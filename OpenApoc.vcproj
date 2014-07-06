@@ -181,6 +181,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\game\apocresources\apocfont.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\game\boot.cpp"
 				>
 			</File>
@@ -280,6 +284,10 @@
 			</File>
 			<File
 				RelativePath=".\library\animation.h"
+				>
+			</File>
+			<File
+				RelativePath=".\game\apocresources\apocfont.h"
 				>
 			</File>
 			<File
