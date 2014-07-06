@@ -5,6 +5,8 @@
 void MainMenu::Begin()
 {
 	ufopediaimg = al_load_bitmap( "data/UFODATA/B-SETUP.PCX" );
+	largefont = new ApocalypseFont( true );
+	smallfont = new ApocalypseFont( false );
 	currentlanguage = new Language( "EN-GB" );
 	buttonclick = new RawSound( "STRATEGC/INTRFACE/BUTTON1.RAW" );
 }
@@ -46,7 +48,15 @@ void MainMenu::Update()
 
 void MainMenu::Render()
 {
+	std::string* s;
 	al_draw_bitmap( ufopediaimg, 0, 0, 0 );
+	largefont->DrawString( FRAMEWORK->Display_GetWidth() / 2, 10, "OPEN/APOC", APOCFONT_ALIGN_CENTRE );
+	s = currentlanguage->GetText( "STR_START_CAMPAIGN" );
+	smallfont->DrawString( 320, 180, *s, APOCFONT_ALIGN_CENTRE );
+	s = currentlanguage->GetText( "STR_LOAD_SAVED_GAME" );
+	smallfont->DrawString( 320, 220, *s, APOCFONT_ALIGN_CENTRE );
+	s = currentlanguage->GetText( "STR_QUIT" );
+	smallfont->DrawString( 320, 260, *s, APOCFONT_ALIGN_CENTRE );
 }
 
 bool MainMenu::IsTransition()

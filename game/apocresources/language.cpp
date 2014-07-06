@@ -37,5 +37,6 @@ std::string* Language::GetText( std::string Key )
 			return c->GetQuickStringValue( Key, "" );
 		}
 	}
+	return new std::string(Key);
 }
 

@@ -5,6 +5,7 @@
 #include "../../framework/includes.h"
 #include "../../library/spritesheet.h"
 
+#include "../apocresources/apocfont.h"
 #include "../apocresources/language.h"
 #include "../apocresources/rawsound.h"
 
@@ -12,6 +13,8 @@ class MainMenu : public Stage
 {
 	private:
 		ALLEGRO_BITMAP* ufopediaimg;
+		ApocalypseFont* largefont;
+		ApocalypseFont* smallfont;
 		Language* currentlanguage;
 		RawSound* buttonclick;
 
