@@ -13,6 +13,7 @@ class MainMenu : public Stage
 {
 	private:
 		ALLEGRO_BITMAP* ufopediaimg;
+		Palette* fontpalette;
 		ApocalypseFont* largefont;
 		ApocalypseFont* smallfont;
 		Language* currentlanguage;

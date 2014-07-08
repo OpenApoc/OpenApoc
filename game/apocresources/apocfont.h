@@ -3,6 +3,7 @@
 
 #include "../../framework/includes.h"
 #include "../../library/memory.h"
+#include "palette.h"
 
 #define APOCFONT_ALIGN_LEFT	0
 #define APOCFONT_ALIGN_CENTRE	1
@@ -19,7 +20,7 @@ class ApocalypseFont
 
 
 	public:
-		ApocalypseFont( bool LargeFont );
+		ApocalypseFont( bool LargeFont, Palette* ColourPalette );
 		~ApocalypseFont();
 
 		void DrawString( int X, int Y, std::string Text, int Alignment );

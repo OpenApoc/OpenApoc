@@ -241,6 +241,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\game\apocresources\palette.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\game\apocresources\rawsound.cpp"
 				>
 			</File>
@@ -348,6 +352,10 @@
 			</File>
 			<File
 				RelativePath=".\framework\network.h"
+				>
+			</File>
+			<File
+				RelativePath=".\game\apocresources\palette.h"
 				>
 			</File>
 			<File

@@ -4,7 +4,7 @@
 // TODO: Fix charstring
 std::string ApocalypseFont::FontCharacterSet = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}";
 
-ApocalypseFont::ApocalypseFont( bool LargeFont )
+ApocalypseFont::ApocalypseFont( bool LargeFont, Palette* ColourPalette )
 {
 	int fontrows;
 	int fontchars;
@@ -36,27 +36,17 @@ ApocalypseFont::ApocalypseFont( bool LargeFont )
 			for( int x = 0; x < 14; x++ )
 			{
 				int palidx = al_fgetc( dathnd );
-				char* rowptr = &((char*)r->data)[ (y * r->pitch) + (x * 4) ];
+				Colour* rowptr = (Colour*)(&((char*)r->data)[ (y * r->pitch) + (x * 4) ]);
+				Colour* palcol = ColourPalette->GetColour( palidx );
+				rowptr->a = palcol->a;
+				rowptr->r = palcol->r;
+				rowptr->g = palcol->g;
+				rowptr->b = palcol->b;
 				if( palidx == 0 )
 				{
-					rowptr[0] = 0;
-					rowptr[1] = 0;
-					rowptr[2] = 0;
-					rowptr[3] = 0;
-				} else {
-					rowptr[3] = 255;
-					if( LargeFont )
-					{
-						rowptr[0] = 256 - ((palidx * 16) + palidx);
-					} else {
-						rowptr[0] = 255 / palidx;
-					}
-					rowptr[1] = rowptr[0];
-					rowptr[2] = rowptr[0];
-					if( x > w )
-					{
-						w = x;
-					}
+					rowptr->a = 0;
+				} else if ( x > w ) {
+					w = x;
 				}
 			}
 		}

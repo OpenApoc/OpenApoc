@@ -5,8 +5,9 @@
 void MainMenu::Begin()
 {
 	ufopediaimg = al_load_bitmap( "data/UFODATA/B-SETUP.PCX" );
-	largefont = new ApocalypseFont( true );
-	smallfont = new ApocalypseFont( false );
+	fontpalette = new Palette( "UFODATA/PAL_01.DAT" );
+	largefont = new ApocalypseFont( true, fontpalette );
+	smallfont = new ApocalypseFont( false, fontpalette );
 	currentlanguage = new Language( "EN-GB" );
 	buttonclick = new RawSound( "STRATEGC/INTRFACE/BUTTON1.RAW" );
 }
