@@ -237,6 +237,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\game\apocresources\music.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\framework\network.cpp"
 				>
 			</File>
@@ -348,6 +352,10 @@
 			</File>
 			<File
 				RelativePath=".\library\memory.h"
+				>
+			</File>
+			<File
+				RelativePath=".\game\apocresources\music.h"
 				>
 			</File>
 			<File

@@ -10,6 +10,7 @@ void MainMenu::Begin()
 	smallfont = new ApocalypseFont( false, fontpalette );
 	currentlanguage = new Language( "EN-GB" );
 	buttonclick = new RawSound( "STRATEGC/INTRFACE/BUTTON1.RAW" );
+	musicplayer = new Music( "" );
 }
 
 void MainMenu::Pause()
@@ -25,6 +26,7 @@ void MainMenu::Finish()
 	al_destroy_bitmap( ufopediaimg );
 	delete currentlanguage;
 	delete buttonclick;
+	delete musicplayer;
 }
 
 void MainMenu::EventOccurred(Event *e)
@@ -34,11 +36,14 @@ void MainMenu::EventOccurred(Event *e)
 		if( e->Data.Keyboard.KeyCode == ALLEGRO_KEY_ESCAPE )
 		{
 			delete FRAMEWORK->ProgramStages->Pop();
+		} else {
+			musicplayer->Play();
 		}
 	}
 
 	if( e->Type == EVENT_MOUSE_DOWN )
 	{
+
 		buttonclick->PlaySound();
 	}
 }

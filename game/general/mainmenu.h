@@ -8,6 +8,7 @@
 #include "../apocresources/apocfont.h"
 #include "../apocresources/language.h"
 #include "../apocresources/rawsound.h"
+#include "../apocresources/music.h"
 
 class MainMenu : public Stage
 {
@@ -18,6 +19,7 @@ class MainMenu : public Stage
 		ApocalypseFont* smallfont;
 		Language* currentlanguage;
 		RawSound* buttonclick;
+		Music* musicplayer;
 
 
   public:
