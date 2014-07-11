@@ -434,6 +434,12 @@ void Framework::Display_SetTitle( std::string* NewTitle )
 	al_set_window_title( screen, NewTitle->c_str() );
 }
 
+void Framework::Display_SetTitle( std::string NewTitle )
+{
+  al_set_app_name( NewTitle.c_str() );
+	al_set_window_title( screen, NewTitle.c_str() );
+}
+
 ALLEGRO_BITMAP* Framework::Display_GetCurrentTarget()
 {
 	if( screenRetarget != 0 )

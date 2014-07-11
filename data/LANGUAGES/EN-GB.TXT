@@ -1,4 +1,5 @@
 STR_START_CAMPAIGN = "Start Campaign Game"
 STR_LOAD_SAVED_GAME = "Load Saved Game"
+STR_OPTIONS = "Options"
 STR_QUIT = "Quit"
 

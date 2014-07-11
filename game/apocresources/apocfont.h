@@ -20,7 +20,14 @@ class ApocalypseFont
 
 
 	public:
-		ApocalypseFont( bool LargeFont, Palette* ColourPalette );
+		enum FontType
+		{
+			LargeFont,
+			SmallFont,
+			TinyFont
+		};
+
+		ApocalypseFont( FontType Face, Palette* ColourPalette );
 		~ApocalypseFont();
 
 		void DrawString( int X, int Y, std::string Text, int Alignment );

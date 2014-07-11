@@ -13,9 +13,9 @@
 class MainMenu : public Stage
 {
 	private:
-		ALLEGRO_BITMAP* ufopediaimg;
+		ALLEGRO_BITMAP* emptybackground;
+		ALLEGRO_BITMAP* buttonimage;
 		Palette* fontpalette;
-		ApocalypseFont* largefont;
 		ApocalypseFont* smallfont;
 		Language* currentlanguage;
 		RawSound* buttonclick;
@@ -23,6 +23,8 @@ class MainMenu : public Stage
 
 
   public:
+		MainMenu();
+		~MainMenu();
     // Stage control
     virtual void Begin();
     virtual void Pause();

@@ -10,9 +10,11 @@ class Music
 	private:
 		Memory* sounddata;
 		ALLEGRO_SAMPLE* soundsample;
+		static long starts[];
+		static long lengths[];
 
 	public:
-		Music( std::string Filename );
+		Music( int Track );
 		~Music();
 
 		void Play();

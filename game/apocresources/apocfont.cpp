@@ -4,36 +4,47 @@
 // TODO: Fix charstring
 std::string ApocalypseFont::FontCharacterSet = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}";
 
-ApocalypseFont::ApocalypseFont( bool LargeFont, Palette* ColourPalette )
+ApocalypseFont::ApocalypseFont( FontType Face, Palette* ColourPalette )
 {
 	int fontrows;
 	int fontchars;
+	int charmaxwidth;
 
 	std::string datfile( "data/UFODATA/" );
-	if( LargeFont )
+	switch( Face )
 	{
-		datfile.append( "BIGFONT" );
-		fontrows = 24;
-		fontchars = 129;
-	} else {
-		datfile.append( "SMALFONT" );
-		fontrows = 15;
-		fontchars = 140;
+		case ApocalypseFont::LargeFont:
+			datfile.append( "BIGFONT" );
+			fontrows = 24;
+			fontchars = 129;
+			charmaxwidth = 14;
+			break;
+		case ApocalypseFont::SmallFont:
+			datfile.append( "SMALFONT" );
+			fontrows = 15;
+			fontchars = 140;
+			charmaxwidth = 14;
+			break;
+		case ApocalypseFont::TinyFont:
+			datfile.append( "SMALLSET" );
+			fontrows = 12;
+			fontchars = 128;
+			charmaxwidth = 8;
+			break;
 	}
 	std::string spcfile( datfile );
 	datfile.append( ".DAT" );
-	spcfile.append( ".SPC" );
 
 	ALLEGRO_FILE* dathnd = al_fopen( datfile.c_str(), "rb" );
 
 	for( int c = 0; c < fontchars; c++ )
 	{
 		int w = 0;
-		ALLEGRO_BITMAP* b = al_create_bitmap( 14, fontrows );
+		ALLEGRO_BITMAP* b = al_create_bitmap( charmaxwidth, fontrows );
 		ALLEGRO_LOCKED_REGION* r = al_lock_bitmap( b, ALLEGRO_PIXEL_FORMAT_ABGR_8888_LE, 0 );
 		for( int y = 0; y < fontrows; y++ )
 		{
-			for( int x = 0; x < 14; x++ )
+			for( int x = 0; x < charmaxwidth; x++ )
 			{
 				int palidx = al_fgetc( dathnd );
 				Colour* rowptr = (Colour*)(&((char*)r->data)[ (y * r->pitch) + (x * 4) ]);
@@ -74,7 +85,7 @@ void ApocalypseFont::DrawString( int X, int Y, std::string Text, int Alignment )
 			int charidx = FontCharacterSet.find_first_of( Text.at( i ) );
 			if( charidx >= 0 )
 			{
-				textlen += fontwidths.at( charidx ); // Fix with spacing data
+				textlen += fontwidths.at( charidx );
 			} else {
 				textlen += 3;
 			}
@@ -97,7 +108,7 @@ void ApocalypseFont::DrawString( int X, int Y, std::string Text, int Alignment )
 		if( charidx >= 0 )
 		{
 			al_draw_bitmap( fontbitmaps.at( charidx ), xpos, Y, 0 );
-			xpos += fontwidths.at( charidx ); // Fix with spacing data
+			xpos += fontwidths.at( charidx );
 		} else {
 			xpos += 3;
 		}

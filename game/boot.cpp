@@ -2,12 +2,12 @@
 #include "boot.h"
 #include "../framework/framework.h"
 #include "general/mainmenu.h"
+#include "../transitions/transitions.h"
 
 void BootUp::Begin()
 {
-	FRAMEWORK->Display_SetTitle( new std::string("OpenApocalypse") );
-	ufopediaimg = al_load_bitmap( "data/UFODATA/TITLES.PCX" );
 	loadtime = 0;
+	FRAMEWORK->Display_SetTitle("OpenApocalypse");
 }
 
 void BootUp::Pause()
@@ -20,7 +20,6 @@ void BootUp::Resume()
 
 void BootUp::Finish()
 {
-	al_destroy_bitmap( ufopediaimg );
 }
 
 void BootUp::EventOccurred(Event *e)
@@ -39,7 +38,7 @@ void BootUp::EventOccurred(Event *e)
 void BootUp::Update()
 {
 	loadtime++;
-	if( loadtime >= FRAMES_PER_SECOND )
+	if( loadtime >= FRAMES_PER_SECOND / 2 )
 	{
 		StartGame();
 	}
@@ -47,13 +46,13 @@ void BootUp::Update()
 
 void BootUp::Render()
 {
-	al_draw_bitmap( ufopediaimg, 0, 0, 0 );
+	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
 }
 
 void BootUp::StartGame()
 {
 	delete FRAMEWORK->ProgramStages->Pop();
-	FRAMEWORK->ProgramStages->Push( new MainMenu() );
+	FRAMEWORK->ProgramStages->Push( new TransitionFadeIn( new MainMenu(), al_map_rgb( 0, 0, 0 ), FRAMES_PER_SECOND ) );
 }
 
 bool BootUp::IsTransition()
