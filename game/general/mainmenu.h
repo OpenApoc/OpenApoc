@@ -9,6 +9,8 @@
 #include "../apocresources/language.h"
 #include "../apocresources/rawsound.h"
 #include "../apocresources/music.h"
+#include "../apocresources/cursor.h"
+#include "../apocresources/pck.h"
 
 class MainMenu : public Stage
 {
@@ -16,10 +18,15 @@ class MainMenu : public Stage
 		ALLEGRO_BITMAP* emptybackground;
 		ALLEGRO_BITMAP* buttonimage;
 		Palette* fontpalette;
+		ApocalypseFont* largefont;
 		ApocalypseFont* smallfont;
 		Language* currentlanguage;
 		RawSound* buttonclick;
 		Music* musicplayer;
+
+		Cursor* mousecursor;
+
+		PCK* testpck;
 
 
   public:

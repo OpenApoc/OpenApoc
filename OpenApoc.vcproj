@@ -197,6 +197,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\game\apocresources\cursor.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\framework\event.cpp"
 				>
 			</File>
@@ -246,6 +250,10 @@
 			</File>
 			<File
 				RelativePath=".\game\apocresources\palette.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\game\apocresources\pck.cpp"
 				>
 			</File>
 			<File
@@ -311,6 +319,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\game\apocresources\cursor.h"
+				>
+			</File>
+			<File
 				RelativePath=".\framework\event.h"
 				>
 			</File>
@@ -364,6 +376,10 @@
 			</File>
 			<File
 				RelativePath=".\game\apocresources\palette.h"
+				>
+			</File>
+			<File
+				RelativePath=".\game\apocresources\pck.h"
 				>
 			</File>
 			<File

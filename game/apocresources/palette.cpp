@@ -16,10 +16,10 @@ Palette::Palette( std::string Filename )
 	while( !al_feof( f ) )
 	{
 		al_fread( f, (void*)&colourblock, 3 );
-		colours[idx].a = 255;
-		colours[idx].r = colourblock[0] << 2;
+		colours[idx].a = (idx == 0 ? 0 : 255);
+		colours[idx].r = colourblock[2] << 2;
 		colours[idx].g = colourblock[1] << 2;
-		colours[idx].b = colourblock[2] << 2;
+		colours[idx].b = colourblock[0] << 2;
 		idx++;
 	}
 

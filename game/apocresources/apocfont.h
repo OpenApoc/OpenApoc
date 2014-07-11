@@ -17,7 +17,7 @@ class ApocalypseFont
 
 		std::vector<ALLEGRO_BITMAP*> fontbitmaps;
 		std::vector<int> fontwidths;
-
+		int spacewidth;
 
 	public:
 		enum FontType

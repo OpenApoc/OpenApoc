@@ -18,18 +18,21 @@ ApocalypseFont::ApocalypseFont( FontType Face, Palette* ColourPalette )
 			fontrows = 24;
 			fontchars = 129;
 			charmaxwidth = 14;
+			spacewidth = 6;
 			break;
 		case ApocalypseFont::SmallFont:
 			datfile.append( "SMALFONT" );
 			fontrows = 15;
 			fontchars = 140;
 			charmaxwidth = 14;
+			spacewidth = 3;
 			break;
 		case ApocalypseFont::TinyFont:
 			datfile.append( "SMALLSET" );
 			fontrows = 12;
 			fontchars = 128;
 			charmaxwidth = 8;
+			spacewidth = 3;
 			break;
 	}
 	std::string spcfile( datfile );
@@ -53,10 +56,8 @@ ApocalypseFont::ApocalypseFont( FontType Face, Palette* ColourPalette )
 				rowptr->r = palcol->r;
 				rowptr->g = palcol->g;
 				rowptr->b = palcol->b;
-				if( palidx == 0 )
+				if ( palcol->a > 0 && x > w )
 				{
-					rowptr->a = 0;
-				} else if ( x > w ) {
 					w = x;
 				}
 			}
@@ -87,7 +88,7 @@ void ApocalypseFont::DrawString( int X, int Y, std::string Text, int Alignment )
 			{
 				textlen += fontwidths.at( charidx );
 			} else {
-				textlen += 3;
+				textlen += spacewidth;
 			}
 		}
 
@@ -110,7 +111,7 @@ void ApocalypseFont::DrawString( int X, int Y, std::string Text, int Alignment )
 			al_draw_bitmap( fontbitmaps.at( charidx ), xpos, Y, 0 );
 			xpos += fontwidths.at( charidx );
 		} else {
-			xpos += 3;
+			xpos += spacewidth;
 		}
 	}
 }
