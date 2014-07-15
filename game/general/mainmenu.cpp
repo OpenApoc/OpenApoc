@@ -15,8 +15,8 @@ MainMenu::MainMenu()
 	FRAMEWORK->Display_SetTarget();
 	al_destroy_bitmap( titlesbackground );
 
-	//fontpalette = new Palette( "UFODATA/PAL_02.DAT" );
-	fontpalette = new Palette( "TACDATA/TACTICAL.PAL" );
+	fontpalette = new Palette( "UFODATA/PAL_02.DAT" );
+	//fontpalette = new Palette( "TACDATA/TACTICAL.PAL" );
 	largefont = new ApocalypseFont( ApocalypseFont::LargeFont, new Palette( "UFODATA/PAL_06.DAT" ) );
 	smallfont = new ApocalypseFont( ApocalypseFont::SmallFont, fontpalette );
 	currentlanguage = new Language( "EN-GB" );
@@ -24,7 +24,8 @@ MainMenu::MainMenu()
 	musicplayer = new Music( 25 );
 	mousecursor = new Cursor( fontpalette );
 
-	testpck = new PCK( "data/UFODATA/ICONS.PCK", "data/UFODATA/ICONS.TAB", false, fontpalette );
+	testpck = new PCK( "data/UFODATA/VEHICLE.PCK", "data/UFODATA/VEHICLE.TAB", false, fontpalette );
+	//testpck = new PCK( "data/MAPS/05RESCUE/MAPUNITS/FEATURE.PCK", "data/MAPS/05RESCUE/MAPUNITS/FEATURE.TAB", false, fontpalette );
 }
 
 MainMenu::~MainMenu()
@@ -110,9 +111,9 @@ void MainMenu::Render()
 
 	mousecursor->Render();
 
-	if( testpck->GetImageCount() > 0 )
+	for( int x = 0; x < testpck->GetImageCount(); x++ )
 	{
-		testpck->RenderImage( 1, 0, 0 );
+		testpck->RenderImage( x, (x * 40) % 640, ((x * 40) / 640) * 40 );
 	}
 }
 

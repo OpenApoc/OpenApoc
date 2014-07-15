@@ -22,5 +22,7 @@ class Palette
 
 		Colour* GetColour(int Index);
 		void SetColour(int Index, Colour* Col);
+
+		void DumpPalette( std::string Filename );
 };
 

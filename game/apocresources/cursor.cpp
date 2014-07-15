@@ -48,11 +48,6 @@ void Cursor::EventOccured( Event* e )
 		cursorx = e->Data.Mouse.X;
 		cursory = e->Data.Mouse.Y;
 	}
-
-	if( e->Type == EVENT_MOUSE_DOWN )
-	{
-		CurrentType = (CursorType)(((int)CurrentType + 1) % images.size());
-	}
 }
 
 void Cursor::Render()

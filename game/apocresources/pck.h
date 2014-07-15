@@ -17,6 +17,15 @@ typedef struct PCKImageHeader
 	int16_t BottomMostPixel;
 } PCKImageHeader;
 
+typedef struct PCKCompression1Header
+{
+	// int16_t SkipPixels; -- Read seperately to get eof record
+	char ColumnToStartAt;
+	char PixelsInRow;
+	char Reserved1;
+	char PaddingInRow;
+} PCKCompression1Header;
+
 class PCK
 {
 

@@ -44,3 +44,28 @@ void Palette::SetColour(int Index, Colour* Col)
 	colours[Index].b = Col->b;
 }
 
+void Palette::DumpPalette( std::string Filename )
+{
+	ALLEGRO_BITMAP* b = al_create_bitmap( 16, 16 );
+	ALLEGRO_LOCKED_REGION* r = al_lock_bitmap( b, ALLEGRO_PIXEL_FORMAT_ABGR_8888_LE, 0 );
+	
+	int c = 0;
+	for( int y = 0; y < 16; y++ )
+	{
+		for( int x = 0; x < 16; x++ )
+		{
+			Colour* c1_rowptr = (Colour*)(&((char*)r->data)[ (y * r->pitch) + (x * 4) ]);
+			Colour* c1_palcol = GetColour( c );
+			c1_rowptr->a = c1_palcol->a;
+			c1_rowptr->r = c1_palcol->r;
+			c1_rowptr->g = c1_palcol->g;
+			c1_rowptr->b = c1_palcol->b;
+
+			c++;
+		}
+	}
+
+	al_unlock_bitmap( b );
+	al_save_bitmap( Filename.c_str(), b );
+	al_destroy_bitmap( b );
+}
