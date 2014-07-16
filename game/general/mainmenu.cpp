@@ -24,8 +24,9 @@ MainMenu::MainMenu()
 	musicplayer = new Music( 25 );
 	mousecursor = new Cursor( fontpalette );
 
-	testpck = new PCK( "data/UFODATA/VEHICLE.PCK", "data/UFODATA/VEHICLE.TAB", false, fontpalette );
+	//testpck = new PCK( "data/UFODATA/PHOTO.PCK", "data/UFODATA/PHOTO.TAB", fontpalette );
 	//testpck = new PCK( "data/MAPS/05RESCUE/MAPUNITS/FEATURE.PCK", "data/MAPS/05RESCUE/MAPUNITS/FEATURE.TAB", false, fontpalette );
+	testpck = new PCK( "data/MAPS/10ASTRO/MAPUNITS/SFEATURE.PCK", "data/MAPS/10ASTRO/MAPUNITS/SFEATURE.TAB", new Palette( "MAPS/10ASTRO/MAPUNITS/PALETTE.PAL" ) );
 }
 
 MainMenu::~MainMenu()
@@ -113,7 +114,7 @@ void MainMenu::Render()
 
 	for( int x = 0; x < testpck->GetImageCount(); x++ )
 	{
-		testpck->RenderImage( x, (x * 40) % 640, ((x * 40) / 640) * 40 );
+		testpck->RenderImage( x, (x * 10) % 640, ((x * 10) / 640) * 10 );
 	}
 }
 

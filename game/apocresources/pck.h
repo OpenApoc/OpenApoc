@@ -5,19 +5,17 @@
 #include "../../library/memory.h"
 #include "palette.h"
 
-typedef struct PCKImageHeader
+typedef struct PCKCompression1ImageHeader
 {
-	char CompressionMethod;
 	char Reserved1;
 	char Reserved2;
-	char Reserved3;
 	int16_t LeftMostPixel;
 	int16_t RightMostPixel;
 	int16_t TopMostPixel;
 	int16_t BottomMostPixel;
 } PCKImageHeader;
 
-typedef struct PCKCompression1Header
+typedef struct PCKCompression1RowHeader
 {
 	// int16_t SkipPixels; -- Read seperately to get eof record
 	char ColumnToStartAt;
@@ -30,11 +28,14 @@ class PCK
 {
 
 	private:
-		bool terrain;
 		std::vector<ALLEGRO_BITMAP*> images;
+		Palette* Colours;
+
+		void LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab);
+		void LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab);
 
 	public:
-		PCK( std::string PckFilename, std::string TabFilename, bool ContainsTerrain, Palette* ColourPalette );
+		PCK( std::string PckFilename, std::string TabFilename, Palette* ColourPalette );
 		~PCK();
 
 		int GetImageCount();

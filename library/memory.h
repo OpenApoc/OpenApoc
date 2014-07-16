@@ -15,7 +15,9 @@ class Memory
 		~Memory();
 
     void Clear();
+		void Resize( size_t length );
 		void AppendData( void* data, size_t length );
 		size_t GetSize();
 		void* GetData();
+		void* GetDataOffset( size_t offset );
 };

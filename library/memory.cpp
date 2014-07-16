@@ -27,6 +27,21 @@ size_t Memory::GetSize()
 	return data_len;
 }
 
+void Memory::Resize( size_t length )
+{
+	void* ptr;
+
+	if( data_ptr == 0 )
+		ptr = malloc( length );
+	else
+		ptr = realloc( data_ptr, length );
+
+	if( ptr == 0 )
+		return;
+	data_ptr = (char*)ptr;
+	data_len = length;
+}
+
 void Memory::AppendData( void* data, size_t length )
 {
 	void* ptr;
@@ -54,4 +69,9 @@ void Memory::Clear()
 		free( data_ptr );
 	data_ptr = 0;
 	data_len = 0;
+}
+
+void* Memory::GetDataOffset( size_t offset )
+{
+	return &(data_ptr[offset]);
 }
