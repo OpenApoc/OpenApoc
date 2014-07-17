@@ -55,5 +55,3 @@ foreach (LIB ${REQUIRED_ALLEGRO_LIBRARIES})
 	target_link_libraries(OpenApoc ${LIB})
 endforeach()
 
-message("Libs: ${ALLEGRO_LIBS}")
-
