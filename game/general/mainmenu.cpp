@@ -4,9 +4,9 @@
 
 MainMenu::MainMenu()
 {
-	emptybackground = al_load_bitmap( "data/UFODATA/TITLES.PCX" );
+	emptybackground = DATA->load_bitmap( "UFODATA/TITLES.PCX" );
 
-	ALLEGRO_BITMAP* titlesbackground = al_load_bitmap( "data/UFODATA/B-SETUP.PCX" );
+	ALLEGRO_BITMAP* titlesbackground = DATA->load_bitmap( "UFODATA/B-SETUP.PCX" );
 	buttonimage = al_create_bitmap( 262, 29 );
 	FRAMEWORK->Display_SetTarget( buttonimage );
 	al_clear_to_color( al_map_rgba( 0, 0, 0, 0 ) );

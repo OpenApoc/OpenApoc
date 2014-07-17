@@ -3,7 +3,7 @@ project(OpenApoc)
 
 #c++11 is required
 # FIXME: Do compiler version check for c++11 support?
-set(CMAKE_CXX_FLAGS "-std=c++11")
+set(CMAKE_CXX_FLAGS "-std=c++11 -W -Wall")
 
 set (OPENAPOC_SOURCE_FILES
 	framework/event.cpp
@@ -11,6 +11,7 @@ set (OPENAPOC_SOURCE_FILES
 	framework/main.cpp
 	framework/network.cpp
 	framework/stagestack.cpp
+	framework/data.cpp
 	game/apocresources/apocfont.cpp
 	game/apocresources/cursor.cpp
 	game/apocresources/language.cpp

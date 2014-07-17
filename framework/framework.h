@@ -3,6 +3,7 @@
 
 #include "includes.h"
 #include "event.h"
+#include "data.h"
 
 #include "../library/configfile.h"
 #include "stagestack.h"

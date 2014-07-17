@@ -5,8 +5,8 @@ PCK::PCK( std::string PckFilename, std::string TabFilename, Palette* ColourPalet
 {
 	Colours = ColourPalette;
 
-	ALLEGRO_FILE* pck = al_fopen( PckFilename.c_str(), "rb" );
-	ALLEGRO_FILE* tab = al_fopen( TabFilename.c_str(), "rb" );
+	ALLEGRO_FILE* pck = DATA->load_file( PckFilename, "rb" );
+	ALLEGRO_FILE* tab = DATA->load_file( TabFilename, "rb" );
 
 	int16_t version = al_fread16le( pck );
 	al_fseek( pck, 0, ALLEGRO_SEEK_SET );

@@ -6,8 +6,7 @@ long Music::lengths[] = { 8202600, 19404000, 35897400, 40131000, 46569600, 57859
 
 Music::Music( int Track )
 {
-	std::string path = "data/MUSIC";
-	ALLEGRO_FILE* f = al_fopen( path.c_str(), "rb" );
+	ALLEGRO_FILE* f = DATA->load_file( "MUSIC", "rb" );
 	sounddata = new Memory( lengths[Track] );
 	al_fseek( f, starts[Track], ALLEGRO_SEEK_SET );
 	al_fread( f, sounddata->GetData(), lengths[Track] );

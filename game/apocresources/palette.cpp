@@ -5,10 +5,7 @@ Palette::Palette( std::string Filename )
 {
 	unsigned char colourblock[3];
 
-	std::string path = "data/";
-	path.append( Filename );
-
-	ALLEGRO_FILE* f = al_fopen( path.c_str(), "rb" );
+	ALLEGRO_FILE* f = DATA->load_file( Filename, "rb" );
 
 	colours = (Colour*)malloc( (al_fsize( f ) / 3) * sizeof( Colour ) );
 
