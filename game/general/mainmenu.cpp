@@ -26,7 +26,7 @@ MainMenu::MainMenu()
 
 	//testpck = new PCK( "data/UFODATA/PHOTO.PCK", "data/UFODATA/PHOTO.TAB", fontpalette );
 	//testpck = new PCK( "data/MAPS/05RESCUE/MAPUNITS/FEATURE.PCK", "data/MAPS/05RESCUE/MAPUNITS/FEATURE.TAB", false, fontpalette );
-	testpck = new PCK( "data/MAPS/10ASTRO/MAPUNITS/SFEATURE.PCK", "data/MAPS/10ASTRO/MAPUNITS/SFEATURE.TAB", new Palette( "MAPS/10ASTRO/MAPUNITS/PALETTE.PAL" ) );
+	testpck = new PCK( "MAPS/10ASTRO/MAPUNITS/SFEATURE.PCK", "MAPS/10ASTRO/MAPUNITS/SFEATURE.TAB", new Palette( "MAPS/10ASTRO/MAPUNITS/PALETTE.PAL" ) );
 }
 
 MainMenu::~MainMenu()
