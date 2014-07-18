@@ -15,4 +15,5 @@ class Shader
 {
 	public:
 		virtual void Apply( ALLEGRO_BITMAP* Target ) = 0;
+		virtual ~Shader(){};
 };

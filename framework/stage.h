@@ -63,4 +63,7 @@ class Stage
 				*Boolean* Indicates if stage should be considered as a transition stage
     */
     virtual bool IsTransition() = 0;
+
+	/* Need a virtual destructor to correctly call any subclass descructors */
+    virtual ~Stage(){};
 };
