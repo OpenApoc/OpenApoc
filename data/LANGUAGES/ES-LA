@@ -1,0 +1,4 @@
+STR_START_CAMPAIGN = "Iniciar campaña"
+STR_LOAD_SAVED_GAME = "Cargar partida"
+STR_OPTIONS = "Opciones"
+STR_QUIT = "Abandonar"
