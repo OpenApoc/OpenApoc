@@ -26,7 +26,7 @@ Cursor::Cursor( Palette* ColourPalette )
 		images.push_back( b );
 	}
 
-	CurrentType = CursorType::Normal;
+	CurrentType = Cursor::Normal;
 	cursorx = 0;
 	cursory = 0;
 
