@@ -3,12 +3,12 @@
 
 SpriteSheet::SpriteSheet( std::string Filename )
 {
-	sheet = al_load_bitmap( Filename.c_str() );
+	sheet = DATA->load_bitmap( Filename );
 }
 
 SpriteSheet::SpriteSheet( std::string Filename, int FrameWidth, int FrameHeight )
 {
-	sheet = al_load_bitmap( Filename.c_str() );
+	sheet = DATA->load_bitmap( Filename );
 
 	for( int y = 0; y < al_get_bitmap_height( sheet ); y += FrameHeight )
 	{

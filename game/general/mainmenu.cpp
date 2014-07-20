@@ -4,9 +4,9 @@
 
 MainMenu::MainMenu()
 {
-	emptybackground = al_load_bitmap( "data/UFODATA/TITLES.PCX" );
+	emptybackground = DATA->load_bitmap( "UFODATA/TITLES.PCX" );
 
-	ALLEGRO_BITMAP* titlesbackground = al_load_bitmap( "data/UFODATA/B-SETUP.PCX" );
+	ALLEGRO_BITMAP* titlesbackground = DATA->load_bitmap( "UFODATA/B-SETUP.PCX" );
 	buttonimage = al_create_bitmap( 262, 29 );
 	FRAMEWORK->Display_SetTarget( buttonimage );
 	al_clear_to_color( al_map_rgba( 0, 0, 0, 0 ) );
@@ -26,7 +26,7 @@ MainMenu::MainMenu()
 
 	//testpck = new PCK( "data/UFODATA/PHOTO.PCK", "data/UFODATA/PHOTO.TAB", fontpalette );
 	//testpck = new PCK( "data/MAPS/05RESCUE/MAPUNITS/FEATURE.PCK", "data/MAPS/05RESCUE/MAPUNITS/FEATURE.TAB", false, fontpalette );
-	testpck = new PCK( "data/MAPS/10ASTRO/MAPUNITS/SFEATURE.PCK", "data/MAPS/10ASTRO/MAPUNITS/SFEATURE.TAB", new Palette( "MAPS/10ASTRO/MAPUNITS/PALETTE.PAL" ) );
+	testpck = new PCK( "MAPS/10ASTRO/MAPUNITS/SFEATURE.PCK", "MAPS/10ASTRO/MAPUNITS/SFEATURE.TAB", new Palette( "MAPS/10ASTRO/MAPUNITS/PALETTE.PAL" ) );
 }
 
 MainMenu::~MainMenu()

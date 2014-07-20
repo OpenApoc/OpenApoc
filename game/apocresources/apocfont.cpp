@@ -10,7 +10,7 @@ ApocalypseFont::ApocalypseFont( FontType Face, Palette* ColourPalette )
 	int fontchars;
 	int charmaxwidth;
 
-	std::string datfile( "data/UFODATA/" );
+	std::string datfile( "UFODATA/" );
 	switch( Face )
 	{
 		case ApocalypseFont::LargeFont:
@@ -38,7 +38,7 @@ ApocalypseFont::ApocalypseFont( FontType Face, Palette* ColourPalette )
 	std::string spcfile( datfile );
 	datfile.append( ".DAT" );
 
-	ALLEGRO_FILE* dathnd = al_fopen( datfile.c_str(), "rb" );
+	ALLEGRO_FILE* dathnd = DATA->load_file( datfile, "rb" );
 
 	for( int c = 0; c < fontchars; c++ )
 	{

@@ -288,6 +288,10 @@
 				RelativePath=".\library\vector2.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\framework\data.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -428,6 +432,10 @@
 			</File>
 			<File
 				RelativePath=".\library\vector2.h"
+				>
+			</File>
+			<File
+				RelativePath=".\framework\data.h"
 				>
 			</File>
 		</Filter>

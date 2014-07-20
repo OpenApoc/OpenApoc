@@ -3,8 +3,8 @@
 
 Cursor::Cursor( Palette* ColourPalette )
 {
-	ALLEGRO_FILE* f = al_fopen( "data/TACDATA/MOUSE.DAT", "rb" );
-	
+	ALLEGRO_FILE* f = DATA->load_file( "TACDATA/MOUSE.DAT", "rb" );
+
 	while( images.size() < al_fsize( f ) / 576 )
 	{
 		ALLEGRO_BITMAP* b = al_create_bitmap( 24, 24 );

@@ -3,9 +3,9 @@
 
 RawSound::RawSound( std::string Filename )
 {
-	std::string path = "data/RAWSOUND/";
+	std::string path = "/RAWSOUND/";
 	path.append( Filename );
-	ALLEGRO_FILE* f = al_fopen( path.c_str(), "rb" );
+	ALLEGRO_FILE* f = DATA->load_file( path, "rb" );
 	sounddata = new Memory( al_fsize( f ) );
 	al_fread( f, sounddata->GetData(), sounddata->GetSize() );
 	al_fclose( f );
