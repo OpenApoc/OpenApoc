@@ -45,7 +45,9 @@ Icon
 [Oo]bj/
 [Dd]ebug/
 [Rr]elease/
-
+*.sdf
+*.opensdf
+allegro.log
 
 # =================
 # pmprog Framework

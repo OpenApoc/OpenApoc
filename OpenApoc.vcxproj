@@ -1,0 +1,165 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BBD67CA5-14A6-47AB-87A9-FFE0166B5D5C}</ProjectGuid>
+    <RootNamespace>OpenApoc</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>12.0.21005.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);%INCLUDE%</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);%LIB%</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir>$(Configuration)\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>allegro-5.1.6-monolith-mt.lib</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>allegro.lib;allegro_acodec.lib;allegro_audio.lib;allegro_color.lib;allegro_font.lib;allegro_image.lib;allegro_primitives.lib;allegro_ttf.lib;allegro_video.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="library\angle.cpp" />
+    <ClCompile Include="library\animation.cpp" />
+    <ClCompile Include="game\apocresources\apocfont.cpp" />
+    <ClCompile Include="game\boot.cpp" />
+    <ClCompile Include="library\box.cpp" />
+    <ClCompile Include="library\configfile.cpp" />
+    <ClCompile Include="game\apocresources\cursor.cpp" />
+    <ClCompile Include="framework\event.cpp" />
+    <ClCompile Include="transitions\fadein.cpp" />
+    <ClCompile Include="transitions\fadeout.cpp" />
+    <ClCompile Include="framework\framework.cpp" />
+    <ClCompile Include="shaders\greyscale.cpp" />
+    <ClCompile Include="game\apocresources\language.cpp" />
+    <ClCompile Include="library\line.cpp" />
+    <ClCompile Include="framework\main.cpp" />
+    <ClCompile Include="game\general\mainmenu.cpp" />
+    <ClCompile Include="library\memory.cpp" />
+    <ClCompile Include="game\apocresources\music.cpp" />
+    <ClCompile Include="framework\network.cpp" />
+    <ClCompile Include="game\apocresources\palette.cpp" />
+    <ClCompile Include="game\apocresources\pck.cpp" />
+    <ClCompile Include="game\apocresources\rawsound.cpp" />
+    <ClCompile Include="shaders\scanlines.cpp" />
+    <ClCompile Include="library\spritesheet.cpp" />
+    <ClCompile Include="framework\stagestack.cpp" />
+    <ClCompile Include="transitions\strips.cpp" />
+    <ClCompile Include="transitions\tiled.cpp" />
+    <ClCompile Include="library\tilemap.cpp" />
+    <ClCompile Include="library\vector2.cpp" />
+    <ClCompile Include="framework\data.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="library\angle.h" />
+    <ClInclude Include="library\animation.h" />
+    <ClInclude Include="game\apocresources\apocfont.h" />
+    <ClInclude Include="game\boot.h" />
+    <ClInclude Include="library\box.h" />
+    <ClInclude Include="library\configfile.h" />
+    <ClInclude Include="game\apocresources\cursor.h" />
+    <ClInclude Include="framework\event.h" />
+    <ClInclude Include="transitions\fadein.h" />
+    <ClInclude Include="transitions\fadeout.h" />
+    <ClInclude Include="framework\framework.h" />
+    <ClInclude Include="shaders\greyscale.h" />
+    <ClInclude Include="framework\includes.h" />
+    <ClInclude Include="game\apocresources\language.h" />
+    <ClInclude Include="library\line.h" />
+    <ClInclude Include="game\general\mainmenu.h" />
+    <ClInclude Include="library\maths.h" />
+    <ClInclude Include="library\memory.h" />
+    <ClInclude Include="game\apocresources\music.h" />
+    <ClInclude Include="framework\network.h" />
+    <ClInclude Include="game\apocresources\palette.h" />
+    <ClInclude Include="game\apocresources\pck.h" />
+    <ClInclude Include="game\apocresources\rawsound.h" />
+    <ClInclude Include="shaders\scanlines.h" />
+    <ClInclude Include="shaders\shader.h" />
+    <ClInclude Include="shaders\shaders.h" />
+    <ClInclude Include="library\spritesheet.h" />
+    <ClInclude Include="framework\stage.h" />
+    <ClInclude Include="framework\stagestack.h" />
+    <ClInclude Include="transitions\strips.h" />
+    <ClInclude Include="transitions\tiled.h" />
+    <ClInclude Include="library\tilemap.h" />
+    <ClInclude Include="transitions\transitions.h" />
+    <ClInclude Include="library\vector2.h" />
+    <ClInclude Include="framework\data.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
