@@ -15,18 +15,14 @@ MainMenu::MainMenu()
 	FRAMEWORK->Display_SetTarget();
 	al_destroy_bitmap( titlesbackground );
 
-	fontpalette = new Palette( "UFODATA/PAL_02.DAT" );
+	fontpalette = new Palette( "UFODATA/PAL_01.DAT" );
 	//fontpalette = new Palette( "TACDATA/TACTICAL.PAL" );
 	largefont = new ApocalypseFont( ApocalypseFont::LargeFont, new Palette( "UFODATA/PAL_06.DAT" ) );
 	smallfont = new ApocalypseFont( ApocalypseFont::SmallFont, fontpalette );
 	currentlanguage = new Language( "EN-GB" );
 	buttonclick = new RawSound( "STRATEGC/INTRFACE/BUTTON1.RAW" );
-	musicplayer = new Music( 25 );
+	musicplayer = new Music( 26 );
 	mousecursor = new Cursor( fontpalette );
-
-	testpck = new PCK( "UFODATA/CITY.PCK", "UFODATA/CITY.TAB", fontpalette );
-	//testpck = new PCK( "data/MAPS/05RESCUE/MAPUNITS/FEATURE.PCK", "data/MAPS/05RESCUE/MAPUNITS/FEATURE.TAB", false, fontpalette );
-	//testpck = new PCK( "MAPS/10ASTRO/MAPUNITS/SFEATURE.PCK", "MAPS/10ASTRO/MAPUNITS/SFEATURE.TAB", new Palette( "MAPS/10ASTRO/MAPUNITS/PALETTE.PAL" ) );
 }
 
 MainMenu::~MainMenu()
@@ -76,6 +72,11 @@ void MainMenu::EventOccurred(Event *e)
 
 		buttonclick->PlaySound();
 	}
+
+	if( e->Type == EVENT_AUDIO_STREAM_FINISHED )
+	{
+		musicplayer->Play( );
+	}
 }
 
 void MainMenu::Update()
@@ -111,11 +112,6 @@ void MainMenu::Render()
 	smallfont->DrawString( 320, 308, *s, APOCFONT_ALIGN_CENTRE );
 
 	mousecursor->Render();
-
-	for( int x = 0; x < testpck->GetImageCount(); x++ )
-	{
-		testpck->RenderImage( x, (x * 10) % 640, ((x * 10) / 640) * 10 );
-	}
 }
 
 bool MainMenu::IsTransition()

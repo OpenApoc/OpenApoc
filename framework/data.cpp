@@ -4,7 +4,7 @@
 #include <iostream>
 #include <algorithm>
 
-Data *Data::data = 0;
+Data *Data::data = nullptr;
 
 Data::Data(const std::string root) :
 	root(root)
@@ -21,7 +21,7 @@ ALLEGRO_BITMAP* Data::load_bitmap(const std::string path)
 {
 	std::string fullpath = std::string(this->root + this->DIR_SEP + path);
 	ALLEGRO_BITMAP* bitmap = al_load_bitmap(fullpath.c_str());
-	if( bitmap != 0 )
+	if (bitmap != nullptr)
 	{
 		return bitmap;
 	}
@@ -32,21 +32,21 @@ ALLEGRO_BITMAP* Data::load_bitmap(const std::string path)
 	fullpath = std::string(this->root + this->DIR_SEP + lowerpath);
 	std::cerr << "Failed to load \"" + path + "\", trying \"" + lowerpath + "\"\n";
 	bitmap = al_load_bitmap(fullpath.c_str());
-	if( bitmap != 0 )
+	if (bitmap != nullptr)
 	{
 		return bitmap;
 	}
 
 	std::cerr << "Failed to load \"" + path + "\"\n";
 	assert(0);
-	return 0;
+	return nullptr;
 }
 
 ALLEGRO_FILE* Data::load_file(const std::string path, const char *mode)
 {
 	std::string fullpath = std::string(this->root + this->DIR_SEP + path);
 	ALLEGRO_FILE* file = al_fopen(fullpath.c_str(), mode);
-	if( file != 0 )
+	if (file != nullptr)
 	{
 		return file;
 	}
@@ -57,7 +57,7 @@ ALLEGRO_FILE* Data::load_file(const std::string path, const char *mode)
 	fullpath = std::string(this->root + this->DIR_SEP + lowerpath);
 	std::cerr << "Failed to load \"" + path + "\", trying \"" + lowerpath + "\"\n";
 	file = al_fopen(fullpath.c_str(), mode);
-	if( file != 0 )
+	if (file != nullptr)
 	{
 		return file;
 	}
@@ -65,5 +65,5 @@ ALLEGRO_FILE* Data::load_file(const std::string path, const char *mode)
 	std::cerr << "Failed to load \"" + path + "\"\n";
 	assert(0);
 
-	return 0;
+	return nullptr;
 }

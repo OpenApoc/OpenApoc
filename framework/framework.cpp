@@ -288,10 +288,9 @@ void Framework::TranslateAllegroEvents()
 				break;
 			case ALLEGRO_EVENT_AUDIO_STREAM_FINISHED:
 				fwE = new Event();
-				fwE->Type = EVENT_AUDIO_FINISHED;
+				fwE->Type = EVENT_AUDIO_STREAM_FINISHED;
 				PushEvent( fwE );
 				break;
-
 			default:
 				fwE = new Event();
 				fwE->Type = EVENT_UNDEFINED;
