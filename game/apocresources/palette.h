@@ -18,12 +18,12 @@ class Palette
 		Colour* colours;
 
 	public:
-		Palette( std::wstring Filename );
+		Palette( std::string Filename );
 		~Palette();
 
 		Colour* GetColour(int Index);
 		void SetColour(int Index, Colour* Col);
 
-		void DumpPalette( std::wstring Filename );
+		void DumpPalette( std::string Filename );
 };
 

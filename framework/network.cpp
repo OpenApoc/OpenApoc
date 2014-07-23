@@ -22,7 +22,7 @@ Network::Network( int Port )
 	}
 }
 
-Network::Network( std::wstring Server, int Port )
+Network::Network( std::string Server, int Port )
 {
 	localHost = enet_host_create (NULL /* create a client host */,
 		1 /* only allow 1 outgoing connection */,

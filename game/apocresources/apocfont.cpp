@@ -2,7 +2,7 @@
 #include "apocfont.h"
 
 // TODO: Fix charstring
-std::wstring ApocalypseFont::FontCharacterSet = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}";
+std::string ApocalypseFont::FontCharacterSet = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}";
 
 ApocalypseFont::ApocalypseFont( FontType Face, Palette* ColourPalette )
 {
@@ -10,7 +10,7 @@ ApocalypseFont::ApocalypseFont( FontType Face, Palette* ColourPalette )
 	int fontchars;
 	int charmaxwidth;
 
-	std::wstring datfile( "UFODATA/" );
+	std::string datfile( "UFODATA/" );
 	switch( Face )
 	{
 		case ApocalypseFont::LargeFont:
@@ -35,7 +35,7 @@ ApocalypseFont::ApocalypseFont( FontType Face, Palette* ColourPalette )
 			spacewidth = 3;
 			break;
 	}
-	std::wstring spcfile( datfile );
+	std::string spcfile( datfile );
 	datfile.append( ".DAT" );
 
 	ALLEGRO_FILE* dathnd = DATA->load_file( datfile, "rb" );
@@ -74,7 +74,7 @@ ApocalypseFont::~ApocalypseFont()
 {
 }
 
-void ApocalypseFont::DrawString( int X, int Y, std::wstring Text, int Alignment )
+void ApocalypseFont::DrawString( int X, int Y, std::string Text, int Alignment )
 {
 	int xpos = X;
 	int textlen = 0;
@@ -118,7 +118,7 @@ void ApocalypseFont::DrawString( int X, int Y, std::wstring Text, int Alignment 
 
 void ApocalypseFont::DumpCharset()
 {
-	std::wstring outfile;
+	std::string outfile;
 	char val[200];
 
 	for( int i = 0; i < fontbitmaps.size(); i++ )

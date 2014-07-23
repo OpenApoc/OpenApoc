@@ -1,12 +1,12 @@
 
 #include "spritesheet.h"
 
-SpriteSheet::SpriteSheet( std::wstring Filename )
+SpriteSheet::SpriteSheet( std::string Filename )
 {
 	sheet = DATA->load_bitmap( Filename );
 }
 
-SpriteSheet::SpriteSheet( std::wstring Filename, int FrameWidth, int FrameHeight )
+SpriteSheet::SpriteSheet( std::string Filename, int FrameWidth, int FrameHeight )
 {
 	sheet = DATA->load_bitmap( Filename );
 

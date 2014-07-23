@@ -1,6 +1,6 @@
 #include "form.h"
 
-Form::Form(tinyxml2::XMLDocument FormConfiguration) : Control( nullptr )
+Form::Form( tinyxml2::XMLDocument FormConfiguration ) : Control( nullptr )
 {
 	// TODO: Load form
 }
@@ -8,7 +8,7 @@ Form::Form(tinyxml2::XMLDocument FormConfiguration) : Control( nullptr )
 Form::~Form()
 {
 	// Delete controls
-	while (Controls.size() > 0)
+	while( Controls.size() > 0 )
 	{
 		Control* c = Controls.back();
 		Controls.pop_back();
@@ -16,14 +16,14 @@ Form::~Form()
 	}
 }
 
-void Form::EventOccured(Event* e)
+void Form::EventOccured( Event* e )
 {
 
 }
 
 void Form::Render()
 {
-	al_draw_filled_rectangle(this->Location.X, this->Location.Y, this->Location.X + this->Size.X, this->Location.Y + this->Size.Y, al_map_rgb(128, 128, 128));
+	al_draw_filled_rectangle( this->Location.X, this->Location.Y, this->Location.X + this->Size.X, this->Location.Y + this->Size.Y, al_map_rgb( 128, 128, 128 ) );
 }
 
 void Form::Update()

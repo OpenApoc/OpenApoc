@@ -39,7 +39,7 @@ enum EventTypes
 #ifdef DOWNLOAD_SUPPORT
 typedef struct FRAMEWORK_DOWNLOAD_EVENT
 {
-	std::wstring* URL;
+	std::string* URL;
 	Memory* Contents;
 	double DownloadedBytes;
 	double TotalBytesToDownload;

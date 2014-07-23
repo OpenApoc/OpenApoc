@@ -8,11 +8,11 @@ class Label : public Control
 {
 
 	private:
-		std::wstring text;
+		std::string text;
 		ApocalypseFont* font;
 
 	public:
-		Label(Control* Owner, std::wstring Text, ApocalypseFont* Font);
+		Label(Control* Owner, std::string Text, ApocalypseFont* Font);
 		~Label();
 
 		virtual void EventOccured(Event* e);

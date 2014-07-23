@@ -21,8 +21,8 @@ class SpriteSheet
 		std::vector<SpriteSheetRegion*> frames;
 
 	public:
-		SpriteSheet( std::wstring Filename );
-		SpriteSheet( std::wstring Filename, int FrameWidth, int FrameHeight );
+		SpriteSheet( std::string Filename );
+		SpriteSheet( std::string Filename, int FrameWidth, int FrameHeight );
 		~SpriteSheet();
 
 		ALLEGRO_BITMAP* GetSheet();

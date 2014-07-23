@@ -427,13 +427,13 @@ int Framework::Display_GetHeight()
 	return al_get_display_height( screen );
 }
 
-void Framework::Display_SetTitle( std::wstring* NewTitle )
+void Framework::Display_SetTitle( std::string* NewTitle )
 {
   al_set_app_name( NewTitle->c_str() );
 	al_set_window_title( screen, NewTitle->c_str() );
 }
 
-void Framework::Display_SetTitle( std::wstring NewTitle )
+void Framework::Display_SetTitle( std::string NewTitle )
 {
   al_set_app_name( NewTitle.c_str() );
 	al_set_window_title( screen, NewTitle.c_str() );
@@ -543,7 +543,7 @@ void Framework::Audio_Shutdown()
 	al_uninstall_audio();
 }
 
-void Framework::Audio_PlayAudio( std::wstring Filename, bool Loop )
+void Framework::Audio_PlayAudio( std::string Filename, bool Loop )
 {
 	if( audioVoice == 0 || audioMixer == 0 )
 	{

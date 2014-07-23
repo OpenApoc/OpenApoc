@@ -35,7 +35,7 @@ class Network
 				Server - Server name/IP address to connect to
 				Port - Port number to connect on
     */
-		Network( std::wstring Server, int Port );
+		Network( std::string Server, int Port );
 
 		/*
 			Destructor: ~Network

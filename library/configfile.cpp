@@ -11,10 +11,10 @@ ConfigFile::ConfigFile()
 	Dirty = false;
 }
 
-ConfigFile::ConfigFile( std::wstring Filename )
+ConfigFile::ConfigFile( std::string Filename )
 {
 	FILE* fileHnd;
-	std::wstring document;
+	std::string document;
 	char buf[1024];
 
 	fileHnd = fopen( Filename.c_str(), "r" );
@@ -50,17 +50,17 @@ ConfigFile::~ConfigFile()
 	}
 }
 
-bool ConfigFile::Save( std::wstring Filename )
+bool ConfigFile::Save( std::string Filename )
 {
 	return Save( Filename, true );
 }
 
-bool ConfigFile::Save( std::wstring Filename, bool OnlyIfChanged )
+bool ConfigFile::Save( std::string Filename, bool OnlyIfChanged )
 {
 	FILE* fileHnd;
-	std::wstring document;
+	std::string document;
 	bool dataNum;
-	std::wstring* escstr;
+	std::string* escstr;
 
 	if( OnlyIfChanged && !Dirty )
 	{
@@ -81,14 +81,14 @@ bool ConfigFile::Save( std::wstring Filename, bool OnlyIfChanged )
 			document.append( " [ " );
 
 			bool isFirst = true;
-			for( std::vector<std::wstring*>::iterator s = cd->Contents->begin(); s != cd->Contents->end(); s++ )
+			for( std::vector<std::string*>::iterator s = cd->Contents->begin(); s != cd->Contents->end(); s++ )
 			{
 				if( isFirst )
 					isFirst = false;
 				else
 					document.append( ", " );
 
-				std::wstring* cs = (std::wstring*)(*s);
+				std::string* cs = (std::string*)(*s);
 				dataNum = IsNumber( *cs );
 				if( !dataNum )
 				{
@@ -128,14 +128,14 @@ bool ConfigFile::Save( std::wstring Filename, bool OnlyIfChanged )
 	return true;
 }
 
-bool ConfigFile::KeyExists( std::wstring Key )
+bool ConfigFile::KeyExists( std::string Key )
 {
 	if( GetData( Key ) != 0 )
 		return true;
 	return false;
 }
 
-bool ConfigFile::KeyIsArray( std::wstring Key )
+bool ConfigFile::KeyIsArray( std::string Key )
 {
 	ConfigData* cd = GetData( Key );
 	if( cd == 0 )
@@ -143,7 +143,7 @@ bool ConfigFile::KeyIsArray( std::wstring Key )
 	return cd->IsArray;
 }
 
-int ConfigFile::GetArraySize( std::wstring Key )
+int ConfigFile::GetArraySize( std::string Key )
 {
 	ConfigData* cd = GetData( Key );
 	if( cd == 0 )
@@ -151,7 +151,7 @@ int ConfigFile::GetArraySize( std::wstring Key )
 	return cd->Contents->size();
 }
 
-void ConfigFile::RemoveArrayElement( std::wstring Key, int ArrayIndex )
+void ConfigFile::RemoveArrayElement( std::string Key, int ArrayIndex )
 {
 	if( !KeyExists( Key ) )
 		return;
@@ -160,7 +160,7 @@ void ConfigFile::RemoveArrayElement( std::wstring Key, int ArrayIndex )
 	cd->Contents->erase( cd->Contents->begin() + ArrayIndex );
 }
 
-void ConfigFile::RemoveKey( std::wstring Key )
+void ConfigFile::RemoveKey( std::string Key )
 {
 	if( !KeyExists( Key ) )
 		return;
@@ -175,17 +175,17 @@ void ConfigFile::RemoveKey( std::wstring Key )
 	delete cd;
 }
 
-void ConfigFile::ParseFile( std::wstring TextContents )
+void ConfigFile::ParseFile( std::string TextContents )
 {
 	ConfigData* cd;
 	unsigned int charPos = 0;
-	std::wstring token;
+	std::string token;
 	bool charQuoted = false;
 	bool wasQuoted = false;
 	int TokenStep = 0;
 
 	cd = (ConfigData*)malloc( sizeof( ConfigData ) );
-	cd->Contents = new std::vector<std::wstring*>();
+	cd->Contents = new std::vector<std::string*>();
 	cd->IsArray = false;
 
 	while( charPos < TextContents.size() )
@@ -210,7 +210,7 @@ void ConfigFile::ParseFile( std::wstring TextContents )
 					switch( TokenStep )
 					{
 						case 0:
-							cd->Key = new std::wstring( token );
+							cd->Key = new std::string( token );
 							TokenStep++;
 							break;
 						case 1:
@@ -222,14 +222,14 @@ void ConfigFile::ParseFile( std::wstring TextContents )
 							break;
 						case 2:
 							if( token != "]" )
-								cd->Contents->push_back( new std::wstring(token) );
+								cd->Contents->push_back( new std::string(token) );
 							break;
 					}
 					if( (!cd->IsArray && (TextContents.at( charPos ) == '\n' || TextContents.at( charPos ) == '\r')) || token == "]" )
 					{
 						Contents.push_back( cd );
 						cd = (ConfigData*)malloc( sizeof( ConfigData ) );
-						cd->Contents = new std::vector<std::wstring*>();
+						cd->Contents = new std::vector<std::string*>();
 						cd->IsArray = false;
 						TokenStep = 0;
 					}
@@ -264,11 +264,11 @@ void ConfigFile::ParseFile( std::wstring TextContents )
 
 }
 
-bool ConfigFile::IsNumber(std::wstring s)
+bool ConfigFile::IsNumber(std::string s)
 {
 	if( s.empty() )
 		return false;
-	for( std::wstring::iterator i = s.begin(); i != s.end(); i++ )
+	for( std::string::iterator i = s.begin(); i != s.end(); i++ )
 	{
 		if( !isdigit(*i) && (*i) != '.' && (*i) != '+' && (*i) != '-' )
 			return false;
@@ -276,9 +276,9 @@ bool ConfigFile::IsNumber(std::wstring s)
 	return true;
 }
 
-std::wstring* ConfigFile::EscapeString( std::wstring s )
+std::string* ConfigFile::EscapeString( std::string s )
 {
-	std::wstring* out = new std::wstring();
+	std::string* out = new std::string();
 	if( !s.empty() )
 	{
 		for( unsigned int i = 0; i < s.size(); i++ )
@@ -292,7 +292,7 @@ std::wstring* ConfigFile::EscapeString( std::wstring s )
 }
 
 
-ConfigData* ConfigFile::GetData( std::wstring Key )
+ConfigData* ConfigFile::GetData( std::string Key )
 {
 	for( std::list<ConfigData*>::iterator i = Contents.begin(); i != Contents.end(); i++ )
 	{
@@ -303,12 +303,12 @@ ConfigData* ConfigFile::GetData( std::wstring Key )
 	return 0;
 }
 
-bool ConfigFile::GetBooleanValue( std::wstring Key, bool* Value )
+bool ConfigFile::GetBooleanValue( std::string Key, bool* Value )
 {
 	return GetBooleanValue( Key, 0, Value );
 }
 
-bool ConfigFile::GetBooleanValue( std::wstring Key, int ArrayIndex, bool* Value )
+bool ConfigFile::GetBooleanValue( std::string Key, int ArrayIndex, bool* Value )
 {
 	ConfigData* cd = GetData( Key );
 	if( cd == 0 )
@@ -318,7 +318,7 @@ bool ConfigFile::GetBooleanValue( std::wstring Key, int ArrayIndex, bool* Value 
 	if( ArrayIndex < 0 || (int)cd->Contents->size() < ArrayIndex )
 		return false;
 
-	switch( ((std::wstring*)cd->Contents->at( ArrayIndex ))->at( 0 ) )
+	switch( ((std::string*)cd->Contents->at( ArrayIndex ))->at( 0 ) )
 	{
 		case 'T':
 		case 't':
@@ -339,11 +339,11 @@ bool ConfigFile::GetBooleanValue( std::wstring Key, int ArrayIndex, bool* Value 
 	return true;
 }
 
-bool ConfigFile::GetIntegerValue( std::wstring Key, int* Value )
+bool ConfigFile::GetIntegerValue( std::string Key, int* Value )
 {
 	return GetIntegerValue( Key, 0, Value );
 }
-bool ConfigFile::GetIntegerValue( std::wstring Key, int ArrayIndex, int* Value )
+bool ConfigFile::GetIntegerValue( std::string Key, int ArrayIndex, int* Value )
 {
 	ConfigData* cd = GetData( Key );
 	if( cd == 0 )
@@ -357,11 +357,11 @@ bool ConfigFile::GetIntegerValue( std::wstring Key, int ArrayIndex, int* Value )
 	return true;
 }
 
-bool ConfigFile::GetInteger64Value( std::wstring Key, long* Value )
+bool ConfigFile::GetInteger64Value( std::string Key, long* Value )
 {
 	return GetInteger64Value( Key, 0, Value );
 }
-bool ConfigFile::GetInteger64Value( std::wstring Key, int ArrayIndex, long* Value )
+bool ConfigFile::GetInteger64Value( std::string Key, int ArrayIndex, long* Value )
 {
 	ConfigData* cd = GetData( Key );
 	if( cd == 0 )
@@ -375,12 +375,12 @@ bool ConfigFile::GetInteger64Value( std::wstring Key, int ArrayIndex, long* Valu
 	return true;
 }
 
-bool ConfigFile::GetFloatValue( std::wstring Key, float* Value )
+bool ConfigFile::GetFloatValue( std::string Key, float* Value )
 {
 	return GetFloatValue( Key, 0, Value );
 }
 
-bool ConfigFile::GetFloatValue( std::wstring Key, int ArrayIndex, float* Value )
+bool ConfigFile::GetFloatValue( std::string Key, int ArrayIndex, float* Value )
 {
 	ConfigData* cd = GetData( Key );
 	if( cd == 0 )
@@ -394,12 +394,12 @@ bool ConfigFile::GetFloatValue( std::wstring Key, int ArrayIndex, float* Value )
 	return true;
 }
 
-bool ConfigFile::GetStringValue( std::wstring Key, std::wstring* Value )
+bool ConfigFile::GetStringValue( std::string Key, std::string* Value )
 {
 	return GetStringValue( Key, 0, Value );
 }
 
-bool ConfigFile::GetStringValue( std::wstring Key, int ArrayIndex, std::wstring* Value )
+bool ConfigFile::GetStringValue( std::string Key, int ArrayIndex, std::string* Value )
 {
 	ConfigData* cd = GetData( Key );
 	if( cd == 0 )
@@ -414,90 +414,90 @@ bool ConfigFile::GetStringValue( std::wstring Key, int ArrayIndex, std::wstring*
 	return true;
 }
 
-bool ConfigFile::SetBooleanValue( std::wstring Key, bool Value )
+bool ConfigFile::SetBooleanValue( std::string Key, bool Value )
 {
-	std::wstring* s = new std::wstring(( Value ? "True" : "False" ));
+	std::string* s = new std::string(( Value ? "True" : "False" ));
 	bool r = SetStringValue( Key, s );
 	return r;
 }
 
-bool ConfigFile::SetBooleanValue( std::wstring Key, int ArrayIndex, bool Value )
+bool ConfigFile::SetBooleanValue( std::string Key, int ArrayIndex, bool Value )
 {
-	std::wstring* s = new std::wstring(( Value ? "True" : "False" ));
+	std::string* s = new std::string(( Value ? "True" : "False" ));
 	bool r = SetStringValue( Key, ArrayIndex, s );
 	return r;
 }
 
-bool ConfigFile::SetIntegerValue( std::wstring Key, int Value )
+bool ConfigFile::SetIntegerValue( std::string Key, int Value )
 {
 	char val[200];
 	sprintf( (char*)&val, "%d", Value );
-	std::wstring* s = new std::wstring( val );
+	std::string* s = new std::string( val );
 	bool r = SetStringValue( Key, s );
 	return r;
 }
 
-bool ConfigFile::SetIntegerValue( std::wstring Key, int ArrayIndex, int Value )
+bool ConfigFile::SetIntegerValue( std::string Key, int ArrayIndex, int Value )
 {
 	char val[200];
 	sprintf( (char*)&val, "%d", Value );
-	std::wstring* s = new std::wstring( val );
+	std::string* s = new std::string( val );
 	bool r = SetStringValue( Key, ArrayIndex, s );
 	return r;
 }
 
-bool ConfigFile::SetInteger64Value( std::wstring Key, long Value )
+bool ConfigFile::SetInteger64Value( std::string Key, long Value )
 {
 	char val[200];
 	sprintf( (char*)&val, "%d", Value );
-	std::wstring* s = new std::wstring( val );
+	std::string* s = new std::string( val );
 	bool r = SetStringValue( Key, s );
 	return r;
 }
 
-bool ConfigFile::SetInteger64Value( std::wstring Key, int ArrayIndex, long Value )
+bool ConfigFile::SetInteger64Value( std::string Key, int ArrayIndex, long Value )
 {
 	char val[200];
 	sprintf( (char*)&val, "%d", Value );
-	std::wstring* s = new std::wstring( val );
+	std::string* s = new std::string( val );
 	bool r = SetStringValue( Key, ArrayIndex, s );
 	return r;
 }
 
-bool ConfigFile::SetFloatValue( std::wstring Key, float Value )
+bool ConfigFile::SetFloatValue( std::string Key, float Value )
 {
 	char val[200];
 	sprintf( (char*)&val, "%f", Value );
-	std::wstring* s = new std::wstring( val );
+	std::string* s = new std::string( val );
 	bool r = SetStringValue( Key, s );
 	return r;
 }
 
-bool ConfigFile::SetFloatValue( std::wstring Key, int ArrayIndex, float Value )
+bool ConfigFile::SetFloatValue( std::string Key, int ArrayIndex, float Value )
 {
 	char val[200];
 	sprintf( (char*)&val, "%f", Value );
-	std::wstring* s = new std::wstring( val );
+	std::string* s = new std::string( val );
 	bool r = SetStringValue( Key, ArrayIndex, s );
 	return r;
 }
 
-bool ConfigFile::SetStringValue( std::wstring Key, std::wstring* Value )
+bool ConfigFile::SetStringValue( std::string Key, std::string* Value )
 {
 	ConfigData* cd = GetData( Key );
 	if( cd == 0 )
 	{
 		cd = (ConfigData*)malloc( sizeof(ConfigData) );
-		cd->Key = new std::wstring( Key );
+		cd->Key = new std::string( Key );
 		cd->IsArray = false;
-		cd->Contents = new std::vector<std::wstring*>();
+		cd->Contents = new std::vector<std::string*>();
 		Contents.push_back( cd );
 	}
 	if( cd->Contents->empty() )
 	{
 		cd->Contents->push_back( Value );
 	} else {
-		std::wstring* s = cd->Contents->at( 0 );
+		std::string* s = cd->Contents->at( 0 );
 		s->clear();
 		s->append( *Value );
 	}
@@ -505,26 +505,26 @@ bool ConfigFile::SetStringValue( std::wstring Key, std::wstring* Value )
 	return true;
 }
 
-bool ConfigFile::SetStringValue( std::wstring Key, int ArrayIndex, std::wstring* Value )
+bool ConfigFile::SetStringValue( std::string Key, int ArrayIndex, std::string* Value )
 {
 	ConfigData* cd = GetData( Key );
 	if( cd == 0 )
 	{
 		cd = (ConfigData*)malloc( sizeof(ConfigData) );
-		cd->Key = new std::wstring( Key );
+		cd->Key = new std::string( Key );
 		cd->IsArray = true;
-		cd->Contents = new std::vector<std::wstring*>();
+		cd->Contents = new std::vector<std::string*>();
 		Contents.push_back( cd );
 	}
 	if( (int)cd->Contents->size() <= ArrayIndex )
 	{
 		while( (long)cd->Contents->size() <= (long)ArrayIndex - 1 )
 		{
-			cd->Contents->push_back( new std::wstring() );
+			cd->Contents->push_back( new std::string() );
 		}
 		cd->Contents->push_back( Value );
 	} else {
-		std::wstring* s = cd->Contents->at( ArrayIndex );
+		std::string* s = cd->Contents->at( ArrayIndex );
 		s->clear();
 		s->append( *Value );
 	}
@@ -532,7 +532,7 @@ bool ConfigFile::SetStringValue( std::wstring Key, int ArrayIndex, std::wstring*
 	return true;
 }
 
-bool ConfigFile::GetQuickBooleanValue( std::wstring Key, bool Default )
+bool ConfigFile::GetQuickBooleanValue( std::string Key, bool Default )
 {
   bool res;
   if( !GetBooleanValue( Key, &res ) )
@@ -542,7 +542,7 @@ bool ConfigFile::GetQuickBooleanValue( std::wstring Key, bool Default )
   return res;
 }
 
-bool ConfigFile::GetQuickBooleanValue( std::wstring Key, int ArrayIndex, bool Default )
+bool ConfigFile::GetQuickBooleanValue( std::string Key, int ArrayIndex, bool Default )
 {
   bool res;
   if( !GetBooleanValue( Key, ArrayIndex, &res ) )
@@ -552,7 +552,7 @@ bool ConfigFile::GetQuickBooleanValue( std::wstring Key, int ArrayIndex, bool De
   return res;
 }
 
-int ConfigFile::GetQuickIntegerValue( std::wstring Key, int Default )
+int ConfigFile::GetQuickIntegerValue( std::string Key, int Default )
 {
   int res;
   if( !GetIntegerValue( Key, &res ) )
@@ -562,7 +562,7 @@ int ConfigFile::GetQuickIntegerValue( std::wstring Key, int Default )
   return res;
 }
 
-int ConfigFile::GetQuickIntegerValue( std::wstring Key, int ArrayIndex, int Default )
+int ConfigFile::GetQuickIntegerValue( std::string Key, int ArrayIndex, int Default )
 {
   int res;
   if( !GetIntegerValue( Key, ArrayIndex, &res ) )
@@ -572,7 +572,7 @@ int ConfigFile::GetQuickIntegerValue( std::wstring Key, int ArrayIndex, int Defa
   return res;
 }
 
-long ConfigFile::GetQuickInteger64Value( std::wstring Key, long Default )
+long ConfigFile::GetQuickInteger64Value( std::string Key, long Default )
 {
   long res;
   if( !GetInteger64Value( Key, &res ) )
@@ -582,7 +582,7 @@ long ConfigFile::GetQuickInteger64Value( std::wstring Key, long Default )
 	return res;
 }
 
-long ConfigFile::GetQuickInteger64Value( std::wstring Key, int ArrayIndex, long Default )
+long ConfigFile::GetQuickInteger64Value( std::string Key, int ArrayIndex, long Default )
 {
   long res;
   if( !GetInteger64Value( Key, ArrayIndex, &res ) )
@@ -592,7 +592,7 @@ long ConfigFile::GetQuickInteger64Value( std::wstring Key, int ArrayIndex, long 
   return res;
 }
 
-float ConfigFile::GetQuickFloatValue( std::wstring Key, float Default )
+float ConfigFile::GetQuickFloatValue( std::string Key, float Default )
 {
   float res;
   if( !GetFloatValue( Key, &res ) )
@@ -602,7 +602,7 @@ float ConfigFile::GetQuickFloatValue( std::wstring Key, float Default )
   return res;
 }
 
-float ConfigFile::GetQuickFloatValue( std::wstring Key, int ArrayIndex, float Default )
+float ConfigFile::GetQuickFloatValue( std::string Key, int ArrayIndex, float Default )
 {
   float res;
   if( !GetFloatValue( Key, ArrayIndex, &res ) )
@@ -612,9 +612,9 @@ float ConfigFile::GetQuickFloatValue( std::wstring Key, int ArrayIndex, float De
   return res;
 }
 
-std::wstring* ConfigFile::GetQuickStringValue( std::wstring Key, std::wstring Default )
+std::string* ConfigFile::GetQuickStringValue( std::string Key, std::string Default )
 {
-  std::wstring* res = new std::wstring();
+  std::string* res = new std::string();
   if( !GetStringValue( Key, res ) )
 	{
 		res->clear();
@@ -623,9 +623,9 @@ std::wstring* ConfigFile::GetQuickStringValue( std::wstring Key, std::wstring De
   return res;
 }
 
-std::wstring* ConfigFile::GetQuickStringValue( std::wstring Key, int ArrayIndex, std::wstring Default )
+std::string* ConfigFile::GetQuickStringValue( std::string Key, int ArrayIndex, std::string Default )
 {
-  std::wstring* res = new std::wstring();
+  std::string* res = new std::string();
   if( !GetStringValue( Key, ArrayIndex, res ) )
 	{
 		res->clear();

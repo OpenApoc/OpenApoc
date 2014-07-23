@@ -7,10 +7,10 @@ class Form : public Control
 {
 
 	public:
-		Form(tinyxml2::XMLDocument FormConfiguration);
+		Form( tinyxml2::XMLDocument FormConfiguration );
 		~Form();
 
-		virtual void EventOccured(Event* e);
+		virtual void EventOccured( Event* e );
 		virtual void Render();
 		virtual void Update();
 };

@@ -1,14 +1,14 @@
 
 #include "label.h"
 
-Label::Label(Control* Owner, std::wstring Text, ApocalypseFont* Font) : Control(Owner), text(Text), font(Font)
+Label::Label( Control* Owner, std::string Text, ApocalypseFont* Font ) : Control( Owner ), text( Text ), font( Font )
 {
 }
 
 Label::~Label()
 {
 	// Delete controls
-	while (Controls.size() > 0)
+	while( Controls.size() > 0 )
 	{
 		Control* c = Controls.back();
 		Controls.pop_back();
@@ -16,14 +16,14 @@ Label::~Label()
 	}
 }
 
-void Label::EventOccured(Event* e)
+void Label::EventOccured( Event* e )
 {
 	// No events for labels
 }
 
 void Label::Render()
 {
-	font->DrawString(Location.X, Location.Y, text, APOCFONT_ALIGN_CENTRE);
+	font->DrawString( Location.X, Location.Y, text, APOCFONT_ALIGN_CENTRE );
 }
 
 void Label::Update()
