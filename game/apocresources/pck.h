@@ -31,11 +31,13 @@ class PCK
 		std::vector<ALLEGRO_BITMAP*> images;
 		Palette* Colours;
 
-		void LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab);
-		void LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab);
+		void ProcessFile(std::string PckFilename, std::string TabFilename, Palette* ColourPalette, int Index);
+		void LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index);
+		void LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index);
 
 	public:
 		PCK( std::string PckFilename, std::string TabFilename, Palette* ColourPalette );
+		PCK( std::string PckFilename, std::string TabFilename, Palette* ColourPalette, int Index );
 		~PCK();
 
 		int GetImageCount();

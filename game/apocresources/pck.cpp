@@ -3,29 +3,39 @@
 
 PCK::PCK( std::string PckFilename, std::string TabFilename, Palette* ColourPalette )
 {
-	Colours = ColourPalette;
+	ProcessFile(PckFilename, TabFilename, ColourPalette, -1);
+}
 
-	ALLEGRO_FILE* pck = DATA->load_file( PckFilename, "rb" );
-	ALLEGRO_FILE* tab = DATA->load_file( TabFilename, "rb" );
-
-	int16_t version = al_fread16le( pck );
-	al_fseek( pck, 0, ALLEGRO_SEEK_SET );
-	switch( version )
-	{
-		case 0:
-			LoadVersion1Format( pck, tab );
-			break;
-		case 1:
-			LoadVersion2Format( pck, tab );
-			break;
-	}
-
-	al_fclose( tab );
-	al_fclose( pck );
+PCK::PCK(std::string PckFilename, std::string TabFilename, Palette* ColourPalette, int Index)
+{
+	ProcessFile(PckFilename, TabFilename, ColourPalette, Index);
 }
 
 PCK::~PCK()
 {
+}
+
+void PCK::ProcessFile(std::string PckFilename, std::string TabFilename, Palette* ColourPalette, int Index)
+{
+	Colours = ColourPalette;
+
+	ALLEGRO_FILE* pck = DATA->load_file(PckFilename, "rb");
+	ALLEGRO_FILE* tab = DATA->load_file(TabFilename, "rb");
+
+	int16_t version = al_fread16le(pck);
+	al_fseek(pck, 0, ALLEGRO_SEEK_SET);
+	switch (version)
+	{
+	case 0:
+		LoadVersion1Format(pck, tab, Index);
+		break;
+	case 1:
+		LoadVersion2Format(pck, tab, Index);
+		break;
+	}
+
+	al_fclose(tab);
+	al_fclose(pck);
 }
 
 int PCK::GetImageCount()
@@ -38,7 +48,7 @@ void PCK::RenderImage( int Index, int X, int Y )
 	al_draw_bitmap( images.at(Index), X, Y, 0 );
 }
 
-void PCK::LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab)
+void PCK::LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 {
 	ALLEGRO_BITMAP* bitmap;
 	ALLEGRO_LOCKED_REGION* region;
@@ -51,7 +61,9 @@ void PCK::LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab)
 	int c0_idx;
 	std::vector<int16_t> c0_rowwidths;
 
-	for( int i = 0; i < al_fsize( tab ) / 4; i++ )
+	int minrec = (Index < 0 ? 0 : Index);
+	int maxrec = (Index < 0 ? al_fsize(tab) / 4 : Index + 1);
+	for( int i = minrec; i < maxrec; i++ )
 	{
 		unsigned int offset = al_fread32le( tab );
 
@@ -112,7 +124,7 @@ void PCK::LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab)
 	}
 }
 
-void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab)
+void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 {
 	int16_t compressionmethod;
 	Memory* tmp;
@@ -124,8 +136,9 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab)
 	int32_t c1_pixelstoskip;
 	PCKCompression1RowHeader c1_header;
 
-
-	for( int i = 0; i < al_fsize( tab ) / 4; i++ )
+	int minrec = (Index < 0 ? 0 : Index);
+	int maxrec = (Index < 0 ? al_fsize(tab) / 4 : Index + 1);
+	for (int i = minrec; i < maxrec; i++)
 	{
 		unsigned int offset = al_fread32le( tab ) * 4;
 

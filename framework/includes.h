@@ -18,6 +18,8 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
 
+#include <tinyxml2.h>
+
 #include <string>
 #include <vector>
 #include <stdio.h>
