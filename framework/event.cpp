@@ -8,6 +8,13 @@ Event::Event()
 
 Event::~Event()
 {
+	if( Type == EVENT_FORM_INTERACTION )
+	{
+		if( Data.Forms.AdditionalData != nullptr )
+		{
+			delete Data.Forms.AdditionalData;
+		}
+	}
 
 #ifdef NETWORK_SUPPORT
 	if( Type == EVENT_NETWORK_PACKET_RECEIVED )

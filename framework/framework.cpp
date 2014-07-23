@@ -198,7 +198,12 @@ void Framework::TranslateAllegroEvents()
 			case ALLEGRO_EVENT_TIMER:
 				if( e.timer.source == frameTimer )
 				{
+#ifdef FRAMEWORK_SPEED_DROPFRAMES
 					framesToProcess++;
+#else
+					// Slow the game down, never process more than one update per frame
+					framesToProcess = 1;
+#endif
 				} else {
 					fwE = new Event();
 					fwE->Type = EVENT_TIMER_TICK;

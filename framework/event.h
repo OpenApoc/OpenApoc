@@ -4,6 +4,11 @@
 #include "includes.h"
 #include "../library/memory.h"
 
+#include "../forms/forms_enums.h"
+#ifndef Control
+class Control;
+#endif
+
 enum EventTypes
 {
 	EVENT_WINDOW_ACTIVATE,
@@ -32,6 +37,7 @@ enum EventTypes
 	EVENT_DOWNLOAD_COMPLETE,
 #endif
 	EVENT_AUDIO_STREAM_FINISHED,
+	EVENT_FORM_INTERACTION,
 	EVENT_USER,
 	EVENT_UNDEFINED
 };
@@ -95,20 +101,31 @@ typedef struct FRAMEWORK_TIMER_EVENT
 	void* TimerObject;
 } FRAMEWORK_TIMER_EVENT;
 
+typedef struct FRAMEWORK_FORMS_EVENT
+{
+	Control* RaisedBy;
+	FormEventType EventFlag;
+	FRAMEWORK_MOUSE_EVENT MouseInfo;
+	FRAMEWORK_KEYBOARD_EVENT KeyInfo;
+	Memory* AdditionalData;
+} FRAMEWORK_FORMS_EVENT;
+
+
 typedef union EventData
 {
 	FRAMEWORK_DISPLAY_EVENT		Display;
 	FRAMEWORK_JOYSTICK_EVENT	Joystick;
 	FRAMEWORK_KEYBOARD_EVENT	Keyboard;
-	FRAMEWORK_MOUSE_EVENT		Mouse;
-	Memory*						User;
+	FRAMEWORK_MOUSE_EVENT			Mouse;
+	Memory*										User;
 #ifdef NETWORK_SUPPORT
 	FRAMEWORK_NETWORK_EVENT		Network;
 #endif
 #ifdef DOWNLOAD_SUPPORT
 	FRAMEWORK_DOWNLOAD_EVENT	Download;
 #endif
-	FRAMEWORK_TIMER_EVENT		Timer;
+	FRAMEWORK_TIMER_EVENT			Timer;
+	FRAMEWORK_FORMS_EVENT			Forms;
 } EventData;
 
 /*

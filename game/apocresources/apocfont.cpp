@@ -6,7 +6,6 @@ std::string ApocalypseFont::FontCharacterSet = "!\"#$%&'()*+,-./0123456789:;<=>?
 
 ApocalypseFont::ApocalypseFont( FontType Face, Palette* ColourPalette )
 {
-	int fontrows;
 	int fontchars;
 	int charmaxwidth;
 
@@ -15,21 +14,21 @@ ApocalypseFont::ApocalypseFont( FontType Face, Palette* ColourPalette )
 	{
 		case ApocalypseFont::LargeFont:
 			datfile.append( "BIGFONT" );
-			fontrows = 24;
+			fontheight = 24;
 			fontchars = 129;
 			charmaxwidth = 14;
 			spacewidth = 6;
 			break;
 		case ApocalypseFont::SmallFont:
 			datfile.append( "SMALFONT" );
-			fontrows = 15;
+			fontheight = 15;
 			fontchars = 140;
 			charmaxwidth = 14;
 			spacewidth = 3;
 			break;
 		case ApocalypseFont::TinyFont:
 			datfile.append( "SMALLSET" );
-			fontrows = 12;
+			fontheight = 12;
 			fontchars = 128;
 			charmaxwidth = 8;
 			spacewidth = 3;
@@ -43,9 +42,9 @@ ApocalypseFont::ApocalypseFont( FontType Face, Palette* ColourPalette )
 	for( int c = 0; c < fontchars; c++ )
 	{
 		int w = 0;
-		ALLEGRO_BITMAP* b = al_create_bitmap( charmaxwidth, fontrows );
+		ALLEGRO_BITMAP* b = al_create_bitmap( charmaxwidth, fontheight );
 		ALLEGRO_LOCKED_REGION* r = al_lock_bitmap( b, ALLEGRO_PIXEL_FORMAT_ABGR_8888_LE, 0 );
-		for( int y = 0; y < fontrows; y++ )
+		for( int y = 0; y < fontheight; y++ )
 		{
 			for( int x = 0; x < charmaxwidth; x++ )
 			{
@@ -114,6 +113,27 @@ void ApocalypseFont::DrawString( int X, int Y, std::string Text, int Alignment )
 			xpos += spacewidth;
 		}
 	}
+}
+
+int ApocalypseFont::GetFontHeight()
+{
+	return fontheight;
+}
+
+int ApocalypseFont::GetFontWidth( std::string Text )
+{
+	int textlen = 0;
+	for( int i = 0; i < Text.length(); i++ )
+	{
+		int charidx = FontCharacterSet.find_first_of( Text.at( i ) );
+		if( charidx >= 0 )
+		{
+			textlen += fontwidths.at( charidx );
+		} else {
+			textlen += spacewidth;
+		}
+	}
+	return textlen;
 }
 
 void ApocalypseFont::DumpCharset()

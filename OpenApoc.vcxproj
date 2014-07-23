@@ -93,9 +93,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="game\forms\control.cpp" />
-    <ClCompile Include="game\forms\form.cpp" />
-    <ClCompile Include="game\forms\label.cpp" />
+    <ClCompile Include="forms\control.cpp" />
+    <ClCompile Include="forms\form.cpp" />
+    <ClCompile Include="forms\graphic.cpp" />
+    <ClCompile Include="forms\label.cpp" />
     <ClCompile Include="library\angle.cpp" />
     <ClCompile Include="library\animation.cpp" />
     <ClCompile Include="game\apocresources\apocfont.cpp" />
@@ -128,9 +129,13 @@
     <ClCompile Include="framework\data.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="forms\control.h" />
+    <ClInclude Include="forms\form.h" />
+    <ClInclude Include="forms\forms.h" />
+    <ClInclude Include="forms\forms_enums.h" />
+    <ClInclude Include="forms\graphic.h" />
+    <ClInclude Include="forms\label.h" />
     <ClInclude Include="game\forms\control.h" />
-    <ClInclude Include="game\forms\form.h" />
-    <ClInclude Include="game\forms\label.h" />
     <ClInclude Include="library\angle.h" />
     <ClInclude Include="library\animation.h" />
     <ClInclude Include="game\apocresources\apocfont.h" />

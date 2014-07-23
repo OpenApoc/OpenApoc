@@ -18,6 +18,7 @@ class ApocalypseFont
 		std::vector<ALLEGRO_BITMAP*> fontbitmaps;
 		std::vector<int> fontwidths;
 		int spacewidth;
+		int fontheight;
 
 	public:
 		enum FontType
@@ -31,6 +32,9 @@ class ApocalypseFont
 		~ApocalypseFont();
 
 		void DrawString( int X, int Y, std::string Text, int Alignment );
+
+		int GetFontHeight();
+		int GetFontWidth(std::string Text);
 
 		void DumpCharset();
 };

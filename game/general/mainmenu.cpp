@@ -23,6 +23,30 @@ MainMenu::MainMenu()
 	buttonclick = new RawSound( "STRATEGC/INTRFACE/BUTTON1.RAW" );
 	musicplayer = new Music( 26 );
 	mousecursor = new Cursor( fontpalette );
+
+	
+	testform = new Form(nullptr);
+	testform->Location.X = (FRAMEWORK->Display_GetWidth() / 2) - 322;
+	testform->Location.Y = (FRAMEWORK->Display_GetHeight() / 2) - 242;
+	testform->Size.X = 644;
+	testform->Size.Y = 484;
+
+	Graphic* g = new Graphic(testform, DATA->load_bitmap( "UFODATA/TITLES.PCX" ) );
+	g->Location.X = 2;
+	g->Location.Y = 2;
+	g->Size.X = testform->Size.X - 4;
+	g->Size.Y = testform->Size.Y - 4;
+	testform->Controls.push_back(g);
+
+	Label* l = new Label(testform, "OPEN APOCALYPSE", largefont);
+	l->BackgroundColour = al_map_rgba( 255, 255, 255, 128 );
+	l->Location.X = 2;
+	l->Location.Y = 2;
+	l->Size.X = 640;
+	l->Size.Y = 32;
+	l->TextHAlign = HorizontalAlignment::Centre;
+	l->TextVAlign = VerticalAlignment::Centre;
+	testform->Controls.push_back(l);
 }
 
 MainMenu::~MainMenu()
@@ -72,11 +96,6 @@ void MainMenu::EventOccurred(Event *e)
 
 		buttonclick->PlaySound();
 	}
-
-	if( e->Type == EVENT_AUDIO_STREAM_FINISHED )
-	{
-		musicplayer->Play( );
-	}
 }
 
 void MainMenu::Update()
@@ -85,6 +104,8 @@ void MainMenu::Update()
 
 void MainMenu::Render()
 {
+	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
+/*
 	std::string* s;
 	al_draw_bitmap( emptybackground, 0, 0, 0 );
 
@@ -110,8 +131,12 @@ void MainMenu::Render()
 	al_draw_bitmap( buttonimage, 188, 304, 0 );
 	s = currentlanguage->GetText( "STR_CHEATING" );
 	smallfont->DrawString( 320, 308, *s, APOCFONT_ALIGN_CENTRE );
+*/
+
+	testform->Render();
 
 	mousecursor->Render();
+	
 }
 
 bool MainMenu::IsTransition()

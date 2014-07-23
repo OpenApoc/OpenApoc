@@ -2,7 +2,9 @@
 #pragma once
 
 #include "control.h"
-#include "../apocresources/apocfont.h"
+#include "../game/apocresources/apocfont.h"
+
+
 
 class Label : public Control
 {
@@ -12,10 +14,12 @@ class Label : public Control
 		ApocalypseFont* font;
 
 	public:
-		Label(Control* Owner, std::string Text, ApocalypseFont* Font);
-		~Label();
+		HorizontalAlignment TextHAlign;
+		VerticalAlignment TextVAlign;
 
-		virtual void EventOccured(Event* e);
+		Label(Control* Owner, std::string Text, ApocalypseFont* Font);
+
+		virtual void EventOccured(Event* e, bool* WasHandled);
 		virtual void Render();
 		virtual void Update();
 };

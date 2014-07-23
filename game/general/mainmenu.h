@@ -12,6 +12,8 @@
 #include "../apocresources/cursor.h"
 #include "../apocresources/pck.h"
 
+#include "../../forms/forms.h"
+
 class MainMenu : public Stage
 {
 	private:
@@ -27,6 +29,8 @@ class MainMenu : public Stage
 		Cursor* mousecursor;
 
 		PCK* testpck;
+
+		Form* testform;
 
 
   public:

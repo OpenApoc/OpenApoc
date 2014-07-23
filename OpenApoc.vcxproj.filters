@@ -105,13 +105,16 @@
     <ClCompile Include="framework\data.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\forms\form.cpp">
+    <ClCompile Include="forms\control.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\forms\control.cpp">
+    <ClCompile Include="forms\form.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\forms\label.cpp">
+    <ClCompile Include="forms\graphic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="forms\label.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -221,13 +224,25 @@
     <ClInclude Include="framework\data.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\forms\form.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game\forms\control.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\forms\label.h">
+    <ClInclude Include="forms\control.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="forms\form.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="forms\forms.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="forms\graphic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="forms\label.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="forms\forms_enums.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

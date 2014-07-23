@@ -8,9 +8,8 @@ class Form : public Control
 
 	public:
 		Form( tinyxml2::XMLDocument FormConfiguration );
-		~Form();
 
-		virtual void EventOccured( Event* e );
+		virtual void EventOccured( Event* e, bool* WasHandled );
 		virtual void Render();
 		virtual void Update();
 };
