@@ -13,7 +13,7 @@ class ApocalypseFont
 {
 
 	private:
-		static std::string FontCharacterSet;
+		static std::wstring FontCharacterSet;
 
 		std::vector<ALLEGRO_BITMAP*> fontbitmaps;
 		std::vector<int> fontwidths;
@@ -30,7 +30,7 @@ class ApocalypseFont
 		ApocalypseFont( FontType Face, Palette* ColourPalette );
 		~ApocalypseFont();
 
-		void DrawString( int X, int Y, std::string Text, int Alignment );
+		void DrawString( int X, int Y, std::wstring Text, int Alignment );
 
 		void DumpCharset();
 };

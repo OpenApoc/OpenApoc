@@ -13,7 +13,7 @@ class RawSound
 		ALLEGRO_SAMPLE* soundsample;
 
 	public:
-		RawSound( std::string Filename );
+		RawSound( std::wstring Filename );
 		~RawSound();
 
 		void PlaySound();

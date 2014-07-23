@@ -108,6 +108,12 @@
     <ClCompile Include="game\forms\form.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\forms\control.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\forms\label.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -216,6 +222,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\forms\form.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\forms\control.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\forms\label.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

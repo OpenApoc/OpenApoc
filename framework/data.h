@@ -8,16 +8,16 @@ class Data
 {
 
 	private:
-		std::string root;
-		std::string DIR_SEP;
+		std::wstring root;
+		std::wstring DIR_SEP;
 
 	public:
 		static Data* data;
 
-		Data(const std::string root);
+		Data(const std::wstring root);
 		~Data();
 
-		ALLEGRO_BITMAP* load_bitmap(const std::string path);
-		ALLEGRO_FILE* load_file(const std::string path, const char *mode);
+		ALLEGRO_BITMAP* load_bitmap(const std::wstring path);
+		ALLEGRO_FILE* load_file(const std::wstring path, const char *mode);
 
 };

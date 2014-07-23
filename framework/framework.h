@@ -59,8 +59,8 @@ class Framework
     void Display_Shutdown();
     int Display_GetWidth();
     int Display_GetHeight();
-		void Display_SetTitle( std::string* NewTitle );
-		void Display_SetTitle( std::string NewTitle );
+		void Display_SetTitle( std::wstring* NewTitle );
+		void Display_SetTitle( std::wstring NewTitle );
 		ALLEGRO_BITMAP* Display_GetCurrentTarget();
 		void Display_SetTarget();
 		void Display_SetTarget( ALLEGRO_BITMAP* Target );
@@ -69,7 +69,7 @@ class Framework
 
     void Audio_Initialise();
     void Audio_Shutdown();
-    void Audio_PlayAudio( std::string Filename, bool Loop );
+    void Audio_PlayAudio( std::wstring Filename, bool Loop );
     void Audio_StopAudio();
 		ALLEGRO_MIXER* Audio_GetMixer();
 

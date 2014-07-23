@@ -85,7 +85,7 @@ void MainMenu::Update()
 
 void MainMenu::Render()
 {
-	std::string* s;
+	std::wstring* s;
 	al_draw_bitmap( emptybackground, 0, 0, 0 );
 
 	al_draw_filled_rectangle( 0, 0, 640, 32, al_map_rgba( 255, 255, 255, 128 ) );

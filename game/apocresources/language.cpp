@@ -1,9 +1,9 @@
 
 #include "language.h"
 
-Language::Language( std::string Language )
+Language::Language( std::wstring Language )
 {
-	std::string path( "data/LANGUAGES/" );
+	std::wstring path( "data/LANGUAGES/" );
 	path.append( Language );
 	path.append( ".TXT" );
 	languagepacks.push_back( new ConfigFile( path ) );
@@ -19,15 +19,15 @@ Language::~Language()
 	}
 }
 
-void Language::LoadAdditionalPack( std::string Filename )
+void Language::LoadAdditionalPack( std::wstring Filename )
 {
-	std::string path( "data/LANGUAGES/" );
+	std::wstring path( "data/LANGUAGES/" );
 	path.append( Filename );
 	path.append( ".TXT" );
 	languagepacks.push_back( new ConfigFile( path ) );
 }
 
-std::string* Language::GetText( std::string Key )
+std::wstring* Language::GetText( std::wstring Key )
 {
 	for( std::vector<ConfigFile*>::const_iterator i = languagepacks.begin(); i != languagepacks.end(); i++ )
 	{
@@ -37,6 +37,6 @@ std::string* Language::GetText( std::string Key )
 			return c->GetQuickStringValue( Key, "" );
 		}
 	}
-	return new std::string(Key);
+	return new std::wstring(Key);
 }
 

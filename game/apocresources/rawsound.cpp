@@ -1,9 +1,9 @@
 
 #include "rawsound.h"
 
-RawSound::RawSound( std::string Filename )
+RawSound::RawSound( std::wstring Filename )
 {
-	std::string path = "/RAWSOUND/";
+	std::wstring path = "/RAWSOUND/";
 	path.append( Filename );
 	ALLEGRO_FILE* f = DATA->load_file( path, "rb" );
 	sounddata = new Memory( al_fsize( f ) );

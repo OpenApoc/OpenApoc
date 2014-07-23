@@ -1,12 +1,12 @@
 
 #include "pck.h"
 
-PCK::PCK( std::string PckFilename, std::string TabFilename, Palette* ColourPalette )
+PCK::PCK( std::wstring PckFilename, std::wstring TabFilename, Palette* ColourPalette )
 {
 	ProcessFile(PckFilename, TabFilename, ColourPalette, -1);
 }
 
-PCK::PCK(std::string PckFilename, std::string TabFilename, Palette* ColourPalette, int Index)
+PCK::PCK(std::wstring PckFilename, std::wstring TabFilename, Palette* ColourPalette, int Index)
 {
 	ProcessFile(PckFilename, TabFilename, ColourPalette, Index);
 }
@@ -15,7 +15,7 @@ PCK::~PCK()
 {
 }
 
-void PCK::ProcessFile(std::string PckFilename, std::string TabFilename, Palette* ColourPalette, int Index)
+void PCK::ProcessFile(std::wstring PckFilename, std::wstring TabFilename, Palette* ColourPalette, int Index)
 {
 	Colours = ColourPalette;
 

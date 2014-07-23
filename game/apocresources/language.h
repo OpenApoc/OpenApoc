@@ -13,10 +13,10 @@ class Language
 
 
 	public:
-		Language( std::string Language );
+		Language( std::wstring Language );
 		~Language();
 
-		void LoadAdditionalPack( std::string Filename );
-		std::string* GetText( std::string Key );
+		void LoadAdditionalPack( std::wstring Filename );
+		std::wstring* GetText( std::wstring Key );
 
 };

@@ -1,7 +1,7 @@
 
 #include "palette.h"
 
-Palette::Palette( std::string Filename )
+Palette::Palette( std::wstring Filename )
 {
 	unsigned char colourblock[3];
 
@@ -41,7 +41,7 @@ void Palette::SetColour(int Index, Colour* Col)
 	colours[Index].b = Col->b;
 }
 
-void Palette::DumpPalette( std::string Filename )
+void Palette::DumpPalette( std::wstring Filename )
 {
 	ALLEGRO_BITMAP* b = al_create_bitmap( 16, 16 );
 	ALLEGRO_LOCKED_REGION* r = al_lock_bitmap( b, ALLEGRO_PIXEL_FORMAT_ABGR_8888_LE, 0 );
