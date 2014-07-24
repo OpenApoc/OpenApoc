@@ -4,6 +4,7 @@
 Event::Event()
 {
   Type = EVENT_UNDEFINED;
+	Handled = false;
 }
 
 Event::~Event()

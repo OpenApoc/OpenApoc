@@ -5,9 +5,9 @@ Form::Form( tinyxml2::XMLDocument FormConfiguration ) : Control( nullptr )
 	// TODO: Load form
 }
 
-void Form::EventOccured( Event* e, bool* WasHandled )
+void Form::EventOccured( Event* e )
 {
-	Control::EventOccured( e, WasHandled );
+	Control::EventOccured( e );
 }
 
 void Form::Render()

@@ -3,21 +3,21 @@
 
 #include "control.h"
 #include "../game/apocresources/apocfont.h"
+#include "../game/apocresources/rawsound.h"
 
-
-
-class Label : public Control
+class TextButton : public Control
 {
 
 	private:
 		std::string text;
 		ApocalypseFont* font;
+		static RawSound* buttonclick;
 
 	public:
 		HorizontalAlignment TextHAlign;
 		VerticalAlignment TextVAlign;
 
-		Label(Control* Owner, std::string Text, ApocalypseFont* Font);
+		TextButton(Control* Owner, std::string Text, ApocalypseFont* Font);
 
 		virtual void EventOccured(Event* e);
 		virtual void Render();

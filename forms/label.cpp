@@ -5,9 +5,9 @@ Label::Label( Control* Owner, std::string Text, ApocalypseFont* Font ) : Control
 {
 }
 
-void Label::EventOccured( Event* e, bool* WasHandled )
+void Label::EventOccured( Event* e )
 {
-	Control::EventOccured( e, WasHandled );
+	Control::EventOccured( e );
 }
 
 void Label::Render()

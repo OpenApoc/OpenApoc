@@ -23,7 +23,6 @@ class MainMenu : public Stage
 		ApocalypseFont* largefont;
 		ApocalypseFont* smallfont;
 		Language* currentlanguage;
-		RawSound* buttonclick;
 		Music* musicplayer;
 
 		Cursor* mousecursor;

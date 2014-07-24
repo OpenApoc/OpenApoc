@@ -38,7 +38,7 @@ void BootUp::EventOccurred(Event *e)
 void BootUp::Update()
 {
 	loadtime++;
-	if( loadtime >= FRAMES_PER_SECOND / 2 )
+	if( loadtime >= FRAMES_PER_SECOND / 4 )
 	{
 		StartGame();
 	}

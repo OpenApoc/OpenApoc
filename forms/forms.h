@@ -6,3 +6,4 @@
 #include "form.h"
 #include "label.h"
 #include "graphic.h"
+#include "textbutton.h"

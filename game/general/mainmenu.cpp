@@ -6,25 +6,11 @@ MainMenu::MainMenu()
 {
 	emptybackground = DATA->load_bitmap( "UFODATA/TITLES.PCX" );
 
-	ALLEGRO_BITMAP* titlesbackground = DATA->load_bitmap( "UFODATA/B-SETUP.PCX" );
-	buttonimage = al_create_bitmap( 262, 29 );
-	FRAMEWORK->Display_SetTarget( buttonimage );
-	al_clear_to_color( al_map_rgba( 0, 0, 0, 0 ) );
-	al_draw_filled_rectangle( 3, 2, 262, 29, al_map_rgba( 0, 0, 0, 192 ) );
-	al_draw_bitmap_region( titlesbackground, 188, 173, 259, 27, 0, 0, 0 );
-	FRAMEWORK->Display_SetTarget();
-	al_destroy_bitmap( titlesbackground );
-
-	fontpalette = new Palette( "UFODATA/PAL_01.DAT" );
-	//fontpalette = new Palette( "TACDATA/TACTICAL.PAL" );
 	largefont = new ApocalypseFont( ApocalypseFont::LargeFont, new Palette( "UFODATA/PAL_06.DAT" ) );
-	smallfont = new ApocalypseFont( ApocalypseFont::SmallFont, fontpalette );
+	smallfont = new ApocalypseFont( ApocalypseFont::SmallFont, new Palette( "UFODATA/PAL_01.DAT" ) );
 	currentlanguage = new Language( "EN-GB" );
-	buttonclick = new RawSound( "STRATEGC/INTRFACE/BUTTON1.RAW" );
-	musicplayer = new Music( 26 );
-	mousecursor = new Cursor( fontpalette );
+	mousecursor = new Cursor( new Palette( "UFODATA/PAL_01.DAT" ) );
 
-	
 	testform = new Form(nullptr);
 	testform->Location.X = (FRAMEWORK->Display_GetWidth() / 2) - 322;
 	testform->Location.Y = (FRAMEWORK->Display_GetHeight() / 2) - 242;
@@ -47,22 +33,60 @@ MainMenu::MainMenu()
 	l->TextHAlign = HorizontalAlignment::Centre;
 	l->TextVAlign = VerticalAlignment::Centre;
 	testform->Controls.push_back(l);
+
+	TextButton* b = new TextButton(testform, "New Game", smallfont);
+	b->BackgroundColour = al_map_rgba( 255, 255, 255, 128 );
+	b->Location.X = (testform->Size.X / 2) - 150;
+	b->Location.Y = 160;
+	b->Size.X = 300;
+	b->Size.Y = 24;
+	testform->Controls.push_back(b);
+
+	b = new TextButton(testform, "Load Saved Game", smallfont);
+	b->BackgroundColour = al_map_rgba( 255, 255, 255, 128 );
+	b->Location.X = (testform->Size.X / 2) - 150;
+	b->Location.Y = 190;
+	b->Size.X = 300;
+	b->Size.Y = 24;
+	testform->Controls.push_back(b);
+
+	b = new TextButton(testform, "Options", smallfont);
+	b->BackgroundColour = al_map_rgba( 255, 255, 255, 128 );
+	b->Location.X = (testform->Size.X / 2) - 150;
+	b->Location.Y = 220;
+	b->Size.X = 300;
+	b->Size.Y = 24;
+	testform->Controls.push_back(b);
+
+	b = new TextButton(testform, "Debugger", smallfont);
+	b->BackgroundColour = al_map_rgba( 255, 255, 255, 128 );
+	b->Location.X = (testform->Size.X / 2) - 150;
+	b->Location.Y = 250;
+	b->Size.X = 300;
+	b->Size.Y = 24;
+	testform->Controls.push_back(b);
+
+	b = new TextButton(testform, "Quit", smallfont);
+	b->BackgroundColour = al_map_rgba( 255, 255, 255, 128 );
+	b->Location.X = (testform->Size.X / 2) - 150;
+	b->Location.Y = 280;
+	b->Size.X = 300;
+	b->Size.Y = 24;
+	testform->Controls.push_back(b);
 }
 
 MainMenu::~MainMenu()
 {
 	al_destroy_bitmap( emptybackground );
-	al_destroy_bitmap( buttonimage );
 	delete largefont;
 	delete smallfont;
 	delete currentlanguage;
-	delete buttonclick;
-	delete musicplayer;
 	delete mousecursor;
 }
 
 void MainMenu::Begin()
 {
+	musicplayer = new Music( 26 );
 	musicplayer->Play();
 }
 
@@ -76,12 +100,13 @@ void MainMenu::Resume()
 
 void MainMenu::Finish()
 {
+	delete musicplayer;
 }
 
 void MainMenu::EventOccurred(Event *e)
 {
 	bool washandled = false;
-	testform->EventOccured( e, &washandled );
+	testform->EventOccured( e );
 	mousecursor->EventOccured( e );
 
 	if( e->Type == EVENT_KEY_DOWN )
@@ -89,36 +114,11 @@ void MainMenu::EventOccurred(Event *e)
 		if( e->Data.Keyboard.KeyCode == ALLEGRO_KEY_ESCAPE )
 		{
 			delete FRAMEWORK->ProgramStages->Pop();
-		} else {
-			musicplayer->Play();
 		}
 	}
 
-	if( e->Type == EVENT_MOUSE_DOWN )
+	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::MouseClick )
 	{
-
-		buttonclick->PlaySound();
-	}
-
-	if( e->Type == EVENT_FORM_INTERACTION )
-	{
-		if( e->Data.Forms.RaisedBy->Size.Y == 32 )
-		{
-			if( e->Data.Forms.EventFlag == FormEventType::MouseEnter )
-			{
-				e->Data.Forms.RaisedBy->BackgroundColour.b = 0.0f;
-			}
-			if( e->Data.Forms.EventFlag == FormEventType::MouseLeave )
-			{
-				e->Data.Forms.RaisedBy->BackgroundColour.b = 1.0f;
-			}
-		}
-
-		if( e->Data.Forms.EventFlag == FormEventType::KeyDown )
-		{
-			testform->Location.X -= 2;
-			testform->Size.X += 4;
-		}
 	}
 }
 

@@ -135,6 +135,7 @@ typedef union EventData
 class Event
 {
 	public:
+		bool Handled;
 		EventTypes Type;
 		EventData Data;
 

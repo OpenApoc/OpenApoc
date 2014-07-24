@@ -12,7 +12,7 @@ class Graphic : public Control
 	public:
 		Graphic( Control* Owner, ALLEGRO_BITMAP* Image );
 
-		virtual void EventOccured( Event* e, bool* WasHandled );
+		virtual void EventOccured( Event* e );
 		virtual void Render();
 		virtual void Update();
 };

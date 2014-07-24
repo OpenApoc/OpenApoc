@@ -7,9 +7,9 @@ Graphic::Graphic( Control* Owner, ALLEGRO_BITMAP* Image ) : Control( Owner )
 	Size.Y = al_get_bitmap_height( image );
 }
 
-void Graphic::EventOccured( Event* e, bool* WasHandled )
+void Graphic::EventOccured( Event* e )
 {
-	Control::EventOccured( e, WasHandled );
+	Control::EventOccured( e );
 }
 
 void Graphic::Render()

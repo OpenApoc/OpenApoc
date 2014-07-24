@@ -58,6 +58,13 @@ Framework::Framework()
 	al_register_event_source( eventAllegro, al_get_timer_event_source( frameTimer ) );
 
 	System = this;
+
+#ifdef FRAMEWORK_SPEED_SLOWDOWN
+	enableSlowDown = true;
+#else
+	enableSlowDown = false;
+#endif
+
 }
 
 Framework::~Framework()
@@ -198,12 +205,13 @@ void Framework::TranslateAllegroEvents()
 			case ALLEGRO_EVENT_TIMER:
 				if( e.timer.source == frameTimer )
 				{
-#ifdef FRAMEWORK_SPEED_DROPFRAMES
-					framesToProcess++;
-#else
-					// Slow the game down, never process more than one update per frame
-					framesToProcess = 1;
-#endif
+					if( enableSlowDown )
+					{
+						// Slow the game down, never process more than one update per frame
+						framesToProcess = 1;
+					} else {
+						framesToProcess++;
+					}
 				} else {
 					fwE = new Event();
 					fwE->Type = EVENT_TIMER_TICK;
@@ -577,4 +585,14 @@ void Framework::Audio_StopAudio()
 ALLEGRO_MIXER* Framework::Audio_GetMixer()
 {
 	return audioMixer;
+}
+
+bool Framework::IsSlowMode()
+{
+	return enableSlowDown;
+}
+
+void Framework::SetSlowMode(bool SlowEnabled)
+{
+	enableSlowDown = SlowEnabled;
 }

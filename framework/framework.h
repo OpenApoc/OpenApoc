@@ -23,6 +23,7 @@ class Framework
 
 		ALLEGRO_TIMER* frameTimer;
     int framesToProcess;
+		bool enableSlowDown;
 
     ALLEGRO_DISPLAY_MODE screenMode;
 		ALLEGRO_DISPLAY* screen;
@@ -73,4 +74,6 @@ class Framework
     void Audio_StopAudio();
 		ALLEGRO_MIXER* Audio_GetMixer();
 
+		bool IsSlowMode();
+		void SetSlowMode(bool SlowEnabled);
 };

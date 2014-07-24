@@ -57,19 +57,19 @@ Vector2* Control::GetResolvedLocation()
 	return v;
 }
 
-void Control::EventOccured( Event* e, bool* WasHandled )
+void Control::EventOccured( Event* e )
 {
 	for( auto ctrlidx = Controls.rbegin(); ctrlidx != Controls.rend(); ctrlidx++ )
 	{
 		Control* c = (Control*)*ctrlidx;
-		c->EventOccured( e, WasHandled );
-		if( WasHandled )
+		c->EventOccured( e );
+		if( e->Handled )
 		{
 			break;
 		}
 	}
 
-	if( *WasHandled )
+	if( e->Handled )
 	{
 			return;
 	}
@@ -102,6 +102,8 @@ void Control::EventOccured( Event* e, bool* WasHandled )
 			memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
 			newevent->Data.Forms.AdditionalData = nullptr;
 			FRAMEWORK->PushEvent( newevent );
+
+			e->Handled = true;
 		} else {
 			if( mouseInside )
 			{
@@ -131,6 +133,8 @@ void Control::EventOccured( Event* e, bool* WasHandled )
 			newevent->Data.Forms.AdditionalData = nullptr;
 			FRAMEWORK->PushEvent( newevent );
 			mouseDepressed = true;
+
+			e->Handled = true;
 		}
 	}
 
@@ -158,9 +162,10 @@ void Control::EventOccured( Event* e, bool* WasHandled )
 				newevent->Data.Forms.AdditionalData = nullptr;
 				FRAMEWORK->PushEvent( newevent );
 			}
-		} else {
-			mouseDepressed = false;
+
+			e->Handled = true;
 		}
+		mouseDepressed = false;
 	}
 
 	delete v;
@@ -177,6 +182,8 @@ void Control::EventOccured( Event* e, bool* WasHandled )
 			memset( (void*)&newevent->Data.Forms.MouseInfo, 0, sizeof( FRAMEWORK_MOUSE_EVENT ) );
 			newevent->Data.Forms.AdditionalData = nullptr;
 			FRAMEWORK->PushEvent( newevent );
+
+			e->Handled = true;
 		}
 	}
 }

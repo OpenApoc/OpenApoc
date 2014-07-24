@@ -8,13 +8,12 @@
 class Control
 {
 
-	private:
+	protected:
 		Control* owningControl;
 		Control* focusedChild;
 		bool mouseInside;
 		bool mouseDepressed;
-		
-	protected:
+
 		void PreRender();
 		void PostRender();
 		void SetFocus(Control* Child);
@@ -33,7 +32,7 @@ class Control
 		Control* GetActiveControl();
 		void Focus();
 
-		virtual void EventOccured(Event* e, bool* WasHandled) = 0;
+		virtual void EventOccured(Event* e) = 0;
 		virtual void Render();
 		virtual void Update() = 0;
 
