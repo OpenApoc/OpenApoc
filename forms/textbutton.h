@@ -11,7 +11,9 @@ class TextButton : public Control
 	private:
 		std::string text;
 		ApocalypseFont* font;
+
 		static RawSound* buttonclick;
+		static ALLEGRO_BITMAP* buttonbackground;
 
 	public:
 		HorizontalAlignment TextHAlign;

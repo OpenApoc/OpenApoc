@@ -32,9 +32,9 @@ class Control
 		Control* GetActiveControl();
 		void Focus();
 
-		virtual void EventOccured(Event* e) = 0;
+		virtual void EventOccured(Event* e);
 		virtual void Render();
-		virtual void Update() = 0;
+		virtual void Update();
 
 };
 
