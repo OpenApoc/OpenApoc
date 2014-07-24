@@ -36,6 +36,12 @@ set (OPENAPOC_SOURCE_FILES
 	transitions/fadeout.cpp
 	transitions/strips.cpp
 	transitions/tiled.cpp
+	forms/control.cpp
+	forms/graphic.cpp
+	forms/graphicbutton.cpp
+	forms/label.cpp
+	forms/textbutton.cpp
+	forms/form.cpp
 )
 
 set (REQUIRED_ALLEGRO_LIBRARIES allegro allegro_font allegro_primitives
