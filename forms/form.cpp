@@ -1,6 +1,6 @@
 #include "form.h"
 
-Form::Form( tinyxml2::XMLDocument FormConfiguration ) : Control( nullptr )
+Form::Form( tinyxml2::XMLDocument *FormConfiguration ) : Control( nullptr )
 {
 	// TODO: Load form
 }
