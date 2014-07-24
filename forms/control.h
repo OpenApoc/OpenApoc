@@ -20,10 +20,12 @@ class Control
 		bool IsFocused();
 
 	public:
-		std::vector<Control*> Controls;
+		std::string Name;
 		Vector2 Location;
 		Vector2 Size;
 		ALLEGRO_COLOR BackgroundColour;
+
+		std::vector<Control*> Controls;
 
 		Control(Control* Owner);
 		virtual ~Control();

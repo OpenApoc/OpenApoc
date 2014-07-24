@@ -87,6 +87,7 @@ MainMenu::MainMenu()
 	c = new Control(testform); c->BackgroundColour = al_map_rgba( 0, 0, 0, 128 ); c->Location.X = (testform->Size.X / 2) - 146; c->Location.Y = ypos + 4; c->Size.X = 300; c->Size.Y = 28; testform->Controls.push_back(c);
 
 	b = new TextButton(testform, "Quit", smallfont);
+	b->Name = "QuitButton";
 	b->BackgroundColour = al_map_rgba( 255, 255, 255, 128 );
 	b->Location.X = (testform->Size.X / 2) - 150;
 	b->Location.Y = ypos;
@@ -133,12 +134,16 @@ void MainMenu::EventOccurred(Event *e)
 	{
 		if( e->Data.Keyboard.KeyCode == ALLEGRO_KEY_ESCAPE )
 		{
-			delete FRAMEWORK->ProgramStages->Pop();
+			FRAMEWORK->ShutdownFramework();
 		}
 	}
 
-	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::MouseClick )
+	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick )
 	{
+		if( e->Data.Forms.RaisedBy->Name == "QuitButton" )
+		{
+			FRAMEWORK->ShutdownFramework();
+		}
 	}
 }
 

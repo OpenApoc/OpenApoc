@@ -13,7 +13,9 @@ enum class FormEventType
 	MouseMove,
 	MouseClick,
 	KeyDown,
-	KeyUp
+	KeyUp,
+
+	ButtonClick
 };
 
 enum class HorizontalAlignment

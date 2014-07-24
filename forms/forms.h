@@ -7,3 +7,5 @@
 #include "label.h"
 #include "graphic.h"
 #include "textbutton.h"
+#include "graphicbutton.h"
+

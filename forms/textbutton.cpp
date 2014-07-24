@@ -1,6 +1,7 @@
 
 #include "textbutton.h"
 
+
 RawSound* TextButton::buttonclick = nullptr;
 ALLEGRO_BITMAP* TextButton::buttonbackground = nullptr;
 
@@ -20,10 +21,18 @@ void TextButton::EventOccured( Event* e )
 {
 	Control::EventOccured( e );
 
-	// I was clicked, play a click sound
 	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this && e->Data.Forms.EventFlag == FormEventType::MouseDown )
 	{
 		buttonclick->PlaySound();
+	}
+
+	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this && e->Data.Forms.EventFlag == FormEventType::MouseClick )
+	{
+		Event* ce = new Event();
+		ce->Type = e->Type;
+		memcpy( (void*)&(ce->Data.Forms), (void*)&(e->Data.Forms), sizeof( FRAMEWORK_FORMS_EVENT ) );
+		ce->Data.Forms.EventFlag = FormEventType::ButtonClick;
+		FRAMEWORK->PushEvent( ce );
 	}
 }
 

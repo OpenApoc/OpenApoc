@@ -2,9 +2,8 @@
 #include "control.h"
 #include "../framework/framework.h"
 
-Control::Control(Control* Owner) : owningControl(Owner), focusedChild(nullptr), BackgroundColour(al_map_rgb( 128, 80, 80 )), mouseInside(false), mouseDepressed(false)
+Control::Control(Control* Owner) : Name("Control"), owningControl(Owner), focusedChild(nullptr), BackgroundColour(al_map_rgb( 128, 80, 80 )), mouseInside(false), mouseDepressed(false)
 {
-	
 }
 
 Control::~Control()
