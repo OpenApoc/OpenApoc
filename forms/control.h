@@ -10,10 +10,15 @@ class Control
 
 	private:
 		Control* owningControl;
-
+		Control* focusedChild;
+		bool mouseInside;
+		bool mouseDepressed;
+		
 	protected:
 		void PreRender();
 		void PostRender();
+		void SetFocus(Control* Child);
+		bool IsFocused();
 
 	public:
 		std::vector<Control*> Controls;
@@ -25,6 +30,8 @@ class Control
 		virtual ~Control();
 
 		Vector2* GetResolvedLocation();
+		Control* GetActiveControl();
+		void Focus();
 
 		virtual void EventOccured(Event* e, bool* WasHandled) = 0;
 		virtual void Render();

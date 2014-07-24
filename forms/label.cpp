@@ -7,7 +7,7 @@ Label::Label( Control* Owner, std::string Text, ApocalypseFont* Font ) : Control
 
 void Label::EventOccured( Event* e, bool* WasHandled )
 {
-	// No events for labels
+	Control::EventOccured( e, WasHandled );
 }
 
 void Label::Render()

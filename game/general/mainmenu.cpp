@@ -80,7 +80,10 @@ void MainMenu::Finish()
 
 void MainMenu::EventOccurred(Event *e)
 {
-	mousecursor->EventOccured(e);
+	bool washandled = false;
+	testform->EventOccured( e, &washandled );
+	mousecursor->EventOccured( e );
+
 	if( e->Type == EVENT_KEY_DOWN )
 	{
 		if( e->Data.Keyboard.KeyCode == ALLEGRO_KEY_ESCAPE )
@@ -96,10 +99,32 @@ void MainMenu::EventOccurred(Event *e)
 
 		buttonclick->PlaySound();
 	}
+
+	if( e->Type == EVENT_FORM_INTERACTION )
+	{
+		if( e->Data.Forms.RaisedBy->Size.Y == 32 )
+		{
+			if( e->Data.Forms.EventFlag == FormEventType::MouseEnter )
+			{
+				e->Data.Forms.RaisedBy->BackgroundColour.b = 0.0f;
+			}
+			if( e->Data.Forms.EventFlag == FormEventType::MouseLeave )
+			{
+				e->Data.Forms.RaisedBy->BackgroundColour.b = 1.0f;
+			}
+		}
+
+		if( e->Data.Forms.EventFlag == FormEventType::KeyDown )
+		{
+			testform->Location.X -= 2;
+			testform->Size.X += 4;
+		}
+	}
 }
 
 void MainMenu::Update()
 {
+	testform->Update();
 }
 
 void MainMenu::Render()

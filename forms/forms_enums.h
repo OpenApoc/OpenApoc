@@ -4,8 +4,14 @@
 
 enum class FormEventType
 {
+	GotFocus,
+	LostFocus,
+	MouseEnter,
+	MouseLeave,
 	MouseDown,
 	MouseUp,
+	MouseMove,
+	MouseClick,
 	KeyDown,
 	KeyUp
 };
