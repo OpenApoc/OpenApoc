@@ -33,6 +33,7 @@ class GameCore
 
 	public:
 		static GameCore* ActiveGame;
+		bool Loaded;
 
 		GameCore(std::string CoreXMLFilename, std::string Language);
 		~GameCore();

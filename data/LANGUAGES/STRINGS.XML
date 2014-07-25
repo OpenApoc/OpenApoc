@@ -1,5 +1,9 @@
 ﻿<openapoc>
 	<fontcharacters>!&quot;#$%&amp;&apos;()*+,-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖŐŰÙÚÛÜÝÞŸßàáâãäåæçèéêëìíîïðñòóôõöőűùúûüýþÿФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯфисвуапршолдьтщзйкыегмцчнябБжЖхХъЪэЭюЮĆĘęąŁćłĄŚśźżŻŹŃńĂăȘȚșțČĎĚŇŘŠŤŮŽčďěňřšťůžЄєŒœіІїЇøØĞŞİğşıΑΒΓΔΕΖΗΘΙΚΛΜΝΞΟΠΡΣΤΥΦΧΨΩαβγδεζηθικλμνξοπρστυφχψωΆΈΉΊΌΎΏάέήίόύώςΐϊĹĽŔĺľŕ∞Ёё</fontcharacters>
+	<string id="STR_OPENAPOCALYPSE">
+		<en_gb>OPEN APOCALYPSE</en_gb>
+		<es_la>OPEN APOCALYPSE</es_la>
+	</string>
 	<string id="STR_START_CAMPAIGN">
 		<en_gb>Start Campaign</en_gb>
 		<es_la>Iniciar campaña</es_la>

@@ -19,8 +19,23 @@
 				<alignment horizontal="centre" vertical="centre" />
 				<font>APOC:LARGE:UFODATA/PAL_06.DAT</font>
 			</label>
-			<textbutton id="BUTTON_NEWGAME" text="STR_NEWGAME">
-				<position x="centre" y="-60" />
+			<textbutton id="BUTTON_NEWGAME" text="STR_START_CAMPAIGN">
+				<position x="centre" y="190" />
+				<size width="300" height="32" />
+				<font>APOC:SMALL:TACDATA/TACTICAL.PAL</font>
+			</textbutton>
+			<textbutton id="BUTTON_LOADGAME" text="STR_LOAD_SAVED_GAME">
+				<position x="centre" y="240" />
+				<size width="300" height="32" />
+				<font>APOC:SMALL:TACDATA/TACTICAL.PAL</font>
+			</textbutton>
+			<textbutton id="BUTTON_OPTIONS" text="STR_OPTIONS">
+				<position x="centre" y="290" />
+				<size width="300" height="32" />
+				<font>APOC:SMALL:TACDATA/TACTICAL.PAL</font>
+			</textbutton>
+			<textbutton id="BUTTON_QUIT" text="STR_QUIT">
+				<position x="centre" y="340" />
 				<size width="300" height="32" />
 				<font>APOC:SMALL:TACDATA/TACTICAL.PAL</font>
 			</textbutton>

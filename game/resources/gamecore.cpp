@@ -5,12 +5,13 @@
 
 GameCore* GameCore::ActiveGame = nullptr;
 
-GameCore::GameCore(std::string CoreXMLFilename, std::string Language)
+GameCore::GameCore(std::string CoreXMLFilename, std::string Language) : languagetext(), palettes(), fonts(), forms()
 {
+	Loaded = false;
+	ActiveGame = this;
 	language = Language;
 	ParseXMLDoc( CoreXMLFilename );
-
-	ActiveGame = this;
+	Loaded = true;
 }
 
 GameCore::~GameCore()
@@ -114,7 +115,7 @@ ALLEGRO_BITMAP* GameCore::GetImage(std::string ImageData)
 
 IFont* GameCore::GetFont(std::string FontData)
 {
-	if( fonts.size() == 0 || fonts.find(FontData) == fonts.end() )
+	if( fonts.find( FontData ) == fonts.end() )
 	{
 		std::vector<std::string> segs = Strings::Split( FontData, ':' );
 		if( segs.at(0) == "APOC" )
@@ -147,7 +148,7 @@ IFont* GameCore::GetFont(std::string FontData)
 
 Palette* GameCore::GetPalette(std::string Path)
 {
-	if( palettes.size() == 0 || palettes.find(Path) == palettes.end() )
+	if( palettes.find(Path) == palettes.end() )
 	{
 		palettes[Path] = new Palette( Path );
 	}

@@ -49,7 +49,7 @@ void BootUp::Update()
 		CreateGameCore( nullptr, nullptr );
 	}
 
-	if( GAMECORE != nullptr )
+	if( GAMECORE != nullptr && GAMECORE->Loaded )
 	{
 		StartGame();
 	}
