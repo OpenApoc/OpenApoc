@@ -1,29 +1,30 @@
 <openapoc>
 
- <form id="FORM_MAINMENU">
+	<form id="FORM_MAINMENU">
+	
+		<style minwidth="640" minheight="480">
+			<size w="644" h="484" />
+			<position x="centre" y="centre" />
+			<backcolor r="128" g="80" b="80" />
+			
+			<graphic vorigin="centre" horigin="centre">
+				<image>UFODATA/TITLES.PCX</image>
+				<position x="centre" y="centre" />
+			</graphic>
+			<label vorigin="centre" horigin="centre" text="STR_OPENAPOCALYPSE">
+				<backcolor r="255" g="255" b="255" a="128" />
+				<position x="-320" y="-240" />
+				<size w="640" h="32" />
+				<alignment horizontal="centre" vertical="centre" />
+				<font>APOC:LARGE:UFODATA/PAL_06.DAT</font>
+			</label>
+			<textbutton id="BUTTON_NEWGAME" vorigin="centre" horigin="centre" text="STR_NEWGAME">
+				<position x="centre" y="-60" />
+				<size w="300" h="32" />
+				<font>APOC:SMALL:TACDATA/TACTICAL.PAL</font>
+			</textbutton>
+		</style>
 
-  <style minwidth="640" minheight="480">
-   <graphic vorigin="centre" horigin="centre">
-    <image>UFODATA/TITLES.PCX</image>
-    <position x="centre" y="centre">
-   </graphic>
-   <label vorigin="centre" horigin="centre" text="STR_OPENAPOCALYPSE">
-    <position x="-320" y="-240" />
-		<size w="640" h="32" />
-		<alignment horizontal="centre" vertical="centre" />
-    <font face="UFODATA/BIGFONT.DAT" palette="UFODATA/PAL_06.DAT" />
-   </label>
-   <textbutton id="BUTTON_NEWGAME" vorigin="centre" horigin="centre" text="STR_NEWGAME">
-    <position x="centre" y="-60" />
-    <size w="300" h="32" />
-		<font face="UFODATA/SMALFONT.DAT" palette="UFODATA/PAL_01.DAT" />
-   </textbutton>
-  </style>
-
-  <!-- Support multiple resolutions -->
-  <style minheight="768">
-  </style>
-
- </form>
+	</form>
 
 </openapoc>

@@ -51,9 +51,6 @@
     <ClCompile Include="shaders\greyscale.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\apocresources\language.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="library\line.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -123,6 +120,12 @@
     <ClCompile Include="forms\graphicbutton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\resources\gamecore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\resources\ttffont.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -162,9 +165,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework\includes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game\apocresources\language.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="library\line.h">
@@ -255,6 +255,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="forms\graphicbutton.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\apocresources\apocresource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\resources\gamecore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\resources\ifont.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\resources\ttffont.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

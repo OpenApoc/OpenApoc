@@ -99,6 +99,8 @@
     <ClCompile Include="forms\graphicbutton.cpp" />
     <ClCompile Include="forms\label.cpp" />
     <ClCompile Include="forms\textbutton.cpp" />
+    <ClCompile Include="game\resources\gamecore.cpp" />
+    <ClCompile Include="game\resources\ttffont.cpp" />
     <ClCompile Include="library\angle.cpp" />
     <ClCompile Include="library\animation.cpp" />
     <ClCompile Include="game\apocresources\apocfont.cpp" />
@@ -111,7 +113,6 @@
     <ClCompile Include="transitions\fadeout.cpp" />
     <ClCompile Include="framework\framework.cpp" />
     <ClCompile Include="shaders\greyscale.cpp" />
-    <ClCompile Include="game\apocresources\language.cpp" />
     <ClCompile Include="library\line.cpp" />
     <ClCompile Include="framework\main.cpp" />
     <ClCompile Include="game\general\mainmenu.cpp" />
@@ -139,7 +140,11 @@
     <ClInclude Include="forms\graphicbutton.h" />
     <ClInclude Include="forms\label.h" />
     <ClInclude Include="forms\textbutton.h" />
+    <ClInclude Include="game\apocresources\apocresource.h" />
     <ClInclude Include="game\forms\control.h" />
+    <ClInclude Include="game\resources\gamecore.h" />
+    <ClInclude Include="game\resources\ifont.h" />
+    <ClInclude Include="game\resources\ttffont.h" />
     <ClInclude Include="library\angle.h" />
     <ClInclude Include="library\animation.h" />
     <ClInclude Include="game\apocresources\apocfont.h" />
@@ -153,7 +158,6 @@
     <ClInclude Include="framework\framework.h" />
     <ClInclude Include="shaders\greyscale.h" />
     <ClInclude Include="framework\includes.h" />
-    <ClInclude Include="game\apocresources\language.h" />
     <ClInclude Include="library\line.h" />
     <ClInclude Include="game\general\mainmenu.h" />
     <ClInclude Include="library\maths.h" />

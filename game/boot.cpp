@@ -3,11 +3,18 @@
 #include "../framework/framework.h"
 #include "general/mainmenu.h"
 #include "../transitions/transitions.h"
+#include "resources/gamecore.h"
 
 void BootUp::Begin()
 {
 	loadtime = 0;
 	FRAMEWORK->Display_SetTitle("OpenApocalypse");
+
+	threadload = al_create_thread( CreateGameCore, nullptr );
+	if( threadload != nullptr )
+	{
+		al_start_thread( threadload );
+	}
 }
 
 void BootUp::Pause()
@@ -37,8 +44,12 @@ void BootUp::EventOccurred(Event *e)
 
 void BootUp::Update()
 {
-	loadtime++;
-	if( loadtime >= FRAMES_PER_SECOND / 4 )
+	if( threadload == nullptr && GAMECORE == nullptr )
+	{
+		CreateGameCore( nullptr, nullptr );
+	}
+
+	if( GAMECORE != nullptr )
 	{
 		StartGame();
 	}
@@ -58,4 +69,19 @@ void BootUp::StartGame()
 bool BootUp::IsTransition()
 {
 	return false;
+}
+
+void* BootUp::CreateGameCore(ALLEGRO_THREAD* thread, void* args)
+{
+	std::string ruleset(*FRAMEWORK->Settings->GetQuickStringValue( "GameRules", "XCOMAPOC.XML" ));
+	std::string language(*FRAMEWORK->Settings->GetQuickStringValue( "Language", "en_gb" ));
+
+	GameCore* c = new GameCore( ruleset, language );
+
+	if( thread != nullptr )
+	{
+		al_destroy_thread( thread );
+	}
+
+	return nullptr;
 }

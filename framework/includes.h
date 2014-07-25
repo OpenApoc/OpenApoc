@@ -20,7 +20,8 @@
 
 #include <tinyxml2.h>
 
+#include <map>
 #include <string>
 #include <vector>
-#include <stdio.h>
+//#include <stdio.h>
 #include "../library/maths.h"

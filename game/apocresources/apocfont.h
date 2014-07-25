@@ -1,26 +1,25 @@
 
 #pragma once
 
-#include "../../framework/includes.h"
+// #include "../../framework/includes.h"
+#include "../resources/ifont.h"
 #include "../../library/memory.h"
 #include "palette.h"
 
-#define APOCFONT_ALIGN_LEFT	0
-#define APOCFONT_ALIGN_CENTRE	1
-#define APOCFONT_ALIGN_RIGHT	2
 
-class ApocalypseFont
+
+class ApocalypseFont : public IFont
 {
 
 	private:
-		static std::string FontCharacterSet;
-
 		std::vector<ALLEGRO_BITMAP*> fontbitmaps;
 		std::vector<int> fontwidths;
 		int spacewidth;
 		int fontheight;
 
 	public:
+		static std::string FontCharacterSet;
+
 		enum FontType
 		{
 			LargeFont,
@@ -31,10 +30,10 @@ class ApocalypseFont
 		ApocalypseFont( FontType Face, Palette* ColourPalette );
 		~ApocalypseFont();
 
-		void DrawString( int X, int Y, std::string Text, int Alignment );
+		virtual void DrawString( int X, int Y, std::string Text, int Alignment );
 
-		int GetFontHeight();
-		int GetFontWidth(std::string Text);
+		virtual int GetFontHeight();
+		virtual int GetFontWidth(std::string Text);
 
 		void DumpCharset();
 };

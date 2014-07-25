@@ -67,3 +67,30 @@ ALLEGRO_FILE* Data::load_file(const std::string path, const char *mode)
 
 	return nullptr;
 }
+
+std::string Data::GetActualFilename( std::string Filename )
+{
+	ALLEGRO_FILE* file;
+
+	std::string fullpath = std::string(this->root + this->DIR_SEP + Filename);
+	file = al_fopen(fullpath.c_str(), "rb");
+	if( file != nullptr )
+	{
+		al_fclose( file );
+		return fullpath;
+	}
+
+	/* Try lowercase version: */
+	std::string lowerpath = Filename;
+	std::transform(lowerpath.begin(), lowerpath.end(), lowerpath.begin(),  ::tolower);
+	fullpath = std::string(this->root + this->DIR_SEP + lowerpath);
+	std::cerr << "Failed to load \"" + Filename + "\", trying \"" + lowerpath + "\"\n";
+	file = al_fopen(fullpath.c_str(), "rb");
+	if (file != nullptr)
+	{
+		al_fclose( file );
+		return fullpath;
+	}
+
+	return "";
+}

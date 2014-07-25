@@ -5,13 +5,7 @@
 #include "../../framework/includes.h"
 #include "../../library/spritesheet.h"
 
-#include "../apocresources/apocfont.h"
-#include "../apocresources/language.h"
-#include "../apocresources/rawsound.h"
-#include "../apocresources/music.h"
-#include "../apocresources/cursor.h"
-#include "../apocresources/pck.h"
-
+#include "../apocresources/apocresource.h"
 #include "../../forms/forms.h"
 
 class MainMenu : public Stage
@@ -22,7 +16,6 @@ class MainMenu : public Stage
 		Palette* fontpalette;
 		ApocalypseFont* largefont;
 		ApocalypseFont* smallfont;
-		Language* currentlanguage;
 		Music* musicplayer;
 
 		Cursor* mousecursor;

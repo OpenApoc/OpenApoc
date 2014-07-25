@@ -1,0 +1,7 @@
+<openapoc>
+	<game>
+		<title>Open Apocalypse</title>
+		<include>LANGUAGES/STRINGS.XML</include>
+		<include>UI/MAINMENU.XML</include>
+	</game>
+</openapoc>

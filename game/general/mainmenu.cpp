@@ -7,9 +7,8 @@ MainMenu::MainMenu()
 	emptybackground = DATA->load_bitmap( "UFODATA/TITLES.PCX" );
 
 	largefont = new ApocalypseFont( ApocalypseFont::LargeFont, new Palette( "UFODATA/PAL_06.DAT" ) );
-	smallfont = new ApocalypseFont( ApocalypseFont::SmallFont, new Palette( "UFODATA/PAL_01.DAT" ) );
-	currentlanguage = new Language( "EN-GB" );
-	mousecursor = new Cursor( new Palette( "UFODATA/PAL_01.DAT" ) );
+	smallfont = new ApocalypseFont( ApocalypseFont::SmallFont, new Palette( "TACDATA/TACTICAL.PAL" ) ); // "UFODATA/PAL_02.DAT" ) );
+	mousecursor = new Cursor( new Palette( "TACDATA/TACTICAL.PAL" ) );
 
 	testform = new Form(nullptr);
 	testform->Location.X = (FRAMEWORK->Display_GetWidth() / 2) - 322;
@@ -101,7 +100,6 @@ MainMenu::~MainMenu()
 	al_destroy_bitmap( emptybackground );
 	delete largefont;
 	delete smallfont;
-	delete currentlanguage;
 	delete mousecursor;
 }
 
@@ -155,38 +153,8 @@ void MainMenu::Update()
 void MainMenu::Render()
 {
 	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
-/*
-	std::string* s;
-	al_draw_bitmap( emptybackground, 0, 0, 0 );
-
-	al_draw_filled_rectangle( 0, 0, 640, 32, al_map_rgba( 255, 255, 255, 128 ) );
-	largefont->DrawString( 320, 4, "OPEN APOCALYPSE", APOCFONT_ALIGN_CENTRE );
-
-	al_draw_bitmap( buttonimage, 188, 176, 0 );
-	s = currentlanguage->GetText( "STR_START_CAMPAIGN" );
-	smallfont->DrawString( 320, 180, *s, APOCFONT_ALIGN_CENTRE );
-
-	al_draw_bitmap( buttonimage, 188, 208, 0 );
-	s = currentlanguage->GetText( "STR_LOAD_SAVED_GAME" );
-	smallfont->DrawString( 320, 212, *s, APOCFONT_ALIGN_CENTRE );
-
-	al_draw_bitmap( buttonimage, 188, 240, 0 );
-	s = currentlanguage->GetText( "STR_OPTIONS" );
-	smallfont->DrawString( 320, 244, *s, APOCFONT_ALIGN_CENTRE );
-
-	al_draw_bitmap( buttonimage, 188, 272, 0 );
-	s = currentlanguage->GetText( "STR_QUIT" );
-	smallfont->DrawString( 320, 276, *s, APOCFONT_ALIGN_CENTRE );
-
-	al_draw_bitmap( buttonimage, 188, 304, 0 );
-	s = currentlanguage->GetText( "STR_CHEATING" );
-	smallfont->DrawString( 320, 308, *s, APOCFONT_ALIGN_CENTRE );
-*/
-
 	testform->Render();
-
 	mousecursor->Render();
-	
 }
 
 bool MainMenu::IsTransition()

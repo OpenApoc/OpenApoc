@@ -20,4 +20,6 @@ class Data
 		ALLEGRO_BITMAP* load_bitmap(const std::string path);
 		ALLEGRO_FILE* load_file(const std::string path, const char *mode);
 
+		std::string GetActualFilename(std::string Filename);
+
 };
