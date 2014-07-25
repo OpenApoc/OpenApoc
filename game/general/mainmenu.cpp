@@ -16,7 +16,7 @@ MainMenu::MainMenu()
 	testform->Size.X = 644;
 	testform->Size.Y = 484;
 
-	Graphic* g = new Graphic(testform, DATA->load_bitmap( "UFODATA/TITLES.PCX" ) );
+	Graphic* g = new Graphic(testform, GAMECORE->GetImage( "UFODATA/TITLES.PCX" ) );
 	g->Location.X = 2;
 	g->Location.Y = 2;
 	g->Size.X = testform->Size.X - 4;

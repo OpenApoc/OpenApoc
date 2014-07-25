@@ -46,7 +46,7 @@ void Label::Render()
 
 	font->DrawString( xpos, ypos, text, APOCFONT_ALIGN_LEFT );
 
-	PostRender();
+	// PostRender();
 }
 
 void Label::Update()
