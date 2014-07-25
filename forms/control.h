@@ -19,6 +19,8 @@ class Control
 		void SetFocus(Control* Child);
 		bool IsFocused();
 
+		void ConfigureFromXML( tinyxml2::XMLElement* Element );
+
 	public:
 		std::string Name;
 		Vector2 Location;

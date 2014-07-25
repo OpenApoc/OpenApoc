@@ -2,7 +2,10 @@
 
 Form::Form( tinyxml2::XMLElement* FormConfiguration ) : Control( nullptr )
 {
-	// TODO: Load form
+	if( FormConfiguration == nullptr )
+	{
+		return;
+	}
 
 	tinyxml2::XMLElement* node;
 	tinyxml2::XMLElement* usenode = nullptr;
@@ -16,12 +19,13 @@ Form::Form( tinyxml2::XMLElement* FormConfiguration ) : Control( nullptr )
 		if( nodename == "style" )
 		{
 			// TODO: Determine best "style" based on minwidth and minheight attributes
+			usenode = node;
 		}
 	}
 
 	if( usenode != nullptr )
 	{
-		// Configure form
+		ConfigureFromXML( usenode );
 	}
 
 }

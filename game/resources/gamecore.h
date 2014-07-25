@@ -39,7 +39,7 @@ class GameCore
 
 		std::string GetString(std::string ID);
 		Form* GetForm(std::string ID);
-
 		ALLEGRO_BITMAP* GetImage(std::string ImageData);
 		IFont* GetFont(std::string FontData);
+		Palette* GetPalette(std::string Path);
 };

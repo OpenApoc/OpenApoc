@@ -1,11 +1,11 @@
 
 #include "textbutton.h"
-
+#include "../framework/framework.h"
 
 RawSound* TextButton::buttonclick = nullptr;
 ALLEGRO_BITMAP* TextButton::buttonbackground = nullptr;
 
-TextButton::TextButton( Control* Owner, std::string Text, ApocalypseFont* Font ) : Control( Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Centre ), TextVAlign( VerticalAlignment::Centre )
+TextButton::TextButton( Control* Owner, std::string Text, IFont* Font ) : Control( Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Centre ), TextVAlign( VerticalAlignment::Centre )
 {
 	if( buttonclick == nullptr )
 	{

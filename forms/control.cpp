@@ -1,9 +1,15 @@
 
 #include "control.h"
 #include "../framework/framework.h"
+#include "forms.h"
+#include "../game/resources/gamecore.h"
 
 Control::Control(Control* Owner) : Name("Control"), owningControl(Owner), focusedChild(nullptr), BackgroundColour(al_map_rgb( 128, 80, 80 )), mouseInside(false), mouseDepressed(false)
 {
+	if( Owner != nullptr )
+	{
+		Owner->Controls.push_back( this );
+	}
 }
 
 Control::~Control()
@@ -218,5 +224,85 @@ void Control::Update()
 	{
 		Control* c = (Control*)*ctrlidx;
 		c->Update();
+	}
+}
+
+void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
+{
+	std::string nodename;
+
+	if( Element->Attribute("id") != nullptr && Element->Attribute("id") != "" )
+	{
+		nodename = Element->Attribute("id");
+		this->Name = nodename;
+	}
+
+	tinyxml2::XMLElement* node;
+	for( node = Element->FirstChildElement(); node != nullptr; node = node->NextSiblingElement() )
+	{
+		nodename = node->Name();
+
+		if( nodename == "backcolour" )
+		{
+			if( node->Attribute("a") != nullptr && node->Attribute("a") != "" )
+			{
+				this->BackgroundColour = al_map_rgba( Strings::ToInteger( node->Attribute("r") ), Strings::ToInteger( node->Attribute("g") ), Strings::ToInteger( node->Attribute("b") ), Strings::ToInteger( node->Attribute("a") ) );
+			} else {
+				this->BackgroundColour = al_map_rgb( Strings::ToInteger( node->Attribute("r") ), Strings::ToInteger( node->Attribute("g") ), Strings::ToInteger( node->Attribute("b") ) );
+			}
+		}
+		if( nodename == "position" )
+		{
+			if( Strings::IsNumeric( node->Attribute("x") ) )
+			{
+				Location.X = Strings::ToInteger( node->Attribute("x") );
+			} else {
+				// TODO: Parse centre/left/right (needs size first)
+			}
+			if( Strings::IsNumeric( node->Attribute("y") ) )
+			{
+				Location.Y = Strings::ToInteger( node->Attribute("y") );
+			} else {
+				// TODO: Parse centre/top/bottom (needs size first)
+			}
+		}
+		if( nodename == "size" )
+		{
+			Size.X = Strings::ToInteger( node->Attribute("width") );
+			Size.Y = Strings::ToInteger( node->Attribute("height") );
+		}
+
+		// Child controls
+		if( nodename == "control" )
+		{
+			Control* c = new Control( this );
+			c->ConfigureFromXML( node );
+		}
+		if( nodename == "label" )
+		{
+			Label* l = new Label( this, GAMECORE->GetString( node->Attribute("text") ), GAMECORE->GetFont( node->FirstChildElement("font")->GetText() ) );
+			l->ConfigureFromXML( node );
+		}
+		if( nodename == "graphic" )
+		{
+			Graphic* g = new Graphic( this, GAMECORE->GetImage( node->FirstChildElement("image")->GetText() ) );
+			g->ConfigureFromXML( node );
+		}
+		if( nodename == "textbutton" )
+		{
+			TextButton* tb = new TextButton( this,  GAMECORE->GetString( node->Attribute("text") ), GAMECORE->GetFont( node->FirstChildElement("font")->GetText() ) );
+			tb->ConfigureFromXML( node );
+		}
+		if( nodename == "graphicbutton" )
+		{
+			GraphicButton* gb;
+			if( node->FirstChildElement("image_hover") == nullptr )
+			{
+				gb = new GraphicButton( this, GAMECORE->GetImage( node->FirstChildElement("image")->GetText() ), GAMECORE->GetImage( node->FirstChildElement("image_depressed")->GetText() ) );
+			} else {
+				gb = new GraphicButton( this, GAMECORE->GetImage( node->FirstChildElement("image")->GetText() ), GAMECORE->GetImage( node->FirstChildElement("image_depressed")->GetText() ), GAMECORE->GetImage( node->FirstChildElement("image_hover")->GetText() ) );
+			}
+			gb->ConfigureFromXML( node );
+		}
 	}
 }

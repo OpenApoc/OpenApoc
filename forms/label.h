@@ -2,22 +2,20 @@
 #pragma once
 
 #include "control.h"
-#include "../game/apocresources/apocfont.h"
-
-
+#include "../game/resources/ifont.h"
 
 class Label : public Control
 {
 
 	private:
 		std::string text;
-		ApocalypseFont* font;
+		IFont* font;
 
 	public:
 		HorizontalAlignment TextHAlign;
 		VerticalAlignment TextVAlign;
 
-		Label(Control* Owner, std::string Text, ApocalypseFont* Font);
+		Label(Control* Owner, std::string Text, IFont* Font);
 
 		virtual void EventOccured(Event* e);
 		virtual void Render();

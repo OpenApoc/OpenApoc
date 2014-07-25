@@ -2,7 +2,7 @@
 #pragma once
 
 #include "control.h"
-#include "../game/apocresources/apocfont.h"
+#include "../game/resources/ifont.h"
 #include "../game/apocresources/rawsound.h"
 
 class TextButton : public Control
@@ -10,7 +10,7 @@ class TextButton : public Control
 
 	private:
 		std::string text;
-		ApocalypseFont* font;
+		IFont* font;
 
 		static RawSound* buttonclick;
 		static ALLEGRO_BITMAP* buttonbackground;
@@ -19,7 +19,7 @@ class TextButton : public Control
 		HorizontalAlignment TextHAlign;
 		VerticalAlignment TextVAlign;
 
-		TextButton(Control* Owner, std::string Text, ApocalypseFont* Font);
+		TextButton(Control* Owner, std::string Text, IFont* Font);
 
 		virtual void EventOccured(Event* e);
 		virtual void Render();

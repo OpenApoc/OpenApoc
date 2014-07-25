@@ -1,6 +1,7 @@
 
 #include "gamecore.h"
 #include "../../framework/framework.h"
+#include "ttffont.h"
 
 GameCore* GameCore::ActiveGame = nullptr;
 
@@ -108,19 +109,47 @@ Form* GameCore::GetForm(std::string ID)
 
 ALLEGRO_BITMAP* GameCore::GetImage(std::string ImageData)
 {
-	return nullptr;
+	return DATA->load_bitmap(ImageData);
 }
 
 IFont* GameCore::GetFont(std::string FontData)
 {
-	IFont* font = fonts[FontData];
-
-	// Use cached font
-	if( font != nullptr )
+	if( fonts.size() == 0 || fonts.find(FontData) == fonts.end() )
 	{
-		return font;
-	}
+		std::vector<std::string> segs = Strings::Split( FontData, ':' );
+		if( segs.at(0) == "APOC" )
+		{
 
-	return font;
+			if( segs.at(1) == "LARGE" )
+			{
+				fonts[FontData] = new ApocalypseFont( ApocalypseFont::LargeFont, GetPalette( segs.at(2) ) );
+			}
+			if( segs.at(1) == "SMALL" )
+			{
+				fonts[FontData] = new ApocalypseFont( ApocalypseFont::SmallFont, GetPalette( segs.at(2) ) );
+			}
+			if( segs.at(1) == "TINY" )
+			{
+				fonts[FontData] = new ApocalypseFont( ApocalypseFont::TinyFont, GetPalette( segs.at(2) ) );
+			}
+
+		} else {
+			if( segs.size() == 1 )
+			{
+				fonts[FontData] = new TTFFont( segs.at(0), 8 );
+			} else if( segs.size() == 2 ) {
+				fonts[FontData] = new TTFFont( segs.at(0), Strings::ToInteger( segs.at(1) ) );
+			}
+		}
+	}
+	return fonts[FontData];
 }
 
+Palette* GameCore::GetPalette(std::string Path)
+{
+	if( palettes.size() == 0 || palettes.find(Path) == palettes.end() )
+	{
+		palettes[Path] = new Palette( Path );
+	}
+	return palettes[Path];
+}

@@ -1,7 +1,7 @@
 
 #include "label.h"
 
-Label::Label( Control* Owner, std::string Text, ApocalypseFont* Font ) : Control( Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Top )
+Label::Label( Control* Owner, std::string Text, IFont* Font ) : Control( Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Top )
 {
 }
 

@@ -269,5 +269,8 @@
     <ClInclude Include="game\resources\ttffont.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="library\strings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -153,6 +153,7 @@
     <ClInclude Include="library\configfile.h" />
     <ClInclude Include="game\apocresources\cursor.h" />
     <ClInclude Include="framework\event.h" />
+    <ClInclude Include="library\strings.h" />
     <ClInclude Include="transitions\fadein.h" />
     <ClInclude Include="transitions\fadeout.h" />
     <ClInclude Include="framework\framework.h" />

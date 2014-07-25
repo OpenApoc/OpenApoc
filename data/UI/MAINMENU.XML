@@ -3,24 +3,25 @@
 	<form id="FORM_MAINMENU">
 	
 		<style minwidth="640" minheight="480">
-			<size w="644" h="484" />
 			<position x="centre" y="centre" />
-			<backcolor r="128" g="80" b="80" />
+			<size width="644" height="484" />
+			<backcolour r="128" g="80" b="80" />
 			
-			<graphic vorigin="centre" horigin="centre">
+			<graphic>
 				<image>UFODATA/TITLES.PCX</image>
-				<position x="centre" y="centre" />
+				<position x="2" y="2" />
+				<size width="640" height="480" />
 			</graphic>
-			<label vorigin="centre" horigin="centre" text="STR_OPENAPOCALYPSE">
-				<backcolor r="255" g="255" b="255" a="128" />
-				<position x="-320" y="-240" />
-				<size w="640" h="32" />
+			<label text="STR_OPENAPOCALYPSE">
+				<backcolour r="255" g="255" b="255" a="128" />
+				<position x="2" y="2" />
+				<size width="640" height="32" />
 				<alignment horizontal="centre" vertical="centre" />
 				<font>APOC:LARGE:UFODATA/PAL_06.DAT</font>
 			</label>
-			<textbutton id="BUTTON_NEWGAME" vorigin="centre" horigin="centre" text="STR_NEWGAME">
+			<textbutton id="BUTTON_NEWGAME" text="STR_NEWGAME">
 				<position x="centre" y="-60" />
-				<size w="300" h="32" />
+				<size width="300" height="32" />
 				<font>APOC:SMALL:TACDATA/TACTICAL.PAL</font>
 			</textbutton>
 		</style>
