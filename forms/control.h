@@ -13,12 +13,14 @@ class Control
 		Control* focusedChild;
 		bool mouseInside;
 		bool mouseDepressed;
+		Vector2 resolvedLocation;
 
 		void PreRender();
 		void PostRender();
 		void SetFocus(Control* Child);
 		bool IsFocused();
 
+		void ResolveLocation();
 		void ConfigureFromXML( tinyxml2::XMLElement* Element );
 
 	public:
@@ -32,7 +34,6 @@ class Control
 		Control(Control* Owner);
 		virtual ~Control();
 
-		Vector2* GetResolvedLocation();
 		Control* GetActiveControl();
 		void Focus();
 

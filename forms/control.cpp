@@ -50,16 +50,22 @@ bool Control::IsFocused()
 	return true;
 }
 
-Vector2* Control::GetResolvedLocation()
+void Control::ResolveLocation()
 {
-	Vector2* v = new Vector2( Location.X, Location.Y );
-	if( owningControl != nullptr )
+	if( owningControl == nullptr )
 	{
-		Vector2* tv = owningControl->GetResolvedLocation();
-		v->Add( tv );
-		delete tv;
+		resolvedLocation.X = Location.X;
+		resolvedLocation.Y = Location.Y;
+	} else {
+		resolvedLocation.X = owningControl->Location.X + Location.X;
+		resolvedLocation.Y = owningControl->Location.Y + Location.Y;
 	}
-	return v;
+
+	for( auto ctrlidx = Controls.rbegin(); ctrlidx != Controls.rend(); ctrlidx++ )
+	{
+		Control* c = (Control*)*ctrlidx;
+		c->ResolveLocation();
+	}
 }
 
 void Control::EventOccured( Event* e )
@@ -79,12 +85,11 @@ void Control::EventOccured( Event* e )
 			return;
 	}
 
-	Vector2* v = GetResolvedLocation();
 	Event* newevent;
 
 	if( e->Type == EVENT_MOUSE_MOVE )
 	{
-		if( e->Data.Mouse.X >= v->X && e->Data.Mouse.X < v->X + Size.X && e->Data.Mouse.Y >= v->Y && e->Data.Mouse.Y < v->Y + Size.Y )
+		if( e->Data.Mouse.X >= resolvedLocation.X && e->Data.Mouse.X < resolvedLocation.X + Size.X && e->Data.Mouse.Y >= resolvedLocation.Y && e->Data.Mouse.Y < resolvedLocation.Y + Size.Y )
 		{
 			if( !mouseInside )
 			{
@@ -173,8 +178,6 @@ void Control::EventOccured( Event* e )
 		mouseDepressed = false;
 	}
 
-	delete v;
-
 	if( e->Type == EVENT_KEY_DOWN || e->Type == EVENT_KEY_UP )
 	{
 		if( IsFocused() )
@@ -203,9 +206,7 @@ void Control::PreRender()
 {
 	if( BackgroundColour.a != 0.0f )
 	{
-		Vector2* v = GetResolvedLocation();
-		al_draw_filled_rectangle( v->X, v->Y, v->X + Size.X, v->Y + Size.Y, BackgroundColour );
-		delete v;
+		al_draw_filled_rectangle( resolvedLocation.X, resolvedLocation.Y, resolvedLocation.X + Size.X, resolvedLocation.Y + Size.Y, BackgroundColour );
 	}
 }
 
@@ -230,6 +231,9 @@ void Control::Update()
 void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 {
 	std::string nodename;
+	std::string specialpositionx = "";
+	std::string specialpositiony = "";
+	tinyxml2::XMLElement* subnode;
 
 	if( Element->Attribute("id") != nullptr && Element->Attribute("id") != "" )
 	{
@@ -257,13 +261,13 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 			{
 				Location.X = Strings::ToInteger( node->Attribute("x") );
 			} else {
-				// TODO: Parse centre/left/right (needs size first)
+				specialpositionx = node->Attribute("x");
 			}
 			if( Strings::IsNumeric( node->Attribute("y") ) )
 			{
 				Location.Y = Strings::ToInteger( node->Attribute("y") );
 			} else {
-				// TODO: Parse centre/top/bottom (needs size first)
+				specialpositiony = node->Attribute("y");
 			}
 		}
 		if( nodename == "size" )
@@ -282,6 +286,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		{
 			Label* l = new Label( this, GAMECORE->GetString( node->Attribute("text") ), GAMECORE->GetFont( node->FirstChildElement("font")->GetText() ) );
 			l->ConfigureFromXML( node );
+			subnode = node->FirstChildElement("alignment");
 		}
 		if( nodename == "graphic" )
 		{
@@ -303,6 +308,58 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 				gb = new GraphicButton( this, GAMECORE->GetImage( node->FirstChildElement("image")->GetText() ), GAMECORE->GetImage( node->FirstChildElement("image_depressed")->GetText() ), GAMECORE->GetImage( node->FirstChildElement("image_hover")->GetText() ) );
 			}
 			gb->ConfigureFromXML( node );
+		}
+	}
+
+	if( specialpositionx != "" )
+	{
+		if( specialpositionx == "left" )
+		{
+			Location.X = 0;
+		}
+		if( specialpositionx == "centre" )
+		{
+			if( owningControl == nullptr )
+			{
+				Location.X = (FRAMEWORK->Display_GetWidth() / 2) - (Size.X / 2);
+			} else {
+				Location.X = (owningControl->Size.X / 2) - (Size.X / 2);
+			}
+		}
+		if( specialpositionx == "right" )
+		{
+			if( owningControl == nullptr )
+			{
+				Location.X = FRAMEWORK->Display_GetWidth() - Size.X;
+			} else {
+				Location.X = owningControl->Size.X - Size.X;
+			}
+		}
+	}
+
+	if( specialpositiony != "" )
+	{
+		if( specialpositiony == "top" )
+		{
+			Location.Y = 0;
+		}
+		if( specialpositiony == "centre" )
+		{
+			if( owningControl == nullptr )
+			{
+				Location.Y = (FRAMEWORK->Display_GetHeight() / 2) - (Size.Y / 2);
+			} else {
+				Location.Y = (owningControl->Size.Y / 2) - (Size.Y / 2);
+			}
+		}
+		if( specialpositiony == "bottom" )
+		{
+			if( owningControl == nullptr )
+			{
+				Location.Y = FRAMEWORK->Display_GetHeight() - Size.Y;
+			} else {
+				Location.Y = owningControl->Size.Y - Size.Y;
+			}
 		}
 	}
 }

@@ -52,7 +52,6 @@ void GraphicButton::EventOccured( Event* e )
 
 void GraphicButton::Render()
 {
-	Vector2* v = GetResolvedLocation();
 	ALLEGRO_BITMAP* useimage;
 
 	useimage = image;
@@ -67,11 +66,10 @@ void GraphicButton::Render()
 	int bmph = al_get_bitmap_height( useimage );
 	if( bmpw == Size.X && bmph == Size.Y )
 	{
-		al_draw_bitmap( useimage, v->X, v->Y, 0 );
+		al_draw_bitmap( useimage, resolvedLocation.X, resolvedLocation.Y, 0 );
 	} else {
-		al_draw_scaled_bitmap( useimage, 0, 0, bmpw, bmph, v->X, v->Y, this->Size.X, this->Size.Y, 0 );
+		al_draw_scaled_bitmap( useimage, 0, 0, bmpw, bmph, resolvedLocation.X, resolvedLocation.Y, this->Size.X, this->Size.Y, 0 );
 	}
-	delete v;
 
 	PostRender();
 }

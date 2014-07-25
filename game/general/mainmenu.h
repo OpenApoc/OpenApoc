@@ -12,19 +12,9 @@
 class MainMenu : public Stage
 {
 	private:
-		ALLEGRO_BITMAP* emptybackground;
-		ALLEGRO_BITMAP* buttonimage;
-		Palette* fontpalette;
-		ApocalypseFont* largefont;
-		ApocalypseFont* smallfont;
 		Music* musicplayer;
-
 		Cursor* mousecursor;
-
-		PCK* testpck;
-
 		Form* testform;
-
 
   public:
 		MainMenu();

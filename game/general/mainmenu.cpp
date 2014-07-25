@@ -4,8 +4,93 @@
 
 MainMenu::MainMenu()
 {
-	mousecursor = new Cursor( new Palette( "TACDATA/TACTICAL.PAL" ) );
-	testform = GAMECORE->GetForm("FORM_MAINMENU");
+	mousecursor = new Cursor( GAMECORE->GetPalette( "TACDATA/TACTICAL.PAL" ) );
+
+	//------------------------------------------------------------------------------ Runs fast
+	IFont* largefont = GAMECORE->GetFont( "APOC:LARGE:UFODATA/PAL_06.DAT" );
+	IFont* smallfont = GAMECORE->GetFont( "APOC:SMALL:TACDATA/TACTICAL.PAL" );
+
+	testform = new Form(nullptr);
+	testform->Location.X = (FRAMEWORK->Display_GetWidth() / 2) - 322;
+	testform->Location.Y = (FRAMEWORK->Display_GetHeight() / 2) - 242;
+	testform->Size.X = 644;
+	testform->Size.Y = 484;
+
+	Graphic* g = new Graphic(testform, DATA->load_bitmap( "UFODATA/TITLES.PCX" ) );
+	g->Location.X = 2;
+	g->Location.Y = 2;
+	g->Size.X = testform->Size.X - 4;
+	g->Size.Y = testform->Size.Y - 4;
+
+	Label* l = new Label(testform, "OPEN APOCALYPSE", largefont);
+	l->BackgroundColour = al_map_rgba( 255, 255, 255, 128 );
+	l->Location.X = 2;
+	l->Location.Y = 2;
+	l->Size.X = 640;
+	l->Size.Y = 32;
+	l->TextHAlign = HorizontalAlignment::Centre;
+	l->TextVAlign = VerticalAlignment::Centre;
+
+	int ypos = 160;
+	Control* c = new Control(testform);
+	c->BackgroundColour = al_map_rgba( 0, 0, 0, 128 ); c->Location.X = (testform->Size.X / 2) - 146; c->Location.Y = ypos + 4; c->Size.X = 300; c->Size.Y = 28; testform->Controls.push_back(c);
+
+	TextButton* b = new TextButton(testform, "New Game", smallfont);
+	b->BackgroundColour = al_map_rgba( 255, 255, 255, 128 );
+	b->Location.X = (testform->Size.X / 2) - 150;
+	b->Location.Y = ypos;
+	b->Size.X = 300;
+	b->Size.Y = 28;
+
+	ypos += 38;
+
+	c = new Control(testform); c->BackgroundColour = al_map_rgba( 0, 0, 0, 128 ); c->Location.X = (testform->Size.X / 2) - 146; c->Location.Y = ypos + 4; c->Size.X = 300; c->Size.Y = 28; testform->Controls.push_back(c);
+
+	b = new TextButton(testform, "Load Saved Game", smallfont);
+	b->BackgroundColour = al_map_rgba( 255, 255, 255, 128 );
+	b->Location.X = (testform->Size.X / 2) - 150;
+	b->Location.Y = ypos;
+	b->Size.X = 300;
+	b->Size.Y = 28;
+
+	ypos += 38;
+
+	c = new Control(testform); c->BackgroundColour = al_map_rgba( 0, 0, 0, 128 ); c->Location.X = (testform->Size.X / 2) - 146; c->Location.Y = ypos + 4; c->Size.X = 300; c->Size.Y = 28; testform->Controls.push_back(c);
+
+	b = new TextButton(testform, "Options", smallfont);
+	b->BackgroundColour = al_map_rgba( 255, 255, 255, 128 );
+	b->Location.X = (testform->Size.X / 2) - 150;
+	b->Location.Y = ypos;
+	b->Size.X = 300;
+	b->Size.Y = 28;
+
+	ypos += 38;
+
+	c = new Control(testform); c->BackgroundColour = al_map_rgba( 0, 0, 0, 128 ); c->Location.X = (testform->Size.X / 2) - 146; c->Location.Y = ypos + 4; c->Size.X = 300; c->Size.Y = 28; testform->Controls.push_back(c);
+
+	b = new TextButton(testform, "Debugger", smallfont);
+	b->BackgroundColour = al_map_rgba( 255, 255, 255, 128 );
+	b->Location.X = (testform->Size.X / 2) - 150;
+	b->Location.Y = ypos;
+	b->Size.X = 300;
+	b->Size.Y = 28;
+
+	ypos += 38;
+
+	c = new Control(testform); c->BackgroundColour = al_map_rgba( 0, 0, 0, 128 ); c->Location.X = (testform->Size.X / 2) - 146; c->Location.Y = ypos + 4; c->Size.X = 300; c->Size.Y = 28; testform->Controls.push_back(c);
+
+	b = new TextButton(testform, "Quit", smallfont);
+	b->Name = "QuitButton";
+	b->BackgroundColour = al_map_rgba( 255, 255, 255, 128 );
+	b->Location.X = (testform->Size.X / 2) - 150;
+	b->Location.Y = ypos;
+	b->Size.X = 300;
+	b->Size.Y = 28;
+
+	testform->Update();
+
+	//------------------------------------------------------------------------------ Runs slow
+	//testform = GAMECORE->GetForm("FORM_MAINMENU");
 }
 
 MainMenu::~MainMenu()

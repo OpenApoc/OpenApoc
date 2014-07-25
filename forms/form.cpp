@@ -26,6 +26,7 @@ Form::Form( tinyxml2::XMLElement* FormConfiguration ) : Control( nullptr )
 	if( usenode != nullptr )
 	{
 		ConfigureFromXML( usenode );
+		ResolveLocation();
 	}
 
 }
@@ -43,4 +44,5 @@ void Form::Render()
 void Form::Update()
 {
 	Control::Update();
+	ResolveLocation();
 }
