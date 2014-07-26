@@ -44,7 +44,7 @@ Framework::Framework()
   Settings = new ConfigFile( "settings.cfg" );
 
 	eventAllegro = al_create_event_queue();
-	eventMutex = al_create_mutex();
+	eventMutex = al_create_mutex_recursive();
 	frameTimer = al_create_timer( 1.0 / FRAMES_PER_SECOND );
 
 	srand( (unsigned int)al_get_time() );
