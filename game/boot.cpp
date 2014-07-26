@@ -10,7 +10,8 @@ void BootUp::Begin()
 	loadtime = 0;
 	FRAMEWORK->Display_SetTitle("OpenApocalypse");
 
-	threadload = al_create_thread( CreateGameCore, nullptr );
+	threadload = nullptr;
+	//threadload = al_create_thread( CreateGameCore, nullptr );
 	if( threadload != nullptr )
 	{
 		al_start_thread( threadload );
