@@ -1,0 +1,35 @@
+<openapoc>
+
+	<form id="FORM_UFOPAEDIA_TITLE">
+	
+		<style minwidth="640" minheight="480">
+			<position x="centre" y="centre" />
+			<size width="644" height="484" />
+			<backcolour r="128" g="80" b="80" />
+			
+			<graphic>
+				<image>UFOPAEDI/TITLE.PCX</image>
+				<position x="2" y="2" />
+				<size width="640" height="480" />
+			</graphic>
+
+			<label text="STR_XCOM">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="344" y="62" />
+				<size width="270" height="40" />
+				<alignment horizontal="left" vertical="centre" />
+				<font>APOC:LARGE:UFODATA/PAL_06.DAT</font>
+			</label>
+			<control id="BUTTON_XCOM">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="62" />
+				<size width="636" height="40"s />
+			</control>
+			
+			
+			
+		</style>
+
+	</form>
+
+</openapoc>

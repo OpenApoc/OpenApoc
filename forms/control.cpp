@@ -234,6 +234,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 	std::string specialpositionx = "";
 	std::string specialpositiony = "";
 	tinyxml2::XMLElement* subnode;
+	std::string attribvalue;
 
 	if( Element->Attribute("id") != nullptr && Element->Attribute("id") != "" )
 	{
@@ -287,6 +288,41 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 			Label* l = new Label( this, GAMECORE->GetString( node->Attribute("text") ), GAMECORE->GetFont( node->FirstChildElement("font")->GetText() ) );
 			l->ConfigureFromXML( node );
 			subnode = node->FirstChildElement("alignment");
+			if( subnode != nullptr )
+			{
+				if( subnode->Attribute("horizontal") != nullptr )
+				{
+					attribvalue = subnode->Attribute("horizontal");
+					if( attribvalue == "left" )
+					{
+						l->TextHAlign = HorizontalAlignment::Left;
+					}
+					if( attribvalue == "centre" )
+					{
+						l->TextHAlign = HorizontalAlignment::Centre;
+					}
+					if( attribvalue == "right" )
+					{
+						l->TextHAlign = HorizontalAlignment::Right;
+					}
+				}
+				if( subnode->Attribute("vertical") != nullptr )
+				{
+					attribvalue = subnode->Attribute("vertical");
+					if( attribvalue == "top" )
+					{
+						l->TextVAlign = VerticalAlignment::Top;
+					}
+					if( attribvalue == "centre" )
+					{
+						l->TextVAlign = VerticalAlignment::Centre;
+					}
+					if( attribvalue == "bottom" )
+					{
+						l->TextVAlign = VerticalAlignment::Bottom;
+					}
+				}
+			}
 		}
 		if( nodename == "graphic" )
 		{
