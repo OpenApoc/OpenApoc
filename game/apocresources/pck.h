@@ -7,21 +7,21 @@
 
 typedef struct PCKCompression1ImageHeader
 {
-	char Reserved1;
-	char Reserved2;
-	int16_t LeftMostPixel;
-	int16_t RightMostPixel;
-	int16_t TopMostPixel;
-	int16_t BottomMostPixel;
+	unsigned char Reserved1;
+	unsigned char Reserved2;
+	uint16_t LeftMostPixel;
+	uint16_t RightMostPixel;
+	uint16_t TopMostPixel;
+	uint16_t BottomMostPixel;
 } PCKImageHeader;
 
 typedef struct PCKCompression1RowHeader
 {
 	// int16_t SkipPixels; -- Read seperately to get eof record
-	char ColumnToStartAt;
-	char PixelsInRow;
-	char Reserved1;
-	char PaddingInRow;
+	unsigned char ColumnToStartAt;
+	unsigned char PixelsInRow;
+	unsigned char Reserved1;
+	unsigned char PaddingInRow;
 } PCKCompression1Header;
 
 class PCK

@@ -163,7 +163,7 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 					al_fread( pck, &c1_header, sizeof( PCKCompression1Header ) );
 					int c1_y = (c1_pixelstoskip / 640) - c1_imgheader.TopMostPixel;
 
-					for( int c1_x = 0; c1_x < c1_header.PixelsInRow - c1_header.PaddingInRow; c1_x++ )
+					for( int c1_x = 0; c1_x < c1_header.PixelsInRow; c1_x++ )
 					{
 						if( (c1_header.ColumnToStartAt + c1_x - c1_imgheader.LeftMostPixel) < c1_imgheader.RightMostPixel - c1_imgheader.LeftMostPixel )
 						{
@@ -180,9 +180,6 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 							al_fgetc( pck );
 						}
 					}
-					tmp = new Memory(c1_header.PaddingInRow);
-					al_fread( pck, tmp->GetData(), c1_header.PaddingInRow );
-					delete tmp;
 
 					c1_pixelstoskip = al_fread32le( pck );
 				}

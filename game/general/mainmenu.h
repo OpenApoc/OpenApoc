@@ -16,6 +16,8 @@ class MainMenu : public Stage
 		Cursor* mousecursor;
 		Form* testform;
 
+		PCK* testpck;
+
   public:
 		MainMenu();
 		~MainMenu();

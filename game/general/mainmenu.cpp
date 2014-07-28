@@ -8,6 +8,8 @@ MainMenu::MainMenu()
 
 	// testform = GAMECORE->GetForm("FORM_UFOPAEDIA_TITLE");
 	testform = GAMECORE->GetForm("FORM_MAINMENU");
+
+	testpck = new PCK( "UFODATA/NEWBUT.PCK", "UFODATA/NEWBUT.TAB", GAMECORE->GetPalette( "TACDATA/TACTICAL.PAL" ) );
 }
 
 MainMenu::~MainMenu()
@@ -67,6 +69,21 @@ void MainMenu::Render()
 	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
 	testform->Render();
 	mousecursor->Render();
+
+	int x = 0;
+	int y = 0;
+
+	for( int c = 0; c < testpck->GetImageCount(); c++ )
+	{
+		testpck->RenderImage( c, x, y );
+		x += 60;
+		if( x > FRAMEWORK->Display_GetWidth() )
+		{
+			x = 0;
+			y += 60;
+		}
+	}
+
 }
 
 bool MainMenu::IsTransition()
