@@ -3,5 +3,6 @@
 		<title>Open Apocalypse</title>
 		<include>LANGUAGES/STRINGS.XML</include>
 		<include>UI/MAINMENU.XML</include>
+		<include>UI/UFOPAEDIA.XML</include>
 	</game>
 </openapoc>

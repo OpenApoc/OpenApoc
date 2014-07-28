@@ -6,6 +6,7 @@ MainMenu::MainMenu()
 {
 	mousecursor = new Cursor( GAMECORE->GetPalette( "TACDATA/TACTICAL.PAL" ) );
 
+	// testform = GAMECORE->GetForm("FORM_UFOPAEDIA_TITLE");
 	testform = GAMECORE->GetForm("FORM_MAINMENU");
 }
 

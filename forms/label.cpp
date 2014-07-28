@@ -5,6 +5,11 @@ Label::Label( Control* Owner, std::string Text, IFont* Font ) : Control( Owner )
 {
 }
 
+Label::~Label()
+{
+	Control::~Control();
+}
+
 void Label::EventOccured( Event* e )
 {
 	Control::EventOccured( e );
@@ -52,4 +57,8 @@ void Label::Render()
 void Label::Update()
 {
 	// No "updates"
+}
+
+void Label::UnloadResources()
+{
 }

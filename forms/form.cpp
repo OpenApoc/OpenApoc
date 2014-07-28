@@ -31,6 +31,11 @@ Form::Form( tinyxml2::XMLElement* FormConfiguration ) : Control( nullptr )
 
 }
 
+Form::~Form()
+{
+	Control::~Control();
+}
+
 void Form::EventOccured( Event* e )
 {
 	Control::EventOccured( e );
@@ -45,4 +50,9 @@ void Form::Update()
 {
 	Control::Update();
 	ResolveLocation();
+}
+
+void Form::UnloadResources()
+{
+	Control::UnloadResources();
 }

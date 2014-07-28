@@ -1,10 +1,16 @@
 #include "graphic.h"
+#include "../game/resources/gamecore.h"
 
-Graphic::Graphic( Control* Owner, ALLEGRO_BITMAP* Image ) : Control( Owner )
+Graphic::Graphic( Control* Owner, std::string Image ) : Control( Owner )
 {
-	image = Image;
-	Size.X = al_get_bitmap_width( image );
-	Size.Y = al_get_bitmap_height( image );
+	image_name = Image;
+	image = nullptr;
+}
+
+Graphic::~Graphic()
+{
+	UnloadResources();
+	Control::~Control();
 }
 
 void Graphic::EventOccured( Event* e )
@@ -14,6 +20,19 @@ void Graphic::EventOccured( Event* e )
 
 void Graphic::Render()
 {
+	if( image == nullptr )
+	{
+		image = GAMECORE->GetImage( image_name );
+		if( Size.X == 0 )
+		{
+			Size.X = al_get_bitmap_width( image );
+		}
+		if( Size.Y == 0 )
+		{
+			Size.Y = al_get_bitmap_height( image );
+		}
+	}
+
 	int bmpw = al_get_bitmap_width( image );
 	int bmph = al_get_bitmap_height( image );
 	if( bmpw == Size.X && bmph == Size.Y )
@@ -29,4 +48,14 @@ void Graphic::Render()
 void Graphic::Update()
 {
 	Control::Update();
+}
+
+void Graphic::UnloadResources()
+{
+	if( image != nullptr )
+	{
+		al_destroy_bitmap( image );
+		image = nullptr;
+	}
+	Control::UnloadResources();
 }

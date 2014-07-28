@@ -20,4 +20,10 @@
 		<en_gb>Quit</en_gb>
 		<es_la>Abandonar</es_la>
 	</string>
+	<string id="STR_UFOPAEDIA">
+		<en_gb>UFOPAEDIA</en_gb>
+	</string>
+	<string id="STR_ORGANISATIONS">
+		<en_gb>Organisations</en_gb>
+	</string>
 </openapoc>

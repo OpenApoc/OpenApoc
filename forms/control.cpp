@@ -326,7 +326,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		}
 		if( nodename == "graphic" )
 		{
-			Graphic* g = new Graphic( this, GAMECORE->GetImage( node->FirstChildElement("image")->GetText() ) );
+			Graphic* g = new Graphic( this, node->FirstChildElement("image")->GetText() );
 			g->ConfigureFromXML( node );
 		}
 		if( nodename == "textbutton" )
@@ -339,9 +339,9 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 			GraphicButton* gb;
 			if( node->FirstChildElement("image_hover") == nullptr )
 			{
-				gb = new GraphicButton( this, GAMECORE->GetImage( node->FirstChildElement("image")->GetText() ), GAMECORE->GetImage( node->FirstChildElement("image_depressed")->GetText() ) );
+				gb = new GraphicButton( this, node->FirstChildElement("image")->GetText(), node->FirstChildElement("image_depressed")->GetText() );
 			} else {
-				gb = new GraphicButton( this, GAMECORE->GetImage( node->FirstChildElement("image")->GetText() ), GAMECORE->GetImage( node->FirstChildElement("image_depressed")->GetText() ), GAMECORE->GetImage( node->FirstChildElement("image_hover")->GetText() ) );
+				gb = new GraphicButton( this,node->FirstChildElement("image")->GetText(), node->FirstChildElement("image_depressed")->GetText(), node->FirstChildElement("image_hover")->GetText() );
 			}
 			gb->ConfigureFromXML( node );
 		}
@@ -398,4 +398,8 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 			}
 		}
 	}
+}
+
+void Control::UnloadResources()
+{
 }

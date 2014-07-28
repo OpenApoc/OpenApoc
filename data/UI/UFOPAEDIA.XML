@@ -5,29 +5,145 @@
 		<style minwidth="640" minheight="480">
 			<position x="centre" y="centre" />
 			<size width="644" height="484" />
-			<backcolour r="128" g="80" b="80" />
+			<backcolour r="80" g="80" b="80" />
 			
 			<graphic>
 				<image>UFOPAEDI/TITLE.PCX</image>
 				<position x="2" y="2" />
 				<size width="640" height="480" />
 			</graphic>
-
-			<label text="STR_XCOM">
+			
+			<label text="STR_UFOPAEDIA">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="20" y="16" />
+				<size width="320" height="40" />
+				<alignment horizontal="left" vertical="centre" />
+				<font>APOC:LARGE:UFODATA/PAL_06.DAT</font>
+			</label>
+			
+			<label text="STR_ORGANISATIONS">
 				<backcolour r="0" g="0" b="0" a="0" />
 				<position x="344" y="62" />
 				<size width="270" height="40" />
 				<alignment horizontal="left" vertical="centre" />
-				<font>APOC:LARGE:UFODATA/PAL_06.DAT</font>
+				<font>APOC:SMALL:UFODATA/PAL_06.DAT</font>
 			</label>
-			<control id="BUTTON_XCOM">
+			<control id="BUTTON_ORGS">
 				<backcolour r="0" g="0" b="0" a="0" />
 				<position x="4" y="62" />
-				<size width="636" height="40"s />
+				<size width="636" height="40" />
 			</control>
 			
+			<label text="STR_VEHICLES">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="344" y="102" />
+				<size width="270" height="40" />
+				<alignment horizontal="left" vertical="centre" />
+				<font>APOC:SMALL:UFODATA/PAL_06.DAT</font>
+			</label>
+			<control id="BUTTON_VEHICLES">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="102" />
+				<size width="636" height="40" />
+			</control>
 			
+			<label text="STR_VEHICLE_EQUIPMENT">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="344" y="142" />
+				<size width="270" height="40" />
+				<alignment horizontal="left" vertical="centre" />
+				<font>APOC:SMALL:UFODATA/PAL_06.DAT</font>
+			</label>
+			<control id="BUTTON_VEHICLEEQUIPMENT">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="142" />
+				<size width="636" height="40" />
+			</control>
 			
+			<label text="STR_EQUIPMENT">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="344" y="182" />
+				<size width="270" height="40" />
+				<alignment horizontal="left" vertical="centre" />
+				<font>APOC:SMALL:UFODATA/PAL_06.DAT</font>
+			</label>
+			<control id="BUTTON_EQUIPMENT">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="182" />
+				<size width="636" height="40" />
+			</control>
+			
+			<label text="STR_BASE_FACILITIES">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="344" y="222" />
+				<size width="270" height="40" />
+				<alignment horizontal="left" vertical="centre" />
+				<font>APOC:SMALL:UFODATA/PAL_06.DAT</font>
+			</label>
+			<control id="BUTTON_FACILITIES">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="222" />
+				<size width="636" height="40" />
+			</control>
+
+
+			<label text="STR_ALIEN_CRAFT">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="344" y="262" />
+				<size width="270" height="40" />
+				<alignment horizontal="left" vertical="centre" />
+				<font>APOC:SMALL:UFODATA/PAL_06.DAT</font>
+			</label>
+			<control id="BUTTON_ALIENCRAFT">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="262" />
+				<size width="636" height="40" />
+			</control>
+			
+			<label text="STR_ALIENS">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="344" y="302" />
+				<size width="270" height="40" />
+				<alignment horizontal="left" vertical="centre" />
+				<font>APOC:SMALL:UFODATA/PAL_06.DAT</font>
+			</label>
+			<control id="BUTTON_ALIENS">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="302" />
+				<size width="636" height="40" />
+			</control>
+			
+			<label text="STR_THE_ALIEN_DIMENSION">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="344" y="342" />
+				<size width="270" height="40" />
+				<alignment horizontal="left" vertical="centre" />
+				<font>APOC:SMALL:UFODATA/PAL_06.DAT</font>
+			</label>
+			<control id="BUTTON_ALIENDIMENSION">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="342" />
+				<size width="636" height="40" />
+			</control>
+			
+			<label text="STR_BUILDINGS">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="344" y="382" />
+				<size width="270" height="40" />
+				<alignment horizontal="left" vertical="centre" />
+				<font>APOC:SMALL:UFODATA/PAL_06.DAT</font>
+			</label>
+			<control id="BUTTON_BUILDINGS">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="382" />
+				<size width="636" height="40" />
+			</control>
+	
+			<textbutton id="BUTTON_QUIT" text="STR_QUIT">
+				<position x="right" y="bottom" />
+				<size width="48" height="48" />
+				<font>APOC:SMALL:TACDATA/TACTICAL.PAL</font>
+			</textbutton>
 		</style>
 
 	</form>

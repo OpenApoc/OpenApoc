@@ -1,34 +1,33 @@
 #include "graphicbutton.h"
 #include "../framework/framework.h"
+#include "../game/resources/gamecore.h"
 
 RawSound* GraphicButton::buttonclick = nullptr;
 
-GraphicButton::GraphicButton( Control* Owner, ALLEGRO_BITMAP* Image, ALLEGRO_BITMAP* ImageDepressed ) : Control( Owner )
+GraphicButton::GraphicButton( Control* Owner, std::string Image, std::string ImageDepressed ) : Control( Owner )
 {
-	image = Image;
-	imagedepressed = ImageDepressed;
+	image = nullptr;
+	imagedepressed = nullptr;
 	imagehover = nullptr;
-	Size.X = al_get_bitmap_width( image );
-	Size.Y = al_get_bitmap_height( image );
+	image_name = Image;
+	imagedepressed_name = ImageDepressed;
+	imagehover_name = "";
 }
 
-GraphicButton::GraphicButton( Control* Owner, ALLEGRO_BITMAP* Image, ALLEGRO_BITMAP* ImageDepressed, ALLEGRO_BITMAP* ImageHover ) : Control( Owner )
+GraphicButton::GraphicButton( Control* Owner, std::string Image, std::string ImageDepressed, std::string ImageHover ) : Control( Owner )
 {
-	image = Image;
-	imagedepressed = ImageDepressed;
-	imagehover = ImageHover;
-	Size.X = al_get_bitmap_width( image );
-	Size.Y = al_get_bitmap_height( image );
+	image = nullptr;
+	imagedepressed = nullptr;
+	imagehover = nullptr;
+	image_name = Image;
+	imagedepressed_name = ImageDepressed;
+	imagehover_name = ImageHover;
 }
 
 GraphicButton::~GraphicButton()
 {
-	al_destroy_bitmap( image );
-	al_destroy_bitmap( imagedepressed );
-	if( imagehover != nullptr )
-	{
-		al_destroy_bitmap( imagehover );
-	}
+	UnloadResources();
+	Control::~Control();
 }
 
 void GraphicButton::EventOccured( Event* e )
@@ -54,6 +53,27 @@ void GraphicButton::Render()
 {
 	ALLEGRO_BITMAP* useimage;
 
+	if( image == nullptr )
+	{
+		image = GAMECORE->GetImage( image_name );
+		if( Size.X == 0 )
+		{
+			Size.X = al_get_bitmap_width( image );
+		}
+		if( Size.Y == 0 )
+		{
+			Size.Y = al_get_bitmap_height( image );
+		}
+	}
+	if( imagedepressed == nullptr )
+	{
+		imagedepressed = GAMECORE->GetImage( imagedepressed_name );
+	}
+	if( imagehover == nullptr && imagehover_name != "" )
+	{
+		imagehover = GAMECORE->GetImage( imagehover_name );
+	}
+
 	useimage = image;
 	if( mouseDepressed )
 	{
@@ -77,4 +97,24 @@ void GraphicButton::Render()
 void GraphicButton::Update()
 {
 	Control::Update();
+}
+
+void GraphicButton::UnloadResources()
+{
+	if( image != nullptr )
+	{
+		al_destroy_bitmap( image );
+		image = nullptr;
+	}
+	if( imagedepressed != nullptr )
+	{
+		al_destroy_bitmap( imagedepressed );
+		imagedepressed = nullptr;
+	}
+	if( imagehover != nullptr )
+	{
+		al_destroy_bitmap( imagehover );
+		imagehover = nullptr;
+	}
+	Control::UnloadResources();
 }

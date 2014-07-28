@@ -7,11 +7,13 @@
 
 void BootUp::Begin()
 {
+	loadingimage = DATA->load_bitmap( "UI/LOADING.PNG" );
 	loadtime = 0;
 	FRAMEWORK->Display_SetTitle("OpenApocalypse");
+	loadingimageangle = new Angle();
 
 	threadload = nullptr;
-	//threadload = al_create_thread( CreateGameCore, nullptr );
+	threadload = al_create_thread( CreateGameCore, nullptr );
 	if( threadload != nullptr )
 	{
 		al_start_thread( threadload );
@@ -28,6 +30,7 @@ void BootUp::Resume()
 
 void BootUp::Finish()
 {
+	al_destroy_bitmap( loadingimage );
 }
 
 void BootUp::EventOccurred(Event *e)
@@ -45,12 +48,15 @@ void BootUp::EventOccurred(Event *e)
 
 void BootUp::Update()
 {
+	loadtime++;
+	loadingimageangle->Add( 5 );
+
 	if( threadload == nullptr && GAMECORE == nullptr )
 	{
 		CreateGameCore( nullptr, nullptr );
 	}
 
-	if( GAMECORE != nullptr && GAMECORE->Loaded )
+	if( GAMECORE != nullptr && GAMECORE->Loaded && loadtime > FRAMES_PER_SECOND * 2 )
 	{
 		StartGame();
 	}
@@ -59,6 +65,7 @@ void BootUp::Update()
 void BootUp::Render()
 {
 	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
+	al_draw_rotated_bitmap( loadingimage, 24, 24, FRAMEWORK->Display_GetWidth() - 50, FRAMEWORK->Display_GetHeight() - 50, loadingimageangle->ToRadians(), 0 );
 }
 
 void BootUp::StartGame()

@@ -10,8 +10,9 @@
 class BootUp : public Stage
 {
 	private:
-		ALLEGRO_BITMAP* ufopediaimg;
+		ALLEGRO_BITMAP* loadingimage;
 		int loadtime;
+		Angle* loadingimageangle;
 		ALLEGRO_THREAD* threadload;
 
 		void StartGame();

@@ -17,6 +17,11 @@ TextButton::TextButton( Control* Owner, std::string Text, IFont* Font ) : Contro
 	}
 }
 
+TextButton::~TextButton()
+{
+	Control::~Control();
+}
+
 void TextButton::EventOccured( Event* e )
 {
 	Control::EventOccured( e );
@@ -90,4 +95,8 @@ void TextButton::Render()
 void TextButton::Update()
 {
 	// No "updates"
+}
+
+void TextButton::UnloadResources()
+{
 }
