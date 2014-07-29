@@ -83,120 +83,120 @@
     <es_la>Aliens</es_la>
   </string>
   <string id="STR_ALIENS_INFO">
-    <en_gb>“All results of Alien research are recorded here, including results of autopsies and analysis of living specimens.”</en_gb>
-    <es_la>“All results of Alien research are recorded here, including results of autopsies and analysis of living specimens.”</es_la>
+    <en_gb>All results of Alien research are recorded here, including results of autopsies and analysis of living specimens.</en_gb>
+    <es_la>All results of Alien research are recorded here, including results of autopsies and analysis of living specimens.</es_la>
   </string>
   <string id="STR_BUILDINGS">
-    <en_gb>“Buildings”</en_gb>
-    <es_la>“Buildings”</es_la>
+    <en_gb>Buildings</en_gb>
+    <es_la>Buildings</es_la>
   </string>
   <string id="STR_BUILDINGS_INFO">
-    <en_gb>“Each building in Mega-Primus is a vast labyrinth of corridors, atriums, rooms, halls and service ducts. If Aliens have infiltrated a building they will be found in just a small part of the complex, with plenty of places to escape from the combat zone. Buildings with lower populations or numerous service areas provide much better places for Aliens to hide and breed.”</en_gb>
-    <es_la>“Each building in Mega-Primus is a vast labyrinth of corridors, atriums, rooms, halls and service ducts. If Aliens have infiltrated a building they will be found in just a small part of the complex, with plenty of places to escape from the combat zone. Buildings with lower populations or numerous service areas provide much better places for Aliens to hide and breed.”</es_la>
+    <en_gb>Each building in Mega-Primus is a vast labyrinth of corridors, atriums, rooms, halls and service ducts. If Aliens have infiltrated a building they will be found in just a small part of the complex, with plenty of places to escape from the combat zone. Buildings with lower populations or numerous service areas provide much better places for Aliens to hide and breed.</en_gb>
+    <es_la>Each building in Mega-Primus is a vast labyrinth of corridors, atriums, rooms, halls and service ducts. If Aliens have infiltrated a building they will be found in just a small part of the complex, with plenty of places to escape from the combat zone. Buildings with lower populations or numerous service areas provide much better places for Aliens to hide and breed.</es_la>
   </string>
   <string id="ATR_ALIEN_DIMENSION">
-    <en_gb>“The Alien Dimension”</en_gb>
-    <es_la>“The Alien Dimension”</es_la>
+    <en_gb>The Alien Dimension</en_gb>
+    <es_la>The Alien Dimension</es_la>
   </string>
   <string id="ATR_ALIEN_DIMENSION_INFO">
-    <en_gb>“All research into the origins of the Aliens and their home world is collected in this section.”</en_gb>
-    <es_la>“All research into the origins of the Aliens and their home world is collected in this section.”</es_la>
+    <en_gb>All research into the origins of the Aliens and their home world is collected in this section.</en_gb>
+    <es_la>All research into the origins of the Aliens and their home world is collected in this section.</es_la>
   </string>
   <string id="STR_PROBE">
-    <en_gb>“Alien Probe”</en_gb>
-    <es_la>“Alien Probe”</es_la>
+    <en_gb>Alien Probe</en_gb>
+    <es_la>Alien Probe</es_la>
   </string>
   <string id="STR_PROBE_INFO">
-    <en_gb>“The structure of the vehicle suggests an organic construction process. The skin is composed of a strong and unusual compound that allows the craft to travel without harm through the Dimension Gates. This unmanned craft is equipped with an unusual type of beam weapon. Its limited capability suggests that it is purely designed to collect information and then return to the Alien Dimension.”</en_gb>
-    <es_la>“The structure of the vehicle suggests an organic construction process. The skin is composed of a strong and unusual compound that allows the craft to travel without harm through the Dimension Gates. This unmanned craft is equipped with an unusual type of beam weapon. Its limited capability suggests that it is purely designed to collect information and then return to the Alien Dimension.”</es_la>
+    <en_gb>The structure of the vehicle suggests an organic construction process. The skin is composed of a strong and unusual compound that allows the craft to travel without harm through the Dimension Gates. This unmanned craft is equipped with an unusual type of beam weapon. Its limited capability suggests that it is purely designed to collect information and then return to the Alien Dimension.</en_gb>
+    <es_la>The structure of the vehicle suggests an organic construction process. The skin is composed of a strong and unusual compound that allows the craft to travel without harm through the Dimension Gates. This unmanned craft is equipped with an unusual type of beam weapon. Its limited capability suggests that it is purely designed to collect information and then return to the Alien Dimension.</es_la>
   </string>
   <string id="STR_SCOUT_SHIP">
-    <en_gb>“Alien Scout Ship”</en_gb>
-    <es_la>“Alien Scout Ship”</es_la>
+    <en_gb>Alien Scout Ship</en_gb>
+    <es_la>Alien Scout Ship</es_la>
   </string>
   <string id="STR_SCOUT_SHIP_INFO">
-    <en_gb>“This vessel appears to be a surveillance craft. Its structure is very strange and there is no evidence of any crew or cargo. The craft&amp;apos;s internals appear to have been intentionally destroyed by the Aliens from a remote location. The craft is armed with small beam weapon. The craft does not appear to be a great threat to the city, but can only be a precursor to more dangerous incursions.”</en_gb>
-    <es_la>“This vessel appears to be a surveillance craft. Its structure is very strange and there is no evidence of any crew or cargo. The craft&amp;apos;s internals appear to have been intentionally destroyed by the Aliens from a remote location. The craft is armed with small beam weapon. The craft does not appear to be a great threat to the city, but can only be a precursor to more dangerous incursions.”</es_la>
+    <en_gb>This vessel appears to be a surveillance craft. Its structure is very strange and there is no evidence of any crew or cargo. The craft&amp;apos;s internals appear to have been intentionally destroyed by the Aliens from a remote location. The craft is armed with small beam weapon. The craft does not appear to be a great threat to the city, but can only be a precursor to more dangerous incursions.</en_gb>
+    <es_la>This vessel appears to be a surveillance craft. Its structure is very strange and there is no evidence of any crew or cargo. The craft&amp;apos;s internals appear to have been intentionally destroyed by the Aliens from a remote location. The craft is armed with small beam weapon. The craft does not appear to be a great threat to the city, but can only be a precursor to more dangerous incursions.</es_la>
   </string>
   <string id="STR_TRANSPORTER_SHIP">
-    <en_gb>“Alien Transporter”</en_gb>
-    <es_la>“Alien Transporter”</es_la>
+    <en_gb>Alien Transporter</en_gb>
+    <es_la>Alien Transporter</es_la>
   </string>
   <string id="STR_TRANSPORTER_SHIP_INFO">
-    <en_gb>“The primary mission of this craft is to deposit Alien life forms inside city buildings. This represents a serious challenge for our ground forces, but if they can be shot down before they unload their passengers, then the problem will be minimized. The craft is armed with the same beam weapon as the Scout Ships or Probes, but it is slower moving and an easier target to hit.”</en_gb>
-    <es_la>“The primary mission of this craft is to deposit Alien life forms inside city buildings. This represents a serious challenge for our ground forces, but if they can be shot down before they unload their passengers, then the problem will be minimized. The craft is armed with the same beam weapon as the Scout Ships or Probes, but it is slower moving and an easier target to hit.”</es_la>
+    <en_gb>The primary mission of this craft is to deposit Alien life forms inside city buildings. This represents a serious challenge for our ground forces, but if they can be shot down before they unload their passengers, then the problem will be minimized. The craft is armed with the same beam weapon as the Scout Ships or Probes, but it is slower moving and an easier target to hit.</en_gb>
+    <es_la>The primary mission of this craft is to deposit Alien life forms inside city buildings. This represents a serious challenge for our ground forces, but if they can be shot down before they unload their passengers, then the problem will be minimized. The craft is armed with the same beam weapon as the Scout Ships or Probes, but it is slower moving and an easier target to hit.</es_la>
   </string>
   <string id="STR_FAST_ATTACK_SHIP">
-    <en_gb>“Alien Fast Attack Ship”</en_gb>
-    <es_la>“Alien Fast Attack Ship”</es_la>
+    <en_gb>Alien Fast Attack Ship</en_gb>
+    <es_la>Alien Fast Attack Ship</es_la>
   </string>
   <string id="STR_FAST_ATTACK_SHIP_INFO">
-    <en_gb>“This craft is well armored, highly maneuverable and armed with a powerful beam weapon. It is designed to protect other more vulnerable Alien ships. Avoid these craft if the threat to our vehicles is too great and concentrate on shooting down the Alien Transports.”</en_gb>
-    <es_la>“This craft is well armored, highly maneuverable and armed with a powerful beam weapon. It is designed to protect other more vulnerable Alien ships. Avoid these craft if the threat to our vehicles is too great and concentrate on shooting down the Alien Transports.”</es_la>
+    <en_gb>This craft is well armored, highly maneuverable and armed with a powerful beam weapon. It is designed to protect other more vulnerable Alien ships. Avoid these craft if the threat to our vehicles is too great and concentrate on shooting down the Alien Transports.</en_gb>
+    <es_la>This craft is well armored, highly maneuverable and armed with a powerful beam weapon. It is designed to protect other more vulnerable Alien ships. Avoid these craft if the threat to our vehicles is too great and concentrate on shooting down the Alien Transports.</es_la>
   </string>
   <string id="STR_DESTROYER_SHIP">
-    <en_gb>“Alien Destroyer</en_gb>
-    <es_la>“Alien Destroyer</es_la>
+    <en_gb>Alien Destroyer</en_gb>
+    <es_la>Alien Destroyer</es_la>
   </string>
   <string id="STR_DESTROYER_SHIP_INFO">
-    <en_gb>“The Destroyer is heavily armored and its behavior is aggressive. It is armed with a powerful Alien Missile Launcher capable of immense destruction. It can also deposit Alien beings into the city.&amp;quot;</en_gb>
-    <es_la>“The Destroyer is heavily armored and its behavior is aggressive. It is armed with a powerful Alien Missile Launcher capable of immense destruction. It can also deposit Alien beings into the city.&amp;quot;</es_la>
+    <en_gb>The Destroyer is heavily armored and its behavior is aggressive. It is armed with a powerful Alien Missile Launcher capable of immense destruction. It can also deposit Alien beings into the city.&amp;quot;</en_gb>
+    <es_la>The Destroyer is heavily armored and its behavior is aggressive. It is armed with a powerful Alien Missile Launcher capable of immense destruction. It can also deposit Alien beings into the city.&amp;quot;</es_la>
   </string>
   <string id="STR_ASSAULT_SHIP">
-    <en_gb>“Alien Assault Ship</en_gb>
-    <es_la>“Alien Assault Ship</es_la>
+    <en_gb>Alien Assault Ship</en_gb>
+    <es_la>Alien Assault Ship</es_la>
   </string>
   <string id="STR_ASSAULT_SHIP_INFO">
-    <en_gb>“The Assault Ship effectively replaces the Alien Transport as a troop carrier. It can deposit large numbers of Aliens into city buildings and is armed with a powerful beam weapon. This craft is highly dangerous and must be stopped at all costs.&amp;quot;</en_gb>
-    <es_la>“The Assault Ship effectively replaces the Alien Transport as a troop carrier. It can deposit large numbers of Aliens into city buildings and is armed with a powerful beam weapon. This craft is highly dangerous and must be stopped at all costs.&amp;quot;</es_la>
+    <en_gb>The Assault Ship effectively replaces the Alien Transport as a troop carrier. It can deposit large numbers of Aliens into city buildings and is armed with a powerful beam weapon. This craft is highly dangerous and must be stopped at all costs.&amp;quot;</en_gb>
+    <es_la>The Assault Ship effectively replaces the Alien Transport as a troop carrier. It can deposit large numbers of Aliens into city buildings and is armed with a powerful beam weapon. This craft is highly dangerous and must be stopped at all costs.&amp;quot;</es_la>
   </string>
   <string id="STR_BOMBER_SHIP">
-    <en_gb>“Alien Bomber</en_gb>
-    <es_la>“Alien Bomber</es_la>
+    <en_gb>Alien Bomber</en_gb>
+    <es_la>Alien Bomber</es_la>
   </string>
   <string id="STR_BOMBER_SHIP_INFO">
-    <en_gb>“The Alien Bomber is equipped with an unusual missile launcher that splits into multiple, independently targeted missiles. It also has a light beam weapon to deal with close air combat. There is a limited crew on board.&amp;quot;</en_gb>
-    <es_la>“The Alien Bomber is equipped with an unusual missile launcher that splits into multiple, independently targeted missiles. It also has a light beam weapon to deal with close air combat. There is a limited crew on board.&amp;quot;</es_la>
+    <en_gb>The Alien Bomber is equipped with an unusual missile launcher that splits into multiple, independently targeted missiles. It also has a light beam weapon to deal with close air combat. There is a limited crew on board.&amp;quot;</en_gb>
+    <es_la>The Alien Bomber is equipped with an unusual missile launcher that splits into multiple, independently targeted missiles. It also has a light beam weapon to deal with close air combat. There is a limited crew on board.&amp;quot;</es_la>
   </string>
   <string id="STR_SCORT_SHIP">
-    <en_gb>“Alien Escort Ship”</en_gb>
-    <es_la>“Alien Escort Ship”</es_la>
+    <en_gb>Alien Escort Ship</en_gb>
+    <es_la>Alien Escort Ship</es_la>
   </string>
   <string id="STR_SCORT_SHIP_INFO">
-    <en_gb>“This craft is fast and nimble. On its own it represents no threat, but is deadly when combined with other Alien combat ships. It is armed with a missile which generates a Stasis Field on impact. This field holds the target still for a small period of time so craft that rely on evasion for defense, become vulnerable.”</en_gb>
-    <es_la>“This craft is fast and nimble. On its own it represents no threat, but is deadly when combined with other Alien combat ships. It is armed with a missile which generates a Stasis Field on impact. This field holds the target still for a small period of time so craft that rely on evasion for defense, become vulnerable.”</es_la>
+    <en_gb>This craft is fast and nimble. On its own it represents no threat, but is deadly when combined with other Alien combat ships. It is armed with a missile which generates a Stasis Field on impact. This field holds the target still for a small period of time so craft that rely on evasion for defense, become vulnerable.</en_gb>
+    <es_la>This craft is fast and nimble. On its own it represents no threat, but is deadly when combined with other Alien combat ships. It is armed with a missile which generates a Stasis Field on impact. This field holds the target still for a small period of time so craft that rely on evasion for defense, become vulnerable.</es_la>
   </string>
   <string id="STR_BATTLESHIP">
-    <en_gb>“Alien Battleship”</en_gb>
-    <es_la>“Alien Battleship”</es_la>
+    <en_gb>Alien Battleship</en_gb>
+    <es_la>Alien Battleship</es_la>
   </string>
   <string id="STR_BATTLESHIP-INFO">
-    <en_gb>“This immense craft is heavily armored, well armed and has a large crew. It is equipped with a Heavy Disruptor Beam and Disruptor Missiles. If the Aliens can produce just a handful of these devastating leviathans, the future of our world looks bleak.”</en_gb>
-    <es_la>“This immense craft is heavily armored, well armed and has a large crew. It is equipped with a Heavy Disruptor Beam and Disruptor Missiles. If the Aliens can produce just a handful of these devastating leviathans, the future of our world looks bleak.”</es_la>
+    <en_gb>This immense craft is heavily armored, well armed and has a large crew. It is equipped with a Heavy Disruptor Beam and Disruptor Missiles. If the Aliens can produce just a handful of these devastating leviathans, the future of our world looks bleak.</en_gb>
+    <es_la>This immense craft is heavily armored, well armed and has a large crew. It is equipped with a Heavy Disruptor Beam and Disruptor Missiles. If the Aliens can produce just a handful of these devastating leviathans, the future of our world looks bleak.</es_la>
   </string>
   <string id="STR_MOTHERSHIP">
-    <en_gb>“Alien Mothership”</en_gb>
-    <es_la>“Alien Mothership”</es_la>
+    <en_gb>Alien Mothership</en_gb>
+    <es_la>Alien Mothership</es_la>
   </string>
   <string id="STR_MOTHERSHIP_INFO">
-    <en_gb>“The Mothership is an extremely large, well equipped vessel. It is armed with a Heavy Disruptor Beam, Disruptor Multi-Bombs and Stasis Field Bombs. It represents a very serious threat to the city because its purpose seems to be mass destruction rather than infiltration. If the Aliens become desperate they will deploy this craft to raze the city to the ground. They must be stopped at all costs.”</en_gb>
-    <es_la>“The Mothership is an extremely large, well equipped vessel. It is armed with a Heavy Disruptor Beam, Disruptor Multi-Bombs and Stasis Field Bombs. It represents a very serious threat to the city because its purpose seems to be mass destruction rather than infiltration. If the Aliens become desperate they will deploy this craft to raze the city to the ground. They must be stopped at all costs.”</es_la>
+    <en_gb>The Mothership is an extremely large, well equipped vessel. It is armed with a Heavy Disruptor Beam, Disruptor Multi-Bombs and Stasis Field Bombs. It represents a very serious threat to the city because its purpose seems to be mass destruction rather than infiltration. If the Aliens become desperate they will deploy this craft to raze the city to the ground. They must be stopped at all costs.</en_gb>
+    <es_la>The Mothership is an extremely large, well equipped vessel. It is armed with a Heavy Disruptor Beam, Disruptor Multi-Bombs and Stasis Field Bombs. It represents a very serious threat to the city because its purpose seems to be mass destruction rather than infiltration. If the Aliens become desperate they will deploy this craft to raze the city to the ground. They must be stopped at all costs.</es_la>
   </string>
   <string id="STR_POLICE_HOVERCAR">
-    <en_gb>“Police Hovercar”</en_gb>
-    <es_la>“Police Hovercar”</es_la>
+    <en_gb>Police Hovercar</en_gb>
+    <es_la>Police Hovercar</es_la>
   </string>
   <string id="STR_POLICE_HOVERCAR_INFO">
-    <en_gb>“Megapol&amp;apos;s police Hovercars are the scourge of the slum dwelling criminal gangs. They are well armed and able to travel freely within and outside the city boundaries, scouring the ground or air for unlicensed criminal vehicles. They are no match for heavier military vehicles, but Megapol is able to manufacture many of these scout cars and can replace any losses. The vehicle&amp;apos;s styling is required to conform to city aesthetic ordinances concerning pleasurable design of public vehicles.”</en_gb>
-    <es_la>“Megapol&amp;apos;s police Hovercars are the scourge of the slum dwelling criminal gangs. They are well armed and able to travel freely within and outside the city boundaries, scouring the ground or air for unlicensed criminal vehicles. They are no match for heavier military vehicles, but Megapol is able to manufacture many of these scout cars and can replace any losses. The vehicle&amp;apos;s styling is required to conform to city aesthetic ordinances concerning pleasurable design of public vehicles.”</es_la>
+    <en_gb>Megapol&amp;apos;s police Hovercars are the scourge of the slum dwelling criminal gangs. They are well armed and able to travel freely within and outside the city boundaries, scouring the ground or air for unlicensed criminal vehicles. They are no match for heavier military vehicles, but Megapol is able to manufacture many of these scout cars and can replace any losses. The vehicle&amp;apos;s styling is required to conform to city aesthetic ordinances concerning pleasurable design of public vehicles.</en_gb>
+    <es_la>Megapol&amp;apos;s police Hovercars are the scourge of the slum dwelling criminal gangs. They are well armed and able to travel freely within and outside the city boundaries, scouring the ground or air for unlicensed criminal vehicles. They are no match for heavier military vehicles, but Megapol is able to manufacture many of these scout cars and can replace any losses. The vehicle&amp;apos;s styling is required to conform to city aesthetic ordinances concerning pleasurable design of public vehicles.</es_la>
   </string>
   <string id="STR_AIRTAXI">
-    <en_gb>“Airtaxi”</en_gb>
-    <es_la>“Airtaxi”</es_la>
+    <en_gb>Airtaxi</en_gb>
+    <es_la>Airtaxi</es_la>
   </string>
   <string id="STR_AIRTAXI_INFO">
-    <en_gb>“The wealthy citizen would not normally travel by people-tube or road, but instead hire the services of a fast and reliable Airtaxi. The styling is conspicuously based on the more humble road going version, but the ride is more refined. Expect the occasional Airtaxi you see to contain a VIP, or flamboyant Sensovision celebrity.&amp;quot;</en_gb>
-    <es_la>“The wealthy citizen would not normally travel by people-tube or road, but instead hire the services of a fast and reliable Airtaxi. The styling is conspicuously based on the more humble road going version, but the ride is more refined. Expect the occasional Airtaxi you see to contain a VIP, or flamboyant Sensovision celebrity.&amp;quot;</es_la>
+    <en_gb>The wealthy citizen would not normally travel by people-tube or road, but instead hire the services of a fast and reliable Airtaxi. The styling is conspicuously based on the more humble road going version, but the ride is more refined. Expect the occasional Airtaxi you see to contain a VIP, or flamboyant Sensovision celebrity.&amp;quot;</en_gb>
+    <es_la>The wealthy citizen would not normally travel by people-tube or road, but instead hire the services of a fast and reliable Airtaxi. The styling is conspicuously based on the more humble road going version, but the ride is more refined. Expect the occasional Airtaxi you see to contain a VIP, or flamboyant Sensovision celebrity.&amp;quot;</es_la>
   </string>
   <string id="STR_RESCUE_TRASNPORT">
     <en_gb>Rescue Transport</en_gb>
