@@ -337,11 +337,21 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		if( nodename == "graphicbutton" )
 		{
 			GraphicButton* gb;
+			std::string gb_image = "";
+			if( node->FirstChildElement("image")->GetText() != nullptr )
+			{
+				gb_image = node->FirstChildElement("image")->GetText();
+			}
+			std::string gb_dep = node->FirstChildElement("image_depressed")->GetText();
+			if( node->FirstChildElement("image_depressed")->GetText() != nullptr )
+			{
+				gb_dep = node->FirstChildElement("image_depressed")->GetText();
+			}
 			if( node->FirstChildElement("image_hover") == nullptr )
 			{
-				gb = new GraphicButton( this, node->FirstChildElement("image")->GetText(), node->FirstChildElement("image_depressed")->GetText() );
+				gb = new GraphicButton( this, gb_image, gb_dep );
 			} else {
-				gb = new GraphicButton( this,node->FirstChildElement("image")->GetText(), node->FirstChildElement("image_depressed")->GetText(), node->FirstChildElement("image_hover")->GetText() );
+				gb = new GraphicButton( this, gb_image, gb_dep, node->FirstChildElement("image_hover")->GetText() );
 			}
 			gb->ConfigureFromXML( node );
 		}

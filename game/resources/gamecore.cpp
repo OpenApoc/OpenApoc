@@ -110,7 +110,19 @@ Form* GameCore::GetForm(std::string ID)
 
 ALLEGRO_BITMAP* GameCore::GetImage(std::string ImageData)
 {
-	return DATA->load_bitmap(ImageData);
+	ALLEGRO_BITMAP* img = nullptr;
+	PCK* pck;
+
+	if( ImageData.substr( 0, 4 ) == "PCK:" )
+	{
+		std::vector<std::string> pckdata = Strings::Split( ImageData, ':' );
+		pck = new PCK( pckdata[1], pckdata[2], GetPalette( pckdata[4] ), Strings::ToInteger( pckdata[3] ) );
+		img = pck->GetImage( 0 );
+		delete pck;
+	} else {
+		img = DATA->load_bitmap(ImageData);
+	}
+	return img;
 }
 
 IFont* GameCore::GetFont(std::string FontData)

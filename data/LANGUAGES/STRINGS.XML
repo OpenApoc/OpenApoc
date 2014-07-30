@@ -588,11 +588,11 @@
 		<es_la	>The standard cannon for police and military vehicles; it fires a high velocity armor piercing shell.</es_la>
 	</string>
 	<string id="STR_JANITOR_MISSILE_ARRAY">
-		<en_g	b>Janitor Missile Array</en_gb>
-		<es_	la>Janitor Missile Array</es_la>
+		<en_gb>Janitor Missile Array</en_gb>
+		<es_la>Janitor Missile Array</es_la>
 	</string>
 	<string id="STR_JANITOR_MISSILE_ARRAY_INFO">
-		<en	_gb>Primarily a short range anti-air missile system. It is effective against smaller air vehicles.</en_gb>
+		<en_gb>Primarily a short range anti-air missile system. It is effective against smaller air vehicles.</en_gb>
 		<es_la>Primarily a short range anti-air missile system. It is effective against smaller air vehicles.</es_la>
 	</string>
 	<string id="STR_JUSTICE_MISSILE_LAUNCHER">

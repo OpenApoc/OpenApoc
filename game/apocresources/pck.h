@@ -42,4 +42,5 @@ class PCK
 
 		int GetImageCount();
 		void RenderImage( int Index, int X, int Y );
+		ALLEGRO_BITMAP* GetImage( int Index );
 };

@@ -139,11 +139,12 @@
 				<size width="636" height="40" />
 			</control>
 	
-			<textbutton id="BUTTON_QUIT" text="STR_QUIT">
-				<position x="right" y="bottom" />
-				<size width="48" height="48" />
-				<font>APOC:SMALL:TACDATA/TACTICAL.PAL</font>
-			</textbutton>
+			<graphicbutton id="BUTTON_QUIT" text="STR_QUIT">
+				<position x="604" y="444" />
+				<size width="35" height="34" />
+				<image />
+				<image_depressed>PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:5:TACDATA/TACTICAL.PAL</image_depressed>
+			</graphicbutton>
 		</style>
 
 	</form>

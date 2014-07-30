@@ -48,6 +48,11 @@ void PCK::RenderImage( int Index, int X, int Y )
 	al_draw_bitmap( images.at(Index), X, Y, 0 );
 }
 
+ALLEGRO_BITMAP* PCK::GetImage( int Index )
+{
+	return images.at(Index);
+}
+
 void PCK::LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 {
 	ALLEGRO_BITMAP* bitmap;
@@ -65,6 +70,7 @@ void PCK::LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 	int maxrec = (Index < 0 ? al_fsize(tab) / 4 : Index + 1);
 	for( int i = minrec; i < maxrec; i++ )
 	{
+		al_fseek( tab, i * 4, ALLEGRO_SEEK_SET );
 		unsigned int offset = al_fread32le( tab );
 
 		al_fseek( pck, offset, ALLEGRO_SEEK_SET );
@@ -140,6 +146,7 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 	int maxrec = (Index < 0 ? al_fsize(tab) / 4 : Index + 1);
 	for (int i = minrec; i < maxrec; i++)
 	{
+		al_fseek( tab, i * 4, ALLEGRO_SEEK_SET );
 		unsigned int offset = al_fread32le( tab ) * 4;
 
 		al_fseek( pck, offset, ALLEGRO_SEEK_SET );

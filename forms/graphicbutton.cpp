@@ -12,6 +12,10 @@ GraphicButton::GraphicButton( Control* Owner, std::string Image, std::string Ima
 	image_name = Image;
 	imagedepressed_name = ImageDepressed;
 	imagehover_name = "";
+	if( buttonclick == nullptr )
+	{
+		buttonclick = new RawSound( "STRATEGC/INTRFACE/BUTTON1.RAW" );
+	}
 }
 
 GraphicButton::GraphicButton( Control* Owner, std::string Image, std::string ImageDepressed, std::string ImageHover ) : Control( Owner )
@@ -22,6 +26,10 @@ GraphicButton::GraphicButton( Control* Owner, std::string Image, std::string Ima
 	image_name = Image;
 	imagedepressed_name = ImageDepressed;
 	imagehover_name = ImageHover;
+	if( buttonclick == nullptr )
+	{
+		buttonclick = new RawSound( "STRATEGC/INTRFACE/BUTTON1.RAW" );
+	}
 }
 
 GraphicButton::~GraphicButton()
@@ -53,7 +61,7 @@ void GraphicButton::Render()
 {
 	ALLEGRO_BITMAP* useimage;
 
-	if( image == nullptr )
+	if( image == nullptr && image_name != "" )
 	{
 		image = GAMECORE->GetImage( image_name );
 		if( Size.X == 0 )
@@ -65,13 +73,29 @@ void GraphicButton::Render()
 			Size.Y = al_get_bitmap_height( image );
 		}
 	}
-	if( imagedepressed == nullptr )
+	if( imagedepressed == nullptr && imagedepressed_name != "" )
 	{
 		imagedepressed = GAMECORE->GetImage( imagedepressed_name );
+		if( Size.X == 0 )
+		{
+			Size.X = al_get_bitmap_width( imagedepressed );
+		}
+		if( Size.Y == 0 )
+		{
+			Size.Y = al_get_bitmap_height( imagedepressed );
+		}
 	}
 	if( imagehover == nullptr && imagehover_name != "" )
 	{
 		imagehover = GAMECORE->GetImage( imagehover_name );
+		if( Size.X == 0 )
+		{
+			Size.X = al_get_bitmap_width( imagehover );
+		}
+		if( Size.Y == 0 )
+		{
+			Size.Y = al_get_bitmap_height( imagehover );
+		}
 	}
 
 	useimage = image;
@@ -82,13 +106,16 @@ void GraphicButton::Render()
 		useimage = imagehover;
 	}
 
-	int bmpw = al_get_bitmap_width( useimage );
-	int bmph = al_get_bitmap_height( useimage );
-	if( bmpw == Size.X && bmph == Size.Y )
+	if( useimage != nullptr )
 	{
-		al_draw_bitmap( useimage, resolvedLocation.X, resolvedLocation.Y, 0 );
-	} else {
-		al_draw_scaled_bitmap( useimage, 0, 0, bmpw, bmph, resolvedLocation.X, resolvedLocation.Y, this->Size.X, this->Size.Y, 0 );
+		int bmpw = al_get_bitmap_width( useimage );
+		int bmph = al_get_bitmap_height( useimage );
+		if( bmpw == Size.X && bmph == Size.Y )
+		{
+			al_draw_bitmap( useimage, resolvedLocation.X, resolvedLocation.Y, 0 );
+		} else {
+			al_draw_scaled_bitmap( useimage, 0, 0, bmpw, bmph, resolvedLocation.X, resolvedLocation.Y, this->Size.X, this->Size.Y, 0 );
+		}
 	}
 
 	PostRender();
