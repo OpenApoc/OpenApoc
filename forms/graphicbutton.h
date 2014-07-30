@@ -26,5 +26,12 @@ class GraphicButton : public Control
 		virtual void Render();
 		virtual void Update();
 		virtual void UnloadResources();
+
+		ALLEGRO_BITMAP* GetImage();
+		void SetImage( ALLEGRO_BITMAP* Image );
+		ALLEGRO_BITMAP* GetDepressedImage();
+		void SetDepressedImage( ALLEGRO_BITMAP* Image );
+		ALLEGRO_BITMAP* GetHoverImage();
+		void SetHoverImage( ALLEGRO_BITMAP* Image );
 };
 

@@ -59,3 +59,14 @@ void Graphic::UnloadResources()
 	}
 	Control::UnloadResources();
 }
+
+ALLEGRO_BITMAP* Graphic::GetImage()
+{
+	return image;
+}
+
+void Graphic::SetImage( ALLEGRO_BITMAP* Image )
+{
+	image = Image;
+}
+

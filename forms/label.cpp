@@ -62,3 +62,13 @@ void Label::Update()
 void Label::UnloadResources()
 {
 }
+
+std::string Label::GetText()
+{
+	return text;
+}
+
+void Label::SetText( std::string Text )
+{
+	text = Text;
+}

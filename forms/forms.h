@@ -8,4 +8,4 @@
 #include "graphic.h"
 #include "textbutton.h"
 #include "graphicbutton.h"
-
+#include "checkbox.h"

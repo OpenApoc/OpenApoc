@@ -94,7 +94,7 @@ void ApocalypseFont::DrawString( int X, int Y, std::string Text, int Alignment )
 		}
 	}
 
-	for( int i = 0; i < Text.length(); i++ )
+	for( unsigned int i = 0; i < Text.length(); i++ )
 	{
 		int charidx = FontCharacterSet.find_first_of( Text.at( i ) );
 		if( charidx >= 0 )
@@ -115,7 +115,7 @@ int ApocalypseFont::GetFontHeight()
 int ApocalypseFont::GetFontWidth( std::string Text )
 {
 	int textlen = 0;
-	for( int i = 0; i < Text.length(); i++ )
+	for( unsigned int i = 0; i < Text.length(); i++ )
 	{
 		int charidx = FontCharacterSet.find_first_of( Text.at( i ) );
 		if( charidx >= 0 )
@@ -133,7 +133,7 @@ void ApocalypseFont::DumpCharset()
 	std::string outfile;
 	char val[200];
 
-	for( int i = 0; i < fontbitmaps.size(); i++ )
+	for( unsigned int i = 0; i < fontbitmaps.size(); i++ )
 	{
 		memset( (void*)val, 0, 200 );
 		sprintf( (char*)&val, "%d", i );

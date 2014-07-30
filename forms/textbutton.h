@@ -26,5 +26,8 @@ class TextButton : public Control
 		virtual void Render();
 		virtual void Update();
 		virtual void UnloadResources();
+
+		std::string GetText();
+		void SetText( std::string Text );
 };
 

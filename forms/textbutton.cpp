@@ -100,3 +100,13 @@ void TextButton::Update()
 void TextButton::UnloadResources()
 {
 }
+
+std::string TextButton::GetText()
+{
+	return text;
+}
+
+void TextButton::SetText( std::string Text )
+{
+	text = Text;
+}

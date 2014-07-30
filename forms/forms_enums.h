@@ -15,7 +15,8 @@ enum class FormEventType
 	KeyDown,
 	KeyUp,
 
-	ButtonClick
+	ButtonClick,
+	CheckBoxChange
 };
 
 enum class HorizontalAlignment

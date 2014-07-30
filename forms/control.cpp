@@ -57,8 +57,8 @@ void Control::ResolveLocation()
 		resolvedLocation.X = Location.X;
 		resolvedLocation.Y = Location.Y;
 	} else {
-		resolvedLocation.X = owningControl->Location.X + Location.X;
-		resolvedLocation.Y = owningControl->Location.Y + Location.Y;
+		resolvedLocation.X = owningControl->resolvedLocation.X + Location.X;
+		resolvedLocation.Y = owningControl->resolvedLocation.Y + Location.Y;
 	}
 
 	for( auto ctrlidx = Controls.rbegin(); ctrlidx != Controls.rend(); ctrlidx++ )
@@ -354,6 +354,11 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 				gb = new GraphicButton( this, gb_image, gb_dep, node->FirstChildElement("image_hover")->GetText() );
 			}
 			gb->ConfigureFromXML( node );
+		}
+		if( nodename == "checkbox" )
+		{
+			CheckBox* cb = new CheckBox( this );
+			cb->ConfigureFromXML( node );
 		}
 	}
 

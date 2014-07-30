@@ -1,3 +1,4 @@
+
 #include "graphicbutton.h"
 #include "../framework/framework.h"
 #include "../game/resources/gamecore.h"
@@ -145,3 +146,37 @@ void GraphicButton::UnloadResources()
 	}
 	Control::UnloadResources();
 }
+
+ALLEGRO_BITMAP* GraphicButton::GetImage()
+{
+	return image;
+}
+
+void GraphicButton::SetImage( ALLEGRO_BITMAP* Image )
+{
+	image_name = "";
+	image = Image;
+}
+
+ALLEGRO_BITMAP* GraphicButton::GetDepressedImage()
+{
+	return imagedepressed;
+}
+
+void GraphicButton::SetDepressedImage( ALLEGRO_BITMAP* Image )
+{
+	imagedepressed_name = "";
+	imagedepressed = Image;
+}
+
+ALLEGRO_BITMAP* GraphicButton::GetHoverImage()
+{
+	return imagehover;
+}
+
+void GraphicButton::SetHoverImage( ALLEGRO_BITMAP* Image )
+{
+	imagehover_name = "";
+	imagehover = Image;
+}
+

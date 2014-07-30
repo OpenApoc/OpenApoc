@@ -18,5 +18,8 @@ class Graphic : public Control
 		virtual void Render();
 		virtual void Update();
 		virtual void UnloadResources();
+
+		ALLEGRO_BITMAP* GetImage();
+		void SetImage( ALLEGRO_BITMAP* Image );
 };
 

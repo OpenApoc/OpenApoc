@@ -93,6 +93,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="forms\checkbox.cpp" />
     <ClCompile Include="forms\control.cpp" />
     <ClCompile Include="forms\form.cpp" />
     <ClCompile Include="forms\graphic.cpp" />
@@ -132,6 +133,7 @@
     <ClCompile Include="framework\data.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="forms\checkbox.h" />
     <ClInclude Include="forms\control.h" />
     <ClInclude Include="forms\form.h" />
     <ClInclude Include="forms\forms.h" />

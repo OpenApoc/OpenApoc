@@ -33,7 +33,7 @@ class Strings
 		{
 			bool isnumeric = true;
 
-			for( int i = 0; i < s.length(); i++ )
+			for( unsigned int i = 0; i < s.length(); i++ )
 			{
 				switch( s[i] )
 				{
