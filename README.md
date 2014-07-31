@@ -9,7 +9,7 @@ while also making use of several other libraries to help
 speed up development.
  
 - [Allegro](http://alleg.sourceforge.net/) (5.0)
-- [TinyXML] (Version 2)
+- [TinyXML2](http://www.grinninglizard.com/tinyxml2/) (Version 2)
  
 ## Running
  
