@@ -8,7 +8,7 @@ class Form : public Control
 
 	public:
 		Form( tinyxml2::XMLElement* FormConfiguration );
-		virtual ~Form();
+		~Form();
 
 		virtual void EventOccured( Event* e );
 		virtual void Render();

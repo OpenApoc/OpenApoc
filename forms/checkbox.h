@@ -19,7 +19,7 @@ class CheckBox : public Control
 		bool Checked;
 
 		CheckBox( Control* Owner );
-		virtual ~CheckBox();
+		~CheckBox();
 
 		virtual void EventOccured( Event* e );
 		virtual void Render();

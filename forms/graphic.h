@@ -12,7 +12,7 @@ class Graphic : public Control
 
 	public:
 		Graphic( Control* Owner, std::string Image );
-		virtual ~Graphic();
+		~Graphic();
 
 		virtual void EventOccured( Event* e );
 		virtual void Render();

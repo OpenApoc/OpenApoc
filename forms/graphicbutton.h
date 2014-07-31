@@ -20,7 +20,7 @@ class GraphicButton : public Control
 	public:
 		GraphicButton( Control* Owner, std::string Image, std::string ImageDepressed );
 		GraphicButton( Control* Owner, std::string Image, std::string ImageDepressed, std::string ImageHover );
-		virtual ~GraphicButton();
+		~GraphicButton();
 
 		virtual void EventOccured( Event* e );
 		virtual void Render();

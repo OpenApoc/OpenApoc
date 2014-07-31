@@ -32,7 +32,7 @@ class Control
 		std::vector<Control*> Controls;
 
 		Control(Control* Owner);
-		virtual ~Control();
+		~Control();
 
 		Control* GetActiveControl();
 		void Focus();
