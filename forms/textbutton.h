@@ -20,7 +20,7 @@ class TextButton : public Control
 		VerticalAlignment TextVAlign;
 
 		TextButton(Control* Owner, std::string Text, IFont* Font);
-		~TextButton();
+		virtual ~TextButton();
 
 		virtual void EventOccured(Event* e);
 		virtual void Render();

@@ -16,7 +16,7 @@ class Label : public Control
 		VerticalAlignment TextVAlign;
 
 		Label(Control* Owner, std::string Text, IFont* Font);
-		~Label();
+		virtual ~Label();
 
 		virtual void EventOccured(Event* e);
 		virtual void Render();
