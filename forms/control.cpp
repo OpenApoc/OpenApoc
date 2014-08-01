@@ -14,6 +14,7 @@ Control::Control(Control* Owner) : Name("Control"), owningControl(Owner), focuse
 
 Control::~Control()
 {
+	UnloadResources();
 	// Delete controls
 	while( Controls.size() > 0 )
 	{

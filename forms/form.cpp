@@ -33,7 +33,6 @@ Form::Form( tinyxml2::XMLElement* FormConfiguration ) : Control( nullptr )
 
 Form::~Form()
 {
-	Control::~Control();
 }
 
 void Form::EventOccured( Event* e )

@@ -19,7 +19,6 @@ TextButton::TextButton( Control* Owner, std::string Text, IFont* Font ) : Contro
 
 TextButton::~TextButton()
 {
-	Control::~Control();
 }
 
 void TextButton::EventOccured( Event* e )

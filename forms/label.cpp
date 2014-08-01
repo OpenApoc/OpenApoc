@@ -7,7 +7,6 @@ Label::Label( Control* Owner, std::string Text, IFont* Font ) : Control( Owner )
 
 Label::~Label()
 {
-	Control::~Control();
 }
 
 void Label::EventOccured( Event* e )

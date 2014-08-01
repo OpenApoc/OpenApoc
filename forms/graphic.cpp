@@ -9,8 +9,6 @@ Graphic::Graphic( Control* Owner, std::string Image ) : Control( Owner )
 
 Graphic::~Graphic()
 {
-	UnloadResources();
-	Control::~Control();
 }
 
 void Graphic::EventOccured( Event* e )

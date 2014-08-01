@@ -35,8 +35,6 @@ GraphicButton::GraphicButton( Control* Owner, std::string Image, std::string Ima
 
 GraphicButton::~GraphicButton()
 {
-	UnloadResources();
-	Control::~Control();
 }
 
 void GraphicButton::EventOccured( Event* e )
