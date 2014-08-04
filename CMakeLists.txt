@@ -37,6 +37,7 @@ set (OPENAPOC_SOURCE_FILES
 	transitions/fadeout.cpp
 	transitions/strips.cpp
 	transitions/tiled.cpp
+	forms/checkbox.cpp
 	forms/control.cpp
 	forms/form.cpp
 	forms/graphic.cpp
