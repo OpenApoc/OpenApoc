@@ -9,7 +9,7 @@ MainMenu::MainMenu()
 	// testform = GAMECORE->GetForm("FORM_UFOPAEDIA_TITLE");
 	testform = GAMECORE->GetForm("FORM_MAINMENU");
 
-	testpck = new PCK( "UFODATA/ICONS.PCK", "UFODATA/ICONS.TAB", GAMECORE->GetPalette( "UFODATA/PAL_01.DAT" ) );
+	testpck = new PCK( "UFODATA/NEWBUT.PCK", "UFODATA/NEWBUT.TAB", GAMECORE->GetPalette( "UI/UI_PALETTE.PNG" ) );
 }
 
 MainMenu::~MainMenu()
@@ -76,11 +76,11 @@ void MainMenu::Render()
 	for( int c = 0; c < testpck->GetImageCount(); c++ )
 	{
 		testpck->RenderImage( c, x, y );
-		x += 40;
+		x += 80;
 		if( x > FRAMEWORK->Display_GetWidth() )
 		{
 			x = 0;
-			y += 40;
+			y += 60;
 		}
 	}
 

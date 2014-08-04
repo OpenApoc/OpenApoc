@@ -38,7 +38,7 @@ ALLEGRO_BITMAP* Data::load_bitmap(const std::string path)
 	}
 
 	std::cerr << "Failed to load \"" + path + "\"\n";
-	assert(0);
+	//assert(0);
 	return nullptr;
 }
 
@@ -63,7 +63,7 @@ ALLEGRO_FILE* Data::load_file(const std::string path, const char *mode)
 	}
 
 	std::cerr << "Failed to load \"" + path + "\"\n";
-	assert(0);
+	//assert(0);
 
 	return nullptr;
 }
