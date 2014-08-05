@@ -114,87 +114,87 @@
 	</string>
 	<string id="STR_SCOUT_SHIP_INFO">
 		<en_gb>This vessel appears to be a surveillance craft. Its structure is very strange and there is no evidence of any crew or cargo. The craft&amp;apos;s internals appear to have been intentionally destroyed by the Aliens from a remote location. The craft is armed with small beam weapon. The craft does not appear to be a great threat to the city, but can only be a precursor to more dangerous incursions.</en_gb>
-		<es_la>This vessel appears to be a surveillance craft. Its structure is very strange and there is no evidence of any crew or cargo. The craft&amp;apos;s internals appear to have been intentionally destroyed by the Aliens from a remote location. The craft is armed with small beam weapon. The craft does not appear to be a great threat to the city, but can only be a precursor to more dangerous incursions.</es_la>
+		<es_la>Esta embarcación parece ser una nave de vigilancia. Su estructura es muy extraña y no hay evidencia de tripulación o carga. La instrumentación de la nave parecen haber sido intencionalmente destruida por los alienígena desde una ubicación remota. La nave está armada con una arma pequeña de rayos. La nave no parece ser una gran amenaza para la ciudad, pero sólo puede ser un precursor de incursiones más peligrosas.</es_la>
 	</string>
 	<string id="STR_TRANSPORTER_SHIP">
 		<en_gb>Alien Transporter</en_gb>
-		<es_la>Alien Transporter</es_la>
+		<es_la>Transporte alienígena</es_la>
 	</string>
 	<string id="STR_TRANSPORTER_SHIP_INFO">
 		<en_gb>The primary mission of this craft is to deposit Alien life forms inside city buildings. This represents a serious challenge for our ground forces, but if they can be shot down before they unload their passengers, then the problem will be minimized. The craft is armed with the same beam weapon as the Scout Ships or Probes, but it is slower moving and an easier target to hit.</en_gb>
-		<es_la>The primary mission of this craft is to deposit Alien life forms inside city buildings. This represents a serious challenge for our ground forces, but if they can be shot down before they unload their passengers, then the problem will be minimized. The craft is armed with the same beam weapon as the Scout Ships or Probes, but it is slower moving and an easier target to hit.</es_la>
+		<es_la>La misión principal de este arte es depositar alienígena dentro de los edificios de la ciudad. Esto representa un serio reto para nuestras fuerzas de tierra, pero si pueden ser derribados antes de que descargan sus pasajeros, entonces el problema se reduce al mínimo. La nave está armada con la misma arma de rayos como las naves de exploración o sondas, pero es más lento en movimiento y un blanco más fácil de acertar.</es_la>
 	</string>
 	<string id="STR_FAST_ATTACK_SHIP">
 		<en_gb>Alien Fast Attack Ship</en_gb>
-		<es_la>Alien Fast Attack Ship</es_la>
+		<es_la>Acorazado alienígena</es_la>
 	</string>
 	<string id="STR_FAST_ATTACK_SHIP_INFO">
 		<en_gb>This craft is well armored, highly maneuverable and armed with a powerful beam weapon. It is designed to protect other more vulnerable Alien ships. Avoid these craft if the threat to our vehicles is too great and concentrate on shooting down the Alien Transports.</en_gb>
-		<es_la>This craft is well armored, highly maneuverable and armed with a powerful beam weapon. It is designed to protect other more vulnerable Alien ships. Avoid these craft if the threat to our vehicles is too great and concentrate on shooting down the Alien Transports.</es_la>
+		<es_la>Esta nave está bien blindada, es muy maniobrable y consta con un arma de rayos de gran alcance. Está diseñado para proteger otras naves alienígena más vulnerables. Evite estas naves si la amenaza a nuestros vehículos es demasiado grande y concentrese en derribar los transportes alienígena.</es_la>
 	</string>
 	<string id="STR_DESTROYER_SHIP">
 		<en_gb>Alien Destroyer</en_gb>
-		<es_la>Alien Destroyer</es_la>
+		<es_la>Destructor alienígena</es_la>
 	</string>
 	<string id="STR_DESTROYER_SHIP_INFO">
 		<en_gb>The Destroyer is heavily armored and its behavior is aggressive. It is armed with a powerful Alien Missile Launcher capable of immense destruction. It can also deposit Alien beings into the city.</en_gb>
-		<es_la>The Destroyer is heavily armored and its behavior is aggressive. It is armed with a powerful Alien Missile Launcher capable of immense destruction. It can also deposit Alien beings into the city.</es_la>
+		<es_la>El Destructor está fuertemente blindado y su comportamiento es agresivo. Consta con un poderoso Lanzamisiles alienígena capaz de inmensa destrucción. Y también puede depositar alienígenas en la ciudad.</es_la>
 	</string>
 	<string id="STR_ASSAULT_SHIP">
 		<en_gb>Alien Assault Ship</en_gb>
-		<es_la>Alien Assault Ship</es_la>
+		<es_la>Nave de Asalto alienígena</es_la>
 	</string>
 	<string id="STR_ASSAULT_SHIP_INFO">
 		<en_gb>The Assault Ship effectively replaces the Alien Transport as a troop carrier. It can deposit large numbers of Aliens into city buildings and is armed with a powerful beam weapon. This craft is highly dangerous and must be stopped at all costs.</en_gb>
-		<es_la>The Assault Ship effectively replaces the Alien Transport as a troop carrier. It can deposit large numbers of Aliens into city buildings and is armed with a powerful beam weapon. This craft is highly dangerous and must be stopped at all costs.</es_la>
+		<es_la>La Nave de Asalto reemplaza efectivamente al transporte alienígena como transporte de tropas. Puede depositar un gran número de alienígenas en edificios de la ciudad y está armado con un arma de rayos de gran alcance. Esta nave es sumamente peligrosa y debe ser detenida a toda costa.</es_la>
 	</string>
 	<string id="STR_BOMBER_SHIP">
 		<en_gb>Alien Bomber</en_gb>
-		<es_la>Alien Bomber</es_la>
+		<es_la>Bombardero alienígena</es_la>
 	</string>
 	<string id="STR_BOMBER_SHIP_INFO">
-		<en_gb>The Alien Bomber is equipped with an unusual missile launcher that splits into multiple, independently targeted missiles. It also has a light beam weapon to deal with close air combat. There is a limited crew on board.</en_gb>
-		<es_la>The Alien Bomber is equipped with an unusual missile launcher that splits into multiple, independently targeted missiles. It also has a light beam weapon to deal with close air combat. There is a limited crew on board.</es_la>
+		<en_gb>The Alien Bomber is equipped with an unusual missile launcher which fires a missile that splits into multiple, independently targeted missiles. It also has a light beam weapon to deal with close air combat. There is a limited crew on board.</en_gb>
+		<es_la>El Bombardero alienígena está equipado con un inusual lanzador de misiles el cual dispara un misil que se divide en varios misiles, independientemente dirigidos. También cuenta con un arma ligera de rayos para defenderse en combate aéreo cercano y consta con una tripulacion limitada.</es_la>
 	</string>
 	<string id="STR_SCORT_SHIP">
 		<en_gb>Alien Escort Ship</en_gb>
-		<es_la>Alien Escort Ship</es_la>
+		<es_la>Escolta alienígena</es_la>
 	</string>
 	<string id="STR_SCORT_SHIP_INFO">
 		<en_gb>This craft is fast and nimble. On its own it represents no threat, but is deadly when combined with other Alien combat ships. It is armed with a missile which generates a Stasis Field on impact. This field holds the target still for a small period of time so craft that rely on evasion for defense, become vulnerable.</en_gb>
-		<es_la>This craft is fast and nimble. On its own it represents no threat, but is deadly when combined with other Alien combat ships. It is armed with a missile which generates a Stasis Field on impact. This field holds the target still for a small period of time so craft that rely on evasion for defense, become vulnerable.</es_la>
+		<es_la>Esta nave es rápida y ágil, por sí sola no representa amenaza ninguna, pero es mortal cuando se combina con otras naves de combate alienígena. Está armada con un misil que genera un campo de estasis en impacto. Este campo detiene el blanco por un corto período de tiempo, de esta manera las naves que se basan en evasión para defensa, quedan vulnerables.</es_la>
 	</string>
 	<string id="STR_BATTLESHIP">
 		<en_gb>Alien Battleship</en_gb>
-		<es_la>Alien Battleship</es_la>
+		<es_la>Acorazado alienígena</es_la>
 	</string>
 	<string id="STR_BATTLESHIP-INFO">
 		<en_gb>This immense craft is heavily armored, well armed and has a large crew. It is equipped with a Heavy Disruptor Beam and Disruptor Missiles. If the Aliens can produce just a handful of these devastating leviathans, the future of our world looks bleak.</en_gb>
-		<es_la>This immense craft is heavily armored, well armed and has a large crew. It is equipped with a Heavy Disruptor Beam and Disruptor Missiles. If the Aliens can produce just a handful of these devastating leviathans, the future of our world looks bleak.</es_la>
+		<es_la>Esta inmensa nave está fuertemente blindado, bien armado y tiene una amplia tripulación. Está equipado con un rayo disyuntor pesado y misiles disyuntor. Si los alienígena pueden producir sólo un puñado de estos leviatanes devastadores, el futuro de nuestro mundo parece sombrío.</es_la>
 	</string>
 	<string id="STR_MOTHERSHIP">
 		<en_gb>Alien Mothership</en_gb>
-		<es_la>Alien Mothership</es_la>
+		<es_la>Nave Nodriza alienígena</es_la>
 	</string>
 	<string id="STR_MOTHERSHIP_INFO">
 		<en_gb>The Mothership is an extremely large, well equipped vessel. It is armed with a Heavy Disruptor Beam, Disruptor Multi-Bombs and Stasis Field Bombs. It represents a very serious threat to the city because its purpose seems to be mass destruction rather than infiltration. If the Aliens become desperate they will deploy this craft to raze the city to the ground. They must be stopped at all costs.</en_gb>
-		<es_la>The Mothership is an extremely large, well equipped vessel. It is armed with a Heavy Disruptor Beam, Disruptor Multi-Bombs and Stasis Field Bombs. It represents a very serious threat to the city because its purpose seems to be mass destruction rather than infiltration. If the Aliens become desperate they will deploy this craft to raze the city to the ground. They must be stopped at all costs.</es_la>
+		<es_la>La Nave Nodriza es una nave muy grande y bien equipada. Está armada con un rayo disyuntor pesado, disruptor Multi-bombas y estasis campo bombas. Representa una amenaza muy severa para la ciudad, ya que su meta parece ser destrucción total en lugar de infiltración. Si los alienígenas se desesperan pueden desplazar esta nave para arrasar con la ciudad hasta sus cimientos. Hay que detenerlos a toda costa.</es_la>
 	</string>
 	<string id="STR_POLICE_HOVERCAR">
 		<en_gb>Police Hovercar</en_gb>
-		<es_la>Police Hovercar</es_la>
+		<es_la>Patrulla flotante</es_la>
 	</string>
 	<string id="STR_POLICE_HOVERCAR_INFO">
-		<en_gb>Megapol&amp;apos;s police Hovercars are the scourge of the slum dwelling criminal gangs. They are well armed and able to travel freely within and outside the city boundaries, scouring the ground or air for unlicensed criminal vehicles. They are no match for heavier military vehicles, but Megapol is able to manufacture many of these scout cars and can replace any losses. The vehicle&amp;apos;s styling is required to conform to city aesthetic ordinances concerning pleasurable design of public vehicles.</en_gb>
-		<es_la>Megapol&amp;apos;s police Hovercars are the scourge of the slum dwelling criminal gangs. They are well armed and able to travel freely within and outside the city boundaries, scouring the ground or air for unlicensed criminal vehicles. They are no match for heavier military vehicles, but Megapol is able to manufacture many of these scout cars and can replace any losses. The vehicle&amp;apos;s styling is required to conform to city aesthetic ordinances concerning pleasurable design of public vehicles.</es_la>
+		<en_gb>Megapol&amp;apos;s police Hovercars are the scourge of the slum dwelling criminal gangs. They are well armed and able to travel freely within and outside the city boundaries, scouring the ground or air for unlicensed or criminal vehicles. They are no match for heavier military vehicles, but Megapol is able to manufacture many of these scout cars and can replace any losses. The vehicle&amp;apos;s styling is required to conform to city aesthetic ordinances concerning pleasurable design of public vehicles.</en_gb>
+		<es_la>Patrulla flotante de Megapol son el azote de los barrio marginales donde viven las bandas criminales. Están bien armados y son capaces de viajar libremente dentro y fuera de los límites de la ciudad, purgando la tierra o el aire de vehículos sin licencia o criminales. No se comparan con vehículos militares pesados​​, pero Megapol es capaz de fabricar muchos de estos vehículos de reconocimiento y puede reemplazar las bajas. Los vehículos requieren un estilo especifico para conformar con las ordenanzas estéticas de la ciudad relacionados con el diseño agradable de los vehículos públicos.</es_la>
 	</string>
 	<string id="STR_AIRTAXI">
 		<en_gb>Airtaxi</en_gb>
-		<es_la>Airtaxi</es_la>
+		<es_la>Aerotaxi</es_la>
 	</string>
 	<string id="STR_AIRTAXI_INFO">
 		<en_gb>The wealthy citizen would not normally travel by people-tube or road, but instead hire the services of a fast and reliable Airtaxi. The styling is conspicuously based on the more humble road going version, but the ride is more refined. Expect the occasional Airtaxi you see to contain a VIP, or flamboyant Sensovision celebrity.</en_gb>
-		<es_la>The wealthy citizen would not normally travel by people-tube or road, but instead hire the services of a fast and reliable Airtaxi. The styling is conspicuously based on the more humble road going version, but the ride is more refined. Expect the occasional Airtaxi you see to contain a VIP, or flamboyant Sensovision celebrity.</es_la>
+		<es_la>El ciudadano rico normalmente no viajaría por los tubo-gente o la via publica, en lugar contratan los servicios de un Aerotaxi que es rápido y fiable. El diseño se basa claramente en la versión de carretera que es más humilde, pero en cambio el viaje es más refinado. Espera lo Aerotaxi ocasional ves para contener un VIP o extravagante celebridad Sensovision.</es_la>
 	</string>
 	<string id="STR_RESCUE_TRASNPORT">
 		<en_gb>Rescue Transport</en_gb>
@@ -579,13 +579,13 @@
 	<string id="STR_HEAVY_DISRUPTOR_BEAM_INFO">
 		<en_gb>The Heavy Dispruptor Beam is an immensely powerful weapon. Its only drawbacks are its size and difficulty of manufacture. The energy chamber is enormous, drawing energy from another dimension. It is possible that the weapon&amp;apos;s original power source is actually located in some alternative dimension.</en_gb>
 	</string>	
-	<string id=	"STR_40MM_AUTO_CANNON">
-		<en_gb>40	mm Auto Cannon</en_gb>
-		<es_la>4	0mm Auto Cannon</es_la>
+	<string id="STR_40MM_AUTO_CANNON">
+		<en_gb>40mm Auto Cannon</en_gb>
+		<es_la>40mm Auto Cannon</es_la>
 	</string>	
 	<string id="STR_40MM_AUTO_CANNON_INFO">
 		<en_gb>	The standard cannon for police and military vehicles; it fires a high velocity armor piercing shell.</en_gb>
-		<es_la	>The standard cannon for police and military vehicles; it fires a high velocity armor piercing shell.</es_la>
+		<es_la>The standard cannon for police and military vehicles; it fires a high velocity armor piercing shell.</es_la>
 	</string>
 	<string id="STR_JANITOR_MISSILE_ARRAY">
 		<en_gb>Janitor Missile Array</en_gb>
