@@ -9,7 +9,7 @@ MainMenu::MainMenu()
 	// testform = GAMECORE->GetForm("FORM_UFOPAEDIA_TITLE");
 	testform = GAMECORE->GetForm("FORM_MAINMENU");
 
-	testpck = new PCK( "UFODATA/NEWBUT.PCK", "UFODATA/NEWBUT.TAB", GAMECORE->GetPalette( "UI/UI_PALETTE.PNG" ) );
+	testpck = new PCK( "TACDATA/ICON_M.PCK", "TACDATA/ICON_M.TAB", GAMECORE->GetPalette( "TACDATA/TACTICAL.PAL" ) );
 }
 
 MainMenu::~MainMenu()

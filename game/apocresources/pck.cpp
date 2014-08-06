@@ -139,7 +139,7 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 	ALLEGRO_LOCKED_REGION* region;
 
 	PCKCompression1ImageHeader c1_imgheader;
-	int32_t c1_pixelstoskip;
+	uint32_t c1_pixelstoskip;
 	PCKCompression1RowHeader c1_header;
 
 	int minrec = (Index < 0 ? 0 : Index);
@@ -164,17 +164,17 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 				bitmap = al_create_bitmap( c1_imgheader.RightMostPixel - c1_imgheader.LeftMostPixel, c1_imgheader.BottomMostPixel - c1_imgheader.TopMostPixel );
 				region = al_lock_bitmap( bitmap, ALLEGRO_PIXEL_FORMAT_ABGR_8888_LE, 0 );
 
-				c1_pixelstoskip = al_fread32le( pck );
-				while( c1_pixelstoskip != -1 )
+				c1_pixelstoskip = (uint32_t)al_fread32le( pck );
+				while( c1_pixelstoskip != 0xFFFFFFFF )
 				{
 					al_fread( pck, &c1_header, sizeof( PCKCompression1Header ) );
-					int c1_y = (c1_pixelstoskip / 640) - c1_imgheader.TopMostPixel;
+					uint32_t c1_y = (c1_pixelstoskip / 640) - c1_imgheader.TopMostPixel;
 
-					for( int c1_x = 0; c1_x < c1_header.PixelsInRow; c1_x++ )
+					for( uint32_t c1_x = 0; c1_x < c1_header.PixelsInRow; c1_x++ )
 					{
 						if( (c1_header.ColumnToStartAt + c1_x - c1_imgheader.LeftMostPixel) < c1_imgheader.RightMostPixel - c1_imgheader.LeftMostPixel )
 						{
-							int dataptr = (c1_y * region->pitch) + ((c1_header.ColumnToStartAt + c1_x - c1_imgheader.LeftMostPixel) * 4);
+							uint32_t dataptr = (c1_y * region->pitch) + ((c1_header.ColumnToStartAt + c1_x - c1_imgheader.LeftMostPixel) * 4);
 
 							Colour* c1_rowptr = (Colour*)(&((char*)region->data)[ dataptr ]);
 							Colour* c1_palcol = Colours->GetColour( al_fgetc( pck ) );
