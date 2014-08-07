@@ -5,19 +5,24 @@ Palette::Palette( std::string Filename )
 {
 	ALLEGRO_BITMAP* paletteimage = nullptr;
 	unsigned char colourblock[3];
-	int idx = 0;
+	unsigned int idx = 0;
 
 	paletteimage = DATA->load_bitmap( Filename );
 	if( paletteimage == nullptr )
 	{
 		ALLEGRO_FILE* f = DATA->load_file( Filename, "rb" );
+		size_t numEntries = al_fsize(f) / 3;
 
-		colours = (Colour*)malloc( (al_fsize( f ) / 3) * sizeof( Colour ) );
+		colours = (Colour*)malloc( numEntries * sizeof( Colour ) );
 
-		
-		while( !al_feof( f ) )
+
+		while(idx < numEntries)
 		{
 			al_fread( f, (void*)&colourblock, 3 );
+			if (al_feof(f))
+			{
+				break;
+			}
 			colours[idx].a = (idx == 0 ? 0 : 255);
 			colours[idx].r = colourblock[2] << 2;
 			colours[idx].g = colourblock[1] << 2;
