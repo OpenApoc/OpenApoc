@@ -20,7 +20,7 @@ typedef struct PCKCompression1RowHeader
 	// int16_t SkipPixels; -- Read seperately to get eof record
 	uint8_t ColumnToStartAt;
 	uint8_t PixelsInRow;
-	uint8_t Reserved1;
+	uint8_t BytesInRow;
 	uint8_t PaddingInRow;
 } PCKCompression1Header;
 

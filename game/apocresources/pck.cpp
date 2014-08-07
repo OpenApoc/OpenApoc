@@ -170,21 +170,46 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 					al_fread( pck, &c1_header, sizeof( PCKCompression1Header ) );
 					uint32_t c1_y = (c1_pixelstoskip / 640) - c1_imgheader.TopMostPixel;
 
-					for( uint32_t c1_x = 0; c1_x < c1_header.PixelsInRow; c1_x++ )
+					if( c1_header.BytesInRow != 0 )
 					{
-						if( (c1_header.ColumnToStartAt + c1_x - c1_imgheader.LeftMostPixel) < c1_imgheader.RightMostPixel - c1_imgheader.LeftMostPixel )
-						{
-							uint32_t dataptr = (c1_y * region->pitch) + ((c1_header.ColumnToStartAt + c1_x - c1_imgheader.LeftMostPixel) * 4);
+						// No idea what this is
+						uint32_t chunk = al_fread32le( pck );
 
-							Colour* c1_rowptr = (Colour*)(&((char*)region->data)[ dataptr ]);
-							Colour* c1_palcol = Colours->GetColour( al_fgetc( pck ) );
-							c1_rowptr->a = c1_palcol->a;
-							c1_rowptr->r = c1_palcol->r;
-							c1_rowptr->g = c1_palcol->g;
-							c1_rowptr->b = c1_palcol->b;
-						} else {
-							// Pretend to process data
-							al_fgetc( pck );
+						for( uint32_t c1_x = 0; c1_x < c1_header.BytesInRow; c1_x++ )
+						{
+							//if( (c1_header.ColumnToStartAt + c1_x - c1_imgheader.LeftMostPixel) < c1_imgheader.RightMostPixel - c1_imgheader.LeftMostPixel )
+							//{
+							//	uint32_t dataptr = (c1_y * region->pitch) + ((c1_header.ColumnToStartAt + c1_x - c1_imgheader.LeftMostPixel) * 4);
+
+							//	Colour* c1_rowptr = (Colour*)(&((char*)region->data)[ dataptr ]);
+							//	Colour* c1_palcol = Colours->GetColour( al_fgetc( pck ) );
+							//	c1_rowptr->a = c1_palcol->a;
+							//	c1_rowptr->r = c1_palcol->r;
+							//	c1_rowptr->g = c1_palcol->g;
+							//	c1_rowptr->b = c1_palcol->b;
+							//} else {
+								// Pretend to process data
+								al_fgetc( pck );
+							//}
+						}
+
+					} else {
+						for( uint32_t c1_x = 0; c1_x < c1_header.PixelsInRow; c1_x++ )
+						{
+							if( (c1_header.ColumnToStartAt + c1_x - c1_imgheader.LeftMostPixel) < c1_imgheader.RightMostPixel - c1_imgheader.LeftMostPixel )
+							{
+								uint32_t dataptr = (c1_y * region->pitch) + ((c1_header.ColumnToStartAt + c1_x - c1_imgheader.LeftMostPixel) * 4);
+
+								Colour* c1_rowptr = (Colour*)(&((char*)region->data)[ dataptr ]);
+								Colour* c1_palcol = Colours->GetColour( al_fgetc( pck ) );
+								c1_rowptr->a = c1_palcol->a;
+								c1_rowptr->r = c1_palcol->r;
+								c1_rowptr->g = c1_palcol->g;
+								c1_rowptr->b = c1_palcol->b;
+							} else {
+								// Pretend to process data
+								al_fgetc( pck );
+							}
 						}
 					}
 
