@@ -70,6 +70,10 @@ void BootUp::Render()
 
 void BootUp::StartGame()
 {
+	if( threadload != nullptr )
+	{
+		al_destroy_thread( threadload );
+	}
 	delete FRAMEWORK->ProgramStages->Pop();
 	FRAMEWORK->ProgramStages->Push( new TransitionFadeIn( new MainMenu(), al_map_rgb( 0, 0, 0 ), FRAMES_PER_SECOND ) );
 }
@@ -85,11 +89,6 @@ void* BootUp::CreateGameCore(ALLEGRO_THREAD* thread, void* args)
 	std::string language(*FRAMEWORK->Settings->GetQuickStringValue( "Language", "en_gb" ));
 
 	GameCore* c = new GameCore( ruleset, language );
-
-	if( thread != nullptr )
-	{
-		al_destroy_thread( thread );
-	}
 
 	return nullptr;
 }
