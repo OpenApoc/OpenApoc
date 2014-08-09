@@ -25,3 +25,9 @@ void Music::Play()
 {
 	al_play_sample( soundsample, 1.0f, 0.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, 0 );
 }
+
+void Music::Stop()
+{
+	al_destroy_sample( soundsample );
+	soundsample = al_create_sample( sounddata->GetData(), sounddata->GetSize(), 22050, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2, false );
+}

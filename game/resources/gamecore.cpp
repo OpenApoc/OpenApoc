@@ -11,12 +11,16 @@ GameCore::GameCore(std::string CoreXMLFilename, std::string Language) : language
 	ActiveGame = this;
 	language = Language;
 	ParseXMLDoc( CoreXMLFilename );
+	DebugModeEnabled = false;
+
+	MouseCursor = new Cursor( GAMECORE->GetPalette( "TACDATA/TACTICAL.PAL" ) );
+
 	Loaded = true;
 }
 
 GameCore::~GameCore()
 {
-
+	delete MouseCursor;
 }
 
 void GameCore::ParseXMLDoc( std::string XMLFilename )

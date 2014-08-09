@@ -9,15 +9,14 @@
 #include "../apocresources/apocresource.h"
 #include "../../forms/forms.h"
 
-class MainMenu : public Stage
+class OptionsMenu : public Stage
 {
 	private:
-		Music* musicplayer;
-		Form* mainmenuform;
+		Form* menuform;
 
   public:
-		MainMenu();
-		~MainMenu();
+		OptionsMenu();
+		~OptionsMenu();
     // Stage control
     virtual void Begin();
     virtual void Pause();

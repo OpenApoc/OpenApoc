@@ -100,6 +100,7 @@
     <ClCompile Include="forms\graphicbutton.cpp" />
     <ClCompile Include="forms\label.cpp" />
     <ClCompile Include="forms\textbutton.cpp" />
+    <ClCompile Include="game\general\optionsmenu.cpp" />
     <ClCompile Include="game\resources\gamecore.cpp" />
     <ClCompile Include="game\resources\ttffont.cpp" />
     <ClCompile Include="library\angle.cpp" />
@@ -110,6 +111,7 @@
     <ClCompile Include="library\configfile.cpp" />
     <ClCompile Include="game\apocresources\cursor.cpp" />
     <ClCompile Include="framework\event.cpp" />
+    <ClCompile Include="transitions\fadeacross.cpp" />
     <ClCompile Include="transitions\fadein.cpp" />
     <ClCompile Include="transitions\fadeout.cpp" />
     <ClCompile Include="framework\framework.cpp" />
@@ -144,6 +146,7 @@
     <ClInclude Include="forms\textbutton.h" />
     <ClInclude Include="game\apocresources\apocresource.h" />
     <ClInclude Include="game\forms\control.h" />
+    <ClInclude Include="game\general\optionsmenu.h" />
     <ClInclude Include="game\resources\gamecore.h" />
     <ClInclude Include="game\resources\ifont.h" />
     <ClInclude Include="game\resources\ttffont.h" />
@@ -156,6 +159,7 @@
     <ClInclude Include="game\apocresources\cursor.h" />
     <ClInclude Include="framework\event.h" />
     <ClInclude Include="library\strings.h" />
+    <ClInclude Include="transitions\fadeacross.h" />
     <ClInclude Include="transitions\fadein.h" />
     <ClInclude Include="transitions\fadeout.h" />
     <ClInclude Include="framework\framework.h" />

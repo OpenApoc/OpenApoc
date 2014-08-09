@@ -1,5 +1,6 @@
 <openapoc>
 
+
 	<form id="FORM_MAINMENU">
 	
 		<style minwidth="640" minheight="480">
@@ -12,8 +13,15 @@
 				<position x="2" y="2" />
 				<size width="640" height="480" />
 				
-				<checkbox id="CHECK_CHEATING">
-					<position x="left" y="bottom" />
+				<label text="STR_DEBUGMODE">
+					<backcolour r="255" g="255" b="255" a="0" />
+					<position x="410" y="bottom" />
+					<size width="200" height="16" />
+					<alignment horizontal="right" vertical="centre" />
+					<font>APOC:TINY:UI/UI_PALETTE.PNG</font>
+				</label>
+				<checkbox id="CHECK_DEBUGMODE">
+					<position x="right" y="bottom" />
 				</checkbox>
 			</graphic>
 
@@ -32,17 +40,17 @@
 			<textbutton id="BUTTON_LOADGAME" text="STR_LOAD_SAVED_GAME">
 				<position x="centre" y="240" />
 				<size width="300" height="32" />
-				<font>APOC:SMALL:TACDATA/TACTICAL.PAL</font>
+				<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
 			</textbutton>
 			<textbutton id="BUTTON_OPTIONS" text="STR_OPTIONS">
 				<position x="centre" y="290" />
 				<size width="300" height="32" />
-				<font>APOC:SMALL:TACDATA/TACTICAL.PAL</font>
+				<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
 			</textbutton>
 			<textbutton id="BUTTON_QUIT" text="STR_QUIT">
 				<position x="centre" y="340" />
 				<size width="300" height="32" />
-				<font>APOC:SMALL:TACDATA/TACTICAL.PAL</font>
+				<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
 			</textbutton>
 			
 			

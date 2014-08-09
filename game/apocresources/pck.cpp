@@ -181,7 +181,7 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 							{
 								if( c1_x < c1_imgheader.RightMostPixel - c1_imgheader.LeftMostPixel )
 								{
-									uint32_t dataptr = (c1_y * region->pitch) + (c1_x * 4);
+									int32_t dataptr = ((int32_t)c1_y * region->pitch) + ((int32_t)c1_x * 4);
 
 									Colour* c1_rowptr = (Colour*)(&((char*)region->data)[ dataptr ]);
 									Colour* c1_palcol = Colours->GetColour( al_fgetc( pck ) );
@@ -200,7 +200,7 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 							{
 								if( (c1_header.ColumnToStartAt + c1_x - c1_imgheader.LeftMostPixel) < c1_imgheader.RightMostPixel - c1_imgheader.LeftMostPixel )
 								{
-									uint32_t dataptr = (c1_y * region->pitch) + ((c1_header.ColumnToStartAt + c1_x - c1_imgheader.LeftMostPixel) * 4);
+									int32_t dataptr = ((int32_t)c1_y * region->pitch) + (((int8_t)c1_header.ColumnToStartAt + (int32_t)c1_x - (int16_t)c1_imgheader.LeftMostPixel) * 4);
 
 									Colour* c1_rowptr = (Colour*)(&((char*)region->data)[ dataptr ]);
 									Colour* c1_palcol = Colours->GetColour( al_fgetc( pck ) );

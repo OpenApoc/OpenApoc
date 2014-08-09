@@ -20,6 +20,9 @@
 		<en_gb>Quit</en_gb>
 		<es_la>Abandonar</es_la>
 	</string>
+	<string id="STR_DEBUGMODE">
+		<en_gb>Debug Mode</en_gb>
+	</string>
 	<string id="STR_UFOPAEDIA">
 		<en_gb>UFOPAEDIA</en_gb>
 		<es_la>UFOPAEDIA</es_la>

@@ -1,0 +1,28 @@
+<openapoc>
+
+
+	<form id="FORM_OPTIONSMENU">
+	
+		<style minwidth="640" minheight="480">
+			<position x="centre" y="centre" />
+			<size width="644" height="484" />
+			<backcolour r="80" g="80" b="80" />
+			
+			<graphic>
+				<image>UFODATA/MESSAGE.PCX</image>
+				<position x="2" y="2" />
+				<size width="640" height="480" />
+			</graphic>
+
+			<textbutton id="BUTTON_OK" text="STR_QUIT">
+				<position x="right" y="bottom" />
+				<size width="44" height="42" />
+				<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+			</textbutton>
+			
+			
+		</style>
+
+	</form>
+
+</openapoc>

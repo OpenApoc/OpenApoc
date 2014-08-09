@@ -34,6 +34,8 @@ class GameCore
 	public:
 		static GameCore* ActiveGame;
 		bool Loaded;
+		bool DebugModeEnabled;
+		Cursor* MouseCursor;
 
 		GameCore(std::string CoreXMLFilename, std::string Language);
 		~GameCore();

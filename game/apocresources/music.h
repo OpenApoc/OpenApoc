@@ -19,5 +19,6 @@ class Music
 		~Music();
 
 		void Play();
+		void Stop();
 
 };

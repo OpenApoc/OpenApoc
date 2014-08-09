@@ -1,34 +1,32 @@
 
 #include "mainmenu.h"
 #include "../../framework/framework.h"
+#include "optionsmenu.h"
+#include "../../transitions/transitions.h"
 
 MainMenu::MainMenu()
 {
-	mousecursor = new Cursor( GAMECORE->GetPalette( "TACDATA/TACTICAL.PAL" ) );
-
-	// testform = GAMECORE->GetForm("FORM_UFOPAEDIA_TITLE");
-	testform = GAMECORE->GetForm("FORM_MAINMENU");
-
-	testpck = new PCK( "TACDATA/ICON_M.PCK", "TACDATA/ICON_M.TAB", GAMECORE->GetPalette( "TACDATA/TACTICAL.PAL" ) );
+	mainmenuform = GAMECORE->GetForm("FORM_MAINMENU");
 }
 
 MainMenu::~MainMenu()
 {
-	delete mousecursor;
 }
 
 void MainMenu::Begin()
 {
-	musicplayer = new Music( 26 );
+	musicplayer = new Music( 0 );
 	musicplayer->Play();
 }
 
 void MainMenu::Pause()
 {
+	musicplayer->Stop();
 }
 
 void MainMenu::Resume()
 {
+	musicplayer->Play();
 }
 
 void MainMenu::Finish()
@@ -38,9 +36,8 @@ void MainMenu::Finish()
 
 void MainMenu::EventOccurred(Event *e)
 {
-	bool washandled = false;
-	testform->EventOccured( e );
-	mousecursor->EventOccured( e );
+	mainmenuform->EventOccured( e );
+	GAMECORE->MouseCursor->EventOccured( e );
 
 	if( e->Type == EVENT_KEY_DOWN )
 	{
@@ -52,38 +49,37 @@ void MainMenu::EventOccurred(Event *e)
 
 	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick )
 	{
+		if( e->Data.Forms.RaisedBy->Name == "BUTTON_OPTIONS" )
+		{
+			FRAMEWORK->ProgramStages->Push( new TransitionFadeAcross( new OptionsMenu(), FRAMES_PER_SECOND * 1.5 ) );
+			return;
+		}
 		if( e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT" )
 		{
 			FRAMEWORK->ShutdownFramework();
 		}
 	}
+
+	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::CheckBoxChange )
+	{
+		if( e->Data.Forms.RaisedBy->Name == "CHECK_DEBUGMODE" )
+		{
+			GAMECORE->DebugModeEnabled = ((CheckBox*)e->Data.Forms.RaisedBy)->Checked;
+		}
+	}
+
 }
 
 void MainMenu::Update()
 {
-	testform->Update();
+	mainmenuform->Update();
 }
 
 void MainMenu::Render()
 {
 	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
-	testform->Render();
-	mousecursor->Render();
-
-	int x = 0;
-	int y = 0;
-
-	for( int c = 0; c < testpck->GetImageCount(); c++ )
-	{
-		testpck->RenderImage( c, x, y );
-		x += 80;
-		if( x > FRAMEWORK->Display_GetWidth() )
-		{
-			x = 0;
-			y += 60;
-		}
-	}
-
+	mainmenuform->Render();
+	GAMECORE->MouseCursor->Render();
 }
 
 bool MainMenu::IsTransition()
