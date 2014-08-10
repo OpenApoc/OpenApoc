@@ -19,6 +19,7 @@ set (OPENAPOC_SOURCE_FILES
 	game/apocresources/rawsound.cpp
 	game/apocresources/apocfont.cpp
 	game/general/mainmenu.cpp
+	game/general/optionsmenu.cpp
 	game/boot.cpp
 	game/resources/gamecore.cpp
 	game/resources/ttffont.cpp
@@ -33,6 +34,7 @@ set (OPENAPOC_SOURCE_FILES
 	library/spritesheet.cpp
 	shaders/greyscale.cpp
 	shaders/scanlines.cpp
+	transitions/fadeacross.cpp
 	transitions/fadein.cpp
 	transitions/fadeout.cpp
 	transitions/strips.cpp
