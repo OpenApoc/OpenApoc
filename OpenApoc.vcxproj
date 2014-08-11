@@ -98,8 +98,10 @@
     <ClCompile Include="forms\form.cpp" />
     <ClCompile Include="forms\graphic.cpp" />
     <ClCompile Include="forms\graphicbutton.cpp" />
+    <ClCompile Include="forms\hscrollbar.cpp" />
     <ClCompile Include="forms\label.cpp" />
     <ClCompile Include="forms\textbutton.cpp" />
+    <ClCompile Include="forms\vscrollbar.cpp" />
     <ClCompile Include="game\general\optionsmenu.cpp" />
     <ClCompile Include="game\resources\gamecore.cpp" />
     <ClCompile Include="game\resources\ttffont.cpp" />
@@ -142,8 +144,10 @@
     <ClInclude Include="forms\forms_enums.h" />
     <ClInclude Include="forms\graphic.h" />
     <ClInclude Include="forms\graphicbutton.h" />
+    <ClInclude Include="forms\hscrollbar.h" />
     <ClInclude Include="forms\label.h" />
     <ClInclude Include="forms\textbutton.h" />
+    <ClInclude Include="forms\vscrollbar.h" />
     <ClInclude Include="game\apocresources\apocresource.h" />
     <ClInclude Include="game\forms\control.h" />
     <ClInclude Include="game\general\optionsmenu.h" />

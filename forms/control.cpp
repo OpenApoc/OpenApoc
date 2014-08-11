@@ -99,6 +99,8 @@ void Control::EventOccured( Event* e )
 				newevent->Data.Forms.RaisedBy = this;
 				newevent->Data.Forms.EventFlag = FormEventType::MouseEnter;
 				memcpy( (void*)&newevent->Data.Forms.MouseInfo, (void*)&e->Data.Mouse, sizeof( FRAMEWORK_MOUSE_EVENT ) );
+				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.X;
+				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.Y;
 				memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
 				newevent->Data.Forms.AdditionalData = nullptr;
 				FRAMEWORK->PushEvent( newevent );
@@ -110,6 +112,8 @@ void Control::EventOccured( Event* e )
 			newevent->Data.Forms.RaisedBy = this;
 			newevent->Data.Forms.EventFlag = FormEventType::MouseMove;
 			memcpy( (void*)&newevent->Data.Forms.MouseInfo, (void*)&e->Data.Mouse, sizeof( FRAMEWORK_MOUSE_EVENT ) );
+			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.X;
+			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.Y;
 			memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
 			newevent->Data.Forms.AdditionalData = nullptr;
 			FRAMEWORK->PushEvent( newevent );
@@ -123,6 +127,8 @@ void Control::EventOccured( Event* e )
 				newevent->Data.Forms.RaisedBy = this;
 				newevent->Data.Forms.EventFlag = FormEventType::MouseLeave;
 				memcpy( (void*)&newevent->Data.Forms.MouseInfo, (void*)&e->Data.Mouse, sizeof( FRAMEWORK_MOUSE_EVENT ) );
+				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.X;
+				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.Y;
 				memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
 				newevent->Data.Forms.AdditionalData = nullptr;
 				FRAMEWORK->PushEvent( newevent );
@@ -140,6 +146,8 @@ void Control::EventOccured( Event* e )
 			newevent->Data.Forms.RaisedBy = this;
 			newevent->Data.Forms.EventFlag = FormEventType::MouseDown;
 			memcpy( (void*)&newevent->Data.Forms.MouseInfo, (void*)&e->Data.Mouse, sizeof( FRAMEWORK_MOUSE_EVENT ) );
+			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.X;
+			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.Y;
 			memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
 			newevent->Data.Forms.AdditionalData = nullptr;
 			FRAMEWORK->PushEvent( newevent );
@@ -158,6 +166,8 @@ void Control::EventOccured( Event* e )
 			newevent->Data.Forms.RaisedBy = this;
 			newevent->Data.Forms.EventFlag = FormEventType::MouseUp;
 			memcpy( (void*)&newevent->Data.Forms.MouseInfo, (void*)&e->Data.Mouse, sizeof( FRAMEWORK_MOUSE_EVENT ) );
+			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.X;
+			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.Y;
 			memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
 			newevent->Data.Forms.AdditionalData = nullptr;
 			FRAMEWORK->PushEvent( newevent );
@@ -169,6 +179,8 @@ void Control::EventOccured( Event* e )
 				newevent->Data.Forms.RaisedBy = this;
 				newevent->Data.Forms.EventFlag = FormEventType::MouseClick;
 				memcpy( (void*)&newevent->Data.Forms.MouseInfo, (void*)&e->Data.Mouse, sizeof( FRAMEWORK_MOUSE_EVENT ) );
+				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.X;
+				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.Y;
 				memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
 				newevent->Data.Forms.AdditionalData = nullptr;
 				FRAMEWORK->PushEvent( newevent );
@@ -387,6 +399,64 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 			CheckBox* cb = new CheckBox( this );
 			cb->ConfigureFromXML( node );
 		}
+		if( nodename == "vscroll" )
+		{
+			VScrollBar* vsb = new VScrollBar( this );
+			vsb->ConfigureFromXML( node );
+
+			subnode = node->FirstChildElement("grippercolour");
+			if( subnode != nullptr )
+			{
+				if( subnode->Attribute("a") != nullptr && subnode->Attribute("a") != "" )
+				{
+					vsb->GripperColour = al_map_rgba( Strings::ToInteger( subnode->Attribute("r") ), Strings::ToInteger( subnode->Attribute("g") ), Strings::ToInteger( subnode->Attribute("b") ), Strings::ToInteger( subnode->Attribute("a") ) );
+				} else {
+					vsb->GripperColour = al_map_rgb( Strings::ToInteger( subnode->Attribute("r") ), Strings::ToInteger( subnode->Attribute("g") ), Strings::ToInteger( subnode->Attribute("b") ) );
+				}
+			}
+			subnode = node->FirstChildElement("range");
+			if( subnode != nullptr )
+			{
+				if( subnode->Attribute("min") != nullptr && subnode->Attribute("min") != "" )
+				{
+					vsb->Minimum = Strings::ToInteger( subnode->Attribute("min") );
+				}
+				if( subnode->Attribute("max") != nullptr && subnode->Attribute("max") != "" )
+				{
+					vsb->Maximum = Strings::ToInteger( subnode->Attribute("max") );
+				}
+			}
+		}
+
+		if( nodename == "hscroll" )
+		{
+			HScrollBar* hsb = new HScrollBar( this );
+			hsb->ConfigureFromXML( node );
+
+			subnode = node->FirstChildElement("grippercolour");
+			if( subnode != nullptr )
+			{
+				if( subnode->Attribute("a") != nullptr && subnode->Attribute("a") != "" )
+				{
+					hsb->GripperColour = al_map_rgba( Strings::ToInteger( subnode->Attribute("r") ), Strings::ToInteger( subnode->Attribute("g") ), Strings::ToInteger( subnode->Attribute("b") ), Strings::ToInteger( subnode->Attribute("a") ) );
+				} else {
+					hsb->GripperColour = al_map_rgb( Strings::ToInteger( subnode->Attribute("r") ), Strings::ToInteger( subnode->Attribute("g") ), Strings::ToInteger( subnode->Attribute("b") ) );
+				}
+			}
+			subnode = node->FirstChildElement("range");
+			if( subnode != nullptr )
+			{
+				if( subnode->Attribute("min") != nullptr && subnode->Attribute("min") != "" )
+				{
+					hsb->Minimum = Strings::ToInteger( subnode->Attribute("min") );
+				}
+				if( subnode->Attribute("max") != nullptr && subnode->Attribute("max") != "" )
+				{
+					hsb->Maximum = Strings::ToInteger( subnode->Attribute("max") );
+				}
+			}
+		}
+
 	}
 
 	if( specialpositionx != "" )

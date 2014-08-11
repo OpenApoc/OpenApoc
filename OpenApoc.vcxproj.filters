@@ -135,6 +135,12 @@
     <ClCompile Include="transitions\fadeacross.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="forms\vscrollbar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="forms\hscrollbar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -288,6 +294,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="transitions\fadeacross.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="forms\vscrollbar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="forms\hscrollbar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

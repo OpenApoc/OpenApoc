@@ -9,3 +9,5 @@
 #include "textbutton.h"
 #include "graphicbutton.h"
 #include "checkbox.h"
+#include "vscrollbar.h"
+#include "hscrollbar.h"

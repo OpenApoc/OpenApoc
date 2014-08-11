@@ -12,6 +12,15 @@
 				<image>UFODATA/MESSAGE.PCX</image>
 				<position x="2" y="2" />
 				<size width="640" height="480" />
+				
+				
+				<vscroll id="SCROLL_LISTPOSITION">
+					<backcolour r="80" g="80" b="80" a="0" />
+					<grippercolour r="192" g="192" b="192" />
+					<position x="559" y="85" />
+					<size width="13" height="350" />
+				</vscroll>
+				
 			</graphic>
 
 			<textbutton id="BUTTON_OK" text="STR_QUIT">
@@ -21,6 +30,13 @@
 			</textbutton>
 			
 			
+			<hscroll id="SCROLL_DUMMY">
+				<backcolour r="80" g="80" b="80" />
+				<grippercolour r="192" g="192" b="192" />
+				<range min="0" max="200" />
+				<position x="0" y="top" />
+				<size width="644" height="16" />
+			</hscroll>
 		</style>
 
 	</form>
