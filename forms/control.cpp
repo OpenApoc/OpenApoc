@@ -225,10 +225,11 @@ void Control::Render()
 
 void Control::PreRender()
 {
-	if( BackgroundColour.a != 0.0f )
-	{
-		al_draw_filled_rectangle( 0, 0, Size.X, Size.Y, BackgroundColour );
-	}
+	al_clear_to_color( BackgroundColour );
+	//if( BackgroundColour.a != 0.0f )
+	//{
+	//	al_draw_filled_rectangle( 0, 0, Size.X, Size.Y, BackgroundColour );
+	//}
 }
 
 void Control::OnRender()
@@ -277,7 +278,6 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		{
 			if( node->Attribute("a") != nullptr && node->Attribute("a") != "" )
 			{
-				int dummya = Strings::ToInteger( node->Attribute("a") );
 				this->BackgroundColour = al_map_rgba( Strings::ToInteger( node->Attribute("r") ), Strings::ToInteger( node->Attribute("g") ), Strings::ToInteger( node->Attribute("b") ), Strings::ToInteger( node->Attribute("a") ) );
 			} else {
 				this->BackgroundColour = al_map_rgb( Strings::ToInteger( node->Attribute("r") ), Strings::ToInteger( node->Attribute("g") ), Strings::ToInteger( node->Attribute("b") ) );

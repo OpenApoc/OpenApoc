@@ -14,7 +14,7 @@
 				<size width="640" height="480" />
 				
 				<label text="STR_OPENAPOCALYPSE">
-					<backcolour r="255" g="255" b="255" a="128" />
+					<backcolour r="255" g="255" b="255" a="192" />
 					<position x="0" y="0" />
 					<size width="640" height="32" />
 					<alignment horizontal="centre" vertical="centre" />
