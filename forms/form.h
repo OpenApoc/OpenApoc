@@ -6,12 +6,14 @@
 class Form : public Control
 {
 
+	protected:
+		virtual void OnRender();
+
 	public:
 		Form( tinyxml2::XMLElement* FormConfiguration );
 		virtual ~Form();
 
 		virtual void EventOccured( Event* e );
-		virtual void Render();
 		virtual void Update();
 		virtual void UnloadResources();
 };

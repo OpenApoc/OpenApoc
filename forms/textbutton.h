@@ -15,6 +15,9 @@ class TextButton : public Control
 		static RawSound* buttonclick;
 		static ALLEGRO_BITMAP* buttonbackground;
 
+	protected:
+		virtual void OnRender();
+
 	public:
 		HorizontalAlignment TextHAlign;
 		VerticalAlignment TextVAlign;
@@ -23,7 +26,6 @@ class TextButton : public Control
 		virtual ~TextButton();
 
 		virtual void EventOccured(Event* e);
-		virtual void Render();
 		virtual void Update();
 		virtual void UnloadResources();
 

@@ -11,6 +11,9 @@ class Label : public Control
 		std::string text;
 		IFont* font;
 
+	protected:
+		virtual void OnRender();
+
 	public:
 		HorizontalAlignment TextHAlign;
 		VerticalAlignment TextVAlign;
@@ -19,7 +22,6 @@ class Label : public Control
 		virtual ~Label();
 
 		virtual void EventOccured(Event* e);
-		virtual void Render();
 		virtual void Update();
 		virtual void UnloadResources();
 

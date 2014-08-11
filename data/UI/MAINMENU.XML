@@ -13,6 +13,14 @@
 				<position x="2" y="2" />
 				<size width="640" height="480" />
 				
+				<label text="STR_OPENAPOCALYPSE">
+					<backcolour r="255" g="255" b="255" a="128" />
+					<position x="0" y="0" />
+					<size width="640" height="32" />
+					<alignment horizontal="centre" vertical="centre" />
+					<font>APOC:LARGE:UI/UI_PALETTE.PNG</font>
+				</label>
+				
 				<label text="STR_DEBUGMODE">
 					<backcolour r="255" g="255" b="255" a="0" />
 					<position x="410" y="bottom" />
@@ -25,13 +33,7 @@
 				</checkbox>
 			</graphic>
 
-			<label text="STR_OPENAPOCALYPSE">
-				<backcolour r="255" g="255" b="255" a="128" />
-				<position x="2" y="2" />
-				<size width="640" height="32" />
-				<alignment horizontal="centre" vertical="centre" />
-				<font>APOC:LARGE:UI/UI_PALETTE.PNG</font>
-			</label>
+
 			<textbutton id="BUTTON_NEWGAME" text="STR_START_CAMPAIGN">
 				<position x="centre" y="190" />
 				<size width="300" height="32" />

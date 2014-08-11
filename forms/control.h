@@ -7,6 +7,12 @@
 
 class Control
 {
+	private:
+		ALLEGRO_BITMAP* controlArea;
+
+		void PreRender();
+		void PostRender();
+		
 
 	protected:
 		Control* owningControl;
@@ -15,8 +21,8 @@ class Control
 		bool mouseDepressed;
 		Vector2 resolvedLocation;
 
-		void PreRender();
-		void PostRender();
+		virtual void OnRender();
+
 		void SetFocus(Control* Child);
 		bool IsFocused();
 
@@ -38,7 +44,7 @@ class Control
 		void Focus();
 
 		virtual void EventOccured(Event* e);
-		virtual void Render();
+		void Render();
 		virtual void Update();
 		virtual void UnloadResources();
 

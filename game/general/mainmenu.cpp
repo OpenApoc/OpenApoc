@@ -51,7 +51,7 @@ void MainMenu::EventOccurred(Event *e)
 	{
 		if( e->Data.Forms.RaisedBy->Name == "BUTTON_OPTIONS" )
 		{
-			FRAMEWORK->ProgramStages->Push( new TransitionFadeAcross( new OptionsMenu(), FRAMES_PER_SECOND * 1.5 ) );
+			FRAMEWORK->ProgramStages->Push( new TransitionFadeAcross( new OptionsMenu(), FRAMES_PER_SECOND >> 2 ) );
 			return;
 		}
 		if( e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT" )

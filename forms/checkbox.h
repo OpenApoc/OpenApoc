@@ -15,6 +15,9 @@ class CheckBox : public Control
 
 		void LoadResources();
 
+	protected:
+		virtual void OnRender();
+
 	public:
 		bool Checked;
 
@@ -22,7 +25,6 @@ class CheckBox : public Control
 		virtual ~CheckBox();
 
 		virtual void EventOccured( Event* e );
-		virtual void Render();
 		virtual void Update();
 		virtual void UnloadResources();
 };

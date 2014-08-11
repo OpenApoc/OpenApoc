@@ -10,12 +10,14 @@ class Graphic : public Control
 		std::string image_name;
 		ALLEGRO_BITMAP* image;
 
+	protected:
+		virtual void OnRender();
+
 	public:
 		Graphic( Control* Owner, std::string Image );
 		virtual ~Graphic();
 
 		virtual void EventOccured( Event* e );
-		virtual void Render();
 		virtual void Update();
 		virtual void UnloadResources();
 

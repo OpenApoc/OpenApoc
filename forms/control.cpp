@@ -4,7 +4,7 @@
 #include "forms.h"
 #include "../game/resources/gamecore.h"
 
-Control::Control(Control* Owner) : Name("Control"), owningControl(Owner), focusedChild(nullptr), BackgroundColour(al_map_rgb( 128, 80, 80 )), mouseInside(false), mouseDepressed(false)
+Control::Control(Control* Owner) : Name("Control"), owningControl(Owner), focusedChild(nullptr), BackgroundColour(al_map_rgb( 128, 80, 80 )), mouseInside(false), mouseDepressed(false), controlArea(nullptr)
 {
 	if( Owner != nullptr )
 	{
@@ -199,16 +199,41 @@ void Control::EventOccured( Event* e )
 
 void Control::Render()
 {
+	ALLEGRO_BITMAP* previousTarget = FRAMEWORK->Display_GetCurrentTarget();
+
+	if( Size.X == 0 || Size.Y == 0 )
+	{
+		return;
+	}
+
+	if( controlArea == nullptr )
+	{
+		controlArea = al_create_bitmap( Size.X, Size.Y );
+	} else if( al_get_bitmap_width( controlArea ) != Size.X || al_get_bitmap_height( controlArea ) != Size.Y ) {
+		al_destroy_bitmap( controlArea );
+		controlArea = al_create_bitmap( Size.X, Size.Y );
+	}
+
+	FRAMEWORK->Display_SetTarget( controlArea );
 	PreRender();
+	OnRender();
 	PostRender();
+
+	FRAMEWORK->Display_SetTarget( previousTarget );
+	al_draw_bitmap( controlArea, Location.X, Location.Y, 0 );
 }
 
 void Control::PreRender()
 {
 	if( BackgroundColour.a != 0.0f )
 	{
-		al_draw_filled_rectangle( resolvedLocation.X, resolvedLocation.Y, resolvedLocation.X + Size.X, resolvedLocation.Y + Size.Y, BackgroundColour );
+		al_draw_filled_rectangle( 0, 0, Size.X, Size.Y, BackgroundColour );
 	}
+}
+
+void Control::OnRender()
+{
+	// Nothing specifically for the base control
 }
 
 void Control::PostRender()
@@ -252,6 +277,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		{
 			if( node->Attribute("a") != nullptr && node->Attribute("a") != "" )
 			{
+				int dummya = Strings::ToInteger( node->Attribute("a") );
 				this->BackgroundColour = al_map_rgba( Strings::ToInteger( node->Attribute("r") ), Strings::ToInteger( node->Attribute("g") ), Strings::ToInteger( node->Attribute("b") ), Strings::ToInteger( node->Attribute("a") ) );
 			} else {
 				this->BackgroundColour = al_map_rgb( Strings::ToInteger( node->Attribute("r") ), Strings::ToInteger( node->Attribute("g") ), Strings::ToInteger( node->Attribute("b") ) );

@@ -40,9 +40,8 @@ void Form::EventOccured( Event* e )
 	Control::EventOccured( e );
 }
 
-void Form::Render()
+void Form::OnRender()
 {
-	Control::Render();
 }
 
 void Form::Update()
