@@ -41,15 +41,15 @@
     <_ProjectFileVersion>12.0.21005.1</_ProjectFileVersion>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
-    <IntDir>$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(INCLUDE);$(IncludePath)</IncludePath>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
-    <IntDir>$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
+    <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(INCLUDE);$(IncludePath)</IncludePath>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
@@ -64,6 +64,7 @@
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ObjectFileName>$(IntDir)\%(RelativeDir)\</ObjectFileName>
     </ClCompile>
     <Link>
       <AdditionalDependencies>allegro-5.1.6-monolith-mt.lib;tinyxml2_debug.lib</AdditionalDependencies>
@@ -82,6 +83,7 @@
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ObjectFileName>$(IntDir)\%(RelativeDir)\</ObjectFileName>
     </ClCompile>
     <Link>
       <AdditionalDependencies>allegro-5.1.6-monolith-mt.lib;tinyxml2.lib</AdditionalDependencies>
@@ -100,6 +102,7 @@
     <ClCompile Include="forms\graphicbutton.cpp" />
     <ClCompile Include="forms\hscrollbar.cpp" />
     <ClCompile Include="forms\label.cpp" />
+    <ClCompile Include="forms\list.cpp" />
     <ClCompile Include="forms\textbutton.cpp" />
     <ClCompile Include="forms\vscrollbar.cpp" />
     <ClCompile Include="game\general\optionsmenu.cpp" />
@@ -146,6 +149,7 @@
     <ClInclude Include="forms\graphicbutton.h" />
     <ClInclude Include="forms\hscrollbar.h" />
     <ClInclude Include="forms\label.h" />
+    <ClInclude Include="forms\list.h" />
     <ClInclude Include="forms\textbutton.h" />
     <ClInclude Include="forms\vscrollbar.h" />
     <ClInclude Include="game\apocresources\apocresource.h" />

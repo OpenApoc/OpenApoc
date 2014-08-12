@@ -46,6 +46,9 @@ set (OPENAPOC_SOURCE_FILES
 	forms/graphicbutton.cpp
 	forms/label.cpp
 	forms/textbutton.cpp
+	forms/hscrollbar.cpp
+	forms/vscrollbar.cpp
+	forms/list.cpp
 )
 
 set (REQUIRED_ALLEGRO_LIBRARIES allegro allegro_font allegro_primitives
