@@ -21,6 +21,82 @@
 					<size width="13" height="350" />
 				</vscroll>
 				
+				<listbox id="LISTBOX_OPTIONS" scrollbarid="SCROLL_LISTPOSITION">
+					<backcolour r="80" g="80" b="80" a="120" />
+					<position x="23" y="68" />
+					<size width="526" height="381" />
+					
+					
+					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
+						<position x="right" y="bottom" />
+						<size width="44" height="42" />
+						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+					</textbutton>
+					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
+						<position x="right" y="bottom" />
+						<size width="44" height="42" />
+						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+					</textbutton>
+					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
+						<position x="right" y="bottom" />
+						<size width="44" height="42" />
+						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+					</textbutton>
+					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
+						<position x="right" y="bottom" />
+						<size width="44" height="42" />
+						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+					</textbutton>
+					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
+						<position x="right" y="bottom" />
+						<size width="44" height="42" />
+						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+					</textbutton>
+					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
+						<position x="right" y="bottom" />
+						<size width="44" height="42" />
+						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+					</textbutton>
+					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
+						<position x="right" y="bottom" />
+						<size width="44" height="42" />
+						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+					</textbutton>
+					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
+						<position x="right" y="bottom" />
+						<size width="44" height="42" />
+						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+					</textbutton>
+					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
+						<position x="right" y="bottom" />
+						<size width="44" height="42" />
+						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+					</textbutton>
+					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
+						<position x="right" y="bottom" />
+						<size width="44" height="42" />
+						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+					</textbutton>
+					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
+						<position x="right" y="bottom" />
+						<size width="44" height="42" />
+						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+					</textbutton>
+					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
+						<position x="right" y="bottom" />
+						<size width="44" height="42" />
+						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+					</textbutton>
+					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
+						<position x="right" y="bottom" />
+						<size width="44" height="42" />
+						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+					</textbutton>
+					
+					
+					
+				</listbox>
+				
 			</graphic>
 
 			<textbutton id="BUTTON_OK" text="STR_QUIT">
@@ -29,14 +105,6 @@
 				<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
 			</textbutton>
 			
-			
-			<hscroll id="SCROLL_DUMMY">
-				<backcolour r="80" g="80" b="80" />
-				<grippercolour r="192" g="192" b="192" />
-				<range min="0" max="200" />
-				<position x="0" y="top" />
-				<size width="644" height="16" />
-			</hscroll>
 		</style>
 
 	</form>

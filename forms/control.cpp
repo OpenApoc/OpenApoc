@@ -381,16 +381,16 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 			{
 				gb_image = node->FirstChildElement("image")->GetText();
 			}
-			std::string gb_dep = node->FirstChildElement("image_depressed")->GetText();
-			if( node->FirstChildElement("image_depressed")->GetText() != nullptr )
+			std::string gb_dep = node->FirstChildElement("imagedepressed")->GetText();
+			if( node->FirstChildElement("imagedepressed")->GetText() != nullptr )
 			{
-				gb_dep = node->FirstChildElement("image_depressed")->GetText();
+				gb_dep = node->FirstChildElement("imagedepressed")->GetText();
 			}
-			if( node->FirstChildElement("image_hover") == nullptr )
+			if( node->FirstChildElement("imagehover") == nullptr )
 			{
 				gb = new GraphicButton( this, gb_image, gb_dep );
 			} else {
-				gb = new GraphicButton( this, gb_image, gb_dep, node->FirstChildElement("image_hover")->GetText() );
+				gb = new GraphicButton( this, gb_image, gb_dep, node->FirstChildElement("imagehover")->GetText() );
 			}
 			gb->ConfigureFromXML( node );
 		}
@@ -457,6 +457,19 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 			}
 		}
 
+		if( nodename == "listbox" )
+		{
+			VScrollBar* vsb = nullptr;
+
+			if( node->Attribute("scrollbarid") != nullptr && node->Attribute("scrollbarid") != "" )
+			{
+				attribvalue = node->Attribute("scrollbarid");
+				vsb = (VScrollBar*)this->FindControl( attribvalue );
+			}
+			ListBox* lb = new ListBox( this, vsb );
+			lb->ConfigureFromXML( node );
+		}
+
 	}
 
 	if( specialpositionx != "" )
@@ -514,4 +527,47 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 
 void Control::UnloadResources()
 {
+}
+
+Control* Control::operator[]( int Index )
+{
+	return Controls.at( Index );
+}
+
+Control* Control::FindControl( std::string ID )
+{
+	for( auto c = Controls.begin(); c != Controls.end(); c++ )
+	{
+		Control* ctrl = (Control*)*c;
+		if( ctrl->Name == ID )
+		{
+			return ctrl;
+		}
+	}
+	return nullptr;
+}
+
+Control* Control::GetParent()
+{
+	return owningControl;
+}
+
+Control* Control::GetRootControl()
+{
+	if( owningControl == nullptr )
+	{
+		return this;
+	} else {
+		return owningControl->GetRootControl();
+	}
+}
+
+Form* Control::GetForm()
+{
+	Control* c = GetRootControl();
+	if( dynamic_cast<Form*>( c ) != nullptr )
+	{
+		return (Form*)c;
+	}
+	return nullptr;
 }

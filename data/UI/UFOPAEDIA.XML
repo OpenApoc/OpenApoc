@@ -143,7 +143,7 @@
 				<position x="604" y="444" />
 				<size width="35" height="34" />
 				<image />
-				<image_depressed>PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:5:TACDATA/TACTICAL.PAL</image_depressed>
+				<imagedepressed>PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:5:TACDATA/TACTICAL.PAL</imagedepressed>
 			</graphicbutton>
 		</style>
 

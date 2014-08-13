@@ -5,6 +5,10 @@
 #include "../library/vector2.h"
 #include "../framework/event.h"
 
+#ifndef Form
+class Form;
+#endif
+
 class Control
 {
 	private:
@@ -29,6 +33,8 @@ class Control
 		void ResolveLocation();
 		void ConfigureFromXML( tinyxml2::XMLElement* Element );
 
+		Control* GetRootControl();
+
 	public:
 		std::string Name;
 		Vector2 Location;
@@ -48,5 +54,10 @@ class Control
 		virtual void Update();
 		virtual void UnloadResources();
 
+		Control* operator[]( int Index );
+		Control* FindControl( std::string ID );
+
+		Control* GetParent();
+		Form* GetForm();
 };
 

@@ -7,8 +7,11 @@
 class ListBox : public Control
 {
 	private:
-		std::vector<Control*> items;
+		// std::vector<Control*> items;
 		VScrollBar* scroller;
+		bool scroller_is_internal;
+
+		void ConfigureInternalScrollBar();
 
 	protected:
 		virtual void OnRender();

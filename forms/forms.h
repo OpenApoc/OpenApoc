@@ -11,3 +11,4 @@
 #include "checkbox.h"
 #include "vscrollbar.h"
 #include "hscrollbar.h"
+#include "list.h"
