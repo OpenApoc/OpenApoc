@@ -7,6 +7,13 @@
 MainMenu::MainMenu()
 {
 	mainmenuform = GAMECORE->GetForm("FORM_MAINMENU");
+
+	TextEdit* e = new TextEdit(mainmenuform, "Testing", new ApocalypseFont( ApocalypseFont::SmallFont, GAMECORE->GetPalette("UI/UI_PALETTE.PNG") ));
+	e->Location.X = 20;
+	e->Location.Y = 60;
+	e->Size.X = 100;
+	e->Size.Y = 32;
+	e->SetText("Dummy");
 }
 
 MainMenu::~MainMenu()

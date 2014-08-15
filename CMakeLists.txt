@@ -49,6 +49,7 @@ set (OPENAPOC_SOURCE_FILES
 	forms/hscrollbar.cpp
 	forms/vscrollbar.cpp
 	forms/list.cpp
+	forms/textedit.cpp
 )
 
 set (REQUIRED_ALLEGRO_LIBRARIES allegro allegro_font allegro_primitives

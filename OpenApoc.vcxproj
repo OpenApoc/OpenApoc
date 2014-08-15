@@ -104,6 +104,7 @@
     <ClCompile Include="forms\label.cpp" />
     <ClCompile Include="forms\list.cpp" />
     <ClCompile Include="forms\textbutton.cpp" />
+    <ClCompile Include="forms\textedit.cpp" />
     <ClCompile Include="forms\vscrollbar.cpp" />
     <ClCompile Include="game\general\optionsmenu.cpp" />
     <ClCompile Include="game\resources\gamecore.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="forms\label.h" />
     <ClInclude Include="forms\list.h" />
     <ClInclude Include="forms\textbutton.h" />
+    <ClInclude Include="forms\textedit.h" />
     <ClInclude Include="forms\vscrollbar.h" />
     <ClInclude Include="game\apocresources\apocresource.h" />
     <ClInclude Include="game\forms\control.h" />
