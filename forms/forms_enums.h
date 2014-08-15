@@ -18,7 +18,9 @@ enum class FormEventType
 
 	ButtonClick,
 	CheckBoxChange,
-	ScrollBarChange
+	ScrollBarChange,
+	TextChanged,
+	TextEditFinish
 };
 
 enum class HorizontalAlignment

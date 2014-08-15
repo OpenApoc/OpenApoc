@@ -18,12 +18,13 @@ class TextEdit : public Control
 		bool editShift;
 		bool editAltGr;
 
+		void RaiseEvent( FormEventType Type );
+
 	protected:
 		virtual void OnRender();
 
 	public:
 		int SelectionStart;
-		//int SelectionLength;
 		HorizontalAlignment TextHAlign;
 		VerticalAlignment TextVAlign;
 

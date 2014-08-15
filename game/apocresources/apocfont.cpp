@@ -97,7 +97,7 @@ void ApocalypseFont::DrawString( int X, int Y, std::string Text, int Alignment )
 	for( unsigned int i = 0; i < Text.length(); i++ )
 	{
 		int charidx = FontCharacterSet.find_first_of( Text.at( i ) );
-		if( charidx >= 0 )
+		if( charidx >= 0 && charidx < fontbitmaps.size() )
 		{
 			al_draw_bitmap( fontbitmaps.at( charidx ), xpos, Y, 0 );
 			xpos += fontwidths.at( charidx );
@@ -118,7 +118,7 @@ int ApocalypseFont::GetFontWidth( std::string Text )
 	for( unsigned int i = 0; i < Text.length(); i++ )
 	{
 		int charidx = FontCharacterSet.find_first_of( Text.at( i ) );
-		if( charidx >= 0 )
+		if( charidx >= 0 && charidx < fontbitmaps.size() )
 		{
 			textlen += fontwidths.at( charidx );
 		} else {

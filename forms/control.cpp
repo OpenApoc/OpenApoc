@@ -481,6 +481,48 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 			lb->ConfigureFromXML( node );
 		}
 
+		if( nodename == "textedit" )
+		{
+			TextEdit* te = new TextEdit( this, "", GAMECORE->GetFont( node->FirstChildElement("font")->GetText() ) );
+			te->ConfigureFromXML( node );
+			subnode = node->FirstChildElement("alignment");
+			if( subnode != nullptr )
+			{
+				if( subnode->Attribute("horizontal") != nullptr )
+				{
+					attribvalue = subnode->Attribute("horizontal");
+					if( attribvalue == "left" )
+					{
+						te->TextHAlign = HorizontalAlignment::Left;
+					}
+					if( attribvalue == "centre" )
+					{
+						te->TextHAlign = HorizontalAlignment::Centre;
+					}
+					if( attribvalue == "right" )
+					{
+						te->TextHAlign = HorizontalAlignment::Right;
+					}
+				}
+				if( subnode->Attribute("vertical") != nullptr )
+				{
+					attribvalue = subnode->Attribute("vertical");
+					if( attribvalue == "top" )
+					{
+						te->TextVAlign = VerticalAlignment::Top;
+					}
+					if( attribvalue == "centre" )
+					{
+						te->TextVAlign = VerticalAlignment::Centre;
+					}
+					if( attribvalue == "bottom" )
+					{
+						te->TextVAlign = VerticalAlignment::Bottom;
+					}
+				}
+			}
+		}
+
 	}
 
 	if( specialpositionx != "" )
