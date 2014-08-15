@@ -25,13 +25,13 @@ void TextEdit::EventOccured( Event* e )
 			if( e->Data.Forms.EventFlag == FormEventType::GotFocus || e->Data.Forms.EventFlag == FormEventType::MouseClick || e->Data.Forms.EventFlag == FormEventType::KeyDown )
 			{
 				editting = true;
-				e->Handled = true;
+				//e->Handled = true;
 			}
 			if( e->Data.Forms.EventFlag == FormEventType::LostFocus )
 			{
 				editting = false;
 				RaiseEvent( FormEventType::TextEditFinish );
-				e->Handled = true;
+				//e->Handled = true;
 			}
 		} else if( e->Data.Forms.EventFlag == FormEventType::MouseClick ) {
 			editting = false;
