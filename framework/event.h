@@ -17,6 +17,7 @@ enum EventTypes
 	EVENT_WINDOW_MANAGER,
 	EVENT_WINDOW_CLOSED,
 	EVENT_KEY_DOWN,
+	EVENT_KEY_PRESS,
 	EVENT_KEY_UP,
 	EVENT_MOUSE_DOWN,
 	EVENT_MOUSE_UP,
@@ -93,6 +94,7 @@ typedef struct FRAMEWORK_MOUSE_EVENT
 typedef struct FRAMEWORK_KEYBOARD_EVENT
 {
 	int KeyCode;
+	int UniChar;
 	unsigned int Modifiers;
 } FRAMEWORK_KEYBOARD_EVENT;
 

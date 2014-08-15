@@ -13,6 +13,7 @@ enum class FormEventType
 	MouseMove,
 	MouseClick,
 	KeyDown,
+	KeyPress,
 	KeyUp,
 
 	ButtonClick,

@@ -223,6 +223,7 @@ void Framework::TranslateAllegroEvents()
 				fwE = new Event();
 				fwE->Type = EVENT_KEY_DOWN;
 				fwE->Data.Keyboard.KeyCode = e.keyboard.keycode;
+				fwE->Data.Keyboard.UniChar = e.keyboard.unichar;
 				fwE->Data.Keyboard.Modifiers = e.keyboard.modifiers;
 				PushEvent( fwE );
 				break;
@@ -230,6 +231,15 @@ void Framework::TranslateAllegroEvents()
 				fwE = new Event();
 				fwE->Type = EVENT_KEY_UP;
 				fwE->Data.Keyboard.KeyCode = e.keyboard.keycode;
+				fwE->Data.Keyboard.UniChar = e.keyboard.unichar;
+				fwE->Data.Keyboard.Modifiers = e.keyboard.modifiers;
+				PushEvent( fwE );
+				break;
+			case ALLEGRO_EVENT_KEY_CHAR:
+				fwE = new Event();
+				fwE->Type = EVENT_KEY_PRESS;
+				fwE->Data.Keyboard.KeyCode = e.keyboard.keycode;
+				fwE->Data.Keyboard.UniChar = e.keyboard.unichar;
 				fwE->Data.Keyboard.Modifiers = e.keyboard.modifiers;
 				PushEvent( fwE );
 				break;

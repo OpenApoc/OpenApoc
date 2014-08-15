@@ -77,13 +77,8 @@ void Control::EventOccured( Event* e )
 		c->EventOccured( e );
 		if( e->Handled )
 		{
-			break;
-		}
-	}
-
-	if( e->Handled )
-	{
 			return;
+		}
 	}
 
 	Event* newevent;
@@ -199,6 +194,22 @@ void Control::EventOccured( Event* e )
 			newevent->Type = EVENT_FORM_INTERACTION;
 			newevent->Data.Forms.RaisedBy = this;
 			newevent->Data.Forms.EventFlag = (e->Type == EVENT_KEY_DOWN ? FormEventType::KeyDown : FormEventType::KeyUp);
+			memcpy( (void*)&newevent->Data.Forms.KeyInfo, (void*)&e->Data.Keyboard, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
+			memset( (void*)&newevent->Data.Forms.MouseInfo, 0, sizeof( FRAMEWORK_MOUSE_EVENT ) );
+			newevent->Data.Forms.AdditionalData = nullptr;
+			FRAMEWORK->PushEvent( newevent );
+
+			e->Handled = true;
+		}
+	}
+	if( e->Type == EVENT_KEY_PRESS )
+	{
+		if( IsFocused() )
+		{
+			newevent = new Event();
+			newevent->Type = EVENT_FORM_INTERACTION;
+			newevent->Data.Forms.RaisedBy = this;
+			newevent->Data.Forms.EventFlag = FormEventType::KeyPress;
 			memcpy( (void*)&newevent->Data.Forms.KeyInfo, (void*)&e->Data.Keyboard, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
 			memset( (void*)&newevent->Data.Forms.MouseInfo, 0, sizeof( FRAMEWORK_MOUSE_EVENT ) );
 			newevent->Data.Forms.AdditionalData = nullptr;

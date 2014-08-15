@@ -15,13 +15,15 @@ class TextEdit : public Control
 		std::string text;
 		IFont* font;
 		bool editting;
+		bool editShift;
+		bool editAltGr;
 
 	protected:
 		virtual void OnRender();
 
 	public:
 		int SelectionStart;
-		int SelectionLength;
+		//int SelectionLength;
 		HorizontalAlignment TextHAlign;
 		VerticalAlignment TextVAlign;
 
