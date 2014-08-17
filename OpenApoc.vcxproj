@@ -44,14 +44,14 @@
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(INCLUDE);$(IncludePath)</IncludePath>
+    <IncludePath>$(INCLUDE);$(SolutionDir);$(IncludePath)</IncludePath>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(INCLUDE);$(IncludePath)</IncludePath>
+    <IncludePath>$(INCLUDE);$(SolutionDir);$(IncludePath)</IncludePath>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
