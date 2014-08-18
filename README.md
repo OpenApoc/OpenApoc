@@ -14,11 +14,14 @@ speed up development.
 ## Running
  
 Since OpenApocalypse is a clone of the original game engine,
-it requires the original datafiles to run.
+it requires the original datafiles to run:
  
-_Instructions on how to do that here_
+1. Do a full install and then copy **all** the installed files
+to the `data` directory where the binary resides.
+
+2. Copy the `music` file from the root of your CD (it does not
+have an extension) to the same `data` folder
  
 ## Links
  
 - [OpenApocalypse Forums](http://openapoc.pmprog.co.uk)
-

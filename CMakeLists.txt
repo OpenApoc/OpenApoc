@@ -77,3 +77,8 @@ foreach (LIB ${REQUIRED_ALLEGRO_LIBRARIES})
 	target_link_libraries(OpenApoc ${LIB})
 endforeach()
 
+# Binary output and data files
+set ( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
+add_custom_command ( TARGET OpenApoc
+	POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/data ${EXECUTABLE_OUTPUT_PATH}/data)

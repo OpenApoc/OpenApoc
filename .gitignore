@@ -26,7 +26,8 @@ $RECYCLE.BIN/
 .LSOverride
 
 # Icon must ends with two \r.
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -71,3 +72,8 @@ allegro.log
 [Dd]ata/UFOPAEDI/
 [Dd]ata/MUSIC
 
+# Netbeans project folder
+nbproject/
+
+# Default "out-of-source build" directory
+build/
