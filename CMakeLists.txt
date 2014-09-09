@@ -1,84 +1,54 @@
-cmake_minimum_required(VERSION 2.8)
-project(OpenApoc)
+# project name, and type
+PROJECT(OpenApoc CXX)
 
-#c++11 is required
-# FIXME: Do compiler version check for c++11 support?
-set(CMAKE_CXX_FLAGS "-std=c++11 -W -Wall")
+# check cmake version
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
-set (OPENAPOC_SOURCE_FILES
-	framework/network.cpp
-	framework/stagestack.cpp
-	framework/event.cpp
-	framework/framework.cpp
-	framework/main.cpp
-	framework/data.cpp
-	game/apocresources/cursor.cpp
-	game/apocresources/music.cpp
-	game/apocresources/palette.cpp
-	game/apocresources/pck.cpp
-	game/apocresources/rawsound.cpp
-	game/apocresources/apocfont.cpp
-	game/general/mainmenu.cpp
-	game/general/optionsmenu.cpp
-	game/boot.cpp
-	game/resources/gamecore.cpp
-	game/resources/ttffont.cpp
-	library/angle.cpp
-	library/animation.cpp
-	library/line.cpp
-	library/memory.cpp
-	library/tilemap.cpp
-	library/vector2.cpp
-	library/box.cpp
-	library/configfile.cpp
-	library/spritesheet.cpp
-	shaders/greyscale.cpp
-	shaders/scanlines.cpp
-	transitions/fadeacross.cpp
-	transitions/fadein.cpp
-	transitions/fadeout.cpp
-	transitions/strips.cpp
-	transitions/tiled.cpp
-	forms/checkbox.cpp
-	forms/control.cpp
-	forms/form.cpp
-	forms/graphic.cpp
-	forms/graphicbutton.cpp
-	forms/label.cpp
-	forms/textbutton.cpp
-	forms/hscrollbar.cpp
-	forms/vscrollbar.cpp
-	forms/list.cpp
-	forms/textedit.cpp
-)
+# check compiler
+INCLUDE(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+if(COMPILER_SUPPORTS_CXX11)
+	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+else()
+	message(FATAL_ERROR "Your C++ compiler does not support C++11.")
+endif()
 
-set (REQUIRED_ALLEGRO_LIBRARIES allegro allegro_font allegro_primitives
-		allegro_ttf allegro_image allegro_audio allegro_acodec)
+# find openapoc sources
+AUX_SOURCE_DIRECTORY(framework source)
+AUX_SOURCE_DIRECTORY(game source)
+AUX_SOURCE_DIRECTORY(game/apocresources source)
+AUX_SOURCE_DIRECTORY(game/general source)
+AUX_SOURCE_DIRECTORY(game/resources source)
+AUX_SOURCE_DIRECTORY(library source)
+AUX_SOURCE_DIRECTORY(shaders source)
+AUX_SOURCE_DIRECTORY(transitions source)
+AUX_SOURCE_DIRECTORY(forms source)
 
-find_package(PkgConfig)
-pkg_check_modules(PC_ALLEGRO REQUIRED allegro-5.0)
+# declare allegro libraries
+SET(REQUIRED_ALLEGRO_LIBRARIES allegro allegro_main allegro_font allegro_primitives allegro_ttf allegro_image allegro_audio allegro_acodec)
 
-pkg_check_modules(PC_TINYXML2 REQUIRED tinyxml2)
+# declare tinyxml library
+SET(REQUIRED_TINYXML_LIBRARIES tinyxml2)
 
-find_path(ALLEGRO_INCLUDE_DIR allegro5/allegro.h
-	HINTS ${PC_ALLEGRO_INCLUDEDIR})
+# check dependencies and include libraries
+FIND_PACKAGE(PkgConfig)
+PKG_CHECK_MODULES(PC_ALLEGRO REQUIRED allegro-5.0)
+PKG_CHECK_MODULES(PC_TINYXML2 REQUIRED tinyxml2)
 
-find_path(TINYXML2_INCLUDE_DIR tinyxml2.h
-	HINTS ${PC_TINYXML2_INCLUDEDIR})
+FIND_PATH(ALLEGRO_INCLUDE_DIR allegro5/allegro.h HINTS ${PC_ALLEGRO_INCLUDEDIR})
+FIND_PATH(TINYXML2_INCLUDE_DIR tinyxml2.h HINTS ${PC_TINYXML2_INCLUDEDIR})
 
-include_directories(${ALLEGRO_INCLUDE_DIR})
-include_directories(${TINYXML2_INCLUDE_DIR})
-add_executable(OpenApoc ${OPENAPOC_SOURCE_FILES})
+INCLUDE_DIRECTORIES(${ALLEGRO_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(${TINYXML2_INCLUDE_DIR})
 
-target_link_libraries(OpenApoc ${PC_TINYXML2_LIBRARIES})
+ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} framework/main.cpp ${source})
 
 #FIXME: Check libraries exist?
-foreach (LIB ${REQUIRED_ALLEGRO_LIBRARIES})
-	target_link_libraries(OpenApoc ${LIB})
-endforeach()
+TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME} ${REQUIRED_ALLEGRO_LIBRARIES})
+TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME} ${PC_TINYXML2_LIBRARIES})
 
-# Binary output and data files
-set ( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
-add_custom_command ( TARGET OpenApoc
-	POST_BUILD
-	COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/data ${EXECUTABLE_OUTPUT_PATH}/data)
+# apoc data copy
+SET( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
+ADD_CUSTOM_COMMAND( TARGET OpenApoc
+	            POST_BUILD
+		    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/data ${EXECUTABLE_OUTPUT_PATH}/data)
