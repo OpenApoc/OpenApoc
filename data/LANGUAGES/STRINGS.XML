@@ -2230,4 +2230,8 @@
 		<en_gb>The Car Factory produces many of the smaller vehicles that are part of everyday life in Mega-Primus.</en_gb>
 		<es_la>The Car Factory produces many of the smaller vehicles that are part of everyday life in Mega-Primus.</es_la>
 	</string>
+	<string id="STR_TEST_XCOM_BASESCREEN">
+		<en_gb>XCOM BASE SCREEN</en_gb>
+		<es_la>XCOM BASE SCREEN</es_la>
+	</string>
 </openapoc>

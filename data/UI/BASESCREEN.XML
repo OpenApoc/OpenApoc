@@ -1,0 +1,21 @@
+<openapoc>
+
+
+    <form id="FORM_BASESCREEN">
+    
+        <style minwidth="640" minheight="480">
+            <position x="centre" y="centre" />
+            <size width="644" height="484" />
+            <backcolour r="80" g="80" b="80" />
+            
+            <graphic>
+                <image>UFODATA/BASE.PCX</image>
+                <position x="2" y="2" />
+                <size width="640" height="480" />
+            </graphic>
+            
+        </style>
+
+    </form>
+
+</openapoc>

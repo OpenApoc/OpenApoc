@@ -27,7 +27,7 @@
 					<size width="526" height="381" />
 					
 					
-					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
+					<textbutton id="BUTTON_TEST_XCOMBASE" text="STR_TEST_XCOM_BASESCREEN">
 						<position x="right" y="bottom" />
 						<size width="44" height="42" />
 						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
