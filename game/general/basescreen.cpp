@@ -1,4 +1,5 @@
 
+#include <iostream>
 #include "basescreen.h"
 #include "../../framework/framework.h"
 
@@ -39,7 +40,13 @@ void BaseScreen::EventOccurred(Event *e)
 			delete FRAMEWORK->ProgramStages->Pop();
 			return;
 		}
-	}
+    }
+
+    if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick )
+    {
+        std::cerr << "button " << e->Data.Forms.RaisedBy->Name << " clicked.\n";
+        return;
+    }
 }
 
 void BaseScreen::Update()
