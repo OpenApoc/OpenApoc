@@ -1,0 +1,79 @@
+<openapoc>
+    <form id="FORM_BASESCREEN">
+        <style minwidth="640" minheight="480">
+            <position x="centre" y="centre" />
+            <size width="644" height="484" />
+            <backcolour r="80" g="80" b="80" />
+            <graphic>
+                <image>UFODATA/BASE.PCX</image>
+                <position x="2" y="2" />
+                <size width="640" height="480" />
+                <hscroll id="SCROLL_LISTPOSITION">
+                    <backcolour r="80" g="80" b="80" a="0" />
+                    <grippercolour r="192" g="192" b="192" />
+                    <position x="32" y="453" />
+                    <size width="180" height="13" />
+                </hscroll>
+            </graphic>
+            
+            <graphicbutton id="BUTTON_BASE_HIREFIRESTAFF">
+                <position x="604" y="42" />
+                <size width="33" height="32" />
+                <backcolour r="0" g="0" b="0" a="0" />
+                <image />
+                <imagedepressed>PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:26:TACDATA/TACTICAL.PAL</imagedepressed>
+            </graphicbutton>
+            <graphicbutton id="BUTTON_BASE_BUYSELL">
+                <position x="604" y="82" />
+                <size width="35" height="34" />
+                <backcolour r="0" g="0" b="0" a="0" />
+                <image />
+                <imagedepressed>PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:27:TACDATA/TACTICAL.PAL</imagedepressed>
+            </graphicbutton>
+            <graphicbutton id="BUTTON_BASE_TRANSFER">
+                <position x="604" y="122" />
+                <size width="35" height="34" />
+                <backcolour r="0" g="0" b="0" a="0" />
+                <image />
+                <imagedepressed>PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:28:TACDATA/TACTICAL.PAL</imagedepressed>
+            </graphicbutton>
+            <graphicbutton id="BUTTON_BASE_EQUIPAGENT">
+                <position x="604" y="162" />
+                <size width="35" height="34" />
+                <backcolour r="0" g="0" b="0" a="0" />
+                <image />
+                <imagedepressed>PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:29:TACDATA/TACTICAL.PAL</imagedepressed>
+            </graphicbutton>
+            <graphicbutton id="BUTTON_BASE_EQUIPVEHICLE">
+                <position x="604" y="202" />
+                <size width="35" height="34" />
+                <backcolour r="0" g="0" b="0" a="0" />
+                <image />
+                <imagedepressed>PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:30:TACDATA/TACTICAL.PAL</imagedepressed>
+            </graphicbutton>
+            <graphicbutton id="BUTTON_BASE_RES_AND_MANUF">
+                <position x="604" y="242" />
+                <size width="35" height="34" />
+                <backcolour r="0" g="0" b="0" a="0" />
+                <image />
+                <imagedepressed>PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:31:TACDATA/TACTICAL.PAL</imagedepressed>
+            </graphicbutton>
+            <graphicbutton id="BUTTON_BASE_ALIEN_CONTAINMENT">
+                <position x="604" y="282" />
+                <size width="35" height="34" />
+                <backcolour r="0" g="0" b="0" a="0" />
+                <image />
+                <imagedepressed>PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:32:TACDATA/TACTICAL.PAL</imagedepressed>
+            </graphicbutton>
+            <graphicbutton id="BUTTON_OK">
+                <position x="604" y="442" />
+                <size width="35" height="34" />
+                <backcolour r="0" g="0" b="0" a="0" />
+                <image />
+                <imagedepressed>PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:5:TACDATA/TACTICAL.PAL</imagedepressed>
+            </graphicbutton>
+        </style>
+
+    </form>
+
+</openapoc>

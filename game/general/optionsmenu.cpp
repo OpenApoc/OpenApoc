@@ -1,6 +1,8 @@
 
 #include "optionsmenu.h"
+#include "basescreen.h"
 #include "../../framework/framework.h"
+#include "../../transitions/transitions.h"
 
 OptionsMenu::OptionsMenu()
 {
@@ -40,6 +42,15 @@ void OptionsMenu::EventOccurred(Event *e)
 			return;
 		}
 	}
+
+    if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick )
+    {
+        if( e->Data.Forms.RaisedBy->Name == "BUTTON_TEST_XCOMBASE" )
+        {
+            FRAMEWORK->ProgramStages->Push( new TransitionFadeAcross( new BaseScreen(), FRAMES_PER_SECOND >> 2 ) );
+            return;
+        }
+    }
 }
 
 void OptionsMenu::Update()

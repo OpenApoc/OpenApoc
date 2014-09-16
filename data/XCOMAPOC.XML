@@ -5,6 +5,7 @@
 		<include>LANGUAGES/STRINGS.XML</include>
 		<include>UI/MAINMENU.XML</include>
 		<include>UI/OPTIONS.XML</include>
+        <include>UI/BASESCREEN.XML</include>
 		<include>UI/UFOPAEDIA.XML</include>
 	</game>
 </openapoc>
