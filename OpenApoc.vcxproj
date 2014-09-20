@@ -142,6 +142,7 @@
 	<ClCompile Include="game\city\city.cpp" />
 	<ClCompile Include="game\city\cityview.cpp" />
 	<ClCompile Include="game\general\difficultymenu.cpp" />
+	<ClCompile Include="game\general\basescreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="forms\checkbox.h" />
@@ -202,6 +203,7 @@
 	<ClInclude Include="game\city\city.h" />
 	<ClInclude Include="game\city\cityview.h" />
 	<ClInclude Include="game\general\difficultymenu.h" />
+	<ClInclude Include="game\general\basescreen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
