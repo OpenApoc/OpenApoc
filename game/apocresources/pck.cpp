@@ -164,6 +164,12 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 				bitmap = al_create_bitmap( c1_imgheader.RightMostPixel - c1_imgheader.LeftMostPixel, c1_imgheader.BottomMostPixel - c1_imgheader.TopMostPixel );
 				region = al_lock_bitmap( bitmap, ALLEGRO_PIXEL_FORMAT_ABGR_8888_LE, 0 );
 
+				// Initialise the buffer to 0 (transparent alpha)
+				for (int y = 0; y < c1_imgheader.BottomMostPixel - c1_imgheader.TopMostPixel; y++)
+				{
+					memset(&((char*)region->data)[y * region->pitch], 0, (c1_imgheader.RightMostPixel - c1_imgheader.LeftMostPixel) * 4);
+				}
+
 				c1_pixelstoskip = (uint32_t)al_fread32le( pck );
 				while( c1_pixelstoskip != 0xFFFFFFFF )
 				{
