@@ -161,31 +161,31 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 			case 1:
 				// Raw Data with RLE
 				al_fread( pck, &c1_imgheader, sizeof( PCKCompression1ImageHeader ) );
-				bitmap = al_create_bitmap( c1_imgheader.RightMostPixel - c1_imgheader.LeftMostPixel, c1_imgheader.BottomMostPixel - c1_imgheader.TopMostPixel );
+				bitmap = al_create_bitmap( c1_imgheader.RightMostPixel, c1_imgheader.BottomMostPixel);
 				region = al_lock_bitmap( bitmap, ALLEGRO_PIXEL_FORMAT_ABGR_8888_LE, 0 );
 
 				// Initialise the buffer to 0 (transparent alpha)
-				for (int y = 0; y < c1_imgheader.BottomMostPixel - c1_imgheader.TopMostPixel; y++)
+				for (int y = 0; y < c1_imgheader.BottomMostPixel; y++)
 				{
-					memset(&((char*)region->data)[y * region->pitch], 0, (c1_imgheader.RightMostPixel - c1_imgheader.LeftMostPixel) * 4);
+					memset(&((char*)region->data)[y * region->pitch], 0, (c1_imgheader.RightMostPixel) * 4);
 				}
 
 				c1_pixelstoskip = (uint32_t)al_fread32le( pck );
 				while( c1_pixelstoskip != 0xFFFFFFFF )
 				{
 					al_fread( pck, &c1_header, sizeof( PCKCompression1Header ) );
-					uint32_t c1_y = (c1_pixelstoskip / 640) - c1_imgheader.TopMostPixel;
+					uint32_t c1_y = (c1_pixelstoskip / 640);
 
-					if( c1_y < c1_imgheader.BottomMostPixel - c1_imgheader.TopMostPixel )
+					if( c1_y < c1_imgheader.BottomMostPixel)
 					{
 						if( c1_header.BytesInRow != 0 )
 						{
 							// No idea what this is
 							uint32_t chunk = al_fread32le( pck );
 
-							for( uint32_t c1_x = 0; c1_x < c1_header.BytesInRow; c1_x++ )
+							for( uint32_t c1_x = c1_imgheader.LeftMostPixel; c1_x < c1_header.BytesInRow; c1_x++ )
 							{
-								if( c1_x < c1_imgheader.RightMostPixel - c1_imgheader.LeftMostPixel )
+								if( c1_x < c1_imgheader.RightMostPixel)
 								{
 									int32_t dataptr = ((int32_t)c1_y * region->pitch) + ((int32_t)c1_x * 4);
 
@@ -206,7 +206,7 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 							{
 								if( (c1_header.ColumnToStartAt + c1_x - c1_imgheader.LeftMostPixel) < c1_imgheader.RightMostPixel - c1_imgheader.LeftMostPixel )
 								{
-									int32_t dataptr = ((int32_t)c1_y * region->pitch) + (((int8_t)c1_header.ColumnToStartAt + (int32_t)c1_x - (int16_t)c1_imgheader.LeftMostPixel) * 4);
+									int32_t dataptr = ((int32_t)c1_y * region->pitch) + (((int8_t)c1_header.ColumnToStartAt + (int32_t)c1_x) * 4);
 
 									Colour* c1_rowptr = (Colour*)(&((char*)region->data)[ dataptr ]);
 									Colour* c1_palcol = Colours->GetColour( al_fgetc( pck ) );
