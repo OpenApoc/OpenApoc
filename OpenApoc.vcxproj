@@ -139,7 +139,6 @@
     <ClCompile Include="library\tilemap.cpp" />
     <ClCompile Include="library\vector2.cpp" />
     <ClCompile Include="framework\data.cpp" />
-	<ClCompile Include="framework\data.cpp" />
 	<ClCompile Include="game\city\city.cpp" />
 	<ClCompile Include="game\city\cityview.cpp" />
 	<ClCompile Include="game\general\difficultymenu.cpp" />
