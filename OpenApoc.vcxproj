@@ -139,6 +139,10 @@
     <ClCompile Include="library\tilemap.cpp" />
     <ClCompile Include="library\vector2.cpp" />
     <ClCompile Include="framework\data.cpp" />
+	<ClCompile Include="framework\data.cpp" />
+	<ClCompile Include="game\city\city.cpp" />
+	<ClCompile Include="game\city\cityview.cpp" />
+	<ClCompile Include="game\general\difficultymenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="forms\checkbox.h" />
@@ -196,6 +200,9 @@
     <ClInclude Include="transitions\transitions.h" />
     <ClInclude Include="library\vector2.h" />
     <ClInclude Include="framework\data.h" />
+	<ClInclude Include="game\city\city.h" />
+	<ClInclude Include="game\city\cityview.h" />
+	<ClInclude Include="game\general\difficultymenu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
