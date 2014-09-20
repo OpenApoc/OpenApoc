@@ -2234,4 +2234,23 @@
 		<en_gb>XCOM BASE SCREEN</en_gb>
 		<es_la>XCOM BASE SCREEN</es_la>
 	</string>
+	<string id="STR_DIFFICULTY1">
+		<en_gb>Novice</en_gb>
+	</string>
+	<string id="STR_DIFFICULTY2">
+		<en_gb>Easy</en_gb>
+	</string>
+	<string id="STR_DIFFICULTY3">
+		<en_gb>Medium</en_gb>
+	</string>
+	<string id="STR_DIFFICULTY4">
+		<en_gb>Hard</en_gb>
+	</string>
+	<string id="STR_DIFFICULTY5">
+		<en_gb>Superhuman</en_gb>
+	</string>
+</openapoc>
+</openapoc>
+</openapoc>
+</openapoc>
 </openapoc>

@@ -2,6 +2,7 @@
 #include "mainmenu.h"
 #include "../../framework/framework.h"
 #include "optionsmenu.h"
+#include "difficultymenu.h"
 #include "../../transitions/transitions.h"
 
 MainMenu::MainMenu()
@@ -57,6 +58,11 @@ void MainMenu::EventOccurred(Event *e)
 		if( e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT" )
 		{
 			FRAMEWORK->ShutdownFramework();
+		}
+		if( e->Data.Forms.RaisedBy->Name == "BUTTON_NEWGAME" )
+		{
+			FRAMEWORK->ProgramStages->Push( new TransitionFadeAcross( new DifficultyMenu(), FRAMES_PER_SECOND >> 2 ) );
+			return;
 		}
 	}
 
