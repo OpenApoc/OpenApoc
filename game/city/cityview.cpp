@@ -1,6 +1,10 @@
 #include "cityview.h"
+#include "city.h"
 
 CityView::CityView()
+	: pal(new Palette("UFODATA/PAL_04.DAT")),
+	  cityPck(new PCK("UFODATA/CITY.PCK", "UFODATA/CITY.TAB", pal.get())),
+	  offsetX(0), offsetY(0)
 {
 }
 
@@ -35,6 +39,22 @@ void CityView::EventOccurred(Event *e)
 			delete FRAMEWORK->ProgramStages->Pop();
 			return;
 		}
+
+		switch (e->Data.Keyboard.KeyCode)
+		{
+			case ALLEGRO_KEY_UP:
+				offsetY += CITY_TILE_HEIGHT;
+				break;
+			case ALLEGRO_KEY_DOWN:
+				offsetY -= CITY_TILE_HEIGHT;
+				break;
+			case ALLEGRO_KEY_LEFT:
+				offsetX += CITY_TILE_WIDTH;
+				break;
+			case ALLEGRO_KEY_RIGHT:
+				offsetX -= CITY_TILE_WIDTH;
+				break;
+		}
 	}
 }
 
@@ -44,6 +64,35 @@ void CityView::Update()
 
 void CityView::Render()
 {
+	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
+	for (int x = 0; x < CITY->sizeX; x++)
+	{
+		for (int y = 0; y < CITY->sizeY; y++)
+		{
+			for (int z = 0; z < CITY->sizeZ; z++)
+			{
+				auto &tile = CITY->tiles[z][y][x];
+				// Skip over transparent (missing) tiles
+				if (tile.id == 0)
+					continue;
+				int posX = offsetX
+					+ (x*CITY_TILE_WIDTH/2)
+					- (y*CITY_TILE_WIDTH/2);
+				int posY = offsetY
+					+ (x*CITY_TILE_HEIGHT/2)
+					+ (y*CITY_TILE_HEIGHT/2)
+					+ (z*CITY_TILE_ZOFFSET);
+
+				//Skip over tiles that would be outside the window
+				if (posX + CITY_TILE_WIDTH < 0 || posY + CITY_TILE_HEIGHT < 0
+					|| posX - CITY_TILE_WIDTH > 640 || posY - CITY_TILE_HEIGHT > 480)
+					continue;
+
+				cityPck->RenderImage(tile.id, posX, posY);
+			}
+		}
+	}
+	GAMECORE->MouseCursor->Render();
 }
 
 bool CityView::IsTransition()

@@ -23,6 +23,7 @@ class City
 	int sizeY;
 	int sizeZ;
 
+	//tiles in [z][y][x] order
 	std::vector < std::vector < std::vector < CityTile > > > tiles;
 
 
