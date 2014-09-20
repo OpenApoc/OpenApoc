@@ -23,6 +23,8 @@ class City
 	int sizeY;
 	int sizeZ;
 
+	std::vector < std::vector < std::vector < CityTile > > > tiles;
+
 
 
 	static std::unique_ptr<City> city;
