@@ -2,6 +2,8 @@
 #include "../../framework/framework.h"
 #include "difficultymenu.h"
 #include "../../transitions/transitions.h"
+#include "../city/city.h"
+#include "../city/cityview.h"
 
 #include <iostream>
 
@@ -47,31 +49,37 @@ void DifficultyMenu::EventOccurred(Event *e)
 
 	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick )
 	{
+		std::string citymapName;
 		if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY1") == 0)
 		{
-			std::cerr << "Difficulty1\n";
+			citymapName = "citymap1";
 		}
 		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY2") == 0)
 		{
-			std::cerr << "Difficulty2\n";
+			citymapName = "citymap2";
 		}
 		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY3") == 0)
 		{
-			std::cerr << "Difficulty3\n";
+			citymapName = "citymap3";
 		}
 		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY4") == 0)
 		{
-			std::cerr << "Difficulty4\n";
+			citymapName = "citymap4";
 		}
 		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY5") == 0)
 		{
-			std::cerr << "Difficulty5\n";
+			citymapName = "citymap5";
 		}
 		else
 		{
 			std::cerr << "Unknown button pressed: " << e->Data.Forms.RaisedBy->Name
 				<< "\n";
+			citymapName = "citymap1";
+			return;
 		}
+		CITY.reset(new City(citymapName));
+		FRAMEWORK->ProgramStages->Push( new TransitionFadeAcross( new CityView(), FRAMES_PER_SECOND >> 2 ) );
+		return;
 	}
 }
 
