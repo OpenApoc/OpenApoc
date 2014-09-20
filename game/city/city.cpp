@@ -6,7 +6,7 @@
 std::unique_ptr<City> City::city;
 
 City::City(std::string mapName)
-	: sizeX(100), sizeY(100), sizeZ(100)
+	: sizeX(100), sizeY(100), sizeZ(10)
 {
 	auto file = DATA->load_file("ufodata/" + mapName, "r");
 	if (!file)
@@ -26,6 +26,14 @@ City::City(std::string mapName)
 			for (int x = 0; x < sizeX; x++)
 			{
 				int16_t tileID = al_fread16le(file);
+				if (tileID == -1 &&
+				    al_feof(file))
+				{
+					std::cerr << "Unexpected EOF reading citymap at x="
+						<< x << " y = " << y << " z = " << z << "\n";
+					al_fclose(file);
+					return;
+				}
 				tiles[z][y][x] = CityTile(tileID);
 			}
 		}
