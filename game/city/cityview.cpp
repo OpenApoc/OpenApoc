@@ -4,7 +4,7 @@
 CityView::CityView()
 	: pal(new Palette("UFODATA/PAL_04.DAT")),
 	  cityPck(new PCK("UFODATA/CITY.PCK", "UFODATA/CITY.TAB", pal.get())),
-	  offsetX(0), offsetY(0)
+	  offsetX(0), offsetY(0), maxZDraw(2)
 {
 }
 
@@ -54,6 +54,19 @@ void CityView::EventOccurred(Event *e)
 			case ALLEGRO_KEY_RIGHT:
 				offsetX -= CITY_TILE_WIDTH;
 				break;
+
+			case ALLEGRO_KEY_PGDN:
+				if( maxZDraw > 0)
+				{
+					maxZDraw--;
+				}
+				break;
+			case ALLEGRO_KEY_PGUP:
+				if( maxZDraw < CITY->sizeZ)
+				{
+					maxZDraw++;
+				}
+				break;
 		}
 	}
 }
@@ -65,11 +78,11 @@ void CityView::Update()
 void CityView::Render()
 {
 	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
-	for (int x = 0; x < CITY->sizeX; x++)
+	for (int y = 0; y < CITY->sizeY; y++)
 	{
-		for (int y = 0; y < CITY->sizeY; y++)
+		for (int z = 0; z < maxZDraw; z++)
 		{
-			for (int z = 0; z < CITY->sizeZ; z++)
+			for (int x = 0; x < CITY->sizeX; x++)
 			{
 				auto &tile = CITY->tiles[z][y][x];
 				// Skip over transparent (missing) tiles

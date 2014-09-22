@@ -17,7 +17,7 @@
 class CityView : public Stage
 {
 	public:
-
+		int maxZDraw;
 
 		int offsetX, offsetY;
 		std::unique_ptr<Palette> pal;
