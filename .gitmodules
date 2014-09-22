@@ -1,0 +1,7 @@
+[submodule "dependencies/tinyxml2"]
+	path = dependencies/tinyxml2
+	url = https://github.com/leethomason/tinyxml2.git
+[submodule "dependencies/allegro"]
+	path = dependencies/allegro
+	url = git://git.code.sf.net/p/alleg/allegro
+	branch = 5.0
