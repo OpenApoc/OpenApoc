@@ -8,7 +8,7 @@ std::unique_ptr<City> City::city;
 City::City(std::string mapName)
 	: sizeX(100), sizeY(100), sizeZ(10)
 {
-	auto file = DATA->load_file("ufodata/" + mapName, "rb");
+	auto file = DATA->load_file("UFODATA/" + mapName, "rb");
 	if (!file)
 	{
 		std::cerr << "Failed to open city map:" << mapName << "\n";
