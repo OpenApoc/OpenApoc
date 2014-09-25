@@ -3,6 +3,7 @@
 #include "../../framework/stage.h"
 #include "../../framework/includes.h"
 #include "../../library/spritesheet.h"
+#include "../../library/vec.h"
 
 #include "../resources/gamecore.h"
 #include "../apocresources/apocresource.h"
@@ -22,6 +23,9 @@ class CityView : public Stage
 		int offsetX, offsetY;
 		std::unique_ptr<Palette> pal;
 		std::unique_ptr<PCK> cityPck;
+
+		Vec3<int> selectedTilePosition;
+		ALLEGRO_BITMAP *selectedTileImageBack, *selectedTileImageFront;
 
 		CityView();
 		~CityView();

@@ -106,6 +106,8 @@
     <ClCompile Include="forms\textbutton.cpp" />
     <ClCompile Include="forms\textedit.cpp" />
     <ClCompile Include="forms\vscrollbar.cpp" />
+    <ClCompile Include="game\city\building.cpp" />
+    <ClCompile Include="game\city\organisation.cpp" />
     <ClCompile Include="game\general\optionsmenu.cpp" />
     <ClCompile Include="game\resources\gamecore.cpp" />
     <ClCompile Include="game\resources\ttffont.cpp" />
@@ -159,6 +161,9 @@
     <ClInclude Include="forms\textedit.h" />
     <ClInclude Include="forms\vscrollbar.h" />
     <ClInclude Include="game\apocresources\apocresource.h" />
+    <ClInclude Include="game\city\building.h" />
+    <ClInclude Include="game\city\organisation.h" />
+    <ClInclude Include="game\city\vehicle.h" />
     <ClInclude Include="game\forms\control.h" />
     <ClInclude Include="game\general\optionsmenu.h" />
     <ClInclude Include="game\resources\gamecore.h" />
@@ -172,7 +177,9 @@
     <ClInclude Include="library\configfile.h" />
     <ClInclude Include="game\apocresources\cursor.h" />
     <ClInclude Include="framework\event.h" />
+    <ClInclude Include="library\rect.h" />
     <ClInclude Include="library\strings.h" />
+    <ClInclude Include="library\vec.h" />
     <ClInclude Include="transitions\fadeacross.h" />
     <ClInclude Include="transitions\fadein.h" />
     <ClInclude Include="transitions\fadeout.h" />

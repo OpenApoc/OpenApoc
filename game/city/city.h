@@ -1,15 +1,22 @@
 #pragma once
 
+#include "building.h"
+#include "vehicle.h"
+#include "organisation.h"
+
 #include "../../framework/includes.h"
 #include <memory>
+#include <list>
 
 class CityTile
 {
 	private:
 	public:
-	CityTile (int id = 0);
+		CityTile (int id = 0, Building *building = NULL);
 
-	int id;
+		int id;
+		Building *building;
+		std::list<std::shared_ptr<Vehicle> > vehiclesOnTile;
 };
 
 class City
@@ -19,16 +26,15 @@ class City
 	City (std::string mapName);
 	~City();
 
-	int sizeX;
-	int sizeY;
-	int sizeZ;
+		int sizeX;
+		int sizeY;
+		int sizeZ;
+		//tiles in [z][y][x] order
+		std::vector < std::vector < std::vector < CityTile > > > tiles;
+		std::list<Building> buildings;
+		std::vector<Organisation> organisations;
 
-	//tiles in [z][y][x] order
-	std::vector < std::vector < std::vector < CityTile > > > tiles;
-
-
-
-	static std::unique_ptr<City> city;
+		static std::unique_ptr<City> city;
 };
 
 #define CITY City::city
