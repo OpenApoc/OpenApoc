@@ -16,8 +16,8 @@ class Rect
 
 		bool intersects(Vec2<T> p){
 			return (p.x >= p0.x &&
-			        p.x < p1.x &&
+			        p.x <= p1.x &&
 					p.y >= p0.y &&
-					p.y < p1.y);
+					p.y <= p1.y);
 		};
 };
