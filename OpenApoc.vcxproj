@@ -44,15 +44,15 @@
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(INCLUDE);$(SolutionDir);$(IncludePath)</IncludePath>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\allegro\msvc2013\allegro5;$(ProjectDir)\dependencies\allegro\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(INCLUDE);$(SolutionDir);$(IncludePath)</IncludePath>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\allegro\msvc2013\allegro5;$(ProjectDir)\dependencies\allegro\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -67,9 +67,10 @@
       <ObjectFileName>$(IntDir)\%(RelativeDir)\</ObjectFileName>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>allegro-5.1.6-monolith-mt.lib;tinyxml2_debug.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -86,9 +87,10 @@
       <ObjectFileName>$(IntDir)\%(RelativeDir)\</ObjectFileName>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>allegro-5.1.6-monolith-mt.lib;tinyxml2.lib</AdditionalDependencies>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
@@ -139,10 +141,10 @@
     <ClCompile Include="library\tilemap.cpp" />
     <ClCompile Include="library\vector2.cpp" />
     <ClCompile Include="framework\data.cpp" />
-	<ClCompile Include="game\city\city.cpp" />
-	<ClCompile Include="game\city\cityview.cpp" />
-	<ClCompile Include="game\general\difficultymenu.cpp" />
-	<ClCompile Include="game\general\basescreen.cpp" />
+    <ClCompile Include="game\city\city.cpp" />
+    <ClCompile Include="game\city\cityview.cpp" />
+    <ClCompile Include="game\general\difficultymenu.cpp" />
+    <ClCompile Include="game\general\basescreen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="forms\checkbox.h" />
@@ -200,10 +202,28 @@
     <ClInclude Include="transitions\transitions.h" />
     <ClInclude Include="library\vector2.h" />
     <ClInclude Include="framework\data.h" />
-	<ClInclude Include="game\city\city.h" />
-	<ClInclude Include="game\city\cityview.h" />
-	<ClInclude Include="game\general\difficultymenu.h" />
-	<ClInclude Include="game\general\basescreen.h" />
+    <ClInclude Include="game\city\city.h" />
+    <ClInclude Include="game\city\cityview.h" />
+    <ClInclude Include="game\general\difficultymenu.h" />
+    <ClInclude Include="game\general\basescreen.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="dependencies\allegro\msvc2013\allegro5\allegro5.vcxproj">
+      <Project>{e68f7d90-9965-42a5-97e5-df0f12f7dbc4}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
+    <ProjectReference Include="dependencies\tinyxml2\tinyxml2\tinyxml2.vcxproj">
+      <Project>{d1c528b6-aa02-4d29-9d61-dc08e317a70d}</Project>
+      <Private>true</Private>
+      <ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+      <CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+      <LinkLibraryDependencies>true</LinkLibraryDependencies>
+      <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
