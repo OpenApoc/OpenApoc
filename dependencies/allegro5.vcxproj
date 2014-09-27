@@ -42,10 +42,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(ProjectDir)\freetype\include;$(ProjectDir)\include;$(ProjectDir)\allegro\addons\font;$(ProjectDir)\allegro\include;$(IncludePath)</IncludePath>
+    <TargetExt>.dll</TargetExt>
+    <OutDir>$(SolutionDir)\bin\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(ProjectDir)\freetype\include;$(ProjectDir)\include;$(ProjectDir)\allegro\addons\font;$(ProjectDir)\allegro\include;$(IncludePath)</IncludePath>
+    <TargetExt>.dll</TargetExt>
+    <OutDir>$(SolutionDir)\bin\$(Configuration)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
