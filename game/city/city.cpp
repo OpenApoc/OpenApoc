@@ -6,14 +6,17 @@
 std::unique_ptr<City> City::city;
 
 City::City(std::string mapName)
-	: sizeX(100), sizeY(100), sizeZ(10)
+	: sizeX(100), sizeY(100), sizeZ(10),
+	  organisations(Organisation::defaultOrganisations)
 {
-	auto file = DATA->load_file("ufodata/" + mapName, "r");
+	auto file = DATA->load_file("UFODATA/" + mapName, "rb");
 	if (!file)
 	{
 		std::cerr << "Failed to open city map:" << mapName << "\n";
 		return;
 	}
+
+	this->buildings = loadBuildingsFromBld(mapName + ".BLD", this->organisations, Building::defaultNames);
 
 	tiles.resize(sizeZ);
 
@@ -35,9 +38,15 @@ City::City(std::string mapName)
 					return;
 				}
 				tiles[z][y][x] = CityTile(tileID);
+				for (auto &bld : this->buildings)
+				{
+					if (bld.bounds.intersects(Vec2<int>(x, y)))
+						tiles[z][y][x].building = &bld;
+				}
 			}
 		}
 	}
+
 
 	al_fclose(file);
 }
@@ -47,7 +56,7 @@ City::~City()
 
 }
 
-CityTile::CityTile(int id)
-	: id(id)
+CityTile::CityTile(int id, Building *building)
+	: id(id), building(building)
 {
 }

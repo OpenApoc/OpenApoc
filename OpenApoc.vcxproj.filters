@@ -147,6 +147,18 @@
     <ClCompile Include="forms\textedit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\city\city.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\city\cityview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\general\difficultymenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\general\basescreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -312,6 +324,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="forms\textedit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\city\city.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\city\cityview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\general\difficultymenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\general\basescreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

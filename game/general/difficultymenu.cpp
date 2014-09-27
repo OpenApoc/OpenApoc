@@ -52,29 +52,29 @@ void DifficultyMenu::EventOccurred(Event *e)
 		std::string citymapName;
 		if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY1") == 0)
 		{
-			citymapName = "citymap1";
+			citymapName = "CITYMAP1";
 		}
 		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY2") == 0)
 		{
-			citymapName = "citymap2";
+			citymapName = "CITYMAP2";
 		}
 		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY3") == 0)
 		{
-			citymapName = "citymap3";
+			citymapName = "CITYMAP3";
 		}
 		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY4") == 0)
 		{
-			citymapName = "citymap4";
+			citymapName = "CITYMAP4";
 		}
 		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY5") == 0)
 		{
-			citymapName = "citymap5";
+			citymapName = "CITYMAP5";
 		}
 		else
 		{
 			std::cerr << "Unknown button pressed: " << e->Data.Forms.RaisedBy->Name
 				<< "\n";
-			citymapName = "citymap1";
+			citymapName = "CITYMAP1";
 			return;
 		}
 		CITY.reset(new City(citymapName));
