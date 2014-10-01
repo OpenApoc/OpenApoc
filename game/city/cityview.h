@@ -2,7 +2,6 @@
 
 #include "../../framework/stage.h"
 #include "../../framework/includes.h"
-#include "../../library/spritesheet.h"
 #include "../../library/vec.h"
 
 #include "../resources/gamecore.h"
@@ -25,7 +24,7 @@ class CityView : public Stage
 		std::unique_ptr<PCK> cityPck;
 
 		Vec3<int> selectedTilePosition;
-		ALLEGRO_BITMAP *selectedTileImageBack, *selectedTileImageFront;
+		std::shared_ptr<Image> selectedTileImageBack, selectedTileImageFront;
 
 		CityView();
 		~CityView();

@@ -50,6 +50,13 @@ class Strings
 			return ls;
 		}
 
+		static std::string ToUpper(const std::string &s)
+		{
+			std::string us = s;
+			std::transform(us.begin(), us.end(), us.begin(), ::toupper);
+			return us;
+		}
+
 		static int CompareCaseInsensitive(const std::string &a, const std::string &b)
 		{
 			std::string la = ToLower(a);
@@ -59,8 +66,6 @@ class Strings
 
 		static bool IsNumeric(const std::string &s)
 		{
-			bool isnumeric = true;
-
 			for( unsigned int i = 0; i < s.length(); i++ )
 			{
 				switch( s[i] )
@@ -104,5 +109,4 @@ class Strings
 			}
 			return atof( s.c_str() );
 		}
-
 };

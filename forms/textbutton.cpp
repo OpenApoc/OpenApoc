@@ -3,17 +3,12 @@
 #include "../framework/framework.h"
 
 RawSound* TextButton::buttonclick = nullptr;
-ALLEGRO_BITMAP* TextButton::buttonbackground = nullptr;
 
-TextButton::TextButton( Control* Owner, std::string Text, IFont* Font ) : Control( Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Centre ), TextVAlign( VerticalAlignment::Centre )
+TextButton::TextButton( Control* Owner, std::string Text, IFont* Font ) : Control( Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Centre ), TextVAlign( VerticalAlignment::Centre ), buttonbackground(DATA->load_image( "UI/TEXTBUTTONBACK.PNG" ))
 {
 	if( buttonclick == nullptr )
 	{
 		buttonclick = new RawSound( "STRATEGC/INTRFACE/BUTTON1.RAW" );
-	}
-	if( buttonbackground == nullptr )
-	{
-		buttonbackground = DATA->load_bitmap( "UI/TEXTBUTTONBACK.PNG" );
 	}
 }
 
@@ -42,7 +37,7 @@ void TextButton::EventOccured( Event* e )
 
 void TextButton::OnRender()
 {
-	al_draw_scaled_bitmap( buttonbackground, 0, 0, al_get_bitmap_width(buttonbackground), al_get_bitmap_height(buttonbackground), 0, 0, Size.X, Size.Y, 0 );
+	buttonbackground->drawScaled(0, 0, buttonbackground->width, buttonbackground->height, 0, 0, Size.X, Size.Y);
 	al_draw_filled_rectangle( 3,  3, Size.X - 2, Size.Y - 2, al_map_rgb( 160, 160, 160 ) );
 
 	al_draw_line( 2, 4, Size.X - 2, 3, al_map_rgb( 220, 220, 220 ), 1 );

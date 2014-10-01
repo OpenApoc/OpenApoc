@@ -58,18 +58,18 @@ void GraphicButton::EventOccured( Event* e )
 
 void GraphicButton::OnRender()
 {
-	ALLEGRO_BITMAP* useimage;
+	std::shared_ptr<Image> useimage;
 
-	if( image == nullptr && image_name != "" )
+	if( !image && image_name != "" )
 	{
 		image = GAMECORE->GetImage( image_name );
 		if( Size.X == 0 )
 		{
-			Size.X = al_get_bitmap_width( image );
+			Size.X = image->width;
 		}
 		if( Size.Y == 0 )
 		{
-			Size.Y = al_get_bitmap_height( image );
+			Size.Y = image->height;
 		}
 	}
 	if( imagedepressed == nullptr && imagedepressed_name != "" )
@@ -77,11 +77,11 @@ void GraphicButton::OnRender()
 		imagedepressed = GAMECORE->GetImage( imagedepressed_name );
 		if( Size.X == 0 )
 		{
-			Size.X = al_get_bitmap_width( imagedepressed );
+			Size.X = imagedepressed->width;
 		}
 		if( Size.Y == 0 )
 		{
-			Size.Y = al_get_bitmap_height( imagedepressed );
+			Size.Y = imagedepressed->height;
 		}
 	}
 	if( imagehover == nullptr && imagehover_name != "" )
@@ -89,11 +89,11 @@ void GraphicButton::OnRender()
 		imagehover = GAMECORE->GetImage( imagehover_name );
 		if( Size.X == 0 )
 		{
-			Size.X = al_get_bitmap_width( imagehover );
+			Size.X = imagehover->width;
 		}
 		if( Size.Y == 0 )
 		{
-			Size.Y = al_get_bitmap_height( imagehover );
+			Size.Y = imagehover->height;
 		}
 	}
 
@@ -107,13 +107,13 @@ void GraphicButton::OnRender()
 
 	if( useimage != nullptr )
 	{
-		int bmpw = al_get_bitmap_width( useimage );
-		int bmph = al_get_bitmap_height( useimage );
+		int bmpw = useimage->width;
+		int bmph = useimage->height;
 		if( bmpw == Size.X && bmph == Size.Y )
 		{
-			al_draw_bitmap( useimage, 0, 0, 0 );
+			useimage->draw(0, 0 );
 		} else {
-			al_draw_scaled_bitmap( useimage, 0, 0, bmpw, bmph, 0, 0, this->Size.X, this->Size.Y, 0 );
+			useimage->drawScaled(0, 0, bmpw, bmph, 0, 0, this->Size.X, this->Size.Y);
 		}
 	}
 }
@@ -125,52 +125,40 @@ void GraphicButton::Update()
 
 void GraphicButton::UnloadResources()
 {
-	if( image != nullptr )
-	{
-		al_destroy_bitmap( image );
-		image = nullptr;
-	}
-	if( imagedepressed != nullptr )
-	{
-		al_destroy_bitmap( imagedepressed );
-		imagedepressed = nullptr;
-	}
-	if( imagehover != nullptr )
-	{
-		al_destroy_bitmap( imagehover );
-		imagehover = nullptr;
-	}
+	image.reset();
+	imagedepressed.reset();
+	imagehover.reset();
 	Control::UnloadResources();
 }
 
-ALLEGRO_BITMAP* GraphicButton::GetImage()
+std::shared_ptr<Image> GraphicButton::GetImage()
 {
 	return image;
 }
 
-void GraphicButton::SetImage( ALLEGRO_BITMAP* Image )
+void GraphicButton::SetImage( std::shared_ptr<Image> Image )
 {
 	image_name = "";
 	image = Image;
 }
 
-ALLEGRO_BITMAP* GraphicButton::GetDepressedImage()
+std::shared_ptr<Image> GraphicButton::GetDepressedImage()
 {
 	return imagedepressed;
 }
 
-void GraphicButton::SetDepressedImage( ALLEGRO_BITMAP* Image )
+void GraphicButton::SetDepressedImage( std::shared_ptr<Image> Image )
 {
 	imagedepressed_name = "";
 	imagedepressed = Image;
 }
 
-ALLEGRO_BITMAP* GraphicButton::GetHoverImage()
+std::shared_ptr<Image> GraphicButton::GetHoverImage()
 {
 	return imagehover;
 }
 
-void GraphicButton::SetHoverImage( ALLEGRO_BITMAP* Image )
+void GraphicButton::SetHoverImage( std::shared_ptr<Image> Image )
 {
 	imagehover_name = "";
 	imagehover = Image;

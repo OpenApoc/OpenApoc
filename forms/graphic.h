@@ -1,14 +1,16 @@
 
 #pragma once
 
+#include "../framework/image.h"
 #include "control.h"
+#include <memory>
 
 class Graphic : public Control
 {
 
 	private:
 		std::string image_name;
-		ALLEGRO_BITMAP* image;
+		std::shared_ptr<Image> image;
 
 	protected:
 		virtual void OnRender();
@@ -21,7 +23,7 @@ class Graphic : public Control
 		virtual void Update();
 		virtual void UnloadResources();
 
-		ALLEGRO_BITMAP* GetImage();
-		void SetImage( ALLEGRO_BITMAP* Image );
+		std::shared_ptr<Image> GetImage();
+		void SetImage( std::shared_ptr<Image> Image );
 };
 

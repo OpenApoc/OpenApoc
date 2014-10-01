@@ -1,4 +1,5 @@
 #include "data.h"
+#include "string.h"
 
 #include <cassert>
 #include <iostream>
@@ -16,35 +17,45 @@ Data::~Data()
 
 }
 
-ALLEGRO_BITMAP* Data::load_bitmap(const std::string path)
+std::shared_ptr<Image>
+Data::load_image(const std::string path)
 {
-	std::string fullpath = this->GetActualFilename(path);
-	if (fullpath == "")
+	std::string fullPath = this->GetActualFilename(path);
+	if (fullPath == "")
 	{
-		std::cerr << "Failed to find bitmap \"" << path << "\"\n";
+		std::cerr << "Failed to find image \"" << path << "\"\n";
 		return nullptr;
 	}
-	ALLEGRO_BITMAP* bitmap = al_load_bitmap(fullpath.c_str());
-	if (bitmap == nullptr)
+	//Use an uppercase version of the path for the cache key
+	std::string fullPathUpper = Strings::ToUpper(fullPath);
+	std::shared_ptr<Image> img = this->imageCache[fullPathUpper].lock();
+	if (img)
+		return img;
+
+	ALLEGRO_BITMAP *bmp = al_load_bitmap(fullPath.c_str());
+	if (!bmp)
 	{
-		std::cerr << "Failed to open bitmap \"" << fullpath << "\"\n";
+		std::cerr << "Failed to load image \"" << fullPath << "\"\n";
 		return nullptr;
 	}
-	return bitmap;
+	img.reset(new Image(bmp));
+
+	this->imageCache[fullPathUpper] = img;
+	return img;
 }
 
 ALLEGRO_FILE* Data::load_file(const std::string path, const char *mode)
 {
-	std::string fullpath = this->GetActualFilename(path);
-	if (fullpath == "")
+	std::string fullPath = this->GetActualFilename(path);
+	if (fullPath == "")
 	{
 		std::cerr << "Failed to find file \"" + path +"\"\n";
 		return nullptr;
 	}
-	ALLEGRO_FILE* file = al_fopen(fullpath.c_str(), mode);
+	ALLEGRO_FILE *file = al_fopen(fullPath.c_str(), mode);
 	if (file == nullptr)
 	{
-		std::cerr << "Failed to open file \"" + fullpath +"\"\n";
+		std::cerr << "Failed to open file \"" + fullPath +"\"\n";
 		return nullptr;
 	}
 	return file;

@@ -13,7 +13,7 @@ class TextButton : public Control
 		IFont* font;
 
 		static RawSound* buttonclick;
-		static ALLEGRO_BITMAP* buttonbackground;
+		std::shared_ptr<Image> buttonbackground;
 
 	protected:
 		virtual void OnRender();

@@ -5,17 +5,15 @@
 
 CityView::CityView()
 	: pal(new Palette("UFODATA/PAL_04.DAT")),
-	  cityPck(new PCK("UFODATA/CITY.PCK", "UFODATA/CITY.TAB", pal.get())),
+	  cityPck(new PCK("UFODATA/CITY.PCK", "UFODATA/CITY.TAB", *pal)),
 	  offsetX(0), offsetY(0), maxZDraw(2),
-	  selectedTilePosition(0,0,0), selectedTileImageBack(DATA->load_bitmap("CITY/SELECTED-CITYTILE-BACK.PNG")),
-	  selectedTileImageFront(DATA->load_bitmap("CITY/SELECTED-CITYTILE-FRONT.PNG"))
+	  selectedTilePosition(0,0,0), selectedTileImageBack(DATA->load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
+	  selectedTileImageFront(DATA->load_image("CITY/SELECTED-CITYTILE-FRONT.PNG"))
 {
 }
 
 CityView::~CityView()
 {
-	al_destroy_bitmap(selectedTileImageBack);
-	al_destroy_bitmap(selectedTileImageFront);
 }
 
 void CityView::Begin()
@@ -163,13 +161,13 @@ void CityView::Render()
 					continue;
 
 				if (showSelected)
-					al_draw_bitmap(selectedTileImageBack, posX, posY, 0);
+					selectedTileImageBack->draw(posX, posY);
 
 				if (tile.id != 0)
 					cityPck->RenderImage(tile.id, posX, posY);
 
 				if (showSelected)
-					al_draw_bitmap(selectedTileImageFront, posX, posY, 0);
+					selectedTileImageFront->draw(posX, posY);
 			}
 		}
 	}

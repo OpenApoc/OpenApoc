@@ -3,7 +3,6 @@
 
 #include "../framework/stage.h"
 #include "../framework/includes.h"
-#include "../library/spritesheet.h"
 
 class TransitionFadeAcross : public Stage
 {

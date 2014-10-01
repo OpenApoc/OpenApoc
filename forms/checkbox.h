@@ -8,8 +8,8 @@ class CheckBox : public Control
 {
 
 	private:
-		ALLEGRO_BITMAP* imagechecked;
-		ALLEGRO_BITMAP* imageunchecked;
+		std::shared_ptr<Image> imagechecked;
+		std::shared_ptr<Image> imageunchecked;
 
 		static RawSound* buttonclick;
 

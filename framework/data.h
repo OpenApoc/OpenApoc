@@ -1,6 +1,9 @@
 #pragma once
 
 #include "includes.h"
+#include "image.h"
+
+#include <memory>
 
 #define DATA Data::data
 
@@ -11,13 +14,15 @@ class Data
 		std::string root;
 		const char DIR_SEP;
 
+		std::map<std::string, std::weak_ptr<Image> >imageCache;
+
 	public:
 		static Data* data;
 
 		Data(const std::string root);
 		~Data();
 
-		ALLEGRO_BITMAP* load_bitmap(const std::string path);
+		std::shared_ptr<Image> load_image(const std::string path);
 		ALLEGRO_FILE* load_file(const std::string path, const char *mode);
 
 		std::string GetActualFilename(std::string Filename);

@@ -29,7 +29,7 @@ class GameCore
 		// void ParseUFOXML( tinyxml2::XMLElement* Source );
 		// void ParseUFOpaediaXML( tinyxml2::XMLElement* Source );
 		// void ParseVehicleXML( tinyxml2::XMLElement* Source );
-		
+
 
 	public:
 		static GameCore* ActiveGame;
@@ -42,7 +42,7 @@ class GameCore
 
 		std::string GetString(std::string ID);
 		Form* GetForm(std::string ID);
-		ALLEGRO_BITMAP* GetImage(std::string ImageData);
+		std::shared_ptr<Image> GetImage(std::string ImageData);
 		IFont* GetFont(std::string FontData);
 		Palette* GetPalette(std::string Path);
 };

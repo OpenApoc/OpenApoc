@@ -51,12 +51,9 @@ ApocalypseFont::ApocalypseFont( FontType Face, Palette* ColourPalette )
 			{
 				int palidx = al_fgetc( dathnd );
 				Colour* rowptr = (Colour*)(&((char*)r->data)[ (y * r->pitch) + (x * 4) ]);
-				Colour* palcol = ColourPalette->GetColour( palidx );
-				rowptr->a = palcol->a;
-				rowptr->r = palcol->r;
-				rowptr->g = palcol->g;
-				rowptr->b = palcol->b;
-				if ( palcol->a > 0 && x > w )
+				Colour &palcol = ColourPalette->GetColour( palidx );
+				*rowptr = palcol;
+				if ( palcol.a > 0 && x > w )
 				{
 					w = x;
 				}

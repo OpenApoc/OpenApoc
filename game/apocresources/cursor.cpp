@@ -15,11 +15,8 @@ Cursor::Cursor( Palette* ColourPalette )
 			{
 				int palidx = al_fgetc( f );
 				Colour* rowptr = (Colour*)(&((char*)r->data)[ (y * r->pitch) + (x * 4) ]);
-				Colour* palcol = ColourPalette->GetColour( palidx );
-				rowptr->a = palcol->a;
-				rowptr->r = palcol->r;
-				rowptr->g = palcol->g;
-				rowptr->b = palcol->b;
+				Colour &palcol = ColourPalette->GetColour( palidx );
+				*rowptr = palcol;
 			}
 		}
 		al_unlock_bitmap( b );
