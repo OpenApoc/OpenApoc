@@ -132,6 +132,8 @@ void CityView::Update()
 
 void CityView::Render()
 {
+	int dpyWidth = FRAMEWORK->Display_GetWidth();
+	int dpyHeight = FRAMEWORK->Display_GetHeight();
 	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
 	for (int y = 0; y < CITY->sizeY; y++)
 	{
@@ -157,7 +159,7 @@ void CityView::Render()
 
 				//Skip over tiles that would be outside the window
 				if (posX + CITY_TILE_WIDTH < 0 || posY + CITY_TILE_HEIGHT < 0
-					|| posX - CITY_TILE_WIDTH > 640 || posY - CITY_TILE_HEIGHT > 480)
+					|| posX - CITY_TILE_WIDTH > dpyWidth || posY - CITY_TILE_HEIGHT > dpyHeight)
 					continue;
 
 				if (showSelected)
