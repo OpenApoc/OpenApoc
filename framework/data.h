@@ -9,7 +9,7 @@ class Data
 
 	private:
 		std::string root;
-		std::string DIR_SEP;
+		const char DIR_SEP;
 
 	public:
 		static Data* data;
@@ -21,5 +21,4 @@ class Data
 		ALLEGRO_FILE* load_file(const std::string path, const char *mode);
 
 		std::string GetActualFilename(std::string Filename);
-
 };
