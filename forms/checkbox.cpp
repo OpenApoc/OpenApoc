@@ -20,19 +20,19 @@ CheckBox::~CheckBox()
 
 void CheckBox::LoadResources()
 {
-	if( imagechecked == nullptr )
+	if( !imagechecked )
 	{
 		imagechecked = GAMECORE->GetImage( "PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:65:UI/UI_PALETTE.PNG" );
 		if( Size.X == 0 )
 		{
-			Size.X = al_get_bitmap_width( imagechecked );
+			Size.X = imagechecked->width;
 		}
 		if( Size.Y == 0 )
 		{
-			Size.Y = al_get_bitmap_height( imagechecked );
+			Size.Y = imagechecked->height;
 		}
 	}
-	if( imageunchecked == nullptr )
+	if( !imageunchecked )
 	{
 		imageunchecked = GAMECORE->GetImage( "PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:64:UI/UI_PALETTE.PNG" );
 	}
@@ -60,7 +60,7 @@ void CheckBox::EventOccured( Event* e )
 
 void CheckBox::OnRender()
 {
-	ALLEGRO_BITMAP* useimage;
+	std::shared_ptr<Image> useimage;
 
 	LoadResources();
 
@@ -68,13 +68,13 @@ void CheckBox::OnRender()
 
 	if( useimage != nullptr )
 	{
-		int bmpw = al_get_bitmap_width( useimage );
-		int bmph = al_get_bitmap_height( useimage );
+		int bmpw = useimage->width;
+		int bmph = useimage->height;
 		if( bmpw == Size.X && bmph == Size.Y )
 		{
-			al_draw_bitmap( useimage, 0, 0, 0 );
+			useimage->draw( 0, 0 );
 		} else {
-			al_draw_scaled_bitmap( useimage, 0, 0, bmpw, bmph, 0, 0, this->Size.X, this->Size.Y, 0 );
+			useimage->drawScaled(0, 0, bmpw, bmph, 0, 0, this->Size.X, this->Size.Y);
 		}
 	}
 }
@@ -86,15 +86,7 @@ void CheckBox::Update()
 
 void CheckBox::UnloadResources()
 {
-	if( imagechecked != nullptr )
-	{
-		al_destroy_bitmap( imagechecked );
-		imagechecked = nullptr;
-	}
-	if( imageunchecked != nullptr )
-	{
-		al_destroy_bitmap( imageunchecked );
-		imageunchecked = nullptr;
-	}
+	imagechecked.reset();
+	imageunchecked.reset();
 	Control::UnloadResources();
 }

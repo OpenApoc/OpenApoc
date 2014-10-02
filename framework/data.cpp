@@ -1,4 +1,5 @@
 #include "data.h"
+#include "string.h"
 
 #include <cassert>
 #include <iostream>
@@ -7,9 +8,8 @@
 Data *Data::data = nullptr;
 
 Data::Data(const std::string root) :
-	root(root)
+	root(root), DIR_SEP('/')
 {
-	DIR_SEP = "/";
 }
 
 Data::~Data()
@@ -17,80 +17,130 @@ Data::~Data()
 
 }
 
-ALLEGRO_BITMAP* Data::load_bitmap(const std::string path)
+std::shared_ptr<Image>
+Data::load_image(const std::string path)
 {
-	std::string fullpath = std::string(this->root + this->DIR_SEP + path);
-	ALLEGRO_BITMAP* bitmap = al_load_bitmap(fullpath.c_str());
-	if (bitmap != nullptr)
+	std::string fullPath = this->GetActualFilename(path);
+	if (fullPath == "")
 	{
-		return bitmap;
+		std::cerr << "Failed to find image \"" << path << "\"\n";
+		return nullptr;
 	}
+	//Use an uppercase version of the path for the cache key
+	std::string fullPathUpper = Strings::ToUpper(fullPath);
+	std::shared_ptr<Image> img = this->imageCache[fullPathUpper].lock();
+	if (img)
+		return img;
 
-	/* Try lowercase version: */
-	std::string lowerpath = path;
-	std::transform(lowerpath.begin(), lowerpath.end(), lowerpath.begin(),  ::tolower);
-	fullpath = std::string(this->root + this->DIR_SEP + lowerpath);
-	std::cerr << "Failed to load \"" + path + "\", trying \"" + lowerpath + "\"\n";
-	bitmap = al_load_bitmap(fullpath.c_str());
-	if (bitmap != nullptr)
+	ALLEGRO_BITMAP *bmp = al_load_bitmap(fullPath.c_str());
+	if (!bmp)
 	{
-		return bitmap;
+		std::cerr << "Failed to load image \"" << fullPath << "\"\n";
+		return nullptr;
 	}
+	img.reset(new Image(bmp));
 
-	std::cerr << "Failed to load \"" + path + "\"\n";
-	//assert(0);
-	return nullptr;
+	this->imageCache[fullPathUpper] = img;
+	return img;
 }
 
 ALLEGRO_FILE* Data::load_file(const std::string path, const char *mode)
 {
-	std::string fullpath = std::string(this->root + this->DIR_SEP + path);
-	ALLEGRO_FILE* file = al_fopen(fullpath.c_str(), mode);
-	if (file != nullptr)
+	std::string fullPath = this->GetActualFilename(path);
+	if (fullPath == "")
 	{
-		return file;
+		std::cerr << "Failed to find file \"" + path +"\"\n";
+		return nullptr;
 	}
-
-	/* Try lowercase version: */
-	std::string lowerpath = path;
-	std::transform(lowerpath.begin(), lowerpath.end(), lowerpath.begin(),  ::tolower);
-	fullpath = std::string(this->root + this->DIR_SEP + lowerpath);
-	std::cerr << "Failed to load \"" + path + "\", trying \"" + lowerpath + "\"\n";
-	file = al_fopen(fullpath.c_str(), mode);
-	if (file != nullptr)
+	ALLEGRO_FILE *file = al_fopen(fullPath.c_str(), mode);
+	if (file == nullptr)
 	{
-		return file;
+		std::cerr << "Failed to open file \"" + fullPath +"\"\n";
+		return nullptr;
 	}
-
-	std::cerr << "Failed to load \"" + path + "\"\n";
-	//assert(0);
-
-	return nullptr;
+	return file;
 }
+
+#ifdef CASE_SENSITIVE_FILESYSTEM
+#include <dirent.h>
+
+class Directory
+{
+private:
+public:
+	DIR *d;
+	explicit Directory(const std::string &path)
+	{
+		d = opendir(path.c_str());
+	}
+	~Directory()
+	{
+		if (d)
+			closedir(d);
+	}
+
+	//Disallow copy
+	Directory(const Directory&) = delete;
+	//Allow move
+	Directory(Directory&&) = default;
+};
+
+std::string findInDir(std::string parent, std::list<std::string> remainingPath, const char DIR_SEP)
+{
+	Directory d(parent);
+	std::string name = remainingPath.front();
+	remainingPath.pop_front();
+	//Strip out any excess blank entries (otherwise paths like "./directory//file" would break)
+	while (name == "")
+	{
+		if (remainingPath.empty())
+			return parent;
+		name = remainingPath.front();
+		remainingPath.pop_front();
+	}
+	struct dirent entry , *result = NULL;
+	while (true)
+	{
+		int err = readdir_r(d.d, &entry, &result);
+		if (err)
+		{
+			std::cerr << "Readdir() failed with \"" << err << "\"\n";
+			return "";
+		}
+		if (!result)
+		{
+			break;
+		}
+		std::string entName(entry.d_name);
+		if (Strings::CompareCaseInsensitive(name, entName) == 0)
+		{
+			std::string entPath = parent + DIR_SEP + entName;
+			if (remainingPath.empty())
+				return entPath;
+			else
+				return findInDir(entPath, remainingPath, DIR_SEP);
+		}
+	}
+	return "";
+}
+
+static std::string GetCaseInsensitiveFilename(const std::string fileName, const char DIR_SEP)
+{
+	auto splitPaths = Strings::SplitList(fileName, DIR_SEP);
+	if (splitPaths.empty())
+		return "";
+	std::string root = splitPaths.front();
+	splitPaths.pop_front();
+	std::string path = findInDir(root, Strings::SplitList(fileName, DIR_SEP), DIR_SEP);
+	return path;
+}
+#endif
 
 std::string Data::GetActualFilename( std::string Filename )
 {
-	ALLEGRO_FILE* file;
-
-	std::string fullpath = std::string(this->root + this->DIR_SEP + Filename);
-	file = al_fopen(fullpath.c_str(), "rb");
-	if( file != nullptr )
-	{
-		al_fclose( file );
-		return fullpath;
-	}
-
-	/* Try lowercase version: */
-	std::string lowerpath = Filename;
-	std::transform(lowerpath.begin(), lowerpath.end(), lowerpath.begin(),  ::tolower);
-	fullpath = std::string(this->root + this->DIR_SEP + lowerpath);
-	std::cerr << "Failed to load \"" + Filename + "\", trying \"" + lowerpath + "\"\n";
-	file = al_fopen(fullpath.c_str(), "rb");
-	if (file != nullptr)
-	{
-		al_fclose( file );
-		return fullpath;
-	}
-
-	return "";
+#ifdef CASE_SENSITIVE_FILESYSTEM
+	return GetCaseInsensitiveFilename(this->root + this->DIR_SEP + Filename, this->DIR_SEP);
+#else
+	return this->root + this->DIR_SEP + Filename;
+#endif
 }

@@ -11,9 +11,9 @@ class GraphicButton : public Control
 		std::string image_name;
 		std::string imagedepressed_name;
 		std::string imagehover_name;
-		ALLEGRO_BITMAP* image;
-		ALLEGRO_BITMAP* imagedepressed;
-		ALLEGRO_BITMAP* imagehover;
+		std::shared_ptr<Image> image;
+		std::shared_ptr<Image> imagedepressed;
+		std::shared_ptr<Image> imagehover;
 
 		static RawSound* buttonclick;
 
@@ -29,11 +29,11 @@ class GraphicButton : public Control
 		virtual void Update();
 		virtual void UnloadResources();
 
-		ALLEGRO_BITMAP* GetImage();
-		void SetImage( ALLEGRO_BITMAP* Image );
-		ALLEGRO_BITMAP* GetDepressedImage();
-		void SetDepressedImage( ALLEGRO_BITMAP* Image );
-		ALLEGRO_BITMAP* GetHoverImage();
-		void SetHoverImage( ALLEGRO_BITMAP* Image );
+		std::shared_ptr<Image> GetImage();
+		void SetImage( std::shared_ptr<Image> Image );
+		std::shared_ptr<Image> GetDepressedImage();
+		void SetDepressedImage( std::shared_ptr<Image> Image );
+		std::shared_ptr<Image> GetHoverImage();
+		void SetHoverImage( std::shared_ptr<Image> Image );
 };
 

@@ -3,14 +3,14 @@
 
 #include "../framework/stage.h"
 #include "../framework/includes.h"
-#include "../library/spritesheet.h"
+#include "../library/angle.h"
 
 #include "apocresources/rawsound.h"
 
 class BootUp : public Stage
 {
 	private:
-		ALLEGRO_BITMAP* loadingimage;
+		std::shared_ptr<Image> loadingimage;
 		int loadtime;
 		Angle* loadingimageangle;
 		ALLEGRO_THREAD* threadload;

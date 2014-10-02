@@ -18,26 +18,26 @@ void Graphic::EventOccured( Event* e )
 
 void Graphic::OnRender()
 {
-	if( image == nullptr )
+	if( !image )
 	{
 		image = GAMECORE->GetImage( image_name );
 		if( Size.X == 0 )
 		{
-			Size.X = al_get_bitmap_width( image );
+			Size.X = image->width;
 		}
 		if( Size.Y == 0 )
 		{
-			Size.Y = al_get_bitmap_height( image );
+			Size.Y = image->height;
 		}
 	}
 
-	int bmpw = al_get_bitmap_width( image );
-	int bmph = al_get_bitmap_height( image );
+	int bmpw = image->width;
+	int bmph = image->height;
 	if( bmpw == Size.X && bmph == Size.Y )
 	{
-		al_draw_bitmap( image, 0, 0, 0 );
+		image->draw(0, 0 );
 	} else {
-		al_draw_scaled_bitmap( image, 0, 0, bmpw, bmph, 0, 0, this->Size.X, this->Size.Y, 0 );
+		image->drawScaled(0, 0, bmpw, bmph, 0, 0, this->Size.X, this->Size.Y);
 	}
 }
 
@@ -48,20 +48,16 @@ void Graphic::Update()
 
 void Graphic::UnloadResources()
 {
-	if( image != nullptr )
-	{
-		al_destroy_bitmap( image );
-		image = nullptr;
-	}
+	image.reset();
 	Control::UnloadResources();
 }
 
-ALLEGRO_BITMAP* Graphic::GetImage()
+std::shared_ptr<Image> Graphic::GetImage()
 {
 	return image;
 }
 
-void Graphic::SetImage( ALLEGRO_BITMAP* Image )
+void Graphic::SetImage( std::shared_ptr<Image> Image )
 {
 	image = Image;
 }

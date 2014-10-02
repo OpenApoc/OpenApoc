@@ -28,19 +28,18 @@ class PCK
 {
 
 	private:
-		std::vector<ALLEGRO_BITMAP*> images;
-		Palette* Colours;
+		std::vector<std::shared_ptr<Image> > images;
 
-		void ProcessFile(std::string PckFilename, std::string TabFilename, Palette* ColourPalette, int Index);
-		void LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index);
-		void LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index);
+		void ProcessFile(std::string PckFilename, std::string TabFilename, Palette &ColourPalette, int Index);
+		void LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index, Palette &Colours);
+		void LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index, Palette &Colours);
 
 	public:
-		PCK( std::string PckFilename, std::string TabFilename, Palette* ColourPalette );
-		PCK( std::string PckFilename, std::string TabFilename, Palette* ColourPalette, int Index );
+		PCK( std::string PckFilename, std::string TabFilename, Palette &ColourPalette );
+		PCK( std::string PckFilename, std::string TabFilename, Palette &ColourPalette, int Index );
 		~PCK();
 
 		int GetImageCount();
 		void RenderImage( int Index, int X, int Y );
-		ALLEGRO_BITMAP* GetImage( int Index );
+		std::shared_ptr<Image> GetImage( int Index );
 };

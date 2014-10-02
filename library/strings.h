@@ -4,6 +4,8 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <list>
+#include <algorithm>
 
 class Strings
 {
@@ -29,10 +31,41 @@ class Strings
 			return elems;
 		}
 
+		static std::list<std::string> SplitList(const std::string &s, char delim)
+		{
+			std::list<std::string> elems;
+			std::stringstream ss(s);
+			std::string item;
+			while( std::getline(ss, item, delim) )
+			{
+				elems.push_back(item);
+			}
+			return elems;
+		}
+
+		static std::string ToLower(const std::string &s)
+		{
+			std::string ls = s;
+			std::transform(ls.begin(), ls.end(), ls.begin(), ::tolower);
+			return ls;
+		}
+
+		static std::string ToUpper(const std::string &s)
+		{
+			std::string us = s;
+			std::transform(us.begin(), us.end(), us.begin(), ::toupper);
+			return us;
+		}
+
+		static int CompareCaseInsensitive(const std::string &a, const std::string &b)
+		{
+			std::string la = ToLower(a);
+			std::string lb = ToLower(b);
+			return la.compare(lb);
+		}
+
 		static bool IsNumeric(const std::string &s)
 		{
-			bool isnumeric = true;
-
 			for( unsigned int i = 0; i < s.length(); i++ )
 			{
 				switch( s[i] )
@@ -76,5 +109,4 @@ class Strings
 			}
 			return atof( s.c_str() );
 		}
-
 };
