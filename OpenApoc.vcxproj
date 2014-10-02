@@ -106,13 +106,13 @@
     <ClCompile Include="forms\textbutton.cpp" />
     <ClCompile Include="forms\textedit.cpp" />
     <ClCompile Include="forms\vscrollbar.cpp" />
+    <ClCompile Include="framework\image.cpp" />
     <ClCompile Include="game\city\building.cpp" />
     <ClCompile Include="game\city\organisation.cpp" />
     <ClCompile Include="game\general\optionsmenu.cpp" />
     <ClCompile Include="game\resources\gamecore.cpp" />
     <ClCompile Include="game\resources\ttffont.cpp" />
     <ClCompile Include="library\angle.cpp" />
-    <ClCompile Include="library\animation.cpp" />
     <ClCompile Include="game\apocresources\apocfont.cpp" />
     <ClCompile Include="game\boot.cpp" />
     <ClCompile Include="library\box.cpp" />
@@ -134,11 +134,9 @@
     <ClCompile Include="game\apocresources\pck.cpp" />
     <ClCompile Include="game\apocresources\rawsound.cpp" />
     <ClCompile Include="shaders\scanlines.cpp" />
-    <ClCompile Include="library\spritesheet.cpp" />
     <ClCompile Include="framework\stagestack.cpp" />
     <ClCompile Include="transitions\strips.cpp" />
     <ClCompile Include="transitions\tiled.cpp" />
-    <ClCompile Include="library\tilemap.cpp" />
     <ClCompile Include="library\vector2.cpp" />
     <ClCompile Include="framework\data.cpp" />
     <ClCompile Include="game\city\city.cpp" />
@@ -160,6 +158,7 @@
     <ClInclude Include="forms\textbutton.h" />
     <ClInclude Include="forms\textedit.h" />
     <ClInclude Include="forms\vscrollbar.h" />
+    <ClInclude Include="framework\image.h" />
     <ClInclude Include="game\apocresources\apocresource.h" />
     <ClInclude Include="game\city\building.h" />
     <ClInclude Include="game\city\organisation.h" />
