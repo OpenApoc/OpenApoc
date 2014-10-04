@@ -6,74 +6,44 @@
 namespace OpenApoc {
 
 Memory::Memory( size_t InitialSize )
+	: data(InitialSize)
 {
-	if( InitialSize <= 0 )
-	{
-		data_ptr = 0;
-		data_len = 0;
-	} else {
-		data_ptr = (char*)malloc( InitialSize );
-		data_len = InitialSize;
-	}
 }
 
 Memory::~Memory()
 {
-	Clear();
 }
 
 size_t Memory::GetSize()
 {
-	return data_len;
+	return data.size();
 }
 
 void Memory::Resize( size_t length )
 {
-	void* ptr;
-
-	if( data_ptr == 0 )
-		ptr = malloc( length );
-	else
-		ptr = realloc( data_ptr, length );
-
-	if( ptr == 0 )
-		return;
-	data_ptr = (char*)ptr;
-	data_len = length;
+	data.resize(length);
 }
 
 void Memory::AppendData( void* data, size_t length )
 {
-	void* ptr;
-
-	if( data_ptr == 0 )
-		ptr = malloc( length );
-	else
-		ptr = realloc( data_ptr, data_len + length );
-
-	if( ptr == 0 )
-		return;
-	data_ptr = (char*)ptr;
-	memcpy( &(data_ptr[data_len]), data, length );
-	data_len += length;
+	size_t startSize = this->GetSize();
+	this->Resize(startSize + length);
+	memcpy(this->GetDataOffset(startSize), data, length);
 }
 
 void* Memory::GetData()
 {
-	return data_ptr;
+	return data.data();
 }
 
 void Memory::Clear()
 {
-	if( data_ptr != 0 )
-		free( data_ptr );
-	data_ptr = 0;
-	data_len = 0;
+	data.clear();
 }
 
 void* Memory::GetDataOffset( size_t offset )
 {
-	return &(data_ptr[offset]);
+	return &(data.data()[offset]);
 }
 
 }; //namespace OpenApoc

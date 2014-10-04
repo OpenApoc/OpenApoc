@@ -9,14 +9,13 @@ class Memory
 {
 
 	private:
-		char*		data_ptr;
-		size_t	data_len;
+		std::vector<char> data;
 
 	public:
 		Memory( size_t InitialSize );
 		~Memory();
 
-    void Clear();
+		void Clear();
 		void Resize( size_t length );
 		void AppendData( void* data, size_t length );
 		size_t GetSize();
