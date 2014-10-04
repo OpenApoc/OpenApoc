@@ -1,10 +1,10 @@
 
 #pragma once
 
-#include "../../framework/framework.h"
-#include "../apocresources/apocresource.h"
+#include "framework/framework.h"
+#include "game/apocresources/apocresource.h"
 #include "ifont.h"
-#include "../../forms/forms.h"
+#include "forms/forms.h"
 
 #define GAMECORE OpenApoc::GameCore::ActiveGame
 

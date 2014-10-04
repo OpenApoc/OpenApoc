@@ -2,9 +2,8 @@
 #pragma once
 
 #include "includes.h"
-#include "../library/memory.h"
 
-#include "../forms/forms_enums.h"
+#include "forms/forms_enums.h"
 
 namespace OpenApoc {
 

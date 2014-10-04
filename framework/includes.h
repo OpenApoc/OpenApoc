@@ -28,5 +28,8 @@
 #include "library/vec.h"
 #include "library/rect.h"
 #include "library/colour.h"
+#include "library/angle.h"
+#include "library/memory.h"
+#include "library/vector2.h"
 
 #endif //__OPENAPOC_FRAMEWORK_INCLUDES_H

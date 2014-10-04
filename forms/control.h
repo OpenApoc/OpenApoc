@@ -1,9 +1,8 @@
 
 #pragma once
 
-#include "../framework/includes.h"
-#include "../library/vector2.h"
-#include "../framework/event.h"
+#include "framework/includes.h"
+#include "framework/event.h"
 
 namespace OpenApoc {
 

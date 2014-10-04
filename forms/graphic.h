@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "../framework/image.h"
+#include "framework/image.h"
 #include "control.h"
 
 namespace OpenApoc {

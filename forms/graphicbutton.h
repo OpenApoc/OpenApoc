@@ -2,7 +2,7 @@
 #pragma once
 
 #include "control.h"
-#include "../game/apocresources/rawsound.h"
+#include "game/apocresources/rawsound.h"
 
 namespace OpenApoc {
 

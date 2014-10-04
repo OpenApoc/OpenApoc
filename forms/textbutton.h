@@ -2,8 +2,8 @@
 #pragma once
 
 #include "control.h"
-#include "../game/resources/ifont.h"
-#include "../game/apocresources/rawsound.h"
+#include "game/resources/ifont.h"
+#include "game/apocresources/rawsound.h"
 
 namespace OpenApoc {
 

@@ -2,7 +2,7 @@
 #pragma once
 
 #include "control.h"
-#include "../game/resources/ifont.h"
+#include "game/resources/ifont.h"
 
 #define TEXTEDITOR_CARET_TOGGLE_TIME		30
 
