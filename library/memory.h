@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include <cstdlib>
+#include "framework/includes.h"
 
 namespace OpenApoc {
 

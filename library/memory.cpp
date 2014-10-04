@@ -1,9 +1,7 @@
 
 #include "memory.h"
 
-//#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
+#include "framework/includes.h"
 
 namespace OpenApoc {
 

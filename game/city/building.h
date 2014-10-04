@@ -1,8 +1,8 @@
 #pragma once
 
 #include "organisation.h"
-#include "../../library/rect.h"
-#include <list>
+
+#include "framework/includes.h"
 
 namespace OpenApoc {
 

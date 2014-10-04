@@ -1,8 +1,8 @@
 #include "cityview.h"
 #include "city.h"
-#include "../../library/vec.h"
 
-#include <iostream>
+#include "framework/includes.h"
+
 
 namespace OpenApoc {
 

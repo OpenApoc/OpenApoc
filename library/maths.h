@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include <cmath>
+#include "framework/includes.h"
 
 #ifndef M_PI
 #define M_PI						3.141592654f

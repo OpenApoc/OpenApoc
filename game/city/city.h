@@ -4,9 +4,7 @@
 #include "vehicle.h"
 #include "organisation.h"
 
-#include "../../framework/includes.h"
-#include <memory>
-#include <list>
+#include "framework/includes.h"
 
 namespace OpenApoc {
 

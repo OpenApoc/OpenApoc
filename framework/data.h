@@ -3,8 +3,6 @@
 #include "includes.h"
 #include "image.h"
 
-#include <memory>
-
 #define DATA OpenApoc::Data::data
 
 namespace OpenApoc {

@@ -5,8 +5,6 @@
 #include "../city/city.h"
 #include "../city/cityview.h"
 
-#include <iostream>
-
 namespace OpenApoc {
 
 DifficultyMenu::DifficultyMenu()

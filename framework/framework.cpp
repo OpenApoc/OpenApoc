@@ -3,9 +3,6 @@
 #include "../game/boot.h"
 #include "../shaders/shaders.h"
 
-#include <allegro5/allegro_opengl.h>
-#include <iostream>
-
 namespace OpenApoc {
 
 Framework* Framework::System;

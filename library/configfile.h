@@ -3,12 +3,7 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 
-//#include <stdlib.h>
-//#include <stdio.h>
-//#include <string.h>
-#include <string>
-#include <vector>
-#include <list>
+#include "framework/includes.h"
 
 typedef struct ConfigData
 {

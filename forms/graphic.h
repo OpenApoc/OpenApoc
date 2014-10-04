@@ -3,7 +3,6 @@
 
 #include "../framework/image.h"
 #include "control.h"
-#include <memory>
 
 namespace OpenApoc {
 

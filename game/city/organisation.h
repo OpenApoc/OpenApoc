@@ -1,7 +1,6 @@
 #pragma once
 
-#include <string>
-#include <vector>
+#include "framework/includes.h"
 
 class Organisation
 {

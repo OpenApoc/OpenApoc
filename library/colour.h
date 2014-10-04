@@ -1,6 +1,6 @@
 #pragma once
 
-#include <cstdint>
+#include "framework/includes.h"
 
 namespace OpenApoc {
 
