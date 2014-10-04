@@ -3,6 +3,8 @@
 
 #include "ifont.h"
 
+namespace OpenApoc {
+
 class TTFFont : public IFont
 {
 
@@ -19,3 +21,5 @@ class TTFFont : public IFont
 		virtual int GetFontHeight();
 		virtual int GetFontWidth(std::string Text);
 };
+
+}; //namespace OpenApoc

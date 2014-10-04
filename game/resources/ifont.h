@@ -7,6 +7,8 @@
 #define APOCFONT_ALIGN_CENTRE	1
 #define APOCFONT_ALIGN_RIGHT	2
 
+namespace OpenApoc {
+
 class IFont
 {
 	public:
@@ -14,3 +16,5 @@ class IFont
 		virtual int GetFontHeight() = 0;
 		virtual int GetFontWidth(std::string Text) = 0;
 };
+
+}; //namespace OpenApoc
