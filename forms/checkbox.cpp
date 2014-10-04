@@ -3,6 +3,8 @@
 #include "../framework/framework.h"
 #include "../game/resources/gamecore.h"
 
+namespace OpenApoc {
+
 RawSound* CheckBox::buttonclick = nullptr;
 
 CheckBox::CheckBox( Control* Owner ) : Control( Owner ), Checked(false), imagechecked(nullptr), imageunchecked(nullptr)
@@ -90,3 +92,5 @@ void CheckBox::UnloadResources()
 	imageunchecked.reset();
 	Control::UnloadResources();
 }
+
+}; //namespace OpenApoc

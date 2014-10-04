@@ -4,6 +4,8 @@
 #include "control.h"
 #include "vscrollbar.h"
 
+namespace OpenApoc {
+
 class ListBox : public Control
 {
 	private:
@@ -31,3 +33,5 @@ class ListBox : public Control
 		Control* RemoveItem( int Index );
 		Control* operator[]( int Index );
 };
+
+}; //namespace OpenApoc

@@ -8,6 +8,8 @@
 #include "../library/configfile.h"
 #include "stagestack.h"
 
+namespace OpenApoc {
+
 #ifndef Shader
 class Shader;
 #endif
@@ -77,3 +79,5 @@ class Framework
 		bool IsSlowMode();
 		void SetSlowMode(bool SlowEnabled);
 };
+
+}; //namespace OpenApoc

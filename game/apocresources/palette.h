@@ -5,6 +5,8 @@
 #include "../../framework/framework.h"
 #include "../../library/colour.h"
 
+namespace OpenApoc {
+
 class Palette
 {
 	private:
@@ -20,3 +22,4 @@ class Palette
 		void DumpPalette( std::string Filename );
 };
 
+}; //namespace OpenApoc

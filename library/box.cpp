@@ -1,6 +1,8 @@
 
 #include "box.h"
 
+namespace OpenApoc {
+
 Box::Box( int X, int Y, int Width, int Height )
 {
 	TopLeft = new Vector2( X, Y );
@@ -60,3 +62,5 @@ bool Box::Collides( Box* CheckAgainst )
 	return ( GetLeft() <= CheckAgainst->GetRight() && GetRight() >= CheckAgainst->GetLeft() &&
 			GetTop() <= CheckAgainst->GetBottom() && GetBottom() >= CheckAgainst->GetTop() );
 }
+
+}; //namespace OpenApoc

@@ -7,6 +7,8 @@
 #include <list>
 #include <algorithm>
 
+namespace OpenApoc {
+
 class Strings
 {
 
@@ -110,3 +112,5 @@ class Strings
 			return atof( s.c_str() );
 		}
 };
+
+}; //namespace OpenApoc

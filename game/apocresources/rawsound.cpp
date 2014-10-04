@@ -1,6 +1,8 @@
 
 #include "rawsound.h"
 
+namespace OpenApoc {
+
 RawSound::RawSound( std::string Filename )
 {
 	std::string path = "/RAWSOUND/";
@@ -23,3 +25,5 @@ void RawSound::PlaySound()
 {
 	al_play_sample( soundsample, 1.0f, 0.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, 0 );
 }
+
+}; //namespace OpenApoc

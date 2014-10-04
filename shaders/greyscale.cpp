@@ -2,6 +2,8 @@
 #include "greyscale.h"
 #include "../framework/framework.h"
 
+namespace OpenApoc {
+
 void ShaderGreyscale::Apply( ALLEGRO_BITMAP* Target )
 {
 	PackedARGB8888* gsCol;
@@ -27,3 +29,4 @@ void ShaderGreyscale::Apply( ALLEGRO_BITMAP* Target )
 	al_unlock_bitmap( Target );
 
 }
+}; //namespace OpenApoc

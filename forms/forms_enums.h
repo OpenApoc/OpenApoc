@@ -1,6 +1,7 @@
 
 #pragma once
 
+namespace OpenApoc {
 
 enum class FormEventType
 {
@@ -36,3 +37,5 @@ enum class VerticalAlignment
 	Centre,
 	Bottom
 };
+
+}; //namespace OpenApoc

@@ -1,6 +1,8 @@
 
 #include "stagestack.h"
 
+namespace OpenApoc {
+
 StageStack::StageStack()
 {
   StackIndex = -1;
@@ -139,3 +141,5 @@ bool StageStack::IsEmpty()
 {
 	return (StackIndex < 0);
 }
+
+}; //namespace OpenApoc

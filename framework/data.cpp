@@ -5,6 +5,8 @@
 #include <iostream>
 #include <algorithm>
 
+namespace OpenApoc {
+
 Data *Data::data = nullptr;
 
 Data::Data(const std::string root) :
@@ -144,3 +146,5 @@ std::string Data::GetActualFilename( std::string Filename )
 	return this->root + this->DIR_SEP + Filename;
 #endif
 }
+
+}; //namespace OpenApoc

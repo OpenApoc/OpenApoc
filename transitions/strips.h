@@ -4,6 +4,8 @@
 #include "../framework/stage.h"
 #include "../framework/includes.h"
 
+namespace OpenApoc {
+
 class TransitionStrips : public Stage
 {
 	private:
@@ -36,3 +38,5 @@ class TransitionStrips : public Stage
     virtual void Render();
 		virtual bool IsTransition();
 };
+
+}; //namespace OpenApoc

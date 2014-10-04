@@ -1,6 +1,8 @@
 
 #include "palette.h"
 
+namespace OpenApoc {
+
 Palette::Palette( std::string Filename )
 {
 	std::shared_ptr<Image> paletteimage;
@@ -80,3 +82,4 @@ void Palette::DumpPalette( std::string Filename )
 
 	img->saveBitmap(Filename);
 }
+}; //namespace OpenApoc

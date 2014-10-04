@@ -3,6 +3,8 @@
 
 #include "control.h"
 
+namespace OpenApoc {
+
 class VScrollBar : public Control
 {
 	private:
@@ -27,3 +29,5 @@ class VScrollBar : public Control
 		virtual void Update();
 		virtual void UnloadResources();
 };
+
+}; //namespace OpenApoc

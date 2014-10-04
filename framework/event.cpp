@@ -1,6 +1,8 @@
 
 #include "event.h"
 
+namespace OpenApoc {
+
 Event::Event()
 {
   Type = EVENT_UNDEFINED;
@@ -39,3 +41,5 @@ Event::~Event()
 #endif
 
 }
+
+}; //namespace OpenApoc

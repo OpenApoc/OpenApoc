@@ -6,7 +6,7 @@
 #include "../../library/memory.h"
 #include "palette.h"
 
-
+namespace OpenApoc {
 
 class ApocalypseFont : public IFont
 {
@@ -37,3 +37,4 @@ class ApocalypseFont : public IFont
 
 		void DumpCharset();
 };
+}; //namespace OpenApoc

@@ -4,6 +4,8 @@
 #include "vector2.h"
 #include "angle.h"
 
+namespace OpenApoc {
+
 class Line
 {
 	public:
@@ -27,3 +29,5 @@ class Line
 
 		Vector2* GetSegmentPoint( int SegmentNumber, int NumberOfSegments );
 };
+
+}; //namespace OpenApoc

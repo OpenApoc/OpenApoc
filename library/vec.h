@@ -1,5 +1,7 @@
 #pragma once
 
+namespace OpenApoc {
+
 template <typename T>
 class Vec2
 {
@@ -19,3 +21,5 @@ class Vec3
 			: x(x), y(y), z(z) {}
 		T x, y, z;
 };
+
+}; //namespace OpenApoc

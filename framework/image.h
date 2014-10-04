@@ -5,6 +5,8 @@
 #include "../library/colour.h"
 #include <memory>
 
+namespace OpenApoc {
+
 class Image
 {
 	private:
@@ -37,3 +39,5 @@ class ImageLock
 		Colour get(int x, int y);
 		void set(int x, int y, Colour &c);
 };
+
+}; //namespace OpenApoc

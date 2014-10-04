@@ -4,6 +4,8 @@
 #include "control.h"
 #include "../game/apocresources/rawsound.h"
 
+namespace OpenApoc {
+
 class GraphicButton : public Control
 {
 
@@ -37,3 +39,4 @@ class GraphicButton : public Control
 		void SetHoverImage( std::shared_ptr<Image> Image );
 };
 
+}; //namespace OpenApoc

@@ -4,6 +4,8 @@
 #include "vector2.h"
 #include "line.h"
 
+namespace OpenApoc {
+
 class Box
 {
 	public:
@@ -24,3 +26,5 @@ class Box
 
 		bool Collides( Box* CheckAgainst );
 };
+
+}; //namespace OpenApoc

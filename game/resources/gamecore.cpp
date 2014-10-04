@@ -3,6 +3,8 @@
 #include "../../framework/framework.h"
 #include "ttffont.h"
 
+namespace OpenApoc {
+
 GameCore* GameCore::ActiveGame = nullptr;
 
 GameCore::GameCore(std::string CoreXMLFilename, std::string Language) : languagetext(), palettes(), fonts(), forms()
@@ -167,3 +169,5 @@ Palette* GameCore::GetPalette(std::string Path)
 	}
 	return palettes[Path];
 }
+
+}; //namespace OpenApoc

@@ -10,6 +10,8 @@
 #define M_DEG_TO_RAD		0.01745329f		// (M_PI / 180.0f)
 #define M_RAD_TO_DEG		57.2957795f		// (180.0f / M_PI )
 
+namespace OpenApoc {
+
 class Maths
 {
 	public:
@@ -42,3 +44,5 @@ class Maths
 			return ( a < 0.0 ? a * -1 : a );
 		};
 };
+
+}; //namespace OpenApoc

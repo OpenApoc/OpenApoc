@@ -5,7 +5,9 @@
 
 #include <memory>
 
-#define DATA Data::data
+#define DATA OpenApoc::Data::data
+
+namespace OpenApoc {
 
 class Data
 {
@@ -27,3 +29,5 @@ class Data
 
 		std::string GetActualFilename(std::string Filename);
 };
+
+}; //namspace OpenApoc

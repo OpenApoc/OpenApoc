@@ -2,6 +2,8 @@
 #include "tiled.h"
 #include "../framework/framework.h"
 
+namespace OpenApoc {
+
 TransitionTiled::TransitionTiled( TiledTransitions::Transition Style, int TilesWide, int TilesHigh )
 {
 	FadeToNewStage = false;
@@ -231,3 +233,5 @@ bool TransitionTiled::IsTransition()
 {
 	return true;
 }
+
+}; //namespace OpenApoc

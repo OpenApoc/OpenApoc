@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <string.h>
 
+namespace OpenApoc {
+
 Memory::Memory( size_t InitialSize )
 {
 	if( InitialSize <= 0 )
@@ -75,3 +77,5 @@ void* Memory::GetDataOffset( size_t offset )
 {
 	return &(data_ptr[offset]);
 }
+
+}; //namespace OpenApoc

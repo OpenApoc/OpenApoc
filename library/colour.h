@@ -2,6 +2,8 @@
 
 #include <cstdint>
 
+namespace OpenApoc {
+
 class Colour
 {
 	private:
@@ -10,3 +12,5 @@ class Colour
 			: r(r),g(g),b(b),a(a){};
 		uint8_t r, g, b, a;
 };
+
+}; //namespace OpenApoc

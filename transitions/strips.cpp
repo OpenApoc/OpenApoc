@@ -2,6 +2,8 @@
 #include "strips.h"
 #include "../framework/framework.h"
 
+namespace OpenApoc {
+
 TransitionStrips::TransitionStrips( int FadeFrames, int NumberOfStrips )
 {
 	FadeToNewStage = false;
@@ -126,3 +128,5 @@ bool TransitionStrips::IsTransition()
 {
 	return true;
 }
+
+}; //namespace OpenApoc

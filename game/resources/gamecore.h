@@ -6,7 +6,9 @@
 #include "ifont.h"
 #include "../../forms/forms.h"
 
-#define GAMECORE GameCore::ActiveGame
+#define GAMECORE OpenApoc::GameCore::ActiveGame
+
+namespace OpenApoc {
 
 class GameCore
 {
@@ -46,3 +48,5 @@ class GameCore
 		IFont* GetFont(std::string FontData);
 		Palette* GetPalette(std::string Path);
 };
+
+}; //namespace OpenApoc

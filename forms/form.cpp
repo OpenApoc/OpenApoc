@@ -1,5 +1,7 @@
 #include "form.h"
 
+namespace OpenApoc {
+
 Form::Form( tinyxml2::XMLElement* FormConfiguration ) : Control( nullptr )
 {
 	if( FormConfiguration == nullptr )
@@ -54,3 +56,5 @@ void Form::UnloadResources()
 {
 	Control::UnloadResources();
 }
+
+}; //namespace OpenApoc

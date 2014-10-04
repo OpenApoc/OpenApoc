@@ -1,6 +1,8 @@
 
 #include "list.h"
 
+namespace OpenApoc {
+
 ListBox::ListBox( Control* Owner ) : Control( Owner )
 {
 	ConfigureInternalScrollBar();
@@ -110,3 +112,5 @@ Control* ListBox::operator[]( int Index )
 {
 	return Controls.at(Index);
 }
+
+}; //namespace OpenApoc

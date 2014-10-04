@@ -5,6 +5,8 @@
 #include "control.h"
 #include <memory>
 
+namespace OpenApoc {
+
 class Graphic : public Control
 {
 
@@ -27,3 +29,4 @@ class Graphic : public Control
 		void SetImage( std::shared_ptr<Image> Image );
 };
 
+}; //namespace OpenApoc

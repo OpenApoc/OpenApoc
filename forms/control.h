@@ -5,9 +5,9 @@
 #include "../library/vector2.h"
 #include "../framework/event.h"
 
-#ifndef Form
+namespace OpenApoc {
+
 class Form;
-#endif
 
 class Control
 {
@@ -16,7 +16,7 @@ class Control
 
 		void PreRender();
 		void PostRender();
-		
+
 
 	protected:
 		Control* owningControl;
@@ -61,3 +61,4 @@ class Control
 		Form* GetForm();
 };
 
+}; //namespace OpenApoc

@@ -5,6 +5,7 @@
 #include "../../framework/event.h"
 #include "palette.h"
 
+namespace OpenApoc {
 class Cursor
 {
 
@@ -35,3 +36,4 @@ class Cursor
 		void EventOccured( Event* e );
 		void Render();
 };
+}; //namespace OpenApoc

@@ -3,6 +3,8 @@
 
 #include "event.h"
 
+namespace OpenApoc {
+
 /*
 	Class: Stage
 	You must inherit this in any game "screens", as it provides the framework's functionality
@@ -67,3 +69,5 @@ class Stage
 	/* Need a virtual destructor to correctly call any subclass descructors */
     virtual ~Stage(){};
 };
+
+}; //namespace OpenApoc

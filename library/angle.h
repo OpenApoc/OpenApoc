@@ -3,9 +3,9 @@
 
 #include "maths.h"
 
-#ifndef Vector2
+namespace OpenApoc {
+
 class Vector2;
-#endif
 
 class Angle
 {
@@ -34,3 +34,5 @@ class Angle
 		float Cosine();
 		float Tan();
 };
+
+}; //namespace OpenApoc

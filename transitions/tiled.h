@@ -4,6 +4,8 @@
 #include "../framework/stage.h"
 #include "../framework/includes.h"
 
+namespace OpenApoc {
+
 namespace TiledTransitions
 {
 	enum Transition
@@ -55,3 +57,5 @@ class TransitionTiled : public Stage
     virtual void Render();
 		virtual bool IsTransition();
 };
+
+}; //namespace OpenApoc

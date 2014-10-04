@@ -6,6 +6,8 @@
 
 #define TEXTEDITOR_CARET_TOGGLE_TIME		30
 
+namespace OpenApoc {
+
 class TextEdit : public Control
 {
 
@@ -39,3 +41,4 @@ class TextEdit : public Control
 		void SetText( std::string Text );
 };
 
+}; //namespace OpenApoc

@@ -2,6 +2,8 @@
 #include "fadein.h"
 #include "../framework/framework.h"
 
+namespace OpenApoc {
+
 TransitionFadeIn::TransitionFadeIn( Stage* Target, ALLEGRO_COLOR Source, int Frames )
 {
 	targetStage = Target;
@@ -80,3 +82,5 @@ bool TransitionFadeIn::IsTransition()
 {
 	return true;
 }
+
+}; //namespace OpenApoc

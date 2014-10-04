@@ -3,6 +3,8 @@
 
 #include "control.h"
 
+namespace OpenApoc {
+
 class Form : public Control
 {
 
@@ -18,3 +20,4 @@ class Form : public Control
 		virtual void UnloadResources();
 };
 
+}; //namespace OpenApoc
