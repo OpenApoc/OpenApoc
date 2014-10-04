@@ -2,9 +2,9 @@
 //#define ALLEGRO_MINGW32
 //#define ALLEGRO_UNIX
 #define ALLEGRO_MSVC
-#define ALLEGRO_CFG_D3D
+//#define ALLEGRO_CFG_D3D
 //#define ALLEGRO_CFG_D3D9EX
-//#define ALLEGRO_CFG_OPENGL
+#define ALLEGRO_CFG_OPENGL
 //#define ALLEGRO_MACOSX
 //#define ALLEGRO_BCC32
 //#define ALLEGRO_GP2XWIZ

@@ -63,7 +63,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>gdiplus.lib;d3d9.lib;shlwapi.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>gdiplus.lib;opengl32.lib;shlwapi.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -82,7 +82,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>gdiplus.lib;d3d9.lib;shlwapi.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>gdiplus.lib;opengl32.lib;shlwapi.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -218,7 +218,6 @@
     <ClInclude Include="allegro\include\allegro5\tls.h" />
     <ClInclude Include="allegro\include\allegro5\transformations.h" />
     <ClInclude Include="allegro\include\allegro5\utf8.h" />
-    <ClInclude Include="allegro\src\win\d3d.h" />
     <ClInclude Include="allegro\src\win\wgl.h" />
     <ClInclude Include="allegro5\platform\alplatf.h" />
     <ClInclude Include="include\allegro5\internal\aintern_audio_cfg.h" />
@@ -303,6 +302,10 @@
     <ClCompile Include="allegro\src\monitor.c" />
     <ClCompile Include="allegro\src\mousenu.c" />
     <ClCompile Include="allegro\src\mouse_cursor.c" />
+    <ClCompile Include="allegro\src\opengl\extensions.c" />
+    <ClCompile Include="allegro\src\opengl\ogl_bitmap.c" />
+    <ClCompile Include="allegro\src\opengl\ogl_display.c" />
+    <ClCompile Include="allegro\src\opengl\ogl_draw.c" />
     <ClCompile Include="allegro\src\optimized.c" />
     <ClCompile Include="allegro\src\path.c" />
     <ClCompile Include="allegro\src\pixels.c" />
@@ -313,9 +316,7 @@
     <ClCompile Include="allegro\src\transformations.c" />
     <ClCompile Include="allegro\src\tri_soft.c" />
     <ClCompile Include="allegro\src\utf8.c" />
-    <ClCompile Include="allegro\src\win\d3d_bmp.cpp" />
-    <ClCompile Include="allegro\src\win\d3d_disp.cpp" />
-    <ClCompile Include="allegro\src\win\d3d_display_formats.cpp" />
+    <ClCompile Include="allegro\src\win\wgl_disp.c" />
     <ClCompile Include="allegro\src\win\wjoydrv.c" />
     <ClCompile Include="allegro\src\win\wjoydxnu.c" />
     <ClCompile Include="allegro\src\win\wkeyboard.c" />
