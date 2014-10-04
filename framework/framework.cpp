@@ -3,6 +3,8 @@
 #include "../game/boot.h"
 #include "../shaders/shaders.h"
 
+namespace OpenApoc {
+
 Framework* Framework::System;
 
 Framework::Framework()
@@ -109,7 +111,7 @@ void Framework::Run()
   printf( "Framework: Run.Program Loop\n" );
 #endif
 
-  ProgramStages->Push( new BootUp() );
+  ProgramStages->Push( new OpenApoc::BootUp() );
 
 	al_start_timer( frameTimer );
 
@@ -606,3 +608,5 @@ void Framework::SetSlowMode(bool SlowEnabled)
 {
 	enableSlowDown = SlowEnabled;
 }
+
+}; //namespace OpenApoc

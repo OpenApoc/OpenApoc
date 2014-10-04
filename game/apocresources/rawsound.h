@@ -5,6 +5,8 @@
 #include "../../framework/data.h"
 #include "../../library/memory.h"
 
+namespace OpenApoc {
+
 class RawSound
 {
 
@@ -19,3 +21,5 @@ class RawSound
 		void PlaySound();
 
 };
+
+}; //namespace OpenApoc

@@ -2,6 +2,8 @@
 #include "fadeacross.h"
 #include "../framework/framework.h"
 
+namespace OpenApoc {
+
 TransitionFadeAcross::TransitionFadeAcross( Stage* Target, int Frames )
 {
 	Stage* sourceStage = FRAMEWORK->ProgramStages->Current();
@@ -87,3 +89,5 @@ bool TransitionFadeAcross::IsTransition()
 {
 	return true;
 }
+
+}; //namespace OpenApoc

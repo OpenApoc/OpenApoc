@@ -2,6 +2,8 @@
 #include "line.h"
 #include "maths.h"
 
+namespace OpenApoc {
+
 Line::Line( Vector2* A, Vector2* B )
 {
 	XAdjust = 0;
@@ -159,3 +161,5 @@ Vector2* Line::GetSegmentPoint( int SegmentNumber, int NumberOfSegments )
 
 	return new Vector2( Points[0]->X + (xSeg * SegmentNumber), Points[0]->Y + (ySeg * SegmentNumber) );
 }
+
+}; //namespace OpenApoc

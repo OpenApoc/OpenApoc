@@ -5,6 +5,8 @@
 #include "../game/resources/ifont.h"
 #include "../game/apocresources/rawsound.h"
 
+namespace OpenApoc {
+
 class TextButton : public Control
 {
 
@@ -33,3 +35,4 @@ class TextButton : public Control
 		void SetText( std::string Text );
 };
 
+}; //namespace OpenApoc

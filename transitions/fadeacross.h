@@ -4,6 +4,8 @@
 #include "../framework/stage.h"
 #include "../framework/includes.h"
 
+namespace OpenApoc {
+
 class TransitionFadeAcross : public Stage
 {
 	private:
@@ -29,3 +31,5 @@ class TransitionFadeAcross : public Stage
     virtual void Render();
 		virtual bool IsTransition();
 };
+
+}; //namespace OpenApoc

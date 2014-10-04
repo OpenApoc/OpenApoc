@@ -1,6 +1,8 @@
 
 #include "cursor.h"
 
+namespace OpenApoc {
+
 Cursor::Cursor( Palette* ColourPalette )
 {
 	ALLEGRO_FILE* f = DATA->load_file( "TACDATA/MOUSE.DAT", "rb" );
@@ -51,3 +53,4 @@ void Cursor::Render()
 {
 	al_draw_bitmap( images.at( (int)CurrentType ), cursorx, cursory, 0 );
 }
+}; //namespace OpenApoc

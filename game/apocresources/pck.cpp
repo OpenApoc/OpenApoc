@@ -1,6 +1,8 @@
 
 #include "pck.h"
 
+namespace OpenApoc {
+
 PCK::PCK( std::string PckFilename, std::string TabFilename, Palette &ColourPalette )
 {
 	ProcessFile(PckFilename, TabFilename, ColourPalette, -1);
@@ -222,3 +224,4 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index, Pa
 
 	}
 }
+}; //namespace OpenApoc

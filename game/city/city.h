@@ -8,6 +8,8 @@
 #include <memory>
 #include <list>
 
+namespace OpenApoc {
+
 class CityTile
 {
 	private:
@@ -37,4 +39,5 @@ class City
 		static std::unique_ptr<City> city;
 };
 
-#define CITY City::city
+#define CITY OpenApoc::City::city
+}; //namespace OpenApoc

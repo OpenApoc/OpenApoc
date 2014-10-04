@@ -3,6 +3,8 @@
 #include "../framework/framework.h"
 #include "../game/resources/gamecore.h"
 
+namespace OpenApoc {
+
 VScrollBar::VScrollBar( Control* Owner ) : Control( Owner ), Maximum(10), Minimum(0), Value(0),  GripperColour(al_map_rgb( 220, 192, 192 )), capture(false), LargeChange(2)
 {
 	//LoadResources();
@@ -99,3 +101,5 @@ void VScrollBar::UnloadResources()
 {
 	Control::UnloadResources();
 }
+
+}; //namespace OpenApoc

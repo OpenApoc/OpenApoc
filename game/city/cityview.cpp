@@ -4,6 +4,8 @@
 
 #include <iostream>
 
+namespace OpenApoc {
+
 CityView::CityView()
 	: pal(new Palette("UFODATA/PAL_04.DAT")),
 	  cityPck(new PCK("UFODATA/CITY.PCK", "UFODATA/CITY.TAB", *pal)),
@@ -207,3 +209,5 @@ bool CityView::IsTransition()
 {
 	return false;
 }
+
+}; //namespace OpenApoc

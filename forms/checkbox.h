@@ -4,6 +4,8 @@
 #include "control.h"
 #include "../game/apocresources/rawsound.h"
 
+namespace OpenApoc {
+
 class CheckBox : public Control
 {
 
@@ -28,3 +30,5 @@ class CheckBox : public Control
 		virtual void Update();
 		virtual void UnloadResources();
 };
+
+}; //namespace OpenApoc

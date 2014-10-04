@@ -1,6 +1,8 @@
 #include "image.h"
 #include "includes.h"
 
+namespace OpenApoc {
+
 Image::Image(ALLEGRO_BITMAP *bmp)
 	: bmp(bmp), locked(false)
 {
@@ -84,3 +86,5 @@ ImageLock::set(int x, int y, Colour &c)
 	*dataPtr++ = c.b;
 	*dataPtr++ = c.a;
 }
+
+}; //namespace OpenApoc

@@ -3,9 +3,9 @@
 
 #include "maths.h"
 
-#ifndef Angle
+namespace OpenApoc {
+
 class Angle;
-#endif
 
 class Vector2
 {
@@ -40,3 +40,4 @@ class Vector2
 		Angle* ToAngle();
 };
 
+}; //namespace OpenApoc

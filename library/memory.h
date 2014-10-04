@@ -3,6 +3,8 @@
 
 #include <cstdlib>
 
+namespace OpenApoc {
+
 class Memory
 {
 
@@ -21,3 +23,5 @@ class Memory
 		void* GetData();
 		void* GetDataOffset( size_t offset );
 };
+
+}; //namespace OpenApoc

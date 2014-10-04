@@ -2,6 +2,8 @@
 #include "scanlines.h"
 #include "../framework/framework.h"
 
+namespace OpenApoc {
+
 ShaderScanlines::ShaderScanlines()
 {
 	nonScanLineWidth = 5;
@@ -36,3 +38,4 @@ void ShaderScanlines::Apply( ALLEGRO_BITMAP* Target )
 	FRAMEWORK->Display_SetTarget( orig );
 
 }
+}; //namespace OpenApoc

@@ -4,6 +4,8 @@
 #include "../../library/rect.h"
 #include <list>
 
+namespace OpenApoc {
+
 class Building
 {
 	public:
@@ -15,3 +17,5 @@ class Building
 };
 
 std::list<Building> loadBuildingsFromBld(std::string fileName, std::vector<Organisation> &orgList, std::vector<std::string> nameList);
+
+}; //namespace OpenApoc

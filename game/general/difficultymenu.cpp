@@ -7,6 +7,8 @@
 
 #include <iostream>
 
+namespace OpenApoc {
+
 DifficultyMenu::DifficultyMenu()
 {
 	difficultymenuform = GAMECORE->GetForm("FORM_DIFFICULTYMENU");
@@ -99,3 +101,4 @@ bool DifficultyMenu::IsTransition()
 {
 	return false;
 }
+}; //namespace OpenApoc

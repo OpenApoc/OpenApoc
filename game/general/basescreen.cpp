@@ -3,6 +3,8 @@
 #include "basescreen.h"
 #include "../../framework/framework.h"
 
+namespace OpenApoc {
+
 BaseScreen::BaseScreen()
 {
     basescreenform = GAMECORE->GetForm("FORM_BASESCREEN");
@@ -65,3 +67,5 @@ bool BaseScreen::IsTransition()
 {
 	return false;
 }
+
+}; //namespace OpenApoc

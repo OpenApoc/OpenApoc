@@ -1,6 +1,8 @@
 #include "graphic.h"
 #include "../game/resources/gamecore.h"
 
+namespace OpenApoc {
+
 Graphic::Graphic( Control* Owner, std::string Image ) : Control( Owner )
 {
 	image_name = Image;
@@ -62,3 +64,4 @@ void Graphic::SetImage( std::shared_ptr<Image> Image )
 	image = Image;
 }
 
+}; //namespace OpenApoc

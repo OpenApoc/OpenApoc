@@ -14,6 +14,8 @@
 #define CITY_TILE_WIDTH (64)
 #define CITY_TILE_ZOFFSET (-16)
 
+namespace OpenApoc {
+
 class CityView : public Stage
 {
 	public:
@@ -38,3 +40,4 @@ class CityView : public Stage
 		virtual void Render();
 		virtual bool IsTransition();
 };
+}; //namespace OpenApoc

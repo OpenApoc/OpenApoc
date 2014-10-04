@@ -2,6 +2,8 @@
 #include "../../framework/data.h"
 #include <iostream>
 
+namespace OpenApoc {
+
 std::vector<std::string> Building::defaultNames =
 {
 	{"Building"},
@@ -226,3 +228,5 @@ loadBuildingsFromBld(std::string fileName, std::vector<Organisation> &orgList, s
 	}
 	return buildings;
 }
+
+}; //namespace OpenApoc

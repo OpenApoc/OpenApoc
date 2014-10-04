@@ -5,6 +5,8 @@
 #include "../../library/memory.h"
 #include "palette.h"
 
+namespace OpenApoc {
+
 typedef struct PCKCompression1ImageHeader
 {
 	uint8_t Reserved1;
@@ -43,3 +45,5 @@ class PCK
 		void RenderImage( int Index, int X, int Y );
 		std::shared_ptr<Image> GetImage( int Index );
 };
+
+}; //namespace OpenApoc

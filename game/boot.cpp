@@ -5,6 +5,8 @@
 #include "../transitions/transitions.h"
 #include "resources/gamecore.h"
 
+namespace OpenApoc {
+
 void BootUp::Begin()
 {
 	loadingimage = DATA->load_image( "UI/LOADING.PNG" );
@@ -91,3 +93,5 @@ void* BootUp::CreateGameCore(ALLEGRO_THREAD* thread, void* args)
 
 	return nullptr;
 }
+
+}; //namespace OpenApoc

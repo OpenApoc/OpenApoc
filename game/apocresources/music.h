@@ -5,6 +5,8 @@
 #include "../../framework/framework.h"
 #include "../../library/memory.h"
 
+namespace OpenApoc {
+
 class Music
 {
 
@@ -22,3 +24,5 @@ class Music
 		void Stop();
 
 };
+
+}; //namespace OpenApoc

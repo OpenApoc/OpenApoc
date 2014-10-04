@@ -2,6 +2,8 @@
 #include "textbutton.h"
 #include "../framework/framework.h"
 
+namespace OpenApoc {
+
 RawSound* TextButton::buttonclick = nullptr;
 
 TextButton::TextButton( Control* Owner, std::string Text, IFont* Font ) : Control( Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Centre ), TextVAlign( VerticalAlignment::Centre ), buttonbackground(DATA->load_image( "UI/TEXTBUTTONBACK.PNG" ))
@@ -100,3 +102,5 @@ void TextButton::SetText( std::string Text )
 {
 	text = Text;
 }
+
+}; //namespace OpenApoc

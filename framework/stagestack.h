@@ -7,6 +7,8 @@
 // Maximum number of stages that can be held in the game loop
 #define MAX_STACK_SIZE	12
 
+namespace OpenApoc {
+
 /*
 	Class: StageStack
 	Used internally by the framework for keeping track of stages
@@ -131,3 +133,5 @@ class StageStack
 		bool IsEmpty();
 
 };
+
+}; //namespace OpenApoc

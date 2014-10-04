@@ -4,6 +4,8 @@
 #include "../../framework/framework.h"
 #include "../../transitions/transitions.h"
 
+namespace OpenApoc {
+
 OptionsMenu::OptionsMenu()
 {
 	menuform = GAMECORE->GetForm("FORM_OPTIONSMENU");
@@ -69,3 +71,5 @@ bool OptionsMenu::IsTransition()
 {
 	return false;
 }
+
+}; //namespace OpenApoc

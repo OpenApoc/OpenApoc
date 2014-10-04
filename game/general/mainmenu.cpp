@@ -5,6 +5,8 @@
 #include "difficultymenu.h"
 #include "../../transitions/transitions.h"
 
+namespace OpenApoc {
+
 MainMenu::MainMenu()
 {
 	mainmenuform = GAMECORE->GetForm("FORM_MAINMENU");
@@ -92,3 +94,4 @@ bool MainMenu::IsTransition()
 {
 	return false;
 }
+}; //namespace OpenApoc

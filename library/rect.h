@@ -2,6 +2,8 @@
 
 #include "vec.h"
 
+namespace OpenApoc {
+
 template <typename T>
 class Rect
 {
@@ -21,3 +23,5 @@ class Rect
 					p.y <= p1.y);
 		};
 };
+
+}; //namespace OpenApoc

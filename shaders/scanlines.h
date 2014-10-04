@@ -3,6 +3,8 @@
 
 #include "shader.h"
 
+namespace OpenApoc {
+
 class ShaderScanlines : public Shader
 {
 	private:
@@ -15,3 +17,5 @@ class ShaderScanlines : public Shader
 		ShaderScanlines(int NonScanWidth, int ScanWidth, int ScanDecrease);
 		void Apply( ALLEGRO_BITMAP* Target );
 };
+
+}; //namespace OpenApoc

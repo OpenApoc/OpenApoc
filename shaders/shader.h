@@ -3,6 +3,8 @@
 
 #include "../framework/includes.h"
 
+namespace OpenApoc {
+
 typedef struct PackedARGB8888
 {
 	unsigned char r;
@@ -17,3 +19,5 @@ class Shader
 		virtual void Apply( ALLEGRO_BITMAP* Target ) = 0;
 		virtual ~Shader(){};
 };
+
+}; //namespace OpenApoc

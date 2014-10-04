@@ -3,6 +3,8 @@
 #include "vector2.h"
 #include "../framework/includes.h"
 
+namespace OpenApoc {
+
 Angle::Angle()
 {
 	curAngle = 0;
@@ -108,3 +110,4 @@ float Angle::Tan()
 	return tan(ToRadians());
 }
 
+}; //namespace OpenApoc

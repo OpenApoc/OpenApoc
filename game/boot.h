@@ -7,6 +7,8 @@
 
 #include "apocresources/rawsound.h"
 
+namespace OpenApoc {
+
 class BootUp : public Stage
 {
 	private:
@@ -30,3 +32,5 @@ class BootUp : public Stage
     virtual void Render();
 		virtual bool IsTransition();
 };
+
+}; //namespace OpenApoc

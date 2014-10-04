@@ -1,6 +1,8 @@
 
 #include "label.h"
 
+namespace OpenApoc {
+
 Label::Label( Control* Owner, std::string Text, IFont* Font ) : Control( Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Top )
 {
 }
@@ -66,3 +68,5 @@ void Label::SetText( std::string Text )
 {
 	text = Text;
 }
+
+}; //namespace OpenApoc

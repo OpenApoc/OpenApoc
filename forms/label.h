@@ -4,6 +4,8 @@
 #include "control.h"
 #include "../game/resources/ifont.h"
 
+namespace OpenApoc {
+
 class Label : public Control
 {
 
@@ -29,3 +31,4 @@ class Label : public Control
 		void SetText( std::string Text );
 };
 
+}; //namespace OpenApoc

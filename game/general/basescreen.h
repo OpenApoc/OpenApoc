@@ -8,6 +8,8 @@
 #include "../apocresources/apocresource.h"
 #include "../../forms/forms.h"
 
+namespace OpenApoc {
+
 class BaseScreen : public Stage
 {
 	private:
@@ -26,3 +28,5 @@ class BaseScreen : public Stage
     virtual void Render();
 		virtual bool IsTransition();
 };
+
+}; //namespace OpenApoc

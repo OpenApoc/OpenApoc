@@ -4,6 +4,8 @@
 #include <algorithm>
 #include "../framework/framework.h"
 
+namespace OpenApoc {
+
 TextEdit::TextEdit( Control* Owner, std::string Text, IFont* Font ) : Control( Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Centre ), editting(false), SelectionStart(Text.length()), caretTimer(0), caretDraw(false), editShift(false), editAltGr(false)
 {
 }
@@ -220,3 +222,5 @@ void TextEdit::RaiseEvent( FormEventType Type )
 	ce->Data.Forms.EventFlag = FormEventType::TextChanged;
 	FRAMEWORK->PushEvent( ce );
 }
+
+}; //namespace OpenApoc

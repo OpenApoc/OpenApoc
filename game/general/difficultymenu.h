@@ -8,6 +8,8 @@
 #include "../apocresources/apocresource.h"
 #include "../../forms/forms.h"
 
+namespace OpenApoc {
+
 class DifficultyMenu : public Stage
 {
 	private:
@@ -26,3 +28,4 @@ class DifficultyMenu : public Stage
     virtual void Render();
 		virtual bool IsTransition();
 };
+}; //namespace OpenApoc

@@ -3,6 +3,8 @@
 #include "../framework/framework.h"
 #include "../game/resources/gamecore.h"
 
+namespace OpenApoc {
+
 RawSound* GraphicButton::buttonclick = nullptr;
 
 GraphicButton::GraphicButton( Control* Owner, std::string Image, std::string ImageDepressed ) : Control( Owner )
@@ -164,3 +166,4 @@ void GraphicButton::SetHoverImage( std::shared_ptr<Image> Image )
 	imagehover = Image;
 }
 
+}; //namespace OpenApoc

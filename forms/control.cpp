@@ -4,6 +4,8 @@
 #include "forms.h"
 #include "../game/resources/gamecore.h"
 
+namespace OpenApoc {
+
 Control::Control(Control* Owner) : Name("Control"), owningControl(Owner), focusedChild(nullptr), BackgroundColour(al_map_rgb( 128, 80, 80 )), mouseInside(false), mouseDepressed(false), controlArea(nullptr)
 {
 	if( Owner != nullptr )
@@ -624,3 +626,5 @@ Form* Control::GetForm()
 	}
 	return nullptr;
 }
+
+}; //namespace OpenApoc

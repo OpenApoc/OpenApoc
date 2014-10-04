@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+namespace OpenApoc {
+
 std::unique_ptr<City> City::city;
 
 City::City(std::string mapName)
@@ -60,3 +62,5 @@ CityTile::CityTile(int id, Building *building)
 	: id(id), building(building)
 {
 }
+
+}; //namespace OpenApoc

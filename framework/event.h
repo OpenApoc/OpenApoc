@@ -5,9 +5,10 @@
 #include "../library/memory.h"
 
 #include "../forms/forms_enums.h"
-#ifndef Control
+
+namespace OpenApoc {
+
 class Control;
-#endif
 
 enum EventTypes
 {
@@ -154,3 +155,4 @@ class Event
 		*/
 		~Event();
 };
+}; //namespace OpenApoc
