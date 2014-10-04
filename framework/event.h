@@ -2,9 +2,8 @@
 #pragma once
 
 #include "includes.h"
-#include "../library/memory.h"
 
-#include "../forms/forms_enums.h"
+#include "forms/forms_enums.h"
 
 namespace OpenApoc {
 
@@ -29,39 +28,11 @@ enum EventTypes
 	EVENT_JOYSTICK_BUTTON_DOWN,
 	EVENT_JOYSTICK_BUTTON_UP,
 	EVENT_TIMER_TICK,
-#ifdef NETWORK_SUPPORT
-	EVENT_NETWORK_CONNECTION_REQUEST,
-	EVENT_NETWORK_PACKET_RECEIVED,
-	EVENT_NETWORK_DISCONNECTED,
-#endif
-#ifdef DOWNLOAD_SUPPORT
-	EVENT_DOWNLOAD_PROGRESS,
-	EVENT_DOWNLOAD_COMPLETE,
-#endif
 	EVENT_AUDIO_STREAM_FINISHED,
 	EVENT_FORM_INTERACTION,
 	EVENT_USER,
 	EVENT_UNDEFINED
 };
-
-#ifdef DOWNLOAD_SUPPORT
-typedef struct FRAMEWORK_DOWNLOAD_EVENT
-{
-	std::string* URL;
-	Memory* Contents;
-	double DownloadedBytes;
-	double TotalBytesToDownload;
-	double UploadedBytes;
-	double TotalBytesToUpload;
-} FRAMEWORK_DOWNLOAD_EVENT;
-#endif
-
-#ifdef NETWORK_SUPPORT
-typedef struct FRAMEWORK_NETWORK_EVENT
-{
-	ENetEvent Traffic;
-} FRAMEWORK_NETWORK_EVENT;
-#endif
 
 typedef struct FRAMEWORK_DISPLAY_EVENT
 {
@@ -110,7 +81,6 @@ typedef struct FRAMEWORK_FORMS_EVENT
 	FormEventType EventFlag;
 	FRAMEWORK_MOUSE_EVENT MouseInfo;
 	FRAMEWORK_KEYBOARD_EVENT KeyInfo;
-	Memory* AdditionalData;
 } FRAMEWORK_FORMS_EVENT;
 
 
@@ -120,13 +90,6 @@ typedef union EventData
 	FRAMEWORK_JOYSTICK_EVENT	Joystick;
 	FRAMEWORK_KEYBOARD_EVENT	Keyboard;
 	FRAMEWORK_MOUSE_EVENT			Mouse;
-	Memory*										User;
-#ifdef NETWORK_SUPPORT
-	FRAMEWORK_NETWORK_EVENT		Network;
-#endif
-#ifdef DOWNLOAD_SUPPORT
-	FRAMEWORK_DOWNLOAD_EVENT	Download;
-#endif
 	FRAMEWORK_TIMER_EVENT			Timer;
 	FRAMEWORK_FORMS_EVENT			Forms;
 } EventData;

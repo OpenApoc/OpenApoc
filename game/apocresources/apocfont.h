@@ -2,8 +2,7 @@
 #pragma once
 
 // #include "../../framework/includes.h"
-#include "../resources/ifont.h"
-#include "../../library/memory.h"
+#include "game/resources/ifont.h"
 #include "palette.h"
 
 namespace OpenApoc {

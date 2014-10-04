@@ -1,9 +1,4 @@
 #include "data.h"
-#include "string.h"
-
-#include <cassert>
-#include <iostream>
-#include <algorithm>
 
 namespace OpenApoc {
 

@@ -3,6 +3,11 @@
 
 namespace OpenApoc {
 
+/* Work around for X11 headers defining KeyPress */
+#ifdef KeyPress
+#undef KeyPress
+#endif
+
 enum class FormEventType
 {
 	GotFocus,

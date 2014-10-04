@@ -1,9 +1,8 @@
 
 #pragma once
 
-#include "../framework/stage.h"
-#include "../framework/includes.h"
-#include "../library/angle.h"
+#include "framework/stage.h"
+#include "framework/includes.h"
 
 #include "apocresources/rawsound.h"
 

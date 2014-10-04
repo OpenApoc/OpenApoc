@@ -1,6 +1,8 @@
 
 #include "ttffont.h"
 
+namespace OpenApoc {
+
 TTFFont::TTFFont( std::string Filename, int Size )
 {
 	fontobject = al_load_ttf_font( Filename.c_str(), Size, 0 );
@@ -44,3 +46,5 @@ int TTFFont::GetFontWidth( std::string Text )
 {
 	return al_get_text_width( fontobject, Text.c_str() );
 }
+
+}; //namespace OpenApoc

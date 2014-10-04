@@ -1,9 +1,6 @@
 #pragma once
 
 #include "includes.h"
-#include "../library/vec.h"
-#include "../library/colour.h"
-#include <memory>
 
 namespace OpenApoc {
 

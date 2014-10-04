@@ -1,7 +1,5 @@
 
 #include "textedit.h"
-#include <iostream>
-#include <algorithm>
 #include "../framework/framework.h"
 
 namespace OpenApoc {

@@ -1,8 +1,8 @@
 
 #pragma once
 
-#include "../../framework/includes.h"
-#include "../../framework/event.h"
+#include "framework/includes.h"
+#include "framework/event.h"
 #include "palette.h"
 
 namespace OpenApoc {

@@ -1,8 +1,7 @@
 
 #pragma once
 
-#include "../../framework/includes.h"
-#include "../../library/memory.h"
+#include "framework/includes.h"
 #include "palette.h"
 
 namespace OpenApoc {

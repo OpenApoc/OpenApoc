@@ -1,8 +1,6 @@
 #include "city.h"
 #include "../../framework/data.h"
 
-#include <iostream>
-
 namespace OpenApoc {
 
 std::unique_ptr<City> City::city;

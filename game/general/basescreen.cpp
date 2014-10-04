@@ -1,5 +1,4 @@
 
-#include <iostream>
 #include "basescreen.h"
 #include "../../framework/framework.h"
 

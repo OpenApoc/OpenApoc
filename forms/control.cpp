@@ -99,7 +99,6 @@ void Control::EventOccured( Event* e )
 				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.X;
 				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.Y;
 				memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-				newevent->Data.Forms.AdditionalData = nullptr;
 				FRAMEWORK->PushEvent( newevent );
 				mouseInside = true;
 			}
@@ -112,7 +111,6 @@ void Control::EventOccured( Event* e )
 			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.X;
 			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.Y;
 			memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-			newevent->Data.Forms.AdditionalData = nullptr;
 			FRAMEWORK->PushEvent( newevent );
 
 			e->Handled = true;
@@ -127,7 +125,6 @@ void Control::EventOccured( Event* e )
 				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.X;
 				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.Y;
 				memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-				newevent->Data.Forms.AdditionalData = nullptr;
 				FRAMEWORK->PushEvent( newevent );
 				mouseInside = false;
 			}
@@ -146,7 +143,6 @@ void Control::EventOccured( Event* e )
 			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.X;
 			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.Y;
 			memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-			newevent->Data.Forms.AdditionalData = nullptr;
 			FRAMEWORK->PushEvent( newevent );
 			mouseDepressed = true;
 
@@ -166,7 +162,6 @@ void Control::EventOccured( Event* e )
 			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.X;
 			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.Y;
 			memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-			newevent->Data.Forms.AdditionalData = nullptr;
 			FRAMEWORK->PushEvent( newevent );
 
 			if( mouseDepressed )
@@ -179,7 +174,6 @@ void Control::EventOccured( Event* e )
 				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.X;
 				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.Y;
 				memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-				newevent->Data.Forms.AdditionalData = nullptr;
 				FRAMEWORK->PushEvent( newevent );
 			}
 
@@ -198,7 +192,6 @@ void Control::EventOccured( Event* e )
 			newevent->Data.Forms.EventFlag = (e->Type == EVENT_KEY_DOWN ? FormEventType::KeyDown : FormEventType::KeyUp);
 			memcpy( (void*)&newevent->Data.Forms.KeyInfo, (void*)&e->Data.Keyboard, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
 			memset( (void*)&newevent->Data.Forms.MouseInfo, 0, sizeof( FRAMEWORK_MOUSE_EVENT ) );
-			newevent->Data.Forms.AdditionalData = nullptr;
 			FRAMEWORK->PushEvent( newevent );
 
 			e->Handled = true;
@@ -214,7 +207,6 @@ void Control::EventOccured( Event* e )
 			newevent->Data.Forms.EventFlag = FormEventType::KeyPress;
 			memcpy( (void*)&newevent->Data.Forms.KeyInfo, (void*)&e->Data.Keyboard, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
 			memset( (void*)&newevent->Data.Forms.MouseInfo, 0, sizeof( FRAMEWORK_MOUSE_EVENT ) );
-			newevent->Data.Forms.AdditionalData = nullptr;
 			FRAMEWORK->PushEvent( newevent );
 
 			e->Handled = true;

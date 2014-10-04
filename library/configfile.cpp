@@ -1,10 +1,5 @@
 
 #include "configfile.h"
-#include <ctype.h>
-// TODO: Change to use C++ libs
-#include <stdlib.h>
-#include <stdio.h>
-#include <string.h>
 
 ConfigFile::ConfigFile()
 {

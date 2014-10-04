@@ -1,6 +1,7 @@
 #include "building.h"
 #include "../../framework/data.h"
-#include <iostream>
+
+#include "framework/includes.h"
 
 namespace OpenApoc {
 

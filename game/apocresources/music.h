@@ -1,9 +1,8 @@
 
 #pragma once
 
-#include "../../framework/includes.h"
-#include "../../framework/framework.h"
-#include "../../library/memory.h"
+#include "framework/includes.h"
+#include "framework/framework.h"
 
 namespace OpenApoc {
 
