@@ -3,6 +3,9 @@
 #include "../game/boot.h"
 #include "../shaders/shaders.h"
 
+#include <allegro5/allegro_opengl.h>
+#include <iostream>
+
 namespace OpenApoc {
 
 Framework* Framework::System;
@@ -362,6 +365,8 @@ void Framework::Display_Initialise()
 	int scrW = fallbackW;
 	int scrH = fallbackH;
 
+	int display_flags = ALLEGRO_OPENGL;
+
 	// Load configuration
 	if( Settings->KeyExists( "Visual.ScreenWidth" ) )
   {
@@ -384,8 +389,10 @@ void Framework::Display_Initialise()
 
 	if( scrFS )
 	{
-		al_set_new_display_flags( ALLEGRO_FULLSCREEN );
+		display_flags |= ALLEGRO_FULLSCREEN;
 	}
+
+	al_set_new_display_flags(display_flags);
 
 	// Get Current Resolution
 	for( int modeIdx = 0; modeIdx < al_get_num_display_modes(); modeIdx++ )
@@ -417,6 +424,23 @@ void Framework::Display_Initialise()
 	} else {
 		screen = al_create_display( fallbackW, fallbackH );
 	}
+
+	if (!screen)
+	{
+		std::cerr << "Failed to create screen\n";
+		exit(1);
+	}
+
+	auto gl_version = al_get_opengl_version();
+
+	std::cout << "OpenGL version: 0x" << std::hex << al_get_opengl_version() << std::dec << "\n";
+
+	if (gl_version < 0x3000000)
+	{
+		std::cerr << "OpenGL implementation too old - we require at least 3.0\n";
+		exit(1);
+	}
+
 	screenRetarget = 0;
 
 	al_set_blender( ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA );
