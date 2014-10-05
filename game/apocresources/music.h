@@ -15,6 +15,7 @@ class Music
 		ALLEGRO_SAMPLE_ID play_id;
 		static long starts[];
 		static long lengths[];
+		bool playing;
 
 	public:
 		Music( int Track );

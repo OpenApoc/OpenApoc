@@ -14,22 +14,32 @@ Music::Music( int Track )
 	al_fread( f, sounddata.GetData(), lengths[Track] );
 	al_fclose( f );
 
+	playing = false;
+
 	soundsample = al_create_sample( sounddata.GetData(), sounddata.GetSize(), 22050, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2, false );
 }
 
 Music::~Music()
 {
-	al_destroy_sample( soundsample );
+	if (playing)
+		al_stop_sample(&play_id);
+	if (soundsample)
+		al_destroy_sample( soundsample );
 }
 
 void Music::Play()
 {
-	al_play_sample( soundsample, 1.0f, 0.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, &play_id );
+	/* If already playing, restart */
+	if (playing)
+		al_stop_sample(&play_id);
+	playing = al_play_sample( soundsample, 1.0f, 0.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, &play_id );
 }
 
 void Music::Stop()
 {
-	al_stop_sample(&play_id);
+	if (playing)
+		al_stop_sample(&play_id);
+	playing = false;
 }
 
 }; //namespace OpenApoc
