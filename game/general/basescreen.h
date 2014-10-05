@@ -14,6 +14,7 @@ class BaseScreen : public Stage
 {
 	private:
         Form* basescreenform;
+		StageCmd stageCmd;
 
   public:
         BaseScreen();
@@ -24,7 +25,7 @@ class BaseScreen : public Stage
     virtual void Resume();
     virtual void Finish();
     virtual void EventOccurred(Event *e);
-    virtual void Update();
+    virtual void Update(StageCmd * const cmd);
     virtual void Render();
 		virtual bool IsTransition();
 };

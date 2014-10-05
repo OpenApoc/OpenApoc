@@ -15,6 +15,7 @@ class MainMenu : public Stage
 	private:
 		Music* musicplayer;
 		Form* mainmenuform;
+		StageCmd stageCmd;
 
   public:
 		MainMenu();
@@ -25,7 +26,7 @@ class MainMenu : public Stage
     virtual void Resume();
     virtual void Finish();
     virtual void EventOccurred(Event *e);
-    virtual void Update();
+    virtual void Update(StageCmd * const cmd);
     virtual void Render();
 		virtual bool IsTransition();
 };

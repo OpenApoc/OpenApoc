@@ -35,18 +35,9 @@ void BootUp::Finish()
 
 void BootUp::EventOccurred(Event *e)
 {
-	if( e->Type == EVENT_KEY_DOWN )
-	{
-		if( e->Data.Keyboard.KeyCode == ALLEGRO_KEY_ESCAPE )
-		{
-			delete FRAMEWORK->ProgramStages->Pop();
-		} else {
-			loadtime = FRAMES_PER_SECOND;
-		}
-	}
 }
 
-void BootUp::Update()
+void BootUp::Update(StageCmd * const cmd)
 {
 	loadtime++;
 	loadingimageangle.Add( 5 );
@@ -59,6 +50,8 @@ void BootUp::Update()
 	if( GAMECORE != nullptr && GAMECORE->Loaded && loadtime > FRAMES_PER_SECOND * 2 )
 	{
 		StartGame();
+		cmd->cmd = StageCmd::Command::REPLACE;
+		cmd->nextStage = std::make_shared<TransitionFadeIn>(std::make_shared<MainMenu>(), al_map_rgb(0,0,0), FRAMES_PER_SECOND);
 	}
 }
 
@@ -74,8 +67,6 @@ void BootUp::StartGame()
 	{
 		al_destroy_thread( threadload );
 	}
-	delete FRAMEWORK->ProgramStages->Pop();
-	FRAMEWORK->ProgramStages->Push( new TransitionFadeIn( new MainMenu(), al_map_rgb( 0, 0, 0 ), FRAMES_PER_SECOND ) );
 }
 
 bool BootUp::IsTransition()

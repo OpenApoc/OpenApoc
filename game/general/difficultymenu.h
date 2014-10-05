@@ -14,6 +14,7 @@ class DifficultyMenu : public Stage
 {
 	private:
 		Form* difficultymenuform;
+		StageCmd stageCmd;
 
   public:
 		DifficultyMenu();
@@ -24,7 +25,7 @@ class DifficultyMenu : public Stage
     virtual void Resume();
     virtual void Finish();
     virtual void EventOccurred(Event *e);
-    virtual void Update();
+    virtual void Update(StageCmd * const cmd);
     virtual void Render();
 		virtual bool IsTransition();
 };

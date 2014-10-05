@@ -38,7 +38,7 @@ void BaseScreen::EventOccurred(Event *e)
 	{
 		if( e->Data.Keyboard.KeyCode == ALLEGRO_KEY_ESCAPE )
 		{
-			delete FRAMEWORK->ProgramStages->Pop();
+			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
     }
@@ -50,9 +50,11 @@ void BaseScreen::EventOccurred(Event *e)
     }
 }
 
-void BaseScreen::Update()
+void BaseScreen::Update(StageCmd * const cmd)
 {
     basescreenform->Update();
+	*cmd = stageCmd;
+	stageCmd = StageCmd();
 }
 
 void BaseScreen::Render()

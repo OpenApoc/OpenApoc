@@ -46,7 +46,8 @@ void MainMenu::EventOccurred(Event *e)
 	{
 		if( e->Data.Keyboard.KeyCode == ALLEGRO_KEY_ESCAPE )
 		{
-			FRAMEWORK->ShutdownFramework();
+			stageCmd.cmd = StageCmd::Command::QUIT;
+			return;
 		}
 	}
 
@@ -54,16 +55,21 @@ void MainMenu::EventOccurred(Event *e)
 	{
 		if( e->Data.Forms.RaisedBy->Name == "BUTTON_OPTIONS" )
 		{
-            FRAMEWORK->ProgramStages->Push( new TransitionFadeAcross( new OptionsMenu(), FRAMES_PER_SECOND >> 2 ) );
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = std::make_shared<TransitionFadeAcross>(
+				std::make_shared<OptionsMenu>(), FRAMES_PER_SECOND/4);
 			return;
 		}
 		if( e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT" )
 		{
-			FRAMEWORK->ShutdownFramework();
+			stageCmd.cmd = StageCmd::Command::QUIT;
+			return;
 		}
 		if( e->Data.Forms.RaisedBy->Name == "BUTTON_NEWGAME" )
 		{
-			FRAMEWORK->ProgramStages->Push( new TransitionFadeAcross( new DifficultyMenu(), FRAMES_PER_SECOND >> 2 ) );
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = std::make_shared<TransitionFadeAcross>(
+				std::make_shared<DifficultyMenu>(), FRAMES_PER_SECOND/4);
 			return;
 		}
 	}
@@ -78,9 +84,11 @@ void MainMenu::EventOccurred(Event *e)
 
 }
 
-void MainMenu::Update()
+void MainMenu::Update(StageCmd * const cmd)
 {
 	mainmenuform->Update();
+	*cmd = stageCmd;
+	stageCmd = StageCmd();
 }
 
 void MainMenu::Render()

@@ -4,9 +4,9 @@
 
 namespace OpenApoc {
 
-TransitionFadeAcross::TransitionFadeAcross( Stage* Target, int Frames )
+TransitionFadeAcross::TransitionFadeAcross( std::shared_ptr<Stage> Target, int Frames )
 {
-	Stage* sourceStage = FRAMEWORK->ProgramStages->Current();
+	auto sourceStage = FRAMEWORK->getCurrentStage();
 	targetStage = Target;
 
 	transitionFrames = Frames;
@@ -48,41 +48,30 @@ void TransitionFadeAcross::Finish()
 
 void TransitionFadeAcross::EventOccurred(Event *e)
 {
-	if( e->Type == EVENT_KEY_DOWN || e->Type == EVENT_MOUSE_DOWN )
-	{
-		//currentFrame--;
-		FinishTransition();
-	}
 }
 
-void TransitionFadeAcross::Update()
+void TransitionFadeAcross::Update(StageCmd * const cmd)
 {
 	currentFrame++;
 	if( currentFrame >= transitionFrames )
 	{
-		FinishTransition();
+		cmd->cmd = StageCmd::Command::REPLACE;
+		cmd->nextStage = this->targetStage;
 	}
 }
 
 void TransitionFadeAcross::Render()
 {
-	
+
 	//targetStage->Render();
 	al_draw_bitmap( sourceRender, 0, 0, 0 );
-	
+
 	float alpha = (float)currentFrame / (float)transitionFrames;
 	if( alpha > 1.0f )
 	{
 		alpha = 1.0f;
 	}
 	al_draw_tinted_bitmap( targetRender, al_map_rgba_f( 1.0f, 1.0f, 1.0f, alpha), 0, 0, 0 );
-}
-
-void TransitionFadeAcross::FinishTransition()
-{
-	Stage* t = targetStage;
-	delete Framework::System->ProgramStages->Pop();
-	Framework::System->ProgramStages->Push( t );
 }
 
 bool TransitionFadeAcross::IsTransition()

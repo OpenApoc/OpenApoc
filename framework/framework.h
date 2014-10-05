@@ -39,12 +39,12 @@ class Framework
 		ALLEGRO_VOICE* audioVoice;
 
 		Shader* activeShader;
+		StageStack ProgramStages;
 
   public:
     static Framework* System;
 
     ConfigFile* Settings;
-    StageStack* ProgramStages;
 
     Framework();
     ~Framework();
@@ -69,6 +69,7 @@ class Framework
 		void Display_SetTarget( ALLEGRO_BITMAP* Target );
 		void Display_SetShader();
 		void Display_SetShader( Shader* NewShader );
+		std::shared_ptr<Stage> getCurrentStage();
 
     void Audio_Initialise();
     void Audio_Shutdown();

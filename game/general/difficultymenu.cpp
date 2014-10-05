@@ -42,7 +42,7 @@ void DifficultyMenu::EventOccurred(Event *e)
 	{
 		if( e->Data.Keyboard.KeyCode == ALLEGRO_KEY_ESCAPE )
 		{
-			delete FRAMEWORK->ProgramStages->Pop();
+			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
@@ -78,14 +78,18 @@ void DifficultyMenu::EventOccurred(Event *e)
 			return;
 		}
 		CITY.reset(new City(citymapName));
-		FRAMEWORK->ProgramStages->Push( new TransitionFadeAcross( new CityView(), FRAMES_PER_SECOND >> 2 ) );
+		stageCmd.cmd = StageCmd::Command::REPLACE;
+		stageCmd.nextStage = std::make_shared<TransitionFadeAcross>(
+			std::make_shared<CityView>(), FRAMES_PER_SECOND / 4);
 		return;
 	}
 }
 
-void DifficultyMenu::Update()
+void DifficultyMenu::Update(StageCmd * const cmd)
 {
 	difficultymenuform->Update();
+	*cmd = stageCmd;
+	stageCmd = StageCmd();
 }
 
 void DifficultyMenu::Render()

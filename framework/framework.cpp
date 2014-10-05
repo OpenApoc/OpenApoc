@@ -41,7 +41,6 @@ Framework::Framework()
 	printf( "Framework: Startup: Variables and Config\n" );
 #endif
 	quitProgram = false;
-  ProgramStages = new StageStack();
   framesToProcess = 0;
   Settings = new ConfigFile( "settings.cfg" );
 
@@ -77,15 +76,6 @@ Framework::~Framework()
   SaveSettings();
 
 #ifdef WRITE_LOG
-  printf( "Framework: Clear stages\n" );
-#endif
-	if( ProgramStages != 0 )
-	{
-		// Just make sure all stages are popped and deleted
-		ShutdownFramework();
-	}
-
-#ifdef WRITE_LOG
   printf( "Framework: Shutdown\n" );
 #endif
 	al_destroy_event_queue( eventAllegro );
@@ -111,7 +101,7 @@ void Framework::Run()
   printf( "Framework: Run.Program Loop\n" );
 #endif
 
-  ProgramStages->Push( new OpenApoc::BootUp() );
+  ProgramStages.Push( std::make_shared<BootUp>() );
 
 	al_start_timer( frameTimer );
 
@@ -120,16 +110,37 @@ void Framework::Run()
 		ProcessEvents();
 		while( framesToProcess > 0 )
 		{
-			if( ProgramStages->IsEmpty() )
+			StageCmd cmd;
+			if( ProgramStages.IsEmpty() )
 			{
 				break;
 			}
-			ProgramStages->Current()->Update();
+			ProgramStages.Current()->Update(&cmd);
+			switch (cmd.cmd)
+			{
+				case StageCmd::Command::CONTINUE:
+					break;
+				case StageCmd::Command::REPLACE:
+					ProgramStages.Pop();
+					ProgramStages.Push(cmd.nextStage);
+					break;
+				case StageCmd::Command::PUSH:
+					ProgramStages.Push(cmd.nextStage);
+					break;
+				case StageCmd::Command::POP:
+					ProgramStages.Pop();
+					break;
+				case StageCmd::Command::QUIT:
+					quitProgram = true;
+					ProgramStages.Clear();
+					break;
+
+			}
 			framesToProcess--;
 		}
-		if( !ProgramStages->IsEmpty() )
+		if( !ProgramStages.IsEmpty() )
 		{
-			ProgramStages->Current()->Render();
+			ProgramStages.Current()->Render();
 			if( activeShader != 0 )
 			{
 				activeShader->Apply( al_get_backbuffer( screen ) );
@@ -145,7 +156,7 @@ void Framework::ProcessEvents()
   printf( "Framework: ProcessEvents\n" );
 #endif
 
-	if( ProgramStages->IsEmpty() )
+	if( ProgramStages.IsEmpty() )
   {
     quitProgram = true;
     return;
@@ -157,7 +168,7 @@ void Framework::ProcessEvents()
 
 	al_lock_mutex( eventMutex );
 
-	while( eventQueue.size() > 0 && !ProgramStages->IsEmpty() )
+	while( eventQueue.size() > 0 && !ProgramStages.IsEmpty() )
 	{
 		Event* e;
 		e = eventQueue.front();
@@ -171,7 +182,7 @@ void Framework::ProcessEvents()
 				return;
 				break;
 			default:
-				ProgramStages->Current()->EventOccurred( e );
+				ProgramStages.Current()->EventOccurred( e );
 				break;
 		}
 		delete e;
@@ -330,10 +341,7 @@ void Framework::ShutdownFramework()
 #ifdef WRITE_LOG
   printf( "Framework: Shutdown Framework\n" );
 #endif
-  while( !ProgramStages->IsEmpty() )
-  {
-    delete ProgramStages->Pop();
-  }
+	ProgramStages.Clear();
   quitProgram = true;
 }
 
@@ -628,6 +636,12 @@ bool Framework::IsSlowMode()
 void Framework::SetSlowMode(bool SlowEnabled)
 {
 	enableSlowDown = SlowEnabled;
+}
+
+std::shared_ptr<Stage>
+Framework::getCurrentStage()
+{
+	return this->ProgramStages.Current();
 }
 
 }; //namespace OpenApoc

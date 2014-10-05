@@ -16,6 +16,8 @@ namespace OpenApoc {
 
 class CityView : public Stage
 {
+	private:
+		StageCmd stageCmd;
 	public:
 		int maxZDraw;
 
@@ -34,7 +36,7 @@ class CityView : public Stage
 		virtual void Resume();
 		virtual void Finish();
 		virtual void EventOccurred(Event *e);
-		virtual void Update();
+		virtual void Update(StageCmd * const cmd);
 		virtual void Render();
 		virtual bool IsTransition();
 };

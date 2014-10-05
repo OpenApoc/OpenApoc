@@ -12,13 +12,11 @@ class TransitionFadeIn : public Stage
 		int currentFrame;
 		int transitionFrames;
 		ALLEGRO_COLOR transitionFrom;
-		Stage* targetStage;
+		std::shared_ptr<Stage> targetStage;
 		ALLEGRO_BITMAP* targetRender;
 
-		void FinishTransition();
-
   public:
-		TransitionFadeIn( Stage* Target, ALLEGRO_COLOR Source, int Frames );
+		TransitionFadeIn( std::shared_ptr<Stage> Target, ALLEGRO_COLOR Source, int Frames );
 		~TransitionFadeIn();
 
     // Stage control
@@ -27,7 +25,7 @@ class TransitionFadeIn : public Stage
     virtual void Resume();
     virtual void Finish();
     virtual void EventOccurred(Event *e);
-    virtual void Update();
+    virtual void Update(StageCmd * const cmd);
     virtual void Render();
 		virtual bool IsTransition();
 };

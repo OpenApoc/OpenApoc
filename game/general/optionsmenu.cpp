@@ -40,7 +40,7 @@ void OptionsMenu::EventOccurred(Event *e)
 	{
 		if( e->Data.Keyboard.KeyCode == ALLEGRO_KEY_ESCAPE )
 		{
-			delete FRAMEWORK->ProgramStages->Pop();
+			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
@@ -49,15 +49,19 @@ void OptionsMenu::EventOccurred(Event *e)
     {
         if( e->Data.Forms.RaisedBy->Name == "BUTTON_TEST_XCOMBASE" )
         {
-            FRAMEWORK->ProgramStages->Push( new TransitionFadeAcross( new BaseScreen(), FRAMES_PER_SECOND >> 2 ) );
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = std::make_shared<TransitionFadeAcross>(std::shared_ptr<BaseScreen>(), FRAMES_PER_SECOND / 4);
             return;
         }
     }
 }
 
-void OptionsMenu::Update()
+void OptionsMenu::Update(StageCmd * const cmd)
 {
 	menuform->Update();
+	*cmd = this->stageCmd;
+	//Reset the command to default
+	this->stageCmd = StageCmd();
 }
 
 void OptionsMenu::Render()

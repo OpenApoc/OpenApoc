@@ -63,7 +63,7 @@ void CityView::EventOccurred(Event *e)
 	{
 		if( e->Data.Keyboard.KeyCode == ALLEGRO_KEY_ESCAPE )
 		{
-			delete FRAMEWORK->ProgramStages->Pop();
+			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 
@@ -160,8 +160,10 @@ void CityView::EventOccurred(Event *e)
 	}
 }
 
-void CityView::Update()
+void CityView::Update(StageCmd * const cmd)
 {
+	*cmd = stageCmd;
+	stageCmd = StageCmd();
 }
 
 void CityView::Render()
