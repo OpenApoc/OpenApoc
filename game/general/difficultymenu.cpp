@@ -1,9 +1,9 @@
 
-#include "../../framework/framework.h"
+#include "framework/framework.h"
 #include "difficultymenu.h"
-#include "../../transitions/transitions.h"
-#include "../city/city.h"
-#include "../city/cityview.h"
+#include "transitions/transitions.h"
+#include "game/city/city.h"
+#include "game/city/cityview.h"
 
 namespace OpenApoc {
 
@@ -77,7 +77,7 @@ void DifficultyMenu::EventOccurred(Event *e)
 			citymapName = "CITYMAP1";
 			return;
 		}
-		CITY.reset(new City(citymapName));
+		FRAMEWORK->state.city.reset(new City(citymapName));
 		stageCmd.cmd = StageCmd::Command::REPLACE;
 		stageCmd.nextStage = std::make_shared<TransitionFadeAcross>(
 			std::make_shared<CityView>(), FRAMES_PER_SECOND / 4);

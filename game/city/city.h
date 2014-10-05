@@ -33,9 +33,6 @@ class City
 		std::vector < std::vector < std::vector < CityTile > > > tiles;
 		std::list<Building> buildings;
 		std::vector<Organisation> organisations;
-
-		static std::unique_ptr<City> city;
 };
 
-#define CITY OpenApoc::City::city
 }; //namespace OpenApoc

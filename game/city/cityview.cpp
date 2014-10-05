@@ -89,14 +89,14 @@ void CityView::EventOccurred(Event *e)
 				}
 				break;
 			case ALLEGRO_KEY_PGUP:
-				if( maxZDraw < CITY->sizeZ)
+				if( maxZDraw < FRAMEWORK->state.city->sizeZ)
 				{
 					maxZDraw++;
 				}
 				break;
 			case ALLEGRO_KEY_S:
 				selectionChanged = true;
-				if (selectedTilePosition.y < (CITY->sizeY-1))
+				if (selectedTilePosition.y < (FRAMEWORK->state.city->sizeY-1))
 					selectedTilePosition.y++;
 				break;
 			case ALLEGRO_KEY_W:
@@ -111,12 +111,12 @@ void CityView::EventOccurred(Event *e)
 				break;
 			case ALLEGRO_KEY_D:
 				selectionChanged = true;
-				if (selectedTilePosition.x < (CITY->sizeX-1))
+				if (selectedTilePosition.x < (FRAMEWORK->state.city->sizeX-1))
 					selectedTilePosition.x++;
 				break;
 			case ALLEGRO_KEY_R:
 				selectionChanged = true;
-				if (selectedTilePosition.z < (CITY->sizeZ-1))
+				if (selectedTilePosition.z < (FRAMEWORK->state.city->sizeZ-1))
 					selectedTilePosition.z++;
 				break;
 			case ALLEGRO_KEY_F:
@@ -141,7 +141,7 @@ void CityView::EventOccurred(Event *e)
 	if (GAMECORE->DebugModeEnabled &&
 	    selectionChanged)
 	{
-		auto &tile = CITY->tiles[selectedTilePosition.z]
+		auto &tile = FRAMEWORK->state.city->tiles[selectedTilePosition.z]
 			[selectedTilePosition.y]
 			[selectedTilePosition.x];
 		std::cout << "Selection: X=" << selectedTilePosition.x
@@ -171,11 +171,11 @@ void CityView::Render()
 	int dpyWidth = FRAMEWORK->Display_GetWidth();
 	int dpyHeight = FRAMEWORK->Display_GetHeight();
 	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
-	for (int y = 0; y < CITY->sizeY; y++)
+	for (int y = 0; y < FRAMEWORK->state.city->sizeY; y++)
 	{
 		for (int z = 0; z < maxZDraw; z++)
 		{
-			for (int x = 0; x < CITY->sizeX; x++)
+			for (int x = 0; x < FRAMEWORK->state.city->sizeX; x++)
 			{
 				bool showSelected =
 					(GAMECORE->DebugModeEnabled &&
@@ -183,7 +183,7 @@ void CityView::Render()
 					 y == selectedTilePosition.y &&
 					 x == selectedTilePosition.x);
 
-				auto &tile = CITY->tiles[z][y][x];
+				auto &tile = FRAMEWORK->state.city->tiles[z][y][x];
 				// Skip over transparent (missing) tiles
 				auto screenPos = translateCityToScreenCoords(Vec3<int>{x,y,z});
 				screenPos.x += offsetX;

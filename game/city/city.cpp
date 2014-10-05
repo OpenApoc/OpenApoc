@@ -3,8 +3,6 @@
 
 namespace OpenApoc {
 
-std::unique_ptr<City> City::city;
-
 City::City(std::string mapName)
 	: sizeX(100), sizeY(100), sizeZ(10),
 	  organisations(Organisation::defaultOrganisations)

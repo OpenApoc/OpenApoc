@@ -8,6 +8,8 @@
 
 #include "library/configfile.h"
 
+#include "game/gamestate.h"
+
 namespace OpenApoc {
 
 #ifndef Shader
@@ -43,6 +45,7 @@ class Framework
 
 	public:
 		Data data;
+		GameState state;
 		static Framework* System;
 
 		ConfigFile* Settings;
