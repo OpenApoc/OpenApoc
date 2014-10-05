@@ -57,11 +57,11 @@ void Control::ResolveLocation()
 {
 	if( owningControl == nullptr )
 	{
-		resolvedLocation.X = Location.X;
-		resolvedLocation.Y = Location.Y;
+		resolvedLocation.x = Location.x;
+		resolvedLocation.y = Location.y;
 	} else {
-		resolvedLocation.X = owningControl->resolvedLocation.X + Location.X;
-		resolvedLocation.Y = owningControl->resolvedLocation.Y + Location.Y;
+		resolvedLocation.x = owningControl->resolvedLocation.x + Location.x;
+		resolvedLocation.y = owningControl->resolvedLocation.y + Location.y;
 	}
 
 	for( auto ctrlidx = Controls.rbegin(); ctrlidx != Controls.rend(); ctrlidx++ )
@@ -87,7 +87,7 @@ void Control::EventOccured( Event* e )
 
 	if( e->Type == EVENT_MOUSE_MOVE )
 	{
-		if( e->Data.Mouse.X >= resolvedLocation.X && e->Data.Mouse.X < resolvedLocation.X + Size.X && e->Data.Mouse.Y >= resolvedLocation.Y && e->Data.Mouse.Y < resolvedLocation.Y + Size.Y )
+		if( e->Data.Mouse.X >= resolvedLocation.x && e->Data.Mouse.X < resolvedLocation.x + Size.x && e->Data.Mouse.Y >= resolvedLocation.y && e->Data.Mouse.Y < resolvedLocation.y + Size.y )
 		{
 			if( !mouseInside )
 			{
@@ -96,8 +96,8 @@ void Control::EventOccured( Event* e )
 				newevent->Data.Forms.RaisedBy = this;
 				newevent->Data.Forms.EventFlag = FormEventType::MouseEnter;
 				memcpy( (void*)&newevent->Data.Forms.MouseInfo, (void*)&e->Data.Mouse, sizeof( FRAMEWORK_MOUSE_EVENT ) );
-				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.X;
-				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.Y;
+				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
+				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
 				memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
 				FRAMEWORK->PushEvent( newevent );
 				mouseInside = true;
@@ -108,8 +108,8 @@ void Control::EventOccured( Event* e )
 			newevent->Data.Forms.RaisedBy = this;
 			newevent->Data.Forms.EventFlag = FormEventType::MouseMove;
 			memcpy( (void*)&newevent->Data.Forms.MouseInfo, (void*)&e->Data.Mouse, sizeof( FRAMEWORK_MOUSE_EVENT ) );
-			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.X;
-			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.Y;
+			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
+			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
 			memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
 			FRAMEWORK->PushEvent( newevent );
 
@@ -122,8 +122,8 @@ void Control::EventOccured( Event* e )
 				newevent->Data.Forms.RaisedBy = this;
 				newevent->Data.Forms.EventFlag = FormEventType::MouseLeave;
 				memcpy( (void*)&newevent->Data.Forms.MouseInfo, (void*)&e->Data.Mouse, sizeof( FRAMEWORK_MOUSE_EVENT ) );
-				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.X;
-				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.Y;
+				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
+				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
 				memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
 				FRAMEWORK->PushEvent( newevent );
 				mouseInside = false;
@@ -140,8 +140,8 @@ void Control::EventOccured( Event* e )
 			newevent->Data.Forms.RaisedBy = this;
 			newevent->Data.Forms.EventFlag = FormEventType::MouseDown;
 			memcpy( (void*)&newevent->Data.Forms.MouseInfo, (void*)&e->Data.Mouse, sizeof( FRAMEWORK_MOUSE_EVENT ) );
-			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.X;
-			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.Y;
+			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
+			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
 			memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
 			FRAMEWORK->PushEvent( newevent );
 			mouseDepressed = true;
@@ -159,8 +159,8 @@ void Control::EventOccured( Event* e )
 			newevent->Data.Forms.RaisedBy = this;
 			newevent->Data.Forms.EventFlag = FormEventType::MouseUp;
 			memcpy( (void*)&newevent->Data.Forms.MouseInfo, (void*)&e->Data.Mouse, sizeof( FRAMEWORK_MOUSE_EVENT ) );
-			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.X;
-			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.Y;
+			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
+			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
 			memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
 			FRAMEWORK->PushEvent( newevent );
 
@@ -171,8 +171,8 @@ void Control::EventOccured( Event* e )
 				newevent->Data.Forms.RaisedBy = this;
 				newevent->Data.Forms.EventFlag = FormEventType::MouseClick;
 				memcpy( (void*)&newevent->Data.Forms.MouseInfo, (void*)&e->Data.Mouse, sizeof( FRAMEWORK_MOUSE_EVENT ) );
-				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.X;
-				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.Y;
+				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
+				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
 				memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
 				FRAMEWORK->PushEvent( newevent );
 			}
@@ -218,17 +218,17 @@ void Control::Render()
 {
 	ALLEGRO_BITMAP* previousTarget = FRAMEWORK->Display_GetCurrentTarget();
 
-	if( Size.X == 0 || Size.Y == 0 )
+	if( Size.x == 0 || Size.y == 0 )
 	{
 		return;
 	}
 
 	if( controlArea == nullptr )
 	{
-		controlArea = al_create_bitmap( Size.X, Size.Y );
-	} else if( al_get_bitmap_width( controlArea ) != Size.X || al_get_bitmap_height( controlArea ) != Size.Y ) {
+		controlArea = al_create_bitmap( Size.x, Size.y );
+	} else if( al_get_bitmap_width( controlArea ) != Size.x || al_get_bitmap_height( controlArea ) != Size.y ) {
 		al_destroy_bitmap( controlArea );
-		controlArea = al_create_bitmap( Size.X, Size.Y );
+		controlArea = al_create_bitmap( Size.x, Size.y );
 	}
 
 	FRAMEWORK->Display_SetTarget( controlArea );
@@ -237,7 +237,7 @@ void Control::Render()
 	PostRender();
 
 	FRAMEWORK->Display_SetTarget( previousTarget );
-	al_draw_bitmap( controlArea, Location.X, Location.Y, 0 );
+	al_draw_bitmap( controlArea, Location.x, Location.y, 0 );
 }
 
 void Control::PreRender()
@@ -245,7 +245,7 @@ void Control::PreRender()
 	al_clear_to_color( BackgroundColour );
 	//if( BackgroundColour.a != 0.0f )
 	//{
-	//	al_draw_filled_rectangle( 0, 0, Size.X, Size.Y, BackgroundColour );
+	//	al_draw_filled_rectangle( 0, 0, Size.x, Size.y, BackgroundColour );
 	//}
 }
 
@@ -304,21 +304,21 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		{
 			if( Strings::IsNumeric( node->Attribute("x") ) )
 			{
-				Location.X = Strings::ToInteger( node->Attribute("x") );
+				Location.x = Strings::ToInteger( node->Attribute("x") );
 			} else {
 				specialpositionx = node->Attribute("x");
 			}
 			if( Strings::IsNumeric( node->Attribute("y") ) )
 			{
-				Location.Y = Strings::ToInteger( node->Attribute("y") );
+				Location.y = Strings::ToInteger( node->Attribute("y") );
 			} else {
 				specialpositiony = node->Attribute("y");
 			}
 		}
 		if( nodename == "size" )
 		{
-			Size.X = Strings::ToInteger( node->Attribute("width") );
-			Size.Y = Strings::ToInteger( node->Attribute("height") );
+			Size.x = Strings::ToInteger( node->Attribute("width") );
+			Size.y = Strings::ToInteger( node->Attribute("height") );
 		}
 
 		// Child controls
@@ -523,24 +523,24 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 	{
 		if( specialpositionx == "left" )
 		{
-			Location.X = 0;
+			Location.x = 0;
 		}
 		if( specialpositionx == "centre" )
 		{
 			if( owningControl == nullptr )
 			{
-				Location.X = (FRAMEWORK->Display_GetWidth() / 2) - (Size.X / 2);
+				Location.x = (FRAMEWORK->Display_GetWidth() / 2) - (Size.x / 2);
 			} else {
-				Location.X = (owningControl->Size.X / 2) - (Size.X / 2);
+				Location.x = (owningControl->Size.x / 2) - (Size.x / 2);
 			}
 		}
 		if( specialpositionx == "right" )
 		{
 			if( owningControl == nullptr )
 			{
-				Location.X = FRAMEWORK->Display_GetWidth() - Size.X;
+				Location.x = FRAMEWORK->Display_GetWidth() - Size.x;
 			} else {
-				Location.X = owningControl->Size.X - Size.X;
+				Location.x = owningControl->Size.x - Size.x;
 			}
 		}
 	}
@@ -549,24 +549,24 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 	{
 		if( specialpositiony == "top" )
 		{
-			Location.Y = 0;
+			Location.y = 0;
 		}
 		if( specialpositiony == "centre" )
 		{
 			if( owningControl == nullptr )
 			{
-				Location.Y = (FRAMEWORK->Display_GetHeight() / 2) - (Size.Y / 2);
+				Location.y = (FRAMEWORK->Display_GetHeight() / 2) - (Size.y / 2);
 			} else {
-				Location.Y = (owningControl->Size.Y / 2) - (Size.Y / 2);
+				Location.y = (owningControl->Size.y / 2) - (Size.y / 2);
 			}
 		}
 		if( specialpositiony == "bottom" )
 		{
 			if( owningControl == nullptr )
 			{
-				Location.Y = FRAMEWORK->Display_GetHeight() - Size.Y;
+				Location.y = FRAMEWORK->Display_GetHeight() - Size.y;
 			} else {
-				Location.Y = owningControl->Size.Y - Size.Y;
+				Location.y = owningControl->Size.y - Size.y;
 			}
 		}
 	}

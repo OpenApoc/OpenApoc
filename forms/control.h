@@ -22,7 +22,7 @@ class Control
 		Control* focusedChild;
 		bool mouseInside;
 		bool mouseDepressed;
-		Vector2 resolvedLocation;
+		Vec2<int> resolvedLocation;
 
 		virtual void OnRender();
 
@@ -36,8 +36,8 @@ class Control
 
 	public:
 		std::string Name;
-		Vector2 Location;
-		Vector2 Size;
+		Vec2<int> Location;
+		Vec2<int> Size;
 		ALLEGRO_COLOR BackgroundColour;
 
 		std::vector<Control*> Controls;

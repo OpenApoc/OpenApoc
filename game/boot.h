@@ -13,7 +13,7 @@ class BootUp : public Stage
 	private:
 		std::shared_ptr<Image> loadingimage;
 		int loadtime;
-		Angle* loadingimageangle;
+		Angle<float> loadingimageangle;
 		ALLEGRO_THREAD* threadload;
 
 		void StartGame();

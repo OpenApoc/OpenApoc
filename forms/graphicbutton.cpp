@@ -65,37 +65,37 @@ void GraphicButton::OnRender()
 	if( !image && image_name != "" )
 	{
 		image = GAMECORE->GetImage( image_name );
-		if( Size.X == 0 )
+		if( Size.x == 0 )
 		{
-			Size.X = image->width;
+			Size.x = image->width;
 		}
-		if( Size.Y == 0 )
+		if( Size.y == 0 )
 		{
-			Size.Y = image->height;
+			Size.y = image->height;
 		}
 	}
 	if( imagedepressed == nullptr && imagedepressed_name != "" )
 	{
 		imagedepressed = GAMECORE->GetImage( imagedepressed_name );
-		if( Size.X == 0 )
+		if( Size.x == 0 )
 		{
-			Size.X = imagedepressed->width;
+			Size.x = imagedepressed->width;
 		}
-		if( Size.Y == 0 )
+		if( Size.y == 0 )
 		{
-			Size.Y = imagedepressed->height;
+			Size.y = imagedepressed->height;
 		}
 	}
 	if( imagehover == nullptr && imagehover_name != "" )
 	{
 		imagehover = GAMECORE->GetImage( imagehover_name );
-		if( Size.X == 0 )
+		if( Size.x == 0 )
 		{
-			Size.X = imagehover->width;
+			Size.x = imagehover->width;
 		}
-		if( Size.Y == 0 )
+		if( Size.y == 0 )
 		{
-			Size.Y = imagehover->height;
+			Size.y = imagehover->height;
 		}
 	}
 
@@ -111,11 +111,11 @@ void GraphicButton::OnRender()
 	{
 		int bmpw = useimage->width;
 		int bmph = useimage->height;
-		if( bmpw == Size.X && bmph == Size.Y )
+		if( bmpw == Size.x && bmph == Size.y )
 		{
 			useimage->draw(0, 0 );
 		} else {
-			useimage->drawScaled(0, 0, bmpw, bmph, 0, 0, this->Size.X, this->Size.Y);
+			useimage->drawScaled(0, 0, bmpw, bmph, 0, 0, this->Size.x, this->Size.y);
 		}
 	}
 }

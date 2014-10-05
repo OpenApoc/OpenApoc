@@ -39,17 +39,17 @@ void TextButton::EventOccured( Event* e )
 
 void TextButton::OnRender()
 {
-	buttonbackground->drawScaled(0, 0, buttonbackground->width, buttonbackground->height, 0, 0, Size.X, Size.Y);
-	al_draw_filled_rectangle( 3,  3, Size.X - 2, Size.Y - 2, al_map_rgb( 160, 160, 160 ) );
+	buttonbackground->drawScaled(0, 0, buttonbackground->width, buttonbackground->height, 0, 0, Size.x, Size.y);
+	al_draw_filled_rectangle( 3,  3, Size.x - 2, Size.y - 2, al_map_rgb( 160, 160, 160 ) );
 
-	al_draw_line( 2, 4, Size.X - 2, 3, al_map_rgb( 220, 220, 220 ), 1 );
-	al_draw_line( 2,  Size.Y - 4, Size.X - 2, Size.Y - 4, al_map_rgb( 80, 80, 80 ), 1 );
-	al_draw_line( 2, Size.Y - 3, Size.X - 2, Size.Y - 3, al_map_rgb( 64, 64, 64 ), 1 );
-	al_draw_rectangle( 3, 3, Size.X - 2, Size.Y - 2, al_map_rgb( 48, 48, 48 ), 1 );
+	al_draw_line( 2, 4, Size.x - 2, 3, al_map_rgb( 220, 220, 220 ), 1 );
+	al_draw_line( 2,  Size.y - 4, Size.x - 2, Size.y - 4, al_map_rgb( 80, 80, 80 ), 1 );
+	al_draw_line( 2, Size.y - 3, Size.x - 2, Size.y - 3, al_map_rgb( 64, 64, 64 ), 1 );
+	al_draw_rectangle( 3, 3, Size.x - 2, Size.y - 2, al_map_rgb( 48, 48, 48 ), 1 );
 
 	if( mouseDepressed && mouseInside )
 	{
-		al_draw_rectangle( 1, 1, Size.X - 1, Size.Y - 1, al_map_rgb( 255, 255, 255 ), 2 );
+		al_draw_rectangle( 1, 1, Size.x - 1, Size.y - 1, al_map_rgb( 255, 255, 255 ), 2 );
 	}
 	
 	int xpos;
@@ -61,10 +61,10 @@ void TextButton::OnRender()
 			xpos = 0;
 			break;
 		case HorizontalAlignment::Centre:
-			xpos = (Size.X / 2) - (font->GetFontWidth( text ) / 2);
+			xpos = (Size.x / 2) - (font->GetFontWidth( text ) / 2);
 			break;
 		case HorizontalAlignment::Right:
-			xpos = Size.X - font->GetFontWidth( text );
+			xpos = Size.x - font->GetFontWidth( text );
 			break;
 	}
 
@@ -74,10 +74,10 @@ void TextButton::OnRender()
 			ypos = 0;
 			break;
 		case VerticalAlignment::Centre:
-			ypos = (Size.Y / 2) - (font->GetFontHeight() / 2);
+			ypos = (Size.y / 2) - (font->GetFontHeight() / 2);
 			break;
 		case VerticalAlignment::Bottom:
-			ypos = Size.Y - font->GetFontHeight();
+			ypos = Size.y - font->GetFontHeight();
 			break;
 	}
 

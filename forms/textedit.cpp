@@ -139,10 +139,10 @@ void TextEdit::OnRender()
 			xpos = 0;
 			break;
 		case HorizontalAlignment::Centre:
-			xpos = (Size.X / 2) - (font->GetFontWidth( text ) / 2);
+			xpos = (Size.x / 2) - (font->GetFontWidth( text ) / 2);
 			break;
 		case HorizontalAlignment::Right:
-			xpos = Size.X - font->GetFontWidth( text );
+			xpos = Size.x - font->GetFontWidth( text );
 			break;
 	}
 
@@ -152,10 +152,10 @@ void TextEdit::OnRender()
 			ypos = 0;
 			break;
 		case VerticalAlignment::Centre:
-			ypos = (Size.Y / 2) - (font->GetFontHeight() / 2);
+			ypos = (Size.y / 2) - (font->GetFontHeight() / 2);
 			break;
 		case VerticalAlignment::Bottom:
-			ypos = Size.Y - font->GetFontHeight();
+			ypos = Size.y - font->GetFontHeight();
 			break;
 	}
 
@@ -168,9 +168,9 @@ void TextEdit::OnRender()
 			xpos += cxpos;
 			cxpos = xpos + font->GetFontWidth( text.substr( 0, SelectionStart ) ) + 1;
 		}
-		if( cxpos > Size.X )
+		if( cxpos > Size.x )
 		{
-			xpos -= cxpos - Size.X;
+			xpos -= cxpos - Size.x;
 			cxpos = xpos + font->GetFontWidth( text.substr( 0, SelectionStart ) ) + 1;
 		}
 

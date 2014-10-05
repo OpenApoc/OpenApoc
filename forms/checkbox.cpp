@@ -25,13 +25,13 @@ void CheckBox::LoadResources()
 	if( !imagechecked )
 	{
 		imagechecked = GAMECORE->GetImage( "PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:65:UI/UI_PALETTE.PNG" );
-		if( Size.X == 0 )
+		if( Size.x == 0 )
 		{
-			Size.X = imagechecked->width;
+			Size.x = imagechecked->width;
 		}
-		if( Size.Y == 0 )
+		if( Size.y == 0 )
 		{
-			Size.Y = imagechecked->height;
+			Size.y = imagechecked->height;
 		}
 	}
 	if( !imageunchecked )
@@ -72,11 +72,11 @@ void CheckBox::OnRender()
 	{
 		int bmpw = useimage->width;
 		int bmph = useimage->height;
-		if( bmpw == Size.X && bmph == Size.Y )
+		if( bmpw == Size.x && bmph == Size.y )
 		{
 			useimage->draw( 0, 0 );
 		} else {
-			useimage->drawScaled(0, 0, bmpw, bmph, 0, 0, this->Size.X, this->Size.Y);
+			useimage->drawScaled(0, 0, bmpw, bmph, 0, 0, this->Size.x, this->Size.y);
 		}
 	}
 }

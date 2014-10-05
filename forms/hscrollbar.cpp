@@ -1,7 +1,8 @@
 
 #include "hscrollbar.h"
-#include "../framework/framework.h"
-#include "../game/resources/gamecore.h"
+#include "framework/framework.h"
+#include "game/resources/gamecore.h"
+#include "framework/includes.h"
 
 namespace OpenApoc {
 
@@ -25,12 +26,12 @@ void HScrollBar::EventOccured( Event* e )
 	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this && e->Data.Forms.EventFlag == FormEventType::MouseDown )
 	{
 		int segments = (Maximum - Minimum) + 1;
-		float segmentsize = Size.X / (float)segments;
+		float segmentsize = Size.x / (float)segments;
 		float grippersize = segmentsize;
 		if (grippersize < 16.0f)
 		{
 			grippersize = 16.0f;
-			segmentsize = (Size.X - grippersize) / (float)(segments - 1);
+			segmentsize = (Size.x - grippersize) / (float)(segments - 1);
 		}
 
 		if( e->Data.Forms.MouseInfo.X >= (segmentsize * (Value - Minimum)) + grippersize )
@@ -61,7 +62,7 @@ void HScrollBar::EventOccured( Event* e )
 	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this && e->Data.Forms.EventFlag == FormEventType::MouseMove && capture )
 	{
 		int segments = (Maximum - Minimum) + 1;
-		float segmentsize = Size.X / (float)segments;
+		float segmentsize = Size.x / (float)segments;
 		Value = Maths::Max(Minimum, Minimum + (int)(e->Data.Forms.MouseInfo.X / segmentsize));
 		Event* ce = new Event();
 		ce->Type = e->Type;
@@ -80,16 +81,16 @@ void HScrollBar::OnRender()
 	//LoadResources();
 
 	int segments = (Maximum - Minimum) + 1;
-	float segmentsize = Size.X / (float)segments;
+	float segmentsize = Size.x / (float)segments;
 	float grippersize = segmentsize;
 	if (grippersize < 16.0f)
 	{
 		grippersize = 16.0f;
-		segmentsize = (Size.X - grippersize) / (float)(segments - 1);
+		segmentsize = (Size.x - grippersize) / (float)(segments - 1);
 	}
 
 	int xpos = segmentsize * (Value - Minimum);
-	al_draw_filled_rectangle( xpos, 0, xpos + grippersize, Size.Y, GripperColour );
+	al_draw_filled_rectangle( xpos, 0, xpos + grippersize, Size.y, GripperColour );
 }
 
 void HScrollBar::Update()

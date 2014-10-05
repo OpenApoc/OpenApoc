@@ -25,12 +25,12 @@ void VScrollBar::EventOccured( Event* e )
 	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this && e->Data.Forms.EventFlag == FormEventType::MouseDown )
 	{
 		int segments = (Maximum - Minimum) + 1;
-		float segmentsize = Size.Y / (float)segments;
+		float segmentsize = Size.y / (float)segments;
 		float grippersize = segmentsize;
 		if (grippersize < 16.0f)
 		{
 			grippersize = 16.0f;
-			segmentsize = (Size.Y - grippersize) / (float)(segments - 1);
+			segmentsize = (Size.y - grippersize) / (float)(segments - 1);
 		}
 
 		if( e->Data.Forms.MouseInfo.Y >= (segmentsize * (Value - Minimum)) + grippersize )
@@ -61,7 +61,7 @@ void VScrollBar::EventOccured( Event* e )
 	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this && e->Data.Forms.EventFlag == FormEventType::MouseMove && capture )
 	{
 		int segments = (Maximum - Minimum) + 1;
-		float segmentsize = Size.Y / (float)segments;
+		float segmentsize = Size.y / (float)segments;
 		Value = Maths::Max(Minimum, Minimum + (int)(e->Data.Forms.MouseInfo.Y / segmentsize));
 		Event* ce = new Event();
 		ce->Type = e->Type;
@@ -80,16 +80,16 @@ void VScrollBar::OnRender()
 	//LoadResources();
 
 	int segments = (Maximum - Minimum) + 1;
-	float segmentsize = Size.Y / (float)segments;
+	float segmentsize = Size.y / (float)segments;
 	float grippersize = segmentsize;
 	if (grippersize < 16.0f)
 	{
 		grippersize = 16.0f;
-		segmentsize = (Size.Y - grippersize) / (float)(segments - 1);
+		segmentsize = (Size.y - grippersize) / (float)(segments - 1);
 	}
 
 	int ypos = segmentsize * (Value - Minimum);
-	al_draw_filled_rectangle( 0, ypos, Size.X, ypos + grippersize, GripperColour );
+	al_draw_filled_rectangle( 0, ypos, Size.x, ypos + grippersize, GripperColour );
 }
 
 void VScrollBar::Update()

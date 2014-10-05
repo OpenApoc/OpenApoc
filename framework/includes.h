@@ -30,6 +30,6 @@
 #include "library/colour.h"
 #include "library/angle.h"
 #include "library/memory.h"
-#include "library/vector2.h"
+#include "library/maths.h"
 
 #endif //__OPENAPOC_FRAMEWORK_INCLUDES_H

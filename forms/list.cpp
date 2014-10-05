@@ -27,10 +27,10 @@ ListBox::~ListBox()
 void ListBox::ConfigureInternalScrollBar()
 {
 	scroller = new VScrollBar( this );
-	scroller->Size.X = 16;
-	scroller->Size.Y = 16;
-	scroller->Location.X = this->Size.X - 16;
-	scroller->Location.Y = 0;
+	scroller->Size.x = 16;
+	scroller->Size.y = 16;
+	scroller->Location.x = this->Size.x - 16;
+	scroller->Location.y = 0;
 	scroller_is_internal = true;
 }
 
@@ -38,8 +38,8 @@ void ListBox::OnRender()
 {
 	if( scroller_is_internal )
 	{
-		scroller->Location.X = this->Size.X - scroller->Size.X;
-		scroller->Size.Y = this->Size.Y;
+		scroller->Location.x = this->Size.x - scroller->Size.x;
+		scroller->Size.y = this->Size.y;
 	}
 
 	int yoffset = 0;
@@ -49,14 +49,14 @@ void ListBox::OnRender()
 		Control* ctrl = (Control*)*c;
 		if( ctrl != scroller )
 		{
-			ctrl->Location.X = 0;
-			ctrl->Location.Y = yoffset - scroller->Value;
-			ctrl->Size.X = ( scroller_is_internal ? scroller->Location.X : this->Size.X );
-			ctrl->Size.Y = 64;
-			yoffset += ctrl->Size.Y + 1;
+			ctrl->Location.x = 0;
+			ctrl->Location.y = yoffset - scroller->Value;
+			ctrl->Size.x = ( scroller_is_internal ? scroller->Location.x : this->Size.x );
+			ctrl->Size.y = 64;
+			yoffset += ctrl->Size.y + 1;
 		}
 	}
-	scroller->Maximum = (yoffset - this->Size.Y);
+	scroller->Maximum = (yoffset - this->Size.y);
 	scroller->LargeChange = Maths::Max( (scroller->Maximum - scroller->Minimum + 2) / 10.0f, 4.0f );
 
 }

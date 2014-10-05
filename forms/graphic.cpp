@@ -23,23 +23,23 @@ void Graphic::OnRender()
 	if( !image )
 	{
 		image = GAMECORE->GetImage( image_name );
-		if( Size.X == 0 )
+		if( Size.x == 0 )
 		{
-			Size.X = image->width;
+			Size.x = image->width;
 		}
-		if( Size.Y == 0 )
+		if( Size.y == 0 )
 		{
-			Size.Y = image->height;
+			Size.y = image->height;
 		}
 	}
 
 	int bmpw = image->width;
 	int bmph = image->height;
-	if( bmpw == Size.X && bmph == Size.Y )
+	if( bmpw == Size.x && bmph == Size.y )
 	{
 		image->draw(0, 0 );
 	} else {
-		image->drawScaled(0, 0, bmpw, bmph, 0, 0, this->Size.X, this->Size.Y);
+		image->drawScaled(0, 0, bmpw, bmph, 0, 0, this->Size.x, this->Size.y);
 	}
 }
 
