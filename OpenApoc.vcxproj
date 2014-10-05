@@ -133,8 +133,6 @@
     <ClCompile Include="game\apocresources\rawsound.cpp" />
     <ClCompile Include="shaders\scanlines.cpp" />
     <ClCompile Include="framework\stagestack.cpp" />
-    <ClCompile Include="transitions\strips.cpp" />
-    <ClCompile Include="transitions\tiled.cpp" />
     <ClCompile Include="framework\data.cpp" />
     <ClCompile Include="game\city\city.cpp" />
     <ClCompile Include="game\city\cityview.cpp" />
