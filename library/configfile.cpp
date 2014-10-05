@@ -179,7 +179,7 @@ void ConfigFile::ParseFile( std::string TextContents )
 	bool wasQuoted = false;
 	int TokenStep = 0;
 
-	cd = (ConfigData*)malloc( sizeof( ConfigData ) );
+	cd = new ConfigData;
 	cd->Contents = new std::vector<std::string*>();
 	cd->IsArray = false;
 
@@ -223,7 +223,7 @@ void ConfigFile::ParseFile( std::string TextContents )
 					if( (!cd->IsArray && (TextContents.at( charPos ) == '\n' || TextContents.at( charPos ) == '\r')) || token == "]" )
 					{
 						Contents.push_back( cd );
-						cd = (ConfigData*)malloc( sizeof( ConfigData ) );
+						cd = new ConfigData;
 						cd->Contents = new std::vector<std::string*>();
 						cd->IsArray = false;
 						TokenStep = 0;
@@ -255,7 +255,7 @@ void ConfigFile::ParseFile( std::string TextContents )
 		}
 		charPos++;
 	}
-	free( cd );
+	delete cd;
 
 }
 
@@ -482,7 +482,7 @@ bool ConfigFile::SetStringValue( std::string Key, std::string* Value )
 	ConfigData* cd = GetData( Key );
 	if( cd == 0 )
 	{
-		cd = (ConfigData*)malloc( sizeof(ConfigData) );
+		cd = new ConfigData;
 		cd->Key = new std::string( Key );
 		cd->IsArray = false;
 		cd->Contents = new std::vector<std::string*>();
@@ -505,7 +505,7 @@ bool ConfigFile::SetStringValue( std::string Key, int ArrayIndex, std::string* V
 	ConfigData* cd = GetData( Key );
 	if( cd == 0 )
 	{
-		cd = (ConfigData*)malloc( sizeof(ConfigData) );
+		cd = new ConfigData;
 		cd->Key = new std::string( Key );
 		cd->IsArray = true;
 		cd->Contents = new std::vector<std::string*>();

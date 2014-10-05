@@ -25,6 +25,8 @@ void GameCore::Load(std::string CoreXMLFilename, std::string Language)
 
 GameCore::~GameCore()
 {
+	for (auto & font : fonts)
+		delete font.second;
 	delete MouseCursor;
 }
 

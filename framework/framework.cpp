@@ -42,7 +42,7 @@ Framework::Framework(const std::string dataRoot)
 #endif
 	quitProgram = false;
 	framesToProcess = 0;
-	Settings = new ConfigFile( "settings.cfg" );
+	Settings.reset(new ConfigFile( "settings.cfg" ));
 
 	eventAllegro = al_create_event_queue();
 	eventMutex = al_create_mutex_recursive();
@@ -80,6 +80,8 @@ Framework::~Framework()
 #ifdef WRITE_LOG
 	printf( "Framework: Shutdown\n" );
 #endif
+	Display_Shutdown();
+	Audio_Shutdown();
 	al_destroy_event_queue( eventAllegro );
 	al_destroy_mutex( eventMutex );
 	al_destroy_timer( frameTimer );
@@ -94,6 +96,13 @@ Framework::~Framework()
 #ifdef WRITE_LOG
 	printf( "Framework: Shutdown Allegro\n" );
 #endif
+	al_shutdown_image_addon();
+	al_shutdown_ttf_addon();
+	al_shutdown_primitives_addon();
+	al_uninstall_mouse();
+	al_uninstall_keyboard();
+	al_shutdown_font_addon();
+
 	al_uninstall_system();
 }
 

@@ -12,6 +12,7 @@ namespace OpenApoc {
 class IFont
 {
 	public:
+		virtual ~IFont() {};
 		virtual void DrawString( int X, int Y, std::string Text, int Alignment ) = 0;
 		virtual int GetFontHeight() = 0;
 		virtual int GetFontWidth(std::string Text) = 0;

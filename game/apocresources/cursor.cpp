@@ -27,6 +27,8 @@ Cursor::Cursor( Framework &fw, Palette* ColourPalette )
 		images.push_back( b );
 	}
 
+	al_fclose(f);
+
 	CurrentType = Cursor::Normal;
 	cursorx = 0;
 	cursory = 0;

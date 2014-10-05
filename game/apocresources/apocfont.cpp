@@ -73,6 +73,8 @@ ApocalypseFont::ApocalypseFont( Framework &fw, FontType Face, Palette* ColourPal
 
 ApocalypseFont::~ApocalypseFont()
 {
+	for (auto *b : fontbitmaps)
+		al_destroy_bitmap(b);
 }
 
 void ApocalypseFont::DrawString( int X, int Y, std::string Text, int Alignment )

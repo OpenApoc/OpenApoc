@@ -45,7 +45,7 @@ class Framework
 		GameState state;
 		std::unique_ptr<GameCore> gamecore;
 
-		ConfigFile* Settings;
+		std::unique_ptr<ConfigFile> Settings;
 
 		Framework(const std::string dataRoot);
 		~Framework();
