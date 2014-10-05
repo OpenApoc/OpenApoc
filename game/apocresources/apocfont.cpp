@@ -1,5 +1,7 @@
 
 #include "apocfont.h"
+#include "framework/framework.h"
+#include "palette.h"
 
 namespace OpenApoc {
 

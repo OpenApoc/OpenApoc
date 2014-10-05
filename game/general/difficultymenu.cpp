@@ -9,7 +9,7 @@ namespace OpenApoc {
 
 DifficultyMenu::DifficultyMenu()
 {
-	difficultymenuform = GAMECORE->GetForm("FORM_DIFFICULTYMENU");
+	difficultymenuform = FRAMEWORK->gamecore->GetForm("FORM_DIFFICULTYMENU");
 	assert(difficultymenuform);
 }
 
@@ -36,7 +36,7 @@ void DifficultyMenu::Finish()
 void DifficultyMenu::EventOccurred(Event *e)
 {
 	difficultymenuform->EventOccured( e );
-	GAMECORE->MouseCursor->EventOccured( e );
+	FRAMEWORK->gamecore->MouseCursor->EventOccured( e );
 
 	if( e->Type == EVENT_KEY_DOWN )
 	{
@@ -96,7 +96,7 @@ void DifficultyMenu::Render()
 {
 	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
 	difficultymenuform->Render();
-	GAMECORE->MouseCursor->Render();
+	FRAMEWORK->gamecore->MouseCursor->Render();
 }
 
 bool DifficultyMenu::IsTransition()

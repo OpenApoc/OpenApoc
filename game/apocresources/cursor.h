@@ -2,10 +2,12 @@
 #pragma once
 
 #include "framework/includes.h"
-#include "framework/event.h"
-#include "palette.h"
 
 namespace OpenApoc {
+
+class Palette;
+class Event;
+
 class Cursor
 {
 

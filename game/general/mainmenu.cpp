@@ -9,7 +9,7 @@ namespace OpenApoc {
 
 MainMenu::MainMenu()
 {
-	mainmenuform = GAMECORE->GetForm("FORM_MAINMENU");
+	mainmenuform = FRAMEWORK->gamecore->GetForm("FORM_MAINMENU");
 }
 
 MainMenu::~MainMenu()
@@ -39,7 +39,7 @@ void MainMenu::Finish()
 void MainMenu::EventOccurred(Event *e)
 {
 	mainmenuform->EventOccured( e );
-	GAMECORE->MouseCursor->EventOccured( e );
+	FRAMEWORK->gamecore->MouseCursor->EventOccured( e );
 
 	if( e->Type == EVENT_KEY_DOWN )
 	{
@@ -77,7 +77,7 @@ void MainMenu::EventOccurred(Event *e)
 	{
 		if( e->Data.Forms.RaisedBy->Name == "CHECK_DEBUGMODE" )
 		{
-			GAMECORE->DebugModeEnabled = ((CheckBox*)e->Data.Forms.RaisedBy)->Checked;
+			FRAMEWORK->gamecore->DebugModeEnabled = ((CheckBox*)e->Data.Forms.RaisedBy)->Checked;
 		}
 	}
 
@@ -94,7 +94,7 @@ void MainMenu::Render()
 {
 	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
 	mainmenuform->Render();
-	GAMECORE->MouseCursor->Render();
+	FRAMEWORK->gamecore->MouseCursor->Render();
 }
 
 bool MainMenu::IsTransition()

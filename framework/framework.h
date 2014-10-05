@@ -12,9 +12,8 @@
 
 namespace OpenApoc {
 
-#ifndef Shader
 class Shader;
-#endif
+class GameCore;
 
 #define FRAMES_PER_SECOND 100
 
@@ -46,6 +45,7 @@ class Framework
 	public:
 		Data data;
 		GameState state;
+		std::unique_ptr<GameCore> gamecore;
 		static Framework* System;
 
 		ConfigFile* Settings;

@@ -6,8 +6,6 @@
 #include "ifont.h"
 #include "forms/forms.h"
 
-#define GAMECORE OpenApoc::GameCore::ActiveGame
-
 namespace OpenApoc {
 
 class GameCore
@@ -34,12 +32,12 @@ class GameCore
 
 
 	public:
-		static GameCore* ActiveGame;
 		bool Loaded;
 		bool DebugModeEnabled;
 		Cursor* MouseCursor;
 
-		GameCore(std::string CoreXMLFilename, std::string Language);
+		GameCore();
+		void Load(std::string CoreXMLFilename, std::string Language);
 		~GameCore();
 
 		std::string GetString(std::string ID);

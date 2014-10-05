@@ -64,7 +64,7 @@ void GraphicButton::OnRender()
 
 	if( !image && image_name != "" )
 	{
-		image = GAMECORE->GetImage( image_name );
+		image = FRAMEWORK->gamecore->GetImage( image_name );
 		if( Size.x == 0 )
 		{
 			Size.x = image->width;
@@ -76,7 +76,7 @@ void GraphicButton::OnRender()
 	}
 	if( imagedepressed == nullptr && imagedepressed_name != "" )
 	{
-		imagedepressed = GAMECORE->GetImage( imagedepressed_name );
+		imagedepressed = FRAMEWORK->gamecore->GetImage( imagedepressed_name );
 		if( Size.x == 0 )
 		{
 			Size.x = imagedepressed->width;
@@ -88,7 +88,7 @@ void GraphicButton::OnRender()
 	}
 	if( imagehover == nullptr && imagehover_name != "" )
 	{
-		imagehover = GAMECORE->GetImage( imagehover_name );
+		imagehover = FRAMEWORK->gamecore->GetImage( imagehover_name );
 		if( Size.x == 0 )
 		{
 			Size.x = imagehover->width;

@@ -24,7 +24,7 @@ void CheckBox::LoadResources()
 {
 	if( !imagechecked )
 	{
-		imagechecked = GAMECORE->GetImage( "PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:65:UI/UI_PALETTE.PNG" );
+		imagechecked = FRAMEWORK->gamecore->GetImage( "PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:65:UI/UI_PALETTE.PNG" );
 		if( Size.x == 0 )
 		{
 			Size.x = imagechecked->width;
@@ -36,7 +36,7 @@ void CheckBox::LoadResources()
 	}
 	if( !imageunchecked )
 	{
-		imageunchecked = GAMECORE->GetImage( "PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:64:UI/UI_PALETTE.PNG" );
+		imageunchecked = FRAMEWORK->gamecore->GetImage( "PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:64:UI/UI_PALETTE.PNG" );
 	}
 }
 

@@ -22,7 +22,7 @@ void Graphic::OnRender()
 {
 	if( !image )
 	{
-		image = GAMECORE->GetImage( image_name );
+		image = FRAMEWORK->gamecore->GetImage( image_name );
 		if( Size.x == 0 )
 		{
 			Size.x = image->width;

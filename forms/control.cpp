@@ -329,7 +329,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		}
 		if( nodename == "label" )
 		{
-			Label* l = new Label( this, GAMECORE->GetString( node->Attribute("text") ), GAMECORE->GetFont( node->FirstChildElement("font")->GetText() ) );
+			Label* l = new Label( this, FRAMEWORK->gamecore->GetString( node->Attribute("text") ), FRAMEWORK->gamecore->GetFont( node->FirstChildElement("font")->GetText() ) );
 			l->ConfigureFromXML( node );
 			subnode = node->FirstChildElement("alignment");
 			if( subnode != nullptr )
@@ -375,7 +375,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		}
 		if( nodename == "textbutton" )
 		{
-			TextButton* tb = new TextButton( this,  GAMECORE->GetString( node->Attribute("text") ), GAMECORE->GetFont( node->FirstChildElement("font")->GetText() ) );
+			TextButton* tb = new TextButton( this,  FRAMEWORK->gamecore->GetString( node->Attribute("text") ), FRAMEWORK->gamecore->GetFont( node->FirstChildElement("font")->GetText() ) );
 			tb->ConfigureFromXML( node );
 		}
 		if( nodename == "graphicbutton" )
@@ -477,7 +477,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 
 		if( nodename == "textedit" )
 		{
-			TextEdit* te = new TextEdit( this, "", GAMECORE->GetFont( node->FirstChildElement("font")->GetText() ) );
+			TextEdit* te = new TextEdit( this, "", FRAMEWORK->gamecore->GetFont( node->FirstChildElement("font")->GetText() ) );
 			te->ConfigureFromXML( node );
 			subnode = node->FirstChildElement("alignment");
 			if( subnode != nullptr )

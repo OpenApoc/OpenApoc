@@ -1,11 +1,12 @@
 
 #pragma once
 
-// #include "../../framework/includes.h"
+#include "framework/includes.h"
 #include "game/resources/ifont.h"
-#include "palette.h"
 
 namespace OpenApoc {
+
+class Palette;
 
 class ApocalypseFont : public IFont
 {

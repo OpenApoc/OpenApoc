@@ -2,6 +2,7 @@
 #include "framework.h"
 #include "game/boot.h"
 #include "shaders/shaders.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc {
 

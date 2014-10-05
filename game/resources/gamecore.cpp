@@ -5,17 +5,19 @@
 
 namespace OpenApoc {
 
-GameCore* GameCore::ActiveGame = nullptr;
-
-GameCore::GameCore(std::string CoreXMLFilename, std::string Language) : languagetext(), palettes(), fonts(), forms()
+GameCore::GameCore() : languagetext(), palettes(), fonts(), forms()
 {
 	Loaded = false;
-	ActiveGame = this;
+}
+
+void GameCore::Load(std::string CoreXMLFilename, std::string Language)
+{
+	assert(Loaded = false);
 	language = Language;
 	ParseXMLDoc( CoreXMLFilename );
 	DebugModeEnabled = false;
 
-	MouseCursor = new Cursor( GAMECORE->GetPalette( "TACDATA/TACTICAL.PAL" ) );
+	MouseCursor = new Cursor( FRAMEWORK->gamecore->GetPalette( "TACDATA/TACTICAL.PAL" ) );
 
 	Loaded = true;
 }

@@ -42,12 +42,12 @@ void BootUp::Update(StageCmd * const cmd)
 	loadtime++;
 	loadingimageangle.Add( 5 );
 
-	if( threadload == nullptr && GAMECORE == nullptr )
+	if( threadload == nullptr && FRAMEWORK->gamecore == nullptr )
 	{
 		CreateGameCore( nullptr, nullptr );
 	}
 
-	if( GAMECORE != nullptr && GAMECORE->Loaded && loadtime > FRAMES_PER_SECOND * 2 )
+	if( FRAMEWORK->gamecore != nullptr && FRAMEWORK->gamecore->Loaded && loadtime > FRAMES_PER_SECOND * 2 )
 	{
 		StartGame();
 		cmd->cmd = StageCmd::Command::REPLACE;
@@ -79,7 +79,10 @@ void* BootUp::CreateGameCore(ALLEGRO_THREAD* thread, void* args)
 	std::string ruleset(*FRAMEWORK->Settings->GetQuickStringValue( "GameRules", "XCOMAPOC.XML" ));
 	std::string language(*FRAMEWORK->Settings->GetQuickStringValue( "Language", "en_gb" ));
 
-	GameCore* c = new GameCore( ruleset, language );
+	FRAMEWORK->gamecore.reset(new GameCore);
+
+	FRAMEWORK->gamecore->Load(ruleset, language);
+
 
 	return nullptr;
 }

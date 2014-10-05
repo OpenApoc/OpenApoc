@@ -8,7 +8,7 @@ namespace OpenApoc {
 
 OptionsMenu::OptionsMenu()
 {
-	menuform = GAMECORE->GetForm("FORM_OPTIONSMENU");
+	menuform = FRAMEWORK->gamecore->GetForm("FORM_OPTIONSMENU");
 }
 
 OptionsMenu::~OptionsMenu()
@@ -34,7 +34,7 @@ void OptionsMenu::Finish()
 void OptionsMenu::EventOccurred(Event *e)
 {
 	menuform->EventOccured( e );
-	GAMECORE->MouseCursor->EventOccured( e );
+	FRAMEWORK->gamecore->MouseCursor->EventOccured( e );
 
 	if( e->Type == EVENT_KEY_DOWN )
 	{
@@ -68,7 +68,7 @@ void OptionsMenu::Render()
 {
 	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
 	menuform->Render();
-	GAMECORE->MouseCursor->Render();
+	FRAMEWORK->gamecore->MouseCursor->Render();
 }
 
 bool OptionsMenu::IsTransition()

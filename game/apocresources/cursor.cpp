@@ -1,5 +1,7 @@
 
 #include "cursor.h"
+#include "framework/framework.h"
+#include "palette.h"
 
 namespace OpenApoc {
 

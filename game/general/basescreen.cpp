@@ -6,7 +6,7 @@ namespace OpenApoc {
 
 BaseScreen::BaseScreen()
 {
-    basescreenform = GAMECORE->GetForm("FORM_BASESCREEN");
+    basescreenform = FRAMEWORK->gamecore->GetForm("FORM_BASESCREEN");
 }
 
 BaseScreen::~BaseScreen()
@@ -32,7 +32,7 @@ void BaseScreen::Finish()
 void BaseScreen::EventOccurred(Event *e)
 {
     basescreenform->EventOccured( e );
-	GAMECORE->MouseCursor->EventOccured( e );
+	FRAMEWORK->gamecore->MouseCursor->EventOccured( e );
 
 	if( e->Type == EVENT_KEY_DOWN )
 	{
@@ -61,7 +61,7 @@ void BaseScreen::Render()
 {
 	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
     basescreenform->Render();
-	GAMECORE->MouseCursor->Render();
+	FRAMEWORK->gamecore->MouseCursor->Render();
 }
 
 bool BaseScreen::IsTransition()

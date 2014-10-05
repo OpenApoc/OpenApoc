@@ -56,7 +56,7 @@ static Vec3<int> translateScreenToCityCoords(Vec2<int> screenPos, int z)
 
 void CityView::EventOccurred(Event *e)
 {
-	GAMECORE->MouseCursor->EventOccured( e );
+	FRAMEWORK->gamecore->MouseCursor->EventOccured( e );
 	bool selectionChanged = false;
 
 	if( e->Type == EVENT_KEY_DOWN )
@@ -138,7 +138,7 @@ void CityView::EventOccurred(Event *e)
 		selectedTilePosition = selected;
 		selectionChanged = true;
 	}
-	if (GAMECORE->DebugModeEnabled &&
+	if (FRAMEWORK->gamecore->DebugModeEnabled &&
 	    selectionChanged)
 	{
 		auto &tile = FRAMEWORK->state.city->tiles[selectedTilePosition.z]
@@ -178,7 +178,7 @@ void CityView::Render()
 			for (int x = 0; x < FRAMEWORK->state.city->sizeX; x++)
 			{
 				bool showSelected =
-					(GAMECORE->DebugModeEnabled &&
+					(FRAMEWORK->gamecore->DebugModeEnabled &&
 					 z == selectedTilePosition.z &&
 					 y == selectedTilePosition.y &&
 					 x == selectedTilePosition.x);
@@ -204,7 +204,7 @@ void CityView::Render()
 			}
 		}
 	}
-	GAMECORE->MouseCursor->Render();
+	FRAMEWORK->gamecore->MouseCursor->Render();
 }
 
 bool CityView::IsTransition()
