@@ -12,7 +12,7 @@ class Memory
 		std::vector<char> data;
 
 	public:
-		Memory( size_t InitialSize );
+		Memory(size_t InitialSize = 0);
 		~Memory();
 
 		void Clear();

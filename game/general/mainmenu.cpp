@@ -18,7 +18,7 @@ MainMenu::~MainMenu()
 
 void MainMenu::Begin()
 {
-	musicplayer = new Music( 0 );
+	musicplayer = std::unique_ptr<Music>(new Music(0));
 	musicplayer->Play();
 }
 
@@ -34,7 +34,6 @@ void MainMenu::Resume()
 
 void MainMenu::Finish()
 {
-	delete musicplayer;
 }
 
 void MainMenu::EventOccurred(Event *e)

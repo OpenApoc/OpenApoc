@@ -9,29 +9,27 @@ long Music::lengths[] = { 8202600, 19404000, 35897400, 40131000, 46569600, 57859
 Music::Music( int Track )
 {
 	ALLEGRO_FILE* f = DATA->load_file( "MUSIC", "rb" );
-	sounddata = new Memory( lengths[Track] );
+	sounddata = Memory( lengths[Track] );
 	al_fseek( f, starts[Track], ALLEGRO_SEEK_SET );
-	al_fread( f, sounddata->GetData(), lengths[Track] );
+	al_fread( f, sounddata.GetData(), lengths[Track] );
 	al_fclose( f );
 
-	soundsample = al_create_sample( sounddata->GetData(), sounddata->GetSize(), 22050, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2, false );
+	soundsample = al_create_sample( sounddata.GetData(), sounddata.GetSize(), 22050, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2, false );
 }
 
 Music::~Music()
 {
 	al_destroy_sample( soundsample );
-	delete sounddata;
 }
 
 void Music::Play()
 {
-	al_play_sample( soundsample, 1.0f, 0.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, 0 );
+	al_play_sample( soundsample, 1.0f, 0.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, &play_id );
 }
 
 void Music::Stop()
 {
-	al_destroy_sample( soundsample );
-	soundsample = al_create_sample( sounddata->GetData(), sounddata->GetSize(), 22050, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2, false );
+	al_stop_sample(&play_id);
 }
 
 }; //namespace OpenApoc

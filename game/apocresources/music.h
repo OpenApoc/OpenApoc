@@ -10,8 +10,9 @@ class Music
 {
 
 	private:
-		Memory* sounddata;
+		Memory sounddata;
 		ALLEGRO_SAMPLE* soundsample;
+		ALLEGRO_SAMPLE_ID play_id;
 		static long starts[];
 		static long lengths[];
 
