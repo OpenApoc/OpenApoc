@@ -10,8 +10,8 @@ CityView::CityView()
 	: pal(new Palette("UFODATA/PAL_04.DAT")),
 	  cityPck(new PCK("UFODATA/CITY.PCK", "UFODATA/CITY.TAB", *pal)),
 	  offsetX(0), offsetY(0), maxZDraw(2),
-	  selectedTilePosition(0,0,0), selectedTileImageBack(DATA->load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
-	  selectedTileImageFront(DATA->load_image("CITY/SELECTED-CITYTILE-FRONT.PNG"))
+	  selectedTilePosition(0,0,0), selectedTileImageBack(FRAMEWORK->data.load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
+	  selectedTileImageFront(FRAMEWORK->data.load_image("CITY/SELECTED-CITYTILE-FRONT.PNG"))
 {
 }
 

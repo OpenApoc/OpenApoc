@@ -5,7 +5,7 @@ namespace OpenApoc {
 
 Cursor::Cursor( Palette* ColourPalette )
 {
-	ALLEGRO_FILE* f = DATA->load_file( "TACDATA/MOUSE.DAT", "rb" );
+	ALLEGRO_FILE* f = FRAMEWORK->data.load_file( "TACDATA/MOUSE.DAT", "rb" );
 
 	while( images.size() < al_fsize( f ) / 576 )
 	{

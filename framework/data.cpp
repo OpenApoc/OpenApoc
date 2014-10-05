@@ -2,8 +2,6 @@
 
 namespace OpenApoc {
 
-Data *Data::data = nullptr;
-
 Data::Data(const std::string root) :
 	root(root), DIR_SEP('/')
 {

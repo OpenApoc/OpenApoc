@@ -3,8 +3,6 @@
 #include "includes.h"
 #include "image.h"
 
-#define DATA OpenApoc::Data::data
-
 namespace OpenApoc {
 
 class Data
@@ -17,8 +15,6 @@ class Data
 		std::map<std::string, std::weak_ptr<Image> >imageCache;
 
 	public:
-		static Data* data;
-
 		Data(const std::string root);
 		~Data();
 

@@ -9,7 +9,7 @@ namespace OpenApoc {
 
 void BootUp::Begin()
 {
-	loadingimage = DATA->load_image( "UI/LOADING.PNG" );
+	loadingimage = FRAMEWORK->data.load_image( "UI/LOADING.PNG" );
 	loadtime = 0;
 	FRAMEWORK->Display_SetTitle("OpenApocalypse");
 

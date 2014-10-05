@@ -1,13 +1,14 @@
 
 #include "framework.h"
-#include "../game/boot.h"
-#include "../shaders/shaders.h"
+#include "game/boot.h"
+#include "shaders/shaders.h"
 
 namespace OpenApoc {
 
 Framework* Framework::System;
 
-Framework::Framework()
+Framework::Framework(const std::string dataRoot)
+	: data(dataRoot)
 {
 #ifdef WRITE_LOG
 	printf( "Framework: Startup: Allegro\n" );
@@ -41,8 +42,8 @@ Framework::Framework()
 	printf( "Framework: Startup: Variables and Config\n" );
 #endif
 	quitProgram = false;
-  framesToProcess = 0;
-  Settings = new ConfigFile( "settings.cfg" );
+	framesToProcess = 0;
+	Settings = new ConfigFile( "settings.cfg" );
 
 	eventAllegro = al_create_event_queue();
 	eventMutex = al_create_mutex_recursive();
@@ -71,12 +72,12 @@ Framework::Framework()
 Framework::~Framework()
 {
 #ifdef WRITE_LOG
-  printf( "Framework: Save Config\n" );
+	printf( "Framework: Save Config\n" );
 #endif
-  SaveSettings();
+	SaveSettings();
 
 #ifdef WRITE_LOG
-  printf( "Framework: Shutdown\n" );
+	printf( "Framework: Shutdown\n" );
 #endif
 	al_destroy_event_queue( eventAllegro );
 	al_destroy_mutex( eventMutex );
@@ -84,13 +85,13 @@ Framework::~Framework()
 	
 #ifdef NETWORK_SUPPORT
 #ifdef WRITE_LOG
-  printf( "Framework: Shutdown enet\n" );
+	printf( "Framework: Shutdown enet\n" );
 #endif
 	enet_deinitialize();
 #endif
 
 #ifdef WRITE_LOG
-  printf( "Framework: Shutdown Allegro\n" );
+	printf( "Framework: Shutdown Allegro\n" );
 #endif
 	al_uninstall_system();
 }
@@ -98,10 +99,10 @@ Framework::~Framework()
 void Framework::Run()
 {
 #ifdef WRITE_LOG
-  printf( "Framework: Run.Program Loop\n" );
+	printf( "Framework: Run.Program Loop\n" );
 #endif
 
-  ProgramStages.Push( std::make_shared<BootUp>() );
+	ProgramStages.Push( std::make_shared<BootUp>() );
 
 	al_start_timer( frameTimer );
 
@@ -153,13 +154,13 @@ void Framework::Run()
 void Framework::ProcessEvents()
 {
 #ifdef WRITE_LOG
-  printf( "Framework: ProcessEvents\n" );
+	printf( "Framework: ProcessEvents\n" );
 #endif
 
 	if( ProgramStages.IsEmpty() )
-  {
-    quitProgram = true;
-    return;
+	{
+		quitProgram = true;
+		return;
 	}
 
 	// Convert Allegro events before we process
@@ -339,22 +340,22 @@ void Framework::TranslateAllegroEvents()
 void Framework::ShutdownFramework()
 {
 #ifdef WRITE_LOG
-  printf( "Framework: Shutdown Framework\n" );
+	printf( "Framework: Shutdown Framework\n" );
 #endif
 	ProgramStages.Clear();
-  quitProgram = true;
+	quitProgram = true;
 }
 
 void Framework::SaveSettings()
 {
-  // Just to keep the filename consistant
-  Settings->Save( "settings.cfg" );
+	// Just to keep the filename consistant
+	Settings->Save( "settings.cfg" );
 }
 
 void Framework::Display_Initialise()
 {
 #ifdef WRITE_LOG
-  printf( "Framework: Initialise Display\n" );
+	printf( "Framework: Initialise Display\n" );
 #endif
 
 	bool foundMode = false;
@@ -374,20 +375,20 @@ void Framework::Display_Initialise()
 
 	// Load configuration
 	if( Settings->KeyExists( "Visual.ScreenWidth" ) )
-  {
-    Settings->GetIntegerValue( "Visual.ScreenWidth", &scrW );
+	{
+		Settings->GetIntegerValue( "Visual.ScreenWidth", &scrW );
 	} else {
 		Settings->SetIntegerValue( "Visual.ScreenWidth", scrW );
 	}
 	if( Settings->KeyExists( "Visual.ScreenHeight" ) )
-  {
-    Settings->GetIntegerValue( "Visual.ScreenHeight", &scrH );
+	{
+		Settings->GetIntegerValue( "Visual.ScreenHeight", &scrH );
 	} else {
 		Settings->SetIntegerValue( "Visual.ScreenHeight", scrH );
 	}
 	if( Settings->KeyExists( "Visual.FullScreen" ) )
-  {
-    Settings->GetBooleanValue( "Visual.FullScreen", &scrFS );
+	{
+		Settings->GetBooleanValue( "Visual.FullScreen", &scrFS );
 	} else {
 		Settings->SetBooleanValue( "Visual.FullScreen", scrFS );
 	}
@@ -459,7 +460,7 @@ void Framework::Display_Initialise()
 void Framework::Display_Shutdown()
 {
 #ifdef WRITE_LOG
-  printf( "Framework: Shutdown Display\n" );
+	printf( "Framework: Shutdown Display\n" );
 #endif
 
 	if( activeShader != 0 )
@@ -483,13 +484,13 @@ int Framework::Display_GetHeight()
 
 void Framework::Display_SetTitle( std::string* NewTitle )
 {
-  al_set_app_name( NewTitle->c_str() );
+	al_set_app_name( NewTitle->c_str() );
 	al_set_window_title( screen, NewTitle->c_str() );
 }
 
 void Framework::Display_SetTitle( std::string NewTitle )
 {
-  al_set_app_name( NewTitle.c_str() );
+	al_set_app_name( NewTitle.c_str() );
 	al_set_window_title( screen, NewTitle.c_str() );
 }
 
@@ -537,7 +538,7 @@ void Framework::Display_SetShader( Shader* NewShader )
 void Framework::Audio_Initialise()
 {
 #ifdef WRITE_LOG
-  printf( "Framework: Initialise Audio\n" );
+	printf( "Framework: Initialise Audio\n" );
 #endif
 
 	if( !al_install_audio() )
@@ -582,7 +583,7 @@ void Framework::Audio_Initialise()
 void Framework::Audio_Shutdown()
 {
 #ifdef WRITE_LOG
-  printf( "Framework: Shutdown Audio\n" );
+	printf( "Framework: Shutdown Audio\n" );
 #endif
 	if( audioVoice != 0 )
 	{
@@ -619,7 +620,7 @@ void Framework::Audio_StopAudio()
 	}
 
 #ifdef WRITE_LOG
-  printf( "Framework: Stop audio\n" );
+	printf( "Framework: Stop audio\n" );
 #endif
 }
 

@@ -29,7 +29,7 @@ void GameCore::ParseXMLDoc( std::string XMLFilename )
 {
 	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLElement* node;
-	std::string actualfile = DATA->GetActualFilename(XMLFilename);
+	std::string actualfile = FRAMEWORK->data.GetActualFilename(XMLFilename);
 
 	doc.LoadFile( actualfile.c_str() );
 	node = doc.RootElement();
@@ -124,7 +124,7 @@ std::shared_ptr<Image> GameCore::GetImage(std::string ImageData)
 		std::unique_ptr<PCK> pck(new PCK( pckdata[1], pckdata[2], *GetPalette( pckdata[4] ), Strings::ToInteger( pckdata[3] ) ));
 		return  pck->GetImage( 0 );
 	} else {
-		return DATA->load_image(ImageData);
+		return FRAMEWORK->data.load_image(ImageData);
 	}
 }
 

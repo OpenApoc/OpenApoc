@@ -1,5 +1,5 @@
 #include "city.h"
-#include "../../framework/data.h"
+#include "framework/framework.h"
 
 namespace OpenApoc {
 
@@ -9,7 +9,7 @@ City::City(std::string mapName)
 	: sizeX(100), sizeY(100), sizeZ(10),
 	  organisations(Organisation::defaultOrganisations)
 {
-	auto file = DATA->load_file("UFODATA/" + mapName, "rb");
+	auto file = FRAMEWORK->data.load_file("UFODATA/" + mapName, "rb");
 	if (!file)
 	{
 		std::cerr << "Failed to open city map:" << mapName << "\n";

@@ -40,7 +40,7 @@ ApocalypseFont::ApocalypseFont( FontType Face, Palette* ColourPalette )
 	std::string spcfile( datfile );
 	datfile.append( ".DAT" );
 
-	ALLEGRO_FILE* dathnd = DATA->load_file( datfile, "rb" );
+	ALLEGRO_FILE* dathnd = FRAMEWORK->data.load_file( datfile, "rb" );
 
 	for( int c = 0; c < fontchars; c++ )
 	{

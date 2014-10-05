@@ -1,5 +1,5 @@
 #include "building.h"
-#include "../../framework/data.h"
+#include "framework/framework.h"
 
 #include "framework/includes.h"
 
@@ -154,7 +154,7 @@ std::list<Building>
 loadBuildingsFromBld(std::string fileName, std::vector<Organisation> &orgList, std::vector<std::string> nameList)
 {
 	std::list<Building> buildings;
-	auto file = DATA->load_file("UFODATA/" + fileName, "rb");
+	auto file = FRAMEWORK->data.load_file("UFODATA/" + fileName, "rb");
 	if (!file)
 	{
 		std::cerr << "Failed to open building data file: " << fileName << "\n";

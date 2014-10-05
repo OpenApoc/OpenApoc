@@ -9,10 +9,10 @@ Palette::Palette( std::string Filename )
 	unsigned char colourblock[3];
 	unsigned int idx = 0;
 
-	paletteimage = DATA->load_image( Filename );
+	paletteimage = FRAMEWORK->data.load_image( Filename );
 	if( !paletteimage )
 	{
-		ALLEGRO_FILE* f = DATA->load_file( Filename, "rb" );
+		ALLEGRO_FILE* f = FRAMEWORK->data.load_file( Filename, "rb" );
 		size_t numEntries = al_fsize(f) / 3;
 
 		colours.reset(new Colour[numEntries]);

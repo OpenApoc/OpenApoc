@@ -20,14 +20,14 @@ class Shader;
 
 class Framework
 {
-  private:
-    bool quitProgram;
+	private:
+		bool quitProgram;
 
 		ALLEGRO_TIMER* frameTimer;
-    int framesToProcess;
+		int framesToProcess;
 		bool enableSlowDown;
 
-    ALLEGRO_DISPLAY_MODE screenMode;
+		ALLEGRO_DISPLAY_MODE screenMode;
 		ALLEGRO_DISPLAY* screen;
 		ALLEGRO_BITMAP* screenRetarget;
 
@@ -41,27 +41,28 @@ class Framework
 		Shader* activeShader;
 		StageStack ProgramStages;
 
-  public:
-    static Framework* System;
+	public:
+		Data data;
+		static Framework* System;
 
-    ConfigFile* Settings;
+		ConfigFile* Settings;
 
-    Framework();
-    ~Framework();
+		Framework(const std::string dataRoot);
+		~Framework();
 
-    void Run();
+		void Run();
 		void ProcessEvents();
-    void PushEvent( Event* e );
+		void PushEvent( Event* e );
 		void TranslateAllegroEvents();
 		void ShutdownFramework();
 		bool IsShuttingDown() { return quitProgram; };
 
-    void SaveSettings();
+		void SaveSettings();
 
-    void Display_Initialise();
-    void Display_Shutdown();
-    int Display_GetWidth();
-    int Display_GetHeight();
+		void Display_Initialise();
+		void Display_Shutdown();
+		int Display_GetWidth();
+		int Display_GetHeight();
 		void Display_SetTitle( std::string* NewTitle );
 		void Display_SetTitle( std::string NewTitle );
 		ALLEGRO_BITMAP* Display_GetCurrentTarget();
@@ -71,10 +72,10 @@ class Framework
 		void Display_SetShader( Shader* NewShader );
 		std::shared_ptr<Stage> getCurrentStage();
 
-    void Audio_Initialise();
-    void Audio_Shutdown();
-    void Audio_PlayAudio( std::string Filename, bool Loop );
-    void Audio_StopAudio();
+		void Audio_Initialise();
+		void Audio_Shutdown();
+		void Audio_PlayAudio( std::string Filename, bool Loop );
+		void Audio_StopAudio();
 		ALLEGRO_MIXER* Audio_GetMixer();
 
 		bool IsSlowMode();
