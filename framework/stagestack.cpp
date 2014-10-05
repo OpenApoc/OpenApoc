@@ -20,6 +20,7 @@ std::shared_ptr<Stage> StageStack::Pop()
 
 	if (result)
 	{
+		result->Finish();
 		Stack.pop();
 	}
 
@@ -45,8 +46,8 @@ bool StageStack::IsEmpty()
 
 void StageStack::Clear()
 {
-	while (!this->Stack.empty())
-		this->Stack.pop();
+	while (!this->IsEmpty())
+		this->Pop();
 }
 
 }; //namespace OpenApoc
