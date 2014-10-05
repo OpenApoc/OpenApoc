@@ -45,14 +45,14 @@
     <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(IncludePath);$(ProjectDir)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(IncludePath);$(ProjectDir)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -114,10 +114,8 @@
     <ClCompile Include="game\general\optionsmenu.cpp" />
     <ClCompile Include="game\resources\gamecore.cpp" />
     <ClCompile Include="game\resources\ttffont.cpp" />
-    <ClCompile Include="library\angle.cpp" />
     <ClCompile Include="game\apocresources\apocfont.cpp" />
     <ClCompile Include="game\boot.cpp" />
-    <ClCompile Include="library\box.cpp" />
     <ClCompile Include="library\configfile.cpp" />
     <ClCompile Include="game\apocresources\cursor.cpp" />
     <ClCompile Include="framework\event.cpp" />
@@ -126,12 +124,10 @@
     <ClCompile Include="transitions\fadeout.cpp" />
     <ClCompile Include="framework\framework.cpp" />
     <ClCompile Include="shaders\greyscale.cpp" />
-    <ClCompile Include="library\line.cpp" />
     <ClCompile Include="framework\main.cpp" />
     <ClCompile Include="game\general\mainmenu.cpp" />
     <ClCompile Include="library\memory.cpp" />
     <ClCompile Include="game\apocresources\music.cpp" />
-    <ClCompile Include="framework\network.cpp" />
     <ClCompile Include="game\apocresources\palette.cpp" />
     <ClCompile Include="game\apocresources\pck.cpp" />
     <ClCompile Include="game\apocresources\rawsound.cpp" />
@@ -139,7 +135,6 @@
     <ClCompile Include="framework\stagestack.cpp" />
     <ClCompile Include="transitions\strips.cpp" />
     <ClCompile Include="transitions\tiled.cpp" />
-    <ClCompile Include="library\vector2.cpp" />
     <ClCompile Include="framework\data.cpp" />
     <ClCompile Include="game\city\city.cpp" />
     <ClCompile Include="game\city\cityview.cpp" />
