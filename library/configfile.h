@@ -59,8 +59,8 @@ class ConfigFile
 		long GetQuickInteger64Value( std::string Key, int ArrayIndex, long Default );
 		float GetQuickFloatValue( std::string Key, float Default );
 		float GetQuickFloatValue( std::string Key, int ArrayIndex, float Default );
-		std::string* GetQuickStringValue( std::string Key, std::string Default );
-		std::string* GetQuickStringValue( std::string Key, int ArrayIndex, std::string Default );
+		std::string GetQuickStringValue( std::string Key, std::string Default );
+		std::string GetQuickStringValue( std::string Key, int ArrayIndex, std::string Default );
 
 		bool SetBooleanValue( std::string Key, bool Value );
 		bool SetBooleanValue( std::string Key, int ArrayIndex, bool Value );

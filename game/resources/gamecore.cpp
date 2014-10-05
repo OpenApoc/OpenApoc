@@ -27,6 +27,10 @@ GameCore::~GameCore()
 {
 	for (auto & font : fonts)
 		delete font.second;
+	for (auto & form : forms)
+		delete form.second;
+	for (auto & palette : palettes)
+		delete palette.second;
 	delete MouseCursor;
 }
 

@@ -77,8 +77,8 @@ bool BootUp::IsTransition()
 void* BootUp::CreateGameCore(ALLEGRO_THREAD* thread, void* args)
 {
 	Framework *fw = (Framework*)args;
-	std::string ruleset(*fw->Settings->GetQuickStringValue( "GameRules", "XCOMAPOC.XML" ));
-	std::string language(*fw->Settings->GetQuickStringValue( "Language", "en_gb" ));
+	std::string ruleset = fw->Settings->GetQuickStringValue( "GameRules", "XCOMAPOC.XML" );
+	std::string language = fw->Settings->GetQuickStringValue( "Language", "en_gb" );
 
 	fw->gamecore.reset(new GameCore(*fw));
 

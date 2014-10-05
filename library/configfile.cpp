@@ -607,24 +607,24 @@ float ConfigFile::GetQuickFloatValue( std::string Key, int ArrayIndex, float Def
   return res;
 }
 
-std::string* ConfigFile::GetQuickStringValue( std::string Key, std::string Default )
+std::string ConfigFile::GetQuickStringValue( std::string Key, std::string Default )
 {
-  std::string* res = new std::string();
-  if( !GetStringValue( Key, res ) )
+  std::string res;
+  if( !GetStringValue( Key, &res ) )
 	{
-		res->clear();
-		res->append( Default );
+		res.clear();
+		res.append( Default );
 	}
   return res;
 }
 
-std::string* ConfigFile::GetQuickStringValue( std::string Key, int ArrayIndex, std::string Default )
+std::string ConfigFile::GetQuickStringValue( std::string Key, int ArrayIndex, std::string Default )
 {
-  std::string* res = new std::string();
-  if( !GetStringValue( Key, ArrayIndex, res ) )
+  std::string res;
+  if( !GetStringValue( Key, ArrayIndex, &res ) )
 	{
-		res->clear();
-		res->append( Default );
+		res.clear();
+		res.append( Default );
 	}
   return res;
 }
