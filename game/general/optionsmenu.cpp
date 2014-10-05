@@ -50,7 +50,7 @@ void OptionsMenu::EventOccurred(Event *e)
         if( e->Data.Forms.RaisedBy->Name == "BUTTON_TEST_XCOMBASE" )
         {
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<TransitionFadeAcross>(std::shared_ptr<BaseScreen>(), FRAMES_PER_SECOND / 4);
+			stageCmd.nextStage = std::make_shared<TransitionFadeAcross>(std::make_shared<BaseScreen>(), FRAMES_PER_SECOND / 4);
             return;
         }
     }
