@@ -28,7 +28,7 @@ class CityView : public Stage
 		Vec3<int> selectedTilePosition;
 		std::shared_ptr<Image> selectedTileImageBack, selectedTileImageFront;
 
-		CityView();
+		CityView(Framework &fw);
 		~CityView();
 		// Stage control
 		virtual void Begin();

@@ -9,12 +9,12 @@ namespace OpenApoc {
 
 void BootUp::Begin()
 {
-	loadingimage = FRAMEWORK->data.load_image( "UI/LOADING.PNG" );
+	loadingimage = fw.data.load_image( "UI/LOADING.PNG" );
 	loadtime = 0;
-	FRAMEWORK->Display_SetTitle("OpenApocalypse");
+	fw.Display_SetTitle("OpenApocalypse");
 
 	threadload = nullptr;
-	threadload = al_create_thread( CreateGameCore, nullptr );
+	threadload = al_create_thread( CreateGameCore, &fw );
 	if( threadload != nullptr )
 	{
 		al_start_thread( threadload );
@@ -42,23 +42,23 @@ void BootUp::Update(StageCmd * const cmd)
 	loadtime++;
 	loadingimageangle.Add( 5 );
 
-	if( threadload == nullptr && FRAMEWORK->gamecore == nullptr )
+	if( threadload == nullptr && fw.gamecore == nullptr )
 	{
-		CreateGameCore( nullptr, nullptr );
+		CreateGameCore( nullptr, &fw );
 	}
 
-	if( FRAMEWORK->gamecore != nullptr && FRAMEWORK->gamecore->Loaded && loadtime > FRAMES_PER_SECOND * 2 )
+	if( fw.gamecore != nullptr && fw.gamecore->Loaded && loadtime > FRAMES_PER_SECOND * 2 )
 	{
 		StartGame();
 		cmd->cmd = StageCmd::Command::REPLACE;
-		cmd->nextStage = std::make_shared<TransitionFadeIn>(std::make_shared<MainMenu>(), al_map_rgb(0,0,0), FRAMES_PER_SECOND);
+		cmd->nextStage = std::make_shared<TransitionFadeIn>(fw, std::make_shared<MainMenu>(fw), al_map_rgb(0,0,0), FRAMES_PER_SECOND);
 	}
 }
 
 void BootUp::Render()
 {
 	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
-	loadingimage->drawRotated( 24, 24, FRAMEWORK->Display_GetWidth() - 50, FRAMEWORK->Display_GetHeight() - 50, loadingimageangle.ToRadians() );
+	loadingimage->drawRotated( 24, 24, fw.Display_GetWidth() - 50, fw.Display_GetHeight() - 50, loadingimageangle.ToRadians() );
 }
 
 void BootUp::StartGame()
@@ -76,13 +76,13 @@ bool BootUp::IsTransition()
 
 void* BootUp::CreateGameCore(ALLEGRO_THREAD* thread, void* args)
 {
-	std::string ruleset(*FRAMEWORK->Settings->GetQuickStringValue( "GameRules", "XCOMAPOC.XML" ));
-	std::string language(*FRAMEWORK->Settings->GetQuickStringValue( "Language", "en_gb" ));
+	Framework *fw = (Framework*)args;
+	std::string ruleset(*fw->Settings->GetQuickStringValue( "GameRules", "XCOMAPOC.XML" ));
+	std::string language(*fw->Settings->GetQuickStringValue( "Language", "en_gb" ));
 
-	FRAMEWORK->gamecore.reset(new GameCore);
+	fw->gamecore.reset(new GameCore(*fw));
 
-	FRAMEWORK->gamecore->Load(ruleset, language);
-
+	fw->gamecore->Load(ruleset, language);
 
 	return nullptr;
 }

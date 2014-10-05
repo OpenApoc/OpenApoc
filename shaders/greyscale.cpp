@@ -4,7 +4,7 @@
 
 namespace OpenApoc {
 
-void ShaderGreyscale::Apply( ALLEGRO_BITMAP* Target )
+void ShaderGreyscale::Apply( Framework &fw, ALLEGRO_BITMAP* Target )
 {
 	PackedARGB8888* gsCol;
 

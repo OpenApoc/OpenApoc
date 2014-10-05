@@ -1,10 +1,11 @@
 
 #include "textedit.h"
-#include "../framework/framework.h"
+#include "framework/framework.h"
+#include "game/resources/ifont.h"
 
 namespace OpenApoc {
 
-TextEdit::TextEdit( Control* Owner, std::string Text, IFont* Font ) : Control( Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Centre ), editting(false), SelectionStart(Text.length()), caretTimer(0), caretDraw(false), editShift(false), editAltGr(false)
+TextEdit::TextEdit( Framework &fw, Control* Owner, std::string Text, IFont* Font ) : Control( fw, Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Centre ), editting(false), SelectionStart(Text.length()), caretTimer(0), caretDraw(false), editShift(false), editAltGr(false)
 {
 }
 
@@ -218,7 +219,7 @@ void TextEdit::RaiseEvent( FormEventType Type )
 	memset( (void*)&(ce->Data.Forms), 0, sizeof( FRAMEWORK_FORMS_EVENT ) );
 	ce->Data.Forms.RaisedBy = this;
 	ce->Data.Forms.EventFlag = FormEventType::TextChanged;
-	FRAMEWORK->PushEvent( ce );
+	fw.PushEvent( ce );
 }
 
 }; //namespace OpenApoc

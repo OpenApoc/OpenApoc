@@ -17,7 +17,7 @@ class Graphic : public Control
 		virtual void OnRender();
 
 	public:
-		Graphic( Control* Owner, std::string Image );
+		Graphic( Framework &fw, Control* Owner, std::string Image );
 		virtual ~Graphic();
 
 		virtual void EventOccured( Event* e );

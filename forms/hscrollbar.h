@@ -22,7 +22,7 @@ class HScrollBar : public Control
 		int Value;
 		int LargeChange;
 
-		HScrollBar( Control* Owner );
+		HScrollBar( Framework &fw, Control* Owner );
 		virtual ~HScrollBar();
 
 		virtual void EventOccured( Event* e );

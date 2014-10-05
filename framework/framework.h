@@ -17,8 +17,6 @@ class GameCore;
 
 #define FRAMES_PER_SECOND 100
 
-#define FRAMEWORK	Framework::System
-
 class Framework
 {
 	private:
@@ -46,7 +44,6 @@ class Framework
 		Data data;
 		GameState state;
 		std::unique_ptr<GameCore> gamecore;
-		static Framework* System;
 
 		ConfigFile* Settings;
 

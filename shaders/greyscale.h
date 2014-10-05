@@ -8,7 +8,7 @@ namespace OpenApoc {
 class ShaderGreyscale : public Shader
 {
 	public:
-		virtual void Apply( ALLEGRO_BITMAP* Target );
+		virtual void Apply( Framework &fw, ALLEGRO_BITMAP* Target );
 };
 
 }; //namespace OpenApoc

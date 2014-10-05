@@ -34,7 +34,10 @@ public:
 
 class Stage
 {
+	protected:
+		Framework &fw;
 	public:
+		Stage(Framework &fw) : fw(fw){};
 		/*
 			Function: Begin
 			This function is called just before the stage becomes the *active* stage.

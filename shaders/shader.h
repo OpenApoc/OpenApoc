@@ -5,6 +5,8 @@
 
 namespace OpenApoc {
 
+class Framework;
+
 typedef struct PackedARGB8888
 {
 	unsigned char r;
@@ -16,7 +18,7 @@ typedef struct PackedARGB8888
 class Shader
 {
 	public:
-		virtual void Apply( ALLEGRO_BITMAP* Target ) = 0;
+		virtual void Apply( Framework &fw, ALLEGRO_BITMAP* Target ) = 0;
 		virtual ~Shader(){};
 };
 

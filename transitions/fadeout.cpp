@@ -4,7 +4,8 @@
 
 namespace OpenApoc {
 
-TransitionFadeOut::TransitionFadeOut(  std::shared_ptr<Stage> Target, std::shared_ptr<Stage> SourceStage, ALLEGRO_COLOR Source, int Frames)
+TransitionFadeOut::TransitionFadeOut( Framework &fw, std::shared_ptr<Stage> Target, std::shared_ptr<Stage> SourceStage, ALLEGRO_COLOR Source, int Frames)
+	: Stage(fw)
 {
 	sourceStage = SourceStage;
 	targetStage = Target;
@@ -24,10 +25,10 @@ TransitionFadeOut::~TransitionFadeOut()
 
 void TransitionFadeOut::Begin()
 {
-	targetRender = al_create_bitmap( FRAMEWORK->Display_GetWidth(), FRAMEWORK->Display_GetHeight() );
-	FRAMEWORK->Display_SetTarget( targetRender );
+	targetRender = al_create_bitmap( fw.Display_GetWidth(), fw.Display_GetHeight() );
+	fw.Display_SetTarget( targetRender );
 	sourceStage->Render();
-	FRAMEWORK->Display_SetTarget();
+	fw.Display_SetTarget();
 }
 
 void TransitionFadeOut::Pause()
@@ -65,7 +66,7 @@ void TransitionFadeOut::Render()
 	{
 		transitionFrom.a = 1.0f;
 	}
-	al_draw_filled_rectangle( 0, 0, FRAMEWORK->Display_GetWidth(), FRAMEWORK->Display_GetHeight(), transitionFrom );
+	al_draw_filled_rectangle( 0, 0, fw.Display_GetWidth(), fw.Display_GetHeight(), transitionFrom );
 }
 
 bool TransitionFadeOut::IsTransition()

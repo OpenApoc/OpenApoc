@@ -5,6 +5,8 @@
 
 namespace OpenApoc {
 
+class Framework;
+
 class Form : public Control
 {
 
@@ -12,7 +14,7 @@ class Form : public Control
 		virtual void OnRender();
 
 	public:
-		Form( tinyxml2::XMLElement* FormConfiguration );
+		Form( Framework &fw, tinyxml2::XMLElement* FormConfiguration );
 		virtual ~Form();
 
 		virtual void EventOccured( Event* e );

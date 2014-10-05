@@ -5,7 +5,8 @@
 
 namespace OpenApoc {
 
-GameCore::GameCore() : languagetext(), palettes(), fonts(), forms()
+GameCore::GameCore(Framework &fw)
+	: languagetext(), palettes(), fonts(), forms(), fw(fw)
 {
 	Loaded = false;
 }
@@ -17,7 +18,7 @@ void GameCore::Load(std::string CoreXMLFilename, std::string Language)
 	ParseXMLDoc( CoreXMLFilename );
 	DebugModeEnabled = false;
 
-	MouseCursor = new Cursor( FRAMEWORK->gamecore->GetPalette( "TACDATA/TACTICAL.PAL" ) );
+	MouseCursor = new Cursor( fw, fw.gamecore->GetPalette( "TACDATA/TACTICAL.PAL" ) );
 
 	Loaded = true;
 }
@@ -31,7 +32,7 @@ void GameCore::ParseXMLDoc( std::string XMLFilename )
 {
 	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLElement* node;
-	std::string actualfile = FRAMEWORK->data.GetActualFilename(XMLFilename);
+	std::string actualfile = fw.data.GetActualFilename(XMLFilename);
 
 	doc.LoadFile( actualfile.c_str() );
 	node = doc.RootElement();
@@ -69,7 +70,7 @@ void GameCore::ParseGameXML( tinyxml2::XMLElement* Source )
 		nodename = node->Name();
 		if( nodename == "title" )
 		{
-			FRAMEWORK->Display_SetTitle( node->GetText() );
+			fw.Display_SetTitle( node->GetText() );
 		}
 		if( nodename == "include" )
 		{
@@ -98,7 +99,7 @@ void GameCore::ParseStringXML( tinyxml2::XMLElement* Source )
 
 void GameCore::ParseFormXML( tinyxml2::XMLElement* Source )
 {
-	forms[Source->Attribute("id")] = new Form( Source );
+	forms[Source->Attribute("id")] = new Form( fw, Source );
 }
 
 std::string GameCore::GetString(std::string ID)
@@ -123,10 +124,10 @@ std::shared_ptr<Image> GameCore::GetImage(std::string ImageData)
 	if( ImageData.substr( 0, 4 ) == "PCK:" )
 	{
 		std::vector<std::string> pckdata = Strings::Split( ImageData, ':' );
-		std::unique_ptr<PCK> pck(new PCK( pckdata[1], pckdata[2], *GetPalette( pckdata[4] ), Strings::ToInteger( pckdata[3] ) ));
+		std::unique_ptr<PCK> pck(new PCK( fw, pckdata[1], pckdata[2], *GetPalette( pckdata[4] ), Strings::ToInteger( pckdata[3] ) ));
 		return  pck->GetImage( 0 );
 	} else {
-		return FRAMEWORK->data.load_image(ImageData);
+		return fw.data.load_image(ImageData);
 	}
 }
 
@@ -140,15 +141,15 @@ IFont* GameCore::GetFont(std::string FontData)
 
 			if( segs.at(1) == "LARGE" )
 			{
-				fonts[FontData] = new ApocalypseFont( ApocalypseFont::LargeFont, GetPalette( segs.at(2) ) );
+				fonts[FontData] = new ApocalypseFont( fw, ApocalypseFont::LargeFont, GetPalette( segs.at(2) ) );
 			}
 			if( segs.at(1) == "SMALL" )
 			{
-				fonts[FontData] = new ApocalypseFont( ApocalypseFont::SmallFont, GetPalette( segs.at(2) ) );
+				fonts[FontData] = new ApocalypseFont( fw, ApocalypseFont::SmallFont, GetPalette( segs.at(2) ) );
 			}
 			if( segs.at(1) == "TINY" )
 			{
-				fonts[FontData] = new ApocalypseFont( ApocalypseFont::TinyFont, GetPalette( segs.at(2) ) );
+				fonts[FontData] = new ApocalypseFont( fw, ApocalypseFont::TinyFont, GetPalette( segs.at(2) ) );
 			}
 
 		} else {
@@ -167,7 +168,7 @@ Palette* GameCore::GetPalette(std::string Path)
 {
 	if( palettes.find(Path) == palettes.end() )
 	{
-		palettes[Path] = new Palette( Path );
+		palettes[Path] = new Palette( fw, Path );
 	}
 	return palettes[Path];
 }

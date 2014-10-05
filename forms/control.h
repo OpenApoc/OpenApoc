@@ -2,11 +2,12 @@
 #pragma once
 
 #include "framework/includes.h"
-#include "framework/event.h"
 
 namespace OpenApoc {
 
 class Form;
+class Event;
+class Framework;
 
 class Control
 {
@@ -15,6 +16,7 @@ class Control
 
 		void PreRender();
 		void PostRender();
+
 
 
 	protected:
@@ -34,6 +36,8 @@ class Control
 
 		Control* GetRootControl();
 
+		Framework &fw;
+
 	public:
 		std::string Name;
 		Vec2<int> Location;
@@ -42,7 +46,7 @@ class Control
 
 		std::vector<Control*> Controls;
 
-		Control(Control* Owner);
+		Control(Framework &fw, Control* Owner);
 		virtual ~Control();
 
 		Control* GetActiveControl();

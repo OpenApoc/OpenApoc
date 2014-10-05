@@ -7,7 +7,7 @@ namespace OpenApoc {
 
 RawSound* GraphicButton::buttonclick = nullptr;
 
-GraphicButton::GraphicButton( Control* Owner, std::string Image, std::string ImageDepressed ) : Control( Owner )
+GraphicButton::GraphicButton( Framework &fw, Control* Owner, std::string Image, std::string ImageDepressed ) : Control( fw, Owner )
 {
 	image = nullptr;
 	imagedepressed = nullptr;
@@ -17,11 +17,11 @@ GraphicButton::GraphicButton( Control* Owner, std::string Image, std::string Ima
 	imagehover_name = "";
 	if( buttonclick == nullptr )
 	{
-		buttonclick = new RawSound( "STRATEGC/INTRFACE/BUTTON1.RAW" );
+		buttonclick = new RawSound( fw, "STRATEGC/INTRFACE/BUTTON1.RAW" );
 	}
 }
 
-GraphicButton::GraphicButton( Control* Owner, std::string Image, std::string ImageDepressed, std::string ImageHover ) : Control( Owner )
+GraphicButton::GraphicButton( Framework &fw, Control* Owner, std::string Image, std::string ImageDepressed, std::string ImageHover ) : Control( fw, Owner )
 {
 	image = nullptr;
 	imagedepressed = nullptr;
@@ -31,7 +31,7 @@ GraphicButton::GraphicButton( Control* Owner, std::string Image, std::string Ima
 	imagehover_name = ImageHover;
 	if( buttonclick == nullptr )
 	{
-		buttonclick = new RawSound( "STRATEGC/INTRFACE/BUTTON1.RAW" );
+		buttonclick = new RawSound( fw, "STRATEGC/INTRFACE/BUTTON1.RAW" );
 	}
 }
 
@@ -54,7 +54,7 @@ void GraphicButton::EventOccured( Event* e )
 		ce->Type = e->Type;
 		memcpy( (void*)&(ce->Data.Forms), (void*)&(e->Data.Forms), sizeof( FRAMEWORK_FORMS_EVENT ) );
 		ce->Data.Forms.EventFlag = FormEventType::ButtonClick;
-		FRAMEWORK->PushEvent( ce );
+		fw.PushEvent( ce );
 	}
 }
 
@@ -64,7 +64,7 @@ void GraphicButton::OnRender()
 
 	if( !image && image_name != "" )
 	{
-		image = FRAMEWORK->gamecore->GetImage( image_name );
+		image = fw.gamecore->GetImage( image_name );
 		if( Size.x == 0 )
 		{
 			Size.x = image->width;
@@ -76,7 +76,7 @@ void GraphicButton::OnRender()
 	}
 	if( imagedepressed == nullptr && imagedepressed_name != "" )
 	{
-		imagedepressed = FRAMEWORK->gamecore->GetImage( imagedepressed_name );
+		imagedepressed = fw.gamecore->GetImage( imagedepressed_name );
 		if( Size.x == 0 )
 		{
 			Size.x = imagedepressed->width;
@@ -88,7 +88,7 @@ void GraphicButton::OnRender()
 	}
 	if( imagehover == nullptr && imagehover_name != "" )
 	{
-		imagehover = FRAMEWORK->gamecore->GetImage( imagehover_name );
+		imagehover = fw.gamecore->GetImage( imagehover_name );
 		if( Size.x == 0 )
 		{
 			Size.x = imagehover->width;

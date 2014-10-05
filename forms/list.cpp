@@ -1,14 +1,15 @@
 
 #include "list.h"
+#include "vscrollbar.h"
 
 namespace OpenApoc {
 
-ListBox::ListBox( Control* Owner ) : Control( Owner )
+ListBox::ListBox( Framework &fw, Control* Owner ) : Control( fw, Owner )
 {
 	ConfigureInternalScrollBar();
 }
 
-ListBox::ListBox( Control* Owner, VScrollBar* ExternalScrollBar ) : Control( Owner )
+ListBox::ListBox( Framework &fw, Control* Owner, VScrollBar* ExternalScrollBar ) : Control( fw, Owner )
 {
 	if( ExternalScrollBar == nullptr )
 	{
@@ -26,7 +27,7 @@ ListBox::~ListBox()
 
 void ListBox::ConfigureInternalScrollBar()
 {
-	scroller = new VScrollBar( this );
+	scroller = new VScrollBar( fw, this );
 	scroller->Size.x = 16;
 	scroller->Size.y = 16;
 	scroller->Location.x = this->Size.x - 16;

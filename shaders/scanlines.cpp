@@ -18,15 +18,15 @@ ShaderScanlines::ShaderScanlines(int NonScanWidth, int ScanWidth, int ScanDecrea
 	scanDecrease = ScanDecrease;
 }
 
-void ShaderScanlines::Apply( ALLEGRO_BITMAP* Target )
+void ShaderScanlines::Apply( Framework &fw, ALLEGRO_BITMAP* Target )
 {
-	ALLEGRO_BITMAP* orig = FRAMEWORK->Display_GetCurrentTarget();
+	ALLEGRO_BITMAP* orig = fw.Display_GetCurrentTarget();
 
 	int imgW = al_get_bitmap_width( Target );
 	int imgH = al_get_bitmap_height( Target );
 	int linesForScan = nonScanLineWidth + scanLineWidth;
 
-	FRAMEWORK->Display_SetTarget( Target );
+	fw.Display_SetTarget( Target );
 
 	int y = nonScanLineWidth;
 	while( y < imgH )
@@ -35,7 +35,7 @@ void ShaderScanlines::Apply( ALLEGRO_BITMAP* Target )
 		y += linesForScan;
 	}
 
-	FRAMEWORK->Display_SetTarget( orig );
+	fw.Display_SetTarget( orig );
 
 }
 }; //namespace OpenApoc

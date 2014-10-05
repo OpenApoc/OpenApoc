@@ -7,9 +7,10 @@
 
 namespace OpenApoc {
 
-DifficultyMenu::DifficultyMenu()
+DifficultyMenu::DifficultyMenu(Framework &fw)
+	: Stage(fw)
 {
-	difficultymenuform = FRAMEWORK->gamecore->GetForm("FORM_DIFFICULTYMENU");
+	difficultymenuform = fw.gamecore->GetForm("FORM_DIFFICULTYMENU");
 	assert(difficultymenuform);
 }
 
@@ -36,7 +37,7 @@ void DifficultyMenu::Finish()
 void DifficultyMenu::EventOccurred(Event *e)
 {
 	difficultymenuform->EventOccured( e );
-	FRAMEWORK->gamecore->MouseCursor->EventOccured( e );
+	fw.gamecore->MouseCursor->EventOccured( e );
 
 	if( e->Type == EVENT_KEY_DOWN )
 	{
@@ -77,10 +78,10 @@ void DifficultyMenu::EventOccurred(Event *e)
 			citymapName = "CITYMAP1";
 			return;
 		}
-		FRAMEWORK->state.city.reset(new City(citymapName));
+		fw.state.city.reset(new City(fw, citymapName));
 		stageCmd.cmd = StageCmd::Command::REPLACE;
 		stageCmd.nextStage = std::make_shared<TransitionFadeAcross>(
-			std::make_shared<CityView>(), FRAMES_PER_SECOND / 4);
+			fw, std::make_shared<CityView>(fw), FRAMES_PER_SECOND / 4);
 		return;
 	}
 }
@@ -96,7 +97,7 @@ void DifficultyMenu::Render()
 {
 	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
 	difficultymenuform->Render();
-	FRAMEWORK->gamecore->MouseCursor->Render();
+	fw.gamecore->MouseCursor->Render();
 }
 
 bool DifficultyMenu::IsTransition()

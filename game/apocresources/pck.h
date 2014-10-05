@@ -2,9 +2,12 @@
 #pragma once
 
 #include "framework/includes.h"
-#include "palette.h"
 
 namespace OpenApoc {
+
+class Palette;
+class Framework;
+class Image;
 
 typedef struct PCKCompression1ImageHeader
 {
@@ -31,13 +34,13 @@ class PCK
 	private:
 		std::vector<std::shared_ptr<Image> > images;
 
-		void ProcessFile(std::string PckFilename, std::string TabFilename, Palette &ColourPalette, int Index);
+		void ProcessFile(Framework &fw, std::string PckFilename, std::string TabFilename, Palette &ColourPalette, int Index);
 		void LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index, Palette &Colours);
 		void LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index, Palette &Colours);
 
 	public:
-		PCK( std::string PckFilename, std::string TabFilename, Palette &ColourPalette );
-		PCK( std::string PckFilename, std::string TabFilename, Palette &ColourPalette, int Index );
+		PCK( Framework &fw, std::string PckFilename, std::string TabFilename, Palette &ColourPalette );
+		PCK( Framework &fw, std::string PckFilename, std::string TabFilename, Palette &ColourPalette, int Index );
 		~PCK();
 
 		int GetImageCount();

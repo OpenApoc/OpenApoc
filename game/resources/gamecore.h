@@ -1,12 +1,13 @@
 
 #pragma once
 
-#include "framework/framework.h"
 #include "game/apocresources/apocresource.h"
 #include "ifont.h"
 #include "forms/forms.h"
 
 namespace OpenApoc {
+
+class Framework;
 
 class GameCore
 {
@@ -31,12 +32,15 @@ class GameCore
 		// void ParseVehicleXML( tinyxml2::XMLElement* Source );
 
 
+		Framework &fw;
+
+
 	public:
 		bool Loaded;
 		bool DebugModeEnabled;
 		Cursor* MouseCursor;
 
-		GameCore();
+		GameCore(Framework &fw);
 		void Load(std::string CoreXMLFilename, std::string Language);
 		~GameCore();
 

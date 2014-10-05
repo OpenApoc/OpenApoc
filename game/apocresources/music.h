@@ -2,13 +2,13 @@
 #pragma once
 
 #include "framework/includes.h"
-#include "framework/framework.h"
 
 namespace OpenApoc {
 
+class Framework;
+
 class Music
 {
-
 	private:
 		Memory sounddata;
 		ALLEGRO_SAMPLE* soundsample;
@@ -18,7 +18,7 @@ class Music
 		bool playing;
 
 	public:
-		Music( int Track );
+		Music( Framework &fw, int Track );
 		~Music();
 
 		void Play();

@@ -16,18 +16,18 @@ class TransitionFadeOut : public Stage
 		std::shared_ptr<Stage> sourceStage;
 		ALLEGRO_BITMAP* targetRender;
 
-  public:
-		TransitionFadeOut( std::shared_ptr<Stage> Target, std::shared_ptr<Stage> SourceStage, ALLEGRO_COLOR Source, int Frames );
+	public:
+		TransitionFadeOut( Framework &fw, std::shared_ptr<Stage> Target, std::shared_ptr<Stage> SourceStage, ALLEGRO_COLOR Source, int Frames );
 		~TransitionFadeOut();
 
-    // Stage control
-    virtual void Begin();
-    virtual void Pause();
-    virtual void Resume();
-    virtual void Finish();
-    virtual void EventOccurred(Event *e);
-    virtual void Update(StageCmd * const cmd);
-    virtual void Render();
+		// Stage control
+		virtual void Begin();
+		virtual void Pause();
+		virtual void Resume();
+		virtual void Finish();
+		virtual void EventOccurred(Event *e);
+		virtual void Update(StageCmd * const cmd);
+		virtual void Render();
 		virtual bool IsTransition();
 };
 

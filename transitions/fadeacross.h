@@ -15,18 +15,18 @@ class TransitionFadeAcross : public Stage
 		std::shared_ptr<Stage> targetStage;
 		ALLEGRO_BITMAP* targetRender;
 
-  public:
-		TransitionFadeAcross( std::shared_ptr<Stage> Target, int Frames );
+	public:
+		TransitionFadeAcross( Framework &fw, std::shared_ptr<Stage> Target, int Frames );
 		virtual ~TransitionFadeAcross();
 
-    // Stage control
-    virtual void Begin();
-    virtual void Pause();
-    virtual void Resume();
-    virtual void Finish();
-    virtual void EventOccurred(Event *e);
-    virtual void Update(StageCmd * const cmd);
-    virtual void Render();
+		// Stage control
+		virtual void Begin();
+		virtual void Pause();
+		virtual void Resume();
+		virtual void Finish();
+		virtual void EventOccurred(Event *e);
+		virtual void Update(StageCmd * const cmd);
+		virtual void Render();
 		virtual bool IsTransition();
 };
 

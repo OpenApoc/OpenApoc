@@ -1,5 +1,7 @@
 #include "organisation.h"
 
+namespace OpenApoc {
+
 std::vector<Organisation> Organisation::defaultOrganisations =
 {
 	{"X-COM"},
@@ -34,3 +36,5 @@ std::vector<Organisation> Organisation::defaultOrganisations =
 Organisation::Organisation(std::string name)
 	: name(name)
 {}
+
+}; //namespace OpenApoc

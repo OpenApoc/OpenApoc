@@ -4,7 +4,8 @@
 
 namespace OpenApoc {
 
-TransitionFadeIn::TransitionFadeIn( std::shared_ptr<Stage> Target, ALLEGRO_COLOR Source, int Frames )
+TransitionFadeIn::TransitionFadeIn( Framework &fw, std::shared_ptr<Stage> Target, ALLEGRO_COLOR Source, int Frames )
+	: Stage(fw)
 {
 	targetStage = Target;
 	transitionFrom = Source;
@@ -23,10 +24,10 @@ TransitionFadeIn::~TransitionFadeIn()
 
 void TransitionFadeIn::Begin()
 {
-	targetRender = al_create_bitmap( FRAMEWORK->Display_GetWidth(), FRAMEWORK->Display_GetHeight() );
-	FRAMEWORK->Display_SetTarget( targetRender );
+	targetRender = al_create_bitmap( fw.Display_GetWidth(), fw.Display_GetHeight() );
+	fw.Display_SetTarget( targetRender );
 	targetStage->Render();
-	FRAMEWORK->Display_SetTarget();
+	fw.Display_SetTarget();
 }
 
 void TransitionFadeIn::Pause()
@@ -64,7 +65,7 @@ void TransitionFadeIn::Render()
 	{
 		transitionFrom.a = 0.0f;
 	}
-	al_draw_filled_rectangle( 0, 0, FRAMEWORK->Display_GetWidth(), FRAMEWORK->Display_GetHeight(), transitionFrom );
+	al_draw_filled_rectangle( 0, 0, fw.Display_GetWidth(), fw.Display_GetHeight(), transitionFrom );
 }
 
 bool TransitionFadeIn::IsTransition()

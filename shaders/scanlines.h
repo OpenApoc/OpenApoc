@@ -15,7 +15,7 @@ class ShaderScanlines : public Shader
 	public:
 		ShaderScanlines();
 		ShaderScanlines(int NonScanWidth, int ScanWidth, int ScanDecrease);
-		void Apply( ALLEGRO_BITMAP* Target );
+		void Apply( Framework &fw, ALLEGRO_BITMAP* Target );
 };
 
 }; //namespace OpenApoc

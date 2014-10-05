@@ -2,9 +2,10 @@
 #pragma once
 
 #include "framework/includes.h"
-#include "framework/framework.h"
 
 namespace OpenApoc {
+
+class Framework;
 
 class Palette
 {
@@ -12,7 +13,7 @@ class Palette
 		std::unique_ptr<Colour[]> colours;
 
 	public:
-		Palette( std::string Filename );
+		Palette( Framework &fw, std::string Filename );
 		~Palette();
 
 		Colour &GetColour(int Index);

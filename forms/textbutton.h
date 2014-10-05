@@ -2,10 +2,14 @@
 #pragma once
 
 #include "control.h"
-#include "game/resources/ifont.h"
-#include "game/apocresources/rawsound.h"
+#include "forms_enums.h"
 
 namespace OpenApoc {
+
+class IFont;
+class RawSound;
+class Framework;
+class Image;
 
 class TextButton : public Control
 {
@@ -24,7 +28,7 @@ class TextButton : public Control
 		HorizontalAlignment TextHAlign;
 		VerticalAlignment TextVAlign;
 
-		TextButton(Control* Owner, std::string Text, IFont* Font);
+		TextButton(Framework &fw, Control* Owner, std::string Text, IFont* Font);
 		virtual ~TextButton();
 
 		virtual void EventOccured(Event* e);

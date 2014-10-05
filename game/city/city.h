@@ -1,12 +1,13 @@
 #pragma once
 
-#include "building.h"
-#include "vehicle.h"
-#include "organisation.h"
-
 #include "framework/includes.h"
 
 namespace OpenApoc {
+
+class Building;
+class Organisation;
+class Framework;
+class Vehicle;
 
 class CityTile
 {
@@ -23,8 +24,8 @@ class City
 {
 	private:
 	public:
-	City (std::string mapName);
-	~City();
+		City (Framework &fw, std::string mapName);
+		~City();
 
 		int sizeX;
 		int sizeY;

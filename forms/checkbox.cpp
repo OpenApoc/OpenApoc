@@ -7,12 +7,12 @@ namespace OpenApoc {
 
 RawSound* CheckBox::buttonclick = nullptr;
 
-CheckBox::CheckBox( Control* Owner ) : Control( Owner ), Checked(false), imagechecked(nullptr), imageunchecked(nullptr)
+CheckBox::CheckBox( Framework &fw, Control* Owner ) : Control( fw, Owner ), Checked(false), imagechecked(nullptr), imageunchecked(nullptr)
 {
 	LoadResources();
 	if( buttonclick == nullptr )
 	{
-		buttonclick = new RawSound( "STRATEGC/INTRFACE/BUTTON1.RAW" );
+		buttonclick = new RawSound( fw, "STRATEGC/INTRFACE/BUTTON1.RAW" );
 	}
 }
 
@@ -24,7 +24,7 @@ void CheckBox::LoadResources()
 {
 	if( !imagechecked )
 	{
-		imagechecked = FRAMEWORK->gamecore->GetImage( "PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:65:UI/UI_PALETTE.PNG" );
+		imagechecked = fw.gamecore->GetImage( "PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:65:UI/UI_PALETTE.PNG" );
 		if( Size.x == 0 )
 		{
 			Size.x = imagechecked->width;
@@ -36,7 +36,7 @@ void CheckBox::LoadResources()
 	}
 	if( !imageunchecked )
 	{
-		imageunchecked = FRAMEWORK->gamecore->GetImage( "PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:64:UI/UI_PALETTE.PNG" );
+		imageunchecked = fw.gamecore->GetImage( "PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:64:UI/UI_PALETTE.PNG" );
 	}
 }
 
@@ -56,7 +56,7 @@ void CheckBox::EventOccured( Event* e )
 		ce->Type = e->Type;
 		memcpy( (void*)&(ce->Data.Forms), (void*)&(e->Data.Forms), sizeof( FRAMEWORK_FORMS_EVENT ) );
 		ce->Data.Forms.EventFlag = FormEventType::CheckBoxChange;
-		FRAMEWORK->PushEvent( ce );
+		fw.PushEvent( ce );
 	}
 }
 

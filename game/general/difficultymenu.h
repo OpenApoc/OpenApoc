@@ -16,17 +16,17 @@ class DifficultyMenu : public Stage
 		Form* difficultymenuform;
 		StageCmd stageCmd;
 
-  public:
-		DifficultyMenu();
+	public:
+		DifficultyMenu(Framework &fw);
 		~DifficultyMenu();
-    // Stage control
-    virtual void Begin();
-    virtual void Pause();
-    virtual void Resume();
-    virtual void Finish();
-    virtual void EventOccurred(Event *e);
-    virtual void Update(StageCmd * const cmd);
-    virtual void Render();
+		// Stage control
+		virtual void Begin();
+		virtual void Pause();
+		virtual void Resume();
+		virtual void Finish();
+		virtual void EventOccurred(Event *e);
+		virtual void Update(StageCmd * const cmd);
+		virtual void Render();
 		virtual bool IsTransition();
 };
 }; //namespace OpenApoc

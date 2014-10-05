@@ -5,6 +5,8 @@
 
 namespace OpenApoc {
 
+class Framework;
+
 class VScrollBar : public Control
 {
 	private:
@@ -22,7 +24,7 @@ class VScrollBar : public Control
 		int Value;
 		int LargeChange;
 
-		VScrollBar( Control* Owner );
+		VScrollBar( Framework &fw, Control* Owner );
 		virtual ~VScrollBar();
 
 		virtual void EventOccured( Event* e );

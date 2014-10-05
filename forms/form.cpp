@@ -2,7 +2,7 @@
 
 namespace OpenApoc {
 
-Form::Form( tinyxml2::XMLElement* FormConfiguration ) : Control( nullptr )
+Form::Form( Framework &fw, tinyxml2::XMLElement* FormConfiguration ) : Control( fw, nullptr )
 {
 	if( FormConfiguration == nullptr )
 	{

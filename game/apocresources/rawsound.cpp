@@ -4,11 +4,11 @@
 
 namespace OpenApoc {
 
-RawSound::RawSound( std::string Filename )
+RawSound::RawSound( Framework &fw, std::string Filename )
 {
 	std::string path = "/RAWSOUND/";
 	path.append( Filename );
-	ALLEGRO_FILE* f = FRAMEWORK->data.load_file( path, "rb" );
+	ALLEGRO_FILE* f = fw.data.load_file( path, "rb" );
 	sounddata = new Memory( al_fsize( f ) );
 	al_fread( f, sounddata->GetData(), sounddata->GetSize() );
 	al_fclose( f );

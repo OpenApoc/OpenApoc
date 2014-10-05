@@ -2,11 +2,14 @@
 #pragma once
 
 #include "control.h"
-#include "game/resources/ifont.h"
+#include "forms_enums.h"
 
 #define TEXTEDITOR_CARET_TOGGLE_TIME		30
 
 namespace OpenApoc {
+
+class IFont;
+class Framework;
 
 class TextEdit : public Control
 {
@@ -30,7 +33,7 @@ class TextEdit : public Control
 		HorizontalAlignment TextHAlign;
 		VerticalAlignment TextVAlign;
 
-		TextEdit(Control* Owner, std::string Text, IFont* Font);
+		TextEdit(Framework &fw, Control* Owner, std::string Text, IFont* Font);
 		virtual ~TextEdit();
 
 		virtual void EventOccured(Event* e);

@@ -1,11 +1,11 @@
 
 #include "vscrollbar.h"
-#include "../framework/framework.h"
-#include "../game/resources/gamecore.h"
+#include "framework/framework.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc {
 
-VScrollBar::VScrollBar( Control* Owner ) : Control( Owner ), Maximum(10), Minimum(0), Value(0),  GripperColour(al_map_rgb( 220, 192, 192 )), capture(false), LargeChange(2)
+VScrollBar::VScrollBar( Framework &fw, Control* Owner ) : Control( fw, Owner ), Maximum(10), Minimum(0), Value(0),  GripperColour(al_map_rgb( 220, 192, 192 )), capture(false), LargeChange(2)
 {
 	//LoadResources();
 }
@@ -40,14 +40,14 @@ void VScrollBar::EventOccured( Event* e )
 			ce->Type = e->Type;
 			memcpy( (void*)&(ce->Data.Forms), (void*)&(e->Data.Forms), sizeof( FRAMEWORK_FORMS_EVENT ) );
 			ce->Data.Forms.EventFlag = FormEventType::ScrollBarChange;
-			FRAMEWORK->PushEvent( ce );
+			fw.PushEvent( ce );
 		} else if ( e->Data.Forms.MouseInfo.Y <= segmentsize * (Value - Minimum) ) {
 			Value = Maths::Max(Minimum, Value - LargeChange);
 			Event* ce = new Event();
 			ce->Type = e->Type;
 			memcpy( (void*)&(ce->Data.Forms), (void*)&(e->Data.Forms), sizeof( FRAMEWORK_FORMS_EVENT ) );
 			ce->Data.Forms.EventFlag = FormEventType::ScrollBarChange;
-			FRAMEWORK->PushEvent( ce );
+			fw.PushEvent( ce );
 		} else {
 			capture = true;
 		}
@@ -67,7 +67,7 @@ void VScrollBar::EventOccured( Event* e )
 		ce->Type = e->Type;
 		memcpy( (void*)&(ce->Data.Forms), (void*)&(e->Data.Forms), sizeof( FRAMEWORK_FORMS_EVENT ) );
 		ce->Data.Forms.EventFlag = FormEventType::ScrollBarChange;
-		FRAMEWORK->PushEvent( ce );
+		fw.PushEvent( ce );
 	}
 
 	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this && e->Data.Forms.EventFlag == FormEventType::MouseClick )

@@ -2,9 +2,11 @@
 #pragma once
 
 #include "control.h"
-#include "game/apocresources/rawsound.h"
 
 namespace OpenApoc {
+
+class RawSound;
+class Image;
 
 class CheckBox : public Control
 {
@@ -23,7 +25,7 @@ class CheckBox : public Control
 	public:
 		bool Checked;
 
-		CheckBox( Control* Owner );
+		CheckBox( Framework &fw, Control* Owner );
 		virtual ~CheckBox();
 
 		virtual void EventOccured( Event* e );

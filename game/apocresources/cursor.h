@@ -7,6 +7,7 @@ namespace OpenApoc {
 
 class Palette;
 class Event;
+class Framework;
 
 class Cursor
 {
@@ -32,7 +33,7 @@ class Cursor
 
 		CursorType CurrentType;
 
-		Cursor( Palette* ColourPalette );
+		Cursor( Framework &fw, Palette* ColourPalette );
 		~Cursor();
 
 		void EventOccured( Event* e );

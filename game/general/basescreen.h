@@ -13,20 +13,20 @@ namespace OpenApoc {
 class BaseScreen : public Stage
 {
 	private:
-        Form* basescreenform;
+		Form* basescreenform;
 		StageCmd stageCmd;
 
-  public:
-        BaseScreen();
-        ~BaseScreen();
-    // Stage control
-    virtual void Begin();
-    virtual void Pause();
-    virtual void Resume();
-    virtual void Finish();
-    virtual void EventOccurred(Event *e);
-    virtual void Update(StageCmd * const cmd);
-    virtual void Render();
+	public:
+		BaseScreen(Framework &fw);
+		~BaseScreen();
+		// Stage control
+		virtual void Begin();
+		virtual void Pause();
+		virtual void Resume();
+		virtual void Finish();
+		virtual void EventOccurred(Event *e);
+		virtual void Update(StageCmd * const cmd);
+		virtual void Render();
 		virtual bool IsTransition();
 };
 

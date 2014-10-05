@@ -2,9 +2,11 @@
 #pragma once
 
 #include "control.h"
-#include "vscrollbar.h"
 
 namespace OpenApoc {
+
+class Framework;
+class VScrollBar;
 
 class ListBox : public Control
 {
@@ -19,8 +21,8 @@ class ListBox : public Control
 		virtual void OnRender();
 
 	public:
-		ListBox( Control* Owner );
-		ListBox( Control* Owner, VScrollBar* ExternalScrollBar );
+		ListBox( Framework &fw, Control* Owner );
+		ListBox( Framework &fw, Control* Owner, VScrollBar* ExternalScrollBar );
 		virtual ~ListBox();
 
 		virtual void EventOccured( Event* e );

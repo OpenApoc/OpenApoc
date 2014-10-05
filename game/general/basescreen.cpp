@@ -4,9 +4,10 @@
 
 namespace OpenApoc {
 
-BaseScreen::BaseScreen()
+BaseScreen::BaseScreen(Framework &fw)
+	: Stage(fw)
 {
-    basescreenform = FRAMEWORK->gamecore->GetForm("FORM_BASESCREEN");
+		basescreenform = fw.gamecore->GetForm("FORM_BASESCREEN");
 }
 
 BaseScreen::~BaseScreen()
@@ -31,8 +32,8 @@ void BaseScreen::Finish()
 
 void BaseScreen::EventOccurred(Event *e)
 {
-    basescreenform->EventOccured( e );
-	FRAMEWORK->gamecore->MouseCursor->EventOccured( e );
+		basescreenform->EventOccured( e );
+	fw.gamecore->MouseCursor->EventOccured( e );
 
 	if( e->Type == EVENT_KEY_DOWN )
 	{
@@ -41,18 +42,18 @@ void BaseScreen::EventOccurred(Event *e)
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
-    }
+		}
 
-    if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick )
-    {
-        std::cerr << "button " << e->Data.Forms.RaisedBy->Name << " clicked.\n";
-        return;
-    }
+		if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick )
+		{
+				std::cerr << "button " << e->Data.Forms.RaisedBy->Name << " clicked.\n";
+				return;
+		}
 }
 
 void BaseScreen::Update(StageCmd * const cmd)
 {
-    basescreenform->Update();
+		basescreenform->Update();
 	*cmd = stageCmd;
 	stageCmd = StageCmd();
 }
@@ -60,8 +61,8 @@ void BaseScreen::Update(StageCmd * const cmd)
 void BaseScreen::Render()
 {
 	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
-    basescreenform->Render();
-	FRAMEWORK->gamecore->MouseCursor->Render();
+		basescreenform->Render();
+	fw.gamecore->MouseCursor->Render();
 }
 
 bool BaseScreen::IsTransition()

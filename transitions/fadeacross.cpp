@@ -4,21 +4,22 @@
 
 namespace OpenApoc {
 
-TransitionFadeAcross::TransitionFadeAcross( std::shared_ptr<Stage> Target, int Frames )
+TransitionFadeAcross::TransitionFadeAcross( Framework &fw,std::shared_ptr<Stage> Target, int Frames )
+	: Stage(fw)
 {
-	auto sourceStage = FRAMEWORK->getCurrentStage();
+	auto sourceStage = fw.getCurrentStage();
 	targetStage = Target;
 
 	transitionFrames = Frames;
 	currentFrame = 0;
 
-	sourceRender = al_create_bitmap( FRAMEWORK->Display_GetWidth(), FRAMEWORK->Display_GetHeight() );
-	FRAMEWORK->Display_SetTarget( sourceRender );
+	sourceRender = al_create_bitmap( fw.Display_GetWidth(), fw.Display_GetHeight() );
+	fw.Display_SetTarget( sourceRender );
 	sourceStage->Render();
-	targetRender = al_create_bitmap( FRAMEWORK->Display_GetWidth(), FRAMEWORK->Display_GetHeight() );
-	FRAMEWORK->Display_SetTarget( targetRender );
+	targetRender = al_create_bitmap( fw.Display_GetWidth(), fw.Display_GetHeight() );
+	fw.Display_SetTarget( targetRender );
 	targetStage->Render();
-	FRAMEWORK->Display_SetTarget();
+	fw.Display_SetTarget();
 }
 
 TransitionFadeAcross::~TransitionFadeAcross()

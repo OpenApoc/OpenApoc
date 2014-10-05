@@ -3,8 +3,11 @@
 
 #include "control.h"
 #include "game/resources/ifont.h"
+#include "forms_enums.h"
 
 namespace OpenApoc {
+
+class Framework;
 
 class Label : public Control
 {
@@ -20,7 +23,7 @@ class Label : public Control
 		HorizontalAlignment TextHAlign;
 		VerticalAlignment TextVAlign;
 
-		Label(Control* Owner, std::string Text, IFont* Font);
+		Label(Framework &fw, Control* Owner, std::string Text, IFont* Font);
 		virtual ~Label();
 
 		virtual void EventOccured(Event* e);

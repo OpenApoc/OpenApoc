@@ -17,17 +17,17 @@ class MainMenu : public Stage
 		Form* mainmenuform;
 		StageCmd stageCmd;
 
-  public:
-		MainMenu();
+	public:
+		MainMenu(Framework &fw);
 		~MainMenu();
-    // Stage control
-    virtual void Begin();
-    virtual void Pause();
-    virtual void Resume();
-    virtual void Finish();
-    virtual void EventOccurred(Event *e);
-    virtual void Update(StageCmd * const cmd);
-    virtual void Render();
+		// Stage control
+		virtual void Begin();
+		virtual void Pause();
+		virtual void Resume();
+		virtual void Finish();
+		virtual void EventOccurred(Event *e);
+		virtual void Update(StageCmd * const cmd);
+		virtual void Render();
 		virtual bool IsTransition();
 };
 }; //namespace OpenApoc

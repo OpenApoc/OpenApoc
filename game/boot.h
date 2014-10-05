@@ -8,6 +8,8 @@
 
 namespace OpenApoc {
 
+class Image;
+
 class BootUp : public Stage
 {
 	private:
@@ -20,15 +22,16 @@ class BootUp : public Stage
 
 		static void* CreateGameCore(ALLEGRO_THREAD* thread, void* args);
 
-  public:
-    // Stage control
-    virtual void Begin();
-    virtual void Pause();
-    virtual void Resume();
-    virtual void Finish();
-    virtual void EventOccurred(Event *e);
-    virtual void Update(StageCmd * const cmd);
-    virtual void Render();
+	public:
+		BootUp(Framework &fw) : Stage(fw){};
+		// Stage control
+		virtual void Begin();
+		virtual void Pause();
+		virtual void Resume();
+		virtual void Finish();
+		virtual void EventOccurred(Event *e);
+		virtual void Update(StageCmd * const cmd);
+		virtual void Render();
 		virtual bool IsTransition();
 };
 

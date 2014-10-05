@@ -7,9 +7,10 @@
 
 namespace OpenApoc {
 
-MainMenu::MainMenu()
+MainMenu::MainMenu(Framework &fw)
+	: Stage(fw)
 {
-	mainmenuform = FRAMEWORK->gamecore->GetForm("FORM_MAINMENU");
+	mainmenuform = fw.gamecore->GetForm("FORM_MAINMENU");
 }
 
 MainMenu::~MainMenu()
@@ -18,7 +19,7 @@ MainMenu::~MainMenu()
 
 void MainMenu::Begin()
 {
-	musicplayer = std::unique_ptr<Music>(new Music(0));
+	musicplayer = std::unique_ptr<Music>(new Music(fw, 0));
 	musicplayer->Play();
 }
 
@@ -39,7 +40,7 @@ void MainMenu::Finish()
 void MainMenu::EventOccurred(Event *e)
 {
 	mainmenuform->EventOccured( e );
-	FRAMEWORK->gamecore->MouseCursor->EventOccured( e );
+	fw.gamecore->MouseCursor->EventOccured( e );
 
 	if( e->Type == EVENT_KEY_DOWN )
 	{
@@ -56,7 +57,7 @@ void MainMenu::EventOccurred(Event *e)
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = std::make_shared<TransitionFadeAcross>(
-				std::make_shared<OptionsMenu>(), FRAMES_PER_SECOND/4);
+				fw, std::make_shared<OptionsMenu>(fw), FRAMES_PER_SECOND/4);
 			return;
 		}
 		if( e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT" )
@@ -68,7 +69,7 @@ void MainMenu::EventOccurred(Event *e)
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = std::make_shared<TransitionFadeAcross>(
-				std::make_shared<DifficultyMenu>(), FRAMES_PER_SECOND/4);
+				fw, std::make_shared<DifficultyMenu>(fw), FRAMES_PER_SECOND/4);
 			return;
 		}
 	}
@@ -77,7 +78,7 @@ void MainMenu::EventOccurred(Event *e)
 	{
 		if( e->Data.Forms.RaisedBy->Name == "CHECK_DEBUGMODE" )
 		{
-			FRAMEWORK->gamecore->DebugModeEnabled = ((CheckBox*)e->Data.Forms.RaisedBy)->Checked;
+			fw.gamecore->DebugModeEnabled = ((CheckBox*)e->Data.Forms.RaisedBy)->Checked;
 		}
 	}
 
@@ -94,7 +95,7 @@ void MainMenu::Render()
 {
 	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
 	mainmenuform->Render();
-	FRAMEWORK->gamecore->MouseCursor->Render();
+	fw.gamecore->MouseCursor->Render();
 }
 
 bool MainMenu::IsTransition()

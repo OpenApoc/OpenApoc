@@ -1,9 +1,10 @@
 #include "graphic.h"
-#include "../game/resources/gamecore.h"
+#include "game/resources/gamecore.h"
+#include "framework/framework.h"
 
 namespace OpenApoc {
 
-Graphic::Graphic( Control* Owner, std::string Image ) : Control( Owner )
+Graphic::Graphic( Framework &fw, Control* Owner, std::string Image ) : Control( fw, Owner )
 {
 	image_name = Image;
 	image = nullptr;
@@ -22,7 +23,7 @@ void Graphic::OnRender()
 {
 	if( !image )
 	{
-		image = FRAMEWORK->gamecore->GetImage( image_name );
+		image = fw.gamecore->GetImage( image_name );
 		if( Size.x == 0 )
 		{
 			Size.x = image->width;

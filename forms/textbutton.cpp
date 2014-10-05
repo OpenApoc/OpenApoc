@@ -1,16 +1,18 @@
 
 #include "textbutton.h"
-#include "../framework/framework.h"
+#include "framework/framework.h"
+#include "game/apocresources/rawsound.h"
+#include "game/resources/ifont.h"
 
 namespace OpenApoc {
 
 RawSound* TextButton::buttonclick = nullptr;
 
-TextButton::TextButton( Control* Owner, std::string Text, IFont* Font ) : Control( Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Centre ), TextVAlign( VerticalAlignment::Centre ), buttonbackground(FRAMEWORK->data.load_image( "UI/TEXTBUTTONBACK.PNG" ))
+TextButton::TextButton( Framework &fw, Control* Owner, std::string Text, IFont* Font ) : Control( fw, Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Centre ), TextVAlign( VerticalAlignment::Centre ), buttonbackground(fw.data.load_image( "UI/TEXTBUTTONBACK.PNG" ))
 {
 	if( buttonclick == nullptr )
 	{
-		buttonclick = new RawSound( "STRATEGC/INTRFACE/BUTTON1.RAW" );
+		buttonclick = new RawSound( fw, "STRATEGC/INTRFACE/BUTTON1.RAW" );
 	}
 }
 
@@ -33,7 +35,7 @@ void TextButton::EventOccured( Event* e )
 		ce->Type = e->Type;
 		memcpy( (void*)&(ce->Data.Forms), (void*)&(e->Data.Forms), sizeof( FRAMEWORK_FORMS_EVENT ) );
 		ce->Data.Forms.EventFlag = FormEventType::ButtonClick;
-		FRAMEWORK->PushEvent( ce );
+		fw.PushEvent( ce );
 	}
 }
 

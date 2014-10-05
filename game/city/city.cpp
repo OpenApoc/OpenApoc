@@ -1,20 +1,22 @@
 #include "city.h"
 #include "framework/framework.h"
+#include "building.h"
+#include "organisation.h"
 
 namespace OpenApoc {
 
-City::City(std::string mapName)
+City::City(Framework &fw, std::string mapName)
 	: sizeX(100), sizeY(100), sizeZ(10),
 	  organisations(Organisation::defaultOrganisations)
 {
-	auto file = FRAMEWORK->data.load_file("UFODATA/" + mapName, "rb");
+	auto file = fw.data.load_file("UFODATA/" + mapName, "rb");
 	if (!file)
 	{
 		std::cerr << "Failed to open city map:" << mapName << "\n";
 		return;
 	}
 
-	this->buildings = loadBuildingsFromBld(mapName + ".BLD", this->organisations, Building::defaultNames);
+	this->buildings = loadBuildingsFromBld(fw, mapName + ".BLD", this->organisations, Building::defaultNames);
 
 	tiles.resize(sizeZ);
 

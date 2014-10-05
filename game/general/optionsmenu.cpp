@@ -6,9 +6,10 @@
 
 namespace OpenApoc {
 
-OptionsMenu::OptionsMenu()
+OptionsMenu::OptionsMenu(Framework &fw)
+	: Stage(fw)
 {
-	menuform = FRAMEWORK->gamecore->GetForm("FORM_OPTIONSMENU");
+	menuform = fw.gamecore->GetForm("FORM_OPTIONSMENU");
 }
 
 OptionsMenu::~OptionsMenu()
@@ -34,7 +35,7 @@ void OptionsMenu::Finish()
 void OptionsMenu::EventOccurred(Event *e)
 {
 	menuform->EventOccured( e );
-	FRAMEWORK->gamecore->MouseCursor->EventOccured( e );
+	fw.gamecore->MouseCursor->EventOccured( e );
 
 	if( e->Type == EVENT_KEY_DOWN )
 	{
@@ -45,15 +46,15 @@ void OptionsMenu::EventOccurred(Event *e)
 		}
 	}
 
-    if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick )
-    {
-        if( e->Data.Forms.RaisedBy->Name == "BUTTON_TEST_XCOMBASE" )
-        {
+	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick )
+	{
+		if( e->Data.Forms.RaisedBy->Name == "BUTTON_TEST_XCOMBASE" )
+		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<TransitionFadeAcross>(std::make_shared<BaseScreen>(), FRAMES_PER_SECOND / 4);
-            return;
-        }
-    }
+			stageCmd.nextStage = std::make_shared<TransitionFadeAcross>(fw, std::make_shared<BaseScreen>(fw), FRAMES_PER_SECOND / 4);
+			return;
+		}
+	}
 }
 
 void OptionsMenu::Update(StageCmd * const cmd)
@@ -68,7 +69,7 @@ void OptionsMenu::Render()
 {
 	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
 	menuform->Render();
-	FRAMEWORK->gamecore->MouseCursor->Render();
+	fw.gamecore->MouseCursor->Render();
 }
 
 bool OptionsMenu::IsTransition()

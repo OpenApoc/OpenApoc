@@ -6,7 +6,7 @@
 
 namespace OpenApoc {
 
-Control::Control(Control* Owner) : Name("Control"), owningControl(Owner), focusedChild(nullptr), BackgroundColour(al_map_rgb( 128, 80, 80 )), mouseInside(false), mouseDepressed(false), controlArea(nullptr)
+Control::Control(Framework &fw, Control* Owner) : fw(fw), Name("Control"), owningControl(Owner), focusedChild(nullptr), BackgroundColour(al_map_rgb( 128, 80, 80 )), mouseInside(false), mouseDepressed(false), controlArea(nullptr)
 {
 	if( Owner != nullptr )
 	{
@@ -99,7 +99,7 @@ void Control::EventOccured( Event* e )
 				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
 				memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-				FRAMEWORK->PushEvent( newevent );
+				fw.PushEvent( newevent );
 				mouseInside = true;
 			}
 
@@ -111,7 +111,7 @@ void Control::EventOccured( Event* e )
 			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
 			memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-			FRAMEWORK->PushEvent( newevent );
+			fw.PushEvent( newevent );
 
 			e->Handled = true;
 		} else {
@@ -125,7 +125,7 @@ void Control::EventOccured( Event* e )
 				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
 				memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-				FRAMEWORK->PushEvent( newevent );
+				fw.PushEvent( newevent );
 				mouseInside = false;
 			}
 		}
@@ -143,7 +143,7 @@ void Control::EventOccured( Event* e )
 			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
 			memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-			FRAMEWORK->PushEvent( newevent );
+			fw.PushEvent( newevent );
 			mouseDepressed = true;
 
 			e->Handled = true;
@@ -162,7 +162,7 @@ void Control::EventOccured( Event* e )
 			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
 			memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-			FRAMEWORK->PushEvent( newevent );
+			fw.PushEvent( newevent );
 
 			if( mouseDepressed )
 			{
@@ -174,7 +174,7 @@ void Control::EventOccured( Event* e )
 				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
 				memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-				FRAMEWORK->PushEvent( newevent );
+				fw.PushEvent( newevent );
 			}
 
 			e->Handled = true;
@@ -192,7 +192,7 @@ void Control::EventOccured( Event* e )
 			newevent->Data.Forms.EventFlag = (e->Type == EVENT_KEY_DOWN ? FormEventType::KeyDown : FormEventType::KeyUp);
 			memcpy( (void*)&newevent->Data.Forms.KeyInfo, (void*)&e->Data.Keyboard, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
 			memset( (void*)&newevent->Data.Forms.MouseInfo, 0, sizeof( FRAMEWORK_MOUSE_EVENT ) );
-			FRAMEWORK->PushEvent( newevent );
+			fw.PushEvent( newevent );
 
 			e->Handled = true;
 		}
@@ -207,7 +207,7 @@ void Control::EventOccured( Event* e )
 			newevent->Data.Forms.EventFlag = FormEventType::KeyPress;
 			memcpy( (void*)&newevent->Data.Forms.KeyInfo, (void*)&e->Data.Keyboard, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
 			memset( (void*)&newevent->Data.Forms.MouseInfo, 0, sizeof( FRAMEWORK_MOUSE_EVENT ) );
-			FRAMEWORK->PushEvent( newevent );
+			fw.PushEvent( newevent );
 
 			e->Handled = true;
 		}
@@ -216,7 +216,7 @@ void Control::EventOccured( Event* e )
 
 void Control::Render()
 {
-	ALLEGRO_BITMAP* previousTarget = FRAMEWORK->Display_GetCurrentTarget();
+	ALLEGRO_BITMAP* previousTarget = fw.Display_GetCurrentTarget();
 
 	if( Size.x == 0 || Size.y == 0 )
 	{
@@ -231,12 +231,12 @@ void Control::Render()
 		controlArea = al_create_bitmap( Size.x, Size.y );
 	}
 
-	FRAMEWORK->Display_SetTarget( controlArea );
+	fw.Display_SetTarget( controlArea );
 	PreRender();
 	OnRender();
 	PostRender();
 
-	FRAMEWORK->Display_SetTarget( previousTarget );
+	fw.Display_SetTarget( previousTarget );
 	al_draw_bitmap( controlArea, Location.x, Location.y, 0 );
 }
 
@@ -324,12 +324,12 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		// Child controls
 		if( nodename == "control" )
 		{
-			Control* c = new Control( this );
+			Control* c = new Control( fw, this );
 			c->ConfigureFromXML( node );
 		}
 		if( nodename == "label" )
 		{
-			Label* l = new Label( this, FRAMEWORK->gamecore->GetString( node->Attribute("text") ), FRAMEWORK->gamecore->GetFont( node->FirstChildElement("font")->GetText() ) );
+			Label* l = new Label( fw, this, fw.gamecore->GetString( node->Attribute("text") ), fw.gamecore->GetFont( node->FirstChildElement("font")->GetText() ) );
 			l->ConfigureFromXML( node );
 			subnode = node->FirstChildElement("alignment");
 			if( subnode != nullptr )
@@ -370,12 +370,12 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		}
 		if( nodename == "graphic" )
 		{
-			Graphic* g = new Graphic( this, node->FirstChildElement("image")->GetText() );
+			Graphic* g = new Graphic( fw, this, node->FirstChildElement("image")->GetText() );
 			g->ConfigureFromXML( node );
 		}
 		if( nodename == "textbutton" )
 		{
-			TextButton* tb = new TextButton( this,  FRAMEWORK->gamecore->GetString( node->Attribute("text") ), FRAMEWORK->gamecore->GetFont( node->FirstChildElement("font")->GetText() ) );
+			TextButton* tb = new TextButton( fw, this,  fw.gamecore->GetString( node->Attribute("text") ), fw.gamecore->GetFont( node->FirstChildElement("font")->GetText() ) );
 			tb->ConfigureFromXML( node );
 		}
 		if( nodename == "graphicbutton" )
@@ -393,20 +393,20 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 			}
 			if( node->FirstChildElement("imagehover") == nullptr )
 			{
-				gb = new GraphicButton( this, gb_image, gb_dep );
+				gb = new GraphicButton( fw, this, gb_image, gb_dep );
 			} else {
-				gb = new GraphicButton( this, gb_image, gb_dep, node->FirstChildElement("imagehover")->GetText() );
+				gb = new GraphicButton( fw, this, gb_image, gb_dep, node->FirstChildElement("imagehover")->GetText() );
 			}
 			gb->ConfigureFromXML( node );
 		}
 		if( nodename == "checkbox" )
 		{
-			CheckBox* cb = new CheckBox( this );
+			CheckBox* cb = new CheckBox( fw, this );
 			cb->ConfigureFromXML( node );
 		}
 		if( nodename == "vscroll" )
 		{
-			VScrollBar* vsb = new VScrollBar( this );
+			VScrollBar* vsb = new VScrollBar( fw, this );
 			vsb->ConfigureFromXML( node );
 
 			subnode = node->FirstChildElement("grippercolour");
@@ -435,7 +435,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 
 		if( nodename == "hscroll" )
 		{
-			HScrollBar* hsb = new HScrollBar( this );
+			HScrollBar* hsb = new HScrollBar( fw, this );
 			hsb->ConfigureFromXML( node );
 
 			subnode = node->FirstChildElement("grippercolour");
@@ -471,13 +471,13 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 				attribvalue = node->Attribute("scrollbarid");
 				vsb = (VScrollBar*)this->FindControl( attribvalue );
 			}
-			ListBox* lb = new ListBox( this, vsb );
+			ListBox* lb = new ListBox( fw, this, vsb );
 			lb->ConfigureFromXML( node );
 		}
 
 		if( nodename == "textedit" )
 		{
-			TextEdit* te = new TextEdit( this, "", FRAMEWORK->gamecore->GetFont( node->FirstChildElement("font")->GetText() ) );
+			TextEdit* te = new TextEdit( fw, this, "", fw.gamecore->GetFont( node->FirstChildElement("font")->GetText() ) );
 			te->ConfigureFromXML( node );
 			subnode = node->FirstChildElement("alignment");
 			if( subnode != nullptr )
@@ -529,7 +529,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		{
 			if( owningControl == nullptr )
 			{
-				Location.x = (FRAMEWORK->Display_GetWidth() / 2) - (Size.x / 2);
+				Location.x = (fw.Display_GetWidth() / 2) - (Size.x / 2);
 			} else {
 				Location.x = (owningControl->Size.x / 2) - (Size.x / 2);
 			}
@@ -538,7 +538,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		{
 			if( owningControl == nullptr )
 			{
-				Location.x = FRAMEWORK->Display_GetWidth() - Size.x;
+				Location.x = fw.Display_GetWidth() - Size.x;
 			} else {
 				Location.x = owningControl->Size.x - Size.x;
 			}
@@ -555,7 +555,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		{
 			if( owningControl == nullptr )
 			{
-				Location.y = (FRAMEWORK->Display_GetHeight() / 2) - (Size.y / 2);
+				Location.y = (fw.Display_GetHeight() / 2) - (Size.y / 2);
 			} else {
 				Location.y = (owningControl->Size.y / 2) - (Size.y / 2);
 			}
@@ -564,7 +564,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		{
 			if( owningControl == nullptr )
 			{
-				Location.y = FRAMEWORK->Display_GetHeight() - Size.y;
+				Location.y = fw.Display_GetHeight() - Size.y;
 			} else {
 				Location.y = owningControl->Size.y - Size.y;
 			}

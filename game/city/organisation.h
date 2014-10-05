@@ -2,6 +2,8 @@
 
 #include "framework/includes.h"
 
+namespace OpenApoc {
+
 class Organisation
 {
 public:
@@ -9,3 +11,5 @@ public:
 	Organisation(std::string name);
 	static std::vector<Organisation> defaultOrganisations;
 };
+
+}; //namespace OpenApoc

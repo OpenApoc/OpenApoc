@@ -2,9 +2,11 @@
 #pragma once
 
 #include "control.h"
-#include "game/apocresources/rawsound.h"
 
 namespace OpenApoc {
+
+class RawSound;
+class Image;
 
 class GraphicButton : public Control
 {
@@ -23,8 +25,8 @@ class GraphicButton : public Control
 		virtual void OnRender();
 
 	public:
-		GraphicButton( Control* Owner, std::string Image, std::string ImageDepressed );
-		GraphicButton( Control* Owner, std::string Image, std::string ImageDepressed, std::string ImageHover );
+		GraphicButton( Framework &fw, Control* Owner, std::string Image, std::string ImageDepressed );
+		GraphicButton( Framework &fw, Control* Owner, std::string Image, std::string ImageDepressed, std::string ImageHover );
 		virtual ~GraphicButton();
 
 		virtual void EventOccured( Event* e );

@@ -6,8 +6,6 @@
 
 namespace OpenApoc {
 
-Framework* Framework::System;
-
 Framework::Framework(const std::string dataRoot)
 	: data(dataRoot)
 {
@@ -21,7 +19,7 @@ Framework::Framework(const std::string dataRoot)
 		quitProgram = true;
 		return;
 	}
-	
+
 	al_init_font_addon();
 	if( !al_install_keyboard() || !al_install_mouse() || !al_init_primitives_addon() || !al_init_ttf_addon() || !al_init_image_addon() )
 	{
@@ -60,8 +58,6 @@ Framework::Framework(const std::string dataRoot)
 	al_register_event_source( eventAllegro, al_get_mouse_event_source() );
 	al_register_event_source( eventAllegro, al_get_timer_event_source( frameTimer ) );
 
-	System = this;
-
 #ifdef FRAMEWORK_SPEED_SLOWDOWN
 	enableSlowDown = true;
 #else
@@ -72,6 +68,10 @@ Framework::Framework(const std::string dataRoot)
 
 Framework::~Framework()
 {
+	//Kill gamecore and program stages first, so any resources are cleaned before
+	//allegro is de-inited
+	gamecore.reset();
+	ProgramStages.Clear();
 #ifdef WRITE_LOG
 	printf( "Framework: Save Config\n" );
 #endif
@@ -103,7 +103,7 @@ void Framework::Run()
 	printf( "Framework: Run.Program Loop\n" );
 #endif
 
-	ProgramStages.Push( std::make_shared<BootUp>() );
+	ProgramStages.Push( std::make_shared<BootUp>(*this) );
 
 	al_start_timer( frameTimer );
 
@@ -145,7 +145,7 @@ void Framework::Run()
 			ProgramStages.Current()->Render();
 			if( activeShader != 0 )
 			{
-				activeShader->Apply( al_get_backbuffer( screen ) );
+				activeShader->Apply( *this, al_get_backbuffer( screen ) );
 			}
 			al_flip_display();
 		}

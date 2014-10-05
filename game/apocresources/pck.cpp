@@ -1,26 +1,29 @@
 
 #include "pck.h"
+#include "framework/framework.h"
+#include "palette.h"
+#include "framework/image.h"
 
 namespace OpenApoc {
 
-PCK::PCK( std::string PckFilename, std::string TabFilename, Palette &ColourPalette )
+PCK::PCK( Framework &fw, std::string PckFilename, std::string TabFilename, Palette &ColourPalette )
 {
-	ProcessFile(PckFilename, TabFilename, ColourPalette, -1);
+	ProcessFile(fw, PckFilename, TabFilename, ColourPalette, -1);
 }
 
-PCK::PCK(std::string PckFilename, std::string TabFilename, Palette &ColourPalette, int Index)
+PCK::PCK(Framework &fw, std::string PckFilename, std::string TabFilename, Palette &ColourPalette, int Index)
 {
-	ProcessFile(PckFilename, TabFilename, ColourPalette, Index);
+	ProcessFile(fw, PckFilename, TabFilename, ColourPalette, Index);
 }
 
 PCK::~PCK()
 {
 }
 
-void PCK::ProcessFile(std::string PckFilename, std::string TabFilename, Palette &ColourPalette, int Index)
+void PCK::ProcessFile(Framework &fw, std::string PckFilename, std::string TabFilename, Palette &ColourPalette, int Index)
 {
-	ALLEGRO_FILE* pck = FRAMEWORK->data.load_file(PckFilename, "rb");
-	ALLEGRO_FILE* tab = FRAMEWORK->data.load_file(TabFilename, "rb");
+	ALLEGRO_FILE* pck = fw.data.load_file(PckFilename, "rb");
+	ALLEGRO_FILE* tab = fw.data.load_file(TabFilename, "rb");
 
 	int16_t version = al_fread16le(pck);
 	al_fseek(pck, 0, ALLEGRO_SEEK_SET);

@@ -1,18 +1,20 @@
 
 #include "palette.h"
+#include "framework/image.h"
+#include "framework/framework.h"
 
 namespace OpenApoc {
 
-Palette::Palette( std::string Filename )
+Palette::Palette( Framework &fw, std::string Filename )
 {
 	std::shared_ptr<Image> paletteimage;
 	unsigned char colourblock[3];
 	unsigned int idx = 0;
 
-	paletteimage = FRAMEWORK->data.load_image( Filename );
+	paletteimage = fw.data.load_image( Filename );
 	if( !paletteimage )
 	{
-		ALLEGRO_FILE* f = FRAMEWORK->data.load_file( Filename, "rb" );
+		ALLEGRO_FILE* f = fw.data.load_file( Filename, "rb" );
 		size_t numEntries = al_fsize(f) / 3;
 
 		colours.reset(new Colour[numEntries]);
