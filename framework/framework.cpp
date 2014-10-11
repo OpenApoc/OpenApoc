@@ -5,7 +5,28 @@
 #include "game/resources/gamecore.h"
 #include "game/city/city.h"
 
+namespace {
+
+static std::map<std::string, std::string> defaultConfig =
+{
+#ifdef PANDORA
+	{"Visual.ScreenWidth", "800"},
+	{"Visual.ScreenHeight", "480"},
+	{"Visual.FullScreen", "true"},
+#else
+	{"Visual.ScreenWidth", "1600"},
+	{"Visual.ScreenHeight", "900"},
+	{"Visual.FullScreen", "false"},
+#endif
+	{"Language", "en_gb"},
+	{"GameRules", "XCOMAPOC.XML"},
+};
+
+};
+
 namespace OpenApoc {
+
+
 
 Framework::Framework(const std::string dataRoot)
 	: data(dataRoot)
@@ -43,7 +64,7 @@ Framework::Framework(const std::string dataRoot)
 #endif
 	quitProgram = false;
 	framesToProcess = 0;
-	Settings.reset(new ConfigFile( "settings.cfg" ));
+	Settings.reset(new ConfigFile( "settings.cfg", defaultConfig));
 
 	eventAllegro = al_create_event_queue();
 	eventMutex = al_create_mutex_recursive();
@@ -361,7 +382,7 @@ void Framework::ShutdownFramework()
 void Framework::SaveSettings()
 {
 	// Just to keep the filename consistant
-	Settings->Save( "settings.cfg" );
+	Settings->save( "settings.cfg" );
 }
 
 void Framework::Display_Initialise()
@@ -369,41 +390,11 @@ void Framework::Display_Initialise()
 #ifdef WRITE_LOG
 	printf( "Framework: Initialise Display\n" );
 #endif
-
-	bool foundMode = false;
-#ifdef PANDORA
-	int fallbackW = 800;
-	int fallbackH = 480;
-	bool scrFS = true;
-#else
-	int fallbackW = 640;
-	int fallbackH = 480;
-	bool scrFS = false;
-#endif
-	int scrW = fallbackW;
-	int scrH = fallbackH;
-
 	int display_flags = ALLEGRO_OPENGL;
 
-	// Load configuration
-	if( Settings->KeyExists( "Visual.ScreenWidth" ) )
-	{
-		Settings->GetIntegerValue( "Visual.ScreenWidth", &scrW );
-	} else {
-		Settings->SetIntegerValue( "Visual.ScreenWidth", scrW );
-	}
-	if( Settings->KeyExists( "Visual.ScreenHeight" ) )
-	{
-		Settings->GetIntegerValue( "Visual.ScreenHeight", &scrH );
-	} else {
-		Settings->SetIntegerValue( "Visual.ScreenHeight", scrH );
-	}
-	if( Settings->KeyExists( "Visual.FullScreen" ) )
-	{
-		Settings->GetBooleanValue( "Visual.FullScreen", &scrFS );
-	} else {
-		Settings->SetBooleanValue( "Visual.FullScreen", scrFS );
-	}
+	int scrW = Settings->getInt("Visual.ScreenWidth");
+	int scrH = Settings->getInt("Visual.ScreenHeight");
+	bool scrFS = Settings->getBool("Visual.FullScreen");
 
 	if( scrFS )
 	{
@@ -412,36 +403,7 @@ void Framework::Display_Initialise()
 
 	al_set_new_display_flags(display_flags);
 
-	// Get Current Resolution
-	for( int modeIdx = 0; modeIdx < al_get_num_display_modes(); modeIdx++ )
-	{
-		if( al_get_display_mode( modeIdx, &screenMode ) != NULL )
-		{
-			if( screenMode.width == scrW && screenMode.height == scrH )
-			{
-				foundMode = true;
-			} else {
-				if( !scrFS && screenMode.width > scrW && screenMode.height > scrH )
-				{
-					foundMode = true;	// We're windowed, and there's a resolution greater, so should be okay
-				} else {
-					fallbackW = screenMode.width;
-					fallbackH = screenMode.height;
-				}
-			}
-		}
-		if( foundMode )
-		{
-			break;
-		}
-	}
-
-	if( foundMode )
-	{
-		screen = al_create_display( scrW, scrH );
-	} else {
-		screen = al_create_display( fallbackW, fallbackH );
-	}
+	screen = al_create_display( scrW, scrH );
 
 	if (!screen)
 	{
