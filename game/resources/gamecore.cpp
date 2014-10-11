@@ -13,7 +13,7 @@ GameCore::GameCore(Framework &fw)
 
 void GameCore::Load(std::string CoreXMLFilename, std::string Language)
 {
-	assert(Loaded = false);
+	assert(Loaded == false);
 	language = Language;
 	ParseXMLDoc( CoreXMLFilename );
 	DebugModeEnabled = false;
