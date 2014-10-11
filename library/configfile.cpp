@@ -109,4 +109,27 @@ ConfigFile::getBool(const std::string key)
 	return false;
 }
 
+void
+ConfigFile::set(const std::string key, const std::string value)
+{
+	this->values[key] = value;
+}
+
+void
+ConfigFile::set(const std::string key, bool value)
+{
+	if (value)
+		this->set(key, trueValues[0]);
+	else
+		this->set(key, falseValues[0]);
+}
+
+void
+ConfigFile::set(const std::string key, int value)
+{
+	std::stringstream ss;
+	ss << std::dec << value;
+	this->set(key, ss.str());
+}
+
 }; //namespace OpenApoc
