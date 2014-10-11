@@ -1,65 +1,63 @@
-#include "cityview.h"
-#include "city.h"
+#include "tileview.h"
+#include "tile.h"
 
 #include "framework/includes.h"
-
-#include "building.h"
-#include "organisation.h"
-#include "vehicle.h"
 #include "framework/framework.h"
+#include "framework/image.h"
+#include "game/resources/gamecore.h"
 
 
 namespace OpenApoc {
 
-CityView::CityView(Framework &fw)
-	: Stage(fw), pal(new Palette(fw, "UFODATA/PAL_04.DAT")),
-	  cityPck(new PCK(fw, "UFODATA/CITY.PCK", "UFODATA/CITY.TAB", *pal)),
-	  offsetX(0), offsetY(0), maxZDraw(2),
+TileView::TileView(Framework &fw, TileMap &map, Vec3<float> tileSize)
+	: Stage(fw), map(map), tileSize(tileSize), maxZDraw(10), offsetX(0), offsetY(0),
 	  selectedTilePosition(0,0,0), selectedTileImageBack(fw.data.load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
 	  selectedTileImageFront(fw.data.load_image("CITY/SELECTED-CITYTILE-FRONT.PNG"))
 {
 }
 
-CityView::~CityView()
+TileView::~TileView()
 {
 }
 
-void CityView::Begin()
+void TileView::Begin()
 {
 }
 
-void CityView::Pause()
+void TileView::Pause()
 {
 }
 
-void CityView::Resume()
+void TileView::Resume()
 {
 }
 
-void CityView::Finish()
+void TileView::Finish()
 {
 }
 
 
-static Vec2<int> translateCityToScreenCoords(Vec3<int> c)
+Vec2<float>
+TileView::tileToScreenCoords(Vec3<float> c)
 {
-	int x = (c.x*CITY_TILE_WIDTH/2) - (c.y*CITY_TILE_WIDTH/2);
-	int y = (c.x*CITY_TILE_HEIGHT/2) + (c.y*CITY_TILE_HEIGHT/2)
-		+ (c.z*CITY_TILE_ZOFFSET);
+	float x = (c.x*tileSize.x/2) - (c.y*tileSize.x/2);
+	float y = (c.x*tileSize.y/2) + (c.y*tileSize.y/2)
+		- (c.z*tileSize.z);
 
-	return Vec2<int>{x,y};
+	return Vec2<float>{x,y};
 }
 
-static Vec3<int> translateScreenToCityCoords(Vec2<int> screenPos, int z)
+Vec3<float>
+TileView::screenToTileCoords(Vec2<float> screenPos, float z)
 {
-	screenPos.y -= (z*CITY_TILE_ZOFFSET);
-	int y = ((screenPos.y/(CITY_TILE_HEIGHT/2)) - (screenPos.x/(CITY_TILE_WIDTH/2))) / (2);
-	int x = ((screenPos.y/(CITY_TILE_HEIGHT/2)) + (screenPos.x/(CITY_TILE_WIDTH/2))) / (2);
+	screenPos.y += (z*tileSize.z);
+	float y = ((screenPos.y/(tileSize.y/2)) - (screenPos.x/(tileSize.x/2))) / (2);
+	float x = ((screenPos.y/(tileSize.y/2)) + (screenPos.x/(tileSize.x/2))) / (2);
 
-	return Vec3<int>{x,y,z};
+	return Vec3<float>{x,y,z};
 }
 
-void CityView::EventOccurred(Event *e)
+void TileView::EventOccurred(Event *e)
 {
 	fw.gamecore->MouseCursor->EventOccured( e );
 	bool selectionChanged = false;
@@ -75,16 +73,16 @@ void CityView::EventOccurred(Event *e)
 		switch (e->Data.Keyboard.KeyCode)
 		{
 			case ALLEGRO_KEY_UP:
-				offsetY += CITY_TILE_HEIGHT;
+				offsetY += tileSize.y;
 				break;
 			case ALLEGRO_KEY_DOWN:
-				offsetY -= CITY_TILE_HEIGHT;
+				offsetY -= tileSize.y;
 				break;
 			case ALLEGRO_KEY_LEFT:
-				offsetX += CITY_TILE_WIDTH;
+				offsetX += tileSize.x;
 				break;
 			case ALLEGRO_KEY_RIGHT:
-				offsetX -= CITY_TILE_WIDTH;
+				offsetX -= tileSize.x;
 				break;
 
 			case ALLEGRO_KEY_PGDN:
@@ -94,14 +92,14 @@ void CityView::EventOccurred(Event *e)
 				}
 				break;
 			case ALLEGRO_KEY_PGUP:
-				if( maxZDraw < fw.state.city->sizeZ)
+				if( maxZDraw < map.size.z)
 				{
 					maxZDraw++;
 				}
 				break;
 			case ALLEGRO_KEY_S:
 				selectionChanged = true;
-				if (selectedTilePosition.y < (fw.state.city->sizeY-1))
+				if (selectedTilePosition.y < (map.size.y-1))
 					selectedTilePosition.y++;
 				break;
 			case ALLEGRO_KEY_W:
@@ -116,12 +114,12 @@ void CityView::EventOccurred(Event *e)
 				break;
 			case ALLEGRO_KEY_D:
 				selectionChanged = true;
-				if (selectedTilePosition.x < (fw.state.city->sizeX-1))
+				if (selectedTilePosition.x < (map.size.x-1))
 					selectedTilePosition.x++;
 				break;
 			case ALLEGRO_KEY_R:
 				selectionChanged = true;
-				if (selectedTilePosition.z < (fw.state.city->sizeZ-1))
+				if (selectedTilePosition.z < (map.size.z-1))
 					selectedTilePosition.z++;
 				break;
 			case ALLEGRO_KEY_F:
@@ -134,53 +132,43 @@ void CityView::EventOccurred(Event *e)
 	else if (e->Type == EVENT_MOUSE_DOWN)
 	{
 		auto &ev = e->Data.Mouse;
-		auto selected = translateScreenToCityCoords(Vec2<int>{ev.X - offsetX, ev.Y - offsetY}, maxZDraw-1);
+		auto selected = screenToTileCoords(Vec2<float>{(float)ev.X - offsetX, (float)ev.Y - offsetY}, (float)maxZDraw-1);
 
 		if (selected.x < 0) selected.x = 0;
 		if (selected.y < 0) selected.y = 0;
 		if (selected.x > 99) selected.x = 99;
 		if (selected.y > 99) selected.y = 99;
-		selectedTilePosition = selected;
+		selectedTilePosition = Vec3<int>{(int)selected.x, (int)selected.y, (int)selected.z};
 		selectionChanged = true;
 	}
 	if (fw.gamecore->DebugModeEnabled &&
 	    selectionChanged)
 	{
-		auto &tile = fw.state.city->tiles[selectedTilePosition.z]
+		auto &tile = map.tiles[selectedTilePosition.z]
 			[selectedTilePosition.y]
 			[selectedTilePosition.x];
-		std::cout << "Selection: X=" << selectedTilePosition.x
-			<< " Y=" << selectedTilePosition.y
-			<< " Z=" << selectedTilePosition.z
-			<< " TileID =" << tile.id << "\n";
-		if (tile.building)
-		{
-			std::cout << "\tBuilding: \"" << tile.building->name
-				<< "\" Owner: \"" << tile.building->owner.name << "\"\n";
-		}
-		else
-		{
-			std::cout << "\tNot part of building\n";
-		}
+		std::cerr << "Selected tile x=" << selectedTilePosition.x <<
+			" y=" << selectedTilePosition.y <<
+			" z=" << selectedTilePosition.z << "\n";
 	}
 }
 
-void CityView::Update(StageCmd * const cmd)
+void TileView::Update(StageCmd * const cmd)
 {
 	*cmd = stageCmd;
 	stageCmd = StageCmd();
 }
 
-void CityView::Render()
+void TileView::Render()
 {
 	int dpyWidth = fw.Display_GetWidth();
 	int dpyHeight = fw.Display_GetHeight();
 	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
-	for (int y = 0; y < fw.state.city->sizeY; y++)
+	for (int y = 0; y < map.size.y; y++)
 	{
 		for (int z = 0; z < maxZDraw; z++)
 		{
-			for (int x = 0; x < fw.state.city->sizeX; x++)
+			for (int x = 0; x < map.size.x; x++)
 			{
 				bool showSelected =
 					(fw.gamecore->DebugModeEnabled &&
@@ -188,21 +176,30 @@ void CityView::Render()
 					 y == selectedTilePosition.y &&
 					 x == selectedTilePosition.x);
 
-				auto &tile = fw.state.city->tiles[z][y][x];
+				auto &tile = map.tiles[z][y][x];
 				// Skip over transparent (missing) tiles
-				auto screenPos = translateCityToScreenCoords(Vec3<int>{x,y,z});
+				auto screenPos = tileToScreenCoords(Vec3<float>{(float)x,(float)y,(float)z});
 				screenPos.x += offsetX;
 				screenPos.y += offsetY;
 				//Skip over tiles that would be outside the window
-				if (screenPos.x + CITY_TILE_WIDTH < 0 || screenPos.y + CITY_TILE_HEIGHT < 0
-					|| screenPos.x - CITY_TILE_WIDTH > dpyWidth || screenPos.y - CITY_TILE_HEIGHT > dpyHeight)
+				if (screenPos.x + tileSize.x < 0 || screenPos.y + tileSize.y < 0
+					|| screenPos.x - tileSize.x > dpyWidth || screenPos.y - tileSize.y > dpyHeight)
 					continue;
 
 				if (showSelected)
 					selectedTileImageBack->draw(screenPos.x, screenPos.y);
+				for (auto obj : tile.objects)
+				{
+					if (obj->visible)
+					{
+						auto objScreenPos = tileToScreenCoords(obj->getPosition());
+						objScreenPos.x += offsetX;
+						objScreenPos.y += offsetY;
+						auto &img = obj->getSprite();
+						img.draw(objScreenPos.x, objScreenPos.y);
+					}
 
-				if (tile.id != 0)
-					cityPck->RenderImage(tile.id, screenPos.x, screenPos.y);
+				}
 
 				if (showSelected)
 					selectedTileImageFront->draw(screenPos.x, screenPos.y);
@@ -212,7 +209,7 @@ void CityView::Render()
 	fw.gamecore->MouseCursor->Render();
 }
 
-bool CityView::IsTransition()
+bool TileView::IsTransition()
 {
 	return false;
 }

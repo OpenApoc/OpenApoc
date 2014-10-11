@@ -17,6 +17,6 @@ class Building
 		static std::vector<std::string> defaultNames;
 };
 
-std::list<Building> loadBuildingsFromBld(Framework &fw, std::string fileName, std::vector<Organisation> &orgList, std::vector<std::string> nameList);
+std::vector<Building> loadBuildingsFromBld(Framework &fw, std::string fileName, std::vector<Organisation> &orgList, std::vector<std::string> nameList);
 
 }; //namespace OpenApoc

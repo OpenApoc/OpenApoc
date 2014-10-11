@@ -3,6 +3,7 @@
 #include "game/boot.h"
 #include "shaders/shaders.h"
 #include "game/resources/gamecore.h"
+#include "game/city/city.h"
 
 namespace OpenApoc {
 
@@ -70,6 +71,7 @@ Framework::~Framework()
 {
 	//Kill gamecore and program stages first, so any resources are cleaned before
 	//allegro is de-inited
+	state.clear();
 	gamecore.reset();
 	ProgramStages.Clear();
 #ifdef WRITE_LOG

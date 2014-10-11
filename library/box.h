@@ -29,6 +29,24 @@ class Box
 };
 
 template <typename T>
+class Cubeoid
+{
+	public:
+		Vec3<T> p1;
+		Vec3<T> p2;
+
+		Cubeoid( T X, T Y, T Z, T W, T H, T D)
+			: Cubeoid(Vec3<T>{X,Y,Z}, Vec3<T>{W,H,D}){};
+		Cubeoid( const Vec3<T> origin, T W, T H, T D)
+			: Cubeoid(origin, Vec3<T>{W,H,D}) {};
+		Cubeoid( const Vec3<T> p1, const Vec3<T> p2 )
+			: p1(p1), p2(p2) {};
+		~Cubeoid();
+
+		bool Collides( const Cubeoid<T> CheckAgainst );
+};
+
+template <typename T>
 Box<T>::Box( T X, T Y, T Width, T Height )
 {
 	TopLeft = Vec2<T>( X, Y );

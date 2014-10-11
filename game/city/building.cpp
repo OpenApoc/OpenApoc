@@ -150,10 +150,10 @@ Building::Building(Organisation &owner, std::string name, Rect<int> bounds)
 	: owner(owner), name(name), bounds(bounds)
 {}
 
-std::list<Building>
+std::vector<Building>
 loadBuildingsFromBld(Framework &fw, std::string fileName, std::vector<Organisation> &orgList, std::vector<std::string> nameList)
 {
-	std::list<Building> buildings;
+	std::vector<Building> buildings;
 	auto file = fw.data.load_file("UFODATA/" + fileName, "rb");
 	if (!file)
 	{

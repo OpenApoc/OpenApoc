@@ -26,6 +26,7 @@
 
 #include "library/strings.h"
 #include "library/vec.h"
+#include "library/box.h"
 #include "library/rect.h"
 #include "library/colour.h"
 #include "library/angle.h"

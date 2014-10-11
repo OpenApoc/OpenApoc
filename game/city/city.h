@@ -2,38 +2,30 @@
 
 #include "framework/includes.h"
 
+#include "game/tileview/tile.h"
+#include "buildingtile.h"
+
 namespace OpenApoc {
+
+#define CITY_TILE_X (64)
+#define CITY_TILE_Y (32)
+#define CITY_TILE_Z (16)
 
 class Building;
 class Organisation;
-class Framework;
-class Vehicle;
+class Tile;
+class BuildingTile;
 
-class CityTile
+class City : public TileMap
 {
 	private:
+		std::vector<Building> buildings;
+		std::vector<Organisation> organisations;
+		std::vector<CityTile> cityTiles;
 	public:
-		CityTile (int id = 0, Building *building = NULL);
-
-		int id;
-		Building *building;
-		std::list<std::shared_ptr<Vehicle> > vehiclesOnTile;
-};
-
-class City
-{
-	private:
-	public:
-		City (Framework &fw, std::string mapName);
+		City(Framework &fw, std::string mapName);
 		~City();
 
-		int sizeX;
-		int sizeY;
-		int sizeZ;
-		//tiles in [z][y][x] order
-		std::vector < std::vector < std::vector < CityTile > > > tiles;
-		std::list<Building> buildings;
-		std::vector<Organisation> organisations;
 };
 
 }; //namespace OpenApoc
