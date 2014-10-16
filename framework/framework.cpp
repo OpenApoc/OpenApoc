@@ -515,6 +515,9 @@ void Framework::Audio_Initialise()
 	printf( "Framework: Initialise Audio\n" );
 #endif
 
+	audioVoice = 0;
+	audioMixer = 0;
+
 	if( !al_install_audio() )
 	{
 		printf( "Audio_Initialise: Failed to install audio\n" );
