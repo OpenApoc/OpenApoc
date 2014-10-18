@@ -4,6 +4,7 @@
 #include "game/apocresources/apocresource.h"
 #include "ifont.h"
 #include "forms/forms.h"
+#include "vehiclefactory.h"
 
 namespace OpenApoc {
 
@@ -35,10 +36,12 @@ class GameCore
 		Framework &fw;
 
 
+
 	public:
 		bool Loaded;
 		bool DebugModeEnabled;
 		Cursor* MouseCursor;
+		VehicleFactory vehicleFactory;
 
 		GameCore(Framework &fw);
 		void Load(std::string CoreXMLFilename, std::string Language);

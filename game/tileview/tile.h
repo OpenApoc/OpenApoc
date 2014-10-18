@@ -19,7 +19,6 @@ class TileObjectCollisionVoxels
 
 class TileObject
 {
-	protected:
 	public:
 		//Every object is 'owned' by a single tile - this defines the point the
 		//sprite will be drawn (so it will have the same x/y/z as the owning tile)
@@ -34,6 +33,7 @@ class TileObject
 		std::shared_ptr<Image> sprite;
 		Vec3<float> size;
 		Vec3<float> position;
+		TileObjectCollisionVoxels collisionVoxels;
 
 		TileObject(Tile &owningTile, Vec3<float> position, Vec3<float> size, bool visible, bool collides, std::shared_ptr<Image> sprite);
 		virtual ~TileObject();
@@ -41,7 +41,7 @@ class TileObject
 		virtual Cubeoid<int> getBoundingBox();
 		virtual Vec3<float> getSize();
 		virtual Vec3<float> getPosition();
-		virtual TileObjectCollisionVoxels &getCollisionVoxels() = 0;
+		virtual TileObjectCollisionVoxels &getCollisionVoxels();
 		virtual Image& getSprite();
 
 		virtual void processCollision(TileObject &otherObject) = 0;
@@ -67,5 +67,6 @@ class TileMap
 
 		TileMap (Framework &fw, Vec3<int> size);
 		~TileMap();
+		virtual void update(unsigned int ticks);
 };
 }; //namespace OpenApoc

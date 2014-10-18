@@ -177,6 +177,10 @@ void TileView::Update(StageCmd * const cmd)
 
 	offsetX += cameraScrollX;
 	offsetY += cameraScrollY;
+
+	//TODO: Map wall-time to ticks?
+	this->map.update(1);
+
 }
 
 void TileView::Render()

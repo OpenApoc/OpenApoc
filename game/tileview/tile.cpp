@@ -21,6 +21,21 @@ TileMap::TileMap(Framework &fw, Vec3<int> size)
 	}
 }
 
+void
+TileMap::update(unsigned int ticks)
+{
+	//Default tilemap update calls update(ticks) on all tiles
+	//Subclasses can optimise this if they know which tiles might be 'active'
+	for (auto& plane : this->tiles)
+	{
+		for (auto& line : plane)
+		{
+			for (auto& tile : line)
+				tile.update(ticks);
+		}
+	}
+}
+
 TileMap::~TileMap()
 {
 }
@@ -72,6 +87,12 @@ Image&
 TileObject::getSprite()
 {
 	return *this->sprite;
+}
+
+TileObjectCollisionVoxels&
+TileObject::getCollisionVoxels()
+{
+	return this->collisionVoxels;
 }
 
 

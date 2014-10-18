@@ -3,6 +3,7 @@
 #include "organisation.h"
 #include "buildingtile.h"
 #include "framework/framework.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc {
 
@@ -62,6 +63,12 @@ City::City(Framework &fw, std::string mapName)
 			}
 		}
 	}
+
+	std::shared_ptr<Vehicle> testVehicle(fw.gamecore->vehicleFactory.create("POLICE_HOVERCAR"));
+	this->vehicles.push_back(testVehicle);
+	std::shared_ptr<FlyingVehicle> testVehicleObject(new FlyingVehicle(*testVehicle, this->tiles[9][0][0]));
+	testVehicle->tileObject = testVehicleObject;
+	this->tiles[9][0][0].objects.push_back(testVehicleObject);
 
 	al_fclose(file);
 
