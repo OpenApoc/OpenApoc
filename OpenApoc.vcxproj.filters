@@ -15,19 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="library\angle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="library\animation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="game\apocresources\apocfont.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game\boot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="library\box.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="library\configfile.cpp">
@@ -51,9 +42,6 @@
     <ClCompile Include="shaders\greyscale.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="library\line.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="framework\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -64,9 +52,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game\apocresources\music.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="framework\network.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game\apocresources\palette.cpp">
@@ -81,22 +66,7 @@
     <ClCompile Include="shaders\scanlines.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="library\spritesheet.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="framework\stagestack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="transitions\strips.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="transitions\tiled.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="library\tilemap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="library\vector2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="framework\data.cpp">
@@ -150,21 +120,36 @@
     <ClCompile Include="game\city\city.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\city\cityview.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="game\general\difficultymenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game\general\basescreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="framework\image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\city\building.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\city\organisation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\tileview\tile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\tileview\tileview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\city\buildingtile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\gamestate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="library\animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\apocresources\apocfont.h">
@@ -215,9 +200,6 @@
     <ClInclude Include="game\apocresources\music.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\network.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game\apocresources\palette.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -236,19 +218,10 @@
     <ClInclude Include="shaders\shaders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="library\spritesheet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="framework\stage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework\stagestack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="transitions\strips.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="transitions\tiled.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="library\tilemap.h">
@@ -257,13 +230,7 @@
     <ClInclude Include="transitions\transitions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="library\vector2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="framework\data.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game\forms\control.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="forms\control.h">
@@ -329,13 +296,43 @@
     <ClInclude Include="game\city\city.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\city\cityview.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game\general\difficultymenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\general\basescreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\image.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\city\building.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\city\organisation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\city\vehicle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="library\rect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="library\vec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\tileview\tile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\tileview\tileview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\city\buildingtile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="library\colour.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\gamestate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
