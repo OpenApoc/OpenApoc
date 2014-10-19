@@ -2060,7 +2060,7 @@
 	</string>
 	<string id="STR_HYDRO_FARM_INFO">
 		<en_gb>Open fields are unsustainable because of exposure to harmful radiation caused by the collapse of the ozone layer. The Hydro-Farms of Mega-Primus are efficient, clean and highly productive. Their controlled environments can produce any kind of vegetable or fruit, or rear any kind of animal. Unfortunately they are also quite good at nurturing the odd Alien which finds its way inside.</en_gb>
-		<es_la>Los campos abiertos no son sostenibles por su exposición a la dañina radiación causada por el colapso de la capa de ozono. Las Hidro-Granjas de Mega-Primus son eficientes, limpias y altamente productivas. Sus ambientes controlados pueden producir cualquier tipo de frutas o verduras, o criar cualquier tipo de animal. Desafortunadamente también son una buena fuente de nutrientes para los extraños aliens capaces de entrar./es_la>
+		<es_la>Los campos abiertos no son sostenibles por su exposición a la dañina radiación causada por el colapso de la capa de ozono. Las Hidro-Granjas de Mega-Primus son eficientes, limpias y altamente productivas. Sus ambientes controlados pueden producir cualquier tipo de frutas o verduras, o criar cualquier tipo de animal. Desafortunadamente también son una buena fuente de nutrientes para los extraños aliens capaces de entrar.</es_la>
 	</string>
 	<string id="STR_SEWAGE_WORKS">
 		<en_gb>Sewage Works</en_gb>
@@ -2180,7 +2180,7 @@
 	</string>
 	<string id="STR_SENSODROME_INFO">
 		<en_gb>Sensodromes contain studios for all types of Sensovision broadcasting. The Psionic projectors on top of the building send signals to Sensovision arenas and into peoples homes.</en_gb>
-		<es_la>Los sensódromos alojan estudios para todo tipo de transmisión de Sensovisión. Los proyectores psiónicos en las azoteas del edificio envían señales a los ecenarios de Sensovisión y la los hogares de los ciudadanos./es_la>
+		<es_la>Los sensódromos alojan estudios para todo tipo de transmisión de Sensovisión. Los proyectores psiónicos en las azoteas del edificio envían señales a los ecenarios de Sensovisión y la los hogares de los ciudadanos.</es_la>
 	</string>
 	<string id="STR_ALIEN_CRAFT_PROPULSION">
 		<en_gb>Alien Craft Propulsion</en_gb>
@@ -2254,8 +2254,4 @@
 		<en_gb>Superhuman</en_gb>
 		<es_la>Sobrehumano</es_la>
 	</string>
-</openapoc>
-</openapoc>
-</openapoc>
-</openapoc>
 </openapoc>
