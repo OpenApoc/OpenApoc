@@ -2,14 +2,8 @@
 #pragma once
 
 #include "control.h"
-#include "forms_enums.h"
-
-namespace OpenApoc {
-
-class IFont;
-class RawSound;
-class Framework;
-class Image;
+#include "../game/resources/ifont.h"
+#include "../game/apocresources/rawsound.h"
 
 class TextButton : public Control
 {
@@ -18,8 +12,10 @@ class TextButton : public Control
 		std::string text;
 		IFont* font;
 
+		ALLEGRO_BITMAP* cached;
+
 		static RawSound* buttonclick;
-		std::shared_ptr<Image> buttonbackground;
+		static ALLEGRO_BITMAP* buttonbackground;
 
 	protected:
 		virtual void OnRender();
@@ -28,7 +24,7 @@ class TextButton : public Control
 		HorizontalAlignment TextHAlign;
 		VerticalAlignment TextVAlign;
 
-		TextButton(Framework &fw, Control* Owner, std::string Text, IFont* Font);
+		TextButton(Control* Owner, std::string Text, IFont* Font);
 		virtual ~TextButton();
 
 		virtual void EventOccured(Event* e);
@@ -39,4 +35,3 @@ class TextButton : public Control
 		void SetText( std::string Text );
 };
 
-}; //namespace OpenApoc
