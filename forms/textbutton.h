@@ -17,6 +17,8 @@ class TextButton : public Control
 	private:
 		std::string text;
 		IFont* font;
+		
+		ALLEGRO_BITMAP* cached;
 
 		static RawSound* buttonclick;
 		std::shared_ptr<Image> buttonbackground;
