@@ -458,14 +458,16 @@ int Framework::Display_GetHeight()
 
 void Framework::Display_SetTitle( std::string* NewTitle )
 {
-	al_set_app_name( NewTitle->c_str() );
-	al_set_window_title( screen, NewTitle->c_str() );
+	std::wstring widestr = std::wstring(NewTitle->begin(), NewTitle->end());
+	al_set_app_name( (char*)widestr.c_str() );
+	al_set_window_title( screen, (char*)widestr.c_str() );
 }
 
 void Framework::Display_SetTitle( std::string NewTitle )
 {
-	al_set_app_name( NewTitle.c_str() );
-	al_set_window_title( screen, NewTitle.c_str() );
+	std::wstring widestr = std::wstring(NewTitle.begin(), NewTitle.end());
+	al_set_app_name( (char*)widestr.c_str() );
+	al_set_window_title( screen, (char*)widestr.c_str() );
 }
 
 ALLEGRO_BITMAP* Framework::Display_GetCurrentTarget()

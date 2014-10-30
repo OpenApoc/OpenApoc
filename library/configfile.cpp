@@ -81,6 +81,7 @@ static const std::vector<std::string> falseValues =
 {
 	"0",
 	"n",
+	"no",
 	"false",
 };
 
@@ -88,6 +89,7 @@ static const std::vector<std::string> trueValues =
 {
 	"1",
 	"y",
+	"yes",
 	"true",
 };
 
