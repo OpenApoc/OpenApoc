@@ -18,6 +18,7 @@ class TileView : public Stage
 	public:
 		int maxZDraw;
 		int offsetX, offsetY;
+		int cameraScrollX, cameraScrollY;
 
 		Vec3<int> selectedTilePosition;
 		std::shared_ptr<Image> selectedTileImageBack, selectedTileImageFront;

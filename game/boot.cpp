@@ -10,6 +10,7 @@ namespace OpenApoc {
 void BootUp::Begin()
 {
 	loadingimage = fw.data.load_image( "UI/LOADING.PNG" );
+	logoimage = fw.data.load_image( "UI/LOGO.PNG" );
 	loadtime = 0;
 	fw.Display_SetTitle("OpenApocalypse");
 
@@ -58,6 +59,12 @@ void BootUp::Update(StageCmd * const cmd)
 void BootUp::Render()
 {
 	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
+
+	int logow = fw.Display_GetWidth() / 3;
+	float logosc = logow / (float)logoimage->width;
+
+	logoimage->drawScaled( 0, 0, logoimage->width, logoimage->height, (fw.Display_GetWidth() / 2) - (logoimage->width * logosc / 2), (fw.Display_GetHeight() / 2) - (logoimage->height * logosc / 2), logoimage->width * logosc, logoimage->height * logosc );
+
 	loadingimage->drawRotated( 24, 24, fw.Display_GetWidth() - 50, fw.Display_GetHeight() - 50, loadingimageangle.ToRadians() );
 }
 

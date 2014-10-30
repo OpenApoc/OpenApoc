@@ -12,7 +12,7 @@ namespace OpenApoc {
 TileView::TileView(Framework &fw, TileMap &map, Vec3<float> tileSize)
 	: Stage(fw), map(map), tileSize(tileSize), maxZDraw(10), offsetX(0), offsetY(0),
 	  selectedTilePosition(0,0,0), selectedTileImageBack(fw.data.load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
-	  selectedTileImageFront(fw.data.load_image("CITY/SELECTED-CITYTILE-FRONT.PNG"))
+	  selectedTileImageFront(fw.data.load_image("CITY/SELECTED-CITYTILE-FRONT.PNG")), cameraScrollX(0), cameraScrollY(0)
 {
 }
 
@@ -73,26 +73,30 @@ void TileView::EventOccurred(Event *e)
 		switch (e->Data.Keyboard.KeyCode)
 		{
 			case ALLEGRO_KEY_UP:
-				offsetY += tileSize.y;
+				//offsetY += tileSize.y;
+				cameraScrollY = tileSize.y / 8;
 				break;
 			case ALLEGRO_KEY_DOWN:
-				offsetY -= tileSize.y;
+				//offsetY -= tileSize.y;
+				cameraScrollY = -tileSize.y / 8;
 				break;
 			case ALLEGRO_KEY_LEFT:
-				offsetX += tileSize.x;
+				//offsetX += tileSize.x;
+				cameraScrollX = tileSize.x / 8;
 				break;
 			case ALLEGRO_KEY_RIGHT:
-				offsetX -= tileSize.x;
+				//offsetX -= tileSize.x;
+				cameraScrollX = -tileSize.x / 8;
 				break;
 
 			case ALLEGRO_KEY_PGDN:
-				if( maxZDraw > 0)
+				if( fw.gamecore->DebugModeEnabled && maxZDraw > 1)
 				{
 					maxZDraw--;
 				}
 				break;
 			case ALLEGRO_KEY_PGUP:
-				if( maxZDraw < map.size.z)
+				if( fw.gamecore->DebugModeEnabled && maxZDraw < map.size.z)
 				{
 					maxZDraw++;
 				}
@@ -140,6 +144,19 @@ void TileView::EventOccurred(Event *e)
 		if (selected.y > 99) selected.y = 99;
 		selectedTilePosition = Vec3<int>{(int)selected.x, (int)selected.y, (int)selected.z};
 		selectionChanged = true;
+	} else if( e->Type == EVENT_KEY_UP )
+	{
+		switch (e->Data.Keyboard.KeyCode)
+		{
+			case ALLEGRO_KEY_UP:
+			case ALLEGRO_KEY_DOWN:
+				cameraScrollY = 0;
+				break;
+			case ALLEGRO_KEY_LEFT:
+			case ALLEGRO_KEY_RIGHT:
+				cameraScrollX = 0;
+				break;
+		}
 	}
 	if (fw.gamecore->DebugModeEnabled &&
 	    selectionChanged)
@@ -157,6 +174,9 @@ void TileView::Update(StageCmd * const cmd)
 {
 	*cmd = stageCmd;
 	stageCmd = StageCmd();
+
+	offsetX += cameraScrollX;
+	offsetY += cameraScrollY;
 }
 
 void TileView::Render()

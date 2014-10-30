@@ -14,6 +14,7 @@ class BootUp : public Stage
 {
 	private:
 		std::shared_ptr<Image> loadingimage;
+		std::shared_ptr<Image> logoimage;
 		int loadtime;
 		Angle<float> loadingimageangle;
 		ALLEGRO_THREAD* threadload;
