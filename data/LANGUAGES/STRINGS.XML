@@ -187,7 +187,7 @@
 	<string id="STR_ASSAULT_SHIP_INFO">
 		<en_gb>The Assault Ship effectively replaces the Alien Transport as a troop carrier. It can deposit large numbers of Aliens into city buildings and is armed with a powerful beam weapon. This craft is highly dangerous and must be stopped at all costs.</en_gb>
 		<es_la>La Nave de Asalto reemplaza efectivamente al transporte alienígena como transporte de tropas. Puede depositar un gran número de alienígenas en edificios de la ciudad y está armado con un arma de rayos de gran alcance. Esta nave es sumamente peligrosa y debe ser detenida a toda costa.</es_la>
-		<en_gb>Le vaisseau d&apos;attaque remplace efficacement le transport alien pour transporter des troupes. Il peut déposer un grand nombre d&apos;aliens dans les bâtiments de la ville, et il est armé d&apos;un émetteur de rayons puissant. Ce vaisseau est extrêmement dangereux et doit être arrêté à tout prix.</fr_fr>
+		<fr_fr>Le vaisseau d&apos;attaque remplace efficacement le transport alien pour transporter des troupes. Il peut déposer un grand nombre d&apos;aliens dans les bâtiments de la ville, et il est armé d&apos;un émetteur de rayons puissant. Ce vaisseau est extrêmement dangereux et doit être arrêté à tout prix.</fr_fr>
 	</string>
 	<string id="STR_BOMBER_SHIP">
 		<en_gb>Alien Bomber</en_gb>
@@ -227,7 +227,7 @@
 	<string id="STR_MOTHERSHIP_INFO">
 		<en_gb>The Mothership is an extremely large, well equipped vessel. It is armed with a Heavy Disruptor Beam, Disruptor Multi-Bombs and Stasis Field Bombs. It represents a very serious threat to the city because its purpose seems to be mass destruction rather than infiltration. If the Aliens become desperate they will deploy this craft to raze the city to the ground. They must be stopped at all costs.</en_gb>
 		<es_la>La Nave Nodriza es una nave muy grande y bien equipada. Está armada con un rayo disyuntor pesado, disruptor Multi-bombas y estasis campo bombas. Representa una amenaza muy severa para la ciudad, ya que su meta parece ser destrucción total en lugar de infiltración. Si los alienígenas se desesperan pueden desplazar esta nave para arrasar con la ciudad hasta sus cimientos. Hay que detenerlos a toda costa.</es_la>
-		<fr_fr>Le vaisseau-mère est immense et très bien équipé. Il est armé d&apos;un rayon disrupteur lourd, de multi-bombes de disruption et de bombes à champ stasique. Ce vaisseau représente une menace très sérieuse pour la ville, car son but semble être la destruction en masse plutôt que l&apos;infiltration. Si les aliens se fâchent, ils peuvent entièrement raser la ville à l&apos;aide de ce vaisseau. Il faut les arrêter à tout prix.</en_gb>
+		<fr_fr>Le vaisseau-mère est immense et très bien équipé. Il est armé d&apos;un rayon disrupteur lourd, de multi-bombes de disruption et de bombes à champ stasique. Ce vaisseau représente une menace très sérieuse pour la ville, car son but semble être la destruction en masse plutôt que l&apos;infiltration. Si les aliens se fâchent, ils peuvent entièrement raser la ville à l&apos;aide de ce vaisseau. Il faut les arrêter à tout prix.</fr_fr>
 	</string>
 	<string id="STR_POLICE_HOVERCAR">
 		<en_gb>Police Hovercar</en_gb>
