@@ -3,241 +3,301 @@
 	<string id="STR_OPENAPOCALYPSE">
 		<en_gb>OPEN APOCALYPSE</en_gb>
 		<es_la>OPEN APOCALYPSE</es_la>
+		<fr_fr>OPEN APOCALYPSE</fr_fr>
 	</string>
 	<string id="STR_START_CAMPAIGN">
 		<en_gb>Start Campaign</en_gb>
 		<es_la>Iniciar campaña</es_la>
+		<fr_fr>Commencer la partie campagne</fr_fr>
 	</string>
 	<string id="STR_LOAD_SAVED_GAME">
 		<en_gb>Load Saved Game</en_gb>
 		<es_la>Cargar partida</es_la>
+		<fr_fr>Charger la partie sauvegardée</fr_fr>
 	</string>
 	<string id="STR_OPTIONS">
 		<en_gb>Options</en_gb>
 		<es_la>Opciones</es_la>
+		<fr_fr>Options</fr_fr>
 	</string>
 	<string id="STR_QUIT">
 		<en_gb>Quit</en_gb>
 		<es_la>Abandonar</es_la>
+		<fr_fr>Quitter</fr_fr>
 	</string>
 	<string id="STR_DEBUGMODE">
 		<en_gb>Debug Mode</en_gb>
+		<fr_fr>Mode Debug</fr_fr>
 	</string>
 	<string id="STR_UFOPAEDIA">
 		<en_gb>UFOPAEDIA</en_gb>
 		<es_la>UFOPAEDIA</es_la>
+		<fr_fr>OVNIPÉDIE</fr_fr>
 	</string>
 	<string id="STR_UFOPEDIA_TITLE">
 		<en_gb>X-COM Apocalypse Ufopedia</en_gb>
 		<es_la>Ufopedia X-COM Apocalypse</es_la>
+		<fr_fr>Ovnipédie X-COM Apocalypse</fr_fr>
 	</string>
 	<string id="STR_VEHICLES">
 		<en_gb>Vehicles</en_gb>
 		<es_la>Vehículos</es_la>
+		<fr_fr>Véhicules</fr_fr>
 	</string>
 	<string id="STR_VEHICLES_INFO">
 		<en_gb>Citizens of Mega-Primus use two types of vehicle. There are common road traveling vehicles that use a low cost anti-gravity system embedded in the road surface and airborne flyers which employ more sophisticated Elerium powered anti-gravity engines. The bold red military vehicles are available for X-COM to purchase.</en_gb>
 		<es_la>Los ciudadanos de Mega-Primus utilizan dos tipos de vehículos. Hay vehículos comunes terrestres que utilizan un sistema de anti-gravedad de bajo costo integrado en la superficie de la carretera y vehículos voladores que emplean motores anti-gravedad más sofisticado Elerium potencia . Los vehículos militares rojos audaces están disponibles para X-COM de la compra.</es_la>
+		<fr_fr>Les citoyens de Mega-Primus utilisent deux types de véhicules: les véhicules terrestres, relativement courants, qui fonctionnent grâce à un système anti-gravité peu coûteux scellé dans la surface de la route, et des véhicules aériens plus sophistiqués, mus par des moteurs anti-gravité à l&apos;élérium. X-COM peut acheter les véhicules militaires rouges.</fr_fr>
 	</string>
 	<string id="STR_FACILITIES">
 		<en_gb>Base Facilities</en_gb>
 		<es_la>Instalaciones</es_la>
+		<fr_fr>Installations de la base</fr_fr>
 	</string>
 	<string id="STR_FACILITIES_INFO">
 		<en_gb>X-COM bases are constructed from a variety of component units designed to perform different functions. The construction of a new base requires a bare minimum of living quarters and storage facilities. Beyond these requirements a base is designed to accommodate research, training and vehicle repair facilities. Bases will also need to be defended against aggression using well equipped Agents and security stations.</en_gb>
 		<es_la>Bases de X-COM se construyen con una variedad de instalaciones diseñadas para realizar diferentes funciones. La construcción de una nueva base requiere un mínimo de alojamientos y almacenamiento. Más allá de estas requisitos una base debe ser diseñada para dar cabida a las instalaciones de investigación, entrenamiento y reparación de vehículos. También tendrán que ser defendidas contra agresión utilizando agentes bien equipados y estaciones de seguridad</es_la>
+		<fr_fr>Les bases X-COM sont composées d&apos;une grande diversité d&apos;unités conçues pour répondre à différents besoins. Une base comprend au minimum des quartiers d&apos;habitation et des installations de stockage, auxquels viennent s&apos;ajouter des installations pour la recherche, l&apos;entraînement et la réparation des véhicules. Les bases doivent aussi posséder un système de défense efficace pour faire face à l&apos;agression alienne: les agents et les postes de sécurité y pourvoient.</fr_fr>
 	</string>
 	<string id="STR_VEHICLE_EQUIPMENT">
 		<en_gb>Vehicle Equipment</en_gb>
 		<es_la>Equipo de vehículo</es_la>
+		<fr_fr>Équipement pour les véhicules</fr_fr>
 	</string>
 	<string id="STR_VEHICLE_EQUIPMENT_INFO">
 		<en_gb>All military vehicles can be equipped with a variety of weapons, engines and special equipment. The engines and weapons are divided into road 	and airborne categories. Careful attention to improving vehicle equipment is an essential part of military strategy.</en_gb>	
-		<es_la>Todos los vehículos militares pueden ser equipados con una variedad de armas, motores y equipos especiales. Los motores y las armas se dividen en categorías terrestres y aereas. Se debe tomar mucho cuidado en la mejora del equipo de vehiculos ya que es una parte esencial de la estrategia militar.</es_la>	
+		<es_la>Todos los vehículos militares pueden ser equipados con una variedad de armas, motores y equipos especiales. Los motores y las armas se dividen en categorías terrestres y aereas. Se debe tomar mucho cuidado en la mejora del equipo de vehiculos ya que es una parte esencial de la estrategia militar.</es_la>
+		<fr_fr>Les véhicules militaires peuvent tous être équipés d&apos;une variété d&apos;armes, de moteurs et d&apos;équipement spécial. Les moteurs et les armes sont classés par catégorie: terrestre ou aérienne. L&apos;amélioration de l&apos;équipement des véhicules est l&apos;un des facteurs essentiels de la stratégie militaire.</fr_fr>
 	</string>	
 	<string id="STR_EQUIPMENT">
 		<en_gb>Equipment</en_gb>
 		<es_la>Equipo</es_la>
+		<fr_fr>Équipement</fr_fr>
 	</string>
 	<string id="STR_EQUIPMENT_INFO">
 		<en_gb>X-COM Agents should be equipped in preparation for tactical missions. You can choose from a variety of guns, missile launchers, ammunition types, grenades and armor.</en_gb>
 		<es_la>Los agentes de X-COM deben estar equipados en preparación para misiones tácticas. Usted puede elegir entre una variedad de armas de fuego, lanzadores de misiles, tipos de municiones, granadas y armaduras.</es_la>
+		<fr_fr>L&apos;équipement des agents X-COM varie en fonction des missions tactiques. Vous avez le choix entre un très grand nombre de fusils, de rampes de lancement de missiles, de types de munitions, de grenades et de blindages.</fr_fr>
 	</string>
 	<string id="STR_ORGANIZATIONS">
 		<en_gb>Organizations</en_gb>
 		<es_la>Organizaciones</es_la>
+		<fr_fr>Organisations</fr_fr>
 	</string>
 	<string id="STR_ORGANIZATIONS_INFO">
 		<en_gb>The Organizations which operate in Mega-Primus consist of corporations, political groups, criminal gangs and the government. All of them are at risk from Alien infiltration but some are more vulnerable than others. </en_gb>
 		<es_la>Las organizaciones que operan en Mega-Primus consisten de corporaciones, grupos políticos, pandilla criminales y el gobierno. Todos ellos están en peligro de  infiltración alienígena, pero algunos son más vulnerables que otros.</es_la>
+		<fr_fr>Les Organisations en activité dans Mega-Primus sont diverses: sociétés, gangs criminels et le gouvernement. Toutes ces organisations sont susceptibles d&apos;être infiltrées par les aliens, mais certaines sont plus vulnérables que d&apos;autres.</fr_fr>
 	</string>
 	<string id="STR_VIP">
 		<en_gb>Unused (WAS VIP TITLE PAGE)</en_gb>
 		<es_la>No utilizado (ERA TÍTULO DE VIP)</es_la>
+		<fr_fr>Non utilisé (ÉTAIT LA PAGE TITRE VIP</fr_fr>
 	</string>
 	<string id="STR_VIP_INFO">
 		<en_gb>Unused (WAS VIP INFO PAGE)</en_gb>
 		<es_la>No utilizado (ERA INFORMACIÓN DE VIP)</es_la>
+		<fr_fr>Non utilisé (ÉTAIT LA PAGE INFO VIP</fr_fr>
 	</string>
 	<string id="STR_ALIENS">
 		<en_gb>Aliens</en_gb>
 		<es_la>Alienígenas</es_la>
+		<fr_fr>Aliens</fr_fr>
 	</string>
 	<string id="STR_ALIENS_INFO">
 		<en_gb>All results of Alien research are recorded here, including results of autopsies and analysis of living specimens.</en_gb>
 		<es_la>Todos los resultados de investigación alienígena se registran aquí, incluyendo los resultados de las autopsias y análisis de los especímenes vivos.</es_la>
+		<fr_fr>Tous les résultats concernant la recherche sur les aliens sont consignés ici, y compris les résultats d&apos;autopsie et les analyses de spécimens vivants.</fr_fr>
 	</string>
 	<string id="STR_BUILDINGS">
 		<en_gb>Buildings</en_gb>
 		<es_la>Edificios</es_la>
+		<fr_fr>Bâtiments</fr_fr>
 	</string>
 	<string id="STR_BUILDINGS_INFO">
 		<en_gb>Each building in Mega-Primus is a vast labyrinth of corridors, atriums, rooms, halls and service ducts. If Aliens have infiltrated a building they will be found in just a small part of the complex, with plenty of places to escape from the combat zone. Buildings with lower populations or numerous service areas provide much better places for Aliens to hide and breed.</en_gb>
 		<es_la>Cada edificio en Mega-Primus es un vasto laberinto de pasillos, atrios, salas, salones y conductos de servicio. Si Los alienígenas se han infiltrado en un edificio estaran hubicados en tan sólo una pequeña parte del complejo, con muchas opciones para escapar de la zona de combate. Edificios con poco residentes o numerosas áreas de servicio ofrecen a los alienígenas mejores lugares  para esconderse y reproducirse.</es_la>
+		<fr_fr>Chaque bâtiment de Mega-Primus est un vaste labyrinthe de couloirs, de cours, de halls et de conduites d&apos;entretien. Si les aliens infiltrent un bâtiment, ils se cachent dans le moindre recoin du complexe, et ils peuvent évacuer la zone de combat et se retrancher dans de nombreux endroits. Les bâtiments peu peuplés ou ceux qui abritent de nombreuses aires de service fournissent une excellente cachette ou un lieu de reproduction pour les aliens.</fr_fr>
 	</string>
 	<string id="ATR_ALIEN_DIMENSION">
 		<en_gb>The Alien Dimension</en_gb>
 		<es_la>La dimensión alienígenas</es_la>
+		<fr_fr>La Dimension Alienne</fr_fr>
 	</string>
 	<string id="ATR_ALIEN_DIMENSION_INFO">
 		<en_gb>All research into the origins of the Aliens and their home world is collected in this section.</en_gb>
 		<es_la>Toda la investigación sobre los orígenes de los alienígenas y su mundo se acumula en esta sección.</es_la>
+		<fr_fr>Toutes les recherches sur les origines des aliens et sur le monde dans lequel ils vivent sont rassemblées dans cette section.</fr_fr>
 	</string>
 	<string id="STR_PROBE">
 		<en_gb>Alien Probe</en_gb>
 		<es_la>Sonda alienígena</es_la>
+		<fr_fr>Sonde alienne</fr_fr>
 	</string>
 	<string id="STR_PROBE_INFO">
 		<en_gb>The structure of the vehicle suggests an organic construction process. The skin is composed of a strong and unusual compound that allows the craft to travel without harm through the Dimension Gates. This unmanned craft is equipped with an unusual type of beam weapon. Its limited capability suggests that it is purely designed to collect information and then return to the Alien Dimension.</en_gb>
 		<es_la>La estructura de este vehículo sugiere un proceso de construcción orgánica. La forro está compuesto de un material fuerte e inusual que permite a la nave viajar sin daño a través de los portales dimensionales. Esta nave sin tripulación cuenta con un tipo inusual de arma de rayos. Sus limitada habilidades sugiere que es puramente diseñado para recopilar información y luego volver a la dimensión alienígena.</es_la>
+		<fr_fr>La structure de la sonde suggère un procédé de construction organique. Le revêtement est composé d&apos;un élément solide et rare qui permet au vaisseau de traverser les portails interdimensionnels sans subir de dégâts. Ce vaisseau doté d&apos;un émetteur de rayons étrange abrite un petit équipage. Son potentiel limité indique qu&apos;il est conçu dans le but unique de rassembler des informations puis de les ramener dans la dimension alienne.</fr_fr>
 	</string>
 	<string id="STR_SCOUT_SHIP">
 		<en_gb>Alien Scout Ship</en_gb>
 		<es_la>Explorador alienígena</es_la>
+		<fr_fr>Vaisseau éclaireur alien</fr_fr>
 	</string>
 	<string id="STR_SCOUT_SHIP_INFO">
 		<en_gb>This vessel appears to be a surveillance craft. Its structure is very strange and there is no evidence of any crew or cargo. The craft&amp;apos;s internals appear to have been intentionally destroyed by the Aliens from a remote location. The craft is armed with small beam weapon. The craft does not appear to be a great threat to the city, but can only be a precursor to more dangerous incursions.</en_gb>
 		<es_la>Esta embarcación parece ser una nave de vigilancia. Su estructura es muy extraña y no hay evidencia de tripulación o carga. La instrumentación de la nave parecen haber sido intencionalmente destruida por los alienígena desde una ubicación remota. La nave está armada con una arma pequeña de rayos. La nave no parece ser una gran amenaza para la ciudad, pero sólo puede ser un precursor de incursiones más peligrosas.</es_la>
+		<fr_fr>Il semblerait que ce soit un appareil de surveillance. Il a une forme bizarre et ne semble transporter ni équipage ni cargaison. On dirait que l&apos;intérieur de l&apos;appareil a été intentionnellement détruit à distance par les Aliens. Le vaisseau est équipé d&apos;un petit émetteur de rayons. Il ne semble pas représenter une grande menace pour la ville, mais il ne peut que présager d&apos;incursions plus dangereuses.</fr_fr>
 	</string>
 	<string id="STR_TRANSPORTER_SHIP">
 		<en_gb>Alien Transporter</en_gb>
 		<es_la>Transporte alienígena</es_la>
+		<fr_fr>Transport alien</fr_fr>
 	</string>
 	<string id="STR_TRANSPORTER_SHIP_INFO">
 		<en_gb>The primary mission of this craft is to deposit Alien life forms inside city buildings. This represents a serious challenge for our ground forces, but if they can be shot down before they unload their passengers, then the problem will be minimized. The craft is armed with the same beam weapon as the Scout Ships or Probes, but it is slower moving and an easier target to hit.</en_gb>
 		<es_la>La misión principal de este arte es depositar alienígena dentro de los edificios de la ciudad. Esto representa un serio reto para nuestras fuerzas de tierra, pero si pueden ser derribados antes de que descargan sus pasajeros, entonces el problema se reduce al mínimo. La nave está armada con la misma arma de rayos como las naves de exploración o sondas, pero es más lento en movimiento y un blanco más fácil de acertar.</es_la>
+		<fr_fr>L&apos;objectif principal de ce vaisseau est de transporter des formes de vie alienne dans les bâtiments de la ville, ce qui pose un problème sérieux à nos forces au sol, à moins qu&apos;elles ne réussissent à l&apos;abattre avant qu&apos;il n&apos;ait eu le temps de déposer ses passagers. Ce vaisseau est armé du même émetteur de rayons que les sondes ou les éclaireurs aliens, mais il se déplace plus lentement et représente une cible facile.</fr_fr>
 	</string>
 	<string id="STR_FAST_ATTACK_SHIP">
 		<en_gb>Alien Fast Attack Ship</en_gb>
 		<es_la>Acorazado alienígena</es_la>
+		<fr_fr>Vaisseau d&apos;attaque rapide alien</fr_fr>
 	</string>
 	<string id="STR_FAST_ATTACK_SHIP_INFO">
 		<en_gb>This craft is well armored, highly maneuverable and armed with a powerful beam weapon. It is designed to protect other more vulnerable Alien ships. Avoid these craft if the threat to our vehicles is too great and concentrate on shooting down the Alien Transports.</en_gb>
 		<es_la>Esta nave está bien blindada, es muy maniobrable y consta con un arma de rayos de gran alcance. Está diseñado para proteger otras naves alienígena más vulnerables. Evite estas naves si la amenaza a nuestros vehículos es demasiado grande y concentrese en derribar los transportes alienígena.</es_la>
+		<fr_fr>Ce vaisseau d&apos;une grande maniabilité possède un armement important, rehaussé d&apos;un émetteur de rayons puissant. Il est conçu pour protéger les autres vaisseaux aliens plus vulnérables. Evitez ces vaisseaux si la menace qu&apos;ils représentent pour nos véhicules est trop grande et contentez-vous d&apos;abattre les transports aliens.</fr_fr>
 	</string>
 	<string id="STR_DESTROYER_SHIP">
 		<en_gb>Alien Destroyer</en_gb>
 		<es_la>Destructor alienígena</es_la>
+		<fr_fr>Destroyer alien</fr_fr>
 	</string>
 	<string id="STR_DESTROYER_SHIP_INFO">
 		<en_gb>The Destroyer is heavily armored and its behavior is aggressive. It is armed with a powerful Alien Missile Launcher capable of immense destruction. It can also deposit Alien beings into the city.</en_gb>
 		<es_la>El Destructor está fuertemente blindado y su comportamiento es agresivo. Consta con un poderoso Lanzamisiles alienígena capaz de inmensa destrucción. Y también puede depositar alienígenas en la ciudad.</es_la>
+		<fr_fr>Le destroyer a un blindage épais et est très agressif. Il est armé d&apos;une puissante rampe de lancement de missiles aliens d&apos;une efficacité terrible. Il peut aussi amener des aliens dans la ville.</fr_fr>
 	</string>
 	<string id="STR_ASSAULT_SHIP">
 		<en_gb>Alien Assault Ship</en_gb>
 		<es_la>Nave de Asalto alienígena</es_la>
+		<fr_fr>Vaisseau d&apos;attaque alien</fr_fr>
 	</string>
 	<string id="STR_ASSAULT_SHIP_INFO">
 		<en_gb>The Assault Ship effectively replaces the Alien Transport as a troop carrier. It can deposit large numbers of Aliens into city buildings and is armed with a powerful beam weapon. This craft is highly dangerous and must be stopped at all costs.</en_gb>
 		<es_la>La Nave de Asalto reemplaza efectivamente al transporte alienígena como transporte de tropas. Puede depositar un gran número de alienígenas en edificios de la ciudad y está armado con un arma de rayos de gran alcance. Esta nave es sumamente peligrosa y debe ser detenida a toda costa.</es_la>
+		<en_gb>Le vaisseau d&apos;attaque remplace efficacement le transport alien pour transporter des troupes. Il peut déposer un grand nombre d&apos;aliens dans les bâtiments de la ville, et il est armé d&apos;un émetteur de rayons puissant. Ce vaisseau est extrêmement dangereux et doit être arrêté à tout prix.</fr_fr>
 	</string>
 	<string id="STR_BOMBER_SHIP">
 		<en_gb>Alien Bomber</en_gb>
 		<es_la>Bombardero alienígena</es_la>
+		<fr_fr>Bombardier alien</fr_fr>
 	</string>
 	<string id="STR_BOMBER_SHIP_INFO">
 		<en_gb>The Alien Bomber is equipped with an unusual missile launcher which fires a missile that splits into multiple, independently targeted missiles. It also has a light beam weapon to deal with close air combat. There is a limited crew on board.</en_gb>
 		<es_la>El Bombardero alienígena está equipado con un inusual lanzador de misiles el cual dispara un misil que se divide en varios misiles, independientemente dirigidos. También cuenta con un arma ligera de rayos para defenderse en combate aéreo cercano y consta con una tripulacion limitada.</es_la>
+		<fr_fr>Le bombardier alien est équipé d&apos;une étrange rampe de lancement de missiles dont les projectiles se divisent en une multitude de missiles qui ont chacun une cible différente. Ce vaisseau est également armé d&apos;un émetteur de rayons léger pour se protéger lors des combats rapprochés. Le bombardier transporte un équipage limité.</fr_fr>
 	</string>
 	<string id="STR_SCORT_SHIP">
 		<en_gb>Alien Escort Ship</en_gb>
 		<es_la>Escolta alienígena</es_la>
+		<fr_fr>Vaisseau d&apos;escorte alien</fr_fr>
 	</string>
 	<string id="STR_SCORT_SHIP_INFO">
 		<en_gb>This craft is fast and nimble. On its own it represents no threat, but is deadly when combined with other Alien combat ships. It is armed with a missile which generates a Stasis Field on impact. This field holds the target still for a small period of time so craft that rely on evasion for defense, become vulnerable.</en_gb>
 		<es_la>Esta nave es rápida y ágil, por sí sola no representa amenaza ninguna, pero es mortal cuando se combina con otras naves de combate alienígena. Está armada con un misil que genera un campo de estasis en impacto. Este campo detiene el blanco por un corto período de tiempo, de esta manera las naves que se basan en evasión para defensa, quedan vulnerables.</es_la>
+		<fr_fr>C&apos;est un vaisseau rapide, d&apos;une excellente maniabilité. Il ne constitue pas une menace à lui seul, mais il est extrêmement dangereux lorsqu&apos;il est accompagné d&apos;autres vaisseaux de combat aliens. Il est armé d&apos;un missile qui génère un champ stasique lorsqu&apos;il explose, ce qui contribue à immobiliser la cible pendant une période limitée. Les véhicules qui se défendent en employant des manoeuvres évasives sont extrêmement vulnérables face à ce vaisseau.</fr_fr>
 	</string>
 	<string id="STR_BATTLESHIP">
 		<en_gb>Alien Battleship</en_gb>
 		<es_la>Acorazado alienígena</es_la>
+		<fr_fr>Vaisseau de combat alien</fr_fr>
 	</string>
 	<string id="STR_BATTLESHIP-INFO">
 		<en_gb>This immense craft is heavily armored, well armed and has a large crew. It is equipped with a Heavy Disruptor Beam and Disruptor Missiles. If the Aliens can produce just a handful of these devastating leviathans, the future of our world looks bleak.</en_gb>
 		<es_la>Esta inmensa nave está fuertemente blindado, bien armado y tiene una amplia tripulación. Está equipado con un rayo disyuntor pesado y misiles disyuntor. Si los alienígena pueden producir sólo un puñado de estos leviatanes devastadores, el futuro de nuestro mundo parece sombrío.</es_la>
+		<fr_fr>Cet immense vaisseau est équipé d&apos;un blindage efficace, d&apos;une grande quantité d&apos;armes, et il dispose d&apos;un équipage important. Il transporte un rayon disrupteur lourd et des bombes de disruption inversées. Si les aliens parviennent à construire plusieurs de ces léviathans dévastateurs, notre futur est bien sombre.</fr_fr>
 	</string>
 	<string id="STR_MOTHERSHIP">
 		<en_gb>Alien Mothership</en_gb>
 		<es_la>Nave Nodriza alienígena</es_la>
+		<fr_fr>Vaisseau-mère alien</fr_fr>
 	</string>
 	<string id="STR_MOTHERSHIP_INFO">
 		<en_gb>The Mothership is an extremely large, well equipped vessel. It is armed with a Heavy Disruptor Beam, Disruptor Multi-Bombs and Stasis Field Bombs. It represents a very serious threat to the city because its purpose seems to be mass destruction rather than infiltration. If the Aliens become desperate they will deploy this craft to raze the city to the ground. They must be stopped at all costs.</en_gb>
 		<es_la>La Nave Nodriza es una nave muy grande y bien equipada. Está armada con un rayo disyuntor pesado, disruptor Multi-bombas y estasis campo bombas. Representa una amenaza muy severa para la ciudad, ya que su meta parece ser destrucción total en lugar de infiltración. Si los alienígenas se desesperan pueden desplazar esta nave para arrasar con la ciudad hasta sus cimientos. Hay que detenerlos a toda costa.</es_la>
+		<fr_fr>Le vaisseau-mère est immense et très bien équipé. Il est armé d&apos;un rayon disrupteur lourd, de multi-bombes de disruption et de bombes à champ stasique. Ce vaisseau représente une menace très sérieuse pour la ville, car son but semble être la destruction en masse plutôt que l&apos;infiltration. Si les aliens se fâchent, ils peuvent entièrement raser la ville à l&apos;aide de ce vaisseau. Il faut les arrêter à tout prix.</en_gb>
 	</string>
 	<string id="STR_POLICE_HOVERCAR">
 		<en_gb>Police Hovercar</en_gb>
 		<es_la>Patrulla flotante</es_la>
+		<fr_fr>Hovercar de police</fr_fr>
 	</string>
 	<string id="STR_POLICE_HOVERCAR_INFO">
 		<en_gb>Megapol&amp;apos;s police Hovercars are the scourge of the slum dwelling criminal gangs. They are well armed and able to travel freely within and outside the city boundaries, scouring the ground or air for unlicensed or criminal vehicles. They are no match for heavier military vehicles, but Megapol is able to manufacture many of these scout cars and can replace any losses. The vehicle&amp;apos;s styling is required to conform to city aesthetic ordinances concerning pleasurable design of public vehicles.</en_gb>
 		<es_la>Patrulla flotante de Megapol son el azote de los barrio marginales donde viven las bandas criminales. Están bien armados y son capaces de viajar libremente dentro y fuera de los límites de la ciudad, purgando la tierra o el aire de vehículos sin licencia o criminales. No se comparan con vehículos militares pesados​​, pero Megapol es capaz de fabricar muchos de estos vehículos de reconocimiento y puede reemplazar las bajas. Los vehículos requieren un estilo especifico para conformar con las ordenanzas estéticas de la ciudad relacionados con el diseño agradable de los vehículos públicos.</es_la>
+		<fr_fr>Les hovercars de police de Megapol sont le cauchemar des gangs de criminels hantant les quartiers pauvres, les taudis de la ville. Ce sont des voitures bien armées qui peuvent circuler librement à l&apos;intérieur et au-delà des frontières de la ville. Elles n&apos;arrivent pas vraiment à la cheville des véhicules militaires plus lourds, mais Megapol peut fabriquer ces voitures de patrouille en grandes quantités et peut donc remplacer les pertes sans problème. La ligne des véhicules doit être conforme aux décrets municipaux sur l&apos;esthétisme concernant le design agréable des véhicules publics</fr_fr>
 	</string>
 	<string id="STR_AIRTAXI">
 		<en_gb>Airtaxi</en_gb>
 		<es_la>Aerotaxi</es_la>
+		<fr_fr>Taxi aérien</fr_fr>
 	</string>
 	<string id="STR_AIRTAXI_INFO">
 		<en_gb>The wealthy citizen would not normally travel by people-tube or road, but instead hire the services of a fast and reliable Airtaxi. The styling is conspicuously based on the more humble road going version, but the ride is more refined. Expect the occasional Airtaxi you see to contain a VIP, or flamboyant Sensovision celebrity.</en_gb>
 		<es_la>El ciudadano rico normalmente no viajaría por los tubo-gente o la via publica, en lugar contratan los servicios de un Aerotaxi que es rápido y fiable. El diseño se basa claramente en la versión de carretera que es más humilde, pero en cambio el viaje es más refinado. Espera lo Aerotaxi ocasional ves para contener un VIP o extravagante celebridad Sensovision.</es_la>
+		<fr_fr>Les citoyens nantis n&apos;ont pas pour habitude d&apos;emprunter les voies terrestres ou les Tubes, ils louent plutôt les services des taxis aériens, rapides et fiables. La ligne est visiblement basée sur les versions plus humbles des taxis terrestres, mais ils sont plus confortables. Si vous voyez des taxis aériens, ils transportent sûrement un VIP ou une vedette extravagante de Sensovision.</fr_fr>
 	</string>
 	<string id="STR_RESCUE_TRASNPORT">
 		<en_gb>Rescue Transport</en_gb>
 		<es_la>Rescue Transport</es_la>
+		<fr_fr>Transport de secours</fr_fr>
 	</string>
 	<string id="STR_RESCUE_TRASNPORT_INFO">
 		<en_gb>The airborne rescue vehicle serves as an ambulance and fire engine. It is specially equipped to deal with rescue situations involving car accidents and other disasters. However dealing with the Alien invasion is well beyond the scope of the rescue service which normally has little to do given the strict safety regulations governing all aspects of city life.</en_gb>
 		<es_la>The airborne rescue vehicle serves as an ambulance and fire engine. It is specially equipped to deal with rescue situations involving car accidents and other disasters. However dealing with the Alien invasion is well beyond the scope of the rescue service which normally has little to do given the strict safety regulations governing all aspects of city life.</es_la>
+		<fr_fr>Le véhicule de secours aérien sert d&apos;ambulance et de voiture de pompier. Il est spécialement équipé pour apporter des secours dans des situations telles que des accidents d&apos;auto ou autres catastrophes dans la ville. Cependant le service de secours, qui n&apos;a pratiquement jamais à intervenir en raison des règles de sécurité extrêmement strictes de la ville, ne dispose pas des compétences nécessaires pour faire face à l&apos;invasion alienne.</fr_fr>
 	</string>
 	<string id="STR_CONSTRUCTION_VEHICLE">
 		<en_gb>Construction Vehicle</en_gb>
 		<es_la>Construction Vehicle</es_la>
+		<fr_fr>Véhicule de construction</fr_fr>
 	</string>
 	<string id="STR_CONSTRUCTION_VEHICLE_INFO">
 		<en_gb>This multipurpose craft is used to build and repair any type of building within the city boundary. It will also repair roads, bridges and other structures. The aesthetic regulations also require construction vehicles to be equipped for landscape gardening and forestry work.</en_gb>
 		<es_la>This multipurpose craft is used to build and repair any type of building within the city boundary. It will also repair roads, bridges and other structures. The aesthetic regulations also require construction vehicles to be equipped for landscape gardening and forestry work.</es_la>
+		<fr_fr>Ce vaisseau polyvalent est utilisé pour construire et réparer tous les types de bâtiment se trouvant dans les limites de la ville. Il répare également les routes, les ponts et autres structures. Selon les décrets sur l&apos;esthétisme, les véhicules de construction doivent aussi être équipés pour le jardinage paysagiste et les travaux forestiers.</fr_fr>
 	</string>
 	<string id="STR_AIRTRANS">
 		<en_gb>Airtrans</en_gb>
 		<es_la>Airtrans</es_la>
+		<fr_fr>Airtrans</fr_fr>
 	</string>
 	<string id="STR_AIRTRANS_INFO">
 		<en_gb>Heavy transportation is mainly undertaken by these heavy duty air transports. Manufactured goods are transported entirely by air, given the unreliability and dangers of road transport in the deregulated areas, or slums. The Airtrans is a computer controlled craft, but must be manned by law according to the inter-personal contact ordinances.</en_gb>
 		<es_la>Heavy transportation is mainly undertaken by these heavy duty air transports. Manufactured goods are transported entirely by air, given the unreliability and dangers of road transport in the deregulated areas, or slums. The Airtrans is a computer controlled craft, but must be manned by law according to the inter-personal contact ordinances.</es_la>
+		<fr_fr>L&apos;Airtrans est un transporteur aérien résistant destiné aux produits lourds ou encombrants. En raison du manque de fiabilité et des dangers des transports routiers dans les zones non réglementées ou les taudis, les produits manufacturés sont toujours transportés par les airs. Ce vaisseau contrôlé par ordinateur doit obligatoirement posséder un équipage, conformément aux décrets de contacts interpersonnels.</fr_fr>
 	</string>
 	<string id="STR_SPACE_LINER">
 		<en_gb>Space Liner</en_gb>
 		<es_la>Space Liner</es_la>
+		<fr_fr>Cargo spatial</fr_fr>
 	</string>
 	<string id="STR_SPACE_LINER_INFO">
 		<en_gb>The huge Space Liners enable commerce with Mars, the Moon and the deep space mining colonies. Huge quantities of manufactured goods are transported outwards, the Space Liners then return laden with raw materials and small quantities of the precious Elerium.</en_gb>
 		<es_la>The huge Space Liners enable commerce with Mars, the Moon and the deep space mining colonies. Huge quantities of manufactured goods are transported outwards, the Space Liners then return laden with raw materials and small quantities of the precious Elerium.</es_la>
+		<fr_fr>Les énormes cargos spatiaux permettent des actes de commerce entre Mars, la Lune et les colonies minières spatiales. D&apos;énormes quantités de produits manufacturés y sont transportées. Au retour, les cargos spatiaux sont chargés de matières premières et de petites quantités du précieux élérium.</fr_fr>
 	</string>
 	<string id="STR_PHOENIX_HOVERCAR">
 		<en_gb>Phoenix Hovercar</en_gb>
 		<es_la>Phoenix Hovercar</es_la>
+		<fr_fr>Hovercar Phénix</fr_fr>
 	</string>
 	<string id="STR_PHOENIX_HOVERCAR_INFO">
 		<en_gb>The Phoenix is manufactured by Marsec mainly for military purposes. This sleek but rugged vehicle is used for reconnaissance in dangerous environments such as the Mars colony. A variety of weapon and engine configurations can be used and a well equipped Phoenix is more than a match for a police Hovercar.</en_gb>
 		<es_la>The Phoenix is manufactured by Marsec mainly for military purposes. This sleek but rugged vehicle is used for reconnaissance in dangerous environments such as the Mars colony. A variety of weapon and engine configurations can be used and a well equipped Phoenix is more than a match for a police Hovercar.</es_la>
+		<fr_fr>Le Phénix est fabriqué par Marsec, essentiellement à des fins militaires. Ce vaisseau robuste aux lignes pures est utilisé pour les missions de reconnaissance dans des environnements dangereux tels que la colonie de Mars. Une grande diversité de configurations d&apos;armes et de moteurs peut être utilisée, et un Phénix bien équipé aura de meilleures performances qu&apos;une hovercar de police.</fr_fr>
 	</string>
 	<string id="STR_HOVERBIKE">
 		<en_gb>Hoverbike</en_gb>
