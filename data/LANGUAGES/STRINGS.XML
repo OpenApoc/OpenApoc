@@ -642,513 +642,642 @@
 	<string id="STR_ALIEN_CRAFT">
 		<en_gb>Alien Craft</en_gb>
 		<es_la>Alien Craft</es_la>
+		<fr_fr>Vaisseaux aliens</fr_fr>
 	</string>
 	<string id="STR_ALIEN_CRAFT_INFO">
 		<en_gb>All research relating to the various types of Alien craft and their propulsion systems is collected here.</en_gb>
 		<es_la>All research relating to the various types of Alien craft and their propulsion systems is collected here.</es_la>
+		<fr_fr>Toutes les recherches concernant les différents types de vaisseaux aliens et leurs systèmes de propulsion sont rassemblées ici.</fr_fr>
 	</string>
 	<string id="STR_BOLTER_4000">
 		<en_gb>Bolter 4000 Laser Gun</en_gb>
 		<es_la>Bolter 4000 Laser Gun</es_la>
+		<fr_fr>Fusil laser Bolter 4000</fr_fr>
 	</string>
 	<string id="STR_BOLTER_4000_INFO">
 		<en_gb>Mid-powered Laser Beam gun commonly used in airborne police vehicles. The atomic power cells contained in these weapons allow for many thousands of shots before they expire.</en_gb>
 		<es_la>Mid-powered Laser Beam gun commonly used in airborne police vehicles. The atomic power cells contained in these weapons allow for many thousands of shots before they expire.</es_la>
+		<fr_fr>Rayon laser de puissance moyenne généralement utilisé par les véhicules de police aériens. Les cellules d&apos;énergie atomique contenues dans ces armes permettent de tirer des milliers de fois avant qu&apos;elles ne s&apos;épuisent.</fr_fr>
 	</string>
 	<string id="STR_LANCER_7000">
 		<en_gb>Lancer 7000 Laser Gun</en_gb>
 		<es_la>Lancer 7000 Laser Gun</es_la>
+		<fr_fr>Fusil laser Lancer 7000</fr_fr>
 	</string>
 	<string id="STR_LANCER_7000_INFO">
 		<en_gb>High energy Laser Beam weapon designed for military and police vehicles. Powerful atomic cells provide the energy source.</en_gb>
 		<es_la>High energy Laser Beam weapon designed for military and police vehicles. Powerful atomic cells provide the energy source.</es_la>
+		<fr_fr>Arme projetant un rayon laser à haute énergie conçue pour les véhicules militaires et de police. De puissantes cellules atomiques lui fournissent une source d&apos;énergie.</fr_fr>
 	</string>
 	<string id="STR_RENDOR_PLASMA_GUN">
 		<en_gb>Rendor Plasma Gun</en_gb>
 		<es_la>Rendor Plasma Gun</es_la>
+		<fr_fr>Fusil à plasma Rendor</fr_fr>
 	</string>
 	<string id="STR_RENDOR_PLASMA_GUN_INFO">
 		<en_gb>A popular but expensive alternative to the Bolter laser gun. The rare Elerium fuel is used to power both the plasma chamber and the electro-magnetic accelerators that propel the ultra-heated plasma to near light speeds.</en_gb>
 		<es_la>A popular but expensive alternative to the Bolter laser gun. The rare Elerium fuel is used to power both the plasma chamber and the electro-magnetic accelerators that propel the ultra-heated plasma to near light speeds.</es_la>
+		<fr_fr>Une alternative populaire mais onéreuse au fusil laser Bolter. L&apos;élérium, un carburant rare, est utilisé pour activer la chambre à plasma et les accélérateurs électromagnétiques qui projettent le plasma surchauffé à des vitesses proches de celle de la lumière.</fr_fr>
 	</string>
 	<string id="STR_LINEAGE_PLASMA_CANNON">
 		<en_gb>Lineage Plasma Cannon</en_gb>
 		<es_la>Lineage Plasma Cannon</es_la>
+		<fr_fr>Canon à plasma Lineage</fr_fr>
 	</string>
 	<string id="STR_LINEAGE_PLASMA_CANNON_INFO">
 		<en_gb>The Marsec corporation has privileged access to Elerium supplies due to a strong security role in the Elerium mining colonies. The Lineage weapons technology represents the ultimate Elerium powered accelerators. They are expensive but devastating.</en_gb>
 		<es_la>The Marsec corporation has privileged access to Elerium supplies due to a strong security role in the Elerium mining colonies. The Lineage weapons technology represents the ultimate Elerium powered accelerators. They are expensive but devastating.</es_la>
+		<fr_fr>En raison de son rôle prépondérant concernant la sécurité sur les colonies minières extrayant l&apos;élérium, la corporation Marsec a un accès privilégié aux réserves de ce précieux élément. La technologie des armes Lineage est ce qu&apos;il y a de plus récent en matière d&apos;accélérateurs fonctionnant à l&apos;élérium. Ce sont des armes chères mais redoutables.</fr_fr>
 	</string>
 	<string id="STR_PLASMA_MULTI_SYSTEM">
 		<en_gb>Plasma Multi-System</en_gb>
 		<es_la>Plasma Multi-System</es_la>
+		<fr_fr>Multi-système à plasma</fr_fr>
 	</string>
 	<string id="STR_PLASMA_MULTI_SYSTEM_INFO">
 		<en_gb>The Plasma Multi-System is a series of connected plasma turrets designed to provide all round fire power. This weapon is ideally suited to installation in larger, less maneuverable craft.</en_gb>
 		<es_la>The Plasma Multi-System is a series of connected plasma turrets designed to provide all round fire power. This weapon is ideally suited to installation in larger, less maneuverable craft.</es_la>
+		<fr_fr>Le multi-système à plasma est composé d&apos;une série de tourelles à plasma connectées et est conçu pour fournir une puissance de feu complète. Cette arme convient en général aux gros vaisseaux de faible maniabilité.</fr_fr>
 	</string>
 	<string id="STR_LIGHT_DISRUPTOR_BEAM">
 		<en_gb>Light Disruptor Beam</en_gb>
 		<es_la>Light Disruptor Beam</es_la>
+		<fr_fr>Rayon disrupteur léger</fr_fr>
 	</string>
 	<string id="STR_LIGHT_DISRUPTOR_BEAM_INFO">
 		<en_gb>Alien weapons technology is based on a complex sub-atomic particle system. The Disruptor Beam is generated from an inter-dimensional power source. It propels sub-atomic particles which disintegrate molecules in their path. The weapon does not require ammunition since the energy chamber appears to be a self-perpetuating energy source.</en_gb>
 		<es_la>Alien weapons technology is based on a complex sub-atomic particle system. The Disruptor Beam is generated from an inter-dimensional power source. It propels sub-atomic particles which disintegrate molecules in their path. The weapon does not require ammunition since the energy chamber appears to be a self-perpetuating energy source.</es_la>
+		<fr_fr>La technologie alienne de l&apos;armement est basée sur un système complexe de particules subatomiques. Le rayon disrupteur est généré à partir d&apos;une source d&apos;énergie interdimensionnelle. Il projette des particules subatomiques qui désintègrent les molécules qu&apos;elles rencontrent. Cette arme n&apos;a pas besoin de munitions car la chambre d&apos;énergie semble être une source d&apos;énergie qui se renouvelle d&apos;elle-même.</fr_fr>
 	</string>
 	<string id="STR_MEDIUM_DISRUPTOR_BEAM">
 		<en_gb>Medium Disruptor Beam</en_gb>
 		<es_la>Medium Disruptor Beam</es_la>
+		<fr_fr>Rayon disrupteur moyen</fr_fr>
 	</string>
 	<string id="STR_MEDIUM_DISRUPTOR_BEAM_INFO">
 		<en_gb>The Medium Disruptor Beam is a more powerful version of the Light Disruptor Beam. It uses the same sub-atomic, inter-dimensional technology but the energy chamber is larger. It is capable of penetrating the heaviest armor.</en_gb>
 		<es_la>The Medium Disruptor Beam is a more powerful version of the Light Disruptor Beam. It uses the same sub-atomic, inter-dimensional technology but the energy chamber is larger. It is capable of penetrating the heaviest armor.</es_la>
+		<fr_fr>Cette arme est une version plus puissante du rayon disrupteur léger. Il utilise la même technologie subatomique interdimensionnelle, mais la chambre d&apos;énergie est plus grande. Il est capable de perforer le plus épais des blindages.</fr_fr>
 	</string>
 	<string id="STR_HEAVY_DISRUPTOR_BEAM">
 		<en_gb>Heavy Disruptor Beam</en_gb>
-		<es_la>The Heavy Dispruptor Beam is an immensely powerful weapon. Its only drawbacks are its size and difficulty of manufacture. The energy chamber is enormous, drawing energy from another dimension. It is possible that the weapon&amp;apos;s original power source is actually located in some alternative dimension.</es_la>
+		<es_la>Heavy Disruptor Beam</es_la>
+		<fr_fr>Rayon disrupteur lourd</fr_fr>
 	</string>
 	<string id="STR_HEAVY_DISRUPTOR_BEAM_INFO">
 		<en_gb>The Heavy Dispruptor Beam is an immensely powerful weapon. Its only drawbacks are its size and difficulty of manufacture. The energy chamber is enormous, drawing energy from another dimension. It is possible that the weapon&amp;apos;s original power source is actually located in some alternative dimension.</en_gb>
+		<es_la>The Heavy Dispruptor Beam is an immensely powerful weapon. Its only drawbacks are its size and difficulty of manufacture. The energy chamber is enormous, drawing energy from another dimension. It is possible that the weapon&amp;apos;s original power source is actually located in some alternative dimension.</es_la>
+		<fr_fr>Le disrupteur lourd est une arme extrêmement puissante. Ses seuls inconvénients sont sa taille et une relative difficulté de fabrication. La chambre d&apos;énergie est énorme, tirant son énergie d&apos;une autre dimension. Il se pourrait que la source originale de puissance de cette arme se trouve en fait dans une autre dimension</fr_fr>
 	</string>	
 	<string id="STR_40MM_AUTO_CANNON">
 		<en_gb>40mm Auto Cannon</en_gb>
 		<es_la>40mm Auto Cannon</es_la>
+		<fr_fr>Auto-canon 40mm</fr_fr>
 	</string>	
 	<string id="STR_40MM_AUTO_CANNON_INFO">
 		<en_gb>	The standard cannon for police and military vehicles; it fires a high velocity armor piercing shell.</en_gb>
 		<es_la>The standard cannon for police and military vehicles; it fires a high velocity armor piercing shell.</es_la>
+		<fr_fr>Le canon standard des véhicules de police et militaires. Il lance des obus très rapides capables de perforer les blindages.</fr_fr>
 	</string>
 	<string id="STR_JANITOR_MISSILE_ARRAY">
 		<en_gb>Janitor Missile Array</en_gb>
 		<es_la>Janitor Missile Array</es_la>
+		<fr_fr>Système de missiles Janitor</fr_fr>
 	</string>
 	<string id="STR_JANITOR_MISSILE_ARRAY_INFO">
 		<en_gb>Primarily a short range anti-air missile system. It is effective against smaller air vehicles.</en_gb>
 		<es_la>Primarily a short range anti-air missile system. It is effective against smaller air vehicles.</es_la>
+		<fr_fr>Un système de missiles antiaériens à courte portée, efficace contre les petits véhicules aériens.</fr_fr>
 	</string>
 	<string id="STR_JUSTICE_MISSILE_LAUNCHER">
 		<en_gb>Justice Missile Launcher</en_gb>
 		<es_la>Justice Missile Launcher</es_la>
+		<fr_fr>Rampe pour missiles Justice</fr_fr>
 	</string>
 	<string id="STR_JUSTICE_MISSILE_LAUNCHER_INFO">
 		<en_gb>A long range missile system with a powerful fusion warhead. Only useful against ground targets or slow moving vehicles.</en_gb>
 		<es_la>A long range missile system with a powerful fusion warhead. Only useful against ground targets or slow moving vehicles.</es_la>
+		<fr_fr>Un système de missiles longue portée équipés d&apos;une ogive à fusion puissante. Utile seulement contre les cibles au sol ou les véhicules se déplaçant lentement.</fr_fr>
 	</string>
 	<string id="STR_PROPHET_MISSILE_ARRAY">
 		<en_gb>Prophet Missile Array</en_gb>
 		<es_la>Prophet Missile Array</es_la>
+		<fr_fr>Système de missiles Prophète</fr_fr>
 	</string>
 	<string id="STR_PROPHET_MISSILE_ARRAY_INFO">
 		<en_gb>The Prophet system is more effective than the Janitor missiles against faster moving targets. Its guidance systems are much more accurate, but the array only has a limited missile capacity.</en_gb>
 		<es_la>The Prophet system is more effective than the Janitor missiles against faster moving targets. Its guidance systems are much more accurate, but the array only has a limited missile capacity.</es_la>
+		<fr_fr>Le système Prophète est plus efficace que les missiles Janitor contre les cibles se déplaçant plus vite. Ses systèmes de guidage sont bien plus précis, mais il a une capacité de missiles limitée.</fr_fr>
 	</string>
 	<string id="STR_RETRIBUTION_MISSILE_LAUNCHER">
 		<en_gb>Retribution Missile Launcher</en_gb>
 		<es_la>Retribution Missile Launcher</es_la>
+		<fr_fr>Rampe pour missiles Retribution</fr_fr>
 	</string>
 	<string id="STR_RETRIBUTION_MISSILE_LAUNCHER_INFO">
 		<en_gb>This is an extremely powerful long range missile system, which should only be used with extreme caution. The destructive fusion warhead is designed to be used against distant ground targets.</en_gb>
 		<es_la>This is an extremely powerful long range missile system, which should only be used with extreme caution. The destructive fusion warhead is designed to be used against distant ground targets.</es_la>
+		<fr_fr>C&apos;est un système de missiles à longue portée extrêmement puissant, qui ne devrait être utilisé qu&apos;avec une grande prudence. L&apos;ogive à fusion destructrice est conçue pour être utilisée contre les cibles au sol éloignées.</fr_fr>
 	</string>
 	<string id="STR_DISRUPTOR_BOMB_LAUNCHER">
 		<en_gb>Disruptor Bomb Launcher</en_gb>
 		<es_la>Disruptor Bomb Launcher</es_la>
+		<fr_fr>Rampe pour bombes de disruption</fr_fr>
 	</string>
 	<string id="STR_DISRUPTOR_BOMB_LAUNCHER_INFO">
 		<en_gb>This Alien missile system is incredibly destructive. The explosive force exceeds the Retribution Missiles and its speed is greater. Fortunately the range is quite limited.</en_gb>
 		<es_la>This Alien missile system is incredibly destructive. The explosive force exceeds the Retribution Missiles and its speed is greater. Fortunately the range is quite limited.</es_la>
+		<fr_fr>Ce système de missiles alien est incroyablement destructeur. Sa force explosive est supérieure aux missiles Retribution et elle est plus rapide. Heureusement, la portée de tir est limitée.</fr_fr>
 	</string>
 	<string id="STR_STASIS_BOMB_LAUNCHER">
 		<en_gb>Stasis Bomb Launcher</en_gb>
 		<es_la>Stasis Bomb Launcher</es_la>
+		<fr_fr>Rampe pour bombes stasiques</fr_fr>
 	</string>
 	<string id="STR_STASIS_BOMB_LAUNCHER_INFO">
 		<en_gb>This unusual Alien weapon causes an inter-dimensional flux field to surround the target when it is hit, rendering it immobile and inactive. The field only lasts a short while but during this time the target vehicle is extremely vulnerable.</en_gb>
 		<es_la>This unusual Alien weapon causes an inter-dimensional flux field to surround the target when it is hit, rendering it immobile and inactive. The field only lasts a short while but during this time the target vehicle is extremely vulnerable.</es_la>
+		<fr_fr>Cette singulière arme alienne fait apparaître un champ de flux interdimensionnel qui entoure la cible lorsqu&apos;elle est touchée, l&apos;immobilisant et la rendant inactive. Ce champ disparaît rapidement, mais le véhicule qu&apos;il vise pendant qu&apos;il est actif est extrêmement vulnérable.</fr_fr>
 	</string>
 	<string id="STR_DISRUPTOR_MULTI_BOMB_LAUNCHER">
 		<en_gb>Disruptor Multi-Bomb Launcher</en_gb>
 		<es_la>Disruptor Multi-Bomb Launcher</es_la>
+		<fr_fr>Rampe pour multi-bombes</fr_fr>
 	</string>
 	<string id="STR_DISRUPTOR_MULTI_BOMB_LAUNCHER_INFO">
 		<en_gb>The multi-bomb has a short range but splits into fast, multiple independently targeted missiles. This makes it a deadly weapon against numerous small targets.</en_gb>
 		<es_la>The multi-bomb has a short range but splits into fast, multiple independently targeted missiles. This makes it a deadly weapon against numerous small targets.</es_la>
+		<fr_fr>La rampe multi-bombes s&apos;utilise seulement sur de courtes portées, mais les projectiles se divisent en une multitude de missiles rapides ayant chacun une cible indépendante. Ces caractéristiques en font une arme mortelle contre de nombreuses petites cibles.</fr_fr>
 	</string>
 	<string id="STR_LASER_DEFENSE_ARRAY">
 		<en_gb>Laser Defense Array</en_gb>
 		<es_la>Laser Defense Array</es_la>
+		<fr_fr>Système de défense laser</fr_fr>
 	</string>
 	<string id="STR_LASER_DEFENSE_ARRAY_INFO">
 		<en_gb>This Megapol produced defense system uses a large number of accurate, short range laser guns to shoot down incoming missiles.</en_gb>
 		<es_la>This Megapol produced defense system uses a large number of accurate, short range laser guns to shoot down incoming missiles.</es_la>
+		<fr_fr>Ce système de défense produit par Megapol utilise une grande quantité de fusils laser précis à courte portée afin d&apos;abattre les missiles arrivant dans leur direction.</fr_fr>
 	</string>
 	<string id="STR_PLASMA_DEFENSE_ARRAY">
 		<en_gb>Plasma Defense Array</en_gb>
 		<es_la>Plasma Defense Array</es_la>
+		<fr_fr>Système de défense à plasma</fr_fr>
 	</string>
 	<string id="STR_PLASMA_DEFENSE_ARRAY_INFO">
 		<en_gb>The Marsec version of the defense array uses more powerful and accurate plasma beam weapons to defend against missile attacks.</en_gb>
 		<es_la>The Marsec version of the defense array uses more powerful and accurate plasma beam weapons to defend against missile attacks.</es_la>
+		<fr_fr>La version Marsec du système de défense se sert d&apos;armes à rayons plasma, d&apos;une précision et d&apos;une puissance supérieures, pour se défendre contre les attaques de missiles.</fr_fr>
 	</string>
 	<string id="STR_SD_STANDARD">
 		<en_gb>SD Standard</en_gb>
 		<es_la>SD Standard</es_la>
+		<fr_fr>SD Standard</fr_fr>
 	</string>
 	<string id="STR_SD_STANDARD_INFO">
 		<en_gb>A compact anti-grav unit suitable for Hoverbikes and smaller vehicles only.</en_gb>
 		<es_la>A compact anti-grav unit suitable for Hoverbikes and smaller vehicles only.</es_la>
+		<fr_fr>Une unité anti-gravité compacte pour les Hoverbikes et les petits véhicules uniquement.</fr_fr>
 	</string>
 	<string id="STR_SD_DELUXE">
 		<en_gb>SD Deluxe</en_gb>
 		<es_la>SD Deluxe</es_la>
+		<fr_fr>SD Deluxe</fr_fr>
 	</string>
 	<string id="STR_SD_DELUXE_INFO">
 		<en_gb>A more high-powered version of the Superdynamics standard, but still small enough for a Hoverbike.</en_gb>
 		<es_la>A more high-powered version of the Superdynamics standard, but still small enough for a Hoverbike.</es_la>
+		<fr_fr>Une version plus puissante du Superdynamics standard; sa taille réduite lui permet quand même d&apos;être monté sur une hoverbike.</fr_fr>
 	</string>
 	<string id="STR_SD_SPORTS">
 		<en_gb>SD Sports</en_gb>
 		<es_la>SD Sports</es_la>
+		<fr_fr>SD Sports</fr_fr>
 	</string>
 	<string id="STR_SD_SPORTS_INFO">
 		<en_gb>Larger anti-grav units give more speed and acceleration for Hovercars and other small airborne vehicles.</en_gb>
 		<es_la>Larger anti-grav units give more speed and acceleration for Hovercars and other small airborne vehicles.</es_la>
+		<fr_fr>Les plus grandes unités anti-gravité donnent plus de vitesse et d&apos;accélération pour les hovercars et les autres petits véhicules aériens.</fr_fr>
 	</string>
 	<string id="STR_SD_TURBO">
 		<en_gb>SD Turbo</en_gb>
 		<es_la>SD Turbo</es_la>
+		<fr_fr>SD Turbo</fr_fr>
 	</string>
 	<string id="STR_SD_TURBO_INFO">
 		<en_gb>A large anti-grav unit designed for military vehicles or commercial transports.</en_gb>
 		<es_la>A large anti-grav unit designed for military vehicles or commercial transports.</es_la>
+		<fr_fr>Une large unité anti-gravité conçue pour les véhicules militaires ou les véhicules de transport commerciaux.</fr_fr>
 	</string>
 	<string id="STR_SD_ELITE">
 		<en_gb>SD Elite</en_gb>
 		<es_la>SD Elite</es_la>
+		<fr_fr>SD Elite</fr_fr>
 	</string>
 	<string id="STR_SD_ELITE_INFO">
 		<en_gb>A high powered anti-grav unit generally restricted to military or police vehicles.</en_gb>
 		<es_la>A high powered anti-grav unit generally restricted to military or police vehicles.</es_la>
+		<fr_fr>Une unité anti-gravité très puissante réservée en général aux véhicules militaires ou de police.</fr_fr>
 	</string>
 	<string id="STR_SD_SPECIAL">
 		<en_gb>SD Special</en_gb>
 		<es_la>SD Special</es_la>
+		<fr_fr>SD Spécial</fr_fr>
 	</string>
 	<string id="STR_SD_SPECIAL_INFO">
 		<en_gb>The ultimate engine upgrade for large airborne vehicles.</en_gb>
 		<es_la>The ultimate engine upgrade for large airborne vehicles.</es_la>
+		<fr_fr>La meilleure version de moteur pour les grands véhicules aériens.</fr_fr>
 	</string>
 	<string id="STR_40MM_AUTO_CANNON_TURRET">
 		<en_gb>40mm Auto Cannon Turret</en_gb>
 		<es_la>40mm Auto Cannon Turret</es_la>
+		<fr_fr>Tourelle d&apos;auto-canon 40mm</fr_fr>
 	</string>
 	<string id="STR_40MM_AUTO_CANNON_TURRET_INFO">
 		<en_gb>A discreet, but powerful computer targeting turret system. Designed for small road vehicles.</en_gb>
 		<es_la>A discreet, but powerful computer targeting turret system. Designed for small road vehicles.</es_la>
+		<fr_fr>Un système de tourelle discret mais puissant avec un système de visée informatique. Conçu pour les petits véhicules terrestres.</fr_fr>
 	</string>
 	<string id="STR_AIRGUARD_ANTI_AIR_CANNON">
 		<en_gb>Airguard Anti-Air Cannon</en_gb>
 		<es_la>Airguard Anti-Air Cannon</es_la>
+		<fr_fr>Canon antiaérien Airguard</fr_fr>
 	</string>
 	<string id="STR_AIRGUARD_ANTI_AIR_CANNON_INFO">
 		<en_gb>A more powerful and accurate cannon system manufactured by Marsec and designed for small road vehicles.</en_gb>
 		<es_la>A more powerful and accurate cannon system manufactured by Marsec and designed for small road vehicles.</es_la>
+		<fr_fr>Un système de canon puissant et précis fabriqué par Marsec et conçu pour les petits véhicules terrestres.</fr_fr>
 	</string>
 	<string id="STR_GLM_ARRAY">
 		<en_gb>GLM Array</en_gb>
 		<es_la>GLM Array</es_la>
+		<fr_fr>Système lance-missiles terrestre</fr_fr>
 	</string>
 	<string id="STR_GLM_ARRAY_INFO">
 		<en_gb>A compact ground launched missile system for small road vehicles. This will turn a humble road car into a serious threat to airborne vehicles.</en_gb>
 		<es_la>A compact ground launched missile system for small road vehicles. This will turn a humble road car into a serious threat to airborne vehicles.</es_la>
+		<fr_fr>Un système compact de lance-missiles terrestre pour les petits véhicules terrestres. Il transforme une voiture inoffensive en une dangereuse menace pour les véhicules aériens.</fr_fr>
 	</string>
 	<string id="STR_PLASMA_TURRET_CANNON">
 		<en_gb>Plasma Turret Cannon</en_gb>
 		<es_la>Plasma Turret Cannon</es_la>
+		<fr_fr>Canon à plasma à tourelle</fr_fr>
 	</string>
 	<string id="STR_PLASMA_TURRET_CANNON_INFO">
 		<en_gb>The Plasma Turret Cannon is a powerful weapon, but lacks the ability to track and hit fast airborne vehicles.</en_gb>
 		<es_la>The Plasma Turret Cannon is a powerful weapon, but lacks the ability to track and hit fast airborne vehicles.</es_la>
+		<fr_fr>Ce canon est une arme puissante, qui n&apos;a cependant pas la capacité de suivre et toucher des véhicules aériens rapides.</fr_fr>
 	</string>
 	<string id="STR_GLM_AIR_DEFENSE">
 		<en_gb>GLM Air Defense</en_gb>
 		<es_la>GLM Air Defense</es_la>
+		<fr_fr>Défense aérienne au sol</fr_fr>
 	</string>
 	<string id="STR_GLM_AIR_DEFENSE_INFO">
 		<en_gb>A missile launcher which transforms the heavy tank into an effective air defense unit.</en_gb>
 		<es_la>A missile launcher which transforms the heavy tank into an effective air defense unit.</es_la>
+		<fr_fr>Une rampe de lancement de missiles qui transforme un char lourd en une unité de défense aérienne efficace.</fr_fr>
 	</string>
 	<string id="STR_RUMBLE_CANNON">
 		<en_gb>Rumble Cannon</en_gb>
 		<es_la>Rumble Cannon</es_la>
+		<fr_fr>Canon explosif</fr_fr>
 	</string>
 	<string id="STR_RUMBLE_CANNON_INFO">
 		<en_gb>A powerful cannon which fires explosive shells over large distances. Its effectiveness is limited to static or slow moving targets.</en_gb>
 		<es_la>A powerful cannon which fires explosive shells over large distances. Its effectiveness is limited to static or slow moving targets.</es_la>
+		<fr_fr>Un puissant canon qui tire des obus explosifs sur de longues distances. Son efficacité est limitée aux cibles immobiles ou se déplaçant lentement.</fr_fr>
 	</string>
 	<string id="STR_METRO_ROADHOG">
 		<en_gb>Metro Roadhog</en_gb>
 		<es_la>Metro Roadhog</es_la>
+		<fr_fr>Metro Roadhog</fr_fr>
 	</string>
 	<string id="STR_METRO_ROADHOG_INFO">
 		<en_gb>A low powered road engine for bikes and small vehicles.</en_gb>
 		<es_la>A low powered road engine for bikes and small vehicles.</es_la>
+		<fr_fr>Un moteur terrestre peu puissant pour les motos et les petits véhicules.</fr_fr>
 	</string>
 	<string id="STR_METRO_ROADGRAV">
 		<en_gb>Metro Roadgrav</en_gb>
 		<es_la>Metro Roadgrav</es_la>
+		<fr_fr>Metro Roadgrav</fr_fr>
 	</string>
 	<string id="STR_METRO_ROADGRAV_INFO">
 		<en_gb>A standard road vehicle anti-grav unit.</en_gb>
 		<es_la>A standard road vehicle anti-grav unit.</es_la>
+		<fr_fr>Une unité anti-gravité standard pour véhicule terrestre.</fr_fr>
 	</string>
 	<string id="STR_METRO_TURBOGRAV">
 		<en_gb>Metro Turbograv</en_gb>
 		<es_la>Metro Turbograv</es_la>
+		<fr_fr>Metro Turbograv</fr_fr>
 	</string>
 	<string id="STR_METRO_TURBOGRAV_INFO">
 		<en_gb>A high powered road vehicle engine for standard size road vehicles</en_gb>
 		<es_la>A high powered road vehicle engine for standard size road vehicles</es_la>
+		<fr_fr>Un moteur puissant pour les véhicules terrestres de taille standard.</fr_fr>
 	</string>
 	<string id="STR_METRO_POWERGRAV">
 		<en_gb>Metro Powergrav</en_gb>
 		<es_la>Metro Powergrav</es_la>
+		<fr_fr>Metro Powergrav</fr_fr>
 	</string>
 	<string id="STR_METRO_POWERGRAV_INFO">
 		<en_gb>A powerful road engine normally reserved for police or military use.</en_gb>
 		<es_la>A powerful road engine normally reserved for police or military use.</es_la>
+		<fr_fr>Un moteur puissant normalement réservé aux véhicules terrestres militaires ou de police.</fr_fr>
 	</string>
 	<string id="STR_METRO_MULTIPOWER_PLUS">
 		<en_gb>Metro Multipower Plus</en_gb>
 		<es_la>Metro Multipower Plus</es_la>
+		<fr_fr>Metro Multipower Plus</fr_fr>
 	</string>
 	<string id="STR_METRO_MULTIPOWER_PLUS_INFO">
 		<en_gb>The ultimate road vehicle engine, strictly for armored military vehicles.</en_gb>
 		<es_la>The ultimate road vehicle engine, strictly for armored military vehicles.</es_la>
+		<fr_fr>Le meilleur en matière de moteur pour véhicule terrestre, réservé uniquement aux véhicules militaires blindés.</fr_fr>
 	</string>
 	<string id="STR_LIGHT_WEAPONS_CONTROL">
 		<en_gb>Light Weapons Control</en_gb>
 		<es_la>Light Weapons Control</es_la>
+		<fr_fr>Contrôle des armes légères</fr_fr>
 	</string>
 	<string id="STR_LIGHT_WEAPONS_CONTROL_INFO">
 		<en_gb>A complex AI unit manufactured by Cyberweb. It is designed to assist the aiming and intelligent targeting for all installed weapons systems.</en_gb>
 		<es_la>A complex AI unit manufactured by Cyberweb. It is designed to assist the aiming and intelligent targeting for all installed weapons systems.</es_la>
+		<fr_fr>Une unité IA complexe fabriquée par Cyberweb et conçue pour faciliter la visée de tous les systèmes d&apos;armes installés.</fr_fr>
 	</string>
 	<string id="STR_MEDIUM_WEAPONS_CONTROL">
 		<en_gb>Medium Weapons Control</en_gb>
 		<es_la>Medium Weapons Control</es_la>
+		<fr_fr>Contrôle des armes moyennes</fr_fr>
 	</string>
 	<string id="STR_MEDIUM_WEAPONS_CONTROL_INFO">
 		<en_gb>A more complex and capable version of the Light Weapons Control. Accuracy is improved over the smaller model.</en_gb>
 		<es_la>A more complex and capable version of the Light Weapons Control. Accuracy is improved over the smaller model.</es_la>
+		<fr_fr>Une version du contrôle des armes légères, plus sophistiquée et plus efficace. La précision est améliorée par rapport au petit modèle.</fr_fr>
 	</string>
 	<string id="STR_HEAVY_WEAPONS_CONTROL">
 		<en_gb>Heavy Weapons Control</en_gb>
 		<es_la>Heavy Weapons Control</es_la>
+		<fr_fr>Contrôle des armes lourdes</fr_fr>
 	</string>
 	<string id="STR_HEAVY_WEAPONS_CONTROL_INFO">
 		<en_gb>The largest and most complex weapons control system available from Cyberweb.An expensive unit that should only be used on heavily loaded weapons platforms.</en_gb>
 		<es_la>The largest and most complex weapons control system available from Cyberweb.An expensive unit that should only be used on heavily loaded weapons platforms.</es_la>
+		<fr_fr>Le système de contrôle d&apos;armes le plus grand et le plus complexe fabriqué par Cyberweb. Une unité onéreuse qu&apos;il est préférable d&apos;utiliser uniquement avec les plates-formes lourdement armées.</fr_fr>
 	</string>
 	<string id="STR_ADVANCED_CONTROL-SYSTEM">
 		<en_gb>Advanced Control System</en_gb>
 		<es_la>Advanced Control System</es_la>
+		<fr_fr>Système de contrôle avancé</fr_fr>
 	</string>
 	<string id="STR_ADVANCED_CONTROL_INFO">
 		<en_gb>X-COM Scientists have devised a superior and more compact weapons control system designed specifically for X-COM vehicles. It assists targeting of the more agile UFOs.</en_gb>
 		<es_la>X-COM Scientists have devised a superior and more compact weapons control system designed specifically for X-COM vehicles. It assists targeting of the more agile UFOs.</es_la>
+		<fr_fr>Les scientifiques d&apos;X-COM ont inventé un système de contrôle des armes plus compact et plus efficace, conçu spécifiquement pour les véhicules X-COM. Il permet de mieux viser les ovnis les plus agiles.</fr_fr>
 	</string>
 	<string id="STR_CARGO_MODULE">
 		<en_gb>Cargo Module</en_gb>
 		<es_la>Cargo Module</es_la>
+		<fr_fr>Module de cargaison</fr_fr>
 	</string>
 	<string id="STR_CARGO_MODULE_INFO">
 		<en_gb>A standard module for transporting goods. X-COM Agents should have cargo capacity at a building after a tactical combat mission in order to retrieve equipment and Alien artifacts.</en_gb>
 		<es_la>A standard module for transporting goods. X-COM Agents should have cargo capacity at a building after a tactical combat mission in order to retrieve equipment and Alien artifacts.</es_la>
+		<fr_fr>Un module de cargaison standard pour transporter des marchandises. Les agents d&apos;X-COM doivent avoir assez de capacité de chargement dans un bâtiment après une mission de combat tactique pour ramener les équipements et objets aliens.</fr_fr>
 	</string>
 	<string id="STR_PASSENGER_MODULE">
 		<en_gb>Passenger Module</en_gb>
 		<es_la>Passenger Module</es_la>
+		<fr_fr>Module de passagers</fr_fr>
 	</string>
 	<string id="STR_PASSENGER_MODULE_INFO">
 		<en_gb>Allows a vehicle to carry an extra four passengers in addition to the standard passenger capacity for the vehicle type.</en_gb>
 		<es_la>Allows a vehicle to carry an extra four passengers in addition to the standard passenger capacity for the vehicle type.</es_la>
+		<fr_fr>Permet à un véhicule de transporter quatre passagers supplémentaires en plus de la capacité standard du véhicule, qui varie en fonction de son type.</fr_fr>
 	</string>
 	<string id="STR_BIO_TRANSPORT_MODULE">
 		<en_gb>Bio-Transport Module</en_gb>
 		<es_la>Bio-Transport Module</es_la>
+		<fr_fr>Module de bio-transport</fr_fr>
 	</string>
 	<string id="STR_BIO_TRANSPORT_MODULE_INFO">
 		<en_gb>This X-COM produced unit is designed to contain Alien specimens, alive or dead. In order to retrieve Alien life forms, X-COM Agents must have Bio-Transport capability at a building after a tactical combat mission.</en_gb>
 		<es_la>This X-COM produced unit is designed to contain Alien specimens, alive or dead. In order to retrieve Alien life forms, X-COM Agents must have Bio-Transport capability at a building after a tactical combat mission.</es_la>
+		<fr_fr>Cette unité produite par X-COM est conçue pour conserver des spécimens aliens, morts ou vifs. Les agents d&apos;X-COM doivent disposer d&apos;une capacité de bio-transport vers un bâtiment après une mission de combat tactique afin de ramener les formes de vie aliennes.</fr_fr>
 	</string>
 	<string id="STR_MISSILE_EVASION_MATRIX">
 		<en_gb>Missile Evasion Matrix</en_gb>
 		<es_la>Missile Evasion Matrix</es_la>
+		<fr_fr>Matrice de détournement de missile</fr_fr>
 	</string>
 	<string id="STR_MISSILE_EVASION_MATRIX_INFO">
 		<en_gb>The Cyberweb evasion system is designed to track hostile missiles and disrupt their guidance systems using various forms of radiation. It is not totally effective but a very useful complement for other defense systems.</en_gb>
 		<es_la>The Cyberweb evasion system is designed to track hostile missiles and disrupt their guidance systems using various forms of radiation. It is not totally effective but a very useful complement for other defense systems.</es_la>
+		<fr_fr>Le système d&apos;évasion Cyberweb est conçu pour suivre les missiles hostiles et brouiller leurs systèmes de guidage à l&apos;aide de différentes formes de radiations. Il n&apos;est pas totalement efficace mais représente un complément très utile aux autres systèmes de défense.</fr_fr>
 	</string>
 	<string id="STR_SMALL_DISRUPTION_SHIELD">
 		<en_gb>Small Disruption Shield</en_gb>
 		<es_la>Small Disruption Shield</es_la>
+		<fr_fr>Petit bouclier disrupteur</fr_fr>
 	</string>
 	<string id="STR_SMALL_DISRUPTION_SHIELD_INFO">
 		<en_gb>The Aliens have manufactured an energy shield that can protect an entire vehicle. It is far more effective than any armor system and can turn a small vehicle into a deadly weapons platform. The disruption field it generates can absorb any kind of beam or projectile, but it loses power for each hit. Power levels are gradually restored but the unit will cease functioning if the power level is reduced to zero.</en_gb>
 		<es_la>The Aliens have manufactured an energy shield that can protect an entire vehicle. It is far more effective than any armor system and can turn a small vehicle into a deadly weapons platform. The disruption field it generates can absorb any kind of beam or projectile, but it loses power for each hit. Power levels are gradually restored but the unit will cease functioning if the power level is reduced to zero.</es_la>
+		<fr_fr>Les aliens ont fabriqué un bouclier d&apos;énergie capable de protéger un véhicule entier. Il est bien plus efficace que n&apos;importe quel système de blindage et peut faire d&apos;un petit véhicule une plate-forme d&apos;armes meurtrière. Le champ de disruption qu&apos;il génère peut absorber toutes sortes de rayons ou de projectiles, mais chaque coup qu&apos;il reçoit diminue son énergie. Les niveaux d&apos;énergie sont peu à peu remis à niveau mais l&apos;unité cessera de fonctionner lorsque le niveau d&apos;énergie atteindra zéro.</fr_fr>
 	</string>
 	<string id="STR_LARGE_DISRUPTION_SHIELD">
 		<en_gb>Large Disruption Shield</en_gb>
 		<es_la>Large Disruption Shield</es_la>
+		<fr_fr>Grand bouclier disrupteur</fr_fr>
 	</string>
 	<string id="STR_LARGE_DISRUPTION_SHIELD_INFO">
 		<en_gb>A larger and more powerful version of the Small Disruption Shield designed for larger Alien craft. Its absorption level is much greater, but will still malfunction if the power level is reduced to zero.</en_gb>
 		<es_la>A larger and more powerful version of the Small Disruption Shield designed for larger Alien craft. Its absorption level is much greater, but will still malfunction if the power level is reduced to zero.</es_la>
+		<fr_fr>Une version plus grande et plus puissante du petit bouclier disrupteur, conçue pour les vaisseaux plus importants. Son niveau d&apos;absorption est bien plus grand, mais lui aussi subira des perturbations dans son fonctionnement si le niveau d&apos;énergie atteint zéro.</fr_fr>
 	</string>
 	<string id="STR_CLOAKING_FIELD">
 		<en_gb>Cloaking Field</en_gb>
 		<es_la>Cloaking Field</es_la>
+		<fr_fr>Champ de camouflage</fr_fr>
 	</string>
 	<string id="STR_CLOAKING_FIELD_INFO">
 		<en_gb>The Cloaking Field is an Alien defense system that disrupts the detectors of missiles or weapon control systems. Effectively this means that the craft is almost invisible to radar, infra-red and visual sighting. It is very effective but the field must be disabled temporarily if the craft is using any of its own weapons systems.</en_gb>
 		<es_la>The Cloaking Field is an Alien defense system that disrupts the detectors of missiles or weapon control systems. Effectively this means that the craft is almost invisible to radar, infra-red and visual sighting. It is very effective but the field must be disabled temporarily if the craft is using any of its own weapons systems.</es_la>
+		<fr_fr>Le champ de camouflage est un système de défense alien qui brouille les détecteurs de missiles ou les systèmes de contrôle d&apos;armes. Le vaisseau sera donc presque invisible aux repérages radar, infrarouges ou visuels. Il est très efficace mais son champ doit être temporairement désactivé si le vaisseau utilise l&apos;un de ses propres systèmes d&apos;armes.</fr_fr>
 	</string>
 	<string id="STR_TELEPORTER">
 		<en_gb>Teleporter</en_gb>
 		<es_la>Teleporter</es_la>
+		<fr_fr>Téléporteur</fr_fr>
 	</string>
 	<string id="STR_TELEPORTER_INFO">
 		<en_gb>The Aliens have developed a very effective teleportation system that allows a craft to jump instantly over short distances. The unit is automatically activated when a vehicle is under fire and receiving damage. Its offensive use is limited because the destination cannot be controlled accurately.</en_gb>
 		<es_la>The Aliens have developed a very effective teleportation system that allows a craft to jump instantly over short distances. The unit is automatically activated when a vehicle is under fire and receiving damage. Its offensive use is limited because the destination cannot be controlled accurately.</es_la>
+		<fr_fr>Les aliens ont développé un système de téléportation très efficace qui permet à un vaisseau de parcourir instantanément de courtes distances. L&apos;unité est automatiquement activée lorsqu&apos;un véhicule subit le feu d&apos;un ennemi et est endommagé. Son utilisation offensive est limitée car il n&apos;est pas possible de contrôler précisément la destination.</fr_fr>
 	</string>
 	<string id="STR_DIMENSION_SHIFTER">
 		<en_gb>Dimension Shifter</en_gb>
 		<es_la>Dimension Shifter</es_la>
+		<fr_fr>Intervertisseur dimensionnel</fr_fr>
 	</string>
 	<string id="STR_DIMENSION_SHIFTER_INFO">
 		<en_gb>NOT USED!</en_gb>
 		<es_la>NOT USED!</es_la>
+		<fr_fr>NON UTILISÉ!</fr_fr>
 	</string>
 	<string id="STR_X_COM">
 		<en_gb>X-COM</en_gb>
 		<es_la>X-COM</es_la>
+		<fr_fr>X-COM</fr_fr>
 	</string>
 	<string id="STR_X_COM_INFO">
 		<en_gb>The Extraterrestrial combat force known as X-COM was originally founded in 1998 to defend the Earth from Alien invasion. After a period of obsolescence, X-COM was revived in 2040 to fight the second Alien war under the seas of the Earth. X-COM has now been enlisted to investigate recent Alien incursions. The city&amp;apos;s senators have agreed to fund a covert initiative, with the assistance of local Megapol stations, who will pass on reports of possible Alien activity directly to the X-COM base commander. X-COM is under pressure to solve the Alien problem before new elections to the Senate. Senators and the corporate elite of Mega-Primus are nervous about the prospect of popular panic undermining the social fabric of the city.</en_gb>
 		<es_la>The Extraterrestrial combat force known as X-COM was originally founded in 1998 to defend the Earth from Alien invasion. After a period of obsolescence, X-COM was revived in 2040 to fight the second Alien war under the seas of the Earth. X-COM has now been enlisted to investigate recent Alien incursions. The city&amp;apos;s senators have agreed to fund a covert initiative, with the assistance of local Megapol stations, who will pass on reports of possible Alien activity directly to the X-COM base commander. X-COM is under pressure to solve the Alien problem before new elections to the Senate. Senators and the corporate elite of Mega-Primus are nervous about the prospect of popular panic undermining the social fabric of the city.</es_la>
+		<fr_fr>L&apos;organisation armée anti-alien, connue sous le nom d&apos;X-COM, fut créée en 1998. Son objectif était de défendre la Terre contre l&apos;invasion alienne. Après une période d&apos;inactivité, X-COM fut remise sur pied en 2040 pour faire face à la seconde invasion alienne, sous les mers de la Terre. X-COM a aujourd&apos;hui été chargée d&apos;enquêter sur les récentes incursions aliennes. Les sénateurs de la ville ont accepté de financer une action secrète, avec l&apos;aide des stations locales Megapol qui transmettront des informations sur l&apos;activité alienne directement au commandant de la base d&apos;X-COM. X-COM doit absolument résoudre le problème alien avant les nouvelles élections du Sénat. Les sénateurs et l&apos;élite de Mega-Primus redoutent en effet une panique populaire qui menacerait la structure sociale de la ville.</fr_fr>
 	</string>
 	<string id="STR_ALIEN">
 		<en_gb>Alien</en_gb>
 		<es_la>Alien</es_la>
+		<fr_fr>Aliens</fr_fr>
 	</string>
 	<string id="STR_ALIEN_INFO">
 		<en_gb>The Alien scare first began on 7th March, 2084 when a strange Dimension Gate appeared in the skies above Mega-Primus. During the following days strange UFOs came and went, but they did not appear to attack anything or abduct anyone. It was only when strange reports of Alien monsters lurking in the recesses of city buildings filtered through to the senatorial security committee that the plan to enlist X-COM was proposed.</en_gb>
 		<es_la>The Alien scare first began on 7th March, 2084 when a strange Dimension Gate appeared in the skies above Mega-Primus. During the following days strange UFOs came and went, but they did not appear to attack anything or abduct anyone. It was only when strange reports of Alien monsters lurking in the recesses of city buildings filtered through to the senatorial security committee that the plan to enlist X-COM was proposed.</es_la>
+		<fr_fr>L&apos;alerte alienne a commencé le 7 mars 2084, lorsqu&apos;un étrange portail interdimensionnel apparut dans les cieux de Mega-Primus. Pendant les jours qui suivirent, d&apos;étranges OVNIS firent des apparitions, sans attaquer ou enlever quiconque cependant. Ce ne fut que lorsque d&apos;étranges rapports, faisant état de monstres cachés dans les recoins des bâtiments de la ville, parvinrent au comité de sécurité du sénat que l&apos;on proposa de faire appel à X-COM.</fr_fr>
 	</string>
 	<string id="STR_GOVERNMENT">
 		<en_gb>Government</en_gb>
 		<es_la>Government</es_la>
+		<fr_fr>Sénat</fr_fr>
 	</string>
 	<string id="STR_GOVERNMENT_INFO">
 		<en_gb>Mega-Primus is a city state ruled by thirteen elected senators. This Government is directly responsible for the legal system and the mass transit systems. All other city services, including the policing of the city, are contracted to various corporations. In practice the immense bureaucracy holds the most power. Senior civil servants are responsible for maintaining the city edicts and defining citizenship and its obligations. They cannot be removed from their jobs except through proven misconduct.</en_gb>
 		<es_la>Mega-Primus is a city state ruled by thirteen elected senators. This Government is directly responsible for the legal system and the mass transit systems. All other city services, including the policing of the city, are contracted to various corporations. In practice the immense bureaucracy holds the most power. Senior civil servants are responsible for maintaining the city edicts and defining citizenship and its obligations. They cannot be removed from their jobs except through proven misconduct.</es_la>
+		<fr_fr>Mega-Primus est une ville-état gouvernée par treize sénateurs élus. Le Sénat est directement responsable du système juridique et des systèmes de transport public. Les autres services municipaux, y compris la surveillance de la ville, sont entre les mains de diverses sociétés. En pratique, la bureaucratie gigantesque détient la plus grande partie du pouvoir. Les hauts fonctionnaires sont chargés de faire respecter les décrets de la ville et de définir la citoyenneté et les obligations qu&apos;elle entraîne. Ils ne peuvent être démis de leurs fonctions, sauf en cas de faute professionnelle reconnue.</fr_fr>
 	</string>
 	<string id="STR_MEGAPOL">
 		<en_gb>Megapol</en_gb>
 		<es_la>Megapol</es_la>
+		<fr_fr>Megapol</fr_fr>
 	</string>
 	<string id="STR_MEGAPOL_INFO">
 		<en_gb>Megapol not only runs the city police force and prison service, it also manufactures vehicles, weapons and munitions. It directly competes with the Marsec corporation for lucrative markets in the mining colonies and Mega-Primus. The major problems for Megapol are the criminal gangs that distribute Psiclone and the UFO incursions which are regarded as a threat to city security. Police vehicles bravely intercept UFOs as they materialize from the Dimension Gates, but they are woefully under equipped to deal with them.</en_gb>
 		<es_la>Megapol not only runs the city police force and prison service, it also manufactures vehicles, weapons and munitions. It directly competes with the Marsec corporation for lucrative markets in the mining colonies and Mega-Primus. The major problems for Megapol are the criminal gangs that distribute Psiclone and the UFO incursions which are regarded as a threat to city security. Police vehicles bravely intercept UFOs as they materialize from the Dimension Gates, but they are woefully under equipped to deal with them.</es_la>
+		<fr_fr>Megapol ne se contente pas de gérer les forces de police de la ville et le système pénitencier; elle fabrique également des véhicules, des armes et des munitions. Elle est en concurrence directe avec la société Marsec pour tenter de remporter des marchés lucratifs dans les colonies minières et au sein de Mega-Primus. Les principaux problèmes auxquels Megapol est confrontée sont les gangs criminels qui distribuent le Psiclone et les incursions d&apos;ovnis considérées comme une menace pour la sécurité de la ville. Les véhicules de police tentent d&apos;intercepter les ovnis lorsqu&apos;ils se matérialisent aux portails interdimensionnels, mais leur équipement n&apos;est vraiment pas adéquat pour les affronter.</fr_fr>
 	</string>
 	<string id="STR_CULT_OF_SIRIUS">
 		<en_gb>Cult of Sirius</en_gb>
 		<es_la>Cult of Sirius</es_la>
+		<fr_fr>Culte de Sirius</fr_fr>
 	</string>
 	<string id="STR_CULT_OF_SIRIUS_INFO">
 		<en_gb>This bizarre cult has whipped up a religious frenzy following the appearance of the Dimension Gates. The cult has long believed in redemption of the human race by a superior Alien race. They believe the UFOs and Aliens to be harmless and are rapidly gaining credibility and recruits from the general population. This represents a considerable threat to X-COM because the cultists will do anything to assist the Aliens in their purpose, whatever that might be.</en_gb>
 		<es_la>This bizarre cult has whipped up a religious frenzy following the appearance of the Dimension Gates. The cult has long believed in redemption of the human race by a superior Alien race. They believe the UFOs and Aliens to be harmless and are rapidly gaining credibility and recruits from the general population. This represents a considerable threat to X-COM because the cultists will do anything to assist the Aliens in their purpose, whatever that might be.</es_la>
+		<fr_fr>Ce culte étrange a engendré une ferveur religieuse proche du fanatisme à la suite de l&apos;apparition des portails interdimensionnels. Les membres du culte croient depuis longtemps que la race humaine sera sauvée par une race alienne supérieure, et ils pensent que les OVNIS et les extraterrestres sont inoffensifs. La crédibilité de ce culte augmente au sein de la population, et c&apos;est une menace considérable pour X-COM; ses adeptes feront tout ce qui est en leur pouvoir pour favoriser les projets des aliens, quels qu&apos;ils soient.</fr_fr>
 	</string>
 	<string id="STR_MARSEC">
 		<en_gb>MarSec</en_gb>
 		<es_la>MarSec</es_la>
+		<fr_fr>MarSec</fr_fr>
 	</string>
 	<string id="STR_MARSEC_INFO">
 		<en_gb>The ominous and highly secretive Marsec corporation took over from X-COM as the leading provider of off-world security, as X-COM centered its activities around Mega-Primus. During the initial years of their operation Marsec was empowered to impose order on the rebellious Mars colony. Marsec (Mars Security) developed high technology weaponry and vehicles by recruiting top Scientists from Earth and using the equipment left by X-COM. With the establishment of the remote Elerium mining colonies, Marsec secured contracts for military equipment despite competition from Megapol.</en_gb>
 		<es_la>The ominous and highly secretive Marsec corporation took over from X-COM as the leading provider of off-world security, as X-COM centered its activities around Mega-Primus. During the initial years of their operation Marsec was empowered to impose order on the rebellious Mars colony. Marsec (Mars Security) developed high technology weaponry and vehicles by recruiting top Scientists from Earth and using the equipment left by X-COM. With the establishment of the remote Elerium mining colonies, Marsec secured contracts for military equipment despite competition from Megapol.</es_la>
+		<fr_fr>La sinistre et mystérieuse corporation Marsec fut nommée responsable de la sécurité hors-planète, ce qui permit à X-COM de concentrer ses activités autour de Mega-Primus. Au cours des premières années de ses opérations, Marsec fut chargée de ramener l&apos;ordre au sein de la colonie rebelle de Mars. Marsec (Mars Sécurité) développa un armement et des véhicules de haute technologie en recrutant les meilleurs scientifiques de la Terre et en utilisant l&apos;équipement laissé par X-COM. Grâce à l&apos;implantation des lointaines colonies minières d&apos;Elérium, Marsec réussit à décrocher les contrats concernant l&apos;équipement militaire, malgré la concurrence de Megapol.</fr_fr>
 	</string>
 	<string id="STR_SUPERDYNAMICS">
 		<en_gb>Superdynamics</en_gb>
 		<es_la>Superdynamics</es_la>
+		<fr_fr>Superdynamics</fr_fr>
 	</string>
 	<string id="STR_SUPERDYNAMICS_INFO">
 		<en_gb>The refinement of Elerium powered anti-grav propulsion units has created a new industry for ecologically friendly power sources. Superdynamics has developed sophisticated plants for producing power units of all sizes as well as a variety of airborne anti-grav vehicles. The cost of manufacture is high and Elerium is also in short supply. This means that privately owned vehicles are rare, but  Superdynamics developed and installed the anti-grav system for the People Tubes. These safe and efficient tube ways rapidly became the mass transit system for Mega-Primus in direct competition to the road network.</en_gb>
 		<es_la>The refinement of Elerium powered anti-grav propulsion units has created a new industry for ecologically friendly power sources. Superdynamics has developed sophisticated plants for producing power units of all sizes as well as a variety of airborne anti-grav vehicles. The cost of manufacture is high and Elerium is also in short supply. This means that privately owned vehicles are rare, but  Superdynamics developed and installed the anti-grav system for the People Tubes. These safe and efficient tube ways rapidly became the mass transit system for Mega-Primus in direct competition to the road network.</es_la>
+		<fr_fr>L&apos;amélioration des unités de propulsion anti-gravité fonctionnant à l&apos;élérium a permis de créer une nouvelle industrie pour les sources d&apos;énergie écologiques. Superdynamics a développé des usines sophistiquées pour la production d&apos;unités d&apos;énergie de toutes tailles, ainsi que plusieurs véhicules aériens anti-gravité. Le coût de fabrication est élevé et les réserves d&apos;élérium ne sont pas immenses. Les véhicules privés sont donc rares, mais Superdynamics a également créé et installé le système anti-gravité pour les Tubes. Ces métros efficaces et sûrs sont rapidement devenus le système de transports publics de Mega-Primus, faisant directement concurrence au réseau routier.</fr_fr>
 	</string>
 	<string id="STR_GENERAL_METRO">
 		<en_gb>General Metro</en_gb>
 		<es_la>General Metro</es_la>
+		<fr_fr>General Metro</fr_fr>
 	</string>
 	<string id="STR_GENERAL_METRO_INFO">
 		<en_gb>The General Metro corporation designs and manufactures road vehicles. Since the corporation installed an efficient anti-grav system inside the road structure it became possible to produce low powered anti-grav road vehicles which were cheap and efficient, despite being limited to the road system. The vehicle designs were based on the exuberant styling of the 1950s according to the requirements of city planners. General Metro is a major competitor to Superdynamics, as both corporations provide transport systems.</en_gb>
 		<es_la>The General Metro corporation designs and manufactures road vehicles. Since the corporation installed an efficient anti-grav system inside the road structure it became possible to produce low powered anti-grav road vehicles which were cheap and efficient, despite being limited to the road system. The vehicle designs were based on the exuberant styling of the 1950s according to the requirements of city planners. General Metro is a major competitor to Superdynamics, as both corporations provide transport systems.</es_la>
+		<fr_fr>La société General Metro développe et fabrique des véhicules routiers. Elle a installé un système anti-gravité efficace dans la structure des routes, ce qui lui permet de produire des véhicules anti-gravité utilisant peu d&apos;énergie, peu coûteux et efficaces, bien qu&apos;ils soient limités au système routier. La ligne de ces véhicules est basée sur le style exubérant des années 1950 et répond parfaitement aux exigences des urbanistes municipaux. General Metro est l&apos;un des concurrents principaux de Superdynamics, les deux sociétés fournissant toutes les deux des systèmes de transport.</fr_fr>
 	</string>
 	<string id="STR_CYBERWEB">
 		<en_gb>Cyberweb</en_gb>
 		<es_la>Cyberweb</es_la>
+		<fr_fr>Cyberweb</fr_fr>
 	</string>
 	<string id="STR_CYBERWEB_INFO">
 		<en_gb>The Cyberweb corporation developed artificial life forms to provide a willing and obedient workforce for the future. However, popular protest against unemployment forced the Senate to pass laws against artificial life. No more Androids could be built and they were banned from employment except the most menial and degrading jobs. Cyberweb had to change strategy and compete with the Nanotech corporation for medical and military contracts. The unfortunate Androids were either banished from the city or had to be bought and sold as household servants or pets. Androids are good for combat, although they possess no Psionic abilities, and the few that remain may well risk seeking employment by X-COM and join the battle against the Aliens.</en_gb>
 		<es_la>The Cyberweb corporation developed artificial life forms to provide a willing and obedient workforce for the future. However, popular protest against unemployment forced the Senate to pass laws against artificial life. No more Androids could be built and they were banned from employment except the most menial and degrading jobs. Cyberweb had to change strategy and compete with the Nanotech corporation for medical and military contracts. The unfortunate Androids were either banished from the city or had to be bought and sold as household servants or pets. Androids are good for combat, although they possess no Psionic abilities, and the few that remain may well risk seeking employment by X-COM and join the battle against the Aliens.</es_la>
+		<fr_fr>La corporation Cyberweb développa des formes de vie artificielle afin de créer une future main-d&apos;oeuvre docile et bien disposée. Toutefois, les protestations populaires contre le chômage obligèrent le Sénat à promulguer des lois contre la vie artificielle. La fabrication d&apos;Androïdes fut interdite, et ces créatures n&apos;eurent pas le droit de travailler, à l&apos;exception des tâches les plus sales et dégradantes. Cyberweb dut changer de stratégie et rivaliser avec Nanotech pour essayer d&apos;obtenir les contrats médicaux et militaires. Les malheureux Androïdes furent bannis de la ville ou durent être achetés et vendus comme domestiques ou animaux familiers. Les Androïdes sont bons pour le combat, bien qu&apos;ils ne possèdent aucune capacité psionique. Les quelques Androïdes restants risquent fort de chercher du travail auprès d&apos;X-COM et de se joindre au combat contre les Aliens.</fr_fr>
 	</string>
 	<string id="STR_TRANSTELLAR">
 		<en_gb>Transtellar</en_gb>
 		<es_la>Transtellar</es_la>
+		<fr_fr>Transtellaire</fr_fr>
 	</string>
 	<string id="STR_TRANSTELLAR_INFO">
 		<en_gb>The Transtellar corporation owns the Space Port and many of the Space Liners that ship to the city. They also own many warehouses spread throughout the city which are used by many corporations involved in importing and exporting. The city goods transport service and the taxi service are owned and run by Transtellar. The corporation has been regarded suspiciously by Megapol which considers the corporation susceptible to Alien contamination.</en_gb>
 		<es_la>The Transtellar corporation owns the Space Port and many of the Space Liners that ship to the city. They also own many warehouses spread throughout the city which are used by many corporations involved in importing and exporting. The city goods transport service and the taxi service are owned and run by Transtellar. The corporation has been regarded suspiciously by Megapol which considers the corporation susceptible to Alien contamination.</es_la>
+		<fr_fr>La société Transtellaire est propriétaire du port spatial et de nombreux cargos spatiaux qui desservent la ville. Elle possède également de nombreux entrepôts répartis un peu partout dans la ville et utilisés par les sociétés d&apos;import-export. Par ailleurs, Transtellaire possède et gère le service de transport de marchandises de la ville et le service de taxi. Megapol ne fait pas confiance à cette société, la soupçonnant de pouvoir être contaminée facilement par les aliens.</fr_fr>
 	</string>
 	<string id="STR_SOLMINE">
 		<en_gb>Solmine</en_gb>
 		<es_la>Solmine</es_la>
+		<fr_fr>Solmine</fr_fr>
 	</string>
 	<string id="STR_SOLMINE_INFO">
 		<en_gb>The discovery of Elerium sources in distant solar systems has produced a new gold rush. The Solmine corporation owns most of the mining operations and it imports Elerium directly to Mega-Primus. These mining operations sustain the economies of the numerous small colonies, but they are still governed from Earth. There have been demands for independence and some rebellions. Major corporations, fearing diminished profits and raised Elerium prices have suppressed these revolts with the aid of Solmine and Marsec.</en_gb>
 		<es_la>The discovery of Elerium sources in distant solar systems has produced a new gold rush. The Solmine corporation owns most of the mining operations and it imports Elerium directly to Mega-Primus. These mining operations sustain the economies of the numerous small colonies, but they are still governed from Earth. There have been demands for independence and some rebellions. Major corporations, fearing diminished profits and raised Elerium prices have suppressed these revolts with the aid of Solmine and Marsec.</es_la>
+		<fr_fr>La découverte des sources d&apos;Elérium dans de lointains systèmes solaires a entraîné une nouvelle ruée vers l&apos;or. La corporation Solmine détient la plupart des opérations minières et importe directement de l&apos;Elérium à Mega-Primus. Ces opérations minières font vivre les innombrables petites colonies qui continuent, cependant, à être gouvernées par la Terre. Des rebellions s&apos;étaient produites et certaines colonies avaient exigé leur indépendance. Craignant une diminution de leurs bénefices et une augmentation des prix de l&apos;Elérium, les grandes corporations réprimèrent ces rebellions avec l&apos;aide de Solmine et Marsec.</fr_fr>
 	</string>
 	<string id="STR_SENSOVISION">
 		<en_gb>Sensovision</en_gb>
 		<es_la>Sensovision</es_la>
+		<fr_fr>Sensovision</fr_fr>
 	</string>
 	<string id="STR_SENSOVISION_INFO">
 		<en_gb>The entertainment industry entered a new phase with the advent of Psionic projectors. Actors connected to Psionic sensors can record their thoughts and experiences in any environment. The recorded patterns are edited into &amp;apos;Sensovision&amp;apos;  experiences and replayed at &amp;apos;Sensodromes&amp;apos; where many people can connect to Psionic receivers. The receiver allows people to see, hear, feel and smell what the actor experienced. Sensoviosion actors are wealthy celebrities and the Sensovision corporation is now selling the expensive receiver sets into peoples homes. The only competition comes from the addictive and illegal Psionic implant known as Psiclone, which is supplied by the criminal syndicates.</en_gb>
 		<es_la>The entertainment industry entered a new phase with the advent of Psionic projectors. Actors connected to Psionic sensors can record their thoughts and experiences in any environment. The recorded patterns are edited into &amp;apos;Sensovision&amp;apos;  experiences and replayed at &amp;apos;Sensodromes&amp;apos; where many people can connect to Psionic receivers. The receiver allows people to see, hear, feel and smell what the actor experienced. Sensoviosion actors are wealthy celebrities and the Sensovision corporation is now selling the expensive receiver sets into peoples homes. The only competition comes from the addictive and illegal Psionic implant known as Psiclone, which is supplied by the criminal syndicates.</es_la>
+		<fr_fr>L&apos;avènement des projecteurs psioniques a ouvert une nouvelle ère dans l&apos;industrie des loisirs. Les acteurs, reliés à des détecteurs psioniques, peuvent enregistrer leurs pensées et sensations dans n&apos;importe quel environnement. Ces enregistrements sont ensuite transformés en expériences de &quot;sensovision&quot; et projetés dans des &quot;sensodromes&quot;, où un public nombreux peut se connecter à des récepteurs psioniques. Les récepteurs permettent à l&apos;assistance de voir, d&apos;entendre, de sentir et d&apos;éprouver les mêmes choses que l&apos;acteur. Les acteurs de sensovision sont des célébrités richissimes, et la société Sensovision vend maintenant des postes de réception privés à des prix relativement élevés. Le seul concurrent de Sensovision vient du Psiclone, un implant psionique illégal qui créé un état de dépendance, fourni par les syndicats du crime.</fr_fr>
 	</string>
 	<string id="STR_LIFETREE">
 		<en_gb>Lifetree</en_gb>
 		<es_la>Lifetree</es_la>
+		<fr_fr>Lifetree</fr_fr>
 	</string>
 	<string id="STR_LIFETREE_INFO">
 		<en_gb>The Lifetree corporation runs the city schools and universities. They have developed a controversial but highly effective Psionic tutoring system which imparts knowledge far more efficiently than reading or listening to lecturers. If the student resists the knowledge transfer then pain results. Lifetree have been accused of brainwashing since the introduction of the &amp;apos;moral education&amp;apos; program which is designed to turn the youth into model citizens. They are competing with Sensovision in the production of Psionic devices.</en_gb>
 		<es_la>The Lifetree corporation runs the city schools and universities. They have developed a controversial but highly effective Psionic tutoring system which imparts knowledge far more efficiently than reading or listening to lecturers. If the student resists the knowledge transfer then pain results. Lifetree have been accused of brainwashing since the introduction of the &amp;apos;moral education&amp;apos; program which is designed to turn the youth into model citizens. They are competing with Sensovision in the production of Psionic devices.</es_la>
+		<fr_fr>La société Lifetree gère les écoles et les universités. Elle a développé un système d&apos;apprentissage psionique controversé mais extrêmement efficace qui distille les connaissances d&apos;une façon bien plus efficace que toutes les autres méthodes d&apos;éducation traditionnelles telles que la lecture ou les cours magistraux. Tout refus d&apos;apprendre est sanctionné par la souffrance. Lifetree s&apos;est vue accusée de lavage de cerveau suite à l&apos;introduction d&apos;un programme &quot;d&apos;éducation morale&quot;, visant à faire de la jeunesse des citoyens modèles. En s&apos;attaquant à la production d&apos;appareils psioniques, Lifetree est devenu le concurrent de Sensovision</fr_fr>
 	</string>
 	<string id="STR_NUTRIVEND">
 		<en_gb>Nutrivend</en_gb>
 		<es_la>Nutrivend</es_la>
+		<fr_fr>Nutrivend</fr_fr>
 	</string>
 	<string id="STR_NUTRIVEND_INFO">
 		<en_gb>Nutrivend has developed a highly efficient organic farming system that produces huge quantities of fruit, vegetables and livestock of all known varieties. The corporation also owns food processing plants and shops. The city regulations governing the additives in food are so strict that rival producers cannot compete economically, with the single exception of Evonet.</en_gb>
 		<es_la>Nutrivend has developed a highly efficient organic farming system that produces huge quantities of fruit, vegetables and livestock of all known varieties. The corporation also owns food processing plants and shops. The city regulations governing the additives in food are so strict that rival producers cannot compete economically, with the single exception of Evonet.</es_la>
+		<fr_fr>Nutrivend a développé un système de culture organique très efficace qui permet de produire de grandes quantités de fruits, légumes et bétail de toutes les variétés. Cette société possède aussi des magasins et des usines de traitement de nourriture. La réglementation municipale concernant les additifs dans la nourriture est d&apos;une telle rigueur qu&apos;aucun producteur rival, à l&apos;exception d&apos;Evonet, ne peut lui faire concurrence sur le plan économique</fr_fr>
 	</string>
 	<string id="STR_EVONET">
 		<en_gb>Evonet</en_gb>
 		<es_la>Evonet</es_la>
+		<fr_fr>Evonet</fr_fr>
 	</string>
 	<string id="STR_EVONET_INFO">
 		<en_gb>Recycling is the business of Evonet. According to city regulations all waste has to be recycled, Evonet have turned this into a profitable enterprise through the construction of their recyclotoriums. These buildings process organic waste, including sewage, into foodstuffs for human and animal consumption. The corporation also owns the sewage works and the highly sophisticated water plants which purify water according to the high standards required by the city Senate.</en_gb>
 		<es_la>Recycling is the business of Evonet. According to city regulations all waste has to be recycled, Evonet have turned this into a profitable enterprise through the construction of their recyclotoriums. These buildings process organic waste, including sewage, into foodstuffs for human and animal consumption. The corporation also owns the sewage works and the highly sophisticated water plants which purify water according to the high standards required by the city Senate.</es_la>
+		<fr_fr>Le recyclage, c&apos;est l&apos;affaire d&apos;Evonet. Selon le règlement municipal, tous les déchets doivent être recyclés. Evonet a su s&apos;implanter dans ce créneau et en faire une entreprise florissante, grâce à la création des recyclotoriums. Ces bâtiments recyclent les déchets organiques, y compris les eaux usées, en denrées destinées à la consommation humaine et animale. La société possède aussi les stations d&apos;épuration et les usines hyper sophistiquées de purification des eaux, qui traitent l&apos;eau en fonction des normes de qualité imposées par le Sénat de la ville.</fr_fr>
 	</string>
 	<string id="STR_SANCTUARY_CLINIC">
 		<en_gb>Sanctuary Clinic</en_gb>
