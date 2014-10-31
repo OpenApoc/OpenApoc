@@ -302,274 +302,342 @@
 	<string id="STR_HOVERBIKE">
 		<en_gb>Hoverbike</en_gb>
 		<es_la>Hoverbike</es_la>
+		<fr_fr>Hoverbike</fr_fr>
 	</string>
 	<string id="STR_HOVERBIKE_INFO">
 		<en_gb>The unusual Hoverbike with &amp;apos;side car&amp;apos; is used for military purposes or for the personal pleasure of wayward youth who enjoy speed and altitude. Its good power to weight ratio means that this is the most maneuverable air vehicle but it can only carry light armaments. The Hoverbike can be a valuable means of transport for the  Agent on investigative missions where speed of response is essential.</en_gb>
 		<es_la>The unusual Hoverbike with &amp;apos;side car&amp;apos; is used for military purposes or for the personal pleasure of wayward youth who enjoy speed and altitude. Its good power to weight ratio means that this is the most maneuverable air vehicle but it can only carry light armaments. The Hoverbike can be a valuable means of transport for the  Agent on investigative missions where speed of response is essential.</es_la>
+		<fr_fr>L&apos;étrange hoverbike &quot;side-car&quot; est utilisée à des fins essentiellement militaires ou par les adolescents rebelles qui se grisent de vitesse et d&apos;altitude. Son impressionnant rapport puissance-poids en fait un véhicule extrêmement maniable dans les airs, mais elle ne peut être équipée que d&apos;armes légères. L&apos;hoverbike peut se révéler un moyen de transport précieux pour les agents d&apos;X-COM menant des enquêtes où la rapidité de réponse est essentielle.</fr_fr>
 	</string>
 	<string id="STR_VALKYRIE">
 		<en_gb>Valkyrie Interceptor</en_gb>
 		<es_la>Valkyrie Interceptor</es_la>
+		<fr_fr>Intercepteur Valkyrie</fr_fr>
 	</string>
 	<string id="STR_VALKYRIE_INFO">
 		<en_gb>The Valkyrie is the standard military vehicle manufactured by Marsec. Its sleek lines appear reminiscent of old rocket designs, but it is a fully capable anti-grav dependent craft with a variety of engine configurations. There is space for many types of armaments and equipment loads. It is capable of solar system travel and is feared by the criminal cartels when it is used to police the space lanes to Mars and beyond.</en_gb>
 		<es_la>The Valkyrie is the standard military vehicle manufactured by Marsec. Its sleek lines appear reminiscent of old rocket designs, but it is a fully capable anti-grav dependent craft with a variety of engine configurations. There is space for many types of armaments and equipment loads. It is capable of solar system travel and is feared by the criminal cartels when it is used to police the space lanes to Mars and beyond.</es_la>
+		<fr_fr>Le Valkyrie est le véhicule militaire standard conçu par Marsec. Ses lignes pures rappellent les premiers designs de fusées inventées au XXème siècle; c&apos;est cependant un vaisseau anti-gravité entièrement autonome avec plusieurs configurations de moteur possible. Il peut contenir une grande variété d&apos;armes et d&apos;équipements. Il peut voyager dans le système solaire et nombreux sont les cartels de criminels qui le craignent.</fr_fr>
 	</string>
 	<string id="STR_HAWK_AIR_WARRIOR">
 		<en_gb>Hawk Air Warrior</en_gb>
 		<es_la>Hawk Air Warrior</es_la>
+		<fr_fr>Vaisseau de guerre Hawk</fr_fr>
 	</string>
 	<string id="STR_HAWK_AIR_WARRIOR_INFO">
 		<en_gb>The Hawk is essentially a heavy weapons platform capable of carrying a significant payload. It is the most powerful vehicle manufactured by Marsec and should be the first line of defense against any invasion force, wherever it comes from.</en_gb>
 		<es_la>The Hawk is essentially a heavy weapons platform capable of carrying a significant payload. It is the most powerful vehicle manufactured by Marsec and should be the first line of defense against any invasion force, wherever it comes from.</es_la>
+		<fr_fr>L&apos;Hawk est essentiellement une plate-forme d&apos;armes lourdes capable de stocker un nombre d&apos;armes impressionnant. C&apos;est le véhicule le plus puissant fabriqué par Marsec et il devrait se trouver dans les premières lignes de défense contre les forces d&apos;invasion, d&apos;où qu&apos;elles viennent.</fr_fr>
 	</string>
 	<string id="STR_DIMENSION_PROBE">
 		<en_gb>Dimension Probe</en_gb>
 		<es_la>Dimension Probe</es_la>
+		<fr_fr>Sonde dimensionnelle</fr_fr>
 	</string>
 	<string id="STR_DIMENSION_PROBE_INFO">
 		<en_gb>This unmanned automated probe is designed to explore the Alien Dimension and has minimal armaments and defenses. The Probe will enable X-COM to test its new adaptation of the Aliens inter-dimensional technology. Exploration is a vital requirement for developing further knowledge of the Alien threat and the probe is just the first step.</en_gb>
 		<es_la>This unmanned automated probe is designed to explore the Alien Dimension and has minimal armaments and defenses. The Probe will enable X-COM to test its new adaptation of the Aliens inter-dimensional technology. Exploration is a vital requirement for developing further knowledge of the Alien threat and the probe is just the first step.</es_la>
+		<fr_fr>Cette sonde automatisée fonctionnant sans aucun équipage à bord est conçue pour explorer la dimension alienne et ne possède ni armement, ni défense. Elle permettra aux scientifiques d&apos;X-COM de tester sa nouvelle technologie interdimensionnelle basée sur celle des aliens. L&apos;exploration est un facteur vital pour approfondir la connaissance de la menace alienne; la sonde en représente la toute première étape.</fr_fr>
 	</string>
 	<string id="STR_BIOTRANS">
 		<en_gb>Biotrans</en_gb>
 		<es_la>Biotrans</es_la>
+		<fr_fr>Biotrans</fr_fr>
 	</string>
 	<string id="STR_BIOTRANS_INFO">
 		<en_gb>This inter-dimensional transport is designed for transporting Alien life forms or Alien technology captured during tactical missions in the Alien Dimension.</en_gb>
 		<es_la>This inter-dimensional transport is designed for transporting Alien life forms or Alien technology captured during tactical missions in the Alien Dimension.</es_la>
+		<fr_fr>Ce moyen de transport interdimensionnel est spécifiquement conçu pour transporter les formes de vie et la technologie aliennes capturées au cours des missions tactiques dans la dimension alienne.</fr_fr>
 	</string>
 	<string id="STR_EXPLORER">
 		<en_gb>Explorer</en_gb>
 		<es_la>Explorer</es_la>
+		<fr_fr>Explorateur</fr_fr>
 	</string>
 	<string id="STR_EXPLORER_INFO">
 		<en_gb>The first manned inter-dimensional vehicle produced for the initial exploration of Alien structures. The craft only has a small equipment and armament load and must conduct its excursions with great care.</en_gb>
 		<es_la>The first manned inter-dimensional vehicle produced for the initial exploration of Alien structures. The craft only has a small equipment and armament load and must conduct its excursions with great care.</es_la>
+		<fr_fr>Le premier véhicule interdimensionnel pourvu d&apos;un équipage et conçu pour l&apos;exploration initiale des structures aliennes. Ce vaisseau a une faible capacité de stockage d&apos;équipement et d&apos;armes. Les missions d&apos;exploration utilisant ce vaisseau doivent être conduites minutieusement.</fr_fr>
 	</string>
 	<string id="STR_RETALIATOR">
 		<en_gb>Retaliator</en_gb>
 		<es_la>Retaliator</es_la>
+		<fr_fr>Riposteur</fr_fr>
 	</string>
 	<string id="STR_RETALIATOR_INFO">
 		<en_gb>The development of the Retaliator shifts the emphasis from exploration to attack. Our Engineers have at last produced a craft which can match the capabilities of many of the Alien ships.</en_gb>
 		<es_la>The development of the Retaliator shifts the emphasis from exploration to attack. Our Engineers have at last produced a craft which can match the capabilities of many of the Alien ships.</es_la>
+		<fr_fr>Avec le développement du Riposteur, l&apos;accent est porté sur l&apos;attaque plutôt que sur l&apos;exploration. Nos ingénieurs ont enfin développé un vaisseau pouvant se mesurer à de nombreux vaisseaux aliens.</fr_fr>
 	</string>
 	<string id="STR_ANNIHILATOR">
 		<en_gb>Annihilator</en_gb>
 		<es_la>Annihilator</es_la>
+		<fr_fr>Anéantisseur</fr_fr>
 	</string>
 	<string id="STR_ANNIHILATOR_INFO">
 		<en_gb>The ultimate expression of X-COM technology - a mean, fast and devastating craft which, if properly equipped, is more than a match for the biggest Alien attack ships. The Annihilator will help secure X-COM domination of the Alien Dimension.</en_gb>
 		<es_la>The ultimate expression of X-COM technology - a mean, fast and devastating craft which, if properly equipped, is more than a match for the biggest Alien attack ships. The Annihilator will help secure X-COM domination of the Alien Dimension.</es_la>
+		<fr_fr>Le nec plus ultra en matière de technologie automobile X-COM: un vaisseau rapide, terrifiant et destructeur qui, s&apos;il est bien équipé, éclipsera même le plus puissant des vaisseaux d&apos;attaque aliens. L&apos;anéantisseur aidera à assurer la domination d&apos;X-COM sur la dimension alienne.</fr_fr>
 	</string>
 	<string id="STR_AUTOTAXI">
 		<en_gb>Autotaxi</en_gb>
 		<es_la>Autotaxi</es_la>
+		<fr_fr>Autotaxi</fr_fr>
 	</string>
 	<string id="STR_AUTOTAXI_INFO">
 		<en_gb>The road going Autotaxi is a more luxurious and relaxed form of public transport than the bustling People Tubes. Although a driver is not technically required regulations specify that a &amp;apos;driver&amp;apos; is needed to fulfill the required inter-personal contact, which is necessary in a society dominated by automation.</en_gb>
 		<es_la>The road going Autotaxi is a more luxurious and relaxed form of public transport than the bustling People Tubes. Although a driver is not technically required regulations specify that a &amp;apos;driver&amp;apos; is needed to fulfill the required inter-personal contact, which is necessary in a society dominated by automation.</es_la>
+		<fr_fr>L&apos;Autotaxi est une alternative plus luxueuse et plus reposante que les Tubes fourmillant de monde. Bien qu&apos;un chauffeur ne soit pas techniquement nécessaire, le règlement spécifie qu&apos;un &quot;conducteur&quot; est requis pour satisfaire aux contacts interpersonnels nécessaires dans une société dominée par l&apos;automatisation.</fr_fr>
 	</string>
 	<string id="STR_AUTOTRANS">
 		<en_gb>Autotrans</en_gb>
 		<es_la>Autotrans</es_la>
+		<fr_fr>Autotrans</fr_fr>
 	</string>
 	<string id="STR_AUTOTRANS_INFO">
 		<en_gb>A computer controlled, fully automated goods vehicle. The road going Autotrans is a more economical version of the Airtrans, but the AI is still so advanced that they can anticipate demand for their services with uncanny accuracy and rarely need to be ordered in advance.</en_gb>
 		<es_la>A computer controlled, fully automated goods vehicle. The road going Autotrans is a more economical version of the Airtrans, but the AI is still so advanced that they can anticipate demand for their services with uncanny accuracy and rarely need to be ordered in advance.</es_la>
+		<fr_fr>Un véhicule de transport de marchandises contrôlé par ordinateur et entièrement automatisé. L&apos;Autotrans, qui emprunte les voies terrestres, est une version plus économique de l&apos;Airtans mais son IA est si avancée techniquement qu&apos;elle peut devancer la demande avec une précision troublante, ce qui fait qu&apos;on a rarement besoin de louer ses services à l&apos;avance.</fr_fr>
 	</string>
 	<string id="STR_POLICE_CAR">
 		<en_gb>Police Car</en_gb>
 		<es_la>Police Car</es_la>
+		<fr_fr>Voiture de police</fr_fr>
 	</string>
 	<string id="STR_POLICE_CAR_INFO">
 		<en_gb>The standard Megapol patrol vehicle is proudly styled in the current retro fashion, but is still capable of carrying several types of weapon system. The recent prevalence for criminals to engage in road combats has led to an increase in patrols and an upgrade in armament.</en_gb>
 		<es_la>The standard Megapol patrol vehicle is proudly styled in the current retro fashion, but is still capable of carrying several types of weapon system. The recent prevalence for criminals to engage in road combats has led to an increase in patrols and an upgrade in armament.</es_la>
+		<fr_fr>La ligne rétro très à la mode de la voiture de patrouille standard Megapol ne l&apos;empêche pas de transporter une grande variété d&apos;armes. L&apos;augmentation récente de &quot;combats de route&quot; avec des criminels a provoqué la multiplication des patrouilles et une amélioration de l&apos;armement.</fr_fr>
 	</string>
 	<string id="STR_CIVILIAN_CAR">
 		<en_gb>Civilian Car</en_gb>
 		<es_la>Civilian Car</es_la>
+		<fr_fr>Voiture civile</fr_fr>
 	</string>
 	<string id="STR_CIVILIAN_CAR_INFO">
 		<en_gb>The private car is a luxury which is only afforded by celebrities and gangsters. The road system in the city is an anti-grav ducting system that allows for fast and safe travel by low powered anti-grav vehicles. Although the car hovers over the road it is not capable of leaving it, except through exceptionally careless manual driving.</en_gb>
 		<es_la>The private car is a luxury which is only afforded by celebrities and gangsters. The road system in the city is an anti-grav ducting system that allows for fast and safe travel by low powered anti-grav vehicles. Although the car hovers over the road it is not capable of leaving it, except through exceptionally careless manual driving.</es_la>
+		<fr_fr>La voiture privée est un luxe que seuls les célébrités et les gangsters peuvent se permettre. Le système routier de la ville est un système de conduite anti-gravité permettant aux véhicules anti-gravité à basse puissance de voyager rapidement et en toute sécurité. Bien que la voiture flotte au-dessus de la route, elle ne peut quitter celle-ci, excepté en cas de conduite manuelle exceptionnellement dangereuse.</fr_fr>
 	</string>
 	<string id="STR_STORMDOG">
 		<en_gb>Stormdog</en_gb>
 		<es_la>Stormdog</es_la>
+		<fr_fr>Stormdog</fr_fr>
 	</string>
 	<string id="STR_STORMDOG_INFO">
 		<en_gb>A Marsec vehicle renowned for its handling and power. Once loaded with weapons systems it proves to be a useful military vehicle and an ideal transport for X-COM Agents.</en_gb>
 		<es_la>A Marsec vehicle renowned for its handling and power. Once loaded with weapons systems it proves to be a useful military vehicle and an ideal transport for X-COM Agents.</es_la>
+		<fr_fr>Un véhicule Marsec réputé pour sa puissance et sa maniabilité. Une fois qu&apos;il est équipé de systèmes d&apos;armement, il devient un véhicule militaire très utile et idéal pour le transport d&apos;agents d&apos;X-COM.</fr_fr>
 	</string>
 	<string id="STR_WOLFHOUND_APC">
 		<en_gb>Wolfhound APC</en_gb>
 		<es_la>Wolfhound APC</es_la>
+		<fr_fr>Transport de troupes blindé Wolfhound</fr_fr>
 	</string>
 	<string id="STR_WOLFHOUND_APC_INFO">
 		<en_gb>Military vehicles are rarely required within the boundaries of Mega-Primus, but if trouble erupts in the deregulated areas then the Wolfhound Armored Personnel Carrier is normally deployed into the conflict zone. Its armament load is small and is primarily used for secure transport.</en_gb>
 		<es_la>Military vehicles are rarely required within the boundaries of Mega-Primus, but if trouble erupts in the deregulated areas then the Wolfhound Armored Personnel Carrier is normally deployed into the conflict zone. Its armament load is small and is primarily used for secure transport.</es_la>
+		<fr_fr>Les véhicules militaires sont rarement nécessaires dans les limites de Mega-Primus, mais en cas de violence et d&apos;émeutes dans les zones déréglementées, le transport de troupes blindé Wolfhound est normalement déployé dans les zones de conflit. Il a une faible capacité d&apos;armement et est utilisé principalement pour acheminer des troupes en toute sécurité.</fr_fr>
 	</string>
 	<string id="STR_BLAZER_TURBO_BIKE">
 		<en_gb>Blazer Turbo Bike</en_gb>
 		<es_la>Blazer Turbo Bike</es_la>
+		<fr_fr>Moto turbo Blazer</fr_fr>
 	</string>
 	<string id="STR_BLAZER_TURBO_BIKE_INFO">
 		<en_gb>The road going anti-grav &amp;apos;bike&amp;apos; is a plaything of rich speed freaks. It is extremely fast and maneuverable. Consequently it is ideal for the lone X-COM Agent.</en_gb>
 		<es_la>The road going anti-grav &amp;apos;bike&amp;apos; is a plaything of rich speed freaks. It is extremely fast and maneuverable. Consequently it is ideal for the lone X-COM Agent.</es_la>
+		<fr_fr>La &quot;moto&quot; anti-gravité empruntant les voies terrestres est le jouet des riches fanas de vitesse. Elle est très rapide et d&apos;une grande maniabilité, et par conséquent idéale pour un agent d&apos;X-COM effectuant des missions en solitaire.</fr_fr>
 	</string>
 	<string id="STR_GRIFFON_AFV">
 		<en_gb>Griffon AFV</en_gb>
 		<es_la>Griffon AFV</es_la>
+		<fr_fr>Véhicule blindé tout terrain Griffon</fr_fr>
 	</string>
 	<string id="STR_GRIFFON_AFV_INFO">
 		<en_gb>The meanest Marsec manufactured land based vehicle is an extremely heavily armored all-terrain vehicle with a choice of three different turret mountings. Projectile and Plasma Cannons can be fitted, or a missile launching unit for targeting airborne vehicles.</en_gb>
 		<es_la>The meanest Marsec manufactured land based vehicle is an extremely heavily armored all-terrain vehicle with a choice of three different turret mountings. Projectile and Plasma Cannons can be fitted, or a missile launching unit for targeting airborne vehicles.</es_la>
+		<fr_fr>Ce véhicule basé au sol est le plus ravageur de tous ceux fabriqués par Marsec. C&apos;est un véhicule tout terrain lourdement blindé disposant de trois options pour l&apos;affût de tourelle. On peut l&apos;équiper d&apos;un canon à projectile, un canon à plasma ou une unité de lancement de missiles afin de prendre pour cible les véhicules en vol.</fr_fr>
 	</string>
 	<string id="STR_ACCESS_LIFT">
 		<en_gb>Access Lift</en_gb>
 		<es_la>Access Lift</es_la>
+		<fr_fr>Ascenseur d&apos;accès</fr_fr>
 	</string>
 	<string id="STR_ACCESS_LIFT_INFO">
 		<en_gb>The connection between the basement level and the outside world is provided by a set of heavy duty gravlifts.</en_gb>
 		<es_la>The connection between the basement level and the outside world is provided by a set of heavy duty gravlifts.</es_la>
+		<fr_fr>La liaison entre le sous-sol et le monde extérieur se fait par un réseau d&apos;ascenseurs anti-gravité résistants.</fr_fr>
 	</string>
 	<string id="STR_LIVING_QUATER">
 		<en_gb>Living Quarters</en_gb>
 		<es_la>Living Quarters</es_la>
+		<fr_fr>Quartiers d&apos;habitation</fr_fr>
 	</string>
 	<string id="STR_LIVING_QUATER_INFO">
 		<en_gb>Accommodation and recreation for X-COM Agents. New living quarters will have to be built as more Agents, Scientists and Engineers are hired.</en_gb>
 		<es_la>Accommodation and recreation for X-COM Agents. New living quarters will have to be built as more Agents, Scientists and Engineers are hired.</es_la>
+		<fr_fr>Les bâtiments d&apos;habitation et de loisir des agents d&apos;X-COM. De nouveaux quartiers d&apos;habitation devront être construits à mesure que de nouveaux agents, scientifiques et ingénieurs sont embauchés.</fr_fr>
 	</string>
 	<string id="STR_STORES">
 		<en_gb>Stores</en_gb>
 		<es_la>Stores</es_la>
+		<fr_fr>Entrepôts</fr_fr>
 	</string>
 	<string id="STR_STORES_INFO">
 		<en_gb>All equipment and raw materials must be safely stored. Spare storage capacity should be maintained in order to allow for purchases and transfers from other bases.</en_gb>
 		<es_la>All equipment and raw materials must be safely stored. Spare storage capacity should be maintained in order to allow for purchases and transfers from other bases.</es_la>
+		<fr_fr>Les équipements et les matières premières doivent tous être stockés en sécurité. Il faut maintenir un espace de stockage libre pour permettre de nouveaux achats et des transferts provenant des autres bases.</fr_fr>
 	</string>
 	<string id="STR_CELLS">
 		<en_gb>Cells</en_gb>
 		<es_la>Cells</es_la>
+		<fr_fr>Cellules</fr_fr>
 	</string>
 	<string id="STR_CELLS_INFO">
 		<en_gb>NOT USED</en_gb>
 		<es_la>NOT USED</es_la>
+		<fr_fr>NON UTILISÉ</fr_fr>
 	</string>
 	<string id="STR_MEDICAL_BAY">
 		<en_gb>Medical Bay</en_gb>
 		<es_la>Medical Bay</es_la>
+		<fr_fr>Bloc médical</fr_fr>
 	</string>
 	<string id="STR_MEDICAL_BAY_INFO">
 		<en_gb>The highest quality medical care is available only from a dedicated medical unit. Any injuries would otherwise have to be dealt with by the city hospitals, where the safety of Agents cannot be guaranteed. Injured Agents are automatically healed when they reside at a base with a Medical Bay, but if the capacity of the Medical Bays are exceeded then healing will not take place at 100% efficiency.</en_gb>
 		<es_la>The highest quality medical care is available only from a dedicated medical unit. Any injuries would otherwise have to be dealt with by the city hospitals, where the safety of Agents cannot be guaranteed. Injured Agents are automatically healed when they reside at a base with a Medical Bay, but if the capacity of the Medical Bays are exceeded then healing will not take place at 100% efficiency.</es_la>
+		<fr_fr>Une unité médicale dévouée fournit des soins médicaux de la meilleure qualité possible. Sans cette unité, les agents devraient se faire soigner dans les hôpitaux de la ville, où leur sécurité ne peut pas être garantie. Les agents blessés guérissent automatiquement lorsqu&apos;ils se trouvent dans une base dotée d&apos;un bloc médical. Cependant, si le nombre de blessés dépasse ce qu&apos;un bloc peut normalement gérer, la guérison ne se fera pas à 100%.</fr_fr>
 	</string>
 	<string id="STR_TRAINING_AREA">
 		<en_gb>Training Area</en_gb>
 		<es_la>Training Area</es_la>
+		<fr_fr>Aire d&apos;entraînement</fr_fr>
 	</string>
 	<string id="STR_TRAINING_AREA_INFO">
 		<en_gb>Training in physical skills is essential for X-COM Agents. Without a fully equipped training area, Agents residing at the base would waste a lot of time when they could be improving their weapons skills, reactions and stamina. Agents assigned to combat training will automatically use any training facilities at a base, but if the capacity of Training Areas is exceeded then training will not take place at 100% efficiency.</en_gb>
 		<es_la>Training in physical skills is essential for X-COM Agents. Without a fully equipped training area, Agents residing at the base would waste a lot of time when they could be improving their weapons skills, reactions and stamina. Agents assigned to combat training will automatically use any training facilities at a base, but if the capacity of Training Areas is exceeded then training will not take place at 100% efficiency.</es_la>
+		<fr_fr>L&apos;entraînement physique est vital pour les agents d&apos;X-COM. Sans une aire d&apos;entraînement entièrement équipée, les agents résidant à la base perdraient leur temps au lieu de peaufiner leur adresse au tir, d&apos;améliorer leurs réactions et leur endurance. Les agents affectés à l&apos;entraînement au combat se servent automatiquement des installations d&apos;entraînement de la base. Cependant, si l&apos;aire d&apos;entraînement accueille plus de personnes qu&apos;elle ne peut normalement en contenir, l&apos;entraînement ne sera pas efficace à 100%.</fr_fr>
 	</string>
 	<string id="STR_PSI_GYM">
 		<en_gb>Psi-Gym</en_gb>
 		<es_la>Psi-Gym</es_la>
+		<fr_fr>Gymnase psionique</fr_fr>
 	</string>
 	<string id="STR_PSI_GYM_INFO">
 		<en_gb>Agents which are naturally talented in Psionic skills need to train hard to maintain and improve their power, attack and defense. The Psi-Gym is equipped with the latest Psionic technology and Psionic training is not possible without such a facility. Agents assigned to Psionic training will automatically use any Psi Gym at a base, but if the capacity of the gyms is exceeded then training will not take place at 100% efficiency.</en_gb>
 		<es_la>Agents which are naturally talented in Psionic skills need to train hard to maintain and improve their power, attack and defense. The Psi-Gym is equipped with the latest Psionic technology and Psionic training is not possible without such a facility. Agents assigned to Psionic training will automatically use any Psi Gym at a base, but if the capacity of the gyms is exceeded then training will not take place at 100% efficiency.</es_la>
+		<fr_fr>Les agents qui ont des dons psioniques innés doivent subir un entraînement intensif pour maintenir et améliorer leur puissance, leur attaque et leur défense. Le gymnase psionique est équipé des toutes dernières technologies psioniques sans lesquelles l&apos;entraînement psionique ne serait pas possible. Les agents affectés à l&apos;entraînement psionique se servent automatiquement du gymnase psionique de la base. Cependant, si le gymnase accueille plus de personnes qu&apos;il ne peut normalement en contenir, l&apos;entraînement ne sera pas efficace à 100%.</fr_fr>
 	</string>
 	<string id="STR_SECURITY_STATION">
 		<en_gb>Security Station</en_gb>
 		<es_la>Security Station</es_la>
+		<fr_fr>Poste de sécurité</fr_fr>
 	</string>
 	<string id="STR_SECURITY_STATION_INFO">
 		<en_gb>Should a base come under attack a Security Station will act as a defensive buffer which can assist Agents in defensive fire. Heavy Plasma Gun emplacements are directed down adjacent corridors. The Security Station is designed so that it will not obstruct the smooth functioning of the base.</en_gb>
 		<es_la>Should a base come under attack a Security Station will act as a defensive buffer which can assist Agents in defensive fire. Heavy Plasma Gun emplacements are directed down adjacent corridors. The Security Station is designed so that it will not obstruct the smooth functioning of the base.</es_la>
+		<fr_fr>En cas d&apos;attaque contre la base, un poste de sécurité agit comme un tampon défensif permettant d&apos;aider les agents à se défendre. Des emplacements pour fusils à plasma lourds sont dirigés le long des couloirs adjacents. Le poste de sécurité est conçu de manière à ne pas gêner le bon fonctionnement de la base.</fr_fr>
 	</string>
 	<string id="STR_ADVANCED_SECURITY_STATION">
 		<en_gb>Advanced Security Station</en_gb>
 		<es_la>Advanced Security Station</es_la>
+		<fr_fr>Poste de sécurité avancé</fr_fr>
 	</string>
 	<string id="STR_ADVANCED_SECURITY_STATION_INFO">
 		<en_gb>Security is a very important issue for a base when it contains vital personnel and technology. Advanced Security Stations provide the best protection for base facilities. Weapon emplacements are based on Alien Disruptor technology.</en_gb>
 		<es_la>Security is a very important issue for a base when it contains vital personnel and technology. Advanced Security Stations provide the best protection for base facilities. Weapon emplacements are based on Alien Disruptor technology.</es_la>
+		<fr_fr>La sécurité est prise très au sérieux dans une base qui abrite un personnel et des technologies essentiels. Les postes de sécurité avancés fournissent la meilleure protection possible pour les installations de la base. Les emplacements des armes sont basés sur la technologie de disruption alienne.</fr_fr>
 	</string>
 	<string id="STR_VEHICLE_REPAIR_BAY">
 		<en_gb>Vehicle Repair Bay</en_gb>
 		<es_la>Vehicle Repair Bay</es_la>
+		<fr_fr>Aire de réparation de véhicules</fr_fr>
 	</string>
 	<string id="STR_VEHICLE_REPAIR_BAY_INFO">
 		<en_gb>Repair bays are required for repairing damaged craft. A single bay can only deal with one vehicle at a time, but if there is more than one damaged vehicle per repair bay, then all vehicles will still be repaired, but at less than 100% efficiency.</en_gb>
 		<es_la>Repair bays are required for repairing damaged craft. A single bay can only deal with one vehicle at a time, but if there is more than one damaged vehicle per repair bay, then all vehicles will still be repaired, but at less than 100% efficiency.</es_la>
+		<fr_fr>Les aires de réparation de véhicules sont nécessaires pour réparer les vaisseaux endommagés. On ne peut réparer qu&apos;un véhicule par aire. S&apos;il y a plus d&apos;un véhicule par aire de réparation, les réparations seront effectuées, mais leur efficacité ne sera pas de 100%.</fr_fr>
 	</string>
 	<string id="STR_BIOCHEMISTRY_LAB">
 		<en_gb>Biochemistry Lab</en_gb>
 		<es_la>Biochemistry Lab</es_la>
+		<fr_fr>Bio-Labo</fr_fr>
 	</string>
 	<string id="STR_BIOCHEMISTRY_LAB_INFO">
 		<en_gb>Any research involving Alien creatures must be conducted in a Biochemistry Lab. These labs can accommodate up to five Biochemists working at one time and each lab can be assigned a specific research project.</en_gb>
 		<es_la>Any research involving Alien creatures must be conducted in a Biochemistry Lab. These labs can accommodate up to five Biochemists working at one time and each lab can be assigned a specific research project.</es_la>
+		<fr_fr>Toutes les recherches concernant les créatures aliennes doivent être effectuées dans un labo de biochimie. Ces labos peuvent contenir jusqu&apos;à cinq bio-scientifiques travaillant en même temps; chaque labo peut être affecté à un type de recherche spécifique.</fr_fr>
 	</string>
 	<string id="STR_ADVANCED_BIOCHEMISTRY_LAB">
 		<en_gb>Advanced Biochemistry Lab</en_gb>
 		<es_la>Advanced Biochemistry Lab</es_la>
+		<fr_fr>Bio-Labo avancé</fr_fr>
 	</string>
 	<string id="STR_ADVANCED_BIOCHEMISTRY_LAB_INFO">
 		<en_gb>This larger and better equipped version of the Biochemistry Lab will enable the study of live Alien specimens. Psionic devices are available to assist in communication with intelligent Alien beings. The Advanced Biochemistry Lab allows up to ten Biochemists to work at any one time.</en_gb>
 		<es_la>This larger and better equipped version of the Biochemistry Lab will enable the study of live Alien specimens. Psionic devices are available to assist in communication with intelligent Alien beings. The Advanced Biochemistry Lab allows up to ten Biochemists to work at any one time.</es_la>
+		<fr_fr>Cette version plus spacieuse et mieux équipée du labo de biochimie permet l&apos;étude de spécimens aliens vivants. Les appareils psioniques peuvent aider à communiquer avec les aliens doués d&apos;intelligence. Le labo de biochimie avancé permet à 10 bio-scientifiques de travailler en même temps.</fr_fr>
 	</string>
 	<string id="STR_QUANTUM_PHYSICS_LAB">
 		<en_gb>Quantum Physics Lab</en_gb>
 		<es_la>Quantum Physics Lab</es_la>
+		<fr_fr>Labo quantique</fr_fr>
 	</string>
 	<string id="STR_QUANTUM_PHYSICS_LAB_INFO">
 		<en_gb>These labs are specifically equipped for high energy particle experiments designed to analyze and replicate Alien technology. The lab can accommodate five Quantum Physicists and each lab can be assigned a specific research project.</en_gb>
 		<es_la>These labs are specifically equipped for high energy particle experiments designed to analyze and replicate Alien technology. The lab can accommodate five Quantum Physicists and each lab can be assigned a specific research project.</es_la>
+		<fr_fr>Ces laboratoires sont équipés spécifiquement pour les expériences impliquant des particules à haute énergie et servant à analyser et reproduire la technologie alienne. Le labo peut abriter cinq scientifiques quantiques; chaque labo peut être affecté à un type de recherche spécifique.</fr_fr>
 	</string>
 	<string id="STR_ADVANCED_QUANTUM_PHYSICS_LAB">
 		<en_gb>Advanced Quantum Physics Lab</en_gb>
 		<es_la>Advanced Quantum Physics Lab</es_la>
+		<fr_fr>Labo quantique avancé</fr_fr>
 	</string>
 	<string id="STR_ADVANCED_QUANTUM_PHYSICS_LAB_INFO">
 		<en_gb>A larger, better equipped lab for researching the larger pieces of Alien technology. The lab can accommodate ten Quantum Physicists.</en_gb>
 		<es_la>A larger, better equipped lab for researching the larger pieces of Alien technology. The lab can accommodate ten Quantum Physicists.</es_la>
+		<fr_fr>Un labo plus grand et mieux équipé pour faire des recherches sur des éléments plus imposants de technologie alienne. Ce labo peut contenir 10 physiciens quantiques.</fr_fr>
 	</string>
 	<string id="STR_ALIEN_CONTAINMENT">
 		<en_gb>Alien Containment</en_gb>
 		<es_la>Alien Containment</es_la>
+		<fr_fr>Confinement alien</fr_fr>
 	</string>
 	<string id="STR_ALIEN_CONTAINMENT_INFO">
 		<en_gb>Live Alien specimens require an enclosed, controlled environment. The Alien Containment system can generate different types of atmosphere at various pressures. The unit is also secure enough to prevent the escape of Aliens into the base. This facility can accommodate up to twenty human sized life forms.</en_gb>
 		<es_la>Live Alien specimens require an enclosed, controlled environment. The Alien Containment system can generate different types of atmosphere at various pressures. The unit is also secure enough to prevent the escape of Aliens into the base. This facility can accommodate up to twenty human sized life forms.</es_la>
+		<fr_fr>Les spécimens aliens vivants doivent être maintenus dans un environnement clos et contrôlé. Le système de confinement alien peut générer différents types d&apos;atmosphères à des pressions différentes. La sécurité déployée rend impossible l&apos;évasion des aliens dans la base. Cette installation peut contenir jusqu&apos;à vingt formes de vie de taille humaine.</fr_fr>
 	</string>
 	<string id="STR_ADVANCED_ALIEN_CONTAINMENT">
 		<en_gb>Advanced Alien Containment</en_gb>
 		<es_la>Advanced Alien Containment</es_la>
+		<fr_fr>Confinement alien avancé</fr_fr>
 	</string>
 	<string id="STR_ADVANCED_ALIEN_CONTAINMENT_INFO">
 		<en_gb>NOT USED IN GAME ANYMORE!</en_gb>
 		<es_la>NOT USED IN GAME ANYMORE!</es_la>
+		<fr_fr>N&apos;EST PLUS UTILISÉ DANS LE JEU!</fr_fr>
 	</string>
 	<string id="STR_WORKSHOP">
 		<en_gb>Workshop</en_gb>
 		<es_la>Workshop</es_la>
+		<fr_fr>Atelier</fr_fr>
 	</string>
 	<string id="STR_WORKSHOP_INFO">
 		<en_gb>X-COM Engineers require the best facilities for the construction of new technology. The latest atomic replicators are installed which can accurately recreate most substances and micro-structures in the known universe. The facility can be used to create small pieces of equipment such as personal weaponry and armor. The workshop can accommodate five Engineers and each Workshop can be assigned to produce a specific item.</en_gb>
 		<es_la>X-COM Engineers require the best facilities for the construction of new technology. The latest atomic replicators are installed which can accurately recreate most substances and micro-structures in the known universe. The facility can be used to create small pieces of equipment such as personal weaponry and armor. The workshop can accommodate five Engineers and each Workshop can be assigned to produce a specific item.</es_la>
+		<fr_fr>Pour construire des appareils utilisant les dernières technologies, les ingénieurs d&apos;X-COM ont besoin des meilleures installations possibles. Les derniers réplicateurs atomiques sont installés pour pouvoir récréer de façon précise la plupart des substances et micro-structures connues dans l&apos;univers. L&apos;installation peut être utilisée pour créer des petites pièces d&apos;équipement telles que des armes et des blindages personnels. L&apos;atelier peut accommoder cinq ingénieurs; chaque atelier peut être affecté à la fabrication d&apos;un projet spécifique.</fr_fr>
 	</string>
 	<string id="STR_ADVANCED_WORKSHOP">
 		<en_gb>Advanced Workshop</en_gb>
 		<es_la>Advanced Workshop</es_la>
+		<fr_fr>Atelier avancé</fr_fr>
 	</string>
 	<string id="STR_ADVANCED_WORKSHOP_INFO">
 		<en_gb>Larger pieces of technology require more space and power to construct. The Advanced Workshop is designed for large construction projects such as new vehicles. The facility can accommodate up to ten Engineers.</en_gb>
 		<es_la>Larger pieces of technology require more space and power to construct. The Advanced Workshop is designed for large construction projects such as new vehicles. The facility can accommodate up to ten Engineers.</es_la>
+		<fr_fr>Les éléments plus imposants faisant appel à la technologie nécessitent plus d&apos;espace et de puissance pour leur construction. L&apos;atelier avancé est conçu pour des projets de construction importants comme de nouveaux types de véhicules. L&apos;installation peut contenir jusqu&apos;à 10 ingénieurs.</fr_fr>
 	</string>
 	<string id="STR_ALIEN_CRAFT">
 		<en_gb>Alien Craft</en_gb>
