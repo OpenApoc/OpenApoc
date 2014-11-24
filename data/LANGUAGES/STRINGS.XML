@@ -1854,7 +1854,7 @@
 		<en_gb>The pod is a genetically engineered missile that flies directly towards a target. It is fired from the Entropy Launcher.</en_gb>
 		<es_la>The pod is a genetically engineered missile that flies directly towards a target. It is fired from the Entropy Launcher.</es_la>
 	</string>
-		<string id="STR_DIMENSION_MISSILE_LAUNCHER">
+	<string id="STR_DIMENSION_MISSILE_LAUNCHER">
 		<en_gb>Dimension Missile Launcher</en_gb>
 		<es_la>Lanzador de misil dimensional</es_la>
 	</string>
