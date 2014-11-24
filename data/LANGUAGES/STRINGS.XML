@@ -1854,93 +1854,93 @@
 		<en_gb>The pod is a genetically engineered missile that flies directly towards a target. It is fired from the Entropy Launcher.</en_gb>
 		<es_la>The pod is a genetically engineered missile that flies directly towards a target. It is fired from the Entropy Launcher.</es_la>
 	</string>
-	<string id="STR_DIMENSION_MISSILE_LAUNCHER">
+		<string id="STR_DIMENSION_MISSILE_LAUNCHER">
 		<en_gb>Dimension Missile Launcher</en_gb>
-		<es_la>Dimension Missile Launcher</es_la>
+		<es_la>Lanzador de misil dimensional</es_la>
 	</string>
 	<string id="STR_DIMENSION_MISSILE_LAUNCHER_INFO">
 		<en_gb>This launcher propels devastating Dimension Missiles which contain an immensely powerful explosive system. The missile is guided to its target and is very accurate at long ranges. The technology is reproducible and quite distinct from the organic weaponry that is used by most Aliens.</en_gb>
-		<es_la>This launcher propels devastating Dimension Missiles which contain an immensely powerful explosive system. The missile is guided to its target and is very accurate at long ranges. The technology is reproducible and quite distinct from the organic weaponry that is used by most Aliens.</es_la>
+		<es_la>Este lanzador propulsa devastadores misiles dimensioanles que contienen un sistema explosivo inmensamente potente. Este misil es guiado hacia su blanco y es muy certero a largo alcance. Esta tecnología es reproducible y dista bastante del armamento orgánico utilizado por muchos aliens.</es_la>
 	</string>
 	<string id="STR_DIMENSION_MISSILE">
 		<en_gb>Dimension Missile</en_gb>
-		<es_la>Dimension Missile</es_la>
+		<es_la>Misil dimensional</es_la>
 	</string>
 	<string id="STR_DIMENSION_MISSILE_INFO">
 		<en_gb>The missile explodes with devastating power. It seems to use an inter-dimensional flux to suck in anti-matter from an alternate dimension. This instantly generates an atomic reaction which destroys the missile and most of its surrounding matter. It should not be used in situations where buildings and civilians need to be protected.</en_gb>
-		<es_la>The missile explodes with devastating power. It seems to use an inter-dimensional flux to suck in anti-matter from an alternate dimension. This instantly generates an atomic reaction which destroys the missile and most of its surrounding matter. It should not be used in situations where buildings and civilians need to be protected.</es_la>
+		<es_la>Este misil explota con un poder devastador. Parace usar flujo interdimensioanl para absorver antimateria de una dimensión paralela. Esto genera instáneamente una reacción atómica que destruye al misil y toda materia a su alrededor. No se debe utilizar en situaciónes donde edificios y civiles deban ser protegidos.</es_la>
 	</string>
 	<string id="STR_VORTEX_MINE">
 		<en_gb>Vortex Mine</en_gb>
-		<es_la>Vortex Mine</es_la>
+		<es_la>Mina vórtex</es_la>
 	</string>
 	<string id="STR_VORTEX_MINE_INFO">
 		<en_gb>This explosive device uses a tiny dimensional flux generator which allows anti-matter to seep through a tiny dimensional warp. The resultant explosion is very powerful.</en_gb>
-		<es_la>This explosive device uses a tiny dimensional flux generator which allows anti-matter to seep through a tiny dimensional warp. The resultant explosion is very powerful.</es_la>
+		<es_la>Este explosivo usa un pequeño generador de flujo dimensional que permite a la antimateria fluir por la pequeña grieta dimensional. La explosión resultante es muy potente.</es_la>
 	</string>
 	<string id="STR_PERSONAL_DISRUPTOR_SHIELD">
 		<en_gb>Personal Disruptor Shield</en_gb>
-		<es_la>Personal Disruptor Shield</es_la>
+		<es_la>Escudo disruptor personal</es_la>
 	</string>
 	<string id="STR_PERSONAL_DISRUPTOR_SHIELD_INFO">
 		<en_gb>The Personal Disruptor Shield generates an energy field which warps the space around the user. This causes beams or projectiles to be deflected and dissipated. Any hit causes the shield&amp;apos;s energy to drain and if it reaches a critically low level it will malfunction. It is a highly sophisticated device that we can reproduce only with great effort.</en_gb>
-		<es_la>The Personal Disruptor Shield generates an energy field which warps the space around the user. This causes beams or projectiles to be deflected and dissipated. Any hit causes the shield&amp;apos;s energy to drain and if it reaches a critically low level it will malfunction. It is a highly sophisticated device that we can reproduce only with great effort.</es_la>
+		<es_la>El escudo disruptor personal genera un campo de energía que retuerce el espacio alrededor del usuario. Esto causa que descargas o proyectiles sean desviadas y disipadas.</es_la>
 	</string>
 	<string id="STR_PERSONAL_TELEPORTER">
 		<en_gb>Personal Teleporter</en_gb>
-		<es_la>Personal Teleporter</es_la>
+		<es_la>Teletransportador personal</es_la>
 	</string>
 	<string id="STR_PERSONAL_TELEPORTER_INFO">
 		<en_gb>This extraordinary device uses inter-dimensional capability to transport the user over short distances via a dimensional flux. The energy level depletes according to the distance jumped, but it recovers over time.</en_gb>
-		<es_la>This extraordinary device uses inter-dimensional capability to transport the user over short distances via a dimensional flux. The energy level depletes according to the distance jumped, but it recovers over time.</es_la>
+		<es_la>Este extraordinario dispositivo usa propiedades interdimensionales para transportar al usuario a cortas distancias mediante fluido dimensional. La cantidad de energía consumida depende de la distancia recorrida, aunque se recarga con el tiempo.</es_la>
 	</string>
 	<string id="STR_PERSONAL_CLOAKING_FIELD">
 		<en_gb>Personal Cloaking Field</en_gb>
-		<es_la>Personal Cloaking Field</es_la>
+		<es_la>Campo de invisibilidad personal</es_la>
 	</string>
 	<string id="STR_PERSONAL_CLOAKING_FIELD_INFO">
 		<en_gb>The Personal Cloaking Field generates a warping effect that bends various wave forms. Effectively this means that the user is considerably less visible to radar, infra-red and visual sighting. The field is disabled temporarily if the user initiates combat.</en_gb>
-		<es_la>The Personal Cloaking Field generates a warping effect that bends various wave forms. Effectively this means that the user is considerably less visible to radar, infra-red and visual sighting. The field is disabled temporarily if the user initiates combat.</es_la>
+		<es_la>El campo de invisibilidad personal genera un desdoblamiento que tuerce varias formas de onda. En la práctica esto significa que el usuario es considerablemente menos visible al radar, y a la observación visual e infraroja. El campo se desactiva temporalmente si el usuario entra en combate.</es_la>
 	</string>
 	<string id="STR_THE_ALIEN_GENETIC_STRUCTURE">
 		<en_gb>The Alien genetic structure</en_gb>
-		<es_la>The Alien genetic structure</es_la>
+		<es_la>Estructura genética alienígena</es_la>
 	</string>
 	<string id="STR_THE_ALIEN_GENETIC_STRUCTURE_INFO">
 		<en_gb>Our initial results show that the distinct Alien life forms are related genetically and form part of a complex life cycle.</en_gb>
-		<es_la>Our initial results show that the distinct Alien life forms are related genetically and form part of a complex life cycle.</es_la>
+		<es_la>Nuestros resultados iniciales muestran que las diversas formas de vida alienígena están genéticamente relacionadas y forman parte de un complejo ciclo vital.</es_la>
 	</string>
 	<string id="STR_THE_ALIEN_LIFE_CYCLE">
 		<en_gb>The Alien life cycle</en_gb>
-		<es_la>The Alien life cycle</es_la>
+		<es_la>El cíclo de vida alien</es_la>
 	</string>
 	<string id="STR_THE_ALIEN_LIFE_CYCLE_INFO">
 		<en_gb>It is clear that the Alien life cycle is an extremely rapid sequence of changes. The eggs always develop into Multiworms which then give birth to Hyperworms which form a Chrysalis. At this stage the genetic variation produces a variety of Alien types which develop inside the Chrysalis. The whole process from the egg hatching to emergence from the Chrysalis only seems to take about ten days, provided that there is an adequate supply of food. Fortunately these life forms do not survive very well in our world and it is unclear how an invasion could be successful.</en_gb>
-		<es_la>It is clear that the Alien life cycle is an extremely rapid sequence of changes. The eggs always develop into Multiworms which then give birth to Hyperworms which form a Chrysalis. At this stage the genetic variation produces a variety of Alien types which develop inside the Chrysalis. The whole process from the egg hatching to emergence from the Chrysalis only seems to take about ten days, provided that there is an adequate supply of food. Fortunately these life forms do not survive very well in our world and it is unclear how an invasion could be successful.</es_la>
+		<es_la>Está claro que el ciclo de vida alien es una secuencia de cambios extremadamente rápida. Los huevos siempre se desarrollan en los Multigusanos que dan a luz a los Hipergusanos quienes formarán una Crisálida. En esta etapa la variación genética produce tipos de alien cuya variedad se desarrolla dentro de la Crisálida. El proceso completo desde que se rompe el huevo hasta que se emerge de la crisálida solo toma unos diez días, si se cuenta con una fuente adecuada de alimento. Por fortuna estas formas de vida no se adaptan bien en nuestro mundo y no se entiende como una invasión podría serles exitosa.</es_la>
 	</string>
 	<string id="STR_THE_REAL_ALIEN_THREAT">
 		<en_gb>The Real Alien Threat</en_gb>
-		<es_la>The Real Alien Threat</es_la>
+		<es_la>La verdadera amenaza alient</es_la>
 	</string>
 	<string id="STR_THE_REAL_ALIEN_THREAT_INFO">
 		<en_gb>It is now clear to us that the Micronoid organisms are the source of the Alien intelligence and they are using the various Alien forms to initiate an assault on our dimension. The large Alien life forms cannot survive in our dimension - the Micronoids must transfer to a new host in order to conquer our world and the ideal host is our own race. Brainsuckers are used to introduce Micronoids into the human bloodstream which then gain control of the brain and have access to all the knowledge and abilities of the host. We now understand the physiology of the Micronoids sufficiently in order to develop a specific toxin that will kill the organisms in the bloodstream.</en_gb>
-		<es_la>It is now clear to us that the Micronoid organisms are the source of the Alien intelligence and they are using the various Alien forms to initiate an assault on our dimension. The large Alien life forms cannot survive in our dimension - the Micronoids must transfer to a new host in order to conquer our world and the ideal host is our own race. Brainsuckers are used to introduce Micronoids into the human bloodstream which then gain control of the brain and have access to all the knowledge and abilities of the host. We now understand the physiology of the Micronoids sufficiently in order to develop a specific toxin that will kill the organisms in the bloodstream.</es_la>
+		<es_la>Ya tenemos claro que los organismos Mironoides son el origen de la inteligencia alienígena y están utilizando varias formas de vida alien para asaltar nuestra dimensión. Los aliens grandes no pueden sobrevivir en nuestra dimensión – los Micronoides deben transferirse a un nuevo huésped para conquistar nuestro mundo y nuestra propia raza es el huésped ideal. Los Chupacerebros son utilizados para introducir Micronoides dentro del torrente sanguíneo humano donde tienen acceso a todo el conocimiento y habilidades del huésped. Ahora conocemos suficientemente la fisiología de los Micronoides para desarrollar una toxina específica que matará a los organismos en la sangre.</es_la>
 	</string>
 	<string id="STR_DIMENSION_GATES">
 		<en_gb>Dimension Gates</en_gb>
-		<es_la>Dimension Gates</es_la>
+		<es_la>Portales dimensionales</es_la>
 	</string>
 	<string id="STR_DIMENSION_GATES_INFO">
 		<en_gb>The Dimension Gates appear to be the means by which the Alien craft travel from their home world. Our craft cannot travel through these gates without being annihilated by an anti-matter implosion. We must disable a UFO and recover its control systems, propulsion systems and power sources for research.</en_gb>
-		<es_la>The Dimension Gates appear to be the means by which the Alien craft travel from their home world. Our craft cannot travel through these gates without being annihilated by an anti-matter implosion. We must disable a UFO and recover its control systems, propulsion systems and power sources for research.</es_la>
+		<es_la>Los portales dimensionales parecen ser el medio por el cual las naves alienígenas viajan desde su mundo. Nuestras naves no pueden atravesar estos portales sin ser aniquilados por una implosión de antimateria. Debemos desmantelar un OVNI y recuperar sus sistemas de control, propulsión y fuentes de potencia para su estudio.</es_la>
 	</string>
 	<string id="STR_THE_ALIEN_DIMENSION">
 		<en_gb>The Alien Dimension</en_gb>
-		<es_la>The Alien Dimension</es_la>
+		<es_la>La dimensión alienígena</es_la>
 	</string>
 	<string id="STR_THE_ALIEN_DIMENSION_INFO">
 		<en_gb>The Alien Dimension consists of a bleak, hostile environment with an organic city. This city undoubtedly constructs Alien craft and nurtures the Alien brood. The structure of the buildings is immensely strong, but there appears to be weak point which will allow our Agents and vehicles to gain access to the building south of the dimension gates. If we can research this building further then we will have the necessary information to send in our squads to destroy it. We should then be able to gain access to the next building via the organic tubing that joins the Alien city together like a giant umbilical cord.</en_gb>
-		<es_la>The Alien Dimension consists of a bleak, hostile environment with an organic city. This city undoubtedly constructs Alien craft and nurtures the Alien brood. The structure of the buildings is immensely strong, but there appears to be weak point which will allow our Agents and vehicles to gain access to the building south of the dimension gates. If we can research this building further then we will have the necessary information to send in our squads to destroy it. We should then be able to gain access to the next building via the organic tubing that joins the Alien city together like a giant umbilical cord.</es_la>
+		<es_la>La dimensión alienígena consiste en un inhóspito ambiente con una ciudad orgánica. Sin dudas esta ciudad construye naves alienígenas y nutre la camada alien. La estructura de estos edificios es inmensamente resistente, pero parece haber un punto débil que permitiría a nuestros agentes y vehículos acceder al edificio al sur de los portales dimensionales. Si pudiéramos estudiar a fondo este edificio tendríamos la información necesaria para enviar un destacamento a destruirlo. Entonces podríamos acceder a la siguiente edificación mediante la tubería orgánica que une la ciudad alienígena como un gigante cordón umbilical.</es_la>
 	</string>
 	<string id="STR_ONE_WAY_TO_WIN">
 		<en_gb>One Way To Win</en_gb>
@@ -1952,19 +1952,19 @@
 	</string>
 	<string id="STR_SENATE">
 		<en_gb>Senate</en_gb>
-		<es_la>Senate</es_la>
+		<es_la>Senado</es_la>
 	</string>
 	<string id="STR_SENATE_INFO">
 		<en_gb>The Senate building accommodates the civil service, law courts and the Senate chamber. It is a maze of lavish marble interiors and large corridors. It is a building which should be protected from Alien infiltration at all costs.</en_gb>
-		<es_la>The Senate building accommodates the civil service, law courts and the Senate chamber. It is a maze of lavish marble interiors and large corridors. It is a building which should be protected from Alien infiltration at all costs.</es_la>
+		<es_la>El edificio del senado aloja el registro civil, las cortes generales y la cámara del senado. Es un laberinto con interiores de caro marfil y debe ser protegido de la infiltración alienígena a cualquier precio.</es_la>
 	</string>
 	<string id="STR_POLICE_STATION">
 		<en_gb>Police Station</en_gb>
-		<es_la>Police Station</es_la>
+		<es_la>Comisaría</es_la>
 	</string>
 	<string id="STR_POLICE_STATION_INFO">
 		<en_gb>Mega-Primus has numerous police stations equipped with Hovercars, road vehicles and substantial armories. These stations are generally well defended against raiders or Alien infiltration.</en_gb>
-		<es_la>Mega-Primus has numerous police stations equipped with Hovercars, road vehicles and substantial armories. These stations are generally well defended against raiders or Alien infiltration.</es_la>
+		<es_la>Mega-Primus tiene numerosas comisarias equipadas con aerodeslizadores, vehículos de calle y sustanciales armerías. En general estas estaciónes están bien defendidas contra asaltantes o infiltración alienígena.</es_la>
 	</string>
 	<string id="STR_HOSPITAL">
 		<en_gb>Hospital</en_gb>
@@ -1972,239 +1972,239 @@
 	</string>
 	<string id="STR_HOSPITAL_INFO">
 		<en_gb>The large hospitals of Mega-Primus are important buildings with high revenue potential. The very best Nano technology is used for the benefit of those that can afford it. Life extension is the service in most demand, but there is also the possibility of limb replacements and strength enhancements which are popular with GravBall players.</en_gb>
-		<es_la>The large hospitals of Mega-Primus are important buildings with high revenue potential. The very best Nano technology is used for the benefit of those that can afford it. Life extension is the service in most demand, but there is also the possibility of limb replacements and strength enhancements which are popular with GravBall players.</es_la>
+		<es_la>Los enormes hospitales de Mega-Primus son edificios importantes con gran potencial en económico. Lo mejor de la nanotecnología es uasada en beneficio de todo aquél que pueda pagarla. El servicio mas demandado es el de extensión de vida, pero también existe la posibilidad de remplazo de organos y aumento de fuerza, muy populares en jugadores de GravBall.</es_la>
 	</string>
 	<string id="STR_SCHOOL">
 		<en_gb>School</en_gb>
-		<es_la>School</es_la>
+		<es_la>Colégio</es_la>
 	</string>
 	<string id="STR_SCHOOL_INFO">
 		<en_gb>Education is a serious matter for citizens of Mega-Primus and the latest Psionic devices are used to fill students&amp;apos; minds with the correct understanding of any topic in the curriculum. The buildings themselves are reminiscent of the old style schools and contain little more than corridors and classrooms.</en_gb>
-		<es_la>Education is a serious matter for citizens of Mega-Primus and the latest Psionic devices are used to fill students&amp;apos; minds with the correct understanding of any topic in the curriculum. The buildings themselves are reminiscent of the old style schools and contain little more than corridors and classrooms.</es_la>
+		<es_la>La educación es un asunto serio para los ciudadanos de Mega-Primus y los últimos dispositivos psiónicos son utilizados para llenar las mentes de los estudiantes con el conocimiento correcto de cualquier tema del currículo. Los propios edificios son una reminiscencia del antiguo estilo de los colegios y contienen poco mas que corredores y aulas.</es_la>
 	</string>
 	<string id="STR_RESCUE_STATION">
 		<en_gb>Rescue Station</en_gb>
-		<es_la>Rescue Station</es_la>
+		<es_la>Estación de rescate</es_la>
 	</string>
 	<string id="STR_RESCUE_STATION_INFO">
 		<en_gb>Rescue Stations are fully equipped to deal with any emergency, whether it is a fire or a road traffic accident. However, there are rarely any serious problems in the city and the stations only have a skeleton staff. They could be good hiding place for Aliens, but the relatively open internal structure of the buildings would not help them in a combat situation.</en_gb>
-		<es_la>Rescue Stations are fully equipped to deal with any emergency, whether it is a fire or a road traffic accident. However, there are rarely any serious problems in the city and the stations only have a skeleton staff. They could be good hiding place for Aliens, but the relatively open internal structure of the buildings would not help them in a combat situation.</es_la>
+		<es_la>Las estaciónes de rescate están completamente equipadas para encargarse de cualquier emergencia, por ejemplo incendios o accidentes de tráfico. Sin embargo, rara vez ocurren problemas serios en la ciudad y las estaciones sólo tienen el personal mínimo. Podrían ser buenos escondites para los aliens, pero la estructura relativamente abierta del edificio no les sería útil en situaciónes de combate.</es_la>
 	</string>
 	<string id="STR_OFFICES">
 		<en_gb>Offices</en_gb>
-		<es_la>Offices</es_la>
+		<es_la>Oficinas</es_la>
 	</string>
 	<string id="STR_OFFICES_INFO">
 		<en_gb>Office buildings are designed to be attractive work environments. They are heavily populated and any Alien activity would soon be discovered. However, the ducting between floors and walls could be the ideal places for Aliens to hide and move around.</en_gb>
-		<es_la>Office buildings are designed to be attractive work environments. They are heavily populated and any Alien activity would soon be discovered. However, the ducting between floors and walls could be the ideal places for Aliens to hide and move around.</es_la>
+		<es_la>Los bloques de oficina están diseñados para ser centros de trabajo atractivos. Están densamente ocupados y cualquier actividad alienígena sería descubierta pronto. No obstante, las canalizaciones entre plantas y paredes pueden ser lugares idealies para los aliens para esconderse y desplazarse.</es_la>
 	</string>
 	<string id="STR_CORPORATE_HQ">
 		<en_gb>Corporate HQ</en_gb>
-		<es_la>Corporate HQ</es_la>
+		<es_la>Sedes corporativas</es_la>
 	</string>
 	<string id="STR_CORPORATE_HQ_INFO">
 		<en_gb>Larger corporations may have a prestigious and expensive office building as a corporate head quarters. No expense would be spared on the interior decoration of these buildings. The equally lavish ventilation system may also be appreciated by Alien life forms.</en_gb>
-		<es_la>Larger corporations may have a prestigious and expensive office building as a corporate head quarters. No expense would be spared on the interior decoration of these buildings. The equally lavish ventilation system may also be appreciated by Alien life forms.</es_la>
+		<es_la>Las grandes corporaciones pueden tener caros y prestigiosos bloques de oficinas como sede central. No se escatima en gastos en la decoración interior de estos edificios. Su igualmente opulento sistema de ventilación es también apreciado por las formas de vida alien.</es_la>
 	</string>
 	<string id="STR_SPACE_PORT">
 		<en_gb>Space Port</en_gb>
-		<es_la>Space Port</es_la>
+		<es_la>Puerto espacial</es_la>
 	</string>
 	<string id="STR_SPACE_PORT_INFO">
 		<en_gb>The enormous Space Port is a vital connection to the outside world. Many passengers pass through on vacation to Mars or other distant destinations. Large quantities of manufactured goods are exported to the mining colonies and raw materials are imported. The Space Port generates huge revenues, but it would also be lucrative for any raider or terrorist.</en_gb>
-		<es_la>The enormous Space Port is a vital connection to the outside world. Many passengers pass through on vacation to Mars or other distant destinations. Large quantities of manufactured goods are exported to the mining colonies and raw materials are imported. The Space Port generates huge revenues, but it would also be lucrative for any raider or terrorist.</es_la>
+		<es_la>El enorme puerto espacial es una conexión vital con el mundo exterior. Muchos pasajeros transitan de vacaciones a Marte u otros destinos distantes. Grandes cantidades de bienes manufacturados son exportados a las colonias mineras y materias primas son importadas. El puerto espacial genera grandes beneficios, pero también puede ser lucrativo para cualquier asaltante o terrorista.</es_la>
 	</string>
 	<string id="STR_ASTRODOME">
 		<en_gb>Astrodome</en_gb>
-		<es_la>Astrodome</es_la>
+		<es_la>Astrodómo</es_la>
 	</string>
 	<string id="STR_ASTRODOME_INFO">
 		<en_gb>The Astrodome contains huge stadiums and other facilities for various modern sports. GravBall is the most popular sport in the city, despite being dangerous. Five players in each team are equipped with anti-grav units and ball throwers. The six remaining team members are firmly routed on the ground and are used to protect the goal area or retrieve fallen balls. The maze of corridors and high stands makes the Astrodome a dangerous place for combat.</en_gb>
-		<es_la>The Astrodome contains huge stadiums and other facilities for various modern sports. GravBall is the most popular sport in the city, despite being dangerous. Five players in each team are equipped with anti-grav units and ball throwers. The six remaining team members are firmly routed on the ground and are used to protect the goal area or retrieve fallen balls. The maze of corridors and high stands makes the Astrodome a dangerous place for combat.</es_la>
+		<es_la>El Astrodómo contiene enormes estadios y otras dependencias para varios deportes modernos. GravBall es el mas deporte mas popular en la ciudad, a pesar de ser peligroso. Cinco jugadores en cada equipo se dotan con unidades antigravedad y lanzapelotas. Los seis miembros restantes del equipo son guiados desde el suelo y son utilizados para proteger el área de meta o devolver pelotas caídas. El laberínto de corredores y las gradas hacen del Astródomo un peligroso lugar para el combate.</es_la>
 	</string>
 	<string id="STR_PROCREATION_PARK">
 		<en_gb>Procreation Park</en_gb>
-		<es_la>Procreation Park</es_la>
+		<es_la>Párques de procreación</es_la>
 	</string>
 	<string id="STR_PROCREATION_PARK_INFO">
 		<en_gb>Since giving birth is now a risky process all babies are now developed in artificial wombs. This has the added advantage of allowing the prospective parents to view the baby&amp;apos;s progress by visiting special Procreation Parks. These buildings are designed to be attractive places to visit with open green spaces, bushes and trees.</en_gb>
-		<es_la>Since giving birth is now a risky process all babies are now developed in artificial wombs. This has the added advantage of allowing the prospective parents to view the baby&amp;apos;s progress by visiting special Procreation Parks. These buildings are designed to be attractive places to visit with open green spaces, bushes and trees.</es_la>
+		<es_la>Ya que ahora dar a luz es un proceso peligroso, todos los bebés son desarrollados en úteros artificiales. Esto tiene la ventaja añadida de permitir a los padres ver el desarrollo del bebé visitando los parques de procreación. Estos edificios están diseñados para ser lugares atractivos para visitar con zonas verdes abiertas, arbustos y arboles.</es_la>
 	</string>
 	<string id="STR_SHOPPING_MALL">
 		<en_gb>Shopping Mall</en_gb>
-		<es_la>Shopping Mall</es_la>
+		<es_la>Centro comercial</es_la>
 	</string>
 	<string id="STR_SHOPPING_MALL_INFO">
 		<en_gb>The vast shopping malls are popular places for citizens. Although most goods are purchased via the Internet, the shopping mall allows potential customers to try before they buy.</en_gb>
-		<es_la>The vast shopping malls are popular places for citizens. Although most goods are purchased via the Internet, the shopping mall allows potential customers to try before they buy.</es_la>
+		<es_la>Los amplios centros comerciales son lugares populares para los ciudadanos. A pesar de que muchas compras se realizan vía internet, los centros comerciales permiten a los potenciales clientes probar antes de comprar.</es_la>
 	</string>
 	<string id="STR_APARTMENTS">
 		<en_gb>Apartments</en_gb>
-		<es_la>Apartments</es_la>
+		<es_la>Apartamentos</es_la>
 	</string>
 	<string id="STR_APARTMENTS_INFO">
 		<en_gb>Vast apartment blocks are standard accommodation in the city. They should be treated carefully in any combat situation because of the high density of civilians at all times of day. An Alien incident in an accommodation block should be dealt with promptly.</en_gb>
-		<es_la>Vast apartment blocks are standard accommodation in the city. They should be treated carefully in any combat situation because of the high density of civilians at all times of day. An Alien incident in an accommodation block should be dealt with promptly.</es_la>
+		<es_la>Los amplios bloques de apartamentos son las residencias estándar de la ciudad. Deben ser tratados con precaución por la alta densidad de civiles a todas horas del dia. Un incidente alien en un bloque residencial debe ser atendido a la brevedad.</es_la>
 	</string>
 	<string id="STR_LUXURY_APARTMENTS">
 		<en_gb>Luxury Apartments</en_gb>
-		<es_la>Luxury Apartments</es_la>
+		<es_la>Apartamentos de lujo</es_la>
 	</string>
 	<string id="STR_LUXURY_APARTMENTS_INFO">
 		<en_gb>The wealthy citizens of Mega-Primus reside in exclusive apartment buildings. Alien infiltration can be particularly dangerous here, because the people which own and control most of the city could be exposed to danger.</en_gb>
-		<es_la>The wealthy citizens of Mega-Primus reside in exclusive apartment buildings. Alien infiltration can be particularly dangerous here, because the people which own and control most of the city could be exposed to danger.</es_la>
+		<es_la>Los ciudadanos ricos de Mega-Primus residen en edificios de apartamentos exclusivos. La infiltración alienígena puede ser particularmente peligrosa aquí, ya que quienes poseen y controlan gran parte de la ciudad pueden verse expuestos al peligro.</es_la>
 	</string>
 	<string id="STR_HYDRO_FARM">
 		<en_gb>Hydro-Farm</en_gb>
-		<es_la>Hydro-Farm</es_la>
+		<es_la>Hydro-Granja</es_la>
 	</string>
 	<string id="STR_HYDRO_FARM_INFO">
 		<en_gb>Open fields are unsustainable because of exposure to harmful radiation caused by the collapse of the ozone layer. The Hydro-Farms of Mega-Primus are efficient, clean and highly productive. Their controlled environments can produce any kind of vegetable or fruit, or rear any kind of animal. Unfortunately they are also quite good at nurturing the odd Alien which finds its way inside.</en_gb>
-		<es_la>Open fields are unsustainable because of exposure to harmful radiation caused by the collapse of the ozone layer. The Hydro-Farms of Mega-Primus are efficient, clean and highly productive. Their controlled environments can produce any kind of vegetable or fruit, or rear any kind of animal. Unfortunately they are also quite good at nurturing the odd Alien which finds its way inside.</es_la>
+		<es_la>Los campos abiertos no son sostenibles por su exposición a la dañina radiación causada por el colapso de la capa de ozono. Las Hidro-Granjas de Mega-Primus son eficientes, limpias y altamente productivas. Sus ambientes controlados pueden producir cualquier tipo de frutas o verduras, o criar cualquier tipo de animal. Desafortunadamente también son una buena fuente de nutrientes para los extraños aliens capaces de entrar.</es_la>
 	</string>
 	<string id="STR_SEWAGE_WORKS">
 		<en_gb>Sewage Works</en_gb>
-		<es_la>Sewage Works</es_la>
+		<es_la>Red de alcantarillado</es_la>
 	</string>
 	<string id="STR_SEWAGE_WORKS_INFO">
 		<en_gb>The sewage works recycles everything possible from the organic waste produced by the city. The solid waste produces food and fertilizer for the Hydro-Farms. Water is then passed back to the water purifying stations. Since the building is largely automated, its dank, dark maze of pipes and walkways provide an ideal habitat for Alien creatures.</en_gb>
-		<es_la>The sewage works recycles everything possible from the organic waste produced by the city. The solid waste produces food and fertilizer for the Hydro-Farms. Water is then passed back to the water purifying stations. Since the building is largely automated, its dank, dark maze of pipes and walkways provide an ideal habitat for Alien creatures.</es_la>
+		<es_la>La red de alcantarillado recicla en todo lo posible los deshechos orgánicos producidos por la ciudad. De los deshechos sólidos se produce comida y fertilizantes para las Hidro-Granjas. El agua es luego reconducida de nuevo a las estaciones pruificadóras de agua. Ya que el complejo está muy automatizado, es un laberinto húmedo y oscuro de tuberías y pasillos que proveen un hábitat ideal para las criaturas alienígenas.</es_la>
 	</string>
 	<string id="STR_WATER_PURIFIER">
 		<en_gb>Water Purifier</en_gb>
-		<es_la>Water Purifier</es_la>
+		<es_la>Purificadora de agua</es_la>
 	</string>
 	<string id="STR_WATER_PURIFIER_INFO">
 		<en_gb>City regulations stipulate the highest possible water quality. The tall water purifiers are largely automated buildings and are difficult areas for combat, they also provide good hiding places for Alien spawn. The tall structures are also vulnerable to collapse, so explosive munitions should be avoided.</en_gb>
-		<es_la>City regulations stipulate the highest possible water quality. The tall water purifiers are largely automated buildings and are difficult areas for combat, they also provide good hiding places for Alien spawn. The tall structures are also vulnerable to collapse, so explosive munitions should be avoided.</es_la>
+		<es_la>Las regulaciones de la ciudad estipulan el mayor nivel de calidad de agua posible. Los altos purificadores de agua están muy automatizados y son áreas difíciles para combatir, además proveen de buenos escondites para los engendros alienígenas. Las altas estructuras también son vulnerables al derribo, por lo que el uso de munición explosiva debe ser evitado.</es_la>
 	</string>
 	<string id="STR_APPLIANCES_FACTORY">
 		<en_gb>Appliances Factory</en_gb>
-		<es_la>Appliances Factory</es_la>
+		<es_la>Fábrica de electrodomésticos</es_la>
 	</string>
 	<string id="STR_APPLIANCES_FACTORY_INFO">
 		<en_gb>All types of consumer durables are produced here. The vast factory complex is highly automated and there are many robots on the production lines.</en_gb>
-		<es_la>All types of consumer durables are produced here. The vast factory complex is highly automated and there are many robots on the production lines.</es_la>
+		<es_la>Todos los tipos de bienes de el consumo son producidos aquí. Esta gran fábrica es altamente automatizada y hay muchos robots en las líneas de producción.</es_la>
 	</string>
 	<string id="STR_ARMS_FACTORY">
 		<en_gb>Arms Factory</en_gb>
-		<es_la>Arms Factory</es_la>
+		<es_la>Fábrica de armamento</es_la>
 	</string>
 	<string id="STR_ARMS_FACTORY_INFO">
 		<en_gb>An arms factory produces munitions and weaponry of all sizes from the smallest Lawpistol slug to the most destructive fusion bombs. Any combat within the factory would be extremely dangerous, so any X-COM Agents must proceed with extreme caution when investigating these buildings.</en_gb>
-		<es_la>An arms factory produces munitions and weaponry of all sizes from the smallest Lawpistol slug to the most destructive fusion bombs. Any combat within the factory would be extremely dangerous, so any X-COM Agents must proceed with extreme caution when investigating these buildings.</es_la>
+		<es_la>Una fábrica de armamento produce munición y armamento de todos los tamaños desde piezas para la pequeña Lawpistol hasta las mas destructivas bombas de fusión. Cualquier combate dentro de estas fábricas será extremadamente peligroso, por lo que cualquiera de los agentes de X-COM deben proceder con extremo cuidado al investigar estos edificios.</es_la>
 	</string>
 	<string id="STR_ROBOT_FACTORY">
 		<en_gb>Robot Factory</en_gb>
-		<es_la>Robot Factory</es_la>
+		<es_la>Fábrica de robots</es_la>
 	</string>
 	<string id="STR_ROBOT_FACTORY_INFO">
 		<en_gb>Mega-Primus is highly automated and requires the services of many robots to perform routine tasks. They are all produced in Robot Factories, which are also largely automated using the latest Nano technological construction techniques.</en_gb>
-		<es_la>Mega-Primus is highly automated and requires the services of many robots to perform routine tasks. They are all produced in Robot Factories, which are also largely automated using the latest Nano technological construction techniques.</es_la>
+		<es_la>Mega-Primus es altamente automatizada y requiere de los servicios de muchos robots para realizar labores rutinarias. Todos ellos son producidos en las fábricas de robots, que están muy automatizadas usando las últimas técnicas de producción nanotecnológica.</es_la>
 	</string>
 	<string id="STR_FLYER_FACTORY">
 		<en_gb>Flyer Factory</en_gb>
-		<es_la>Flyer Factory</es_la>
+		<es_la>Fábrica de aeronaves</es_la>
 	</string>
 	<string id="STR_FLYER_FACTORY_INFO">
 		<en_gb>All kinds of small flying vehicles are produced here, such as Hovercars, Hoverbikes and transports. There are many Elerium supplies stored here which could be the target of hostile raiders.</en_gb>
-		<es_la>All kinds of small flying vehicles are produced here, such as Hovercars, Hoverbikes and transports. There are many Elerium supplies stored here which could be the target of hostile raiders.</es_la>
+		<es_la>Todos los tipos de aeronaves pequeñas son producidas aquí, por ejemplo aerodeslizadores, aeromotos y transportes. Hay varios suministros de Elérium almacenado que pueden ser el objetivo de asaltantes hostiles.</es_la>
 	</string>
 	<string id="STR_LARGE_FLYER_FACTORY">
 		<en_gb>Large Flyer Factory</en_gb>
-		<es_la>Large Flyer Factory</es_la>
+		<es_la>Fábrica grande de aeronaves</es_la>
 	</string>
 	<string id="STR_LARGE_FLYER_FACTORY_INFO">
 		<en_gb>The cavernous interior of this factory is designed for construction of the largest vehicles such as the Valkyrie Interceptor, or the great Space Liners. There are large quantities of valuable construction materials, such as Elerium, stored in various parts of the building.</en_gb>
-		<es_la>The cavernous interior of this factory is designed for construction of the largest vehicles such as the Valkyrie Interceptor, or the great Space Liners. There are large quantities of valuable construction materials, such as Elerium, stored in various parts of the building.</es_la>
+		<es_la>El cavernoso interior de esta fábrica está diseñado para la construcción de los vehículos mas grandes por ejemplo el interceptor Valkyrie, o el gran Crucero Espacial. Contienen grandes cantidades de valiosos materiales de construcción, por ejemplo elérium, almacenado varios rincones del edificio.</es_la>
 	</string>
 	<string id="STR_CONSTRUCTION_FACTORY">
 		<en_gb>Construction Factory</en_gb>
-		<es_la>Construction Factory</es_la>
+		<es_la>Fábrica de construcción</es_la>
 	</string>
 	<string id="STR_CONSTRUCTION_FACTORY_INFO">
 		<en_gb>All types of building materials and components are created here. The high walkways and open factory floors create a dangerous environment for any firearms combat.</en_gb>
-		<es_la>All types of building materials and components are created here. The high walkways and open factory floors create a dangerous environment for any firearms combat.</es_la>
+		<es_la>Todos los típos de materiales y componentes de construcción son creados aquí. Las elevados pasarelas y los las plantas abiertas son un peligroso ambiente para cualquier enfrentamieno armado.</es_la>
 	</string>
 	<string id="STR_SLUMS">
 		<en_gb>Slums</en_gb>
-		<es_la>Slums</es_la>
+		<es_la>Suburbios</es_la>
 	</string>
 	<string id="STR_SLUMS_INFO">
 		<en_gb>The slum dwellings located outside the city boundaries are the remnants of an old civilization. They are still heavily populated and used by gangsters and political groups as a base of support. They are dangerous places which are difficult to attack with ground forces. There is always the prospect of finding Psiclone or Elerium during a successful raid.</en_gb>
-		<es_la>The slum dwellings located outside the city boundaries are the remnants of an old civilization. They are still heavily populated and used by gangsters and political groups as a base of support. They are dangerous places which are difficult to attack with ground forces. There is always the prospect of finding Psiclone or Elerium during a successful raid.</es_la>
+		<es_la>Las viviendas de los suburbios que se encuentran fuera del perímetro de la ciudad son los remanentes de una vieja sociedad. Aún se encuentran densamente poblados y utilizados por gángsters y grupos políticos como base de apoyo. Son lugares peligrosos y difíciles de atacar con tropas de a pie. Siempre existe la posibilidad de encontrar psiclones o elérium tras un asalto exitoso.</es_la>
 	</string>
 	<string id="STR_WAREHOUSE">
 		<en_gb>Warehouse</en_gb>
-		<es_la>Warehouse</es_la>
+		<es_la>Almacenenes</es_la>
 	</string>
 	<string id="STR_WAREHOUSE_INFO">
 		<en_gb>The warehouse is used to store large quantities of merchandise for import or export. The cavernous interiors are easy to defend and raiders should be careful.</en_gb>
-		<es_la>The warehouse is used to store large quantities of merchandise for import or export. The cavernous interiors are easy to defend and raiders should be careful.</es_la>
+		<es_la>Los almacenes son empleados para alojar grandes cantidades de mercancía de importación o para exportar. Sus cavernosos interiores son fáciles de defender y sus asaltantes deben ser precavidos.</es_la>
 	</string>
 	<string id="STR_POWER_STATION">
 		<en_gb>Power Station</en_gb>
-		<es_la>Power Station</es_la>
+		<es_la>Central eléctrica</es_la>
 	</string>
 	<string id="STR_POWER_STATION_INFO">
 		<en_gb>The highly efficient Power Stations use cold fusion technology to generate energy for the city. They should be protected from Alien infiltration as far as possible. Any damage to them could result in serious power shortages.</en_gb>
-		<es_la>The highly efficient Power Stations use cold fusion technology to generate energy for the city. They should be protected from Alien infiltration as far as possible. Any damage to them could result in serious power shortages.</es_la>
+		<es_la>Estas centrales eléctricas altamente eficientes utilizan tecnología de fusión fría para generar electricidad para la ciudad. Deben ser protegidas de infiltración alienígena tanto como sea posible. Cualquier daño que reciban puede resultar en graves cortes de suministro.</es_la>
 	</string>
 	<string id="STR_RECYCLOTORIUM">
 		<en_gb>Recyclotorium</en_gb>
-		<es_la>Recyclotorium</es_la>
+		<es_la>Reciclotorio</es_la>
 	</string>
 	<string id="STR_RECYCLOTORIUM_INFO">
 		<en_gb>The Recyclotorium is capable of recycling all kinds of waste product, organic or mineral. The city is an ecologically self contained area. This would not be possible without these complex recycling stations.</en_gb>
-		<es_la>The Recyclotorium is capable of recycling all kinds of waste product, organic or mineral. The city is an ecologically self contained area. This would not be possible without these complex recycling stations.</es_la>
+		<es_la>El reciclorio es capaz de reciclar todo tipo de producto de deshecho, orgánico o mineral.La ciudad es un área ecológicamente autosustentable. Esto no sería posible sin este tipo de estaciones de reciclado complejas.</es_la>
 	</string>
 	<string id="STR_PEOPLE_TUBES">
 		<en_gb>People Tubes</en_gb>
-		<es_la>People Tubes</es_la>
+		<es_la>Tubos de transporte</es_la>
 	</string>
 	<string id="STR_PEOPLE_TUBES_INFO">
 		<en_gb>The People Tube network is the mass transit system for the whole city. The anti-gravity pathways suspend the traveler above the floor and safely propels them at speeds of about 25 miles an hour.</en_gb>
-		<es_la>The People Tube network is the mass transit system for the whole city. The anti-gravity pathways suspend the traveler above the floor and safely propels them at speeds of about 25 miles an hour.</es_la>
+		<es_la>La red de tubos de transporte es el sistema de transporte público de la ciudad. Los senderos antigravitatorios suspenden al viajero sobre el suelo y le impulsan a velocidades de 25 millas por hora con seguridad.</es_la>
 	</string>
 	<string id="STR_TEMPLE_OF_SIRIUS">
 		<en_gb>Temple of Sirius</en_gb>
-		<es_la>Temple of Sirius</es_la>
+		<es_la>Templo de Sirius</es_la>
 	</string>
 	<string id="STR_TEMPLE_OF_SIRIUS_INFO">
 		<en_gb>The Cult Of Sirius builds temples to worship the superior Alien master race. It is rumored that these temples contain altars where bizarre rituals take place.</en_gb>
-		<es_la>The Cult Of Sirius builds temples to worship the superior Alien master race. It is rumored that these temples contain altars where bizarre rituals take place.</es_la>
+		<es_la>El Culto de Sirius construye templos para adorar a la raza maestra y superior Alien. Se rumorea que estos templos contienen altares donde tienen lugar bizarros rituales. </es_la>
 	</string>
 	<string id="STR_SENSODROME">
 		<en_gb>Sensodrome</en_gb>
-		<es_la>Sensodrome</es_la>
+		<es_la>Sensódromo</es_la>
 	</string>
 	<string id="STR_SENSODROME_INFO">
 		<en_gb>Sensodromes contain studios for all types of Sensovision broadcasting. The Psionic projectors on top of the building send signals to Sensovision arenas and into peoples homes.</en_gb>
-		<es_la>Sensodromes contain studios for all types of Sensovision broadcasting. The Psionic projectors on top of the building send signals to Sensovision arenas and into peoples homes.</es_la>
+		<es_la>Los sensódromos alojan estudios para todo tipo de transmisión de Sensovisión. Los proyectores psiónicos en las azoteas del edificio envían señales a los ecenarios de Sensovisión y la los hogares de los ciudadanos./es_la>
 	</string>
 	<string id="STR_ALIEN_CRAFT_PROPULSION">
 		<en_gb>Alien Craft Propulsion</en_gb>
-		<es_la>Alien Craft Propulsion</es_la>
+		<es_la>Propilsuón de naves alienígenas</es_la>
 	</string>
 	<string id="STR_ALIEN_CRAFT_PROPULSION_INFO">
 		<en_gb>The propulsion system of the Alien craft is built into the external fabric of the craft itself. It generates a dimensional field that warps the craft through space and allows the craft to pass undamaged through Dimension Gates.</en_gb>
-		<es_la>The propulsion system of the Alien craft is built into the external fabric of the craft itself. It generates a dimensional field that warps the craft through space and allows the craft to pass undamaged through Dimension Gates.</es_la>
+		<es_la>El sistema de propulsión de las naves alienígenas está ensamblado en la coraza externa de la propia nave. Genera un campo dimensional que traslada la nave a través del espacio y le permite pasar indemne a través de los portales dimensionales.</es_la>
 	</string>
 	<string id="STR_ALIEN_CRAFT_CONTROL_SYSTEMS">
 		<en_gb>Alien Craft Control Systems</en_gb>
-		<es_la>Alien Craft Control Systems</es_la>
+		<es_la>Sistemas de control de naves alienígenas</es_la>
 	</string>
 	<string id="STR_ALIEN_CRAFT_CONTROL_SYSTEMS_INFO">
 		<en_gb>The control stations onboard the Alien craft direct the propulsion system and control its ability to transform matter into anti-matter.</en_gb>
-		<es_la>The control stations onboard the Alien craft direct the propulsion system and control its ability to transform matter into anti-matter.</es_la>
+		<es_la>Las estaciónes de control de abordo de las naves alienígenas dirigen los sistemas de propulsión y controlan su habilidad de transformar materia en antimateria.</es_la>
 	</string>
 	<string id="STR_ALIEN_CRAFT_ENERGY_SOURCE">
 		<en_gb>Alien Craft Energy Source</en_gb>
-		<es_la>Alien Craft Energy Source</es_la>
+		<es_la>Fuente de energía de naves alienígenas</es_la>
 	</string>
 	<string id="STR_ALIEN_CRAFT_ENERGY_SOURCE_INFO">
 		<en_gb>The energy source for the Alien craft is generated in special dimension chambers which suck incredible amounts of energy from the Alien Dimension. These systems are highly unstable and should be treated with caution in combat situations.</en_gb>
-		<es_la>The energy source for the Alien craft is generated in special dimension chambers which suck incredible amounts of energy from the Alien Dimension. These systems are highly unstable and should be treated with caution in combat situations.</es_la>
+		<es_la>La fuente de energía para las naves alienígenas se genera en unas cámaras dimensionales especiales que absorben increíbles cantidades de energía desde la dimensión alienígena. Estos sistemas son altamente inestables y deben ser manipulados con cuidado en situaciónes de combate.</es_la>
 	</string>
 	<string id="STR_PSICLONE">
 		<en_gb>Psiclone</en_gb>
@@ -2212,42 +2212,47 @@
 	</string>
 	<string id="STR_PSICLONE_INFO">
 		<en_gb>The Psiclone implant is manufactured and distributed by criminal gangs. It allows the user to experience any mental state or images just by imagining them. Its widespread popularity and detrimental effect on the health of young citizens led the Senate to ban the use or distribution of the device. The price of Psiclone implants has subsequently soared and this has resulted in open warfare between the criminal gangs and Megapol.</en_gb>
-		<es_la>The Psiclone implant is manufactured and distributed by criminal gangs. It allows the user to experience any mental state or images just by imagining them. Its widespread popularity and detrimental effect on the health of young citizens led the Senate to ban the use or distribution of the device. The price of Psiclone implants has subsequently soared and this has resulted in open warfare between the criminal gangs and Megapol.</es_la>
+		<es_la>Los implantes psiclone son manufacturados y distribuidos por las bandas criminales. Permiten al usuario experimentar cualquier imagen o estado mental sólo con imaginarlo. Su extendida popularidad y sus efectos nocivos en la salud de los jóvenes condujo al senado a prohibir el uso o la distribución de este dispositivo. Consecuentemente, el precio de los implantes psiclone se ha disparado lo que ha resultado en una guerra abierta entre los grupos criminales y Megapol.</es_la>
 	</string>
 	<string id="STR_ELERIUM">
 		<en_gb>Elerium</en_gb>
-		<es_la>Elerium</es_la>
+		<es_la>Elérium</es_la>
 	</string>
 	<string id="STR_ELERIUM_INFO">
 		<en_gb>Since its introduction during the first Alien invasion, Elerium has proved to be an essential power source for interplanetary travel and military use. It is mined from distant planetary systems and transported back to Earth where its rarity ensures a high price. Tiny quantities contained in small pods fetch a high price. Corporations store pods in preference to gold because the stability of its value is guaranteed.</en_gb>
-		<es_la>Since its introduction during the first Alien invasion, Elerium has proved to be an essential power source for interplanetary travel and military use. It is mined from distant planetary systems and transported back to Earth where its rarity ensures a high price. Tiny quantities contained in small pods fetch a high price. Corporations store pods in preference to gold because the stability of its value is guaranteed.</es_la>
+		<es_la>Desde su aparición durante la primera invasión alienígena, el Elérium ha demostrado ser una fuente de energía esencial para el viaje interplanetario y el uso militar. Es recolectado en distantes sistemas planetarios y transportado a la tierra donde su rareza garantiza un alto costo. Diminutas cantidades contenidas en pequeñas cápsulas adquieren un alto precio. Las empresas almacenan cápsulas en lugar de oro ya que la estabilidad de su valor está garantizada.</es_la>
 	</string>
 	<string id="STR_CAR_FACTORY">
 		<en_gb>Car Factory</en_gb>
-		<es_la>Car Factory</es_la>
+		<es_la>Fàbrica de automòviles</es_la>
 	</string>
 	<string id="STR_CAR_FACTORY_INFO">
 		<en_gb>The Car Factory produces many of the smaller vehicles that are part of everyday life in Mega-Primus.</en_gb>
-		<es_la>The Car Factory produces many of the smaller vehicles that are part of everyday life in Mega-Primus.</es_la>
+		<es_la>La fàbrica de automòviles produce muchos de los pequeños vehículos que son parte de la vida cotidiana de Mega-Primus.</es_la>
 	</string>
 	<string id="STR_TEST_XCOM_BASESCREEN">
 		<en_gb>XCOM BASE SCREEN</en_gb>
-		<es_la>XCOM BASE SCREEN</es_la>
+		<es_la>PANTALLA BASE XCOM</es_la>
 	</string>
 	<string id="STR_DIFFICULTY1">
 		<en_gb>Novice</en_gb>
+		<es_la>Novato</es_la>
 	</string>
 	<string id="STR_DIFFICULTY2">
 		<en_gb>Easy</en_gb>
+		<es_la>Fácil</es_la>
 	</string>
 	<string id="STR_DIFFICULTY3">
 		<en_gb>Medium</en_gb>
+		<es_la>Medio</es_la>
 	</string>
 	<string id="STR_DIFFICULTY4">
 		<en_gb>Hard</en_gb>
+		<es_la>Difìcil</es_la>
 	</string>
 	<string id="STR_DIFFICULTY5">
 		<en_gb>Superhuman</en_gb>
+		<es_la>Sobrehumano</es_la>
 	</string>
 </openapoc>
 </openapoc>
