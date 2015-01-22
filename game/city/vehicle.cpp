@@ -3,6 +3,8 @@
 #include <cfloat>
 #include <random>
 
+std::default_random_engine rng;
+
 namespace OpenApoc {
 
 Vehicle::Vehicle(VehicleDefinition &def)
@@ -19,7 +21,6 @@ Vehicle::~Vehicle()
 class VehicleRandomWalk : public VehicleMission
 {
 public:
-	std::default_random_engine generator;
 	std::uniform_int_distribution<int> distribution;
 	VehicleRandomWalk(Vehicle &vehicle)
 		: VehicleMission(vehicle), distribution(-1,1)
@@ -32,7 +33,7 @@ public:
 		int tries = 0;
 		do {
 			nextPosition = {v.position.x, v.position.y, v.position.z};
-			Vec3<int> diff {distribution(generator), distribution(generator), distribution(generator)};
+			Vec3<int> diff {distribution(rng), distribution(rng), distribution(rng)};
 			nextPosition += diff;
 			//FIXME HACK - abort after some attempts (e.g. if we're completely trapped)
 			//and just phase through whatever obstruction is there
@@ -48,6 +49,7 @@ public:
 	}
 };
 
+
 class FlyingVehicleMover : public VehicleMover
 {
 public:
@@ -56,8 +58,10 @@ public:
 	FlyingVehicleMover(Vehicle &v)
 		: VehicleMover(v)
 	{
+		std::uniform_real_distribution<float> distribution(-0.02, 0.02);
 		goalPosition.x = -1.0f;
-		speed = 0.1f;
+		//Tweak the speed slightly, makes everything a little less synchronised
+		speed = 0.05 + distribution(rng);
 	}
 	virtual void update(unsigned int ticks)
 	{
