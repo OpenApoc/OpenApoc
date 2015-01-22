@@ -27,17 +27,23 @@ public:
 	virtual Vec3<float> getNextDestination()
 	{
 		FlyingVehicle &v = dynamic_cast<FlyingVehicle&>(*this->vehicle.tileObject);
-		TileMap &map = v.owningTile.map;
+		TileMap &map = v.owningTile->map;
 		Vec3<int> nextPosition;
+		int tries = 0;
 		do {
 			nextPosition = {v.position.x, v.position.y, v.position.z};
 			Vec3<int> diff {distribution(generator), distribution(generator), distribution(generator)};
 			nextPosition += diff;
+			//FIXME HACK - abort after some attempts (e.g. if we're completely trapped)
+			//and just phase through whatever obstruction is there
+			tries++;
 			//Keep looping until we find an empty tile within the map
 		} while (nextPosition.x >= map.size.x || nextPosition.x < 0 ||
 			nextPosition.y >= map.size.y || nextPosition.y < 0 ||
-			nextPosition.z >= map.size.z || nextPosition.z < 0 ||
-			!map.tiles[nextPosition.z][nextPosition.y][nextPosition.z].objects.empty());
+			nextPosition.z >= map.size.z || nextPosition.z < 0
+			//FIXME: Proper routing/obstruction handling
+			//(This below could cause an infinite loop if a vehicle gets 'trapped'
+			|| (tries < 50 && !map.tiles[nextPosition.z][nextPosition.y][nextPosition.z].objects.empty()));
 		return Vec3<float>{nextPosition.x, nextPosition.y, nextPosition.z};
 	}
 };
@@ -77,6 +83,21 @@ public:
 				distanceLeft = -1;
 			}
 		}
+		Vec3<int> currentTile{v.position.x, v.position.y, v.position.z};
+		if (currentTile != v.owningTile->position)
+		{
+			for (auto o : v.owningTile->objects)
+			{
+				if (o.get() == &v)
+				{
+					auto &map = v.owningTile->map;
+					v.owningTile->objects.remove(o);
+					v.owningTile = &map.tiles[currentTile.z][currentTile.y][currentTile.x];
+					v.owningTile->objects.push_back(o);
+					break;
+				}
+			}
+		}
 
 		//FIXME: change owning tile?
 		//I've possibly backed myself into a corner here, how I can 'change' the owning tile
@@ -107,8 +128,8 @@ VehicleMover::~VehicleMover()
 {
 
 }
-FlyingVehicle::FlyingVehicle(Vehicle &vehicle, Tile &owningTile)
-	: TileObject(owningTile, Vec3<float>(owningTile.position), vehicle.def.size, true, true, std::shared_ptr<Image>(nullptr)), vehicle(vehicle), direction(0, 1, 0)
+FlyingVehicle::FlyingVehicle(Vehicle &vehicle, Tile *owningTile)
+	: TileObject(owningTile, Vec3<float>(owningTile->position), vehicle.def.size, true, true, std::shared_ptr<Image>(nullptr)), vehicle(vehicle), direction(0, 1, 0)
 {
 	assert(!vehicle.tileObject);
 	this->mission.reset(new VehicleRandomWalk(vehicle));

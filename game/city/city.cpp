@@ -57,7 +57,7 @@ City::City(Framework &fw, std::string mapName)
 					}
 					else
 					{
-						this->tiles[z][y][x].objects.push_back(std::make_shared<BuildingSection>(this->tiles[z][y][x], this->cityTiles[tileID], Vec3<int>{x,y,z}, bld));
+						this->tiles[z][y][x].objects.push_back(std::make_shared<BuildingSection>(&this->tiles[z][y][x], this->cityTiles[tileID], Vec3<int>{x,y,z}, bld));
 					}
 				}
 			}
@@ -66,9 +66,11 @@ City::City(Framework &fw, std::string mapName)
 
 	std::shared_ptr<Vehicle> testVehicle(fw.gamecore->vehicleFactory.create("POLICE_HOVERCAR"));
 	this->vehicles.push_back(testVehicle);
-	std::shared_ptr<FlyingVehicle> testVehicleObject(new FlyingVehicle(*testVehicle, this->tiles[9][0][0]));
+	std::shared_ptr<FlyingVehicle> testVehicleObject(new FlyingVehicle(*testVehicle, &this->tiles[9][0][0]));
 	testVehicle->tileObject = testVehicleObject;
 	this->tiles[9][0][0].objects.push_back(testVehicleObject);
+	//Vehicles are active
+	this->activeObjects.push_back(testVehicleObject);
 
 	al_fclose(file);
 

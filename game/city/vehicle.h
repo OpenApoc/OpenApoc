@@ -77,7 +77,7 @@ class FlyingVehicle : public TileObject
 {
 public:
 	Vehicle &vehicle;
-	FlyingVehicle(Vehicle &vehicle, Tile &owningTile);
+	FlyingVehicle(Vehicle &vehicle, Tile *owningTile);
 	std::unique_ptr<VehicleMission> mission;
 	std::unique_ptr<VehicleMover> mover;
 	Vec3<float> direction;

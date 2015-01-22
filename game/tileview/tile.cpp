@@ -26,14 +26,8 @@ TileMap::update(unsigned int ticks)
 {
 	//Default tilemap update calls update(ticks) on all tiles
 	//Subclasses can optimise this if they know which tiles might be 'active'
-	for (auto& plane : this->tiles)
-	{
-		for (auto& line : plane)
-		{
-			for (auto& tile : line)
-				tile.update(ticks);
-		}
-	}
+	for (auto& object : this->activeObjects)
+		object->update(ticks);
 }
 
 TileMap::~TileMap()
@@ -45,14 +39,7 @@ Tile::Tile(TileMap &map, Vec3<int> position)
 {
 }
 
-void
-Tile::update(unsigned int ticks)
-{
-	for (auto &o : objects)
-		o->update(ticks);
-}
-
-TileObject::TileObject(Tile &owningTile, Vec3<float> position, Vec3<float> size, bool visible, bool collides, std::shared_ptr<Image> sprite)
+TileObject::TileObject(Tile *owningTile, Vec3<float> position, Vec3<float> size, bool visible, bool collides, std::shared_ptr<Image> sprite)
 	: owningTile(owningTile), position(position), size(size), visible(visible), collides(collides), sprite(sprite)
 {
 

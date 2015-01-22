@@ -22,7 +22,7 @@ class TileObject
 	public:
 		//Every object is 'owned' by a single tile - this defines the point the
 		//sprite will be drawn (so it will have the same x/y/z as the owning tile)
-		Tile &owningTile;
+		Tile *owningTile;
 
 		// Flag to set if the object is visible (IE should be drawn)
 		bool visible;
@@ -35,7 +35,7 @@ class TileObject
 		Vec3<float> position;
 		TileObjectCollisionVoxels collisionVoxels;
 
-		TileObject(Tile &owningTile, Vec3<float> position, Vec3<float> size, bool visible, bool collides, std::shared_ptr<Image> sprite);
+		TileObject(Tile *owningTile, Vec3<float> position, Vec3<float> size, bool visible, bool collides, std::shared_ptr<Image> sprite);
 		virtual ~TileObject();
 		virtual void update(unsigned int ticks) = 0;
 		virtual Cubeoid<int> getBoundingBox();
@@ -55,7 +55,6 @@ class Tile
 		std::list<std::shared_ptr<TileObject> > objects;
 
 		Tile(TileMap &map, Vec3<int> position);
-		void update(unsigned int ticks);
 };
 
 class TileMap
@@ -64,6 +63,8 @@ class TileMap
 		Framework &fw;
 		std::vector < std::vector < std::vector < Tile > > > tiles;
 		Vec3<int> size;
+
+		std::vector<std::shared_ptr<TileObject> > activeObjects;
 
 		TileMap (Framework &fw, Vec3<int> size);
 		~TileMap();

@@ -40,7 +40,7 @@ CityTile::loadTilesFromFile(Framework &fw)
 	return v;
 }
 
-BuildingSection::BuildingSection(Tile &owningTile, CityTile &cityTile, Vec3<int> pos, Building *building)
+BuildingSection::BuildingSection(Tile *owningTile, CityTile &cityTile, Vec3<int> pos, Building *building)
 	: TileObject(owningTile, Vec3<float>{(float)pos.x,(float)pos.y,(float)pos.z}, Vec3<float>{1.0f,1.0f,1.0f}, true, true, cityTile.sprite), cityTile(cityTile), pos(pos), building(building)
 {
 
