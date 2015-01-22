@@ -4,6 +4,7 @@
 #include "buildingtile.h"
 #include "framework/framework.h"
 #include "game/resources/gamecore.h"
+#include <random>
 
 namespace OpenApoc {
 
@@ -64,13 +65,31 @@ City::City(Framework &fw, std::string mapName)
 		}
 	}
 
-	std::shared_ptr<Vehicle> testVehicle(fw.gamecore->vehicleFactory.create("POLICE_HOVERCAR"));
-	this->vehicles.push_back(testVehicle);
-	std::shared_ptr<FlyingVehicle> testVehicleObject(new FlyingVehicle(*testVehicle, &this->tiles[9][0][0]));
-	testVehicle->tileObject = testVehicleObject;
-	this->tiles[9][0][0].objects.push_back(testVehicleObject);
-	//Vehicles are active
-	this->activeObjects.push_back(testVehicleObject);
+	std::default_random_engine generator;
+	std::uniform_int_distribution<int> xydistribution(0,99);
+	std::uniform_int_distribution<int> zdistribution(0,9);
+	//Place 1000 random cars
+	for (int i = 0; i < 1000; i++)
+	{
+		int x = 0;
+		int y = 0;
+		int z = 0;
+		while (!this->tiles[z][y][x].objects.empty())
+		{
+			x = xydistribution(generator);
+			y = xydistribution(generator);
+			z = zdistribution(generator);
+		}
+
+		std::shared_ptr<Vehicle> testVehicle(fw.gamecore->vehicleFactory.create("POLICE_HOVERCAR"));
+		this->vehicles.push_back(testVehicle);
+		std::shared_ptr<FlyingVehicle> testVehicleObject(new FlyingVehicle(*testVehicle, &this->tiles[z][y][x]));
+		testVehicle->tileObject = testVehicleObject;
+		this->tiles[z][y][x].objects.push_back(testVehicleObject);
+		//Vehicles are active
+		this->activeObjects.push_back(testVehicleObject);
+	}
+	std::cerr << "Placed cars\n";
 
 	al_fclose(file);
 
