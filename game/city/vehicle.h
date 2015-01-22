@@ -60,8 +60,17 @@ class VehicleMission
 public:
 	Vehicle &vehicle;
 	VehicleMission(Vehicle &vehicle);
-	virtual void update(unsigned int ticks) = 0;
+	virtual Vec3<float> getNextDestination() = 0;
 	virtual ~VehicleMission();
+};
+
+class VehicleMover
+{
+public:
+	Vehicle &vehicle;
+	VehicleMover(Vehicle &vehicle);
+	virtual void update(unsigned int ticks) = 0;
+	virtual ~VehicleMover();
 };
 
 class FlyingVehicle : public TileObject
@@ -70,6 +79,7 @@ public:
 	Vehicle &vehicle;
 	FlyingVehicle(Vehicle &vehicle, Tile &owningTile);
 	std::unique_ptr<VehicleMission> mission;
+	std::unique_ptr<VehicleMover> mover;
 	Vec3<float> direction;
 	virtual ~FlyingVehicle();
 	virtual Image& getSprite();
