@@ -49,6 +49,53 @@ public:
 	}
 };
 
+class VehicleRandomDestination : public VehicleMission
+{
+public:
+	std::uniform_int_distribution<int> xydistribution;
+	std::uniform_int_distribution<int> zdistribution;
+	VehicleRandomDestination(Vehicle &v)
+		: VehicleMission(v), xydistribution(0,99), zdistribution(0,9)
+			{};
+	std::list<Tile*> path;
+	virtual Vec3<float> getNextDestination()
+	{
+		FlyingVehicle &v = dynamic_cast<FlyingVehicle&>(*this->vehicle.tileObject);
+		while (path.empty())
+		{
+			Vec3<int> newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
+			while (!v.owningTile->map.tiles[newTarget.z][newTarget.y][newTarget.x].objects.empty())
+				newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
+			path = v.owningTile->map.findShortestPath(v.owningTile->position, newTarget);
+			std::cerr << __func__ << "Setting next destination to {" << newTarget.x << "," << newTarget.y << "," << newTarget.z << "}\n";
+			if (path.empty())
+			{
+				std::cerr << "Failed to path - retrying\n";
+				continue;
+			}
+			//Skip first in the path (as that's current tile)
+			path.pop_front();
+		}
+		if (!path.front()->objects.empty())
+		{
+			Vec3<int> target = path.back()->position;
+			path = v.owningTile->map.findShortestPath(v.owningTile->position, target);
+			if (path.empty())
+			{
+				std::cerr << "Failed to path after obstruction\n";
+				path.clear();
+				return this->getNextDestination();
+			}
+			//Skip first in the path (as that's current tile)
+			path.pop_front();
+		}
+		Tile *nextTile = path.front();
+		path.pop_front();
+		return Vec3<float>{nextTile->position.x, nextTile->position.y, nextTile->position.z};
+	}
+
+};
+
 
 class FlyingVehicleMover : public VehicleMover
 {
