@@ -155,14 +155,14 @@ FlyingVehicle::update(unsigned int ticks)
 
 const std::vector<std::pair<Vec3<float>, Vehicle::Direction>> directions =
 {
-	{{ 0, 1, 0}, Vehicle::Direction::N},
-	{{ 1, 1, 0}, Vehicle::Direction::NE},
+	{{ 0,-1, 0}, Vehicle::Direction::N},
+	{{ 1,-1, 0}, Vehicle::Direction::NE},
 	{{ 1, 0, 0}, Vehicle::Direction::E},
-	{{ 1,-1, 0}, Vehicle::Direction::SE},
-	{{ 0,-1, 0}, Vehicle::Direction::S},
-	{{-1,-1, 0}, Vehicle::Direction::SW},
+	{{ 1, 1, 0}, Vehicle::Direction::SE},
+	{{ 0, 1, 0}, Vehicle::Direction::S},
+	{{-1, 1, 0}, Vehicle::Direction::SW},
 	{{-1, 0, 0}, Vehicle::Direction::W},
-	{{-1, 1, 0}, Vehicle::Direction::NW},
+	{{-1,-1, 0}, Vehicle::Direction::NW},
 };
 
 static Vehicle::Direction findClosestDirection(Vec3<float> v)
