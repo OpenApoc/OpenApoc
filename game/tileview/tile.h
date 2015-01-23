@@ -69,5 +69,8 @@ class TileMap
 		TileMap (Framework &fw, Vec3<int> size);
 		~TileMap();
 		virtual void update(unsigned int ticks);
+
+		std::list<Tile*> findShortestPath(Vec3<int> origin, Vec3<int> destination);
+
 };
 }; //namespace OpenApoc

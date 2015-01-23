@@ -91,6 +91,17 @@ City::City(Framework &fw, std::string mapName)
 	}
 	std::cerr << "Placed cars\n";
 
+	std::cerr << "PATH TEST {0,0,9} to {99,99,9}\n";
+
+	std::list<Tile*> path;
+	path = this->findShortestPath(Vec3<int>{0,0,9}, Vec3<int>{99,99,9});
+
+	std::cerr << "Route found in " << path.size() << " steps\n";
+	for (auto tile : path)
+	{
+		std::cerr << "Tile {" << tile->position.x << "," << tile->position.y << "," << tile->position.z << "}\n";
+	}
+
 	al_fclose(file);
 
 }
