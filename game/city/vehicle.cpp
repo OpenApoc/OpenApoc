@@ -198,7 +198,7 @@ FlyingVehicle::FlyingVehicle(Vehicle &vehicle, Tile *owningTile)
 	: TileObject(owningTile, Vec3<float>(owningTile->position), vehicle.def.size, true, true, std::shared_ptr<Image>(nullptr)), vehicle(vehicle), direction(0, 1, 0)
 {
 	assert(!vehicle.tileObject);
-	this->mission.reset(new VehicleRandomWalk(vehicle));
+	this->mission.reset(new VehicleRandomDestination(vehicle));
 	this->mover.reset(new FlyingVehicleMover(vehicle));
 
 }
