@@ -108,7 +108,7 @@ public:
 	}
 };
 
-#define THRESHOLD_ITERATIONS 2000
+#define THRESHOLD_ITERATIONS 500
 
 static bool findNextNodeOnPath(PathComparer &comparer, TileMap &map, std::list<Tile*> &currentPath, Vec3<int> destination, volatile unsigned long *numIterations)
 {
