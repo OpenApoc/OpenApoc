@@ -108,10 +108,15 @@ public:
 	}
 };
 
-static bool findNextNodeOnPath(PathComparer &comparer, TileMap &map, std::list<Tile*> &currentPath, Vec3<int> destination)
+#define THRESHOLD_ITERATIONS 2000
+
+static bool findNextNodeOnPath(PathComparer &comparer, TileMap &map, std::list<Tile*> &currentPath, Vec3<int> destination, volatile unsigned long *numIterations)
 {
 	if (currentPath.back()->position == destination)
 		return true;
+	if (*numIterations > THRESHOLD_ITERATIONS)
+		return false;
+	*numIterations = (*numIterations)+1;
 	std::vector<Tile*> fringe;
 	for (int x = -1; x <= 1; x++)
 	{
@@ -146,7 +151,7 @@ static bool findNextNodeOnPath(PathComparer &comparer, TileMap &map, std::list<T
 	{
 		currentPath.push_back(tile);
 		comparer.origin = {tile->position.x, tile->position.y, tile->position.z};
-		if (findNextNodeOnPath(comparer, map, currentPath, destination))
+		if (findNextNodeOnPath(comparer, map, currentPath, destination, numIterations))
 			return true;
 		currentPath.pop_back();
 	}
@@ -158,6 +163,7 @@ static bool findNextNodeOnPath(PathComparer &comparer, TileMap &map, std::list<T
 std::list<Tile*>
 TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination)
 {
+	volatile unsigned long numIterations = 0;
 	std::list<Tile*> path;
 	PathComparer pc(destination);
 	if (origin.x < 0 || origin.x >= this->size.x
@@ -175,7 +181,7 @@ TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination)
 		return path;
 	}
 	path.push_back(&this->tiles[origin.z][origin.y][origin.x]);
-	if (!findNextNodeOnPath(pc, *this, path, destination))
+	if (!findNextNodeOnPath(pc, *this, path, destination, &numIterations))
 	{
 		std::cerr << __func__ << " No route found from origin: {" << origin.x << "," << origin.y << "," << origin.z << "} to destination: {" << destination.x << "," << destination.y << "," << destination.z << "}\n";
 		path.clear();
