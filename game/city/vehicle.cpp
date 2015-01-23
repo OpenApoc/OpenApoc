@@ -126,6 +126,21 @@ public:
 				distanceLeft -= distanceToGoal;
 				v.position = goalPosition;
 				goalPosition = v.mission->getNextDestination();
+				Vec3<int> currentTile{v.position.x, v.position.y, v.position.z};
+				if (currentTile != v.owningTile->position)
+				{
+					for (auto o : v.owningTile->objects)
+					{
+						if (o.get() == &v)
+						{
+							auto &map = v.owningTile->map;
+							v.owningTile->objects.remove(o);
+							v.owningTile = &map.tiles[currentTile.z][currentTile.y][currentTile.x];
+							v.owningTile->objects.push_back(o);
+							break;
+						}
+					}
+				}
 			}
 			else
 			{
