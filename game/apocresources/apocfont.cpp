@@ -48,7 +48,7 @@ ApocalypseFont::ApocalypseFont( Framework &fw, FontType Face, std::shared_ptr<Pa
 	{
 		int w = 0;
 		ALLEGRO_BITMAP* b = al_create_bitmap( charmaxwidth, fontheight );
-		ALLEGRO_LOCKED_REGION* r = al_lock_bitmap( b, ALLEGRO_PIXEL_FORMAT_ABGR_8888_LE, 0 );
+		ALLEGRO_LOCKED_REGION* r = al_lock_bitmap( b, ALLEGRO_PIXEL_FORMAT_ABGR_8888_LE, ALLEGRO_LOCK_WRITEONLY );
 		for( int y = 0; y < fontheight; y++ )
 		{
 			for( int x = 0; x < charmaxwidth; x++ )

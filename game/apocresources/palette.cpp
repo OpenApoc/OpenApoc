@@ -39,7 +39,7 @@ Palette::Palette( Data &d, std::string Filename )
 		auto rgbImage = std::dynamic_pointer_cast<RGBImage>(paletteimage);
 		assert(rgbImage);
 		colours.reset (new Colour[ paletteimage->width * paletteimage->height] );
-		RGBImageLock img(rgbImage);
+		RGBImageLock img(rgbImage, ImageLockUse::Read);
 
 		for( int y = 0; y < paletteimage->height; y++ )
 		{

@@ -51,12 +51,36 @@ void RGBImage::saveBitmap(const std::string &fileName)
 	al_save_bitmap(fileName.c_str(), this->bmp);
 }
 
-RGBImageLock::RGBImageLock(std::shared_ptr<RGBImage> img)
-	: img(img)
+static int ImageUseToAllegroFlags(ImageLockUse use)
+{
+	switch (use)
+	{
+		case ImageLockUse::Read:
+			return ALLEGRO_LOCK_READONLY;
+		case ImageLockUse::Write:
+			return ALLEGRO_LOCK_WRITEONLY;
+		case ImageLockUse::ReadWrite:
+			return ALLEGRO_LOCK_READWRITE;
+		default:
+			assert(0);
+	}
+}
+
+static bool ImageUseCanRead(ImageLockUse use)
+{
+	return (use == ImageLockUse::Read || use == ImageLockUse::ReadWrite);
+}
+static bool ImageUseCanWrite(ImageLockUse use)
+{
+	return (use == ImageLockUse::Write || use == ImageLockUse::ReadWrite);
+}
+
+RGBImageLock::RGBImageLock(std::shared_ptr<RGBImage> img, ImageLockUse use)
+	: img(img), use(use)
 {
 	assert(img->locked == false);
 	img->locked = true;
-	region = al_lock_bitmap(img->bmp, ALLEGRO_PIXEL_FORMAT_ABGR_8888_LE, ALLEGRO_LOCK_READWRITE);
+	region = al_lock_bitmap(img->bmp, ALLEGRO_PIXEL_FORMAT_ABGR_8888_LE, ImageUseToAllegroFlags(use));
 }
 
 RGBImageLock::~RGBImageLock()
@@ -69,6 +93,7 @@ RGBImageLock::~RGBImageLock()
 Colour
 RGBImageLock::get(int x, int y)
 {
+	assert(ImageUseCanRead(this->use));
 	Colour c;
 	uint8_t *dataPtr = (uint8_t*)this->region->data;
 	dataPtr += (this->region->pitch * y);
@@ -83,6 +108,7 @@ RGBImageLock::get(int x, int y)
 void
 RGBImageLock::set(int x, int y, Colour &c)
 {
+	assert(ImageUseCanWrite(this->use));
 	uint8_t *dataPtr = (uint8_t*)this->region->data;
 	dataPtr += (this->region->pitch * y);
 	dataPtr += (this->region->pixel_size * x);
@@ -92,8 +118,8 @@ RGBImageLock::set(int x, int y, Colour &c)
 	*dataPtr++ = c.a;
 }
 
-PaletteImageLock::PaletteImageLock(std::shared_ptr<PaletteImage> img)
-	: img(img)
+PaletteImageLock::PaletteImageLock(std::shared_ptr<PaletteImage> img, ImageLockUse use)
+	: img(img), use(use)
 {
 	assert(img->locked == false);
 	img->locked = true;
@@ -108,12 +134,14 @@ PaletteImageLock::~PaletteImageLock()
 uint8_t
 PaletteImageLock::get(int x, int y)
 {
+	assert(ImageUseCanRead(this->use));
 	return img->indices[y*img->width + x];
 }
 
 void
 PaletteImageLock::set(int x, int y, uint8_t idx)
 {
+	assert(ImageUseCanWrite(use));
 	assert(x >= 0);
 	assert(y >= 0);
 	assert(x < img->width);

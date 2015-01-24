@@ -7,6 +7,13 @@ namespace OpenApoc {
 class Palette;
 class RGBImage;
 
+enum class ImageLockUse
+{
+	Read,
+	Write,
+	ReadWrite,
+};
+
 class Image
 {
 	public:
@@ -47,8 +54,9 @@ class PaletteImageLock
 		std::shared_ptr<PaletteImage> img;
 		//Disallow copy
 		PaletteImageLock(const PaletteImageLock &) = delete;
+		ImageLockUse use;
 	public:
-		PaletteImageLock(std::shared_ptr<PaletteImage> img);
+		PaletteImageLock(std::shared_ptr<PaletteImage> img, ImageLockUse use = ImageLockUse::Write);
 		~PaletteImageLock();
 		uint8_t get(int x, int y);
 		void set(int x, int y, uint8_t idx);
@@ -78,8 +86,9 @@ class RGBImageLock
 		ALLEGRO_LOCKED_REGION *region;
 		//Disallow copy
 		RGBImageLock(const RGBImageLock &) = delete;
+		ImageLockUse use;
 	public:
-		RGBImageLock(std::shared_ptr<RGBImage> img);
+		RGBImageLock(std::shared_ptr<RGBImage> img, ImageLockUse use = ImageLockUse::Write);
 		~RGBImageLock();
 		Colour get(int x, int y);
 		void set(int x, int y, Colour &c);
