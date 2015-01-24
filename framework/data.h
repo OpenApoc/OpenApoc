@@ -19,6 +19,7 @@ class Data
 		~Data();
 
 		std::shared_ptr<Image> load_image(const std::string path);
+		std::shared_ptr<Palette> load_palette(const std::string path);
 		ALLEGRO_FILE* load_file(const std::string path, const char *mode);
 
 		std::string GetActualFilename(std::string Filename);

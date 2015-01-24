@@ -1,20 +1,20 @@
 
 #include "palette.h"
 #include "framework/image.h"
-#include "framework/framework.h"
+#include "framework/data.h"
 
 namespace OpenApoc {
 
-Palette::Palette( Framework &fw, std::string Filename )
+Palette::Palette( Data &d, std::string Filename )
 {
 	std::shared_ptr<Image> paletteimage;
 	unsigned char colourblock[3];
 	unsigned int idx = 0;
 
-	paletteimage = fw.data.load_image( Filename );
+	paletteimage = d.load_image( Filename );
 	if( !paletteimage )
 	{
-		ALLEGRO_FILE* f = fw.data.load_file( Filename, "rb" );
+		ALLEGRO_FILE* f = d.load_file( Filename, "rb" );
 		size_t numEntries = al_fsize(f) / 3;
 
 		colours.reset(new Colour[numEntries]);
@@ -36,8 +36,10 @@ Palette::Palette( Framework &fw, std::string Filename )
 
 		al_fclose( f );
 	} else {
+		auto rgbImage = std::dynamic_pointer_cast<RGBImage>(paletteimage);
+		assert(rgbImage);
 		colours.reset (new Colour[ paletteimage->width * paletteimage->height] );
-		ImageLock img(paletteimage);
+		RGBImageLock img(rgbImage);
 
 		for( int y = 0; y < paletteimage->height; y++ )
 		{
@@ -67,9 +69,9 @@ void Palette::SetColour(int Index, Colour &Col)
 
 void Palette::DumpPalette( std::string Filename )
 {
-	std::shared_ptr<Image> img = std::make_shared<Image>(16,16);
+	std::shared_ptr<RGBImage> img = std::make_shared<RGBImage>(16,16);
 	{
-		ImageLock lock(img);
+		RGBImageLock lock(img);
 
 		int c = 0;
 		for( int y = 0; y < 16; y++ )

@@ -28,7 +28,7 @@ class ApocalypseFont : public IFont
 			TinyFont
 		};
 
-		ApocalypseFont( Framework &fw, FontType Face, Palette* ColourPalette );
+		ApocalypseFont( Framework &fw, FontType Face, std::shared_ptr<Palette> ColourPalette );
 		~ApocalypseFont();
 
 		virtual void DrawString( int X, int Y, std::string Text, int Alignment );

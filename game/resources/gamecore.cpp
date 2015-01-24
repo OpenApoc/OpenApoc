@@ -6,7 +6,7 @@
 namespace OpenApoc {
 
 GameCore::GameCore(Framework &fw)
-	: languagetext(), palettes(), fonts(), forms(), fw(fw), vehicleFactory(fw)
+	: languagetext(), fonts(), forms(), fw(fw), vehicleFactory(fw)
 {
 	Loaded = false;
 }
@@ -29,8 +29,6 @@ GameCore::~GameCore()
 		delete font.second;
 	for (auto & form : forms)
 		delete form.second;
-	for (auto & palette : palettes)
-		delete palette.second;
 	delete MouseCursor;
 }
 
@@ -129,16 +127,7 @@ Form* GameCore::GetForm(std::string ID)
 
 std::shared_ptr<Image> GameCore::GetImage(std::string ImageData)
 {
-	PCK* pck;
-
-	if( ImageData.substr( 0, 4 ) == "PCK:" )
-	{
-		std::vector<std::string> pckdata = Strings::Split( ImageData, ':' );
-		std::unique_ptr<PCK> pck(new PCK( fw, pckdata[1], pckdata[2], *GetPalette( pckdata[4] ), Strings::ToInteger( pckdata[3] ) ));
-		return  pck->GetImage( 0 );
-	} else {
-		return fw.data.load_image(ImageData);
-	}
+	return fw.data.load_image(ImageData);
 }
 
 IFont* GameCore::GetFont(std::string FontData)
@@ -174,13 +163,9 @@ IFont* GameCore::GetFont(std::string FontData)
 	return fonts[FontData];
 }
 
-Palette* GameCore::GetPalette(std::string Path)
+std::shared_ptr<Palette> GameCore::GetPalette(std::string Path)
 {
-	if( palettes.find(Path) == palettes.end() )
-	{
-		palettes[Path] = new Palette( fw, Path );
-	}
-	return palettes[Path];
+	return fw.data.load_palette(Path);
 }
 
 }; //namespace OpenApoc

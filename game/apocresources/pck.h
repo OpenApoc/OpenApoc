@@ -5,9 +5,8 @@
 
 namespace OpenApoc {
 
-class Palette;
-class Framework;
-class Image;
+class Data;
+class PaletteImage;
 
 typedef struct PCKCompression1ImageHeader
 {
@@ -32,20 +31,19 @@ class PCK
 {
 
 	private:
-		std::vector<std::shared_ptr<Image> > images;
+		std::vector<std::shared_ptr<PaletteImage> > images;
 
-		void ProcessFile(Framework &fw, std::string PckFilename, std::string TabFilename, Palette &ColourPalette, int Index);
-		void LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index, Palette &Colours);
-		void LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index, Palette &Colours);
+		void ProcessFile(Data &d, std::string PckFilename, std::string TabFilename, int Index);
+		void LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index);
+		void LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index);
 
 	public:
-		PCK( Framework &fw, std::string PckFilename, std::string TabFilename, Palette &ColourPalette );
-		PCK( Framework &fw, std::string PckFilename, std::string TabFilename, Palette &ColourPalette, int Index );
+		PCK( Data &d, std::string PckFilename, std::string TabFilename);
+		PCK( Data &d, std::string PckFilename, std::string TabFilename, int Index );
 		~PCK();
 
 		int GetImageCount();
-		void RenderImage( int Index, int X, int Y );
-		std::shared_ptr<Image> GetImage( int Index );
+		std::shared_ptr<PaletteImage> GetImage( int Index );
 };
 
 }; //namespace OpenApoc

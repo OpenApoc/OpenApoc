@@ -1,4 +1,6 @@
 #include "data.h"
+#include "game/apocresources/pck.h"
+#include "game/apocresources/palette.h"
 
 namespace OpenApoc {
 
@@ -15,27 +17,60 @@ Data::~Data()
 std::shared_ptr<Image>
 Data::load_image(const std::string path)
 {
-	std::string fullPath = this->GetActualFilename(path);
-	if (fullPath == "")
-	{
-		std::cerr << "Failed to find image \"" << path << "\"\n";
-		return nullptr;
-	}
 	//Use an uppercase version of the path for the cache key
-	std::string fullPathUpper = Strings::ToUpper(fullPath);
-	std::shared_ptr<Image> img = this->imageCache[fullPathUpper].lock();
+	std::string cacheKey = Strings::ToUpper(path);
+	std::shared_ptr<Image> img = this->imageCache[cacheKey].lock();
 	if (img)
 		return img;
 
-	ALLEGRO_BITMAP *bmp = al_load_bitmap(fullPath.c_str());
-	if (!bmp)
+	if (path.substr(0,4) == "PCK:")
 	{
-		std::cerr << "Failed to load image \"" << fullPath << "\"\n";
-		return nullptr;
+		//PCK resources come in the format:
+		//"PCK:PCKFILE:TABFILE:INDEX"
+		//or
+		//"PCK:PCKFILE:TABFILE:INDEX:PALETTE" if we want them already in rgb space
+		std::vector<std::string> splitString = Strings::Split(path, ':');
+		switch (splitString.size())
+		{
+			case 4:
+			{
+				img = PCK(*this, splitString[1], splitString[2], Strings::ToInteger(splitString[3])).GetImage(0);
+				break;
+			}
+			case 5:
+			{
+				std::shared_ptr<PaletteImage> pImg = 
+					std::dynamic_pointer_cast<PaletteImage>(
+						this->load_image("PCK:" + splitString[1] + ":" + splitString[2] + ":" + splitString[3]));
+				assert(pImg);
+				auto pal = this->load_palette(splitString[4]);
+				assert(pal);
+				img = pImg->toRGBImage(pal);
+				break;
+			}
+			default:
+				std::cerr << "Invalid PCK resource string \"" << path << "\"\n";
+				return nullptr;
+		}
 	}
-	img.reset(new Image(bmp));
+	else
+	{
+		std::string fullPath = this->GetActualFilename(path);
+		if (fullPath == "")
+		{
+			std::cerr << "Failed to find image \"" << path << "\"\n";
+			return nullptr;
+		}
+		ALLEGRO_BITMAP *bmp = al_load_bitmap(fullPath.c_str());
+		if (!bmp)
+		{
+			std::cerr << "Failed to load image \"" << fullPath << "\"\n";
+			return nullptr;
+		}
+		img.reset(new RGBImage(bmp));
+	}
 
-	this->imageCache[fullPathUpper] = img;
+	this->imageCache[cacheKey] = img;
 	return img;
 }
 
@@ -138,6 +173,12 @@ std::string Data::GetActualFilename( std::string Filename )
 #else
 	return this->root + this->DIR_SEP + Filename;
 #endif
+}
+
+std::shared_ptr<Palette>
+Data::load_palette(const std::string path)
+{
+	return std::make_shared<Palette>(*this, path);
 }
 
 }; //namespace OpenApoc

@@ -33,7 +33,7 @@ class Cursor
 
 		CursorType CurrentType;
 
-		Cursor( Framework &fw, Palette* ColourPalette );
+		Cursor( Framework &fw, std::shared_ptr<Palette> ColourPalette );
 		~Cursor();
 
 		void EventOccured( Event* e );

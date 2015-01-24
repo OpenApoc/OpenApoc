@@ -1,39 +1,39 @@
 
 #include "pck.h"
-#include "framework/framework.h"
+#include "framework/data.h"
 #include "palette.h"
 #include "framework/image.h"
 
 namespace OpenApoc {
 
-PCK::PCK( Framework &fw, std::string PckFilename, std::string TabFilename, Palette &ColourPalette )
+PCK::PCK(Data &d, std::string PckFilename, std::string TabFilename)
 {
-	ProcessFile(fw, PckFilename, TabFilename, ColourPalette, -1);
+	ProcessFile(d, PckFilename, TabFilename, -1);
 }
 
-PCK::PCK(Framework &fw, std::string PckFilename, std::string TabFilename, Palette &ColourPalette, int Index)
+PCK::PCK(Data &d, std::string PckFilename, std::string TabFilename, int Index)
 {
-	ProcessFile(fw, PckFilename, TabFilename, ColourPalette, Index);
+	ProcessFile(d, PckFilename, TabFilename, Index);
 }
 
 PCK::~PCK()
 {
 }
 
-void PCK::ProcessFile(Framework &fw, std::string PckFilename, std::string TabFilename, Palette &ColourPalette, int Index)
+void PCK::ProcessFile(Data &d, std::string PckFilename, std::string TabFilename, int Index)
 {
-	ALLEGRO_FILE* pck = fw.data.load_file(PckFilename, "rb");
-	ALLEGRO_FILE* tab = fw.data.load_file(TabFilename, "rb");
+	ALLEGRO_FILE* pck = d.load_file(PckFilename, "rb");
+	ALLEGRO_FILE* tab = d.load_file(TabFilename, "rb");
 
 	int16_t version = al_fread16le(pck);
 	al_fseek(pck, 0, ALLEGRO_SEEK_SET);
 	switch (version)
 	{
 	case 0:
-		LoadVersion1Format(pck, tab, Index, ColourPalette);
+		LoadVersion1Format(pck, tab, Index);
 		break;
 	case 1:
-		LoadVersion2Format(pck, tab, Index, ColourPalette);
+		LoadVersion2Format(pck, tab, Index);
 		break;
 	}
 
@@ -46,19 +46,14 @@ int PCK::GetImageCount()
 	return images.size();
 }
 
-void PCK::RenderImage( int Index, int X, int Y )
-{
-	images.at(Index)->draw(X, Y);
-}
-
-std::shared_ptr<Image> PCK::GetImage( int Index )
+std::shared_ptr<PaletteImage> PCK::GetImage( int Index )
 {
 	return images.at(Index);
 }
 
-void PCK::LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index, Palette &Colours)
+void PCK::LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 {
-	std::shared_ptr<Image> img;
+	std::shared_ptr<PaletteImage> img;
 
 	int16_t c0_offset;
 	int16_t c0_maxwidth;
@@ -101,8 +96,8 @@ void PCK::LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index, Pa
 
 			c0_offset = al_fread16le( pck );	// Always a 640px row (that I've seen)
 		}
-		img = std::make_shared<Image>(c0_maxwidth, c0_height);
-		ImageLock region(img);
+		img = std::make_shared<PaletteImage>(c0_maxwidth, c0_height);
+		PaletteImageLock region(img);
 		c0_idx = 0;
 		for( int c0_y = 0; c0_y < c0_height; c0_y++ )
 		{
@@ -110,9 +105,9 @@ void PCK::LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index, Pa
 			{
 				if( c0_x < c0_rowwidths.at( c0_y ) )
 				{
-					region.set(c0_x, c0_y, Colours.GetColour( ((char*)c0_imagedata->GetDataOffset( c0_idx ))[0] ));
+					region.set(c0_x, c0_y, ((char*)c0_imagedata->GetDataOffset( c0_idx ))[0] );
 				} else {
-					region.set(c0_x, c0_y, Colours.GetColour( 0 ));
+					region.set(c0_x, c0_y, 0);
 				}
 				c0_idx++;
 			}
@@ -123,12 +118,12 @@ void PCK::LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index, Pa
 	}
 }
 
-void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index, Palette &Colours)
+void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 {
 	int16_t compressionmethod;
 	Memory* tmp;
 
-	std::shared_ptr<Image> img;
+	std::shared_ptr<PaletteImage> img;
 
 	PCKCompression1ImageHeader c1_imgheader;
 	uint32_t c1_pixelstoskip;
@@ -154,9 +149,9 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index, Pa
 			{
 				// Raw Data with RLE
 				al_fread( pck, &c1_imgheader, sizeof( PCKCompression1ImageHeader ) );
-				img = std::make_shared<Image>(c1_imgheader.RightMostPixel, c1_imgheader.BottomMostPixel);
+				img = std::make_shared<PaletteImage>(c1_imgheader.RightMostPixel, c1_imgheader.BottomMostPixel);
 
-				ImageLock lock(img);
+				PaletteImageLock lock(img);
 				c1_pixelstoskip = (uint32_t)al_fread32le( pck );
 				while( c1_pixelstoskip != 0xFFFFFFFF )
 				{
@@ -174,7 +169,7 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index, Pa
 							{
 								if (c1_x < c1_imgheader.RightMostPixel)
 								{
-									lock.set(c1_x, c1_y, Colours.GetColour(al_fgetc(pck)));
+									lock.set(c1_x, c1_y, al_fgetc(pck));
 								} else {
 									// Pretend to process data
 									al_fgetc( pck );
@@ -186,7 +181,7 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index, Pa
 							{
 								if( (c1_header.ColumnToStartAt + c1_x - c1_imgheader.LeftMostPixel) < c1_imgheader.RightMostPixel - c1_imgheader.LeftMostPixel )
 								{
-									lock.set(c1_header.ColumnToStartAt + c1_x, c1_y, Colours.GetColour(al_fgetc(pck)));
+									lock.set(c1_header.ColumnToStartAt + c1_x, c1_y, al_fgetc(pck));
 								} else {
 									// Pretend to process data
 									al_fgetc( pck );

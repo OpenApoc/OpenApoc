@@ -10,8 +10,9 @@ CityTile::loadTilesFromFile(Framework &fw)
 {
 	std::vector<CityTile> v;
 
-	Palette pal{fw, "UFODATA/PAL_04.DAT"};
-	PCK sprites{fw, "UFODATA/CITY.PCK", "UFODATA/CITY.TAB", pal};
+	auto pal = fw.data.load_palette("UFODATA/PAL_04.DAT");
+
+	PCK sprites{fw.data, "UFODATA/CITY.PCK", "UFODATA/CITY.TAB"};
 
 	auto datFile = fw.data.load_file("UFODATA/CITYMAP.DAT", "rb");
 
@@ -33,6 +34,7 @@ CityTile::loadTilesFromFile(Framework &fw)
 	{
 		CityTile tile;
 		tile.sprite = sprites.GetImage(t);
+		std::dynamic_pointer_cast<PaletteImage>(tile.sprite)->setPalette(pal);
 		v.push_back(tile);
 	}
 

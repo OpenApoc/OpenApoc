@@ -5,7 +5,7 @@
 
 namespace OpenApoc {
 
-Cursor::Cursor( Framework &fw, Palette* ColourPalette )
+Cursor::Cursor( Framework &fw, std::shared_ptr<Palette> ColourPalette )
 {
 	ALLEGRO_FILE* f = fw.data.load_file( "TACDATA/MOUSE.DAT", "rb" );
 

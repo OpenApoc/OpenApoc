@@ -5,7 +5,7 @@
 
 namespace OpenApoc {
 
-class Framework;
+class Data;
 
 class Palette
 {
@@ -13,7 +13,7 @@ class Palette
 		std::unique_ptr<Colour[]> colours;
 
 	public:
-		Palette( Framework &fw, std::string Filename );
+		Palette( Data &d, std::string Filename );
 		~Palette();
 
 		Colour &GetColour(int Index);
