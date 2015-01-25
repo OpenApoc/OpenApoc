@@ -13,13 +13,13 @@ void BootUp::Begin()
 	logoimage = fw.data.load_image( "UI/LOGO.PNG" );
 	loadtime = 0;
 	fw.Display_SetTitle("OpenApocalypse");
-
 	threadload = nullptr;
-	threadload = al_create_thread( CreateGameCore, &fw );
-	if( threadload != nullptr )
-	{
-		al_start_thread( threadload );
-	}
+
+//	threadload = al_create_thread( CreateGameCore, &fw );
+//	if( threadload != nullptr )
+//	{
+//		al_start_thread( threadload );
+//	}
 }
 
 void BootUp::Pause()
