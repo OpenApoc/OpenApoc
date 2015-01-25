@@ -33,6 +33,7 @@ class PaletteImage : public Image
 	private:
 		friend class PaletteImageLock;
 		std::unique_ptr<PaletteImageImpl> pimpl;
+		std::shared_ptr<Palette> pal;
 	public:
 		PaletteImage(int width, int height, uint8_t initialIndex = 0);
 		~PaletteImage();
@@ -66,6 +67,7 @@ class RGBImage : public Image
 {
 	private:
 		friend class RGBImageLock;
+		friend class PaletteImageImpl;
 		std::unique_ptr<RGBImageImpl> pimpl;
 	public:
 		RGBImage(ALLEGRO_BITMAP *bmp);

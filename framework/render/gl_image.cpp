@@ -14,6 +14,7 @@ class RGBImageImpl
 private:
 	friend class RGBImageLock;
 	friend class RGBImage;
+	friend class PaletteImageImpl;
 	bool dirty;
 	Vec2<int> size;
 	GLuint texHandle;
@@ -37,9 +38,10 @@ public:
 		if (!this->dirty)
 			return;
 		glBindTexture(GL_TEXTURE_2D, this->texHandle);
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, size.x, size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, (void*)this->lockedPixels.data());
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		this->dirty = false;
 	}
 	void draw(GLuint fboTarget, Vec2<int> offset, Vec2<int> size, Vec2<int> screenSize)
@@ -80,8 +82,17 @@ RGBImage::RGBImage(ALLEGRO_BITMAP *bmp)
 
 RGBImage::RGBImage(int width, int height, Colour initialColour)
 {
-	std::cerr << __PRETTY_FUNCTION__ << "Not implemented\n";
-	assert(0);
+	this->width = width;
+	this->height = height;
+	pimpl.reset(new RGBImageImpl{Vec2<int>{width, height}});
+	for (int y = 0; y < height; y++)
+	{
+		for (int x = 0; x < width; x++)
+		{
+			pimpl->lockedPixels[y*width + x] = initialColour;
+		}
+	}
+	pimpl->dirty = true;
 }
 
 RGBImage::~RGBImage()
@@ -90,8 +101,7 @@ RGBImage::~RGBImage()
 
 void RGBImage::draw(float dx, float dy)
 {
-	std::cerr << __PRETTY_FUNCTION__ << "Not implemented\n";
-	assert(0);
+	this->drawScaled(0, 0, this->width, this->height, dx, dy, this->width, this->height);
 }
 
 void RGBImage::drawRotated(float cx, float cy, float dx, float dy, float angle)
@@ -107,17 +117,10 @@ void RGBImage::drawScaled(float sx, float sy, float sw, float sh, float dx, floa
 	assert(sw == pimpl->size.x);
 	assert(sh == pimpl->size.y);
 	ALLEGRO_BITMAP *target = al_get_target_bitmap();
-	std::cerr << "al_target_bitmap = 0x" << target << "\n";
 	GLuint fbo = al_get_opengl_fbo(target);
-	std::cerr << "fbo " << fbo << "\n";
 
 	int screenHeight = al_get_bitmap_height(target);
 	int screenWidth = al_get_bitmap_width(target);
-
-	std::cerr << "screen height: " << screenHeight << "\n";
-	std::cerr << "screen width : " << screenWidth << "\n";
-
-	std::cerr << "Drawing sprite - size {" << sw << "," << sh <<"}\n";
 
 	pimpl->draw(fbo, Vec2<int>{dx, dy}, Vec2<int>{dw, dh}, Vec2<int>{screenWidth, screenHeight});
 	glUseProgram(0);
@@ -164,26 +167,74 @@ RGBImageLock::get(int x, int y)
 void
 RGBImageLock::set(int x, int y, Colour &c)
 {
-	std::cerr << __PRETTY_FUNCTION__ << "Not implemented\n";
-	assert(0);
+	img->pimpl->lockedPixels[y*img->pimpl->size.x + x] = c;
 }
 
 class PaletteImageImpl
 {
 private:
+	friend class PaletteImageLock;
+	friend class PaletteImage;
+	bool dirty;
+	Vec2<int> size;
+	GLuint texHandle;
+	bool locked;
+	std::vector<uint8_t> lockedPixels;
+	std::shared_ptr<GL::PaletteSpriteProgram> program;
 public:
+	PaletteImageImpl(Vec2<int> size)
+		: dirty(true), size(size), texHandle(0), locked(false)
+	{
+		glGenTextures(1, &this->texHandle);
+		lockedPixels.resize(size.x*size.y);
+		this->program = GL::PaletteSpriteProgram::get();
+	}
+	~PaletteImageImpl()
+	{
+		glDeleteTextures(1, &this->texHandle);
+	}
+	void update()
+	{
+		if (!this->dirty)
+			return;
+		glBindTexture(GL_TEXTURE_2D, this->texHandle);
+		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RED, size.x, size.y, 0, GL_RED, GL_UNSIGNED_BYTE, (void*)this->lockedPixels.data());
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		this->dirty = false;
+	}
+	void draw(GLuint fboTarget, std::shared_ptr<RGBImage> paletteImage, Vec2<int> offset, Vec2<int> size, Vec2<int> screenSize)
+	{
+		this->update();
+		paletteImage->pimpl->update();
+		GL::BindTexture t(texHandle, 0);
+		GL::BindTexture pal(paletteImage->pimpl->texHandle, 1);
+		this->program->enable(offset, size, screenSize);
+		GL::IdentityQuad::draw(this->program->positionLoc);
+	}
 };
 
 PaletteImageLock::PaletteImageLock(std::shared_ptr<PaletteImage> img, ImageLockUse use)
+	: img(img), use(use)
 {
-	std::cerr << __PRETTY_FUNCTION__ << "Not implemented\n";
-	assert(0);
+	assert(img->pimpl->locked == false);
+	img->pimpl->locked = true;
+	if (use != ImageLockUse::Write)
+	{
+		std::cerr << __PRETTY_FUNCTION__ << "NO READBACK\n";
+	}
+	if (use == ImageLockUse::Write || use == ImageLockUse::ReadWrite)
+	{
+		img->pimpl->dirty = true;
+	}
 }
 
 PaletteImageLock::~PaletteImageLock()
 {
-	std::cerr << __PRETTY_FUNCTION__ << "Not implemented\n";
-	assert(0);
+	assert(img->pimpl->locked);
+	img->pimpl->locked = false;
+	img->pimpl->update();
 }
 
 uint8_t
@@ -196,14 +247,19 @@ PaletteImageLock::get(int x, int y)
 void
 PaletteImageLock::set(int x, int y, uint8_t idx)
 {
-	std::cerr << __PRETTY_FUNCTION__ << "Not implemented\n";
-	assert(0);
+	assert(x >= 0);
+	assert(x < img->pimpl->size.x);
+	assert(y >= 0);
+	assert(y < img->pimpl->size.y);
+	img->pimpl->lockedPixels[y*img->pimpl->size.x + x] = idx;
 }
 
 PaletteImage::PaletteImage(int width, int height, uint8_t initialIndex)
 {
-	std::cerr << __PRETTY_FUNCTION__ << "Not implemented\n";
-	assert(0);
+	this->width = width;
+	this->height = height;
+	pimpl.reset(new PaletteImageImpl{Vec2<int>{width, height}});
+	memset(pimpl->lockedPixels.data(), initialIndex, width*height);
 }
 
 PaletteImage::~PaletteImage(){}
@@ -220,15 +276,24 @@ PaletteImage::drawRotated(float cx, float cy, float dx, float dy, float angle)
 void
 PaletteImage::drawScaled(float sx, float sy, float sw, float sh, float dx, float dy, float dw, float dh)
 {
-	std::cerr << __PRETTY_FUNCTION__ << "Not implemented\n";
-	assert(0);
+	assert(sx == 0);
+	assert(sy == 0);
+	assert(sw == pimpl->size.x);
+	assert(sh == pimpl->size.y);
+	ALLEGRO_BITMAP *target = al_get_target_bitmap();
+	GLuint fbo = al_get_opengl_fbo(target);
+
+	int screenHeight = al_get_bitmap_height(target);
+	int screenWidth = al_get_bitmap_width(target);
+
+	pimpl->draw(fbo, this->pal->getImage(), Vec2<int>{dx, dy}, Vec2<int>{dw, dh}, Vec2<int>{screenWidth, screenHeight});
+	glUseProgram(0);
 }
 
 void
 PaletteImage::draw(float dx, float dy)
 {
-	std::cerr << __PRETTY_FUNCTION__ << "Not implemented\n";
-	assert(0);
+	this->drawScaled(0, 0, this->width, this->height, dx, dy, this->width, this->height);
 }
 
 void
@@ -241,22 +306,29 @@ PaletteImage::saveBitmap(const std::string &filename)
 std::shared_ptr<RGBImage>
 PaletteImage::toRGBImage()
 {
-	std::cerr << __PRETTY_FUNCTION__ << "Not implemented\n";
-	assert(0);
+	return this->toRGBImage(this->pal);
 }
 
 std::shared_ptr<RGBImage>
 PaletteImage::toRGBImage(std::shared_ptr<Palette> p)
 {
-	std::cerr << __PRETTY_FUNCTION__ << "Not implemented\n";
-	assert(0);
+	auto img = std::make_shared<RGBImage>(this->width, this->height);
+	RGBImageLock dst(img);
+	for (int y = 0; y < this->height; y++)
+	{
+		for (int x = 0; x < this->width; x++)
+		{
+			uint8_t idx = this->pimpl->lockedPixels[y*width + x];
+			dst.set(x, y, p->GetColour(idx));
+		}
+	}
+	return img;
 }
 
 void
 PaletteImage::setPalette(std::shared_ptr<Palette> newPal)
 {
-	std::cerr << __PRETTY_FUNCTION__ << "Not implemented\n";
-	assert(0);
+	this->pal = newPal;
 }
 
 }; //namespace OpenApoc

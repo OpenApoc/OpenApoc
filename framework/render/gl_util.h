@@ -24,7 +24,8 @@ public:
 			1.0f, 0.0f,
 			1.0f, 1.0f,
 		};
-		std::cerr << __PRETTY_FUNCTION__ << "\n";
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glVertexAttribPointer(positionAttribute, 2, GL_FLOAT, GL_FALSE, 0, &vertices);
 		glEnableVertexAttribArray(positionAttribute);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -184,7 +185,7 @@ class PaletteSpriteProgram
 		"uniform sampler2D tex;\n"
 		"uniform sampler2D pal;\n"
 		"void main() {\n"
-		"  gl_FragColor = texture2D(pal, vec2(texture2D(tex, texcoord).x, 0));\n"
+		"  gl_FragColor = texture2D(pal, vec2(texture2D(tex, texcoord).r, 0));\n"
 		"}\n"
 	};
 	GLuint programID;

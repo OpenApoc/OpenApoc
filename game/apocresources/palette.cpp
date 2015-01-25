@@ -65,6 +65,8 @@ Colour &Palette::GetColour(int Index)
 void Palette::SetColour(int Index, Colour &Col)
 {
 	colours[Index] = Col;
+	//Invalidate the current RGBImage
+	this->img.reset();
 }
 
 void Palette::DumpPalette( std::string Filename )
@@ -86,4 +88,22 @@ void Palette::DumpPalette( std::string Filename )
 
 	img->saveBitmap(Filename);
 }
+
+std::shared_ptr<RGBImage>
+Palette::getImage()
+{
+	if (!this->img)
+	{
+		this->img = std::make_shared<RGBImage>(256, 1);
+		RGBImageLock lock(img);
+		for (int x = 0; x < 256; x++)
+		{
+			lock.set(x, 0, GetColour(x));
+		}
+	}
+	return this->img;
+}
+
+
+
 }; //namespace OpenApoc
