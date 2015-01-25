@@ -27,13 +27,12 @@ class Image
 		int height, width;
 };
 
+class PaletteImageImpl;
 class PaletteImage : public Image
 {
 	private:
 		friend class PaletteImageLock;
-		std::vector<uint8_t> indices;
-		bool locked;
-		std::shared_ptr<Palette> pal;
+		std::unique_ptr<PaletteImageImpl> pimpl;
 	public:
 		PaletteImage(int width, int height, uint8_t initialIndex = 0);
 		~PaletteImage();
@@ -62,12 +61,12 @@ class PaletteImageLock
 		void set(int x, int y, uint8_t idx);
 };
 
+class RGBImageImpl;
 class RGBImage : public Image
 {
 	private:
 		friend class RGBImageLock;
-		ALLEGRO_BITMAP *bmp;
-		bool locked;
+		std::unique_ptr<RGBImageImpl> pimpl;
 	public:
 		RGBImage(ALLEGRO_BITMAP *bmp);
 		RGBImage(int width, int height, Colour initialColour = Colour(0,0,0,0));

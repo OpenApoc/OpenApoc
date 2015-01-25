@@ -1,5 +1,5 @@
-#include "image.h"
-#include "includes.h"
+#include "framework/image.h"
+#include "framework/includes.h"
 #include "game/apocresources/palette.h"
 
 namespace OpenApoc {

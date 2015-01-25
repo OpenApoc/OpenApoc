@@ -1,5 +1,5 @@
 # project name, and type
-PROJECT(OpenApoc CXX)
+PROJECT(OpenApoc CXX C)
 
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
@@ -12,6 +12,24 @@ if(COMPILER_SUPPORTS_CXX11)
 else()
 	message(FATAL_ERROR "Your C++ compiler does not support C++11.")
 endif()
+
+SET(IMAGE_IMPLEMENTATION "OpenGL" CACHE STRING "Image implemtnation
+(Supported: OpenGL Allegro")
+
+if (${IMAGE_IMPLEMENTATION} STREQUAL "OpenGL")
+		find_package(OpenGL)
+		if (NOT OPENGL_FOUND)
+				message(FATAL_ERROR "OpenGL libraries not found")
+		endif()
+		list(APPEND sources "framework/render/gl_image.cpp")
+		list(APPEND sources "framework/render/gl_util.h")
+elseif(${IMAGE_IMPLEMENTATION} STREQUAL "Allegro")
+		list(APPEND sources "framework/render/allegro_image.cpp")
+else()
+		message(FATAL_ERROR "Invalid image implementation selected (Must be
+		one of \"OpenGL\",\"Allegro\"")
+endif()
+
 
 # find openapoc sources
 AUX_SOURCE_DIRECTORY(framework sources)
@@ -54,12 +72,14 @@ INCLUDE_DIRECTORIES(${ALLEGRO_INCLUDE_DIR})
 INCLUDE_DIRECTORIES(${TINYXML2_INCLUDE_DIR})
 INCLUDE_DIRECTORIES(.)
 INCLUDE_DIRECTORIES(${GLM_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(${OPENGL_INCLUDE_DIR})
 
 ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} framework/main.cpp ${sources})
 
 #FIXME: Check libraries exist?
 TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME} ${REQUIRED_ALLEGRO_LIBRARIES})
 TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME} ${PC_TINYXML2_LIBRARIES})
+TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME} ${OPENGL_gl_LIBRARY})
 
 # apoc data copy
 SET( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
