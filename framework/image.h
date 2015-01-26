@@ -70,8 +70,8 @@ class RGBImage : public Image
 		friend class PaletteImageImpl;
 		std::unique_ptr<RGBImageImpl> pimpl;
 	public:
-		RGBImage(ALLEGRO_BITMAP *bmp);
-		RGBImage(int width, int height, Colour initialColour = Colour(0,0,0,0));
+		RGBImage(ALLEGRO_BITMAP *bmp, bool isPalette = false);
+		RGBImage(int width, int height, Colour initialColour = Colour(0,0,0,0), bool isPalette = false);
 		~RGBImage();
 		virtual void drawRotated(float cx, float cy, float dx, float dy, float angle);
 		virtual void drawScaled(float sx, float sy, float sw, float sh,

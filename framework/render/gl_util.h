@@ -35,7 +35,7 @@ public:
 
 static void debugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar *message, const void *userParam)
 {
-	std::cerr << "DEBUG MESSAGE: \"" << message << "\"\n";
+	std::cerr << "DEBUG MESSAGE: \"" << std::string(message, length) << "\"\n";
 	assert(0);
 }
 
@@ -183,9 +183,9 @@ class PaletteSpriteProgram
 		"#version 120\n"
 		"varying vec2 texcoord;\n"
 		"uniform sampler2D tex;\n"
-		"uniform sampler2D pal;\n"
+		"uniform sampler2DRect pal;\n"
 		"void main() {\n"
-		"  gl_FragColor = texture2D(pal, vec2(texture2D(tex, texcoord).r, 0));\n"
+		"  gl_FragColor = texture2DRect(pal, vec2(texture2D(tex, texcoord).r * 255, 0));\n"
 		"}\n"
 	};
 	GLuint programID;
@@ -323,6 +323,26 @@ public:
 	{
 		ActiveTexture a(unit);
 		glBindTexture(GL_TEXTURE_2D, prevTexId);
+	}
+};
+
+class BindTextureRect
+{
+private:
+	GLint prevTexId;
+	GLuint unit;
+public:
+	BindTextureRect(GLuint texID, GLuint unit = 0)
+		:unit(unit)
+	{
+		ActiveTexture a(unit);
+		glGetIntegerv(GL_TEXTURE_BINDING_RECTANGLE, &prevTexId);
+		glBindTexture(GL_TEXTURE_RECTANGLE, texID);
+	}
+	~BindTextureRect()
+	{
+		ActiveTexture a(unit);
+		glBindTexture(GL_TEXTURE_RECTANGLE, prevTexId);
 	}
 };
 

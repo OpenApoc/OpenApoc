@@ -94,7 +94,7 @@ Palette::getImage()
 {
 	if (!this->img)
 	{
-		this->img = std::make_shared<RGBImage>(256, 1);
+		this->img = std::make_shared<RGBImage>(256, 1, Colour(0,0,0,0), true);
 		RGBImageLock lock(img);
 		for (int x = 0; x < 256; x++)
 		{

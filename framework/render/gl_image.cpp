@@ -21,9 +21,10 @@ private:
 	bool locked;
 	std::vector<Colour> lockedPixels;
 	std::shared_ptr<GL::RGBSpriteProgram> program;
+	bool isPalette;
 public:
-	RGBImageImpl(Vec2<int> size)
-		: dirty(true),size(size),texHandle(0),locked(false)
+	RGBImageImpl(Vec2<int> size, bool isPalette)
+		: dirty(true),size(size),texHandle(0),locked(false), isPalette(isPalette)
 	{
 		glGenTextures(1, &this->texHandle);
 		lockedPixels.resize(size.x*size.y);
@@ -37,11 +38,22 @@ public:
 	{
 		if (!this->dirty)
 			return;
-		glBindTexture(GL_TEXTURE_2D, this->texHandle);
-		glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, size.x, size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, (void*)this->lockedPixels.data());
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		if (isPalette)
+		{
+			glBindTexture(GL_TEXTURE_RECTANGLE, this->texHandle);
+			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+			glTexImage2D(GL_TEXTURE_RECTANGLE, 0, GL_RGBA, size.x, size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, (void*)this->lockedPixels.data());
+			glTexParameteri(GL_TEXTURE_RECTANGLE, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_RECTANGLE, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		}
+		else
+		{
+			glBindTexture(GL_TEXTURE_2D, this->texHandle);
+			glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, size.x, size.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, (void*)this->lockedPixels.data());
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		}
 		this->dirty = false;
 	}
 	void draw(GLuint fboTarget, Vec2<int> offset, Vec2<int> size, Vec2<int> screenSize)
@@ -54,11 +66,11 @@ public:
 
 };
 
-RGBImage::RGBImage(ALLEGRO_BITMAP *bmp)
+RGBImage::RGBImage(ALLEGRO_BITMAP *bmp, bool isPalette)
 {
 	this->width = al_get_bitmap_width(bmp);
 	this->height = al_get_bitmap_height(bmp);
-	pimpl.reset(new RGBImageImpl{Vec2<int>{width, height}});
+	pimpl.reset(new RGBImageImpl{Vec2<int>{width, height}, isPalette});
 
 	ALLEGRO_LOCKED_REGION *lr = al_lock_bitmap(bmp, ALLEGRO_PIXEL_FORMAT_ABGR_8888_LE, ALLEGRO_LOCK_READONLY);
 
@@ -80,11 +92,11 @@ RGBImage::RGBImage(ALLEGRO_BITMAP *bmp)
 	pimpl->dirty = true;
 }
 
-RGBImage::RGBImage(int width, int height, Colour initialColour)
+RGBImage::RGBImage(int width, int height, Colour initialColour, bool isPalette)
 {
 	this->width = width;
 	this->height = height;
-	pimpl.reset(new RGBImageImpl{Vec2<int>{width, height}});
+	pimpl.reset(new RGBImageImpl{Vec2<int>{width, height}, isPalette});
 	for (int y = 0; y < height; y++)
 	{
 		for (int x = 0; x < width; x++)
@@ -209,7 +221,7 @@ public:
 		this->update();
 		paletteImage->pimpl->update();
 		GL::BindTexture t(texHandle, 0);
-		GL::BindTexture pal(paletteImage->pimpl->texHandle, 1);
+		GL::BindTextureRect pal(paletteImage->pimpl->texHandle, 1);
 		this->program->enable(offset, size, screenSize);
 		GL::IdentityQuad::draw(this->program->positionLoc);
 	}
