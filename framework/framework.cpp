@@ -390,7 +390,7 @@ void Framework::Display_Initialise()
 #ifdef WRITE_LOG
 	printf( "Framework: Initialise Display\n" );
 #endif
-	int display_flags = ALLEGRO_OPENGL;
+	int display_flags = ALLEGRO_OPENGL | ALLEGRO_OPENGL_CORE | ALLEGRO_OPENGL_3_0 | ALLEGRO_PROGRAMMABLE_PIPELINE;
 
 	int scrW = Settings->getInt("Visual.ScreenWidth");
 	int scrH = Settings->getInt("Visual.ScreenHeight");
@@ -420,6 +420,10 @@ void Framework::Display_Initialise()
 		std::cerr << "OpenGL implementation too old - we require at least 3.0\n";
 		exit(1);
 	}
+
+	std::cout << "OpenGL Vendor:" << glGetString(GL_VENDOR) << "\n";
+	std::cout << "OpenGL Renderer:" << glGetString(GL_RENDERER) << "\n";
+	std::cout << "OpenGL Version:" << glGetString(GL_VERSION) << "\n";
 
 	screenRetarget = 0;
 
