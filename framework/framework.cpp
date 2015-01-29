@@ -390,7 +390,14 @@ void Framework::Display_Initialise()
 #ifdef WRITE_LOG
 	printf( "Framework: Initialise Display\n" );
 #endif
-	int display_flags = ALLEGRO_OPENGL | ALLEGRO_OPENGL_CORE | ALLEGRO_OPENGL_3_0 | ALLEGRO_PROGRAMMABLE_PIPELINE;
+	int display_flags = ALLEGRO_OPENGL;
+#ifdef ALLEGRO_OPENGL_CORE
+	display_flags |= ALLEGRO_OPENGL_CORE;
+#endif
+
+#if ALLEGRO_VERSION > 5 || (ALLEGRO_VERSION == 5 && ALLEGRO_SUB_VERSION >= 1)
+	display_flags |= ALLEGRO_OPENGL_3_0 | ALLEGRO_PROGRAMMABLE_PIPELINE;
+#endif
 
 	int scrW = Settings->getInt("Visual.ScreenWidth");
 	int scrH = Settings->getInt("Visual.ScreenHeight");
