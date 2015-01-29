@@ -2,6 +2,7 @@
 
 #include "framework/stage.h"
 #include "framework/includes.h"
+#include "framework/palette.h"
 
 namespace OpenApoc {
 
@@ -22,6 +23,7 @@ class TileView : public Stage
 
 		Vec3<int> selectedTilePosition;
 		std::shared_ptr<Image> selectedTileImageBack, selectedTileImageFront;
+		std::shared_ptr<Palette> pal;
 
 		TileView(Framework &fw, TileMap &map, Vec3<float> tileSize);
 		~TileView();

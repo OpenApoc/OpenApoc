@@ -1,8 +1,7 @@
 
 #include "optionsmenu.h"
 #include "basescreen.h"
-#include "../../framework/framework.h"
-#include "../../transitions/transitions.h"
+#include "framework/framework.h"
 
 namespace OpenApoc {
 
@@ -51,7 +50,7 @@ void OptionsMenu::EventOccurred(Event *e)
 		if( e->Data.Forms.RaisedBy->Name == "BUTTON_TEST_XCOMBASE" )
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<TransitionFadeAcross>(fw, std::make_shared<BaseScreen>(fw), FRAMES_PER_SECOND / 4);
+			stageCmd.nextStage = std::make_shared<BaseScreen>(fw);
 			return;
 		}
 	}

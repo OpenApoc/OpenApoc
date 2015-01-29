@@ -43,23 +43,18 @@ void TextButton::EventOccured( Event* e )
 
 void TextButton::OnRender()
 {
-	if( cached == nullptr || al_get_bitmap_width(cached) != Size.x || al_get_bitmap_height(cached) != Size.y )
+	if( cached == nullptr || cached->size != Size)
 	{
-		if( cached != nullptr )
-		{
-			al_destroy_bitmap( cached );
-		}
-		cached = al_create_bitmap( Size.x, Size.y );
-		ALLEGRO_BITMAP* tmptarget = fw.Display_GetCurrentTarget();
-		fw.Display_SetTarget( cached );
+		cached.reset(new Surface{Size});
 
-		buttonbackground->drawScaled(0, 0, buttonbackground->width, buttonbackground->height, 0, 0, Size.x, Size.y);
-		al_draw_filled_rectangle( 3,  3, Size.x - 2, Size.y - 2, al_map_rgb( 160, 160, 160 ) );
+		RendererSurfaceBinding b(*fw.renderer, cached);
 
-		al_draw_line( 2, 4, Size.x - 2, 3, al_map_rgb( 220, 220, 220 ), 1 );
-		al_draw_line( 2,  Size.y - 4, Size.x - 2, Size.y - 4, al_map_rgb( 80, 80, 80 ), 1 );
-		al_draw_line( 2, Size.y - 3, Size.x - 2, Size.y - 3, al_map_rgb( 64, 64, 64 ), 1 );
-		al_draw_rectangle( 3, 3, Size.x - 2, Size.y - 2, al_map_rgb( 48, 48, 48 ), 1 );
+		fw.renderer->drawScaled(*buttonbackground, Vec2<float>{0,0}, Vec2<float>{Size.x, Size.y}); 
+		fw.renderer->drawFilledRect(Vec2<float>{3,3}, Vec2<float>{Size.x-2, Size.y-2}, Colour{160,160,160});
+		fw.renderer->drawLine(Vec2<float>{2,4}, Vec2<float>{Size.x-2, 3}, Colour{220,220,220});
+		fw.renderer->drawLine(Vec2<float>{2, Size.y - 4}, Vec2<float>{Size.x - 2, Size.y - 4}, Colour{80,80,80});
+		fw.renderer->drawLine(Vec2<float>{2, Size.y - 3}, Vec2<float>{Size.x - 2, Size.y - 3}, Colour{64,64,64});
+		fw.renderer->drawRect(Vec2<float>{3,3}, Vec2<float>{Size.x-2, Size.y-2}, Colour{48,48,48});
 
 		int xpos;
 		int ypos;
@@ -90,15 +85,13 @@ void TextButton::OnRender()
 				break;
 		}
 
-		font->DrawString( xpos, ypos, text, APOCFONT_ALIGN_LEFT );
-		
-		fw.Display_SetTarget( tmptarget );
+		font->DrawString( *fw.renderer, xpos, ypos, text, APOCFONT_ALIGN_LEFT );
 	}
-	al_draw_bitmap( cached, 0, 0, 0 );
-	
+	fw.renderer->draw(*cached, Vec2<float>{0,0});
+
 	if( mouseDepressed && mouseInside )
 	{
-		al_draw_rectangle( 1, 1, Size.x - 1, Size.y - 1, al_map_rgb( 255, 255, 255 ), 2 );
+		fw.renderer->drawRect(Vec2<float>{1,1}, Vec2<float>{Size.x-1, Size.y-1}, Colour{255,255,255}, 2);
 	}
 }
 

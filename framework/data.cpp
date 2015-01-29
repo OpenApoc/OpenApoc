@@ -1,11 +1,12 @@
 #include "data.h"
 #include "game/apocresources/pck.h"
-#include "game/apocresources/palette.h"
+#include "game/apocresources/apocpalette.h"
+#include "palette.h"
 
 namespace OpenApoc {
 
 Data::Data(const std::string root) :
-	root(root), DIR_SEP('/')
+	root(root), DIR_SEP('/'), imageLoader(createImageLoader())
 {
 }
 
@@ -61,13 +62,13 @@ Data::load_image(const std::string path)
 			std::cerr << "Failed to find image \"" << path << "\"\n";
 			return nullptr;
 		}
-		ALLEGRO_BITMAP *bmp = al_load_bitmap(fullPath.c_str());
+		Image* bmp = imageLoader->loadImage(fullPath);
 		if (!bmp)
 		{
 			std::cerr << "Failed to load image \"" << fullPath << "\"\n";
 			return nullptr;
 		}
-		img.reset(new RGBImage(bmp));
+		img.reset(bmp);
 	}
 
 	this->imageCache[cacheKey] = img;
@@ -178,7 +179,7 @@ std::string Data::GetActualFilename( std::string Filename )
 std::shared_ptr<Palette>
 Data::load_palette(const std::string path)
 {
-	return std::make_shared<Palette>(*this, path);
+	return std::shared_ptr<Palette>(loadApocPalette(*this, path));
 }
 
 }; //namespace OpenApoc

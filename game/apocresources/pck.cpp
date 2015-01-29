@@ -1,7 +1,6 @@
 
 #include "pck.h"
 #include "framework/data.h"
-#include "palette.h"
 #include "framework/image.h"
 
 namespace OpenApoc {
@@ -96,7 +95,7 @@ void PCK::LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 
 			c0_offset = al_fread16le( pck );	// Always a 640px row (that I've seen)
 		}
-		img = std::make_shared<PaletteImage>(c0_maxwidth, c0_height);
+		img = std::make_shared<PaletteImage>(Vec2<int>{c0_maxwidth, c0_height});
 		PaletteImageLock region(img);
 		c0_idx = 0;
 		for( int c0_y = 0; c0_y < c0_height; c0_y++ )
@@ -105,9 +104,9 @@ void PCK::LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 			{
 				if( c0_x < c0_rowwidths.at( c0_y ) )
 				{
-					region.set(c0_x, c0_y, ((char*)c0_imagedata->GetDataOffset( c0_idx ))[0] );
+					region.set(Vec2<int>{c0_x, c0_y}, ((char*)c0_imagedata->GetDataOffset( c0_idx ))[0] );
 				} else {
-					region.set(c0_x, c0_y, 0);
+					region.set(Vec2<int>{c0_x, c0_y}, 0);
 				}
 				c0_idx++;
 			}
@@ -149,7 +148,7 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 			{
 				// Raw Data with RLE
 				al_fread( pck, &c1_imgheader, sizeof( PCKCompression1ImageHeader ) );
-				img = std::make_shared<PaletteImage>(c1_imgheader.RightMostPixel, c1_imgheader.BottomMostPixel);
+				img = std::make_shared<PaletteImage>(Vec2<int>{c1_imgheader.RightMostPixel, c1_imgheader.BottomMostPixel});
 
 				PaletteImageLock lock(img);
 				c1_pixelstoskip = (uint32_t)al_fread32le( pck );
@@ -169,7 +168,7 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 							{
 								if (c1_x < c1_imgheader.RightMostPixel)
 								{
-									lock.set(c1_x, c1_y, al_fgetc(pck));
+									lock.set(Vec2<int>{c1_x, c1_y}, al_fgetc(pck));
 								} else {
 									// Pretend to process data
 									al_fgetc( pck );
@@ -181,7 +180,7 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 							{
 								if( (c1_header.ColumnToStartAt + c1_x - c1_imgheader.LeftMostPixel) < c1_imgheader.RightMostPixel - c1_imgheader.LeftMostPixel )
 								{
-									lock.set(c1_header.ColumnToStartAt + c1_x, c1_y, al_fgetc(pck));
+									lock.set(Vec2<int>{c1_header.ColumnToStartAt + c1_x, c1_y}, al_fgetc(pck));
 								} else {
 									// Pretend to process data
 									al_fgetc( pck );

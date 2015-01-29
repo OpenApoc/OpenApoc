@@ -1,5 +1,5 @@
 #include "buildingtile.h"
-#include "game/apocresources/palette.h"
+#include "framework/palette.h"
 #include "game/apocresources/pck.h"
 #include "framework/framework.h"
 
@@ -34,7 +34,6 @@ CityTile::loadTilesFromFile(Framework &fw)
 	{
 		CityTile tile;
 		tile.sprite = sprites.GetImage(t);
-		std::dynamic_pointer_cast<PaletteImage>(tile.sprite)->setPalette(pal);
 		v.push_back(tile);
 	}
 

@@ -6,6 +6,7 @@ namespace OpenApoc {
 
 class Palette;
 class RGBImage;
+class RendererImageData;
 
 enum class ImageLockUse
 {
@@ -16,35 +17,42 @@ enum class ImageLockUse
 
 class Image
 {
+	protected:
+		Image(Vec2<int> size);
+	private:
+		std::unique_ptr<RendererImageData> rendererPrivateData;
+		bool dirty;
+		friend class Renderer;
 	public:
 		virtual ~Image();
-		virtual void drawRotated(float cx, float cy, float dx, float dy, float angle) = 0;
-		virtual void drawScaled(float sx, float sy, float sw, float sh,
-			float dx, float dy, float dw, float dh) = 0;
-		virtual void draw(float dx, float dy) = 0;
-		virtual void saveBitmap(const std::string &filename) = 0;
-
-		int height, width;
+		Vec2<int> size;
 };
 
-class PaletteImageImpl;
+class ImageLoader
+{
+public:
+	virtual ~ImageLoader();
+	virtual Image* loadImage(std::string path) = 0;
+};
+
+ImageLoader* createImageLoader();
+
+//A surface is an image you can render to. No SW locking is allowed!
+class Surface : public Image
+{
+public:
+	Surface(Vec2<int> size);
+	virtual ~Surface();
+};
+
 class PaletteImage : public Image
 {
 	private:
 		friend class PaletteImageLock;
-		std::unique_ptr<PaletteImageImpl> pimpl;
-		std::shared_ptr<Palette> pal;
+		std::vector<uint8_t> indices;
 	public:
-		PaletteImage(int width, int height, uint8_t initialIndex = 0);
+		PaletteImage(Vec2<int> size, uint8_t initialIndex = 0);
 		~PaletteImage();
-		virtual void drawRotated(float cx, float cy, float dx, float dy, float angle);
-		virtual void drawScaled(float sx, float sy, float sw, float sh,
-			float dx, float dy, float dw, float dh);
-		virtual void draw(float dx, float dy);
-		virtual void saveBitmap(const std::string &filename);
-
-		void setPalette(std::shared_ptr<Palette> newPal);
-		std::shared_ptr<RGBImage> toRGBImage();
 		std::shared_ptr<RGBImage> toRGBImage(std::shared_ptr<Palette> p);
 };
 
@@ -58,41 +66,33 @@ class PaletteImageLock
 	public:
 		PaletteImageLock(std::shared_ptr<PaletteImage> img, ImageLockUse use = ImageLockUse::Write);
 		~PaletteImageLock();
-		uint8_t get(int x, int y);
-		void set(int x, int y, uint8_t idx);
+		uint8_t get(Vec2<int> pos);
+		void set(Vec2<int> pos, uint8_t idx);
 };
 
-class RGBImageImpl;
 class RGBImage : public Image
 {
 	private:
 		friend class RGBImageLock;
-		friend class PaletteImageImpl;
-		std::unique_ptr<RGBImageImpl> pimpl;
+		std::vector<Colour> pixels;
 	public:
-		RGBImage(ALLEGRO_BITMAP *bmp, bool isPalette = false);
-		RGBImage(int width, int height, Colour initialColour = Colour(0,0,0,0), bool isPalette = false);
+		RGBImage(Vec2<int> size, Colour initialColour = Colour(0,0,0,0));
 		~RGBImage();
-		virtual void drawRotated(float cx, float cy, float dx, float dy, float angle);
-		virtual void drawScaled(float sx, float sy, float sw, float sh,
-			float dx, float dy, float dw, float dh);
-		virtual void draw(float dx, float dy);
-		virtual void saveBitmap(const std::string &filename);
+		void saveBitmap(const std::string &filename);
 };
 
 class RGBImageLock
 {
 	private:
 		std::shared_ptr<RGBImage> img;
-		ALLEGRO_LOCKED_REGION *region;
 		//Disallow copy
 		RGBImageLock(const RGBImageLock &) = delete;
 		ImageLockUse use;
 	public:
 		RGBImageLock(std::shared_ptr<RGBImage> img, ImageLockUse use = ImageLockUse::Write);
 		~RGBImageLock();
-		Colour get(int x, int y);
-		void set(int x, int y, Colour &c);
+		Colour get(Vec2<int> pos);
+		void set(Vec2<int> pos, Colour &c);
 };
 
 }; //namespace OpenApoc

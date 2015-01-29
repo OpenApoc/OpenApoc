@@ -12,7 +12,8 @@ namespace OpenApoc {
 TileView::TileView(Framework &fw, TileMap &map, Vec3<float> tileSize)
 	: Stage(fw), map(map), tileSize(tileSize), maxZDraw(10), offsetX(0), offsetY(0),
 	  selectedTilePosition(0,0,0), selectedTileImageBack(fw.data.load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
-	  selectedTileImageFront(fw.data.load_image("CITY/SELECTED-CITYTILE-FRONT.PNG")), cameraScrollX(0), cameraScrollY(0)
+	  selectedTileImageFront(fw.data.load_image("CITY/SELECTED-CITYTILE-FRONT.PNG")),
+	  pal(fw.data.load_palette("UFODATA/PAL_04.DAT")), cameraScrollX(0), cameraScrollY(0)
 {
 }
 
@@ -188,6 +189,8 @@ void TileView::Render()
 	int dpyWidth = fw.Display_GetWidth();
 	int dpyHeight = fw.Display_GetHeight();
 	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
+	Renderer &r = *fw.renderer;
+	r.setPalette(this->pal);
 	for (int y = 0; y < map.size.y; y++)
 	{
 		for (int z = 0; z < maxZDraw; z++)
@@ -211,7 +214,7 @@ void TileView::Render()
 					continue;
 
 				if (showSelected)
-					selectedTileImageBack->draw(screenPos.x, screenPos.y);
+					r.draw(*selectedTileImageBack, screenPos);
 				for (auto obj : tile.objects)
 				{
 					if (obj->visible)
@@ -220,13 +223,13 @@ void TileView::Render()
 						objScreenPos.x += offsetX;
 						objScreenPos.y += offsetY;
 						auto &img = obj->getSprite();
-						img.draw(objScreenPos.x, objScreenPos.y);
+						r.draw(img, objScreenPos);
 					}
 
 				}
 
 				if (showSelected)
-					selectedTileImageFront->draw(screenPos.x, screenPos.y);
+					r.draw(*selectedTileImageFront, screenPos);
 			}
 		}
 	}

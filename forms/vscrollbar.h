@@ -18,7 +18,7 @@ class VScrollBar : public Control
 		virtual void OnRender();
 
 	public:
-		ALLEGRO_COLOR GripperColour;
+		Colour GripperColour;
 		int Minimum;
 		int Maximum;
 		int Value;

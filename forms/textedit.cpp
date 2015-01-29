@@ -3,6 +3,8 @@
 #include "framework/framework.h"
 #include "game/resources/ifont.h"
 
+#include <allegro5/keycodes.h>
+
 namespace OpenApoc {
 
 TextEdit::TextEdit( Framework &fw, Control* Owner, std::string Text, IFont* Font ) : Control( fw, Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Centre ), editting(false), SelectionStart(Text.length()), caretTimer(0), caretDraw(false), editShift(false), editAltGr(false)
@@ -177,11 +179,11 @@ void TextEdit::OnRender()
 
 		if( caretDraw )
 		{
-			al_draw_line( cxpos, ypos, cxpos, ypos + font->GetFontHeight(), al_map_rgb( 255, 255, 255 ), 1 );
+			fw.renderer->drawLine(Vec2<float>{cxpos, ypos}, Vec2<float>{cxpos, ypos + font->GetFontHeight()}, Colour{255,255,255});
 		}
 	}
 
-	font->DrawString( xpos, ypos, text, APOCFONT_ALIGN_LEFT );
+	font->DrawString( *fw.renderer, xpos, ypos, text, APOCFONT_ALIGN_LEFT );
 }
 
 void TextEdit::Update()

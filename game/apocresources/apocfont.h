@@ -8,12 +8,14 @@ namespace OpenApoc {
 
 class Palette;
 class Framework;
+class Image;
+class Renderer;
 
 class ApocalypseFont : public IFont
 {
 
 	private:
-		std::vector<ALLEGRO_BITMAP*> fontbitmaps;
+		std::vector<std::shared_ptr<Image> > fontbitmaps;
 		std::vector<int> fontwidths;
 		int spacewidth;
 		int fontheight;
@@ -31,11 +33,10 @@ class ApocalypseFont : public IFont
 		ApocalypseFont( Framework &fw, FontType Face, std::shared_ptr<Palette> ColourPalette );
 		~ApocalypseFont();
 
-		virtual void DrawString( int X, int Y, std::string Text, int Alignment );
+		virtual void DrawString( Renderer &r, int X, int Y, std::string Text, int Alignment );
 
 		virtual int GetFontHeight();
 		virtual int GetFontWidth(std::string Text);
 
-		void DumpCharset();
 };
 }; //namespace OpenApoc

@@ -67,11 +67,11 @@ void GraphicButton::OnRender()
 		image = fw.gamecore->GetImage( image_name );
 		if( Size.x == 0 )
 		{
-			Size.x = image->width;
+			Size.x = image->size.x;
 		}
 		if( Size.y == 0 )
 		{
-			Size.y = image->height;
+			Size.y = image->size.y;
 		}
 	}
 	if( imagedepressed == nullptr && imagedepressed_name != "" )
@@ -79,11 +79,11 @@ void GraphicButton::OnRender()
 		imagedepressed = fw.gamecore->GetImage( imagedepressed_name );
 		if( Size.x == 0 )
 		{
-			Size.x = imagedepressed->width;
+			Size.x = imagedepressed->size.x;
 		}
 		if( Size.y == 0 )
 		{
-			Size.y = imagedepressed->height;
+			Size.y = imagedepressed->size.y;
 		}
 	}
 	if( imagehover == nullptr && imagehover_name != "" )
@@ -91,11 +91,11 @@ void GraphicButton::OnRender()
 		imagehover = fw.gamecore->GetImage( imagehover_name );
 		if( Size.x == 0 )
 		{
-			Size.x = imagehover->width;
+			Size.x = imagehover->size.x;
 		}
 		if( Size.y == 0 )
 		{
-			Size.y = imagehover->height;
+			Size.y = imagehover->size.y;
 		}
 	}
 
@@ -109,13 +109,13 @@ void GraphicButton::OnRender()
 
 	if( useimage != nullptr )
 	{
-		int bmpw = useimage->width;
-		int bmph = useimage->height;
-		if( bmpw == Size.x && bmph == Size.y )
+		if(Size != useimage->size)
 		{
-			useimage->draw(0, 0 );
-		} else {
-			useimage->drawScaled(0, 0, bmpw, bmph, 0, 0, this->Size.x, this->Size.y);
+			fw.renderer->draw(*useimage, Vec2<float>{0,0});
+		}
+		else
+		{
+			fw.renderer->drawScaled(*useimage, Vec2<float>{0,0}, Vec2<float>{this->Size.x, this->Size.y});
 		}
 	}
 }

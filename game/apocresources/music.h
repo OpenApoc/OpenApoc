@@ -2,6 +2,7 @@
 #pragma once
 
 #include "framework/includes.h"
+#include <allegro5/allegro_audio.h>
 
 namespace OpenApoc {
 

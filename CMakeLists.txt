@@ -13,20 +13,22 @@ else()
 	message(FATAL_ERROR "Your C++ compiler does not support C++11.")
 endif()
 
-SET(IMAGE_IMPLEMENTATION "OpenGL" CACHE STRING "Image implemtnation
+SET(RENDERER "OpenGL" CACHE STRING "Renderer implementation
 (Supported: OpenGL Allegro")
 
-if (${IMAGE_IMPLEMENTATION} STREQUAL "OpenGL")
+SET(IMAGELOADER "Allegro" CACHE STRING "Image loader implementation
+(Supported: Allegro")
+
+if (${RENDERER} STREQUAL "OpenGL")
 		find_package(OpenGL)
 		if (NOT OPENGL_FOUND)
 				message(FATAL_ERROR "OpenGL libraries not found")
 		endif()
-		list(APPEND sources "framework/render/gl_image.cpp")
-		list(APPEND sources "framework/render/gl_util.h")
-elseif(${IMAGE_IMPLEMENTATION} STREQUAL "Allegro")
-		list(APPEND sources "framework/render/allegro_image.cpp")
+		list(APPEND sources "framework/render/ogl_renderer.cpp")
+elseif(${RENDERER} STREQUAL "Allegro")
+		list(APPEND sources "framework/render/allegro_renderer.cpp")
 else()
-		message(FATAL_ERROR "Invalid image implementation selected (Must be
+		message(FATAL_ERROR "Invalid renderer implementation selected (Must be
 		one of \"OpenGL\",\"Allegro\"")
 endif()
 
@@ -46,7 +48,15 @@ AUX_SOURCE_DIRECTORY(forms sources)
 
 # declare allegro libraries
 SET(REQUIRED_ALLEGRO_LIBRARIES allegro-5 allegro_font-5 allegro_ttf-5
-		allegro_image-5 allegro_primitives-5 allegro_audio-5 allegro_acodec-5)
+		allegro_primitives-5 allegro_audio-5 allegro_acodec-5)
+
+if (${IMAGELOADER} STREQUAL "Allegro")
+		list(APPEND REQUIRED_ALLEGRO_LIBRARIES allegro_image-5)
+		list(APPEND sources "framework/imageloader/allegro_image.cpp")
+else()
+		message(FATAL_ERROR "Invalid image load implementation selected (Must
+		be one of \"Allegro\"")
+endif()
 
 # declare tinyxml library
 SET(REQUIRED_TINYXML_LIBRARIES tinyxml2)

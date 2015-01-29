@@ -3,6 +3,8 @@
 #include "includes.h"
 #include "image.h"
 
+#include <allegro5/file.h>
+
 namespace OpenApoc {
 
 class Data
@@ -13,6 +15,7 @@ class Data
 		const char DIR_SEP;
 
 		std::map<std::string, std::weak_ptr<Image> >imageCache;
+		std::unique_ptr<ImageLoader> imageLoader;
 
 	public:
 		Data(const std::string root);

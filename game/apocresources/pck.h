@@ -3,6 +3,8 @@
 
 #include "framework/includes.h"
 
+#include <allegro5/file.h>
+
 namespace OpenApoc {
 
 class Data;

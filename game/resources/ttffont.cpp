@@ -14,8 +14,10 @@ TTFFont::~TTFFont()
 	al_destroy_font( fontobject );
 }
 
-void TTFFont::DrawString( int X, int Y, std::string Text, int Alignment )
+void TTFFont::DrawString( Renderer &r, int X, int Y, std::string Text, int Alignment )
 {
+	assert(0 && "NOT IMPLEMENTED");
+#if 0
 	int xpos = X;
 	int textlen = 0;
 
@@ -35,6 +37,7 @@ void TTFFont::DrawString( int X, int Y, std::string Text, int Alignment )
 	}
 
 	al_draw_text( fontobject, al_map_rgb( 255, 255, 255 ), xpos, Y, 0, Text.c_str() );
+#endif
 }
 
 int TTFFont::GetFontHeight()
