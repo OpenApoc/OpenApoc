@@ -5,6 +5,137 @@
 
 namespace OpenApoc {
 
+namespace {
+
+class Program
+{
+	public:
+		GLuint prog;
+		static GLuint CreateShader(GLenum type, const std::string source)
+		{
+			GLuint shader = gl::CreateShader(type);
+			const GLchar *string = source.c_str();
+			GLint stringLength = source.length();
+			gl::ShaderSource(shader, 1, &string, &stringLength);
+			gl::CompileShader(shader);
+			GLint compileStatus;
+			gl::GetShaderiv(shader, gl::COMPILE_STATUS, &compileStatus);
+			if (compileStatus == gl::TRUE_)
+				return shader;
+
+			GLint logLength;
+			gl::GetShaderiv(shader, gl::INFO_LOG_LENGTH, &logLength);
+
+			std::unique_ptr<char[]> log(new char[logLength]);
+			gl::GetShaderInfoLog(shader, logLength, NULL, log.get());
+
+			std::cerr << "Shader compile error:\n\"" << std::string(log.get()) << "\"\n";
+
+			gl::DeleteShader(shader);
+			return 0;
+		}
+		Program(const std::string vertexSource, const std::string fragmentSource)
+			: prog(0)
+		{
+			GLuint vShader = CreateShader(gl::VERTEX_SHADER, vertexSource);
+			if (!vShader)
+			{
+				std::cerr << "Failed to compile vertex shader\n";
+				return;
+			}
+			GLuint fShader = CreateShader(gl::FRAGMENT_SHADER, fragmentSource);
+			if (!fShader)
+			{
+				std::cerr << "Failed to compile fragment shader\n";
+				gl::DeleteShader(vShader);
+				return;
+			}
+
+			prog = gl::CreateProgram();
+			gl::AttachShader(prog, vShader);
+			gl::AttachShader(prog, fShader);
+
+			gl::DeleteShader(vShader);
+			gl::DeleteShader(fShader);
+
+			gl::LinkProgram(prog);
+
+			GLint linkStatus;
+			gl::GetProgramiv(prog, gl::LINK_STATUS, &linkStatus);
+			if (linkStatus == gl::TRUE_)
+				return;
+
+			GLint logLength;
+			gl::GetProgramiv(prog, gl::INFO_LOG_LENGTH, &logLength);
+
+			std::unique_ptr<char[]> log(new char[logLength]);
+			gl::GetProgramInfoLog(prog, logLength, NULL, log.get());
+
+			std::cerr << "Program link error:\n\"" << std::string(log.get()) << "\"\n";
+
+			gl::DeleteProgram(prog);
+			prog = 0;
+			return;
+
+		}
+		virtual ~Program()
+		{
+			if (prog)
+				gl::DeleteProgram(prog);
+		};
+};
+
+class SpriteProgram : public Program
+{
+	protected:
+		SpriteProgram(const std::string vertexSource, const std::string fragmentSource)
+			: Program(vertexSource, fragmentSource)
+			{
+			}
+	public:
+		GLuint positionAttribLocation;
+		GLuint sizeAttribLocation;
+		GLuint offsetAttribLocation;
+		GLuint screenSizeUniformLocation;
+		GLuint textureUniformLocation;
+};
+
+class RGBProgram : public SpriteProgram
+{
+	private:
+		constexpr static const char* vertexSource = {
+                "#version 130\n"
+                "in vec2 position;\n"
+                "in vec2 size;\n"
+                "in vec2 offset;\n"
+				"out vec2 texcoord;\n"
+                "uniform vec2 screenSize;\n"
+                "void main() {\n"
+                "  texcoord = position;\n"
+                "  vec2 tmpPos = position;\n"
+                "  tmpPos *= size;\n"
+                "  tmpPos += offset;\n"
+                "  tmpPos /= screenSize;\n"
+                "  tmpPos -= vec2(0.5,0.5);\n"
+                "  gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
+                "}\n"
+		};
+		constexpr static const char* fragmentSource  = {
+                "#version 130\n"
+                "in vec2 texcoord;\n"
+                "uniform sampler2D tex;\n"
+				"out vec4 out_colour;\n"
+                "void main() {\n"
+                "  out_colour = texture2D(tex, texcoord);\n"
+                "}\n"
+		};
+	public:
+		RGBProgram()
+			: SpriteProgram(vertexSource, fragmentSource)
+			{
+			}
+};
+
 class BindTexture
 {
 	BindTexture(const BindTexture &) = delete;
@@ -25,7 +156,6 @@ public:
 	{
 		gl::GetIntegerv(getBindEnum(bind), (GLint*)&prevID);
 		gl::BindTexture(bind, id);
-
 	}
 	~BindTexture()
 	{
@@ -57,7 +187,7 @@ public:
 	GLuint tex;
 	FBOData(GLuint fbo)
 		: fbo(fbo){}
-	
+
 	FBOData(Vec2<int> size)
 	{
 		gl::GenTextures(1, &this->tex);
@@ -68,8 +198,8 @@ public:
 
 		gl::FramebufferTexture2D(gl::DRAW_FRAMEBUFFER, gl::COLOR_ATTACHMENT0, gl::TEXTURE_2D, this->tex, 0);
 		assert(gl::CheckFramebufferStatus(gl::DRAW_FRAMEBUFFER) == gl::FRAMEBUFFER_COMPLETE);
-		
-		
+
+
 	}
 	virtual ~FBOData()
 	{
@@ -83,6 +213,9 @@ public:
 class OGL30Renderer : public Renderer
 {
 private:
+	std::unique_ptr<RGBProgram> rgbProgram;
+	GLuint currentBountProgram;
+
 	std::shared_ptr<Surface> currentSurface;
 	friend class RendererSurfaceBinding;
 	virtual void setSurface(std::shared_ptr<Surface> s)
@@ -94,6 +227,7 @@ private:
 
 		FBOData *fbo = static_cast<FBOData*>(s->rendererPrivateData.get());
 		gl::BindFramebuffer(gl::FRAMEBUFFER, fbo->fbo);
+		gl::Viewport(0, 0, s->size.x, s->size.y);
 	};
 	virtual std::shared_ptr<Surface> getSurface()
 	{
@@ -122,6 +256,7 @@ public:
 };
 
 OGL30Renderer::OGL30Renderer()
+	: rgbProgram(new RGBProgram())
 {
 	GLint viewport[4];
 	gl::GetIntegerv(gl::VIEWPORT, viewport);
@@ -131,6 +266,9 @@ OGL30Renderer::OGL30Renderer()
 	this->defaultSurface->rendererPrivateData.reset(new FBOData(0));
 	this->currentSurface = this->defaultSurface;
 
+	GLint maxTexArrayLayers;
+	gl::GetIntegerv(gl::MAX_ARRAY_TEXTURE_LAYERS, &maxTexArrayLayers);
+	std::cerr << "MAX_ARRAY_TEXTURE_LAYERS: \"" << maxTexArrayLayers << "\"\n";
 }
 
 OGL30Renderer::~OGL30Renderer()
@@ -156,6 +294,8 @@ OGL30Renderer::getName()
 {
 	return "OGL3.0 Renderer";
 }
+
+}; //anonymouse namespace
 
 OpenApoc::Renderer *
 OpenApoc::Renderer::createRenderer()
