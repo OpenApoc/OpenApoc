@@ -62,13 +62,12 @@ Data::load_image(const std::string path)
 			std::cerr << "Failed to find image \"" << path << "\"\n";
 			return nullptr;
 		}
-		Image* bmp = imageLoader->loadImage(fullPath);
-		if (!bmp)
+		img = imageLoader->loadImage(fullPath);
+		if (!img)
 		{
 			std::cerr << "Failed to load image \"" << fullPath << "\"\n";
 			return nullptr;
 		}
-		img.reset(bmp);
 	}
 
 	this->imageCache[cacheKey] = img;
@@ -179,6 +178,23 @@ std::string Data::GetActualFilename( std::string Filename )
 std::shared_ptr<Palette>
 Data::load_palette(const std::string path)
 {
+	std::shared_ptr<RGBImage> img = std::dynamic_pointer_cast<RGBImage>(this->load_image(path));
+	if (img)
+	{
+		int idx = 0;
+		auto p = std::make_shared<Palette>(img->size.x * img->size.y);
+		RGBImageLock src{img, ImageLockUse::Read};
+		for (int y = 0; y < img->size.y; y++)
+		{
+			for (int x = 0; x < img->size.x; x++)
+			{
+				Colour c = src.get(Vec2<int>{x,y});
+				p->SetColour(idx, c);
+				idx++;
+			}
+		}
+		return p;
+	}
 	return std::shared_ptr<Palette>(loadApocPalette(*this, path));
 }
 

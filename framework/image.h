@@ -19,20 +19,19 @@ class Image
 {
 	protected:
 		Image(Vec2<int> size);
-	private:
-		std::unique_ptr<RendererImageData> rendererPrivateData;
-		bool dirty;
-		friend class Renderer;
 	public:
 		virtual ~Image();
 		Vec2<int> size;
+
+		std::unique_ptr<RendererImageData> rendererPrivateData;
+		bool dirty;
 };
 
 class ImageLoader
 {
 public:
 	virtual ~ImageLoader();
-	virtual Image* loadImage(std::string path) = 0;
+	virtual std::shared_ptr<Image> loadImage(std::string path) = 0;
 };
 
 ImageLoader* createImageLoader();

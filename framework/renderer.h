@@ -42,7 +42,7 @@ class Renderer
 		virtual void flush() = 0;
 		virtual std::string getName() = 0;
 
-		virtual Surface *getDefaultSurface() = 0;
+		virtual std::shared_ptr<Surface> getDefaultSurface() = 0;
 
 		static Renderer* createRenderer();
 };

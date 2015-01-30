@@ -24,7 +24,7 @@ class BootUp : public Stage
 		static void* CreateGameCore(ALLEGRO_THREAD* thread, void* args);
 
 	public:
-		BootUp(Framework &fw) : Stage(fw){};
+		BootUp(Framework &fw) : Stage(fw), threadload(nullptr){};
 		// Stage control
 		virtual void Begin();
 		virtual void Pause();

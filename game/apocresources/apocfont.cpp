@@ -61,6 +61,7 @@ ApocalypseFont::ApocalypseFont( Framework &fw, FontType Face, std::shared_ptr<Pa
 				}
 			}
 		}
+		this->fontwidths.push_back(w+2);
 		this->fontbitmaps.push_back(pimg->toRGBImage(ColourPalette));
 	}
 

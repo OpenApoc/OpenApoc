@@ -449,7 +449,7 @@ void Framework::Display_Initialise()
 	al_hide_mouse_cursor( p->screen );
 
 	this->renderer.reset(Renderer::createRenderer());
-	this->p->defaultSurface.reset(this->renderer->getDefaultSurface());
+	this->p->defaultSurface = this->renderer->getDefaultSurface();
 
 	std::cout << "Using renderer: " << this->renderer->getName() << "\n";
 
@@ -460,6 +460,8 @@ void Framework::Display_Shutdown()
 #ifdef WRITE_LOG
 	printf( "Framework: Shutdown Display\n" );
 #endif
+	p->defaultSurface.reset();
+	renderer.reset();
 
 	al_unregister_event_source( p->eventAllegro, al_get_display_event_source( p->screen ) );
 	al_destroy_display( p->screen );

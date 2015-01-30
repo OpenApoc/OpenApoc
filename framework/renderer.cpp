@@ -13,4 +13,12 @@ RendererSurfaceBinding::~RendererSurfaceBinding()
 	r.setSurface(prevBinding);
 }
 
+Renderer::~Renderer()
+{
+}
+
+RendererImageData::~RendererImageData()
+{
+}
+
 }; //namespace OpenApoc
