@@ -23,9 +23,8 @@ Surface::~Surface()
 {}
 
 PaletteImage::PaletteImage(Vec2<int> size, uint8_t initialIndex)
-	: Image(size)
+	: Image(size), indices(new uint8_t[size.x*size.y])
 {
-	this->indices.resize(size.x*size.y);
 	for (int i = 0; i < size.x*size.y; i++)
 		this->indices[i] = initialIndex;
 }
@@ -52,9 +51,8 @@ PaletteImage::toRGBImage(std::shared_ptr<Palette> p)
 }
 
 RGBImage::RGBImage(Vec2<int> size, Colour initialColour)
-: Image(size)
+: Image(size), pixels(new Colour[size.x*size.y])
 {
-	this->pixels.resize(size.x*size.y);
 	for (int i = 0; i < size.x*size.y; i++)
 		this->pixels[i] = initialColour;
 }
@@ -77,7 +75,7 @@ RGBImageLock::get(Vec2<int> pos)
 {
 	//FIXME: Check read use
 	unsigned offset = pos.y * this->img->size.x + pos.x;
-	assert(offset < this->img->pixels.size());
+	assert(offset < this->img->size.x * this->img->size.y);
 	return this->img->pixels[offset];
 }
 
@@ -85,7 +83,7 @@ void
 RGBImageLock::set(Vec2<int> pos, Colour &c)
 {
 	unsigned offset = pos.y * this->img->size.x + pos.x;
-	assert(offset < this->img->pixels.size());
+	assert(offset < this->img->size.x * this->img->size.y);
 	this->img->pixels[offset] = c;
 }
 
@@ -104,7 +102,7 @@ PaletteImageLock::get(Vec2<int> pos)
 {
 	//FIXME: Check read use
 	unsigned offset = pos.y * this->img->size.x + pos.x;
-	assert(offset < this->img->indices.size());
+	assert(offset < this->img->size.x * this->img->size.y);
 	return this->img->indices[offset];
 }
 
@@ -113,7 +111,7 @@ PaletteImageLock::set(Vec2<int> pos, uint8_t idx)
 {
 	//FIXME: Check write use
 	unsigned offset = pos.y * this->img->size.x + pos.x;
-	assert(offset < this->img->indices.size());
+	assert(offset < this->img->size.x * this->img->size.y);
 	this->img->indices[offset] = idx;
 }
 
