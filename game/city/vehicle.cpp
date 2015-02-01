@@ -246,12 +246,12 @@ static Vehicle::Direction findClosestDirection(Vec3<float> v)
 }
 
 
-Image&
+std::shared_ptr<Image>
 FlyingVehicle::getSprite()
 {
 	//TODO: Banking selection logic
 	Vehicle::Direction d = findClosestDirection(this->direction);
-	return *this->vehicle.def.sprites[Vehicle::Banking::Flat][d];
+	return this->vehicle.def.sprites[Vehicle::Banking::Flat][d];
 }
 
 void

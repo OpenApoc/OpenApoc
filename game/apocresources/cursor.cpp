@@ -45,6 +45,6 @@ void Cursor::EventOccured( Event* e )
 
 void Cursor::Render()
 {
-	fw.renderer->draw(*images.at((int)CurrentType), Vec2<float>{cursorPos.x, cursorPos.y});
+	fw.renderer->draw(images.at((int)CurrentType), Vec2<float>{cursorPos.x, cursorPos.y});
 }
 }; //namespace OpenApoc

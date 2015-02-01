@@ -96,7 +96,7 @@ void ApocalypseFont::DrawString( Renderer &r, int X, int Y, std::string Text, in
 		int charidx = FontCharacterSet.find_first_of( Text.at( i ) );
 		if( charidx >= 0 && charidx < fontbitmaps.size() )
 		{
-			r.draw(*fontbitmaps.at(charidx), Vec2<float>{xpos,Y});
+			r.draw(fontbitmaps.at(charidx), Vec2<float>{xpos,Y});
 			xpos += fontwidths.at( charidx );
 		} else {
 			xpos += spacewidth;

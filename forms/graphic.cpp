@@ -36,7 +36,7 @@ void Graphic::OnRender()
 
 	if(Size == image->size)
 	{
-		fw.renderer->draw(*image, Vec2<float>{0,0});
+		fw.renderer->draw(image, Vec2<float>{0,0});
 	} else {
 		fw.renderer->drawScaled(*image, Vec2<float>{0,0}, Vec2<float>{this->Size.x, this->Size.y});
 	}

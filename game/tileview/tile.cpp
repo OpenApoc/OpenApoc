@@ -70,10 +70,10 @@ TileObject::getPosition()
 	return this->position;
 }
 
-Image&
+std::shared_ptr<Image>
 TileObject::getSprite()
 {
-	return *this->sprite;
+	return this->sprite;
 }
 
 TileObjectCollisionVoxels&

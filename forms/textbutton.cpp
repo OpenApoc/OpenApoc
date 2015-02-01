@@ -87,7 +87,7 @@ void TextButton::OnRender()
 
 		font->DrawString( *fw.renderer, xpos, ypos, text, APOCFONT_ALIGN_LEFT );
 	}
-	fw.renderer->draw(*cached, Vec2<float>{0,0});
+	fw.renderer->draw(cached, Vec2<float>{0,0});
 
 	if( mouseDepressed && mouseInside )
 	{

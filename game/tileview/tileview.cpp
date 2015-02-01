@@ -214,7 +214,7 @@ void TileView::Render()
 					continue;
 
 				if (showSelected)
-					r.draw(*selectedTileImageBack, screenPos);
+					r.draw(selectedTileImageBack, screenPos);
 				for (auto obj : tile.objects)
 				{
 					if (obj->visible)
@@ -222,14 +222,14 @@ void TileView::Render()
 						auto objScreenPos = tileToScreenCoords(obj->getPosition());
 						objScreenPos.x += offsetX;
 						objScreenPos.y += offsetY;
-						auto &img = obj->getSprite();
+						auto img = obj->getSprite();
 						r.draw(img, objScreenPos);
 					}
 
 				}
 
 				if (showSelected)
-					r.draw(*selectedTileImageFront, screenPos);
+					r.draw(selectedTileImageFront, screenPos);
 			}
 		}
 	}

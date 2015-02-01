@@ -234,7 +234,7 @@ void Control::Render()
 		PostRender();
 	}
 
-	fw.renderer->draw(*controlArea, Vec2<float>{Location.x, Location.y});
+	fw.renderer->draw(controlArea, Vec2<float>{Location.x, Location.y});
 }
 
 void Control::PreRender()

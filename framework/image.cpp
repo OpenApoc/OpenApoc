@@ -87,6 +87,12 @@ RGBImageLock::set(Vec2<int> pos, Colour &c)
 	this->img->pixels[offset] = c;
 }
 
+void *
+RGBImageLock::getData()
+{
+	return this->img->pixels.get();
+}
+
 PaletteImageLock::PaletteImageLock(std::shared_ptr<PaletteImage> img, ImageLockUse use)
 : img(img), use(use)
 {

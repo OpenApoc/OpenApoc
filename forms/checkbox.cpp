@@ -72,7 +72,7 @@ void CheckBox::OnRender()
 	{
 		if (useimage->size == Size)
 		{
-			fw.renderer->draw(*useimage, Vec2<float>{0,0});
+			fw.renderer->draw(useimage, Vec2<float>{0,0});
 		}
 		else
 		{

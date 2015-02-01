@@ -92,6 +92,9 @@ class RGBImageLock
 		~RGBImageLock();
 		Colour get(Vec2<int> pos);
 		void set(Vec2<int> pos, Colour &c);
+
+		//FIXME: Magic backdoor to the RGBA data
+		void *getData();
 };
 
 }; //namespace OpenApoc

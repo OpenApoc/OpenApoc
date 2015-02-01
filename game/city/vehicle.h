@@ -82,7 +82,7 @@ public:
 	std::unique_ptr<VehicleMover> mover;
 	Vec3<float> direction;
 	virtual ~FlyingVehicle();
-	virtual Image& getSprite();
+	virtual std::shared_ptr<Image> getSprite();
 	virtual void update(unsigned int ticks);
 	virtual void processCollision(TileObject &otherObject);
 };
