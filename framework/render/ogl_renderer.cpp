@@ -79,6 +79,11 @@ class Program
 
 		}
 
+		void Uniform(GLuint loc, Colour c)
+		{
+			gl::Uniform4f(loc, c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, c.a / 255.0f);
+		}
+
 		void Uniform(GLuint loc, Vec2<float> v)
 		{
 			gl::Uniform2f(loc, v.x, v.y);
@@ -137,12 +142,15 @@ class RGBProgram : public SpriteProgram
                 "uniform vec2 screenSize;\n"
 				"uniform bool flipY;\n"
                 "void main() {\n"
-				"  texcoord = position;\n;"
+//				"  if (flipY) texcoord = vec2(position.x, -position.y);\n"
+//				"  else texcoord = position;\n;"
+				"  texcoord = position;\n"
                 "  vec2 tmpPos = position;\n"
                 "  tmpPos *= size;\n"
                 "  tmpPos += offset;\n"
                 "  tmpPos /= screenSize;\n"
                 "  tmpPos -= vec2(0.5,0.5);\n"
+//				"  gl_Position = vec4((tmpPos.x*2), (tmpPos.y*2),0,1);\n"
 				"  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
 				"  else gl_Position = vec4((tmpPos.x*2), (tmpPos.y*2),0,1);\n"
                 "}\n"
@@ -173,6 +181,61 @@ class RGBProgram : public SpriteProgram
 			this->Uniform(this->sizeLoc, size);
 			this->Uniform(this->screenSizeLoc, screenSize);
 			this->Uniform(this->texLoc, texUnit);
+			this->Uniform(this->flipYLoc, flipY);
+		}
+};
+
+class SolidColourProgram : public Program
+{
+	private:
+		constexpr static const char* vertexSource = {
+				"#version 130\n"
+				"in vec2 position;\n"
+				"uniform vec2 size;\n"
+				"uniform vec2 offset;\n"
+				"uniform vec2 screenSize;\n"
+				"uniform bool flipY;\n"
+				"void main() {\n"
+				"  vec2 tmpPos = position;\n"
+				"  tmpPos *= size;\n"
+				"  tmpPos += offset;\n"
+				"  tmpPos /= screenSize;\n"
+				"  tmpPos -= vec2(0.5,0.5);\n"
+				"  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
+				"  else gl_Position = vec4((tmpPos.x*2), (tmpPos.y*2),0,1);\n"
+				"}\n"
+		};
+		constexpr static const char* fragmentSource  = {
+				"#version 130\n"
+				"uniform vec4 colour;\n"
+				"out vec4 out_colour;\n"
+				"void main() {\n"
+				" out_colour = colour;\n"
+				"}\n"
+		};
+	public:
+		GLuint posLoc;
+		GLuint sizeLoc;
+		GLuint offsetLoc;
+		GLuint screenSizeLoc;
+		GLuint colourLoc;
+		GLuint flipYLoc;
+		SolidColourProgram()
+			: Program(vertexSource, fragmentSource)
+			{
+				this->posLoc = gl::GetAttribLocation(this->prog, "position");
+				this->sizeLoc = gl::GetUniformLocation(this->prog, "size");
+				this->offsetLoc = gl::GetUniformLocation(this->prog, "offset");
+				this->screenSizeLoc = gl::GetUniformLocation(this->prog, "screenSize");
+				this->colourLoc = gl::GetUniformLocation(this->prog, "colour");
+				this->flipYLoc = gl::GetUniformLocation(this->prog, "flipY");
+			}
+		void setUniforms(Vec2<float> offset, Vec2<float> size, Vec2<int> screenSize, bool flipY, Colour colour)
+		{
+			this->Uniform(this->offsetLoc, offset);
+			this->Uniform(this->sizeLoc, size);
+			this->Uniform(this->screenSizeLoc, screenSize);
+			this->Uniform(this->colourLoc, colour);
 			this->Uniform(this->flipYLoc, flipY);
 		}
 };
@@ -303,6 +366,7 @@ class OGL30Renderer : public Renderer
 {
 private:
 	std::shared_ptr<RGBProgram> rgbProgram;
+	std::shared_ptr<SolidColourProgram> colourProgram;
 	GLuint currentBoundProgram;
 	GLuint currentBoundFBO;
 
@@ -334,7 +398,7 @@ public:
 	virtual void drawRotated(Image &i, Vec2<float> center, Vec2<float> position, float angle){};
 	virtual void drawScaled(Image &i, Vec2<float> position, Vec2<float> size, Scaler scaler = Scaler::Linear){};
 	virtual void drawTinted(Image &i, Vec2<float> position, Colour tint){};
-	virtual void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c){};
+	virtual void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c);
 	virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c, float thickness = 1.0){};
 	virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0){};
 	virtual void flush();
@@ -358,8 +422,8 @@ public:
 	{
 		BindProgram(rgbProgram);
 		bool flipY = false;
-		if (currentBoundFBO = 0)
-			flipY = !flipY;
+		if (currentBoundFBO == 0)
+			flipY = true;
 		rgbProgram->setUniforms(offset, img.size, this->currentSurface->size, flipY);
 		BindTexture t(img.texID);
 		IdentityQuad::draw(rgbProgram->posLoc);
@@ -368,19 +432,29 @@ public:
 	void DrawSurface(FBOData &fbo, Vec2<float> offset)
 	{
 		BindProgram(rgbProgram);
-		bool flipY = true;
-		if (currentBoundFBO = 0)
-			flipY = !flipY;
+		bool flipY = false;
+		if (currentBoundFBO == 0)
+			flipY = true;
 		rgbProgram->setUniforms(offset, fbo.size, this->currentSurface->size, flipY);
 		BindTexture t(fbo.tex);
 		IdentityQuad::draw(rgbProgram->posLoc);
+	}
+
+	void DrawRect(Vec2<float> offset, Vec2<float> size, Colour c)
+	{
+		BindProgram(colourProgram);
+		bool flipY = false;
+		if (currentBoundFBO == 0)
+			flipY = true;
+		colourProgram->setUniforms(offset, size, this->currentSurface->size, flipY, c);
+		IdentityQuad::draw(colourProgram->posLoc);
 	}
 
 };
 
 
 OGL30Renderer::OGL30Renderer()
-	: rgbProgram(new RGBProgram())
+	: rgbProgram(new RGBProgram()), colourProgram(new SolidColourProgram())
 {
 	GLint viewport[4];
 	gl::GetIntegerv(gl::VIEWPORT, viewport);
@@ -437,6 +511,10 @@ void OGL30Renderer::draw(std::shared_ptr<Image> image, Vec2<float> position)
 		DrawSurface(*fbo, position);
 		return;
 	}
+}
+void OGL30Renderer::drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c)
+{
+	DrawRect(position, size, c);
 }
 
 void

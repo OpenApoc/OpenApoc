@@ -11,7 +11,7 @@ class AllegroImageLoader : public OpenApoc::ImageLoader
 public:
 	AllegroImageLoader()
 	{
-		al_init_image_addon();	
+		al_init_image_addon();
 	}
 	virtual ~AllegroImageLoader()
 	{
@@ -38,7 +38,6 @@ public:
 			for (int x = 0; x < size.x; x++)
 			{
 				dst.set(OpenApoc::Vec2<int>{x,y}, c[x]);
-				
 			}
 			srcLinePtr += src->pitch;
 		}
