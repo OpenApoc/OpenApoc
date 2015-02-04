@@ -45,14 +45,14 @@
     <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(IncludePath);$(ProjectDir)</IncludePath>
+    <IncludePath>$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\glm\glm;$(IncludePath);$(ProjectDir)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(IncludePath);$(ProjectDir)</IncludePath>
+    <IncludePath>$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\glm\glm;$(IncludePath);$(ProjectDir)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
