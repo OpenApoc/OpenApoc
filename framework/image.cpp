@@ -121,4 +121,10 @@ PaletteImageLock::set(Vec2<int> pos, uint8_t idx)
 	this->img->indices[offset] = idx;
 }
 
+void *
+PaletteImageLock::getData()
+{
+	return this->img->indices.get();
+}
+
 }; //namespace OpenApoc

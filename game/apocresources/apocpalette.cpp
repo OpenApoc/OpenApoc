@@ -23,7 +23,7 @@ loadApocPalette(Data &data, const std::string fileName)
 		if (i == 0)
 			c = {0,0,0,0};
 		else
-			c = {(uint8_t)(colour[0] << 2), (uint8_t)(colour[1] << 2), (uint8_t)(colour[2] << 2, 255)};
+			c = {(uint8_t)(colour[0] << 2), (uint8_t)(colour[1] << 2), (uint8_t)(colour[2] << 2), 255};
 		p->SetColour(i, c);
 	}
 	al_fclose(f);

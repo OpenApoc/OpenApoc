@@ -67,6 +67,9 @@ class PaletteImageLock
 		~PaletteImageLock();
 		uint8_t get(Vec2<int> pos);
 		void set(Vec2<int> pos, uint8_t idx);
+
+		//FIXME: Magic backdoor to the index data
+		void *getData();
 };
 
 class RGBImage : public Image
