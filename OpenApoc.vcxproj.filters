@@ -30,16 +30,7 @@
     <ClCompile Include="framework\event.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="transitions\fadein.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="transitions\fadeout.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="framework\framework.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="shaders\greyscale.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="framework\main.cpp">
@@ -54,16 +45,10 @@
     <ClCompile Include="game\apocresources\music.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\apocresources\palette.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="game\apocresources\pck.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game\apocresources\rawsound.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="shaders\scanlines.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="framework\stagestack.cpp">
@@ -100,9 +85,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game\general\optionsmenu.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="transitions\fadeacross.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="forms\vscrollbar.cpp">
@@ -153,6 +135,21 @@
     <ClCompile Include="game\resources\vehiclefactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="framework\palette.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\render\gl_3_0.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\render\ogl_renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\imageloader\allegro_image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -176,16 +173,7 @@
     <ClInclude Include="framework\event.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="transitions\fadein.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="transitions\fadeout.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="framework\framework.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="shaders\greyscale.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework\includes.h">
@@ -206,34 +194,16 @@
     <ClInclude Include="game\apocresources\music.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\apocresources\palette.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game\apocresources\pck.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\apocresources\rawsound.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="shaders\scanlines.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="shaders\shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="shaders\shaders.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="framework\stage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework\stagestack.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="library\tilemap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="transitions\transitions.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework\data.h">
@@ -282,9 +252,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\general\optionsmenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="transitions\fadeacross.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="forms\vscrollbar.h">
@@ -342,6 +309,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\resources\vehiclefactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\palette.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\render\gl_3_0.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
