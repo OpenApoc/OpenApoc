@@ -1,5 +1,6 @@
 #include "framework/renderer.h"
 #include "framework/image.h"
+#include "framework/palette.h"
 
 #include "gl_3_0.cpp"
 
@@ -142,15 +143,12 @@ class RGBProgram : public SpriteProgram
                 "uniform vec2 screenSize;\n"
 				"uniform bool flipY;\n"
                 "void main() {\n"
-//				"  if (flipY) texcoord = vec2(position.x, -position.y);\n"
-//				"  else texcoord = position;\n;"
 				"  texcoord = position;\n"
                 "  vec2 tmpPos = position;\n"
                 "  tmpPos *= size;\n"
                 "  tmpPos += offset;\n"
                 "  tmpPos /= screenSize;\n"
                 "  tmpPos -= vec2(0.5,0.5);\n"
-//				"  gl_Position = vec4((tmpPos.x*2), (tmpPos.y*2),0,1);\n"
 				"  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
 				"  else gl_Position = vec4((tmpPos.x*2), (tmpPos.y*2),0,1);\n"
                 "}\n"
@@ -185,6 +183,61 @@ class RGBProgram : public SpriteProgram
 		}
 };
 
+class PaletteProgram : public SpriteProgram
+{
+	private:
+		constexpr static const char* vertexSource = {
+				"#version 130\n"
+				"in vec2 position;\n"
+				"uniform vec2 size;\n"
+				"uniform vec2 offset;\n"
+				"out vec2 texcoord;\n"
+				"uniform vec2 screenSize;\n"
+				"uniform bool flipY;\n"
+				"void main() {\n"
+				"  texcoord = position;\n"
+				"  vec2 tmpPos = position;\n"
+				"  tmpPos *= size;\n"
+				"  tmpPos += offset;\n"
+				"  tmpPos /= screenSize;\n"
+				"  tmpPos -= vec2(0.5,0.5);\n"
+				"  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
+				"  else gl_Position = vec4((tmpPos.x*2), (tmpPos.y*2),0,1);\n"
+				"}\n"
+		};
+		constexpr static const char* fragmentSource  = {
+				"#version 130\n"
+				"in vec2 texcoord;\n"
+				"uniform sampler2D tex;\n"
+				"uniform sampler2D pal;\n"
+				"out vec4 out_colour;\n"
+				"void main() {\n"
+				" out_colour = texture2D(pal, vec2(texture2D(tex,texcoord).r,0));\n"
+				"}\n"
+		};
+	public:
+		GLuint palLoc;
+		PaletteProgram()
+			: SpriteProgram(vertexSource, fragmentSource)
+			{
+				this->posLoc = gl::GetAttribLocation(this->prog, "position");
+				this->sizeLoc = gl::GetUniformLocation(this->prog, "size");
+				this->offsetLoc = gl::GetUniformLocation(this->prog, "offset");
+				this->screenSizeLoc = gl::GetUniformLocation(this->prog, "screenSize");
+				this->texLoc = gl::GetUniformLocation(this->prog, "tex");
+				this->palLoc = gl::GetUniformLocation(this->prog, "pal");
+				this->flipYLoc = gl::GetUniformLocation(this->prog, "flipY");
+			}
+		void setUniforms(Vec2<float> offset, Vec2<float> size, Vec2<int> screenSize, bool flipY, GLint texUnit = 0, GLint palUnit = 1)
+		{
+			this->Uniform(this->offsetLoc, offset);
+			this->Uniform(this->sizeLoc, size);
+			this->Uniform(this->screenSizeLoc, screenSize);
+			this->Uniform(this->texLoc, texUnit);
+			this->Uniform(this->palLoc, palUnit);
+			this->Uniform(this->flipYLoc, flipY);
+		}
+};
 class SolidColourProgram : public Program
 {
 	private:
@@ -258,13 +311,51 @@ public:
 	}
 };
 
+class ActiveTexture
+{
+	ActiveTexture(const ActiveTexture &) = delete;
+public:
+	GLenum prevUnit;
+	static GLenum getUnitEnum(int unit)
+	{
+		return gl::TEXTURE0 + unit;
+	}
+
+	ActiveTexture(int unit)
+	{
+		gl::GetIntegerv(gl::ACTIVE_TEXTURE, (GLint*)&prevUnit);
+		gl::ActiveTexture(getUnitEnum(unit));
+	}
+	~ActiveTexture()
+	{
+		gl::ActiveTexture(prevUnit);
+	}
+};
+
+class UnpackAlignment
+{
+	UnpackAlignment(const UnpackAlignment &) = delete;
+public:
+	GLint prevAlign;
+	UnpackAlignment(int align)
+	{
+		gl::GetIntegerv(gl::UNPACK_ALIGNMENT, &prevAlign);
+		gl::PixelStorei(gl::UNPACK_ALIGNMENT, align);
+	}
+	~UnpackAlignment()
+	{
+		gl::PixelStorei(gl::UNPACK_ALIGNMENT, prevAlign);
+	}
+};
+
 class BindTexture
 {
 	BindTexture(const BindTexture &) = delete;
 public:
 	GLenum bind;
 	GLuint prevID;
-	GLenum getBindEnum(GLenum e)
+	int unit;
+	static GLenum getBindEnum(GLenum e)
 	{
 		switch (e) {
 			case gl::TEXTURE_1D: return gl::TEXTURE_BINDING_1D;
@@ -273,14 +364,16 @@ public:
 			default: assert(0);
 		}
 	}
-	BindTexture(GLuint id, GLenum bind = gl::TEXTURE_2D)
-		: bind(bind)
+	BindTexture(GLuint id, GLint unit = 0, GLenum bind = gl::TEXTURE_2D)
+		: unit(unit), bind(bind)
 	{
+		ActiveTexture a(unit);
 		gl::GetIntegerv(getBindEnum(bind), (GLint*)&prevID);
 		gl::BindTexture(bind, id);
 	}
 	~BindTexture()
 	{
+		ActiveTexture a(unit);
 		gl::BindTexture(bind, prevID);
 	}
 };
@@ -362,15 +455,63 @@ class GLRGBImage : public RendererImageData
 		}
 };
 
+class GLPalette : public RendererImageData
+{
+	public:
+		GLuint texID;
+		Vec2<float> size;
+		std::weak_ptr<Palette> parent;
+		GLPalette(std::shared_ptr<Palette> parent)
+			: parent(parent), size(Vec2<float>(parent->colours.size(), 1))
+		{
+			gl::GenTextures(1, &this->texID);
+			BindTexture b(this->texID);
+			gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::NEAREST);
+			gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::NEAREST);
+			gl::TexImage2D(gl::TEXTURE_2D, 0, gl::RGBA, parent->colours.size(), 1, 0, gl::RGBA, gl::UNSIGNED_BYTE, parent->colours.data());
+
+		}
+		virtual ~GLPalette()
+		{
+			gl::DeleteTextures(1, &this->texID);
+		}
+};
+
+class GLPaletteImage : public RendererImageData
+{
+	public:
+		GLuint texID;
+		Vec2<float> size;
+		std::weak_ptr<PaletteImage> parent;
+		GLPaletteImage(std::shared_ptr<PaletteImage> parent)
+			: parent(parent), size(parent->size)
+		{
+			PaletteImageLock l(parent, ImageLockUse::Read);
+			gl::GenTextures(1, &this->texID);
+			BindTexture b(this->texID);
+			UnpackAlignment align(1);
+			gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::NEAREST);
+			gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::NEAREST);
+			gl::TexImage2D(gl::TEXTURE_2D, 0, gl::RED, parent->size.x, parent->size.y, 0, gl::RED, gl::UNSIGNED_BYTE, l.getData());
+
+		}
+		virtual ~GLPaletteImage()
+		{
+			gl::DeleteTextures(1, &this->texID);
+		}
+};
 class OGL30Renderer : public Renderer
 {
 private:
 	std::shared_ptr<RGBProgram> rgbProgram;
 	std::shared_ptr<SolidColourProgram> colourProgram;
+	std::shared_ptr<PaletteProgram> paletteProgram;
 	GLuint currentBoundProgram;
 	GLuint currentBoundFBO;
 
 	std::shared_ptr<Surface> currentSurface;
+	std::shared_ptr<Palette> currentPalette;
+
 	friend class RendererSurfaceBinding;
 	virtual void setSurface(std::shared_ptr<Surface> s)
 	{
@@ -393,7 +534,13 @@ public:
 	OGL30Renderer();
 	virtual ~OGL30Renderer();
 	virtual void clear(Colour c = Colour{0,0,0,0});
-	virtual void setPalette(std::shared_ptr<Palette> p){};
+	virtual void setPalette(std::shared_ptr<Palette> p)
+	{
+		if (!p->rendererPrivateData)
+			p->rendererPrivateData.reset(new GLPalette(p));
+		this->currentPalette = p;
+	}
+	
 	virtual void draw(std::shared_ptr<Image> i, Vec2<float> position);
 	virtual void drawRotated(Image &i, Vec2<float> center, Vec2<float> position, float angle){};
 	virtual void drawScaled(Image &i, Vec2<float> position, Vec2<float> size, Scaler scaler = Scaler::Linear){};
@@ -428,6 +575,20 @@ public:
 		BindTexture t(img.texID);
 		IdentityQuad::draw(rgbProgram->posLoc);
 	}
+	
+	void DrawPalette(GLPaletteImage &img, Vec2<float> offset)
+	{
+		BindProgram(paletteProgram);
+		bool flipY = false;
+		if (currentBoundFBO == 0)
+			flipY = true;
+		paletteProgram->setUniforms(offset, img.size, this->currentSurface->size, flipY);
+		BindTexture t(img.texID, 0);
+
+		BindTexture p(static_cast<GLPalette*>(this->currentPalette->rendererPrivateData.get())->texID, 1);
+
+		IdentityQuad::draw(paletteProgram->posLoc);
+	}
 
 	void DrawSurface(FBOData &fbo, Vec2<float> offset)
 	{
@@ -454,7 +615,7 @@ public:
 
 
 OGL30Renderer::OGL30Renderer()
-	: rgbProgram(new RGBProgram()), colourProgram(new SolidColourProgram())
+	: rgbProgram(new RGBProgram()), colourProgram(new SolidColourProgram()), paletteProgram(new PaletteProgram())
 {
 	GLint viewport[4];
 	gl::GetIntegerv(gl::VIEWPORT, viewport);
@@ -467,6 +628,9 @@ OGL30Renderer::OGL30Renderer()
 	GLint maxTexArrayLayers;
 	gl::GetIntegerv(gl::MAX_ARRAY_TEXTURE_LAYERS, &maxTexArrayLayers);
 	std::cerr << "MAX_ARRAY_TEXTURE_LAYERS: \"" << maxTexArrayLayers << "\"\n";
+	GLint maxTexUnits;
+	gl::GetIntegerv(gl::MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTexUnits);
+	std::cerr << "MAX_COMBINED_TEXTURE_IMAGE_UNITS: \"" << maxTexUnits << "\"\n";
 	gl::Enable(gl::BLEND);
 	gl::BlendFunc(gl::SRC_ALPHA, gl::ONE_MINUS_SRC_ALPHA);
 }
@@ -496,6 +660,19 @@ void OGL30Renderer::draw(std::shared_ptr<Image> image, Vec2<float> position)
 			image->rendererPrivateData.reset(img);
 		}
 		DrawRGB(*img, position);
+		return;
+	}
+	
+	std::shared_ptr<PaletteImage> paletteImage = std::dynamic_pointer_cast<PaletteImage>(image);
+	if (paletteImage)
+	{
+		GLPaletteImage *img = dynamic_cast<GLPaletteImage*>(paletteImage->rendererPrivateData.get());
+		if (!img)
+		{
+			img = new GLPaletteImage(paletteImage);
+			image->rendererPrivateData.reset(img);
+		}
+		DrawPalette(*img, position);
 		return;
 	}
 
