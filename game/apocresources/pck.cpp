@@ -2,6 +2,7 @@
 #include "pck.h"
 #include "framework/data.h"
 #include "framework/image.h"
+#include "framework/renderer.h"
 
 namespace OpenApoc {
 
@@ -260,6 +261,9 @@ PCKLoader::load(Data &data, const std::string PckFilename, const std::string Tab
 		if (imageSet->images[i]->size.y > imageSet->maxSize.y)
 			imageSet->maxSize.y = imageSet->images[i]->size.y;
 	}
+
+	std::cerr << "loaded \"" << PckFilename << "\" - " << imageSet->images.size() << " images, max size {" << imageSet->maxSize.x << "," << imageSet->maxSize.y << "}\n";
+
 	return imageSet;
 }
 }; //namespace OpenApoc

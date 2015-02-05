@@ -108,6 +108,8 @@ class ImageSet
 public:
 	std::vector<std::shared_ptr<Image> > images;
 	Vec2<int> maxSize;
+
+	std::unique_ptr<RendererImageData> rendererPrivateData;
 };
 
 }; //namespace OpenApoc

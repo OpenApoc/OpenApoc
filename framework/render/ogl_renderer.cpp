@@ -238,6 +238,95 @@ class PaletteProgram : public SpriteProgram
 			this->Uniform(this->flipYLoc, flipY);
 		}
 };
+
+class PaletteSetProgram : public Program
+{
+	private:
+		constexpr static const char* vertexSource = {
+				"#version 130\n"
+				"in vec2 position;\n"
+				"in vec2 texcoord_in;\n"
+				"in int sprite_in;\n"
+				"out vec2 texcoord;\n"
+				"flat out int sprite;\n"
+				"uniform vec2 screenSize;\n"
+				"uniform bool flipY;\n"
+				"void main() {\n"
+				"  texcoord = texcoord_in;\n"
+				"  sprite = sprite_in;\n"
+				"  vec2 tmpPos = position;\n"
+				"  tmpPos /= screenSize;\n"
+				"  tmpPos -= vec2(0.5,0.5);\n"
+				"  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
+				"  else gl_Position = vec4((tmpPos.x*2), (tmpPos.y*2),0,1);\n"
+				"}\n"
+		};
+		constexpr static const char* fragmentSource  = {
+				"#version 130\n"
+				"in vec2 texcoord;\n"
+				"flat in int sprite;\n"
+				"uniform isampler2DArray tex;\n"
+				"uniform sampler2D pal;\n"
+				"out vec4 out_colour;\n"
+				"void main() {\n"
+				" out_colour = texelFetch(pal, ivec2(texelFetch(tex,ivec3(texcoord.r, texcoord.g, sprite), 0).r,0),0);\n"
+				"}\n"
+		};
+	public:
+		GLuint posLoc;
+		GLuint texcoordLoc;
+		GLuint spriteLoc;
+		GLuint screenSizeLoc;
+		GLuint texLoc;
+		GLuint palLoc;
+		GLuint flipYLoc;
+		PaletteSetProgram()
+			: Program(vertexSource, fragmentSource)
+			{
+				this->posLoc = gl::GetAttribLocation(this->prog, "position");
+				this->texcoordLoc = gl::GetAttribLocation(this->prog, "texcoord_in");
+				this->spriteLoc = gl::GetAttribLocation(this->prog, "sprite_in");
+
+				this->screenSizeLoc = gl::GetUniformLocation(this->prog, "screenSize");
+				this->texLoc = gl::GetUniformLocation(this->prog, "tex");
+				this->palLoc = gl::GetUniformLocation(this->prog, "pal");
+				this->flipYLoc = gl::GetUniformLocation(this->prog, "flipY");
+			}
+		void setUniforms(Vec2<int> screenSize, bool flipY, GLint texUnit = 0, GLint palUnit = 1)
+		{
+			this->Uniform(this->screenSizeLoc, screenSize);
+			this->Uniform(this->texLoc, texUnit);
+			this->Uniform(this->palLoc, palUnit);
+			this->Uniform(this->flipYLoc, flipY);
+		}
+		class VertexDef
+		{
+		public:
+			VertexDef(Vec2<float> pos, Vec2<float> texcoords, int sprite)
+				: pos(pos), texcoords(texcoords), sprite(sprite){}
+
+			Vec2<float> pos;
+			Vec2<float> texcoords;
+			int sprite;
+		};
+		static_assert(sizeof(VertexDef) == 20, "VertexDef should be tightly packed");
+		class SpriteDef
+		{
+		public:
+			SpriteDef(Vec2<float> offset, Vec2<float> size, int sprite)
+				: v{
+					{offset, Vec2<float>{0,0}, sprite},
+					{offset + size * Vec2<float>{0,1}, Vec2<float>{0,1}, sprite},
+					{offset + size * Vec2<float>{1,0}, Vec2<float>{1,0}, sprite},
+					{offset + size * Vec2<float>{1,1}, Vec2<float>{1,1}, sprite},
+				}
+			{}
+
+			VertexDef v[4];
+		};
+		static_assert(sizeof(SpriteDef) == sizeof(VertexDef)*4, "SpriteDef should be tightly packed");
+};
+
 class SolidColourProgram : public Program
 {
 	private:
@@ -506,6 +595,7 @@ private:
 	std::shared_ptr<RGBProgram> rgbProgram;
 	std::shared_ptr<SolidColourProgram> colourProgram;
 	std::shared_ptr<PaletteProgram> paletteProgram;
+	std::shared_ptr<PaletteSetProgram> paletteSetProgram;
 	GLuint currentBoundProgram;
 	GLuint currentBoundFBO;
 
@@ -615,7 +705,7 @@ public:
 
 
 OGL30Renderer::OGL30Renderer()
-	: rgbProgram(new RGBProgram()), colourProgram(new SolidColourProgram()), paletteProgram(new PaletteProgram())
+	: rgbProgram(new RGBProgram()), colourProgram(new SolidColourProgram()), paletteProgram(new PaletteProgram()), paletteSetProgram(new PaletteSetProgram())
 {
 	GLint viewport[4];
 	gl::GetIntegerv(gl::VIEWPORT, viewport);

@@ -188,8 +188,8 @@ void TileView::Render()
 {
 	int dpyWidth = fw.Display_GetWidth();
 	int dpyHeight = fw.Display_GetHeight();
-	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
 	Renderer &r = *fw.renderer;
+	r.clear();
 	r.setPalette(this->pal);
 	for (int y = 0; y < map.size.y; y++)
 	{
