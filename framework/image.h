@@ -7,6 +7,7 @@ namespace OpenApoc {
 class Palette;
 class RGBImage;
 class RendererImageData;
+class ImageSet;
 
 enum class ImageLockUse
 {
@@ -25,6 +26,8 @@ class Image
 
 		std::unique_ptr<RendererImageData> rendererPrivateData;
 		bool dirty;
+
+		std::weak_ptr<ImageSet> owningSet;
 };
 
 class ImageLoader
@@ -98,6 +101,13 @@ class RGBImageLock
 
 		//FIXME: Magic backdoor to the RGBA data
 		void *getData();
+};
+
+class ImageSet
+{
+public:
+	std::vector<std::shared_ptr<Image> > images;
+	Vec2<int> maxSize;
 };
 
 }; //namespace OpenApoc

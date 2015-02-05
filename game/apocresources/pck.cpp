@@ -5,14 +5,45 @@
 
 namespace OpenApoc {
 
+namespace  {
+
+typedef struct PCKCompression1ImageHeader
+{
+	uint8_t Reserved1;
+	uint8_t Reserved2;
+	uint16_t LeftMostPixel;
+	uint16_t RightMostPixel;
+	uint16_t TopMostPixel;
+	uint16_t BottomMostPixel;
+} PCKImageHeader;
+
+typedef struct PCKCompression1RowHeader
+{
+	// int16_t SkipPixels; -- Read seperately to get eof record
+	uint8_t ColumnToStartAt;
+	uint8_t PixelsInRow;
+	uint8_t BytesInRow;
+	uint8_t PaddingInRow;
+} PCKCompression1Header;
+
+class PCK
+{
+
+	private:
+
+		void ProcessFile(Data &d, std::string PckFilename, std::string TabFilename, int Index);
+		void LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index);
+		void LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index);
+
+	public:
+		PCK( Data &d, std::string PckFilename, std::string TabFilename);
+		~PCK();
+
+		std::vector<std::shared_ptr<PaletteImage> > images;
+};
 PCK::PCK(Data &d, std::string PckFilename, std::string TabFilename)
 {
 	ProcessFile(d, PckFilename, TabFilename, -1);
-}
-
-PCK::PCK(Data &d, std::string PckFilename, std::string TabFilename, int Index)
-{
-	ProcessFile(d, PckFilename, TabFilename, Index);
 }
 
 PCK::~PCK()
@@ -38,16 +69,6 @@ void PCK::ProcessFile(Data &d, std::string PckFilename, std::string TabFilename,
 
 	al_fclose(tab);
 	al_fclose(pck);
-}
-
-int PCK::GetImageCount()
-{
-	return images.size();
-}
-
-std::shared_ptr<PaletteImage> PCK::GetImage( int Index )
-{
-	return images.at(Index);
 }
 
 void PCK::LoadVersion1Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
@@ -220,5 +241,25 @@ void PCK::LoadVersion2Format(ALLEGRO_FILE* pck, ALLEGRO_FILE* tab, int Index)
 		}
 
 	}
+}
+}; //anonymous namespace
+
+std::shared_ptr<ImageSet>
+PCKLoader::load(Data &data, const std::string PckFilename, const std::string TabFilename)
+{
+	PCK *p = new PCK(data, PckFilename, TabFilename);
+	auto imageSet = std::make_shared<ImageSet>();
+	imageSet->maxSize = Vec2<int>{0,0};
+	imageSet->images.resize(p->images.size());
+	for (int i = 0; i < p->images.size(); i++)
+	{
+		imageSet->images[i] = p->images[i];
+		imageSet->images[i]->owningSet = imageSet;
+		if (imageSet->images[i]->size.x > imageSet->maxSize.x)
+			imageSet->maxSize.x = imageSet->images[i]->size.x;
+		if (imageSet->images[i]->size.y > imageSet->maxSize.y)
+			imageSet->maxSize.y = imageSet->images[i]->size.y;
+	}
+	return imageSet;
 }
 }; //namespace OpenApoc

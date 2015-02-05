@@ -12,11 +12,11 @@ CityTile::loadTilesFromFile(Framework &fw)
 
 	auto pal = fw.data.load_palette("UFODATA/PAL_04.DAT");
 
-	PCK sprites{fw.data, "UFODATA/CITY.PCK", "UFODATA/CITY.TAB"};
+	auto sprites = fw.data.load_image_set("PCK:UFODATA/CITY.PCK:UFODATA/CITY.TAB");
 
 	auto datFile = fw.data.load_file("UFODATA/CITYMAP.DAT", "rb");
 
-	int numTiles = sprites.GetImageCount();
+	int numTiles = sprites->images.size();
 
 	int64_t datFileSize = al_fsize(datFile);
 
@@ -33,7 +33,7 @@ CityTile::loadTilesFromFile(Framework &fw)
 	for (int t = 0; t < numTiles; t++)
 	{
 		CityTile tile;
-		tile.sprite = sprites.GetImage(t);
+		tile.sprite = sprites->images[t];
 		v.push_back(tile);
 	}
 

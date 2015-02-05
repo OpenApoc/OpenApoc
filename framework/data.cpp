@@ -5,14 +5,47 @@
 
 namespace OpenApoc {
 
-Data::Data(const std::string root) :
+Data::Data(const std::string root, int imageCacheSize, int imageSetCacheSize) :
 	root(root), DIR_SEP('/'), imageLoader(createImageLoader())
 {
+	for (int i = 0; i < imageCacheSize; i++)
+		pinnedImages.push(nullptr);
+	for (int i = 0; i < imageSetCacheSize; i++)
+		pinnedImageSets.push(nullptr);
 }
 
 Data::~Data()
 {
 
+}
+
+std::shared_ptr<ImageSet>
+Data::load_image_set(const std::string path)
+{
+	std::string cacheKey = Strings::ToUpper(path);
+	std::shared_ptr<ImageSet> imgSet = this->imageSetCache[cacheKey].lock();
+	if (imgSet)
+	{
+		return imgSet;
+	}
+	//PCK resources come in the format:
+	//"PCK:PCKFILE:TABFILE[:optional/ignored]"
+	if (path.substr(0, 4) == "PCK:")
+	{
+		std::vector<std::string> splitString = Strings::Split(path, ':');
+		imgSet = PCKLoader::load(*this, splitString[1], splitString[2]);
+	}
+	else
+	{
+		std::cerr << "Unknown image set format \"" << path << "\"\n";
+		return nullptr;
+	}
+
+	this->pinnedImageSets.push(imgSet);
+	this->pinnedImageSets.pop();
+
+	this->imageSetCache[cacheKey] = imgSet;
+	return imgSet;
 }
 
 std::shared_ptr<Image>
@@ -22,20 +55,28 @@ Data::load_image(const std::string path)
 	std::string cacheKey = Strings::ToUpper(path);
 	std::shared_ptr<Image> img = this->imageCache[cacheKey].lock();
 	if (img)
+	{
 		return img;
+	}
+
 
 	if (path.substr(0,4) == "PCK:")
 	{
+		std::vector<std::string> splitString = Strings::Split(path, ':');
+		auto imageSet = this->load_image_set(splitString[0] + ":" + splitString[1] + ":" + splitString[2]);
+		if (!imageSet)
+		{
+			return nullptr;
+		}
 		//PCK resources come in the format:
 		//"PCK:PCKFILE:TABFILE:INDEX"
 		//or
 		//"PCK:PCKFILE:TABFILE:INDEX:PALETTE" if we want them already in rgb space
-		std::vector<std::string> splitString = Strings::Split(path, ':');
 		switch (splitString.size())
 		{
 			case 4:
 			{
-				img = PCK(*this, splitString[1], splitString[2], Strings::ToInteger(splitString[3])).GetImage(0);
+				img = imageSet->images[Strings::ToInteger(splitString[3])];
 				break;
 			}
 			case 5:
@@ -69,6 +110,9 @@ Data::load_image(const std::string path)
 			return nullptr;
 		}
 	}
+
+	this->pinnedImages.push(img);
+	this->pinnedImages.pop();
 
 	this->imageCache[cacheKey] = img;
 	return img;
