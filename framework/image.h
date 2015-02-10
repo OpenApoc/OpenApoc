@@ -28,6 +28,7 @@ class Image
 		bool dirty;
 
 		std::weak_ptr<ImageSet> owningSet;
+		unsigned indexInSet;
 };
 
 class ImageLoader
@@ -109,7 +110,7 @@ public:
 	std::vector<std::shared_ptr<Image> > images;
 	Vec2<int> maxSize;
 
-	std::unique_ptr<RendererImageData> rendererPrivateData;
+	std::shared_ptr<RendererImageData> rendererPrivateData;
 };
 
 }; //namespace OpenApoc

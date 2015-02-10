@@ -1,6 +1,7 @@
 #include "framework/renderer.h"
 #include "framework/image.h"
 #include "framework/palette.h"
+#include <memory>
 
 #include "gl_3_0.cpp"
 
@@ -589,9 +590,36 @@ class GLPaletteImage : public RendererImageData
 			gl::DeleteTextures(1, &this->texID);
 		}
 };
+
+class GLPaletteSpritesheet : public RendererImageData
+{
+	public:
+		std::weak_ptr<ImageSet> parent;
+		Vec2<int> maxSize;
+		unsigned numSprites;
+		GLuint texID;
+		GLPaletteSpritesheet(std::shared_ptr<ImageSet> parent)
+			: parent(parent), maxSize(parent->maxSize), numSprites(parent->images.size())
+		{
+			gl::GenTextures(1, &this->texID);
+			BindTexture b(this->texID, gl::TEXTURE_2D_ARRAY);
+
+		}
+		virtual ~GLPaletteSpritesheet()
+		{
+			gl::DeleteTextures(1, &this->texID);
+		}
+};
+
 class OGL30Renderer : public Renderer
 {
 private:
+	enum class RendererState
+	{
+		Idle,
+		BatchingSpritesheet,
+	};
+	RendererState state;
 	std::shared_ptr<RGBProgram> rgbProgram;
 	std::shared_ptr<SolidColourProgram> colourProgram;
 	std::shared_ptr<PaletteProgram> paletteProgram;
@@ -701,6 +729,62 @@ public:
 		IdentityQuad::draw(colourProgram->posLoc);
 	}
 
+	class BatchedVertex
+	{
+	public:
+		Vec2<float> position;
+		Vec2<float> texCoord;
+		int spriteIdx;
+		BatchedVertex()
+		{}
+		BatchedVertex(Vec2<float> p, Vec2<float> tc, int i)
+			: position(p), texCoord(tc), spriteIdx(i){}
+	};
+	static_assert(sizeof(BatchedVertex) == 20, "BatchedVertex unexpected size");
+
+	class BatchedSprite
+	{
+	public:
+		std::array<BatchedVertex, 4> vertices;
+		BatchedSprite(Vec2<float> screenPosition, Vec2<float> spriteSize,
+			int spriteIdx, Vec2<float> maxTexSize)
+		{
+			Vec2<float> maxTexCoords = spriteSize/maxTexSize;
+			Vec2<float> maxPosition = screenPosition + spriteSize;
+			vertices[0] = BatchedVertex{
+				screenPosition,
+				Vec2<float>{0,0},
+				spriteIdx
+			};
+			vertices[1] = BatchedVertex{
+				Vec2<float>{screenPosition.x, maxPosition.y},
+				Vec2<float>{0,maxTexCoords.y},
+				spriteIdx
+			};
+			vertices[2] = BatchedVertex{
+				Vec2<float>{maxPosition.x, screenPosition.y},
+				Vec2<float>{maxTexCoords.x,0},
+				spriteIdx
+			};
+			vertices[3] = BatchedVertex{
+				maxPosition,
+				maxTexCoords,
+				spriteIdx
+			};
+		}
+	};
+	static_assert(sizeof(BatchedSprite) == sizeof(BatchedVertex) * 4, "BatchedSprite unexpected size");
+
+	std::vector<BatchedSprite> batchedSprites;
+	unsigned maxBatchedSprites;
+	unsigned maxSpritesheetSize;
+	std::shared_ptr<GLPaletteSpritesheet> boundSpritesheet;
+
+	void DrawBatchedSpritesheet()
+	{
+		
+	}
+
 };
 
 
@@ -718,6 +802,8 @@ OGL30Renderer::OGL30Renderer()
 	GLint maxTexArrayLayers;
 	gl::GetIntegerv(gl::MAX_ARRAY_TEXTURE_LAYERS, &maxTexArrayLayers);
 	std::cerr << "MAX_ARRAY_TEXTURE_LAYERS: \"" << maxTexArrayLayers << "\"\n";
+	this->maxBatchedSprites = 256;
+	this->maxSpritesheetSize = maxTexArrayLayers;
 	GLint maxTexUnits;
 	gl::GetIntegerv(gl::MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTexUnits);
 	std::cerr << "MAX_COMBINED_TEXTURE_IMAGE_UNITS: \"" << maxTexUnits << "\"\n";
@@ -740,6 +826,34 @@ OGL30Renderer::clear(Colour c)
 
 void OGL30Renderer::draw(std::shared_ptr<Image> image, Vec2<float> position)
 {
+	std::shared_ptr<ImageSet> owningSet = image->owningSet.lock();
+	if (owningSet)
+	{
+		std::shared_ptr<GLPaletteSpritesheet> ss = std::dynamic_pointer_cast<GLPaletteSpritesheet>(owningSet->rendererPrivateData);
+		if (!ss)
+		{
+			ss = std::make_shared<GLPaletteSpritesheet>(owningSet);
+			owningSet->rendererPrivateData = ss;
+		}
+		switch (this->state)
+		{
+			default:
+				this->flush();
+			case RendererState::BatchingSpritesheet:
+				if (ss != this->boundSpritesheet ||
+				    this->batchedSprites.size() >= this->maxBatchedSprites)
+				{
+					this->flush();
+				}
+			case RendererState::Idle:
+				break;
+		}
+		this->state = RendererState::BatchingSpritesheet;
+		this->batchedSprites.emplace_back(
+				position, Vec2<float>(image->size.x, image->size.y),
+				image->indexInSet, Vec2<float>{owningSet->maxSize.x, owningSet->maxSize.y}
+			);
+	}
 	std::shared_ptr<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
 	if (rgbImage)
 	{
@@ -787,6 +901,15 @@ void OGL30Renderer::drawFilledRect(Vec2<float> position, Vec2<float> size, Colou
 void
 OGL30Renderer::flush()
 {
+	switch (this->state)
+	{
+		case RendererState::Idle:
+			break;
+		case RendererState::BatchingSpritesheet:
+			this->DrawBatchedSpritesheet();
+			this->state = RendererState::Idle;
+	}
+	this->state = RendererState::Idle;
 }
 
 std::string
