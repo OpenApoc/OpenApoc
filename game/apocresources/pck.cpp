@@ -256,6 +256,7 @@ PCKLoader::load(Data &data, const std::string PckFilename, const std::string Tab
 	{
 		imageSet->images[i] = p->images[i];
 		imageSet->images[i]->owningSet = imageSet;
+		imageSet->images[i]->indexInSet = i;
 		if (imageSet->images[i]->size.x > imageSet->maxSize.x)
 			imageSet->maxSize.x = imageSet->images[i]->size.x;
 		if (imageSet->images[i]->size.y > imageSet->maxSize.y)

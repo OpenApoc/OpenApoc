@@ -270,7 +270,8 @@ class PaletteSetProgram : public Program
 				"uniform sampler2D pal;\n"
 				"out vec4 out_colour;\n"
 				"void main() {\n"
-				" out_colour = texelFetch(pal, ivec2(texelFetch(tex,ivec3(texcoord.r, texcoord.g, sprite), 0).r,0),0);\n"
+				" int idx = texelFetch(tex, ivec3(texcoord.x, texcoord.y, sprite), 0).r;\n"
+				" out_colour = texelFetch(pal, ivec2(idx,0), 0);\n"
 				"}\n"
 		};
 	public:
@@ -451,6 +452,7 @@ public:
 			case gl::TEXTURE_1D: return gl::TEXTURE_BINDING_1D;
 			case gl::TEXTURE_2D: return gl::TEXTURE_BINDING_2D;
 			case gl::TEXTURE_3D: return gl::TEXTURE_BINDING_3D;
+			case gl::TEXTURE_2D_ARRAY: return gl::TEXTURE_BINDING_2D_ARRAY;
 			default: assert(0);
 		}
 	}
@@ -602,7 +604,27 @@ class GLPaletteSpritesheet : public RendererImageData
 			: parent(parent), maxSize(parent->maxSize), numSprites(parent->images.size())
 		{
 			gl::GenTextures(1, &this->texID);
-			BindTexture b(this->texID, gl::TEXTURE_2D_ARRAY);
+			BindTexture b(this->texID, 0, gl::TEXTURE_2D_ARRAY);
+			UnpackAlignment align(1);
+			gl::TexParameteri(gl::TEXTURE_2D_ARRAY, gl::TEXTURE_MIN_FILTER, gl::NEAREST);
+			gl::TexParameteri(gl::TEXTURE_2D_ARRAY, gl::TEXTURE_MAG_FILTER, gl::NEAREST);
+			gl::TexImage3D(gl::TEXTURE_2D_ARRAY, 0, gl::R8UI, maxSize.x, maxSize.y, numSprites, 0, gl::RED_INTEGER, gl::UNSIGNED_BYTE, NULL);
+
+			std::unique_ptr<char[]> zeros(new char[maxSize.x * maxSize.y]);
+			memset(zeros.get(), 1, maxSize.x * maxSize.y);
+
+			for (int i = 0; i < numSprites; i++)
+			{
+				std::shared_ptr<PaletteImage> img =
+					std::dynamic_pointer_cast<PaletteImage>(parent->images[i]);
+				//FIXME: HACK - better way of clearing undefined portions to '0'?
+				gl::TexSubImage3D(gl::TEXTURE_2D_ARRAY, 0, 0, 0, i, maxSize.x, maxSize.y, 1, gl::RED_INTEGER, gl::UNSIGNED_BYTE, zeros.get());
+
+				PaletteImageLock l(img, ImageLockUse::Read);
+
+				gl::TexSubImage3D(gl::TEXTURE_2D_ARRAY, 0, 0, 0, i, img->size.x, img->size.y, 1, gl::RED_INTEGER, gl::UNSIGNED_BYTE, l.getData());
+
+			}
 
 		}
 		virtual ~GLPaletteSpritesheet()
@@ -738,7 +760,9 @@ public:
 		BatchedVertex()
 		{}
 		BatchedVertex(Vec2<float> p, Vec2<float> tc, int i)
-			: position(p), texCoord(tc), spriteIdx(i){}
+			: position(p), texCoord(tc), spriteIdx(i)
+			{
+			}
 	};
 	static_assert(sizeof(BatchedVertex) == 20, "BatchedVertex unexpected size");
 
@@ -749,7 +773,7 @@ public:
 		BatchedSprite(Vec2<float> screenPosition, Vec2<float> spriteSize,
 			int spriteIdx, Vec2<float> maxTexSize)
 		{
-			Vec2<float> maxTexCoords = spriteSize/maxTexSize;
+			Vec2<float> maxTexCoords = spriteSize;
 			Vec2<float> maxPosition = screenPosition + spriteSize;
 			vertices[0] = BatchedVertex{
 				screenPosition,
@@ -780,8 +804,33 @@ public:
 	unsigned maxSpritesheetSize;
 	std::shared_ptr<GLPaletteSpritesheet> boundSpritesheet;
 
+	std::unique_ptr<GLint[]> firstList;
+	std::unique_ptr<GLsizei[]> countList;
+
 	void DrawBatchedSpritesheet()
 	{
+		BindProgram(paletteSetProgram);
+		bool flipY = false;
+		if (currentBoundFBO == 0)
+			flipY = true;
+		paletteSetProgram->setUniforms(this->currentSurface->size, flipY);
+		BindTexture t(this->boundSpritesheet->texID, 0, gl::TEXTURE_2D_ARRAY);
+		BindTexture p(static_cast<GLPalette*>(this->currentPalette->rendererPrivateData.get())->texID, 1);
+
+		gl::EnableVertexAttribArray(paletteSetProgram->posLoc);
+		gl::EnableVertexAttribArray(paletteSetProgram->texcoordLoc);
+		gl::EnableVertexAttribArray(paletteSetProgram->spriteLoc);
+
+		const char* vertexPtr = (const char*)this->batchedSprites.data();
+
+		gl::VertexAttribPointer(paletteSetProgram->posLoc, 2, gl::FLOAT, gl::FALSE_, sizeof(BatchedVertex), vertexPtr + offsetof(BatchedVertex, position));
+		gl::VertexAttribPointer(paletteSetProgram->texcoordLoc, 2, gl::FLOAT, gl::FALSE_, sizeof(BatchedVertex), vertexPtr + offsetof(BatchedVertex, texCoord));
+		gl::VertexAttribIPointer(paletteSetProgram->spriteLoc, 1, gl::INT, sizeof(BatchedVertex), vertexPtr + offsetof(BatchedVertex, spriteIdx));
+
+		gl::MultiDrawArrays(gl::TRIANGLE_STRIP, this->firstList.get(), this->countList.get(), this->batchedSprites.size());
+
+		this->batchedSprites.clear();
+		this->state = RendererState::Idle;
 		
 	}
 
@@ -804,6 +853,16 @@ OGL30Renderer::OGL30Renderer()
 	std::cerr << "MAX_ARRAY_TEXTURE_LAYERS: \"" << maxTexArrayLayers << "\"\n";
 	this->maxBatchedSprites = 256;
 	this->maxSpritesheetSize = maxTexArrayLayers;
+	
+	this->firstList.reset(new GLint[this->maxBatchedSprites]); 
+	this->countList.reset(new GLsizei[this->maxBatchedSprites]); 
+
+	for (int i = 0; i < this->maxBatchedSprites; i++)
+	{
+		this->firstList[i] = 4*i;
+		this->countList[i] = 4;
+	}
+
 	GLint maxTexUnits;
 	gl::GetIntegerv(gl::MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTexUnits);
 	std::cerr << "MAX_COMBINED_TEXTURE_IMAGE_UNITS: \"" << maxTexUnits << "\"\n";
@@ -848,12 +907,16 @@ void OGL30Renderer::draw(std::shared_ptr<Image> image, Vec2<float> position)
 			case RendererState::Idle:
 				break;
 		}
+		this->boundSpritesheet = ss;
 		this->state = RendererState::BatchingSpritesheet;
 		this->batchedSprites.emplace_back(
 				position, Vec2<float>(image->size.x, image->size.y),
 				image->indexInSet, Vec2<float>{owningSet->maxSize.x, owningSet->maxSize.y}
 			);
+		return;
 	}
+	if (this->state != RendererState::Idle)
+		this->flush();
 	std::shared_ptr<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
 	if (rgbImage)
 	{
@@ -907,7 +970,7 @@ OGL30Renderer::flush()
 			break;
 		case RendererState::BatchingSpritesheet:
 			this->DrawBatchedSpritesheet();
-			this->state = RendererState::Idle;
+			break;
 	}
 	this->state = RendererState::Idle;
 }
