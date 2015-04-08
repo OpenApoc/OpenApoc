@@ -41,6 +41,8 @@ ConfigFile::save(const std::string fileName)
 		return;
 	}
 
+	outFile << "# Lines starting with a '#' are ignored\n";
+
 	for (auto &pair : this->values)
 	{
 		//If the value is the default, print it commented out
