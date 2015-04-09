@@ -2,20 +2,38 @@
 #include "game/apocresources/pck.h"
 #include "game/apocresources/apocpalette.h"
 #include "palette.h"
+#include "ignorecase.h"
 
 namespace OpenApoc {
 
-Data::Data(const std::string root, int imageCacheSize, int imageSetCacheSize) :
-	root(root), DIR_SEP('/'), imageLoader(createImageLoader())
+Data::Data(const char *programName, std::vector<std::string> paths, int imageCacheSize, int imageSetCacheSize) :
+	imageLoader(createImageLoader())
 {
+	PHYSFS_init(programName);
+	std::cerr << "PHYSFS_init(" << programName << ")\n";
+	this->writeDir = PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME);
+	std::cerr << "Setting write dir to \"" << this->writeDir << "\"\n";
+	PHYSFS_setWriteDir(this->writeDir.c_str());
 	for (int i = 0; i < imageCacheSize; i++)
 		pinnedImages.push(nullptr);
 	for (int i = 0; i < imageSetCacheSize; i++)
 		pinnedImageSets.push(nullptr);
+	
+	//Paths are supplied in inverse-search order (IE the last in 'paths' should be the first searched)
+	for(auto &p : paths)
+	{
+		std::cerr << "Appending resouce dir \"" << p << "\"\n";
+		if (!PHYSFS_mount(p.c_str(), "/", 0))
+			std::cerr << "Failed to add resource dir!\n";
+		std::cerr << "Resource dir mounted to \"" << PHYSFS_getMountPoint(p.c_str()) << "\"\n";
+	}
+	//Finally, the write directory trumps all
+	PHYSFS_mount(writeDir.c_str(), "/", 0);
 }
 
 Data::~Data()
 {
+	PHYSFS_deinit();
 
 }
 
@@ -97,16 +115,10 @@ Data::load_image(const std::string path)
 	}
 	else
 	{
-		std::string fullPath = this->GetActualFilename(path);
-		if (fullPath == "")
-		{
-			std::cerr << "Failed to find image \"" << path << "\"\n";
-			return nullptr;
-		}
-		img = imageLoader->loadImage(fullPath);
+		img = imageLoader->loadImage(GetCorrectCaseFilename(path));
 		if (!img)
 		{
-			std::cerr << "Failed to load image \"" << fullPath << "\"\n";
+			std::cerr << "Failed to load image \"" << path << "\"\n";
 			return nullptr;
 		}
 	}
@@ -118,105 +130,17 @@ Data::load_image(const std::string path)
 	return img;
 }
 
-ALLEGRO_FILE* Data::load_file(const std::string path, const char *mode)
+PHYSFS_file* Data::load_file(const std::string path, const char *mode)
 {
-	std::string fullPath = this->GetActualFilename(path);
-	if (fullPath == "")
+	//FIXME: read/write/append modes
+	std::string foundPath = GetCorrectCaseFilename(path);
+	if (foundPath == "")
 	{
-		std::cerr << "Failed to find file \"" + path +"\"\n";
+		std::cerr << "Failed to open file \"" + path +"\"\n";
+		std::cerr << PHYSFS_getLastError() << "\n";
 		return nullptr;
 	}
-	ALLEGRO_FILE *file = al_fopen(fullPath.c_str(), mode);
-	if (file == nullptr)
-	{
-		std::cerr << "Failed to open file \"" + fullPath +"\"\n";
-		return nullptr;
-	}
-	return file;
-}
-
-#ifdef CASE_SENSITIVE_FILESYSTEM
-#include <dirent.h>
-
-class Directory
-{
-private:
-public:
-	DIR *d;
-	explicit Directory(const std::string &path)
-	{
-		d = opendir(path.c_str());
-	}
-	~Directory()
-	{
-		if (d)
-			closedir(d);
-	}
-
-	//Disallow copy
-	Directory(const Directory&) = delete;
-	//Allow move
-	Directory(Directory&&) = default;
-};
-
-std::string findInDir(std::string parent, std::list<std::string> remainingPath, const char DIR_SEP)
-{
-	Directory d(parent);
-	std::string name = remainingPath.front();
-	remainingPath.pop_front();
-	//Strip out any excess blank entries (otherwise paths like "./directory//file" would break)
-	while (name == "")
-	{
-		if (remainingPath.empty())
-			return parent;
-		name = remainingPath.front();
-		remainingPath.pop_front();
-	}
-	struct dirent entry , *result = NULL;
-	while (true)
-	{
-		int err = readdir_r(d.d, &entry, &result);
-		if (err)
-		{
-			std::cerr << "Readdir() failed with \"" << err << "\"\n";
-			return "";
-		}
-		if (!result)
-		{
-			break;
-		}
-		std::string entName(entry.d_name);
-		if (Strings::CompareCaseInsensitive(name, entName) == 0)
-		{
-			std::string entPath = parent + DIR_SEP + entName;
-			if (remainingPath.empty())
-				return entPath;
-			else
-				return findInDir(entPath, remainingPath, DIR_SEP);
-		}
-	}
-	return "";
-}
-
-static std::string GetCaseInsensitiveFilename(const std::string fileName, const char DIR_SEP)
-{
-	auto splitPaths = Strings::SplitList(fileName, DIR_SEP);
-	if (splitPaths.empty())
-		return "";
-	std::string root = splitPaths.front();
-	splitPaths.pop_front();
-	std::string path = findInDir(root, Strings::SplitList(fileName, DIR_SEP), DIR_SEP);
-	return path;
-}
-#endif
-
-std::string Data::GetActualFilename( std::string Filename )
-{
-#ifdef CASE_SENSITIVE_FILESYSTEM
-	return GetCaseInsensitiveFilename(this->root + this->DIR_SEP + Filename, this->DIR_SEP);
-#else
-	return this->root + this->DIR_SEP + Filename;
-#endif
+	return PHYSFS_openRead(foundPath.c_str());
 }
 
 std::shared_ptr<Palette>
@@ -240,6 +164,28 @@ Data::load_palette(const std::string path)
 		return p;
 	}
 	return std::shared_ptr<Palette>(loadApocPalette(*this, path));
+}
+
+std::string
+Data::GetCorrectCaseFilename(std::string Filename)
+{
+	std::unique_ptr<char[]> buf(new char[Filename.length() + 1]);
+	strncpy(buf.get(), Filename.c_str(), Filename.length());
+	buf[Filename.length()] = '\0';
+	if (PHYSFSEXT_locateCorrectCase(buf.get()))
+	{
+		std::cerr << "Failed to find file \"" << Filename << "\n";
+		return "";
+	}
+	return std::string(buf.get());
+}
+
+std::string
+Data::GetActualFilename(std::string Filename)
+{
+	std::string foundPath = GetCorrectCaseFilename(Filename);
+	std::string folder = PHYSFS_getRealDir(foundPath.c_str());
+	return folder + "/" + foundPath;
 }
 
 }; //namespace OpenApoc

@@ -11,9 +11,9 @@ namespace OpenApoc {
 
 TileView::TileView(Framework &fw, TileMap &map, Vec3<float> tileSize)
 	: Stage(fw), map(map), tileSize(tileSize), maxZDraw(10), offsetX(0), offsetY(0),
-	  selectedTilePosition(0,0,0), selectedTileImageBack(fw.data.load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
-	  selectedTileImageFront(fw.data.load_image("CITY/SELECTED-CITYTILE-FRONT.PNG")),
-	  pal(fw.data.load_palette("UFODATA/PAL_04.DAT")), cameraScrollX(0), cameraScrollY(0)
+	  selectedTilePosition(0,0,0), selectedTileImageBack(fw.data->load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
+	  selectedTileImageFront(fw.data->load_image("CITY/SELECTED-CITYTILE-FRONT.PNG")),
+	  pal(fw.data->load_palette("xcom3/ufodata/PAL_04.DAT")), cameraScrollX(0), cameraScrollY(0)
 {
 }
 

@@ -14,7 +14,7 @@ ApocalypseFont::ApocalypseFont( Framework &fw, FontType Face, std::shared_ptr<Pa
 	int fontchars;
 	int charmaxwidth;
 
-	std::string datfile( "UFODATA/" );
+	std::string datfile( "xcom3/ufodata/" );
 	switch( Face )
 	{
 		case ApocalypseFont::LargeFont:
@@ -42,7 +42,7 @@ ApocalypseFont::ApocalypseFont( Framework &fw, FontType Face, std::shared_ptr<Pa
 	std::string spcfile( datfile );
 	datfile.append( ".DAT" );
 
-	ALLEGRO_FILE* dathnd = fw.data.load_file( datfile, "rb" );
+	PHYSFS_file* dathnd = fw.data->load_file( datfile, "rb" );
 
 	for( int c = 0; c < fontchars; c++ )
 	{
@@ -53,7 +53,8 @@ ApocalypseFont::ApocalypseFont( Framework &fw, FontType Face, std::shared_ptr<Pa
 		{
 			for( int x = 0; x < charmaxwidth; x++ )
 			{
-				int palidx = al_fgetc( dathnd );
+				char palidx;
+				PHYSFS_readBytes(dathnd, &palidx, 1);
 				r.set(Vec2<int>{x,y}, palidx);
 				if ( palidx > 0 && x > w )
 				{
@@ -65,7 +66,7 @@ ApocalypseFont::ApocalypseFont( Framework &fw, FontType Face, std::shared_ptr<Pa
 		this->fontbitmaps.push_back(pimg->toRGBImage(ColourPalette));
 	}
 
-	al_fclose( dathnd );
+	PHYSFS_close( dathnd );
 }
 
 ApocalypseFont::~ApocalypseFont()

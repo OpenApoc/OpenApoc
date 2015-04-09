@@ -4,6 +4,7 @@
 #include "game/resources/ifont.h"
 
 #include <allegro5/keycodes.h>
+#include <allegro5/allegro.h>
 
 namespace OpenApoc {
 

@@ -11,7 +11,7 @@ namespace OpenApoc {
 City::City(Framework &fw, std::string mapName)
 	: TileMap(fw, Vec3<int>{100, 100, 10}), organisations(Organisation::defaultOrganisations)
 {
-	auto file = fw.data.load_file("UFODATA/" + mapName, "rb");
+	auto file = fw.data->load_file("xcom3/ufodata/" + mapName, "rb");
 	if (!file)
 	{
 		std::cerr << "Failed to open city map: " << mapName << "\n";
@@ -27,9 +27,10 @@ City::City(Framework &fw, std::string mapName)
 		{
 			for (int x = 0; x < this->size.x; x++)
 			{
-				int16_t tileID = al_fread16le(file);
+				uint16_t tileID;
+				PHYSFS_readULE16(file, &tileID);
 				if (tileID == -1 &&
-				    al_feof(file))
+				    PHYSFS_eof(file))
 				{
 					std::cerr << "Unexpected EOF reading citymap at x = " << x
 						<< " y = " << y << " z = " << z << "\n";
@@ -102,7 +103,7 @@ City::City(Framework &fw, std::string mapName)
 		std::cerr << "Tile {" << tile->position.x << "," << tile->position.y << "," << tile->position.z << "}\n";
 	}
 
-	al_fclose(file);
+	PHYSFS_close(file);
 
 }
 

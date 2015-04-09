@@ -24,15 +24,16 @@ class Framework
 {
 	private:
 		std::unique_ptr<FrameworkPrivate> p;
+		std::string programName;
 	public:
-		Data data;
+		std::unique_ptr<Data> data;
 		GameState state;
 		std::unique_ptr<GameCore> gamecore;
 
 		std::unique_ptr<ConfigFile> Settings;
 		std::unique_ptr<Renderer> renderer;
 
-		Framework(const std::string dataRoot);
+		Framework(const std::string programName);
 		~Framework();
 
 		void Run();

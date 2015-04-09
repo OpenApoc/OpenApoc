@@ -8,7 +8,7 @@ namespace OpenApoc {
 
 RawSound* TextButton::buttonclick = nullptr;
 
-TextButton::TextButton( Framework &fw, Control* Owner, std::string Text, IFont* Font ) : Control( fw, Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Centre ), TextVAlign( VerticalAlignment::Centre ), buttonbackground(fw.data.load_image( "UI/TEXTBUTTONBACK.PNG" ))
+TextButton::TextButton( Framework &fw, Control* Owner, std::string Text, IFont* Font ) : Control( fw, Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Centre ), TextVAlign( VerticalAlignment::Centre ), buttonbackground(fw.data->load_image( "UI/TEXTBUTTONBACK.PNG" ))
 {
 	if( buttonclick == nullptr )
 	{

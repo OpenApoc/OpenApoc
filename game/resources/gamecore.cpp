@@ -18,7 +18,7 @@ void GameCore::Load(std::string CoreXMLFilename, std::string Language)
 	ParseXMLDoc( CoreXMLFilename );
 	DebugModeEnabled = false;
 
-	MouseCursor = new Cursor( fw, fw.gamecore->GetPalette( "TACDATA/TACTICAL.PAL" ) );
+	MouseCursor = new Cursor( fw, fw.gamecore->GetPalette( "xcom3/tacdata/TACTICAL.PAL" ) );
 
 	Loaded = true;
 }
@@ -36,7 +36,7 @@ void GameCore::ParseXMLDoc( std::string XMLFilename )
 {
 	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLElement* node;
-	std::string actualfile = fw.data.GetActualFilename(XMLFilename);
+	std::string actualfile = fw.data->GetActualFilename(XMLFilename.c_str());
 
 	doc.LoadFile( actualfile.c_str() );
 	node = doc.RootElement();
@@ -127,7 +127,7 @@ Form* GameCore::GetForm(std::string ID)
 
 std::shared_ptr<Image> GameCore::GetImage(std::string ImageData)
 {
-	return fw.data.load_image(ImageData);
+	return fw.data->load_image(ImageData);
 }
 
 IFont* GameCore::GetFont(std::string FontData)
@@ -165,7 +165,7 @@ IFont* GameCore::GetFont(std::string FontData)
 
 std::shared_ptr<Palette> GameCore::GetPalette(std::string Path)
 {
-	return fw.data.load_palette(Path);
+	return fw.data->load_palette(Path);
 }
 
 }; //namespace OpenApoc

@@ -26,6 +26,8 @@ static std::map<std::string, std::string> defaultConfig =
 #endif
 	{"Language", "en_gb"},
 	{"GameRules", "XCOMAPOC.XML"},
+	{"Resource.DataDir", "./data"},
+	{"Resource.CDPath", "./cd.iso"},
 };
 
 };
@@ -58,8 +60,8 @@ class FrameworkPrivate
 
 
 
-Framework::Framework(const std::string dataRoot)
-	: data(dataRoot), p(new FrameworkPrivate)
+Framework::Framework(const std::string programName)
+	: programName(programName), p(new FrameworkPrivate)
 {
 #ifdef WRITE_LOG
 	printf( "Framework: Startup: Allegro\n" );
@@ -95,6 +97,14 @@ Framework::Framework(const std::string dataRoot)
 	p->quitProgram = false;
 	p->framesToProcess = 0;
 	Settings.reset(new ConfigFile( "settings.cfg", defaultConfig));
+
+	std::vector<std::string> resourcePaths;
+	resourcePaths.push_back(Settings->getString("Resource.CDPath"));
+	resourcePaths.push_back(Settings->getString("Resource.DataDir"));
+
+	this->data.reset(new Data(this->programName.c_str(), resourcePaths));
+
+	auto testFile = this->data->load_file("MUSIC", "r");
 
 	p->eventAllegro = al_create_event_queue();
 	p->eventMutex = al_create_mutex_recursive();

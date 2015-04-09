@@ -8,9 +8,9 @@ namespace OpenApoc {
 Cursor::Cursor( Framework &fw, std::shared_ptr<Palette> pal )
 	: fw(fw), cursorPos{0,0}
 {
-	ALLEGRO_FILE* f = fw.data.load_file( "TACDATA/MOUSE.DAT", "rb" );
+	PHYSFS_file* f = fw.data->load_file( "xcom3/TACDATA/MOUSE.DAT", "rb" );
 
-	while( images.size() < al_fsize( f ) / 576 )
+	while( images.size() < PHYSFS_fileLength( f ) / 576 )
 	{
 		auto palImg = std::make_shared<PaletteImage>(Vec2<int>{24,24});
 		PaletteImageLock l(palImg, ImageLockUse::Write);
@@ -18,14 +18,15 @@ Cursor::Cursor( Framework &fw, std::shared_ptr<Palette> pal )
 		{
 			for( int x = 0; x < 24; x++ )
 			{
-				int palidx = al_fgetc( f );
+				char palidx;
+				PHYSFS_readBytes(f, &palidx, 1);
 				l.set(Vec2<int>{x,y}, palidx);
 			}
 		}
 		images.push_back(palImg->toRGBImage(pal));
 	}
 
-	al_fclose(f);
+	PHYSFS_close(f);
 
 	CurrentType = Cursor::Normal;
 }

@@ -10,15 +10,15 @@ CityTile::loadTilesFromFile(Framework &fw)
 {
 	std::vector<CityTile> v;
 
-	auto pal = fw.data.load_palette("UFODATA/PAL_04.DAT");
+	auto pal = fw.data->load_palette("xcom3/ufodata/PAL_04.DAT");
 
-	auto sprites = fw.data.load_image_set("PCK:UFODATA/CITY.PCK:UFODATA/CITY.TAB");
+	auto sprites = fw.data->load_image_set("PCK:xcom3/ufodata/CITY.PCK:xcom3/ufodata/CITY.TAB");
 
-	auto datFile = fw.data.load_file("UFODATA/CITYMAP.DAT", "rb");
+	auto datFile = fw.data->load_file("xcom3/ufodata/CITYMAP.DAT", "rb");
 
 	int numTiles = sprites->images.size();
 
-	int64_t datFileSize = al_fsize(datFile);
+	int64_t datFileSize = PHYSFS_fileLength(datFile);
 
 	int numDatEntries = datFileSize / 52;
 
@@ -37,7 +37,7 @@ CityTile::loadTilesFromFile(Framework &fw)
 		v.push_back(tile);
 	}
 
-	al_fclose(datFile);
+	PHYSFS_close(datFile);
 	return v;
 }
 

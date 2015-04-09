@@ -3,6 +3,7 @@
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_physfs.h>
 
 namespace {
 
@@ -12,6 +13,7 @@ public:
 	AllegroImageLoader()
 	{
 		al_init_image_addon();
+		al_set_physfs_file_interface();
 	}
 	virtual ~AllegroImageLoader()
 	{
@@ -22,7 +24,10 @@ public:
 	{
 		ALLEGRO_BITMAP *bmp = al_load_bitmap(path.c_str());
 		if (!bmp)
+		{
+			std::cerr << "AllegroImageLoader: Failed to read image \"" << path << "\"\n";
 			return nullptr;
+		}
 
 		OpenApoc::Vec2<int> size {al_get_bitmap_width(bmp), al_get_bitmap_height(bmp)};
 		auto img = std::make_shared<OpenApoc::RGBImage>(size);

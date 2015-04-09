@@ -8,8 +8,8 @@ namespace OpenApoc {
 
 void BootUp::Begin()
 {
-	loadingimage = fw.data.load_image( "UI/LOADING.PNG" );
-	logoimage = fw.data.load_image( "UI/LOGO.PNG" );
+	loadingimage = fw.data->load_image( "UI/LOADING.PNG" );
+	logoimage = fw.data->load_image( "UI/LOGO.PNG" );
 	loadtime = 0;
 	fw.Display_SetTitle("OpenApocalypse");
 }
