@@ -1,9 +1,8 @@
 
 #include "mainmenu.h"
-#include "../../framework/framework.h"
+#include "framework/framework.h"
 #include "optionsmenu.h"
 #include "difficultymenu.h"
-#include "../../transitions/transitions.h"
 
 namespace OpenApoc {
 
@@ -56,8 +55,7 @@ void MainMenu::EventOccurred(Event *e)
 		if( e->Data.Forms.RaisedBy->Name == "BUTTON_OPTIONS" )
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<TransitionFadeAcross>(
-				fw, std::make_shared<OptionsMenu>(fw), FRAMES_PER_SECOND/4);
+			stageCmd.nextStage = std::make_shared<OptionsMenu>(fw);
 			return;
 		}
 		if( e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT" )
@@ -68,8 +66,7 @@ void MainMenu::EventOccurred(Event *e)
 		if( e->Data.Forms.RaisedBy->Name == "BUTTON_NEWGAME" )
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<TransitionFadeAcross>(
-				fw, std::make_shared<DifficultyMenu>(fw), FRAMES_PER_SECOND/4);
+			stageCmd.nextStage = std::make_shared<DifficultyMenu>(fw);
 			return;
 		}
 	}

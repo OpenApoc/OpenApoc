@@ -2,17 +2,19 @@
 #pragma once
 
 #include "framework/includes.h"
+#include "library/colour.h"
 
 namespace OpenApoc {
 
 class Form;
 class Event;
 class Framework;
+class Surface;
 
 class Control
 {
 	private:
-		ALLEGRO_BITMAP* controlArea;
+		std::shared_ptr<Surface> controlArea;
 
 		void PreRender();
 		void PostRender();
@@ -42,7 +44,7 @@ class Control
 		std::string Name;
 		Vec2<int> Location;
 		Vec2<int> Size;
-		ALLEGRO_COLOR BackgroundColour;
+		Colour BackgroundColour;
 
 		std::vector<Control*> Controls;
 

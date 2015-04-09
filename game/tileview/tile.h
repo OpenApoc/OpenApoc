@@ -42,7 +42,7 @@ class TileObject
 		virtual Vec3<float> getSize();
 		virtual Vec3<float> getPosition();
 		virtual TileObjectCollisionVoxels &getCollisionVoxels();
-		virtual Image& getSprite();
+		virtual std::shared_ptr<Image> getSprite();
 
 		virtual void processCollision(TileObject &otherObject) = 0;
 };

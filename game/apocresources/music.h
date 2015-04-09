@@ -2,6 +2,7 @@
 #pragma once
 
 #include "framework/includes.h"
+#include <allegro5/allegro_audio.h>
 
 namespace OpenApoc {
 
@@ -10,7 +11,7 @@ class Framework;
 class Music
 {
 	private:
-		Memory sounddata;
+		std::unique_ptr<char[]> data;
 		ALLEGRO_SAMPLE* soundsample;
 		ALLEGRO_SAMPLE_ID play_id;
 		static long starts[];

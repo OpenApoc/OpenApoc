@@ -2,24 +2,22 @@
 #pragma once
 
 #include "framework/includes.h"
+#include "image.h"
+#include "renderer.h"
 
 namespace OpenApoc {
 
-class Framework;
-
 class Palette
 {
-	private:
-		std::unique_ptr<Colour[]> colours;
-
 	public:
-		Palette( Framework &fw, std::string Filename );
+		std::vector<Colour> colours;
+		std::unique_ptr<RendererImageData> rendererPrivateData;
+
+		Palette(int size, Colour initialColour = {0,0,0,0});
 		~Palette();
 
 		Colour &GetColour(int Index);
 		void SetColour(int Index, Colour &Col);
-
-		void DumpPalette( std::string Filename );
 };
 
 }; //namespace OpenApoc

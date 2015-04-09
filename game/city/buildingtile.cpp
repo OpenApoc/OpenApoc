@@ -1,5 +1,5 @@
 #include "buildingtile.h"
-#include "game/apocresources/palette.h"
+#include "framework/palette.h"
 #include "game/apocresources/pck.h"
 #include "framework/framework.h"
 
@@ -10,12 +10,13 @@ CityTile::loadTilesFromFile(Framework &fw)
 {
 	std::vector<CityTile> v;
 
-	Palette pal{fw, "UFODATA/PAL_04.DAT"};
-	PCK sprites{fw, "UFODATA/CITY.PCK", "UFODATA/CITY.TAB", pal};
+	auto pal = fw.data.load_palette("UFODATA/PAL_04.DAT");
+
+	auto sprites = fw.data.load_image_set("PCK:UFODATA/CITY.PCK:UFODATA/CITY.TAB");
 
 	auto datFile = fw.data.load_file("UFODATA/CITYMAP.DAT", "rb");
 
-	int numTiles = sprites.GetImageCount();
+	int numTiles = sprites->images.size();
 
 	int64_t datFileSize = al_fsize(datFile);
 
@@ -32,7 +33,7 @@ CityTile::loadTilesFromFile(Framework &fw)
 	for (int t = 0; t < numTiles; t++)
 	{
 		CityTile tile;
-		tile.sprite = sprites.GetImage(t);
+		tile.sprite = sprites->images[t];
 		v.push_back(tile);
 	}
 

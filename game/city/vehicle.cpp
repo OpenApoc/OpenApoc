@@ -67,7 +67,6 @@ public:
 			while (!v.owningTile->map.tiles[newTarget.z][newTarget.y][newTarget.x].objects.empty())
 				newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
 			path = v.owningTile->map.findShortestPath(v.owningTile->position, newTarget);
-			std::cerr << __func__ << "Setting next destination to {" << newTarget.x << "," << newTarget.y << "," << newTarget.z << "}\n";
 			if (path.empty())
 			{
 				std::cerr << "Failed to path - retrying\n";
@@ -246,12 +245,12 @@ static Vehicle::Direction findClosestDirection(Vec3<float> v)
 }
 
 
-Image&
+std::shared_ptr<Image>
 FlyingVehicle::getSprite()
 {
 	//TODO: Banking selection logic
 	Vehicle::Direction d = findClosestDirection(this->direction);
-	return *this->vehicle.def.sprites[Vehicle::Banking::Flat][d];
+	return this->vehicle.def.sprites[Vehicle::Banking::Flat][d];
 }
 
 void

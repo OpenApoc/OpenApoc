@@ -16,7 +16,6 @@ class GameCore
 		std::string language;
 
 		std::map<std::string, std::string> languagetext;
-		std::map<std::string, Palette*> palettes;
 		std::map<std::string, IFont*> fonts;
 		std::map<std::string, Form*> forms;
 
@@ -51,7 +50,7 @@ class GameCore
 		Form* GetForm(std::string ID);
 		std::shared_ptr<Image> GetImage(std::string ImageData);
 		IFont* GetFont(std::string FontData);
-		Palette* GetPalette(std::string Path);
+		std::shared_ptr<Palette> GetPalette(std::string Path);
 };
 
 }; //namespace OpenApoc

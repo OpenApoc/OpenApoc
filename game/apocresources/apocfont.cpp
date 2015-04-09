@@ -1,7 +1,7 @@
 
 #include "apocfont.h"
 #include "framework/framework.h"
-#include "palette.h"
+#include "framework/palette.h"
 
 namespace OpenApoc {
 
@@ -9,7 +9,7 @@ namespace OpenApoc {
 std::string ApocalypseFont::FontCharacterSet = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~¡¢£¤¥¦§¨©ª«¬®¯°±²³´µ¶·¸¹º»¼½¾¿ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏĞÑÒÓÔÕÖ??ÙÚÛÜİŞŸßàáâãäåæçèéêëìíîïğñòóôõö??ùúûüışÿ???????????????????????????????????????????????????????????????????????????????????????????Š???????š????Œœ????øØ????????????????????????????????????????????????????????????????????????????????";
 
 
-ApocalypseFont::ApocalypseFont( Framework &fw, FontType Face, Palette* ColourPalette )
+ApocalypseFont::ApocalypseFont( Framework &fw, FontType Face, std::shared_ptr<Palette> ColourPalette )
 {
 	int fontchars;
 	int charmaxwidth;
@@ -47,25 +47,22 @@ ApocalypseFont::ApocalypseFont( Framework &fw, FontType Face, Palette* ColourPal
 	for( int c = 0; c < fontchars; c++ )
 	{
 		int w = 0;
-		ALLEGRO_BITMAP* b = al_create_bitmap( charmaxwidth, fontheight );
-		ALLEGRO_LOCKED_REGION* r = al_lock_bitmap( b, ALLEGRO_PIXEL_FORMAT_ABGR_8888_LE, 0 );
+		std::shared_ptr<PaletteImage> pimg = std::make_shared<PaletteImage>(Vec2<int>{charmaxwidth, fontheight} );
+		PaletteImageLock r(pimg, ImageLockUse::Write);
 		for( int y = 0; y < fontheight; y++ )
 		{
 			for( int x = 0; x < charmaxwidth; x++ )
 			{
 				int palidx = al_fgetc( dathnd );
-				Colour* rowptr = (Colour*)(&((char*)r->data)[ (y * r->pitch) + (x * 4) ]);
-				Colour &palcol = ColourPalette->GetColour( palidx );
-				*rowptr = palcol;
-				if ( palcol.a > 0 && x > w )
+				r.set(Vec2<int>{x,y}, palidx);
+				if ( palidx > 0 && x > w )
 				{
 					w = x;
 				}
 			}
 		}
-		al_unlock_bitmap( b );
-		fontbitmaps.push_back( b );
-		fontwidths.push_back( w + 2 );
+		this->fontwidths.push_back(w+2);
+		this->fontbitmaps.push_back(pimg->toRGBImage(ColourPalette));
 	}
 
 	al_fclose( dathnd );
@@ -73,11 +70,9 @@ ApocalypseFont::ApocalypseFont( Framework &fw, FontType Face, Palette* ColourPal
 
 ApocalypseFont::~ApocalypseFont()
 {
-	for (auto *b : fontbitmaps)
-		al_destroy_bitmap(b);
 }
 
-void ApocalypseFont::DrawString( int X, int Y, std::string Text, int Alignment )
+void ApocalypseFont::DrawString( Renderer &r, int X, int Y, std::string Text, int Alignment )
 {
 	int xpos = X;
 	int textlen = 0;
@@ -85,7 +80,6 @@ void ApocalypseFont::DrawString( int X, int Y, std::string Text, int Alignment )
 	if( Alignment != APOCFONT_ALIGN_LEFT )
 	{
 		textlen = GetFontWidth( Text );
-
 		switch( Alignment )
 		{
 			case APOCFONT_ALIGN_CENTRE:
@@ -102,7 +96,7 @@ void ApocalypseFont::DrawString( int X, int Y, std::string Text, int Alignment )
 		int charidx = FontCharacterSet.find_first_of( Text.at( i ) );
 		if( charidx >= 0 && charidx < fontbitmaps.size() )
 		{
-			al_draw_bitmap( fontbitmaps.at( charidx ), xpos, Y, 0 );
+			r.draw(fontbitmaps.at(charidx), Vec2<float>{xpos,Y});
 			xpos += fontwidths.at( charidx );
 		} else {
 			xpos += spacewidth;
@@ -131,20 +125,4 @@ int ApocalypseFont::GetFontWidth( std::string Text )
 	return textlen;
 }
 
-void ApocalypseFont::DumpCharset()
-{
-	std::string outfile;
-	char val[200];
-
-	for( unsigned int i = 0; i < fontbitmaps.size(); i++ )
-	{
-		memset( (void*)val, 0, 200 );
-		sprintf( (char*)&val, "%d", i );
-		outfile.clear();
-		outfile.append( "data/" );
-		outfile.append( (char*)&val );
-		outfile.append( ".png" );
-		al_save_bitmap( outfile.c_str(), fontbitmaps.at( i ) );
-	}
-}
 }; //namespace OpenApoc

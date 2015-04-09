@@ -8,12 +8,13 @@
 #define APOCFONT_ALIGN_RIGHT	2
 
 namespace OpenApoc {
+class Renderer;
 
 class IFont
 {
 	public:
 		virtual ~IFont() {};
-		virtual void DrawString( int X, int Y, std::string Text, int Alignment ) = 0;
+		virtual void DrawString( Renderer &r, int X, int Y, std::string Text, int Alignment ) = 0;
 		virtual int GetFontHeight() = 0;
 		virtual int GetFontWidth(std::string Text) = 0;
 };

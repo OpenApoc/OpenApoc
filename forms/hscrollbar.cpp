@@ -6,7 +6,7 @@
 
 namespace OpenApoc {
 
-HScrollBar::HScrollBar( Framework &fw, Control* Owner ) : Control( fw, Owner ), Maximum(10), Minimum(0), Value(0),  GripperColour(al_map_rgb( 220, 192, 192 )), capture(false), LargeChange(2)
+HScrollBar::HScrollBar( Framework &fw, Control* Owner ) : Control( fw, Owner ), Maximum(10), Minimum(0), Value(0),  GripperColour( 220, 192, 192 ), capture(false), LargeChange(2)
 {
 	//LoadResources();
 }
@@ -90,7 +90,8 @@ void HScrollBar::OnRender()
 	}
 
 	int xpos = segmentsize * (Value - Minimum);
-	al_draw_filled_rectangle( xpos, 0, xpos + grippersize, Size.y, GripperColour );
+	fw.renderer->drawRect(Vec2<float>{xpos, 0}, Vec2<float>{xpos+grippersize, Size.y},
+		GripperColour);
 }
 
 void HScrollBar::Update()

@@ -6,7 +6,7 @@
 
 namespace OpenApoc {
 
-Control::Control(Framework &fw, Control* Owner) : fw(fw), Name("Control"), owningControl(Owner), focusedChild(nullptr), BackgroundColour(al_map_rgb( 128, 80, 80 )), mouseInside(false), mouseDepressed(false), controlArea(nullptr)
+Control::Control(Framework &fw, Control* Owner) : fw(fw), Name("Control"), owningControl(Owner), focusedChild(nullptr), BackgroundColour( 128, 80, 80 ), mouseInside(false), mouseDepressed(false), controlArea(nullptr)
 {
 	if( Owner != nullptr )
 	{
@@ -216,37 +216,30 @@ void Control::EventOccured( Event* e )
 
 void Control::Render()
 {
-	ALLEGRO_BITMAP* previousTarget = fw.Display_GetCurrentTarget();
-
 	if( Size.x == 0 || Size.y == 0 )
 	{
 		return;
 	}
 
-	if( controlArea == nullptr )
+	if( controlArea == nullptr ||
+		controlArea->size != Size)
 	{
-		controlArea = al_create_bitmap( Size.x, Size.y );
-	} else if( al_get_bitmap_width( controlArea ) != Size.x || al_get_bitmap_height( controlArea ) != Size.y ) {
-		al_destroy_bitmap( controlArea );
-		controlArea = al_create_bitmap( Size.x, Size.y );
+		controlArea.reset(new Surface{Size});
+	}
+	{
+
+		RendererSurfaceBinding b(*fw.renderer, controlArea);
+		PreRender();
+		OnRender();
+		PostRender();
 	}
 
-	fw.Display_SetTarget( controlArea );
-	PreRender();
-	OnRender();
-	PostRender();
-
-	fw.Display_SetTarget( previousTarget );
-	al_draw_bitmap( controlArea, Location.x, Location.y, 0 );
+	fw.renderer->draw(controlArea, Vec2<float>{Location.x, Location.y});
 }
 
 void Control::PreRender()
 {
-	al_clear_to_color( BackgroundColour );
-	//if( BackgroundColour.a != 0.0f )
-	//{
-	//	al_draw_filled_rectangle( 0, 0, Size.x, Size.y, BackgroundColour );
-	//}
+	fw.renderer->clear(BackgroundColour);
 }
 
 void Control::OnRender()
@@ -295,9 +288,9 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		{
 			if( node->Attribute("a") != nullptr && node->Attribute("a") != "" )
 			{
-				this->BackgroundColour = al_map_rgba( Strings::ToInteger( node->Attribute("r") ), Strings::ToInteger( node->Attribute("g") ), Strings::ToInteger( node->Attribute("b") ), Strings::ToInteger( node->Attribute("a") ) );
+				this->BackgroundColour = Colour{ Strings::ToU8( node->Attribute("r") ), Strings::ToU8( node->Attribute("g") ), Strings::ToU8( node->Attribute("b") ), Strings::ToU8( node->Attribute("a") ) };
 			} else {
-				this->BackgroundColour = al_map_rgb( Strings::ToInteger( node->Attribute("r") ), Strings::ToInteger( node->Attribute("g") ), Strings::ToInteger( node->Attribute("b") ) );
+				this->BackgroundColour = Colour{ Strings::ToU8( node->Attribute("r") ), Strings::ToU8( node->Attribute("g") ), Strings::ToU8( node->Attribute("b") ) };
 			}
 		}
 		if( nodename == "position" )
@@ -414,9 +407,9 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 			{
 				if( subnode->Attribute("a") != nullptr && subnode->Attribute("a") != "" )
 				{
-					vsb->GripperColour = al_map_rgba( Strings::ToInteger( subnode->Attribute("r") ), Strings::ToInteger( subnode->Attribute("g") ), Strings::ToInteger( subnode->Attribute("b") ), Strings::ToInteger( subnode->Attribute("a") ) );
+					vsb->GripperColour = Colour( Strings::ToU8( subnode->Attribute("r") ), Strings::ToU8( subnode->Attribute("g") ), Strings::ToU8( subnode->Attribute("b") ), Strings::ToU8( subnode->Attribute("a") ) );
 				} else {
-					vsb->GripperColour = al_map_rgb( Strings::ToInteger( subnode->Attribute("r") ), Strings::ToInteger( subnode->Attribute("g") ), Strings::ToInteger( subnode->Attribute("b") ) );
+					vsb->GripperColour = Colour( Strings::ToU8( subnode->Attribute("r") ), Strings::ToU8( subnode->Attribute("g") ), Strings::ToU8( subnode->Attribute("b") ) );
 				}
 			}
 			subnode = node->FirstChildElement("range");
@@ -443,9 +436,9 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 			{
 				if( subnode->Attribute("a") != nullptr && subnode->Attribute("a") != "" )
 				{
-					hsb->GripperColour = al_map_rgba( Strings::ToInteger( subnode->Attribute("r") ), Strings::ToInteger( subnode->Attribute("g") ), Strings::ToInteger( subnode->Attribute("b") ), Strings::ToInteger( subnode->Attribute("a") ) );
+					hsb->GripperColour = Colour( Strings::ToU8( subnode->Attribute("r") ), Strings::ToU8( subnode->Attribute("g") ), Strings::ToU8( subnode->Attribute("b") ), Strings::ToU8( subnode->Attribute("a") ) );
 				} else {
-					hsb->GripperColour = al_map_rgb( Strings::ToInteger( subnode->Attribute("r") ), Strings::ToInteger( subnode->Attribute("g") ), Strings::ToInteger( subnode->Attribute("b") ) );
+					hsb->GripperColour = Colour( Strings::ToU8( subnode->Attribute("r") ), Strings::ToU8( subnode->Attribute("g") ), Strings::ToU8( subnode->Attribute("b") ) );
 				}
 			}
 			subnode = node->FirstChildElement("range");

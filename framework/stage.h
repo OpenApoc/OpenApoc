@@ -7,6 +7,7 @@ namespace OpenApoc {
 
 class Framework;
 class Stage;
+class Surface;
 
 class StageCmd
 {
