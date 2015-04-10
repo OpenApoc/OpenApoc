@@ -141,13 +141,16 @@
     <ClCompile Include="framework\renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="framework\render\gl_3_0.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="framework\render\ogl_renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="framework\imageloader\allegro_image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\ignorecase.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\apocresources\apocpalette.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -318,6 +321,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework\render\gl_3_0.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\ignorecase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
