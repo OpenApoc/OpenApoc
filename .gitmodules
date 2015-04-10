@@ -11,3 +11,6 @@
 [submodule "dependencies/glm"]
 	path = dependencies/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "dependencies/physfs"]
+	path = dependencies/physfs
+	url = https://github.com/JonnyH/physfs-hg-import.git
