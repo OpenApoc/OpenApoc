@@ -22,7 +22,10 @@ Data::Data(std::vector<std::string> paths, int imageCacheSize, int imageSetCache
 	{
 		std::cerr << "Appending resouce dir \"" << p << "\"\n";
 		if (!PHYSFS_mount(p.c_str(), "/", 0))
+		{
 			std::cerr << "Failed to add resource dir!\n";
+			continue;
+		}
 		std::cerr << "Resource dir mounted to \"" << PHYSFS_getMountPoint(p.c_str()) << "\"\n";
 	}
 	//Finally, the write directory trumps all

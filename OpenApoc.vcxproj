@@ -67,8 +67,7 @@
       <ObjectFileName>$(IntDir)\%(RelativeDir)\</ObjectFileName>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>
-      </AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -87,8 +86,7 @@
       <ObjectFileName>$(IntDir)\%(RelativeDir)\</ObjectFileName>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>
-      </AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -108,12 +106,13 @@
     <ClCompile Include="forms\textbutton.cpp" />
     <ClCompile Include="forms\textedit.cpp" />
     <ClCompile Include="forms\vscrollbar.cpp" />
+    <ClCompile Include="framework\ignorecase.c" />
     <ClCompile Include="framework\image.cpp" />
     <ClCompile Include="framework\imageloader\allegro_image.cpp" />
     <ClCompile Include="framework\palette.cpp" />
     <ClCompile Include="framework\renderer.cpp" />
-    <ClCompile Include="framework\render\gl_3_0.cpp" />
     <ClCompile Include="framework\render\ogl_renderer.cpp" />
+    <ClCompile Include="game\apocresources\apocpalette.cpp" />
     <ClCompile Include="game\city\building.cpp" />
     <ClCompile Include="game\city\buildingtile.cpp" />
     <ClCompile Include="game\city\organisation.cpp" />
@@ -157,6 +156,7 @@
     <ClInclude Include="forms\textbutton.h" />
     <ClInclude Include="forms\textedit.h" />
     <ClInclude Include="forms\vscrollbar.h" />
+    <ClInclude Include="framework\ignorecase.h" />
     <ClInclude Include="framework\image.h" />
     <ClInclude Include="framework\palette.h" />
     <ClInclude Include="framework\renderer.h" />

@@ -41,13 +41,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)\freetype\include;$(ProjectDir)\include;$(ProjectDir)\allegro\addons\font;$(ProjectDir)\allegro\include;$(ProjectDir)\allegro\addons\audio;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)\physfs\src;$(ProjectDir)\freetype\include;$(ProjectDir)\include;$(ProjectDir)\allegro\addons\font;$(ProjectDir)\allegro\include;$(ProjectDir)\allegro\addons\audio;$(IncludePath)</IncludePath>
     <TargetExt>.dll</TargetExt>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)\freetype\include;$(ProjectDir)\include;$(ProjectDir)\allegro\addons\font;$(ProjectDir)\allegro\include;$(ProjectDir)\allegro\addons\audio;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)\physfs\src;$(ProjectDir)\freetype\include;$(ProjectDir)\include;$(ProjectDir)\allegro\addons\font;$(ProjectDir)\allegro\include;$(ProjectDir)\allegro\addons\audio;$(IncludePath)</IncludePath>
     <TargetExt>.dll</TargetExt>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\</OutDir>
   </PropertyGroup>
@@ -90,6 +90,7 @@
     <ClInclude Include="allegro\addons\acodec\helper.h" />
     <ClInclude Include="allegro\addons\font\font.h" />
     <ClInclude Include="allegro\addons\image\iio.h" />
+    <ClInclude Include="allegro\addons\physfs\allegro_physfs_intern.h" />
     <ClInclude Include="allegro\include\allegro5\alcompat.h" />
     <ClInclude Include="allegro\include\allegro5\alinline.h" />
     <ClInclude Include="allegro\include\allegro5\allegro.h" />
@@ -256,6 +257,8 @@
     <ClCompile Include="allegro\addons\image\iio.c" />
     <ClCompile Include="allegro\addons\image\pcx.c" />
     <ClCompile Include="allegro\addons\image\tga.c" />
+    <ClCompile Include="allegro\addons\physfs\a5_physfs.c" />
+    <ClCompile Include="allegro\addons\physfs\a5_physfs_dir.c" />
     <ClCompile Include="allegro\addons\primitives\directx_shaders.c" />
     <ClCompile Include="allegro\addons\primitives\high_primitives.c" />
     <ClCompile Include="allegro\addons\primitives\line_soft.c" />
@@ -332,6 +335,9 @@
   <ItemGroup>
     <ProjectReference Include="freetype.vcxproj">
       <Project>{78b079bd-9fc7-4b9e-b4a6-96da0f00248b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="physfs.vcxproj">
+      <Project>{5a1d2ec4-525e-49b6-9398-be359e71cb35}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -2,6 +2,7 @@
 #include "framework/image.h"
 #include "framework/palette.h"
 #include <memory>
+#include <array>
 
 #include "gl_3_0.cpp"
 
@@ -131,41 +132,41 @@ class SpriteProgram : public Program
 		GLuint texLoc;
 		GLuint flipYLoc;
 };
-
+const char* RGBProgram_vertexSource = {
+	"#version 130\n"
+	"in vec2 position;\n"
+	"uniform vec2 size;\n"
+	"uniform vec2 offset;\n"
+	"out vec2 texcoord;\n"
+	"uniform vec2 screenSize;\n"
+	"uniform bool flipY;\n"
+	"void main() {\n"
+	"  texcoord = position;\n"
+	"  vec2 tmpPos = position;\n"
+	"  tmpPos *= size;\n"
+	"  tmpPos += offset;\n"
+	"  tmpPos /= screenSize;\n"
+	"  tmpPos -= vec2(0.5,0.5);\n"
+	"  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
+	"  else gl_Position = vec4((tmpPos.x*2), (tmpPos.y*2),0,1);\n"
+	"}\n"
+};
+const char* RGBProgram_fragmentSource = {
+	"#version 130\n"
+	"in vec2 texcoord;\n"
+	"uniform sampler2D tex;\n"
+	"out vec4 out_colour;\n"
+	"void main() {\n"
+	" out_colour = texture2D(tex, texcoord);\n"
+	"}\n"
+};
 class RGBProgram : public SpriteProgram
 {
 	private:
-		constexpr static const char* vertexSource = {
-                "#version 130\n"
-                "in vec2 position;\n"
-                "uniform vec2 size;\n"
-                "uniform vec2 offset;\n"
-				"out vec2 texcoord;\n"
-                "uniform vec2 screenSize;\n"
-				"uniform bool flipY;\n"
-                "void main() {\n"
-				"  texcoord = position;\n"
-                "  vec2 tmpPos = position;\n"
-                "  tmpPos *= size;\n"
-                "  tmpPos += offset;\n"
-                "  tmpPos /= screenSize;\n"
-                "  tmpPos -= vec2(0.5,0.5);\n"
-				"  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
-				"  else gl_Position = vec4((tmpPos.x*2), (tmpPos.y*2),0,1);\n"
-                "}\n"
-		};
-		constexpr static const char* fragmentSource  = {
-                "#version 130\n"
-                "in vec2 texcoord;\n"
-                "uniform sampler2D tex;\n"
-				"out vec4 out_colour;\n"
-                "void main() {\n"
-				" out_colour = texture2D(tex, texcoord);\n"
-                "}\n"
-		};
+		
 	public:
 		RGBProgram()
-			: SpriteProgram(vertexSource, fragmentSource)
+			: SpriteProgram(RGBProgram_vertexSource, RGBProgram_fragmentSource)
 			{
 				this->posLoc = gl::GetAttribLocation(this->prog, "position");
 				this->sizeLoc = gl::GetUniformLocation(this->prog, "size");
@@ -183,43 +184,42 @@ class RGBProgram : public SpriteProgram
 			this->Uniform(this->flipYLoc, flipY);
 		}
 };
-
+const char* PaletteProgram_vertexSource = {
+	"#version 130\n"
+	"in vec2 position;\n"
+	"uniform vec2 size;\n"
+	"uniform vec2 offset;\n"
+	"out vec2 texcoord;\n"
+	"uniform vec2 screenSize;\n"
+	"uniform bool flipY;\n"
+	"void main() {\n"
+	"  texcoord = position;\n"
+	"  vec2 tmpPos = position;\n"
+	"  tmpPos *= size;\n"
+	"  tmpPos += offset;\n"
+	"  tmpPos /= screenSize;\n"
+	"  tmpPos -= vec2(0.5,0.5);\n"
+	"  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
+	"  else gl_Position = vec4((tmpPos.x*2), (tmpPos.y*2),0,1);\n"
+	"}\n"
+};
+const char* PaletteProgram_fragmentSource = {
+	"#version 130\n"
+	"in vec2 texcoord;\n"
+	"uniform sampler2D tex;\n"
+	"uniform sampler2D pal;\n"
+	"out vec4 out_colour;\n"
+	"void main() {\n"
+	" out_colour = texture2D(pal, vec2(texture2D(tex,texcoord).r,0));\n"
+	"}\n"
+};
 class PaletteProgram : public SpriteProgram
 {
-	private:
-		constexpr static const char* vertexSource = {
-				"#version 130\n"
-				"in vec2 position;\n"
-				"uniform vec2 size;\n"
-				"uniform vec2 offset;\n"
-				"out vec2 texcoord;\n"
-				"uniform vec2 screenSize;\n"
-				"uniform bool flipY;\n"
-				"void main() {\n"
-				"  texcoord = position;\n"
-				"  vec2 tmpPos = position;\n"
-				"  tmpPos *= size;\n"
-				"  tmpPos += offset;\n"
-				"  tmpPos /= screenSize;\n"
-				"  tmpPos -= vec2(0.5,0.5);\n"
-				"  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
-				"  else gl_Position = vec4((tmpPos.x*2), (tmpPos.y*2),0,1);\n"
-				"}\n"
-		};
-		constexpr static const char* fragmentSource  = {
-				"#version 130\n"
-				"in vec2 texcoord;\n"
-				"uniform sampler2D tex;\n"
-				"uniform sampler2D pal;\n"
-				"out vec4 out_colour;\n"
-				"void main() {\n"
-				" out_colour = texture2D(pal, vec2(texture2D(tex,texcoord).r,0));\n"
-				"}\n"
-		};
+	private:	
 	public:
 		GLuint palLoc;
 		PaletteProgram()
-			: SpriteProgram(vertexSource, fragmentSource)
+			: SpriteProgram(PaletteProgram_vertexSource, PaletteProgram_fragmentSource)
 			{
 				this->posLoc = gl::GetAttribLocation(this->prog, "position");
 				this->sizeLoc = gl::GetUniformLocation(this->prog, "size");
@@ -240,40 +240,42 @@ class PaletteProgram : public SpriteProgram
 		}
 };
 
+const char* PaletteSetProgram_vertexSource = {
+	"#version 130\n"
+	"in vec2 position;\n"
+	"in vec2 texcoord_in;\n"
+	"in int sprite_in;\n"
+	"out vec2 texcoord;\n"
+	"flat out int sprite;\n"
+	"uniform vec2 screenSize;\n"
+	"uniform bool flipY;\n"
+	"void main() {\n"
+	"  texcoord = texcoord_in;\n"
+	"  sprite = sprite_in;\n"
+	"  vec2 tmpPos = position;\n"
+	"  tmpPos /= screenSize;\n"
+	"  tmpPos -= vec2(0.5,0.5);\n"
+	"  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
+	"  else gl_Position = vec4((tmpPos.x*2), (tmpPos.y*2),0,1);\n"
+	"}\n"
+};
+const char* PaletteSetProgram_fragmentSource = {
+	"#version 130\n"
+	"in vec2 texcoord;\n"
+	"flat in int sprite;\n"
+	"uniform isampler2DArray tex;\n"
+	"uniform sampler2D pal;\n"
+	"out vec4 out_colour;\n"
+	"void main() {\n"
+	" int idx = texelFetch(tex, ivec3(texcoord.x, texcoord.y, sprite), 0).r;\n"
+	" out_colour = texelFetch(pal, ivec2(idx,0), 0);\n"
+	"}\n"
+};
 class PaletteSetProgram : public Program
 {
 	private:
-		constexpr static const char* vertexSource = {
-				"#version 130\n"
-				"in vec2 position;\n"
-				"in vec2 texcoord_in;\n"
-				"in int sprite_in;\n"
-				"out vec2 texcoord;\n"
-				"flat out int sprite;\n"
-				"uniform vec2 screenSize;\n"
-				"uniform bool flipY;\n"
-				"void main() {\n"
-				"  texcoord = texcoord_in;\n"
-				"  sprite = sprite_in;\n"
-				"  vec2 tmpPos = position;\n"
-				"  tmpPos /= screenSize;\n"
-				"  tmpPos -= vec2(0.5,0.5);\n"
-				"  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
-				"  else gl_Position = vec4((tmpPos.x*2), (tmpPos.y*2),0,1);\n"
-				"}\n"
-		};
-		constexpr static const char* fragmentSource  = {
-				"#version 130\n"
-				"in vec2 texcoord;\n"
-				"flat in int sprite;\n"
-				"uniform isampler2DArray tex;\n"
-				"uniform sampler2D pal;\n"
-				"out vec4 out_colour;\n"
-				"void main() {\n"
-				" int idx = texelFetch(tex, ivec3(texcoord.x, texcoord.y, sprite), 0).r;\n"
-				" out_colour = texelFetch(pal, ivec2(idx,0), 0);\n"
-				"}\n"
-		};
+		
+		
 	public:
 		GLuint posLoc;
 		GLuint texcoordLoc;
@@ -283,7 +285,7 @@ class PaletteSetProgram : public Program
 		GLuint palLoc;
 		GLuint flipYLoc;
 		PaletteSetProgram()
-			: Program(vertexSource, fragmentSource)
+			: Program(PaletteSetProgram_vertexSource, PaletteSetProgram_fragmentSource)
 			{
 				this->posLoc = gl::GetAttribLocation(this->prog, "position");
 				this->texcoordLoc = gl::GetAttribLocation(this->prog, "texcoord_in");
@@ -306,6 +308,7 @@ class PaletteSetProgram : public Program
 		public:
 			VertexDef(Vec2<float> pos, Vec2<float> texcoords, int sprite)
 				: pos(pos), texcoords(texcoords), sprite(sprite){}
+			VertexDef(){}
 
 			Vec2<float> pos;
 			Vec2<float> texcoords;
@@ -316,47 +319,48 @@ class PaletteSetProgram : public Program
 		{
 		public:
 			SpriteDef(Vec2<float> offset, Vec2<float> size, int sprite)
-				: v{
-					{offset, Vec2<float>{0,0}, sprite},
-					{offset + size * Vec2<float>{0,1}, Vec2<float>{0,1}, sprite},
-					{offset + size * Vec2<float>{1,0}, Vec2<float>{1,0}, sprite},
-					{offset + size * Vec2<float>{1,1}, Vec2<float>{1,1}, sprite},
-				}
-			{}
+			{
+				v[0] = { offset, Vec2<float>{0, 0}, sprite };
+				v[1] = { offset + size * Vec2<float>{0, 1}, Vec2<float>{0, 1}, sprite };
+				v[2] = { offset + size * Vec2<float>{1, 0}, Vec2<float>{1, 0}, sprite };
+				v[3] = { offset + size * Vec2<float>{1, 0}, Vec2<float>{1, 0}, sprite };
+			}
 
 			VertexDef v[4];
 		};
 		static_assert(sizeof(SpriteDef) == sizeof(VertexDef)*4, "SpriteDef should be tightly packed");
 };
 
+const char* SolidColourProgram_vertexSource = {
+	"#version 130\n"
+	"in vec2 position;\n"
+	"uniform vec2 size;\n"
+	"uniform vec2 offset;\n"
+	"uniform vec2 screenSize;\n"
+	"uniform bool flipY;\n"
+	"void main() {\n"
+	"  vec2 tmpPos = position;\n"
+	"  tmpPos *= size;\n"
+	"  tmpPos += offset;\n"
+	"  tmpPos /= screenSize;\n"
+	"  tmpPos -= vec2(0.5,0.5);\n"
+	"  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
+	"  else gl_Position = vec4((tmpPos.x*2), (tmpPos.y*2),0,1);\n"
+	"}\n"
+};
+const char* SolidColourProgram_fragmentSource = {
+	"#version 130\n"
+	"uniform vec4 colour;\n"
+	"out vec4 out_colour;\n"
+	"void main() {\n"
+	" out_colour = colour;\n"
+	"}\n"
+};
 class SolidColourProgram : public Program
 {
 	private:
-		constexpr static const char* vertexSource = {
-				"#version 130\n"
-				"in vec2 position;\n"
-				"uniform vec2 size;\n"
-				"uniform vec2 offset;\n"
-				"uniform vec2 screenSize;\n"
-				"uniform bool flipY;\n"
-				"void main() {\n"
-				"  vec2 tmpPos = position;\n"
-				"  tmpPos *= size;\n"
-				"  tmpPos += offset;\n"
-				"  tmpPos /= screenSize;\n"
-				"  tmpPos -= vec2(0.5,0.5);\n"
-				"  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
-				"  else gl_Position = vec4((tmpPos.x*2), (tmpPos.y*2),0,1);\n"
-				"}\n"
-		};
-		constexpr static const char* fragmentSource  = {
-				"#version 130\n"
-				"uniform vec4 colour;\n"
-				"out vec4 out_colour;\n"
-				"void main() {\n"
-				" out_colour = colour;\n"
-				"}\n"
-		};
+		
+		
 	public:
 		GLuint posLoc;
 		GLuint sizeLoc;
@@ -365,7 +369,7 @@ class SolidColourProgram : public Program
 		GLuint colourLoc;
 		GLuint flipYLoc;
 		SolidColourProgram()
-			: Program(vertexSource, fragmentSource)
+			: Program(SolidColourProgram_vertexSource, SolidColourProgram_fragmentSource)
 			{
 				this->posLoc = gl::GetAttribLocation(this->prog, "position");
 				this->sizeLoc = gl::GetUniformLocation(this->prog, "size");
