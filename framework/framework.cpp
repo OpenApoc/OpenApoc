@@ -32,7 +32,8 @@ static std::map<std::string, std::string> defaultConfig =
 	{"GameRules", "XCOMAPOC.XML"},
 	{"Resource.LocalDataDir", "./data"},
 	{"Resource.SystemDataDir", DATA_DIRECTORY},
-	{"Resource.CDPath", "./cd.iso"},
+	{"Resource.LocalCDPath", "./data/cd.iso"},
+	{"Resource.SystemCDPath", DATA_DIRECTORY "/cd.iso"},
 };
 
 };
@@ -104,7 +105,8 @@ Framework::Framework(const std::string programName)
 	Settings.reset(new ConfigFile( "settings.cfg", defaultConfig));
 
 	std::vector<std::string> resourcePaths;
-	resourcePaths.push_back(Settings->getString("Resource.CDPath"));
+	resourcePaths.push_back(Settings->getString("Resource.SystemCDPath"));
+	resourcePaths.push_back(Settings->getString("Resource.LocalCDPath"));
 	resourcePaths.push_back(Settings->getString("Resource.SystemDataDir"));
 	resourcePaths.push_back(Settings->getString("Resource.LocalDataDir"));
 
