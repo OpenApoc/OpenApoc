@@ -13,6 +13,10 @@
 
 namespace {
 
+#ifndef DATA_DIRECTORY
+#define DATA_DIRECTORY "./data"
+#endif
+
 static std::map<std::string, std::string> defaultConfig =
 {
 #ifdef PANDORA
@@ -26,7 +30,8 @@ static std::map<std::string, std::string> defaultConfig =
 #endif
 	{"Language", "en_gb"},
 	{"GameRules", "XCOMAPOC.XML"},
-	{"Resource.DataDir", "./data"},
+	{"Resource.LocalDataDir", "./data"},
+	{"Resource.SystemDataDir", DATA_DIRECTORY},
 	{"Resource.CDPath", "./cd.iso"},
 };
 
@@ -100,7 +105,8 @@ Framework::Framework(const std::string programName)
 
 	std::vector<std::string> resourcePaths;
 	resourcePaths.push_back(Settings->getString("Resource.CDPath"));
-	resourcePaths.push_back(Settings->getString("Resource.DataDir"));
+	resourcePaths.push_back(Settings->getString("Resource.SystemDataDir"));
+	resourcePaths.push_back(Settings->getString("Resource.LocalDataDir"));
 
 	this->data.reset(new Data(this->programName.c_str(), resourcePaths));
 
