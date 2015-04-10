@@ -6,11 +6,9 @@
 
 namespace OpenApoc {
 
-Data::Data(const char *programName, std::vector<std::string> paths, int imageCacheSize, int imageSetCacheSize) :
+Data::Data(std::vector<std::string> paths, int imageCacheSize, int imageSetCacheSize) :
 	imageLoader(createImageLoader())
 {
-	PHYSFS_init(programName);
-	std::cerr << "PHYSFS_init(" << programName << ")\n";
 	this->writeDir = PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME);
 	std::cerr << "Setting write dir to \"" << this->writeDir << "\"\n";
 	PHYSFS_setWriteDir(this->writeDir.c_str());
@@ -33,7 +31,6 @@ Data::Data(const char *programName, std::vector<std::string> paths, int imageCac
 
 Data::~Data()
 {
-	PHYSFS_deinit();
 
 }
 

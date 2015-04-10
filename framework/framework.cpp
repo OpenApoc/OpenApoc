@@ -72,6 +72,7 @@ Framework::Framework(const std::string programName)
 #ifdef WRITE_LOG
 	printf( "Framework: Startup: Allegro\n" );
 #endif
+	PHYSFS_init(programName.c_str());
 
 	if( !al_init() )
 	{
@@ -102,7 +103,9 @@ Framework::Framework(const std::string programName)
 #endif
 	p->quitProgram = false;
 	p->framesToProcess = 0;
-	Settings.reset(new ConfigFile( "settings.cfg", defaultConfig));
+	std::string settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
+	settingsPath += "/settings.cfg";
+	Settings.reset(new ConfigFile(settingsPath, defaultConfig));
 
 	std::vector<std::string> resourcePaths;
 	resourcePaths.push_back(Settings->getString("Resource.SystemCDPath"));
@@ -110,7 +113,7 @@ Framework::Framework(const std::string programName)
 	resourcePaths.push_back(Settings->getString("Resource.SystemDataDir"));
 	resourcePaths.push_back(Settings->getString("Resource.LocalDataDir"));
 
-	this->data.reset(new Data(this->programName.c_str(), resourcePaths));
+	this->data.reset(new Data(resourcePaths));
 
 	auto testFile = this->data->load_file("MUSIC", "r");
 
@@ -173,6 +176,7 @@ Framework::~Framework()
 	al_shutdown_font_addon();
 
 	al_uninstall_system();
+	PHYSFS_deinit();
 }
 
 void Framework::Run()
@@ -426,7 +430,9 @@ void Framework::ShutdownFramework()
 void Framework::SaveSettings()
 {
 	// Just to keep the filename consistant
-	Settings->save( "settings.cfg" );
+	std::string settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
+	settingsPath += "/settings.cfg";
+	Settings->save( settingsPath );
 }
 
 void Framework::Display_Initialise()

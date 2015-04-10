@@ -28,7 +28,7 @@ class Data
 		std::queue<std::shared_ptr<ImageSet> > pinnedImageSets;
 
 	public:
-		Data(const char *programName, std::vector<std::string> paths, int imageCacheSize = 1, int imageSetCacheSize = 1);
+		Data(std::vector<std::string> paths, int imageCacheSize = 1, int imageSetCacheSize = 1);
 		~Data();
 
 		std::shared_ptr<Image> load_image(const std::string path);
