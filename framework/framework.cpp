@@ -46,9 +46,6 @@ class FrameworkPrivate
 		friend class Framework;
 		bool quitProgram;
 
-		ALLEGRO_TIMER *frameTimer;
-		int framesToProcess;
-		bool enableSlowDown;
 
 		ALLEGRO_DISPLAY_MODE screenMode;
 		ALLEGRO_DISPLAY *screen;
@@ -102,7 +99,6 @@ Framework::Framework(const std::string programName)
 	printf( "Framework: Startup: Variables and Config\n" );
 #endif
 	p->quitProgram = false;
-	p->framesToProcess = 0;
 	std::string settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
 	settingsPath += "/settings.cfg";
 	Settings.reset(new ConfigFile(settingsPath, defaultConfig));
@@ -119,7 +115,6 @@ Framework::Framework(const std::string programName)
 
 	p->eventAllegro = al_create_event_queue();
 	p->eventMutex = al_create_mutex_recursive();
-	p->frameTimer = al_create_timer( 1.0 / FRAMES_PER_SECOND );
 
 	srand( (unsigned int)al_get_time() );
 
@@ -129,13 +124,6 @@ Framework::Framework(const std::string programName)
 	al_register_event_source( p->eventAllegro, al_get_display_event_source( p->screen ) );
 	al_register_event_source( p->eventAllegro, al_get_keyboard_event_source() );
 	al_register_event_source( p->eventAllegro, al_get_mouse_event_source() );
-	al_register_event_source( p->eventAllegro, al_get_timer_event_source( p->frameTimer ) );
-
-#ifdef FRAMEWORK_SPEED_SLOWDOWN
-	p->enableSlowDown = true;
-#else
-	p->enableSlowDown = false;
-#endif
 
 }
 
@@ -158,8 +146,7 @@ Framework::~Framework()
 	Audio_Shutdown();
 	al_destroy_event_queue( p->eventAllegro );
 	al_destroy_mutex( p->eventMutex );
-	al_destroy_timer( p->frameTimer );
-	
+
 #ifdef NETWORK_SUPPORT
 #ifdef WRITE_LOG
 	printf( "Framework: Shutdown enet\n" );
@@ -187,42 +174,38 @@ void Framework::Run()
 
 	p->ProgramStages.Push( std::make_shared<BootUp>(*this) );
 
-	al_start_timer( p->frameTimer );
 
 	while( !p->quitProgram )
 	{
 		RendererSurfaceBinding b(*this->renderer, p->defaultSurface);
 		this->renderer->clear();
 		ProcessEvents();
-		while( p->framesToProcess > 0 )
-		{
-			StageCmd cmd;
-			if( p->ProgramStages.IsEmpty() )
-			{
-				break;
-			}
-			p->ProgramStages.Current()->Update(&cmd);
-			switch (cmd.cmd)
-			{
-				case StageCmd::Command::CONTINUE:
-					break;
-				case StageCmd::Command::REPLACE:
-					p->ProgramStages.Pop();
-					p->ProgramStages.Push(cmd.nextStage);
-					break;
-				case StageCmd::Command::PUSH:
-					p->ProgramStages.Push(cmd.nextStage);
-					break;
-				case StageCmd::Command::POP:
-					p->ProgramStages.Pop();
-					break;
-				case StageCmd::Command::QUIT:
-					p->quitProgram = true;
-					p->ProgramStages.Clear();
-					break;
 
-			}
-			p->framesToProcess--;
+		StageCmd cmd;
+		if( p->ProgramStages.IsEmpty() )
+		{
+			break;
+		}
+		p->ProgramStages.Current()->Update(&cmd);
+		switch (cmd.cmd)
+		{
+			case StageCmd::Command::CONTINUE:
+				break;
+			case StageCmd::Command::REPLACE:
+				p->ProgramStages.Pop();
+				p->ProgramStages.Push(cmd.nextStage);
+				break;
+			case StageCmd::Command::PUSH:
+				p->ProgramStages.Push(cmd.nextStage);
+				break;
+			case StageCmd::Command::POP:
+				p->ProgramStages.Pop();
+				break;
+			case StageCmd::Command::QUIT:
+				p->quitProgram = true;
+				p->ProgramStages.Clear();
+				break;
+
 		}
 		if( !p->ProgramStages.IsEmpty() )
 		{
@@ -298,21 +281,10 @@ void Framework::TranslateAllegroEvents()
 				al_reconfigure_joysticks();
 				break;
 			case ALLEGRO_EVENT_TIMER:
-				if( e.timer.source == p->frameTimer )
-				{
-					if( p->enableSlowDown )
-					{
-						// Slow the game down, never process more than one update per frame
-						p->framesToProcess = 1;
-					} else {
-						p->framesToProcess++;
-					}
-				} else {
-					fwE = new Event();
-					fwE->Type = EVENT_TIMER_TICK;
-					fwE->Data.Timer.TimerObject = (void*)e.timer.source;
-					PushEvent( fwE );
-				}
+				fwE = new Event();
+				fwE->Type = EVENT_TIMER_TICK;
+				fwE->Data.Timer.TimerObject = (void*)e.timer.source;
+				PushEvent( fwE );
 				break;
 			case ALLEGRO_EVENT_KEY_DOWN:
 				fwE = new Event();
@@ -605,16 +577,6 @@ void Framework::Audio_StopAudio()
 #ifdef WRITE_LOG
 	printf( "Framework: Stop audio\n" );
 #endif
-}
-
-bool Framework::IsSlowMode()
-{
-	return p->enableSlowDown;
-}
-
-void Framework::SetSlowMode(bool SlowEnabled)
-{
-	p->enableSlowDown = SlowEnabled;
 }
 
 }; //namespace OpenApoc
