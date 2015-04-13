@@ -5,7 +5,7 @@
 
 namespace OpenApoc {
 
-VScrollBar::VScrollBar( Framework &fw, Control* Owner ) : Control( fw, Owner ), Maximum(10), Minimum(0), Value(0),  GripperColour(al_map_rgb( 220, 192, 192 )), capture(false), LargeChange(2)
+VScrollBar::VScrollBar( Framework &fw, Control* Owner ) : Control( fw, Owner ), Maximum(10), Minimum(0), Value(0),  GripperColour( 220, 192, 192 ), capture(false), LargeChange(2)
 {
 	//LoadResources();
 }
@@ -89,7 +89,7 @@ void VScrollBar::OnRender()
 	}
 
 	int ypos = segmentsize * (Value - Minimum);
-	al_draw_filled_rectangle( 0, ypos, Size.x, ypos + grippersize, GripperColour );
+	fw.renderer->drawRect(Vec2<float>{0,ypos}, Vec2<float>{Size.x, ypos + grippersize}, GripperColour);
 }
 
 void VScrollBar::Update()

@@ -4,6 +4,7 @@
 
 #include "game/tileview/tile.h"
 #include "buildingtile.h"
+#include "game/city/vehicle.h"
 
 namespace OpenApoc {
 
@@ -15,6 +16,7 @@ class Building;
 class Organisation;
 class Tile;
 class BuildingTile;
+class Vehicle;
 
 class City : public TileMap
 {
@@ -22,6 +24,7 @@ class City : public TileMap
 		std::vector<Building> buildings;
 		std::vector<Organisation> organisations;
 		std::vector<CityTile> cityTiles;
+		std::vector<std::shared_ptr<Vehicle>> vehicles;
 	public:
 		City(Framework &fw, std::string mapName);
 		~City();

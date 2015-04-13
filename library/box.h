@@ -41,7 +41,7 @@ class Cubeoid
 			: Cubeoid(origin, Vec3<T>{W,H,D}) {};
 		Cubeoid( const Vec3<T> p1, const Vec3<T> p2 )
 			: p1(p1), p2(p2) {};
-		~Cubeoid();
+		~Cubeoid(){};
 
 		bool Collides( const Cubeoid<T> CheckAgainst );
 };

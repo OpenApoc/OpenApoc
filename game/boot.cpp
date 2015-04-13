@@ -1,25 +1,17 @@
 
 #include "boot.h"
-#include "../framework/framework.h"
+#include "framework/framework.h"
 #include "general/mainmenu.h"
-#include "../transitions/transitions.h"
 #include "resources/gamecore.h"
 
 namespace OpenApoc {
 
 void BootUp::Begin()
 {
-	loadingimage = fw.data.load_image( "UI/LOADING.PNG" );
-	logoimage = fw.data.load_image( "UI/LOGO.PNG" );
+	loadingimage = fw.data->load_image( "UI/LOADING.PNG" );
+	logoimage = fw.data->load_image( "UI/LOGO.PNG" );
 	loadtime = 0;
 	fw.Display_SetTitle("OpenApocalypse");
-
-	threadload = nullptr;
-	threadload = al_create_thread( CreateGameCore, &fw );
-	if( threadload != nullptr )
-	{
-		al_start_thread( threadload );
-	}
 }
 
 void BootUp::Pause()
@@ -52,20 +44,27 @@ void BootUp::Update(StageCmd * const cmd)
 	{
 		StartGame();
 		cmd->cmd = StageCmd::Command::REPLACE;
-		cmd->nextStage = std::make_shared<TransitionFadeIn>(fw, std::make_shared<MainMenu>(fw), al_map_rgb(0,0,0), FRAMES_PER_SECOND);
+		cmd->nextStage = std::make_shared<MainMenu>(fw);
 	}
 }
 
 void BootUp::Render()
 {
-	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
-
 	int logow = fw.Display_GetWidth() / 3;
-	float logosc = logow / (float)logoimage->width;
+	float logosc = logow / (float)logoimage->size.x;
+	
+	Vec2<float> logoPosition {
+		fw.Display_GetWidth()/2 - (logoimage->size.x * logosc / 2),
+		fw.Display_GetHeight()/2 - (logoimage->size.y * logosc / 2)
+	};
+	Vec2<float> logoSize {
+		logoimage->size.x * logosc,
+		logoimage->size.y * logosc
+	};
 
-	logoimage->drawScaled( 0, 0, logoimage->width, logoimage->height, (fw.Display_GetWidth() / 2) - (logoimage->width * logosc / 2), (fw.Display_GetHeight() / 2) - (logoimage->height * logosc / 2), logoimage->width * logosc, logoimage->height * logosc );
+	fw.renderer->drawScaled(*logoimage, logoPosition, logoSize);
 
-	loadingimage->drawRotated( 24, 24, fw.Display_GetWidth() - 50, fw.Display_GetHeight() - 50, loadingimageangle.ToRadians() );
+	fw.renderer->drawRotated(*loadingimage, Vec2<float>{24, 24}, Vec2<float>{fw.Display_GetWidth() - 50, fw.Display_GetHeight() - 50}, loadingimageangle.ToRadians() );
 }
 
 void BootUp::StartGame()

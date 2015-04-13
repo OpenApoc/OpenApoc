@@ -24,19 +24,19 @@ void CheckBox::LoadResources()
 {
 	if( !imagechecked )
 	{
-		imagechecked = fw.gamecore->GetImage( "PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:65:UI/UI_PALETTE.PNG" );
+		imagechecked = fw.gamecore->GetImage( "PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:65:UI/UI_PALETTE.PNG" );
 		if( Size.x == 0 )
 		{
-			Size.x = imagechecked->width;
+			Size.x = imagechecked->size.x;
 		}
 		if( Size.y == 0 )
 		{
-			Size.y = imagechecked->height;
+			Size.y = imagechecked->size.y;
 		}
 	}
 	if( !imageunchecked )
 	{
-		imageunchecked = fw.gamecore->GetImage( "PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:64:UI/UI_PALETTE.PNG" );
+		imageunchecked = fw.gamecore->GetImage( "PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:64:UI/UI_PALETTE.PNG" );
 	}
 }
 
@@ -70,13 +70,13 @@ void CheckBox::OnRender()
 
 	if( useimage != nullptr )
 	{
-		int bmpw = useimage->width;
-		int bmph = useimage->height;
-		if( bmpw == Size.x && bmph == Size.y )
+		if (useimage->size == Size)
 		{
-			useimage->draw( 0, 0 );
-		} else {
-			useimage->drawScaled(0, 0, bmpw, bmph, 0, 0, this->Size.x, this->Size.y);
+			fw.renderer->draw(useimage, Vec2<float>{0,0});
+		}
+		else
+		{
+			fw.renderer->drawScaled(*useimage, Vec2<float>{0,0}, Vec2<float>{this->Size.x, this->Size.y});
 		}
 	}
 }

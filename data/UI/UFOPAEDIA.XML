@@ -18,7 +18,7 @@
 				<position x="20" y="16" />
 				<size width="320" height="40" />
 				<alignment horizontal="left" vertical="centre" />
-				<font>APOC:LARGE:UFODATA/PAL_06.DAT</font>
+				<font>APOC:LARGE:xcom3/UFODATA/PAL_06.DAT</font>
 			</label>
 			
 			<label text="STR_ORGANISATIONS">
@@ -26,7 +26,7 @@
 				<position x="344" y="62" />
 				<size width="270" height="40" />
 				<alignment horizontal="left" vertical="centre" />
-				<font>APOC:SMALL:UFODATA/PAL_06.DAT</font>
+				<font>APOC:SMALL:xcom3/UFODATA/PAL_06.DAT</font>
 			</label>
 			<control id="BUTTON_ORGS">
 				<backcolour r="0" g="0" b="0" a="0" />
@@ -39,7 +39,7 @@
 				<position x="344" y="102" />
 				<size width="270" height="40" />
 				<alignment horizontal="left" vertical="centre" />
-				<font>APOC:SMALL:UFODATA/PAL_06.DAT</font>
+				<font>APOC:SMALL:xcom3/UFODATA/PAL_06.DAT</font>
 			</label>
 			<control id="BUTTON_VEHICLES">
 				<backcolour r="0" g="0" b="0" a="0" />
@@ -52,7 +52,7 @@
 				<position x="344" y="142" />
 				<size width="270" height="40" />
 				<alignment horizontal="left" vertical="centre" />
-				<font>APOC:SMALL:UFODATA/PAL_06.DAT</font>
+				<font>APOC:SMALL:xcom3/UFODATA/PAL_06.DAT</font>
 			</label>
 			<control id="BUTTON_VEHICLEEQUIPMENT">
 				<backcolour r="0" g="0" b="0" a="0" />
@@ -65,7 +65,7 @@
 				<position x="344" y="182" />
 				<size width="270" height="40" />
 				<alignment horizontal="left" vertical="centre" />
-				<font>APOC:SMALL:UFODATA/PAL_06.DAT</font>
+				<font>APOC:SMALL:xcom3/UFODATA/PAL_06.DAT</font>
 			</label>
 			<control id="BUTTON_EQUIPMENT">
 				<backcolour r="0" g="0" b="0" a="0" />
@@ -78,7 +78,7 @@
 				<position x="344" y="222" />
 				<size width="270" height="40" />
 				<alignment horizontal="left" vertical="centre" />
-				<font>APOC:SMALL:UFODATA/PAL_06.DAT</font>
+				<font>APOC:SMALL:xcom3/UFODATA/PAL_06.DAT</font>
 			</label>
 			<control id="BUTTON_FACILITIES">
 				<backcolour r="0" g="0" b="0" a="0" />
@@ -92,7 +92,7 @@
 				<position x="344" y="262" />
 				<size width="270" height="40" />
 				<alignment horizontal="left" vertical="centre" />
-				<font>APOC:SMALL:UFODATA/PAL_06.DAT</font>
+				<font>APOC:SMALL:xcom3/UFODATA/PAL_06.DAT</font>
 			</label>
 			<control id="BUTTON_ALIENCRAFT">
 				<backcolour r="0" g="0" b="0" a="0" />
@@ -105,7 +105,7 @@
 				<position x="344" y="302" />
 				<size width="270" height="40" />
 				<alignment horizontal="left" vertical="centre" />
-				<font>APOC:SMALL:UFODATA/PAL_06.DAT</font>
+				<font>APOC:SMALL:xcom3/UFODATA/PAL_06.DAT</font>
 			</label>
 			<control id="BUTTON_ALIENS">
 				<backcolour r="0" g="0" b="0" a="0" />
@@ -118,7 +118,7 @@
 				<position x="344" y="342" />
 				<size width="270" height="40" />
 				<alignment horizontal="left" vertical="centre" />
-				<font>APOC:SMALL:UFODATA/PAL_06.DAT</font>
+				<font>APOC:SMALL:xcom3/UFODATA/PAL_06.DAT</font>
 			</label>
 			<control id="BUTTON_ALIENDIMENSION">
 				<backcolour r="0" g="0" b="0" a="0" />
@@ -131,7 +131,7 @@
 				<position x="344" y="382" />
 				<size width="270" height="40" />
 				<alignment horizontal="left" vertical="centre" />
-				<font>APOC:SMALL:UFODATA/PAL_06.DAT</font>
+				<font>APOC:SMALL:xcom3/UFODATA/PAL_06.DAT</font>
 			</label>
 			<control id="BUTTON_BUILDINGS">
 				<backcolour r="0" g="0" b="0" a="0" />
@@ -143,7 +143,7 @@
 				<position x="604" y="444" />
 				<size width="35" height="34" />
 				<image />
-				<imagedepressed>PCK:UFODATA/NEWBUT.PCK:UFODATA/NEWBUT.TAB:5:TACDATA/TACTICAL.PAL</imagedepressed>
+				<imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:5:xcom3/TACDATA/TACTICAL.PAL</imagedepressed>
 			</graphicbutton>
 		</style>
 

@@ -26,21 +26,19 @@ void Graphic::OnRender()
 		image = fw.gamecore->GetImage( image_name );
 		if( Size.x == 0 )
 		{
-			Size.x = image->width;
+			Size.x = image->size.x;
 		}
 		if( Size.y == 0 )
 		{
-			Size.y = image->height;
+			Size.y = image->size.y;
 		}
 	}
 
-	int bmpw = image->width;
-	int bmph = image->height;
-	if( bmpw == Size.x && bmph == Size.y )
+	if(Size == image->size)
 	{
-		image->draw(0, 0 );
+		fw.renderer->draw(image, Vec2<float>{0,0});
 	} else {
-		image->drawScaled(0, 0, bmpw, bmph, 0, 0, this->Size.x, this->Size.y);
+		fw.renderer->drawScaled(*image, Vec2<float>{0,0}, Vec2<float>{this->Size.x, this->Size.y});
 	}
 }
 

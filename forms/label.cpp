@@ -1,5 +1,6 @@
 
 #include "label.h"
+#include "framework/framework.h"
 
 namespace OpenApoc {
 
@@ -47,7 +48,7 @@ void Label::OnRender()
 			break;
 	}
 
-	font->DrawString( xpos, ypos, text, APOCFONT_ALIGN_LEFT );
+	font->DrawString( *fw.renderer, xpos, ypos, text, APOCFONT_ALIGN_LEFT );
 }
 
 void Label::Update()

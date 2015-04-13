@@ -99,6 +99,11 @@ class Strings
 			return atoi( s.c_str() );
 		}
 
+		static uint8_t ToU8(const std::string &s)
+		{
+			return strtoul(s.c_str(), NULL, 0);
+		}
+
 		static float ToFloat(const std::string &s)
 		{
 			if( !IsNumeric( s ) )

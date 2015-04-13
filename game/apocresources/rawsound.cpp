@@ -6,12 +6,12 @@ namespace OpenApoc {
 
 RawSound::RawSound( Framework &fw, std::string Filename )
 {
-	std::string path = "/RAWSOUND/";
+	std::string path = "xcom3/RAWSOUND/";
 	path.append( Filename );
-	ALLEGRO_FILE* f = fw.data.load_file( path, "rb" );
-	sounddata = new Memory( al_fsize( f ) );
-	al_fread( f, sounddata->GetData(), sounddata->GetSize() );
-	al_fclose( f );
+	PHYSFS_file* f = fw.data->load_file( path, "rb" );
+	sounddata = new Memory( PHYSFS_fileLength( f ) );
+	PHYSFS_readBytes( f, sounddata->GetData(), sounddata->GetSize() );
+	PHYSFS_close( f );
 
 	soundsample = al_create_sample( sounddata->GetData(), sounddata->GetSize(), 22050, ALLEGRO_AUDIO_DEPTH_UNSIGNED, ALLEGRO_CHANNEL_CONF_1, false );
 }

@@ -8,14 +8,15 @@ namespace OpenApoc {
 class Palette;
 class Event;
 class Framework;
+class Image;
 
 class Cursor
 {
 
 	private:
-		std::vector<ALLEGRO_BITMAP*> images;
-		int cursorx;
-		int cursory;
+		std::vector<std::shared_ptr<Image> > images;
+		Framework &fw;
+		Vec2<int> cursorPos;
 
 	public:
 		enum CursorType
@@ -33,7 +34,7 @@ class Cursor
 
 		CursorType CurrentType;
 
-		Cursor( Framework &fw, Palette* ColourPalette );
+		Cursor( Framework &fw, std::shared_ptr<Palette> ColourPalette );
 		~Cursor();
 
 		void EventOccured( Event* e );

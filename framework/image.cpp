@@ -1,90 +1,130 @@
 #include "image.h"
-#include "includes.h"
+#include "palette.h"
+#include "renderer.h"
 
 namespace OpenApoc {
 
-Image::Image(ALLEGRO_BITMAP *bmp)
-	: bmp(bmp), locked(false)
-{
-	this->height = al_get_bitmap_height(bmp);
-	this->width = al_get_bitmap_width(bmp);
-}
-
-Image::Image(int width, int height, Colour initialColour)
-	: bmp(al_create_bitmap(width, height)), height(height), width(width), locked(false)
-{
-	ALLEGRO_BITMAP *prevBmp = al_get_target_bitmap();
-	al_set_target_bitmap(this->bmp);
-
-	al_clear_to_color(al_map_rgba(initialColour.r, initialColour.g, initialColour.b, initialColour.a));
-
-	al_set_target_bitmap(prevBmp);
-}
+ImageLoader::~ImageLoader()
+{}
 
 Image::~Image()
 {
-	al_destroy_bitmap(this->bmp);
 }
 
-void Image::draw(float dx, float dy)
+Image::Image(Vec2<int> size)
+	: dirty(true), size(size)
+{}
+
+Surface::Surface(Vec2<int> size)
+	: Image(size)
+{}
+
+Surface::~Surface()
+{}
+
+PaletteImage::PaletteImage(Vec2<int> size, uint8_t initialIndex)
+	: Image(size), indices(new uint8_t[size.x*size.y])
 {
-	al_draw_bitmap(this->bmp, dx, dy, 0);
+	for (int i = 0; i < size.x*size.y; i++)
+		this->indices[i] = initialIndex;
 }
 
-void Image::drawRotated(float cx, float cy, float dx, float dy, float angle)
+PaletteImage::~PaletteImage()
+{}
+
+std::shared_ptr<RGBImage>
+PaletteImage::toRGBImage(std::shared_ptr<Palette> p)
 {
-	al_draw_rotated_bitmap(this->bmp, cx, cy, dx, dy, angle, 0);
+	std::shared_ptr<RGBImage> i = std::make_shared<RGBImage>(size);
+
+	RGBImageLock imgLock{i, ImageLockUse::Write};
+
+	for (int y = 0; y < this->size.y; y++)
+	{
+		for (int x = 0; x < this->size.x; x++)
+		{
+			uint8_t idx = this->indices[y*this->size.x + x];
+			imgLock.set(Vec2<int>{x,y}, p->GetColour(idx));
+		}
+	}
+	return i;
 }
 
-void Image::drawScaled(float sx, float sy, float sw, float sh, float dx, float dy, float dw, float dh)
+RGBImage::RGBImage(Vec2<int> size, Colour initialColour)
+: Image(size), pixels(new Colour[size.x*size.y])
 {
-	al_draw_scaled_bitmap(this->bmp, sx, sy, sw, sh, dx, dy, dw, dh, 0);
+	for (int i = 0; i < size.x*size.y; i++)
+		this->pixels[i] = initialColour;
 }
 
-void Image::saveBitmap(const std::string &fileName)
+RGBImage::~RGBImage()
+{}
+
+RGBImageLock::RGBImageLock(std::shared_ptr<RGBImage> img, ImageLockUse use)
+	: img(img), use(use)
 {
-	al_save_bitmap(fileName.c_str(), this->bmp);
+	//FIXME: Readback from renderer?
+	//FIXME: Disallow multiple locks?
 }
 
-ImageLock::ImageLock(std::shared_ptr<Image> img)
-	: img(img)
-{
-	assert(img->locked == false);
-	img->locked = true;
-	region = al_lock_bitmap(img->bmp, ALLEGRO_PIXEL_FORMAT_ABGR_8888_LE, ALLEGRO_LOCK_READWRITE);
-}
-
-ImageLock::~ImageLock()
-{
-	assert(img->locked == true);
-	img->locked = false;
-	al_unlock_bitmap(img->bmp);
-}
+RGBImageLock::~RGBImageLock()
+{}
 
 Colour
-ImageLock::get(int x, int y)
+RGBImageLock::get(Vec2<int> pos)
 {
-	Colour c;
-	uint8_t *dataPtr = (uint8_t*)this->region->data;
-	dataPtr += (this->region->pitch * y);
-	dataPtr += (this->region->pixel_size * x);
-	c.r = *dataPtr++;
-	c.g = *dataPtr++;
-	c.b = *dataPtr++;
-	c.a = *dataPtr++;
-	return c;
+	//FIXME: Check read use
+	unsigned offset = pos.y * this->img->size.x + pos.x;
+	assert(offset < this->img->size.x * this->img->size.y);
+	return this->img->pixels[offset];
 }
 
 void
-ImageLock::set(int x, int y, Colour &c)
+RGBImageLock::set(Vec2<int> pos, Colour &c)
 {
-	uint8_t *dataPtr = (uint8_t*)this->region->data;
-	dataPtr += (this->region->pitch * y);
-	dataPtr += (this->region->pixel_size * x);
-	*dataPtr++ = c.r;
-	*dataPtr++ = c.g;
-	*dataPtr++ = c.b;
-	*dataPtr++ = c.a;
+	unsigned offset = pos.y * this->img->size.x + pos.x;
+	assert(offset < this->img->size.x * this->img->size.y);
+	this->img->pixels[offset] = c;
+}
+
+void *
+RGBImageLock::getData()
+{
+	return this->img->pixels.get();
+}
+
+PaletteImageLock::PaletteImageLock(std::shared_ptr<PaletteImage> img, ImageLockUse use)
+: img(img), use(use)
+{
+	//FIXME: Readback from renderer?
+	//FIXME: Disallow multiple locks?
+}
+
+PaletteImageLock::~PaletteImageLock()
+{}
+
+uint8_t
+PaletteImageLock::get(Vec2<int> pos)
+{
+	//FIXME: Check read use
+	unsigned offset = pos.y * this->img->size.x + pos.x;
+	assert(offset < this->img->size.x * this->img->size.y);
+	return this->img->indices[offset];
+}
+
+void
+PaletteImageLock::set(Vec2<int> pos, uint8_t idx)
+{
+	//FIXME: Check write use
+	unsigned offset = pos.y * this->img->size.x + pos.x;
+	assert(offset < this->img->size.x * this->img->size.y);
+	this->img->indices[offset] = idx;
+}
+
+void *
+PaletteImageLock::getData()
+{
+	return this->img->indices.get();
 }
 
 }; //namespace OpenApoc

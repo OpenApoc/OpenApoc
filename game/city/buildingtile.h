@@ -23,7 +23,7 @@ class BuildingSection : public TileObject
 		Building *building;
 	public:
 
-		BuildingSection(Tile &owningTile, CityTile &cityTile, Vec3<int> pos, Building *building);
+		BuildingSection(Tile *owningTile, CityTile &cityTile, Vec3<int> pos, Building *building);
 		virtual ~BuildingSection();
 		virtual void update(unsigned int ticks);
 		virtual TileObjectCollisionVoxels &getCollisionVoxels();

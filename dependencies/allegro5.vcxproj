@@ -5,9 +5,17 @@
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -22,7 +30,20 @@
     <PlatformToolset>v120</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
@@ -35,23 +56,58 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)\freetype\include;$(ProjectDir)\include;$(ProjectDir)\allegro\addons\font;$(ProjectDir)\allegro\include;$(ProjectDir)\allegro\addons\audio;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)\physfs\src;$(ProjectDir)\freetype\include;$(ProjectDir)\include;$(ProjectDir)\allegro\addons\font;$(ProjectDir)\allegro\include;$(ProjectDir)\allegro\addons\audio;$(IncludePath)</IncludePath>
     <TargetExt>.dll</TargetExt>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(ProjectDir)\physfs\src;$(ProjectDir)\freetype\include;$(ProjectDir)\include;$(ProjectDir)\allegro\addons\font;$(ProjectDir)\allegro\include;$(ProjectDir)\allegro\addons\audio;$(IncludePath)</IncludePath>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)\freetype\include;$(ProjectDir)\include;$(ProjectDir)\allegro\addons\font;$(ProjectDir)\allegro\include;$(ProjectDir)\allegro\addons\audio;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)\physfs\src;$(ProjectDir)\freetype\include;$(ProjectDir)\include;$(ProjectDir)\allegro\addons\font;$(ProjectDir)\allegro\include;$(ProjectDir)\allegro\addons\audio;$(IncludePath)</IncludePath>
     <TargetExt>.dll</TargetExt>
     <OutDir>$(SolutionDir)\bin\$(Configuration)\</OutDir>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>$(ProjectDir)\physfs\src;$(ProjectDir)\freetype\include;$(ProjectDir)\include;$(ProjectDir)\allegro\addons\font;$(ProjectDir)\allegro\include;$(ProjectDir)\allegro\addons\audio;$(IncludePath)</IncludePath>
+    <TargetExt>.dll</TargetExt>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;ALLEGRO_SRC;ALLEGRO_LIB_BUILD;_CRT_SECURE_NO_DEPRECATE;_CRT_NOSTDC_NO_DEPRECATE;ALLEGRO_PRIMITIVES_SRC;ALLEGRO_FONT_SRC;ALLEGRO_TTF_SRC;ALLEGRO_KCM_AUDIO_SRC;ALLEGRO_IIO_SRC;ALLEGRO_ACODEC_SRC;_CRT_NONSTDC_NO_WARNINGS;PATH_MAX=MAX_PATH;_DEBUG;_WINDOWS;_USRDLL;ALLEGRO5_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <BrowseInformation>true</BrowseInformation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>gdiplus.lib;opengl32.lib;shlwapi.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
@@ -85,11 +141,31 @@
       <AdditionalDependencies>gdiplus.lib;opengl32.lib;shlwapi.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;ALLEGRO_SRC;ALLEGRO_LIB_BUILD;_CRT_SECURE_NO_DEPRECATE;_CRT_NOSTDC_NO_DEPRECATE;ALLEGRO_PRIMITIVES_SRC;ALLEGRO_FONT_SRC;ALLEGRO_TTF_SRC;ALLEGRO_KCM_AUDIO_SRC;ALLEGRO_IIO_SRC;ALLEGRO_ACODEC_SRC;_CRT_NONSTDC_NO_WARNINGS;PATH_MAX=MAX_PATH;NDEBUG;_WINDOWS;_USRDLL;ALLEGRO5_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>gdiplus.lib;opengl32.lib;shlwapi.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="allegro\addons\acodec\acodec.h" />
     <ClInclude Include="allegro\addons\acodec\helper.h" />
     <ClInclude Include="allegro\addons\font\font.h" />
     <ClInclude Include="allegro\addons\image\iio.h" />
+    <ClInclude Include="allegro\addons\physfs\allegro_physfs_intern.h" />
     <ClInclude Include="allegro\include\allegro5\alcompat.h" />
     <ClInclude Include="allegro\include\allegro5\alinline.h" />
     <ClInclude Include="allegro\include\allegro5\allegro.h" />
@@ -256,6 +332,8 @@
     <ClCompile Include="allegro\addons\image\iio.c" />
     <ClCompile Include="allegro\addons\image\pcx.c" />
     <ClCompile Include="allegro\addons\image\tga.c" />
+    <ClCompile Include="allegro\addons\physfs\a5_physfs.c" />
+    <ClCompile Include="allegro\addons\physfs\a5_physfs_dir.c" />
     <ClCompile Include="allegro\addons\primitives\directx_shaders.c" />
     <ClCompile Include="allegro\addons\primitives\high_primitives.c" />
     <ClCompile Include="allegro\addons\primitives\line_soft.c" />
@@ -332,6 +410,9 @@
   <ItemGroup>
     <ProjectReference Include="freetype.vcxproj">
       <Project>{78b079bd-9fc7-4b9e-b4a6-96da0f00248b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="physfs.vcxproj">
+      <Project>{5a1d2ec4-525e-49b6-9398-be359e71cb35}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

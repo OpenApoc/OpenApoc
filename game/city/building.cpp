@@ -154,7 +154,7 @@ std::vector<Building>
 loadBuildingsFromBld(Framework &fw, std::string fileName, std::vector<Organisation> &orgList, std::vector<std::string> nameList)
 {
 	std::vector<Building> buildings;
-	auto file = fw.data.load_file("UFODATA/" + fileName, "rb");
+	auto file = fw.data->load_file("xcom3/ufodata/" + fileName, "rb");
 	if (!file)
 	{
 		std::cerr << "Failed to open building data file: " << fileName << "\n";
@@ -169,35 +169,29 @@ loadBuildingsFromBld(Framework &fw, std::string fileName, std::vector<Organisati
 	//0xc8 uint16: building Owner ID
 	//
 	//Total size of each buildilg field: 226 bytes
-	if (!al_fseek(file, 0, ALLEGRO_SEEK_END))
-	{
-		std::cerr << "Failed to seek to end of building data file\n";
-		al_fclose(file);
-		return buildings;
-	}
-	size_t fileSize = al_ftell(file);
+	size_t fileSize = PHYSFS_fileLength(file);
 	int numBuildings = fileSize / 226;
 	std::cout << "Loading " << numBuildings << " buildings in " << fileSize << "bytes\n";
 	for (int b = 0; b < numBuildings; b++)
 	{
-		if (!al_fseek(file, b*226, ALLEGRO_SEEK_SET))
+		if (!PHYSFS_seek(file, b*226))
 		{
 			std::cerr << "Failed to seek to beginning of building " << b << "\n";
 			break;
 		}
-		int16_t nameIdx = al_fread16le(file);
-		int16_t x0 = al_fread16le(file);
-		int16_t x1 = al_fread16le(file);
-		int16_t y0 = al_fread16le(file);
-		int16_t y1 = al_fread16le(file);
+		uint16_t nameIdx; PHYSFS_readULE16(file, &nameIdx);
+		uint16_t x0; PHYSFS_readULE16(file, &x0);
+		uint16_t x1; PHYSFS_readULE16(file, &x1);
+		uint16_t y0; PHYSFS_readULE16(file, &y0);
+		uint16_t y1; PHYSFS_readULE16(file, &y1);
 		//Read 10 bytes
 		//Skip to byte 200 (190 bytes)
-		if (!al_fseek(file, 190, ALLEGRO_SEEK_CUR))
+		if (!PHYSFS_seek(file, (b*255)+200))
 		{
 			std::cerr << "Failed to seek reading building " << b << "\n";
 			break;
 		}
-		int16_t orgIdx = al_fread16le(file);
+		uint16_t orgIdx; PHYSFS_readULE16(file, &orgIdx);
 		if (nameIdx >= nameList.size() ||
 		    nameIdx < 0)
 		{
@@ -227,6 +221,7 @@ loadBuildingsFromBld(Framework &fw, std::string fileName, std::vector<Organisati
 			bld.bounds.p0.x << "," << bld.bounds.p0.y << "),(" <<
 			bld.bounds.p1.x << "," << bld.bounds.p1.y << ")\n";
 	}
+	PHYSFS_close(file);
 	return buildings;
 }
 

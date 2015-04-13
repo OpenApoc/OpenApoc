@@ -49,6 +49,8 @@ Icon
 *.sdf
 *.opensdf
 allegro.log
+#Dependencies build information
+[Dd]ependencies/x64/
 
 # =================
 # pmprog Framework
@@ -71,6 +73,7 @@ allegro.log
 [Dd]ata/UFOEXE/
 [Dd]ata/UFOPAEDI/
 [Dd]ata/MUSIC
+[Dd]ata/cd.iso
 
 # Netbeans project folder
 nbproject/

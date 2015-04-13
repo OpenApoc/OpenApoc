@@ -9,15 +9,15 @@ long Music::lengths[] = { 8202600, 19404000, 35897400, 40131000, 46569600, 57859
 
 Music::Music( Framework &fw, int Track )
 {
-	ALLEGRO_FILE* f = fw.data.load_file( "MUSIC", "rb" );
-	sounddata = Memory( lengths[Track] );
-	al_fseek( f, starts[Track], ALLEGRO_SEEK_SET );
-	al_fread( f, sounddata.GetData(), lengths[Track] );
-	al_fclose( f );
+	PHYSFS_file* f = fw.data->load_file( "MUSIC", "rb" );
+	data.reset(new char[lengths[Track]]);
+	PHYSFS_seek( f, starts[Track]);
+	PHYSFS_readBytes( f, &data[0], lengths[Track] );
+	PHYSFS_close( f );
 
 	playing = false;
 
-	soundsample = al_create_sample( sounddata.GetData(), sounddata.GetSize(), 22050, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2, false );
+	soundsample = al_create_sample( &data[0], lengths[Track], 22050, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2, false );
 }
 
 Music::~Music()
