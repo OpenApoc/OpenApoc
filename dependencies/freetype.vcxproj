@@ -1033,7 +1033,6 @@
     <ClCompile Include="freetype\src\base\ftsynth.c" />
     <ClCompile Include="freetype\src\base\fttype1.c" />
     <ClCompile Include="freetype\src\base\ftwinfnt.c" />
-    <ClCompile Include="freetype\src\base\ftxf86.c" />
     <ClCompile Include="freetype\src\base\ftlcdfil.c" />
     <ClCompile Include="freetype\src\base\ftgxval.c" />
     <ClCompile Include="freetype\src\base\ftotval.c" />

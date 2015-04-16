@@ -28,7 +28,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -294,6 +294,7 @@
     <ClInclude Include="allegro\include\allegro5\tls.h" />
     <ClInclude Include="allegro\include\allegro5\transformations.h" />
     <ClInclude Include="allegro\include\allegro5\utf8.h" />
+    <ClInclude Include="allegro\src\win\d3d.h" />
     <ClInclude Include="allegro\src\win\wgl.h" />
     <ClInclude Include="allegro5\platform\alplatf.h" />
     <ClInclude Include="include\allegro5\internal\aintern_audio_cfg.h" />
@@ -306,6 +307,7 @@
     <None Include="allegro\include\allegro5\platform\alplatf.h.cmake" />
     <None Include="allegro\src\fshook_win.inc" />
     <None Include="allegro\src\scanline_drawers.inc" />
+    <None Include="allegro\src\shader_source.inc" />
     <None Include="allegro\src\tls_dll.inc" />
     <None Include="allegro\src\tls_native.inc" />
     <None Include="allegro\src\tls_pthread.inc" />
@@ -313,6 +315,7 @@
   <ItemGroup>
     <ClCompile Include="allegro\addons\acodec\acodec.c" />
     <ClCompile Include="allegro\addons\acodec\helper.c" />
+    <ClCompile Include="allegro\addons\acodec\voc.c" />
     <ClCompile Include="allegro\addons\acodec\wav.c" />
     <ClCompile Include="allegro\addons\audio\audio.c" />
     <ClCompile Include="allegro\addons\audio\audio_io.c" />
@@ -323,23 +326,24 @@
     <ClCompile Include="allegro\addons\audio\kcm_sample.c" />
     <ClCompile Include="allegro\addons\audio\kcm_stream.c" />
     <ClCompile Include="allegro\addons\audio\kcm_voice.c" />
+    <ClCompile Include="allegro\addons\audio\recorder.c" />
     <ClCompile Include="allegro\addons\font\font.c" />
     <ClCompile Include="allegro\addons\font\fontbmp.c" />
     <ClCompile Include="allegro\addons\font\stdfont.c" />
     <ClCompile Include="allegro\addons\font\text.c" />
     <ClCompile Include="allegro\addons\image\bmp.c" />
+    <ClCompile Include="allegro\addons\image\dds.c" />
     <ClCompile Include="allegro\addons\image\gdiplus.cpp" />
     <ClCompile Include="allegro\addons\image\iio.c" />
     <ClCompile Include="allegro\addons\image\pcx.c" />
     <ClCompile Include="allegro\addons\image\tga.c" />
     <ClCompile Include="allegro\addons\physfs\a5_physfs.c" />
     <ClCompile Include="allegro\addons\physfs\a5_physfs_dir.c" />
-    <ClCompile Include="allegro\addons\primitives\directx_shaders.c" />
     <ClCompile Include="allegro\addons\primitives\high_primitives.c" />
     <ClCompile Include="allegro\addons\primitives\line_soft.c" />
     <ClCompile Include="allegro\addons\primitives\point_soft.c" />
     <ClCompile Include="allegro\addons\primitives\primitives.c" />
-    <ClCompile Include="allegro\addons\primitives\prim_directx.c" />
+    <ClCompile Include="allegro\addons\primitives\prim_directx.cpp" />
     <ClCompile Include="allegro\addons\primitives\prim_opengl.c" />
     <ClCompile Include="allegro\addons\primitives\prim_soft.c" />
     <ClCompile Include="allegro\addons\ttf\ttf.c" />
@@ -349,6 +353,7 @@
     <ClCompile Include="allegro\src\bitmap_io.c" />
     <ClCompile Include="allegro\src\bitmap_lock.c" />
     <ClCompile Include="allegro\src\bitmap_pixel.c" />
+    <ClCompile Include="allegro\src\bitmap_type.c" />
     <ClCompile Include="allegro\src\blenders.c" />
     <ClCompile Include="allegro\src\config.c" />
     <ClCompile Include="allegro\src\convert.c" />
@@ -366,6 +371,7 @@
     <ClCompile Include="allegro\src\fshook.c" />
     <ClCompile Include="allegro\src\fshook_stdio.c" />
     <ClCompile Include="allegro\src\fullscreen_mode.c" />
+    <ClCompile Include="allegro\src\haptic.c" />
     <ClCompile Include="allegro\src\inline.c" />
     <ClCompile Include="allegro\src\joynu.c" />
     <ClCompile Include="allegro\src\keybdnu.c" />
@@ -384,25 +390,42 @@
     <ClCompile Include="allegro\src\opengl\ogl_bitmap.c" />
     <ClCompile Include="allegro\src\opengl\ogl_display.c" />
     <ClCompile Include="allegro\src\opengl\ogl_draw.c" />
-    <ClCompile Include="allegro\src\optimized.c" />
+    <ClCompile Include="allegro\src\opengl\ogl_fbo.c" />
+    <ClCompile Include="allegro\src\opengl\ogl_lock.c" />
+    <ClCompile Include="allegro\src\opengl\ogl_render_state.c" />
     <ClCompile Include="allegro\src\path.c" />
     <ClCompile Include="allegro\src\pixels.c" />
+    <ClCompile Include="allegro\src\shader.c" />
     <ClCompile Include="allegro\src\system.c" />
     <ClCompile Include="allegro\src\threads.c" />
     <ClCompile Include="allegro\src\timernu.c" />
     <ClCompile Include="allegro\src\tls.c" />
+    <ClCompile Include="allegro\src\touch_input.c" />
     <ClCompile Include="allegro\src\transformations.c" />
     <ClCompile Include="allegro\src\tri_soft.c" />
     <ClCompile Include="allegro\src\utf8.c" />
+    <ClCompile Include="allegro\src\win\d3d_bmp.cpp" />
+    <ClCompile Include="allegro\src\win\d3d_d3dx9.cpp" />
+    <ClCompile Include="allegro\src\win\d3d_disp.cpp" />
+    <ClCompile Include="allegro\src\win\d3d_display_formats.cpp" />
+    <ClCompile Include="allegro\src\win\d3d_render_state.cpp" />
+    <ClCompile Include="allegro\src\win\d3d_shader.cpp" />
     <ClCompile Include="allegro\src\win\wgl_disp.c" />
+    <ClCompile Include="allegro\src\win\whapall.c" />
+    <ClCompile Include="allegro\src\win\whaptic.c" />
+    <ClCompile Include="allegro\src\win\whaptic.cpp" />
+    <ClCompile Include="allegro\src\win\whapxi.c" />
+    <ClCompile Include="allegro\src\win\wjoyall.c" />
     <ClCompile Include="allegro\src\win\wjoydrv.c" />
-    <ClCompile Include="allegro\src\win\wjoydxnu.c" />
+    <ClCompile Include="allegro\src\win\wjoydxnu.cpp" />
+    <ClCompile Include="allegro\src\win\wjoyxi.c" />
     <ClCompile Include="allegro\src\win\wkeyboard.c" />
     <ClCompile Include="allegro\src\win\wmcursor.c" />
     <ClCompile Include="allegro\src\win\wmouse.c" />
     <ClCompile Include="allegro\src\win\wsystem.c" />
     <ClCompile Include="allegro\src\win\wthread.c" />
     <ClCompile Include="allegro\src\win\wtime.c" />
+    <ClCompile Include="allegro\src\win\wtouch_input.c" />
     <ClCompile Include="allegro\src\win\wunicode.c" />
     <ClCompile Include="allegro\src\win\wwindow.c" />
     <ClCompile Include="allegro\src\win\wxthread.c" />
