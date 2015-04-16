@@ -30,3 +30,7 @@ branches:
 
 os:
   - linux
+
+notifications:
+  - irc:
+    - "chat.freenode.net#openapoc"
