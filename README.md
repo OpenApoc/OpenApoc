@@ -2,6 +2,9 @@
  
 The OpenApocalypse project aims to build a open-source
 clone of the original X-COM: Apocalypse strategy game.
+
+# Current linux build status:
+[![Build Status](https://travis-ci.org/JonnyH/OpenApoc.svg?branch=master)](https://travis-ci.org/JonnyH/OpenApoc)
  
 ## Compiling
 OpenApocalypse is built primarily using the Allegro library,
