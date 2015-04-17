@@ -41,7 +41,7 @@
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -294,7 +294,7 @@
     <ClInclude Include="allegro\include\allegro5\tls.h" />
     <ClInclude Include="allegro\include\allegro5\transformations.h" />
     <ClInclude Include="allegro\include\allegro5\utf8.h" />
-    <ClInclude Include="allegro\src\win\d3d.h" />
+    <ClInclude Include="allegro\src\opengl\ogl_helpers.h" />
     <ClInclude Include="allegro\src\win\wgl.h" />
     <ClInclude Include="allegro5\platform\alplatf.h" />
     <ClInclude Include="include\allegro5\internal\aintern_audio_cfg.h" />
@@ -392,7 +392,9 @@
     <ClCompile Include="allegro\src\opengl\ogl_draw.c" />
     <ClCompile Include="allegro\src\opengl\ogl_fbo.c" />
     <ClCompile Include="allegro\src\opengl\ogl_lock.c" />
+    <ClCompile Include="allegro\src\opengl\ogl_lock_es.c" />
     <ClCompile Include="allegro\src\opengl\ogl_render_state.c" />
+    <ClCompile Include="allegro\src\opengl\ogl_shader.c" />
     <ClCompile Include="allegro\src\path.c" />
     <ClCompile Include="allegro\src\pixels.c" />
     <ClCompile Include="allegro\src\shader.c" />
@@ -404,15 +406,8 @@
     <ClCompile Include="allegro\src\transformations.c" />
     <ClCompile Include="allegro\src\tri_soft.c" />
     <ClCompile Include="allegro\src\utf8.c" />
-    <ClCompile Include="allegro\src\win\d3d_bmp.cpp" />
-    <ClCompile Include="allegro\src\win\d3d_d3dx9.cpp" />
-    <ClCompile Include="allegro\src\win\d3d_disp.cpp" />
-    <ClCompile Include="allegro\src\win\d3d_display_formats.cpp" />
-    <ClCompile Include="allegro\src\win\d3d_render_state.cpp" />
-    <ClCompile Include="allegro\src\win\d3d_shader.cpp" />
     <ClCompile Include="allegro\src\win\wgl_disp.c" />
     <ClCompile Include="allegro\src\win\whapall.c" />
-    <ClCompile Include="allegro\src\win\whaptic.c" />
     <ClCompile Include="allegro\src\win\whaptic.cpp" />
     <ClCompile Include="allegro\src\win\whapxi.c" />
     <ClCompile Include="allegro\src\win\wjoyall.c" />
