@@ -34,3 +34,4 @@ os:
 notifications:
   irc:
     - "chat.freenode.net#openapoc"
+    skip_join: true
