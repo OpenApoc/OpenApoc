@@ -191,9 +191,9 @@ void TileView::Render()
 	Renderer &r = *fw.renderer;
 	r.clear();
 	r.setPalette(this->pal);
-	for (int y = 0; y < map.size.y; y++)
+	for (int z = 0; z < maxZDraw; z++)
 	{
-		for (int z = 0; z < maxZDraw; z++)
+		for (int y = 0; y < map.size.y; y++)
 		{
 			for (int x = 0; x < map.size.x; x++)
 			{
