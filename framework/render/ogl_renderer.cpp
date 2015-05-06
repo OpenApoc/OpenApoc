@@ -708,7 +708,6 @@ public:
 	}
 
 
-
 	void DrawRGB(GLRGBImage &img, Vec2<float> offset)
 	{
 		BindProgram(rgbProgram);
@@ -719,7 +718,7 @@ public:
 		BindTexture t(img.texID);
 		IdentityQuad::draw(rgbProgram->posLoc);
 	}
-	
+
 	void DrawPalette(GLPaletteImage &img, Vec2<float> offset)
 	{
 		BindProgram(paletteProgram);
@@ -962,6 +961,7 @@ void OGL30Renderer::draw(std::shared_ptr<Image> image, Vec2<float> position)
 }
 void OGL30Renderer::drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c)
 {
+	this->flush();
 	DrawRect(position, size, c);
 }
 
