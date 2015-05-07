@@ -5,7 +5,7 @@
 
 namespace OpenApoc {
 
-class RawSound;
+class Sample;
 class Image;
 
 class CheckBox : public Control
@@ -15,7 +15,7 @@ class CheckBox : public Control
 		std::shared_ptr<Image> imagechecked;
 		std::shared_ptr<Image> imageunchecked;
 
-		static RawSound* buttonclick;
+		std::shared_ptr<Sample> buttonclick;
 
 		void LoadResources();
 

@@ -7,7 +7,7 @@
 namespace OpenApoc {
 
 class IFont;
-class RawSound;
+class Sample;
 class Framework;
 class Image;
 
@@ -19,7 +19,7 @@ class TextButton : public Control
 		IFont* font;
 		std::shared_ptr<Surface> cached;
 
-		static RawSound* buttonclick;
+		std::shared_ptr<Sample> buttonclick;
 		std::shared_ptr<Image> buttonbackground;
 
 	protected:

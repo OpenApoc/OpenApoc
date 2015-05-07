@@ -5,22 +5,45 @@
 #include "ignorecase.h"
 
 #include "imageloader_interface.h"
+#include "musicloader_interface.h"
+#include "sampleloader_interface.h"
 
 namespace {
-	std::map<std::string, std::unique_ptr<OpenApoc::ImageLoaderFactory>> registeredImageBackends;
-
+	std::map<std::string, std::unique_ptr<OpenApoc::ImageLoaderFactory>> *registeredImageBackends = nullptr;
+	std::map<std::string, std::unique_ptr<OpenApoc::MusicLoaderFactory>> *registeredMusicLoaders = nullptr;
+	std::map<std::string, std::unique_ptr<OpenApoc::SampleLoaderFactory>> *registeredSampleLoaders = nullptr;
 }; //anonymous namespace
 
 namespace OpenApoc {
 
 void registerImageLoader(ImageLoaderFactory* factory, std::string name)
 {
-	registeredImageBackends.emplace(name, std::unique_ptr<ImageLoaderFactory>(factory));
+	if (!registeredImageBackends)
+	{
+		registeredImageBackends = new std::map<std::string, std::unique_ptr<OpenApoc::ImageLoaderFactory>>();
+	}
+	registeredImageBackends->emplace(name, std::unique_ptr<ImageLoaderFactory>(factory));
+}
+void registerSampleLoader(SampleLoaderFactory *factory, std::string name)
+{
+	if (!registeredSampleLoaders)
+	{
+		registeredSampleLoaders = new std::map<std::string, std::unique_ptr<OpenApoc::SampleLoaderFactory>>();
+	}
+	registeredSampleLoaders->emplace(name, std::unique_ptr<SampleLoaderFactory>(factory));
+}
+void registerMusicLoader(MusicLoaderFactory *factory, std::string name)
+{
+	if (!registeredMusicLoaders)
+	{
+		registeredMusicLoaders = new std::map<std::string, std::unique_ptr<OpenApoc::MusicLoaderFactory>>();
+	}
+	registeredMusicLoaders->emplace(name, std::unique_ptr<MusicLoaderFactory>(factory));
 }
 
-Data::Data(std::vector<std::string> paths, int imageCacheSize, int imageSetCacheSize)
+Data::Data(Framework &fw, std::vector<std::string> paths, int imageCacheSize, int imageSetCacheSize)
 {
-	for (auto &imageBackend : registeredImageBackends)
+	for (auto &imageBackend : *registeredImageBackends)
 	{
 		ImageLoader *l = imageBackend.second->create();
 		if (l)
@@ -30,6 +53,18 @@ Data::Data(std::vector<std::string> paths, int imageCacheSize, int imageSetCache
 		}
 		else
 			std::cerr << "Failed to load image loader \"" << imageBackend.first << "\"\n";
+	}
+
+	for (auto &sampleBackend : *registeredSampleLoaders)
+	{
+		SampleLoader *s = sampleBackend.second->create(fw);
+		if (s)
+		{
+			this->sampleLoaders.emplace_back(s);
+			std::cerr << "Initialised sample loader \"" << sampleBackend.first << "\"\n";
+		}
+		else
+			std::cerr << "Failed to load sample loader \"" << sampleBackend.first << "\"\n";
 	}
 	this->writeDir = PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME);
 	std::cerr << "Setting write dir to \"" << this->writeDir << "\"\n";
@@ -86,6 +121,29 @@ Data::load_image_set(const std::string path)
 
 	this->imageSetCache[cacheKey] = imgSet;
 	return imgSet;
+}
+
+std::shared_ptr<Sample>
+Data::load_sample(const std::string path)
+{
+	std::string cacheKey = Strings::ToUpper(path);
+	std::shared_ptr<Sample> sample = this->sampleCache[cacheKey].lock();
+	if (sample)
+		return sample;
+
+	for (auto &loader : this->sampleLoaders)
+	{
+		sample = loader->loadSample(path);
+		if (sample)
+			break;
+	}
+	if (!sample)
+	{
+		std::cerr << "Failed to load sample \"" << path << "\"\n";
+		return nullptr;
+	}
+	this->sampleCache[cacheKey] = sample;
+	return sample;
 }
 
 std::shared_ptr<Image>

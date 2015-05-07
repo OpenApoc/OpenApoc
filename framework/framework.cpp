@@ -5,12 +5,11 @@
 #include "game/city/city.h"
 #include "renderer.h"
 #include "renderer_interface.h"
+#include "sound_interface.h"
 
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
-#include <allegro5/allegro_audio.h>
-#include <allegro5/allegro_acodec.h>
 
 namespace {
 
@@ -36,9 +35,11 @@ static std::map<std::string, std::string> defaultConfig =
 	{"Resource.LocalCDPath", "./data/cd.iso"},
 	{"Resource.SystemCDPath", DATA_DIRECTORY "/cd.iso"},
 	{"Visual.RendererList", "GL_3_0;GL_2_1;allegro"},
+	{"Audio.Backends", "allegro"},
 };
 
-std::map<std::string, std::unique_ptr<OpenApoc::RendererFactory>> registeredRenderers;
+std::map<std::string, std::unique_ptr<OpenApoc::RendererFactory>> *registeredRenderers = nullptr;
+std::map<std::string, std::unique_ptr<OpenApoc::SoundBackendFactory>> *registeredSoundBackends = nullptr;
 
 };
 
@@ -46,10 +47,17 @@ namespace OpenApoc {
 
 void registerRenderer(RendererFactory* factory, std::string name)
 {
-	registeredRenderers.emplace(name, std::unique_ptr<RendererFactory>(factory));
+	if (!registeredRenderers)
+		registeredRenderers = new std::map<std::string, std::unique_ptr<OpenApoc::RendererFactory>>();
+	registeredRenderers->emplace(name, std::unique_ptr<RendererFactory>(factory));
 }
 
-
+void registerSoundBackend(SoundBackendFactory *factory, std::string name)
+{
+	if (!registeredSoundBackends)
+		registeredSoundBackends = new std::map<std::string, std::unique_ptr<OpenApoc::SoundBackendFactory>>();
+	registeredSoundBackends->emplace(name, std::unique_ptr<SoundBackendFactory>(factory));
+}
 
 class FrameworkPrivate
 {
@@ -64,9 +72,6 @@ class FrameworkPrivate
 		ALLEGRO_EVENT_QUEUE *eventAllegro;
 		std::list<Event*> eventQueue;
 		ALLEGRO_MUTEX *eventMutex;
-
-		ALLEGRO_MIXER *audioMixer;
-		ALLEGRO_VOICE *audioVoice;
 
 		StageStack ProgramStages;
 		std::shared_ptr<Surface> defaultSurface;
@@ -120,7 +125,7 @@ Framework::Framework(const std::string programName)
 	resourcePaths.push_back(Settings->getString("Resource.SystemDataDir"));
 	resourcePaths.push_back(Settings->getString("Resource.LocalDataDir"));
 
-	this->data.reset(new Data(resourcePaths));
+	this->data.reset(new Data(*this, resourcePaths));
 
 	auto testFile = this->data->load_file("MUSIC", "r");
 
@@ -458,13 +463,13 @@ void Framework::Display_Initialise()
 	for (auto &rendererName : Strings::Split(Settings->getString("Visual.RendererList"), ';'))
 	{
 		std::cerr << "Trying to load renderer \"" << rendererName << "\"\n";
-		auto rendererFactory = registeredRenderers.find(rendererName);
-		if (rendererFactory == registeredRenderers.end())
+		auto rendererFactory = registeredRenderers->find(rendererName);
+		if (rendererFactory == registeredRenderers->end())
 		{
 			std::cerr << "Renderer not in supported list\n";
 			continue;
 		}
-		Renderer *r = (rendererFactory->second)->create();
+		Renderer *r = rendererFactory->second->create();
 		if (!r)
 		{
 			std::cerr << "Renderer failed to init\n";
@@ -472,6 +477,7 @@ void Framework::Display_Initialise()
 		}
 		this->renderer.reset(r);
 		std::cout << "Using renderer: " << this->renderer->getName() << "\n";
+		break;
 	}
 	if (!this->renderer)
 	{
@@ -525,45 +531,29 @@ void Framework::Audio_Initialise()
 	printf( "Framework: Initialise Audio\n" );
 #endif
 
-	p->audioVoice = 0;
-	p->audioMixer = 0;
-
-	if( !al_install_audio() )
+	for (auto &soundBackendName : Strings::Split(Settings->getString("Audio.Backends"), ';'))
 	{
-		printf( "Audio_Initialise: Failed to install audio\n" );
-		return;
+		std::cerr << "Trying to load sound backend \"" << soundBackendName << "\"\n";
+		auto backendFactory = registeredSoundBackends->find(soundBackendName);
+		if (backendFactory == registeredSoundBackends->end())
+		{
+			std::cerr << "Backend not in supported list\n";
+			continue;
+		}
+		SoundBackend *backend = backendFactory->second->create();
+		if (!backend)
+		{
+			std::cerr << "Backend failed to init\n";
+			continue;
+		}
+		this->soundBackend.reset(backend);
+		std::cerr << "Backend init success\n";
+		break;
 	}
-	if( !al_init_acodec_addon() )
+	if (!this->soundBackend)
 	{
-		printf( "Audio_Initialise: Failed to install codecs\n" );
-		return;
-	}
-
-	// Allow playing samples
-	al_reserve_samples( 10 );
-
-	p->audioVoice = al_create_voice(44100, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2);
-	if( p->audioVoice == 0 )
-	{
-		printf( "Audio_Initialise: Failed to create voice\n" );
-		return;
-	}
-	p->audioMixer = al_create_mixer(44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, ALLEGRO_CHANNEL_CONF_2);
-	if( p->audioMixer == 0 )
-	{
-		printf( "Audio_Initialise: Failed to create mixer\n" );
-		al_destroy_voice( p->audioVoice );
-		p->audioVoice = 0;
-		return;
-	}
-	if( !al_attach_mixer_to_voice( p->audioMixer, p->audioVoice ) )
-	{
-		printf( "Audio_Initialise: Failed to attach mixer to voice\n" );
-		al_destroy_voice( p->audioVoice );
-		p->audioVoice = 0;
-		al_destroy_mixer( p->audioMixer );
-		p->audioMixer = 0;
-		return;
+		std::cerr << "No functional backend found\n";
+		abort();
 	}
 }
 
@@ -572,43 +562,7 @@ void Framework::Audio_Shutdown()
 #ifdef WRITE_LOG
 	printf( "Framework: Shutdown Audio\n" );
 #endif
-	if( p->audioVoice != 0 )
-	{
-		al_destroy_voice( p->audioVoice );
-		p->audioVoice = 0;
-	}
-	if( p->audioMixer != 0 )
-	{
-		al_destroy_mixer( p->audioMixer );
-		p->audioMixer = 0;
-	}
-	al_uninstall_audio();
-}
-
-void Framework::Audio_PlayAudio( std::string Filename, bool Loop )
-{
-	if( p->audioVoice == 0 || p->audioMixer == 0 )
-	{
-		return;
-	}
-
-#ifdef WRITE_LOG
-	printf( "Framework: Start audio file %s\n", Filename.c_str() );
-#endif
-
-
-}
-
-void Framework::Audio_StopAudio()
-{
-	if( p->audioVoice == 0 || p->audioMixer == 0 )
-	{
-		return;
-	}
-
-#ifdef WRITE_LOG
-	printf( "Framework: Stop audio\n" );
-#endif
+	this->soundBackend.reset();
 }
 
 }; //namespace OpenApoc

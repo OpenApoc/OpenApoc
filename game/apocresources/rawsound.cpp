@@ -1,30 +1,43 @@
-
-#include "rawsound.h"
+#include "framework/sampleloader_interface.h"
 #include "framework/framework.h"
 
-namespace OpenApoc {
+namespace {
 
-RawSound::RawSound( Framework &fw, std::string Filename )
+using namespace OpenApoc;
+
+class RawSampleLoader : public SampleLoader
 {
-	std::string path = "xcom3/RAWSOUND/";
-	path.append( Filename );
-	PHYSFS_file* f = fw.data->load_file( path, "rb" );
-	sounddata = new Memory( PHYSFS_fileLength( f ) );
-	PHYSFS_readBytes( f, sounddata->GetData(), sounddata->GetSize() );
-	PHYSFS_close( f );
+	Framework &fw;
+public:
+	RawSampleLoader(Framework &fw)
+		:fw(fw){}
+	virtual std::shared_ptr<Sample> loadSample(std::string path)
+	{
+		PHYSFS_file *file = fw.data->load_file(path, "r");
+		if (!file)
+			return nullptr;
 
-	soundsample = al_create_sample( sounddata->GetData(), sounddata->GetSize(), 22050, ALLEGRO_AUDIO_DEPTH_UNSIGNED, ALLEGRO_CHANNEL_CONF_1, false );
-}
+		auto sample = std::make_shared<Sample>();
 
-RawSound::~RawSound()
+		sample->format.frequency = 22050;
+		sample->format.channels = 1;
+		sample->format.format = AudioFormat::SampleFormat::PCM_UINT8;
+		sample->sampleCount = PHYSFS_fileLength(file);
+		sample->data.reset(new uint8_t[sample->sampleCount]);
+		PHYSFS_readBytes(file, sample->data.get(), sample->sampleCount);
+		PHYSFS_close(file);
+		return sample;
+	}
+};
+
+class RawSampleLoaderFactory : public SampleLoaderFactory
 {
-	al_destroy_sample( soundsample );
-	delete sounddata;
-}
+public:
+	virtual SampleLoader *create(Framework &fw)
+	{
+		return new RawSampleLoader(fw);
+	}
+};
 
-void RawSound::PlaySound()
-{
-	al_play_sample( soundsample, 1.0f, 0.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, 0 );
-}
-
-}; //namespace OpenApoc
+SampleLoaderRegister<RawSampleLoaderFactory> load_at_init("raw");
+}; //anonymous namespace

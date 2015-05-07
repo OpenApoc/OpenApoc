@@ -5,7 +5,7 @@
 
 namespace OpenApoc {
 
-class RawSound;
+class Sample;
 class Image;
 
 class GraphicButton : public Control
@@ -19,7 +19,7 @@ class GraphicButton : public Control
 		std::shared_ptr<Image> imagedepressed;
 		std::shared_ptr<Image> imagehover;
 
-		static RawSound* buttonclick;
+		std::shared_ptr<Sample> buttonclick;
 
 	protected:
 		virtual void OnRender();

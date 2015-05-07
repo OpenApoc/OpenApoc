@@ -11,6 +11,7 @@
 #include "data.h"
 #include "stagestack.h"
 #include "renderer.h"
+#include "sound.h"
 
 #include "library/configfile.h"
 
@@ -30,6 +31,8 @@ class Framework
 	private:
 		std::unique_ptr<FrameworkPrivate> p;
 		std::string programName;
+		void Audio_Initialise();
+		void Audio_Shutdown();
 	public:
 		std::unique_ptr<Data> data;
 		GameState state;
@@ -37,6 +40,7 @@ class Framework
 
 		std::unique_ptr<ConfigFile> Settings;
 		std::unique_ptr<Renderer> renderer;
+		std::unique_ptr<SoundBackend> soundBackend;
 
 		Framework(const std::string programName);
 		~Framework();
@@ -56,11 +60,6 @@ class Framework
 		int Display_GetHeight();
 		void Display_SetTitle( std::string* NewTitle );
 		void Display_SetTitle( std::string NewTitle );
-
-		void Audio_Initialise();
-		void Audio_Shutdown();
-		void Audio_PlayAudio( std::string Filename, bool Loop );
-		void Audio_StopAudio();
 
 		bool IsSlowMode();
 		void SetSlowMode(bool SlowEnabled);

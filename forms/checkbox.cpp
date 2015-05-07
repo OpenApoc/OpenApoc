@@ -5,15 +5,10 @@
 
 namespace OpenApoc {
 
-RawSound* CheckBox::buttonclick = nullptr;
-
 CheckBox::CheckBox( Framework &fw, Control* Owner ) : Control( fw, Owner ), Checked(false), imagechecked(nullptr), imageunchecked(nullptr)
 {
 	LoadResources();
-	if( buttonclick == nullptr )
-	{
-		buttonclick = new RawSound( fw, "STRATEGC/INTRFACE/BUTTON1.RAW" );
-	}
+	this->buttonclick = fw.data->load_sample("xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW" );
 }
 
 CheckBox::~CheckBox()
@@ -46,7 +41,7 @@ void CheckBox::EventOccured( Event* e )
 
 	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this && e->Data.Forms.EventFlag == FormEventType::MouseDown )
 	{
-		buttonclick->PlaySound();
+		fw.soundBackend->playSample(buttonclick);
 	}
 
 	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this && e->Data.Forms.EventFlag == FormEventType::MouseClick )

@@ -4,7 +4,7 @@
 #include "framework/stage.h"
 #include "framework/includes.h"
 
-#include "apocresources/rawsound.h"
+#include <allegro5/allegro5.h>
 
 namespace OpenApoc {
 
