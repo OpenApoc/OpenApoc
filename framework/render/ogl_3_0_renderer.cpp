@@ -841,7 +841,7 @@ public:
 
 
 OGL30Renderer::OGL30Renderer()
-	: rgbProgram(new RGBProgram()), colourProgram(new SolidColourProgram()), paletteProgram(new PaletteProgram()), paletteSetProgram(new PaletteSetProgram())
+	: state(RendererState::Idle), rgbProgram(new RGBProgram()), colourProgram(new SolidColourProgram()), paletteProgram(new PaletteProgram()), paletteSetProgram(new PaletteSetProgram()), currentBoundProgram(0)
 {
 	GLint viewport[4];
 	gl::GetIntegerv(gl::VIEWPORT, viewport);
