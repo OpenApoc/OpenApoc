@@ -3,17 +3,18 @@
 
 namespace OpenApoc {
 
+	class Framework;
 	class MusicLoader
 	{
 	public:
 		virtual ~MusicLoader() {};
-		virtual std::shared_ptr<MusicTrack> loadMusic(std::string path, AudioFormat requestedFormat) = 0;
+		virtual std::shared_ptr<MusicTrack> loadMusic(std::string path) = 0;
 	};
 
 	class MusicLoaderFactory
 	{
 	public:
-		virtual MusicLoader *create() = 0;
+		virtual MusicLoader *create(Framework &fw) = 0;
 		virtual ~MusicLoaderFactory() {};
 	};
 

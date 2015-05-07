@@ -1,6 +1,7 @@
 
 #include "basescreen.h"
-#include "../../framework/framework.h"
+#include "framework/framework.h"
+
 
 namespace OpenApoc {
 
@@ -60,7 +61,6 @@ void BaseScreen::Update(StageCmd * const cmd)
 
 void BaseScreen::Render()
 {
-	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
 		basescreenform->Render();
 	fw.gamecore->MouseCursor->Render();
 }

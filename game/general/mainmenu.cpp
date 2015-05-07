@@ -6,6 +6,8 @@
 
 namespace OpenApoc {
 
+std::vector<std::string> tracks {"music:0"};
+
 MainMenu::MainMenu(Framework &fw)
 	: Stage(fw)
 {
@@ -18,18 +20,17 @@ MainMenu::~MainMenu()
 
 void MainMenu::Begin()
 {
-	musicplayer = std::unique_ptr<Music>(new Music(fw, 0));
-	musicplayer->Play();
+	fw.jukebox->play(tracks);
 }
 
 void MainMenu::Pause()
 {
-	musicplayer->Stop();
+	fw.jukebox->stop();
 }
 
 void MainMenu::Resume()
 {
-	musicplayer->Play();
+	fw.jukebox->play(tracks);
 }
 
 void MainMenu::Finish()

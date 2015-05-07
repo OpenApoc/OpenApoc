@@ -392,11 +392,6 @@ void Framework::TranslateAllegroEvents()
 				fwE->Data.Display.Active = false;
 				PushEvent( fwE );
 				break;
-			case ALLEGRO_EVENT_AUDIO_STREAM_FINISHED:
-				fwE = new Event();
-				fwE->Type = EVENT_AUDIO_STREAM_FINISHED;
-				PushEvent( fwE );
-				break;
 			default:
 				fwE = new Event();
 				fwE->Type = EVENT_UNDEFINED;

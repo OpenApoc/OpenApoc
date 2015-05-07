@@ -17,6 +17,10 @@
 
 #include "game/gamestate.h"
 
+//FIXME: Remove core-allegro
+//Required for input types
+#include <allegro5/allegro.h>
+
 namespace OpenApoc {
 
 class Shader;
@@ -41,6 +45,7 @@ class Framework
 		std::unique_ptr<ConfigFile> Settings;
 		std::unique_ptr<Renderer> renderer;
 		std::unique_ptr<SoundBackend> soundBackend;
+		std::unique_ptr<JukeBox> jukebox;
 
 		Framework(const std::string programName);
 		~Framework();
