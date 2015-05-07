@@ -4,9 +4,6 @@
 
 namespace OpenApoc {
 
-ImageLoader::~ImageLoader()
-{}
-
 Image::~Image()
 {
 }

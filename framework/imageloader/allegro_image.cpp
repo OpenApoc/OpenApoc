@@ -1,4 +1,4 @@
-#include "framework/image.h"
+#include "framework/imageloader_interface.h"
 #include "library/vec.h"
 
 #include <allegro5/allegro.h>
@@ -6,6 +6,7 @@
 #include <allegro5/allegro_physfs.h>
 
 namespace {
+
 
 class AllegroImageLoader : public OpenApoc::ImageLoader
 {
@@ -51,16 +52,25 @@ public:
 		al_destroy_bitmap(bmp);
 		return img;
 	}
+
+	virtual std::string getName()
+	{
+		return "allegro";
+	}
 };
 
-}; //anonymous namespace
-
-namespace OpenApoc{
-
-ImageLoader*
-createImageLoader()
+class AllegroImageLoaderFactory : public OpenApoc::ImageLoaderFactory
 {
-	return new AllegroImageLoader();
-}
+public:
+	virtual OpenApoc::ImageLoader *create()
+	{
+		return new AllegroImageLoader();
+	}
+	virtual ~AllegroImageLoaderFactory()
+	{
+	}
+};
 
-}; //namespace OpenApoc
+OpenApoc::ImageLoaderRegister<AllegroImageLoaderFactory> register_at_load("allegro");
+
+}; //anonymous namespace

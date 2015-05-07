@@ -31,15 +31,6 @@ class Image
 		unsigned indexInSet;
 };
 
-class ImageLoader
-{
-public:
-	virtual ~ImageLoader();
-	virtual std::shared_ptr<Image> loadImage(std::string path) = 0;
-};
-
-ImageLoader* createImageLoader();
-
 //A surface is an image you can render to. No SW locking is allowed!
 class Surface : public Image
 {

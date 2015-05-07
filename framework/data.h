@@ -13,6 +13,8 @@ namespace OpenApoc {
 #define PROGRAM_NAME "OpenApoc"
 #define PROGRAM_ORGANISATION "OpenApoc"
 
+class ImageLoader;
+
 class Data
 {
 
@@ -20,12 +22,12 @@ class Data
 		std::string writeDir;
 		std::map<std::string, std::weak_ptr<Image> >imageCache;
 		std::map<std::string, std::weak_ptr<ImageSet> >imageSetCache;
-		std::unique_ptr<ImageLoader> imageLoader;
 
 		//Pin open 'imageCacheSize' images
 		std::queue<std::shared_ptr<Image> > pinnedImages;
 		//Pin open 'imageSetCacheSize' image sets
 		std::queue<std::shared_ptr<ImageSet> > pinnedImageSets;
+		std::list<std::unique_ptr<ImageLoader>> imageLoaders;
 
 	public:
 		Data(std::vector<std::string> paths, int imageCacheSize = 1, int imageSetCacheSize = 1);

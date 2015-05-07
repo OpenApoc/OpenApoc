@@ -4,11 +4,33 @@
 #include "palette.h"
 #include "ignorecase.h"
 
+#include "imageloader_interface.h"
+
+namespace {
+	std::map<std::string, std::unique_ptr<OpenApoc::ImageLoaderFactory>> registeredImageBackends;
+
+}; //anonymous namespace
+
 namespace OpenApoc {
 
-Data::Data(std::vector<std::string> paths, int imageCacheSize, int imageSetCacheSize) :
-	imageLoader(createImageLoader())
+void registerImageLoader(ImageLoaderFactory* factory, std::string name)
 {
+	registeredImageBackends.emplace(name, std::unique_ptr<ImageLoaderFactory>(factory));
+}
+
+Data::Data(std::vector<std::string> paths, int imageCacheSize, int imageSetCacheSize)
+{
+	for (auto &imageBackend : registeredImageBackends)
+	{
+		ImageLoader *l = imageBackend.second->create();
+		if (l)
+		{
+			this->imageLoaders.emplace_back(l);
+			std::cerr << "Initialised image loader \"" << imageBackend.first << "\"\n";
+		}
+		else
+			std::cerr << "Failed to load image loader \"" << imageBackend.first << "\"\n";
+	}
 	this->writeDir = PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME);
 	std::cerr << "Setting write dir to \"" << this->writeDir << "\"\n";
 	PHYSFS_setWriteDir(this->writeDir.c_str());
@@ -115,7 +137,14 @@ Data::load_image(const std::string path)
 	}
 	else
 	{
-		img = imageLoader->loadImage(GetCorrectCaseFilename(path));
+		for (auto &loader : imageLoaders)
+		{
+			img = loader->loadImage(GetCorrectCaseFilename(path));
+			if (img)
+			{
+				break;
+			}
+		}
 		if (!img)
 		{
 			std::cerr << "Failed to load image \"" << path << "\"\n";
