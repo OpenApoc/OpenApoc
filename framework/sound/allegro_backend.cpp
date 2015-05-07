@@ -2,6 +2,7 @@
 #include <iostream>
 #include <allegro5/allegro_audio.h>
 #include <list>
+#include <thread>
 
 namespace {
 
@@ -51,7 +52,6 @@ public:
 			sample->format.frequency, depth, channels, false);
 		if (!this->s)
 			std::cerr << "Failed to create sample\n";
-		
 	}
 };
 
@@ -61,6 +61,10 @@ class AllegroSoundBackend : public SoundBackend
 	//FIXME: Keep last max_samples live as they may still be playing (no way
 	// to tell if allegro is finished without managing the stream outselves?)
 	std::list<std::shared_ptr<Sample>> liveSamples;
+
+	bool stopThread;
+	std::unique_ptr<std::thread> musicThread;
+
 public:
 	virtual void playSample(std::shared_ptr<Sample> sample)
 	{
@@ -79,19 +83,98 @@ public:
 
 	}
 
-	virtual void playMusic(std::shared_ptr<MusicTrack>, std::function<void(void*)> finishedCallback, void *callbackData)
+	static void musicThreadFunction(AllegroSoundBackend &parent, std::shared_ptr<MusicTrack> track, std::function<void(void*)> finishedCallback, void *callbackData)
 	{
+		ALLEGRO_AUDIO_DEPTH depth;
+		switch (track->format.format)
+		{
+			case AudioFormat::SampleFormat::PCM_SINT16:
+				depth = ALLEGRO_AUDIO_DEPTH_INT16;
+				break;
+			default:
+				std::cerr << "AllegroSoundBackend: Unsupported music format\n";
+				return;
+		}
+		ALLEGRO_CHANNEL_CONF channels;
+		switch (track->format.channels)
+		{
+			case 1:
+				channels = ALLEGRO_CHANNEL_CONF_1;
+				break;
+			case 2:
+				channels = ALLEGRO_CHANNEL_CONF_2;
+				break;
+			default:
+				std::cerr << "AllegroSoundBackend: Unsupported music channels\n";
+				return;
+		}
+		ALLEGRO_AUDIO_STREAM *stream = al_create_audio_stream(2, track->requestedSampleBufferSize, track->format.frequency, depth, channels);
+		if (!stream)
+		{
+			std::cerr << "AllegroSoundBackend: Failed to create music stream\n";
+			return;
+		}
 
+		al_attach_audio_stream_to_mixer(stream, al_get_default_mixer());
+
+		ALLEGRO_EVENT_QUEUE *eventQueue = al_create_event_queue();
+		al_register_event_source(eventQueue, al_get_audio_stream_event_source(stream));
+		while (!parent.stopThread)
+		{
+			ALLEGRO_EVENT event;
+			al_wait_for_event(eventQueue, &event);
+			if (event.type == ALLEGRO_EVENT_AUDIO_STREAM_FRAGMENT)
+			{
+				uint8_t *buf = (uint8_t*)al_get_audio_stream_fragment(stream);
+				if (!buf)
+				{
+					/* Sometimes we get an event with no buffer? */
+					continue;
+				}
+				unsigned int returnedSamples;
+				auto callbackReturn = track->callback(track, track->requestedSampleBufferSize, buf, &returnedSamples);
+				if (returnedSamples != track->requestedSampleBufferSize)
+				{
+					std::cerr << "AllegroSoundBackend: Requested " << track->requestedSampleBufferSize << " samples, got " << returnedSamples << "\n";
+					std::cerr << "AllegroSoundBackend: Buffer underrun not yet handled correctly\n";
+				}
+				al_set_audio_stream_fragment(stream, buf);
+
+				if (callbackReturn == MusicTrack::MusicCallbackReturn::End)
+				{
+					al_drain_audio_stream(stream);
+					//FIXME: finishedCallback() in a way that calling playMusic() won't just wedge waiting for the same thread to join
+					al_destroy_audio_stream(stream);
+					return;
+				}
+
+			}
+		}
+		al_drain_audio_stream(stream);
+		al_destroy_audio_stream(stream);
+
+	}
+
+	virtual void playMusic(std::shared_ptr<MusicTrack> track, std::function<void(void*)> finishedCallback, void *callbackData)
+	{
+		this->stopMusic();
+		stopThread = false;
+		this->musicThread.reset(new std::thread(musicThreadFunction, std::ref(*this), track, finishedCallback, callbackData));
 	}
 
 	virtual void stopMusic()
 	{
-
+		if (musicThread)
+		{
+			stopThread = true;
+			musicThread->join();
+			musicThread.reset(nullptr);
+		}
 	}
 
 	virtual ~AllegroSoundBackend()
 	{
-
+		this->stopMusic();
 	}
 
 	virtual const AudioFormat& getPreferredFormat()

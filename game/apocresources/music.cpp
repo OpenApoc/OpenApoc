@@ -40,6 +40,7 @@ public:
 
 		int bytesPerSample = 2;
 		PHYSFS_readBytes(this->file, sampleBuffer, samples * bytesPerSample * this->format.channels);
+		*returnedSamples = samples;
 		if (samples < maxSamples)
 			return MusicTrack::MusicCallbackReturn::End;
 		return MusicTrack::MusicCallbackReturn::Continue;
