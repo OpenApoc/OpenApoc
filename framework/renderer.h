@@ -43,8 +43,6 @@ class Renderer
 		virtual std::string getName() = 0;
 
 		virtual std::shared_ptr<Surface> getDefaultSurface() = 0;
-
-		static Renderer* createRenderer();
 };
 
 class RendererSurfaceBinding

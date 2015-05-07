@@ -1,4 +1,4 @@
-#include "framework/renderer.h"
+#include "framework/renderer_interface.h"
 #include "framework/image.h"
 #include "framework/palette.h"
 #include <memory>
@@ -6,9 +6,9 @@
 
 #include "gl_3_0.cpp"
 
-namespace OpenApoc {
-
 namespace {
+
+using namespace OpenApoc;
 
 class Program
 {
@@ -985,22 +985,31 @@ OGL30Renderer::getName()
 	return "OGL3.0 Renderer";
 }
 
-}; //anonymouse namespace
-
-OpenApoc::Renderer *
-OpenApoc::Renderer::createRenderer()
+class OGL30RendererFactory : public OpenApoc::RendererFactory
 {
-	auto success = gl::sys::LoadFunctions();
-	if (!success)
+bool alreadyInitialised;
+bool functionLoadSuccess;
+public:
+	OGL30RendererFactory()
+		: alreadyInitialised(false), functionLoadSuccess(false){}
+	virtual OpenApoc::Renderer *create()
 	{
-		std::cerr << "Failed to load GL3.0\n";
+		if (!alreadyInitialised)
+		{
+			alreadyInitialised = true;
+			auto success = gl::sys::LoadFunctions();
+			if (!success)
+				return nullptr;
+			if (success.GetNumMissing())
+				return nullptr;
+			functionLoadSuccess = true;
+		}
+		if (functionLoadSuccess)
+			return new OGL30Renderer();
 		return nullptr;
 	}
-	if (success.GetNumMissing())
-	{
-		std::cerr << "Failed to load " << success.GetNumMissing() << " GL3.0 functions\n";
-		return nullptr;
-	}
-	return new OGL30Renderer();
-}
-}; //namesapce OpenApoc
+};
+
+OpenApoc::RendererRegister<OGL30RendererFactory> register_at_load("GL_3_0");
+
+}; //anonymous namespace

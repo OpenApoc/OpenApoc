@@ -4,6 +4,7 @@
 #include "game/resources/gamecore.h"
 #include "game/city/city.h"
 #include "renderer.h"
+#include "renderer_interface.h"
 
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
@@ -34,11 +35,21 @@ static std::map<std::string, std::string> defaultConfig =
 	{"Resource.SystemDataDir", DATA_DIRECTORY},
 	{"Resource.LocalCDPath", "./data/cd.iso"},
 	{"Resource.SystemCDPath", DATA_DIRECTORY "/cd.iso"},
+	{"Visual.RendererList", "GL_3_0;GL_2_1;allegro"},
 };
+
+std::map<std::string, std::unique_ptr<OpenApoc::RendererFactory>> registeredRenderers;
 
 };
 
 namespace OpenApoc {
+
+void registerRenderer(RendererFactory* factory, std::string name)
+{
+	registeredRenderers.emplace(name, std::unique_ptr<RendererFactory>(factory));
+}
+
+
 
 class FrameworkPrivate
 {
@@ -444,10 +455,31 @@ void Framework::Display_Initialise()
 
 	al_hide_mouse_cursor( p->screen );
 
-	this->renderer.reset(Renderer::createRenderer());
+	for (auto &rendererName : Strings::Split(Settings->getString("Visual.RendererList"), ';'))
+	{
+		std::cerr << "Trying to load renderer \"" << rendererName << "\"\n";
+		auto rendererFactory = registeredRenderers.find(rendererName);
+		if (rendererFactory == registeredRenderers.end())
+		{
+			std::cerr << "Renderer not in supported list\n";
+			continue;
+		}
+		Renderer *r = (rendererFactory->second)->create();
+		if (!r)
+		{
+			std::cerr << "Renderer failed to init\n";
+			continue;
+		}
+		this->renderer.reset(r);
+		std::cout << "Using renderer: " << this->renderer->getName() << "\n";
+	}
+	if (!this->renderer)
+	{
+		std::cerr << "No functional renderer found\n";
+		abort();
+	}
 	this->p->defaultSurface = this->renderer->getDefaultSurface();
 
-	std::cout << "Using renderer: " << this->renderer->getName() << "\n";
 
 }
 
