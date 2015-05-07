@@ -62,6 +62,7 @@ public:
 	virtual ~SoundBackend() {};
 	virtual void playSample(std::shared_ptr<Sample> sample) = 0;
 	virtual void playMusic(std::shared_ptr<MusicTrack>, std::function<void(void*)> finishedCallback, void *callbackData = nullptr) = 0;
+	virtual void stopMusic() = 0;
 };
 
 class JukeBox

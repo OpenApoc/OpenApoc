@@ -6,6 +6,7 @@
 #include "renderer.h"
 #include "renderer_interface.h"
 #include "sound_interface.h"
+#include "sound.h"
 
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
@@ -58,6 +59,63 @@ void registerSoundBackend(SoundBackendFactory *factory, std::string name)
 		registeredSoundBackends = new std::map<std::string, std::unique_ptr<OpenApoc::SoundBackendFactory>>();
 	registeredSoundBackends->emplace(name, std::unique_ptr<SoundBackendFactory>(factory));
 }
+
+
+class JukeBoxImpl : public JukeBox
+{
+	Framework &fw;
+	int position;
+	std::vector<std::shared_ptr<MusicTrack>> trackList;
+	JukeBox::PlayMode mode;
+public:
+	JukeBoxImpl(Framework &fw)
+		:fw(fw), mode(JukeBox::PlayMode::Loop)
+	{
+
+	}
+	virtual ~JukeBoxImpl()
+	{
+		this->stop();
+	}
+
+	virtual void play(std::vector<std::string> tracks, JukeBox::PlayMode mode)
+	{
+		this->trackList.clear();
+		this->position = 0;
+		this->mode = mode;
+		for (auto &track : tracks)
+		{
+			auto musicTrack = fw.data->load_music(track);
+			if (!musicTrack)
+				std::cerr << "Failed to load music track \"" << track << "\" - skipping\n";
+			else
+				this->trackList.push_back(musicTrack);
+		}
+		this->progressTrack(this);
+	}
+	static void progressTrack(void *data)
+	{
+		JukeBoxImpl *jukebox = static_cast<JukeBoxImpl*>(data);
+		if (jukebox->trackList.size() == 0)
+		{
+			std::cerr << "Trying to play empty jukebox\n";
+			return;
+		}
+		if (jukebox->position >= jukebox->trackList.size())
+		{
+			std::cerr << "End of jukebox playlist\n";
+			return;
+		}
+		jukebox->fw.soundBackend->playMusic(jukebox->trackList[jukebox->position], progressTrack, jukebox);
+		jukebox->position++;
+		if (jukebox->mode == JukeBox::PlayMode::Loop)
+			jukebox->position = jukebox->position % jukebox->trackList.size();
+	}
+	virtual void stop()
+	{
+		fw.soundBackend->stopMusic();
+	}
+};
 
 class FrameworkPrivate
 {
@@ -550,6 +608,7 @@ void Framework::Audio_Initialise()
 		std::cerr << "No functional backend found\n";
 		abort();
 	}
+	this->jukebox.reset(new JukeBoxImpl(*this));
 }
 
 void Framework::Audio_Shutdown()
@@ -557,6 +616,7 @@ void Framework::Audio_Shutdown()
 #ifdef WRITE_LOG
 	printf( "Framework: Shutdown Audio\n" );
 #endif
+	this->jukebox.reset();
 	this->soundBackend.reset();
 }
 

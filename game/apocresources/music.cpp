@@ -73,14 +73,14 @@ public:
 
 	virtual std::shared_ptr<MusicTrack> loadMusic(std::string path)
 	{
-		auto strings = Strings::Split(path, ';');
+		auto strings = Strings::Split(path, ':');
 		if (strings.size() != 2)
 		{
 			std::cerr << "Invalid raw music path string\n";
 			return nullptr;
 		}
 
-		if (Strings::IsNumeric(strings[1]))
+		if (!Strings::IsNumeric(strings[1]))
 		{
 			std::cerr << "Raw music track \"" << strings[1] << "\" doesn't look like a number\n";
 			return nullptr;

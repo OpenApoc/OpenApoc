@@ -66,6 +66,18 @@ Data::Data(Framework &fw, std::vector<std::string> paths, int imageCacheSize, in
 		else
 			std::cerr << "Failed to load sample loader \"" << sampleBackend.first << "\"\n";
 	}
+
+	for (auto &musicLoader : *registeredMusicLoaders)
+	{
+		MusicLoader *m = musicLoader.second->create(fw);
+		if (m)
+		{
+			this->musicLoaders.emplace_back(m);
+			std::cerr << "Initialised music loader \"" << musicLoader.first << "\"\n";
+		}
+		else
+			std::cerr << "Failed to load music loader \"" << musicLoader.first << "\"\n";
+	}
 	this->writeDir = PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME);
 	std::cerr << "Setting write dir to \"" << this->writeDir << "\"\n";
 	PHYSFS_setWriteDir(this->writeDir.c_str());
@@ -144,6 +156,20 @@ Data::load_sample(const std::string path)
 	}
 	this->sampleCache[cacheKey] = sample;
 	return sample;
+}
+
+std::shared_ptr<MusicTrack>
+Data::load_music(const std::string path)
+{
+	//No cache for music tracks, just stream of disk
+	for (auto &loader : this->musicLoaders)
+	{
+		auto track = loader->loadMusic(path);
+		if (track)
+			return track;
+	}
+	std::cerr << "Failed to load music track \"" << path << "\"\n";
+	return nullptr;
 }
 
 std::shared_ptr<Image>

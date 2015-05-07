@@ -84,6 +84,11 @@ public:
 
 	}
 
+	virtual void stopMusic()
+	{
+
+	}
+
 	virtual ~AllegroSoundBackend()
 	{
 
