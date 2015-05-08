@@ -1,3 +1,4 @@
+#include "framework/logger.h"
 #include "vehicle.h"
 #include "game/resources/vehiclefactory.h"
 #include <cfloat>
@@ -69,7 +70,7 @@ public:
 			path = v.owningTile->map.findShortestPath(v.owningTile->position, newTarget);
 			if (path.empty())
 			{
-				std::cerr << "Failed to path - retrying\n";
+				LogInfo("Failed to path - retrying");
 				continue;
 			}
 			//Skip first in the path (as that's current tile)
@@ -81,7 +82,7 @@ public:
 			path = v.owningTile->map.findShortestPath(v.owningTile->position, target);
 			if (path.empty())
 			{
-				std::cerr << "Failed to path after obstruction\n";
+				LogInfo("Failed to path after obstruction");
 				path.clear();
 				return this->getNextDestination();
 			}

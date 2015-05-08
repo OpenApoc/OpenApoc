@@ -1,3 +1,4 @@
+#include "framework/logger.h"
 #include "framework/musicloader_interface.h"
 #include "framework/framework.h"
 #include <algorithm>
@@ -77,33 +78,33 @@ public:
 		auto strings = Strings::Split(path, ':');
 		if (strings.size() != 2)
 		{
-			std::cerr << "Invalid raw music path string\n";
+			LogInfo("Invalid raw music path string \"%s\"", path.c_str());
 			return nullptr;
 		}
 
 		if (!Strings::IsNumeric(strings[1]))
 		{
-			std::cerr << "Raw music track \"" << strings[1] << "\" doesn't look like a number\n";
+			LogInfo("Raw music track \"%s\" doesn't look like a number", strings[1].c_str());
 			return nullptr;
 		}
 
 		int track = Strings::ToInteger(strings[1]);
 		if (track > lengths.size())
 		{
-			std::cerr << "Raw music track " << track << " out of bounds\n";
+			LogInfo("Raw music track %d out of bounds", track);
 			return nullptr;
 		}
 
 		PHYSFS_file *file = fw.data->load_file(strings[0], "r");
 		if (!file)
 		{
-			std::cerr << "Failed to open raw music file \"" << strings[0] << "\"\n";
+			LogInfo("Failed to open raw music file \"%s\"", strings[0].c_str());
 			return nullptr;
 		}
 
 		if (PHYSFS_fileLength(file) < lengths[track] + starts[track])
 		{
-			std::cerr << "Raw music file of insufficient size\n";
+			LogError("Raw music file \"%s\" of insuffucicient size", strings[0].c_str());
 			PHYSFS_close(file);
 			return nullptr;
 		}
@@ -125,43 +126,5 @@ public:
 };
 
 MusicLoaderRegister<RawMusicLoaderFactory> load_at_init("raw");
-
-#if 0
-Music::Music( Framework &fw, int Track )
-{
-	PHYSFS_file* f = fw.data->load_file( "MUSIC", "rb" );
-	data.reset(new char[lengths[Track]]);
-	PHYSFS_seek( f, starts[Track]);
-	PHYSFS_readBytes( f, &data[0], lengths[Track] );
-	PHYSFS_close( f );
-
-	playing = false;
-
-	soundsample = al_create_sample( &data[0], lengths[Track], 22050, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2, false );
-}
-
-Music::~Music()
-{
-	if (playing)
-		al_stop_sample(&play_id);
-	if (soundsample)
-		al_destroy_sample( soundsample );
-}
-
-void Music::Play()
-{
-	/* If already playing, restart */
-	if (playing)
-		al_stop_sample(&play_id);
-	playing = al_play_sample( soundsample, 1.0f, 0.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, &play_id );
-}
-
-void Music::Stop()
-{
-	if (playing)
-		al_stop_sample(&play_id);
-	playing = false;
-}
-#endif
 
 }; //anonymous namespace

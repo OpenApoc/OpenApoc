@@ -93,16 +93,18 @@ void Log (LogLevel level, const char *prefix, const char* format, ...)
 	if (level == LogLevel::Error)
 		print_backtrace(outFile);
 	fprintf(outFile, "\n");
+	va_end(arglist);
 
 	//If it's a warning or error flush the outfile (in case we crash 'soon') and also print to stderr
 	if (level != LogLevel::Info)
 	{
 		fflush(outFile);
+		va_start(arglist, format);
 		fprintf(stderr, "%s %llu %s: ", level_prefix, clockns, prefix);
 		vfprintf(stderr, format, arglist);
 		fprintf(stderr, "\n");
+		va_end(arglist);
 	}
-	va_end(arglist);
 
 	logMutex.unlock();
 }

@@ -1,3 +1,4 @@
+#include "framework/logger.h"
 #include "configfile.h"
 
 #include <fstream>
@@ -9,10 +10,10 @@ ConfigFile::ConfigFile(const std::string fileName, std::map<std::string, std::st
 	: values(defaults), defaults(defaults)
 {
 	std::ifstream inFile{fileName, std::ios::in};
-	int line = 0;
+	int lineNo = 0;
 	while (inFile)
 	{
-		line++;
+		lineNo++;
 		std::string line;
 		std::getline(inFile, line);
 		if (!inFile)
@@ -22,7 +23,7 @@ ConfigFile::ConfigFile(const std::string fileName, std::map<std::string, std::st
 		auto splitPos = line.find_first_of('=');
 		if (splitPos == line.npos)
 		{
-			std::cerr << "Error reading config \"" << fileName << "\" line " << line << " - no '='\n";
+			LogError("Error reading config \"%s\" line %d", fileName.c_str(), lineNo);
 			continue;
 		}
 		std::string key = line.substr(0, splitPos);
@@ -37,7 +38,7 @@ ConfigFile::save(const std::string fileName)
 	std::ofstream outFile{fileName, std::ios::out};
 	if (!outFile)
 	{
-		std::cerr << "Error opening config file \"" << fileName << "\n";
+		LogError("Failed to open config file \"%s\"", fileName.c_str());
 		return;
 	}
 
@@ -63,7 +64,7 @@ ConfigFile::getString(const std::string key)
 	if (it != this->defaults.end())
 		return it->second;
 
-	std::cerr << "Error reading config key \"" << key << "\" - not found\n";
+	LogError("Config key \"%s\" not found", key.c_str());
 	return "";
 }
 
@@ -109,7 +110,7 @@ ConfigFile::getBool(const std::string key)
 		if (v == value)
 			return false;
 	}
-	std::cerr << "Error reading boolean key \"" << key << "\" - invalid value \"" << value << "\"\n";
+	LogError("Invalid boolean value of \"%s\" in key \"%s\"", value.c_str(), key.c_str());
 	return false;
 }
 

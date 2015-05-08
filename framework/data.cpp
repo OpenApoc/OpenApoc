@@ -1,3 +1,4 @@
+#include "framework/logger.h"
 #include "data.h"
 #include "game/apocresources/pck.h"
 #include "game/apocresources/apocpalette.h"
@@ -49,10 +50,10 @@ Data::Data(Framework &fw, std::vector<std::string> paths, int imageCacheSize, in
 		if (l)
 		{
 			this->imageLoaders.emplace_back(l);
-			std::cerr << "Initialised image loader \"" << imageBackend.first << "\"\n";
+			LogInfo("Initialised image loader %s", imageBackend.first.c_str());
 		}
 		else
-			std::cerr << "Failed to load image loader \"" << imageBackend.first << "\"\n";
+			LogWarning("Failed to load image loader %s", imageBackend.first.c_str());
 	}
 
 	for (auto &sampleBackend : *registeredSampleLoaders)
@@ -61,10 +62,10 @@ Data::Data(Framework &fw, std::vector<std::string> paths, int imageCacheSize, in
 		if (s)
 		{
 			this->sampleLoaders.emplace_back(s);
-			std::cerr << "Initialised sample loader \"" << sampleBackend.first << "\"\n";
+			LogInfo("Initialised sample loader %s", sampleBackend.first.c_str());
 		}
 		else
-			std::cerr << "Failed to load sample loader \"" << sampleBackend.first << "\"\n";
+			LogWarning("Failed to load sample loader %s", sampleBackend.first.c_str());
 	}
 
 	for (auto &musicLoader : *registeredMusicLoaders)
@@ -73,29 +74,29 @@ Data::Data(Framework &fw, std::vector<std::string> paths, int imageCacheSize, in
 		if (m)
 		{
 			this->musicLoaders.emplace_back(m);
-			std::cerr << "Initialised music loader \"" << musicLoader.first << "\"\n";
+			LogInfo("Initialised music loader %s", musicLoader.first.c_str());
 		}
 		else
-			std::cerr << "Failed to load music loader \"" << musicLoader.first << "\"\n";
+			LogWarning("Failed to load music loader %s", musicLoader.first.c_str());
 	}
 	this->writeDir = PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME);
-	std::cerr << "Setting write dir to \"" << this->writeDir << "\"\n";
+	LogInfo("Setting write directory to \"%s\"", this->writeDir.c_str());
 	PHYSFS_setWriteDir(this->writeDir.c_str());
 	for (int i = 0; i < imageCacheSize; i++)
 		pinnedImages.push(nullptr);
 	for (int i = 0; i < imageSetCacheSize; i++)
 		pinnedImageSets.push(nullptr);
-	
+
 	//Paths are supplied in inverse-search order (IE the last in 'paths' should be the first searched)
 	for(auto &p : paths)
 	{
-		std::cerr << "Appending resouce dir \"" << p << "\"\n";
 		if (!PHYSFS_mount(p.c_str(), "/", 0))
 		{
-			std::cerr << "Failed to add resource dir!\n";
+			LogWarning("Failed to add resource dir \"%s\"", p.c_str());
 			continue;
 		}
-		std::cerr << "Resource dir mounted to \"" << PHYSFS_getMountPoint(p.c_str()) << "\"\n";
+		else
+			LogInfo("Resource dir \"%s\" mounted to \"%s\"", p.c_str(), PHYSFS_getMountPoint(p.c_str()));
 	}
 	//Finally, the write directory trumps all
 	PHYSFS_mount(writeDir.c_str(), "/", 0);
@@ -124,7 +125,7 @@ Data::load_image_set(const std::string path)
 	}
 	else
 	{
-		std::cerr << "Unknown image set format \"" << path << "\"\n";
+		LogError("Unknown image set format \"%s\"", path.c_str());
 		return nullptr;
 	}
 
@@ -151,7 +152,7 @@ Data::load_sample(const std::string path)
 	}
 	if (!sample)
 	{
-		std::cerr << "Failed to load sample \"" << path << "\"\n";
+		LogInfo("Failed to load sample \"%s\"", path.c_str());
 		return nullptr;
 	}
 	this->sampleCache[cacheKey] = sample;
@@ -168,7 +169,7 @@ Data::load_music(const std::string path)
 		if (track)
 			return track;
 	}
-	std::cerr << "Failed to load music track \"" << path << "\"\n";
+	LogInfo("Failed to load music track \"%s\"", path.c_str());
 	return nullptr;
 }
 
@@ -215,7 +216,7 @@ Data::load_image(const std::string path)
 				break;
 			}
 			default:
-				std::cerr << "Invalid PCK resource string \"" << path << "\"\n";
+				LogError("Invalid PCK resource string \"%s\"", path.c_str());
 				return nullptr;
 		}
 	}
@@ -231,7 +232,7 @@ Data::load_image(const std::string path)
 		}
 		if (!img)
 		{
-			std::cerr << "Failed to load image \"" << path << "\"\n";
+			LogInfo("Failed to load image \"%s\"", path.c_str());
 			return nullptr;
 		}
 	}
@@ -249,8 +250,7 @@ PHYSFS_file* Data::load_file(const std::string path, const char *mode)
 	std::string foundPath = GetCorrectCaseFilename(path);
 	if (foundPath == "")
 	{
-		std::cerr << "Failed to open file \"" + path +"\"\n";
-		std::cerr << PHYSFS_getLastError() << "\n";
+		LogInfo("Failed to open file \"%s\" : \"%s\"", path.c_str(), PHYSFS_getLastError());
 		return nullptr;
 	}
 	return PHYSFS_openRead(foundPath.c_str());
@@ -276,7 +276,16 @@ Data::load_palette(const std::string path)
 		}
 		return p;
 	}
-	return std::shared_ptr<Palette>(loadApocPalette(*this, path));
+	else
+	{
+		std::shared_ptr<Palette> pal(loadApocPalette(*this, path));
+		if (!pal)
+		{
+			LogError("Failed to open palette \"%s\"", path.c_str());
+			return nullptr;
+		}
+		return pal;
+	}
 }
 
 std::string
@@ -287,7 +296,7 @@ Data::GetCorrectCaseFilename(std::string Filename)
 	buf[Filename.length()] = '\0';
 	if (PHYSFSEXT_locateCorrectCase(buf.get()))
 	{
-		std::cerr << "Failed to find file \"" << Filename << "\n";
+		LogInfo("Failed to find file \"%s\"", Filename.c_str());
 		return "";
 	}
 	return std::string(buf.get());

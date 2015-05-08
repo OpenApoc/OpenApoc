@@ -14,7 +14,7 @@ City::City(Framework &fw, std::string mapName)
 	auto file = fw.data->load_file("xcom3/ufodata/" + mapName, "rb");
 	if (!file)
 	{
-		std::cerr << "Failed to open city map: " << mapName << "\n";
+		LogError("Failed to open city map \"%s\"", mapName.c_str());
 		return;
 	}
 
@@ -32,8 +32,7 @@ City::City(Framework &fw, std::string mapName)
 				if (tileID == -1 &&
 				    PHYSFS_eof(file))
 				{
-					std::cerr << "Unexpected EOF reading citymap at x = " << x
-						<< " y = " << y << " z = " << z << "\n";
+					LogError("Unexpected EOF reading citymap at %d,%d,%d",x,y,z);
 					tileID = 0;
 				}
 				if (tileID)
@@ -45,8 +44,7 @@ City::City(Framework &fw, std::string mapName)
 						{
 							if (bld)
 							{
-								std::cerr << "Multiple buildings on tile at x = " << x
-									<< " y = " << y << " z = " << z << "\n";
+								LogError("Multiple buildings on tile at %d,%d,%d", x, y, z);
 							}
 							bld = &b;
 						}
@@ -54,8 +52,7 @@ City::City(Framework &fw, std::string mapName)
 					if (tileID < 0 ||
 						tileID >= this->cityTiles.size())
 					{
-						std::cerr << "Invalid tile IDX " << tileID << " at x = " << x
-							<< " y = " << y << " z = " << z << "\n";
+						LogError("Invalid tile IDX %u at %d,%d,%d", tileID, x, y, z);
 					}
 					else
 					{
@@ -70,6 +67,7 @@ City::City(Framework &fw, std::string mapName)
 	std::uniform_int_distribution<int> xydistribution(0,99);
 	std::uniform_int_distribution<int> zdistribution(0,9);
 	//Place 1000 random cars
+	LogInfo("Starting placing cars");
 	for (int i = 0; i < 1000; i++)
 	{
 		int x = 0;
@@ -90,17 +88,17 @@ City::City(Framework &fw, std::string mapName)
 		//Vehicles are active
 		this->activeObjects.push_back(testVehicleObject);
 	}
-	std::cerr << "Placed cars\n";
+	LogInfo("Finished placing cars");
 
-	std::cerr << "PATH TEST {0,0,9} to {99,99,9}\n";
+	LogInfo("PATH TEST {0,0,9} to {99,99,9}");
 
 	std::list<Tile*> path;
 	path = this->findShortestPath(Vec3<int>{0,0,9}, Vec3<int>{99,99,9});
 
-	std::cerr << "Route found in " << path.size() << " steps\n";
+	LogInfo("Route found in %zu steps", path.size());
 	for (auto tile : path)
 	{
-		std::cerr << "Tile {" << tile->position.x << "," << tile->position.y << "," << tile->position.z << "}\n";
+		LogInfo("Tile {%d,%d,%d,}", tile->position.x, tile->position.y, tile->position.z);
 	}
 
 	PHYSFS_close(file);

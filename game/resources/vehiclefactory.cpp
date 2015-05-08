@@ -59,18 +59,18 @@ parseDirectionalSprites(Framework &fw, tinyxml2::XMLElement *root)
 			dir = Vehicle::Direction::NNW;
 		else
 		{
-			std::cerr << "Unknown sprite direction \"" << name << "\"\n";
+			LogError("Unknown sprite direction \"%s\"", name.c_str());
 			continue;
 		}
 
 		std::string spriteName = node->GetText();
-		std::cerr << "Loading image \"" << spriteName << "\"\n";
+		LogInfo("Loading image \"%s\"", spriteName.c_str());
 		if (sprites[dir])
-			std::cerr << "Warning: Replacing directional sprite\n";
+			LogWarning("Replacing directional sprite");
 		auto sprite = fw.gamecore->GetImage(spriteName);
 
 		if (!sprite)
-			std::cerr << "Failed to load directional sprite\n";
+			LogError("Failed to load directional sprite");
 		sprites[dir] = sprite;
 	}
 	return sprites;
@@ -79,13 +79,10 @@ parseDirectionalSprites(Framework &fw, tinyxml2::XMLElement *root)
 void
 VehicleFactory::ParseVehicleDefinition(tinyxml2::XMLElement *root)
 {
-	std::cerr << __func__ << std::endl;
 	VehicleDefinition def;
 	def.name = root->Attribute("id");
-	std::cerr << "name = \"" << def.name << "\"\n";
 
 	std::string type = root->Attribute("type");
-	std::cerr << "type = \"" << type << "\"\n";
 
 	if (type == "flying")
 		def.type = Vehicle::Type::Flying;
@@ -93,7 +90,7 @@ VehicleFactory::ParseVehicleDefinition(tinyxml2::XMLElement *root)
 		def.type = Vehicle::Type::Ground;
 	else
 	{
-		std::cerr << "Unknown vehicle type \"" << type << "\"\n";
+		LogError("Unknown vehicle type \"%s\"", type.c_str());
 		return;
 	}
 
@@ -126,7 +123,7 @@ VehicleFactory::ParseVehicleDefinition(tinyxml2::XMLElement *root)
 		}
 		else
 		{
-			std::cerr << "Unknown vehicle tag \"" << tag << "\"\n";
+			LogError("Unknown vehicle tag \"%s\"", tag.c_str());
 			continue;
 		}
 	}

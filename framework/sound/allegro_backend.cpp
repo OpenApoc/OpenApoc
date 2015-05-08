@@ -1,4 +1,5 @@
 #include "framework/sound_interface.h"
+#include "framework/logger.h"
 #include <iostream>
 #include <allegro5/allegro_audio.h>
 #include <list>
@@ -31,7 +32,7 @@ public:
 				depth = ALLEGRO_AUDIO_DEPTH_UINT8;
 				break;
 			default:
-				std::cerr << "Unsupported sample format\n";
+				LogWarning("Unsupported sample format");
 				return;
 		}
 		ALLEGRO_CHANNEL_CONF channels;
@@ -44,14 +45,14 @@ public:
 				channels = ALLEGRO_CHANNEL_CONF_2;
 				break;
 			default:
-				std::cerr << "Unsupported channel count\n";
+				LogWarning("Unsupported sample format");
 				return;
 		}
 
 		this->s = al_create_sample(sample->data.get(), sample->sampleCount,
 			sample->format.frequency, depth, channels, false);
 		if (!this->s)
-			std::cerr << "Failed to create sample\n";
+			LogError("Failed to create sample");
 	}
 };
 
@@ -68,7 +69,6 @@ class AllegroSoundBackend : public SoundBackend
 public:
 	virtual void playSample(std::shared_ptr<Sample> sample)
 	{
-		std::cerr << "Playing sample\n";
 		if (!sample->backendData)
 			sample->backendData.reset(new AllegroSampleData(sample));
 		liveSamples.push_back(sample);
@@ -78,7 +78,7 @@ public:
 
 		if (!al_play_sample(sampleData->s, 1.0f, 0.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, nullptr))
 		{
-			std::cerr << "Failed to play sample\n";
+			LogError("Failed to play sample");
 		}
 
 	}
@@ -92,7 +92,7 @@ public:
 				depth = ALLEGRO_AUDIO_DEPTH_INT16;
 				break;
 			default:
-				std::cerr << "AllegroSoundBackend: Unsupported music format\n";
+				LogWarning("AllegroSoundBackend: Unsupported music format");
 				return;
 		}
 		ALLEGRO_CHANNEL_CONF channels;
@@ -105,13 +105,13 @@ public:
 				channels = ALLEGRO_CHANNEL_CONF_2;
 				break;
 			default:
-				std::cerr << "AllegroSoundBackend: Unsupported music channels\n";
+				LogWarning("Unsupported music channels");
 				return;
 		}
 		ALLEGRO_AUDIO_STREAM *stream = al_create_audio_stream(2, track->requestedSampleBufferSize, track->format.frequency, depth, channels);
 		if (!stream)
 		{
-			std::cerr << "AllegroSoundBackend: Failed to create music stream\n";
+			LogError("Failed to create music stream");
 			return;
 		}
 
@@ -135,8 +135,7 @@ public:
 				auto callbackReturn = track->callback(track, track->requestedSampleBufferSize, buf, &returnedSamples);
 				if (returnedSamples != track->requestedSampleBufferSize)
 				{
-					std::cerr << "AllegroSoundBackend: Requested " << track->requestedSampleBufferSize << " samples, got " << returnedSamples << "\n";
-					std::cerr << "AllegroSoundBackend: Buffer underrun not yet handled correctly\n";
+					LogWarning("AllegroSoundBackend: Requested %u samples, got %u - buffer underrun not yet handled correctly",  track->requestedSampleBufferSize, returnedSamples);
 				}
 				al_set_audio_stream_fragment(stream, buf);
 
@@ -193,19 +192,19 @@ public:
 	{
 		if (initialised)
 		{
-			std::cerr << "Trying to load multiple allegro sound backends\n";
+			LogError("Trying to load multiple allegro sound backends");
 			return nullptr;
 		}
 
 		if (!al_install_audio())
 		{
-			std::cerr << "Failed to init allegro sound backend\n";
+			LogError("Failed to init allegro sound backend");
 			return nullptr;
 		}
 
 		if (!al_reserve_samples(max_samples))
 		{
-			std::cerr << "Failed to reserve sample channels\n";
+			LogError("Failed to reserve sample channels");
 			return nullptr;
 		}
 

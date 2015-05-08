@@ -165,9 +165,7 @@ void TileView::EventOccurred(Event *e)
 		auto &tile = map.tiles[selectedTilePosition.z]
 			[selectedTilePosition.y]
 			[selectedTilePosition.x];
-		std::cerr << "Selected tile x=" << selectedTilePosition.x <<
-			" y=" << selectedTilePosition.y <<
-			" z=" << selectedTilePosition.z << "\n";
+		LogInfo("Selected tile {%d,%d,%d}", selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z);
 	}
 }
 

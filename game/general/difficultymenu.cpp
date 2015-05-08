@@ -72,8 +72,7 @@ void DifficultyMenu::EventOccurred(Event *e)
 		}
 		else
 		{
-			std::cerr << "Unknown button pressed: " << e->Data.Forms.RaisedBy->Name
-				<< "\n";
+			LogWarning("Unknown button pressed: %s", e->Data.Forms.RaisedBy->Name.c_str());
 			citymapName = "CITYMAP1";
 			return;
 		}

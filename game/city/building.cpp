@@ -157,7 +157,7 @@ loadBuildingsFromBld(Framework &fw, std::string fileName, std::vector<Organisati
 	auto file = fw.data->load_file("xcom3/ufodata/" + fileName, "rb");
 	if (!file)
 	{
-		std::cerr << "Failed to open building data file: " << fileName << "\n";
+		LogError("Failed to open building data file: %s", fileName.c_str());
 		return buildings;
 	}
 	//Currently known fields in .bld files:
@@ -171,12 +171,12 @@ loadBuildingsFromBld(Framework &fw, std::string fileName, std::vector<Organisati
 	//Total size of each buildilg field: 226 bytes
 	size_t fileSize = PHYSFS_fileLength(file);
 	int numBuildings = fileSize / 226;
-	std::cout << "Loading " << numBuildings << " buildings in " << fileSize << "bytes\n";
+	LogInfo("Loading %d buildings in %zu bytes", numBuildings, fileSize);
 	for (int b = 0; b < numBuildings; b++)
 	{
 		if (!PHYSFS_seek(file, b*226))
 		{
-			std::cerr << "Failed to seek to beginning of building " << b << "\n";
+			LogError("Failed to seek to beginning of building %d", b);
 			break;
 		}
 		uint16_t nameIdx; PHYSFS_readULE16(file, &nameIdx);
@@ -186,22 +186,22 @@ loadBuildingsFromBld(Framework &fw, std::string fileName, std::vector<Organisati
 		uint16_t y1; PHYSFS_readULE16(file, &y1);
 		//Read 10 bytes
 		//Skip to byte 200 (190 bytes)
-		if (!PHYSFS_seek(file, (b*255)+200))
+		if (!PHYSFS_seek(file, (b*226)+200))
 		{
-			std::cerr << "Failed to seek reading building " << b << "\n";
+			LogError("Failed to seek reading building %d", b);
 			break;
 		}
 		uint16_t orgIdx; PHYSFS_readULE16(file, &orgIdx);
 		if (nameIdx >= nameList.size() ||
 		    nameIdx < 0)
 		{
-			std::cerr << "Invalid building name IDX " << nameIdx << " (max " << nameList.size() << ") reading building " << b << "\n";
+			LogError("Invalid building name IDX %u (max %zu) reading building %d", nameIdx, nameList.size(), b);
 			break;
 		}
 		if (orgIdx >= orgList.size() ||
 		    orgIdx < 0)
 		{
-			std::cerr << "Invalid building owner IDX " << orgIdx << " (max " << orgList.size() << ") reading building " << b << "\n";
+			LogError("Invalid building owner IDX %u (max %zu) reading building %d", orgIdx, orgList.size(), b);
 			break;
 		}
 		if (x0 < 0 || x0 >= 100 ||
@@ -210,16 +210,14 @@ loadBuildingsFromBld(Framework &fw, std::string fileName, std::vector<Organisati
 			y1 < 1 || y1 > 100 ||
 			x0 >= x1 || y0 >= y1)
 		{
-			std::cerr << "Invalid position (" << x0 << "," << y0 << ")(" << x1 << "," << y1 << ") reading building " << b << "\n";
+			LogError("Invalid position {%d,%d},{%d,%d} reading building %d", x0, y0, x1, y1, b);
 			break;
 		}
 		buildings.emplace_back(orgList[orgIdx], nameList[nameIdx],
 			Rect<int>(x0, y0, x1, y1));
 		auto &bld = buildings.back();
-		std::cout << "Read building \"" << bld.name << "\" owner \"" <<
-			bld.owner.name << "\" position (" <<
-			bld.bounds.p0.x << "," << bld.bounds.p0.y << "),(" <<
-			bld.bounds.p1.x << "," << bld.bounds.p1.y << ")\n";
+		LogInfo("Read building \"%s\" owner \"%s\" position {%d,%d},{%d,%d}", bld.name.c_str(), bld.owner.name.c_str(),
+			bld.bounds.p0.x, bld.bounds.p0.y, bld.bounds.p1.x, bld.bounds.p1.y);
 	}
 	PHYSFS_close(file);
 	return buildings;

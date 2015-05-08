@@ -1,4 +1,5 @@
 #include "framework/renderer_interface.h"
+#include "framework/logger.h"
 #include "framework/image.h"
 #include "framework/palette.h"
 #include <memory>
@@ -32,7 +33,7 @@ class Program
 			std::unique_ptr<char[]> log(new char[logLength]);
 			gl::GetShaderInfoLog(shader, logLength, NULL, log.get());
 
-			std::cerr << "Shader compile error:\n\"" << std::string(log.get()) << "\"\n";
+			LogError("Shader compile error: %s", log.get());
 
 			gl::DeleteShader(shader);
 			return 0;
@@ -43,13 +44,13 @@ class Program
 			GLuint vShader = CreateShader(gl::VERTEX_SHADER, vertexSource);
 			if (!vShader)
 			{
-				std::cerr << "Failed to compile vertex shader\n";
+				LogError("Failed to compile vertex shader");
 				return;
 			}
 			GLuint fShader = CreateShader(gl::FRAGMENT_SHADER, fragmentSource);
 			if (!fShader)
 			{
-				std::cerr << "Failed to compile fragment shader\n";
+				LogError("Failed to compile fragment shader");
 				gl::DeleteShader(vShader);
 				return;
 			}
@@ -74,7 +75,7 @@ class Program
 			std::unique_ptr<char[]> log(new char[logLength]);
 			gl::GetProgramInfoLog(prog, logLength, NULL, log.get());
 
-			std::cerr << "Program link error:\n\"" << std::string(log.get()) << "\"\n";
+			LogError("Program link error: %s", log.get());
 
 			gl::DeleteProgram(prog);
 			prog = 0;
@@ -834,7 +835,7 @@ public:
 
 		this->batchedSprites.clear();
 		this->state = RendererState::Idle;
-		
+
 	}
 
 };
@@ -845,7 +846,7 @@ OGL30Renderer::OGL30Renderer()
 {
 	GLint viewport[4];
 	gl::GetIntegerv(gl::VIEWPORT, viewport);
-	std::cerr << "Viewport {" << viewport[0] << "," << viewport[1] << "," << viewport[2] << "," << viewport[3] << "}\n";
+	LogInfo("Viewport {%d,%d,%d,%d}", viewport[0], viewport[1], viewport[2], viewport[3]);
 	assert(viewport[0] == 0 && viewport[1] == 0);
 	this->defaultSurface = std::make_shared<Surface>(Vec2<int>{viewport[2], viewport[3]});
 	this->defaultSurface->rendererPrivateData.reset(new FBOData(0));
@@ -853,12 +854,12 @@ OGL30Renderer::OGL30Renderer()
 
 	GLint maxTexArrayLayers;
 	gl::GetIntegerv(gl::MAX_ARRAY_TEXTURE_LAYERS, &maxTexArrayLayers);
-	std::cerr << "MAX_ARRAY_TEXTURE_LAYERS: \"" << maxTexArrayLayers << "\"\n";
+	LogInfo("MAX_ARRAY_TEXTURE_LAYERS: %d", maxTexArrayLayers);
 	this->maxBatchedSprites = 256;
 	this->maxSpritesheetSize = maxTexArrayLayers;
-	
-	this->firstList.reset(new GLint[this->maxBatchedSprites]); 
-	this->countList.reset(new GLsizei[this->maxBatchedSprites]); 
+
+	this->firstList.reset(new GLint[this->maxBatchedSprites]);
+	this->countList.reset(new GLsizei[this->maxBatchedSprites]);
 
 	for (int i = 0; i < this->maxBatchedSprites; i++)
 	{
@@ -868,7 +869,7 @@ OGL30Renderer::OGL30Renderer()
 
 	GLint maxTexUnits;
 	gl::GetIntegerv(gl::MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTexUnits);
-	std::cerr << "MAX_COMBINED_TEXTURE_IMAGE_UNITS: \"" << maxTexUnits << "\"\n";
+	LogInfo("MAX_COMBINED_TEXTURE_IMAGE_UNITS: %d", maxTexUnits);
 	gl::Enable(gl::BLEND);
 	gl::BlendFunc(gl::SRC_ALPHA, gl::ONE_MINUS_SRC_ALPHA);
 }

@@ -87,7 +87,7 @@ public:
 		{
 			auto musicTrack = fw.data->load_music(track);
 			if (!musicTrack)
-				std::cerr << "Failed to load music track \"" << track << "\" - skipping\n";
+				LogError("Failed to load music track \"%s\" - skipping", track.c_str());
 			else
 				this->trackList.push_back(musicTrack);
 		}
@@ -98,12 +98,12 @@ public:
 		JukeBoxImpl *jukebox = static_cast<JukeBoxImpl*>(data);
 		if (jukebox->trackList.size() == 0)
 		{
-			std::cerr << "Trying to play empty jukebox\n";
+			LogWarning("Trying to play empty jukebox");
 			return;
 		}
 		if (jukebox->position >= jukebox->trackList.size())
 		{
-			std::cerr << "End of jukebox playlist\n";
+			LogInfo("End of jukebox playlist");
 			return;
 		}
 		jukebox->fw.soundBackend->playMusic(jukebox->trackList[jukebox->position], progressTrack, jukebox);
@@ -145,7 +145,7 @@ Framework::Framework(const std::string programName)
 
 	if( !al_init() )
 	{
-		printf( "Framework: Error: Cannot init Allegro\n" );
+		LogError("Cannot init Allegro");
 		p->quitProgram = true;
 		return;
 	}
@@ -153,23 +153,12 @@ Framework::Framework(const std::string programName)
 	al_init_font_addon();
 	if( !al_install_keyboard() || !al_install_mouse() || !al_init_ttf_addon())
 	{
-		printf( "Framework: Error: Cannot init Allegro plugin\n" );
+		LogError(" Cannot init Allegro plugins");
 		p->quitProgram = true;
 		return;
 	}
 
-#ifdef NETWORK_SUPPORT
-	if( enet_initialize() != 0 )
-	{
-		printf( "Framework: Error: Cannot init enet\n" );
-		p->quitProgram = true;
-		return;
-	}
-#endif
-
-#ifdef WRITE_LOG
-	printf( "Framework: Startup: Variables and Config\n" );
-#endif
+	LogInfo("Loading config\n" );
 	p->quitProgram = false;
 	std::string settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
 	settingsPath += "/settings.cfg";
@@ -207,29 +196,16 @@ Framework::~Framework()
 	state.clear();
 	gamecore.reset();
 	p->ProgramStages.Clear();
-#ifdef WRITE_LOG
-	printf( "Framework: Save Config\n" );
-#endif
+	LogInfo("Saving config");
 	SaveSettings();
 
-#ifdef WRITE_LOG
-	printf( "Framework: Shutdown\n" );
-#endif
+	LogInfo("Shutdown");
 	Display_Shutdown();
 	Audio_Shutdown();
 	al_destroy_event_queue( p->eventAllegro );
 	al_destroy_mutex( p->eventMutex );
 
-#ifdef NETWORK_SUPPORT
-#ifdef WRITE_LOG
-	printf( "Framework: Shutdown enet\n" );
-#endif
-	enet_deinitialize();
-#endif
-
-#ifdef WRITE_LOG
-	printf( "Framework: Shutdown Allegro\n" );
-#endif
+	LogInfo("Allegro shutdown");
 	al_shutdown_ttf_addon();
 	al_uninstall_mouse();
 	al_uninstall_keyboard();
@@ -241,9 +217,7 @@ Framework::~Framework()
 
 void Framework::Run()
 {
-#ifdef WRITE_LOG
-	printf( "Framework: Run.Program Loop\n" );
-#endif
+	LogInfo("Program loop started");
 
 	p->ProgramStages.Push( std::make_shared<BootUp>(*this) );
 
@@ -290,9 +264,7 @@ void Framework::Run()
 
 void Framework::ProcessEvents()
 {
-#ifdef WRITE_LOG
-	printf( "Framework: ProcessEvents\n" );
-#endif
+	LogInfo("Processing events");
 
 	if( p->ProgramStages.IsEmpty() )
 	{
@@ -460,9 +432,7 @@ void Framework::TranslateAllegroEvents()
 
 void Framework::ShutdownFramework()
 {
-#ifdef WRITE_LOG
-	printf( "Framework: Shutdown Framework\n" );
-#endif
+	LogInfo("Shutdown framework");
 	p->ProgramStages.Clear();
 	p->quitProgram = true;
 }
@@ -477,9 +447,7 @@ void Framework::SaveSettings()
 
 void Framework::Display_Initialise()
 {
-#ifdef WRITE_LOG
-	printf( "Framework: Initialise Display\n" );
-#endif
+	LogInfo("Init display");
 	int display_flags = ALLEGRO_OPENGL;
 #ifdef ALLEGRO_OPENGL_CORE
 	display_flags |= ALLEGRO_OPENGL_CORE;
@@ -504,7 +472,7 @@ void Framework::Display_Initialise()
 
 	if (!p->screen)
 	{
-		std::cerr << "Failed to create screen\n";
+		LogError("Failed to create screen");;
 		exit(1);
 	}
 
@@ -514,26 +482,25 @@ void Framework::Display_Initialise()
 
 	for (auto &rendererName : Strings::Split(Settings->getString("Visual.RendererList"), ';'))
 	{
-		std::cerr << "Trying to load renderer \"" << rendererName << "\"\n";
 		auto rendererFactory = registeredRenderers->find(rendererName);
 		if (rendererFactory == registeredRenderers->end())
 		{
-			std::cerr << "Renderer not in supported list\n";
+			LogInfo("Renderer \"%s\" not in supported list", rendererName.c_str());
 			continue;
 		}
 		Renderer *r = rendererFactory->second->create();
 		if (!r)
 		{
-			std::cerr << "Renderer failed to init\n";
+			LogInfo("Renderer \"%s\" failed to init", rendererName.c_str());
 			continue;
 		}
 		this->renderer.reset(r);
-		std::cout << "Using renderer: " << this->renderer->getName() << "\n";
+		LogInfo("Using renderer: %s", this->renderer->getName().c_str());
 		break;
 	}
 	if (!this->renderer)
 	{
-		std::cerr << "No functional renderer found\n";
+		LogError("No functional renderer found");
 		abort();
 	}
 	this->p->defaultSurface = this->renderer->getDefaultSurface();
@@ -543,9 +510,7 @@ void Framework::Display_Initialise()
 
 void Framework::Display_Shutdown()
 {
-#ifdef WRITE_LOG
-	printf( "Framework: Shutdown Display\n" );
-#endif
+	LogInfo("Shutdown Display");
 	p->defaultSurface.reset();
 	renderer.reset();
 
@@ -579,32 +544,29 @@ void Framework::Display_SetTitle( std::string NewTitle )
 
 void Framework::Audio_Initialise()
 {
-#ifdef WRITE_LOG
-	printf( "Framework: Initialise Audio\n" );
-#endif
+	LogInfo("Initialise Audio");
 
 	for (auto &soundBackendName : Strings::Split(Settings->getString("Audio.Backends"), ';'))
 	{
-		std::cerr << "Trying to load sound backend \"" << soundBackendName << "\"\n";
 		auto backendFactory = registeredSoundBackends->find(soundBackendName);
 		if (backendFactory == registeredSoundBackends->end())
 		{
-			std::cerr << "Backend not in supported list\n";
+			LogInfo("Sound backend %s not in supported list", soundBackendName.c_str());
 			continue;
 		}
 		SoundBackend *backend = backendFactory->second->create();
 		if (!backend)
 		{
-			std::cerr << "Backend failed to init\n";
+			LogInfo("Sound backend %s failed to init", soundBackendName.c_str());
 			continue;
 		}
 		this->soundBackend.reset(backend);
-		std::cerr << "Backend init success\n";
+		LogInfo("Using sound backend %s", soundBackendName.c_str());
 		break;
 	}
 	if (!this->soundBackend)
 	{
-		std::cerr << "No functional backend found\n";
+		LogError("No functional sound backend found");
 		abort();
 	}
 	this->jukebox.reset(new JukeBoxImpl(*this));
@@ -612,9 +574,7 @@ void Framework::Audio_Initialise()
 
 void Framework::Audio_Shutdown()
 {
-#ifdef WRITE_LOG
-	printf( "Framework: Shutdown Audio\n" );
-#endif
+	LogInfo("Shutdown Audio");
 	this->jukebox.reset();
 	this->soundBackend.reset();
 }

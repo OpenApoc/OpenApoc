@@ -170,20 +170,20 @@ TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination)
 		|| origin.y < 0 || origin.y >= this->size.y
 		|| origin.z < 0 || origin.z >= this->size.z)
 	{
-		std::cerr << __func__ << " Bad origin: {" << origin.x << "," << origin.y << "," << origin.z << "}\n";
+		LogError("Bad origin {%d,%d,%d}", origin.x, origin.y, origin.z);
 		return path;
 	}
 	if (destination.x < 0 || destination.x >= this->size.x
 		|| destination.y < 0 || destination.y >= this->size.y
 		|| destination.z < 0 || destination.z >= this->size.z)
 	{
-		std::cerr << __func__ << " Bad destination: {" << destination.x << "," << destination.y << "," << destination.z << "}\n";
+		LogError("Bad destination {%d,%d,%d}", destination.x, destination.y, destination.z);
 		return path;
 	}
 	path.push_back(&this->tiles[origin.z][origin.y][origin.x]);
 	if (!findNextNodeOnPath(pc, *this, path, destination, &numIterations))
 	{
-		std::cerr << __func__ << " No route found from origin: {" << origin.x << "," << origin.y << "," << origin.z << "} to destination: {" << destination.x << "," << destination.y << "," << destination.z << "}\n";
+		LogWarning("No route found from origin {%d,%d,%d} to desination {%d,%d,%d}", origin.x, origin.y, origin.z, destination.x, destination.y, destination.z);
 		path.clear();
 		return path;
 	}

@@ -1,4 +1,4 @@
-
+#include "framework/logger.h"
 #include "pck.h"
 #include "framework/data.h"
 #include "framework/image.h"
@@ -276,7 +276,7 @@ PCKLoader::load(Data &data, const std::string PckFilename, const std::string Tab
 	}
 	delete p;
 
-	std::cerr << "loaded \"" << PckFilename << "\" - " << imageSet->images.size() << " images, max size {" << imageSet->maxSize.x << "," << imageSet->maxSize.y << "}\n";
+	LogInfo("Loaded \"%s\" - %zu images, max size {%d,%d}", PckFilename.c_str(), imageSet->images.size(), imageSet->maxSize.x, imageSet->maxSize.y);
 
 	return imageSet;
 }

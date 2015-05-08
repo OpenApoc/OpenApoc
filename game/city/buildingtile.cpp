@@ -24,11 +24,11 @@ CityTile::loadTilesFromFile(Framework &fw)
 
 	if (numDatEntries != numTiles)
 	{
-		std::cerr << "Number of city sprite tiles does not match number of dat entries (" 
-			<< numDatEntries << " dat chunks, " << numTiles << " images\n";
+		LogError("Number of city sprite tiles does not match number of dat entries (%d dat chunks, %d images)",
+			numDatEntries, numTiles);
 	}
 
-	std::cerr << "Loading " << numTiles << " city tiles\n";
+	LogInfo("Loading %d city tiles", numTiles);
 
 	for (int t = 0; t < numTiles; t++)
 	{

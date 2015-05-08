@@ -47,8 +47,8 @@ void BaseScreen::EventOccurred(Event *e)
 
 		if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick )
 		{
-				std::cerr << "button " << e->Data.Forms.RaisedBy->Name << " clicked.\n";
-				return;
+			LogInfo("Button %s clicked", e->Data.Forms.RaisedBy->Name.c_str());
+			return;
 		}
 }
 

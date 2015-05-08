@@ -1,4 +1,5 @@
 #include "framework/imageloader_interface.h"
+#include "framework/logger.h"
 #include "library/vec.h"
 
 #include <allegro5/allegro.h>
@@ -26,7 +27,7 @@ public:
 		ALLEGRO_BITMAP *bmp = al_load_bitmap(path.c_str());
 		if (!bmp)
 		{
-			std::cerr << "AllegroImageLoader: Failed to read image \"" << path << "\"\n";
+			LogInfo("Failed to read image %s", path.c_str());
 			return nullptr;
 		}
 
