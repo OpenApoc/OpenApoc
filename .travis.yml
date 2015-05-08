@@ -24,10 +24,9 @@ before_script:
 
 script: make VERBOSE=1
 
-branches:
-  only:
-    - master
-
 os:
   - linux
 
+notifications:
+  irc:
+    - "chat.freenode.net#openapoc"
