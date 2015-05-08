@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
+option(BACKTRACE_ON_ERROR "Print backtrace on logging an error (Requires libunwind)" ON)
+
 INCLUDE(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
 if(COMPILER_SUPPORTS_CXX11)
@@ -39,6 +41,14 @@ list(APPEND FRAMEWORK_INCLUDE_DIRS ${SOUNDBACKEND_INCLUDE_DIRS})
 list(APPEND FRAMEWORK_LIBRARIES ${SOUNDBACKEND_LIBRARIES})
 
 find_package(PkgConfig)
+
+if(BACKTRACE_ON_ERROR)
+		pkg_check_modules(PC_UNWIND REQUIRED libunwind)
+		find_path(UNWIND_INCLUDE_DIR libunwind.h HINTS ${PC_UNWIND_INCLUDEDIR})
+		list(APPEND FRAMEWORK_INCLUDE_DIRS ${UNWIND_INCLUDE_DIR})
+		list(APPEND FRAMEWORK_LIBRARIES ${PC_UNWIND_LIBRARIES} dl)
+		add_definitions(-DBACKTRACE_ON_ERROR)
+endif()
 
 pkg_check_modules(PC_PHYSFS REQUIRED physfs>=2.1.0)
 

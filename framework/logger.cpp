@@ -3,12 +3,51 @@
 #include <cstdarg>
 #include <mutex>
 #include <chrono>
+#ifdef BACKTRACE_ON_ERROR
+#ifndef _GNU_SOURCE
+#define _GNU_SOURCE
+#endif
+#include <dlfcn.h>
+#define UNW_LOCAL_ONLY
+#include <libunwind.h>
+#endif
 
 #ifndef LOGFILE
 #define LOGFILE "openapoc_log.txt"
 #endif
 
+
 namespace OpenApoc {
+
+#ifdef BACKTRACE_ON_ERROR
+static void print_backtrace(FILE *f)
+{
+	fprintf(f, "  called by:\n");
+	unw_cursor_t cursor;
+	unw_context_t ctx;
+	unw_word_t ip;
+	unw_getcontext(&ctx);
+	unw_init_local(&cursor, &ctx);
+	while (unw_step(&cursor) > 0)
+	{
+		Dl_info info;
+		unw_get_reg(&cursor, UNW_REG_IP, &ip);
+		dladdr((void*)ip, &info);
+		if (info.dli_sname)
+			fprintf(f, "  0x%p %s+0x%lx (%s)\n", (void*)ip, info.dli_sname, (uintptr_t)ip - (uintptr_t)info.dli_saddr, info.dli_fname);
+		else
+			fprintf(f, "  0x%p\n", (void*)ip);
+	}
+}
+#else
+//Stub implementation
+//TODO: Implement for windows?
+static void print_backtrace(FILE *f)
+{
+
+}
+#endif
+
 
 static FILE *outFile = nullptr;
 
@@ -31,9 +70,6 @@ void Log (LogLevel level, const char *prefix, const char* format, ...)
 			fprintf(stderr, "Failed to open logfile \"%s\"\n", LOGFILE);
 			return;
 		}
-		logMutex.unlock();
-		LogInfo("Initialising log");
-		logMutex.lock();
 	}
 
 	switch (level)
@@ -53,6 +89,9 @@ void Log (LogLevel level, const char *prefix, const char* format, ...)
 	va_start(arglist, format);
 	fprintf(outFile, "%s %llu %s: ", level_prefix, clockns, prefix);
 	vfprintf(outFile, format, arglist);
+	//On error print a backtrace to the log file
+	if (level == LogLevel::Error)
+		print_backtrace(outFile);
 	fprintf(outFile, "\n");
 
 	//If it's a warning or error flush the outfile (in case we crash 'soon') and also print to stderr

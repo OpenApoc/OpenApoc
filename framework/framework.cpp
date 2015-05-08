@@ -140,9 +140,7 @@ class FrameworkPrivate
 Framework::Framework(const std::string programName)
 	: programName(programName), p(new FrameworkPrivate)
 {
-#ifdef WRITE_LOG
-	printf( "Framework: Startup: Allegro\n" );
-#endif
+	LogInfo("Starting framework");
 	PHYSFS_init(programName.c_str());
 
 	if( !al_init() )
@@ -203,6 +201,7 @@ Framework::Framework(const std::string programName)
 
 Framework::~Framework()
 {
+	LogInfo("Destroying framework");
 	//Kill gamecore and program stages first, so any resources are cleaned before
 	//allegro is de-inited
 	state.clear();

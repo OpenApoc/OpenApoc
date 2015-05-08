@@ -6,6 +6,7 @@
 #define __func__ __FUNCTION__
 #endif
 
+#include "logger.h"
 #include "includes.h"
 #include "event.h"
 #include "data.h"
