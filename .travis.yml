@@ -28,6 +28,3 @@ script: make VERBOSE=1
 os:
   - linux
 
-notifications:
-  irc:
-    - "chat.freenode.net#openapoc"
