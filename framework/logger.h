@@ -30,12 +30,12 @@ namespace OpenApoc {
 
 #if defined(__GNUC__)
 //GCC has an extension if __VA_ARGS__ are not supplied to 'remove' the precending comma
-#define LogInfo(f, ...) OpenApoc::Log(LogLevel::Info, __PRETTY_FUNCTION__, f, ##__VA_ARGS__)
-#define LogWarning(f, ...) OpenApoc::Log(LogLevel::Warning, __PRETTY_FUNCTION__, f, ##__VA_ARGS__)
-#define LogError(f, ...) OpenApoc::Log(LogLevel::Error, __PRETTY_FUNCTION__, f, ##__VA_ARGS__)
+#define LogInfo(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Info, __PRETTY_FUNCTION__, f, ##__VA_ARGS__)
+#define LogWarning(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Warning, __PRETTY_FUNCTION__, f, ##__VA_ARGS__)
+#define LogError(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Error, __PRETTY_FUNCTION__, f, ##__VA_ARGS__)
 #else
 //At least msvc automatically removes the comma
-#define LogInfo(f, ...) OpenApoc::Log(LogLevel::Info, __PRETTY_FUNCTION__, f, __VA_ARGS__)
-#define LogWarning(f, ...) OpenApoc::Log(LogLevel::Warning, __PRETTY_FUNCTION__, f, __VA_ARGS__)
-#define LogError(f, ...) OpenApoc::Log(LogLevel::Error, __PRETTY_FUNCTION__, f, __VA_ARGS__)
+#define LogInfo(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Info, __PRETTY_FUNCTION__, f, __VA_ARGS__)
+#define LogWarning(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Warning, __PRETTY_FUNCTION__, f, __VA_ARGS__)
+#define LogError(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Error, __PRETTY_FUNCTION__, f, __VA_ARGS__)
 #endif
