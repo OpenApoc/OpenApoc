@@ -25,12 +25,10 @@ void MainMenu::Begin()
 
 void MainMenu::Pause()
 {
-	fw.jukebox->stop();
 }
 
 void MainMenu::Resume()
 {
-	fw.jukebox->play(tracks);
 }
 
 void MainMenu::Finish()

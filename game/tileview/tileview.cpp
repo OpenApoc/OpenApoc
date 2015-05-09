@@ -171,9 +171,7 @@ void TileView::EventOccurred(Event *e)
 	if (fw.gamecore->DebugModeEnabled &&
 	    selectionChanged)
 	{
-		auto &tile = map.tiles[selectedTilePosition.z]
-			[selectedTilePosition.y]
-			[selectedTilePosition.x];
+		auto &tile = map.getTile(selectedTilePosition);
 		LogInfo("Selected tile {%d,%d,%d}", selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z);
 	}
 }
@@ -210,7 +208,7 @@ void TileView::Render()
 					 y == selectedTilePosition.y &&
 					 x == selectedTilePosition.x);
 
-				auto &tile = map.tiles[z][y][x];
+				auto &tile = map.getTile(x, y, z);
 				// Skip over transparent (missing) tiles
 				auto screenPos = tileToScreenCoords(Vec3<float>{(float)x,(float)y,(float)z});
 				screenPos.x += offsetX;

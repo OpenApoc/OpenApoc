@@ -28,6 +28,7 @@ City::City(Framework &fw, std::string mapName)
 			for (int x = 0; x < this->size.x; x++)
 			{
 				uint16_t tileID;
+				Tile &tile = this->getTile(x,y,z);
 				PHYSFS_readULE16(file, &tileID);
 				if (tileID == -1 &&
 				    PHYSFS_eof(file))
@@ -56,7 +57,7 @@ City::City(Framework &fw, std::string mapName)
 					}
 					else
 					{
-						this->tiles[z][y][x].objects.push_back(std::make_shared<BuildingSection>(&this->tiles[z][y][x], this->cityTiles[tileID], Vec3<int>{x,y,z}, bld));
+						tile.objects.push_back(std::make_shared<BuildingSection>(&tile, this->cityTiles[tileID], Vec3<int>{x,y,z}, bld));
 					}
 				}
 			}
@@ -73,18 +74,20 @@ City::City(Framework &fw, std::string mapName)
 		int x = 0;
 		int y = 0;
 		int z = 0;
-		while (!this->tiles[z][y][x].objects.empty())
-		{
+		
+		do {
 			x = xydistribution(generator);
 			y = xydistribution(generator);
 			z = zdistribution(generator);
-		}
+		} while (!this->getTile(x,y,z).objects.empty());
+
+		Tile &tile = this->getTile(x,y,z);
 
 		std::shared_ptr<Vehicle> testVehicle(fw.gamecore->vehicleFactory.create("POLICE_HOVERCAR"));
 		this->vehicles.push_back(testVehicle);
-		std::shared_ptr<FlyingVehicle> testVehicleObject(new FlyingVehicle(*testVehicle, &this->tiles[z][y][x]));
+		std::shared_ptr<FlyingVehicle> testVehicleObject(new FlyingVehicle(*testVehicle, &tile));
 		testVehicle->tileObject = testVehicleObject;
-		this->tiles[z][y][x].objects.push_back(testVehicleObject);
+		tile.objects.push_back(testVehicleObject);
 		//Vehicles are active
 		this->activeObjects.push_back(testVehicleObject);
 	}

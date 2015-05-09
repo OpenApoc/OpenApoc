@@ -6,16 +6,14 @@ namespace OpenApoc {
 TileMap::TileMap(Framework &fw, Vec3<int> size)
 	: fw(fw), size(size)
 {
-	tiles.resize(size.z);
+	tiles.reserve(size.z * size.y * size.z);
 	for (int z = 0; z < size.z; z++)
 	{
-		tiles[z].resize(size.y);
 		for (int y = 0; y < size.y; y++)
 		{
-			tiles[z][y].reserve(size.x);
 			for (int x = 0; x < size.x; x++)
 			{
-				tiles[z][y].emplace_back(*this, Vec3<int>{x,y,z});
+				tiles.emplace_back(*this, Vec3<int>{x,y,z});
 			}
 		}
 	}
@@ -28,6 +26,18 @@ TileMap::update(unsigned int ticks)
 	//Subclasses can optimise this if they know which tiles might be 'active'
 	for (auto& object : this->activeObjects)
 		object->update(ticks);
+}
+
+Tile&
+TileMap::getTile(int x, int y, int z)
+{
+	return this->tiles[z * size.x * size.y + y * size.x + x];
+}
+
+Tile&
+TileMap::getTile(Vec3<int> pos)
+{
+	return getTile(pos.x, pos.y, pos.z);
 }
 
 TileMap::~TileMap()
@@ -135,14 +145,14 @@ static bool findNextNodeOnPath(PathComparer &comparer, TileMap &map, std::list<T
 					|| nextPosition.y < 0 || nextPosition.y >= map.size.y
 					|| nextPosition.x < 0 || nextPosition.x >= map.size.x)
 					continue;
-				Tile *tile = &map.tiles[nextPosition.z][nextPosition.y][nextPosition.x];
+				Tile &tile = map.getTile(nextPosition);
 				//FIXME: Make 'blocked' tiles cleverer (e.g. don't plan around objects that will move anyway?)
-				if (!tile->objects.empty())
+				if (!tile.objects.empty())
 					continue;
 				//Already visited this tile
-				if (std::find(currentPath.begin(), currentPath.end(), tile) != currentPath.end())
+				if (std::find(currentPath.begin(), currentPath.end(), &tile) != currentPath.end())
 					continue;
-				fringe.push_back(tile);
+				fringe.push_back(&tile);
 			}
 		}
 	}
@@ -180,7 +190,7 @@ TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination)
 		LogError("Bad destination {%d,%d,%d}", destination.x, destination.y, destination.z);
 		return path;
 	}
-	path.push_back(&this->tiles[origin.z][origin.y][origin.x]);
+	path.push_back(&this->getTile(origin));
 	if (!findNextNodeOnPath(pc, *this, path, destination, &numIterations))
 	{
 		LogWarning("No route found from origin {%d,%d,%d} to desination {%d,%d,%d}", origin.x, origin.y, origin.z, destination.x, destination.y, destination.z);

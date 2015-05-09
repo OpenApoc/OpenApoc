@@ -45,7 +45,7 @@ public:
 			nextPosition.z >= map.size.z || nextPosition.z < 0
 			//FIXME: Proper routing/obstruction handling
 			//(This below could cause an infinite loop if a vehicle gets 'trapped'
-			|| (tries < 50 && !map.tiles[nextPosition.z][nextPosition.y][nextPosition.z].objects.empty()));
+			|| (tries < 50 && !map.getTile(nextPosition).objects.empty()));
 		return Vec3<float>{nextPosition.x, nextPosition.y, nextPosition.z};
 	}
 };
@@ -65,7 +65,7 @@ public:
 		while (path.empty())
 		{
 			Vec3<int> newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
-			while (!v.owningTile->map.tiles[newTarget.z][newTarget.y][newTarget.x].objects.empty())
+			while (!v.owningTile->map.getTile(newTarget).objects.empty())
 				newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
 			path = v.owningTile->map.findShortestPath(v.owningTile->position, newTarget);
 			if (path.empty())
@@ -135,7 +135,7 @@ public:
 						{
 							auto &map = v.owningTile->map;
 							v.owningTile->objects.remove(o);
-							v.owningTile = &map.tiles[currentTile.z][currentTile.y][currentTile.x];
+							v.owningTile = &map.getTile(currentTile);
 							v.owningTile->objects.push_back(o);
 							break;
 						}
@@ -158,7 +158,7 @@ public:
 				{
 					auto &map = v.owningTile->map;
 					v.owningTile->objects.remove(o);
-					v.owningTile = &map.tiles[currentTile.z][currentTile.y][currentTile.x];
+					v.owningTile = &map.getTile(currentTile);
 					v.owningTile->objects.push_back(o);
 					break;
 				}
