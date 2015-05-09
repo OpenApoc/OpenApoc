@@ -137,7 +137,7 @@ class FrameworkPrivate
 
 
 
-Framework::Framework(const std::string programName)
+Framework::Framework(const std::string programName, const std::vector<std::string> cmdline)
 	: programName(programName), p(new FrameworkPrivate)
 {
 	LogInfo("Starting framework");
@@ -163,6 +163,19 @@ Framework::Framework(const std::string programName)
 	std::string settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
 	settingsPath += "/settings.cfg";
 	Settings.reset(new ConfigFile(settingsPath, defaultConfig));
+
+	for (auto &option : cmdline)
+	{
+		auto splitString = Strings::Split(option, '=');
+		if (splitString.size() != 2)
+		{
+			LogError("Failed to read command line option \"%s\" - ignoring", option.c_str());
+			continue;
+		}
+		LogInfo("Setting option \"%s\" to \"%s\" from command line", splitString[0].c_str(), splitString[1].c_str());
+		Settings->set(splitString[0], splitString[1]);
+
+	}
 
 	std::vector<std::string> resourcePaths;
 	resourcePaths.push_back(Settings->getString("Resource.SystemCDPath"));

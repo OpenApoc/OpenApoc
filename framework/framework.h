@@ -48,7 +48,7 @@ class Framework
 		std::unique_ptr<SoundBackend> soundBackend;
 		std::unique_ptr<JukeBox> jukebox;
 
-		Framework(const std::string programName);
+		Framework(const std::string programName, const std::vector<std::string> cmdline);
 		~Framework();
 
 		void Run();
