@@ -9,7 +9,7 @@
 
 namespace OpenApoc {
 
-TileView::TileView(Framework &fw, TileMap &map, Vec3<float> tileSize)
+TileView::TileView(Framework &fw, TileMap &map, Vec3<int> tileSize)
 	: Stage(fw), map(map), tileSize(tileSize), maxZDraw(10), offsetX(0), offsetY(0),
 	  selectedTilePosition(0,0,0), selectedTileImageBack(fw.data->load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
 	  selectedTileImageFront(fw.data->load_image("CITY/SELECTED-CITYTILE-FRONT.PNG")),
@@ -37,26 +37,6 @@ void TileView::Finish()
 {
 }
 
-
-Vec2<float>
-TileView::tileToScreenCoords(Vec3<float> c)
-{
-	float x = (c.x*tileSize.x/2) - (c.y*tileSize.x/2);
-	float y = (c.x*tileSize.y/2) + (c.y*tileSize.y/2)
-		- (c.z*tileSize.z);
-
-	return Vec2<float>{x,y};
-}
-
-Vec3<float>
-TileView::screenToTileCoords(Vec2<float> screenPos, float z)
-{
-	screenPos.y += (z*tileSize.z);
-	float y = ((screenPos.y/(tileSize.y/2)) - (screenPos.x/(tileSize.x/2))) / (2);
-	float x = ((screenPos.y/(tileSize.y/2)) + (screenPos.x/(tileSize.x/2))) / (2);
-
-	return Vec3<float>{x,y,z};
-}
 
 void TileView::EventOccurred(Event *e)
 {

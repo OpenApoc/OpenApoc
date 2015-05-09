@@ -78,7 +78,7 @@ void DifficultyMenu::EventOccurred(Event *e)
 		}
 		fw.state.city.reset(new City(fw, citymapName));
 		stageCmd.cmd = StageCmd::Command::REPLACE;
-		stageCmd.nextStage = std::make_shared<TileView>(fw, *fw.state.city, Vec3<float>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z});
+		stageCmd.nextStage = std::make_shared<TileView>(fw, *fw.state.city, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z});
 		return;
 	}
 }

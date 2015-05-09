@@ -69,7 +69,7 @@ City::City(Framework &fw, std::string mapName)
 	std::uniform_int_distribution<int> zdistribution(0,9);
 	//Place 1000 random cars
 	LogInfo("Starting placing cars");
-	for (int i = 0; i < 1000; i++)
+	for (int i = 0; i < 100; i++)
 	{
 		int x = 0;
 		int y = 0;

@@ -176,7 +176,7 @@ loadBuildingsFromBld(Framework &fw, std::string fileName, std::vector<Organisati
 	{
 		if (!PHYSFS_seek(file, b*226))
 		{
-			LogError("Failed to seek to beginning of building %d", b);
+			LogError("Failed to seek to beginning of building %d - %s", b, PHYSFS_getLastError());
 			break;
 		}
 		uint16_t nameIdx; PHYSFS_readULE16(file, &nameIdx);

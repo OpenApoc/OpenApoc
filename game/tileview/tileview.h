@@ -14,7 +14,7 @@ class TileView : public Stage
 	private:
 		StageCmd stageCmd;
 		TileMap &map;
-		Vec3<float> tileSize;
+		Vec3<int> tileSize;
 
 	public:
 		int maxZDraw;
@@ -25,11 +25,25 @@ class TileView : public Stage
 		std::shared_ptr<Image> selectedTileImageBack, selectedTileImageFront;
 		std::shared_ptr<Palette> pal;
 
-		TileView(Framework &fw, TileMap &map, Vec3<float> tileSize);
+		TileView(Framework &fw, TileMap &map, Vec3<int> tileSize);
 		~TileView();
 
-		Vec2<float> tileToScreenCoords(Vec3<float> c);
-		Vec3<float> screenToTileCoords(Vec2<float> screenPos, float z);
+		template <typename T>
+		Vec2<T> tileToScreenCoords(Vec3<T> c)
+		{
+			T x = (c.x * tileSize.x / 2) - (c.y * tileSize.x / 2);
+			T y = (c.x * tileSize.y / 2) + (c.y * tileSize.y / 2)
+				- (c.z * tileSize.z);
+			return Vec2<T>{x,y};
+		};
+		template <typename T>
+		Vec3<T> screenToTileCoords(Vec2<T> screenPos, T z)
+		{
+			screenPos.y += (z * tileSize.z);
+			T y = ((screenPos.y / (tileSize.y / 2)) - (screenPos.x / (tileSize.x / 2))) / 2;
+			T x = ((screenPos.y / (tileSize.y / 2)) + (screenPos.x / (tileSize.x / 2))) / 2;
+			return Vec3<T>{x,y,z};
+		};
 		// Stage control
 		virtual void Begin();
 		virtual void Pause();
