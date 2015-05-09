@@ -13,7 +13,7 @@ TileView::TileView(Framework &fw, TileMap &map, Vec3<float> tileSize)
 	: Stage(fw), map(map), tileSize(tileSize), maxZDraw(10), offsetX(0), offsetY(0),
 	  selectedTilePosition(0,0,0), selectedTileImageBack(fw.data->load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
 	  selectedTileImageFront(fw.data->load_image("CITY/SELECTED-CITYTILE-FRONT.PNG")),
-	  pal(fw.data->load_palette("xcom3/ufodata/PAL_04.DAT")), cameraScrollX(0), cameraScrollY(0)
+	  pal(fw.data->load_palette("xcom3/ufodata/PAL_01.DAT")), cameraScrollX(0), cameraScrollY(0)
 {
 }
 
@@ -131,6 +131,15 @@ void TileView::EventOccurred(Event *e)
 				selectionChanged = true;
 				if (selectedTilePosition.z > 0)
 					selectedTilePosition.z--;
+				break;
+			case ALLEGRO_KEY_1:
+				pal = fw.data->load_palette("xcom3/ufodata/PAL_01.DAT");
+				break;
+			case ALLEGRO_KEY_2:
+				pal = fw.data->load_palette("xcom3/ufodata/PAL_02.DAT");
+				break;
+			case ALLEGRO_KEY_3:
+				pal = fw.data->load_palette("xcom3/ufodata/PAL_03.DAT");
 				break;
 		}
 	}
