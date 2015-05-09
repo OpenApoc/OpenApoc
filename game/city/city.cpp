@@ -29,9 +29,8 @@ City::City(Framework &fw, std::string mapName)
 			{
 				uint16_t tileID;
 				Tile &tile = this->getTile(x,y,z);
-				PHYSFS_readULE16(file, &tileID);
-				if (tileID == -1 &&
-				    PHYSFS_eof(file))
+				int success = PHYSFS_readULE16(file, &tileID);
+				if (!success)
 				{
 					LogError("Unexpected EOF reading citymap at %d,%d,%d",x,y,z);
 					tileID = 0;
@@ -50,8 +49,7 @@ City::City(Framework &fw, std::string mapName)
 							bld = &b;
 						}
 					}
-					if (tileID < 0 ||
-						tileID >= this->cityTiles.size())
+					if (tileID >= this->cityTiles.size())
 					{
 						LogError("Invalid tile IDX %u at %d,%d,%d", tileID, x, y, z);
 					}

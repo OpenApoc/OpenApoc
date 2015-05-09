@@ -192,20 +192,17 @@ loadBuildingsFromBld(Framework &fw, std::string fileName, std::vector<Organisati
 			break;
 		}
 		uint16_t orgIdx; PHYSFS_readULE16(file, &orgIdx);
-		if (nameIdx >= nameList.size() ||
-		    nameIdx < 0)
+		if (nameIdx >= nameList.size())
 		{
 			LogError("Invalid building name IDX %u (max %zu) reading building %d", nameIdx, nameList.size(), b);
 			break;
 		}
-		if (orgIdx >= orgList.size() ||
-		    orgIdx < 0)
+		if (orgIdx >= orgList.size())
 		{
 			LogError("Invalid building owner IDX %u (max %zu) reading building %d", orgIdx, orgList.size(), b);
 			break;
 		}
-		if (x0 < 0 || x0 >= 100 ||
-		    y0 < 0 || y0 >= 100 ||
+		if (x0 >= 100 || y0 >= 100 ||
 			x1 < 1 || x1 > 100 ||
 			y1 < 1 || y1 > 100 ||
 			x0 >= x1 || y0 >= y1)

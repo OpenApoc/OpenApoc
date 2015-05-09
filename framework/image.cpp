@@ -9,7 +9,7 @@ Image::~Image()
 }
 
 Image::Image(Vec2<int> size)
-	: dirty(true), size(size)
+	: size(size), dirty(true)
 {}
 
 Surface::Surface(Vec2<int> size)

@@ -6,7 +6,8 @@
 
 namespace OpenApoc {
 
-Control::Control(Framework &fw, Control* Owner) : fw(fw), Name("Control"), owningControl(Owner), focusedChild(nullptr), BackgroundColour( 128, 80, 80 ), mouseInside(false), mouseDepressed(false), controlArea(nullptr)
+Control::Control(Framework &fw, Control* Owner)
+	: owningControl(Owner), fw(fw), Name("Control"), BackgroundColour( 128, 80, 80 )
 {
 	if( Owner != nullptr )
 	{
@@ -273,7 +274,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 	tinyxml2::XMLElement* subnode;
 	std::string attribvalue;
 
-	if( Element->Attribute("id") != nullptr && Element->Attribute("id") != "" )
+	if( Element->Attribute("id") != nullptr && std::string(Element->Attribute("id")) != "" )
 	{
 		nodename = Element->Attribute("id");
 		this->Name = nodename;
@@ -286,7 +287,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 
 		if( nodename == "backcolour" )
 		{
-			if( node->Attribute("a") != nullptr && node->Attribute("a") != "" )
+			if( node->Attribute("a") != nullptr && std::string(node->Attribute("a")) != "" )
 			{
 				this->BackgroundColour = Colour{ Strings::ToU8( node->Attribute("r") ), Strings::ToU8( node->Attribute("g") ), Strings::ToU8( node->Attribute("b") ), Strings::ToU8( node->Attribute("a") ) };
 			} else {
@@ -405,7 +406,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 			subnode = node->FirstChildElement("grippercolour");
 			if( subnode != nullptr )
 			{
-				if( subnode->Attribute("a") != nullptr && subnode->Attribute("a") != "" )
+				if( subnode->Attribute("a") != nullptr && std::string(subnode->Attribute("a")) != "" )
 				{
 					vsb->GripperColour = Colour( Strings::ToU8( subnode->Attribute("r") ), Strings::ToU8( subnode->Attribute("g") ), Strings::ToU8( subnode->Attribute("b") ), Strings::ToU8( subnode->Attribute("a") ) );
 				} else {
@@ -415,11 +416,11 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 			subnode = node->FirstChildElement("range");
 			if( subnode != nullptr )
 			{
-				if( subnode->Attribute("min") != nullptr && subnode->Attribute("min") != "" )
+				if( subnode->Attribute("min") != nullptr && std::string(subnode->Attribute("min")) != "" )
 				{
 					vsb->Minimum = Strings::ToInteger( subnode->Attribute("min") );
 				}
-				if( subnode->Attribute("max") != nullptr && subnode->Attribute("max") != "" )
+				if( subnode->Attribute("max") != nullptr && std::string(subnode->Attribute("max")) != "" )
 				{
 					vsb->Maximum = Strings::ToInteger( subnode->Attribute("max") );
 				}
@@ -434,7 +435,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 			subnode = node->FirstChildElement("grippercolour");
 			if( subnode != nullptr )
 			{
-				if( subnode->Attribute("a") != nullptr && subnode->Attribute("a") != "" )
+				if( subnode->Attribute("a") != nullptr && std::string(subnode->Attribute("a")) != "" )
 				{
 					hsb->GripperColour = Colour( Strings::ToU8( subnode->Attribute("r") ), Strings::ToU8( subnode->Attribute("g") ), Strings::ToU8( subnode->Attribute("b") ), Strings::ToU8( subnode->Attribute("a") ) );
 				} else {
@@ -444,11 +445,11 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 			subnode = node->FirstChildElement("range");
 			if( subnode != nullptr )
 			{
-				if( subnode->Attribute("min") != nullptr && subnode->Attribute("min") != "" )
+				if( subnode->Attribute("min") != nullptr && std::string(subnode->Attribute("min")) != "" )
 				{
 					hsb->Minimum = Strings::ToInteger( subnode->Attribute("min") );
 				}
-				if( subnode->Attribute("max") != nullptr && subnode->Attribute("max") != "" )
+				if( subnode->Attribute("max") != nullptr && std::string(subnode->Attribute("max")) != "" )
 				{
 					hsb->Maximum = Strings::ToInteger( subnode->Attribute("max") );
 				}
@@ -459,7 +460,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		{
 			VScrollBar* vsb = nullptr;
 
-			if( node->Attribute("scrollbarid") != nullptr && node->Attribute("scrollbarid") != "" )
+			if( node->Attribute("scrollbarid") != nullptr && std::string(node->Attribute("scrollbarid")) != "" )
 			{
 				attribvalue = node->Attribute("scrollbarid");
 				vsb = (VScrollBar*)this->FindControl( attribvalue );

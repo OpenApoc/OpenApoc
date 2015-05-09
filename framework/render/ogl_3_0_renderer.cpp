@@ -458,11 +458,13 @@ public:
 			case gl::TEXTURE_2D: return gl::TEXTURE_BINDING_2D;
 			case gl::TEXTURE_3D: return gl::TEXTURE_BINDING_3D;
 			case gl::TEXTURE_2D_ARRAY: return gl::TEXTURE_BINDING_2D_ARRAY;
-			default: assert(0);
+			default:
+				LogError("Unknown texture enum %d", (int)e);
+				return gl::TEXTURE_BINDING_2D;
 		}
 	}
 	BindTexture(GLuint id, GLint unit = 0, GLenum bind = gl::TEXTURE_2D)
-		: unit(unit), bind(bind)
+		: bind(bind), unit(unit) 
 	{
 		ActiveTexture a(unit);
 		gl::GetIntegerv(getBindEnum(bind), (GLint*)&prevID);
@@ -536,7 +538,7 @@ class GLRGBImage : public RendererImageData
 		Vec2<float> size;
 		std::weak_ptr<RGBImage> parent;
 		GLRGBImage(std::shared_ptr<RGBImage> parent)
-			: parent(parent), size(parent->size)
+			: size(parent->size), parent(parent)
 		{
 			RGBImageLock l(parent, ImageLockUse::Read);
 			gl::GenTextures(1, &this->texID);
@@ -559,7 +561,7 @@ class GLPalette : public RendererImageData
 		Vec2<float> size;
 		std::weak_ptr<Palette> parent;
 		GLPalette(std::shared_ptr<Palette> parent)
-			: parent(parent), size(Vec2<float>(parent->colours.size(), 1))
+			: size(Vec2<float>(parent->colours.size(), 1)), parent(parent)
 		{
 			gl::GenTextures(1, &this->texID);
 			BindTexture b(this->texID);
@@ -581,7 +583,7 @@ class GLPaletteImage : public RendererImageData
 		Vec2<float> size;
 		std::weak_ptr<PaletteImage> parent;
 		GLPaletteImage(std::shared_ptr<PaletteImage> parent)
-			: parent(parent), size(parent->size)
+			: size(parent->size), parent(parent)
 		{
 			PaletteImageLock l(parent, ImageLockUse::Read);
 			gl::GenTextures(1, &this->texID);
@@ -618,7 +620,7 @@ class GLPaletteSpritesheet : public RendererImageData
 			std::unique_ptr<char[]> zeros(new char[maxSize.x * maxSize.y]);
 			memset(zeros.get(), 1, maxSize.x * maxSize.y);
 
-			for (int i = 0; i < numSprites; i++)
+			for (unsigned int i = 0; i < numSprites; i++)
 			{
 				std::shared_ptr<PaletteImage> img =
 					std::dynamic_pointer_cast<PaletteImage>(parent->images[i]);
@@ -687,12 +689,46 @@ public:
 	}
 	
 	virtual void draw(std::shared_ptr<Image> i, Vec2<float> position);
-	virtual void drawRotated(Image &i, Vec2<float> center, Vec2<float> position, float angle){};
-	virtual void drawScaled(Image &i, Vec2<float> position, Vec2<float> size, Scaler scaler = Scaler::Linear){};
-	virtual void drawTinted(Image &i, Vec2<float> position, Colour tint){};
+	virtual void drawRotated(Image &i, Vec2<float> center, Vec2<float> position, float angle)
+	{
+		LogError("Unimplemented function");
+		std::ignore = i;
+		std::ignore = center;
+		std::ignore = position;
+		std::ignore = angle;
+	};
+	virtual void drawScaled(Image &i, Vec2<float> position, Vec2<float> size, Scaler scaler = Scaler::Linear)
+	{
+		LogError("Unimplemented function");
+		std::ignore = i;
+		std::ignore = position;
+		std::ignore = size;
+		std::ignore = scaler;
+	};
+	virtual void drawTinted(Image &i, Vec2<float> position, Colour tint)
+	{
+		LogError("Unimplemented function");
+		std::ignore = i;
+		std::ignore = position;
+		std::ignore = tint;
+	};
 	virtual void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c);
-	virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c, float thickness = 1.0){};
-	virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0){};
+	virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c, float thickness = 1.0)
+	{
+		LogError("Unimplemented function");
+		std::ignore = position;
+		std::ignore = size;
+		std::ignore = c;
+		std::ignore = thickness;
+	};
+	virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0)
+	{
+		LogError("Unimplemented function");
+		std::ignore = p1;
+		std::ignore = p2;
+		std::ignore = c;
+		std::ignore = thickness;
+	};
 	virtual void flush();
 	virtual std::string getName();
 	virtual std::shared_ptr<Surface>getDefaultSurface()
@@ -775,7 +811,7 @@ public:
 	public:
 		std::array<BatchedVertex, 4> vertices;
 		BatchedSprite(Vec2<float> screenPosition, Vec2<float> spriteSize,
-			int spriteIdx, Vec2<float> maxTexSize)
+			int spriteIdx)
 		{
 			Vec2<float> maxTexCoords = spriteSize;
 			Vec2<float> maxPosition = screenPosition + spriteSize;
@@ -861,7 +897,7 @@ OGL30Renderer::OGL30Renderer()
 	this->firstList.reset(new GLint[this->maxBatchedSprites]);
 	this->countList.reset(new GLsizei[this->maxBatchedSprites]);
 
-	for (int i = 0; i < this->maxBatchedSprites; i++)
+	for (unsigned int i = 0; i < this->maxBatchedSprites; i++)
 	{
 		this->firstList[i] = 4*i;
 		this->countList[i] = 4;
@@ -915,7 +951,7 @@ void OGL30Renderer::draw(std::shared_ptr<Image> image, Vec2<float> position)
 		this->state = RendererState::BatchingSpritesheet;
 		this->batchedSprites.emplace_back(
 				position, Vec2<float>(image->size.x, image->size.y),
-				image->indexInSet, Vec2<float>{owningSet->maxSize.x, owningSet->maxSize.y}
+				image->indexInSet
 			);
 		return;
 	}

@@ -10,7 +10,9 @@ Cursor::Cursor( Framework &fw, std::shared_ptr<Palette> pal )
 {
 	PHYSFS_file* f = fw.data->load_file( "xcom3/TACDATA/MOUSE.DAT", "rb" );
 
-	while( images.size() < PHYSFS_fileLength( f ) / 576 )
+	size_t fileLength = PHYSFS_fileLength(f) / 576;
+
+	while( images.size() < fileLength )
 	{
 		auto palImg = std::make_shared<PaletteImage>(Vec2<int>{24,24});
 		PaletteImageLock l(palImg, ImageLockUse::Write);

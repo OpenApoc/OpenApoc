@@ -33,6 +33,9 @@ void Label::OnRender()
 		case HorizontalAlignment::Right:
 			xpos = Size.x - font->GetFontWidth( text );
 			break;
+		default:
+			LogError("Unknown TextHAlign");
+			return;
 	}
 
 	switch( TextVAlign )
@@ -46,6 +49,9 @@ void Label::OnRender()
 		case VerticalAlignment::Bottom:
 			ypos = Size.y - font->GetFontHeight();
 			break;
+		default:
+			LogError("Unknown TextVAlign");
+			return;
 	}
 
 	font->DrawString( *fw.renderer, xpos, ypos, text, APOCFONT_ALIGN_LEFT );

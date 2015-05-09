@@ -3,6 +3,7 @@
 #include "framework/framework.h"
 #include "general/mainmenu.h"
 #include "resources/gamecore.h"
+#include <tuple>
 
 namespace OpenApoc {
 
@@ -28,6 +29,7 @@ void BootUp::Finish()
 
 void BootUp::EventOccurred(Event *e)
 {
+	std::ignore = e;
 }
 
 void BootUp::Update(StageCmd * const cmd)
@@ -35,12 +37,12 @@ void BootUp::Update(StageCmd * const cmd)
 	loadtime++;
 	loadingimageangle.Add( 5 );
 
-	if( threadload == nullptr && fw.gamecore == nullptr )
+	if(fw.gamecore == nullptr)
 	{
-		CreateGameCore( nullptr, &fw );
+		CreateGameCore(fw);
 	}
 
-	if( fw.gamecore != nullptr && fw.gamecore->Loaded && loadtime > FRAMES_PER_SECOND * 2 )
+	if(fw.gamecore && fw.gamecore->Loaded)
 	{
 		StartGame();
 		cmd->cmd = StageCmd::Command::REPLACE;
@@ -69,10 +71,6 @@ void BootUp::Render()
 
 void BootUp::StartGame()
 {
-	if( threadload != nullptr )
-	{
-		al_destroy_thread( threadload );
-	}
 }
 
 bool BootUp::IsTransition()
@@ -80,17 +78,14 @@ bool BootUp::IsTransition()
 	return false;
 }
 
-void* BootUp::CreateGameCore(ALLEGRO_THREAD* thread, void* args)
+void BootUp::CreateGameCore(Framework &fw)
 {
-	Framework *fw = (Framework*)args;
-	std::string ruleset = fw->Settings->getString( "GameRules" );
-	std::string language = fw->Settings->getString( "Language" );
+	std::string ruleset = fw.Settings->getString( "GameRules" );
+	std::string language = fw.Settings->getString( "Language" );
 
-	fw->gamecore.reset(new GameCore(*fw));
+	fw.gamecore.reset(new GameCore(fw));
 
-	fw->gamecore->Load(ruleset, language);
-
-	return nullptr;
+	fw.gamecore->Load(ruleset, language);
 }
 
 }; //namespace OpenApoc

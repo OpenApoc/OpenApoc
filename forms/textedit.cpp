@@ -8,7 +8,7 @@
 
 namespace OpenApoc {
 
-TextEdit::TextEdit( Framework &fw, Control* Owner, std::string Text, IFont* Font ) : Control( fw, Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Centre ), editting(false), SelectionStart(Text.length()), caretTimer(0), caretDraw(false), editShift(false), editAltGr(false)
+TextEdit::TextEdit( Framework &fw, Control* Owner, std::string Text, IFont* Font ) : Control( fw, Owner ), text( Text ), font( Font ), SelectionStart(Text.length()), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Centre )
 {
 }
 
@@ -135,7 +135,6 @@ void TextEdit::OnRender()
 {
 	int xpos;
 	int ypos;
-	int xadjust = 0;
 
 	switch( TextHAlign )
 	{
@@ -148,6 +147,9 @@ void TextEdit::OnRender()
 		case HorizontalAlignment::Right:
 			xpos = Size.x - font->GetFontWidth( text );
 			break;
+		default:
+			LogError("Unknown TextHAlign");
+			return;
 	}
 
 	switch( TextVAlign )
@@ -161,6 +163,9 @@ void TextEdit::OnRender()
 		case VerticalAlignment::Bottom:
 			ypos = Size.y - font->GetFontHeight();
 			break;
+		default:
+			LogError("Unknown TextVAlign");
+			return;
 	}
 
 	if( editting )
@@ -217,6 +222,7 @@ void TextEdit::SetText( std::string Text )
 
 void TextEdit::RaiseEvent( FormEventType Type )
 {
+	std::ignore = Type;
 	Event* ce = new Event();
 	ce->Type = EVENT_FORM_INTERACTION;
 	memset( (void*)&(ce->Data.Forms), 0, sizeof( FRAMEWORK_FORMS_EVENT ) );

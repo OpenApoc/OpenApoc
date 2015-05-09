@@ -29,7 +29,7 @@ class TextEdit : public Control
 		virtual void OnRender();
 
 	public:
-		int SelectionStart;
+		unsigned int SelectionStart;
 		HorizontalAlignment TextHAlign;
 		VerticalAlignment TextVAlign;
 

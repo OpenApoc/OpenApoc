@@ -102,7 +102,7 @@ void PCK::LoadVersion1Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
 		c0_maxwidth = 0;
 		c0_height = 0;
 
-		while( c0_offset != -1 )
+		while( c0_offset != 0xffff )
 		{
 			uint16_t c0_width;
 			PHYSFS_readULE16(pck, &c0_width);	// I hope they never change width mid-image
@@ -145,7 +145,6 @@ void PCK::LoadVersion1Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
 void PCK::LoadVersion2Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
 {
 	uint16_t compressionmethod;
-	Memory* tmp;
 
 	std::shared_ptr<PaletteImage> img;
 
@@ -209,7 +208,7 @@ void PCK::LoadVersion2Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
 						} else {
 							for( uint32_t c1_x = 0; c1_x < c1_header.PixelsInRow; c1_x++ )
 							{
-								if( (c1_header.ColumnToStartAt + c1_x - c1_imgheader.LeftMostPixel) < c1_imgheader.RightMostPixel - c1_imgheader.LeftMostPixel )
+								if( (c1_header.ColumnToStartAt + c1_x) < c1_imgheader.RightMostPixel)
 								{
 									char idx;
 									PHYSFS_readBytes(pck, &idx, 1);
@@ -264,7 +263,7 @@ PCKLoader::load(Data &data, const std::string PckFilename, const std::string Tab
 	auto imageSet = std::make_shared<ImageSet>();
 	imageSet->maxSize = Vec2<int>{0,0};
 	imageSet->images.resize(p->images.size());
-	for (int i = 0; i < p->images.size(); i++)
+	for (unsigned int i = 0; i < p->images.size(); i++)
 	{
 		imageSet->images[i] = p->images[i];
 		imageSet->images[i]->owningSet = imageSet;

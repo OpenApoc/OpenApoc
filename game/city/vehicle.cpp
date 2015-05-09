@@ -258,6 +258,7 @@ void
 FlyingVehicle::processCollision(TileObject &otherObject)
 {
 	//TODO: Vehicle collision
+	std::ignore = otherObject;
 }
 
 }; //namespace OpenApoc

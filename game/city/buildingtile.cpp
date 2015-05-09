@@ -55,7 +55,7 @@ BuildingSection::~BuildingSection()
 void
 BuildingSection::update(unsigned int ticks)
 {
-
+	std::ignore = ticks;
 }
 
 TileObjectCollisionVoxels&
@@ -67,7 +67,7 @@ BuildingSection::getCollisionVoxels()
 void
 BuildingSection::processCollision(TileObject &otherObject)
 {
-
+	std::ignore = otherObject;
 }
 
 };//namesapce OpenApoc

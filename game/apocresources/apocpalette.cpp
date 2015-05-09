@@ -12,7 +12,7 @@ loadApocPalette(Data &data, const std::string fileName)
 		return nullptr;
 	size_t numEntries = PHYSFS_fileLength(f) / 3;
 	Palette *p = new Palette(numEntries);
-	for (int i = 0; i < numEntries; i++)
+	for (unsigned int i = 0; i < numEntries; i++)
 	{
 		uint8_t colour[3];
 		Colour c;

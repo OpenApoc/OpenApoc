@@ -5,7 +5,7 @@
 
 namespace OpenApoc {
 
-TextButton::TextButton( Framework &fw, Control* Owner, std::string Text, IFont* Font ) : Control( fw, Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Centre ), TextVAlign( VerticalAlignment::Centre ), buttonbackground(fw.data->load_image( "UI/TEXTBUTTONBACK.PNG" ))
+TextButton::TextButton( Framework &fw, Control* Owner, std::string Text, IFont* Font ) : Control( fw, Owner ), text( Text ), font( Font ), buttonbackground(fw.data->load_image( "UI/TEXTBUTTONBACK.PNG" )), TextHAlign( HorizontalAlignment::Centre ), TextVAlign( VerticalAlignment::Centre )
 {
 	this->buttonclick = fw.data->load_sample("xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW" );
 	cached = nullptr;
@@ -63,6 +63,9 @@ void TextButton::OnRender()
 			case HorizontalAlignment::Right:
 				xpos = Size.x - font->GetFontWidth( text );
 				break;
+			default:
+				LogError("Unknown TextHAlign");
+				return;
 		}
 
 		switch( TextVAlign )
@@ -76,6 +79,9 @@ void TextButton::OnRender()
 			case VerticalAlignment::Bottom:
 				ypos = Size.y - font->GetFontHeight();
 				break;
+			default:
+				LogError("Unknown TextHAlign");
+				return;
 		}
 
 		font->DrawString( *fw.renderer, xpos, ypos, text, APOCFONT_ALIGN_LEFT );

@@ -1,4 +1,4 @@
-
+#include "framework/logger.h"
 #include "ttffont.h"
 
 namespace OpenApoc {
@@ -16,7 +16,12 @@ TTFFont::~TTFFont()
 
 void TTFFont::DrawString( Renderer &r, int X, int Y, std::string Text, int Alignment )
 {
-	assert(0 && "NOT IMPLEMENTED");
+	LogError("NOT IMPLEMENTED");
+	std::ignore = r;
+	std::ignore = X;
+	std::ignore = Y;
+	std::ignore = Text;
+	std::ignore = Alignment;
 #if 0
 	int xpos = X;
 	int textlen = 0;

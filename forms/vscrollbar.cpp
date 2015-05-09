@@ -5,7 +5,7 @@
 
 namespace OpenApoc {
 
-VScrollBar::VScrollBar( Framework &fw, Control* Owner ) : Control( fw, Owner ), Maximum(10), Minimum(0), Value(0),  GripperColour( 220, 192, 192 ), capture(false), LargeChange(2)
+VScrollBar::VScrollBar( Framework &fw, Control* Owner ) : Control( fw, Owner ), GripperColour( 220, 192, 192 ), Minimum(0), Maximum(10), LargeChange(2)
 {
 	//LoadResources();
 }

@@ -142,6 +142,9 @@ public:
 				if (callbackReturn == MusicTrack::MusicCallbackReturn::End)
 				{
 					al_drain_audio_stream(stream);
+					LogError("Unimplement track progression");
+					std::ignore = finishedCallback;
+					std::ignore = callbackData;
 					//FIXME: finishedCallback() in a way that calling playMusic() won't just wedge waiting for the same thread to join
 					al_destroy_audio_stream(stream);
 					return;

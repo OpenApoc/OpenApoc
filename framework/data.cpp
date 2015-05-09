@@ -247,6 +247,10 @@ Data::load_image(const std::string path)
 PHYSFS_file* Data::load_file(const std::string path, const char *mode)
 {
 	//FIXME: read/write/append modes
+	if (std::string(mode) != "r" && std::string(mode) != "rb")
+	{
+		LogError("Non-readonly modes not yet supported (tried \"%s\")", mode);
+	}
 	std::string foundPath = GetCorrectCaseFilename(path);
 	if (foundPath == "")
 	{

@@ -50,7 +50,7 @@ Tile::Tile(TileMap &map, Vec3<int> position)
 }
 
 TileObject::TileObject(Tile *owningTile, Vec3<float> position, Vec3<float> size, bool visible, bool collides, std::shared_ptr<Image> sprite)
-	: owningTile(owningTile), position(position), size(size), visible(visible), collides(collides), sprite(sprite)
+	: owningTile(owningTile), visible(visible), collides(collides), sprite(sprite), size(size), position(position)
 {
 
 }

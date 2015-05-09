@@ -88,7 +88,7 @@ public:
 			return nullptr;
 		}
 
-		int track = Strings::ToInteger(strings[1]);
+		unsigned int track = Strings::ToInteger(strings[1]);
 		if (track > lengths.size())
 		{
 			LogInfo("Raw music track %d out of bounds", track);

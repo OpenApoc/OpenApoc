@@ -64,7 +64,7 @@ void registerSoundBackend(SoundBackendFactory *factory, std::string name)
 class JukeBoxImpl : public JukeBox
 {
 	Framework &fw;
-	int position;
+	unsigned int position;
 	std::vector<std::shared_ptr<MusicTrack>> trackList;
 	JukeBox::PlayMode mode;
 public:
@@ -138,7 +138,7 @@ class FrameworkPrivate
 
 
 Framework::Framework(const std::string programName, const std::vector<std::string> cmdline)
-	: programName(programName), p(new FrameworkPrivate)
+	: p(new FrameworkPrivate), programName(programName)
 {
 	LogInfo("Starting framework");
 	PHYSFS_init(programName.c_str());
@@ -186,6 +186,10 @@ Framework::Framework(const std::string programName, const std::vector<std::strin
 	this->data.reset(new Data(*this, resourcePaths));
 
 	auto testFile = this->data->load_file("MUSIC", "r");
+	if (!testFile)
+	{
+		LogError("Failed to open \"music\" from the CD - likely the cd couldn't be loaded or paths are incorrect if using an extracted CD image");
+	}
 
 	p->eventAllegro = al_create_event_queue();
 	p->eventMutex = al_create_mutex_recursive();

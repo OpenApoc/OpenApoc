@@ -4,8 +4,6 @@
 #include "framework/stage.h"
 #include "framework/includes.h"
 
-#include <allegro5/allegro5.h>
-
 namespace OpenApoc {
 
 class Image;
@@ -17,14 +15,13 @@ class BootUp : public Stage
 		std::shared_ptr<Image> logoimage;
 		int loadtime;
 		Angle<float> loadingimageangle;
-		ALLEGRO_THREAD* threadload;
 
 		void StartGame();
 
-		static void* CreateGameCore(ALLEGRO_THREAD* thread, void* args);
+		static void CreateGameCore(Framework &fw);
 
 	public:
-		BootUp(Framework &fw) : Stage(fw), threadload(nullptr){};
+		BootUp(Framework &fw) : Stage(fw){};
 		// Stage control
 		virtual void Begin();
 		virtual void Pause();

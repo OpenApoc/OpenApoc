@@ -38,6 +38,9 @@ ApocalypseFont::ApocalypseFont( Framework &fw, FontType Face, std::shared_ptr<Pa
 			charmaxwidth = 8;
 			spacewidth = 3;
 			break;
+		default:
+			LogError("Unkown font face");
+			return;
 	}
 	std::string spcfile( datfile );
 	datfile.append( ".DAT" );
@@ -94,8 +97,8 @@ void ApocalypseFont::DrawString( Renderer &r, int X, int Y, std::string Text, in
 
 	for( unsigned int i = 0; i < Text.length(); i++ )
 	{
-		int charidx = FontCharacterSet.find_first_of( Text.at( i ) );
-		if( charidx >= 0 && charidx < fontbitmaps.size() )
+		auto charidx = FontCharacterSet.find_first_of( Text.at( i ) );
+		if( charidx != FontCharacterSet.npos && charidx < fontbitmaps.size() )
 		{
 			r.draw(fontbitmaps.at(charidx), Vec2<float>{xpos,Y});
 			xpos += fontwidths.at( charidx );
@@ -115,8 +118,8 @@ int ApocalypseFont::GetFontWidth( std::string Text )
 	int textlen = 0;
 	for( unsigned int i = 0; i < Text.length(); i++ )
 	{
-		int charidx = FontCharacterSet.find_first_of( Text.at( i ) );
-		if( charidx >= 0 && charidx < fontbitmaps.size() )
+		auto charidx = FontCharacterSet.find_first_of( Text.at( i ) );
+		if( charidx != FontCharacterSet.npos && charidx < fontbitmaps.size() )
 		{
 			textlen += fontwidths.at( charidx );
 		} else {
