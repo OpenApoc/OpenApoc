@@ -1,13 +1,13 @@
 #include "framework/logger.h"
-#include "data.h"
+#include "framework/data.h"
 #include "game/apocresources/pck.h"
 #include "game/apocresources/apocpalette.h"
-#include "palette.h"
-#include "ignorecase.h"
+#include "framework/palette.h"
+#include "framework/ignorecase.h"
 
-#include "imageloader_interface.h"
-#include "musicloader_interface.h"
-#include "sampleloader_interface.h"
+#include "framework/imageloader_interface.h"
+#include "framework/musicloader_interface.h"
+#include "framework/sampleloader_interface.h"
 
 namespace {
 	std::map<std::string, std::unique_ptr<OpenApoc::ImageLoaderFactory>> *registeredImageBackends = nullptr;

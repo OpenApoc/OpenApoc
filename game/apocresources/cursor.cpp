@@ -1,5 +1,5 @@
 
-#include "cursor.h"
+#include "game/apocresources/cursor.h"
 #include "framework/framework.h"
 #include "framework/palette.h"
 

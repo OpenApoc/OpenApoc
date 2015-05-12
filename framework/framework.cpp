@@ -1,12 +1,12 @@
 
-#include "framework.h"
+#include "framework/framework.h"
 #include "game/boot.h"
 #include "game/resources/gamecore.h"
 #include "game/city/city.h"
-#include "renderer.h"
-#include "renderer_interface.h"
-#include "sound_interface.h"
-#include "sound.h"
+#include "framework/renderer.h"
+#include "framework/renderer_interface.h"
+#include "framework/sound_interface.h"
+#include "framework/sound.h"
 
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>

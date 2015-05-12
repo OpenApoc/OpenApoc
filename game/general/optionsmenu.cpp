@@ -1,6 +1,6 @@
 
-#include "optionsmenu.h"
-#include "basescreen.h"
+#include "game/general/optionsmenu.h"
+#include "game/general/basescreen.h"
 #include "framework/framework.h"
 
 namespace OpenApoc {

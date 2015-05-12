@@ -1,7 +1,7 @@
 
-#include "graphicbutton.h"
-#include "../framework/framework.h"
-#include "../game/resources/gamecore.h"
+#include "forms/graphicbutton.h"
+#include "framework/framework.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc {
 

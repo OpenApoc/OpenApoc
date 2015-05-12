@@ -1,7 +1,7 @@
-#include "vehiclefactory.h"
+#include "game/resources/vehiclefactory.h"
 
 #include "framework/framework.h"
-#include "gamecore.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc {
 

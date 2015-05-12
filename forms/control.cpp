@@ -1,8 +1,8 @@
 
-#include "control.h"
-#include "../framework/framework.h"
-#include "forms.h"
-#include "../game/resources/gamecore.h"
+#include "forms/control.h"
+#include "framework/framework.h"
+#include "forms/forms.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc {
 

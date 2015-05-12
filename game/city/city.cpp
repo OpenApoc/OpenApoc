@@ -1,7 +1,7 @@
-#include "city.h"
-#include "building.h"
-#include "organisation.h"
-#include "buildingtile.h"
+#include "game/city/city.h"
+#include "game/city/building.h"
+#include "game/city/organisation.h"
+#include "game/city/buildingtile.h"
 #include "framework/framework.h"
 #include "game/resources/gamecore.h"
 #include <random>

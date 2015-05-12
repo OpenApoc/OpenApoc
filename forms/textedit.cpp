@@ -1,5 +1,5 @@
 
-#include "textedit.h"
+#include "forms/textedit.h"
 #include "framework/framework.h"
 #include "game/resources/ifont.h"
 

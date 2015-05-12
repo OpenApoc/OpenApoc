@@ -1,4 +1,4 @@
-#include "apocpalette.h"
+#include "game/apocresources/apocpalette.h"
 #include "framework/palette.h"
 #include "framework/data.h"
 

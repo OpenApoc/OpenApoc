@@ -1,7 +1,7 @@
 
-#include "checkbox.h"
-#include "../framework/framework.h"
-#include "../game/resources/gamecore.h"
+#include "forms/checkbox.h"
+#include "framework/framework.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc {
 

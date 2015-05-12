@@ -1,5 +1,5 @@
 
-#include "label.h"
+#include "forms/label.h"
 #include "framework/framework.h"
 
 namespace OpenApoc {

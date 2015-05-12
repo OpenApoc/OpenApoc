@@ -1,5 +1,5 @@
 
-#include "hscrollbar.h"
+#include "forms/hscrollbar.h"
 #include "framework/framework.h"
 #include "game/resources/gamecore.h"
 #include "framework/includes.h"

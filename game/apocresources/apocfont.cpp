@@ -1,5 +1,5 @@
 
-#include "apocfont.h"
+#include "game/apocresources/apocfont.h"
 #include "framework/framework.h"
 #include "framework/palette.h"
 

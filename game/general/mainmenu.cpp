@@ -1,8 +1,8 @@
 
-#include "mainmenu.h"
+#include "game/general/mainmenu.h"
 #include "framework/framework.h"
-#include "optionsmenu.h"
-#include "difficultymenu.h"
+#include "game/general/optionsmenu.h"
+#include "game/general/difficultymenu.h"
 
 namespace OpenApoc {
 

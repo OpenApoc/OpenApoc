@@ -1,4 +1,4 @@
-#include "tile.h"
+#include "game/tileview/tile.h"
 #include "framework/framework.h"
 
 namespace OpenApoc {

@@ -1,6 +1,6 @@
 
 #include "framework/framework.h"
-#include "difficultymenu.h"
+#include "game/general/difficultymenu.h"
 #include "game/city/city.h"
 #include "game/tileview/tileview.h"
 

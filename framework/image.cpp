@@ -1,6 +1,6 @@
-#include "image.h"
-#include "palette.h"
-#include "renderer.h"
+#include "framework/image.h"
+#include "framework/palette.h"
+#include "framework/renderer.h"
 
 namespace OpenApoc {
 

@@ -1,8 +1,8 @@
 
-#include "boot.h"
+#include "game/boot.h"
 #include "framework/framework.h"
-#include "general/mainmenu.h"
-#include "resources/gamecore.h"
+#include "game/general/mainmenu.h"
+#include "game/resources/gamecore.h"
 #include <tuple>
 
 namespace OpenApoc {

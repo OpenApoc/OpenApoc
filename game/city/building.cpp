@@ -1,5 +1,5 @@
-#include "building.h"
-#include "organisation.h"
+#include "game/city/building.h"
+#include "game/city/organisation.h"
 #include "framework/framework.h"
 #include "framework/includes.h"
 

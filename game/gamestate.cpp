@@ -1,4 +1,4 @@
-#include "gamestate.h"
+#include "game/gamestate.h"
 #include "game/city/city.h"
 
 #include "framework/includes.h"

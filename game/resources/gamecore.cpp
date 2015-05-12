@@ -1,7 +1,7 @@
 
-#include "gamecore.h"
-#include "../../framework/framework.h"
-#include "ttffont.h"
+#include "game/resources/gamecore.h"
+#include "framework/framework.h"
+#include "game/resources/ttffont.h"
 
 namespace OpenApoc {
 

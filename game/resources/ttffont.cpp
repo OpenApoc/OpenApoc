@@ -1,5 +1,5 @@
 #include "framework/logger.h"
-#include "ttffont.h"
+#include "game/resources/ttffont.h"
 
 namespace OpenApoc {
 

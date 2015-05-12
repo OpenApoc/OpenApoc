@@ -1,4 +1,4 @@
-#include "palette.h"
+#include "framework/palette.h"
 #include <cassert>
 
 namespace OpenApoc {

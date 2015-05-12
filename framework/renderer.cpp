@@ -1,4 +1,4 @@
-#include "renderer.h"
+#include "framework/renderer.h"
 
 namespace OpenApoc {
 

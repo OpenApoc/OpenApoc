@@ -1,5 +1,5 @@
 #include "framework/logger.h"
-#include "pck.h"
+#include "game/apocresources/pck.h"
 #include "framework/data.h"
 #include "framework/image.h"
 #include "framework/renderer.h"

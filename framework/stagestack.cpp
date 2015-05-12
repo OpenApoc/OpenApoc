@@ -1,5 +1,5 @@
 
-#include "stagestack.h"
+#include "framework/stagestack.h"
 
 namespace OpenApoc {
 

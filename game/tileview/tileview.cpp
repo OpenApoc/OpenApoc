@@ -1,5 +1,5 @@
-#include "tileview.h"
-#include "tile.h"
+#include "game/tileview/tileview.h"
+#include "game/tileview/tile.h"
 
 #include "framework/includes.h"
 #include "framework/framework.h"

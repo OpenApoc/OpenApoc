@@ -1,4 +1,4 @@
-#include "organisation.h"
+#include "game/city/organisation.h"
 
 namespace OpenApoc {
 
