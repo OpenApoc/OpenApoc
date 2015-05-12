@@ -18,7 +18,7 @@ void GameCore::Load(std::string CoreXMLFilename, std::string Language)
 	ParseXMLDoc( CoreXMLFilename );
 	DebugModeEnabled = false;
 
-	MouseCursor = new Cursor( fw, fw.gamecore->GetPalette( "xcom3/tacdata/TACTICAL.PAL" ) );
+	MouseCursor = new ApocCursor( fw, fw.gamecore->GetPalette( "xcom3/tacdata/TACTICAL.PAL" ) );
 
 	Loaded = true;
 }

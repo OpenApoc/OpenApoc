@@ -5,7 +5,7 @@
 
 namespace OpenApoc {
 
-Cursor::Cursor( Framework &fw, std::shared_ptr<Palette> pal )
+ApocCursor::ApocCursor( Framework &fw, std::shared_ptr<Palette> pal )
 	: fw(fw), cursorPos{0,0}
 {
 	PHYSFS_file* f = fw.data->load_file( "xcom3/TACDATA/MOUSE.DAT", "rb" );
@@ -30,14 +30,14 @@ Cursor::Cursor( Framework &fw, std::shared_ptr<Palette> pal )
 
 	PHYSFS_close(f);
 
-	CurrentType = Cursor::Normal;
+	CurrentType = ApocCursor::Normal;
 }
 
-Cursor::~Cursor()
+ApocCursor::~ApocCursor()
 {
 }
 
-void Cursor::EventOccured( Event* e )
+void ApocCursor::EventOccured( Event* e )
 {
 	if( e->Type == EVENT_MOUSE_MOVE )
 	{
@@ -46,7 +46,7 @@ void Cursor::EventOccured( Event* e )
 	}
 }
 
-void Cursor::Render()
+void ApocCursor::Render()
 {
 	fw.renderer->draw(images.at((int)CurrentType), Vec2<float>{cursorPos.x, cursorPos.y});
 }

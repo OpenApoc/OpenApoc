@@ -39,7 +39,7 @@ class GameCore
 	public:
 		bool Loaded;
 		bool DebugModeEnabled;
-		Cursor* MouseCursor;
+		ApocCursor* MouseCursor;
 		VehicleFactory vehicleFactory;
 
 		GameCore(Framework &fw);
