@@ -48,6 +48,7 @@ class PaletteImage : public Image
 		PaletteImage(Vec2<int> size, uint8_t initialIndex = 0);
 		~PaletteImage();
 		std::shared_ptr<RGBImage> toRGBImage(std::shared_ptr<Palette> p);
+		static void blit(std::shared_ptr<PaletteImage> src, Vec2<int> offset, std::shared_ptr<PaletteImage> dst);
 };
 
 class PaletteImageLock
@@ -76,6 +77,7 @@ class RGBImage : public Image
 		RGBImage(Vec2<int> size, Colour initialColour = Colour(0,0,0,0));
 		~RGBImage();
 		void saveBitmap(const std::string &filename);
+		static void blit(std::shared_ptr<RGBImage> src, Vec2<int> srcOffset, std::shared_ptr<RGBImage> dst, Vec2<int> dstOffset);
 };
 
 class RGBImageLock

@@ -3,6 +3,7 @@
 		<title>Open Apocalypse</title>
 		<include>LANGUAGES/LANGUAGES.XML</include>
 		<include>LANGUAGES/STRINGS.XML</include>
+		<include>LANGUAGES/FONTS.XML</include>
 		<include>UI/MAINMENU.XML</include>
 		<include>UI/OPTIONS.XML</include>
         <include>UI/BASESCREEN.XML</include>

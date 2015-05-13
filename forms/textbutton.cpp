@@ -1,11 +1,10 @@
 
 #include "forms/textbutton.h"
 #include "framework/framework.h"
-#include "game/resources/ifont.h"
 
 namespace OpenApoc {
 
-TextButton::TextButton( Framework &fw, Control* Owner, std::string Text, IFont* Font ) : Control( fw, Owner ), text( Text ), font( Font ), buttonbackground(fw.data->load_image( "UI/TEXTBUTTONBACK.PNG" )), TextHAlign( HorizontalAlignment::Centre ), TextVAlign( VerticalAlignment::Centre )
+TextButton::TextButton( Framework &fw, Control* Owner, std::string Text, std::shared_ptr<BitmapFont> font ) : Control( fw, Owner ), text( Text ), font( font ), buttonbackground(fw.data->load_image( "UI/TEXTBUTTONBACK.PNG" )), TextHAlign( HorizontalAlignment::Centre ), TextVAlign( VerticalAlignment::Centre )
 {
 	this->buttonclick = fw.data->load_sample("xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW" );
 	cached = nullptr;
@@ -84,7 +83,8 @@ void TextButton::OnRender()
 				return;
 		}
 
-		font->DrawString( *fw.renderer, xpos, ypos, text, APOCFONT_ALIGN_LEFT );
+		auto textImage = font->getString(text);
+		fw.renderer->draw(textImage, Vec2<float>{xpos,ypos});
 	}
 	fw.renderer->draw(cached, Vec2<float>{0,0});
 

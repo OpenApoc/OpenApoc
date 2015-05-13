@@ -1,14 +1,13 @@
 
 #include "forms/textedit.h"
 #include "framework/framework.h"
-#include "game/resources/ifont.h"
 
 #include <allegro5/keycodes.h>
 #include <allegro5/allegro.h>
 
 namespace OpenApoc {
 
-TextEdit::TextEdit( Framework &fw, Control* Owner, std::string Text, IFont* Font ) : Control( fw, Owner ), text( Text ), font( Font ), SelectionStart(Text.length()), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Centre )
+TextEdit::TextEdit( Framework &fw, Control* Owner, std::string Text, std::shared_ptr<BitmapFont> font ) : Control( fw, Owner ), text( Text ), font( font ), SelectionStart(Text.length()), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Centre )
 {
 }
 
@@ -189,7 +188,8 @@ void TextEdit::OnRender()
 		}
 	}
 
-	font->DrawString( *fw.renderer, xpos, ypos, text, APOCFONT_ALIGN_LEFT );
+	auto textImage = font->getString(text);
+	fw.renderer->draw(textImage, Vec2<float>{xpos, ypos});
 }
 
 void TextEdit::Update()

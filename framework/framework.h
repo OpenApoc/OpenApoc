@@ -13,6 +13,7 @@
 #include "stagestack.h"
 #include "renderer.h"
 #include "sound.h"
+#include "font.h"
 
 #include "library/configfile.h"
 

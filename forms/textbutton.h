@@ -6,7 +6,7 @@
 
 namespace OpenApoc {
 
-class IFont;
+class BitmapFont;
 class Sample;
 class Framework;
 class Image;
@@ -16,7 +16,7 @@ class TextButton : public Control
 
 	private:
 		std::string text;
-		IFont* font;
+		std::shared_ptr<BitmapFont> font;
 		std::shared_ptr<Surface> cached;
 
 		std::shared_ptr<Sample> buttonclick;
@@ -29,7 +29,7 @@ class TextButton : public Control
 		HorizontalAlignment TextHAlign;
 		VerticalAlignment TextVAlign;
 
-		TextButton(Framework &fw, Control* Owner, std::string Text, IFont* Font);
+		TextButton(Framework &fw, Control* Owner, std::string Text, std::shared_ptr<BitmapFont> font);
 		virtual ~TextButton();
 
 		virtual void EventOccured(Event* e);

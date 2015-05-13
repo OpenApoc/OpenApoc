@@ -4,7 +4,7 @@
 
 namespace OpenApoc {
 
-Label::Label( Framework &fw, Control* Owner, std::string Text, IFont* Font ) : Control( fw, Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Top )
+Label::Label( Framework &fw, Control* Owner, std::string Text, std::shared_ptr<BitmapFont> font ) : Control( fw, Owner ), text( Text ), font( font ), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Top )
 {
 }
 
@@ -54,7 +54,8 @@ void Label::OnRender()
 			return;
 	}
 
-	font->DrawString( *fw.renderer, xpos, ypos, text, APOCFONT_ALIGN_LEFT );
+	auto textImage = font->getString(text);
+	fw.renderer->draw(textImage, Vec2<float>{xpos, ypos});
 }
 
 void Label::Update()

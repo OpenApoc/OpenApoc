@@ -238,6 +238,8 @@ void Framework::Run()
 
 	p->ProgramStages.Push( std::make_shared<BootUp>(*this) );
 
+	this->renderer->setPalette(this->data->load_palette("xcom3/ufodata/PAL_01.DAT"));
+
 
 	while( !p->quitProgram )
 	{

@@ -8,7 +8,7 @@
 
 namespace OpenApoc {
 
-class IFont;
+class BitmapFont;
 class Framework;
 
 class TextEdit : public Control
@@ -18,7 +18,7 @@ class TextEdit : public Control
 		bool caretDraw;
 		int caretTimer;
 		std::string text;
-		IFont* font;
+		std::shared_ptr<BitmapFont> font;
 		bool editting;
 		bool editShift;
 		bool editAltGr;
@@ -33,7 +33,7 @@ class TextEdit : public Control
 		HorizontalAlignment TextHAlign;
 		VerticalAlignment TextVAlign;
 
-		TextEdit(Framework &fw, Control* Owner, std::string Text, IFont* Font);
+		TextEdit(Framework &fw, Control* Owner, std::string Text, std::shared_ptr<BitmapFont> font);
 		virtual ~TextEdit();
 
 		virtual void EventOccured(Event* e);

@@ -47,6 +47,27 @@ PaletteImage::toRGBImage(std::shared_ptr<Palette> p)
 	return i;
 }
 
+void
+PaletteImage::blit(std::shared_ptr<PaletteImage> src, Vec2<int> offset, std::shared_ptr<PaletteImage> dst)
+{
+	PaletteImageLock reader(src, ImageLockUse::Read);
+	PaletteImageLock writer(dst, ImageLockUse::Write);
+
+	for (int y = 0; y < src->size.y; y++)
+	{
+		for (int x = 0; x < src->size.x; x++)
+		{
+			Vec2<int> readPos{x,y};
+			Vec2<int> writePos{readPos + offset};
+			if (writePos.x >= dst->size.x ||
+			    writePos.y >= dst->size.y)
+				break;
+			writer.set(writePos, reader.get(readPos));
+		}
+		
+	}
+}
+
 RGBImage::RGBImage(Vec2<int> size, Colour initialColour)
 : Image(size), pixels(new Colour[size.x*size.y])
 {

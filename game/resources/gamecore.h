@@ -2,7 +2,7 @@
 #pragma once
 
 #include "game/apocresources/apocresource.h"
-#include "ifont.h"
+#include "framework/font.h"
 #include "forms/forms.h"
 #include "vehiclefactory.h"
 
@@ -16,7 +16,7 @@ class GameCore
 		std::string language;
 
 		std::map<std::string, std::string> languagetext;
-		std::map<std::string, IFont*> fonts;
+		std::map<std::string, std::shared_ptr<BitmapFont>> fonts;
 		std::map<std::string, Form*> forms;
 
 		void ParseXMLDoc( std::string XMLFilename );
@@ -49,7 +49,7 @@ class GameCore
 		std::string GetString(std::string ID);
 		Form* GetForm(std::string ID);
 		std::shared_ptr<Image> GetImage(std::string ImageData);
-		IFont* GetFont(std::string FontData);
+		std::shared_ptr<BitmapFont> GetFont(std::string FontData);
 		std::shared_ptr<Palette> GetPalette(std::string Path);
 };
 
