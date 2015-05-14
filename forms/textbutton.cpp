@@ -43,11 +43,11 @@ void TextButton::OnRender()
 		RendererSurfaceBinding b(*fw.renderer, cached);
 
 		fw.renderer->drawScaled(*buttonbackground, Vec2<float>{0,0}, Vec2<float>{Size.x, Size.y}); 
-		fw.renderer->drawFilledRect(Vec2<float>{3,3}, Vec2<float>{Size.x-2, Size.y-2}, Colour{160,160,160});
-		fw.renderer->drawLine(Vec2<float>{2,4}, Vec2<float>{Size.x-2, 3}, Colour{220,220,220});
+		fw.renderer->drawFilledRect(Vec2<float>{3,3}, Vec2<float>{Size.x-6, Size.y-6}, Colour{160,160,160});
+		fw.renderer->drawLine(Vec2<float>{2,4}, Vec2<float>{Size.x-2, 4}, Colour{220,220,220});
 		fw.renderer->drawLine(Vec2<float>{2, Size.y - 4}, Vec2<float>{Size.x - 2, Size.y - 4}, Colour{80,80,80});
 		fw.renderer->drawLine(Vec2<float>{2, Size.y - 3}, Vec2<float>{Size.x - 2, Size.y - 3}, Colour{64,64,64});
-		fw.renderer->drawRect(Vec2<float>{3,3}, Vec2<float>{Size.x-2, Size.y-2}, Colour{48,48,48});
+		fw.renderer->drawRect(Vec2<float>{3,3}, Vec2<float>{Size.x-3, Size.y-3}, Colour{48,48,48});
 
 		int xpos;
 		int ypos;
@@ -90,7 +90,7 @@ void TextButton::OnRender()
 
 	if( mouseDepressed && mouseInside )
 	{
-		fw.renderer->drawRect(Vec2<float>{1,1}, Vec2<float>{Size.x-1, Size.y-1}, Colour{255,255,255}, 2);
+		fw.renderer->drawRect(Vec2<float>{1,1}, Vec2<float>{Size.x-2, Size.y-2}, Colour{255,255,255}, 2);
 	}
 }
 
