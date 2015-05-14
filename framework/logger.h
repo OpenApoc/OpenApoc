@@ -1,5 +1,9 @@
 #pragma once
 
+#if _MSC_VER > 1400
+#include <sal.h>
+#endif
+
 /* The logger is global state as we want it to be available even if the framework hasn't been successfully initialised */
 
 namespace OpenApoc {
@@ -9,12 +13,6 @@ namespace OpenApoc {
 #define __PRETTY_FUNCTION__ __FUNCSIG__
 #endif
 
-#if defined(__GNUC__)
-#define PRINTF_FORMAT(x,y) __attribute__((format(printf,x,y)))
-#else
-#define PRINTF_FORMAT
-#endif
-
 	enum class LogLevel
 	{
 		Info,
@@ -22,8 +20,15 @@ namespace OpenApoc {
 		Error,
 	};
 
-	//TODO: ostream log versions?
-	PRINTF_FORMAT(3,4) void Log(LogLevel level, const char *prefix, const char* format, ...);
+#if defined(__GNUC__)
+#define PRINTF_FORMAT(x,y) __attribute__((format(printf,x,y)))
+	PRINTF_FORMAT(3, 4) void Log(LogLevel level, const char *prefix, const char* format, ...);
+#elif _MSC_VER > 1400
+
+	void Log(LogLevel level, const char *prefix, _Printf_format_string_ const char* format, ...);
+#else
+	void Log(LogLevel level, const char *prefix, const char* format, ...);
+#endif
 
 
 }; //namespace OpenApoc
