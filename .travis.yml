@@ -8,7 +8,7 @@ before_install:
   - sudo apt-get update
   - if [ "$CXX" = "g++" ]; then sudo apt-get install g++-4.9; fi
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
-  - sudo apt-get install libunwind7-dev
+  - sudo apt-get install libunwind7-dev libicu-dev
   - ${CXX} --version
   - ${CC} --version
   - mkdir ~/dependency-prefix
