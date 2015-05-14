@@ -21,7 +21,7 @@ install:
   - pushd ./dependencies/allegro && cmake -DWANT_DEMO=OFF -DWANT_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make && make install && popd;
 
 before_script:
-  - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_CXX_FLAGS="-Wall -Wextra -W" -DCMAKE_C_FLAGS="-Wall -Wextra -W"
+  - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=""  -DCMAKE_CXX_FLAGS="-Wall -Wextra -W -O2" -DCMAKE_C_FLAGS="-Wall -Wextra -W -O2" -DMONOLITHIC_BUILD=ON
 
 script: make VERBOSE=1
 

@@ -125,6 +125,6 @@ public:
 	}
 };
 
-MusicLoaderRegister<RawMusicLoaderFactory> load_at_init("raw");
+MusicLoaderRegister<RawMusicLoaderFactory> load_at_init_raw_music("raw");
 
 }; //anonymous namespace
