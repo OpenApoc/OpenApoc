@@ -22,7 +22,27 @@ else()
 	endif()
 endif()
 
+CHECK_CXX_COMPILER_FLAG("-fvisibility=hidden"
+		COMPILER_SUPPORTS_HIDDEN_VISIBILITY)
+if(COMPILER_SUPPORTS_HIDDEN_VISIBILITY)
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
+		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden")
+endif(COMPILER_SUPPORTS_HIDDEN_VISIBILITY)
+
 option(MONOLITHIC_BUILD "Build all source in a single step" OFF)
+
+option(LTO "Build using link-time-optimisations" OFF)
+
+CHECK_CXX_COMPILER_FLAG("-flto"
+	COMPILER_SUPPORTS_LTO)
+
+if (LTO)
+		if (NOT COMPILER_SUPPORTS_LTO)
+				message(FATAL_ERROR "LTO not supported by this compiler")
+		endif(NOT COMPILER_SUPPORTS_LTO)
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -flto")
+		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -flto")
+endif(LTO)
 
 
 # find openapoc sources
