@@ -61,7 +61,6 @@ if(BACKTRACE_ON_ERROR)
 endif()
 
 pkg_check_modules(PC_PHYSFS REQUIRED physfs>=2.1.0)
-pkg_check_modules(PC_ICU REQUIRED icu-uc)
 
 find_path(PHYSFS_INCLUDE_DIR physfs.h HINTS ${PC_PHYSFS_INCLUDEDIR})
 list(APPEND FRAMEWORK_INCLUDE_DIRS ${PHYSFS_INCLUDE_DIR})
@@ -77,20 +76,30 @@ endforeach(PHYSFS_LIBRARY)
 
 list(APPEND FRAMEWORK_LIBRARIES ${PHYSFS_LIBRARIES})
 
-find_path(ICU_INCLUDE_DIR unicode/unistr.h HINTS ${PC_PHYSFS_INCLUDEDIR})
-list(APPEND FRAMEWORK_INCLUDE_DIRS ${ICU_INCLUDE_DIR})
-
-foreach (ICU_LIBRARY ${PC_ICU_LIBRARIES})
-	find_library(ICU_LIBRARY_PATH ${ICU_LIBRARY} HINTS
-			${PC_ICU_LIBRARY_DIRS})
-	if (NOT ICU_LIBRARY_PATH)
-			message(FATAL_ERROR "Failed to find ICU library ${ICU_LIBRARY} in ${PC_ICU_LIBRARY_DIRS}")
+pkg_check_modules(PC_ICU icu-uc)
+if (NOT PC_ICU_FOUNT)
+	#Ubuntu 12.04 icu doesn't have a pkgconfig - try 'current' paths anyway
+	find_path(ICU_INCLUDE_DIR unicode/unistr.h HINTS ${FRAMEWORK_INCLUDE_DIRS})
+	if (NOT ICU_INCLUDE_DIR)
+		message(FATAL_ERROR "libicu not found")
 	endif()
-	list(APPEND ICU_LIBRARIES ${ICU_LIBRARY_PATH})
-endforeach(ICU_LIBRARY)
+	#HACK - this assumes the library path is already searched?
+	list(APPEND FRAMEWORK_LIBRARIES icuuc)
+else()
+	find_path(ICU_INCLUDE_DIR unicode/unistr.h HINTS ${PC_ICU_INCLUDEDIR})
+	list(APPEND FRAMEWORK_INCLUDE_DIRS ${ICU_INCLUDE_DIR})
 
-list(APPEND FRAMEWORK_LIBRARIES ${ICU_LIBRARIES})
+	foreach (ICU_LIBRARY ${PC_ICU_LIBRARIES})
+		find_library(ICU_LIBRARY_PATH ${ICU_LIBRARY} HINTS
+				${PC_ICU_LIBRARY_DIRS})
+		if (NOT ICU_LIBRARY_PATH)
+				message(FATAL_ERROR "Failed to find ICU library ${ICU_LIBRARY} in ${PC_ICU_LIBRARY_DIRS}")
+		endif()
+		list(APPEND ICU_LIBRARIES ${ICU_LIBRARY_PATH})
+	endforeach(ICU_LIBRARY)
 
+	list(APPEND FRAMEWORK_LIBRARIES ${ICU_LIBRARIES})
+endif()
 set(ALLEGRO_VERSIONS 5.1 5 5.0)
 
 foreach (ALLEGRO_MODULE ${FRAMEWORK_ALLEGRO_LIBRARIES})
