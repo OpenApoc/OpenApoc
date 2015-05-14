@@ -224,6 +224,6 @@ public:
 	}
 };
 
-SoundBackendRegister<AllegroSoundBackendFactory> load_at_init("allegro");
+SoundBackendRegister<AllegroSoundBackendFactory> load_at_init_allegro_sound("allegro");
 
 }; //anonymous namespace

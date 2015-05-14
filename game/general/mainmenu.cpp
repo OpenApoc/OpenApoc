@@ -89,7 +89,6 @@ void MainMenu::Update(StageCmd * const cmd)
 
 void MainMenu::Render()
 {
-	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
 	mainmenuform->Render();
 	fw.gamecore->MouseCursor->Render();
 }
