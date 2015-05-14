@@ -72,6 +72,6 @@ public:
 	}
 };
 
-OpenApoc::ImageLoaderRegister<AllegroImageLoaderFactory> register_at_load("allegro");
+OpenApoc::ImageLoaderRegister<AllegroImageLoaderFactory> register_at_load_allegro_image("allegro");
 
 }; //anonymous namespace

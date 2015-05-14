@@ -22,6 +22,8 @@ else()
 	endif()
 endif()
 
+option(MONOLITHIC_BUILD "Build all source in a single step" OFF)
+
 
 # find openapoc sources
 AUX_SOURCE_DIRECTORY(game sources)
@@ -38,8 +40,17 @@ AUX_SOURCE_DIRECTORY(forms sources)
 # declare tinyxml library
 SET(REQUIRED_TINYXML_LIBRARIES tinyxml2)
 
+if (MONOLITHIC_BUILD)
+		add_custom_command(OUTPUT sources.cpp
+				COMMAND ${CMAKE_SOURCE_DIR}/append_sources.sh ${sources} ${FRAMEWORK_SOURCES} >
+				sources.cpp
+				DEPENDS ${sources} ${FRAMEWORK_SOURCES})
+		ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} sources.cpp)
+
+else(MONOLITHIC_BUILD)
 ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} framework/main.cpp ${sources}
 		${FRAMEWORK_SOURCES})
+endif(MONOLITHIC_BUILD)
 
 # check dependencies and include libraries
 FIND_PACKAGE(PkgConfig)
