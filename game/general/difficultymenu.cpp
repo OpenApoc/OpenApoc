@@ -92,7 +92,6 @@ void DifficultyMenu::Update(StageCmd * const cmd)
 
 void DifficultyMenu::Render()
 {
-	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
 	difficultymenuform->Render();
 	fw.gamecore->MouseCursor->Render();
 }
