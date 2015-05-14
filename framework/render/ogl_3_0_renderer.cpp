@@ -715,19 +715,30 @@ public:
 	virtual void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c);
 	virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c, float thickness = 1.0)
 	{
-		LogError("Unimplemented function");
-		std::ignore = position;
-		std::ignore = size;
-		std::ignore = c;
-		std::ignore = thickness;
+		this->drawLine(position, Vec2<float>{position.x + size.x, position.y}, c, thickness);
+		this->drawLine(Vec2<float>{position.x + size.x, position.y}, Vec2<float>{position.x + size.x, position.y + size.y}, c, thickness);
+		this->drawLine(Vec2<float>{position.x + size.x, position.y + size.y}, Vec2<float>{position.x, position.y + size.y}, c, thickness);
+		this->drawLine(Vec2<float>{position.x, position.y + size.y}, position, c, thickness);
 	};
 	virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0)
 	{
-		LogError("Unimplemented function");
-		std::ignore = p1;
-		std::ignore = p2;
-		std::ignore = c;
-		std::ignore = thickness;
+		//FIXME: Hack - allow axis-aligned lines to be drawn using the drawFilledRect() fn
+		if (p1.x == p2.x)
+		{
+			if (p1.y > p2.y)
+				std::swap(p1, p2);
+			this->drawFilledRect(p1, Vec2<float>{thickness, p2.y - p1.y}, c);
+		}
+		else if (p1.y == p2.y)
+		{
+			if (p1.x > p2.x)
+				std::swap(p1, p2);
+			this->drawFilledRect(p1, Vec2<float>{p2.x - p1.x, thickness}, c);
+		}
+		else
+		{
+			LogError("Unimplemented function {%f,%f},{%f,%f}", p1.x, p1.y, p2.x, p2.y);
+		}
 	};
 	virtual void flush();
 	virtual std::string getName();
