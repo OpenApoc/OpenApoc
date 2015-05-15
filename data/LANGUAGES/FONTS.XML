@@ -2,5 +2,7 @@
 <openapoc>
 	<game>
 		<include>LANGUAGES/SMALFONT.XML</include>
+		<include>LANGUAGES/BIGFONT.XML</include>
+		<include>LANGUAGES/SMALLSET.XML</include>
 	</game>
 </openapoc>

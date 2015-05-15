@@ -18,7 +18,7 @@
 					<position x="0" y="0" />
 					<size width="640" height="32" />
 					<alignment horizontal="centre" vertical="centre" />
-					<font>SMALFONT</font>
+					<font>BIGFONT</font>
 				</label>
 				
 				<label text="STR_DEBUGMODE">
@@ -26,7 +26,7 @@
 					<position x="410" y="bottom" />
 					<size width="200" height="16" />
 					<alignment horizontal="right" vertical="centre" />
-					<font>SMALFONT</font>
+					<font>SMALLSET</font>
 				</label>
 				<checkbox id="CHECK_DEBUGMODE">
 					<position x="right" y="bottom" />
