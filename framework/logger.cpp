@@ -42,7 +42,7 @@ static void print_backtrace(UFILE *f)
 #else
 //Stub implementation
 //TODO: Implement for windows?
-static void print_backtrace(FILE *f)
+static void print_backtrace(UFILE *f)
 {
 
 }
