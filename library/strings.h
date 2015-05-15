@@ -3,7 +3,11 @@
 
 #include "framework/includes.h"
 
+#include <unicode/unistr.h>
+
 namespace OpenApoc {
+
+typedef icu::UnicodeString UString;
 
 class Strings
 {

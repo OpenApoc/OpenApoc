@@ -1,5 +1,7 @@
 #pragma once
 
+#include "library/strings.h"
+
 #if _MSC_VER > 1400
 #include <sal.h>
 #endif
@@ -19,25 +21,14 @@ namespace OpenApoc {
 		Warning,
 		Error,
 	};
-
-#if defined(__GNUC__)
-#define PRINTF_FORMAT(x,y) __attribute__((format(printf,x,y)))
-	PRINTF_FORMAT(3, 4) void Log(LogLevel level, const char *prefix, const char* format, ...);
-#elif _MSC_VER > 1400
-
-	void Log(LogLevel level, const char *prefix, _Printf_format_string_ const char* format, ...);
-#else
-	void Log(LogLevel level, const char *prefix, const char* format, ...);
-#endif
-
-
+	void Log(LogLevel level, UString prefix, UString format, ...);
 }; //namespace OpenApoc
 
 #if defined(__GNUC__)
 //GCC has an extension if __VA_ARGS__ are not supplied to 'remove' the precending comma
-#define LogInfo(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Info, __PRETTY_FUNCTION__, f, ##__VA_ARGS__)
-#define LogWarning(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Warning, __PRETTY_FUNCTION__, f, ##__VA_ARGS__)
-#define LogError(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Error, __PRETTY_FUNCTION__, f, ##__VA_ARGS__)
+#define LogInfo(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Info, OpenApoc::UString(__PRETTY_FUNCTION__, "UTF-8"), f, ##__VA_ARGS__)
+#define LogWarning(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Warning, OpenApoc::UString(__PRETTY_FUNCTION__, "UTF-8"), f, ##__VA_ARGS__)
+#define LogError(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Error, OpenApoc::UString(__PRETTY_FUNCTION__, "UTF-8"), f, ##__VA_ARGS__)
 #else
 //At least msvc automatically removes the comma
 #define LogInfo(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Info, __PRETTY_FUNCTION__, f, __VA_ARGS__)
