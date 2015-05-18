@@ -275,7 +275,7 @@ PCKLoader::load(Data &data, const std::string PckFilename, const std::string Tab
 	}
 	delete p;
 
-	LogInfo("Loaded \"%s\" - %zu images, max size {%d,%d}", PckFilename.c_str(), imageSet->images.size(), imageSet->maxSize.x, imageSet->maxSize.y);
+	LogInfo("Loaded \"%s\" - %u images, max size {%d,%d}", PckFilename.c_str(), (unsigned int)imageSet->images.size(), imageSet->maxSize.x, imageSet->maxSize.y);
 
 	return imageSet;
 }

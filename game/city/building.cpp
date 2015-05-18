@@ -171,7 +171,7 @@ loadBuildingsFromBld(Framework &fw, std::string fileName, std::vector<Organisati
 	//Total size of each buildilg field: 226 bytes
 	size_t fileSize = PHYSFS_fileLength(file);
 	int numBuildings = fileSize / 226;
-	LogInfo("Loading %d buildings in %zu bytes", numBuildings, fileSize);
+	LogInfo("Loading %d buildings in %u bytes", numBuildings, (unsigned int)fileSize);
 	for (int b = 0; b < numBuildings; b++)
 	{
 		if (!PHYSFS_seek(file, b*226))
@@ -194,12 +194,12 @@ loadBuildingsFromBld(Framework &fw, std::string fileName, std::vector<Organisati
 		uint16_t orgIdx; PHYSFS_readULE16(file, &orgIdx);
 		if (nameIdx >= nameList.size())
 		{
-			LogError("Invalid building name IDX %u (max %zu) reading building %d", nameIdx, nameList.size(), b);
+			LogError("Invalid building name IDX %u (max %u) reading building %d", nameIdx, (unsigned int)nameList.size(), b);
 			break;
 		}
 		if (orgIdx >= orgList.size())
 		{
-			LogError("Invalid building owner IDX %u (max %zu) reading building %d", orgIdx, orgList.size(), b);
+			LogError("Invalid building owner IDX %u (max %u) reading building %d", orgIdx, (unsigned int)orgList.size(), b);
 			break;
 		}
 		if (x0 >= 100 || y0 >= 100 ||
