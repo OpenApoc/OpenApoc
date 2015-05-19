@@ -105,7 +105,7 @@ class Strings
 
 		static uint8_t ToU8(const std::string &s)
 		{
-			return strtoul(s.c_str(), NULL, 0);
+			return (uint8_t)strtoul(s.c_str(), NULL, 0);
 		}
 
 		static float ToFloat(const std::string &s)
@@ -114,7 +114,7 @@ class Strings
 			{
 				return 0;
 			}
-			return atof( s.c_str() );
+			return (float)atof( s.c_str() );
 		}
 };
 

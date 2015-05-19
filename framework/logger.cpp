@@ -16,6 +16,7 @@
 #include <libunwind.h>
 #elif defined(BACKTRACE_WINDOWS)
 #include <windows.h>
+#include <DbgHelp.h>
 #endif
 
 #ifndef LOGFILE
@@ -70,13 +71,13 @@ static void print_backtrace(UFILE *f)
 	static bool initialised = false;
 	static HANDLE process;
 
-	unsigned int frame, frames;
+	unsigned int frames;
 	void *ip[MAX_STACK_FRAMES];
 	SYMBOL_INFO *sym;
 
 	if (!initialised) {
 		process = GetCurrentProcess();
-		SymInitialize(procress, NULL, true);
+		SymInitialize(process, NULL, true);
 		initialised = true;
 	}
 
@@ -90,7 +91,7 @@ static void print_backtrace(UFILE *f)
 	for (unsigned int frame = 0; frame < frames; frame++)
 	{
 		SymFromAddr(process, (DWORD64)(ip[frame]), 0, sym);
-		u_fprintf(f, "  0x%p %s+0x%lx (%s)\n", ip[frame], sym->Name, (uintptr_t)ip[frame] - (uintptr_t)sym->Address);
+		u_fprintf(f, "  0x%p %s+0x%lx\n", ip[frame], sym->Name, (uintptr_t)ip[frame] - (uintptr_t)sym->Address);
 	}
 
 	free(sym);
