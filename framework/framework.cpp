@@ -556,7 +556,11 @@ void Framework::Display_SetTitle( UString NewTitle )
 {
 #ifdef _WIN32
 	std::wstring widestr;
-	NewTitle.toUTF16String(widestr);
+	int stringLength;
+	u_strToWCS(NULL, 0, &stringLength, NewTitle.getBuffer(), NewTitle.length(), NULL);
+	widestr.resize(stringLength+1);
+	u_strToWCF(widestr.c_str(), stringLength, NULL, NewTitle.getBuffer(), NewTitle.length(), NULL);
+	widestr[stringLength - 1] = '\0';
 	al_set_app_name( (char*)widestr.c_str() );
 	al_set_window_title( p->screen, (char*)widestr.c_str() );
 #else
