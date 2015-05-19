@@ -557,8 +557,13 @@ void Framework::Display_SetTitle( UString NewTitle )
 #ifdef _WIN32
 	int stringLength;
 	std::unique_ptr < wchar_t[] >  buf;
-	u_strToWCS(NULL, 0, &stringLength, NewTitle.getBuffer(), NewTitle.length(), NULL);
-	LogInfo("Setting string to %S - length %u WChars", NewTitle.getTerminatedBuffer(), stringLength);
+	UErrorCode err;
+	u_strToWCS(NULL, 0, &stringLength, NewTitle.getBuffer(), NewTitle.length(), &err);
+	if (U_FAILURE(err))
+	{
+		LogError("Failed to convert \"%S\" to wstring (%d)", NewTitle.getTerminatedBuffer(), err);
+		return;
+	}
 	buf.reset(new wchar_t[stringLength+1]);
 	u_strToWCS(buf.get(), stringLength, NULL, NewTitle.getBuffer(), NewTitle.length(), NULL);
 	buf[stringLength] = '\0';
