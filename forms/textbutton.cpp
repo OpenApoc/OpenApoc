@@ -4,7 +4,7 @@
 
 namespace OpenApoc {
 
-TextButton::TextButton( Framework &fw, Control* Owner, std::string Text, std::shared_ptr<BitmapFont> font ) : Control( fw, Owner ), text( Text ), font( font ), buttonbackground(fw.data->load_image( "UI/TEXTBUTTONBACK.PNG" )), TextHAlign( HorizontalAlignment::Centre ), TextVAlign( VerticalAlignment::Centre )
+TextButton::TextButton( Framework &fw, Control* Owner, UString Text, std::shared_ptr<BitmapFont> font ) : Control( fw, Owner ), text( Text ), font( font ), buttonbackground(fw.data->load_image( "UI/TEXTBUTTONBACK.PNG" )), TextHAlign( HorizontalAlignment::Centre ), TextVAlign( VerticalAlignment::Centre )
 {
 	this->buttonclick = fw.data->load_sample("xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW" );
 	cached = nullptr;
@@ -103,12 +103,12 @@ void TextButton::UnloadResources()
 {
 }
 
-std::string TextButton::GetText()
+UString TextButton::GetText()
 {
 	return text;
 }
 
-void TextButton::SetText( std::string Text )
+void TextButton::SetText( UString Text )
 {
 	text = Text;
 }

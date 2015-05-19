@@ -12,13 +12,15 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 
+using namespace OpenApoc;
+
 namespace {
 
 #ifndef DATA_DIRECTORY
 #define DATA_DIRECTORY "./data"
 #endif
 
-static std::map<std::string, std::string> defaultConfig =
+static std::map<UString, UString> defaultConfig =
 {
 #ifdef PANDORA
 	{"Visual.ScreenWidth", "800"},
@@ -39,24 +41,24 @@ static std::map<std::string, std::string> defaultConfig =
 	{"Audio.Backends", "allegro"},
 };
 
-std::map<std::string, std::unique_ptr<OpenApoc::RendererFactory>> *registeredRenderers = nullptr;
-std::map<std::string, std::unique_ptr<OpenApoc::SoundBackendFactory>> *registeredSoundBackends = nullptr;
+std::map<UString, std::unique_ptr<OpenApoc::RendererFactory>> *registeredRenderers = nullptr;
+std::map<UString, std::unique_ptr<OpenApoc::SoundBackendFactory>> *registeredSoundBackends = nullptr;
 
 };
 
 namespace OpenApoc {
 
-void registerRenderer(RendererFactory* factory, std::string name)
+void registerRenderer(RendererFactory* factory, UString name)
 {
 	if (!registeredRenderers)
-		registeredRenderers = new std::map<std::string, std::unique_ptr<OpenApoc::RendererFactory>>();
+		registeredRenderers = new std::map<UString, std::unique_ptr<OpenApoc::RendererFactory>>();
 	registeredRenderers->emplace(name, std::unique_ptr<RendererFactory>(factory));
 }
 
-void registerSoundBackend(SoundBackendFactory *factory, std::string name)
+void registerSoundBackend(SoundBackendFactory *factory, UString name)
 {
 	if (!registeredSoundBackends)
-		registeredSoundBackends = new std::map<std::string, std::unique_ptr<OpenApoc::SoundBackendFactory>>();
+		registeredSoundBackends = new std::map<UString, std::unique_ptr<OpenApoc::SoundBackendFactory>>();
 	registeredSoundBackends->emplace(name, std::unique_ptr<SoundBackendFactory>(factory));
 }
 
@@ -78,7 +80,7 @@ public:
 		this->stop();
 	}
 
-	virtual void play(std::vector<std::string> tracks, JukeBox::PlayMode mode)
+	virtual void play(std::vector<UString> tracks, JukeBox::PlayMode mode)
 	{
 		this->trackList.clear();
 		this->position = 0;
@@ -87,7 +89,7 @@ public:
 		{
 			auto musicTrack = fw.data->load_music(track);
 			if (!musicTrack)
-				LogError("Failed to load music track \"%s\" - skipping", track.c_str());
+				LogError("Failed to load music track \"%S\" - skipping", track.getTerminatedBuffer());
 			else
 				this->trackList.push_back(musicTrack);
 		}
@@ -137,11 +139,13 @@ class FrameworkPrivate
 
 
 
-Framework::Framework(const std::string programName, const std::vector<std::string> cmdline)
+Framework::Framework(const UString programName, const std::vector<UString> cmdline)
 	: p(new FrameworkPrivate), programName(programName)
 {
 	LogInfo("Starting framework");
-	PHYSFS_init(programName.c_str());
+	std::string U8ProgramName;
+	programName.toUTF8String(U8ProgramName);
+	PHYSFS_init(U8ProgramName.c_str());
 
 	if( !al_init() )
 	{
@@ -160,24 +164,25 @@ Framework::Framework(const std::string programName, const std::vector<std::strin
 
 	LogInfo("Loading config\n" );
 	p->quitProgram = false;
-	std::string settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
+	UString settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
 	settingsPath += "/settings.cfg";
 	Settings.reset(new ConfigFile(settingsPath, defaultConfig));
 
 	for (auto &option : cmdline)
 	{
 		auto splitString = Strings::Split(option, '=');
+		UString t = option;
 		if (splitString.size() != 2)
 		{
-			LogError("Failed to read command line option \"%s\" - ignoring", option.c_str());
+			LogError("Failed to read command line option \"%S\" - ignoring", t.getTerminatedBuffer());
 			continue;
 		}
-		LogInfo("Setting option \"%s\" to \"%s\" from command line", splitString[0].c_str(), splitString[1].c_str());
+		LogInfo("Setting option \"%S\" to \"%S\" from command line", splitString[0].getTerminatedBuffer(), splitString[1].getTerminatedBuffer());
 		Settings->set(splitString[0], splitString[1]);
 
 	}
 
-	std::vector<std::string> resourcePaths;
+	std::vector<UString> resourcePaths;
 	resourcePaths.push_back(Settings->getString("Resource.SystemCDPath"));
 	resourcePaths.push_back(Settings->getString("Resource.LocalCDPath"));
 	resourcePaths.push_back(Settings->getString("Resource.SystemDataDir"));
@@ -185,7 +190,7 @@ Framework::Framework(const std::string programName, const std::vector<std::strin
 
 	this->data.reset(new Data(*this, resourcePaths));
 
-	auto testFile = this->data->load_file("MUSIC", "r");
+	auto testFile = this->data->load_file("MUSIC", Data::FileMode::Read);
 	if (!testFile)
 	{
 		LogError("Failed to open \"music\" from the CD - likely the cd couldn't be loaded or paths are incorrect if using an extracted CD image");
@@ -459,7 +464,7 @@ void Framework::ShutdownFramework()
 void Framework::SaveSettings()
 {
 	// Just to keep the filename consistant
-	std::string settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
+	UString settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
 	settingsPath += "/settings.cfg";
 	Settings->save( settingsPath );
 }
@@ -504,17 +509,17 @@ void Framework::Display_Initialise()
 		auto rendererFactory = registeredRenderers->find(rendererName);
 		if (rendererFactory == registeredRenderers->end())
 		{
-			LogInfo("Renderer \"%s\" not in supported list", rendererName.c_str());
+			LogInfo("Renderer \"%S\" not in supported list", rendererName.getTerminatedBuffer());
 			continue;
 		}
 		Renderer *r = rendererFactory->second->create();
 		if (!r)
 		{
-			LogInfo("Renderer \"%s\" failed to init", rendererName.c_str());
+			LogInfo("Renderer \"%S\" failed to init", rendererName.getTerminatedBuffer());
 			continue;
 		}
 		this->renderer.reset(r);
-		LogInfo("Using renderer: %s", this->renderer->getName().c_str());
+		LogInfo("Using renderer: %S", this->renderer->getName().getTerminatedBuffer());
 		break;
 	}
 	if (!this->renderer)
@@ -547,18 +552,19 @@ int Framework::Display_GetHeight()
 	return al_get_display_height( p->screen );
 }
 
-void Framework::Display_SetTitle( std::string* NewTitle )
+void Framework::Display_SetTitle( UString NewTitle )
 {
-	std::wstring widestr = std::wstring(NewTitle->begin(), NewTitle->end());
+#ifdef _WIN32
+	std::wstring widestr;
+	NewTitle.toUTF16String(widestr);
 	al_set_app_name( (char*)widestr.c_str() );
 	al_set_window_title( p->screen, (char*)widestr.c_str() );
-}
-
-void Framework::Display_SetTitle( std::string NewTitle )
-{
-	std::wstring widestr = std::wstring(NewTitle.begin(), NewTitle.end());
-	al_set_app_name( (char*)widestr.c_str() );
-	al_set_window_title( p->screen, (char*)widestr.c_str() );
+#else
+	std::string U8String;
+	NewTitle.toUTF8String(U8String);
+	al_set_app_name(U8String.c_str());
+	al_set_window_title(p->screen, U8String.c_str());
+#endif
 }
 
 void Framework::Audio_Initialise()
@@ -570,17 +576,17 @@ void Framework::Audio_Initialise()
 		auto backendFactory = registeredSoundBackends->find(soundBackendName);
 		if (backendFactory == registeredSoundBackends->end())
 		{
-			LogInfo("Sound backend %s not in supported list", soundBackendName.c_str());
+			LogInfo("Sound backend %S not in supported list", soundBackendName.getTerminatedBuffer());
 			continue;
 		}
 		SoundBackend *backend = backendFactory->second->create();
 		if (!backend)
 		{
-			LogInfo("Sound backend %s failed to init", soundBackendName.c_str());
+			LogInfo("Sound backend %S failed to init", soundBackendName.getTerminatedBuffer());
 			continue;
 		}
 		this->soundBackend.reset(backend);
-		LogInfo("Using sound backend %s", soundBackendName.c_str());
+		LogInfo("Using sound backend %S", soundBackendName.getTerminatedBuffer());
 		break;
 	}
 	if (!this->soundBackend)

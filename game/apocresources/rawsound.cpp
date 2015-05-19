@@ -11,9 +11,9 @@ class RawSampleLoader : public SampleLoader
 public:
 	RawSampleLoader(Framework &fw)
 		:fw(fw){}
-	virtual std::shared_ptr<Sample> loadSample(std::string path)
+	virtual std::shared_ptr<Sample> loadSample(UString path)
 	{
-		PHYSFS_file *file = fw.data->load_file(path, "r");
+		PHYSFS_file *file = fw.data->load_file(path, Data::FileMode::Read);
 		if (!file)
 			return nullptr;
 
@@ -39,5 +39,5 @@ public:
 	}
 };
 
-SampleLoaderRegister<RawSampleLoaderFactory> load_at_init_raw_sample("raw");
+SampleLoaderRegister<RawSampleLoaderFactory> load_at_init_raw_sample(U8Str(u8"raw"));
 }; //anonymous namespace

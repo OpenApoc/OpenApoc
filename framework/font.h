@@ -17,10 +17,10 @@ class BitmapFont
 	public:
 		virtual ~BitmapFont();
 		virtual std::shared_ptr<PaletteImage> getGlyph(UChar codepoint) = 0;
-		virtual std::shared_ptr<PaletteImage> getString(std::string Text);
+		virtual std::shared_ptr<PaletteImage> getString(UString Text);
 		virtual int GetFontHeight() = 0;
-		virtual int GetFontWidth(std::string Text);
-		virtual std::string getName() = 0;
+		virtual int GetFontWidth(UString Text);
+		virtual UString getName() = 0;
 };
 
 }; //namespace OpenApoc

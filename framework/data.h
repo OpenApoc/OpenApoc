@@ -7,7 +7,6 @@
 #include <physfs.h>
 #include <queue>
 #include <vector>
-#include <string>
 
 namespace OpenApoc {
 
@@ -23,12 +22,12 @@ class Data
 {
 
 	private:
-		std::string writeDir;
-		std::map<std::string, std::weak_ptr<Image> >imageCache;
-		std::map<std::string, std::weak_ptr<ImageSet> >imageSetCache;
+		UString writeDir;
+		std::map<UString, std::weak_ptr<Image> >imageCache;
+		std::map<UString, std::weak_ptr<ImageSet> >imageSetCache;
 
-		std::map<std::string, std::weak_ptr<Sample> >sampleCache;
-		std::map<std::string, std::weak_ptr<MusicTrack> >musicCache;
+		std::map<UString, std::weak_ptr<Sample> >sampleCache;
+		std::map<UString, std::weak_ptr<MusicTrack> >musicCache;
 
 		//Pin open 'imageCacheSize' images
 		std::queue<std::shared_ptr<Image> > pinnedImages;
@@ -39,17 +38,25 @@ class Data
 		std::list<std::unique_ptr<MusicLoader>> musicLoaders;
 
 	public:
-		Data(Framework &fw, std::vector<std::string> paths, int imageCacheSize = 1, int imageSetCacheSize = 1);
+		Data(Framework &fw, std::vector<UString> paths, int imageCacheSize = 1, int imageSetCacheSize = 1);
 		~Data();
 
-		std::shared_ptr<Sample> load_sample(const std::string path);
-		std::shared_ptr<MusicTrack> load_music(const std::string path);
-		std::shared_ptr<Image> load_image(const std::string path);
-		std::shared_ptr<ImageSet> load_image_set(const std::string path);
-		std::shared_ptr<Palette> load_palette(const std::string path);
-		PHYSFS_file* load_file(const std::string path, const char *mode);
-		std::string GetActualFilename(std::string Filename);
-		std::string GetCorrectCaseFilename(std::string Filename);
+		enum class FileMode
+		{
+			Read,
+			Write,
+			ReadWrite,
+		};
+
+		std::shared_ptr<Sample> load_sample(UString path);
+		std::shared_ptr<MusicTrack> load_music(UString path);
+		std::shared_ptr<Image> load_image(UString path);
+		std::shared_ptr<ImageSet> load_image_set(UString path);
+		std::shared_ptr<Palette> load_palette(UString path);
+		PHYSFS_file* load_file(UString path, FileMode mode);
+		UString GetActualFilename(UString Filename);
+		UString GetCorrectCaseFilename(UString Filename);
+
 };
 
 }; //namspace OpenApoc

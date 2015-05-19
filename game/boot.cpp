@@ -80,8 +80,8 @@ bool BootUp::IsTransition()
 
 void BootUp::CreateGameCore(Framework &fw)
 {
-	std::string ruleset = fw.Settings->getString( "GameRules" );
-	std::string language = fw.Settings->getString( "Language" );
+	UString ruleset = fw.Settings->getString( "GameRules" );
+	UString language = fw.Settings->getString( "Language" );
 
 	fw.gamecore.reset(new GameCore(fw));
 

@@ -26,7 +26,7 @@ class City : public TileMap
 		std::vector<CityTile> cityTiles;
 		std::vector<std::shared_ptr<Vehicle>> vehicles;
 	public:
-		City(Framework &fw, std::string mapName);
+		City(Framework &fw, UString mapName);
 		~City();
 
 };

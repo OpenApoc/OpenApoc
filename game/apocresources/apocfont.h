@@ -20,14 +20,14 @@ class ApocalypseFont : public BitmapFont
 		std::map<UChar, std::shared_ptr<PaletteImage> > fontbitmaps;
 		int spacewidth;
 		int fontheight;
-		std::string name;
+		UString name;
 
 	public:
 		static std::shared_ptr<ApocalypseFont> loadFont(Framework &fw, tinyxml2::XMLElement *fontElement);
 		virtual ~ApocalypseFont();
 		virtual std::shared_ptr<PaletteImage> getGlyph(UChar codepoint);
 		virtual int GetFontHeight();
-		virtual std::string getName();
+		virtual UString getName();
 
 };
 }; //namespace OpenApoc

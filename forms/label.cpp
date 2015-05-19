@@ -4,7 +4,7 @@
 
 namespace OpenApoc {
 
-Label::Label( Framework &fw, Control* Owner, std::string Text, std::shared_ptr<BitmapFont> font ) : Control( fw, Owner ), text( Text ), font( font ), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Top )
+Label::Label( Framework &fw, Control* Owner, UString Text, std::shared_ptr<BitmapFont> font ) : Control( fw, Owner ), text( Text ), font( font ), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Top )
 {
 }
 
@@ -67,12 +67,12 @@ void Label::UnloadResources()
 {
 }
 
-std::string Label::GetText()
+UString Label::GetText()
 {
 	return text;
 }
 
-void Label::SetText( std::string Text )
+void Label::SetText( UString Text )
 {
 	text = Text;
 }

@@ -40,7 +40,7 @@ public:
 	virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c, float thickness = 1.0);
 	virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0);
 	virtual void flush();
-	virtual std::string getName();
+	virtual UString getName();
 	virtual Surface *getDefaultSurface();
 
 };

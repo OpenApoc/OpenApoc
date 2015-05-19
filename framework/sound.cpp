@@ -3,7 +3,6 @@
 #include "framework/musicloader_interface.h"
 #include "framework/sound_interface.h"
 #include <map>
-#include <string>
 #include <memory>
 
 namespace {

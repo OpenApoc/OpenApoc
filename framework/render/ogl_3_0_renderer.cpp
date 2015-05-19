@@ -15,11 +15,13 @@ class Program
 {
 	public:
 		GLuint prog;
-		static GLuint CreateShader(GLenum type, const std::string source)
+		static GLuint CreateShader(GLenum type, const UString source)
 		{
 			GLuint shader = gl::CreateShader(type);
-			const GLchar *string = source.c_str();
-			GLint stringLength = source.length();
+			std::string U8Source;
+			source.toUTF8String(U8Source);
+			const GLchar *string = U8Source.c_str();
+			GLint stringLength = U8Source.length();
 			gl::ShaderSource(shader, 1, &string, &stringLength);
 			gl::CompileShader(shader);
 			GLint compileStatus;
@@ -38,7 +40,7 @@ class Program
 			gl::DeleteShader(shader);
 			return 0;
 		}
-		Program(const std::string vertexSource, const std::string fragmentSource)
+		Program(const UString vertexSource, const UString fragmentSource)
 			: prog(0)
 		{
 			GLuint vShader = CreateShader(gl::VERTEX_SHADER, vertexSource);
@@ -121,7 +123,7 @@ class Program
 class SpriteProgram : public Program
 {
 	protected:
-		SpriteProgram(const std::string vertexSource, const std::string fragmentSource)
+		SpriteProgram(const UString vertexSource, const UString fragmentSource)
 			: Program(vertexSource, fragmentSource)
 			{
 			}
@@ -741,7 +743,7 @@ public:
 		}
 	};
 	virtual void flush();
-	virtual std::string getName();
+	virtual UString getName();
 	virtual std::shared_ptr<Surface>getDefaultSurface()
 	{
 		return this->defaultSurface;
@@ -1027,7 +1029,7 @@ OGL30Renderer::flush()
 	this->state = RendererState::Idle;
 }
 
-std::string
+UString
 OGL30Renderer::getName()
 {
 	return "OGL3.0 Renderer";

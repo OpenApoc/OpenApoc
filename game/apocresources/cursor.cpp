@@ -8,7 +8,7 @@ namespace OpenApoc {
 ApocCursor::ApocCursor( Framework &fw, std::shared_ptr<Palette> pal )
 	: fw(fw), cursorPos{0,0}
 {
-	PHYSFS_file* f = fw.data->load_file( "xcom3/TACDATA/MOUSE.DAT", "rb" );
+	PHYSFS_file* f = fw.data->load_file( U8Str(u8"xcom3/TACDATA/MOUSE.DAT"), Data::FileMode::Read);
 
 	size_t fileLength = PHYSFS_fileLength(f) / 576;
 

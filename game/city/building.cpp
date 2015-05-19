@@ -5,7 +5,7 @@
 
 namespace OpenApoc {
 
-std::vector<std::string> Building::defaultNames =
+std::vector<UString> Building::defaultNames =
 {
 	{"Building"},
 	{"The Senate"},
@@ -146,18 +146,18 @@ std::vector<std::string> Building::defaultNames =
 }
 ;
 
-Building::Building(Organisation &owner, std::string name, Rect<int> bounds)
+Building::Building(Organisation &owner, UString name, Rect<int> bounds)
 	: owner(owner), name(name), bounds(bounds)
 {}
 
 std::vector<Building>
-loadBuildingsFromBld(Framework &fw, std::string fileName, std::vector<Organisation> &orgList, std::vector<std::string> nameList)
+loadBuildingsFromBld(Framework &fw, UString fileName, std::vector<Organisation> &orgList, std::vector<UString> nameList)
 {
 	std::vector<Building> buildings;
-	auto file = fw.data->load_file("xcom3/ufodata/" + fileName, "rb");
+	auto file = fw.data->load_file("xcom3/ufodata/" + fileName, Data::FileMode::Read);
 	if (!file)
 	{
-		LogError("Failed to open building data file: %s", fileName.c_str());
+		LogError("Failed to open building data file: %S", fileName.getTerminatedBuffer());
 		return buildings;
 	}
 	//Currently known fields in .bld files:
@@ -213,7 +213,7 @@ loadBuildingsFromBld(Framework &fw, std::string fileName, std::vector<Organisati
 		buildings.emplace_back(orgList[orgIdx], nameList[nameIdx],
 			Rect<int>(x0, y0, x1, y1));
 		auto &bld = buildings.back();
-		LogInfo("Read building \"%s\" owner \"%s\" position {%d,%d},{%d,%d}", bld.name.c_str(), bld.owner.name.c_str(),
+		LogInfo("Read building \"%S\" owner \"%S\" position {%d,%d},{%d,%d}", bld.name.getTerminatedBuffer(), bld.owner.name.getTerminatedBuffer(),
 			bld.bounds.p0.x, bld.bounds.p0.y, bld.bounds.p1.x, bld.bounds.p1.y);
 	}
 	PHYSFS_close(file);

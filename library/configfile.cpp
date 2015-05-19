@@ -6,10 +6,12 @@
 
 namespace OpenApoc {
 
-ConfigFile::ConfigFile(const std::string fileName, std::map<std::string, std::string> defaults)
+ConfigFile::ConfigFile(const UString fileName, std::map<UString, UString> defaults)
 	: values(defaults), defaults(defaults)
 {
-	std::ifstream inFile{fileName, std::ios::in};
+	std::string platformString;
+	fileName.toUTF8String(platformString);
+	std::ifstream inFile{platformString, std::ios::in};
 	int lineNo = 0;
 	while (inFile)
 	{
@@ -23,22 +25,24 @@ ConfigFile::ConfigFile(const std::string fileName, std::map<std::string, std::st
 		auto splitPos = line.find_first_of('=');
 		if (splitPos == line.npos)
 		{
-			LogError("Error reading config \"%s\" line %d", fileName.c_str(), lineNo);
+			LogError("Error reading config \"%s\" line %d", platformString.c_str(), lineNo);
 			continue;
 		}
-		std::string key = line.substr(0, splitPos);
-		std::string value = line.substr(splitPos+1);
+		UString key = U8Str(line.substr(0, splitPos).c_str());
+		UString value = U8Str(line.substr(splitPos+1).c_str());
 		values[key] = value;
 	}
 }
 
 void
-ConfigFile::save(const std::string fileName)
+ConfigFile::save(const UString fileName)
 {
-	std::ofstream outFile{fileName, std::ios::out};
+	std::string platformString;
+	fileName.toUTF8String(platformString);
+	std::ofstream outFile{platformString.c_str(), std::ios::out};
 	if (!outFile)
 	{
-		LogError("Failed to open config file \"%s\"", fileName.c_str());
+		LogError("Failed to open config file \"%s\"", platformString.c_str());
 		return;
 	}
 
@@ -46,15 +50,18 @@ ConfigFile::save(const std::string fileName)
 
 	for (auto &pair : this->values)
 	{
+		std::string u8Key, u8Value;
+		pair.first.toUTF8String(u8Key);
+		pair.second.toUTF8String(u8Value);
 		//If the value is the default, print it commented out
 		if (pair.second == defaults[pair.first])
 			outFile << "#";
-		outFile << pair.first << "=" << pair.second << "\n";
+		outFile << u8Key << "=" << u8Value << "\n";
 	}
 }
 
-std::string
-ConfigFile::getString(const std::string key)
+UString
+ConfigFile::getString(UString key)
 {
 	auto it = this->values.find(key);
 	if (it != this->values.end())
@@ -64,23 +71,25 @@ ConfigFile::getString(const std::string key)
 	if (it != this->defaults.end())
 		return it->second;
 
-	LogError("Config key \"%s\" not found", key.c_str());
+	LogError("Config key \"%S\" not found", key.getTerminatedBuffer());
 	return "";
 }
 
 int
-ConfigFile::getInt(const std::string key)
+ConfigFile::getInt(UString key)
 {
 	auto string = this->getString(key);
 	if (string == "")
 	{
 		return 0;
 	}
-	int value = std::atoi(string.c_str());
+	std::string u8Str;
+	string.toUTF8String(u8Str);
+	int value = std::atoi(u8Str.c_str());
 	return value;
 }
 
-static const std::vector<std::string> falseValues =
+static const std::vector<UString> falseValues =
 {
 	"0",
 	"n",
@@ -88,7 +97,7 @@ static const std::vector<std::string> falseValues =
 	"false",
 };
 
-static const std::vector<std::string> trueValues =
+static const std::vector<UString> trueValues =
 {
 	"1",
 	"y",
@@ -97,7 +106,7 @@ static const std::vector<std::string> trueValues =
 };
 
 bool
-ConfigFile::getBool(const std::string key)
+ConfigFile::getBool(UString key)
 {
 	auto value = this->getString(key);
 	for (auto &v : trueValues)
@@ -110,18 +119,18 @@ ConfigFile::getBool(const std::string key)
 		if (v == value)
 			return false;
 	}
-	LogError("Invalid boolean value of \"%s\" in key \"%s\"", value.c_str(), key.c_str());
+	LogError("Invalid boolean value of \"%S\" in key \"%S\"", value.getTerminatedBuffer(), key.getTerminatedBuffer());
 	return false;
 }
 
 void
-ConfigFile::set(const std::string key, const std::string value)
+ConfigFile::set(const UString key, const UString value)
 {
 	this->values[key] = value;
 }
 
 void
-ConfigFile::set(const std::string key, bool value)
+ConfigFile::set(const UString key, bool value)
 {
 	if (value)
 		this->set(key, trueValues[0]);
@@ -130,11 +139,11 @@ ConfigFile::set(const std::string key, bool value)
 }
 
 void
-ConfigFile::set(const std::string key, int value)
+ConfigFile::set(const UString key, int value)
 {
 	std::stringstream ss;
 	ss << std::dec << value;
-	this->set(key, ss.str());
+	this->set(key, U8Str(ss.str().c_str()));
 }
 
 }; //namespace OpenApoc

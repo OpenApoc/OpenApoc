@@ -1,7 +1,6 @@
 #pragma once
 #include "library/vec.h"
 #include "library/colour.h"
-#include <string>
 #include <memory>
 
 namespace OpenApoc {
@@ -40,7 +39,7 @@ class Renderer
 		virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c, float thickness = 1.0) = 0;
 		virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0) = 0;
 		virtual void flush() = 0;
-		virtual std::string getName() = 0;
+		virtual UString getName() = 0;
 
 		virtual std::shared_ptr<Surface> getDefaultSurface() = 0;
 };

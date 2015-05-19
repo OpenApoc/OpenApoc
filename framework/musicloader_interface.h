@@ -1,5 +1,6 @@
 #pragma once
 #include "sound.h"
+#include "library/strings.h"
 
 namespace OpenApoc {
 
@@ -8,7 +9,7 @@ namespace OpenApoc {
 	{
 	public:
 		virtual ~MusicLoader() {};
-		virtual std::shared_ptr<MusicTrack> loadMusic(std::string path) = 0;
+		virtual std::shared_ptr<MusicTrack> loadMusic(UString path) = 0;
 	};
 
 	class MusicLoaderFactory
@@ -18,13 +19,13 @@ namespace OpenApoc {
 		virtual ~MusicLoaderFactory() {};
 	};
 
-	void registerMusicLoader(MusicLoaderFactory *factory, std::string name);
+	void registerMusicLoader(MusicLoaderFactory *factory, UString name);
 
 	template <typename T>
 	class MusicLoaderRegister
 	{
 	public:
-		MusicLoaderRegister(std::string name)
+		MusicLoaderRegister(UString name)
 		{
 			registerMusicLoader(new T, name);
 		}

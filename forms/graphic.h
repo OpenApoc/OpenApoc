@@ -10,14 +10,14 @@ class Graphic : public Control
 {
 
 	private:
-		std::string image_name;
+		UString image_name;
 		std::shared_ptr<Image> image;
 
 	protected:
 		virtual void OnRender();
 
 	public:
-		Graphic( Framework &fw, Control* Owner, std::string Image );
+		Graphic( Framework &fw, Control* Owner, UString Image );
 		virtual ~Graphic();
 
 		virtual void EventOccured( Event* e );

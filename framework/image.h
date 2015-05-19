@@ -76,7 +76,7 @@ class RGBImage : public Image
 	public:
 		RGBImage(Vec2<int> size, Colour initialColour = Colour(0,0,0,0));
 		~RGBImage();
-		void saveBitmap(const std::string &filename);
+		void saveBitmap(const UString &filename);
 		static void blit(std::shared_ptr<RGBImage> src, Vec2<int> srcOffset, std::shared_ptr<RGBImage> dst, Vec2<int> dstOffset);
 };
 

@@ -4,84 +4,92 @@
 #include "game/apocresources/apocpalette.h"
 #include "framework/palette.h"
 #include "framework/ignorecase.h"
+#include "library/strings.h"
 
 #include "framework/imageloader_interface.h"
 #include "framework/musicloader_interface.h"
 #include "framework/sampleloader_interface.h"
 
+using namespace OpenApoc;
+
 namespace {
-	std::map<std::string, std::unique_ptr<OpenApoc::ImageLoaderFactory>> *registeredImageBackends = nullptr;
-	std::map<std::string, std::unique_ptr<OpenApoc::MusicLoaderFactory>> *registeredMusicLoaders = nullptr;
-	std::map<std::string, std::unique_ptr<OpenApoc::SampleLoaderFactory>> *registeredSampleLoaders = nullptr;
+	std::map<UString, std::unique_ptr<OpenApoc::ImageLoaderFactory>> *registeredImageBackends = nullptr;
+	std::map<UString, std::unique_ptr<OpenApoc::MusicLoaderFactory>> *registeredMusicLoaders = nullptr;
+	std::map<UString, std::unique_ptr<OpenApoc::SampleLoaderFactory>> *registeredSampleLoaders = nullptr;
 }; //anonymous namespace
 
 namespace OpenApoc {
 
-void registerImageLoader(ImageLoaderFactory* factory, std::string name)
+void registerImageLoader(ImageLoaderFactory* factory, UString name)
 {
 	if (!registeredImageBackends)
 	{
-		registeredImageBackends = new std::map<std::string, std::unique_ptr<OpenApoc::ImageLoaderFactory>>();
+		registeredImageBackends = new std::map<UString, std::unique_ptr<OpenApoc::ImageLoaderFactory>>();
 	}
 	registeredImageBackends->emplace(name, std::unique_ptr<ImageLoaderFactory>(factory));
 }
-void registerSampleLoader(SampleLoaderFactory *factory, std::string name)
+void registerSampleLoader(SampleLoaderFactory *factory, UString name)
 {
 	if (!registeredSampleLoaders)
 	{
-		registeredSampleLoaders = new std::map<std::string, std::unique_ptr<OpenApoc::SampleLoaderFactory>>();
+		registeredSampleLoaders = new std::map<UString, std::unique_ptr<OpenApoc::SampleLoaderFactory>>();
 	}
 	registeredSampleLoaders->emplace(name, std::unique_ptr<SampleLoaderFactory>(factory));
 }
-void registerMusicLoader(MusicLoaderFactory *factory, std::string name)
+void registerMusicLoader(MusicLoaderFactory *factory, UString name)
 {
 	if (!registeredMusicLoaders)
 	{
-		registeredMusicLoaders = new std::map<std::string, std::unique_ptr<OpenApoc::MusicLoaderFactory>>();
+		registeredMusicLoaders = new std::map<UString, std::unique_ptr<OpenApoc::MusicLoaderFactory>>();
 	}
 	registeredMusicLoaders->emplace(name, std::unique_ptr<MusicLoaderFactory>(factory));
 }
 
-Data::Data(Framework &fw, std::vector<std::string> paths, int imageCacheSize, int imageSetCacheSize)
+Data::Data(Framework &fw, std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize)
 {
 	for (auto &imageBackend : *registeredImageBackends)
 	{
+		auto t = imageBackend.first;
 		ImageLoader *l = imageBackend.second->create();
 		if (l)
 		{
 			this->imageLoaders.emplace_back(l);
-			LogInfo("Initialised image loader %s", imageBackend.first.c_str());
+			LogInfo("Initialised image loader %S", t.getTerminatedBuffer());
 		}
 		else
-			LogWarning("Failed to load image loader %s", imageBackend.first.c_str());
+			LogWarning("Failed to load image loader %S", t.getTerminatedBuffer());
 	}
 
 	for (auto &sampleBackend : *registeredSampleLoaders)
 	{
+		auto t = sampleBackend.first;
 		SampleLoader *s = sampleBackend.second->create(fw);
 		if (s)
 		{
 			this->sampleLoaders.emplace_back(s);
-			LogInfo("Initialised sample loader %s", sampleBackend.first.c_str());
+			LogInfo("Initialised sample loader %S", t.getTerminatedBuffer());
 		}
 		else
-			LogWarning("Failed to load sample loader %s", sampleBackend.first.c_str());
+			LogWarning("Failed to load sample loader %S", t.getTerminatedBuffer());
 	}
 
 	for (auto &musicLoader : *registeredMusicLoaders)
 	{
+		auto t = musicLoader.first;
 		MusicLoader *m = musicLoader.second->create(fw);
 		if (m)
 		{
 			this->musicLoaders.emplace_back(m);
-			LogInfo("Initialised music loader %s", musicLoader.first.c_str());
+			LogInfo("Initialised music loader %S", t.getTerminatedBuffer());
 		}
 		else
-			LogWarning("Failed to load music loader %s", musicLoader.first.c_str());
+			LogWarning("Failed to load music loader %S", t.getTerminatedBuffer());
 	}
-	this->writeDir = PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME);
-	LogInfo("Setting write directory to \"%s\"", this->writeDir.c_str());
-	PHYSFS_setWriteDir(this->writeDir.c_str());
+	this->writeDir = U8Str(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
+	LogInfo("Setting write directory to \"%S\"", this->writeDir.getTerminatedBuffer());
+	std::string writeDirU8String;
+	this->writeDir.toUTF8String(writeDirU8String);
+	PHYSFS_setWriteDir(writeDirU8String.c_str());
 	for (int i = 0; i < imageCacheSize; i++)
 		pinnedImages.push(nullptr);
 	for (int i = 0; i < imageSetCacheSize; i++)
@@ -90,16 +98,18 @@ Data::Data(Framework &fw, std::vector<std::string> paths, int imageCacheSize, in
 	//Paths are supplied in inverse-search order (IE the last in 'paths' should be the first searched)
 	for(auto &p : paths)
 	{
-		if (!PHYSFS_mount(p.c_str(), "/", 0))
+		std::string pathU8String;
+		p.toUTF8String(pathU8String);
+		if (!PHYSFS_mount(pathU8String.c_str(), "/", 0))
 		{
-			LogWarning("Failed to add resource dir \"%s\"", p.c_str());
+			LogWarning("Failed to add resource dir \"%s\"", pathU8String.c_str());
 			continue;
 		}
 		else
-			LogInfo("Resource dir \"%s\" mounted to \"%s\"", p.c_str(), PHYSFS_getMountPoint(p.c_str()));
+			LogInfo("Resource dir \"%s\" mounted to \"%s\"", pathU8String.c_str(), PHYSFS_getMountPoint(pathU8String.c_str()));
 	}
 	//Finally, the write directory trumps all
-	PHYSFS_mount(writeDir.c_str(), "/", 0);
+	PHYSFS_mount(writeDirU8String.c_str(), "/", 0);
 }
 
 Data::~Data()
@@ -108,9 +118,9 @@ Data::~Data()
 }
 
 std::shared_ptr<ImageSet>
-Data::load_image_set(const std::string path)
+Data::load_image_set(UString path)
 {
-	std::string cacheKey = Strings::ToUpper(path);
+	UString cacheKey = Strings::ToUpper(path);
 	std::shared_ptr<ImageSet> imgSet = this->imageSetCache[cacheKey].lock();
 	if (imgSet)
 	{
@@ -118,14 +128,14 @@ Data::load_image_set(const std::string path)
 	}
 	//PCK resources come in the format:
 	//"PCK:PCKFILE:TABFILE[:optional/ignored]"
-	if (path.substr(0, 4) == "PCK:")
+	if (path.tempSubString(0, 4) == "PCK:")
 	{
-		std::vector<std::string> splitString = Strings::Split(path, ':');
+		std::vector<UString> splitString = Strings::Split(path, ':');
 		imgSet = PCKLoader::load(*this, splitString[1], splitString[2]);
 	}
 	else
 	{
-		LogError("Unknown image set format \"%s\"", path.c_str());
+		LogError("Unknown image set format \"%S\"", path.getTerminatedBuffer());
 		return nullptr;
 	}
 
@@ -137,9 +147,9 @@ Data::load_image_set(const std::string path)
 }
 
 std::shared_ptr<Sample>
-Data::load_sample(const std::string path)
+Data::load_sample(UString path)
 {
-	std::string cacheKey = Strings::ToUpper(path);
+	UString cacheKey = Strings::ToUpper(path);
 	std::shared_ptr<Sample> sample = this->sampleCache[cacheKey].lock();
 	if (sample)
 		return sample;
@@ -152,7 +162,7 @@ Data::load_sample(const std::string path)
 	}
 	if (!sample)
 	{
-		LogInfo("Failed to load sample \"%s\"", path.c_str());
+		LogInfo("Failed to load sample \"%S\"", path.getTerminatedBuffer());
 		return nullptr;
 	}
 	this->sampleCache[cacheKey] = sample;
@@ -160,7 +170,7 @@ Data::load_sample(const std::string path)
 }
 
 std::shared_ptr<MusicTrack>
-Data::load_music(const std::string path)
+Data::load_music(UString path)
 {
 	//No cache for music tracks, just stream of disk
 	for (auto &loader : this->musicLoaders)
@@ -169,15 +179,15 @@ Data::load_music(const std::string path)
 		if (track)
 			return track;
 	}
-	LogInfo("Failed to load music track \"%s\"", path.c_str());
+	LogInfo("Failed to load music track \"%S\"", path.getTerminatedBuffer());
 	return nullptr;
 }
 
 std::shared_ptr<Image>
-Data::load_image(const std::string path)
+Data::load_image(UString path)
 {
 	//Use an uppercase version of the path for the cache key
-	std::string cacheKey = Strings::ToUpper(path);
+	UString cacheKey = Strings::ToUpper(path);
 	std::shared_ptr<Image> img = this->imageCache[cacheKey].lock();
 	if (img)
 	{
@@ -185,9 +195,9 @@ Data::load_image(const std::string path)
 	}
 
 
-	if (path.substr(0,4) == "PCK:")
+	if (path.tempSubString(0,4) == "PCK:")
 	{
-		std::vector<std::string> splitString = Strings::Split(path, ':');
+		std::vector<UString> splitString = Strings::Split(path, ':');
 		auto imageSet = this->load_image_set(splitString[0] + ":" + splitString[1] + ":" + splitString[2]);
 		if (!imageSet)
 		{
@@ -216,7 +226,7 @@ Data::load_image(const std::string path)
 				break;
 			}
 			default:
-				LogError("Invalid PCK resource string \"%s\"", path.c_str());
+				LogError("Invalid PCK resource string \"%S\"", path.getTerminatedBuffer());
 				return nullptr;
 		}
 	}
@@ -232,7 +242,7 @@ Data::load_image(const std::string path)
 		}
 		if (!img)
 		{
-			LogInfo("Failed to load image \"%s\"", path.c_str());
+			LogInfo("Failed to load image \"%S\"", path.getTerminatedBuffer());
 			return nullptr;
 		}
 	}
@@ -244,24 +254,32 @@ Data::load_image(const std::string path)
 	return img;
 }
 
-PHYSFS_file* Data::load_file(const std::string path, const char *mode)
+PHYSFS_file* Data::load_file(UString path, Data::FileMode mode)
 {
 	//FIXME: read/write/append modes
-	if (std::string(mode) != "r" && std::string(mode) != "rb")
+	if (mode != Data::FileMode::Read)
 	{
-		LogError("Non-readonly modes not yet supported (tried \"%s\")", mode);
+		LogError("Non-readonly modes not yet supported");
 	}
-	std::string foundPath = GetCorrectCaseFilename(path);
+	UString foundPath = GetCorrectCaseFilename(path);
 	if (foundPath == "")
 	{
-		LogInfo("Failed to open file \"%s\" : \"%s\"", path.c_str(), PHYSFS_getLastError());
+		LogInfo("Failed to open file \"%S\" : \"%s\"", path.getTerminatedBuffer(), PHYSFS_getLastError());
 		return nullptr;
 	}
-	return PHYSFS_openRead(foundPath.c_str());
+	std::string U8Path;
+	foundPath.toUTF8String(U8Path);
+	PHYSFS_File *f = PHYSFS_openRead(U8Path.c_str());
+	if (!f)
+	{
+		LogError("Failed to open file \"%S\" despite being 'found' at \"%s\"? - error: \"%s\"", path.getTerminatedBuffer(), U8Path.c_str(), PHYSFS_getLastError());
+		return nullptr;
+	}
+	return f;
 }
 
 std::shared_ptr<Palette>
-Data::load_palette(const std::string path)
+Data::load_palette(UString path)
 {
 	std::shared_ptr<RGBImage> img = std::dynamic_pointer_cast<RGBImage>(this->load_image(path));
 	if (img)
@@ -285,33 +303,37 @@ Data::load_palette(const std::string path)
 		std::shared_ptr<Palette> pal(loadApocPalette(*this, path));
 		if (!pal)
 		{
-			LogError("Failed to open palette \"%s\"", path.c_str());
+			LogError("Failed to open palette \"%S\"", path.getTerminatedBuffer());
 			return nullptr;
 		}
 		return pal;
 	}
 }
 
-std::string
-Data::GetCorrectCaseFilename(std::string Filename)
+UString
+Data::GetCorrectCaseFilename(UString Filename)
 {
-	std::unique_ptr<char[]> buf(new char[Filename.length() + 1]);
-	strncpy(buf.get(), Filename.c_str(), Filename.length());
+	std::string U8Filename;
+	Filename.toUTF8String(U8Filename);
+	std::unique_ptr<char[]> buf(new char[U8Filename.length() + 1]);
+	strncpy(buf.get(), U8Filename.c_str(), U8Filename.length());
 	buf[Filename.length()] = '\0';
 	if (PHYSFSEXT_locateCorrectCase(buf.get()))
 	{
-		LogInfo("Failed to find file \"%s\"", Filename.c_str());
+		LogInfo("Failed to find file \"%S\"", Filename.getTerminatedBuffer());
 		return "";
 	}
-	return std::string(buf.get());
+	return U8Str(buf.get());
 }
 
-std::string
-Data::GetActualFilename(std::string Filename)
+UString
+Data::GetActualFilename(UString Filename)
 {
-	std::string foundPath = GetCorrectCaseFilename(Filename);
-	std::string folder = PHYSFS_getRealDir(foundPath.c_str());
-	return folder + "/" + foundPath;
+	UString foundPath = GetCorrectCaseFilename(Filename);
+	std::string U8Filename;
+	Filename.toUTF8String(U8Filename);
+	UString folder = PHYSFS_getRealDir(U8Filename.c_str());
+	return folder + U8Str("/") + foundPath;
 }
 
 }; //namespace OpenApoc

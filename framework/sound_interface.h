@@ -9,13 +9,13 @@ namespace OpenApoc {
 		virtual ~SoundBackendFactory() {};
 	};
 
-	void registerSoundBackend(SoundBackendFactory *factory, std::string name);
+	void registerSoundBackend(SoundBackendFactory *factory, UString name);
 
 	template <typename T>
 	class SoundBackendRegister
 	{
 	public:
-		SoundBackendRegister(std::string name)
+		SoundBackendRegister(UString name)
 		{
 			registerSoundBackend(new T, name);
 		}

@@ -12,9 +12,9 @@ class GraphicButton : public Control
 {
 
 	private:
-		std::string image_name;
-		std::string imagedepressed_name;
-		std::string imagehover_name;
+		UString image_name;
+		UString imagedepressed_name;
+		UString imagehover_name;
 		std::shared_ptr<Image> image;
 		std::shared_ptr<Image> imagedepressed;
 		std::shared_ptr<Image> imagehover;
@@ -25,8 +25,8 @@ class GraphicButton : public Control
 		virtual void OnRender();
 
 	public:
-		GraphicButton( Framework &fw, Control* Owner, std::string Image, std::string ImageDepressed );
-		GraphicButton( Framework &fw, Control* Owner, std::string Image, std::string ImageDepressed, std::string ImageHover );
+		GraphicButton( Framework &fw, Control* Owner, UString Image, UString ImageDepressed );
+		GraphicButton( Framework &fw, Control* Owner, UString Image, UString ImageDepressed, UString ImageHover );
 		virtual ~GraphicButton();
 
 		virtual void EventOccured( Event* e );

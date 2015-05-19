@@ -6,7 +6,7 @@
 
 namespace OpenApoc {
 
-std::vector<std::string> tracks {"music:0"};
+std::vector<UString> tracks {"music:0"};
 
 MainMenu::MainMenu(Framework &fw)
 	: Stage(fw)

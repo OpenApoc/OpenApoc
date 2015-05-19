@@ -4,7 +4,7 @@
 
 namespace OpenApoc {
 
-Graphic::Graphic( Framework &fw, Control* Owner, std::string Image ) : Control( fw, Owner )
+Graphic::Graphic( Framework &fw, Control* Owner, UString Image ) : Control( fw, Owner )
 {
 	image_name = Image;
 	image = nullptr;

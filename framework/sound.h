@@ -1,8 +1,9 @@
 #pragma once
 #include <functional>
 #include <memory>
-#include <string>
 #include <vector>
+
+#include "library/strings.h"
 
 namespace OpenApoc
 {
@@ -74,7 +75,7 @@ public:
 		Loop,
 	};
 	virtual ~JukeBox(){};
-	virtual void play(std::vector<std::string> tracks, PlayMode mode = PlayMode::Loop) = 0;
+	virtual void play(std::vector<UString> tracks, PlayMode mode = PlayMode::Loop) = 0;
 	virtual void stop() = 0;
 };
 

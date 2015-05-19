@@ -1,6 +1,6 @@
 #pragma once
 #include "image.h"
-#include <string>
+#include "library/strings.h"
 
 namespace OpenApoc {
 
@@ -8,8 +8,8 @@ namespace OpenApoc {
 	{
 	public:
 		virtual ~ImageLoader() {};
-		virtual std::shared_ptr<Image> loadImage(std::string path) = 0;
-		virtual std::string getName() = 0;
+		virtual std::shared_ptr<Image> loadImage(UString path) = 0;
+		virtual UString getName() = 0;
 	};
 
 	class ImageLoaderFactory
@@ -19,12 +19,12 @@ namespace OpenApoc {
 		virtual ~ImageLoaderFactory() {};
 	};
 	
-	void registerImageLoader(ImageLoaderFactory* factory, std::string name);
+	void registerImageLoader(ImageLoaderFactory* factory, UString name);
 	template <typename T>
 	class ImageLoaderRegister
 	{
 	public:
-		ImageLoaderRegister(std::string name)
+		ImageLoaderRegister(UString name)
 		{
 			registerImageLoader(new T, name);
 		}

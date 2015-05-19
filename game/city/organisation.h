@@ -7,8 +7,8 @@ namespace OpenApoc {
 class Organisation
 {
 public:
-	std::string name;
-	Organisation(std::string name);
+	UString name;
+	Organisation(UString name);
 	static std::vector<Organisation> defaultOrganisations;
 };
 

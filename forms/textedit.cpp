@@ -7,7 +7,7 @@
 
 namespace OpenApoc {
 
-TextEdit::TextEdit( Framework &fw, Control* Owner, std::string Text, std::shared_ptr<BitmapFont> font ) : Control( fw, Owner ), text( Text ), font( font ), SelectionStart(Text.length()), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Centre )
+TextEdit::TextEdit( Framework &fw, Control* Owner, UString Text, std::shared_ptr<BitmapFont> font ) : Control( fw, Owner ), text( Text ), font( font ), SelectionStart(Text.length()), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Centre )
 {
 }
 
@@ -17,7 +17,7 @@ TextEdit::~TextEdit()
 
 void TextEdit::EventOccured( Event* e )
 {
-	std::string keyname;
+	UString keyname;
 
 	Control::EventOccured( e );
 
@@ -48,7 +48,7 @@ void TextEdit::EventOccured( Event* e )
 				case ALLEGRO_KEY_BACKSPACE:
 					if( SelectionStart > 0 )
 					{
-						text.erase( text.begin() + SelectionStart - 1, text.begin() + SelectionStart );
+						text.remove(SelectionStart, 1);
 						SelectionStart--;
 						RaiseEvent( FormEventType::TextChanged );
 					}
@@ -57,7 +57,7 @@ void TextEdit::EventOccured( Event* e )
 				case ALLEGRO_KEY_DELETE:
 					if( SelectionStart < text.length() )
 					{
-						text.erase( text.begin() + SelectionStart, text.begin() + SelectionStart + 1 );
+						text.remove(SelectionStart+1, 1);
 						RaiseEvent( FormEventType::TextChanged );
 					}
 					e->Handled = true;
@@ -169,17 +169,17 @@ void TextEdit::OnRender()
 
 	if( editting )
 	{
-		int cxpos = xpos + font->GetFontWidth( text.substr( 0, SelectionStart ) ) + 1;
+		int cxpos = xpos + font->GetFontWidth( text.tempSubString( 0, SelectionStart ) ) + 1;
 
 		if( cxpos < 0 )
 		{
 			xpos += cxpos;
-			cxpos = xpos + font->GetFontWidth( text.substr( 0, SelectionStart ) ) + 1;
+			cxpos = xpos + font->GetFontWidth( text.tempSubString( 0, SelectionStart ) ) + 1;
 		}
 		if( cxpos > Size.x )
 		{
 			xpos -= cxpos - Size.x;
-			cxpos = xpos + font->GetFontWidth( text.substr( 0, SelectionStart ) ) + 1;
+			cxpos = xpos + font->GetFontWidth( text.tempSubString( 0, SelectionStart ) ) + 1;
 		}
 
 		if( caretDraw )
@@ -208,12 +208,12 @@ void TextEdit::UnloadResources()
 {
 }
 
-std::string TextEdit::GetText()
+UString TextEdit::GetText()
 {
 	return text;
 }
 
-void TextEdit::SetText( std::string Text )
+void TextEdit::SetText( UString Text )
 {
 	text = Text;
 	SelectionStart = text.length();

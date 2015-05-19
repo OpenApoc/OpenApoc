@@ -6,7 +6,7 @@
 namespace OpenApoc {
 
 
-GraphicButton::GraphicButton( Framework &fw, Control* Owner, std::string Image, std::string ImageDepressed ) : Control( fw, Owner )
+GraphicButton::GraphicButton( Framework &fw, Control* Owner, UString Image, UString ImageDepressed ) : Control( fw, Owner )
 {
 	image = nullptr;
 	imagedepressed = nullptr;
@@ -17,7 +17,7 @@ GraphicButton::GraphicButton( Framework &fw, Control* Owner, std::string Image, 
 	this->buttonclick = fw.data->load_sample("xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW" );
 }
 
-GraphicButton::GraphicButton( Framework &fw, Control* Owner, std::string Image, std::string ImageDepressed, std::string ImageHover ) : Control( fw, Owner )
+GraphicButton::GraphicButton( Framework &fw, Control* Owner, UString Image, UString ImageDepressed, UString ImageHover ) : Control( fw, Owner )
 {
 	image = nullptr;
 	imagedepressed = nullptr;

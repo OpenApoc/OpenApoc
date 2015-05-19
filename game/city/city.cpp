@@ -8,17 +8,17 @@
 
 namespace OpenApoc {
 
-City::City(Framework &fw, std::string mapName)
+City::City(Framework &fw, UString mapName)
 	: TileMap(fw, Vec3<int>{100, 100, 10}), organisations(Organisation::defaultOrganisations)
 {
-	auto file = fw.data->load_file("xcom3/ufodata/" + mapName, "rb");
+	auto file = fw.data->load_file(U8Str(u8"xcom3/ufodata/") + mapName, Data::FileMode::Read);
 	if (!file)
 	{
-		LogError("Failed to open city map \"%s\"", mapName.c_str());
+		LogError("Failed to open city map \"%S\"", mapName.getTerminatedBuffer());
 		return;
 	}
 
-	this->buildings = loadBuildingsFromBld(fw, mapName + ".bld", this->organisations, Building::defaultNames);
+	this->buildings = loadBuildingsFromBld(fw, mapName + U8Str(u8".bld"), this->organisations, Building::defaultNames);
 	this->cityTiles = CityTile::loadTilesFromFile(fw);
 
 	for (int z = 0; z < this->size.z; z++)

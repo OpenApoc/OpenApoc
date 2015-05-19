@@ -6,6 +6,8 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_physfs.h>
 
+using namespace OpenApoc;
+
 namespace {
 
 
@@ -22,12 +24,14 @@ public:
 		al_shutdown_image_addon();
 	}
 
-	virtual std::shared_ptr<OpenApoc::Image> loadImage(std::string path)
+	virtual std::shared_ptr<OpenApoc::Image> loadImage(UString path)
 	{
-		ALLEGRO_BITMAP *bmp = al_load_bitmap(path.c_str());
+		std::string U8Path;
+		path.toUTF8String(U8Path);
+		ALLEGRO_BITMAP *bmp = al_load_bitmap(U8Path.c_str());
 		if (!bmp)
 		{
-			LogInfo("Failed to read image %s", path.c_str());
+			LogInfo("Failed to read image %S", path.getTerminatedBuffer());
 			return nullptr;
 		}
 
@@ -54,7 +58,7 @@ public:
 		return img;
 	}
 
-	virtual std::string getName()
+	virtual UString getName()
 	{
 		return "allegro";
 	}

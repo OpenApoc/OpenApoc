@@ -17,7 +17,7 @@ class TextEdit : public Control
 	private:
 		bool caretDraw;
 		int caretTimer;
-		std::string text;
+		UString text;
 		std::shared_ptr<BitmapFont> font;
 		bool editting;
 		bool editShift;
@@ -33,15 +33,15 @@ class TextEdit : public Control
 		HorizontalAlignment TextHAlign;
 		VerticalAlignment TextVAlign;
 
-		TextEdit(Framework &fw, Control* Owner, std::string Text, std::shared_ptr<BitmapFont> font);
+		TextEdit(Framework &fw, Control* Owner, UString Text, std::shared_ptr<BitmapFont> font);
 		virtual ~TextEdit();
 
 		virtual void EventOccured(Event* e);
 		virtual void Update();
 		virtual void UnloadResources();
 
-		std::string GetText();
-		void SetText( std::string Text );
+		UString GetText();
+		void SetText( UString Text );
 };
 
 }; //namespace OpenApoc

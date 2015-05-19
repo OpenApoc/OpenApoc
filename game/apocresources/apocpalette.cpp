@@ -5,9 +5,9 @@
 namespace OpenApoc {
 
 Palette*
-loadApocPalette(Data &data, const std::string fileName)
+loadApocPalette(Data &data, const UString fileName)
 {
-	PHYSFS_file *f = data.load_file(fileName, "rb");
+	PHYSFS_file *f = data.load_file(fileName, Data::FileMode::Read);
 	if (!f)
 		return nullptr;
 	size_t numEntries = PHYSFS_fileLength(f) / 3;

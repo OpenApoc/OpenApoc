@@ -11,7 +11,7 @@ Form::Form( Framework &fw, tinyxml2::XMLElement* FormConfiguration ) : Control( 
 
 	tinyxml2::XMLElement* node;
 	tinyxml2::XMLElement* usenode = nullptr;
-	std::string nodename;
+	UString nodename;
 
 	for( node = FormConfiguration->FirstChildElement(); node != nullptr; node = node->NextSiblingElement() )
 	{

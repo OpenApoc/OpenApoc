@@ -16,6 +16,7 @@
 #include "font.h"
 
 #include "library/configfile.h"
+#include "library/strings.h"
 
 #include "game/gamestate.h"
 
@@ -36,7 +37,7 @@ class Framework
 {
 	private:
 		std::unique_ptr<FrameworkPrivate> p;
-		std::string programName;
+		UString programName;
 		void Audio_Initialise();
 		void Audio_Shutdown();
 	public:
@@ -49,7 +50,7 @@ class Framework
 		std::unique_ptr<SoundBackend> soundBackend;
 		std::unique_ptr<JukeBox> jukebox;
 
-		Framework(const std::string programName, const std::vector<std::string> cmdline);
+		Framework(const UString programName, const std::vector<UString> cmdline);
 		~Framework();
 
 		void Run();
@@ -65,8 +66,7 @@ class Framework
 		void Display_Shutdown();
 		int Display_GetWidth();
 		int Display_GetHeight();
-		void Display_SetTitle( std::string* NewTitle );
-		void Display_SetTitle( std::string NewTitle );
+		void Display_SetTitle( UString NewTitle );
 
 		bool IsSlowMode();
 		void SetSlowMode(bool SlowEnabled);

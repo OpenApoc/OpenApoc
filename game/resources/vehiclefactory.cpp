@@ -23,7 +23,7 @@ parseDirectionalSprites(Framework &fw, tinyxml2::XMLElement *root)
 
 	for (tinyxml2::XMLElement* node = root->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
 	{
-		std::string name = node->Name();
+		UString name = node->Name();
 		Vehicle::Direction dir;
 		if (name == "N")
 			dir = Vehicle::Direction::N;
@@ -59,12 +59,12 @@ parseDirectionalSprites(Framework &fw, tinyxml2::XMLElement *root)
 			dir = Vehicle::Direction::NNW;
 		else
 		{
-			LogError("Unknown sprite direction \"%s\"", name.c_str());
+			LogError("Unknown sprite direction \"%S\"", name.getTerminatedBuffer());
 			continue;
 		}
 
-		std::string spriteName = node->GetText();
-		LogInfo("Loading image \"%s\"", spriteName.c_str());
+		UString spriteName = node->GetText();
+		LogInfo("Loading image \"%S\"", spriteName.getTerminatedBuffer());
 		if (sprites[dir])
 			LogWarning("Replacing directional sprite");
 		auto sprite = fw.gamecore->GetImage(spriteName);
@@ -82,7 +82,7 @@ VehicleFactory::ParseVehicleDefinition(tinyxml2::XMLElement *root)
 	VehicleDefinition def;
 	def.name = root->Attribute("id");
 
-	std::string type = root->Attribute("type");
+	UString type = root->Attribute("type");
 
 	if (type == "flying")
 		def.type = Vehicle::Type::Flying;
@@ -90,7 +90,7 @@ VehicleFactory::ParseVehicleDefinition(tinyxml2::XMLElement *root)
 		def.type = Vehicle::Type::Ground;
 	else
 	{
-		LogError("Unknown vehicle type \"%s\"", type.c_str());
+		LogError("Unknown vehicle type \"%S\"", type.getTerminatedBuffer());
 		return;
 	}
 
@@ -100,7 +100,7 @@ VehicleFactory::ParseVehicleDefinition(tinyxml2::XMLElement *root)
 
 	for (tinyxml2::XMLElement* node = root->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
 	{
-		std::string tag = node->Name();
+		UString tag = node->Name();
 		if (tag == "flat")
 		{
 			def.sprites[Vehicle::Banking::Flat] = parseDirectionalSprites(fw, node);
@@ -123,7 +123,7 @@ VehicleFactory::ParseVehicleDefinition(tinyxml2::XMLElement *root)
 		}
 		else
 		{
-			LogError("Unknown vehicle tag \"%s\"", tag.c_str());
+			LogError("Unknown vehicle tag \"%S\"", tag.getTerminatedBuffer());
 			continue;
 		}
 	}
@@ -133,7 +133,7 @@ VehicleFactory::ParseVehicleDefinition(tinyxml2::XMLElement *root)
 }
 
 std::shared_ptr<Vehicle>
-VehicleFactory::create(const std::string name)
+VehicleFactory::create(const UString name)
 {
 	auto &def = this->defs[name];
 	auto v = std::shared_ptr<Vehicle>(new Vehicle(def));

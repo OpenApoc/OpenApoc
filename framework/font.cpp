@@ -9,18 +9,16 @@ BitmapFont::~BitmapFont()
 }
 
 std::shared_ptr<PaletteImage>
-BitmapFont::getString(std::string Text)
+BitmapFont::getString(UString Text)
 {
 	int height = this->GetFontHeight();
 	int width = this->GetFontWidth(Text);
 	auto img = std::make_shared<PaletteImage>(Vec2<int>{width, height});
 	int pos = 0;
 
-	icu::UnicodeString str(Text.c_str(), "UTF-8");
-
-	for (int i = 0; i < str.length(); i++)
+	for (int i = 0; i < Text.length(); i++)
 	{
-		UChar c = str.charAt(i);
+		UChar c = Text.charAt(i);
 		auto glyph = this->getGlyph(c);
 		PaletteImage::blit(glyph, Vec2<int>{pos, 0}, img);
 		pos += glyph->size.x;
@@ -30,13 +28,12 @@ BitmapFont::getString(std::string Text)
 	return img;
 }
 
-int BitmapFont::GetFontWidth( std::string Text )
+int BitmapFont::GetFontWidth( UString Text )
 {
 	int textlen = 0;
-	icu::UnicodeString str(Text.c_str(), "UTF-8");
-	for( int i = 0; i < str.length(); i++ )
+	for( int i = 0; i < Text.length(); i++ )
 	{
-		auto glyph = this->getGlyph(str.charAt(i));
+		auto glyph = this->getGlyph(Text.charAt(i));
 		textlen += glyph->size.x;
 	}
 	return textlen;

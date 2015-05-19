@@ -33,7 +33,7 @@ std::vector<Organisation> Organisation::defaultOrganisations =
 	{"Civilian"},
 };
 
-Organisation::Organisation(std::string name)
+Organisation::Organisation(UString name)
 	: name(name)
 {}
 

@@ -10,13 +10,13 @@ class Framework;
 class Building
 {
 	public:
-		Building(Organisation &owner, std::string name, Rect<int> bounds);
+		Building(Organisation &owner, UString name, Rect<int> bounds);
 		Organisation &owner;
-		std::string name;
+		UString name;
 		Rect<int> bounds;
-		static std::vector<std::string> defaultNames;
+		static std::vector<UString> defaultNames;
 };
 
-std::vector<Building> loadBuildingsFromBld(Framework &fw, std::string fileName, std::vector<Organisation> &orgList, std::vector<std::string> nameList);
+std::vector<Building> loadBuildingsFromBld(Framework &fw, UString fileName, std::vector<Organisation> &orgList, std::vector<UString> nameList);
 
 }; //namespace OpenApoc

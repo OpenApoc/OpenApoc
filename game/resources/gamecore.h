@@ -13,13 +13,13 @@ class Framework;
 class GameCore
 {
 	private:
-		std::string language;
+		UString language;
 
-		std::map<std::string, std::string> languagetext;
-		std::map<std::string, std::shared_ptr<BitmapFont>> fonts;
-		std::map<std::string, Form*> forms;
+		std::map<UString, UString> languagetext;
+		std::map<UString, std::shared_ptr<BitmapFont>> fonts;
+		std::map<UString, Form*> forms;
 
-		void ParseXMLDoc( std::string XMLFilename );
+		void ParseXMLDoc( UString XMLFilename );
 		void ParseGameXML( tinyxml2::XMLElement* Source );
 		void ParseStringXML( tinyxml2::XMLElement* Source );
 		void ParseFormXML( tinyxml2::XMLElement* Source );
@@ -43,14 +43,14 @@ class GameCore
 		VehicleFactory vehicleFactory;
 
 		GameCore(Framework &fw);
-		void Load(std::string CoreXMLFilename, std::string Language);
+		void Load(UString CoreXMLFilename, UString Language);
 		~GameCore();
 
-		std::string GetString(std::string ID);
-		Form* GetForm(std::string ID);
-		std::shared_ptr<Image> GetImage(std::string ImageData);
-		std::shared_ptr<BitmapFont> GetFont(std::string FontData);
-		std::shared_ptr<Palette> GetPalette(std::string Path);
+		UString GetString(UString ID);
+		Form* GetForm(UString ID);
+		std::shared_ptr<Image> GetImage(UString ImageData);
+		std::shared_ptr<BitmapFont> GetFont(UString FontData);
+		std::shared_ptr<Palette> GetPalette(UString Path);
 };
 
 }; //namespace OpenApoc

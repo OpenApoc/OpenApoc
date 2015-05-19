@@ -15,7 +15,7 @@ class TextButton : public Control
 {
 
 	private:
-		std::string text;
+		UString text;
 		std::shared_ptr<BitmapFont> font;
 		std::shared_ptr<Surface> cached;
 
@@ -29,15 +29,15 @@ class TextButton : public Control
 		HorizontalAlignment TextHAlign;
 		VerticalAlignment TextVAlign;
 
-		TextButton(Framework &fw, Control* Owner, std::string Text, std::shared_ptr<BitmapFont> font);
+		TextButton(Framework &fw, Control* Owner, UString Text, std::shared_ptr<BitmapFont> font);
 		virtual ~TextButton();
 
 		virtual void EventOccured(Event* e);
 		virtual void Update();
 		virtual void UnloadResources();
 
-		std::string GetText();
-		void SetText( std::string Text );
+		UString GetText();
+		void SetText( UString Text );
 };
 
 }; //namespace OpenApoc

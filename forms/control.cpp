@@ -268,13 +268,13 @@ void Control::Update()
 
 void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 {
-	std::string nodename;
-	std::string specialpositionx = "";
-	std::string specialpositiony = "";
+	UString nodename;
+	UString specialpositionx = "";
+	UString specialpositiony = "";
 	tinyxml2::XMLElement* subnode;
-	std::string attribvalue;
+	UString attribvalue;
 
-	if( Element->Attribute("id") != nullptr && std::string(Element->Attribute("id")) != "" )
+	if( Element->Attribute("id") != nullptr && UString(Element->Attribute("id")) != "" )
 	{
 		nodename = Element->Attribute("id");
 		this->Name = nodename;
@@ -287,7 +287,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 
 		if( nodename == "backcolour" )
 		{
-			if( node->Attribute("a") != nullptr && std::string(node->Attribute("a")) != "" )
+			if( node->Attribute("a") != nullptr && UString(node->Attribute("a")) != "" )
 			{
 				this->BackgroundColour = Colour{ Strings::ToU8( node->Attribute("r") ), Strings::ToU8( node->Attribute("g") ), Strings::ToU8( node->Attribute("b") ), Strings::ToU8( node->Attribute("a") ) };
 			} else {
@@ -375,12 +375,12 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		if( nodename == "graphicbutton" )
 		{
 			GraphicButton* gb;
-			std::string gb_image = "";
+			UString gb_image = "";
 			if( node->FirstChildElement("image")->GetText() != nullptr )
 			{
 				gb_image = node->FirstChildElement("image")->GetText();
 			}
-			std::string gb_dep = node->FirstChildElement("imagedepressed")->GetText();
+			UString gb_dep = node->FirstChildElement("imagedepressed")->GetText();
 			if( node->FirstChildElement("imagedepressed")->GetText() != nullptr )
 			{
 				gb_dep = node->FirstChildElement("imagedepressed")->GetText();
@@ -406,7 +406,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 			subnode = node->FirstChildElement("grippercolour");
 			if( subnode != nullptr )
 			{
-				if( subnode->Attribute("a") != nullptr && std::string(subnode->Attribute("a")) != "" )
+				if( subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "" )
 				{
 					vsb->GripperColour = Colour( Strings::ToU8( subnode->Attribute("r") ), Strings::ToU8( subnode->Attribute("g") ), Strings::ToU8( subnode->Attribute("b") ), Strings::ToU8( subnode->Attribute("a") ) );
 				} else {
@@ -416,11 +416,11 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 			subnode = node->FirstChildElement("range");
 			if( subnode != nullptr )
 			{
-				if( subnode->Attribute("min") != nullptr && std::string(subnode->Attribute("min")) != "" )
+				if( subnode->Attribute("min") != nullptr && UString(subnode->Attribute("min")) != "" )
 				{
 					vsb->Minimum = Strings::ToInteger( subnode->Attribute("min") );
 				}
-				if( subnode->Attribute("max") != nullptr && std::string(subnode->Attribute("max")) != "" )
+				if( subnode->Attribute("max") != nullptr && UString(subnode->Attribute("max")) != "" )
 				{
 					vsb->Maximum = Strings::ToInteger( subnode->Attribute("max") );
 				}
@@ -435,7 +435,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 			subnode = node->FirstChildElement("grippercolour");
 			if( subnode != nullptr )
 			{
-				if( subnode->Attribute("a") != nullptr && std::string(subnode->Attribute("a")) != "" )
+				if( subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "" )
 				{
 					hsb->GripperColour = Colour( Strings::ToU8( subnode->Attribute("r") ), Strings::ToU8( subnode->Attribute("g") ), Strings::ToU8( subnode->Attribute("b") ), Strings::ToU8( subnode->Attribute("a") ) );
 				} else {
@@ -445,11 +445,11 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 			subnode = node->FirstChildElement("range");
 			if( subnode != nullptr )
 			{
-				if( subnode->Attribute("min") != nullptr && std::string(subnode->Attribute("min")) != "" )
+				if( subnode->Attribute("min") != nullptr && UString(subnode->Attribute("min")) != "" )
 				{
 					hsb->Minimum = Strings::ToInteger( subnode->Attribute("min") );
 				}
-				if( subnode->Attribute("max") != nullptr && std::string(subnode->Attribute("max")) != "" )
+				if( subnode->Attribute("max") != nullptr && UString(subnode->Attribute("max")) != "" )
 				{
 					hsb->Maximum = Strings::ToInteger( subnode->Attribute("max") );
 				}
@@ -460,7 +460,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		{
 			VScrollBar* vsb = nullptr;
 
-			if( node->Attribute("scrollbarid") != nullptr && std::string(node->Attribute("scrollbarid")) != "" )
+			if( node->Attribute("scrollbarid") != nullptr && UString(node->Attribute("scrollbarid")) != "" )
 			{
 				attribvalue = node->Attribute("scrollbarid");
 				vsb = (VScrollBar*)this->FindControl( attribvalue );
@@ -575,7 +575,7 @@ Control* Control::operator[]( int Index )
 	return Controls.at( Index );
 }
 
-Control* Control::FindControl( std::string ID )
+Control* Control::FindControl( UString ID )
 {
 	for( auto c = Controls.begin(); c != Controls.end(); c++ )
 	{

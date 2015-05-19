@@ -7,8 +7,6 @@
 #include <tinyxml2.h>
 
 #include <map>
-#include <string>
-#include <sstream>
 #include <cmath>
 #include <vector>
 #include <memory>

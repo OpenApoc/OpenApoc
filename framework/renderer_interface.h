@@ -1,6 +1,5 @@
 #pragma once
 #include "renderer.h"
-#include <string>
 
 namespace OpenApoc {
 
@@ -11,13 +10,13 @@ public:
 	virtual ~RendererFactory() {};
 };
 
-void registerRenderer(RendererFactory *factory, std::string name);
+void registerRenderer(RendererFactory *factory, UString name);
 
 template <typename T>
 class RendererRegister
 {
 public:
-	RendererRegister(std::string name)
+	RendererRegister(UString name)
 	{
 		registerRenderer(new T, name);
 	}
