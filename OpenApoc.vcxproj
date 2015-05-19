@@ -222,6 +222,7 @@
     <ClCompile Include="game\city\city.cpp" />
     <ClCompile Include="game\general\difficultymenu.cpp" />
     <ClCompile Include="game\general\basescreen.cpp" />
+    <ClCompile Include="library\strings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="forms\checkbox.h" />

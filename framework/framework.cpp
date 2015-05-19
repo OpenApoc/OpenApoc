@@ -555,12 +555,14 @@ int Framework::Display_GetHeight()
 void Framework::Display_SetTitle( UString NewTitle )
 {
 #ifdef _WIN32
-	std::wstring widestr;
 	int stringLength;
+	std::unique_ptr < wchar_t[] >  buf;
 	u_strToWCS(NULL, 0, &stringLength, NewTitle.getBuffer(), NewTitle.length(), NULL);
-	widestr.resize(stringLength+1);
-	u_strToWCF(widestr.c_str(), stringLength, NULL, NewTitle.getBuffer(), NewTitle.length(), NULL);
-	widestr[stringLength - 1] = '\0';
+	LogInfo("Setting string to %S - length %u WChars", NewTitle.getTerminatedBuffer(), stringLength);
+	buf.reset(new wchar_t[stringLength+1]);
+	u_strToWCS(buf.get(), stringLength, NULL, NewTitle.getBuffer(), NewTitle.length(), NULL);
+	buf[stringLength] = '\0';
+	std::wstring widestr(buf.get());
 	al_set_app_name( (char*)widestr.c_str() );
 	al_set_window_title( p->screen, (char*)widestr.c_str() );
 #else

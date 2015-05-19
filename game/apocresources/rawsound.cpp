@@ -39,5 +39,5 @@ public:
 	}
 };
 
-SampleLoaderRegister<RawSampleLoaderFactory> load_at_init_raw_sample(U8Str(u8"raw"));
+SampleLoaderRegister<RawSampleLoaderFactory> load_at_init_raw_sample(U8Str("raw"));
 }; //anonymous namespace
