@@ -552,8 +552,8 @@ int Framework::Display_GetHeight()
 void Framework::Display_SetTitle( UString NewTitle )
 {
 #ifdef _WIN32
-	al_set_app_name(NewTitle.wstr().c_str());
-	al_set_window_title(p->screen, NewTitle.wstr().c_str());
+	al_set_app_name(NewTitle.str().c_str());
+	al_set_window_title(p->screen, NewTitle.str().c_str());
 #else
 	al_set_app_name(NewTitle.str().c_str());
 	al_set_window_title(p->screen, NewTitle.str().c_str());
