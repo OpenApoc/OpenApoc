@@ -323,9 +323,12 @@ UString
 Data::GetActualFilename(UString Filename)
 {
 	UString foundPath = GetCorrectCaseFilename(Filename);
-	LogError("Found \"%s\" at \"%s\"", Filename.str().c_str(), foundPath.str().c_str());
+	if (foundPath == "")
+	{
+		LogError("Failed to get filename for \"%s\"", Filename.str().c_str());
+		return "";
+	}
 	UString folder = PHYSFS_getRealDir(foundPath.str().c_str());
-	LogError("Found \"%s\" in \"%s\"", Filename.str().c_str(), folder.str().c_str());
 	return folder + "/" + foundPath;
 }
 
