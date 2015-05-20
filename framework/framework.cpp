@@ -304,6 +304,10 @@ void Framework::ProcessEvents()
 		Event* e;
 		e = p->eventQueue.front();
 		p->eventQueue.pop_front();
+		if (!e) {
+			LogError("Invalid event on queue");
+			continue;
+		}
 		switch( e->Type )
 		{
 			case EVENT_WINDOW_CLOSED:

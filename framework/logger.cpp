@@ -80,7 +80,16 @@ static void print_backtrace(FILE *f)
 		initialised = true;
 	}
 
+	if (!process) {
+		fprintf(f, "Failed to get process for backtrace\n");
+		return;
+	}
+
 	sym = (SYMBOL_INFO*)calloc(sizeof(SYMBOL_INFO) + MAX_SYMBOL_LENGTH * (sizeof(char)), 1);
+	if (!sym){
+		fprintf(f, "Failed to allocate symbol info for backtrace\n");
+		return;
+	}
 	sym->MaxNameLen = MAX_SYMBOL_LENGTH;
 	sym->SizeOfStruct = sizeof(SYMBOL_INFO);
 
