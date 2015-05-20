@@ -235,28 +235,8 @@ void PCK::LoadVersion2Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
 				break;
 			}
 
-			case 2:
-				// Divide by 0 should indicate we've tried to load a Mode 2 compressed image
-				compressionmethod = 0;
-				compressionmethod = 2 / compressionmethod;
-				break;
-
-			case 3:
-				// Divide by 0 should indicate we've tried to load a Mode 3 compressed image
-				compressionmethod = 0;
-				compressionmethod = 2 / compressionmethod;
-				break;
-
-			case 128:
-				// Divide by 0 should indicate we've tried to load a Mode 128 compressed image
-				compressionmethod = 0;
-				compressionmethod = 2 / compressionmethod;
-				break;
-
 			default:
-				// No idea
-				compressionmethod = 0;
-				compressionmethod = 2 / compressionmethod;
+				LogError("Unsupported compression method %d", compressionmethod);
 				break;
 		}
 
