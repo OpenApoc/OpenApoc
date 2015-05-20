@@ -2,7 +2,7 @@
 #pragma once
 
 #include "framework/includes.h"
-#include <unicode/unistr.h>
+#include "library/strings.h"
 
 #define APOCFONT_ALIGN_LEFT	0
 #define APOCFONT_ALIGN_CENTRE	1
@@ -16,7 +16,7 @@ class BitmapFont
 {
 	public:
 		virtual ~BitmapFont();
-		virtual std::shared_ptr<PaletteImage> getGlyph(UChar codepoint) = 0;
+		virtual std::shared_ptr<PaletteImage> getGlyph(UniChar codepoint) = 0;
 		virtual std::shared_ptr<PaletteImage> getString(UString Text);
 		virtual int GetFontHeight() = 0;
 		virtual int GetFontWidth(UString Text);

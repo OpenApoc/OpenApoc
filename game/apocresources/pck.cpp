@@ -57,11 +57,11 @@ void PCK::ProcessFile(Data &d, UString PckFilename, UString TabFilename, int Ind
 	PHYSFS_file* tab = d.load_file(TabFilename, Data::FileMode::Read);
 	if (!pck)
 	{
-		LogError("Failed to open PCK file \"%S\"", PckFilename.getTerminatedBuffer());
+		LogError("Failed to open PCK file \"%s\"", PckFilename.str().c_str());
 	}
 	if (!tab)
 	{
-		LogError("Failed to open TAB file \"%S\"", TabFilename.getTerminatedBuffer());
+		LogError("Failed to open TAB file \"%s\"", TabFilename.str().c_str());
 	}
 
 	uint16_t version;
@@ -283,7 +283,7 @@ PCKLoader::load(Data &data, UString PckFilename, UString TabFilename)
 	}
 	delete p;
 
-	LogInfo("Loaded \"%S\" - %u images, max size {%d,%d}", PckFilename.getTerminatedBuffer(), (unsigned int)imageSet->images.size(), imageSet->maxSize.x, imageSet->maxSize.y);
+	LogInfo("Loaded \"%s\" - %u images, max size {%d,%d}", PckFilename.str().c_str(), (unsigned int)imageSet->images.size(), imageSet->maxSize.x, imageSet->maxSize.y);
 
 	return imageSet;
 }

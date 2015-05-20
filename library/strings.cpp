@@ -1,77 +1,240 @@
 #include "library/strings.h"
 
+#include <unicode/unistr.h>
+#include <unicode/umachine.h>
+
 namespace OpenApoc
 {
 
-	UString U8Str(const char* str)
+class UString::UString_impl : public icu::UnicodeString
+{
+public:
+	UString_impl(const std::string str)
+		: icu::UnicodeString(str.c_str(), "UTF-8")
+	{}
+	UString_impl(const UChar *ucstr, int len)
+		: icu::UnicodeString()
 	{
-		return icu::UnicodeString::fromUTF8(icu::StringPiece(str));
+		this->setTo(ucstr, len);
 	}
+	UString_impl(const char* str)
+		: icu::UnicodeString(str, "UTF-8")
+	{}
+	UString_impl(const UString_impl &other)
+		: icu::UnicodeString(other)
+	{}
 
-	std::vector<UString>
-	Strings::Split(const UString &s, const UString &delims)
+};
+
+UString::~UString()
+{}
+
+UString::UString()
+	: pimpl(new UString_impl(""))
+{}
+
+UString::UString(std::string str)
+	: pimpl(new UString_impl(str))
+{}
+
+UString::UString(char c)
+	: pimpl(new UString_impl(std::string(1, c)))
+{}
+
+UString::UString(const char *cstr)
+	:pimpl(new UString_impl(cstr))
+{}
+
+UString::UString(const UString& other)
+	:pimpl(new UString_impl(*other.pimpl.get()))
+{}
+
+UString::UString(UniChar uc)
+	:pimpl(new UString_impl(""))
+{
+	pimpl->setTo((UChar32)uc);
+}
+
+std::string
+UString::str() const
+{
+	std::string str;
+	this->pimpl->toUTF8String(str);
+	return str;
+};
+
+bool
+UString::operator<(const UString& other) const
+{
+	return (*this->pimpl) < (*other.pimpl);
+}
+
+bool
+UString::operator==(const UString& other) const
+{
+	return (*this->pimpl) == (*other.pimpl);
+}
+
+UString
+UString::substr(size_t offset, size_t length) const
+{
+	UString other;
+	other.pimpl->setTo(*this->pimpl, offset, length);
+	return other;
+}
+
+UString
+UString::toUpper() const
+{
+	UString other;
+	other.pimpl->setTo(this->pimpl->toUpper());
+	return other;
+}
+
+UString&
+UString::operator=(const UString& other)
+{
+	this->pimpl->setTo(*other.pimpl);
+	return *this;
+}
+
+UString&
+UString::operator+=(const UString& other)
+{
+	*this->pimpl += *other.pimpl;
+	return *this;
+}
+
+UniChar
+UString::operator[](size_t pos) const
+{
+	return this->pimpl->char32At(pos);
+}
+
+size_t
+UString::length() const
+{
+	return this->pimpl->countChar32();
+}
+
+void
+UString::insert(size_t offset, const UString &other)
+{
+	this->pimpl->insert(offset, *other.pimpl);
+}
+
+void
+UString::remove(size_t offset, size_t count)
+{
+	this->pimpl->remove(offset, count);
+}
+
+bool
+UString::operator!=(const UString& other) const
+{
+	return *this->pimpl != *other.pimpl;
+}
+
+
+UString operator+(const UString& lhs, const UString& rhs)
+{
+	UString s;
+	s += lhs;
+	s += rhs;
+	return s;
+}
+
+std::vector<UString>
+UString::split(const UString& delims) const
+{
+	std::vector<UString> strings;
+	strings.push_back("");
+	for (auto c : *this)
 	{
-		std::vector<UString> strings;
-		strings.push_back("");
-		for (int i = 0; i < s.length(); i++)
-		{
 			bool delim = false;
-			for (int j = 0; j < delims.length(); j++)
+			for (auto d : delims)
 			{
-				if (s.charAt(i) == delims.charAt(j))
-				{
-					strings.push_back("");
-					delim = true;
-					break;
-				}
+					if (c == d)
+					{
+							strings.push_back("");
+							delim = true;
+							break;
+					}
 			}
 			if (!delim)
-				strings.back().append(s.charAt(i));
-		}
-		return strings;
+					strings.back() += c;
 	}
+	return strings;
+}
 
-	UString
-	Strings::ToLower(const UString &s)
-	{
-		UString ls = s;
-		ls.toLower();
-		return ls;
-	}
+UniChar
+UString::u8Char(char c)
+{
+	//FIXME: Evil nasty hack
+	UString s(c);
+	return s[0];
+}
 
-	UString
-	Strings::ToUpper(const UString &s)
-	{
-		UString us = s;
-		us.toUpper();
-		return us;
-	}
+int
+UString::compare(const UString &other) const
+{
+	return this->pimpl->compare(*other.pimpl);
+}
 
-	int
-	Strings::ToInteger(const UString &s)
-	{
-		//FIXME: Hack - this relies on utf8 numerals being the same as ascii
-		std::string U8Str;
-		s.toUTF8String(U8Str);
-		return strtol(U8Str.c_str(), NULL, 0);
-	}
-	uint8_t
-	Strings::ToU8(const UString &s)
-	{
-		return (uint8_t)ToInteger(s);
-	}
+UString::const_iterator
+UString::begin() const
+{
+	return UString::const_iterator (*this, 0);
+}
 
-	bool
-	Strings::IsNumeric(const UString &s)
-	{
-		//FIXME: Hack - this relies on utf8 numerals being the same as ascii
-		std::string U8Str;
-		s.toUTF8String(U8Str);
-		char *endptr;
-		strtol(U8Str.c_str(), &endptr, 0);
-		//If the endptr is not the start of the string some numbers were successfully parsed
-		return (endptr != U8Str.c_str());
-		
-	}
+UString::const_iterator
+UString::end() const
+{
+	return UString::const_iterator(*this, this->length());
+}
+
+UString::const_iterator
+UString::const_iterator::operator++()
+{
+	this->offset++;
+	return *this;
+}
+
+bool
+UString::const_iterator::operator!=(const UString::const_iterator &other) const
+{
+	return (this->offset != other.offset || this->s != other.s);
+}
+
+UniChar
+UString::const_iterator::operator*() const
+{
+	return this->s[this->offset];
+}
+
+
+int
+Strings::ToInteger(const UString &s)
+{
+	std::string u8str = s.str();
+	return (int)strtol(u8str.c_str(), NULL, 0);
+}
+
+uint8_t
+Strings::ToU8(const UString &s)
+{
+	return (uint8_t)Strings::ToInteger(s);
+}
+
+bool
+Strings::IsNumeric(const UString &s)
+{
+	std::string u8str = s.str();
+	char *endpos;
+	std::ignore = strtol(u8str.c_str(), &endpos, 0);
+	return (endpos != u8str.c_str());
+}
+
+
 
 }; //namespace OpenApoc

@@ -3,7 +3,6 @@
 #endif
 
 #include "framework/logger.h"
-#include <unicode/ustdio.h>
 #include <cstdarg>
 #include <mutex>
 #include <chrono>
@@ -28,7 +27,7 @@
 namespace OpenApoc {
 
 #if defined(BACKTRACE_LIBUNWIND)
-static void print_backtrace(UFILE *f)
+static void print_backtrace(FILE *f)
 {
 
 	unw_cursor_t cursor;
@@ -37,7 +36,7 @@ static void print_backtrace(UFILE *f)
 	unw_getcontext(&ctx);
 	unw_init_local(&cursor, &ctx);
 
-	u_fprintf(f, "  called by:\n");
+	fprintf(f, "  called by:\n");
 	while (unw_step(&cursor) > 0)
 	{
 		Dl_info info;
@@ -47,7 +46,7 @@ static void print_backtrace(UFILE *f)
 		dladdr((void*)ip, &info);
 		if (info.dli_sname)
 		{
-			u_fprintf(f, "  0x%p %s+0x%lx (%s)\n", (void*)ip, info.dli_sname, (uintptr_t)ip - (uintptr_t)info.dli_saddr, info.dli_fname);
+			fprintf(f, "  0x%p %s+0x%lx (%s)\n", (void*)ip, info.dli_sname, (uintptr_t)ip - (uintptr_t)info.dli_saddr, info.dli_fname);
 			continue;
 		}
 		//If dladdr() failed, try libunwind
@@ -55,18 +54,18 @@ static void print_backtrace(UFILE *f)
 		char fnName[MAX_SYMBOL_LENGTH];
 		if (!unw_get_proc_name(&cursor, fnName, MAX_SYMBOL_LENGTH, &offsetInFn))
 		{
-			u_fprintf(f, "  0x%p %s+0x%lx (%s)\n", (void*)ip, fnName, offsetInFn, info.dli_fname);
+			fprintf(f, "  0x%p %s+0x%lx (%s)\n", (void*)ip, fnName, offsetInFn, info.dli_fname);
 			continue;
 		}
 		else
-			u_fprintf(f, "  0x%p\n", (void*)ip);
+			fprintf(f, "  0x%p\n", (void*)ip);
 	}
 }
 #elif defined(BACKTRACE_WINDOWS)
 #define MAX_STACK_FRAMES 100
 //Stub implementation
 //TODO: Implement for windows?
-static void print_backtrace(UFILE *f)
+static void print_backtrace(FILE *f)
 {
 	static bool initialised = false;
 	static HANDLE process;
@@ -91,21 +90,21 @@ static void print_backtrace(UFILE *f)
 	for (unsigned int frame = 0; frame < frames; frame++)
 	{
 		SymFromAddr(process, (DWORD64)(ip[frame]), 0, sym);
-		u_fprintf(f, "  0x%p %s+0x%lx\n", ip[frame], sym->Name, (uintptr_t)ip[frame] - (uintptr_t)sym->Address);
+		fprintf(f, "  0x%p %s+0x%lx\n", ip[frame], sym->Name, (uintptr_t)ip[frame] - (uintptr_t)sym->Address);
 	}
 
 	free(sym);
 }
 #else
-static void print_backtrace(UFILE *f)
+#warning no backtrace enabled for this platform
+static void print_backtrace(FILE *f)
 {
 	//TODO: Other platform backtrace?
 }
 #endif
 
 
-static UFILE *outFile = nullptr;
-static UFILE *u_stderr = nullptr;
+static FILE *outFile = nullptr;
 
 static std::mutex logMutex;
 static std::chrono::time_point<std::chrono::high_resolution_clock> timeInit = std::chrono::high_resolution_clock::now();
@@ -117,17 +116,13 @@ void Log (LogLevel level, UString prefix, UString format, ...)
 	unsigned long long clockns = std::chrono::duration<unsigned long long, std::nano>(timeNow - timeInit).count();
 
 	logMutex.lock();
-	if (!u_stderr)
-	{
-		u_stderr = u_finit(stdout, NULL, NULL);	
-	}
 	if (!outFile)
 	{
-		outFile = u_fopen(LOGFILE, "w", nullptr, nullptr);
+		outFile = fopen(LOGFILE, "w");
 		if (!outFile)
 		{
 			//No log file, have to hope stderr goes somewhere useful
-			u_fprintf(u_stderr, "Failed to open logfile \"%s\"\n", LOGFILE);
+			fprintf(stderr, "Failed to open logfile \"%s\"\n", LOGFILE);
 			return;
 		}
 	}
@@ -147,22 +142,22 @@ void Log (LogLevel level, UString prefix, UString format, ...)
 
 	va_list arglist;
 	va_start(arglist, format);
-	u_fprintf(outFile, "%s %llu %S: ", level_prefix, clockns, prefix.getTerminatedBuffer());
-	u_vfprintf_u(outFile, format.getTerminatedBuffer(), arglist);
+	fprintf(outFile, "%s %llu %s: ", level_prefix, clockns, prefix.str().c_str());
+	vfprintf(outFile, format.str().c_str(), arglist);
 	//On error print a backtrace to the log file
 	if (level == LogLevel::Error)
 		print_backtrace(outFile);
-	u_fprintf(outFile, "\n");
+	fprintf(outFile, "\n");
 	va_end(arglist);
 
 	//If it's a warning or error flush the outfile (in case we crash 'soon') and also print to stderr
 	if (level != LogLevel::Info)
 	{
-		u_fflush(outFile);
+		fflush(outFile);
 		va_start(arglist, format);
-		u_fprintf(u_stderr, "%s %llu %S: ", level_prefix, clockns, prefix.getTerminatedBuffer());
-		u_vfprintf_u(u_stderr, format.getTerminatedBuffer(), arglist);
-		u_fprintf(u_stderr, "\n");
+		fprintf(stderr, "%s %llu %s: ", level_prefix, clockns, prefix.str().c_str());
+		vfprintf(stderr, format.str().c_str(), arglist);
+		fprintf(stderr, "\n");
 		va_end(arglist);
 	}
 

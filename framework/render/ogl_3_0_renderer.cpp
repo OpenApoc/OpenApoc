@@ -18,10 +18,9 @@ class Program
 		static GLuint CreateShader(GLenum type, const UString source)
 		{
 			GLuint shader = gl::CreateShader(type);
-			std::string U8Source;
-			source.toUTF8String(U8Source);
-			const GLchar *string = U8Source.c_str();
-			GLint stringLength = U8Source.length();
+			auto sourceString = source.str();
+			const GLchar *string = sourceString.c_str();
+			GLint stringLength = sourceString.length();
 			gl::ShaderSource(shader, 1, &string, &stringLength);
 			gl::CompileShader(shader);
 			GLint compileStatus;

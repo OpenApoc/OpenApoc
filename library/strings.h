@@ -4,12 +4,12 @@
 #include "framework/includes.h"
 #include <iterator>
 
-#include <unicode/unistr.h>
 
 namespace OpenApoc {
 
+typedef uint32_t UniChar;
 
-class UString2
+class UString
 {
 private:
 	class UString_impl;
@@ -19,68 +19,79 @@ public:
 	//All std::string/char are utf8
 	//wchar_t/std::wstring are platform-dependant types
 	//All lengths/offsets are in unicode code-points (not bytes/anything)
-	UString2(std::string str);
-	UString2(std::wstring wstr);
-	UString2(char c);
-	UString2(wchar_t wc);
-	UString2(UChar uc);
-	~UString2();
+	UString(std::string str);
+	UString(std::wstring wstr);
+	UString(char c);
+	UString(wchar_t wc);
+	UString(UniChar uc);
+	UString(const char *cstr);
+	UString(const wchar_t *wcstr);
+	UString(const UniChar *ucstr);
+	UString();
+	~UString();
 
-	UString2(const UString2 &other);
+	UString(const UString &other);
+	UString& operator=(const UString &other);
 
-	std::string str();
-	std::wstring wstr();
+	std::string str() const;
+	std::wstring wstr() const;
 
-	UString2 toUpper();
-	UString2 toLower();
-	std::vector<UString2> split(UString2 delims);
+	UString toUpper() const;
+	UString toLower() const;
+	std::vector<UString> split(const UString &delims) const;
 
-	size_t length();
-	UString2 substr(size_t offset, size_t length = npos);
+	size_t length() const;
+	UString substr(size_t offset, size_t length = npos) const;
 
-	const UChar& operator[](size_t pos) const;
+	UniChar operator[](size_t pos) const;
 
 	static const size_t npos = -1;
 
-	UString2& operator+=(const UString2& ustr);
-	UString2& operator+=(const std::string& str);
-	UString2& operator+=(const char* cstr);
-	UString2& operator+=(const std::wstring& wstr);
-	UString2& operator+=(const wchar_t* wcstr);
-	UString2& operator+=(const char& c);
-	UString2& operator+=(const wchar_t& wc);
-	UString2& operator+=(const UChar& uc);
+	UString& operator+=(const UString& ustr);
+	//UString& operator+=(const std::string& str);
+	//UString& operator+=(const char* cstr);
+	//UString& operator+=(const std::wstring& wstr);
+	//UString& operator+=(const wchar_t* wcstr);
+	//UString& operator+=(const char& c);
+	//UString& operator+=(const wchar_t& wc);
+	//UString& operator+=(const UniChar& uc);
 
-	int compare(const UString2& str) const;
+	void remove(size_t offset, size_t count);
+	void insert(size_t offset, const UString& other);
+	
 
-	bool operator==(const UString2& other);
+	int compare(const UString& str) const;
+
+	bool operator==(const UString& other) const;
+	bool operator!=(const UString& other) const;
+	bool operator<(const UString& other) const;
 
 	class const_iterator : public std::random_access_iterator_tag
 	{
+	private:
+		const UString &s;
+		size_t offset;
+		friend class UString;
+		const_iterator(const UString &s, size_t initial_offset)
+			: s(s), offset(initial_offset){};
 	public:
 		//Just enough to struggle through a range-based for
-		bool operator != (const const_iterator &other);
+		bool operator != (const const_iterator &other) const;
 		const_iterator operator ++ ();
-		const UChar & operator*();
+		UniChar operator*() const;
 	};
 	const_iterator begin() const;
 	const_iterator end() const;
+
+	static UniChar u8Char(char c);
 };
 
-UString2 operator+ (const UString2& lhs, const UString2& rhs);
+UString operator+ (const UString& lhs, const UString& rhs);
 
-typedef icu::UnicodeString UString;
-
-UString U8Str(const char* str);
 class Strings
 {
 
 	public:
-
-		static std::vector<UString> Split(const UString &s, const UString &delims);
-		static UString ToLower(const UString &s);
-		static UString ToUpper(const UString &s);
-		static int CompareCaseInsensitive(const UString &a, const UString &b);
 		static bool IsNumeric(const UString &s);
 		static int ToInteger(const UString &s);
 		static uint8_t ToU8(const UString &s);

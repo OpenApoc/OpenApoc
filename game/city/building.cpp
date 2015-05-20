@@ -157,7 +157,7 @@ loadBuildingsFromBld(Framework &fw, UString fileName, std::vector<Organisation> 
 	auto file = fw.data->load_file("xcom3/ufodata/" + fileName, Data::FileMode::Read);
 	if (!file)
 	{
-		LogError("Failed to open building data file: %S", fileName.getTerminatedBuffer());
+		LogError("Failed to open building data file: %s", fileName.str().c_str());
 		return buildings;
 	}
 	//Currently known fields in .bld files:
@@ -213,7 +213,7 @@ loadBuildingsFromBld(Framework &fw, UString fileName, std::vector<Organisation> 
 		buildings.emplace_back(orgList[orgIdx], nameList[nameIdx],
 			Rect<int>(x0, y0, x1, y1));
 		auto &bld = buildings.back();
-		LogInfo("Read building \"%S\" owner \"%S\" position {%d,%d},{%d,%d}", bld.name.getTerminatedBuffer(), bld.owner.name.getTerminatedBuffer(),
+		LogInfo("Read building \"%s\" owner \"%s\" position {%d,%d},{%d,%d}", bld.name.str().c_str(), bld.owner.name.str().c_str(),
 			bld.bounds.p0.x, bld.bounds.p0.y, bld.bounds.p1.x, bld.bounds.p1.y);
 	}
 	PHYSFS_close(file);

@@ -169,17 +169,17 @@ void TextEdit::OnRender()
 
 	if( editting )
 	{
-		int cxpos = xpos + font->GetFontWidth( text.tempSubString( 0, SelectionStart ) ) + 1;
+		int cxpos = xpos + font->GetFontWidth( text.substr( 0, SelectionStart ) ) + 1;
 
 		if( cxpos < 0 )
 		{
 			xpos += cxpos;
-			cxpos = xpos + font->GetFontWidth( text.tempSubString( 0, SelectionStart ) ) + 1;
+			cxpos = xpos + font->GetFontWidth( text.substr( 0, SelectionStart ) ) + 1;
 		}
 		if( cxpos > Size.x )
 		{
 			xpos -= cxpos - Size.x;
-			cxpos = xpos + font->GetFontWidth( text.tempSubString( 0, SelectionStart ) ) + 1;
+			cxpos = xpos + font->GetFontWidth( text.substr( 0, SelectionStart ) ) + 1;
 		}
 
 		if( caretDraw )

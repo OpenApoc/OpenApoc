@@ -21,38 +21,38 @@ ApocalypseFont::loadFont( Framework &fw, tinyxml2::XMLElement *fontElement)
 		LogError("apocfont element with no \"name\" attribute");
 		return nullptr;
 	}
-	fontName = U8Str(attr);
+	fontName = attr;
 	attr = fontElement->Attribute("path");
 	if (!attr)
 	{
-		LogError("apocfont \"%s\" with no \"path\" attribute", fontName.getTerminatedBuffer());
+		LogError("apocfont \"%s\" with no \"path\" attribute", fontName.str().c_str());
 		return nullptr;
 	}
-	fileName = U8Str(attr);
+	fileName = attr;
 	
 	auto err = fontElement->QueryIntAttribute("height", &height);
 	if (err != tinyxml2::XML_NO_ERROR || height <= 0)
 	{
-		LogError("apocfont \"%s\" with invalid \"height\" attribute", fontName.getTerminatedBuffer());
+		LogError("apocfont \"%s\" with invalid \"height\" attribute", fontName.str().c_str());
 		return nullptr;
 	}
 	err = fontElement->QueryIntAttribute("width", &width);
 	if (err != tinyxml2::XML_NO_ERROR || width <= 0)
 	{
-		LogError("apocfont \"%s\" with invalid \"width\" attribute", fontName.getTerminatedBuffer());
+		LogError("apocfont \"%s\" with invalid \"width\" attribute", fontName.str().c_str());
 		return nullptr;
 	}
 	err = fontElement->QueryIntAttribute("spacewidth", &spacewidth);
 	if (err != tinyxml2::XML_NO_ERROR || spacewidth <= 0)
 	{
-		LogError("apocfont \"%s\" with invalid \"spacewidth\" attribute", fontName.getTerminatedBuffer());
+		LogError("apocfont \"%s\" with invalid \"spacewidth\" attribute", fontName.str().c_str());
 		return nullptr;
 	}
 
 	auto *file = fw.data->load_file(fileName, Data::FileMode::Read);
 	if (!file)
 	{
-		LogError("apocfont \"%S\" - Failed to open font path \"%S\"", fontName.getTerminatedBuffer(), fileName.getTerminatedBuffer());
+		LogError("apocfont \"%s\" - Failed to open font path \"%s\"", fontName.str().c_str(), fileName.str().c_str());
 		return nullptr;
 	}
 
@@ -62,7 +62,7 @@ ApocalypseFont::loadFont( Framework &fw, tinyxml2::XMLElement *fontElement)
 
 	if (!glyphCount)
 	{
-		LogError("apocfont \"%S\" - file \"%S\" contains no glyphs", fontName.getTerminatedBuffer(), fileName.getTerminatedBuffer());
+		LogError("apocfont \"%s\" - file \"%s\" contains no glyphs", fontName.str().c_str(), fileName.str().c_str());
 	}
 	std::shared_ptr<ApocalypseFont> font(new ApocalypseFont);
 
@@ -72,41 +72,41 @@ ApocalypseFont::loadFont( Framework &fw, tinyxml2::XMLElement *fontElement)
 
 	for (auto *glyphNode = fontElement->FirstChildElement(); glyphNode; glyphNode = glyphNode->NextSiblingElement())
 	{
-		UString nodeName = U8Str(glyphNode->Name());
+		UString nodeName = glyphNode->Name();
 		if (nodeName != "glyph")
 		{
-			LogError("apocfont \"%S\" has unexpected child node \"%S\", skipping", fontName.getTerminatedBuffer(), nodeName.getTerminatedBuffer());
+			LogError("apocfont \"%s\" has unexpected child node \"%s\", skipping", fontName.str().c_str(), nodeName.str().c_str());
 			continue;
 		}
 		int offset;
 		err = glyphNode->QueryIntAttribute("offset", &offset);
 		if (err != tinyxml2::XML_NO_ERROR)
 		{
-			LogError("apocfont \"%S\" has glyph with invalid/missing offset attribute - skipping glyph", fontName.getTerminatedBuffer());
+			LogError("apocfont \"%s\" has glyph with invalid/missing offset attribute - skipping glyph", fontName.str().c_str());
 			continue;
 		}
 		attr = glyphNode->Attribute("string");
 		if (!attr)
 		{
-			LogError("apocfont \"%S\" has glyph with missing string attribute - skipping glyph", fontName.getTerminatedBuffer());
+			LogError("apocfont \"%s\" has glyph with missing string attribute - skipping glyph", fontName.str().c_str());
 			continue;
 		}
 
-		icu::UnicodeString glyphString(attr, "UTF-8");
+		UString glyphString(attr);
 		if (glyphString.length() != 1)
 		{
-			LogError("apocfont \"%S\" glyph w/offset %d has %d codepoints, expected one - skipping glyph", fontName.getTerminatedBuffer(), offset, glyphString.length());
+			LogError("apocfont \"%s\" glyph w/offset %d has %d codepoints, expected one - skipping glyph", fontName.str().c_str(), offset, glyphString.length());
 			continue;
 		}
 		if (offset >= glyphCount)
 		{
-			LogError("apocfont \"%S\" glyph \"%S\" has invalid offset %d - file contains a max of %d - skipping glyph", fontName.getTerminatedBuffer(), glyphString.getTerminatedBuffer(), offset, glyphCount);
+			LogError("apocfont \"%s\" glyph \"%s\" has invalid offset %d - file contains a max of %d - skipping glyph", fontName.str().c_str(), glyphString.str().c_str(), offset, glyphCount);
 			continue;
 		}
-		UChar c = glyphString.charAt(0);
+		UniChar c = glyphString[0];
 		if (font->fontbitmaps.find(c) != font->fontbitmaps.end())
 		{
-			LogError("apocfont \"%S\" glyph \"%S\" has multiple definitions - skipping re-definition", fontName.getTerminatedBuffer(), glyphString.getTerminatedBuffer());
+			LogError("apocfont \"%s\" glyph \"%s\" has multiple definitions - skipping re-definition", fontName.str().c_str(), glyphString.str().c_str());
 			continue;
 		}
 		PHYSFS_seek(file, glyphSize * offset);
@@ -137,8 +137,7 @@ ApocalypseFont::loadFont( Framework &fw, tinyxml2::XMLElement *fontElement)
 	//FIXME: Bit of a hack to handle spaces?
 	auto spaceImage = std::make_shared<PaletteImage>(Vec2<int>{spacewidth,height});
 	//Defaults to transparent (0)
-	icu::UnicodeString spaceString(" ", "UTF-8");
-	font->fontbitmaps[spaceString.charAt(0)] = spaceImage;
+	font->fontbitmaps[UString::u8Char(' ')] = spaceImage;
 
 
 	PHYSFS_close(file);
@@ -147,18 +146,14 @@ ApocalypseFont::loadFont( Framework &fw, tinyxml2::XMLElement *fontElement)
 }
 
 std::shared_ptr<PaletteImage>
-ApocalypseFont::getGlyph(UChar codepoint)
+ApocalypseFont::getGlyph(UniChar codepoint)
 {
 	if (fontbitmaps.find(codepoint) == fontbitmaps.end())
 	{
 		//FIXME: Hack - assume all missing glyphs are spaces
 		//TODO: Fallback fonts?
-		icu::UnicodeString glyphString;
-		glyphString.append(codepoint);
-		
-		LogError("Font %S missing glyph for character \"%S\"", this->getName().getTerminatedBuffer(), glyphString.getTerminatedBuffer());
-		glyphString = icu::UnicodeString(" ", "UTF-8");
-		return this->getGlyph(glyphString.charAt(0));
+		LogError("Font %s missing glyph for character \"%s\"", this->getName().str().c_str(), UString(codepoint).str().c_str());
+		return this->getGlyph(UString::u8Char(' '));
 	}
 	return fontbitmaps[codepoint];
 }

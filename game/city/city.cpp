@@ -11,14 +11,14 @@ namespace OpenApoc {
 City::City(Framework &fw, UString mapName)
 	: TileMap(fw, Vec3<int>{100, 100, 10}), organisations(Organisation::defaultOrganisations)
 {
-	auto file = fw.data->load_file(U8Str("xcom3/ufodata/") + mapName, Data::FileMode::Read);
+	auto file = fw.data->load_file("xcom3/ufodata/" + mapName, Data::FileMode::Read);
 	if (!file)
 	{
-		LogError("Failed to open city map \"%S\"", mapName.getTerminatedBuffer());
+		LogError("Failed to open city map \"%s\"", mapName.str().c_str());
 		return;
 	}
 
-	this->buildings = loadBuildingsFromBld(fw, mapName + U8Str(".bld"), this->organisations, Building::defaultNames);
+	this->buildings = loadBuildingsFromBld(fw, mapName + ".bld", this->organisations, Building::defaultNames);
 	this->cityTiles = CityTile::loadTilesFromFile(fw);
 
 	for (int z = 0; z < this->size.z; z++)

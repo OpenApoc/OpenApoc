@@ -26,12 +26,10 @@ public:
 
 	virtual std::shared_ptr<OpenApoc::Image> loadImage(UString path)
 	{
-		std::string U8Path;
-		path.toUTF8String(U8Path);
-		ALLEGRO_BITMAP *bmp = al_load_bitmap(U8Path.c_str());
+		ALLEGRO_BITMAP *bmp = al_load_bitmap(path.str().c_str());
 		if (!bmp)
 		{
-			LogInfo("Failed to read image %S", path.getTerminatedBuffer());
+			LogInfo("Failed to read image %s", path.str().c_str());
 			return nullptr;
 		}
 

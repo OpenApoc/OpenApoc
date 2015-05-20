@@ -10,11 +10,11 @@ CityTile::loadTilesFromFile(Framework &fw)
 {
 	std::vector<CityTile> v;
 
-	auto pal = fw.data->load_palette(U8Str("xcom3/ufodata/PAL_04.DAT"));
+	auto pal = fw.data->load_palette("xcom3/ufodata/PAL_04.DAT");
 
-	auto sprites = fw.data->load_image_set(U8Str("PCK:xcom3/ufodata/CITY.PCK:xcom3/ufodata/CITY.TAB"));
+	auto sprites = fw.data->load_image_set("PCK:xcom3/ufodata/CITY.PCK:xcom3/ufodata/CITY.TAB");
 
-	auto datFile = fw.data->load_file(U8Str("xcom3/ufodata/CITYMAP.DAT"), Data::FileMode::Read);
+	auto datFile = fw.data->load_file("xcom3/ufodata/CITYMAP.DAT", Data::FileMode::Read);
 
 	int numTiles = sprites->images.size();
 

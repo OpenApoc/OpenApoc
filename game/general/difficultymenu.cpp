@@ -52,28 +52,28 @@ void DifficultyMenu::EventOccurred(Event *e)
 		UString citymapName;
 		if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY1") == 0)
 		{
-			citymapName = U8Str("CITYMAP1");
+			citymapName = "CITYMAP1";
 		}
 		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY2") == 0)
 		{
-			citymapName = U8Str("CITYMAP2");
+			citymapName = "CITYMAP2";
 		}
 		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY3") == 0)
 		{
-			citymapName = U8Str("CITYMAP3");
+			citymapName = "CITYMAP3";
 		}
 		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY4") == 0)
 		{
-			citymapName = U8Str("CITYMAP4");
+			citymapName = "CITYMAP4";
 		}
 		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY5") == 0)
 		{
-			citymapName = U8Str("CITYMAP5");
+			citymapName = "CITYMAP5";
 		}
 		else
 		{
-			LogWarning("Unknown button pressed: %S", e->Data.Forms.RaisedBy->Name.getTerminatedBuffer());
-			citymapName = U8Str("CITYMAP1");
+			LogWarning("Unknown button pressed: %s", e->Data.Forms.RaisedBy->Name.str().c_str());
+			citymapName = "CITYMAP1";
 			return;
 		}
 		fw.state.city.reset(new City(fw, citymapName));

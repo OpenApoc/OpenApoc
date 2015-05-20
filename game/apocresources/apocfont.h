@@ -17,7 +17,7 @@ class ApocalypseFont : public BitmapFont
 
 	private:
 		ApocalypseFont(){};
-		std::map<UChar, std::shared_ptr<PaletteImage> > fontbitmaps;
+		std::map<UniChar, std::shared_ptr<PaletteImage> > fontbitmaps;
 		int spacewidth;
 		int fontheight;
 		UString name;
@@ -25,7 +25,7 @@ class ApocalypseFont : public BitmapFont
 	public:
 		static std::shared_ptr<ApocalypseFont> loadFont(Framework &fw, tinyxml2::XMLElement *fontElement);
 		virtual ~ApocalypseFont();
-		virtual std::shared_ptr<PaletteImage> getGlyph(UChar codepoint);
+		virtual std::shared_ptr<PaletteImage> getGlyph(UniChar codepoint);
 		virtual int GetFontHeight();
 		virtual UString getName();
 

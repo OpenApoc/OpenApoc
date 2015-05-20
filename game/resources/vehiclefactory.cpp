@@ -59,12 +59,12 @@ parseDirectionalSprites(Framework &fw, tinyxml2::XMLElement *root)
 			dir = Vehicle::Direction::NNW;
 		else
 		{
-			LogError("Unknown sprite direction \"%S\"", name.getTerminatedBuffer());
+			LogError("Unknown sprite direction \"%s\"", name.str().c_str());
 			continue;
 		}
 
 		UString spriteName = node->GetText();
-		LogInfo("Loading image \"%S\"", spriteName.getTerminatedBuffer());
+		LogInfo("Loading image \"%s\"", spriteName.str().c_str());
 		if (sprites[dir])
 			LogWarning("Replacing directional sprite");
 		auto sprite = fw.gamecore->GetImage(spriteName);
@@ -90,7 +90,7 @@ VehicleFactory::ParseVehicleDefinition(tinyxml2::XMLElement *root)
 		def.type = Vehicle::Type::Ground;
 	else
 	{
-		LogError("Unknown vehicle type \"%S\"", type.getTerminatedBuffer());
+		LogError("Unknown vehicle type \"%s\"", type.str().c_str());
 		return;
 	}
 
@@ -123,7 +123,7 @@ VehicleFactory::ParseVehicleDefinition(tinyxml2::XMLElement *root)
 		}
 		else
 		{
-			LogError("Unknown vehicle tag \"%S\"", tag.getTerminatedBuffer());
+			LogError("Unknown vehicle tag \"%s\"", tag.str().c_str());
 			continue;
 		}
 	}

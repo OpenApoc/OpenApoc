@@ -75,16 +75,16 @@ public:
 
 	virtual std::shared_ptr<MusicTrack> loadMusic(UString path)
 	{
-		auto strings = Strings::Split(path, U8Str(":"));
+		auto strings = path.split(' ');
 		if (strings.size() != 2)
 		{
-			LogInfo("Invalid raw music path string \"%S\"", path.getTerminatedBuffer());
+			LogInfo("Invalid raw music path string \"%s\"", path.str().c_str());
 			return nullptr;
 		}
 
 		if (!Strings::IsNumeric(strings[1]))
 		{
-			LogInfo("Raw music track \"%S\" doesn't look like a number", strings[1].getTerminatedBuffer());
+			LogInfo("Raw music track \"%s\" doesn't look like a number", strings[1].str().c_str());
 			return nullptr;
 		}
 
@@ -98,13 +98,13 @@ public:
 		PHYSFS_file *file = fw.data->load_file(strings[0], Data::FileMode::Read);
 		if (!file)
 		{
-			LogInfo("Failed to open raw music file \"%S\"", strings[0].getTerminatedBuffer());
+			LogInfo("Failed to open raw music file \"%s\"", strings[0].str().c_str());
 			return nullptr;
 		}
 
 		if (PHYSFS_fileLength(file) < lengths[track] + starts[track])
 		{
-			LogError("Raw music file \"%S\" of insuffucicient size", strings[0].getTerminatedBuffer());
+			LogError("Raw music file \"%s\" of insuffucicient size", strings[0].str().c_str());
 			PHYSFS_close(file);
 			return nullptr;
 		}
@@ -125,6 +125,6 @@ public:
 	}
 };
 
-MusicLoaderRegister<RawMusicLoaderFactory> load_at_init_raw_music(U8Str("raw"));
+MusicLoaderRegister<RawMusicLoaderFactory> load_at_init_raw_music("raw");
 
 }; //anonymous namespace

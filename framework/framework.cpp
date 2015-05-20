@@ -89,7 +89,7 @@ public:
 		{
 			auto musicTrack = fw.data->load_music(track);
 			if (!musicTrack)
-				LogError("Failed to load music track \"%S\" - skipping", track.getTerminatedBuffer());
+				LogError("Failed to load music track \"%s\" - skipping", track.str().c_str());
 			else
 				this->trackList.push_back(musicTrack);
 		}
@@ -143,9 +143,7 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 	: p(new FrameworkPrivate), programName(programName)
 {
 	LogInfo("Starting framework");
-	std::string U8ProgramName;
-	programName.toUTF8String(U8ProgramName);
-	PHYSFS_init(U8ProgramName.c_str());
+	PHYSFS_init(programName.str().c_str());
 
 	if( !al_init() )
 	{
@@ -170,14 +168,13 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 
 	for (auto &option : cmdline)
 	{
-		auto splitString = Strings::Split(option, '=');
-		UString t = option;
+		auto splitString = option.split('=');
 		if (splitString.size() != 2)
 		{
-			LogError("Failed to read command line option \"%S\" - ignoring", t.getTerminatedBuffer());
+			LogError("Failed to read command line option \"%s\" - ignoring", option.str().c_str());
 			continue;
 		}
-		LogInfo("Setting option \"%S\" to \"%S\" from command line", splitString[0].getTerminatedBuffer(), splitString[1].getTerminatedBuffer());
+		LogInfo("Setting option \"%s\" to \"%s\" from command line", splitString[0].str().c_str(), splitString[1].str().c_str());
 		Settings->set(splitString[0], splitString[1]);
 
 	}
@@ -504,22 +501,22 @@ void Framework::Display_Initialise()
 
 	al_hide_mouse_cursor( p->screen );
 
-	for (auto &rendererName : Strings::Split(Settings->getString("Visual.RendererList"), ';'))
+	for (auto &rendererName : Settings->getString("Visual.RendererList").split(';'))
 	{
 		auto rendererFactory = registeredRenderers->find(rendererName);
 		if (rendererFactory == registeredRenderers->end())
 		{
-			LogInfo("Renderer \"%S\" not in supported list", rendererName.getTerminatedBuffer());
+			LogInfo("Renderer \"%s\" not in supported list", rendererName.str().c_str());
 			continue;
 		}
 		Renderer *r = rendererFactory->second->create();
 		if (!r)
 		{
-			LogInfo("Renderer \"%S\" failed to init", rendererName.getTerminatedBuffer());
+			LogInfo("Renderer \"%s\" failed to init", rendererName.str().c_str());
 			continue;
 		}
 		this->renderer.reset(r);
-		LogInfo("Using renderer: %S", this->renderer->getName().getTerminatedBuffer());
+		LogInfo("Using renderer: %s", this->renderer->getName().str().c_str());
 		break;
 	}
 	if (!this->renderer)
@@ -555,26 +552,11 @@ int Framework::Display_GetHeight()
 void Framework::Display_SetTitle( UString NewTitle )
 {
 #ifdef _WIN32
-	int stringLength;
-	std::unique_ptr < wchar_t[] >  buf;
-	UErrorCode err;
-	u_strToWCS(NULL, 0, &stringLength, NewTitle.getBuffer(), NewTitle.length(), &err);
-	if (U_FAILURE(err))
-	{
-		LogError("Failed to convert \"%S\" to wstring (%d)", NewTitle.getTerminatedBuffer(), err);
-		return;
-	}
-	buf.reset(new wchar_t[stringLength+1]);
-	u_strToWCS(buf.get(), stringLength, NULL, NewTitle.getBuffer(), NewTitle.length(), NULL);
-	buf[stringLength] = '\0';
-	std::wstring widestr(buf.get());
-	al_set_app_name( (char*)widestr.c_str() );
-	al_set_window_title( p->screen, (char*)widestr.c_str() );
+	al_set_app_name(NewTitle.wstr().c_str());
+	al_set_window_title(p->screen, NewTitle.wstr().c_str());
 #else
-	std::string U8String;
-	NewTitle.toUTF8String(U8String);
-	al_set_app_name(U8String.c_str());
-	al_set_window_title(p->screen, U8String.c_str());
+	al_set_app_name(NewTitle.str().c_str());
+	al_set_window_title(p->screen, NewTitle.str().c_str());
 #endif
 }
 
@@ -582,22 +564,22 @@ void Framework::Audio_Initialise()
 {
 	LogInfo("Initialise Audio");
 
-	for (auto &soundBackendName : Strings::Split(Settings->getString("Audio.Backends"), ';'))
+	for (auto &soundBackendName : Settings->getString("Audio.Backends").split(';'))
 	{
 		auto backendFactory = registeredSoundBackends->find(soundBackendName);
 		if (backendFactory == registeredSoundBackends->end())
 		{
-			LogInfo("Sound backend %S not in supported list", soundBackendName.getTerminatedBuffer());
+			LogInfo("Sound backend %s not in supported list", soundBackendName.str().c_str());
 			continue;
 		}
 		SoundBackend *backend = backendFactory->second->create();
 		if (!backend)
 		{
-			LogInfo("Sound backend %S failed to init", soundBackendName.getTerminatedBuffer());
+			LogInfo("Sound backend %s failed to init", soundBackendName.str().c_str());
 			continue;
 		}
 		this->soundBackend.reset(backend);
-		LogInfo("Using sound backend %S", soundBackendName.getTerminatedBuffer());
+		LogInfo("Using sound backend %s", soundBackendName.str().c_str());
 		break;
 	}
 	if (!this->soundBackend)
