@@ -34,7 +34,7 @@ void Graphic::OnRender()
 		}
 	}
 
-	if(Size == image->size)
+	if(Vec2<unsigned int>{Size.x, Size.y} == image->size)
 	{
 		fw.renderer->draw(image, Vec2<float>{0,0});
 	} else {

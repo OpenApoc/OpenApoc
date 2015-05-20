@@ -102,7 +102,7 @@ void GraphicButton::OnRender()
 
 	if( useimage != nullptr )
 	{
-		if(Size != useimage->size)
+		if(Vec2<unsigned int>{Size.x, Size.y} != useimage->size)
 		{
 			fw.renderer->draw(useimage, Vec2<float>{0,0});
 		}

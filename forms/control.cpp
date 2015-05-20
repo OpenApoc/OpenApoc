@@ -223,9 +223,9 @@ void Control::Render()
 	}
 
 	if( controlArea == nullptr ||
-		controlArea->size != Size)
+		controlArea->size != Vec2<unsigned int>{Size.x, Size.y})
 	{
-		controlArea.reset(new Surface{Size});
+		controlArea.reset(new Surface{Vec2<unsigned int>{Size.x, Size.y}});
 	}
 	{
 

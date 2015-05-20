@@ -8,21 +8,21 @@ Image::~Image()
 {
 }
 
-Image::Image(Vec2<int> size)
+Image::Image(Vec2<unsigned int> size)
 	: size(size), dirty(true)
 {}
 
-Surface::Surface(Vec2<int> size)
+Surface::Surface(Vec2<unsigned int> size)
 	: Image(size)
 {}
 
 Surface::~Surface()
 {}
 
-PaletteImage::PaletteImage(Vec2<int> size, uint8_t initialIndex)
+PaletteImage::PaletteImage(Vec2<unsigned int> size, uint8_t initialIndex)
 	: Image(size), indices(new uint8_t[size.x*size.y])
 {
-	for (int i = 0; i < size.x*size.y; i++)
+	for (unsigned int i = 0; i < size.x*size.y; i++)
 		this->indices[i] = initialIndex;
 }
 
@@ -36,42 +36,41 @@ PaletteImage::toRGBImage(std::shared_ptr<Palette> p)
 
 	RGBImageLock imgLock{i, ImageLockUse::Write};
 
-	for (int y = 0; y < this->size.y; y++)
+	for (unsigned int y = 0; y < this->size.y; y++)
 	{
-		for (int x = 0; x < this->size.x; x++)
+		for (unsigned int x = 0; x < this->size.x; x++)
 		{
 			uint8_t idx = this->indices[y*this->size.x + x];
-			imgLock.set(Vec2<int>{x,y}, p->GetColour(idx));
+			imgLock.set(Vec2<unsigned int>{x,y}, p->GetColour(idx));
 		}
 	}
 	return i;
 }
 
 void
-PaletteImage::blit(std::shared_ptr<PaletteImage> src, Vec2<int> offset, std::shared_ptr<PaletteImage> dst)
+PaletteImage::blit(std::shared_ptr<PaletteImage> src, Vec2<unsigned int> offset, std::shared_ptr<PaletteImage> dst)
 {
 	PaletteImageLock reader(src, ImageLockUse::Read);
 	PaletteImageLock writer(dst, ImageLockUse::Write);
 
-	for (int y = 0; y < src->size.y; y++)
+	for (unsigned int y = 0; y < src->size.y; y++)
 	{
-		for (int x = 0; x < src->size.x; x++)
+		for (unsigned int x = 0; x < src->size.x; x++)
 		{
-			Vec2<int> readPos{x,y};
-			Vec2<int> writePos{readPos + offset};
+			Vec2<unsigned int> readPos{x,y};
+			Vec2<unsigned int> writePos{readPos + offset};
 			if (writePos.x >= dst->size.x ||
 			    writePos.y >= dst->size.y)
 				break;
 			writer.set(writePos, reader.get(readPos));
 		}
-		
 	}
 }
 
-RGBImage::RGBImage(Vec2<int> size, Colour initialColour)
+RGBImage::RGBImage(Vec2<unsigned int> size, Colour initialColour)
 : Image(size), pixels(new Colour[size.x*size.y])
 {
-	for (int i = 0; i < size.x*size.y; i++)
+	for (unsigned int i = 0; i < size.x*size.y; i++)
 		this->pixels[i] = initialColour;
 }
 
@@ -89,7 +88,7 @@ RGBImageLock::~RGBImageLock()
 {}
 
 Colour
-RGBImageLock::get(Vec2<int> pos)
+RGBImageLock::get(Vec2<unsigned int> pos)
 {
 	//FIXME: Check read use
 	unsigned offset = pos.y * this->img->size.x + pos.x;
@@ -98,7 +97,7 @@ RGBImageLock::get(Vec2<int> pos)
 }
 
 void
-RGBImageLock::set(Vec2<int> pos, Colour &c)
+RGBImageLock::set(Vec2<unsigned int> pos, Colour &c)
 {
 	unsigned offset = pos.y * this->img->size.x + pos.x;
 	assert(offset < this->img->size.x * this->img->size.y);
@@ -122,7 +121,7 @@ PaletteImageLock::~PaletteImageLock()
 {}
 
 uint8_t
-PaletteImageLock::get(Vec2<int> pos)
+PaletteImageLock::get(Vec2<unsigned int> pos)
 {
 	//FIXME: Check read use
 	unsigned offset = pos.y * this->img->size.x + pos.x;
@@ -131,7 +130,7 @@ PaletteImageLock::get(Vec2<int> pos)
 }
 
 void
-PaletteImageLock::set(Vec2<int> pos, uint8_t idx)
+PaletteImageLock::set(Vec2<unsigned int> pos, uint8_t idx)
 {
 	//FIXME: Check write use
 	unsigned offset = pos.y * this->img->size.x + pos.x;

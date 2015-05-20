@@ -35,9 +35,9 @@ void TextButton::EventOccured( Event* e )
 
 void TextButton::OnRender()
 {
-	if( cached == nullptr || cached->size != Size)
+	if( cached == nullptr || cached->size != Vec2<unsigned int>{Size.x, Size.y})
 	{
-		cached.reset(new Surface{Size});
+		cached.reset(new Surface{Vec2<unsigned int>{Size.x, Size.y}});
 
 		RendererSurfaceBinding b(*fw.renderer, cached);
 

@@ -278,12 +278,12 @@ Data::load_palette(UString path)
 	std::shared_ptr<RGBImage> img = std::dynamic_pointer_cast<RGBImage>(this->load_image(path));
 	if (img)
 	{
-		int idx = 0;
+		unsigned int idx = 0;
 		auto p = std::make_shared<Palette>(img->size.x * img->size.y);
 		RGBImageLock src{img, ImageLockUse::Read};
-		for (int y = 0; y < img->size.y; y++)
+		for (unsigned int y = 0; y < img->size.y; y++)
 		{
-			for (int x = 0; x < img->size.x; x++)
+			for (unsigned int x = 0; x < img->size.x; x++)
 			{
 				Colour c = src.get(Vec2<int>{x,y});
 				p->SetColour(idx, c);
