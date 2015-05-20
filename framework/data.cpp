@@ -331,7 +331,7 @@ Data::GetActualFilename(UString Filename)
 {
 	UString foundPath = GetCorrectCaseFilename(Filename);
 	std::string U8Filename;
-	Filename.toUTF8String(U8Filename);
+	foundPath.toUTF8String(U8Filename);
 	UString folder = PHYSFS_getRealDir(U8Filename.c_str());
 	return folder + U8Str("/") + foundPath;
 }
