@@ -6,7 +6,7 @@ compiler:
 
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo add-apt-repository "http://llvm.org/apt/precise/ llvm-toolchain-precise-3.6 main"
+  - sudo add-apt-repository "deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.6 main"
   - sudo apt-get update
   - if [ "$CXX" = "g++" ]; then sudo apt-get install g++-4.9; fi
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
@@ -18,6 +18,9 @@ before_install:
   - mkdir ~/dependency-prefix
   - export PKG_CONFIG_PATH=~/dependency-prefix/lib/pkgconfig
 
+env:
+  - MONOLITHIC_BUILD=on
+  - MONOLITHIC_BUILD=off
 install:
   - pushd ./dependencies/tinyxml2 && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make && make install && popd;
   - pushd ./dependencies/glm && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make && make install && popd;
@@ -25,7 +28,7 @@ install:
   - pushd ./dependencies/allegro && cmake -DWANT_DEMO=OFF -DWANT_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make && make install && popd;
 
 before_script:
-  - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=""  -DCMAKE_CXX_FLAGS="-Wall -Wextra -W -O2" -DCMAKE_C_FLAGS="-Wall -Wextra -W -O2" -DMONOLITHIC_BUILD=ON
+  - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=""  -DCMAKE_CXX_FLAGS="-Wall -Wextra -W -O2" -DCMAKE_C_FLAGS="-Wall -Wextra -W -O2" -DMONOLITHIC_BUILD=${MONOLITHIC_BUILD}
 
 script: make VERBOSE=1
 
