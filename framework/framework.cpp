@@ -9,8 +9,6 @@
 #include "framework/sound.h"
 
 #include <allegro5/allegro5.h>
-#include <allegro5/allegro_font.h>
-#include <allegro5/allegro_ttf.h>
 
 using namespace OpenApoc;
 
@@ -152,8 +150,7 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 		return;
 	}
 
-	al_init_font_addon();
-	if( !al_install_keyboard() || !al_install_mouse() || !al_init_ttf_addon())
+	if( !al_install_keyboard() || !al_install_mouse())
 	{
 		LogError(" Cannot init Allegro plugins");
 		p->quitProgram = true;
@@ -225,10 +222,8 @@ Framework::~Framework()
 	al_destroy_mutex( p->eventMutex );
 
 	LogInfo("Allegro shutdown");
-	al_shutdown_ttf_addon();
 	al_uninstall_mouse();
 	al_uninstall_keyboard();
-	al_shutdown_font_addon();
 
 	al_uninstall_system();
 	PHYSFS_deinit();

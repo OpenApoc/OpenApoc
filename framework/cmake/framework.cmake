@@ -21,8 +21,8 @@ unset(FRAMEWORK_INCLUDE_DIRS)
 unset(FRAMEWORK_LIBRARIES)
 unset(FRAMEWORK_ALLEGRO_LIBRARIES)
 
-# Font, Audio and Window modularity is still TODO
-list(APPEND FRAMEWORK_ALLEGRO_LIBRARIES allegro allegro_ttf allegro_font allegro_audio allegro_acodec)
+# Window modularity is still TODO
+list(APPEND FRAMEWORK_ALLEGRO_LIBRARIES allegro)
 
 aux_source_directory(framework FRAMEWORK_SOURCES)
 
