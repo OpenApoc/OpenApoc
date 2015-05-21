@@ -7,12 +7,13 @@ compiler:
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo add-apt-repository "deb http://llvm.org/apt/precise/ llvm-toolchain-precise-3.6 main"
+  - sudo add-apt-repository ppa:allegro/5.0
   - sudo apt-get update
   - if [ "$CXX" = "g++" ]; then sudo apt-get install g++-4.9; fi
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.9" CC="gcc-4.9"; fi
   - if [ "$CXX" = "clang++" ]; then sudo apt-get install clang-3.6; fi
   - if [ "$CXX" = "clang++" ]; then export CXX="clang++-3.6" CC="clang-3.6"; fi
-  - sudo apt-get install libunwind7-dev libicu-dev
+  - sudo apt-get install libunwind7-dev libicu-dev liballegro5-dev
   - ${CXX} --version
   - ${CC} --version
   - mkdir ~/dependency-prefix
@@ -25,7 +26,6 @@ install:
   - pushd ./dependencies/tinyxml2 && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make && make install && popd;
   - pushd ./dependencies/glm && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make && make install && popd;
   - pushd ./dependencies/physfs && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make && make install && popd;
-  - pushd ./dependencies/allegro && cmake -DWANT_DEMO=OFF -DWANT_EXAMPLES=OFF -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make && make install && popd;
 
 before_script:
   - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=""  -DCMAKE_CXX_FLAGS="-Wall -Wextra -W -O2" -DCMAKE_C_FLAGS="-Wall -Wextra -W -O2" -DMONOLITHIC_BUILD=${MONOLITHIC_BUILD}
