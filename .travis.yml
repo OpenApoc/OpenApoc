@@ -20,7 +20,6 @@ before_install:
   - export PKG_CONFIG_PATH=~/dependency-prefix/lib/pkgconfig
 
 env:
-  - MONOLITHIC_BUILD=on LTO=on
   - MONOLITHIC_BUILD=on LTO=off
 install:
   - pushd ./dependencies/tinyxml2 && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make && make install && popd;
