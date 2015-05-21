@@ -5,9 +5,6 @@
 	path = dependencies/allegro
 	url = git://git.code.sf.net/p/alleg/allegro
 	branch = 5.0
-[submodule "dependencies/freetype"]
-	path = dependencies/freetype
-	url = git://git.sv.nongnu.org/freetype/freetype2.git
 [submodule "dependencies/glm"]
 	path = dependencies/glm
 	url = https://github.com/JonnyH/glm.git
