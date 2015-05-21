@@ -194,6 +194,7 @@
     <ClCompile Include="framework\render\ogl_3_0_renderer.cpp" />
     <ClCompile Include="framework\sound.cpp" />
     <ClCompile Include="framework\sound\allegro_backend.cpp" />
+    <ClCompile Include="framework\sound\null_backend.cpp" />
     <ClCompile Include="game\apocresources\apocpalette.cpp" />
     <ClCompile Include="game\city\building.cpp" />
     <ClCompile Include="game\city\buildingtile.cpp" />

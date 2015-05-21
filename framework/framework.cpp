@@ -38,7 +38,7 @@ static std::map<UString, UString> defaultConfig =
 	{"Resource.LocalCDPath", "./data/cd.iso"},
 	{"Resource.SystemCDPath", DATA_DIRECTORY "/cd.iso"},
 	{"Visual.RendererList", "GL_3_0;GL_2_1;allegro"},
-	{"Audio.Backends", "allegro"},
+	{ "Audio.Backends", "allegro;null" },
 };
 
 std::map<UString, std::unique_ptr<OpenApoc::RendererFactory>> *registeredRenderers = nullptr;
@@ -589,7 +589,6 @@ void Framework::Audio_Initialise()
 	if (!this->soundBackend)
 	{
 		LogError("No functional sound backend found");
-		abort();
 	}
 	this->jukebox.reset(new JukeBoxImpl(*this));
 }
