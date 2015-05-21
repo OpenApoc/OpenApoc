@@ -17,9 +17,9 @@ class BitmapFont
 	public:
 		virtual ~BitmapFont();
 		virtual std::shared_ptr<PaletteImage> getGlyph(UniChar codepoint) = 0;
-		virtual std::shared_ptr<PaletteImage> getString(UString Text);
+		virtual std::shared_ptr<PaletteImage> getString(const UString& Text);
 		virtual int GetFontHeight() = 0;
-		virtual int GetFontWidth(UString Text);
+		virtual int GetFontWidth(const UString& Text);
 		virtual UString getName() = 0;
 };
 

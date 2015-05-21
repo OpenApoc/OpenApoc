@@ -9,7 +9,7 @@ BitmapFont::~BitmapFont()
 }
 
 std::shared_ptr<PaletteImage>
-BitmapFont::getString(UString Text)
+BitmapFont::getString(const UString& Text)
 {
 	int height = this->GetFontHeight();
 	int width = this->GetFontWidth(Text);
@@ -28,7 +28,7 @@ BitmapFont::getString(UString Text)
 	return img;
 }
 
-int BitmapFont::GetFontWidth( UString Text )
+int BitmapFont::GetFontWidth( const UString& Text )
 {
 	int textlen = 0;
 	for( size_t i = 0; i < Text.length(); i++ )
