@@ -114,7 +114,7 @@ Data::~Data()
 }
 
 std::shared_ptr<ImageSet>
-Data::load_image_set(UString path)
+Data::load_image_set(const UString& path)
 {
 	UString cacheKey = path.toUpper();
 	std::shared_ptr<ImageSet> imgSet = this->imageSetCache[cacheKey].lock();
@@ -143,7 +143,7 @@ Data::load_image_set(UString path)
 }
 
 std::shared_ptr<Sample>
-Data::load_sample(UString path)
+Data::load_sample(const UString& path)
 {
 	UString cacheKey = path.toUpper();
 	std::shared_ptr<Sample> sample = this->sampleCache[cacheKey].lock();
@@ -166,7 +166,7 @@ Data::load_sample(UString path)
 }
 
 std::shared_ptr<MusicTrack>
-Data::load_music(UString path)
+Data::load_music(const UString& path)
 {
 	//No cache for music tracks, just stream of disk
 	for (auto &loader : this->musicLoaders)
@@ -180,7 +180,7 @@ Data::load_music(UString path)
 }
 
 std::shared_ptr<Image>
-Data::load_image(UString path)
+Data::load_image(const UString& path)
 {
 	//Use an uppercase version of the path for the cache key
 	UString cacheKey = path.toUpper();
@@ -250,7 +250,7 @@ Data::load_image(UString path)
 	return img;
 }
 
-PHYSFS_file* Data::load_file(UString path, Data::FileMode mode)
+PHYSFS_file* Data::load_file(const UString& path, Data::FileMode mode)
 {
 	//FIXME: read/write/append modes
 	if (mode != Data::FileMode::Read)
@@ -273,7 +273,7 @@ PHYSFS_file* Data::load_file(UString path, Data::FileMode mode)
 }
 
 std::shared_ptr<Palette>
-Data::load_palette(UString path)
+Data::load_palette(const UString& path)
 {
 	std::shared_ptr<RGBImage> img = std::dynamic_pointer_cast<RGBImage>(this->load_image(path));
 	if (img)
@@ -305,7 +305,7 @@ Data::load_palette(UString path)
 }
 
 UString
-Data::GetCorrectCaseFilename(UString Filename)
+Data::GetCorrectCaseFilename(const UString& Filename)
 {
 	std::string u8Filename = Filename.str();
 	std::unique_ptr<char[]> buf(new char[u8Filename.length() + 1]);
@@ -320,7 +320,7 @@ Data::GetCorrectCaseFilename(UString Filename)
 }
 
 UString
-Data::GetActualFilename(UString Filename)
+Data::GetActualFilename(const UString& Filename)
 {
 	UString foundPath = GetCorrectCaseFilename(Filename);
 	if (foundPath == "")

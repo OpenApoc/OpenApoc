@@ -48,14 +48,14 @@ class Data
 			ReadWrite,
 		};
 
-		std::shared_ptr<Sample> load_sample(UString path);
-		std::shared_ptr<MusicTrack> load_music(UString path);
-		std::shared_ptr<Image> load_image(UString path);
-		std::shared_ptr<ImageSet> load_image_set(UString path);
-		std::shared_ptr<Palette> load_palette(UString path);
-		PHYSFS_file* load_file(UString path, FileMode mode);
-		UString GetActualFilename(UString Filename);
-		UString GetCorrectCaseFilename(UString Filename);
+		std::shared_ptr<Sample> load_sample(const UString& path);
+		std::shared_ptr<MusicTrack> load_music(const UString& path);
+		std::shared_ptr<Image> load_image(const UString& path);
+		std::shared_ptr<ImageSet> load_image_set(const UString& path);
+		std::shared_ptr<Palette> load_palette(const UString& path);
+		PHYSFS_file* load_file(const UString& path, FileMode mode);
+		UString GetActualFilename(const UString& Filename);
+		UString GetCorrectCaseFilename(const UString& Filename);
 
 };
 
