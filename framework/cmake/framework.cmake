@@ -62,7 +62,7 @@ if(BACKTRACE_ON_ERROR)
 		#FIXME: Add Windows support for cmake? (BACKTRACE_WINDOWS?)
 endif()
 
-pkg_check_modules(PC_PHYSFS REQUIRED physfs>=2.1.0)
+pkg_check_modules(PC_PHYSFS REQUIRED physfs>=2.0.0)
 
 find_path(PHYSFS_INCLUDE_DIR physfs.h HINTS ${PC_PHYSFS_INCLUDEDIR})
 list(APPEND FRAMEWORK_INCLUDE_DIRS ${PHYSFS_INCLUDE_DIR})
