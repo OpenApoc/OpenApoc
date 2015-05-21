@@ -67,7 +67,7 @@ public:
 	bool operator!=(const UString& other) const;
 	bool operator<(const UString& other) const;
 
-	class const_iterator : public std::random_access_iterator_tag
+	class const_iterator : public std::iterator<std::forward_iterator_tag, UniChar>
 	{
 	private:
 		const UString &s;
