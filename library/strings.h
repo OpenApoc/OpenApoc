@@ -27,6 +27,7 @@ public:
 	UString(const char *cstr);
 	UString(const wchar_t *wcstr);
 	UString(const UniChar *ucstr);
+	UString(UString &&other);
 	UString();
 	~UString();
 

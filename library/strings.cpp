@@ -49,6 +49,11 @@ UString::UString(const UString& other)
 	:pimpl(new UString_impl(*other.pimpl.get()))
 {}
 
+UString::UString(UString&& other)
+{
+	this->pimpl = std::move(other.pimpl);
+}
+
 UString::UString(UniChar uc)
 	:pimpl(new UString_impl(""))
 {
