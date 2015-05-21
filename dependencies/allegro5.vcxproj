@@ -161,9 +161,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="allegro\addons\acodec\acodec.h" />
     <ClInclude Include="allegro\addons\acodec\helper.h" />
-    <ClInclude Include="allegro\addons\font\font.h" />
     <ClInclude Include="allegro\addons\image\iio.h" />
     <ClInclude Include="allegro\addons\physfs\allegro_physfs_intern.h" />
     <ClInclude Include="allegro\include\allegro5\alcompat.h" />
@@ -299,12 +297,10 @@
     <ClInclude Include="allegro5\platform\alplatf.h" />
     <ClInclude Include="include\allegro5\internal\aintern_audio_cfg.h" />
     <ClInclude Include="include\allegro5\internal\aintern_image_cfg.h" />
-    <ClInclude Include="include\allegro5\internal\aintern_ttf_cfg.h" />
     <ClInclude Include="include\allegro5\platform\alplatf.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="allegro\include\allegro5\inline\fmaths.inl" />
-    <None Include="allegro\include\allegro5\platform\alplatf.h.cmake" />
     <None Include="allegro\src\fshook_win.inc" />
     <None Include="allegro\src\scanline_drawers.inc" />
     <None Include="allegro\src\shader_source.inc" />
@@ -313,10 +309,7 @@
     <None Include="allegro\src\tls_pthread.inc" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="allegro\addons\acodec\acodec.c" />
     <ClCompile Include="allegro\addons\acodec\helper.c" />
-    <ClCompile Include="allegro\addons\acodec\voc.c" />
-    <ClCompile Include="allegro\addons\acodec\wav.c" />
     <ClCompile Include="allegro\addons\audio\audio.c" />
     <ClCompile Include="allegro\addons\audio\audio_io.c" />
     <ClCompile Include="allegro\addons\audio\dsound.cpp" />
@@ -327,10 +320,6 @@
     <ClCompile Include="allegro\addons\audio\kcm_stream.c" />
     <ClCompile Include="allegro\addons\audio\kcm_voice.c" />
     <ClCompile Include="allegro\addons\audio\recorder.c" />
-    <ClCompile Include="allegro\addons\font\font.c" />
-    <ClCompile Include="allegro\addons\font\fontbmp.c" />
-    <ClCompile Include="allegro\addons\font\stdfont.c" />
-    <ClCompile Include="allegro\addons\font\text.c" />
     <ClCompile Include="allegro\addons\image\bmp.c" />
     <ClCompile Include="allegro\addons\image\dds.c" />
     <ClCompile Include="allegro\addons\image\gdiplus.cpp" />
@@ -346,7 +335,6 @@
     <ClCompile Include="allegro\addons\primitives\prim_directx.cpp" />
     <ClCompile Include="allegro\addons\primitives\prim_opengl.c" />
     <ClCompile Include="allegro\addons\primitives\prim_soft.c" />
-    <ClCompile Include="allegro\addons\ttf\ttf.c" />
     <ClCompile Include="allegro\src\allegro.c" />
     <ClCompile Include="allegro\src\bitmap.c" />
     <ClCompile Include="allegro\src\bitmap_draw.c" />
@@ -426,9 +414,6 @@
     <ClCompile Include="allegro\src\win\wxthread.c" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="freetype.vcxproj">
-      <Project>{78b079bd-9fc7-4b9e-b4a6-96da0f00248b}</Project>
-    </ProjectReference>
     <ProjectReference Include="physfs.vcxproj">
       <Project>{5a1d2ec4-525e-49b6-9398-be359e71cb35}</Project>
     </ProjectReference>
