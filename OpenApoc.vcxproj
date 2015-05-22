@@ -323,9 +323,6 @@
     <ProjectReference Include="dependencies\icu55\source\common\common.vcxproj">
       <Project>{73c0a65b-d1f2-4de1-b3a6-15dad2c23f3d}</Project>
     </ProjectReference>
-    <ProjectReference Include="dependencies\icu55\source\io\io.vcxproj">
-      <Project>{c2b04507-2521-4801-bf0d-5fd79d6d518c}</Project>
-    </ProjectReference>
     <ProjectReference Include="dependencies\physfs.vcxproj">
       <Project>{5a1d2ec4-525e-49b6-9398-be359e71cb35}</Project>
     </ProjectReference>
