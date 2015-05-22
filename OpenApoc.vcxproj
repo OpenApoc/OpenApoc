@@ -111,6 +111,12 @@
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)\dependencies\icu55\bin\*.dll $(SolutionDir)bin\$(Configuration)\</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy ICU DLLs</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -129,6 +135,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)\dependencies\icu55\bin64\*.dll $(SolutionDir)$(Platform)\$(Configuration)\</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy ICU DLLs</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -150,6 +162,12 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)\dependencies\icu55\bin\*.dll $(SolutionDir)bin\$(Configuration)\</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy ICU DLLs</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -171,6 +189,12 @@
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)\dependencies\icu55\bin64\*.dll $(SolutionDir)$(Platform)\$(Configuration)\</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy ICU DLLs</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="forms\checkbox.cpp" />
