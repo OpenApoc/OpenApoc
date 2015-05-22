@@ -21,6 +21,8 @@ before_install:
 
 env:
   - MONOLITHIC_BUILD=on LTO=off
+  - MONOLITHIC_BUILD=off LTO=off
+
 install:
   - pushd ./dependencies/tinyxml2 && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make && make install && popd;
   - pushd ./dependencies/glm && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make && make install && popd;
