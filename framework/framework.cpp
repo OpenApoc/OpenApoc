@@ -9,6 +9,8 @@
 #include "framework/sound.h"
 
 #include <allegro5/allegro5.h>
+#include <iostream>
+#include <string>
 
 using namespace OpenApoc;
 
