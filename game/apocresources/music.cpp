@@ -75,7 +75,7 @@ public:
 
 	virtual std::shared_ptr<MusicTrack> loadMusic(UString path)
 	{
-		auto strings = path.split(' ');
+		auto strings = path.split(':');
 		if (strings.size() != 2)
 		{
 			LogInfo("Invalid raw music path string \"%s\"", path.str().c_str());
