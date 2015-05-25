@@ -48,6 +48,8 @@ Event::Event(const UString &str)
 		this->Type = EVENT_WINDOW_DEACTIVATE;
 	} else if (type[1] == "END_OF_FRAME") {
 		this->Type = EVENT_END_OF_FRAME;
+	} else if (type[1] == "UNDEFINED") {
+		this->Type = EVENT_UNDEFINED;
 	} else {
 		LogError("Invalid event string \"%s\" - unhandled TYPE", str.str().c_str());
 		return;
