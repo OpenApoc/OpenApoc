@@ -940,32 +940,44 @@ void OGL30Renderer::draw(std::shared_ptr<Image> image, Vec2<float> position)
 	std::shared_ptr<ImageSet> owningSet = image->owningSet.lock();
 	if (owningSet)
 	{
-		std::shared_ptr<GLPaletteSpritesheet> ss = std::dynamic_pointer_cast<GLPaletteSpritesheet>(owningSet->rendererPrivateData);
-		if (!ss)
+		if (owningSet->images.size() > maxSpritesheetSize)
 		{
-			ss = std::make_shared<GLPaletteSpritesheet>(owningSet);
-			owningSet->rendererPrivateData = ss;
+			static bool warnonce = false;
+			if (!warnonce)
+			{
+				warnonce = true;
+				LogError("Spritesheet size %d would be over max array size %d - falling back to 'slow' path", owningSet->images.size(), maxSpritesheetSize);
+			}
 		}
-		switch (this->state)
+		else
 		{
-			default:
-				this->flush();
-			case RendererState::BatchingSpritesheet:
-				if (ss != this->boundSpritesheet ||
-				    this->batchedSprites.size() >= this->maxBatchedSprites)
-				{
+			std::shared_ptr<GLPaletteSpritesheet> ss = std::dynamic_pointer_cast<GLPaletteSpritesheet>(owningSet->rendererPrivateData);
+			if (!ss)
+			{
+				ss = std::make_shared<GLPaletteSpritesheet>(owningSet);
+				owningSet->rendererPrivateData = ss;
+			}
+			switch (this->state)
+			{
+				default:
 					this->flush();
-				}
-			case RendererState::Idle:
-				break;
+				case RendererState::BatchingSpritesheet:
+					if (ss != this->boundSpritesheet ||
+					    this->batchedSprites.size() >= this->maxBatchedSprites)
+					{
+						this->flush();
+					}
+				case RendererState::Idle:
+					break;
+			}
+			this->boundSpritesheet = ss;
+			this->state = RendererState::BatchingSpritesheet;
+			this->batchedSprites.emplace_back(
+					position, Vec2<float>(image->size.x, image->size.y),
+					image->indexInSet
+				);
+			return;
 		}
-		this->boundSpritesheet = ss;
-		this->state = RendererState::BatchingSpritesheet;
-		this->batchedSprites.emplace_back(
-				position, Vec2<float>(image->size.x, image->size.y),
-				image->indexInSet
-			);
-		return;
 	}
 	if (this->state != RendererState::Idle)
 		this->flush();
