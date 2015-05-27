@@ -3,6 +3,10 @@
 The OpenApocalypse project aims to build a open-source
 clone of the original X-COM: Apocalypse strategy game.
 
+# BIG CAVEAT
+OpenApoc is in early development - it is not yet 'playable' as a game.
+All help is appreciated, but there's little point trying to 'play' is as yes
+
 # Current linux build status:
 [![Build Status](https://travis-ci.org/JonnyH/OpenApoc.svg?branch=master)](https://travis-ci.org/JonnyH/OpenApoc)
  
