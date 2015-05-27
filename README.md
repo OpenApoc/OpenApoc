@@ -71,7 +71,10 @@ cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
 make -j4
 ```
 - This should create a directory 'bin' under the build directory, with the 'OpenApoc' executable file, and the 'data' directory already in place.
-- Copy the cd.iso file to the 'data' directory under build/bin
+- Copy the cd.iso file to the 'data' directory under build/bin (Note - despite dosbox having good linux support, the steam version of X-Com Apocalypse refuses to install in steam for linux - you may need to snatch the cd.iso file off a windows steam install)
+```
+cp /path/to/cd.iso data/
+```
 - Change to the build/bin directory
 ```
 cd bin
