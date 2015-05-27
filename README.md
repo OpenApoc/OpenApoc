@@ -19,6 +19,7 @@ OpenApocalypse is built leveraging a number of libraries - to provide needed fun
 - [Physfs] (http://icculus.org/physfs/) - though we have patched it to fix some ISO loading bugs on [Github] (https://github.com/JonnyH/physfs-hg-import)- so use that version if you want to use the .iso file as a data source directly
 - [ICU4C] (http://site.icu-project.org/)
 - [GLM] (http://glm.g-truc.net/)
+- [Libunwind] (http://www.nongnu.org/libunwind/download.html) - debug backtracing on linux
 
 Requirements:
 - This assumes that you have the file 'cd.iso' - a copy of the original X-Com Apocalypse CD (This can be got from steam for a pittance http://store.steampowered.com/app/7660/ - this is _required_ to run)
@@ -41,26 +42,35 @@ Building on Linux
 (tested on ubuntu 14.04 - other distributions will probably need different packages to install - see the dependency list above)
 - Install the following packages: liballegro5-dev glm libicu-dev libtinyxml2-dev cmake build-essential git
 ```
-sudo apt-get install liballegro5-dev glm libicu-dev libtinyxml2-dev cmake build-essential git
+sudo apt-get install liballegro5-dev libicu-dev libtinyxml2-dev cmake build-essential git libunwind-dev
 ```
 - Checkout OpenApoc from github
 - Fetch the dependencies from git with the following terminal command (run from the just-created OpenApoc folder)
 ```
 git submodule init
-git submodule init
+git submodule update
 ```
 -  Build our patched Physfs
 -- You can do this by typing the following command in a terminal from the dependencies/physfs directory:
 ```
+cd /path/to/OpenApoc/dependencies/physfs
 cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .
 make
 ```
--- Install the patched physfs with the following command in the terminal (also in the physfs directory - providing your password if prompted)
+-- Install the patched physfs with the following command in the terminal (also in the physfs directory - providing your password if prompted). By default this will install physfs system wide under /usr/local.
 ```
+sudo make install
+```
+- Configure and install the dependencies version of GLM (libglm-dev in ubuntu 14.04 is old and doesn't seem to work)
+```
+cd /path/to/OpenApoc/dependencies/glm
+cmake .
+make
 sudo make install
 ```
 - Create a subdirectory ('build' in this example) in the OpenApoc checkout directory, and from that use cmake to configure OpenApoc:
 ```
+cd /path/to/OpenApoc
 mkdir build
 cd build
 cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
