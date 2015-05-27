@@ -27,7 +27,11 @@ Building on Windows:
 (Tested with Visual Studio 2013 community edition)
 - Checkout OpenApoc from github
 All the required dependencies (allegro, tinyxml2, physfs, ICU) are packaged as submodules. These submodules are fetched automatically if using the github for windows app, so if you are please skip the next step
-- From a command line, run 'git submodule init' and 'git submodule update'  to fetch the dependency packages
+- From a Git command line, run the following to fetch the dependency packages
+```
+git submodule init
+git submodule update
+```
 - Open openapoc.sln in Visual Studio
 - Build (Release/Debug x86/x64 should all work)
 - Before running, copy the 'cd.iso' file into the 'data' directory in the root of the git project.
@@ -35,22 +39,42 @@ All the required dependencies (allegro, tinyxml2, physfs, ICU) are packaged as s
 
 Building on Linux
 (tested on ubuntu 14.04 - other distributions will probably need different packages to install - see the dependency list above)
-- Install the following packages: liballegro5-dev glm libicu-dev libtinyxml2-dev cmake build-essential cmake git
+- Install the following packages: liballegro5-dev glm libicu-dev libtinyxml2-dev cmake build-essential git
+```
+sudo apt-get install liballegro5-dev glm libicu-dev libtinyxml2-dev cmake build-essential git
+```
 - Checkout OpenApoc from github
 - Fetch the dependencies from git with the following terminal command (run from the just-created OpenApoc folder)
--- git submodule init; git submodule init
+```
+git submodule init; git submodule init
+```
 -  Build our patched Physfs
 -- You can do this by typing the following command in a terminal from the dependencies/physfs directory:
---- cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .; make
+```
+cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .; make
+```
 -- Install the patched physfs with the following command in the terminal (also in the physfs directory - providing your password if prompted)
---- sudo make install
+```
+sudo make install
+```
 - Create a subdirectory ('build' in this example) in the OpenApoc checkout directory, and from that use cmake to configure OpenApoc:
--- cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+```
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..
+```
 - This cmake command will fail if we're missing a dependency, or your system is for some other reason unable to build - if you have any issues please contact us (see above for links)
 - Build the project with the following command
--- make -j4
+```
+make -j4
+```
 - This should create a directory 'bin' under the build directory, with the 'OpenApoc' executable file, and the 'data' directory already in place.
 - Copy the cd.iso file to the 'data' directory under build/bin
 - Change to the build/bin directory
+```
+cd bin
+```
 - Run openapoc
--- ./OpenApoc
+```
+./OpenApoc
+```
