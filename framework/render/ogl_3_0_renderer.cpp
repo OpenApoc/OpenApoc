@@ -1,24 +1,26 @@
-#include "framework/renderer.h"
+#include "framework/renderer_interface.h"
+#include "framework/logger.h"
 #include "framework/image.h"
 #include "framework/palette.h"
 #include <memory>
 #include <array>
 
-#include "gl_3_0.cpp"
-
-namespace OpenApoc {
+#include "framework/render/gl_3_0.cpp"
 
 namespace {
+
+using namespace OpenApoc;
 
 class Program
 {
 	public:
 		GLuint prog;
-		static GLuint CreateShader(GLenum type, const std::string source)
+		static GLuint CreateShader(GLenum type, const UString source)
 		{
 			GLuint shader = gl::CreateShader(type);
-			const GLchar *string = source.c_str();
-			GLint stringLength = source.length();
+			auto sourceString = source.str();
+			const GLchar *string = sourceString.c_str();
+			GLint stringLength = sourceString.length();
 			gl::ShaderSource(shader, 1, &string, &stringLength);
 			gl::CompileShader(shader);
 			GLint compileStatus;
@@ -32,24 +34,24 @@ class Program
 			std::unique_ptr<char[]> log(new char[logLength]);
 			gl::GetShaderInfoLog(shader, logLength, NULL, log.get());
 
-			std::cerr << "Shader compile error:\n\"" << std::string(log.get()) << "\"\n";
+			LogError("Shader compile error: %s", log.get());
 
 			gl::DeleteShader(shader);
 			return 0;
 		}
-		Program(const std::string vertexSource, const std::string fragmentSource)
+		Program(const UString vertexSource, const UString fragmentSource)
 			: prog(0)
 		{
 			GLuint vShader = CreateShader(gl::VERTEX_SHADER, vertexSource);
 			if (!vShader)
 			{
-				std::cerr << "Failed to compile vertex shader\n";
+				LogError("Failed to compile vertex shader");
 				return;
 			}
 			GLuint fShader = CreateShader(gl::FRAGMENT_SHADER, fragmentSource);
 			if (!fShader)
 			{
-				std::cerr << "Failed to compile fragment shader\n";
+				LogError("Failed to compile fragment shader");
 				gl::DeleteShader(vShader);
 				return;
 			}
@@ -74,7 +76,7 @@ class Program
 			std::unique_ptr<char[]> log(new char[logLength]);
 			gl::GetProgramInfoLog(prog, logLength, NULL, log.get());
 
-			std::cerr << "Program link error:\n\"" << std::string(log.get()) << "\"\n";
+			LogError("Program link error: %s", log.get());
 
 			gl::DeleteProgram(prog);
 			prog = 0;
@@ -120,7 +122,7 @@ class Program
 class SpriteProgram : public Program
 {
 	protected:
-		SpriteProgram(const std::string vertexSource, const std::string fragmentSource)
+		SpriteProgram(const UString vertexSource, const UString fragmentSource)
 			: Program(vertexSource, fragmentSource)
 			{
 			}
@@ -457,11 +459,13 @@ public:
 			case gl::TEXTURE_2D: return gl::TEXTURE_BINDING_2D;
 			case gl::TEXTURE_3D: return gl::TEXTURE_BINDING_3D;
 			case gl::TEXTURE_2D_ARRAY: return gl::TEXTURE_BINDING_2D_ARRAY;
-			default: assert(0);
+			default:
+				LogError("Unknown texture enum %d", (int)e);
+				return gl::TEXTURE_BINDING_2D;
 		}
 	}
 	BindTexture(GLuint id, GLint unit = 0, GLenum bind = gl::TEXTURE_2D)
-		: unit(unit), bind(bind)
+		: bind(bind), unit(unit) 
 	{
 		ActiveTexture a(unit);
 		gl::GetIntegerv(getBindEnum(bind), (GLint*)&prevID);
@@ -535,7 +539,7 @@ class GLRGBImage : public RendererImageData
 		Vec2<float> size;
 		std::weak_ptr<RGBImage> parent;
 		GLRGBImage(std::shared_ptr<RGBImage> parent)
-			: parent(parent), size(parent->size)
+			: size(parent->size), parent(parent)
 		{
 			RGBImageLock l(parent, ImageLockUse::Read);
 			gl::GenTextures(1, &this->texID);
@@ -558,7 +562,7 @@ class GLPalette : public RendererImageData
 		Vec2<float> size;
 		std::weak_ptr<Palette> parent;
 		GLPalette(std::shared_ptr<Palette> parent)
-			: parent(parent), size(Vec2<float>(parent->colours.size(), 1))
+			: size(Vec2<float>(parent->colours.size(), 1)), parent(parent)
 		{
 			gl::GenTextures(1, &this->texID);
 			BindTexture b(this->texID);
@@ -580,7 +584,7 @@ class GLPaletteImage : public RendererImageData
 		Vec2<float> size;
 		std::weak_ptr<PaletteImage> parent;
 		GLPaletteImage(std::shared_ptr<PaletteImage> parent)
-			: parent(parent), size(parent->size)
+			: size(parent->size), parent(parent)
 		{
 			PaletteImageLock l(parent, ImageLockUse::Read);
 			gl::GenTextures(1, &this->texID);
@@ -617,7 +621,7 @@ class GLPaletteSpritesheet : public RendererImageData
 			std::unique_ptr<char[]> zeros(new char[maxSize.x * maxSize.y]);
 			memset(zeros.get(), 1, maxSize.x * maxSize.y);
 
-			for (int i = 0; i < numSprites; i++)
+			for (unsigned int i = 0; i < numSprites; i++)
 			{
 				std::shared_ptr<PaletteImage> img =
 					std::dynamic_pointer_cast<PaletteImage>(parent->images[i]);
@@ -686,14 +690,59 @@ public:
 	}
 	
 	virtual void draw(std::shared_ptr<Image> i, Vec2<float> position);
-	virtual void drawRotated(Image &i, Vec2<float> center, Vec2<float> position, float angle){};
-	virtual void drawScaled(Image &i, Vec2<float> position, Vec2<float> size, Scaler scaler = Scaler::Linear){};
-	virtual void drawTinted(Image &i, Vec2<float> position, Colour tint){};
+	virtual void drawRotated(Image &i, Vec2<float> center, Vec2<float> position, float angle)
+	{
+		LogError("Unimplemented function");
+		std::ignore = i;
+		std::ignore = center;
+		std::ignore = position;
+		std::ignore = angle;
+	};
+	virtual void drawScaled(Image &i, Vec2<float> position, Vec2<float> size, Scaler scaler = Scaler::Linear)
+	{
+		LogError("Unimplemented function");
+		std::ignore = i;
+		std::ignore = position;
+		std::ignore = size;
+		std::ignore = scaler;
+	};
+	virtual void drawTinted(Image &i, Vec2<float> position, Colour tint)
+	{
+		LogError("Unimplemented function");
+		std::ignore = i;
+		std::ignore = position;
+		std::ignore = tint;
+	};
 	virtual void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c);
-	virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c, float thickness = 1.0){};
-	virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0){};
+	virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c, float thickness = 1.0)
+	{
+		this->drawLine(position, Vec2<float>{position.x + size.x, position.y}, c, thickness);
+		this->drawLine(Vec2<float>{position.x + size.x, position.y}, Vec2<float>{position.x + size.x, position.y + size.y}, c, thickness);
+		this->drawLine(Vec2<float>{position.x + size.x, position.y + size.y}, Vec2<float>{position.x, position.y + size.y}, c, thickness);
+		this->drawLine(Vec2<float>{position.x, position.y + size.y}, position, c, thickness);
+	};
+	virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0)
+	{
+		//FIXME: Hack - allow axis-aligned lines to be drawn using the drawFilledRect() fn
+		if (p1.x == p2.x)
+		{
+			if (p1.y > p2.y)
+				std::swap(p1, p2);
+			this->drawFilledRect(p1, Vec2<float>{thickness, p2.y - p1.y}, c);
+		}
+		else if (p1.y == p2.y)
+		{
+			if (p1.x > p2.x)
+				std::swap(p1, p2);
+			this->drawFilledRect(p1, Vec2<float>{p2.x - p1.x, thickness}, c);
+		}
+		else
+		{
+			LogError("Unimplemented function {%f,%f},{%f,%f}", p1.x, p1.y, p2.x, p2.y);
+		}
+	};
 	virtual void flush();
-	virtual std::string getName();
+	virtual UString getName();
 	virtual std::shared_ptr<Surface>getDefaultSurface()
 	{
 		return this->defaultSurface;
@@ -708,7 +757,6 @@ public:
 	}
 
 
-
 	void DrawRGB(GLRGBImage &img, Vec2<float> offset)
 	{
 		BindProgram(rgbProgram);
@@ -719,7 +767,7 @@ public:
 		BindTexture t(img.texID);
 		IdentityQuad::draw(rgbProgram->posLoc);
 	}
-	
+
 	void DrawPalette(GLPaletteImage &img, Vec2<float> offset)
 	{
 		BindProgram(paletteProgram);
@@ -775,7 +823,7 @@ public:
 	public:
 		std::array<BatchedVertex, 4> vertices;
 		BatchedSprite(Vec2<float> screenPosition, Vec2<float> spriteSize,
-			int spriteIdx, Vec2<float> maxTexSize)
+			int spriteIdx)
 		{
 			Vec2<float> maxTexCoords = spriteSize;
 			Vec2<float> maxPosition = screenPosition + spriteSize;
@@ -835,18 +883,18 @@ public:
 
 		this->batchedSprites.clear();
 		this->state = RendererState::Idle;
-		
+
 	}
 
 };
 
 
 OGL30Renderer::OGL30Renderer()
-	: rgbProgram(new RGBProgram()), colourProgram(new SolidColourProgram()), paletteProgram(new PaletteProgram()), paletteSetProgram(new PaletteSetProgram())
+	: state(RendererState::Idle), rgbProgram(new RGBProgram()), colourProgram(new SolidColourProgram()), paletteProgram(new PaletteProgram()), paletteSetProgram(new PaletteSetProgram()), currentBoundProgram(0)
 {
 	GLint viewport[4];
 	gl::GetIntegerv(gl::VIEWPORT, viewport);
-	std::cerr << "Viewport {" << viewport[0] << "," << viewport[1] << "," << viewport[2] << "," << viewport[3] << "}\n";
+	LogInfo("Viewport {%d,%d,%d,%d}", viewport[0], viewport[1], viewport[2], viewport[3]);
 	assert(viewport[0] == 0 && viewport[1] == 0);
 	this->defaultSurface = std::make_shared<Surface>(Vec2<int>{viewport[2], viewport[3]});
 	this->defaultSurface->rendererPrivateData.reset(new FBOData(0));
@@ -854,14 +902,14 @@ OGL30Renderer::OGL30Renderer()
 
 	GLint maxTexArrayLayers;
 	gl::GetIntegerv(gl::MAX_ARRAY_TEXTURE_LAYERS, &maxTexArrayLayers);
-	std::cerr << "MAX_ARRAY_TEXTURE_LAYERS: \"" << maxTexArrayLayers << "\"\n";
+	LogInfo("MAX_ARRAY_TEXTURE_LAYERS: %d", maxTexArrayLayers);
 	this->maxBatchedSprites = 256;
 	this->maxSpritesheetSize = maxTexArrayLayers;
-	
-	this->firstList.reset(new GLint[this->maxBatchedSprites]); 
-	this->countList.reset(new GLsizei[this->maxBatchedSprites]); 
 
-	for (int i = 0; i < this->maxBatchedSprites; i++)
+	this->firstList.reset(new GLint[this->maxBatchedSprites]);
+	this->countList.reset(new GLsizei[this->maxBatchedSprites]);
+
+	for (unsigned int i = 0; i < this->maxBatchedSprites; i++)
 	{
 		this->firstList[i] = 4*i;
 		this->countList[i] = 4;
@@ -869,7 +917,7 @@ OGL30Renderer::OGL30Renderer()
 
 	GLint maxTexUnits;
 	gl::GetIntegerv(gl::MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTexUnits);
-	std::cerr << "MAX_COMBINED_TEXTURE_IMAGE_UNITS: \"" << maxTexUnits << "\"\n";
+	LogInfo("MAX_COMBINED_TEXTURE_IMAGE_UNITS: %d", maxTexUnits);
 	gl::Enable(gl::BLEND);
 	gl::BlendFunc(gl::SRC_ALPHA, gl::ONE_MINUS_SRC_ALPHA);
 }
@@ -915,7 +963,7 @@ void OGL30Renderer::draw(std::shared_ptr<Image> image, Vec2<float> position)
 		this->state = RendererState::BatchingSpritesheet;
 		this->batchedSprites.emplace_back(
 				position, Vec2<float>(image->size.x, image->size.y),
-				image->indexInSet, Vec2<float>{owningSet->maxSize.x, owningSet->maxSize.y}
+				image->indexInSet
 			);
 		return;
 	}
@@ -962,6 +1010,7 @@ void OGL30Renderer::draw(std::shared_ptr<Image> image, Vec2<float> position)
 }
 void OGL30Renderer::drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c)
 {
+	this->flush();
 	DrawRect(position, size, c);
 }
 
@@ -979,28 +1028,37 @@ OGL30Renderer::flush()
 	this->state = RendererState::Idle;
 }
 
-std::string
+UString
 OGL30Renderer::getName()
 {
 	return "OGL3.0 Renderer";
 }
 
-}; //anonymouse namespace
-
-OpenApoc::Renderer *
-OpenApoc::Renderer::createRenderer()
+class OGL30RendererFactory : public OpenApoc::RendererFactory
 {
-	auto success = gl::sys::LoadFunctions();
-	if (!success)
+bool alreadyInitialised;
+bool functionLoadSuccess;
+public:
+	OGL30RendererFactory()
+		: alreadyInitialised(false), functionLoadSuccess(false){}
+	virtual OpenApoc::Renderer *create()
 	{
-		std::cerr << "Failed to load GL3.0\n";
+		if (!alreadyInitialised)
+		{
+			alreadyInitialised = true;
+			auto success = gl::sys::LoadFunctions();
+			if (!success)
+				return nullptr;
+			if (success.GetNumMissing())
+				return nullptr;
+			functionLoadSuccess = true;
+		}
+		if (functionLoadSuccess)
+			return new OGL30Renderer();
 		return nullptr;
 	}
-	if (success.GetNumMissing())
-	{
-		std::cerr << "Failed to load " << success.GetNumMissing() << " GL3.0 functions\n";
-		return nullptr;
-	}
-	return new OGL30Renderer();
-}
-}; //namesapce OpenApoc
+};
+
+OpenApoc::RendererRegister<OGL30RendererFactory> register_at_load_gl_3_0_renderer("GL_3_0");
+
+}; //anonymous namespace

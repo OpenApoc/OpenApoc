@@ -2,7 +2,8 @@
 #pragma once
 
 #include "framework/includes.h"
-#include "game/resources/ifont.h"
+#include "framework/font.h"
+
 
 namespace OpenApoc {
 
@@ -11,32 +12,22 @@ class Framework;
 class Image;
 class Renderer;
 
-class ApocalypseFont : public IFont
+class ApocalypseFont : public BitmapFont
 {
 
 	private:
-		std::vector<std::shared_ptr<Image> > fontbitmaps;
-		std::vector<int> fontwidths;
+		ApocalypseFont(){};
+		std::map<UniChar, std::shared_ptr<PaletteImage> > fontbitmaps;
 		int spacewidth;
 		int fontheight;
+		UString name;
 
 	public:
-		static std::string FontCharacterSet;
-
-		enum FontType
-		{
-			LargeFont,
-			SmallFont,
-			TinyFont
-		};
-
-		ApocalypseFont( Framework &fw, FontType Face, std::shared_ptr<Palette> ColourPalette );
-		~ApocalypseFont();
-
-		virtual void DrawString( Renderer &r, int X, int Y, std::string Text, int Alignment );
-
+		static std::shared_ptr<ApocalypseFont> loadFont(Framework &fw, tinyxml2::XMLElement *fontElement);
+		virtual ~ApocalypseFont();
+		virtual std::shared_ptr<PaletteImage> getGlyph(UniChar codepoint);
 		virtual int GetFontHeight();
-		virtual int GetFontWidth(std::string Text);
+		virtual UString getName();
 
 };
 }; //namespace OpenApoc

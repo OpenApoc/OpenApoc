@@ -1,6 +1,6 @@
 
-#include "list.h"
-#include "vscrollbar.h"
+#include "forms/list.h"
+#include "forms/vscrollbar.h"
 
 namespace OpenApoc {
 

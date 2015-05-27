@@ -41,7 +41,7 @@ class Control
 		Framework &fw;
 
 	public:
-		std::string Name;
+		UString Name;
 		Vec2<int> Location;
 		Vec2<int> Size;
 		Colour BackgroundColour;
@@ -60,7 +60,7 @@ class Control
 		virtual void UnloadResources();
 
 		Control* operator[]( int Index );
-		Control* FindControl( std::string ID );
+		Control* FindControl( UString ID );
 
 		Control* GetParent();
 		Form* GetForm();

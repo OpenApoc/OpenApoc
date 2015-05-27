@@ -10,7 +10,7 @@ class Vehicle;
 class VehicleDefinition
 {
 public:
-	std::string name;
+	UString name;
 	Vehicle::Type type;
 	std::map<Vehicle::Banking, std::map<Vehicle::Direction, std::shared_ptr<Image> > > sprites;
 	Vec3<float> size;
@@ -22,12 +22,12 @@ private:
 
 	Framework &fw;
 
-	std::map<std::string, VehicleDefinition> defs;
+	std::map<UString, VehicleDefinition> defs;
 public:
 	VehicleFactory(Framework &fw);
 	~VehicleFactory();
 	void ParseVehicleDefinition(tinyxml2::XMLElement *root);
-	std::shared_ptr<Vehicle> create(const std::string name);
+	std::shared_ptr<Vehicle> create(const UString name);
 };
 
 };

@@ -5,12 +5,13 @@
 	path = dependencies/allegro
 	url = git://git.code.sf.net/p/alleg/allegro
 	branch = 5.0
-[submodule "dependencies/freetype"]
-	path = dependencies/freetype
-	url = git://git.sv.nongnu.org/freetype/freetype2.git
 [submodule "dependencies/glm"]
 	path = dependencies/glm
-	url = https://github.com/g-truc/glm.git
+	url = https://github.com/JonnyH/glm.git
+	branch = 0.9.6
 [submodule "dependencies/physfs"]
 	path = dependencies/physfs
 	url = https://github.com/JonnyH/physfs-hg-import.git
+[submodule "dependencies/icu55"]
+	path = dependencies/icu55
+	url = https://github.com/JonnyH/icu55.git

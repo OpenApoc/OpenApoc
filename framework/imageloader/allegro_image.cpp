@@ -1,11 +1,15 @@
-#include "framework/image.h"
+#include "framework/imageloader_interface.h"
+#include "framework/logger.h"
 #include "library/vec.h"
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_physfs.h>
 
+using namespace OpenApoc;
+
 namespace {
+
 
 class AllegroImageLoader : public OpenApoc::ImageLoader
 {
@@ -20,12 +24,12 @@ public:
 		al_shutdown_image_addon();
 	}
 
-	virtual std::shared_ptr<OpenApoc::Image> loadImage(std::string path)
+	virtual std::shared_ptr<OpenApoc::Image> loadImage(UString path)
 	{
-		ALLEGRO_BITMAP *bmp = al_load_bitmap(path.c_str());
+		ALLEGRO_BITMAP *bmp = al_load_bitmap(path.str().c_str());
 		if (!bmp)
 		{
-			std::cerr << "AllegroImageLoader: Failed to read image \"" << path << "\"\n";
+			LogInfo("Failed to read image %s", path.str().c_str());
 			return nullptr;
 		}
 
@@ -51,16 +55,25 @@ public:
 		al_destroy_bitmap(bmp);
 		return img;
 	}
+
+	virtual UString getName()
+	{
+		return "allegro";
+	}
 };
 
-}; //anonymous namespace
-
-namespace OpenApoc{
-
-ImageLoader*
-createImageLoader()
+class AllegroImageLoaderFactory : public OpenApoc::ImageLoaderFactory
 {
-	return new AllegroImageLoader();
-}
+public:
+	virtual OpenApoc::ImageLoader *create()
+	{
+		return new AllegroImageLoader();
+	}
+	virtual ~AllegroImageLoaderFactory()
+	{
+	}
+};
 
-}; //namespace OpenApoc
+OpenApoc::ImageLoaderRegister<AllegroImageLoaderFactory> register_at_load_allegro_image("allegro");
+
+}; //anonymous namespace

@@ -1,10 +1,12 @@
 
-#include "mainmenu.h"
+#include "game/general/mainmenu.h"
 #include "framework/framework.h"
-#include "optionsmenu.h"
-#include "difficultymenu.h"
+#include "game/general/optionsmenu.h"
+#include "game/general/difficultymenu.h"
 
 namespace OpenApoc {
+
+std::vector<UString> tracks {"music:0"};
 
 MainMenu::MainMenu(Framework &fw)
 	: Stage(fw)
@@ -18,18 +20,15 @@ MainMenu::~MainMenu()
 
 void MainMenu::Begin()
 {
-	musicplayer = std::unique_ptr<Music>(new Music(fw, 0));
-	musicplayer->Play();
+	fw.jukebox->play(tracks);
 }
 
 void MainMenu::Pause()
 {
-	musicplayer->Stop();
 }
 
 void MainMenu::Resume()
 {
-	musicplayer->Play();
 }
 
 void MainMenu::Finish()
@@ -90,7 +89,6 @@ void MainMenu::Update(StageCmd * const cmd)
 
 void MainMenu::Render()
 {
-	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
 	mainmenuform->Render();
 	fw.gamecore->MouseCursor->Render();
 }

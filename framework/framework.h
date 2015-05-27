@@ -6,15 +6,24 @@
 #define __func__ __FUNCTION__
 #endif
 
+#include "logger.h"
 #include "includes.h"
 #include "event.h"
 #include "data.h"
 #include "stagestack.h"
 #include "renderer.h"
+#include "sound.h"
+#include "font.h"
 
 #include "library/configfile.h"
+#include "library/strings.h"
 
 #include "game/gamestate.h"
+
+//FIXME: Remove core-allegro
+//Required for input types
+#include <allegro5/allegro.h>
+#include <fstream>
 
 namespace OpenApoc {
 
@@ -28,8 +37,13 @@ class FrameworkPrivate;
 class Framework
 {
 	private:
+		bool dumpEvents;
+		bool replayEvents;
+		std::fstream eventStream;
 		std::unique_ptr<FrameworkPrivate> p;
-		std::string programName;
+		UString programName;
+		void Audio_Initialise();
+		void Audio_Shutdown();
 	public:
 		std::unique_ptr<Data> data;
 		GameState state;
@@ -37,14 +51,18 @@ class Framework
 
 		std::unique_ptr<ConfigFile> Settings;
 		std::unique_ptr<Renderer> renderer;
+		std::unique_ptr<SoundBackend> soundBackend;
+		std::unique_ptr<JukeBox> jukebox;
 
-		Framework(const std::string programName);
+		Framework(const UString programName, const std::vector<UString> cmdline);
 		~Framework();
 
 		void Run();
 		void ProcessEvents();
 		void PushEvent( Event* e );
+		void DumpEvent( Event* e );
 		void TranslateAllegroEvents();
+		void ReadRecordedEvents();
 		void ShutdownFramework();
 		bool IsShuttingDown();
 
@@ -54,13 +72,7 @@ class Framework
 		void Display_Shutdown();
 		int Display_GetWidth();
 		int Display_GetHeight();
-		void Display_SetTitle( std::string* NewTitle );
-		void Display_SetTitle( std::string NewTitle );
-
-		void Audio_Initialise();
-		void Audio_Shutdown();
-		void Audio_PlayAudio( std::string Filename, bool Loop );
-		void Audio_StopAudio();
+		void Display_SetTitle( UString NewTitle );
 
 		bool IsSlowMode();
 		void SetSlowMode(bool SlowEnabled);

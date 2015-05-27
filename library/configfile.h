@@ -10,19 +10,19 @@ namespace OpenApoc {
 class ConfigFile
 {
 	private:
-		std::map<std::string, std::string> values;
-		std::map<std::string, std::string> defaults;
+		std::map<UString, UString> values;
+		std::map<UString, UString> defaults;
 
 	public:
-		ConfigFile(const std::string fileName, std::map<std::string, std::string> defaults);
-		void save(const std::string fileName);
+		ConfigFile(const UString fileName, std::map<UString, UString> defaults);
+		void save(const UString fileName);
 
-		int getInt(const std::string key);
-		bool getBool(const std::string key);
-		std::string getString(const std::string key);
-		void set(const std::string key, bool value);
-		void set(const std::string key, int value);
-		void set(const std::string key, const std::string value);
+		int getInt(UString key);
+		bool getBool(UString key);
+		UString getString(UString key);
+		void set(const UString key, bool value);
+		void set(const UString key, int value);
+		void set(const UString key, const UString value);
 
 };
 

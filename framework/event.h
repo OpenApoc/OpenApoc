@@ -31,6 +31,7 @@ enum EventTypes
 	EVENT_AUDIO_STREAM_FINISHED,
 	EVENT_FORM_INTERACTION,
 	EVENT_USER,
+	EVENT_END_OF_FRAME,
 	EVENT_UNDEFINED
 };
 
@@ -105,11 +106,15 @@ class Event
 		EventTypes Type;
 		EventData Data;
 
+		UString toString();
+
 		/*
 			Constructor: Event
 			Defaults the <Type> to Undefined
 		*/
 		Event();
+		// Constructs an Event from event->toString() output
+		Event(const UString &str);
 
 		/*
 			Destructor: ~Event

@@ -1,15 +1,18 @@
 
-#include "framework.h"
+#include "framework/framework.h"
 #include "game/boot.h"
 #include "game/resources/gamecore.h"
 #include "game/city/city.h"
-#include "renderer.h"
+#include "framework/renderer.h"
+#include "framework/renderer_interface.h"
+#include "framework/sound_interface.h"
+#include "framework/sound.h"
 
 #include <allegro5/allegro5.h>
-#include <allegro5/allegro_font.h>
-#include <allegro5/allegro_ttf.h>
-#include <allegro5/allegro_audio.h>
-#include <allegro5/allegro_acodec.h>
+#include <iostream>
+#include <string>
+
+using namespace OpenApoc;
 
 namespace {
 
@@ -17,7 +20,7 @@ namespace {
 #define DATA_DIRECTORY "./data"
 #endif
 
-static std::map<std::string, std::string> defaultConfig =
+static std::map<UString, UString> defaultConfig =
 {
 #ifdef PANDORA
 	{"Visual.ScreenWidth", "800"},
@@ -34,11 +37,87 @@ static std::map<std::string, std::string> defaultConfig =
 	{"Resource.SystemDataDir", DATA_DIRECTORY},
 	{"Resource.LocalCDPath", "./data/cd.iso"},
 	{"Resource.SystemCDPath", DATA_DIRECTORY "/cd.iso"},
+	{"Visual.RendererList", "GL_3_0;GL_2_1;allegro"},
+	{ "Audio.Backends", "allegro;null" },
 };
+
+std::map<UString, std::unique_ptr<OpenApoc::RendererFactory>> *registeredRenderers = nullptr;
+std::map<UString, std::unique_ptr<OpenApoc::SoundBackendFactory>> *registeredSoundBackends = nullptr;
 
 };
 
 namespace OpenApoc {
+
+void registerRenderer(RendererFactory* factory, UString name)
+{
+	if (!registeredRenderers)
+		registeredRenderers = new std::map<UString, std::unique_ptr<OpenApoc::RendererFactory>>();
+	registeredRenderers->emplace(name, std::unique_ptr<RendererFactory>(factory));
+}
+
+void registerSoundBackend(SoundBackendFactory *factory, UString name)
+{
+	if (!registeredSoundBackends)
+		registeredSoundBackends = new std::map<UString, std::unique_ptr<OpenApoc::SoundBackendFactory>>();
+	registeredSoundBackends->emplace(name, std::unique_ptr<SoundBackendFactory>(factory));
+}
+
+
+class JukeBoxImpl : public JukeBox
+{
+	Framework &fw;
+	unsigned int position;
+	std::vector<std::shared_ptr<MusicTrack>> trackList;
+	JukeBox::PlayMode mode;
+public:
+	JukeBoxImpl(Framework &fw)
+		:fw(fw), mode(JukeBox::PlayMode::Loop)
+	{
+
+	}
+	virtual ~JukeBoxImpl()
+	{
+		this->stop();
+	}
+
+	virtual void play(std::vector<UString> tracks, JukeBox::PlayMode mode)
+	{
+		this->trackList.clear();
+		this->position = 0;
+		this->mode = mode;
+		for (auto &track : tracks)
+		{
+			auto musicTrack = fw.data->load_music(track);
+			if (!musicTrack)
+				LogError("Failed to load music track \"%s\" - skipping", track.str().c_str());
+			else
+				this->trackList.push_back(musicTrack);
+		}
+		this->progressTrack(this);
+	}
+	static void progressTrack(void *data)
+	{
+		JukeBoxImpl *jukebox = static_cast<JukeBoxImpl*>(data);
+		if (jukebox->trackList.size() == 0)
+		{
+			LogWarning("Trying to play empty jukebox");
+			return;
+		}
+		if (jukebox->position >= jukebox->trackList.size())
+		{
+			LogInfo("End of jukebox playlist");
+			return;
+		}
+		jukebox->fw.soundBackend->playMusic(jukebox->trackList[jukebox->position], progressTrack, jukebox);
+		jukebox->position++;
+		if (jukebox->mode == JukeBox::PlayMode::Loop)
+			jukebox->position = jukebox->position % jukebox->trackList.size();
+	}
+	virtual void stop()
+	{
+		fw.soundBackend->stopMusic();
+	}
+};
 
 class FrameworkPrivate
 {
@@ -54,64 +133,107 @@ class FrameworkPrivate
 		std::list<Event*> eventQueue;
 		ALLEGRO_MUTEX *eventMutex;
 
-		ALLEGRO_MIXER *audioMixer;
-		ALLEGRO_VOICE *audioVoice;
-
 		StageStack ProgramStages;
 		std::shared_ptr<Surface> defaultSurface;
 };
 
 
 
-Framework::Framework(const std::string programName)
-	: programName(programName), p(new FrameworkPrivate)
+Framework::Framework(const UString programName, const std::vector<UString> cmdline)
+	: dumpEvents(false), replayEvents(false), p(new FrameworkPrivate), programName(programName)
 {
-#ifdef WRITE_LOG
-	printf( "Framework: Startup: Allegro\n" );
-#endif
-	PHYSFS_init(programName.c_str());
+	LogInfo("Starting framework");
+	PHYSFS_init(programName.str().c_str());
 
 	if( !al_init() )
 	{
-		printf( "Framework: Error: Cannot init Allegro\n" );
+		LogError("Cannot init Allegro");
 		p->quitProgram = true;
 		return;
 	}
 
-	al_init_font_addon();
-	if( !al_install_keyboard() || !al_install_mouse() || !al_init_ttf_addon())
+	if( !al_install_keyboard() || !al_install_mouse())
 	{
-		printf( "Framework: Error: Cannot init Allegro plugin\n" );
+		LogError(" Cannot init Allegro plugins");
 		p->quitProgram = true;
 		return;
 	}
 
-#ifdef NETWORK_SUPPORT
-	if( enet_initialize() != 0 )
-	{
-		printf( "Framework: Error: Cannot init enet\n" );
-		p->quitProgram = true;
-		return;
-	}
-#endif
-
-#ifdef WRITE_LOG
-	printf( "Framework: Startup: Variables and Config\n" );
-#endif
+	LogInfo("Loading config\n" );
 	p->quitProgram = false;
-	std::string settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
+	UString settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
 	settingsPath += "/settings.cfg";
 	Settings.reset(new ConfigFile(settingsPath, defaultConfig));
 
-	std::vector<std::string> resourcePaths;
+	for (auto &option : cmdline)
+	{
+		auto splitString = option.split('=');
+		if (splitString.size() != 2)
+		{
+			LogError("Failed to parse command line option \"%s\" - ignoring", option.str().c_str());
+			continue;
+		}
+		else if (splitString[0] == "--dumpevents")
+		{
+			if (this->replayEvents || this->dumpEvents)
+			{
+				LogError("Only one --dumpevents or --replayevents should be supplied, ignoring \"%s\"", option.str().c_str());
+			}
+			else
+			{
+				this->eventStream.open(splitString[1].str(), std::ios::out);
+				if (!this->eventStream)
+				{
+					LogError("Failed to open event file \"%s\" for writing - ignoring --dumpevents option", splitString[1].str().c_str());
+				}
+				else
+				{
+					this->dumpEvents = true;
+					LogInfo("Dumping events to file \"%s\"", splitString[1].str().c_str());
+				}
+			}
+		}
+		else if (splitString[0] == "--replayevents")
+		{
+			if (this->replayEvents || this->dumpEvents)
+			{
+				LogError("Only one --dumpevents or --replayevents should be supplied, ignoring \"%s\"", option.str().c_str());
+			}
+			else
+			{
+				this->eventStream.open(splitString[1].str(), std::ios::in);
+				if (!this->eventStream)
+				{
+					LogError("Failed to open event file \"%s\" for reading - ignoring --replayevents option", splitString[1].str().c_str());
+				}
+				else
+				{
+					this->replayEvents = true;
+					LogInfo("Replaying events from file \"%s\"", splitString[1].str().c_str());
+				}
+			}
+		}
+		else
+		{
+			LogInfo("Setting option \"%s\" to \"%s\" from command line", splitString[0].str().c_str(), splitString[1].str().c_str());
+			Settings->set(splitString[0], splitString[1]);
+		}
+
+	}
+
+	std::vector<UString> resourcePaths;
 	resourcePaths.push_back(Settings->getString("Resource.SystemCDPath"));
 	resourcePaths.push_back(Settings->getString("Resource.LocalCDPath"));
 	resourcePaths.push_back(Settings->getString("Resource.SystemDataDir"));
 	resourcePaths.push_back(Settings->getString("Resource.LocalDataDir"));
 
-	this->data.reset(new Data(resourcePaths));
+	this->data.reset(new Data(*this, resourcePaths));
 
-	auto testFile = this->data->load_file("MUSIC", "r");
+	auto testFile = this->data->load_file("MUSIC", Data::FileMode::Read);
+	if (!testFile)
+	{
+		LogError("Failed to open \"music\" from the CD - likely the cd couldn't be loaded or paths are incorrect if using an extracted CD image");
+	}
 
 	p->eventAllegro = al_create_event_queue();
 	p->eventMutex = al_create_mutex_recursive();
@@ -129,38 +251,24 @@ Framework::Framework(const std::string programName)
 
 Framework::~Framework()
 {
+	LogInfo("Destroying framework");
 	//Kill gamecore and program stages first, so any resources are cleaned before
 	//allegro is de-inited
 	state.clear();
 	gamecore.reset();
 	p->ProgramStages.Clear();
-#ifdef WRITE_LOG
-	printf( "Framework: Save Config\n" );
-#endif
+	LogInfo("Saving config");
 	SaveSettings();
 
-#ifdef WRITE_LOG
-	printf( "Framework: Shutdown\n" );
-#endif
+	LogInfo("Shutdown");
 	Display_Shutdown();
 	Audio_Shutdown();
 	al_destroy_event_queue( p->eventAllegro );
 	al_destroy_mutex( p->eventMutex );
 
-#ifdef NETWORK_SUPPORT
-#ifdef WRITE_LOG
-	printf( "Framework: Shutdown enet\n" );
-#endif
-	enet_deinitialize();
-#endif
-
-#ifdef WRITE_LOG
-	printf( "Framework: Shutdown Allegro\n" );
-#endif
-	al_shutdown_ttf_addon();
+	LogInfo("Allegro shutdown");
 	al_uninstall_mouse();
 	al_uninstall_keyboard();
-	al_shutdown_font_addon();
 
 	al_uninstall_system();
 	PHYSFS_deinit();
@@ -168,11 +276,11 @@ Framework::~Framework()
 
 void Framework::Run()
 {
-#ifdef WRITE_LOG
-	printf( "Framework: Run.Program Loop\n" );
-#endif
+	LogInfo("Program loop started");
 
 	p->ProgramStages.Push( std::make_shared<BootUp>(*this) );
+
+	this->renderer->setPalette(this->data->load_palette("xcom3/ufodata/PAL_06.DAT"));
 
 
 	while( !p->quitProgram )
@@ -212,14 +320,39 @@ void Framework::Run()
 			p->ProgramStages.Current()->Render();
 			al_flip_display();
 		}
+		if (this->dumpEvents)
+		{
+			//insert END_OF_FRAME to mark the end of each frame
+			Event *e = new Event();
+			e->Type = EVENT_END_OF_FRAME;
+			DumpEvent(e);
+			delete e;
+		}
+	}
+}
+
+void Framework::ReadRecordedEvents()
+{
+	std::string line;
+	while (std::getline(this->eventStream, line))
+	{
+		Event *e = new Event(UString(line));
+		PushEvent(e);
+		if (e->Type == EVENT_END_OF_FRAME)
+			break;
+	}
+	if (!this->eventStream)
+	{
+		LogInfo("Reached end of reply, appending CLOSE");
+		Event *e = new Event();
+		e->Type = EVENT_WINDOW_CLOSED;
+		PushEvent( e );
 	}
 }
 
 void Framework::ProcessEvents()
 {
-#ifdef WRITE_LOG
-	printf( "Framework: ProcessEvents\n" );
-#endif
+	LogInfo("Processing events");
 
 	if( p->ProgramStages.IsEmpty() )
 	{
@@ -229,7 +362,10 @@ void Framework::ProcessEvents()
 
 	// Convert Allegro events before we process
 	// TODO: Consider threading the translation
-	TranslateAllegroEvents();
+	if (this->replayEvents)
+		ReadRecordedEvents();
+	else
+		TranslateAllegroEvents();
 
 	al_lock_mutex( p->eventMutex );
 
@@ -238,6 +374,12 @@ void Framework::ProcessEvents()
 		Event* e;
 		e = p->eventQueue.front();
 		p->eventQueue.pop_front();
+		if (!e) {
+			LogError("Invalid event on queue");
+			continue;
+		}
+		if (this->dumpEvents)
+			DumpEvent(e);
 		switch( e->Type )
 		{
 			case EVENT_WINDOW_CLOSED:
@@ -261,6 +403,14 @@ void Framework::PushEvent( Event* e )
 	al_lock_mutex( p->eventMutex );
 	p->eventQueue.push_back( e );
 	al_unlock_mutex( p->eventMutex );
+}
+
+void Framework::DumpEvent(Event* e)
+{
+	assert(e);
+	assert(this->eventStream);
+	this->eventStream << std::dec;
+	this->eventStream << e->toString().str() << "\n";
 }
 
 void Framework::TranslateAllegroEvents()
@@ -376,11 +526,6 @@ void Framework::TranslateAllegroEvents()
 				fwE->Data.Display.Active = false;
 				PushEvent( fwE );
 				break;
-			case ALLEGRO_EVENT_AUDIO_STREAM_FINISHED:
-				fwE = new Event();
-				fwE->Type = EVENT_AUDIO_STREAM_FINISHED;
-				PushEvent( fwE );
-				break;
 			default:
 				fwE = new Event();
 				fwE->Type = EVENT_UNDEFINED;
@@ -392,9 +537,7 @@ void Framework::TranslateAllegroEvents()
 
 void Framework::ShutdownFramework()
 {
-#ifdef WRITE_LOG
-	printf( "Framework: Shutdown Framework\n" );
-#endif
+	LogInfo("Shutdown framework");
 	p->ProgramStages.Clear();
 	p->quitProgram = true;
 }
@@ -402,16 +545,14 @@ void Framework::ShutdownFramework()
 void Framework::SaveSettings()
 {
 	// Just to keep the filename consistant
-	std::string settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
+	UString settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
 	settingsPath += "/settings.cfg";
 	Settings->save( settingsPath );
 }
 
 void Framework::Display_Initialise()
 {
-#ifdef WRITE_LOG
-	printf( "Framework: Initialise Display\n" );
-#endif
+	LogInfo("Init display");
 	int display_flags = ALLEGRO_OPENGL;
 #ifdef ALLEGRO_OPENGL_CORE
 	display_flags |= ALLEGRO_OPENGL_CORE;
@@ -436,7 +577,7 @@ void Framework::Display_Initialise()
 
 	if (!p->screen)
 	{
-		std::cerr << "Failed to create screen\n";
+		LogError("Failed to create screen");;
 		exit(1);
 	}
 
@@ -444,18 +585,37 @@ void Framework::Display_Initialise()
 
 	al_hide_mouse_cursor( p->screen );
 
-	this->renderer.reset(Renderer::createRenderer());
+	for (auto &rendererName : Settings->getString("Visual.RendererList").split(';'))
+	{
+		auto rendererFactory = registeredRenderers->find(rendererName);
+		if (rendererFactory == registeredRenderers->end())
+		{
+			LogInfo("Renderer \"%s\" not in supported list", rendererName.str().c_str());
+			continue;
+		}
+		Renderer *r = rendererFactory->second->create();
+		if (!r)
+		{
+			LogInfo("Renderer \"%s\" failed to init", rendererName.str().c_str());
+			continue;
+		}
+		this->renderer.reset(r);
+		LogInfo("Using renderer: %s", this->renderer->getName().str().c_str());
+		break;
+	}
+	if (!this->renderer)
+	{
+		LogError("No functional renderer found");
+		abort();
+	}
 	this->p->defaultSurface = this->renderer->getDefaultSurface();
 
-	std::cout << "Using renderer: " << this->renderer->getName() << "\n";
 
 }
 
 void Framework::Display_Shutdown()
 {
-#ifdef WRITE_LOG
-	printf( "Framework: Shutdown Display\n" );
-#endif
+	LogInfo("Shutdown Display");
 	p->defaultSurface.reset();
 	renderer.reset();
 
@@ -473,110 +633,51 @@ int Framework::Display_GetHeight()
 	return al_get_display_height( p->screen );
 }
 
-void Framework::Display_SetTitle( std::string* NewTitle )
+void Framework::Display_SetTitle( UString NewTitle )
 {
-	std::wstring widestr = std::wstring(NewTitle->begin(), NewTitle->end());
-	al_set_app_name( (char*)widestr.c_str() );
-	al_set_window_title( p->screen, (char*)widestr.c_str() );
-}
-
-void Framework::Display_SetTitle( std::string NewTitle )
-{
-	std::wstring widestr = std::wstring(NewTitle.begin(), NewTitle.end());
-	al_set_app_name( (char*)widestr.c_str() );
-	al_set_window_title( p->screen, (char*)widestr.c_str() );
+#ifdef _WIN32
+	al_set_app_name(NewTitle.str().c_str());
+	al_set_window_title(p->screen, NewTitle.str().c_str());
+#else
+	al_set_app_name(NewTitle.str().c_str());
+	al_set_window_title(p->screen, NewTitle.str().c_str());
+#endif
 }
 
 void Framework::Audio_Initialise()
 {
-#ifdef WRITE_LOG
-	printf( "Framework: Initialise Audio\n" );
-#endif
+	LogInfo("Initialise Audio");
 
-	p->audioVoice = 0;
-	p->audioMixer = 0;
-
-	if( !al_install_audio() )
+	for (auto &soundBackendName : Settings->getString("Audio.Backends").split(';'))
 	{
-		printf( "Audio_Initialise: Failed to install audio\n" );
-		return;
+		auto backendFactory = registeredSoundBackends->find(soundBackendName);
+		if (backendFactory == registeredSoundBackends->end())
+		{
+			LogInfo("Sound backend %s not in supported list", soundBackendName.str().c_str());
+			continue;
+		}
+		SoundBackend *backend = backendFactory->second->create();
+		if (!backend)
+		{
+			LogInfo("Sound backend %s failed to init", soundBackendName.str().c_str());
+			continue;
+		}
+		this->soundBackend.reset(backend);
+		LogInfo("Using sound backend %s", soundBackendName.str().c_str());
+		break;
 	}
-	if( !al_init_acodec_addon() )
+	if (!this->soundBackend)
 	{
-		printf( "Audio_Initialise: Failed to install codecs\n" );
-		return;
+		LogError("No functional sound backend found");
 	}
-
-	// Allow playing samples
-	al_reserve_samples( 10 );
-
-	p->audioVoice = al_create_voice(44100, ALLEGRO_AUDIO_DEPTH_INT16, ALLEGRO_CHANNEL_CONF_2);
-	if( p->audioVoice == 0 )
-	{
-		printf( "Audio_Initialise: Failed to create voice\n" );
-		return;
-	}
-	p->audioMixer = al_create_mixer(44100, ALLEGRO_AUDIO_DEPTH_FLOAT32, ALLEGRO_CHANNEL_CONF_2);
-	if( p->audioMixer == 0 )
-	{
-		printf( "Audio_Initialise: Failed to create mixer\n" );
-		al_destroy_voice( p->audioVoice );
-		p->audioVoice = 0;
-		return;
-	}
-	if( !al_attach_mixer_to_voice( p->audioMixer, p->audioVoice ) )
-	{
-		printf( "Audio_Initialise: Failed to attach mixer to voice\n" );
-		al_destroy_voice( p->audioVoice );
-		p->audioVoice = 0;
-		al_destroy_mixer( p->audioMixer );
-		p->audioMixer = 0;
-		return;
-	}
+	this->jukebox.reset(new JukeBoxImpl(*this));
 }
 
 void Framework::Audio_Shutdown()
 {
-#ifdef WRITE_LOG
-	printf( "Framework: Shutdown Audio\n" );
-#endif
-	if( p->audioVoice != 0 )
-	{
-		al_destroy_voice( p->audioVoice );
-		p->audioVoice = 0;
-	}
-	if( p->audioMixer != 0 )
-	{
-		al_destroy_mixer( p->audioMixer );
-		p->audioMixer = 0;
-	}
-	al_uninstall_audio();
-}
-
-void Framework::Audio_PlayAudio( std::string Filename, bool Loop )
-{
-	if( p->audioVoice == 0 || p->audioMixer == 0 )
-	{
-		return;
-	}
-
-#ifdef WRITE_LOG
-	printf( "Framework: Start audio file %s\n", Filename.c_str() );
-#endif
-
-
-}
-
-void Framework::Audio_StopAudio()
-{
-	if( p->audioVoice == 0 || p->audioMixer == 0 )
-	{
-		return;
-	}
-
-#ifdef WRITE_LOG
-	printf( "Framework: Stop audio\n" );
-#endif
+	LogInfo("Shutdown Audio");
+	this->jukebox.reset();
+	this->soundBackend.reset();
 }
 
 }; //namespace OpenApoc

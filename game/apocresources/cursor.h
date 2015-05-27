@@ -10,7 +10,7 @@ class Event;
 class Framework;
 class Image;
 
-class Cursor
+class ApocCursor
 {
 
 	private:
@@ -34,8 +34,8 @@ class Cursor
 
 		CursorType CurrentType;
 
-		Cursor( Framework &fw, std::shared_ptr<Palette> ColourPalette );
-		~Cursor();
+		ApocCursor( Framework &fw, std::shared_ptr<Palette> ColourPalette );
+		~ApocCursor();
 
 		void EventOccured( Event* e );
 		void Render();

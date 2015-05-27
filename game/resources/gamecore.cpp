@@ -1,7 +1,6 @@
 
-#include "gamecore.h"
-#include "../../framework/framework.h"
-#include "ttffont.h"
+#include "game/resources/gamecore.h"
+#include "framework/framework.h"
 
 namespace OpenApoc {
 
@@ -11,37 +10,48 @@ GameCore::GameCore(Framework &fw)
 	Loaded = false;
 }
 
-void GameCore::Load(std::string CoreXMLFilename, std::string Language)
+void GameCore::Load(UString CoreXMLFilename, UString Language)
 {
 	assert(Loaded == false);
 	language = Language;
 	ParseXMLDoc( CoreXMLFilename );
 	DebugModeEnabled = false;
 
-	MouseCursor = new Cursor( fw, fw.gamecore->GetPalette( "xcom3/tacdata/TACTICAL.PAL" ) );
+	MouseCursor = new ApocCursor( fw, fw.gamecore->GetPalette( "xcom3/tacdata/TACTICAL.PAL" ) );
 
 	Loaded = true;
 }
 
 GameCore::~GameCore()
 {
-	for (auto & font : fonts)
-		delete font.second;
 	for (auto & form : forms)
 		delete form.second;
 	delete MouseCursor;
 }
 
-void GameCore::ParseXMLDoc( std::string XMLFilename )
+void GameCore::ParseXMLDoc( UString XMLFilename )
 {
 	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLElement* node;
-	std::string actualfile = fw.data->GetActualFilename(XMLFilename.c_str());
+	UString actualfile = fw.data->GetActualFilename(XMLFilename.str().c_str());
 
-	doc.LoadFile( actualfile.c_str() );
+	if (actualfile == "")
+	{
+		LogError("Failed to read XML file \"%s\"", XMLFilename.str().c_str());
+		return;
+	}
+	LogInfo("Loading XML file \"%s\" - found at \"%s\"", XMLFilename.str().c_str(), actualfile.str().c_str());
+
+	doc.LoadFile( actualfile.str().c_str() );
 	node = doc.RootElement();
 
-	std::string nodename = node->Name();
+	if (!node)
+	{
+		LogError("Failed to parse XML file \"%s\"", actualfile.str().c_str());
+		return;
+	}
+
+	UString nodename = node->Name();
 
 	if( nodename == "openapoc" )
 	{
@@ -52,17 +62,43 @@ void GameCore::ParseXMLDoc( std::string XMLFilename )
 			{
 				ParseGameXML( node );
 			}
-			if( nodename == "string" || nodename == "fontcharacters" )
+			else if( nodename == "string" )
 			{
 				ParseStringXML( node );
 			}
-			if( nodename == "form" )
+			else if( nodename == "form" )
 			{
 				ParseFormXML( node );
 			}
-			if( nodename == "vehicle" )
+			else if( nodename == "vehicle" )
 			{
 				vehicleFactory.ParseVehicleDefinition( node );
+			}
+			else if (nodename == "apocfont" )
+			{
+				UString fontName = node->Attribute("name");
+				if (fontName == "")
+				{
+					LogError("apocfont element with no name");
+					continue;
+				}
+				auto font = ApocalypseFont::loadFont(fw, node);
+				if (!font)
+				{
+					LogError("apocfont element \"%s\" failed to load", fontName.str().c_str());
+					continue;
+				}
+
+				if (this->fonts.find(fontName) != this->fonts.end())
+				{
+					LogError("multiple fonts with name \"%s\"", fontName.str().c_str());
+					continue;
+				}
+				this->fonts[fontName] = font;
+			}
+			else
+			{
+				LogError("Unknown XML element \"%s\"", nodename.str().c_str());
 			}
 		}
 	}
@@ -71,7 +107,7 @@ void GameCore::ParseXMLDoc( std::string XMLFilename )
 void GameCore::ParseGameXML( tinyxml2::XMLElement* Source )
 {
 	tinyxml2::XMLElement* node;
-	std::string nodename;
+	UString nodename;
 
 	for( node = Source->FirstChildElement(); node != nullptr; node = node->NextSiblingElement() )
 	{
@@ -89,18 +125,12 @@ void GameCore::ParseGameXML( tinyxml2::XMLElement* Source )
 
 void GameCore::ParseStringXML( tinyxml2::XMLElement* Source )
 {
-	std::string nodename = Source->Name();
-	if( nodename == "fontcharacters" )
-	{
-		ApocalypseFont::FontCharacterSet = Source->GetText();
-		return;
-	}
-
+	UString nodename = Source->Name();
 	if( nodename == "string" )
 	{
-		if( Source->FirstChildElement(language.c_str()) != nullptr )
+		if( Source->FirstChildElement(language.str().c_str()) != nullptr )
 		{
-			languagetext[Source->Attribute("id")] = Source->FirstChildElement(language.c_str())->GetText();
+			languagetext[Source->Attribute("id")] = Source->FirstChildElement(language.str().c_str())->GetText();
 		}
 	}
 }
@@ -110,9 +140,9 @@ void GameCore::ParseFormXML( tinyxml2::XMLElement* Source )
 	forms[Source->Attribute("id")] = new Form( fw, Source );
 }
 
-std::string GameCore::GetString(std::string ID)
+UString GameCore::GetString(UString ID)
 {
-	std::string s = languagetext[ID];
+	UString s = languagetext[ID];
 	if( s == "" )
 	{
 		s = ID;
@@ -120,50 +150,27 @@ std::string GameCore::GetString(std::string ID)
 	return s;
 }
 
-Form* GameCore::GetForm(std::string ID)
+Form* GameCore::GetForm(UString ID)
 {
 	return forms[ID];
 }
 
-std::shared_ptr<Image> GameCore::GetImage(std::string ImageData)
+std::shared_ptr<Image> GameCore::GetImage(UString ImageData)
 {
 	return fw.data->load_image(ImageData);
 }
 
-IFont* GameCore::GetFont(std::string FontData)
+std::shared_ptr<BitmapFont> GameCore::GetFont(UString FontData)
 {
 	if( fonts.find( FontData ) == fonts.end() )
 	{
-		std::vector<std::string> segs = Strings::Split( FontData, ':' );
-		if( segs.at(0) == "APOC" )
-		{
-
-			if( segs.at(1) == "LARGE" )
-			{
-				fonts[FontData] = new ApocalypseFont( fw, ApocalypseFont::LargeFont, GetPalette( segs.at(2) ) );
-			}
-			if( segs.at(1) == "SMALL" )
-			{
-				fonts[FontData] = new ApocalypseFont( fw, ApocalypseFont::SmallFont, GetPalette( segs.at(2) ) );
-			}
-			if( segs.at(1) == "TINY" )
-			{
-				fonts[FontData] = new ApocalypseFont( fw, ApocalypseFont::TinyFont, GetPalette( segs.at(2) ) );
-			}
-
-		} else {
-			if( segs.size() == 1 )
-			{
-				fonts[FontData] = new TTFFont( segs.at(0), 8 );
-			} else if( segs.size() == 2 ) {
-				fonts[FontData] = new TTFFont( segs.at(0), Strings::ToInteger( segs.at(1) ) );
-			}
-		}
+		LogError("Missing font \"%s\"", FontData.str().c_str());
+		return nullptr;
 	}
 	return fonts[FontData];
 }
 
-std::shared_ptr<Palette> GameCore::GetPalette(std::string Path)
+std::shared_ptr<Palette> GameCore::GetPalette(UString Path)
 {
 	return fw.data->load_palette(Path);
 }

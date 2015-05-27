@@ -1,18 +1,19 @@
-#include "configfile.h"
+#include "framework/logger.h"
+#include "library/configfile.h"
 
 #include <fstream>
 #include <sstream>
 
 namespace OpenApoc {
 
-ConfigFile::ConfigFile(const std::string fileName, std::map<std::string, std::string> defaults)
+ConfigFile::ConfigFile(const UString fileName, std::map<UString, UString> defaults)
 	: values(defaults), defaults(defaults)
 {
-	std::ifstream inFile{fileName, std::ios::in};
-	int line = 0;
+	std::ifstream inFile{fileName.str().c_str(), std::ios::in};
+	int lineNo = 0;
 	while (inFile)
 	{
-		line++;
+		lineNo++;
 		std::string line;
 		std::getline(inFile, line);
 		if (!inFile)
@@ -22,22 +23,22 @@ ConfigFile::ConfigFile(const std::string fileName, std::map<std::string, std::st
 		auto splitPos = line.find_first_of('=');
 		if (splitPos == line.npos)
 		{
-			std::cerr << "Error reading config \"" << fileName << "\" line " << line << " - no '='\n";
+			LogError("Error reading config \"%s\" line %d", fileName.str().c_str(), lineNo);
 			continue;
 		}
-		std::string key = line.substr(0, splitPos);
-		std::string value = line.substr(splitPos+1);
+		UString key = line.substr(0, splitPos);
+		UString value = line.substr(splitPos+1);
 		values[key] = value;
 	}
 }
 
 void
-ConfigFile::save(const std::string fileName)
+ConfigFile::save(const UString fileName)
 {
-	std::ofstream outFile{fileName, std::ios::out};
+	std::ofstream outFile{fileName.str().c_str(), std::ios::out};
 	if (!outFile)
 	{
-		std::cerr << "Error opening config file \"" << fileName << "\n";
+		LogError("Failed to open config file \"%s\"", fileName.str().c_str());
 		return;
 	}
 
@@ -48,12 +49,12 @@ ConfigFile::save(const std::string fileName)
 		//If the value is the default, print it commented out
 		if (pair.second == defaults[pair.first])
 			outFile << "#";
-		outFile << pair.first << "=" << pair.second << "\n";
+		outFile << pair.first.str() << "=" << pair.second.str() << "\n";
 	}
 }
 
-std::string
-ConfigFile::getString(const std::string key)
+UString
+ConfigFile::getString(UString key)
 {
 	auto it = this->values.find(key);
 	if (it != this->values.end())
@@ -63,23 +64,23 @@ ConfigFile::getString(const std::string key)
 	if (it != this->defaults.end())
 		return it->second;
 
-	std::cerr << "Error reading config key \"" << key << "\" - not found\n";
+	LogError("Config key \"%s\" not found", key.str().c_str());
 	return "";
 }
 
 int
-ConfigFile::getInt(const std::string key)
+ConfigFile::getInt(UString key)
 {
 	auto string = this->getString(key);
 	if (string == "")
 	{
 		return 0;
 	}
-	int value = std::atoi(string.c_str());
+	int value = std::atoi(string.str().c_str());
 	return value;
 }
 
-static const std::vector<std::string> falseValues =
+static const std::vector<UString> falseValues =
 {
 	"0",
 	"n",
@@ -87,7 +88,7 @@ static const std::vector<std::string> falseValues =
 	"false",
 };
 
-static const std::vector<std::string> trueValues =
+static const std::vector<UString> trueValues =
 {
 	"1",
 	"y",
@@ -96,7 +97,7 @@ static const std::vector<std::string> trueValues =
 };
 
 bool
-ConfigFile::getBool(const std::string key)
+ConfigFile::getBool(UString key)
 {
 	auto value = this->getString(key);
 	for (auto &v : trueValues)
@@ -109,18 +110,18 @@ ConfigFile::getBool(const std::string key)
 		if (v == value)
 			return false;
 	}
-	std::cerr << "Error reading boolean key \"" << key << "\" - invalid value \"" << value << "\"\n";
+	LogError("Invalid boolean value of \"%s\" in key \"%s\"", value.str().c_str(), key.str().c_str());
 	return false;
 }
 
 void
-ConfigFile::set(const std::string key, const std::string value)
+ConfigFile::set(const UString key, const UString value)
 {
 	this->values[key] = value;
 }
 
 void
-ConfigFile::set(const std::string key, bool value)
+ConfigFile::set(const UString key, bool value)
 {
 	if (value)
 		this->set(key, trueValues[0]);
@@ -129,7 +130,7 @@ ConfigFile::set(const std::string key, bool value)
 }
 
 void
-ConfigFile::set(const std::string key, int value)
+ConfigFile::set(const UString key, int value)
 {
 	std::stringstream ss;
 	ss << std::dec << value;

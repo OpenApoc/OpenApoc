@@ -13,7 +13,6 @@ namespace OpenApoc {
 class MainMenu : public Stage
 {
 	private:
-		std::unique_ptr<Music> musicplayer;
 		Form* mainmenuform;
 		StageCmd stageCmd;
 

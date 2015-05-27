@@ -1,6 +1,6 @@
 
 #include "framework/framework.h"
-#include "difficultymenu.h"
+#include "game/general/difficultymenu.h"
 #include "game/city/city.h"
 #include "game/tileview/tileview.h"
 
@@ -49,7 +49,7 @@ void DifficultyMenu::EventOccurred(Event *e)
 
 	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick )
 	{
-		std::string citymapName;
+		UString citymapName;
 		if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY1") == 0)
 		{
 			citymapName = "CITYMAP1";
@@ -72,14 +72,13 @@ void DifficultyMenu::EventOccurred(Event *e)
 		}
 		else
 		{
-			std::cerr << "Unknown button pressed: " << e->Data.Forms.RaisedBy->Name
-				<< "\n";
+			LogWarning("Unknown button pressed: %s", e->Data.Forms.RaisedBy->Name.str().c_str());
 			citymapName = "CITYMAP1";
 			return;
 		}
 		fw.state.city.reset(new City(fw, citymapName));
 		stageCmd.cmd = StageCmd::Command::REPLACE;
-		stageCmd.nextStage = std::make_shared<TileView>(fw, *fw.state.city, Vec3<float>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z});
+		stageCmd.nextStage = std::make_shared<TileView>(fw, *fw.state.city, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z});
 		return;
 	}
 }
@@ -93,7 +92,6 @@ void DifficultyMenu::Update(StageCmd * const cmd)
 
 void DifficultyMenu::Render()
 {
-	al_clear_to_color( al_map_rgb( 0, 0, 0 ) );
 	difficultymenuform->Render();
 	fw.gamecore->MouseCursor->Render();
 }

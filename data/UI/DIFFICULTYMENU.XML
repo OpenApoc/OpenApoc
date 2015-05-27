@@ -18,7 +18,7 @@
 					<position x="0" y="0" />
 					<size width="640" height="32" />
 					<alignment horizontal="centre" vertical="centre" />
-					<font>APOC:LARGE:UI/UI_PALETTE.PNG</font>
+					<font>BIGFONT</font>
 				</label>
 			</graphic>
 
@@ -26,27 +26,27 @@
 			<textbutton id="BUTTON_DIFFICULTY1" text="STR_DIFFICULTY1">
 				<position x="centre" y="190" />
 				<size width="300" height="32" />
-				<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+				<font>SMALFONT</font>
 			</textbutton>
 			<textbutton id="BUTTON_DIFFICULTY2" text="STR_DIFFICULTY2">
 				<position x="centre" y="240" />
 				<size width="300" height="32" />
-				<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+				<font>SMALFONT</font>
 			</textbutton>
 			<textbutton id="BUTTON_DIFFICULTY3" text="STR_DIFFICULTY3">
 				<position x="centre" y="290" />
 				<size width="300" height="32" />
-				<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+				<font>SMALFONT</font>
 			</textbutton>
 			<textbutton id="BUTTON_DIFFICULTY4" text="STR_DIFFICULTY4">
 				<position x="centre" y="340" />
 				<size width="300" height="32" />
-				<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+				<font>SMALFONT</font>
 			</textbutton>
 			<textbutton id="BUTTON_DIFFICULTY5" text="STR_DIFFICULTY5">
 				<position x="centre" y="390" />
 				<size width="300" height="32" />
-				<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+				<font>SMALFONT</font>
 			</textbutton>
 			
 		</style>

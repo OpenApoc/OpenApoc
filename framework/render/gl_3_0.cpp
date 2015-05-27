@@ -78,6 +78,8 @@ static PROC WinGetProcAddress(const char *name)
 		return pFunc;
 	}
 	glMod = GetModuleHandleA("OpenGL32.dll");
+	if (!glMod)
+		return nullptr;
 	return (PROC)GetProcAddress(glMod, (LPCSTR)name);
 }
 	

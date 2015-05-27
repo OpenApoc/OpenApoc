@@ -1,4 +1,4 @@
-#include "organisation.h"
+#include "game/city/organisation.h"
 
 namespace OpenApoc {
 
@@ -33,7 +33,7 @@ std::vector<Organisation> Organisation::defaultOrganisations =
 	{"Civilian"},
 };
 
-Organisation::Organisation(std::string name)
+Organisation::Organisation(UString name)
 	: name(name)
 {}
 

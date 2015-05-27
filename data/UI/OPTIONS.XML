@@ -30,67 +30,67 @@
 					<textbutton id="BUTTON_TEST_XCOMBASE" text="STR_TEST_XCOM_BASESCREEN">
 						<position x="right" y="bottom" />
 						<size width="44" height="42" />
-						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+						<font>SMALFONT</font>
 					</textbutton>
 					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
 						<position x="right" y="bottom" />
 						<size width="44" height="42" />
-						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+						<font>SMALFONT</font>
 					</textbutton>
 					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
 						<position x="right" y="bottom" />
 						<size width="44" height="42" />
-						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+						<font>SMALFONT</font>
 					</textbutton>
 					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
 						<position x="right" y="bottom" />
 						<size width="44" height="42" />
-						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+						<font>SMALFONT</font>
 					</textbutton>
 					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
 						<position x="right" y="bottom" />
 						<size width="44" height="42" />
-						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+						<font>SMALFONT</font>
 					</textbutton>
 					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
 						<position x="right" y="bottom" />
 						<size width="44" height="42" />
-						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+						<font>SMALFONT</font>
 					</textbutton>
 					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
 						<position x="right" y="bottom" />
 						<size width="44" height="42" />
-						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+						<font>SMALFONT</font>
 					</textbutton>
 					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
 						<position x="right" y="bottom" />
 						<size width="44" height="42" />
-						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+						<font>SMALFONT</font>
 					</textbutton>
 					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
 						<position x="right" y="bottom" />
 						<size width="44" height="42" />
-						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+						<font>SMALFONT</font>
 					</textbutton>
 					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
 						<position x="right" y="bottom" />
 						<size width="44" height="42" />
-						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+						<font>SMALFONT</font>
 					</textbutton>
 					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
 						<position x="right" y="bottom" />
 						<size width="44" height="42" />
-						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+						<font>SMALFONT</font>
 					</textbutton>
 					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
 						<position x="right" y="bottom" />
 						<size width="44" height="42" />
-						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+						<font>SMALFONT</font>
 					</textbutton>
 					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
 						<position x="right" y="bottom" />
 						<size width="44" height="42" />
-						<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+						<font>SMALFONT</font>
 					</textbutton>
 					
 					
@@ -102,7 +102,7 @@
 			<textbutton id="BUTTON_OK" text="STR_QUIT">
 				<position x="right" y="bottom" />
 				<size width="44" height="42" />
-				<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+				<font>SMALFONT</font>
 			</textbutton>
 			
 			
@@ -111,7 +111,7 @@
 				<position x="0" y="bottom" />
 				<size width="100" height="16" />
 				<alignment horizontal="left" vertical="centre" />
-				<font>APOC:TINY:UI/UI_PALETTE.PNG</font>
+				<font>SMALLSET</font>
 			</textedit>
 			
 			<textedit id="TEXTEDIT_B">
@@ -119,7 +119,7 @@
 				<position x="110" y="bottom" />
 				<size width="100" height="16" />
 				<alignment horizontal="left" vertical="centre" />
-				<font>APOC:TINY:UI/UI_PALETTE.PNG</font>
+				<font>SMALLSET</font>
 			</textedit>
 			
 		</style>

@@ -1,5 +1,5 @@
-#include "tileview.h"
-#include "tile.h"
+#include "game/tileview/tileview.h"
+#include "game/tileview/tile.h"
 
 #include "framework/includes.h"
 #include "framework/framework.h"
@@ -9,11 +9,12 @@
 
 namespace OpenApoc {
 
-TileView::TileView(Framework &fw, TileMap &map, Vec3<float> tileSize)
+TileView::TileView(Framework &fw, TileMap &map, Vec3<int> tileSize)
 	: Stage(fw), map(map), tileSize(tileSize), maxZDraw(10), offsetX(0), offsetY(0),
-	  selectedTilePosition(0,0,0), selectedTileImageBack(fw.data->load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
+	  cameraScrollX(0), cameraScrollY(0), selectedTilePosition(0,0,0),
+	  selectedTileImageBack(fw.data->load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
 	  selectedTileImageFront(fw.data->load_image("CITY/SELECTED-CITYTILE-FRONT.PNG")),
-	  pal(fw.data->load_palette("xcom3/ufodata/PAL_04.DAT")), cameraScrollX(0), cameraScrollY(0)
+	  pal(fw.data->load_palette("xcom3/ufodata/PAL_01.DAT"))
 {
 }
 
@@ -37,26 +38,6 @@ void TileView::Finish()
 {
 }
 
-
-Vec2<float>
-TileView::tileToScreenCoords(Vec3<float> c)
-{
-	float x = (c.x*tileSize.x/2) - (c.y*tileSize.x/2);
-	float y = (c.x*tileSize.y/2) + (c.y*tileSize.y/2)
-		- (c.z*tileSize.z);
-
-	return Vec2<float>{x,y};
-}
-
-Vec3<float>
-TileView::screenToTileCoords(Vec2<float> screenPos, float z)
-{
-	screenPos.y += (z*tileSize.z);
-	float y = ((screenPos.y/(tileSize.y/2)) - (screenPos.x/(tileSize.x/2))) / (2);
-	float x = ((screenPos.y/(tileSize.y/2)) + (screenPos.x/(tileSize.x/2))) / (2);
-
-	return Vec3<float>{x,y,z};
-}
 
 void TileView::EventOccurred(Event *e)
 {
@@ -132,6 +113,15 @@ void TileView::EventOccurred(Event *e)
 				if (selectedTilePosition.z > 0)
 					selectedTilePosition.z--;
 				break;
+			case ALLEGRO_KEY_1:
+				pal = fw.data->load_palette("xcom3/ufodata/PAL_01.DAT");
+				break;
+			case ALLEGRO_KEY_2:
+				pal = fw.data->load_palette("xcom3/ufodata/PAL_02.DAT");
+				break;
+			case ALLEGRO_KEY_3:
+				pal = fw.data->load_palette("xcom3/ufodata/PAL_03.DAT");
+				break;
 		}
 	}
 	else if (e->Type == EVENT_MOUSE_DOWN)
@@ -162,12 +152,8 @@ void TileView::EventOccurred(Event *e)
 	if (fw.gamecore->DebugModeEnabled &&
 	    selectionChanged)
 	{
-		auto &tile = map.tiles[selectedTilePosition.z]
-			[selectedTilePosition.y]
-			[selectedTilePosition.x];
-		std::cerr << "Selected tile x=" << selectedTilePosition.x <<
-			" y=" << selectedTilePosition.y <<
-			" z=" << selectedTilePosition.z << "\n";
+		auto &tile = map.getTile(selectedTilePosition);
+		LogInfo("Selected tile {%d,%d,%d}", selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z);
 	}
 }
 
@@ -191,9 +177,9 @@ void TileView::Render()
 	Renderer &r = *fw.renderer;
 	r.clear();
 	r.setPalette(this->pal);
-	for (int y = 0; y < map.size.y; y++)
+	for (int z = 0; z < maxZDraw; z++)
 	{
-		for (int z = 0; z < maxZDraw; z++)
+		for (int y = 0; y < map.size.y; y++)
 		{
 			for (int x = 0; x < map.size.x; x++)
 			{
@@ -203,7 +189,7 @@ void TileView::Render()
 					 y == selectedTilePosition.y &&
 					 x == selectedTilePosition.x);
 
-				auto &tile = map.tiles[z][y][x];
+				auto &tile = map.getTile(x, y, z);
 				// Skip over transparent (missing) tiles
 				auto screenPos = tileToScreenCoords(Vec3<float>{(float)x,(float)y,(float)z});
 				screenPos.x += offsetX;

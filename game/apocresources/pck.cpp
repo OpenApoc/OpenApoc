@@ -1,5 +1,5 @@
-
-#include "pck.h"
+#include "framework/logger.h"
+#include "game/apocresources/pck.h"
 #include "framework/data.h"
 #include "framework/image.h"
 #include "framework/renderer.h"
@@ -32,17 +32,17 @@ class PCK
 
 	private:
 
-		void ProcessFile(Data &d, std::string PckFilename, std::string TabFilename, int Index);
+		void ProcessFile(Data &d, UString PckFilename, UString TabFilename, int Index);
 		void LoadVersion1Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index);
 		void LoadVersion2Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index);
 
 	public:
-		PCK( Data &d, std::string PckFilename, std::string TabFilename);
+		PCK( Data &d, UString PckFilename, UString TabFilename);
 		~PCK();
 
 		std::vector<std::shared_ptr<PaletteImage> > images;
 };
-PCK::PCK(Data &d, std::string PckFilename, std::string TabFilename)
+PCK::PCK(Data &d, UString PckFilename, UString TabFilename)
 {
 	ProcessFile(d, PckFilename, TabFilename, -1);
 }
@@ -51,10 +51,18 @@ PCK::~PCK()
 {
 }
 
-void PCK::ProcessFile(Data &d, std::string PckFilename, std::string TabFilename, int Index)
+void PCK::ProcessFile(Data &d, UString PckFilename, UString TabFilename, int Index)
 {
-	PHYSFS_file* pck = d.load_file(PckFilename, "rb");
-	PHYSFS_file* tab = d.load_file(TabFilename, "rb");
+	PHYSFS_file* pck = d.load_file(PckFilename, Data::FileMode::Read);
+	PHYSFS_file* tab = d.load_file(TabFilename, Data::FileMode::Read);
+	if (!pck)
+	{
+		LogError("Failed to open PCK file \"%s\"", PckFilename.str().c_str());
+	}
+	if (!tab)
+	{
+		LogError("Failed to open TAB file \"%s\"", TabFilename.str().c_str());
+	}
 
 	uint16_t version;
 	PHYSFS_readULE16(pck, &version);
@@ -102,7 +110,7 @@ void PCK::LoadVersion1Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
 		c0_maxwidth = 0;
 		c0_height = 0;
 
-		while( c0_offset != -1 )
+		while( c0_offset != 0xffff )
 		{
 			uint16_t c0_width;
 			PHYSFS_readULE16(pck, &c0_width);	// I hope they never change width mid-image
@@ -145,7 +153,6 @@ void PCK::LoadVersion1Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
 void PCK::LoadVersion2Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
 {
 	uint16_t compressionmethod;
-	Memory* tmp;
 
 	std::shared_ptr<PaletteImage> img;
 
@@ -209,7 +216,7 @@ void PCK::LoadVersion2Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
 						} else {
 							for( uint32_t c1_x = 0; c1_x < c1_header.PixelsInRow; c1_x++ )
 							{
-								if( (c1_header.ColumnToStartAt + c1_x - c1_imgheader.LeftMostPixel) < c1_imgheader.RightMostPixel - c1_imgheader.LeftMostPixel )
+								if( (c1_header.ColumnToStartAt + c1_x) < c1_imgheader.RightMostPixel)
 								{
 									char idx;
 									PHYSFS_readBytes(pck, &idx, 1);
@@ -228,28 +235,8 @@ void PCK::LoadVersion2Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
 				break;
 			}
 
-			case 2:
-				// Divide by 0 should indicate we've tried to load a Mode 2 compressed image
-				compressionmethod = 0;
-				compressionmethod = 2 / compressionmethod;
-				break;
-
-			case 3:
-				// Divide by 0 should indicate we've tried to load a Mode 3 compressed image
-				compressionmethod = 0;
-				compressionmethod = 2 / compressionmethod;
-				break;
-
-			case 128:
-				// Divide by 0 should indicate we've tried to load a Mode 128 compressed image
-				compressionmethod = 0;
-				compressionmethod = 2 / compressionmethod;
-				break;
-
 			default:
-				// No idea
-				compressionmethod = 0;
-				compressionmethod = 2 / compressionmethod;
+				LogError("Unsupported compression method %d", compressionmethod);
 				break;
 		}
 
@@ -258,13 +245,13 @@ void PCK::LoadVersion2Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
 }; //anonymous namespace
 
 std::shared_ptr<ImageSet>
-PCKLoader::load(Data &data, const std::string PckFilename, const std::string TabFilename)
+PCKLoader::load(Data &data, UString PckFilename, UString TabFilename)
 {
 	PCK *p = new PCK(data, PckFilename, TabFilename);
 	auto imageSet = std::make_shared<ImageSet>();
 	imageSet->maxSize = Vec2<int>{0,0};
 	imageSet->images.resize(p->images.size());
-	for (int i = 0; i < p->images.size(); i++)
+	for (unsigned int i = 0; i < p->images.size(); i++)
 	{
 		imageSet->images[i] = p->images[i];
 		imageSet->images[i]->owningSet = imageSet;
@@ -274,8 +261,9 @@ PCKLoader::load(Data &data, const std::string PckFilename, const std::string Tab
 		if (imageSet->images[i]->size.y > imageSet->maxSize.y)
 			imageSet->maxSize.y = imageSet->images[i]->size.y;
 	}
+	delete p;
 
-	std::cerr << "loaded \"" << PckFilename << "\" - " << imageSet->images.size() << " images, max size {" << imageSet->maxSize.x << "," << imageSet->maxSize.y << "}\n";
+	LogInfo("Loaded \"%s\" - %u images, max size {%d,%d}", PckFilename.str().c_str(), (unsigned int)imageSet->images.size(), imageSet->maxSize.x, imageSet->maxSize.y);
 
 	return imageSet;
 }

@@ -1,13 +1,12 @@
 
-#include "graphicbutton.h"
-#include "../framework/framework.h"
-#include "../game/resources/gamecore.h"
+#include "forms/graphicbutton.h"
+#include "framework/framework.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc {
 
-RawSound* GraphicButton::buttonclick = nullptr;
 
-GraphicButton::GraphicButton( Framework &fw, Control* Owner, std::string Image, std::string ImageDepressed ) : Control( fw, Owner )
+GraphicButton::GraphicButton( Framework &fw, Control* Owner, UString Image, UString ImageDepressed ) : Control( fw, Owner )
 {
 	image = nullptr;
 	imagedepressed = nullptr;
@@ -15,13 +14,10 @@ GraphicButton::GraphicButton( Framework &fw, Control* Owner, std::string Image, 
 	image_name = Image;
 	imagedepressed_name = ImageDepressed;
 	imagehover_name = "";
-	if( buttonclick == nullptr )
-	{
-		buttonclick = new RawSound( fw, "STRATEGC/INTRFACE/BUTTON1.RAW" );
-	}
+	this->buttonclick = fw.data->load_sample("xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW" );
 }
 
-GraphicButton::GraphicButton( Framework &fw, Control* Owner, std::string Image, std::string ImageDepressed, std::string ImageHover ) : Control( fw, Owner )
+GraphicButton::GraphicButton( Framework &fw, Control* Owner, UString Image, UString ImageDepressed, UString ImageHover ) : Control( fw, Owner )
 {
 	image = nullptr;
 	imagedepressed = nullptr;
@@ -29,10 +25,7 @@ GraphicButton::GraphicButton( Framework &fw, Control* Owner, std::string Image, 
 	image_name = Image;
 	imagedepressed_name = ImageDepressed;
 	imagehover_name = ImageHover;
-	if( buttonclick == nullptr )
-	{
-		buttonclick = new RawSound( fw, "STRATEGC/INTRFACE/BUTTON1.RAW" );
-	}
+	this->buttonclick = fw.data->load_sample("xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW" );
 }
 
 GraphicButton::~GraphicButton()
@@ -45,7 +38,7 @@ void GraphicButton::EventOccured( Event* e )
 
 	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this && e->Data.Forms.EventFlag == FormEventType::MouseDown )
 	{
-		buttonclick->PlaySound();
+		fw.soundBackend->playSample(buttonclick);
 	}
 
 	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this && e->Data.Forms.EventFlag == FormEventType::MouseClick )
@@ -109,7 +102,7 @@ void GraphicButton::OnRender()
 
 	if( useimage != nullptr )
 	{
-		if(Size != useimage->size)
+		if(Vec2<unsigned int>{Size.x, Size.y} != useimage->size)
 		{
 			fw.renderer->draw(useimage, Vec2<float>{0,0});
 		}

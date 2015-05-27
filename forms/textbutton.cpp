@@ -1,20 +1,12 @@
 
-#include "textbutton.h"
+#include "forms/textbutton.h"
 #include "framework/framework.h"
-#include "game/apocresources/rawsound.h"
-#include "game/resources/ifont.h"
 
 namespace OpenApoc {
 
-RawSound* TextButton::buttonclick = nullptr;
-
-TextButton::TextButton( Framework &fw, Control* Owner, std::string Text, IFont* Font ) : Control( fw, Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Centre ), TextVAlign( VerticalAlignment::Centre ), buttonbackground(fw.data->load_image( "UI/TEXTBUTTONBACK.PNG" ))
+TextButton::TextButton( Framework &fw, Control* Owner, UString Text, std::shared_ptr<BitmapFont> font ) : Control( fw, Owner ), text( Text ), font( font ), buttonbackground(fw.data->load_image( "UI/TEXTBUTTONBACK.PNG" )), TextHAlign( HorizontalAlignment::Centre ), TextVAlign( VerticalAlignment::Centre )
 {
-	if( buttonclick == nullptr )
-	{
-		buttonclick = new RawSound( fw, "STRATEGC/INTRFACE/BUTTON1.RAW" );
-	}
-	
+	this->buttonclick = fw.data->load_sample("xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW" );
 	cached = nullptr;
 }
 
@@ -28,7 +20,7 @@ void TextButton::EventOccured( Event* e )
 
 	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this && e->Data.Forms.EventFlag == FormEventType::MouseDown )
 	{
-		buttonclick->PlaySound();
+		fw.soundBackend->playSample(buttonclick);
 	}
 
 	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this && e->Data.Forms.EventFlag == FormEventType::MouseClick )
@@ -43,18 +35,18 @@ void TextButton::EventOccured( Event* e )
 
 void TextButton::OnRender()
 {
-	if( cached == nullptr || cached->size != Size)
+	if( cached == nullptr || cached->size != Vec2<unsigned int>{Size.x, Size.y})
 	{
-		cached.reset(new Surface{Size});
+		cached.reset(new Surface{Vec2<unsigned int>{Size.x, Size.y}});
 
 		RendererSurfaceBinding b(*fw.renderer, cached);
 
 		fw.renderer->drawScaled(*buttonbackground, Vec2<float>{0,0}, Vec2<float>{Size.x, Size.y}); 
-		fw.renderer->drawFilledRect(Vec2<float>{3,3}, Vec2<float>{Size.x-2, Size.y-2}, Colour{160,160,160});
-		fw.renderer->drawLine(Vec2<float>{2,4}, Vec2<float>{Size.x-2, 3}, Colour{220,220,220});
+		fw.renderer->drawFilledRect(Vec2<float>{3,3}, Vec2<float>{Size.x-6, Size.y-6}, Colour{160,160,160});
+		fw.renderer->drawLine(Vec2<float>{2,4}, Vec2<float>{Size.x-2, 4}, Colour{220,220,220});
 		fw.renderer->drawLine(Vec2<float>{2, Size.y - 4}, Vec2<float>{Size.x - 2, Size.y - 4}, Colour{80,80,80});
 		fw.renderer->drawLine(Vec2<float>{2, Size.y - 3}, Vec2<float>{Size.x - 2, Size.y - 3}, Colour{64,64,64});
-		fw.renderer->drawRect(Vec2<float>{3,3}, Vec2<float>{Size.x-2, Size.y-2}, Colour{48,48,48});
+		fw.renderer->drawRect(Vec2<float>{3,3}, Vec2<float>{Size.x-3, Size.y-3}, Colour{48,48,48});
 
 		int xpos;
 		int ypos;
@@ -70,6 +62,9 @@ void TextButton::OnRender()
 			case HorizontalAlignment::Right:
 				xpos = Size.x - font->GetFontWidth( text );
 				break;
+			default:
+				LogError("Unknown TextHAlign");
+				return;
 		}
 
 		switch( TextVAlign )
@@ -83,15 +78,19 @@ void TextButton::OnRender()
 			case VerticalAlignment::Bottom:
 				ypos = Size.y - font->GetFontHeight();
 				break;
+			default:
+				LogError("Unknown TextHAlign");
+				return;
 		}
 
-		font->DrawString( *fw.renderer, xpos, ypos, text, APOCFONT_ALIGN_LEFT );
+		auto textImage = font->getString(text);
+		fw.renderer->draw(textImage, Vec2<float>{xpos,ypos});
 	}
 	fw.renderer->draw(cached, Vec2<float>{0,0});
 
 	if( mouseDepressed && mouseInside )
 	{
-		fw.renderer->drawRect(Vec2<float>{1,1}, Vec2<float>{Size.x-1, Size.y-1}, Colour{255,255,255}, 2);
+		fw.renderer->drawRect(Vec2<float>{1,1}, Vec2<float>{Size.x-2, Size.y-2}, Colour{255,255,255}, 2);
 	}
 }
 
@@ -104,12 +103,12 @@ void TextButton::UnloadResources()
 {
 }
 
-std::string TextButton::GetText()
+UString TextButton::GetText()
 {
 	return text;
 }
 
-void TextButton::SetText( std::string Text )
+void TextButton::SetText( UString Text )
 {
 	text = Text;
 }

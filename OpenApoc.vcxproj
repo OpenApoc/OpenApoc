@@ -70,24 +70,24 @@
     <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)</IncludePath>
+    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)</IncludePath>
+    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)</IncludePath>
+    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)</IncludePath>
+    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -103,7 +103,7 @@
       <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib</AdditionalDependencies>
+      <AdditionalDependencies>DbgHelp.lib;gdiplus.lib;opengl32.lib;shlwapi.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
@@ -111,6 +111,12 @@
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)\dependencies\icu55\bin\*.dll $(SolutionDir)bin\$(Configuration)\</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy ICU DLLs</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -125,10 +131,16 @@
       <ObjectFileName>$(IntDir)\%(RelativeDir)\</ObjectFileName>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib</AdditionalDependencies>
+      <AdditionalDependencies>DbgHelp.lib;gdiplus.lib;opengl32.lib;shlwapi.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)\dependencies\icu55\bin64\*.dll $(SolutionDir)$(Platform)\$(Configuration)\</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy ICU DLLs</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -143,13 +155,19 @@
       <ObjectFileName>$(IntDir)\%(RelativeDir)\</ObjectFileName>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib</AdditionalDependencies>
+      <AdditionalDependencies>DbgHelp.lib;gdiplus.lib;opengl32.lib;shlwapi.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)\dependencies\icu55\bin\*.dll $(SolutionDir)bin\$(Configuration)\</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy ICU DLLs</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -165,12 +183,18 @@
       <ObjectFileName>$(IntDir)\%(RelativeDir)\</ObjectFileName>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib</AdditionalDependencies>
+      <AdditionalDependencies>DbgHelp.lib;gdiplus.lib;opengl32.lib;shlwapi.lib;winmm.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)\dependencies\icu55\bin64\*.dll $(SolutionDir)$(Platform)\$(Configuration)\</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy ICU DLLs</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="forms\checkbox.cpp" />
@@ -184,12 +208,17 @@
     <ClCompile Include="forms\textbutton.cpp" />
     <ClCompile Include="forms\textedit.cpp" />
     <ClCompile Include="forms\vscrollbar.cpp" />
+    <ClCompile Include="framework\font.cpp" />
     <ClCompile Include="framework\ignorecase.c" />
     <ClCompile Include="framework\image.cpp" />
     <ClCompile Include="framework\imageloader\allegro_image.cpp" />
+    <ClCompile Include="framework\logger.cpp" />
     <ClCompile Include="framework\palette.cpp" />
     <ClCompile Include="framework\renderer.cpp" />
-    <ClCompile Include="framework\render\ogl_renderer.cpp" />
+    <ClCompile Include="framework\render\ogl_3_0_renderer.cpp" />
+    <ClCompile Include="framework\sound.cpp" />
+    <ClCompile Include="framework\sound\allegro_backend.cpp" />
+    <ClCompile Include="framework\sound\null_backend.cpp" />
     <ClCompile Include="game\apocresources\apocpalette.cpp" />
     <ClCompile Include="game\city\building.cpp" />
     <ClCompile Include="game\city\buildingtile.cpp" />
@@ -198,7 +227,6 @@
     <ClCompile Include="game\gamestate.cpp" />
     <ClCompile Include="game\general\optionsmenu.cpp" />
     <ClCompile Include="game\resources\gamecore.cpp" />
-    <ClCompile Include="game\resources\ttffont.cpp" />
     <ClCompile Include="game\apocresources\apocfont.cpp" />
     <ClCompile Include="game\boot.cpp" />
     <ClCompile Include="game\resources\vehiclefactory.cpp" />
@@ -219,6 +247,7 @@
     <ClCompile Include="game\city\city.cpp" />
     <ClCompile Include="game\general\difficultymenu.cpp" />
     <ClCompile Include="game\general\basescreen.cpp" />
+    <ClCompile Include="library\strings.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="forms\checkbox.h" />
@@ -234,11 +263,19 @@
     <ClInclude Include="forms\textbutton.h" />
     <ClInclude Include="forms\textedit.h" />
     <ClInclude Include="forms\vscrollbar.h" />
+    <ClInclude Include="framework\font.h" />
     <ClInclude Include="framework\ignorecase.h" />
     <ClInclude Include="framework\image.h" />
+    <ClInclude Include="framework\imageloader_interface.h" />
+    <ClInclude Include="framework\logger.h" />
+    <ClInclude Include="framework\musicloader_interface.h" />
     <ClInclude Include="framework\palette.h" />
     <ClInclude Include="framework\renderer.h" />
+    <ClInclude Include="framework\renderer_interface.h" />
     <ClInclude Include="framework\render\gl_3_0.hpp" />
+    <ClInclude Include="framework\sampleloader_interface.h" />
+    <ClInclude Include="framework\sound.h" />
+    <ClInclude Include="framework\sound_interface.h" />
     <ClInclude Include="game\apocresources\apocresource.h" />
     <ClInclude Include="game\city\building.h" />
     <ClInclude Include="game\city\buildingtile.h" />
@@ -283,12 +320,21 @@
     <ProjectReference Include="dependencies\allegro5.vcxproj">
       <Project>{e68f7d90-9965-42a5-97e5-df0f12f7dbc4}</Project>
     </ProjectReference>
+    <ProjectReference Include="dependencies\icu55\source\common\common.vcxproj">
+      <Project>{73c0a65b-d1f2-4de1-b3a6-15dad2c23f3d}</Project>
+    </ProjectReference>
     <ProjectReference Include="dependencies\physfs.vcxproj">
       <Project>{5a1d2ec4-525e-49b6-9398-be359e71cb35}</Project>
     </ProjectReference>
     <ProjectReference Include="dependencies\tinyxml2.vcxproj">
       <Project>{d1c528b6-aa02-4d29-9d61-dc08e317a70d}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="apocicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="apocicon.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

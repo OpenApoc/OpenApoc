@@ -18,7 +18,7 @@
 					<position x="0" y="0" />
 					<size width="640" height="32" />
 					<alignment horizontal="centre" vertical="centre" />
-					<font>APOC:LARGE:UI/UI_PALETTE.PNG</font>
+					<font>BIGFONT</font>
 				</label>
 				
 				<label text="STR_DEBUGMODE">
@@ -26,7 +26,7 @@
 					<position x="410" y="bottom" />
 					<size width="200" height="16" />
 					<alignment horizontal="right" vertical="centre" />
-					<font>APOC:TINY:UI/UI_PALETTE.PNG</font>
+					<font>SMALLSET</font>
 				</label>
 				<checkbox id="CHECK_DEBUGMODE">
 					<position x="right" y="bottom" />
@@ -37,22 +37,22 @@
 			<textbutton id="BUTTON_NEWGAME" text="STR_START_CAMPAIGN">
 				<position x="centre" y="190" />
 				<size width="300" height="32" />
-				<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+				<font>SMALFONT</font>
 			</textbutton>
 			<textbutton id="BUTTON_LOADGAME" text="STR_LOAD_SAVED_GAME">
 				<position x="centre" y="240" />
 				<size width="300" height="32" />
-				<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+				<font>SMALFONT</font>
 			</textbutton>
 			<textbutton id="BUTTON_OPTIONS" text="STR_OPTIONS">
 				<position x="centre" y="290" />
 				<size width="300" height="32" />
-				<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+				<font>SMALFONT</font>
 			</textbutton>
 			<textbutton id="BUTTON_QUIT" text="STR_QUIT">
 				<position x="centre" y="340" />
 				<size width="300" height="32" />
-				<font>APOC:SMALL:UI/UI_PALETTE.PNG</font>
+				<font>SMALFONT</font>
 			</textbutton>
 			
 		</style>

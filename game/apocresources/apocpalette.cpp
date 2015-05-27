@@ -1,18 +1,18 @@
-#include "apocpalette.h"
+#include "game/apocresources/apocpalette.h"
 #include "framework/palette.h"
 #include "framework/data.h"
 
 namespace OpenApoc {
 
 Palette*
-loadApocPalette(Data &data, const std::string fileName)
+loadApocPalette(Data &data, const UString fileName)
 {
-	PHYSFS_file *f = data.load_file(fileName, "rb");
+	PHYSFS_file *f = data.load_file(fileName, Data::FileMode::Read);
 	if (!f)
 		return nullptr;
 	size_t numEntries = PHYSFS_fileLength(f) / 3;
 	Palette *p = new Palette(numEntries);
-	for (int i = 0; i < numEntries; i++)
+	for (unsigned int i = 0; i < numEntries; i++)
 	{
 		uint8_t colour[3];
 		Colour c;

@@ -1,14 +1,13 @@
 
-#include "textedit.h"
+#include "forms/textedit.h"
 #include "framework/framework.h"
-#include "game/resources/ifont.h"
 
 #include <allegro5/keycodes.h>
 #include <allegro5/allegro.h>
 
 namespace OpenApoc {
 
-TextEdit::TextEdit( Framework &fw, Control* Owner, std::string Text, IFont* Font ) : Control( fw, Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Centre ), editting(false), SelectionStart(Text.length()), caretTimer(0), caretDraw(false), editShift(false), editAltGr(false)
+TextEdit::TextEdit( Framework &fw, Control* Owner, UString Text, std::shared_ptr<BitmapFont> font ) : Control( fw, Owner ), text( Text ), font( font ), SelectionStart(Text.length()), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Centre )
 {
 }
 
@@ -18,7 +17,7 @@ TextEdit::~TextEdit()
 
 void TextEdit::EventOccured( Event* e )
 {
-	std::string keyname;
+	UString keyname;
 
 	Control::EventOccured( e );
 
@@ -49,7 +48,7 @@ void TextEdit::EventOccured( Event* e )
 				case ALLEGRO_KEY_BACKSPACE:
 					if( SelectionStart > 0 )
 					{
-						text.erase( text.begin() + SelectionStart - 1, text.begin() + SelectionStart );
+						text.remove(SelectionStart, 1);
 						SelectionStart--;
 						RaiseEvent( FormEventType::TextChanged );
 					}
@@ -58,7 +57,7 @@ void TextEdit::EventOccured( Event* e )
 				case ALLEGRO_KEY_DELETE:
 					if( SelectionStart < text.length() )
 					{
-						text.erase( text.begin() + SelectionStart, text.begin() + SelectionStart + 1 );
+						text.remove(SelectionStart+1, 1);
 						RaiseEvent( FormEventType::TextChanged );
 					}
 					e->Handled = true;
@@ -135,7 +134,6 @@ void TextEdit::OnRender()
 {
 	int xpos;
 	int ypos;
-	int xadjust = 0;
 
 	switch( TextHAlign )
 	{
@@ -148,6 +146,9 @@ void TextEdit::OnRender()
 		case HorizontalAlignment::Right:
 			xpos = Size.x - font->GetFontWidth( text );
 			break;
+		default:
+			LogError("Unknown TextHAlign");
+			return;
 	}
 
 	switch( TextVAlign )
@@ -161,6 +162,9 @@ void TextEdit::OnRender()
 		case VerticalAlignment::Bottom:
 			ypos = Size.y - font->GetFontHeight();
 			break;
+		default:
+			LogError("Unknown TextVAlign");
+			return;
 	}
 
 	if( editting )
@@ -184,7 +188,8 @@ void TextEdit::OnRender()
 		}
 	}
 
-	font->DrawString( *fw.renderer, xpos, ypos, text, APOCFONT_ALIGN_LEFT );
+	auto textImage = font->getString(text);
+	fw.renderer->draw(textImage, Vec2<float>{xpos, ypos});
 }
 
 void TextEdit::Update()
@@ -203,12 +208,12 @@ void TextEdit::UnloadResources()
 {
 }
 
-std::string TextEdit::GetText()
+UString TextEdit::GetText()
 {
 	return text;
 }
 
-void TextEdit::SetText( std::string Text )
+void TextEdit::SetText( UString Text )
 {
 	text = Text;
 	SelectionStart = text.length();
@@ -217,6 +222,7 @@ void TextEdit::SetText( std::string Text )
 
 void TextEdit::RaiseEvent( FormEventType Type )
 {
+	std::ignore = Type;
 	Event* ce = new Event();
 	ce->Type = EVENT_FORM_INTERACTION;
 	memset( (void*)&(ce->Data.Forms), 0, sizeof( FRAMEWORK_FORMS_EVENT ) );

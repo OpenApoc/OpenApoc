@@ -1,10 +1,10 @@
 
-#include "label.h"
+#include "forms/label.h"
 #include "framework/framework.h"
 
 namespace OpenApoc {
 
-Label::Label( Framework &fw, Control* Owner, std::string Text, IFont* Font ) : Control( fw, Owner ), text( Text ), font( Font ), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Top )
+Label::Label( Framework &fw, Control* Owner, UString Text, std::shared_ptr<BitmapFont> font ) : Control( fw, Owner ), text( Text ), font( font ), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Top )
 {
 }
 
@@ -33,6 +33,9 @@ void Label::OnRender()
 		case HorizontalAlignment::Right:
 			xpos = Size.x - font->GetFontWidth( text );
 			break;
+		default:
+			LogError("Unknown TextHAlign");
+			return;
 	}
 
 	switch( TextVAlign )
@@ -46,9 +49,13 @@ void Label::OnRender()
 		case VerticalAlignment::Bottom:
 			ypos = Size.y - font->GetFontHeight();
 			break;
+		default:
+			LogError("Unknown TextVAlign");
+			return;
 	}
 
-	font->DrawString( *fw.renderer, xpos, ypos, text, APOCFONT_ALIGN_LEFT );
+	auto textImage = font->getString(text);
+	fw.renderer->draw(textImage, Vec2<float>{xpos, ypos});
 }
 
 void Label::Update()
@@ -60,12 +67,12 @@ void Label::UnloadResources()
 {
 }
 
-std::string Label::GetText()
+UString Label::GetText()
 {
 	return text;
 }
 
-void Label::SetText( std::string Text )
+void Label::SetText( UString Text )
 {
 	text = Text;
 }

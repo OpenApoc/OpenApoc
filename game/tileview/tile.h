@@ -59,9 +59,12 @@ class Tile
 
 class TileMap
 {
+	private:
+		std::vector <Tile> tiles;
 	public:
 		Framework &fw;
-		std::vector < std::vector < std::vector < Tile > > > tiles;
+		Tile& getTile(int x, int y, int z);
+		Tile& getTile(Vec3<int> pos);
 		Vec3<int> size;
 
 		std::vector<std::shared_ptr<TileObject> > activeObjects;

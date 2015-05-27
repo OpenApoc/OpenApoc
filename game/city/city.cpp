@@ -1,20 +1,20 @@
-#include "city.h"
-#include "building.h"
-#include "organisation.h"
-#include "buildingtile.h"
+#include "game/city/city.h"
+#include "game/city/building.h"
+#include "game/city/organisation.h"
+#include "game/city/buildingtile.h"
 #include "framework/framework.h"
 #include "game/resources/gamecore.h"
 #include <random>
 
 namespace OpenApoc {
 
-City::City(Framework &fw, std::string mapName)
+City::City(Framework &fw, UString mapName)
 	: TileMap(fw, Vec3<int>{100, 100, 10}), organisations(Organisation::defaultOrganisations)
 {
-	auto file = fw.data->load_file("xcom3/ufodata/" + mapName, "rb");
+	auto file = fw.data->load_file("xcom3/ufodata/" + mapName, Data::FileMode::Read);
 	if (!file)
 	{
-		std::cerr << "Failed to open city map: " << mapName << "\n";
+		LogError("Failed to open city map \"%s\"", mapName.str().c_str());
 		return;
 	}
 
@@ -28,12 +28,11 @@ City::City(Framework &fw, std::string mapName)
 			for (int x = 0; x < this->size.x; x++)
 			{
 				uint16_t tileID;
-				PHYSFS_readULE16(file, &tileID);
-				if (tileID == -1 &&
-				    PHYSFS_eof(file))
+				Tile &tile = this->getTile(x,y,z);
+				int success = PHYSFS_readULE16(file, &tileID);
+				if (!success)
 				{
-					std::cerr << "Unexpected EOF reading citymap at x = " << x
-						<< " y = " << y << " z = " << z << "\n";
+					LogError("Unexpected EOF reading citymap at %d,%d,%d",x,y,z);
 					tileID = 0;
 				}
 				if (tileID)
@@ -45,21 +44,18 @@ City::City(Framework &fw, std::string mapName)
 						{
 							if (bld)
 							{
-								std::cerr << "Multiple buildings on tile at x = " << x
-									<< " y = " << y << " z = " << z << "\n";
+								LogError("Multiple buildings on tile at %d,%d,%d", x, y, z);
 							}
 							bld = &b;
 						}
 					}
-					if (tileID < 0 ||
-						tileID >= this->cityTiles.size())
+					if (tileID >= this->cityTiles.size())
 					{
-						std::cerr << "Invalid tile IDX " << tileID << " at x = " << x
-							<< " y = " << y << " z = " << z << "\n";
+						LogError("Invalid tile IDX %u at %d,%d,%d", tileID, x, y, z);
 					}
 					else
 					{
-						this->tiles[z][y][x].objects.push_back(std::make_shared<BuildingSection>(&this->tiles[z][y][x], this->cityTiles[tileID], Vec3<int>{x,y,z}, bld));
+						tile.objects.push_back(std::make_shared<BuildingSection>(&tile, this->cityTiles[tileID], Vec3<int>{x,y,z}, bld));
 					}
 				}
 			}
@@ -70,37 +66,40 @@ City::City(Framework &fw, std::string mapName)
 	std::uniform_int_distribution<int> xydistribution(0,99);
 	std::uniform_int_distribution<int> zdistribution(0,9);
 	//Place 1000 random cars
-	for (int i = 0; i < 1000; i++)
+	LogInfo("Starting placing cars");
+	for (int i = 0; i < 100; i++)
 	{
 		int x = 0;
 		int y = 0;
 		int z = 0;
-		while (!this->tiles[z][y][x].objects.empty())
-		{
+		
+		do {
 			x = xydistribution(generator);
 			y = xydistribution(generator);
 			z = zdistribution(generator);
-		}
+		} while (!this->getTile(x,y,z).objects.empty());
+
+		Tile &tile = this->getTile(x,y,z);
 
 		std::shared_ptr<Vehicle> testVehicle(fw.gamecore->vehicleFactory.create("POLICE_HOVERCAR"));
 		this->vehicles.push_back(testVehicle);
-		std::shared_ptr<FlyingVehicle> testVehicleObject(new FlyingVehicle(*testVehicle, &this->tiles[z][y][x]));
+		std::shared_ptr<FlyingVehicle> testVehicleObject(new FlyingVehicle(*testVehicle, &tile));
 		testVehicle->tileObject = testVehicleObject;
-		this->tiles[z][y][x].objects.push_back(testVehicleObject);
+		tile.objects.push_back(testVehicleObject);
 		//Vehicles are active
 		this->activeObjects.push_back(testVehicleObject);
 	}
-	std::cerr << "Placed cars\n";
+	LogInfo("Finished placing cars");
 
-	std::cerr << "PATH TEST {0,0,9} to {99,99,9}\n";
+	LogInfo("PATH TEST {0,0,9} to {99,99,9}");
 
 	std::list<Tile*> path;
 	path = this->findShortestPath(Vec3<int>{0,0,9}, Vec3<int>{99,99,9});
 
-	std::cerr << "Route found in " << path.size() << " steps\n";
+	LogInfo("Route found in %u steps", (unsigned int)path.size());
 	for (auto tile : path)
 	{
-		std::cerr << "Tile {" << tile->position.x << "," << tile->position.y << "," << tile->position.z << "}\n";
+		LogInfo("Tile {%d,%d,%d,}", tile->position.x, tile->position.y, tile->position.z);
 	}
 
 	PHYSFS_close(file);

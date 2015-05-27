@@ -1,10 +1,10 @@
-#include "graphic.h"
+#include "forms/graphic.h"
 #include "game/resources/gamecore.h"
 #include "framework/framework.h"
 
 namespace OpenApoc {
 
-Graphic::Graphic( Framework &fw, Control* Owner, std::string Image ) : Control( fw, Owner )
+Graphic::Graphic( Framework &fw, Control* Owner, UString Image ) : Control( fw, Owner )
 {
 	image_name = Image;
 	image = nullptr;
@@ -34,7 +34,7 @@ void Graphic::OnRender()
 		}
 	}
 
-	if(Size == image->size)
+	if(Vec2<unsigned int>{Size.x, Size.y} == image->size)
 	{
 		fw.renderer->draw(image, Vec2<float>{0,0});
 	} else {
