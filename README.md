@@ -46,12 +46,14 @@ sudo apt-get install liballegro5-dev glm libicu-dev libtinyxml2-dev cmake build-
 - Checkout OpenApoc from github
 - Fetch the dependencies from git with the following terminal command (run from the just-created OpenApoc folder)
 ```
-git submodule init; git submodule init
+git submodule init
+git submodule init
 ```
 -  Build our patched Physfs
 -- You can do this by typing the following command in a terminal from the dependencies/physfs directory:
 ```
-cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .; make
+cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo .
+make
 ```
 -- Install the patched physfs with the following command in the terminal (also in the physfs directory - providing your password if prompted)
 ```
