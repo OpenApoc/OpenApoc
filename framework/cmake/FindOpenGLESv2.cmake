@@ -1,0 +1,21 @@
+#Sets the following:
+# OPENGLESv2_FOUND
+# OPENGLESv2_gl_LIBRARY
+# OPENGLESv2_INCLUDE_DIR
+
+find_package (PkgConfig)
+
+pkg_check_modules(PC_GLESv2 glesv2)
+
+if (PC_GLESv2_FOUND)
+		set(OPENGLESv2_FOUND "YES")
+		find_path(OPENGLESv2_INCLUDE_DIR GLES2/gl2.h HINTS ${PC_GLESv2_INCLUDEDIR})
+		find_library(OPENGLESv2_gl_LIBRARY GLESv2 HINTS ${PC_GLESv2_LIBRARY_DIRS})
+else(PC_GLESv2_FOUND)
+		set(OPENGLESv2_FOUND "NO")
+endif(PC_GLESv2_FOUND)
+
+mark_as_advanced(
+		OPENGLESv2_INCLUDE_DIR
+		OPENGLESv2_LIBRARY
+)
