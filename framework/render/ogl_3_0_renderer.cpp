@@ -690,7 +690,7 @@ public:
 	}
 	
 	virtual void draw(std::shared_ptr<Image> i, Vec2<float> position);
-	virtual void drawRotated(Image &i, Vec2<float> center, Vec2<float> position, float angle)
+	virtual void drawRotated(std::shared_ptr<Image> i, Vec2<float> center, Vec2<float> position, float angle)
 	{
 		LogError("Unimplemented function");
 		std::ignore = i;
@@ -698,7 +698,7 @@ public:
 		std::ignore = position;
 		std::ignore = angle;
 	};
-	virtual void drawScaled(Image &i, Vec2<float> position, Vec2<float> size, Scaler scaler = Scaler::Linear)
+	virtual void drawScaled(std::shared_ptr<Image> i, Vec2<float> position, Vec2<float> size, Scaler scaler = Scaler::Linear)
 	{
 		LogError("Unimplemented function");
 		std::ignore = i;
@@ -706,7 +706,7 @@ public:
 		std::ignore = size;
 		std::ignore = scaler;
 	};
-	virtual void drawTinted(Image &i, Vec2<float> position, Colour tint)
+	virtual void drawTinted(std::shared_ptr<Image> i, Vec2<float> position, Colour tint)
 	{
 		LogError("Unimplemented function");
 		std::ignore = i;

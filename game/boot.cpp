@@ -64,9 +64,9 @@ void BootUp::Render()
 		logoimage->size.y * logosc
 	};
 
-	fw.renderer->drawScaled(*logoimage, logoPosition, logoSize);
+	fw.renderer->drawScaled(logoimage, logoPosition, logoSize);
 
-	fw.renderer->drawRotated(*loadingimage, Vec2<float>{24, 24}, Vec2<float>{fw.Display_GetWidth() - 50, fw.Display_GetHeight() - 50}, loadingimageangle.ToRadians() );
+	fw.renderer->drawRotated(loadingimage, Vec2<float>{24, 24}, Vec2<float>{fw.Display_GetWidth() - 50, fw.Display_GetHeight() - 50}, loadingimageangle.ToRadians() );
 }
 
 void BootUp::StartGame()
