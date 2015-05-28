@@ -20,6 +20,11 @@ namespace {
 #define DATA_DIRECTORY "./data"
 #endif
 
+#ifndef RENDERERS
+#warning RENDERERS not set - using default list
+#define RENDERERS "GL_3_0:GLES_2_0"
+#endif
+
 static std::map<UString, UString> defaultConfig =
 {
 #ifdef PANDORA
@@ -37,8 +42,8 @@ static std::map<UString, UString> defaultConfig =
 	{"Resource.SystemDataDir", DATA_DIRECTORY},
 	{"Resource.LocalCDPath", "./data/cd.iso"},
 	{"Resource.SystemCDPath", DATA_DIRECTORY "/cd.iso"},
-	{"Visual.RendererList", "GL_3_0;GL_2_1;allegro"},
-	{ "Audio.Backends", "allegro;null" },
+	{"Visual.Renderers", RENDERERS},
+	{"Audio.Backends", "allegro:null"},
 };
 
 std::map<UString, std::unique_ptr<OpenApoc::RendererFactory>> *registeredRenderers = nullptr;
@@ -585,7 +590,7 @@ void Framework::Display_Initialise()
 
 	al_hide_mouse_cursor( p->screen );
 
-	for (auto &rendererName : Settings->getString("Visual.RendererList").split(';'))
+	for (auto &rendererName : Settings->getString("Visual.Renderers").split(':'))
 	{
 		auto rendererFactory = registeredRenderers->find(rendererName);
 		if (rendererFactory == registeredRenderers->end())
@@ -648,7 +653,7 @@ void Framework::Audio_Initialise()
 {
 	LogInfo("Initialise Audio");
 
-	for (auto &soundBackendName : Settings->getString("Audio.Backends").split(';'))
+	for (auto &soundBackendName : Settings->getString("Audio.Backends").split(':'))
 	{
 		auto backendFactory = registeredSoundBackends->find(soundBackendName);
 		if (backendFactory == registeredSoundBackends->end())
