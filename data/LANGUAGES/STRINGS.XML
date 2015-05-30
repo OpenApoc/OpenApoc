@@ -78,8 +78,8 @@
 		<es_la>Los agentes de X-COM deben estar equipados en preparación para misiones tácticas. Usted puede elegir entre una variedad de armas de fuego, lanzadores de misiles, tipos de municiones, granadas y armaduras.</es_la>
 		<fr_fr>L&apos;équipement des agents X-COM varie en fonction des missions tactiques. Vous avez le choix entre un très grand nombre de fusils, de rampes de lancement de missiles, de types de munitions, de grenades et de blindages.</fr_fr>
 	</string>
-	<string id="STR_ORGANIZATIONS">
-		<en_gb>Organizations</en_gb>
+	<string id="STR_ORGANISATIONS">
+		<en_gb>Organisations</en_gb>
 		<es_la>Organizaciones</es_la>
 		<fr_fr>Organisations</fr_fr>
 	</string>
@@ -2817,5 +2817,8 @@
 		<en_gb>Superhuman</en_gb>
 		<es_la>Sobrehumano</es_la>
 		<fr_fr>Surhumain</fr_fr>
+	</string>
+	<string id="STR_TEST_UFOPAEDIA">
+	  <en_gb>Test Ufopedia</en_gb>
 	</string>
 </openapoc>

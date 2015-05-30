@@ -32,7 +32,7 @@
 						<size width="44" height="42" />
 						<font>SMALFONT</font>
 					</textbutton>
-					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
+					<textbutton id="BUTTON_TEST_UFOPAEDIA" text="STR_TEST_UFOPAEDIA">
 						<position x="right" y="bottom" />
 						<size width="44" height="42" />
 						<font>SMALFONT</font>

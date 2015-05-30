@@ -15,6 +15,7 @@ class GameCore
 	private:
 		UString language;
 
+		std::map<UString, UString> supportedlanguages;
 		std::map<UString, UString> languagetext;
 		std::map<UString, std::shared_ptr<BitmapFont>> fonts;
 		std::map<UString, Form*> forms;
