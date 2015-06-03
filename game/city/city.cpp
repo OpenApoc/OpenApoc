@@ -90,18 +90,6 @@ City::City(Framework &fw, UString mapName)
 		this->activeObjects.push_back(testVehicleObject);
 	}
 	LogInfo("Finished placing cars");
-
-	LogInfo("PATH TEST {0,0,9} to {99,99,9}");
-
-	std::list<Tile*> path;
-	path = this->findShortestPath(Vec3<int>{0,0,9}, Vec3<int>{99,99,9});
-
-	LogInfo("Route found in %u steps", (unsigned int)path.size());
-	for (auto tile : path)
-	{
-		LogInfo("Tile {%d,%d,%d,}", tile->position.x, tile->position.y, tile->position.z);
-	}
-
 	PHYSFS_close(file);
 
 }
