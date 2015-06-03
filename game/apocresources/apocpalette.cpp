@@ -7,18 +7,18 @@ namespace OpenApoc {
 Palette*
 loadApocPalette(Data &data, const UString fileName)
 {
-	PHYSFS_file *f = data.load_file(fileName, Data::FileMode::Read);
+	auto f = data.load_file(fileName);
 	if (!f)
 		return nullptr;
-	size_t numEntries = PHYSFS_fileLength(f) / 3;
+	auto numEntries = f.size() / 3;
 	Palette *p = new Palette(numEntries);
 	for (unsigned int i = 0; i < numEntries; i++)
 	{
 		uint8_t colour[3];
 		Colour c;
 
-		PHYSFS_readBytes(f, (void*)&colour, 3);
-		if (PHYSFS_eof(f))
+		f.read((char*)&colour, 3);
+		if (!f)
 			break;
 		if (i == 0)
 			c = {0,0,0,0};
@@ -26,7 +26,6 @@ loadApocPalette(Data &data, const UString fileName)
 			c = {(uint8_t)(colour[0] << 2), (uint8_t)(colour[1] << 2), (uint8_t)(colour[2] << 2), 255};
 		p->SetColour(i, c);
 	}
-	PHYSFS_close(f);
 
 	return p;
 }

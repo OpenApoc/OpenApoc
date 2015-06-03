@@ -8,11 +8,16 @@ namespace OpenApoc {
 ApocCursor::ApocCursor( Framework &fw, std::shared_ptr<Palette> pal )
 	: fw(fw), cursorPos{0,0}
 {
-	PHYSFS_file* f = fw.data->load_file("xcom3/TACDATA/MOUSE.DAT", Data::FileMode::Read);
+	auto f = fw.data->load_file("xcom3/TACDATA/MOUSE.DAT");
+	if (!f)
+	{
+		LogError("Failed to open xcom3/TACDATA/MOUSE.DAT");
+		return;
+	}
 
-	size_t fileLength = PHYSFS_fileLength(f) / 576;
+	auto cursorCount = f.size() / 576;
 
-	while( images.size() < fileLength )
+	while( images.size() < cursorCount )
 	{
 		auto palImg = std::make_shared<PaletteImage>(Vec2<int>{24,24});
 		PaletteImageLock l(palImg, ImageLockUse::Write);
@@ -21,14 +26,12 @@ ApocCursor::ApocCursor( Framework &fw, std::shared_ptr<Palette> pal )
 			for( int x = 0; x < 24; x++ )
 			{
 				char palidx;
-				PHYSFS_readBytes(f, &palidx, 1);
+				f.read(&palidx, 1);
 				l.set(Vec2<int>{x,y}, palidx);
 			}
 		}
 		images.push_back(palImg->toRGBImage(pal));
 	}
-
-	PHYSFS_close(f);
 
 	CurrentType = ApocCursor::Normal;
 }

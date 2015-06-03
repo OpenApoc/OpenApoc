@@ -49,14 +49,14 @@ ApocalypseFont::loadFont( Framework &fw, tinyxml2::XMLElement *fontElement)
 		return nullptr;
 	}
 
-	auto *file = fw.data->load_file(fileName, Data::FileMode::Read);
+	auto file = fw.data->load_file(fileName);
 	if (!file)
 	{
 		LogError("apocfont \"%s\" - Failed to open font path \"%s\"", fontName.str().c_str(), fileName.str().c_str());
 		return nullptr;
 	}
 
-	auto fileSize = PHYSFS_fileLength(file);
+	auto fileSize = file.size();
 	int glyphSize = height * width;
 	int glyphCount = fileSize / glyphSize;
 
@@ -109,7 +109,7 @@ ApocalypseFont::loadFont( Framework &fw, tinyxml2::XMLElement *fontElement)
 			LogError("apocfont \"%s\" glyph \"%s\" has multiple definitions - skipping re-definition", fontName.str().c_str(), glyphString.str().c_str());
 			continue;
 		}
-		PHYSFS_seek(file, glyphSize * offset);
+		file.seekg(glyphSize * offset, std::ios::beg);
 		int glyphWidth = 0;
 
 		auto glyphImage = std::make_shared<PaletteImage>(Vec2<int>(width,height));	
@@ -122,7 +122,7 @@ ApocalypseFont::loadFont( Framework &fw, tinyxml2::XMLElement *fontElement)
 				for (int x = 0; x < width; x++)
 				{
 					uint8_t idx;
-					PHYSFS_readBytes(file, (char*)&idx, 1);
+					file.read((char*)&idx, 1);
 					imgLock.set(Vec2<int>{x,y}, idx);
 					if (idx != 0 && glyphWidth < x)
 						glyphWidth = x;
@@ -138,9 +138,6 @@ ApocalypseFont::loadFont( Framework &fw, tinyxml2::XMLElement *fontElement)
 	auto spaceImage = std::make_shared<PaletteImage>(Vec2<int>{spacewidth,height});
 	//Defaults to transparent (0)
 	font->fontbitmaps[UString::u8Char(' ')] = spaceImage;
-
-
-	PHYSFS_close(file);
 
 	return font;
 }

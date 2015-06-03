@@ -33,21 +33,29 @@ void GameCore::ParseXMLDoc( UString XMLFilename )
 {
 	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLElement* node;
-	UString actualfile = fw.data->GetActualFilename(XMLFilename.str().c_str());
+	UString systemPath;
+	{
+		auto file = fw.data->load_file(XMLFilename);
+		if (!file)
+		{
+			LogError("Failed to open XML file \"%s\"", XMLFilename.str().c_str());
+		}
+		systemPath = file.systemPath();
+	}
 
-	if (actualfile == "")
+	if (systemPath == "")
 	{
 		LogError("Failed to read XML file \"%s\"", XMLFilename.str().c_str());
 		return;
 	}
-	LogInfo("Loading XML file \"%s\" - found at \"%s\"", XMLFilename.str().c_str(), actualfile.str().c_str());
+	LogInfo("Loading XML file \"%s\" - found at \"%s\"", XMLFilename.str().c_str(), systemPath.str().c_str());
 
-	doc.LoadFile( actualfile.str().c_str() );
+	doc.LoadFile( systemPath.str().c_str() );
 	node = doc.RootElement();
 
 	if (!node)
 	{
-		LogError("Failed to parse XML file \"%s\"", actualfile.str().c_str());
+		LogError("Failed to parse XML file \"%s\"", systemPath.str().c_str());
 		return;
 	}
 

@@ -10,15 +10,194 @@
 #include "framework/musicloader_interface.h"
 #include "framework/sampleloader_interface.h"
 
+#include <physfs.h>
+#include <endian.h>
+
 using namespace OpenApoc;
 
 namespace {
 	std::map<UString, std::unique_ptr<OpenApoc::ImageLoaderFactory>> *registeredImageBackends = nullptr;
 	std::map<UString, std::unique_ptr<OpenApoc::MusicLoaderFactory>> *registeredMusicLoaders = nullptr;
 	std::map<UString, std::unique_ptr<OpenApoc::SampleLoaderFactory>> *registeredSampleLoaders = nullptr;
+
+static UString GetCorrectCaseFilename(const UString& Filename)
+{
+	std::string u8Filename = Filename.str();
+	std::unique_ptr<char[]> buf(new char[u8Filename.length() + 1]);
+	strncpy(buf.get(), u8Filename.c_str(), u8Filename.length());
+	buf[Filename.length()] = '\0';
+	if (PHYSFSEXT_locateCorrectCase(buf.get()))
+	{
+		LogInfo("Failed to find file \"%s\"", Filename.str().c_str());
+		return "";
+	}
+	return buf.get();
+}
+
+class PhysfsIFileImpl : public std::streambuf, public IFileImpl
+{
+public:
+	size_t bufferSize;
+	std::unique_ptr<char[]> buffer;
+	UString systemPath;
+	UString caseCorrectedPath;
+	UString suppliedPath;
+
+	PHYSFS_File *file;
+
+	PhysfsIFileImpl(const UString &path, const UString &suppliedPath, size_t bufferSize = 512)
+		: bufferSize(bufferSize), buffer(new char[bufferSize]), suppliedPath(suppliedPath)
+	{
+		file = PHYSFS_openRead(path.str().c_str());
+		if (!file)
+		{
+			LogError("Failed to open file \"%s\" : \"%s\"", path.str().c_str(), PHYSFS_getLastError());
+			return;
+		}
+		systemPath = PHYSFS_getRealDir(path.str().c_str());
+		systemPath += "/" + path;
+
+	}
+	virtual ~PhysfsIFileImpl()
+	{
+		if (file)
+			PHYSFS_close(file);
+	}
+
+	int_type underflow()
+	{
+		if (PHYSFS_eof(file))
+		{
+			return traits_type::eof();
+		}
+		size_t bytesRead = PHYSFS_readBytes(file, buffer.get(), bufferSize);
+		if (bytesRead < 1)
+		{
+			return traits_type::eof();
+		}
+		setg(buffer.get(), buffer.get(), buffer.get() + bytesRead);
+		return (unsigned char) *gptr();
+	}
+
+	pos_type seekoff(off_type pos, std::ios_base::seekdir dir, std::ios_base::openmode mode)
+	{
+		switch (dir)
+		{
+			case std::ios_base::beg:
+				PHYSFS_seek(file, pos);
+				break;
+			case std::ios_base::cur:
+				PHYSFS_seek(file, (PHYSFS_tell(file) + pos) - (egptr() - gptr()));
+				break;
+			case std::ios_base::end:
+				PHYSFS_seek(file, PHYSFS_fileLength(file) + pos);
+				break;
+			default:
+				LogError("Unknown direction in seekoff (%d)", dir);
+				assert(0);
+		}
+
+		if (mode & std::ios_base::in)
+		{
+			setg(egptr(), egptr(), egptr());
+		}
+
+		if (mode & std::ios_base::out)
+		{
+			LogError("ios::out set on read-only IFile \"%s\"", this->suppliedPath.str().c_str());
+			assert(0);
+			setp(buffer.get(), buffer.get());
+		}
+
+		return PHYSFS_tell(file);
+	}
+
+	pos_type seekpos(pos_type pos, std::ios_base::openmode mode)
+	{
+		PHYSFS_seek(file, pos);
+		if (mode & std::ios_base::in)
+		{
+			setg(egptr(), egptr(), egptr());
+		}
+
+		if (mode & std::ios_base::out)
+		{
+			LogError("ios::out set on read-only IFile \"%s\"", this->suppliedPath.str().c_str());
+			assert(0);
+			setp(buffer.get(), buffer.get());
+		}
+
+		return PHYSFS_tell(file);
+	}
+
+	int_type overflow(int_type c = traits_type::eof())
+	{
+		LogError("overflow called on read-only IFile \"%s\"", this->suppliedPath.str().c_str());
+		assert(0);
+		std::ignore = c;
+		return 0;
+	}
+};
+
 }; //anonymous namespace
 
 namespace OpenApoc {
+
+IFile::IFile()
+{
+
+}
+
+IFileImpl::~IFileImpl()
+{
+}
+	
+bool
+IFile::readule16(uint16_t &val)
+{
+	this->read((char*)&val, sizeof(val));
+	val = le16toh(val);
+	return !!this;
+}
+
+bool
+IFile::readule32(uint32_t &val)
+{
+	this->read((char*)&val, sizeof(val));
+	val = le32toh(val);
+	return !!this;
+}
+
+size_t
+IFile::size() const
+{
+	if (this->f)
+		return PHYSFS_fileLength(dynamic_cast<PhysfsIFileImpl*>(f.get())->file);
+	return 0;
+}
+
+const UString&
+IFile::fileName() const
+{
+	static const UString emptyString = "";
+	if (this->f)
+		return dynamic_cast<PhysfsIFileImpl*>(f.get())->suppliedPath;
+	return emptyString;
+}
+
+const UString&
+IFile::systemPath() const
+{
+	static const UString emptyString = "";
+	if (this->f)
+		return dynamic_cast<PhysfsIFileImpl*>(f.get())->systemPath;
+	return emptyString;
+}
+
+IFile::~IFile()
+{
+
+}
 
 void registerImageLoader(ImageLoaderFactory* factory, UString name)
 {
@@ -250,25 +429,24 @@ Data::load_image(const UString& path)
 	return img;
 }
 
-PHYSFS_file* Data::load_file(const UString& path, Data::FileMode mode)
+IFile Data::load_file(const UString& path, Data::FileMode mode)
 {
-	//FIXME: read/write/append modes
+	IFile f;
 	if (mode != Data::FileMode::Read)
 	{
-		LogError("Non-readonly modes not yet supported");
+		LogError("Invalid FileMode set for \"%s\"", path.str().c_str());
+		return f;
 	}
 	UString foundPath = GetCorrectCaseFilename(path);
 	if (foundPath == "")
 	{
-		LogInfo("Failed to open file \"%s\" : \"%s\"", path.str().c_str(), PHYSFS_getLastError());
-		return nullptr;
+		LogInfo("Failed to find \"%s\"", path.str().c_str());
+		assert(!f);
+		return f;
 	}
-	PHYSFS_File *f = PHYSFS_openRead(foundPath.str().c_str());
-	if (!f)
-	{
-		LogError("Failed to open file \"%s\" despite being 'found' at \"%s\"? - error: \"%s\"", path.str().c_str(), foundPath.str().c_str(), PHYSFS_getLastError());
-		return nullptr;
-	}
+	f.f.reset(new PhysfsIFileImpl(foundPath, path));
+	f.rdbuf(dynamic_cast<PhysfsIFileImpl*>(f.f.get()));
+	LogInfo("Loading \"%s\" from \"%s\"", path.str().c_str(), f.systemPath().str().c_str());
 	return f;
 }
 
@@ -304,32 +482,5 @@ Data::load_palette(const UString& path)
 	}
 }
 
-UString
-Data::GetCorrectCaseFilename(const UString& Filename)
-{
-	std::string u8Filename = Filename.str();
-	std::unique_ptr<char[]> buf(new char[u8Filename.length() + 1]);
-	strncpy(buf.get(), u8Filename.c_str(), u8Filename.length());
-	buf[Filename.length()] = '\0';
-	if (PHYSFSEXT_locateCorrectCase(buf.get()))
-	{
-		LogInfo("Failed to find file \"%s\"", Filename.str().c_str());
-		return "";
-	}
-	return buf.get();
-}
-
-UString
-Data::GetActualFilename(const UString& Filename)
-{
-	UString foundPath = GetCorrectCaseFilename(Filename);
-	if (foundPath == "")
-	{
-		LogError("Failed to get filename for \"%s\"", Filename.str().c_str());
-		return "";
-	}
-	UString folder = PHYSFS_getRealDir(foundPath.str().c_str());
-	return folder + "/" + foundPath;
-}
 
 }; //namespace OpenApoc

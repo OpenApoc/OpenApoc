@@ -11,6 +11,7 @@
 #include <allegro5/allegro5.h>
 #include <iostream>
 #include <string>
+#include <physfs.h>
 
 using namespace OpenApoc;
 
@@ -238,10 +239,16 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 
 	this->data.reset(new Data(*this, resourcePaths));
 
-	auto testFile = this->data->load_file("MUSIC", Data::FileMode::Read);
+	auto testFile = this->data->load_file("MUSIC");
 	if (!testFile)
 	{
 		LogError("Failed to open \"music\" from the CD - likely the cd couldn't be loaded or paths are incorrect if using an extracted CD image");
+	}
+
+	auto testFile2 = this->data->load_file("FileDoesntExist");
+	if (testFile2)
+	{
+		LogError("Succeded in opening \"FileDoesntExist\" - either you have the weirdest filename preferences or something is wrong");
 	}
 
 	p->eventAllegro = al_create_event_queue();

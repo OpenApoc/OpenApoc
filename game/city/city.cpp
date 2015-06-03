@@ -11,7 +11,7 @@ namespace OpenApoc {
 City::City(Framework &fw, UString mapName)
 	: TileMap(fw, Vec3<int>{100, 100, 10}), organisations(Organisation::defaultOrganisations)
 {
-	auto file = fw.data->load_file("xcom3/ufodata/" + mapName, Data::FileMode::Read);
+	auto file = fw.data->load_file("xcom3/ufodata/" + mapName);
 	if (!file)
 	{
 		LogError("Failed to open city map \"%s\"", mapName.str().c_str());
@@ -29,8 +29,7 @@ City::City(Framework &fw, UString mapName)
 			{
 				uint16_t tileID;
 				Tile &tile = this->getTile(x,y,z);
-				int success = PHYSFS_readULE16(file, &tileID);
-				if (!success)
+				if (!file.readule16(tileID))
 				{
 					LogError("Unexpected EOF reading citymap at %d,%d,%d",x,y,z);
 					tileID = 0;
@@ -90,8 +89,6 @@ City::City(Framework &fw, UString mapName)
 		this->activeObjects.push_back(testVehicleObject);
 	}
 	LogInfo("Finished placing cars");
-	PHYSFS_close(file);
-
 }
 
 City::~City()
