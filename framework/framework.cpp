@@ -21,7 +21,11 @@ namespace {
 #endif
 
 #ifndef RENDERERS
+#ifdef _WIN32
+#pragma message ( "WARNING: Using default renderer list" )
+#else
 #warning RENDERERS not set - using default list
+#endif
 #define RENDERERS "GL_3_0:GLES_2_0"
 #endif
 
