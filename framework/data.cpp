@@ -157,6 +157,7 @@ public:
 namespace OpenApoc {
 
 IFile::IFile()
+	: std::istream(nullptr)
 {
 
 }
