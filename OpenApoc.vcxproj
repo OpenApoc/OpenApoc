@@ -232,6 +232,7 @@
     <ClCompile Include="game\resources\vehiclefactory.cpp" />
     <ClCompile Include="game\tileview\tile.cpp" />
     <ClCompile Include="game\tileview\tileview.cpp" />
+    <ClCompile Include="game\ufopaedia\ufopaedia.cpp" />
     <ClCompile Include="library\configfile.cpp" />
     <ClCompile Include="game\apocresources\cursor.cpp" />
     <ClCompile Include="framework\event.cpp" />
@@ -289,6 +290,7 @@
     <ClInclude Include="game\resources\vehiclefactory.h" />
     <ClInclude Include="game\tileview\tile.h" />
     <ClInclude Include="game\tileview\tileview.h" />
+    <ClInclude Include="game\ufopaedia\ufopaedia.h" />
     <ClInclude Include="library\angle.h" />
     <ClInclude Include="game\apocresources\apocfont.h" />
     <ClInclude Include="game\boot.h" />
