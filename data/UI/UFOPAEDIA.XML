@@ -8,7 +8,7 @@
 			<backcolour r="80" g="80" b="80" />
 			
 			<graphic>
-				<image>UFOPAEDI/TITLE.PCX</image>
+				<image>xcom3/UFOPAEDI/TITLE.PCX</image>
 				<position x="2" y="2" />
 				<size width="640" height="480" />
 			</graphic>
@@ -73,7 +73,7 @@
 				<size width="636" height="40" />
 			</control>
 			
-			<label text="STR_BASE_FACILITIES">
+			<label text="STR_FACILITIES">
 				<backcolour r="0" g="0" b="0" a="0" />
 				<position x="344" y="222" />
 				<size width="270" height="40" />

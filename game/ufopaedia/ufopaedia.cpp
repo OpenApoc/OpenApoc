@@ -1,38 +1,36 @@
 
-#include "game/general/optionsmenu.h"
-#include "game/general/basescreen.h"
 #include "game/ufopaedia/ufopaedia.h"
 #include "framework/framework.h"
 
 namespace OpenApoc {
 
-OptionsMenu::OptionsMenu(Framework &fw)
+Ufopaedia::Ufopaedia(Framework &fw)
 	: Stage(fw)
 {
-	menuform = fw.gamecore->GetForm("FORM_OPTIONSMENU");
+	menuform = fw.gamecore->GetForm("FORM_UFOPAEDIA_TITLE");
 }
 
-OptionsMenu::~OptionsMenu()
+Ufopaedia::~Ufopaedia()
 {
 }
 
-void OptionsMenu::Begin()
+void Ufopaedia::Begin()
 {
 }
 
-void OptionsMenu::Pause()
+void Ufopaedia::Pause()
 {
 }
 
-void OptionsMenu::Resume()
+void Ufopaedia::Resume()
 {
 }
 
-void OptionsMenu::Finish()
+void Ufopaedia::Finish()
 {
 }
 
-void OptionsMenu::EventOccurred(Event *e)
+void Ufopaedia::EventOccurred(Event *e)
 {
 	menuform->EventOccured( e );
 	fw.gamecore->MouseCursor->EventOccured( e );
@@ -50,20 +48,12 @@ void OptionsMenu::EventOccurred(Event *e)
 	{
 		if( e->Data.Forms.RaisedBy->Name == "BUTTON_TEST_XCOMBASE" )
 		{
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<BaseScreen>(fw);
-			return;
-		}
-		if( e->Data.Forms.RaisedBy->Name == "BUTTON_TEST_UFOPAEDIA" )
-		{
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<Ufopaedia>(fw);
 			return;
 		}
 	}
 }
 
-void OptionsMenu::Update(StageCmd * const cmd)
+void Ufopaedia::Update(StageCmd * const cmd)
 {
 	menuform->Update();
 	*cmd = this->stageCmd;
@@ -71,13 +61,13 @@ void OptionsMenu::Update(StageCmd * const cmd)
 	this->stageCmd = StageCmd();
 }
 
-void OptionsMenu::Render()
+void Ufopaedia::Render()
 {
 	menuform->Render();
 	fw.gamecore->MouseCursor->Render();
 }
 
-bool OptionsMenu::IsTransition()
+bool Ufopaedia::IsTransition()
 {
 	return false;
 }
