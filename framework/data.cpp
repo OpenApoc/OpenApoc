@@ -11,7 +11,20 @@
 #include "framework/sampleloader_interface.h"
 
 #include <physfs.h>
+
+#ifndef _WIN32
 #include <endian.h>
+#else
+/* Windows is always little endian? */
+static inline uint16_t le16toh(uint16_t val)
+{
+	return val;
+}
+static inline uint32_t le32toh(uint32_t val)
+{
+	return val;
+}
+#endif
 
 using namespace OpenApoc;
 
@@ -148,10 +161,18 @@ IFile::IFile()
 
 }
 
+IFile::IFile(IFile&& other)
+	: std::istream(std::move(other))
+{
+	this->f = std::move(other.f);
+	rdbuf(other.rdbuf());
+	other.rdbuf(nullptr);
+}
+
 IFileImpl::~IFileImpl()
 {
 }
-	
+
 bool
 IFile::readule16(uint16_t &val)
 {
