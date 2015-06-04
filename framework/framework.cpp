@@ -368,8 +368,6 @@ void Framework::ReadRecordedEvents()
 
 void Framework::ProcessEvents()
 {
-	LogInfo("Processing events");
-
 	if( p->ProgramStages.IsEmpty() )
 	{
 		p->quitProgram = true;
