@@ -26,7 +26,7 @@ class RawMusicTrack : public MusicTrack
 
 public:
 	RawMusicTrack(Data &data, const UString &fileName, unsigned int fileOffset, unsigned int numSamples)
-		: file(data.load_file(fileName)), valid(false)
+		: file(data.load_file(fileName)), samplePosition(0), valid(false)
 	{
 		if (!file)
 		{

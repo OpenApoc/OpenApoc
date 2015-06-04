@@ -7,7 +7,7 @@
 namespace OpenApoc {
 
 Control::Control(Framework &fw, Control* Owner)
-	: owningControl(Owner), focusedChild(nullptr), mouseInside(false), mouseDepressed(false), fw(fw), Name("Control"), BackgroundColour( 128, 80, 80 )
+	: owningControl(Owner), focusedChild(nullptr), mouseInside(false), mouseDepressed(false), resolvedLocation(0,0), fw(fw), Name("Control"),Location(0,0), Size(0,0), BackgroundColour( 128, 80, 80 )
 {
 	if( Owner != nullptr )
 	{
