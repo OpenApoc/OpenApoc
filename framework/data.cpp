@@ -161,7 +161,8 @@ IFile::IFile()
 {
 
 }
-
+//FIXME: MSVC needs this, GCC fails with it?
+#ifdef _WIN32
 IFile::IFile(IFile&& other)
 	: std::istream(std::move(other))
 {
@@ -169,6 +170,7 @@ IFile::IFile(IFile&& other)
 	rdbuf(other.rdbuf());
 	other.rdbuf(nullptr);
 }
+#endif
 
 IFileImpl::~IFileImpl()
 {
