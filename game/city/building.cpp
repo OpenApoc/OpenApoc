@@ -154,7 +154,7 @@ std::vector<Building>
 loadBuildingsFromBld(Framework &fw, UString fileName, std::vector<Organisation> &orgList, std::vector<UString> nameList)
 {
 	std::vector<Building> buildings;
-	auto file = fw.data->load_file("xcom3/ufodata/" + fileName, Data::FileMode::Read);
+	auto file = fw.data->load_file("xcom3/ufodata/" + fileName);
 	if (!file)
 	{
 		LogError("Failed to open building data file: %s", fileName.str().c_str());
@@ -169,29 +169,29 @@ loadBuildingsFromBld(Framework &fw, UString fileName, std::vector<Organisation> 
 	//0xc8 uint16: building Owner ID
 	//
 	//Total size of each buildilg field: 226 bytes
-	size_t fileSize = PHYSFS_fileLength(file);
+	auto fileSize = file.size();
 	int numBuildings = fileSize / 226;
 	LogInfo("Loading %d buildings in %u bytes", numBuildings, (unsigned int)fileSize);
 	for (int b = 0; b < numBuildings; b++)
 	{
-		if (!PHYSFS_seek(file, b*226))
+		if (!file.seekg(b*226, std::ios::beg))
 		{
-			LogError("Failed to seek to beginning of building %d - %s", b, PHYSFS_getLastError());
+			LogError("Failed to seek to beginning of building %d", b);
 			break;
 		}
-		uint16_t nameIdx; PHYSFS_readULE16(file, &nameIdx);
-		uint16_t x0; PHYSFS_readULE16(file, &x0);
-		uint16_t x1; PHYSFS_readULE16(file, &x1);
-		uint16_t y0; PHYSFS_readULE16(file, &y0);
-		uint16_t y1; PHYSFS_readULE16(file, &y1);
+		uint16_t nameIdx; file.readule16(nameIdx);
+		uint16_t x0; file.readule16(x0);
+		uint16_t x1; file.readule16(x1);
+		uint16_t y0; file.readule16(y0);
+		uint16_t y1; file.readule16(y1);
 		//Read 10 bytes
 		//Skip to byte 200 (190 bytes)
-		if (!PHYSFS_seek(file, (b*226)+200))
+		if (!file.seekg((b*226)+200, std::ios::beg))
 		{
 			LogError("Failed to seek reading building %d", b);
 			break;
 		}
-		uint16_t orgIdx; PHYSFS_readULE16(file, &orgIdx);
+		uint16_t orgIdx; file.readule16(orgIdx);
 		if (nameIdx >= nameList.size())
 		{
 			LogError("Invalid building name IDX %u (max %u) reading building %d", nameIdx, (unsigned int)nameList.size(), b);
@@ -216,7 +216,6 @@ loadBuildingsFromBld(Framework &fw, UString fileName, std::vector<Organisation> 
 		LogInfo("Read building \"%s\" owner \"%s\" position {%d,%d},{%d,%d}", bld.name.str().c_str(), bld.owner.name.str().c_str(),
 			bld.bounds.p0.x, bld.bounds.p0.y, bld.bounds.p1.x, bld.bounds.p1.y);
 	}
-	PHYSFS_close(file);
 	return buildings;
 }
 

@@ -14,11 +14,16 @@ CityTile::loadTilesFromFile(Framework &fw)
 
 	auto sprites = fw.data->load_image_set("PCK:xcom3/ufodata/CITY.PCK:xcom3/ufodata/CITY.TAB");
 
-	auto datFile = fw.data->load_file("xcom3/ufodata/CITYMAP.DAT", Data::FileMode::Read);
+	auto datFile = fw.data->load_file("xcom3/ufodata/CITYMAP.DAT");
+	if (!datFile)
+	{
+		LogError("Failed to load CITYMAP.DAT");
+		return v;
+	}
 
 	int numTiles = sprites->images.size();
 
-	int64_t datFileSize = PHYSFS_fileLength(datFile);
+	auto datFileSize = datFile.size();
 
 	int numDatEntries = datFileSize / 52;
 
@@ -36,8 +41,6 @@ CityTile::loadTilesFromFile(Framework &fw)
 		tile.sprite = sprites->images[t];
 		v.push_back(tile);
 	}
-
-	PHYSFS_close(datFile);
 	return v;
 }
 

@@ -71,7 +71,7 @@ void CheckBox::OnRender()
 		}
 		else
 		{
-			fw.renderer->drawScaled(*useimage, Vec2<float>{0,0}, Vec2<float>{this->Size.x, this->Size.y});
+			fw.renderer->drawScaled(useimage, Vec2<float>{0,0}, Vec2<float>{this->Size.x, this->Size.y});
 		}
 	}
 }

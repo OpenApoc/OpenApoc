@@ -4,9 +4,9 @@
 #include "image.h"
 #include "sound.h"
 
-#include <physfs.h>
 #include <queue>
 #include <vector>
+#include <fstream>
 
 namespace OpenApoc {
 
@@ -17,6 +17,28 @@ class ImageLoader;
 class SampleLoader;
 class MusicLoader;
 class Framework;
+
+class IFileImpl
+{
+public:
+	virtual ~IFileImpl();
+};
+
+class IFile : public std::istream
+{
+private:
+	std::unique_ptr<IFileImpl> f;
+	IFile();
+	friend class Data;
+public:
+	~IFile();
+	size_t size() const;
+	bool readule16(uint16_t &val);
+	bool readule32(uint32_t &val);
+	const UString &fileName() const;
+	const UString &systemPath() const;
+	IFile(IFile &&other);
+};
 
 class Data
 {
@@ -53,9 +75,7 @@ class Data
 		std::shared_ptr<Image> load_image(const UString& path);
 		std::shared_ptr<ImageSet> load_image_set(const UString& path);
 		std::shared_ptr<Palette> load_palette(const UString& path);
-		PHYSFS_file* load_file(const UString& path, FileMode mode);
-		UString GetActualFilename(const UString& Filename);
-		UString GetCorrectCaseFilename(const UString& Filename);
+		IFile load_file(const UString& path, FileMode mode = FileMode::Read);
 
 };
 

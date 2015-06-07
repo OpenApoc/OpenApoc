@@ -7,7 +7,7 @@
 
 namespace OpenApoc {
 
-TextEdit::TextEdit( Framework &fw, Control* Owner, UString Text, std::shared_ptr<BitmapFont> font ) : Control( fw, Owner ), text( Text ), font( font ), SelectionStart(Text.length()), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Centre )
+TextEdit::TextEdit( Framework &fw, Control* Owner, UString Text, std::shared_ptr<BitmapFont> font ) : Control( fw, Owner ), caretDraw(false), caretTimer(0), text( Text ), font( font ), editting(false), editShift(false), editAltGr(false),  SelectionStart(Text.length()), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Centre )
 {
 }
 

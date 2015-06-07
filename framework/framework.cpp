@@ -11,6 +11,7 @@
 #include <allegro5/allegro5.h>
 #include <iostream>
 #include <string>
+#include <physfs.h>
 
 using namespace OpenApoc;
 
@@ -18,6 +19,15 @@ namespace {
 
 #ifndef DATA_DIRECTORY
 #define DATA_DIRECTORY "./data"
+#endif
+
+#ifndef RENDERERS
+#ifdef _WIN32
+#pragma message ( "WARNING: Using default renderer list" )
+#else
+#warning RENDERERS not set - using default list
+#endif
+#define RENDERERS "GL_3_0:GLES_2_0"
 #endif
 
 static std::map<UString, UString> defaultConfig =
@@ -37,8 +47,8 @@ static std::map<UString, UString> defaultConfig =
 	{"Resource.SystemDataDir", DATA_DIRECTORY},
 	{"Resource.LocalCDPath", "./data/cd.iso"},
 	{"Resource.SystemCDPath", DATA_DIRECTORY "/cd.iso"},
-	{"Visual.RendererList", "GL_3_0;GL_2_1;allegro"},
-	{ "Audio.Backends", "allegro;null" },
+	{"Visual.Renderers", RENDERERS},
+	{"Audio.Backends", "allegro:null"},
 };
 
 std::map<UString, std::unique_ptr<OpenApoc::RendererFactory>> *registeredRenderers = nullptr;
@@ -229,10 +239,16 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 
 	this->data.reset(new Data(*this, resourcePaths));
 
-	auto testFile = this->data->load_file("MUSIC", Data::FileMode::Read);
+	auto testFile = this->data->load_file("MUSIC");
 	if (!testFile)
 	{
 		LogError("Failed to open \"music\" from the CD - likely the cd couldn't be loaded or paths are incorrect if using an extracted CD image");
+	}
+
+	auto testFile2 = this->data->load_file("FileDoesntExist");
+	if (testFile2)
+	{
+		LogError("Succeded in opening \"FileDoesntExist\" - either you have the weirdest filename preferences or something is wrong");
 	}
 
 	p->eventAllegro = al_create_event_queue();
@@ -352,8 +368,6 @@ void Framework::ReadRecordedEvents()
 
 void Framework::ProcessEvents()
 {
-	LogInfo("Processing events");
-
 	if( p->ProgramStages.IsEmpty() )
 	{
 		p->quitProgram = true;
@@ -585,7 +599,7 @@ void Framework::Display_Initialise()
 
 	al_hide_mouse_cursor( p->screen );
 
-	for (auto &rendererName : Settings->getString("Visual.RendererList").split(';'))
+	for (auto &rendererName : Settings->getString("Visual.Renderers").split(':'))
 	{
 		auto rendererFactory = registeredRenderers->find(rendererName);
 		if (rendererFactory == registeredRenderers->end())
@@ -648,7 +662,7 @@ void Framework::Audio_Initialise()
 {
 	LogInfo("Initialise Audio");
 
-	for (auto &soundBackendName : Settings->getString("Audio.Backends").split(';'))
+	for (auto &soundBackendName : Settings->getString("Audio.Backends").split(':'))
 	{
 		auto backendFactory = registeredSoundBackends->find(soundBackendName);
 		if (backendFactory == registeredSoundBackends->end())

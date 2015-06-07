@@ -33,8 +33,8 @@ class PCK
 	private:
 
 		void ProcessFile(Data &d, UString PckFilename, UString TabFilename, int Index);
-		void LoadVersion1Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index);
-		void LoadVersion2Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index);
+		void LoadVersion1Format(IFile& pck, IFile& tab, int Index);
+		void LoadVersion2Format(IFile& pck, IFile& tab, int Index);
 
 	public:
 		PCK( Data &d, UString PckFilename, UString TabFilename);
@@ -53,20 +53,26 @@ PCK::~PCK()
 
 void PCK::ProcessFile(Data &d, UString PckFilename, UString TabFilename, int Index)
 {
-	PHYSFS_file* pck = d.load_file(PckFilename, Data::FileMode::Read);
-	PHYSFS_file* tab = d.load_file(TabFilename, Data::FileMode::Read);
+	auto pck = d.load_file(PckFilename);
 	if (!pck)
 	{
 		LogError("Failed to open PCK file \"%s\"", PckFilename.str().c_str());
+		return;
 	}
+	auto tab = d.load_file(TabFilename);
 	if (!tab)
 	{
 		LogError("Failed to open TAB file \"%s\"", TabFilename.str().c_str());
+		return;
 	}
 
 	uint16_t version;
-	PHYSFS_readULE16(pck, &version);
-	PHYSFS_seek(pck, 0);
+	if (!pck.readule16(version))
+	{
+		LogError("Failed to read version from \"%s\"", PckFilename.str().c_str());
+		return;
+	}
+	pck.seekg(0, std::ios::beg);
 	switch (version)
 	{
 	case 0:
@@ -76,12 +82,9 @@ void PCK::ProcessFile(Data &d, UString PckFilename, UString TabFilename, int Ind
 		LoadVersion2Format(pck, tab, Index);
 		break;
 	}
-
-	PHYSFS_close(tab);
-	PHYSFS_close(pck);
 }
 
-void PCK::LoadVersion1Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
+void PCK::LoadVersion1Format(IFile& pck, IFile& tab, int Index)
 {
 	std::shared_ptr<PaletteImage> img;
 
@@ -94,17 +97,33 @@ void PCK::LoadVersion1Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
 	std::vector<int16_t> c0_rowwidths;
 
 	int minrec = (Index < 0 ? 0 : Index);
-	int maxrec = (Index < 0 ? PHYSFS_fileLength(tab) / 4 : Index + 1);
+	int maxrec = (Index < 0 ? tab.size() / 4 : Index + 1);
 	for( int i = minrec; i < maxrec; i++ )
 	{
-		PHYSFS_seek( tab, i * 4);
+		if (!tab.seekg(i*4, std::ios::beg))
+		{
+			LogError("Failed to seek to record %d in \"%s\"", i, tab.fileName().str().c_str());
+			return;
+		}
 		unsigned int offset;
-		PHYSFS_readULE32(tab, &offset);
+		if (!tab.readule32(offset))
+		{
+			LogError("Failed to read offset %d from tab \"%s\"", i, tab.fileName().str().c_str());
+			return;
+		}
 
-		PHYSFS_seek( pck, offset);
+		if (!pck.seekg(offset, std::ios::beg))
+		{
+			LogError("Failed to seek to offset %u for PCK \"%s\" id %s", offset, pck.fileName().str().c_str(), i);
+			return;
+		}
 
 		// Raw Data
-		PHYSFS_readULE16(pck, &c0_offset);
+		if (!pck.readule16(c0_offset))
+		{
+			LogError("Failed to read offset header in PCK \"%s\" id %d", pck.fileName().str().c_str(), i);
+			return;
+		}
 		c0_imagedata = new Memory(0);
 		c0_rowwidths.clear();
 		c0_maxwidth = 0;
@@ -113,7 +132,11 @@ void PCK::LoadVersion1Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
 		while( c0_offset != 0xffff )
 		{
 			uint16_t c0_width;
-			PHYSFS_readULE16(pck, &c0_width);	// I hope they never change width mid-image
+			if (!pck.readule16(c0_width))
+			{
+				LogError("Failed to read width header in PCK \"%s\" id %d", pck.fileName().str().c_str(), i);
+				return;
+			}
 			c0_rowwidths.push_back( c0_width );
 			if( c0_maxwidth < c0_width )
 			{
@@ -123,10 +146,18 @@ void PCK::LoadVersion1Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
 			c0_bufferptr = c0_imagedata->GetSize();
 			c0_imagedata->Resize( c0_bufferptr + c0_width + (c0_offset % 640) );
 			memset( c0_imagedata->GetDataOffset( c0_bufferptr ), 0, c0_width + (c0_offset % 640) );
-			PHYSFS_readBytes( pck, c0_imagedata->GetDataOffset( c0_bufferptr + (c0_offset % 640) ), c0_width );
+			if (!pck.read((char*)c0_imagedata->GetDataOffset(c0_bufferptr + (c0_offset % 640)), c0_width))
+			{
+				LogError("Failed to read pixel data in PCK \"%s\" id %d", pck.fileName().str().c_str(), i);
+				return;
+			}
 			c0_height++;
 
-			PHYSFS_readULE16(pck, &c0_offset);	// Always a 640px row (that I've seen)
+			if (!pck.readule16(c0_offset))
+			{
+				LogError("Failed to read offset after %d from tab \"%s\"", i, tab.fileName().str().c_str());
+				return;
+			}
 		}
 		img = std::make_shared<PaletteImage>(Vec2<int>{c0_maxwidth, c0_height});
 		PaletteImageLock region(img);
@@ -150,7 +181,7 @@ void PCK::LoadVersion1Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
 	}
 }
 
-void PCK::LoadVersion2Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
+void PCK::LoadVersion2Format(IFile& pck, IFile& tab, int Index)
 {
 	uint16_t compressionmethod;
 
@@ -161,17 +192,33 @@ void PCK::LoadVersion2Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
 	PCKCompression1RowHeader c1_header;
 
 	int minrec = (Index < 0 ? 0 : Index);
-	int maxrec = (Index < 0 ? PHYSFS_fileLength(tab) / 4 : Index + 1);
+	int maxrec = (Index < 0 ? tab.size() / 4 : Index + 1);
 	for (int i = minrec; i < maxrec; i++)
 	{
-		PHYSFS_seek( tab, i * 4);
+		if (!tab.seekg(i*4, std::ios::beg))
+		{
+			LogError("Failed to seek to record %d in \"%s\"", i, tab.fileName().str().c_str());
+			return;
+		}
 		unsigned int offset;
-		PHYSFS_readULE32( tab, &offset );
+		if (!tab.readule32(offset))
+		{
+			LogError("Failed to read offset %d from tab \"%s\"", i, tab.fileName().str().c_str());
+			return;
+		}
 		offset *= 4;
 
-		PHYSFS_seek(pck, offset);
+		if (!pck.seekg(offset, std::ios::beg))
+		{
+			LogError("Failed to seek to offset %u for PCK \"%s\" id %s", offset, pck.fileName().str().c_str(), i);
+			return;
+		}
 
-		PHYSFS_readULE16(pck, &compressionmethod);
+		if (!pck.readule16(compressionmethod))
+		{
+			LogError("Failed to read compression header for PCK \"%s\" id %d", pck.fileName().str().c_str(), i);
+			return;
+		}
 		switch( compressionmethod )
 		{
 			case 0:
@@ -181,14 +228,26 @@ void PCK::LoadVersion2Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
 			case 1:
 			{
 				// Raw Data with RLE
-				PHYSFS_readBytes( pck, &c1_imgheader, sizeof( PCKCompression1ImageHeader ) );
+				if (!pck.read((char*)&c1_imgheader, sizeof(c1_imgheader)))
+				{
+					LogError("Failed to read header for PCK \"%s\" id %d", pck.fileName().str().c_str(), i);
+					return;
+				}
 				img = std::make_shared<PaletteImage>(Vec2<int>{c1_imgheader.RightMostPixel, c1_imgheader.BottomMostPixel});
 
 				PaletteImageLock lock(img);
-				PHYSFS_readULE32(pck, &c1_pixelstoskip);
+				if (!pck.readule32(c1_pixelstoskip))
+				{
+					LogError("Failed to read pixel skip for PCK \"%s\" id %d", pck.fileName().str().c_str(), i);
+					return;
+				}
 				while( c1_pixelstoskip != 0xFFFFFFFF )
 				{
-					PHYSFS_readBytes( pck, &c1_header, sizeof( PCKCompression1Header ) );
+					if (!pck.read((char*)&c1_header, sizeof(c1_header)))
+					{
+						LogError("Failed to read RLE header for PCK \"%s\" id %d", pck.fileName().str().c_str(), i);
+						return;
+					}
 					uint32_t c1_y = (c1_pixelstoskip / 640);
 
 					if( c1_y < c1_imgheader.BottomMostPixel)
@@ -197,19 +256,23 @@ void PCK::LoadVersion2Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
 						{
 							// No idea what this is
 							uint32_t chunk;
-							PHYSFS_readULE32(pck, &chunk);
+							pck.readule32(chunk);
 
 							for (uint32_t c1_x = c1_imgheader.LeftMostPixel; c1_x < c1_header.BytesInRow; c1_x++)
 							{
 								if (c1_x < c1_imgheader.RightMostPixel)
 								{
 									char idx;
-									PHYSFS_readBytes(pck, &idx, 1);
+									if (!pck.read(&idx, 1))
+									{
+										LogError("Failed to read pixel data for PCK \"%s\" id %d", pck.fileName().str().c_str(), i);
+										return;
+									}
 									lock.set(Vec2<int>{c1_x, c1_y}, idx);
 								} else {
 									// Pretend to process data
 									char dummy;
-									PHYSFS_readBytes(pck, &dummy, 1);
+									pck.read(&dummy, 1);
 								}
 							}
 
@@ -219,17 +282,25 @@ void PCK::LoadVersion2Format(PHYSFS_file* pck, PHYSFS_file* tab, int Index)
 								if( (c1_header.ColumnToStartAt + c1_x) < c1_imgheader.RightMostPixel)
 								{
 									char idx;
-									PHYSFS_readBytes(pck, &idx, 1);
+									if (!pck.read(&idx, 1))
+									{
+										LogError("Failed to read pixel data for PCK \"%s\" id %d", pck.fileName().str().c_str(), i);
+										return;
+									}
 									lock.set(Vec2<int>{c1_header.ColumnToStartAt + c1_x, c1_y}, idx);
 								} else {
 									// Pretend to process data
 									char dummy;
-									PHYSFS_readBytes(pck, &dummy, 1);
+									pck.read(&dummy, 1);
 								}
 							}
 						}
 					}
-					PHYSFS_readULE32(pck, &c1_pixelstoskip);
+					if (!pck.readule32(c1_pixelstoskip))
+					{
+						LogError("Failed to read pixel skip after PCK \"%s\" id %d", pck.fileName().str().c_str(), i);
+						return;
+					}
 				}
 				images.push_back( img );
 				break;

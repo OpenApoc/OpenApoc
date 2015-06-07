@@ -690,7 +690,7 @@ public:
 	}
 	
 	virtual void draw(std::shared_ptr<Image> i, Vec2<float> position);
-	virtual void drawRotated(Image &i, Vec2<float> center, Vec2<float> position, float angle)
+	virtual void drawRotated(std::shared_ptr<Image> i, Vec2<float> center, Vec2<float> position, float angle)
 	{
 		LogError("Unimplemented function");
 		std::ignore = i;
@@ -698,7 +698,7 @@ public:
 		std::ignore = position;
 		std::ignore = angle;
 	};
-	virtual void drawScaled(Image &i, Vec2<float> position, Vec2<float> size, Scaler scaler = Scaler::Linear)
+	virtual void drawScaled(std::shared_ptr<Image> i, Vec2<float> position, Vec2<float> size, Scaler scaler = Scaler::Linear)
 	{
 		LogError("Unimplemented function");
 		std::ignore = i;
@@ -706,7 +706,7 @@ public:
 		std::ignore = size;
 		std::ignore = scaler;
 	};
-	virtual void drawTinted(Image &i, Vec2<float> position, Colour tint)
+	virtual void drawTinted(std::shared_ptr<Image> i, Vec2<float> position, Colour tint)
 	{
 		LogError("Unimplemented function");
 		std::ignore = i;
@@ -940,32 +940,44 @@ void OGL30Renderer::draw(std::shared_ptr<Image> image, Vec2<float> position)
 	std::shared_ptr<ImageSet> owningSet = image->owningSet.lock();
 	if (owningSet)
 	{
-		std::shared_ptr<GLPaletteSpritesheet> ss = std::dynamic_pointer_cast<GLPaletteSpritesheet>(owningSet->rendererPrivateData);
-		if (!ss)
+		if (owningSet->images.size() > maxSpritesheetSize)
 		{
-			ss = std::make_shared<GLPaletteSpritesheet>(owningSet);
-			owningSet->rendererPrivateData = ss;
+			static bool warnonce = false;
+			if (!warnonce)
+			{
+				warnonce = true;
+				LogError("Spritesheet size %d would be over max array size %d - falling back to 'slow' path", owningSet->images.size(), maxSpritesheetSize);
+			}
 		}
-		switch (this->state)
+		else
 		{
-			default:
-				this->flush();
-			case RendererState::BatchingSpritesheet:
-				if (ss != this->boundSpritesheet ||
-				    this->batchedSprites.size() >= this->maxBatchedSprites)
-				{
+			std::shared_ptr<GLPaletteSpritesheet> ss = std::dynamic_pointer_cast<GLPaletteSpritesheet>(owningSet->rendererPrivateData);
+			if (!ss)
+			{
+				ss = std::make_shared<GLPaletteSpritesheet>(owningSet);
+				owningSet->rendererPrivateData = ss;
+			}
+			switch (this->state)
+			{
+				default:
 					this->flush();
-				}
-			case RendererState::Idle:
-				break;
+				case RendererState::BatchingSpritesheet:
+					if (ss != this->boundSpritesheet ||
+					    this->batchedSprites.size() >= this->maxBatchedSprites)
+					{
+						this->flush();
+					}
+				case RendererState::Idle:
+					break;
+			}
+			this->boundSpritesheet = ss;
+			this->state = RendererState::BatchingSpritesheet;
+			this->batchedSprites.emplace_back(
+					position, Vec2<float>(image->size.x, image->size.y),
+					image->indexInSet
+				);
+			return;
 		}
-		this->boundSpritesheet = ss;
-		this->state = RendererState::BatchingSpritesheet;
-		this->batchedSprites.emplace_back(
-				position, Vec2<float>(image->size.x, image->size.y),
-				image->indexInSet
-			);
-		return;
 	}
 	if (this->state != RendererState::Idle)
 		this->flush();

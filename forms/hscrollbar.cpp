@@ -6,7 +6,7 @@
 
 namespace OpenApoc {
 
-HScrollBar::HScrollBar( Framework &fw, Control* Owner ) : Control( fw, Owner ), GripperColour( 220, 192, 192 ), Minimum(0), Maximum(10), Value(0),  LargeChange(2)
+HScrollBar::HScrollBar( Framework &fw, Control* Owner ) : Control( fw, Owner ), capture(false), GripperColour( 220, 192, 192 ), Minimum(0), Maximum(10), Value(0),  LargeChange(2)
 {
 	//LoadResources();
 }

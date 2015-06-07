@@ -13,7 +13,7 @@ public:
 		:fw(fw){}
 	virtual std::shared_ptr<Sample> loadSample(UString path)
 	{
-		PHYSFS_file *file = fw.data->load_file(path, Data::FileMode::Read);
+		auto file = fw.data->load_file(path);
 		if (!file)
 			return nullptr;
 
@@ -22,10 +22,9 @@ public:
 		sample->format.frequency = 22050;
 		sample->format.channels = 1;
 		sample->format.format = AudioFormat::SampleFormat::PCM_UINT8;
-		sample->sampleCount = PHYSFS_fileLength(file);
+		sample->sampleCount = file.size();
 		sample->data.reset(new uint8_t[sample->sampleCount]);
-		PHYSFS_readBytes(file, sample->data.get(), sample->sampleCount);
-		PHYSFS_close(file);
+		file.read((char*)sample->data.get(), sample->sampleCount);
 		return sample;
 	}
 };
