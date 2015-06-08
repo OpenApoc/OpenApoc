@@ -46,8 +46,15 @@ void Ufopaedia::EventOccurred(Event *e)
 
 	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick )
 	{
-		if( e->Data.Forms.RaisedBy->Name == "BUTTON_TEST_XCOMBASE" )
+		if( e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT" )
 		{
+			stageCmd.cmd = StageCmd::Command::POP;
+			return;
+		}
+		else
+		{
+			delete menuform;
+			menuform = fw.gamecore->GetForm("FORM_UFOPAEDIA_BASE");
 			return;
 		}
 	}

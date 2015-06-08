@@ -133,20 +133,80 @@
 				<alignment horizontal="left" vertical="centre" />
 				<font>SMALFONT</font>
 			</label>
-			<control id="BUTTON_BUILDINGS">
+			<graphicbutton id="BUTTON_BUILDINGS">
 				<backcolour r="0" g="0" b="0" a="0" />
 				<position x="4" y="382" />
 				<size width="636" height="40" />
-			</control>
+				<image />
+				<imagedepressed />
+			</graphicbutton>
 	
 			<graphicbutton id="BUTTON_QUIT" text="STR_QUIT">
 				<position x="604" y="444" />
 				<size width="35" height="34" />
 				<image />
-				<imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:5:xcom3/TACDATA/TACTICAL.PAL</imagedepressed>
+				<imagedepressed />
 			</graphicbutton>
 		</style>
 
+	</form>
+	
+	<form id="FORM_UFOPAEDIA_BASE">
+		<style minwidth="640" minheight="480">
+			<position x="centre" y="centre" />
+			<size width="644" height="484" />
+			<backcolour r="80" g="80" b="80" />
+			
+			<graphic>
+				<image>xcom3/UFOPAEDI/B-TITLE.PCX</image>
+				<position x="2" y="2" />
+				<size width="640" height="480" />
+			</graphic>
+			
+			<graphicbutton id="BUTTON_QUIT">
+				<position x="602" y="444" />
+				<size width="35" height="34" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			
+			<graphicbutton id="BUTTON_NEXT_SECTION">
+				<position x="570" y="449" />
+				<size width="25" height="24" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			
+			<graphicbutton id="BUTTON_NEXT_TOPIC">
+				<position x="548" y="449" />
+				<size width="25" height="24" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+
+			<graphicbutton id="BUTTON_PREVIOUS_TOPIC">
+				<position x="507" y="449" />
+				<size width="25" height="24" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+
+			<graphicbutton id="BUTTON_PREVIOUS_SECTION">
+				<position x="475" y="449" />
+				<size width="25" height="24" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			
+			<graphicbutton id="BUTTON_INFORMATION">
+				<position x="432" y="444" />
+				<size width="35" height="34" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+
+			
+		</style>
 	</form>
 
 </openapoc>
