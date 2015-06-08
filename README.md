@@ -44,9 +44,9 @@ git submodule update
 
 Building on Linux
 (tested on ubuntu 14.04 - other distributions will probably need different packages to install - see the dependency list above)
-- Install the following packages: liballegro5-dev glm libicu-dev libtinyxml2-dev cmake build-essential git
+- Install the following packages: liballegro5-dev glm libicu-dev libtinyxml2-dev cmake build-essential git libglm-dev
 ```
-sudo apt-get install liballegro5-dev libicu-dev libtinyxml2-dev cmake build-essential git libunwind-dev
+sudo apt-get install liballegro5-dev libicu-dev libtinyxml2-dev cmake build-essential git libunwind-dev libglm-dev
 ```
 - Checkout OpenApoc from github
 - Fetch the dependencies from git with the following terminal command (run from the just-created OpenApoc folder)
