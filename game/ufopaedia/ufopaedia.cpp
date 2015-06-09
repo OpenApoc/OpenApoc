@@ -53,7 +53,7 @@ void Ufopaedia::EventOccurred(Event *e)
 		}
 		else
 		{
-			delete menuform;
+			//delete menuform;
 			menuform = fw.gamecore->GetForm("FORM_UFOPAEDIA_BASE");
 			return;
 		}
