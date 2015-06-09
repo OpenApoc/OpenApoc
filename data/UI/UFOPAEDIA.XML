@@ -1,7 +1,6 @@
 <openapoc>
 
 	<form id="FORM_UFOPAEDIA_TITLE">
-	
 		<style minwidth="640" minheight="480">
 			<position x="centre" y="centre" />
 			<size width="644" height="484" />
@@ -148,7 +147,6 @@
 				<imagedepressed />
 			</graphicbutton>
 		</style>
-
 	</form>
 	
 	<form id="FORM_UFOPAEDIA_BASE">
@@ -162,6 +160,22 @@
 				<position x="2" y="2" />
 				<size width="640" height="480" />
 			</graphic>
+			
+			<label id="TEXT_ORG_DATA" text="">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="20" y="280" />
+				<size width="270" height="180" />
+				<alignment horizontal="left" vertical="top" />
+				<font>SMALFONT</font>
+			</label>
+			
+			<label id="TEXT_INFO" text="">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="344" y="62" />
+				<size width="270" height="400" />
+				<alignment horizontal="left" vertical="top" />
+				<font>SMALFONT</font>
+			</label>
 			
 			<graphicbutton id="BUTTON_QUIT">
 				<position x="602" y="444" />
@@ -208,5 +222,43 @@
 			
 		</style>
 	</form>
+
+	<ufopaedia>
+		<category id="ORGANISATIONS">
+			<backgroundimage>xcom3/UFOPAEDI/L-TITLE.PCX</backgroundimage>
+			<entries>
+				<entry id="XCOM" name="STR_X_COM">
+					<backgroundimage>xcom3/UFOPAEDI/27XCOM.PCX</backgroundimage>
+					<text_info>STR_X_COM_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
+				</entry>
+				
+				<entry id="XCOM" name="STR_GOVERNMENT">
+					<backgroundimage>xcom3/UFOPAEDI/10GOVRNM.PCX</backgroundimage>
+					<text_info>STR_GOVERNMENT_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
+				</entry>
+				
+			</entries>
+		</category>
+		<category id="VEHICLES">
+		</category>
+		<category id="VEHICLEEQUIPMENT">
+		</category>
+		<category id="EQUIPMENT">
+		</category>
+		<category id="FACILITIES">
+		</category>
+		<category id="ALIENCRAFT">
+		</category>
+		<category id="ALIENS">
+		</category>
+		<category id="ALIENDIMENSION">
+		</category>
+		<category id="BUILDINGSor">
+		</category>
+
+
+	</ufopaedia>
 
 </openapoc>
