@@ -2821,4 +2821,7 @@
 	<string id="STR_TEST_UFOPAEDIA">
 	  <en_gb>Test Ufopedia</en_gb>
 	</string>
+	<string id="STR_DEBUG_MENU">
+		<en_gb>Debugging Menu</en_gb>
+	</string>
 </openapoc>

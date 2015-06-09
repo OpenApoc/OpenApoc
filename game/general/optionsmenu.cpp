@@ -2,6 +2,7 @@
 #include "game/general/optionsmenu.h"
 #include "game/general/basescreen.h"
 #include "game/ufopaedia/ufopaedia.h"
+#include "game/debugtools/debugmenu.h"
 #include "framework/framework.h"
 
 namespace OpenApoc {
@@ -58,6 +59,12 @@ void OptionsMenu::EventOccurred(Event *e)
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = std::make_shared<Ufopaedia>(fw);
+			return;
+		}
+		if( e->Data.Forms.RaisedBy->Name == "BUTTON_DEBUGGING" )
+		{
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = std::make_shared<DebugMenu>(fw);
 			return;
 		}
 	}

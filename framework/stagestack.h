@@ -3,7 +3,7 @@
 
 #include "stage.h"
 
-#include <stack>
+#include <vector>
 
 namespace OpenApoc {
 
@@ -14,7 +14,7 @@ namespace OpenApoc {
 class StageStack
 {
 	private:
-	std::stack<std::shared_ptr<Stage> > Stack;
+	std::vector<std::shared_ptr<Stage> > Stack;
 
 	public:
 
@@ -45,6 +45,22 @@ class StageStack
 				*Stage Pointer* Current <Stage>
 		*/
 		std::shared_ptr<Stage> Current();
+
+		/*
+			Function: Previous
+			Returns a pointer to the previous stage to the active stage
+			Returns:
+				*Stage Pointer* Current <Stage>
+		*/
+		std::shared_ptr<Stage> Previous();
+
+		/*
+			Function: Previous
+			Returns a pointer to the previous stage to a given stage
+			Returns:
+				*Stage Pointer* Current <Stage>
+		*/
+		std::shared_ptr<Stage> Previous(std::shared_ptr<Stage> From);
 
 		bool IsEmpty();
 		void Clear();

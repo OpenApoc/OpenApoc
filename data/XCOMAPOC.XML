@@ -9,6 +9,7 @@
 		<include>UI/BASESCREEN.XML</include>
 		<include>UI/UFOPAEDIA.XML</include>
 		<include>UI/DIFFICULTYMENU.XML</include>
+		<include>UI/DEBUGMENU.XML</include>
 		<include>CITY/VEHICLES.XML</include>
 	</game>
 </openapoc>

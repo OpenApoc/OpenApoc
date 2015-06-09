@@ -76,6 +76,9 @@ class Framework
 
 		bool IsSlowMode();
 		void SetSlowMode(bool SlowEnabled);
+
+		std::shared_ptr<Stage> Stage_GetPrevious();
+		std::shared_ptr<Stage> Stage_GetPrevious(std::shared_ptr<Stage> From);
 };
 
 }; //namespace OpenApoc

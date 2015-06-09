@@ -224,6 +224,7 @@
     <ClCompile Include="game\city\buildingtile.cpp" />
     <ClCompile Include="game\city\organisation.cpp" />
     <ClCompile Include="game\city\vehicle.cpp" />
+    <ClCompile Include="game\debugtools\debugmenu.cpp" />
     <ClCompile Include="game\gamestate.cpp" />
     <ClCompile Include="game\general\optionsmenu.cpp" />
     <ClCompile Include="game\resources\gamecore.cpp" />
@@ -277,11 +278,13 @@
     <ClInclude Include="framework\sampleloader_interface.h" />
     <ClInclude Include="framework\sound.h" />
     <ClInclude Include="framework\sound_interface.h" />
+    <ClInclude Include="game\apocresources\apocpalette.h" />
     <ClInclude Include="game\apocresources\apocresource.h" />
     <ClInclude Include="game\city\building.h" />
     <ClInclude Include="game\city\buildingtile.h" />
     <ClInclude Include="game\city\organisation.h" />
     <ClInclude Include="game\city\vehicle.h" />
+    <ClInclude Include="game\debugtools\debugmenu.h" />
     <ClInclude Include="game\gamestate.h" />
     <ClInclude Include="game\general\optionsmenu.h" />
     <ClInclude Include="game\resources\gamecore.h" />

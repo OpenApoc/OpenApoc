@@ -10,7 +10,7 @@ void StageStack::Push(std::shared_ptr<Stage> newStage)
 	if(this->Current())
 		this->Current()->Pause();
 
-	this->Stack.push(newStage);
+	this->Stack.push_back(newStage);
 	newStage->Begin();
 }
 
@@ -21,7 +21,7 @@ std::shared_ptr<Stage> StageStack::Pop()
 	if (result)
 	{
 		result->Finish();
-		Stack.pop();
+		Stack.pop_back();
 	}
 
 	// If there's still an item on the stack, resume it
@@ -36,7 +36,27 @@ std::shared_ptr<Stage> StageStack::Current()
 	if (this->Stack.empty())
 		return nullptr;
 	else
-		return this->Stack.top();
+		return this->Stack.back();
+}
+
+std::shared_ptr<Stage> StageStack::Previous()
+{
+	return Previous(Current());
+}
+
+std::shared_ptr<Stage> StageStack::Previous(std::shared_ptr<Stage> From)
+{
+	if (!this->Stack.empty())
+	{
+		for(int idx = 1; idx < this->Stack.size(); idx++ )
+		{
+			if( this->Stack.at(idx) == From )
+			{
+				return this->Stack[idx - 1];
+			}
+		}
+	}
+	return nullptr;
 }
 
 bool StageStack::IsEmpty()

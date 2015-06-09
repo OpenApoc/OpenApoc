@@ -33,7 +33,7 @@ public:
 	You must inherit this in any game "screens", as it provides the framework's functionality
 */
 
-class Stage
+class Stage : public std::enable_shared_from_this<Stage>
 {
 	protected:
 		Framework &fw;

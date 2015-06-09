@@ -694,4 +694,14 @@ void Framework::Audio_Shutdown()
 	this->soundBackend.reset();
 }
 
+std::shared_ptr<Stage> Framework::Stage_GetPrevious()
+{
+	return p->ProgramStages.Previous();
+}
+
+std::shared_ptr<Stage> Framework::Stage_GetPrevious(std::shared_ptr<Stage> From)
+{
+	return p->ProgramStages.Previous(From);
+}
+
 }; //namespace OpenApoc
