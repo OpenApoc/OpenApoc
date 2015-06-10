@@ -4,80 +4,747 @@
 
 namespace OpenApoc {
 
-DebugMenu::DebugMenu(Framework &fw)
-	: Stage(fw)
-{
-	menuform = fw.gamecore->GetForm("FORM_DEBUG_MENU");
-}
-
-DebugMenu::~DebugMenu()
-{
-}
-
-void DebugMenu::Begin()
-{
-}
-
-void DebugMenu::Pause()
-{
-}
-
-void DebugMenu::Resume()
-{
-}
-
-void DebugMenu::Finish()
-{
-}
-
-void DebugMenu::EventOccurred(Event *e)
-{
-	menuform->EventOccured( e );
-	fw.gamecore->MouseCursor->EventOccured( e );
-
-	if( e->Type == EVENT_KEY_DOWN )
+	DebugMenu::DebugMenu(Framework &fw)
+		: Stage(fw)
 	{
-		if( e->Data.Keyboard.KeyCode == ALLEGRO_KEY_ESCAPE )
+		menuform = fw.gamecore->GetForm("FORM_DEBUG_MENU");
+	}
+
+	DebugMenu::~DebugMenu()
+	{
+	}
+
+	void DebugMenu::Begin()
+	{
+	}
+
+	void DebugMenu::Pause()
+	{
+	}
+
+	void DebugMenu::Resume()
+	{
+	}
+
+	void DebugMenu::Finish()
+	{
+	}
+
+	void DebugMenu::EventOccurred(Event *e)
+	{
+		menuform->EventOccured(e);
+		fw.gamecore->MouseCursor->EventOccured(e);
+
+		if (e->Type == EVENT_KEY_DOWN)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
-			return;
+			if (e->Data.Keyboard.KeyCode == ALLEGRO_KEY_ESCAPE)
+			{
+				stageCmd.cmd = StageCmd::Command::POP;
+				return;
+			}
+		}
+
+		if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick)
+		{
+			if (e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT")
+			{
+				stageCmd.cmd = StageCmd::Command::POP;
+				return;
+			}
+			else if (e->Data.Forms.RaisedBy->Name == "BUTTON_DUMPPCK")
+			{
+				BulkExportPCKs();
+				return;
+			}
 		}
 	}
 
-	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick )
+	void DebugMenu::Update(StageCmd * const cmd)
 	{
-		if( e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT" )
-		{
-			stageCmd.cmd = StageCmd::Command::POP;
-			return;
-		}
-		else if( e->Data.Forms.RaisedBy->Name == "BUTTON_DUMPPCK" )
-		{
-			// TODO: Hardcoded PCK dumps
-			return;
-		}
+		menuform->Update();
+		*cmd = this->stageCmd;
+		//Reset the command to default
+		this->stageCmd = StageCmd();
 	}
-}
 
-void DebugMenu::Update(StageCmd * const cmd)
-{
-	menuform->Update();
-	*cmd = this->stageCmd;
-	//Reset the command to default
-	this->stageCmd = StageCmd();
-}
+	void DebugMenu::Render()
+	{
+		fw.Stage_GetPrevious(this->shared_from_this())->Render();
+		fw.renderer->drawFilledRect(Vec2<float>(0, 0), Vec2<float>(fw.Display_GetWidth(), fw.Display_GetHeight()), Colour(0, 0, 0, 128));
+		menuform->Render();
+		fw.gamecore->MouseCursor->Render();
+	}
 
-void DebugMenu::Render()
-{
-	fw.Stage_GetPrevious(this->shared_from_this())->Render();
-	fw.renderer->drawFilledRect( Vec2<float>(0,0), Vec2<float>(fw.Display_GetWidth(), fw.Display_GetHeight()), Colour(0,0,0,128) );
-	menuform->Render();
-	fw.gamecore->MouseCursor->Render();
-}
+	bool DebugMenu::IsTransition()
+	{
+		return false;
+	}
 
-bool DebugMenu::IsTransition()
-{
-	return false;
-}
+	void DebugMenu::BulkExportPCKs()
+	{
+		std::vector<UString> PaletteNames;
+		std::vector<std::shared_ptr<Palette>> PaletteList;
+		std::vector<UString> PckNames;
+		std::vector<std::shared_ptr<ImageSet>> PckList;
+
+		PaletteNames.push_back("XCOM3/UFODATA/PAL_01.DAT");
+
+		// All the palettes
+		PaletteNames.push_back("XCOM3/UFODATA/PAL_01.DAT");
+		PaletteNames.push_back("XCOM3/UFODATA/PAL_02.DAT");
+		PaletteNames.push_back("XCOM3/UFODATA/PAL_03.DAT");
+		PaletteNames.push_back("XCOM3/UFODATA/PAL_04.DAT");
+		PaletteNames.push_back("XCOM3/UFODATA/PAL_05.DAT");
+		PaletteNames.push_back("XCOM3/UFODATA/PAL_06.DAT");
+		PaletteNames.push_back("XCOM3/UFODATA/PAL_99.DAT");
+		PaletteNames.push_back("XCOM3/TACDATA/DEFAULT.PAL");
+		PaletteNames.push_back("XCOM3/TACDATA/EQUIP.PAL");
+		PaletteNames.push_back("XCOM3/TACDATA/TACTICAL.PAL");
+
+		// Load them up
+		for (auto i = PaletteNames.begin(); i != PaletteNames.end(); i++)
+		{
+			UString palname = (UString)(*i);
+			PaletteList.push_back(fw.data->load_palette(palname));
+		}
+
+		// All the PCKs
+		PckNames.push_back("XCOM3/MAPS/01SENATE/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/01SENATE/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/01SENATE/MAPUNITS/FLOOR.PCK");
+		PckNames.push_back("XCOM3/MAPS/01SENATE/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/01SENATE/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/01SENATE/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/01SENATE/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/01SENATE/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/01SENATE/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/01SENATE/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/01SENATE/MAPUNITS/STRATMAP.PCK");
+		PckNames.push_back("XCOM3/MAPS/02POLICE/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/02POLICE/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/02POLICE/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/02POLICE/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/02POLICE/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/02POLICE/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/02POLICE/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/02POLICE/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/02POLICE/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/03HOSPIT/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/03HOSPIT/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/03HOSPIT/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/03HOSPIT/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/03HOSPIT/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/03HOSPIT/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/03HOSPIT/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/03HOSPIT/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/03HOSPIT/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/04SCHOOL/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/04SCHOOL/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/04SCHOOL/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/04SCHOOL/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/04SCHOOL/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/04SCHOOL/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/04SCHOOL/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/04SCHOOL/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/04SCHOOL/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/05RESCUE/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/05RESCUE/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/05RESCUE/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/05RESCUE/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/05RESCUE/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/05RESCUE/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/05RESCUE/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/05RESCUE/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/05RESCUE/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/06OFFICE/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/06OFFICE/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/06OFFICE/MAPUNITS/FLOOR.PCK");
+		PckNames.push_back("XCOM3/MAPS/06OFFICE/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/06OFFICE/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/06OFFICE/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/06OFFICE/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/06OFFICE/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/06OFFICE/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/06OFFICE/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/06OFFICE/MAPUNITS/STRATMAP.PCK");
+		PckNames.push_back("XCOM3/MAPS/07CORPHQ/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/07CORPHQ/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/07CORPHQ/MAPUNITS/FLOOR.PCK");
+		PckNames.push_back("XCOM3/MAPS/07CORPHQ/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/07CORPHQ/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/07CORPHQ/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/07CORPHQ/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/07CORPHQ/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/07CORPHQ/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/07CORPHQ/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/07CORPHQ/MAPUNITS/STRATMAP.PCK");
+		PckNames.push_back("XCOM3/MAPS/08PORT/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/08PORT/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/08PORT/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/08PORT/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/08PORT/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/08PORT/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/08PORT/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/08PORT/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/08PORT/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/10ASTRO/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/10ASTRO/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/10ASTRO/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/10ASTRO/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/10ASTRO/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/10ASTRO/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/10ASTRO/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/10ASTRO/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/10ASTRO/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/11PARK/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/11PARK/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/11PARK/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/11PARK/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/11PARK/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/11PARK/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/11PARK/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/11PARK/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/11PARK/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/12SHOPS/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/12SHOPS/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/12SHOPS/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/12SHOPS/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/12SHOPS/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/12SHOPS/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/12SHOPS/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/12SHOPS/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/12SHOPS/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/14ACNORM/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/14ACNORM/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/14ACNORM/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/14ACNORM/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/14ACNORM/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/14ACNORM/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/14ACNORM/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/14ACNORM/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/14ACNORM/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/15ACPOSH/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/15ACPOSH/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/15ACPOSH/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/15ACPOSH/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/15ACPOSH/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/15ACPOSH/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/15ACPOSH/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/15ACPOSH/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/15ACPOSH/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/18HYDRO/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/18HYDRO/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/18HYDRO/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/18HYDRO/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/18HYDRO/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/18HYDRO/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/18HYDRO/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/18HYDRO/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/18HYDRO/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/19SEWAGE/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/19SEWAGE/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/19SEWAGE/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/19SEWAGE/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/19SEWAGE/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/19SEWAGE/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/19SEWAGE/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/19SEWAGE/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/19SEWAGE/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/20WATER/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/20WATER/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/20WATER/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/20WATER/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/20WATER/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/20WATER/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/20WATER/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/20WATER/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/20WATER/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/21APPL/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/21APPL/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/21APPL/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/21APPL/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/21APPL/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/21APPL/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/21APPL/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/21APPL/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/21APPL/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/22ARMS/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/22ARMS/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/22ARMS/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/22ARMS/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/22ARMS/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/22ARMS/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/22ARMS/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/22ARMS/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/22ARMS/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/22ARMS/MAPUNITS/STRATMAP.PCK");
+		PckNames.push_back("XCOM3/MAPS/23ROBOTS/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/23ROBOTS/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/23ROBOTS/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/23ROBOTS/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/23ROBOTS/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/23ROBOTS/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/23ROBOTS/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/23ROBOTS/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/23ROBOTS/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/25FLYER/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/25FLYER/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/25FLYER/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/25FLYER/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/25FLYER/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/25FLYER/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/25FLYER/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/25FLYER/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/25FLYER/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/26LFLYER/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/26LFLYER/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/26LFLYER/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/26LFLYER/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/26LFLYER/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/26LFLYER/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/26LFLYER/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/26LFLYER/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/26LFLYER/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/27CONSTR/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/27CONSTR/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/27CONSTR/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/27CONSTR/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/27CONSTR/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/27CONSTR/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/27CONSTR/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/27CONSTR/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/27CONSTR/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/28SLUMS/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/28SLUMS/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/28SLUMS/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/28SLUMS/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/28SLUMS/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/28SLUMS/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/28SLUMS/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/28SLUMS/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/28SLUMS/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/30WARE/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/30WARE/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/30WARE/MAPUNITS/FLOOR.PCK");
+		PckNames.push_back("XCOM3/MAPS/30WARE/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/30WARE/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/30WARE/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/30WARE/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/30WARE/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/30WARE/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/30WARE/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/30WARE/MAPUNITS/STRATMAP.PCK");
+		PckNames.push_back("XCOM3/MAPS/32POWER/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/32POWER/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/32POWER/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/32POWER/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/32POWER/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/32POWER/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/32POWER/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/32POWER/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/32POWER/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/33RECYCL/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/33RECYCL/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/33RECYCL/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/33RECYCL/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/33RECYCL/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/33RECYCL/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/33RECYCL/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/33RECYCL/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/33RECYCL/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/35TUBES/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/35TUBES/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/35TUBES/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/35TUBES/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/35TUBES/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/35TUBES/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/35TUBES/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/35TUBES/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/35TUBES/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/36CHURCH/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/36CHURCH/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/36CHURCH/MAPUNITS/FLOOR.PCK");
+		PckNames.push_back("XCOM3/MAPS/36CHURCH/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/36CHURCH/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/36CHURCH/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/36CHURCH/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/36CHURCH/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/36CHURCH/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/36CHURCH/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/36CHURCH/MAPUNITS/STRATMAP.PCK");
+		PckNames.push_back("XCOM3/MAPS/37BASE/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/37BASE/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/37BASE/MAPUNITS/FLOOR.PCK");
+		PckNames.push_back("XCOM3/MAPS/37BASE/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/37BASE/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/37BASE/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/37BASE/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/37BASE/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/37BASE/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/37BASE/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/37BASE/MAPUNITS/STRATMAP.PCK");
+		PckNames.push_back("XCOM3/MAPS/39INCUB/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/39INCUB/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/39INCUB/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/39INCUB/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/39INCUB/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/39INCUB/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/39INCUB/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/39INCUB/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/39INCUB/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/40SPAWN/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/40SPAWN/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/40SPAWN/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/40SPAWN/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/40SPAWN/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/40SPAWN/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/40SPAWN/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/40SPAWN/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/40SPAWN/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/41FOOD/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/41FOOD/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/41FOOD/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/41FOOD/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/41FOOD/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/41FOOD/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/41FOOD/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/41FOOD/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/41FOOD/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/42MEGAPD/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/42MEGAPD/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/42MEGAPD/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/42MEGAPD/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/42MEGAPD/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/42MEGAPD/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/42MEGAPD/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/42MEGAPD/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/42MEGAPD/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/43SLEEP/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/43SLEEP/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/43SLEEP/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/43SLEEP/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/43SLEEP/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/43SLEEP/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/43SLEEP/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/43SLEEP/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/43SLEEP/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/44ORGAN/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/44ORGAN/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/44ORGAN/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/44ORGAN/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/44ORGAN/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/44ORGAN/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/44ORGAN/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/44ORGAN/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/44ORGAN/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/45FARM/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/45FARM/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/45FARM/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/45FARM/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/45FARM/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/45FARM/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/45FARM/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/45FARM/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/45FARM/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/46CONTRL/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/46CONTRL/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/46CONTRL/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/46CONTRL/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/46CONTRL/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/46CONTRL/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/46CONTRL/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/46CONTRL/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/46CONTRL/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/47MAINT/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/47MAINT/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/47MAINT/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/47MAINT/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/47MAINT/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/47MAINT/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/47MAINT/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/47MAINT/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/47MAINT/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/48GATE/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/48GATE/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/48GATE/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/48GATE/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/48GATE/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/48GATE/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/48GATE/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/48GATE/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/48GATE/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/50SENSO/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/50SENSO/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/50SENSO/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/50SENSO/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/50SENSO/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/50SENSO/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/50SENSO/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/50SENSO/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/50SENSO/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/51UFO1/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/51UFO1/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/51UFO1/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/51UFO1/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/51UFO1/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/51UFO1/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/51UFO1/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/51UFO1/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/51UFO1/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/52UFO2/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/52UFO2/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/52UFO2/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/52UFO2/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/52UFO2/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/52UFO2/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/52UFO2/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/52UFO2/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/52UFO2/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/53UFO3/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/53UFO3/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/53UFO3/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/53UFO3/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/53UFO3/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/53UFO3/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/53UFO3/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/53UFO3/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/53UFO3/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/54UFO4/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/54UFO4/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/54UFO4/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/54UFO4/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/54UFO4/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/54UFO4/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/54UFO4/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/54UFO4/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/54UFO4/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/55UFO5/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/55UFO5/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/55UFO5/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/55UFO5/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/55UFO5/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/55UFO5/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/55UFO5/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/55UFO5/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/55UFO5/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/56UFO6/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/56UFO6/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/56UFO6/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/56UFO6/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/56UFO6/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/56UFO6/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/56UFO6/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/56UFO6/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/56UFO6/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/57UFO7/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/57UFO7/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/57UFO7/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/57UFO7/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/57UFO7/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/57UFO7/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/57UFO7/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/58UFO8/MAPUNITS/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/MAPS/58UFO8/MAPUNITS/FEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/58UFO8/MAPUNITS/GROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/58UFO8/MAPUNITS/LEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/58UFO8/MAPUNITS/RIGHT.PCK");
+		PckNames.push_back("XCOM3/MAPS/58UFO8/MAPUNITS/SFEATURE.PCK");
+		PckNames.push_back("XCOM3/MAPS/58UFO8/MAPUNITS/SGROUND.PCK");
+		PckNames.push_back("XCOM3/MAPS/58UFO8/MAPUNITS/SLEFT.PCK");
+		PckNames.push_back("XCOM3/MAPS/58UFO8/MAPUNITS/SRIGHT.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ANIMATE.PCK");
+		PckNames.push_back("XCOM3/TACDATA/DESCURS.PCK");
+		PckNames.push_back("XCOM3/TACDATA/GAMEOBJ.PCK");
+		PckNames.push_back("XCOM3/TACDATA/GFLOOR.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ICONS.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ICON_M.PCK");
+		PckNames.push_back("XCOM3/TACDATA/OSHADOW.PCK");
+		PckNames.push_back("XCOM3/TACDATA/PTANG.PCK");
+		PckNames.push_back("XCOM3/TACDATA/STRATICO.PCK");
+		PckNames.push_back("XCOM3/TACDATA/TACBUT.PCK");
+		PckNames.push_back("XCOM3/TACDATA/VS_ICON.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/BSK-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/BSKS.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/CHRYSA.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/CHRYSB.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/GUN.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/HYPR-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/HYPRS.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/MEGA-S.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/MEGAA.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/MEGAB.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/MEGAD.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/MEGAE.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/MICRO-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/MULTI-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/MWEGGA.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/MWEGGB.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/POPPER-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/POPPERS.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/PSI-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/PSI-S.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/QUEENA.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/QUEENB.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/SPIT-S.PCK");
+		PckNames.push_back("XCOM3/TACDATA/ALIEN/SPITR.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/GREY-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/NM1-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/NM2-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/NM3-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/NW1-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/NW2-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/NW3-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/RM1-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/RM2-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/RM3-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/ROBO1-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/ROBO2-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/ROBO3-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/ROBO4-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/ROBOT-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/RW1-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/RW2-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/RW3-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/SCNTST.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/SM1-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/SM2-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/SM3-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/SW1-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/SW2-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/CIV/SW3-.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/ANTRPA.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/ANTRPB.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/ANTRPC.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/ANTRPD.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/ANTRPE.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/CULTA.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/CULTB.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/CULTC.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/CULTD.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/CULTE.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/CULTLA.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/CULTLB.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/CULTLC.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/CULTLD.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/CULTLE.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/EQUIP.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/GANG2A.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/GANG2B.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/GANG2C.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/GANG2D.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/GANG2E.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/GANGA.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/GANGB.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/GANGC.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/GANGD.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/GANGE.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/GANGLA.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/GANGLB.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/GANGLC.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/GANGLD.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/GANGLE.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/POLICA.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/POLICB.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/POLICC.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/POLICD.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/POLICE.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/SECA.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/SECB.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/SECC.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/SECD.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/SECE.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/SHADOW.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/SKELA.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/SKELB.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/SKELC.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/SKELD.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/SKELE.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM1A.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM1B.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM1C.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM1D.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM1E.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM2A.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM2B.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM2C.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM2D.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM2E.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM3A.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM3B.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM3C.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM3D.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM3E.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM4A.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM4B.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM4C.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM4D.PCK");
+		PckNames.push_back("XCOM3/TACDATA/UNIT/XCOM4E.PCK");
+		PckNames.push_back("XCOM3/UFODATA/AGNTICO.PCK");
+		PckNames.push_back("XCOM3/UFODATA/ALIEN.PCK");
+		PckNames.push_back("XCOM3/UFODATA/ALIEN_S.PCK");
+		PckNames.push_back("XCOM3/UFODATA/ARMOUR.PCK");
+		PckNames.push_back("XCOM3/UFODATA/BASE.PCK");
+		PckNames.push_back("XCOM3/UFODATA/BIGVEH.PCK");
+		PckNames.push_back("XCOM3/UFODATA/CITY.PCK");
+		PckNames.push_back("XCOM3/UFODATA/CITYOVR.PCK");
+		PckNames.push_back("XCOM3/UFODATA/CONTICO.PCK");
+		PckNames.push_back("XCOM3/UFODATA/DESCURS.PCK");
+		PckNames.push_back("XCOM3/UFODATA/ICONS.PCK");
+		PckNames.push_back("XCOM3/UFODATA/ICON_M.PCK");
+		PckNames.push_back("XCOM3/UFODATA/ICON_S.PCK");
+		PckNames.push_back("XCOM3/UFODATA/NEWBUT.PCK");
+		PckNames.push_back("XCOM3/UFODATA/OVER-A.PCK");
+		PckNames.push_back("XCOM3/UFODATA/OVER-B.PCK");
+		PckNames.push_back("XCOM3/UFODATA/OVER-S.PCK");
+		PckNames.push_back("XCOM3/UFODATA/PED-BUT.PCK");
+		PckNames.push_back("XCOM3/UFODATA/PEQUIP.PCK");
+		PckNames.push_back("XCOM3/UFODATA/PHOTO.PCK");
+		PckNames.push_back("XCOM3/UFODATA/PTANG.PCK");
+		PckNames.push_back("XCOM3/UFODATA/SAUCER.PCK");
+		PckNames.push_back("XCOM3/UFODATA/SHADOW.PCK");
+		PckNames.push_back("XCOM3/UFODATA/SMALVEH.PCK");
+		PckNames.push_back("XCOM3/UFODATA/STRATMAP.PCK");
+		PckNames.push_back("XCOM3/UFODATA/VEHEQUIP.PCK");
+		PckNames.push_back("XCOM3/UFODATA/VEHICLE.PCK");
+		PckNames.push_back("XCOM3/UFODATA/VS_ICON.PCK");
+		PckNames.push_back("XCOM3/UFODATA/VS_OBS.PCK");
+
+		// Load them up
+		for (auto i = PckNames.begin(); i != PckNames.end(); i++)
+		{
+			UString pckname = (UString)(*i);
+			UString pckloadstr = UString("PCK:") + pckname + UString(":") + pckname.substr(0, pckname.length() - 3) + UString("TAB");
+
+			std::shared_ptr<ImageSet> pckset = fw.data->load_image_set( pckloadstr );
+
+			if( pckset != nullptr )
+			{
+				// PckList.push_back(pckset);
+
+				for( unsigned int idx = 0; idx < pckset->images.size(); idx++ )
+				{
+					UString outputname = pckname.substr(0, pckname.length() - 3) + UString("PNG");
+					std::shared_ptr<Image> curimg = pckset->images.at(idx);
+
+					if( RGBImage* bi = dynamic_cast<RGBImage*>(curimg.get()) )
+					{
+						bi->saveBitmap( outputname );
+					} else if( PaletteImage* pi = dynamic_cast<PaletteImage*>(curimg.get()) ) {
+						for( int palidx = 0; palidx < PaletteList.size(); palidx++ )
+						{
+							outputname = pckname.substr(0, pckname.length() - 3) + UString("#") + UString(".PNG");	// TODO: Insert Palette number after #
+							pi->toRGBImage( PaletteList.at(palidx) )->saveBitmap( outputname );
+						}
+					}
+
+				}
+
+			}
+
+		}
+
+	}
 
 }; //namespace OpenApoc

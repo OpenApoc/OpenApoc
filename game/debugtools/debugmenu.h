@@ -16,6 +16,7 @@ class DebugMenu : public Stage
 		Form* menuform;
 		StageCmd stageCmd;
 
+		void BulkExportPCKs();
 
 	public:
 		DebugMenu(Framework &fw);

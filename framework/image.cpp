@@ -74,6 +74,11 @@ RGBImage::RGBImage(Vec2<unsigned int> size, Colour initialColour)
 		this->pixels[i] = initialColour;
 }
 
+void RGBImage::saveBitmap(const UString &filename)
+{
+	// TODO: Allow saving of bitmap
+}
+
 RGBImage::~RGBImage()
 {}
 
