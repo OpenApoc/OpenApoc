@@ -2,6 +2,11 @@
 #include "framework/palette.h"
 #include "framework/renderer.h"
 
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_image.h>
+#include <physfs.h>
+#include "logger.h"
+
 namespace OpenApoc {
 
 Image::~Image()
@@ -76,7 +81,48 @@ RGBImage::RGBImage(Vec2<unsigned int> size, Colour initialColour)
 
 void RGBImage::saveBitmap(const UString &filename)
 {
-	// TODO: Allow saving of bitmap
+	// TODO: Check file's path exists
+	std::vector<UString> segs = filename.split('/');
+	UString workingdir("");
+
+	for( int pidx = 0; pidx < segs.size() - 1; pidx++ )
+	{
+		workingdir += segs.at(pidx);
+
+		if( !PHYSFS_exists(workingdir.str().c_str()) )
+		{
+			LogInfo("Building %s", workingdir.str().c_str() );
+			PHYSFS_mkdir(workingdir.str().c_str());
+		}
+		if( workingdir.substr( workingdir.length() - 1, 1 ) != "/" )
+		{
+			workingdir += "/";
+		}
+	}
+
+	ALLEGRO_BITMAP* bmp = al_create_bitmap( size.x, size.y );
+	ALLEGRO_LOCKED_REGION* rgn = al_lock_bitmap( bmp, ALLEGRO_PIXEL_FORMAT_ABGR_8888_LE, ALLEGRO_LOCK_READWRITE );
+
+	for( unsigned int y = 0; y < size.y; y++ )
+	{
+		for( unsigned int x = 0; x < size.x; x++ )
+		{
+			int offset = (y * rgn->pitch) + (x * 4);
+			uint8_t* bytedata = (uint8_t*)rgn->data;
+			Colour_ARGB8888LE* pxdata = (Colour_ARGB8888LE*)(bytedata + offset);
+			Colour c = pixels[(y * size.x) + x];
+
+			pxdata->r = c.r;
+			pxdata->g = c.g;
+			pxdata->b = c.b;
+			pxdata->a = c.a;
+		}
+	}
+
+	al_unlock_bitmap( bmp );
+	al_save_bitmap( filename.str().c_str(), bmp );
+	al_destroy_bitmap( bmp );
+
 }
 
 RGBImage::~RGBImage()
