@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
 option (BUILD_GL_3_0_RENDERER "Build an OpenGL 3.0 renderer backend" ON)
-option (BUILD_GLES_2_0_RENDERER "Build an OpenGL|ES 2.0 renderer backend" ON)
+option (BUILD_GLES_2_0_RENDERER "Build an OpenGL|ES 2.0 renderer backend" OFF)
 option (BUILD_ALLEGRO_RENDERER "Build an allegro renderer backend" OFF)
 
 set (RENDERERS "")
