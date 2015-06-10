@@ -97,5 +97,7 @@ class Strings
 		static int ToInteger(const UString &s);
 		static uint8_t ToU8(const UString &s);
 		static float ToFloat(const UString &s);
+		static UString FromInteger(int i);
+		static UString FromFloat(float f);
 };;
 }; //namespace OpenApoc

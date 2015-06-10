@@ -240,6 +240,18 @@ Strings::IsNumeric(const UString &s)
 	return (endpos != u8str.c_str());
 }
 
+UString Strings::FromInteger(int i)
+{
+	char buffer[50];
+	snprintf( buffer, 50, "%d", i );
+	return UString(buffer);
+}
 
+UString Strings::FromFloat(float f)
+{
+	char buffer[50];
+	snprintf( buffer, 50, "%f", f );
+	return UString(buffer);
+}
 
 }; //namespace OpenApoc

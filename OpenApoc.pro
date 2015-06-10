@@ -57,7 +57,8 @@ SOURCES += main.cpp \
     library/configfile.cpp \
     library/memory.cpp \
     library/strings.cpp \
-    game/ufopaedia/ufopaedia.cpp
+    game/ufopaedia/ufopaedia.cpp \
+    game/debugtools/debugmenu.cpp
 
 HEADERS += \
     forms/checkbox.h \
@@ -122,7 +123,8 @@ HEADERS += \
     library/rect.h \
     library/strings.h \
     library/vec.h \
-    game/ufopaedia/ufopaedia.h
+    game/ufopaedia/ufopaedia.h \
+    game/debugtools/debugmenu.h
 
 OTHER_FILES += \
     CMakeLists.txt
