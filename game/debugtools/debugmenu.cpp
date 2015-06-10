@@ -725,18 +725,26 @@ namespace OpenApoc {
 
 				for( unsigned int idx = 0; idx < pckset->images.size(); idx++ )
 				{
-					UString outputname = pckname.substr(0, pckname.length() - 3) + UString("PNG");
+					UString outputname = pckname.substr(0, pckname.length() - 3) + Strings::FromInteger(idx) + UString(".PNG");
 					std::shared_ptr<Image> curimg = pckset->images.at(idx);
 
 					if( RGBImage* bi = dynamic_cast<RGBImage*>(curimg.get()) )
 					{
+
+						LogInfo( UString("Saving ") + outputname );
 						bi->saveBitmap( outputname );
-					} else if( PaletteImage* pi = dynamic_cast<PaletteImage*>(curimg.get()) ) {
-						for( int palidx = 0; palidx < PaletteList.size(); palidx++ )
+
+					}
+					else if( PaletteImage* pi = dynamic_cast<PaletteImage*>(curimg.get()) )
+					{
+
+						for( unsigned int palidx = 0; palidx < PaletteList.size(); palidx++ )
 						{
-							outputname = pckname.substr(0, pckname.length() - 3) + UString("#") + UString(".PNG");	// TODO: Insert Palette number after #
+							outputname = pckname.substr(0, pckname.length() - 3) + Strings::FromInteger(idx) + UString(".#") + Strings::FromInteger(palidx) + UString(".PNG");
+							LogInfo( UString("Saving ") + outputname );
 							pi->toRGBImage( PaletteList.at(palidx) )->saveBitmap( outputname );
 						}
+
 					}
 
 				}

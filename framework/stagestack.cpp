@@ -48,7 +48,7 @@ std::shared_ptr<Stage> StageStack::Previous(std::shared_ptr<Stage> From)
 {
 	if (!this->Stack.empty())
 	{
-		for(int idx = 1; idx < this->Stack.size(); idx++ )
+		for(unsigned int idx = 1; idx < this->Stack.size(); idx++ )
 		{
 			if( this->Stack.at(idx) == From )
 			{
