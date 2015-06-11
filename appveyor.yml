@@ -1,0 +1,11 @@
+version: 1.0.{build}
+skip_tags: true
+configuration: Release
+platform: x64
+clone_depth: 1
+before_build:
+- git submodule init
+- git submodule update
+build:
+  project: OpenApoc.sln
+  verbosity: normal
