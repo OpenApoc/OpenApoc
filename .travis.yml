@@ -31,7 +31,7 @@ install:
 before_script:
   - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=""  -DCMAKE_CXX_FLAGS="-Wall -Wextra -W -O2" -DCMAKE_C_FLAGS="-Wall -Wextra -W -O2" -DMONOLITHIC_BUILD=${MONOLITHIC_BUILD} -DLTO=${LTO}
 
-script: make VERBOSE=1 && make test
+script: make VERBOSE=1 && make test ARGS="-V"
 
 os:
   - linux
