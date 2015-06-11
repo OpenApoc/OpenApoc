@@ -132,3 +132,6 @@ ADD_CUSTOM_COMMAND( TARGET OpenApoc
 	install(TARGETS ${CMAKE_PROJECT_NAME}
 			RUNTIME DESTINATION bin)
 	install(DIRECTORY data/ DESTINATION share/OpenApoc)
+
+enable_testing()
+add_subdirectory(tests)

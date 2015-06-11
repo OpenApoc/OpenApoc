@@ -39,7 +39,7 @@ City::City(Framework &fw, UString mapName)
 					Building *bld = nullptr;
 					for (auto &b : this->buildings)
 					{
-						if (b.bounds.intersects(Vec2<int>{x,y}))
+						if (b.bounds.within(Vec2<int>{x,y}))
 						{
 							if (bld)
 							{
