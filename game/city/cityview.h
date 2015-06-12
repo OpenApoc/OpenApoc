@@ -4,8 +4,12 @@
 
 namespace OpenApoc {
 
+class Form;
+
 class CityView : public TileView
 {
+private:
+	Form *ui;
 public:
 	CityView(Framework &fw);
 	virtual ~CityView();

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+
+	<form id="FORM_CITY_UI">
+		<style minwidth="640" minheight="128">
+			<position x="centre" y="bottom" />
+			<size width="640" height="128" />
+			<backcolour r="128" g="96" b="80" />
+			<graphic>
+				<size width="640" height="128" />
+				<backcolour r="0" g="0" b="0" />
+				<image>RAW:xcom3/ufodata/isobord1.dat:640:128</image>
+			</graphic>
+		</style>
+	</form>
+</openapoc>
