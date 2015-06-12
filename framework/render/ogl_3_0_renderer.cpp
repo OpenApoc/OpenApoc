@@ -478,6 +478,29 @@ public:
 	}
 };
 
+template <GLenum param>
+class TexParam
+{
+	TexParam(const TexParam&) = delete;
+public:
+	GLint prevValue;
+	GLuint id;
+	GLenum type;
+
+	TexParam(GLuint id, GLint value, GLenum type = gl::TEXTURE_2D)
+		: id(id), type(type)
+	{
+		BindTexture b(id, 0, type);
+		gl::GetTexParameteriv(type, param, &prevValue);
+		gl::TexParameteri(type, param, value);
+	}
+	~TexParam()
+	{
+		BindTexture b(id, 0, type);
+		gl::TexParameteri(type, param, prevValue);
+	}
+};
+
 class BindFramebuffer
 {
 	BindFramebuffer(const BindFramebuffer &) = delete;
@@ -698,13 +721,56 @@ public:
 		std::ignore = position;
 		std::ignore = angle;
 	};
-	virtual void drawScaled(std::shared_ptr<Image> i, Vec2<float> position, Vec2<float> size, Scaler scaler = Scaler::Linear)
+	virtual void drawScaled(std::shared_ptr<Image> image, Vec2<float> position, Vec2<float> size, Scaler scaler = Scaler::Linear)
 	{
-		LogError("Unimplemented function");
-		std::ignore = i;
-		std::ignore = position;
-		std::ignore = size;
-		std::ignore = scaler;
+
+		if (this->state != RendererState::Idle)
+			this->flush();
+		std::shared_ptr<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
+		if (rgbImage)
+		{
+			GLRGBImage *img = dynamic_cast<GLRGBImage*>(rgbImage->rendererPrivateData.get());
+			if (!img)
+			{
+				img = new GLRGBImage(rgbImage);
+				image->rendererPrivateData.reset(img);
+			}
+			DrawRGB(*img, position, size, scaler);
+			return;
+		}
+
+		std::shared_ptr<PaletteImage> paletteImage = std::dynamic_pointer_cast<PaletteImage>(image);
+		if (paletteImage)
+		{
+			GLPaletteImage *img = dynamic_cast<GLPaletteImage*>(paletteImage->rendererPrivateData.get());
+			if (!img)
+			{
+				img = new GLPaletteImage(paletteImage);
+				image->rendererPrivateData.reset(img);
+			}
+			if (scaler != Scaler::Nearest)
+			{
+				//blending indices doesn't make sense. You'll have to render
+				//it to an RGB surface then scale that
+				LogError("Only nearest scaler is supported on paletted images");
+			}
+			DrawPalette(*img, position, size);
+			return;
+		}
+
+		std::shared_ptr<Surface> surface = std::dynamic_pointer_cast<Surface>(image);
+		if (surface)
+		{
+			FBOData *fbo = dynamic_cast<FBOData*>(surface->rendererPrivateData.get());
+			if (!fbo)
+			{
+				fbo = new FBOData(image->size);
+				image->rendererPrivateData.reset(fbo);
+			}
+			DrawSurface(*fbo, position, size, scaler);
+			return;
+		}
+		LogError("Unsupported image type");
 	};
 	virtual void drawTinted(std::shared_ptr<Image> i, Vec2<float> position, Colour tint)
 	{
@@ -757,24 +823,40 @@ public:
 	}
 
 
-	void DrawRGB(GLRGBImage &img, Vec2<float> offset)
+	void DrawRGB(GLRGBImage &img, Vec2<float> offset, Vec2<float> size, Scaler scaler)
 	{
+		GLenum filter;
+		switch (scaler)
+		{
+			case Scaler::Linear:
+				filter = gl::LINEAR;
+				break;
+			case Scaler::Nearest:
+				filter = gl::NEAREST;
+				break;
+			default:
+				LogError("Unknown scaler requested");
+				filter = gl::NEAREST;
+				break;
+		}
 		BindProgram(rgbProgram);
 		bool flipY = false;
 		if (currentBoundFBO == 0)
 			flipY = true;
-		rgbProgram->setUniforms(offset, img.size, this->currentSurface->size, flipY);
+		rgbProgram->setUniforms(offset, size, this->currentSurface->size, flipY);
 		BindTexture t(img.texID);
+		TexParam<gl::TEXTURE_MAG_FILTER> mag(img.texID, filter);
+		TexParam<gl::TEXTURE_MIN_FILTER> min(img.texID, filter);
 		IdentityQuad::draw(rgbProgram->posLoc);
 	}
 
-	void DrawPalette(GLPaletteImage &img, Vec2<float> offset)
+	void DrawPalette(GLPaletteImage &img, Vec2<float> offset, Vec2<float> size)
 	{
 		BindProgram(paletteProgram);
 		bool flipY = false;
 		if (currentBoundFBO == 0)
 			flipY = true;
-		paletteProgram->setUniforms(offset, img.size, this->currentSurface->size, flipY);
+		paletteProgram->setUniforms(offset, size, this->currentSurface->size, flipY);
 		BindTexture t(img.texID, 0);
 
 		BindTexture p(static_cast<GLPalette*>(this->currentPalette->rendererPrivateData.get())->texID, 1);
@@ -782,14 +864,30 @@ public:
 		IdentityQuad::draw(paletteProgram->posLoc);
 	}
 
-	void DrawSurface(FBOData &fbo, Vec2<float> offset)
+	void DrawSurface(FBOData &fbo, Vec2<float> offset, Vec2<float> size, Scaler scaler)
 	{
+		GLenum filter;
+		switch (scaler)
+		{
+			case Scaler::Linear:
+				filter = gl::LINEAR;
+				break;
+			case Scaler::Nearest:
+				filter = gl::NEAREST;
+				break;
+			default:
+				LogError("Unknown scaler requested");
+				filter = gl::NEAREST;
+				break;
+		}
 		BindProgram(rgbProgram);
 		bool flipY = false;
 		if (currentBoundFBO == 0)
 			flipY = true;
-		rgbProgram->setUniforms(offset, fbo.size, this->currentSurface->size, flipY);
+		rgbProgram->setUniforms(offset, size, this->currentSurface->size, flipY);
 		BindTexture t(fbo.tex);
+		TexParam<gl::TEXTURE_MAG_FILTER> mag(fbo.tex, filter);
+		TexParam<gl::TEXTURE_MIN_FILTER> min(fbo.tex, filter);
 		IdentityQuad::draw(rgbProgram->posLoc);
 	}
 
@@ -979,46 +1077,7 @@ void OGL30Renderer::draw(std::shared_ptr<Image> image, Vec2<float> position)
 			return;
 		}
 	}
-	if (this->state != RendererState::Idle)
-		this->flush();
-	std::shared_ptr<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
-	if (rgbImage)
-	{
-		GLRGBImage *img = dynamic_cast<GLRGBImage*>(rgbImage->rendererPrivateData.get());
-		if (!img)
-		{
-			img = new GLRGBImage(rgbImage);
-			image->rendererPrivateData.reset(img);
-		}
-		DrawRGB(*img, position);
-		return;
-	}
-	
-	std::shared_ptr<PaletteImage> paletteImage = std::dynamic_pointer_cast<PaletteImage>(image);
-	if (paletteImage)
-	{
-		GLPaletteImage *img = dynamic_cast<GLPaletteImage*>(paletteImage->rendererPrivateData.get());
-		if (!img)
-		{
-			img = new GLPaletteImage(paletteImage);
-			image->rendererPrivateData.reset(img);
-		}
-		DrawPalette(*img, position);
-		return;
-	}
-
-	std::shared_ptr<Surface> surface = std::dynamic_pointer_cast<Surface>(image);
-	if (surface)
-	{
-		FBOData *fbo = dynamic_cast<FBOData*>(surface->rendererPrivateData.get());
-		if (!fbo)
-		{
-			fbo = new FBOData(image->size);
-			image->rendererPrivateData.reset(fbo);
-		}
-		DrawSurface(*fbo, position);
-		return;
-	}
+	drawScaled(image, position, image->size, Scaler::Nearest);
 }
 void OGL30Renderer::drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c)
 {
