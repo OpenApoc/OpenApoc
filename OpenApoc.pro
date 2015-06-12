@@ -45,6 +45,7 @@ SOURCES += main.cpp \
     game/city/building.cpp \
     game/city/buildingtile.cpp \
     game/city/city.cpp \
+	game/city/cityview.cpp \
     game/city/organisation.cpp \
     game/city/vehicle.cpp \
     game/general/basescreen.cpp \
@@ -105,6 +106,7 @@ HEADERS += \
     game/city/building.h \
     game/city/buildingtile.h \
     game/city/city.h \
+	game/city/cityview.h \
     game/city/organisation.h \
     game/city/vehicle.h \
     game/general/basescreen.h \
