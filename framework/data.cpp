@@ -1,6 +1,7 @@
 #include "framework/logger.h"
 #include "framework/data.h"
 #include "game/apocresources/pck.h"
+#include "game/apocresources/rawimage.h"
 #include "game/apocresources/apocpalette.h"
 #include "framework/palette.h"
 #include "framework/ignorecase.h"
@@ -394,9 +395,36 @@ Data::load_image(const UString& path)
 	}
 
 
-	if (path.substr(0,4) == "PCK:")
+	if (path.substr(0,4) == "RAW:")
 	{
 		auto splitString = path.split(':');
+		// RAW:PATH:WIDTH:HEIGHT
+		if (splitString.size() != 4)
+		{
+			LogError("Invalid RAW resource string: \"%s\"",
+				path.str().c_str());
+			return nullptr;
+		}
+
+		img = RawImage::load(*this, splitString[1],
+			Vec2<int>{Strings::ToInteger(splitString[2]), Strings::ToInteger(splitString[3])});
+		if (!img)
+		{
+			LogError("Failed to load RAW image: \"%s\"",
+				path.str().c_str());
+			return nullptr;
+		}
+
+	}
+	else if (path.substr(0,4) == "PCK:")
+	{
+		auto splitString = path.split(':');
+		if (splitString.size() != 3 && splitString.size() != 4 && splitString.size() != 5)
+		{
+			LogError("Invalid PCK resource string: \"%s\"",
+				path.str().c_str());
+			return nullptr;
+		}
 		auto imageSet = this->load_image_set(splitString[0] + ":" + splitString[1] + ":" + splitString[2]);
 		if (!imageSet)
 		{

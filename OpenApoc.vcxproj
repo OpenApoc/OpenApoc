@@ -250,6 +250,8 @@
     <ClCompile Include="game\general\difficultymenu.cpp" />
     <ClCompile Include="game\general\basescreen.cpp" />
     <ClCompile Include="library\strings.cpp" />
+	<ClCompile Include="game\apocresources\rawimage.cpp" />
+	<ClCompile Include="game\city\cityview.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="forms\checkbox.h" />
@@ -320,6 +322,8 @@
     <ClInclude Include="game\city\city.h" />
     <ClInclude Include="game\general\difficultymenu.h" />
     <ClInclude Include="game\general\basescreen.h" />
+	<ClInclude Include="game\apocresources\rawimage.h" />
+	<ClInclude Include="game\city\cityview.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="dependencies\allegro5.vcxproj">

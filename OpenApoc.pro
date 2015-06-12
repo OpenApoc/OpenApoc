@@ -40,10 +40,12 @@ SOURCES += main.cpp \
     game/apocresources/cursor.cpp \
     game/apocresources/music.cpp \
     game/apocresources/pck.cpp \
+    game/apocresources/rawimage.cpp \
     game/apocresources/rawsound.cpp \
     game/city/building.cpp \
     game/city/buildingtile.cpp \
     game/city/city.cpp \
+	game/city/cityview.cpp \
     game/city/organisation.cpp \
     game/city/vehicle.cpp \
     game/general/basescreen.cpp \
@@ -100,9 +102,11 @@ HEADERS += \
     game/apocresources/apocresource.h \
     game/apocresources/cursor.h \
     game/apocresources/pck.h \
+	game/apocresources/rawimage.h \
     game/city/building.h \
     game/city/buildingtile.h \
     game/city/city.h \
+	game/city/cityview.h \
     game/city/organisation.h \
     game/city/vehicle.h \
     game/general/basescreen.h \

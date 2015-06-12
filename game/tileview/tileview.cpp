@@ -41,7 +41,6 @@ void TileView::Finish()
 
 void TileView::EventOccurred(Event *e)
 {
-	fw.gamecore->MouseCursor->EventOccured( e );
 	bool selectionChanged = false;
 
 	if( e->Type == EVENT_KEY_DOWN )
@@ -219,7 +218,6 @@ void TileView::Render()
 			}
 		}
 	}
-	fw.gamecore->MouseCursor->Render();
 }
 
 bool TileView::IsTransition()
