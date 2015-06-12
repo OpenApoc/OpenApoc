@@ -5,7 +5,7 @@ platform: x64
 clone_depth: 10
 before_build:
 - git submodule init
-- git submodule update
+- git submodule update --depth=10
 build:
   project: OpenApoc.sln
   verbosity: normal
