@@ -67,7 +67,7 @@ CityView::EventOccurred(Event *e)
 	{
 		if (e->Type == EVENT_FORM_INTERACTION)
 		{
-			if (e->Data.Forms.EventFlag == FormEventType::MouseDown)
+			if (e->Data.Forms.EventFlag == FormEventType::ButtonClick)
 			{
 				auto &cname = e->Data.Forms.RaisedBy->Name;
 				if (cname == "BUTTON_TAB_1")
