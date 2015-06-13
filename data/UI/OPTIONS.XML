@@ -99,14 +99,15 @@
 				</listbox>
 				
 			</graphic>
+			<graphicbutton id="BUTTON_QUIT">
+				<position x="604" y="446"/>
+				<size width="35" height="34"/>
+				<backcolour a="0"/>
+				<image/>
+				<!-- FIXME: PAL_01 doesn't seem correct for all newbut.tab images? -->
+				<imagedepressed>PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:5:XCOM3/UFODATA/PAL_01.DAT</imagedepressed>
+			</graphicbutton>
 
-			<textbutton id="BUTTON_OK" text="STR_QUIT">
-				<position x="right" y="bottom" />
-				<size width="44" height="32" />
-				<font>SMALFONT</font>
-			</textbutton>
-			
-			
 			<textedit id="TEXTEDIT_A">
 				<backcolour r="80" g="80" b="80" a="255" />
 				<position x="0" y="bottom" />

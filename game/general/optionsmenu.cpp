@@ -67,6 +67,11 @@ void OptionsMenu::EventOccurred(Event *e)
 			stageCmd.nextStage = std::make_shared<DebugMenu>(fw);
 			return;
 		}
+		if (e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT")
+		{
+			stageCmd.cmd = StageCmd::Command::POP;
+			return;
+		}
 	}
 }
 
