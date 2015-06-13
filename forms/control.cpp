@@ -6,8 +6,8 @@
 
 namespace OpenApoc {
 
-Control::Control(Framework &fw, Control* Owner)
-	: owningControl(Owner), focusedChild(nullptr), mouseInside(false), mouseDepressed(false), resolvedLocation(0,0), fw(fw), Name("Control"),Location(0,0), Size(0,0), BackgroundColour( 128, 80, 80 )
+Control::Control(Framework &fw, Control* Owner, bool takesFocus)
+	: owningControl(Owner), focusedChild(nullptr), mouseInside(false), mouseDepressed(false), resolvedLocation(0,0), fw(fw), Name("Control"),Location(0,0), Size(0,0), BackgroundColour( 128, 80, 80 ), takesFocus(takesFocus)
 {
 	if( Owner != nullptr )
 	{
@@ -47,6 +47,8 @@ void Control::Focus()
 
 bool Control::IsFocused()
 {
+	if (!this->takesFocus)
+		return false;
 	if( owningControl != nullptr )
 	{
 		return (owningControl->GetActiveControl() == this);

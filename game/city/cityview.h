@@ -9,7 +9,8 @@ class Form;
 class CityView : public TileView
 {
 private:
-	Form *ui;
+	Form *activeTab;
+	std::vector<Form*> uiTabs;
 public:
 	CityView(Framework &fw);
 	virtual ~CityView();
