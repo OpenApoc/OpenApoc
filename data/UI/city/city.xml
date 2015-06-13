@@ -74,7 +74,7 @@
 				<image />
 				<imagedepressed />
 			</graphicbutton>
-			<graphicbutton id="BUTTON_SHOW_STRATMAP">
+			<graphicbutton id="BUTTON_TOGGLE_STRATMAP">
 				<backcolour r="0" g="0" b="0" a="0" />
 				<position x="4" y="30" />
 				<size width="71" height="21" />
@@ -240,7 +240,7 @@
 				<image />
 				<imagedepressed />
 			</graphicbutton>
-			<graphicbutton id="BUTTON_SHOW_STRATMAP">
+			<graphicbutton id="BUTTON_TOGGLE_STRATMAP">
 				<backcolour r="0" g="0" b="0" a="0" />
 				<position x="4" y="30" />
 				<size width="71" height="21" />
@@ -406,7 +406,7 @@
 				<image />
 				<imagedepressed />
 			</graphicbutton>
-			<graphicbutton id="BUTTON_SHOW_STRATMAP">
+			<graphicbutton id="BUTTON_TOGGLE_STRATMAP">
 				<backcolour r="0" g="0" b="0" a="0" />
 				<position x="4" y="30" />
 				<size width="71" height="21" />
@@ -572,7 +572,7 @@
 				<image />
 				<imagedepressed />
 			</graphicbutton>
-			<graphicbutton id="BUTTON_SHOW_STRATMAP">
+			<graphicbutton id="BUTTON_TOGGLE_STRATMAP">
 				<backcolour r="0" g="0" b="0" a="0" />
 				<position x="4" y="30" />
 				<size width="71" height="21" />
@@ -738,7 +738,7 @@
 				<image />
 				<imagedepressed />
 			</graphicbutton>
-			<graphicbutton id="BUTTON_SHOW_STRATMAP">
+			<graphicbutton id="BUTTON_TOGGLE_STRATMAP">
 				<backcolour r="0" g="0" b="0" a="0" />
 				<position x="4" y="30" />
 				<size width="71" height="21" />
@@ -904,7 +904,7 @@
 				<image />
 				<imagedepressed />
 			</graphicbutton>
-			<graphicbutton id="BUTTON_SHOW_STRATMAP">
+			<graphicbutton id="BUTTON_TOGGLE_STRATMAP">
 				<backcolour r="0" g="0" b="0" a="0" />
 				<position x="4" y="30" />
 				<size width="71" height="21" />
@@ -1070,7 +1070,7 @@
 				<image />
 				<imagedepressed />
 			</graphicbutton>
-			<graphicbutton id="BUTTON_SHOW_STRATMAP">
+			<graphicbutton id="BUTTON_TOGGLE_STRATMAP">
 				<backcolour r="0" g="0" b="0" a="0" />
 				<position x="4" y="30" />
 				<size width="71" height="21" />
@@ -1119,7 +1119,7 @@
 				<image />
 				<imagedepressed />
 			</graphicbutton>
-			<graphicbutton id="BUTTON_PAUSE">
+			<graphicbutton id="BUTTON_SPEED0">
 				<backcolour r="0" g="0" b="0" a="0" />
 				<position x="565" y="7" />
 				<size width="71" height="21" />
@@ -1236,7 +1236,7 @@
 				<image />
 				<imagedepressed />
 			</graphicbutton>
-			<graphicbutton id="BUTTON_SHOW_STRATMAP">
+			<graphicbutton id="BUTTON_TOGGLE_STRATMAP">
 				<backcolour r="0" g="0" b="0" a="0" />
 				<position x="4" y="30" />
 				<size width="71" height="21" />

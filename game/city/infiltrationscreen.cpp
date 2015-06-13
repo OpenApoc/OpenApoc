@@ -1,36 +1,36 @@
 
-#include "game/ufopaedia/ufopaedia.h"
+#include "game/city/infiltrationscreen.h"
 #include "framework/framework.h"
 
 namespace OpenApoc {
 
-Ufopaedia::Ufopaedia(Framework &fw)
+InfiltrationScreen::InfiltrationScreen(Framework &fw)
 	: Stage(fw)
 {
-	menuform = fw.gamecore->GetForm("FORM_UFOPAEDIA_TITLE");
+	menuform = fw.gamecore->GetForm("FORM_INFILTRATION_SCREEN");
 }
 
-Ufopaedia::~Ufopaedia()
+InfiltrationScreen::~InfiltrationScreen()
 {
 }
 
-void Ufopaedia::Begin()
+void InfiltrationScreen::Begin()
 {
 }
 
-void Ufopaedia::Pause()
+void InfiltrationScreen::Pause()
 {
 }
 
-void Ufopaedia::Resume()
+void InfiltrationScreen::Resume()
 {
 }
 
-void Ufopaedia::Finish()
+void InfiltrationScreen::Finish()
 {
 }
 
-void Ufopaedia::EventOccurred(Event *e)
+void InfiltrationScreen::EventOccurred(Event *e)
 {
 	menuform->EventOccured( e );
 	fw.gamecore->MouseCursor->EventOccured( e );
@@ -51,16 +51,10 @@ void Ufopaedia::EventOccurred(Event *e)
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
-		else
-		{
-			//delete menuform;
-			menuform = fw.gamecore->GetForm("FORM_UFOPAEDIA_BASE");
-			return;
-		}
 	}
 }
 
-void Ufopaedia::Update(StageCmd * const cmd)
+void InfiltrationScreen::Update(StageCmd * const cmd)
 {
 	menuform->Update();
 	*cmd = this->stageCmd;
@@ -68,7 +62,7 @@ void Ufopaedia::Update(StageCmd * const cmd)
 	this->stageCmd = StageCmd();
 }
 
-void Ufopaedia::Render()
+void InfiltrationScreen::Render()
 {
 	fw.Stage_GetPrevious(this->shared_from_this())->Render();
 	fw.renderer->drawFilledRect({0,0}, fw.Display_GetSize(), Colour{0,0,0,128});
@@ -76,7 +70,7 @@ void Ufopaedia::Render()
 	fw.gamecore->MouseCursor->Render();
 }
 
-bool Ufopaedia::IsTransition()
+bool InfiltrationScreen::IsTransition()
 {
 	return false;
 }

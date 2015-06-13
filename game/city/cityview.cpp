@@ -2,6 +2,10 @@
 #include "game/city/cityview.h"
 #include "framework/framework.h"
 #include "game/resources/gamecore.h"
+#include "game/ufopaedia/ufopaedia.h"
+#include "game/city/infiltrationscreen.h"
+#include "game/city/scorescreen.h"
+#include "game/general/optionsmenu.h"
 
 namespace OpenApoc {
 
@@ -82,6 +86,49 @@ CityView::EventOccurred(Event *e)
 					this->activeTab = uiTabs[6];
 				else if (cname == "BUTTON_TAB_8")
 					this->activeTab = uiTabs[7];
+				else if (cname == "BUTTON_TOGGLE_STRATMAP")
+					LogError("Toggle stratmap");
+				else if (cname == "BUTTON_SHOW_ALIEN_INFILTRATION")
+				{
+					stageCmd.cmd = StageCmd::Command::PUSH;
+					stageCmd.nextStage = std::make_shared<InfiltrationScreen>(fw);
+					return;
+				}
+				else if (cname == "BUTTON_SHOW_SCORE")
+				{
+					stageCmd.cmd = StageCmd::Command::PUSH;
+					stageCmd.nextStage = std::make_shared<ScoreScreen>(fw);
+					return;
+				}
+				else if (cname == "BUTTON_SHOW_UFOPAEDIA")
+				{
+					stageCmd.cmd = StageCmd::Command::PUSH;
+					stageCmd.nextStage = std::make_shared<Ufopaedia>(fw);
+					return;
+				}
+				else if (cname == "BUTTON_SHOW_OPTIONS")
+				{
+					stageCmd.cmd = StageCmd::Command::PUSH;
+					stageCmd.nextStage = std::make_shared<OptionsMenu>(fw);
+					return;
+				}
+				else if (cname == "BUTTON_SHOW_LOG")
+					LogError("Show log");
+				else if (cname == "BUTTON_ZOOM_EVENT")
+					LogError("Zoom to event");
+				else if (cname == "BUTTON_SPEED0")
+					LogError("Set speed 0");
+				else if (cname == "BUTTON_SPEED1")
+					LogError("Set speed 1");
+				else if (cname == "BUTTON_SPEED2")
+					LogError("Set speed 2");
+				else if (cname == "BUTTON_SPEED3")
+					LogError("Set speed 3");
+				else if (cname == "BUTTON_SPEED4")
+					LogError("Set speed 4");
+				else if (cname == "BUTTON_SPEED5")
+					LogError("Set speed 5");
+					
 			}
 
 		}

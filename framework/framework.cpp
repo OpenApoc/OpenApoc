@@ -647,6 +647,11 @@ int Framework::Display_GetHeight()
 	return al_get_display_height( p->screen );
 }
 
+Vec2<int> Framework::Display_GetSize()
+{
+	return Vec2<int>(this->Display_GetWidth(), this->Display_GetHeight());
+}
+
 void Framework::Display_SetTitle( UString NewTitle )
 {
 #ifdef _WIN32

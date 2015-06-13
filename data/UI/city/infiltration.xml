@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+	<form id="FORM_INFILTRATION_SCREEN">
+		<style minwidth="640" minheight="480">
+			<position x="centre" y="centre"/>
+			<size width="640" height="480"/>
+			<graphic>
+				<image>XCOM3/UFODATA/GRAPH.PCX</image>
+				<position x="0" y="0"/>
+				<size width="640" height="480"/>
+			</graphic>
+			<graphicbutton id="BUTTON_QUIT">
+				<position x="600" y="440"/>
+				<size width="40" height="40"/>
+				<backcolour a="0"/>
+				<image/>
+				<imagedepressed/>
+			</graphicbutton>
+		</style>
+	</form>
+</openapoc>
