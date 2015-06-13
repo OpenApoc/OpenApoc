@@ -7,7 +7,7 @@
 namespace OpenApoc {
 
 Control::Control(Framework &fw, Control* Owner, bool takesFocus)
-	: owningControl(Owner), focusedChild(nullptr), mouseInside(false), mouseDepressed(false), resolvedLocation(0,0), fw(fw), Name("Control"),Location(0,0), Size(0,0), BackgroundColour( 128, 80, 80 ), takesFocus(takesFocus)
+	: owningControl(Owner), focusedChild(nullptr), mouseInside(false), mouseDepressed(false), resolvedLocation(0,0), fw(fw), Name("Control"),Location(0,0), Size(0,0), BackgroundColour( 128, 80, 80 ), takesFocus(takesFocus), showBounds(false)
 {
 	if( Owner != nullptr )
 	{
@@ -256,6 +256,10 @@ void Control::PostRender()
 	{
 		Control* c = (Control*)*ctrlidx;
 		c->Render();
+	}
+	if (showBounds)
+	{
+		fw.renderer->drawRect({0,0}, Size, Colour{255,0,0,255});
 	}
 }
 

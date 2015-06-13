@@ -46,6 +46,7 @@ class Control
 		Vec2<int> Size;
 		Colour BackgroundColour;
 		bool takesFocus;
+		bool showBounds;
 
 		std::vector<Control*> Controls;
 
