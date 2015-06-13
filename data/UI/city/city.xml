@@ -67,6 +67,104 @@
 				<image />
 				<imagedepressed />
 			</graphicbutton>
+			<graphicbutton id="BUTTON_FOLLOW_VEHICLE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="7" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_STRATMAP">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="30" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_ALIEN_INFILTRATION">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_SCORE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="40" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_UFOPAEDIA">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="76" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_OPTIONS">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="99" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_LOG">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="83" y="3" />
+				<size width="25" height="25" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_ZOOM_EVENT">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="532" y="3" />
+				<size width="25" height="25" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_PAUSE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="7" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED1">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED2">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="600" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED3">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="76" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED4">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="600" y="76" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED5">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="100" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
 		</style>
 	</form>
 	<form id="FORM_CITY_UI_2">
@@ -132,6 +230,104 @@
 				<backcolour r="0" g="0" b="0" a="0" />
 				<position x="453" y="22" />
 				<size width="41" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_FOLLOW_VEHICLE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="7" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_STRATMAP">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="30" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_ALIEN_INFILTRATION">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_SCORE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="40" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_UFOPAEDIA">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="76" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_OPTIONS">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="99" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_LOG">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="83" y="3" />
+				<size width="25" height="25" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_ZOOM_EVENT">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="532" y="3" />
+				<size width="25" height="25" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_PAUSE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="7" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED1">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED2">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="600" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED3">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="76" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED4">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="600" y="76" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED5">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="100" />
+				<size width="71" height="21" />
 				<image />
 				<imagedepressed />
 			</graphicbutton>
@@ -203,6 +399,104 @@
 				<image />
 				<imagedepressed />
 			</graphicbutton>
+			<graphicbutton id="BUTTON_FOLLOW_VEHICLE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="7" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_STRATMAP">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="30" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_ALIEN_INFILTRATION">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_SCORE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="40" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_UFOPAEDIA">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="76" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_OPTIONS">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="99" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_LOG">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="83" y="3" />
+				<size width="25" height="25" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_ZOOM_EVENT">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="532" y="3" />
+				<size width="25" height="25" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_PAUSE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="7" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED1">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED2">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="600" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED3">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="76" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED4">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="600" y="76" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED5">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="100" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
 		</style>
 	</form>
 	<form id="FORM_CITY_UI_4">
@@ -268,6 +562,104 @@
 				<backcolour r="0" g="0" b="0" a="0" />
 				<position x="453" y="22" />
 				<size width="41" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_FOLLOW_VEHICLE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="7" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_STRATMAP">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="30" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_ALIEN_INFILTRATION">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_SCORE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="40" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_UFOPAEDIA">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="76" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_OPTIONS">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="99" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_LOG">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="83" y="3" />
+				<size width="25" height="25" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_ZOOM_EVENT">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="532" y="3" />
+				<size width="25" height="25" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_PAUSE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="7" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED1">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED2">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="600" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED3">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="76" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED4">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="600" y="76" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED5">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="100" />
+				<size width="71" height="21" />
 				<image />
 				<imagedepressed />
 			</graphicbutton>
@@ -339,6 +731,104 @@
 				<image />
 				<imagedepressed />
 			</graphicbutton>
+			<graphicbutton id="BUTTON_FOLLOW_VEHICLE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="7" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_STRATMAP">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="30" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_ALIEN_INFILTRATION">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_SCORE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="40" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_UFOPAEDIA">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="76" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_OPTIONS">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="99" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_LOG">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="83" y="3" />
+				<size width="25" height="25" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_ZOOM_EVENT">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="532" y="3" />
+				<size width="25" height="25" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_PAUSE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="7" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED1">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED2">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="600" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED3">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="76" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED4">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="600" y="76" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED5">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="100" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
 		</style>
 	</form>
 	<form id="FORM_CITY_UI_6">
@@ -404,6 +894,104 @@
 				<backcolour r="0" g="0" b="0" a="0" />
 				<position x="453" y="22" />
 				<size width="41" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_FOLLOW_VEHICLE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="7" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_STRATMAP">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="30" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_ALIEN_INFILTRATION">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_SCORE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="40" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_UFOPAEDIA">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="76" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_OPTIONS">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="99" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_LOG">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="83" y="3" />
+				<size width="25" height="25" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_ZOOM_EVENT">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="532" y="3" />
+				<size width="25" height="25" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_PAUSE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="7" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED1">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED2">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="600" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED3">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="76" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED4">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="600" y="76" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED5">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="100" />
+				<size width="71" height="21" />
 				<image />
 				<imagedepressed />
 			</graphicbutton>
@@ -475,6 +1063,104 @@
 				<image />
 				<imagedepressed />
 			</graphicbutton>
+			<graphicbutton id="BUTTON_FOLLOW_VEHICLE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="7" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_STRATMAP">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="30" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_ALIEN_INFILTRATION">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_SCORE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="40" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_UFOPAEDIA">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="76" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_OPTIONS">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="99" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_LOG">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="83" y="3" />
+				<size width="25" height="25" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_ZOOM_EVENT">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="532" y="3" />
+				<size width="25" height="25" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_PAUSE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="7" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED1">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED2">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="600" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED3">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="76" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED4">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="600" y="76" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED5">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="100" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
 		</style>
 	</form>
 	<form id="FORM_CITY_UI_8">
@@ -540,6 +1226,104 @@
 				<backcolour r="0" g="0" b="0" a="0" />
 				<position x="453" y="22" />
 				<size width="41" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_FOLLOW_VEHICLE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="7" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_STRATMAP">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="30" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_ALIEN_INFILTRATION">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_SCORE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="40" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_UFOPAEDIA">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="76" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_OPTIONS">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="4" y="99" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SHOW_LOG">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="83" y="3" />
+				<size width="25" height="25" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_ZOOM_EVENT">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="532" y="3" />
+				<size width="25" height="25" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_PAUSE">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="7" />
+				<size width="71" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED1">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED2">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="600" y="53" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED3">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="76" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED4">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="600" y="76" />
+				<size width="35" height="21" />
+				<image />
+				<imagedepressed />
+			</graphicbutton>
+			<graphicbutton id="BUTTON_SPEED5">
+				<backcolour r="0" g="0" b="0" a="0" />
+				<position x="565" y="100" />
+				<size width="71" height="21" />
 				<image />
 				<imagedepressed />
 			</graphicbutton>
