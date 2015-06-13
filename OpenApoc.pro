@@ -46,7 +46,9 @@ SOURCES += main.cpp \
     game/city/buildingtile.cpp \
     game/city/city.cpp \
 	game/city/cityview.cpp \
+	game/city/infiltrationscreen.cpp \
     game/city/organisation.cpp \
+	game/city/scorescreen.cpp \
     game/city/vehicle.cpp \
     game/general/basescreen.cpp \
     game/general/difficultymenu.cpp \
@@ -107,7 +109,9 @@ HEADERS += \
     game/city/buildingtile.h \
     game/city/city.h \
 	game/city/cityview.h \
+	game/city/infiltrationscreen.h \
     game/city/organisation.h \
+	game/city/scorescreen.h \
     game/city/vehicle.h \
     game/general/basescreen.h \
     game/general/difficultymenu.h \

@@ -8,6 +8,7 @@ Graphic::Graphic( Framework &fw, Control* Owner, UString Image ) : Control( fw, 
 {
 	image_name = Image;
 	image = nullptr;
+	image = fw.gamecore->GetImage( image_name );
 }
 
 Graphic::~Graphic()

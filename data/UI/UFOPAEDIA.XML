@@ -144,8 +144,9 @@
 			<graphicbutton id="BUTTON_QUIT" text="STR_QUIT">
 				<position x="604" y="444" />
 				<size width="35" height="34" />
+				<backcolour a="0"/>
 				<image />
-				<imagedepressed />
+				<imagedepressed>PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:5:XCOM3/UFODATA/PAL_01.DAT</imagedepressed>
 			</graphicbutton>
 		</style>
 	</form>

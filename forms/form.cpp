@@ -13,6 +13,9 @@ Form::Form( Framework &fw, tinyxml2::XMLElement* FormConfiguration ) : Control( 
 	tinyxml2::XMLElement* usenode = nullptr;
 	UString nodename;
 
+	if (FormConfiguration->Attribute("id"))
+		this->Name = FormConfiguration->Attribute("id");
+
 	for( node = FormConfiguration->FirstChildElement(); node != nullptr; node = node->NextSiblingElement() )
 	{
 		nodename = node->Name();

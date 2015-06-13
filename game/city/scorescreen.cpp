@@ -1,36 +1,36 @@
 
-#include "game/ufopaedia/ufopaedia.h"
+#include "game/city/scorescreen.h"
 #include "framework/framework.h"
 
 namespace OpenApoc {
 
-Ufopaedia::Ufopaedia(Framework &fw)
+ScoreScreen::ScoreScreen(Framework &fw)
 	: Stage(fw)
 {
-	menuform = fw.gamecore->GetForm("FORM_UFOPAEDIA_TITLE");
+	menuform = fw.gamecore->GetForm("FORM_SCORE_SCREEN");
 }
 
-Ufopaedia::~Ufopaedia()
+ScoreScreen::~ScoreScreen()
 {
 }
 
-void Ufopaedia::Begin()
+void ScoreScreen::Begin()
 {
 }
 
-void Ufopaedia::Pause()
+void ScoreScreen::Pause()
 {
 }
 
-void Ufopaedia::Resume()
+void ScoreScreen::Resume()
 {
 }
 
-void Ufopaedia::Finish()
+void ScoreScreen::Finish()
 {
 }
 
-void Ufopaedia::EventOccurred(Event *e)
+void ScoreScreen::EventOccurred(Event *e)
 {
 	menuform->EventOccured( e );
 	fw.gamecore->MouseCursor->EventOccured( e );
@@ -51,16 +51,10 @@ void Ufopaedia::EventOccurred(Event *e)
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
-		else
-		{
-			//delete menuform;
-			menuform = fw.gamecore->GetForm("FORM_UFOPAEDIA_BASE");
-			return;
-		}
 	}
 }
 
-void Ufopaedia::Update(StageCmd * const cmd)
+void ScoreScreen::Update(StageCmd * const cmd)
 {
 	menuform->Update();
 	*cmd = this->stageCmd;
@@ -68,7 +62,7 @@ void Ufopaedia::Update(StageCmd * const cmd)
 	this->stageCmd = StageCmd();
 }
 
-void Ufopaedia::Render()
+void ScoreScreen::Render()
 {
 	fw.Stage_GetPrevious(this->shared_from_this())->Render();
 	fw.renderer->drawFilledRect({0,0}, fw.Display_GetSize(), Colour{0,0,0,128});
@@ -76,7 +70,7 @@ void Ufopaedia::Render()
 	fw.gamecore->MouseCursor->Render();
 }
 
-bool Ufopaedia::IsTransition()
+bool ScoreScreen::IsTransition()
 {
 	return false;
 }

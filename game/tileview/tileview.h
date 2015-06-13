@@ -11,8 +11,9 @@ class Image;
 
 class TileView : public Stage
 {
-	private:
+	protected:
 		StageCmd stageCmd;
+	private:
 		TileMap &map;
 		Vec3<int> tileSize;
 

@@ -72,6 +72,7 @@ class Framework
 		void Display_Shutdown();
 		int Display_GetWidth();
 		int Display_GetHeight();
+		Vec2<int> Display_GetSize();
 		void Display_SetTitle( UString NewTitle );
 
 		bool IsSlowMode();

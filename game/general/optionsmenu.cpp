@@ -67,6 +67,11 @@ void OptionsMenu::EventOccurred(Event *e)
 			stageCmd.nextStage = std::make_shared<DebugMenu>(fw);
 			return;
 		}
+		if (e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT")
+		{
+			stageCmd.cmd = StageCmd::Command::POP;
+			return;
+		}
 	}
 }
 
@@ -80,6 +85,8 @@ void OptionsMenu::Update(StageCmd * const cmd)
 
 void OptionsMenu::Render()
 {
+	fw.Stage_GetPrevious(this->shared_from_this())->Render();
+	fw.renderer->drawFilledRect({0,0}, fw.Display_GetSize(), Colour{0,0,0,128});
 	menuform->Render();
 	fw.gamecore->MouseCursor->Render();
 }

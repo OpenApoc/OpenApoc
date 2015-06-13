@@ -45,10 +45,12 @@ class Control
 		Vec2<int> Location;
 		Vec2<int> Size;
 		Colour BackgroundColour;
+		bool takesFocus;
+		bool showBounds;
 
 		std::vector<Control*> Controls;
 
-		Control(Framework &fw, Control* Owner);
+		Control(Framework &fw, Control* Owner, bool takesFocus = true);
 		virtual ~Control();
 
 		Control* GetActiveControl();
