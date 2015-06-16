@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc>
 
+	<alias id="TESTALIAS">Testing Alias Text</alias>
+	<alias id="TESTBACKGROUND">xcom3/UFODATA/AGENTEQP.PCX</alias>
 
 	<form id="FORM_OPTIONSMENU">
 	
@@ -10,6 +12,7 @@
 			<backcolour r="80" g="80" b="80" />
 			
 			<graphic>
+				<imagex>TESTBACKGROUND</imagex>
 				<image>xcom3/UFODATA/MESSAGE.PCX</image>
 				<position x="2" y="2" />
 				<size width="640" height="480" />
@@ -43,7 +46,7 @@
 						<size width="44" height="32" />
 						<font>SMALFONT</font>
 					</textbutton>
-					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
+					<textbutton id="BUTTON_TEMP" text="TESTALIAS">
 						<position x="right" y="bottom" />
 						<size width="44" height="32" />
 						<font>SMALFONT</font>

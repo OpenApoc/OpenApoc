@@ -19,7 +19,9 @@ class GameCore
 		std::map<UString, UString> languagetext;
 		std::map<UString, std::shared_ptr<BitmapFont>> fonts;
 		std::map<UString, Form*> forms;
+		std::map<UString, UString> aliases;
 
+		void ApplyAliases( tinyxml2::XMLElement* Source );
 		void ParseXMLDoc( UString XMLFilename );
 		void ParseGameXML( tinyxml2::XMLElement* Source );
 		void ParseStringXML( tinyxml2::XMLElement* Source );

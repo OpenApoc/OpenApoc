@@ -65,6 +65,7 @@ void GameCore::ParseXMLDoc( UString XMLFilename )
 	{
 		for( node = node->FirstChildElement(); node != nullptr; node = node->NextSiblingElement() )
 		{
+			ApplyAliases( node );
 			nodename = node->Name();
 			if( nodename == "game" )
 			{
@@ -107,6 +108,10 @@ void GameCore::ParseXMLDoc( UString XMLFilename )
 			else if (nodename == "language")
 			{
 				supportedlanguages[node->Attribute("id")] = node->GetText();
+			}
+			else if (nodename == "alias")
+			{
+				aliases[UString(node->Attribute("id"))] = UString(node->GetText());
 			}
 			else
 			{
@@ -185,6 +190,44 @@ std::shared_ptr<BitmapFont> GameCore::GetFont(UString FontData)
 std::shared_ptr<Palette> GameCore::GetPalette(UString Path)
 {
 	return fw.data->load_palette(Path);
+}
+
+void GameCore::ApplyAliases( tinyxml2::XMLElement* Source )
+{
+	if( aliases.empty() )
+	{
+		return;
+	}
+
+	const tinyxml2::XMLAttribute* attr = Source->FirstAttribute();
+
+	while( attr != nullptr )
+	{
+		// Is the attribute value the same as an alias? If so, replace with alias' value
+		if( aliases.find( UString(attr->Value()) ) != aliases.end() )
+		{
+			LogInfo("%s attribute \"%s\" value \"%s\" matches alias \"%s\"", Source->Name(), attr->Name(), attr->Value(), aliases[UString(attr->Value())].str().c_str() );
+			Source->SetAttribute( attr->Name(), aliases[UString(attr->Value())].str().c_str() );
+		}
+
+		attr = attr->Next();
+	}
+
+	// Replace inner text
+	if( Source->GetText() != nullptr && aliases.find( UString(Source->GetText()) ) != aliases.end() )
+	{
+		LogInfo("%s  value \"%s\" matches alias \"%s\"", Source->Name(), Source->GetText(), aliases[UString(Source->GetText())].str().c_str() );
+		Source->SetText( aliases[UString(Source->GetText())].str().c_str() );
+	}
+
+	// Recurse down tree
+	tinyxml2::XMLElement* child = Source->FirstChildElement();
+	while( child != nullptr )
+	{
+		ApplyAliases( child );
+		child = child->NextSiblingElement();
+	}
+
 }
 
 }; //namespace OpenApoc
