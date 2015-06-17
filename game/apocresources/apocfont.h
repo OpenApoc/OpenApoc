@@ -21,6 +21,7 @@ class ApocalypseFont : public BitmapFont
 		int spacewidth;
 		int fontheight;
 		UString name;
+		int averagecharacterwidth;
 
 	public:
 		static std::shared_ptr<ApocalypseFont> loadFont(Framework &fw, tinyxml2::XMLElement *fontElement);
@@ -28,6 +29,7 @@ class ApocalypseFont : public BitmapFont
 		virtual std::shared_ptr<PaletteImage> getGlyph(UniChar codepoint);
 		virtual int GetFontHeight();
 		virtual UString getName();
+		virtual int GetEstimateCharacters(int FitInWidth);
 
 };
 }; //namespace OpenApoc

@@ -50,22 +50,7 @@ void TextButton::OnRender()
 
 		int xpos;
 		int ypos;
-
-		switch( TextHAlign )
-		{
-			case HorizontalAlignment::Left:
-				xpos = 0;
-				break;
-			case HorizontalAlignment::Centre:
-				xpos = (Size.x / 2) - (font->GetFontWidth( text ) / 2);
-				break;
-			case HorizontalAlignment::Right:
-				xpos = Size.x - font->GetFontWidth( text );
-				break;
-			default:
-				LogError("Unknown TextHAlign");
-				return;
-		}
+		std::list<UString> lines = WordWrapText( font, text );
 
 		switch( TextVAlign )
 		{
@@ -73,18 +58,40 @@ void TextButton::OnRender()
 				ypos = 0;
 				break;
 			case VerticalAlignment::Centre:
-				ypos = (Size.y / 2) - (font->GetFontHeight() / 2);
+				ypos = (Size.y / 2) - ((font->GetFontHeight() * lines.size()) / 2);
 				break;
 			case VerticalAlignment::Bottom:
-				ypos = Size.y - font->GetFontHeight();
+				ypos = Size.y - (font->GetFontHeight() * lines.size());
 				break;
 			default:
-				LogError("Unknown TextHAlign");
+				LogError("Unknown TextVAlign");
 				return;
 		}
 
-		auto textImage = font->getString(text);
-		fw.renderer->draw(textImage, Vec2<float>{xpos,ypos});
+		while( lines.size() > 0 )
+		{
+			switch( TextHAlign )
+			{
+				case HorizontalAlignment::Left:
+					xpos = 0;
+					break;
+				case HorizontalAlignment::Centre:
+					xpos = (Size.x / 2) - (font->GetFontWidth( lines.front() ) / 2);
+					break;
+				case HorizontalAlignment::Right:
+					xpos = Size.x - font->GetFontWidth( lines.front() );
+					break;
+				default:
+					LogError("Unknown TextHAlign");
+					return;
+			}
+
+			auto textImage = font->getString(lines.front());
+			fw.renderer->draw(textImage, Vec2<float>{xpos, ypos});
+
+			lines.pop_front();
+			ypos += font->GetFontHeight();
+		}
 	}
 	fw.renderer->draw(cached, Vec2<float>{0,0});
 

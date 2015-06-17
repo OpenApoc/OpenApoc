@@ -22,6 +22,7 @@ class Label : public Control
 	public:
 		HorizontalAlignment TextHAlign;
 		VerticalAlignment TextVAlign;
+		bool WordWrap;
 
 		Label(Framework &fw, Control* Owner, UString Text, std::shared_ptr<BitmapFont> font);
 		virtual ~Label();

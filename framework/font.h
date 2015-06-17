@@ -21,6 +21,7 @@ class BitmapFont
 		virtual int GetFontHeight() = 0;
 		virtual int GetFontWidth(const UString& Text);
 		virtual UString getName() = 0;
+		virtual int GetEstimateCharacters(int FitInWidth) = 0;
 };
 
 }; //namespace OpenApoc

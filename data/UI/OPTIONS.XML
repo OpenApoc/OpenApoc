@@ -56,7 +56,7 @@
 						<size width="44" height="32" />
 						<font>SMALFONT</font>
 					</textbutton>
-					<textbutton id="BUTTON_TEMP" text="STR_QUIT">
+					<textbutton id="BUTTON_TEMP" text="STR_VEHICLES_INFO">
 						<position x="right" y="bottom" />
 						<size width="44" height="32" />
 						<font>SMALFONT</font>
@@ -126,6 +126,13 @@
 				<alignment horizontal="left" vertical="centre" />
 				<font>SMALLSET</font>
 			</textedit>
+			
+			<label id="LABEL_TESTXX" text="STR_VEHICLES_INFO">
+				<position x="right" y="top" />
+				<size width="200" height="200" />
+				<alignment horizontal="right" vertical="bottom" />
+				<font>SMALFONT</font>
+			</label>
 			
 		</style>
 

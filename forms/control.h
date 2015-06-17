@@ -3,6 +3,7 @@
 
 #include "framework/includes.h"
 #include "library/colour.h"
+#include "framework/font.h"
 
 namespace OpenApoc {
 
@@ -37,6 +38,8 @@ class Control
 		void ConfigureFromXML( tinyxml2::XMLElement* Element );
 
 		Control* GetRootControl();
+
+		std::list<UString> WordWrapText( std::shared_ptr<OpenApoc::BitmapFont> UseFont, UString WrapText );
 
 		Framework &fw;
 
