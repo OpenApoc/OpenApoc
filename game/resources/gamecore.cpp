@@ -113,6 +113,10 @@ void GameCore::ParseXMLDoc( UString XMLFilename )
 			{
 				aliases[UString(node->Attribute("id"))] = UString(node->GetText());
 			}
+			else if (nodename == "ufopaedia")
+			{
+				// TODO: Handle UFOpaedia nodes
+			}
 			else
 			{
 				LogError("Unknown XML element \"%s\"", nodename.str().c_str());
