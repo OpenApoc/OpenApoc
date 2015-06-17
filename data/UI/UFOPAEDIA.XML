@@ -189,37 +189,42 @@
 			
 			<graphicbutton id="BUTTON_NEXT_SECTION">
 				<position x="570" y="449" />
-				<size width="25" height="24" />
+				<size width="26" height="24" />
+				<backcolour a="0"/>
 				<image />
-				<imagedepressed />
+				<imagedepressed>BUTTON_PAEDIA_NEXTSECTION</imagedepressed>
 			</graphicbutton>
 			
 			<graphicbutton id="BUTTON_NEXT_TOPIC">
-				<position x="548" y="449" />
-				<size width="25" height="24" />
+				<position x="538" y="449" />
+				<size width="26" height="24" />
+				<backcolour a="0"/>
 				<image />
-				<imagedepressed />
+				<imagedepressed>BUTTON_PAEDIA_NEXTTOPIC</imagedepressed>
 			</graphicbutton>
 
 			<graphicbutton id="BUTTON_PREVIOUS_TOPIC">
 				<position x="507" y="449" />
-				<size width="25" height="24" />
+				<size width="26" height="24" />
+				<backcolour a="0"/>
 				<image />
-				<imagedepressed />
+				<imagedepressed>BUTTON_PAEDIA_PREVTOPIC</imagedepressed>
 			</graphicbutton>
 
 			<graphicbutton id="BUTTON_PREVIOUS_SECTION">
 				<position x="475" y="449" />
-				<size width="25" height="24" />
+				<size width="26" height="24" />
+				<backcolour a="0"/>
 				<image />
-				<imagedepressed />
+				<imagedepressed>BUTTON_PAEDIA_PREVSECTION</imagedepressed>
 			</graphicbutton>
 			
 			<graphicbutton id="BUTTON_INFORMATION">
-				<position x="432" y="444" />
+				<position x="433" y="444" />
 				<size width="35" height="34" />
+				<backcolour a="0"/>
 				<image />
-				<imagedepressed />
+				<imagedepressed>BUTTON_PAEDIA_INFO</imagedepressed>
 			</graphicbutton>
 
 			
