@@ -69,6 +69,7 @@ ApocalypseFont::loadFont( Framework &fw, tinyxml2::XMLElement *fontElement)
 	font->name = fontName;
 	font->spacewidth = spacewidth;
 	font->fontheight = height;
+	font->averagecharacterwidth = 0;
 
 	for (auto *glyphNode = fontElement->FirstChildElement(); glyphNode; glyphNode = glyphNode->NextSiblingElement())
 	{
@@ -132,12 +133,16 @@ ApocalypseFont::loadFont( Framework &fw, tinyxml2::XMLElement *fontElement)
 		auto trimmedGlyph = std::make_shared<PaletteImage>(Vec2<int>{glyphWidth + 2, height});
 		PaletteImage::blit(glyphImage, Vec2<int>{0,0}, trimmedGlyph);
 		font->fontbitmaps[c] = trimmedGlyph;
+
+		font->averagecharacterwidth += glyphWidth + 2;
 	}
 
 	//FIXME: Bit of a hack to handle spaces?
 	auto spaceImage = std::make_shared<PaletteImage>(Vec2<int>{spacewidth,height});
 	//Defaults to transparent (0)
 	font->fontbitmaps[UString::u8Char(' ')] = spaceImage;
+
+	font->averagecharacterwidth /= font->fontbitmaps.size();
 
 	return font;
 }
@@ -169,6 +174,10 @@ UString ApocalypseFont::getName()
 	return this->name;
 }
 
+int ApocalypseFont::GetEstimateCharacters(int FitInWidth)
+{
+	return FitInWidth / averagecharacterwidth;
+}
 
 
 }; //namespace OpenApoc

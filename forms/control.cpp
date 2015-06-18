@@ -620,4 +620,44 @@ Form* Control::GetForm()
 	return nullptr;
 }
 
+std::list<UString> Control::WordWrapText( std::shared_ptr<OpenApoc::BitmapFont> Font, UString WrapText )
+{
+	int txtwidth;
+	std::list<UString> lines;
+
+	txtwidth = Font->GetFontWidth( WrapText );
+
+	if( txtwidth > Size.x )
+	{
+		UString textleft = WrapText;
+		int estlinelength = Font->GetEstimateCharacters( Size.x );
+
+		while( textleft.length() > 0 )
+		{
+			if( textleft.length() > estlinelength )
+			{
+				int charidx;
+				for( charidx = estlinelength - 1; charidx > 1; charidx-- )
+				{
+					// TODO: Need to implement a list of line break characters
+					if( textleft.substr( charidx, 1 ) == UString(" ") )
+					{
+						lines.push_back( textleft.substr( 0, charidx ) );
+						textleft = textleft.substr( charidx, textleft.length() - charidx );
+						break;
+					}
+				}
+
+			} else {
+				lines.push_back( textleft );
+				textleft = "";
+			}
+		}
+	} else {
+		lines.push_back( WrapText );
+	}
+
+	return lines;
+}
+
 }; //namespace OpenApoc
