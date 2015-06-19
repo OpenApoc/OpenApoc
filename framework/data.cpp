@@ -399,20 +399,36 @@ Data::load_image(const UString& path)
 	{
 		auto splitString = path.split(':');
 		// RAW:PATH:WIDTH:HEIGHT
-		if (splitString.size() != 4)
+		if (splitString.size() != 4 && splitString.size() != 5)
 		{
 			LogError("Invalid RAW resource string: \"%s\"",
 				path.str().c_str());
 			return nullptr;
 		}
 
-		img = RawImage::load(*this, splitString[1],
+		auto pImg = RawImage::load(*this, splitString[1],
 			Vec2<int>{Strings::ToInteger(splitString[2]), Strings::ToInteger(splitString[3])});
-		if (!img)
+		if (!pImg)
 		{
 			LogError("Failed to load RAW image: \"%s\"",
 				path.str().c_str());
 			return nullptr;
+		}
+		if (splitString.size() == 5)
+		{
+			auto pal = this->load_palette(splitString[4]);
+			if (!pal)
+			{
+				LogError("Failed to load palette for RAW image: \"%s\"",
+					path.str().c_str());
+				return nullptr;
+			}
+			img = pImg->toRGBImage(pal);
+
+		}
+		else
+		{
+			img = pImg;
 		}
 
 	}
