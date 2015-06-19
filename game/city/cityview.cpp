@@ -5,7 +5,7 @@
 #include "game/ufopaedia/ufopaedia.h"
 #include "game/city/infiltrationscreen.h"
 #include "game/city/scorescreen.h"
-#include "game/general/optionsmenu.h"
+#include "game/general/ingameoptions.h"
 
 namespace OpenApoc {
 
@@ -109,7 +109,7 @@ CityView::EventOccurred(Event *e)
 				else if (cname == "BUTTON_SHOW_OPTIONS")
 				{
 					stageCmd.cmd = StageCmd::Command::PUSH;
-					stageCmd.nextStage = std::make_shared<OptionsMenu>(fw);
+					stageCmd.nextStage = std::make_shared<InGameOptions>(fw);
 					return;
 				}
 				else if (cname == "BUTTON_SHOW_LOG")

@@ -254,6 +254,7 @@
 	<ClCompile Include="game\city\cityview.cpp" />
 	<ClCompile Include="game\city\scorescreen.cpp" />
 	<ClCompile Include="game\city\infiltrationscreen.cpp" />
+	<ClCompile Include="game\general\ingameoptions.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="forms\checkbox.h" />
@@ -328,6 +329,7 @@
 	<ClInclude Include="game\city\cityview.h" />
 	<ClInclude Include="game\city\scorescreen.h" />
 	<ClInclude Include="game\city\infiltrationscreen.h" />
+	<ClInclude Include="game\general\ingameoptions.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="dependencies\allegro5.vcxproj">

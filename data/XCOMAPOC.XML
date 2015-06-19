@@ -12,6 +12,7 @@
 		<include>UI/UFOPAEDIA.XML</include>
 		<include>UI/DIFFICULTYMENU.XML</include>
 		<include>UI/DEBUGMENU.XML</include>
+		<include>UI/INGAMEOPTIONS.XML</include>
 		<include>UI/CITY/city.xml</include>
 		<include>UI/CITY/infiltration.xml</include>
 		<include>UI/CITY/score.xml</include>

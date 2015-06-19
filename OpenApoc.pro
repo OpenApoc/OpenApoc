@@ -52,6 +52,7 @@ SOURCES += main.cpp \
     game/city/vehicle.cpp \
     game/general/basescreen.cpp \
     game/general/difficultymenu.cpp \
+	game/general/ingameoptions.cpp \
     game/general/mainmenu.cpp \
     game/general/optionsmenu.cpp \
     game/resources/gamecore.cpp \
@@ -115,6 +116,7 @@ HEADERS += \
     game/city/vehicle.h \
     game/general/basescreen.h \
     game/general/difficultymenu.h \
+	game/general/ingameoptions.h \
     game/general/mainmenu.h \
     game/general/optionsmenu.h \
     game/resources/gamecore.h \
