@@ -14,7 +14,7 @@
           <backcolour a="0"/>
           <image/>
           <!-- FIXME: PAL_01 doesn't seem correct for all newbut.tab images? -->
-          <imagedepressed>PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:5:XCOM3/UFODATA/PAL_01.DAT</imagedepressed>
+          <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
         </graphicbutton>
       </graphic>
     </style>
