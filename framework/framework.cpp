@@ -49,6 +49,9 @@ static std::map<UString, UString> defaultConfig =
 	{"Resource.SystemCDPath", DATA_DIRECTORY "/cd.iso"},
 	{"Visual.Renderers", RENDERERS},
 	{"Audio.Backends", "allegro:null"},
+	{"Audio.GlobalGain", "100"},
+	{"Audio.SampleGain", "100"},
+	{"Audio.MusicGain", "100"},
 };
 
 std::map<UString, std::unique_ptr<OpenApoc::RendererFactory>> *registeredRenderers = nullptr;
@@ -690,6 +693,11 @@ void Framework::Audio_Initialise()
 		LogError("No functional sound backend found");
 	}
 	this->jukebox.reset(new JukeBoxImpl(*this));
+
+	/* Setup initial gain */
+	this->soundBackend->setGain(SoundBackend::Gain::Global, (float)this->Settings->getInt("Audio.GlobalGain") / 100.0f);
+	this->soundBackend->setGain(SoundBackend::Gain::Music, (float)this->Settings->getInt("Audio.MusicGain") / 100.0f);
+	this->soundBackend->setGain(SoundBackend::Gain::Sample, (float)this->Settings->getInt("Audio.SampleGain") / 100.0f);
 }
 
 void Framework::Audio_Shutdown()

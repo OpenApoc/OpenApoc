@@ -64,6 +64,29 @@ public:
 	virtual void playSample(std::shared_ptr<Sample> sample) = 0;
 	virtual void playMusic(std::shared_ptr<MusicTrack>, std::function<void(void*)> finishedCallback, void *callbackData = nullptr) = 0;
 	virtual void stopMusic() = 0;
+
+
+	/* Gain - a float scale (from 1.0 to 0.0) in 'linear intensity' (IE samples
+	 * are simply multiplied by the 'volume')
+	 *
+	 * The Global volume is applied to both Sample and Music.
+	 * IE music is multiplied by (Gain::Music * Gain::Global)
+	 * and samples by (Gain::Sample * Gain::Global)
+	 *
+	 * No claims as to the backend accuracy of this, though.
+	 */
+
+	enum class Gain
+	{
+		Sample,
+		Music,
+		Global,
+	};
+
+
+	virtual float getGain(Gain g) = 0;
+	/* Any values outside the range 0..1 will be clamped */
+	virtual void setGain(Gain g, float v) = 0;
 };
 
 class JukeBox
