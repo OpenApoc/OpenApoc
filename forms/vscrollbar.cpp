@@ -89,7 +89,7 @@ void VScrollBar::OnRender()
 	}
 
 	int ypos = segmentsize * (Value - Minimum);
-	fw.renderer->drawRect(Vec2<float>{0,ypos}, Vec2<float>{Size.x, ypos + grippersize}, GripperColour);
+	fw.renderer->drawRect(Vec2<float>{0,ypos}, Vec2<float>{Size.x, grippersize}, GripperColour);
 }
 
 void VScrollBar::Update()
