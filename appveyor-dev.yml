@@ -1,6 +1,6 @@
-version: 0.0.{build}
+version: '{branch}-0.0.{build}'
 branches:
-  only:
+  except:
   - master
 skip_tags: true
 configuration: Release
@@ -19,7 +19,7 @@ after_build:
 - copy x64\Release\*.dll OpenApoc-%APPVEYOR_BUILD_VERSION%\
 - copy x64\Release\OpenApoc.exe OpenApoc-%APPVEYOR_BUILD_VERSION%\
 - xcopy /E data OpenApoc-%APPVEYOR_BUILD_VERSION%\data\
-- 7z a OpenApoc-msvc.zip OpenApoc-%APPVEYOR_BUILD_VERSION%
+- 7z a OpenApoc-msvc-dev.zip OpenApoc-%APPVEYOR_BUILD_VERSION%
 artifacts:
-- path: OpenApoc-msvc.zip
+- path: OpenApoc-msvc-dev.zip
   name: built-zip
