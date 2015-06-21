@@ -19,6 +19,21 @@ void HScrollBar::LoadResources()
 {
 }
 
+void HScrollBar::SetValue(int newValue)
+{
+	newValue = std::max(newValue, Minimum);
+	newValue = std::min(newValue, Maximum);
+	if (newValue == Value)
+		return;
+
+	Event* e = new Event();
+	e->Type = EVENT_FORM_INTERACTION;
+	e->Data.Forms.RaisedBy = this;
+	e->Data.Forms.EventFlag = FormEventType::ScrollBarChange;
+	fw.PushEvent(e);
+	Value = newValue;
+}
+
 void HScrollBar::EventOccured( Event* e )
 {
 	Control::EventOccured( e );
@@ -36,19 +51,9 @@ void HScrollBar::EventOccured( Event* e )
 
 		if( e->Data.Forms.MouseInfo.X >= (segmentsize * (Value - Minimum)) + grippersize )
 		{
-			Value = Maths::Min(Maximum, Value + LargeChange);
-			Event* ce = new Event();
-			ce->Type = e->Type;
-			memcpy( (void*)&(ce->Data.Forms), (void*)&(e->Data.Forms), sizeof( FRAMEWORK_FORMS_EVENT ) );
-			ce->Data.Forms.EventFlag = FormEventType::ScrollBarChange;
-			fw.PushEvent( ce );
+			this->SetValue(Value + LargeChange);
 		} else if ( e->Data.Forms.MouseInfo.X <= segmentsize * (Value - Minimum) ) {
-			Value = Maths::Max(Minimum, Value - LargeChange);
-			Event* ce = new Event();
-			ce->Type = e->Type;
-			memcpy( (void*)&(ce->Data.Forms), (void*)&(e->Data.Forms), sizeof( FRAMEWORK_FORMS_EVENT ) );
-			ce->Data.Forms.EventFlag = FormEventType::ScrollBarChange;
-			fw.PushEvent( ce );
+			this->SetValue(Value - LargeChange);
 		} else {
 			capture = true;
 		}
@@ -63,12 +68,7 @@ void HScrollBar::EventOccured( Event* e )
 	{
 		int segments = (Maximum - Minimum) + 1;
 		float segmentsize = Size.x / (float)segments;
-		Value = Maths::Max(Minimum, Minimum + (int)(e->Data.Forms.MouseInfo.X / segmentsize));
-		Event* ce = new Event();
-		ce->Type = e->Type;
-		memcpy( (void*)&(ce->Data.Forms), (void*)&(e->Data.Forms), sizeof( FRAMEWORK_FORMS_EVENT ) );
-		ce->Data.Forms.EventFlag = FormEventType::ScrollBarChange;
-		fw.PushEvent( ce );
+		this->SetValue(e->Data.Forms.MouseInfo.X / segmentsize);
 	}
 
 	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this && e->Data.Forms.EventFlag == FormEventType::MouseClick )
