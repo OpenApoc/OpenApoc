@@ -8,16 +8,36 @@ namespace OpenApoc {
 class Image;
 class VehicleFactory;
 class VehicleDefinition;
+class VehicleTileObject;
+class Vehicle;
+class Organisation;
 
+class VehicleMission
+{
+public:
+	Vehicle &vehicle;
+	VehicleMission(Vehicle &vehicle);
+	virtual Vec3<float> getNextDestination() = 0;
+	virtual ~VehicleMission();
+};
 
+class VehicleMover
+{
+public:
+	Vehicle &vehicle;
+	VehicleMover(Vehicle &vehicle);
+	virtual void update(unsigned int ticks) = 0;
+	virtual ~VehicleMover();
+};
 
-class Vehicle
+class Vehicle : public std::enable_shared_from_this<Vehicle>
 {
 public:
 	virtual ~Vehicle();
-	Vehicle(VehicleDefinition &def);
+	Vehicle(VehicleDefinition &def, Organisation &owner);
 
 	VehicleDefinition &def;
+	Organisation &owner;
 
 	enum class Type
 	{
@@ -52,39 +72,27 @@ public:
 		Decending,
 	};
 
-	std::shared_ptr<TileObject> tileObject;
-};
+	std::shared_ptr<VehicleTileObject> tileObject;
+	/* FIXME: Merge with tileObject? */
+	Vec3<float> position;
+	Vec3<float> direction;
 
-class VehicleMission
-{
-public:
-	Vehicle &vehicle;
-	VehicleMission(Vehicle &vehicle);
-	virtual Vec3<float> getNextDestination() = 0;
-	virtual ~VehicleMission();
-};
-
-class VehicleMover
-{
-public:
-	Vehicle &vehicle;
-	VehicleMover(Vehicle &vehicle);
-	virtual void update(unsigned int ticks) = 0;
-	virtual ~VehicleMover();
-};
-
-class FlyingVehicle : public TileObject
-{
-public:
-	Vehicle &vehicle;
-	FlyingVehicle(Vehicle &vehicle, Tile *owningTile);
 	std::unique_ptr<VehicleMission> mission;
 	std::unique_ptr<VehicleMover> mover;
-	Vec3<float> direction;
-	virtual ~FlyingVehicle();
-	virtual std::shared_ptr<Image> getSprite();
+
+	/* 'launch' the vehicle into the city */
+	/* FIXME: Make this take initial mission/mover? */
+	void launch(TileMap &map, Vec3<float> initialPosition);
+};
+
+class VehicleTileObject : public TileObjectDirectionalSprite
+{
+private:
+	Vehicle &vehicle;
+public:
+	VehicleTileObject(Vehicle &vehicle, TileMap &map, Vec3<float> position);
+	virtual ~VehicleTileObject();
 	virtual void update(unsigned int ticks);
-	virtual void processCollision(TileObject &otherObject);
 };
 
 }; //namespace OpenApoc

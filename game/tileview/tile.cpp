@@ -24,20 +24,46 @@ TileMap::update(unsigned int ticks)
 {
 	//Default tilemap update calls update(ticks) on all tiles
 	//Subclasses can optimise this if they know which tiles might be 'active'
-	for (auto& object : this->activeObjects)
+	for (auto& object : this->objects)
 		object->update(ticks);
 }
 
-Tile&
+Tile*
 TileMap::getTile(int x, int y, int z)
 {
-	return this->tiles[z * size.x * size.y + y * size.x + x];
+	if (x >= size.x || y >= size.y || z >= size.z)
+	{
+		LogError("Requesting tile {%d,%d,%d} in map of size {%d,%d,%d}",
+			x, y, z, size.x, size.y, size.z);
+		return nullptr;
+	}
+	return &this->tiles[z * size.x * size.y + y * size.x + x];
 }
 
-Tile&
+Tile*
 TileMap::getTile(Vec3<int> pos)
 {
 	return getTile(pos.x, pos.y, pos.z);
+}
+
+Tile*
+TileMap::getTile(Vec3<float> pos)
+{
+	return getTile(pos.x, pos.y, pos.z);
+}
+
+void
+TileMap::addObject(std::shared_ptr<TileObject> obj)
+{
+	this->objects.insert(obj);
+	obj->owningTile->objects.insert(obj);
+}
+
+void
+TileMap::removeObject(std::shared_ptr<TileObject> obj)
+{
+	this->objects.erase(obj);
+	obj->owningTile->objects.erase(obj);
 }
 
 TileMap::~TileMap()
@@ -49,29 +75,14 @@ Tile::Tile(TileMap &map, Vec3<int> position)
 {
 }
 
-TileObject::TileObject(Tile *owningTile, Vec3<float> position, Vec3<float> size, bool visible, bool collides, std::shared_ptr<Image> sprite)
-	: owningTile(owningTile), visible(visible), collides(collides), sprite(sprite), size(size), position(position)
+TileObject::TileObject(TileMap &map, Vec3<float> position)
+	: position(position), owningTile(map.getTile(position)) 
 {
-
 }
 
 TileObject::~TileObject()
 {
 
-}
-
-Cubeoid<int>
-TileObject::getBoundingBox()
-{
-	Vec3<int> p1 {(int)floor((float)position.x), (int)floor((float)position.y), (int)floor((float)position.z)};
-	Vec3<int> p2 {(int)ceil((float)position.x + size.x), (int)ceil((float)position.y + size.y), (int)ceil((float)position.z + size.z)};
-	return Cubeoid<int>{p1,p2};
-}
-
-Vec3<float>
-TileObject::getSize()
-{
-	return this->size;
 }
 
 Vec3<float>
@@ -80,17 +91,51 @@ TileObject::getPosition()
 	return this->position;
 }
 
+void
+TileObject::setPosition(Vec3<float> newPos)
+{
+	this->position = newPos;
+	auto &map = this->owningTile->map;
+	auto newOwner = map.getTile(this->position);
+	if (newOwner != this->owningTile)
+	{
+		auto thisPtr = shared_from_this();
+		this->owningTile->objects.erase(thisPtr);
+		newOwner->objects.insert(thisPtr);
+		this->owningTile = newOwner;
+	}
+}
+
 std::shared_ptr<Image>
-TileObject::getSprite()
+TileObjectNonDirectionalSprite::getSprite()
 {
 	return this->sprite;
 }
 
-TileObjectCollisionVoxels&
-TileObject::getCollisionVoxels()
+std::shared_ptr<Image>
+TileObjectDirectionalSprite::getSprite()
 {
-	return this->collisionVoxels;
+	float closestAngle = FLT_MAX;
+	std::shared_ptr<Image> closestImage;
+	for (auto &p : sprites)
+	{
+		float angle = glm::angle(glm::normalize(p.first), glm::normalize(this->getDirection()));
+		if (angle < closestAngle)
+		{
+			closestAngle = angle;
+			closestImage = p.second;
+		}
+	}
+	return closestImage;
 }
+
+void
+TileObject::update(unsigned int ticks)
+{
+	std::ignore = ticks;
+}
+
+
 
 class PathComparer
 {
@@ -145,14 +190,14 @@ static bool findNextNodeOnPath(PathComparer &comparer, TileMap &map, std::list<T
 					|| nextPosition.y < 0 || nextPosition.y >= map.size.y
 					|| nextPosition.x < 0 || nextPosition.x >= map.size.x)
 					continue;
-				Tile &tile = map.getTile(nextPosition);
+				Tile *tile = map.getTile(nextPosition);
 				//FIXME: Make 'blocked' tiles cleverer (e.g. don't plan around objects that will move anyway?)
-				if (!tile.objects.empty())
+				if (!tile->objects.empty())
 					continue;
 				//Already visited this tile
-				if (std::find(currentPath.begin(), currentPath.end(), &tile) != currentPath.end())
+				if (std::find(currentPath.begin(), currentPath.end(), tile) != currentPath.end())
 					continue;
-				fringe.push_back(&tile);
+				fringe.push_back(tile);
 			}
 		}
 	}
@@ -190,7 +235,7 @@ TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination)
 		LogError("Bad destination {%d,%d,%d}", destination.x, destination.y, destination.z);
 		return path;
 	}
-	path.push_back(&this->getTile(origin));
+	path.push_back(this->getTile(origin));
 	if (!findNextNodeOnPath(pc, *this, path, destination, &numIterations))
 	{
 		LogWarning("No route found from origin {%d,%d,%d} to desination {%d,%d,%d}", origin.x, origin.y, origin.z, destination.x, destination.y, destination.z);

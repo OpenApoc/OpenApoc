@@ -16,6 +16,18 @@ VehicleFactory::~VehicleFactory()
 
 }
 
+std::map<Vehicle::Direction, Vec3<float>> directionsToVec =
+{
+	{Vehicle::Direction::N,  { 0,-1, 0}}, 
+	{Vehicle::Direction::NE, { 1,-1, 0}}, 
+	{Vehicle::Direction::E,  { 1, 0, 0}}, 
+	{Vehicle::Direction::SE, { 1, 1, 0}}, 
+	{Vehicle::Direction::S,  { 0, 1, 0}}, 
+	{Vehicle::Direction::SW, {-1, 1, 0}}, 
+	{Vehicle::Direction::W,  {-1, 0, 0}}, 
+	{Vehicle::Direction::NW, {-1,-1, 0}}, 
+};
+
 static std::map<Vehicle::Direction, std::shared_ptr<Image> >
 parseDirectionalSprites(Framework &fw, tinyxml2::XMLElement *root)
 {
@@ -127,16 +139,38 @@ VehicleFactory::ParseVehicleDefinition(tinyxml2::XMLElement *root)
 			continue;
 		}
 	}
+	//Push all directional sprites into 'directional vector' space
+	//FIXME: How to do banking left/right?
+	for (auto &s : def.sprites[Vehicle::Banking::Flat])
+	{
+		Vec3<float> v = directionsToVec[s.first];
+		v = glm::normalize(v);
+		def.directionalSprites.emplace_back(v, s.second);
+	}
+	for (auto &s : def.sprites[Vehicle::Banking::Ascending])
+	{
+		Vec3<float> v = directionsToVec[s.first];
+		v.z = 1;
+		v = glm::normalize(v);
+		def.directionalSprites.emplace_back(v, s.second);
+	}
+	for (auto &s : def.sprites[Vehicle::Banking::Decending])
+	{
+		Vec3<float> v = directionsToVec[s.first];
+		v.z = -1;
+		v = glm::normalize(v);
+		def.directionalSprites.emplace_back(v, s.second);
+	}
 
 	this->defs[def.name] = def;
 
 }
 
 std::shared_ptr<Vehicle>
-VehicleFactory::create(const UString name)
+VehicleFactory::create(const UString name, Organisation &owner)
 {
 	auto &def = this->defs[name];
-	auto v = std::shared_ptr<Vehicle>(new Vehicle(def));
+	auto v = std::shared_ptr<Vehicle>(new Vehicle(def, owner));
 
 
 	return v;

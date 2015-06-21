@@ -151,7 +151,6 @@ void TileView::EventOccurred(Event *e)
 	if (fw.gamecore->DebugModeEnabled &&
 	    selectionChanged)
 	{
-		auto &tile = map.getTile(selectedTilePosition);
 		LogInfo("Selected tile {%d,%d,%d}", selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z);
 	}
 }
@@ -188,7 +187,7 @@ void TileView::Render()
 					 y == selectedTilePosition.y &&
 					 x == selectedTilePosition.x);
 
-				auto &tile = map.getTile(x, y, z);
+				auto tile = map.getTile(x, y, z);
 				// Skip over transparent (missing) tiles
 				auto screenPos = tileToScreenCoords(Vec3<float>{(float)x,(float)y,(float)z});
 				screenPos.x += offsetX;
@@ -200,14 +199,15 @@ void TileView::Render()
 
 				if (showSelected)
 					r.draw(selectedTileImageBack, screenPos);
-				for (auto obj : tile.objects)
+				for (auto obj : tile->objects)
 				{
-					if (obj->visible)
+					auto tileSprite = std::dynamic_pointer_cast<TileObjectSprite>(obj);
+					if (tileSprite)
 					{
 						auto objScreenPos = tileToScreenCoords(obj->getPosition());
 						objScreenPos.x += offsetX;
 						objScreenPos.y += offsetY;
-						auto img = obj->getSprite();
+						auto img = tileSprite->getSprite();
 						r.draw(img, objScreenPos);
 					}
 

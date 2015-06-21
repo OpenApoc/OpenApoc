@@ -28,7 +28,6 @@ City::City(Framework &fw, UString mapName)
 			for (int x = 0; x < this->size.x; x++)
 			{
 				uint16_t tileID;
-				Tile &tile = this->getTile(x,y,z);
 				if (!file.readule16(tileID))
 				{
 					LogError("Unexpected EOF reading citymap at %d,%d,%d",x,y,z);
@@ -54,7 +53,8 @@ City::City(Framework &fw, UString mapName)
 					}
 					else
 					{
-						tile.objects.push_back(std::make_shared<BuildingSection>(&tile, this->cityTiles[tileID], Vec3<int>{x,y,z}, bld));
+						auto tile = std::make_shared<BuildingSection>(*this, this->cityTiles[tileID], Vec3<int>{x,y,z}, bld);
+						this->addObject(tile);
 					}
 				}
 			}
@@ -76,17 +76,12 @@ City::City(Framework &fw, UString mapName)
 			x = xydistribution(generator);
 			y = xydistribution(generator);
 			z = zdistribution(generator);
-		} while (!this->getTile(x,y,z).objects.empty());
+		} while (!this->getTile(x,y,z)->objects.empty());
 
-		Tile &tile = this->getTile(x,y,z);
-
-		std::shared_ptr<Vehicle> testVehicle(fw.gamecore->vehicleFactory.create("POLICE_HOVERCAR"));
+		std::shared_ptr<Vehicle> testVehicle(fw.gamecore->vehicleFactory.create("POLICE_HOVERCAR", organisations[0]));
 		this->vehicles.push_back(testVehicle);
-		std::shared_ptr<FlyingVehicle> testVehicleObject(new FlyingVehicle(*testVehicle, &tile));
-		testVehicle->tileObject = testVehicleObject;
-		tile.objects.push_back(testVehicleObject);
-		//Vehicles are active
-		this->activeObjects.push_back(testVehicleObject);
+
+		testVehicle->launch(*this, Vec3<float>{x,y,z});
 	}
 	LogInfo("Finished placing cars");
 }
