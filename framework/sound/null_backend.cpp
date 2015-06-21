@@ -43,6 +43,15 @@ public:
 	{
 		return preferredFormat;
 	}
+
+	virtual float getGain(Gain g)
+	{
+		return 0.0;
+	}
+	virtual void setGain(Gain g, float f)
+	{
+		return;
+	}
 };
 
 class NullSoundBackendFactory : public SoundBackendFactory

@@ -28,6 +28,7 @@ class HScrollBar : public Control
 		virtual void EventOccured( Event* e );
 		virtual void Update();
 		virtual void UnloadResources();
+		virtual void SetValue(int newValue);
 };
 
 }; //namespace OpenApoc

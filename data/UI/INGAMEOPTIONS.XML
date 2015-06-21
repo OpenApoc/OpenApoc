@@ -13,9 +13,71 @@
           <size width="35" height="34"/>
           <backcolour a="0"/>
           <image/>
-          <!-- FIXME: PAL_01 doesn't seem correct for all newbut.tab images? -->
           <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
         </graphicbutton>
+		<graphicbutton id="GLOBAL_GAIN_DOWN">
+		  <position x="61" y="262"/>
+		  <size width="16" height="20"/>
+		  <backcolour a="0"/>
+		  <image></image>
+		  <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+		</graphicbutton>
+		<graphicbutton id="GLOBAL_GAIN_UP">
+		  <position x="222" y="262"/>
+		  <size width="17" height="20"/>
+		  <backcolour a="0"/>
+		  <image></image>
+		  <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+		</graphicbutton>
+		<hscroll id="GLOBAL_GAIN_SLIDER">
+			<position x="76" y="264"/>
+			<size width="145" height="14"/>
+			<backcolour r="0" g="0" b="0" a="0"/>
+			<grippercolour r="255" g="255" b="255" a="255"/>
+			<range min="0" max="20"/>
+		</hscroll>
+		<graphicbutton id="MUSIC_GAIN_DOWN">
+			<position x="61" y="290"/>
+			<size width="16" height="20"/>
+			<backcolour a="0"/>
+			<image></image>
+			<imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+	  	</graphicbutton>
+		<graphicbutton id="MUSIC_GAIN_UP">
+		  <position x="222" y="290"/>
+		  <size width="17" height="20"/>
+		  <backcolour a="0"/>
+		  <image></image>
+		  <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+		</graphicbutton>
+		<hscroll id="MUSIC_GAIN_SLIDER">
+			<position x="76" y="290"/>
+			<size width="145" height="14"/>
+			<backcolour r="0" g="0" b="0" a="0"/>
+			<grippercolour r="255" g="255" b="255" a="255"/>
+			<range min="0" max="20"/>
+		</hscroll>
+		<graphicbutton id="SAMPLE_GAIN_DOWN">
+			<position x="61" y="318"/>
+			<size width="16" height="20"/>
+			<backcolour a="0"/>
+			<image></image>
+			<imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+		</graphicbutton>
+		<graphicbutton id="SAMPLE_GAIN_UP">
+		  <position x="222" y="318"/>
+		  <size width="17" height="20"/>
+		  <backcolour a="0"/>
+		  <image></image>
+		  <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+		</graphicbutton>
+		<hscroll id="SAMPLE_GAIN_SLIDER">
+			<position x="76" y="318"/>
+			<size width="145" height="14"/>
+			<backcolour r="0" g="0" b="0" a="0"/>
+			<grippercolour r="255" g="255" b="255" a="255"/>
+			<range min="0" max="20"/>
+		</hscroll>
       </graphic>
     </style>
   </form>

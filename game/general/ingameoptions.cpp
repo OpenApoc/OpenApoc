@@ -8,10 +8,97 @@ InGameOptions::InGameOptions(Framework &fw)
 	: Stage(fw)
 {
 	menuform = fw.gamecore->GetForm("FORM_INGAMEOPTIONS");
+
+	/* Initialse all initial values */
+
+	Control *c = menuform->FindControl("GLOBAL_GAIN_SLIDER");
+	if (!c)
+	{
+		LogError("Failed to find \"GLOBAL_GAIN_SLIDER\" control");
+		return;
+	}
+	HScrollBar *slider = dynamic_cast<HScrollBar*>(c);
+	if (!slider)
+	{
+		LogError("Failed to cast \"GLOBAL_GAIN_SLIDER\" control to HScrollBar");
+		return;
+	}
+	slider->SetValue(fw.Settings->getInt("Audio.GlobalGain"));
+
+	c = menuform->FindControl("MUSIC_GAIN_SLIDER");
+	if (!c)
+	{
+		LogError("Failed to find \"MUSIC_GAIN_SLIDER\" control");
+		return;
+	}
+	slider = dynamic_cast<HScrollBar*>(c);
+	if (!slider)
+	{
+		LogError("Failed to cast \"MUSIC_GAIN_SLIDER\" control to HScrollBar");
+		return;
+	}
+	slider->SetValue(fw.Settings->getInt("Audio.MusicGain"));
+
+	c = menuform->FindControl("SAMPLE_GAIN_SLIDER");
+	if (!c)
+	{
+		LogError("Failed to find \"SAMPLE_GAIN_SLIDER\" control");
+		return;
+	}
+	slider = dynamic_cast<HScrollBar*>(c);
+	if (!slider)
+	{
+		LogError("Failed to cast \"SAMPLE_GAIN_SLIDER\" control to HScrollBar");
+		return;
+	}
+	slider->SetValue(fw.Settings->getInt("Audio.SampleGain"));
 }
 
 InGameOptions::~InGameOptions()
 {
+	/* Store persistent options */
+
+	Control *c = menuform->FindControl("GLOBAL_GAIN_SLIDER");
+	if (!c)
+	{
+		LogError("Failed to find \"GLOBAL_GAIN_SLIDER\" control");
+		return;
+	}
+	HScrollBar *slider = dynamic_cast<HScrollBar*>(c);
+	if (!slider)
+	{
+		LogError("Failed to cast \"GLOBAL_GAIN_SLIDER\" control to HScrollBar");
+		return;
+	}
+	fw.Settings->set("Audio.GlobalGain", slider->Value);
+
+	c = menuform->FindControl("MUSIC_GAIN_SLIDER");
+	if (!c)
+	{
+		LogError("Failed to find \"MUSIC_GAIN_SLIDER\" control");
+		return;
+	}
+	slider = dynamic_cast<HScrollBar*>(c);
+	if (!slider)
+	{
+		LogError("Failed to cast \"MUSIC_GAIN_SLIDER\" control to HScrollBar");
+		return;
+	}
+	fw.Settings->set("Audio.MusicGain", slider->Value);
+
+	c = menuform->FindControl("SAMPLE_GAIN_SLIDER");
+	if (!c)
+	{
+		LogError("Failed to find \"SAMPLE_GAIN_SLIDER\" control");
+		return;
+	}
+	slider = dynamic_cast<HScrollBar*>(c);
+	if (!slider)
+	{
+		LogError("Failed to cast \"SAMPLE_GAIN_SLIDER\" control to HScrollBar");
+		return;
+	}
+	fw.Settings->set("Audio.SampleGain", slider->Value);
 }
 
 void InGameOptions::Begin()
@@ -51,6 +138,139 @@ void InGameOptions::EventOccurred(Event *e)
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
+		else if (e->Data.Forms.RaisedBy->Name == "GLOBAL_GAIN_DOWN")
+		{
+			Control *c = menuform->FindControl("GLOBAL_GAIN_SLIDER");
+			if (!c)
+			{
+				LogError("Failed to find \"GLOBAL_GAIN_SLIDER\" control");
+				return;
+			}
+			HScrollBar *slider = dynamic_cast<HScrollBar*>(c);
+			if (!slider)
+			{
+				LogError("Failed to cast \"GLOBAL_GAIN_SLIDER\" control to HScrollBar");
+				return;
+			}
+			slider->SetValue(slider->Value - 1);
+		}
+		else if (e->Data.Forms.RaisedBy->Name == "GLOBAL_GAIN_UP")
+		{
+			Control *c = menuform->FindControl("GLOBAL_GAIN_SLIDER");
+			if (!c)
+			{
+				LogError("Failed to find \"GLOBAL_GAIN_SLIDER\" control");
+				return;
+			}
+			HScrollBar *slider = dynamic_cast<HScrollBar*>(c);
+			if (!slider)
+			{
+				LogError("Failed to cast \"GLOBAL_GAIN_SLIDER\" control to HScrollBar");
+				return;
+			}
+			slider->SetValue(slider->Value + 1);
+		}
+		else if (e->Data.Forms.RaisedBy->Name == "MUSIC_GAIN_DOWN")
+		{
+			Control *c = menuform->FindControl("MUSIC_GAIN_SLIDER");
+			if (!c)
+			{
+				LogError("Failed to find \"MUSIC_GAIN_SLIDER\" control");
+				return;
+			}
+			HScrollBar *slider = dynamic_cast<HScrollBar*>(c);
+			if (!slider)
+			{
+				LogError("Failed to cast \"MUSIC_GAIN_SLIDER\" control to HScrollBar");
+				return;
+			}
+			slider->SetValue(slider->Value - 1);
+		}
+		else if (e->Data.Forms.RaisedBy->Name == "MUSIC_GAIN_UP")
+		{
+			Control *c = menuform->FindControl("MUSIC_GAIN_SLIDER");
+			if (!c)
+			{
+				LogError("Failed to find \"MUSIC_GAIN_SLIDER\" control");
+				return;
+			}
+			HScrollBar *slider = dynamic_cast<HScrollBar*>(c);
+			if (!slider)
+			{
+				LogError("Failed to cast \"MUSIC_GAIN_SLIDER\" control to HScrollBar");
+				return;
+			}
+			slider->SetValue(slider->Value + 1);
+		}
+		else if (e->Data.Forms.RaisedBy->Name == "SAMPLE_GAIN_DOWN")
+		{
+			Control *c = menuform->FindControl("SAMPLE_GAIN_SLIDER");
+			if (!c)
+			{
+				LogError("Failed to find \"SAMPLE_GAIN_SLIDER\" control");
+				return;
+			}
+			HScrollBar *slider = dynamic_cast<HScrollBar*>(c);
+			if (!slider)
+			{
+				LogError("Failed to cast \"SAMPLE_GAIN_SLIDER\" control to HScrollBar");
+				return;
+			}
+			slider->SetValue(slider->Value - 1);
+		}
+		else if (e->Data.Forms.RaisedBy->Name == "SAMPLE_GAIN_UP")
+		{
+			Control *c = menuform->FindControl("SAMPLE_GAIN_SLIDER");
+			if (!c)
+			{
+				LogError("Failed to find \"SAMPLE_GAIN_SLIDER\" control");
+				return;
+			}
+			HScrollBar *slider = dynamic_cast<HScrollBar*>(c);
+			if (!slider)
+			{
+				LogError("Failed to cast \"SAMPLE_GAIN_SLIDER\" control to HScrollBar");
+				return;
+			}
+			slider->SetValue(slider->Value + 1);
+		}
+	}
+	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ScrollBarChange )
+	{
+		if (e->Data.Forms.RaisedBy->Name == "GLOBAL_GAIN_SLIDER")
+		{
+			HScrollBar *slider = dynamic_cast<HScrollBar*>(e->Data.Forms.RaisedBy);
+			if (!slider)
+			{
+				LogError("Failed to cast \"GLOBAL_GAIN_SLIDER\" control to HScrollBar");
+				return;
+			}
+			float gain = (float)slider->Value / (float)slider->Maximum;
+			fw.soundBackend->setGain(SoundBackend::Gain::Global, gain);
+		}
+		else if (e->Data.Forms.RaisedBy->Name == "MUSIC_GAIN_SLIDER")
+		{
+			HScrollBar *slider = dynamic_cast<HScrollBar*>(e->Data.Forms.RaisedBy);
+			if (!slider)
+			{
+				LogError("Failed to cast \"MUSIC_GAIN_SLIDER\" control to HScrollBar");
+				return;
+			}
+			float gain = (float)slider->Value / (float)slider->Maximum;
+			fw.soundBackend->setGain(SoundBackend::Gain::Music, gain);
+		}
+		else if (e->Data.Forms.RaisedBy->Name == "SAMPLE_GAIN_SLIDER")
+		{
+			HScrollBar *slider = dynamic_cast<HScrollBar*>(e->Data.Forms.RaisedBy);
+			if (!slider)
+			{
+				LogError("Failed to cast \"SAMPLE_GAIN_SLIDER\" control to HScrollBar");
+				return;
+			}
+			float gain = (float)slider->Value / (float)slider->Maximum;
+			fw.soundBackend->setGain(SoundBackend::Gain::Sample, gain);
+		}
+
 	}
 }
 

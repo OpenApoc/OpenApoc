@@ -66,7 +66,54 @@ class AllegroSoundBackend : public SoundBackend
 	bool stopThread;
 	std::unique_ptr<std::thread> musicThread;
 
+	float globalGain;
+	float sampleGain;
+	float musicGain;
+
 public:
+
+	AllegroSoundBackend()
+		: stopThread(false), globalGain(1.0), sampleGain(1.0), musicGain(1.0)
+	{
+	}
+
+	virtual float getGain(Gain g)
+	{
+		switch (g)
+		{
+			case Gain::Global:
+				return globalGain;
+			case Gain::Sample:
+				return sampleGain;
+			case Gain::Music:
+				return musicGain;
+			default:
+				LogError("Unexpected Gain type");
+				return 0.0f;
+		}
+	}
+
+	virtual void setGain(Gain g, float v)
+	{
+		v = std::min(1.0f, v);
+		v = std::max(0.0f, v);
+		switch (g)
+		{
+			case Gain::Global:
+				globalGain = v;
+				break;
+			case Gain::Sample:
+				sampleGain = v;
+				break;
+			case Gain::Music:
+				musicGain = v;
+				break;
+			default:
+				LogError("Unexpected Gain type");
+				break;
+		}
+	}
+
 	virtual void playSample(std::shared_ptr<Sample> sample)
 	{
 		if (!sample->backendData)
@@ -76,7 +123,8 @@ public:
 			liveSamples.pop_front();
 		AllegroSampleData *sampleData = static_cast<AllegroSampleData*>(sample->backendData.get());
 
-		if (!al_play_sample(sampleData->s, 1.0f, 0.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, nullptr))
+		LogWarning("Playing sample with gain %f (%f * %f)", this->globalGain * this->sampleGain, this->globalGain,  this->sampleGain);
+		if (!al_play_sample(sampleData->s, this->globalGain * this->sampleGain, 0.0f, 1.0f, ALLEGRO_PLAYMODE_ONCE, nullptr))
 		{
 			LogError("Failed to play sample");
 		}
@@ -121,6 +169,10 @@ public:
 		al_register_event_source(eventQueue, al_get_audio_stream_event_source(stream));
 		while (!parent.stopThread)
 		{
+			if (!al_set_audio_stream_gain(stream, parent.globalGain * parent.musicGain))
+			{
+				LogError("Failed to set music stream gain");
+			}
 			ALLEGRO_EVENT event;
 			al_wait_for_event(eventQueue, &event);
 			if (event.type == ALLEGRO_EVENT_AUDIO_STREAM_FRAGMENT)
@@ -137,6 +189,7 @@ public:
 				{
 					LogWarning("AllegroSoundBackend: Requested %u samples, got %u - buffer underrun not yet handled correctly",  track->requestedSampleBufferSize, returnedSamples);
 				}
+				
 				al_set_audio_stream_fragment(stream, buf);
 
 				if (callbackReturn == MusicTrack::MusicCallbackReturn::End)

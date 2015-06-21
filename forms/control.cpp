@@ -591,6 +591,9 @@ Control* Control::FindControl( UString ID )
 		{
 			return ctrl;
 		}
+		Control *childControl = ctrl->FindControl(ID);
+		if (childControl)
+			return childControl;
 	}
 	return nullptr;
 }
