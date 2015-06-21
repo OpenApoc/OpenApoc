@@ -13,13 +13,13 @@ build:
   project: OpenApoc.sln
   verbosity: normal
 after_build:
-- mkdir OpenApoc-%APPVEYOR_BUILD_VERSION%
-- echo %APPVEYOR_REPO_COMMIT% > OpenApoc-%APPVEYOR_BUILD_VERSION%\git-commit
-- echo %APPVEYOR_BUILD_VERSION% > OpenApoc-%APPVEYOR_BUILD_VERSION%\build-id
-- copy x64\Release\*.dll OpenApoc-%APPVEYOR_BUILD_VERSION%\
-- copy x64\Release\OpenApoc.exe OpenApoc-%APPVEYOR_BUILD_VERSION%\
-- xcopy /E data OpenApoc-%APPVEYOR_BUILD_VERSION%\data\
-- 7z a OpenApoc-msvc-dev.zip OpenApoc-%APPVEYOR_BUILD_VERSION%
+- mkdir OpenApoc-DEV
+- echo %APPVEYOR_REPO_COMMIT% > OpenApoc-DEV\git-commit
+- echo %APPVEYOR_BUILD_VERSION% > OpenApoc-DEV\build-id
+- copy x64\Release\*.dll OpenApoc-DEV\
+- copy x64\Release\OpenApoc.exe OpenApoc-DEV\
+- xcopy /E data OpenApoc-DEV\data\
+- 7z a OpenApoc-msvc-dev.zip OpenApoc-DEV
 artifacts:
 - path: OpenApoc-msvc-dev.zip
   name: built-zip
