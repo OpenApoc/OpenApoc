@@ -695,9 +695,9 @@ void Framework::Audio_Initialise()
 	this->jukebox.reset(new JukeBoxImpl(*this));
 
 	/* Setup initial gain */
-	this->soundBackend->setGain(SoundBackend::Gain::Global, (float)this->Settings->getInt("Audio.GlobalGain") / 100.0f);
-	this->soundBackend->setGain(SoundBackend::Gain::Music, (float)this->Settings->getInt("Audio.MusicGain") / 100.0f);
-	this->soundBackend->setGain(SoundBackend::Gain::Sample, (float)this->Settings->getInt("Audio.SampleGain") / 100.0f);
+	this->soundBackend->setGain(SoundBackend::Gain::Global, (float)this->Settings->getInt("Audio.GlobalGain") / 20.0f);
+	this->soundBackend->setGain(SoundBackend::Gain::Music, (float)this->Settings->getInt("Audio.MusicGain") / 20.0f);
+	this->soundBackend->setGain(SoundBackend::Gain::Sample, (float)this->Settings->getInt("Audio.SampleGain") / 20.0f);
 }
 
 void Framework::Audio_Shutdown()
