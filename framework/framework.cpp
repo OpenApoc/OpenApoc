@@ -49,9 +49,9 @@ static std::map<UString, UString> defaultConfig =
 	{"Resource.SystemCDPath", DATA_DIRECTORY "/cd.iso"},
 	{"Visual.Renderers", RENDERERS},
 	{"Audio.Backends", "allegro:null"},
-	{"Audio.GlobalGain", "100"},
-	{"Audio.SampleGain", "100"},
-	{"Audio.MusicGain", "100"},
+	{"Audio.GlobalGain", "20"},
+	{"Audio.SampleGain", "20"},
+	{"Audio.MusicGain", "20"},
 };
 
 std::map<UString, std::unique_ptr<OpenApoc::RendererFactory>> *registeredRenderers = nullptr;
