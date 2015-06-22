@@ -63,7 +63,7 @@ City::City(Framework &fw, UString mapName)
 
 	std::default_random_engine generator;
 	std::uniform_int_distribution<int> xydistribution(0,99);
-	std::uniform_int_distribution<int> zdistribution(0,9);
+	std::uniform_int_distribution<int> zdistribution(8,9);
 	//Place 1000 random cars
 	LogInfo("Starting placing cars");
 	for (int i = 0; i < 100; i++)

@@ -194,6 +194,22 @@ static bool findNextNodeOnPath(PathComparer &comparer, TileMap &map, std::list<T
 				//FIXME: Make 'blocked' tiles cleverer (e.g. don't plan around objects that will move anyway?)
 				if (!tile->objects.empty())
 					continue;
+				//Check for diagonal routes that the 'corner' tiles we touch are empty
+				Vec3<int> cornerPosition = currentPosition;
+				cornerPosition += Vec3<int>{0,y,z};
+				if (cornerPosition != currentPosition &&
+					!map.getTile(cornerPosition)->objects.empty())
+					continue;
+				cornerPosition = currentPosition;
+				cornerPosition += Vec3<int>{x,0,z};
+				if (cornerPosition != currentPosition &&
+					!map.getTile(cornerPosition)->objects.empty())
+					continue;
+				cornerPosition = currentPosition;
+				cornerPosition += Vec3<int>{x,y,0};
+				if (cornerPosition != currentPosition &&
+					!map.getTile(cornerPosition)->objects.empty())
+					continue;
 				//Already visited this tile
 				if (std::find(currentPath.begin(), currentPath.end(), tile) != currentPath.end())
 					continue;
