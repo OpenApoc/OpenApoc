@@ -60,7 +60,7 @@ class Data
 		std::list<std::unique_ptr<MusicLoader>> musicLoaders;
 
 	public:
-		Data(Framework &fw, std::vector<UString> paths, int imageCacheSize = 1, int imageSetCacheSize = 1);
+		Data(Framework &fw, std::vector<UString> paths, int imageCacheSize = 10, int imageSetCacheSize = 10);
 		~Data();
 
 		enum class FileMode
