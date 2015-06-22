@@ -1,0 +1,25 @@
+version: '{branch}-0.0.{build}'
+branches:
+  except:
+  - master
+skip_tags: true
+configuration: Release
+platform: x64
+clone_depth: 10
+before_build:
+- git submodule init
+- git submodule update
+build:
+  project: OpenApoc.sln
+  verbosity: normal
+after_build:
+- mkdir OpenApoc-DEV
+- echo %APPVEYOR_REPO_COMMIT% > OpenApoc-DEV\git-commit
+- echo %APPVEYOR_BUILD_VERSION% > OpenApoc-DEV\build-id
+- copy x64\Release\*.dll OpenApoc-DEV\
+- copy x64\Release\OpenApoc.exe OpenApoc-DEV\
+- xcopy /E data OpenApoc-DEV\data\
+- 7z a OpenApoc-msvc-dev.zip OpenApoc-DEV
+artifacts:
+- path: OpenApoc-msvc-dev.zip
+  name: built-zip
