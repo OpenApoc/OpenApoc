@@ -186,6 +186,7 @@ void TileView::Render()
 					 z == selectedTilePosition.z &&
 					 y == selectedTilePosition.y &&
 					 x == selectedTilePosition.x);
+				bool showVehicleBounds = (fw.gamecore->DebugModeEnabled);
 
 				auto tile = map.getTile(x, y, z);
 				// Skip over transparent (missing) tiles
@@ -201,16 +202,26 @@ void TileView::Render()
 					r.draw(selectedTileImageBack, screenPos);
 				for (auto obj : tile->objects)
 				{
+					auto vehicleSprite = std::dynamic_pointer_cast<VehicleTileObject>(obj);
 					auto tileSprite = std::dynamic_pointer_cast<TileObjectSprite>(obj);
+					if (showVehicleBounds && vehicleSprite)
+						r.draw(selectedTileImageBack, screenPos);
 					if (tileSprite)
 					{
-						auto objScreenPos = tileToScreenCoords(obj->getPosition());
+						auto pos = obj->getPosition();
+						/* FIXME: Bit of a hack - it seems the vehicle sprites are {1,1,1}
+						 * tile offset from what I was expecting?
+						 */
+						if (vehicleSprite)
+							pos -= Vec3<float>{1, 1, 1};
+						auto objScreenPos = tileToScreenCoords(pos);
 						objScreenPos.x += offsetX;
 						objScreenPos.y += offsetY;
 						auto img = tileSprite->getSprite();
 						r.draw(img, objScreenPos);
 					}
-
+					if (showVehicleBounds && vehicleSprite)
+						r.draw(selectedTileImageFront, screenPos);
 				}
 
 				if (showSelected)
