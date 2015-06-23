@@ -79,7 +79,9 @@ public:
 		}
 		Tile *nextTile = path.front();
 		path.pop_front();
-		return Vec3<float>{nextTile->position.x, nextTile->position.y, nextTile->position.z};
+		return Vec3<float>{nextTile->position.x, nextTile->position.y, nextTile->position.z}
+			//Add {0.5,0.5,0.5} to make it route to the center of the tile
+			+ Vec3<float>{0.5,0.5,0.5};
 	}
 
 };
