@@ -241,58 +241,135 @@
 					<text_info>STR_X_COM_INFO</text_info>
 					<use_org_data>TRUE</use_org_data>
 				</entry>
-				
+				<entry id="ALIENS" name="STR_ALIEN">
+					<backgroundimage>xcom3/UFOPAEDI/02ALIEN.PCX</backgroundimage>
+					<text_info>STR_ALIEN_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
+				</entry>
 				<entry id="GOVERNMENT" name="STR_GOVERNMENT">
 					<backgroundimage>xcom3/UFOPAEDI/10GOVRNM.PCX</backgroundimage>
 					<text_info>STR_GOVERNMENT_INFO</text_info>
 					<use_org_data>TRUE</use_org_data>
 				</entry>
-
-				<entry id="MEGAPOL" name="STR_MEGALPOL">
+				<entry id="MEGAPOL" name="STR_MEGAPOL">
+					<backgroundimage>xcom3/UFOPAEDI/13MEGAPO.PCX</backgroundimage>
+					<text_info>STR_MEGAPOL_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="CULTOFSIRIUS" name="STR_CULT_OF_SIRIUS">
+					<backgroundimage>xcom3/UFOPAEDI/03CHURCH.PCX</backgroundimage>
+					<text_info>STR_CULT_OF_SIRIUS_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="MARSEC" name="STR_MARSEC">
+					<backgroundimage>xcom3/UFOPAEDI/12MARSEC.PCX</backgroundimage>
+					<text_info>STR_MARSEC_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="SUPERDYNAMICS" name="STR_SUPERDYNAMICS">
+					<backgroundimage>xcom3/UFOPAEDI/23SUPERD.PCX</backgroundimage>
+					<text_info>STR_SUPERDYNAMICS_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="GENERALMETRO" name="STR_GENERAL_METRO">
+					<backgroundimage>xcom3/UFOPAEDI/09GENMET.PCX</backgroundimage>
+					<text_info>STR_GENERAL_METRO_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
-				<entry id="CYBERWEB" name="STR_CYBER_WEB">
+				<entry id="CYBERWEB" name="STR_CYBERWEB">
+					<backgroundimage>xcom3/UFOPAEDI/04CYBERW.PCX</backgroundimage>
+					<text_info>STR_CYBERWEB_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="TRANSTELLAR" name="STR_TRANSTELLAR">
+					<backgroundimage>xcom3/UFOPAEDI/26TRANST.PCX</backgroundimage>
+					<text_info>STR_TRANSTELLAR_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="SOLMINE" name="STR_SOLMINE">
+					<backgroundimage>xcom3/UFOPAEDI/22SOLMIN.PCX</backgroundimage>
+					<text_info>STR_SOLMINE_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="SENSOVISION" name="STR_SENSOVISION">
+					<backgroundimage>xcom3/UFOPAEDI/21SENSO.PCX</backgroundimage>
+					<text_info>STR_SENSOVISION_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="LIFETREE" name="STR_LIFETREE">
+					<backgroundimage>xcom3/UFOPAEDI/11LIFETR.PCX</backgroundimage>
+					<text_info>STR_LIFETREE_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="NUTRIVEND" name="STR_NUTRIVEND">
+					<backgroundimage>xcom3/UFOPAEDI/17NUTRIV.PCX</backgroundimage>
+					<text_info>STR_NUTRIVEND_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="EVONET" name="STR_EVONET">
+					<backgroundimage>xcom3/UFOPAEDI/07EVONET.PCX</backgroundimage>
+					<text_info>STR_EVONET_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="SANCTUARYCLINIC" name="STR_SANCTUARY_CLINIC">
+					<backgroundimage>xcom3/UFOPAEDI/19S_CLIN.PCX</backgroundimage>
+					<text_info>STR_SANCTUARY_CLINIC_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="NANOTECH" name="STR_NANOTECH">
+					<backgroundimage>xcom3/UFOPAEDI/16NANOTE.PCX</backgroundimage>
+					<text_info>STR_NANOTECH_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="ENERGEN" name="STR_ENERGEN">
+					<backgroundimage>xcom3/UFOPAEDI/06ENERGE.PCX</backgroundimage>
+					<text_info>STR_ENERGEN_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="SYNTHEMESH" name="STR_SYNTHEMESH">
+					<backgroundimage>xcom3/UFOPAEDI/24SYNTHM.PCX</backgroundimage>
+					<text_info>STR_SYNTHEMESH_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="GRAVBALLLEAGUE" name="STR_GRAVBALL_LEAGUE">
+					<backgroundimage>xcom3/UFOPAEDI/01AIRBAL.PCX</backgroundimage>
+					<text_info>STR_GRAVBALL_LEAGUE_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="PSYKE" name="STR_PSYKE">
+					<backgroundimage>xcom3/UFOPAEDI/18PSYKE.PCX</backgroundimage>
+					<text_info>STR_PSYKE_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="DIABLO" name="STR_DIABLO">
+					<backgroundimage>xcom3/UFOPAEDI/05DIABLO.PCX</backgroundimage>
+					<text_info>STR_DIABLO_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="OSIRON" name="STR_OSIRON">
+					<backgroundimage>xcom3/UFOPAEDI/14MENTAT.PCX</backgroundimage>
+					<text_info>STR_OSIRON_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="SELF" name="STR_SENTIENT_ENGINE_LIBERATION_FRONT">
+					<backgroundimage>xcom3/UFOPAEDI/20SELF.PCX</backgroundimage>
+					<text_info>STR_SENTIENT_ENGINE_LIBERATION_FRONT_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="MUTANTALLIANCE" name="STR_MUTANT_ALLIANCE">
+					<backgroundimage>xcom3/UFOPAEDI/15MUTE_A.PCX</backgroundimage>
+					<text_info>STR_MUTANT_ALLIANCE_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				<entry id="EXTROPIANS" name="STR_EXTROPIANS">
+					<backgroundimage>xcom3/UFOPAEDI/08EXTRO1.PCX</backgroundimage>
+					<text_info>STR_EXTROPIANS_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
+				</entry>
+				<entry id="TECHNOCRATS" name="STR_TECHNOCRATS">
+					<backgroundimage>xcom3/UFOPAEDI/25TECHNO.PCX</backgroundimage>
+					<text_info>STR_TECHNOCRATS_INFO</text_info>
+					<use_org_data>TRUE</use_org_data>
 				</entry>
 				
 			</entries>
