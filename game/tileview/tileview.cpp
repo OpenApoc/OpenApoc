@@ -175,11 +175,25 @@ void TileView::Render()
 	Renderer &r = *fw.renderer;
 	r.clear();
 	r.setPalette(this->pal);
+
+	// offsetX/offsetY is the 'amount added to the tile coords' - so we want
+	// the inverse to tell which tiles are at the screen bounds
+	auto topLeft = screenToTileCoords(Vec2<int>{-offsetX, -offsetY}, 0);
+	auto topRight = screenToTileCoords(Vec2<int>{-offsetX + dpyWidth, -offsetY}, 0);
+	auto bottomLeft = screenToTileCoords(Vec2<int>{-offsetX, -offsetY + dpyHeight}, map.size.z);
+	auto bottomRight = screenToTileCoords(Vec2<int>{-offsetX + dpyWidth, -offsetY + dpyHeight}, map.size.z);
+
+	int minX = std::max(0, topLeft.x);
+	int maxX = std::min(map.size.x, bottomRight.x);
+
+	int minY = std::max(0, topRight.y);
+	int maxY = std::min(map.size.y, bottomLeft.y);
+
 	for (int z = 0; z < maxZDraw; z++)
 	{
-		for (int y = 0; y < map.size.y; y++)
+		for (int y = minY; y < maxY; y++)
 		{
-			for (int x = 0; x < map.size.x; x++)
+			for (int x = minX; x < maxX; x++)
 			{
 				bool showSelected =
 					(fw.gamecore->DebugModeEnabled &&
