@@ -234,6 +234,7 @@
 	<ufopaedia>
 		<category id="ORGANISATIONS">
 			<backgroundimage>xcom3/UFOPAEDI/L-TITLE.PCX</backgroundimage>
+			<text_info>STR_ORGANISATIONS_FLAVOUR</text_info>
 			<entries>
 				<entry id="XCOM" name="STR_X_COM">
 					<backgroundimage>xcom3/UFOPAEDI/27XCOM.PCX</backgroundimage>
@@ -241,19 +242,78 @@
 					<use_org_data>TRUE</use_org_data>
 				</entry>
 				
-				<entry id="XCOM" name="STR_GOVERNMENT">
+				<entry id="GOVERNMENT" name="STR_GOVERNMENT">
 					<backgroundimage>xcom3/UFOPAEDI/10GOVRNM.PCX</backgroundimage>
 					<text_info>STR_GOVERNMENT_INFO</text_info>
 					<use_org_data>TRUE</use_org_data>
+				</entry>
+
+				<entry id="MEGAPOL" name="STR_MEGALPOL">
+				</entry>
+				<entry id="CULTOFSIRIUS" name="STR_CULT_OF_SIRIUS">
+				</entry>
+				<entry id="MARSEC" name="STR_MARSEC">
+				</entry>
+				<entry id="SUPERDYNAMICS" name="STR_SUPERDYNAMICS">
+				</entry>
+				<entry id="GENERALMETRO" name="STR_GENERAL_METRO">
+				</entry>
+				<entry id="CYBERWEB" name="STR_CYBER_WEB">
+				</entry>
+				<entry id="TRANSTELLAR" name="STR_TRANSTELLAR">
+				</entry>
+				<entry id="SOLMINE" name="STR_SOLMINE">
+				</entry>
+				<entry id="SENSOVISION" name="STR_SENSOVISION">
+				</entry>
+				<entry id="LIFETREE" name="STR_LIFETREE">
+				</entry>
+				<entry id="NUTRIVEND" name="STR_NUTRIVEND">
+				</entry>
+				<entry id="EVONET" name="STR_EVONET">
+				</entry>
+				<entry id="SANCTUARYCLINIC" name="STR_SANCTUARY_CLINIC">
+				</entry>
+				<entry id="NANOTECH" name="STR_NANOTECH">
+				</entry>
+				<entry id="ENERGEN" name="STR_ENERGEN">
+				</entry>
+				<entry id="SYNTHEMESH" name="STR_SYNTHEMESH">
+				</entry>
+				<entry id="GRAVBALLLEAGUE" name="STR_GRAVBALL_LEAGUE">
+				</entry>
+				<entry id="PSYKE" name="STR_PSYKE">
+				</entry>
+				<entry id="DIABLO" name="STR_DIABLO">
+				</entry>
+				<entry id="OSIRON" name="STR_OSIRON">
+				</entry>
+				<entry id="SELF" name="STR_SENTIENT_ENGINE_LIBERATION_FRONT">
+				</entry>
+				<entry id="MUTANTALLIANCE" name="STR_MUTANT_ALLIANCE">
+				</entry>
+				<entry id="EXTROPIANS" name="STR_EXTROPIANS">
 				</entry>
 				
 			</entries>
 		</category>
 		<category id="VEHICLES">
+			<backgroundimage></backgroundimage>
+			<text_info></text_info>
+			<entries>
+			</entries>
 		</category>
 		<category id="VEHICLEEQUIPMENT">
+			<backgroundimage></backgroundimage>
+			<text_info></text_info>
+			<entries>
+			</entries>
 		</category>
 		<category id="EQUIPMENT">
+			<backgroundimage></backgroundimage>
+			<text_info></text_info>
+			<entries>
+			</entries>
 		</category>
 		<category id="FACILITIES">
 		</category>
