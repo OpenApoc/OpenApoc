@@ -234,7 +234,8 @@
 	<ufopaedia>
 		<category id="ORGANISATIONS">
 			<backgroundimage>xcom3/UFOPAEDI/L-TITLE.PCX</backgroundimage>
-			<text_info>STR_ORGANISATIONS_FLAVOUR</text_info>
+			<title>STR_ORGANISATIONS</title>
+			<text_info>STR_ORGANISATIONS_INFO</text_info>
 			<entries>
 				<entry id="XCOM" name="STR_X_COM">
 					<backgroundimage>xcom3/UFOPAEDI/27XCOM.PCX</backgroundimage>
@@ -375,32 +376,60 @@
 			</entries>
 		</category>
 		<category id="VEHICLES">
-			<backgroundimage></backgroundimage>
-			<text_info></text_info>
+			<backgroundimage>xcom3/UFOPAEDI/V-TITLE.PCX</backgroundimage>
+			<title>STR_VEHICLES</title>
+			<text_info>STR_VEHICLES_INFO</text_info>
 			<entries>
 			</entries>
 		</category>
 		<category id="VEHICLEEQUIPMENT">
-			<backgroundimage></backgroundimage>
-			<text_info></text_info>
+			<backgroundimage>xcom3/UFOPAEDI/VW-TITLE.PCX</backgroundimage>
+			<title>STR_VEHICLE_EQUIPMENT</title>
+			<text_info>STR_VEHICLE_EQUIPMENT_INFO</text_info>
 			<entries>
 			</entries>
 		</category>
 		<category id="EQUIPMENT">
-			<backgroundimage></backgroundimage>
-			<text_info></text_info>
+			<backgroundimage>xcom3/UFOPAEDI/W-TITLE.PCX</backgroundimage>
+			<title>STR_EQUIPMENT</title>
+			<text_info>STR_EQUIPMENT_INFO</text_info>
 			<entries>
 			</entries>
 		</category>
 		<category id="FACILITIES">
+			<backgroundimage>xcom3/UFOPAEDI/F-TITLE.PCX</backgroundimage>
+			<title>STR_FACILITIES</title>
+			<text_info>STR_FACILITIES_INFO</text_info>
+			<entries>
+			</entries>
 		</category>
 		<category id="ALIENCRAFT">
+			<backgroundimage>xcom3/UFOPAEDI/U-TITLE.PCX</backgroundimage>
+			<title>STR_ALIEN_CRAFT</title>
+			<text_info>STR_ALIEN_CRAFT_INFO</text_info>
+			<entries>
+			</entries>
 		</category>
 		<category id="ALIENS">
+			<backgroundimage>xcom3/UFOPAEDI/A-TITLE.PCX</backgroundimage>
+			<title>STR_ALIENS</title>
+			<text_info>STR_ALIENS_INFO</text_info>
+			<entries>
+			</entries>
 		</category>
 		<category id="ALIENDIMENSION">
+			<backgroundimage>xcom3/UFOPAEDI/AB-TTL.PCX</backgroundimage>
+			<title>STR_ALIEN_DIMENSION</title>
+			<text_info>STR_ALIEN_DIMENSION_INFO</text_info>
+			<entries>
+			</entries>
 		</category>
 		<category id="BUILDINGS">
+			<backgroundimage>xcom3/UFOPAEDI/B-TITLE.PCX</backgroundimage>
+			<title>STR_BUILDINGS</title>
+			<text_info>STR_BUILDINGS_INFO</text_info>
+			<entries>
+			</entries>
 		</category>
 
 

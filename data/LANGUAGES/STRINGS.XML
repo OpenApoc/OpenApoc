@@ -95,14 +95,14 @@
 		<fr_fr>L&apos;équipement des agents X-COM varie en fonction des missions tactiques. Vous avez le choix entre un très grand nombre de fusils, de rampes de lancement de missiles, de types de munitions, de grenades et de blindages.</fr_fr>
 		<de_de>X-COM-Agenten müssen für die taktischen Einsätze gut gerüstet sein. Sie können dazu aus einer Vielzahl von Feuerwaffen, Raketen-Launchern, Munitionstypen, Granaten und Panzerungen auswählen.</de_de>
 	</string>
-	<string id="STR_ORGANIZATIONS">
-		<en_gb>Organizations</en_gb>
+	<string id="STR_ORGANISATIONS">
+		<en_gb>Organisations</en_gb>
 		<es_la>Organizaciones</es_la>
 		<fr_fr>Organisations</fr_fr>
 		<de_de>Organisationen</de_de>
 	</string>
-	<string id="STR_ORGANIZATIONS_INFO">
-		<en_gb>The Organizations which operate in Mega-Primus consist of corporations, political groups, criminal gangs and the government. All of them are at risk from Alien infiltration but some are more vulnerable than others. </en_gb>
+	<string id="STR_ORGANISATIONS_INFO">
+		<en_gb>The Organisations which operate in Mega-Primus consist of corporations, political groups, criminal gangs and the government. All of them are at risk from Alien infiltration but some are more vulnerable than others. </en_gb>
 		<es_la>Las organizaciones que operan en Mega-Primus consisten de corporaciones, grupos políticos, pandilla criminales y el gobierno. Todos ellos están en peligro de  infiltración alienígena, pero algunos son más vulnerables que otros.</es_la>
 		<fr_fr>Les Organisations en activité dans Mega-Primus sont diverses: sociétés, gangs criminels et le gouvernement. Toutes ces organisations sont susceptibles d&apos;être infiltrées par les aliens, mais certaines sont plus vulnérables que d&apos;autres.</fr_fr>
 		<de_de>Zu den Organisationen in Mega-Primus zählen Unternehmen, politische Gruppierungen, kriminelle Banden sowie die Regierung. All diese Organisationen können durch Aliens unterwandert werden, wobei einige gefährdeter sind als andere.</de_de>
@@ -143,13 +143,13 @@
 		<fr_fr>Chaque bâtiment de Mega-Primus est un vaste labyrinthe de couloirs, de cours, de halls et de conduites d&apos;entretien. Si les aliens infiltrent un bâtiment, ils se cachent dans le moindre recoin du complexe, et ils peuvent évacuer la zone de combat et se retrancher dans de nombreux endroits. Les bâtiments peu peuplés ou ceux qui abritent de nombreuses aires de service fournissent une excellente cachette ou un lieu de reproduction pour les aliens.</fr_fr>
 		<de_de>Jedes Gebäude in Mega-Primus ist ein riesiges Labyrinth aus Korridoren, Höfen, Räumen, Hallen und Röhrensystemen. Wenn Aliens das Gebäude infiltriert haben, sind sie meist in einem Teil zu finden, der ihnen genug Möglichkeiten zur Flucht aus dem Gefechtsfeld bietet. Gebäude mit wenigen Bewohnern und zahlreichen Service-Bereichen eignen sich für die Aliens am besten, um sich zu verstecken und fortzupflanzen.</de_de>
 	</string>
-	<string id="ATR_ALIEN_DIMENSION">
+	<string id="STR_ALIEN_DIMENSION">
 		<en_gb>The Alien Dimension</en_gb>
 		<es_la>La dimensión alienígenas</es_la>
 		<fr_fr>La Dimension Alienne</fr_fr>
 		<de_de>Die Alien-Dimension</de_de>
 	</string>
-	<string id="ATR_ALIEN_DIMENSION_INFO">
+	<string id="STR_ALIEN_DIMENSION_INFO">
 		<en_gb>All research into the origins of the Aliens and their home world is collected in this section.</en_gb>
 		<es_la>Toda la investigación sobre los orígenes de los alienígenas y su mundo se acumula en esta sección.</es_la>
 		<fr_fr>Toutes les recherches sur les origines des aliens et sur le monde dans lequel ils vivent sont rassemblées dans cette section.</fr_fr>
