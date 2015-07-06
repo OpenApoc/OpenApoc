@@ -240,137 +240,137 @@
 				<entry id="XCOM" name="STR_X_COM">
 					<backgroundimage>xcom3/UFOPAEDI/27XCOM.PCX</backgroundimage>
 					<text_info>STR_X_COM_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="ALIENS" name="STR_ALIEN">
 					<backgroundimage>xcom3/UFOPAEDI/02ALIEN.PCX</backgroundimage>
 					<text_info>STR_ALIEN_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="GOVERNMENT" name="STR_GOVERNMENT">
 					<backgroundimage>xcom3/UFOPAEDI/10GOVRNM.PCX</backgroundimage>
 					<text_info>STR_GOVERNMENT_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="MEGAPOL" name="STR_MEGAPOL">
 					<backgroundimage>xcom3/UFOPAEDI/13MEGAPO.PCX</backgroundimage>
 					<text_info>STR_MEGAPOL_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="CULTOFSIRIUS" name="STR_CULT_OF_SIRIUS">
 					<backgroundimage>xcom3/UFOPAEDI/03CHURCH.PCX</backgroundimage>
 					<text_info>STR_CULT_OF_SIRIUS_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="MARSEC" name="STR_MARSEC">
 					<backgroundimage>xcom3/UFOPAEDI/12MARSEC.PCX</backgroundimage>
 					<text_info>STR_MARSEC_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="SUPERDYNAMICS" name="STR_SUPERDYNAMICS">
 					<backgroundimage>xcom3/UFOPAEDI/23SUPERD.PCX</backgroundimage>
 					<text_info>STR_SUPERDYNAMICS_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="GENERALMETRO" name="STR_GENERAL_METRO">
 					<backgroundimage>xcom3/UFOPAEDI/09GENMET.PCX</backgroundimage>
 					<text_info>STR_GENERAL_METRO_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="CYBERWEB" name="STR_CYBERWEB">
 					<backgroundimage>xcom3/UFOPAEDI/04CYBERW.PCX</backgroundimage>
 					<text_info>STR_CYBERWEB_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="TRANSTELLAR" name="STR_TRANSTELLAR">
 					<backgroundimage>xcom3/UFOPAEDI/26TRANST.PCX</backgroundimage>
 					<text_info>STR_TRANSTELLAR_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="SOLMINE" name="STR_SOLMINE">
 					<backgroundimage>xcom3/UFOPAEDI/22SOLMIN.PCX</backgroundimage>
 					<text_info>STR_SOLMINE_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="SENSOVISION" name="STR_SENSOVISION">
 					<backgroundimage>xcom3/UFOPAEDI/21SENSO.PCX</backgroundimage>
 					<text_info>STR_SENSOVISION_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="LIFETREE" name="STR_LIFETREE">
 					<backgroundimage>xcom3/UFOPAEDI/11LIFETR.PCX</backgroundimage>
 					<text_info>STR_LIFETREE_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="NUTRIVEND" name="STR_NUTRIVEND">
 					<backgroundimage>xcom3/UFOPAEDI/17NUTRIV.PCX</backgroundimage>
 					<text_info>STR_NUTRIVEND_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="EVONET" name="STR_EVONET">
 					<backgroundimage>xcom3/UFOPAEDI/07EVONET.PCX</backgroundimage>
 					<text_info>STR_EVONET_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="SANCTUARYCLINIC" name="STR_SANCTUARY_CLINIC">
 					<backgroundimage>xcom3/UFOPAEDI/19S_CLIN.PCX</backgroundimage>
 					<text_info>STR_SANCTUARY_CLINIC_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="NANOTECH" name="STR_NANOTECH">
 					<backgroundimage>xcom3/UFOPAEDI/16NANOTE.PCX</backgroundimage>
 					<text_info>STR_NANOTECH_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="ENERGEN" name="STR_ENERGEN">
 					<backgroundimage>xcom3/UFOPAEDI/06ENERGE.PCX</backgroundimage>
 					<text_info>STR_ENERGEN_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="SYNTHEMESH" name="STR_SYNTHEMESH">
 					<backgroundimage>xcom3/UFOPAEDI/24SYNTHM.PCX</backgroundimage>
 					<text_info>STR_SYNTHEMESH_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="GRAVBALLLEAGUE" name="STR_GRAVBALL_LEAGUE">
 					<backgroundimage>xcom3/UFOPAEDI/01AIRBAL.PCX</backgroundimage>
 					<text_info>STR_GRAVBALL_LEAGUE_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="PSYKE" name="STR_PSYKE">
 					<backgroundimage>xcom3/UFOPAEDI/18PSYKE.PCX</backgroundimage>
 					<text_info>STR_PSYKE_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="DIABLO" name="STR_DIABLO">
 					<backgroundimage>xcom3/UFOPAEDI/05DIABLO.PCX</backgroundimage>
 					<text_info>STR_DIABLO_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="OSIRON" name="STR_OSIRON">
 					<backgroundimage>xcom3/UFOPAEDI/14MENTAT.PCX</backgroundimage>
 					<text_info>STR_OSIRON_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="SELF" name="STR_SENTIENT_ENGINE_LIBERATION_FRONT">
 					<backgroundimage>xcom3/UFOPAEDI/20SELF.PCX</backgroundimage>
 					<text_info>STR_SENTIENT_ENGINE_LIBERATION_FRONT_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="MUTANTALLIANCE" name="STR_MUTANT_ALLIANCE">
 					<backgroundimage>xcom3/UFOPAEDI/15MUTE_A.PCX</backgroundimage>
 					<text_info>STR_MUTANT_ALLIANCE_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="EXTROPIANS" name="STR_EXTROPIANS">
 					<backgroundimage>xcom3/UFOPAEDI/08EXTRO1.PCX</backgroundimage>
 					<text_info>STR_EXTROPIANS_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				<entry id="TECHNOCRATS" name="STR_TECHNOCRATS">
 					<backgroundimage>xcom3/UFOPAEDI/25TECHNO.PCX</backgroundimage>
 					<text_info>STR_TECHNOCRATS_INFO</text_info>
-					<use_org_data>TRUE</use_org_data>
+					<dynamic_data>ORG</dynamic_data>
 				</entry>
 				
 			</entries>
@@ -380,6 +380,121 @@
 			<title>STR_VEHICLES</title>
 			<text_info>STR_VEHICLES_INFO</text_info>
 			<entries>
+				<entry id="POLICE_HOVERCAR" name="STR_POLICE_HOVERCAR">
+					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
+					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="AIRTAXI" name="STR_AIRTAXI">
+					<backgroundimage>xcom3/UFOPAEDI/07TAXI2.PCX</backgroundimage>
+					<text_info>STR_AIRTAXI_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="RESCUE_TRANSPORT" name="STR_RESCUE_TRANSPORT">
+					<backgroundimage>xcom3/UFOPAEDI/05RESCUE.PCX</backgroundimage>
+					<text_info>STR_RESCUE_TRANSPORT_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="CONSTRUCTION_VEHICLE" name="STR_CONSTRUCTION_VEHICLE">
+					<backgroundimage>xcom3/UFOPAEDI/02CONSTR.PCX</backgroundimage>
+					<text_info>STR_CONSTRUCTION_VEHICLE_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="AIRTRANS" name="STR_AIRTRANS">
+					<backgroundimage>xcom3/UFOPAEDI/09TRANS2.PCX</backgroundimage>
+					<text_info>STR_AIRTRANS_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="SPACE_LINER" name="STR_SPACE_LINER">
+					<backgroundimage>xcom3/UFOPAEDI/06SPACE.PCX</backgroundimage>
+					<text_info>STR_SPACE_LINER_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="PHOENIX_HOVERCAR" name="STR_PHOENIX_HOVERCAR">
+					<backgroundimage>xcom3/UFOPAEDI/18PHEONX.PCX</backgroundimage>
+					<text_info>STR_PHOENIX_HOVERCAR_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="HOVERBIKE" name="STR_HOVERBIKE">
+					<backgroundimage>xcom3/UFOPAEDI/12BIKE2.PCX</backgroundimage>
+					<text_info>STR_HOVERBIKE_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="VALKYRIE" name="STR_VALKYRIE">
+					<backgroundimage>xcom3/UFOPAEDI/22STARFR.PCX</backgroundimage>
+					<text_info>STR_VALKYRIE_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="HAWK_AIR_WARRIOR" name="STR_HAWK_AIR_WARRIOR">
+					<backgroundimage>xcom3/UFOPAEDI/17HAWK.PCX</backgroundimage>
+					<text_info>STR_HAWK_AIR_WARRIOR_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="DIMENSION_PROBE" name="STR_DIMENSION_PROBE">
+					<backgroundimage>xcom3/UFOPAEDI/15PROBE.PCX</backgroundimage>
+					<text_info>STR_DIMENSION_PROBE_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="BIOTRANS" name="STR_BIOTRANS">
+					<backgroundimage>xcom3/UFOPAEDI/14ATRAN.PCX</backgroundimage>
+					<text_info>STR_BIOTRANS_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="EXPLORER" name="STR_EXPLORER">
+					<backgroundimage>xcom3/UFOPAEDI/16EXPLOR.PCX</backgroundimage>
+					<text_info>STR_EXPLORER_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="RETALIATOR" name="STR_RETALIATOR">
+					<backgroundimage>xcom3/UFOPAEDI/19RETALI.PCX</backgroundimage>
+					<text_info>STR_RETALIATOR_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="ANNIHILATOR" name="STR_ANNIHILATOR">
+					<backgroundimage>xcom3/UFOPAEDI/11ANNIHA.PCX</backgroundimage>
+					<text_info>STR_ANNIHILATOR_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="AUTOTAXI" name="STR_AUTOTAXI">
+					<backgroundimage>xcom3/UFOPAEDI/08TAXI1.PCX</backgroundimage>
+					<text_info>STR_AUTOTAXI_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="AUTOTRANS" name="STR_AUTOTRANS">
+					<backgroundimage>xcom3/UFOPAEDI/10TRANS1.PCX</backgroundimage>
+					<text_info>STR_AUTOTRANS_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="POLICE_CAR" name="STR_POLICE_CAR">
+					<backgroundimage>xcom3/UFOPAEDI/04POLICE.PCX</backgroundimage>
+					<text_info>STR_POLICE_CAR_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="CIVILIAN_CAR" name="STR_CIVILIAN_CAR">
+					<backgroundimage>xcom3/UFOPAEDI/01CIVIL.PCX</backgroundimage>
+					<text_info>STR_CIVILIAN_CAR_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="STORMDOG" name="STR_STORMDOG">
+					<backgroundimage>xcom3/UFOPAEDI/20ROADWR.PCX</backgroundimage>
+					<text_info>STR_STORMDOG_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="WOLFHOUND_APC" name="STR_WOLFHOUND_APCI">
+					<backgroundimage>xcom3/UFOPAEDI/21STALAG.PCX</backgroundimage>
+					<text_info>STR_WOLFHOUND_APC_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="BLAZER_TURBO_BIKE" name="STR_BLAZER_TURBO_BIKE">
+					<backgroundimage>xcom3/UFOPAEDI/13BIKE.PCX</backgroundimage>
+					<text_info>STR_BLAZER_TURBO_BIKE_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
+				<entry id="GRIFFON_AFV" name="STR_GRIFFON_AFV">
+					<backgroundimage>xcom3/UFOPAEDI/23TANK1.PCX</backgroundimage>
+					<text_info>STR_GRIFFON_AFV_INFO</text_info>
+					<dynamic_data>VEHICLE</dynamic_data>
+				</entry>
 			</entries>
 		</category>
 		<category id="VEHICLEEQUIPMENT">
