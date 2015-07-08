@@ -28,7 +28,7 @@
         <glyph string="9" offset="24"/>
         <glyph string=":" offset="25"/>
         <glyph string=";" offset="26"/>
-        <glyph string="," offset="27"/>
+        <glyph string="&lt;" offset="27"/>
         <glyph string="=" offset="28"/>
         <glyph string="&gt;" offset="29"/>
         <glyph string="?" offset="30"/>

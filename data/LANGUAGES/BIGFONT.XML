@@ -57,7 +57,7 @@
 		<glyph string="Ö" offset="115"/>
 		<glyph string="Û" offset="117"/>
 		<!-- repeated? <glyph string="Ö" offset="120"/> -->
-		<glyph string="Ü" offset="121"/>
+		<!-- reperated? <glyph string="Ü" offset="121"/> -->
 		<glyph string="Á" offset="127"/>
     </apocfont>
 </openapoc>

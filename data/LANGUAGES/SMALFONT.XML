@@ -28,7 +28,7 @@
         <glyph string="9" offset="24"/>
         <glyph string=":" offset="25"/>
         <glyph string=";" offset="26"/>
-        <glyph string="," offset="27"/>
+        <glyph string="&lt;" offset="27"/>
         <glyph string="=" offset="28"/>
         <glyph string="&gt;" offset="29"/>
         <glyph string="?" offset="30"/>
@@ -114,7 +114,7 @@
         <glyph string="Å" offset="110"/>
         <glyph string="É" offset="111"/>
         <glyph string="ô" offset="114"/>
-        <glyph string="ô" offset="115"/>
+        <glyph string="ö" offset="115"/>
         <glyph string="ò" offset="116"/>
         <glyph string="û" offset="117"/>
         <glyph string="ù" offset="118"/>
