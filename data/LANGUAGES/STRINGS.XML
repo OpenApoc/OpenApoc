@@ -257,7 +257,7 @@
 		<fr_fr>Vaisseau de combat alien</fr_fr>
 		<de_de>Alien-Kampfschiff</de_de>
 	</string>
-	<string id="STR_BATTLESHIP-INFO">
+	<string id="STR_BATTLESHIP_INFO">
 		<en_gb>This immense craft is heavily armored, well armed and has a large crew. It is equipped with a Heavy Disruptor Beam and Disruptor Missiles. If the Aliens can produce just a handful of these devastating leviathans, the future of our world looks bleak.</en_gb>
 		<es_la>Esta inmensa nave está fuertemente blindado, bien armado y tiene una amplia tripulación. Está equipado con un rayo disyuntor pesado y misiles disyuntor. Si los alienígena pueden producir sólo un puñado de estos leviatanes devastadores, el futuro de nuestro mundo parece sombrío.</es_la>
 		<fr_fr>Cet immense vaisseau est équipé d&apos;un blindage efficace, d&apos;une grande quantité d&apos;armes, et il dispose d&apos;un équipage important. Il transporte un rayon disrupteur lourd et des bombes de disruption inversées. Si les aliens parviennent à construire plusieurs de ces léviathans dévastateurs, notre futur est bien sombre.</fr_fr>
@@ -299,13 +299,13 @@
 		<fr_fr>Les citoyens nantis n&apos;ont pas pour habitude d&apos;emprunter les voies terrestres ou les Tubes, ils louent plutôt les services des taxis aériens, rapides et fiables. La ligne est visiblement basée sur les versions plus humbles des taxis terrestres, mais ils sont plus confortables. Si vous voyez des taxis aériens, ils transportent sûrement un VIP ou une vedette extravagante de Sensovision.</fr_fr>
 	<de_de>Die wohlhabenden Bürger von Mega-Primus ziehen die zuverlässigen und schnellen Flugtaxis dem öffentlichen Straßen- und Personenrohrverkehr vor. Das Design entspricht der bescheideneren Straßenversion, das Reisen in diesem Luxusgefährt ist allerdings erheblich angenehmer. In den Flugtaxis sieht man öfter mal Prominente oder extravagante Sensovision-Stars.</de_de>
 	</string>
-	<string id="STR_RESCUE_TRASNPORT">
+	<string id="STR_RESCUE_TRANSPORT">
 		<en_gb>Rescue Transport</en_gb>
 		<es_la>Rescue Transport</es_la>
 		<fr_fr>Transport de secours</fr_fr>
 		<de_de>Rettungstransporter</de_de>
 	</string>
-	<string id="STR_RESCUE_TRASNPORT_INFO">
+	<string id="STR_RESCUE_TRANSPORT_INFO">
 		<en_gb>The airborne rescue vehicle serves as an ambulance and fire engine. It is specially equipped to deal with rescue situations involving car accidents and other disasters. However dealing with the Alien invasion is well beyond the scope of the rescue service which normally has little to do given the strict safety regulations governing all aspects of city life.</en_gb>
 		<es_la>The airborne rescue vehicle serves as an ambulance and fire engine. It is specially equipped to deal with rescue situations involving car accidents and other disasters. However dealing with the Alien invasion is well beyond the scope of the rescue service which normally has little to do given the strict safety regulations governing all aspects of city life.</es_la>
 		<fr_fr>Le véhicule de secours aérien sert d&apos;ambulance et de voiture de pompier. Il est spécialement équipé pour apporter des secours dans des situations telles que des accidents d&apos;auto ou autres catastrophes dans la ville. Cependant le service de secours, qui n&apos;a pratiquement jamais à intervenir en raison des règles de sécurité extrêmement strictes de la ville, ne dispose pas des compétences nécessaires pour faire face à l&apos;invasion alienne.</fr_fr>
