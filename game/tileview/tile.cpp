@@ -22,10 +22,10 @@ TileMap::TileMap(Framework &fw, Vec3<int> size)
 void
 TileMap::update(unsigned int ticks)
 {
-	//Default tilemap update calls update(ticks) on all tiles
-	//Subclasses can optimise this if they know which tiles might be 'active'
-	for (auto& object : this->objects)
+	for (auto& object : this->activeObjects)
 		object->update(ticks);
+	for (auto& object : this->projectiles)
+		object->checkProjectileCollision();
 }
 
 Tile*
@@ -55,15 +55,43 @@ TileMap::getTile(Vec3<float> pos)
 void
 TileMap::addObject(std::shared_ptr<TileObject> obj)
 {
-	this->objects.insert(obj);
-	obj->owningTile->objects.insert(obj);
+	if (!obj->getOwningTile())
+	{
+		LogError("Adding object with no owner");
+		assert(0);
+	}
+	obj->getOwningTile()->ownedObjects.insert(obj);
+	if (obj->isActive())
+		this->activeObjects.insert(obj);
+	if (obj->isVisible())
+		obj->getOwningTile()->visibleObjects.insert(obj);
+	if (obj->isCollidable())
+		obj->addToAffectedTiles();
+	if (obj->isProjectile())
+		this->projectiles.insert(obj);
 }
 
 void
 TileMap::removeObject(std::shared_ptr<TileObject> obj)
 {
-	this->objects.erase(obj);
-	obj->owningTile->objects.erase(obj);
+	if (!obj->getOwningTile())
+	{
+		LogError("Removing object with no owner");
+		assert(0);
+	}
+	if (obj->isActive())
+		this->activeObjects.erase(obj);
+	if (obj->isProjectile())
+		this->projectiles.erase(obj);
+	if (obj->isVisible())
+		obj->getOwningTile()->visibleObjects.erase(obj);
+	if (obj->isCollidable())
+		obj->removeFromAffectedTiles();
+	auto count = obj->getOwningTile()->ownedObjects.erase(obj);
+	if (count != 1)
+	{
+		LogError("Removed %u objects from owning tile", (unsigned)count);
+	}
 }
 
 TileMap::~TileMap()
@@ -75,9 +103,11 @@ Tile::Tile(TileMap &map, Vec3<int> position)
 {
 }
 
-TileObject::TileObject(TileMap &map, Vec3<float> position)
-	: position(position), owningTile(map.getTile(position)) 
+TileObject::TileObject(TileMap &map, Vec3<float> position, bool active, bool collides, bool visible, bool projectile)
+	: position(position), owningTile(map.getTile(position)), active(active), collides(collides), visible(visible), projectile(projectile)
 {
+	//May be called by multiple subclass constructors - don't do anything
+	//non-repeatable here
 }
 
 TileObject::~TileObject()
@@ -85,8 +115,8 @@ TileObject::~TileObject()
 
 }
 
-Vec3<float>
-TileObject::getPosition()
+const Vec3<float>&
+TileObject::getPosition() const
 {
 	return this->position;
 }
@@ -94,48 +124,114 @@ TileObject::getPosition()
 void
 TileObject::setPosition(Vec3<float> newPos)
 {
+	auto thisPtr = shared_from_this();
 	this->position = newPos;
 	auto &map = this->owningTile->map;
 	auto newOwner = map.getTile(this->position);
 	if (newOwner != this->owningTile)
 	{
-		auto thisPtr = shared_from_this();
-		this->owningTile->objects.erase(thisPtr);
-		newOwner->objects.insert(thisPtr);
+		this->owningTile->ownedObjects.erase(thisPtr);
+		newOwner->ownedObjects.insert(thisPtr);
 		this->owningTile = newOwner;
 	}
-}
-
-std::shared_ptr<Image>
-TileObjectNonDirectionalSprite::getSprite()
-{
-	return this->sprite;
-}
-
-std::shared_ptr<Image>
-TileObjectDirectionalSprite::getSprite()
-{
-	float closestAngle = FLT_MAX;
-	std::shared_ptr<Image> closestImage;
-	for (auto &p : sprites)
-	{
-		float angle = glm::angle(glm::normalize(p.first), glm::normalize(this->getDirection()));
-		if (angle < closestAngle)
-		{
-			closestAngle = angle;
-			closestImage = p.second;
-		}
-	}
-	return closestImage;
 }
 
 void
 TileObject::update(unsigned int ticks)
 {
+	//Override this for active objects
+	LogWarning("Called on non-active object");
+	assert(!this->isActive());
 	std::ignore = ticks;
 }
 
+std::shared_ptr<Image>
+TileObject::getSprite()
+{
+	//Override this for visible objects
+	LogWarning("Called on non-visible object");
+	assert(!this->isVisible());
+	return nullptr;
+}
 
+const Vec3<int>&
+TileObject::getTileSizeInVoxels() const
+{
+	static Vec3<int> invalidSize{0,0,0};
+	//Override this for collidable objects
+	LogWarning("Called on non-collidable object");
+	assert(!this->isCollidable());
+	return invalidSize;
+}
+
+const Vec3<int>&
+TileObject::getBounds() const
+{
+	static Vec3<int> invalidSize{0,0,0};
+	//Override this for collidable objects
+	LogWarning("Called on non-collidable object");
+	assert(!this->isCollidable());
+	return invalidSize;
+}
+
+bool
+TileObject::hasVoxelAt(const Vec3<float> &worldPosition) const
+{
+	//Override this for collidable objects
+	LogWarning("Called on non-collidable object");
+	assert(!this->isCollidable());
+	std::ignore = worldPosition;
+	return false;
+}
+
+void
+TileObject::handleCollision(const Collision &c) 
+{
+	//Override this for collidable objects
+	LogWarning("Called on non-collidable object");
+	assert(!this->isCollidable());
+	std::ignore = c;
+	return;
+}
+
+void
+TileObject::removeFromAffectedTiles()
+{
+	//Override this for collidable objects
+	LogWarning("Called on non-collidable object");
+	assert(!this->isCollidable());
+	return;
+}
+
+void
+TileObject::addToAffectedTiles()
+{
+	//Override this for collidable objects
+	LogWarning("Called on non-collidable object");
+	assert(!this->isCollidable());
+	return;
+}
+
+void
+TileObject::checkProjectileCollision()
+{
+	//Override this for projectile objects
+	LogWarning("Called on non-projectile object");
+	assert(!this->isProjectile());
+	return;
+}
+
+void
+TileObject::drawProjectile(TileView &v, Renderer &r, Vec2<int> screenPosition)
+{
+	//Override this for projectile objects
+	LogWarning("Called on non-projectile object");
+	assert(!this->isProjectile());
+	std::ignore = v;
+	std::ignore = r;
+	std::ignore = screenPosition;
+	return;
+}
 
 class PathComparer
 {
@@ -192,23 +288,23 @@ static bool findNextNodeOnPath(PathComparer &comparer, TileMap &map, std::list<T
 					continue;
 				Tile *tile = map.getTile(nextPosition);
 				//FIXME: Make 'blocked' tiles cleverer (e.g. don't plan around objects that will move anyway?)
-				if (!tile->objects.empty())
+				if (!tile->collideableObjects.empty())
 					continue;
 				//Check for diagonal routes that the 'corner' tiles we touch are empty
 				Vec3<int> cornerPosition = currentPosition;
 				cornerPosition += Vec3<int>{0,y,z};
 				if (cornerPosition != currentPosition &&
-					!map.getTile(cornerPosition)->objects.empty())
+					!map.getTile(cornerPosition)->ownedObjects.empty())
 					continue;
 				cornerPosition = currentPosition;
 				cornerPosition += Vec3<int>{x,0,z};
 				if (cornerPosition != currentPosition &&
-					!map.getTile(cornerPosition)->objects.empty())
+					!map.getTile(cornerPosition)->ownedObjects.empty())
 					continue;
 				cornerPosition = currentPosition;
 				cornerPosition += Vec3<int>{x,y,0};
 				if (cornerPosition != currentPosition &&
-					!map.getTile(cornerPosition)->objects.empty())
+					!map.getTile(cornerPosition)->ownedObjects.empty())
 					continue;
 				//Already visited this tile
 				if (std::find(currentPath.begin(), currentPath.end(), tile) != currentPath.end())

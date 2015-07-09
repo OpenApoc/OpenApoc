@@ -54,7 +54,7 @@ City::City(Framework &fw, UString mapName)
 					else
 					{
 						auto tile = std::make_shared<BuildingSection>(*this, this->cityTiles[tileID], Vec3<int>{x,y,z}, bld);
-						this->addObject(tile);
+						this->addObject(std::dynamic_pointer_cast<TileObject>(tile));
 					}
 				}
 			}
@@ -76,7 +76,7 @@ City::City(Framework &fw, UString mapName)
 			x = xydistribution(generator);
 			y = xydistribution(generator);
 			z = zdistribution(generator);
-		} while (!this->getTile(x,y,z)->objects.empty());
+		} while (!this->getTile(x,y,z)->ownedObjects.empty());
 
 		std::shared_ptr<Vehicle> testVehicle(fw.gamecore->vehicleFactory.create("POLICE_HOVERCAR", organisations[0]));
 		this->vehicles.push_back(testVehicle);

@@ -18,7 +18,7 @@ public:
 			{};
 	virtual Vec3<float> getNextDestination()
 	{
-		TileMap &map = this->vehicle.tileObject->owningTile->map;
+		TileMap &map = this->vehicle.tileObject->getOwningTile()->map;
 		Vec3<int> nextPosition;
 		int tries = 0;
 		do {
@@ -34,7 +34,7 @@ public:
 			nextPosition.z >= map.size.z || nextPosition.z < 0
 			//FIXME: Proper routing/obstruction handling
 			//(This below could cause an infinite loop if a vehicle gets 'trapped'
-			|| (tries < 50 && !map.getTile(nextPosition)->objects.empty()));
+			|| (tries < 50 && !map.getTile(nextPosition)->ownedObjects.empty()));
 		return Vec3<float>{nextPosition.x, nextPosition.y, nextPosition.z};
 	}
 };
@@ -53,9 +53,9 @@ public:
 		while (path.empty())
 		{
 			Vec3<int> newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
-			while (!vehicle.tileObject->owningTile->map.getTile(newTarget)->objects.empty())
+			while (!vehicle.tileObject->getOwningTile()->map.getTile(newTarget)->ownedObjects.empty())
 				newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
-			path = vehicle.tileObject->owningTile->map.findShortestPath(vehicle.tileObject->owningTile->position, newTarget);
+			path = vehicle.tileObject->getOwningTile()->map.findShortestPath(vehicle.tileObject->getOwningTile()->position, newTarget);
 			if (path.empty())
 			{
 				LogInfo("Failed to path - retrying");
@@ -64,10 +64,10 @@ public:
 			//Skip first in the path (as that's current tile)
 			path.pop_front();
 		}
-		if (!path.front()->objects.empty())
+		if (!path.front()->ownedObjects.empty())
 		{
 			Vec3<int> target = path.back()->position;
-			path = vehicle.tileObject->owningTile->map.findShortestPath(vehicle.tileObject->owningTile->position, target);
+			path = vehicle.tileObject->getOwningTile()->map.findShortestPath(vehicle.tileObject->getOwningTile()->position, target);
 			if (path.empty())
 			{
 				LogInfo("Failed to path after obstruction");
@@ -172,8 +172,12 @@ Vehicle::launch(TileMap &map, Vec3<float> initialPosition)
 }
 
 VehicleTileObject::VehicleTileObject(Vehicle &vehicle, TileMap &map, Vec3<float> position)
-	: TileObjectDirectionalSprite(map, vehicle.def.directionalSprites, position, Vec3<float>{0,1,0}), vehicle(vehicle)
+	: TileObject(map, position),
+	TileObjectDirectionalSprite(map, position, vehicle.def.directionalSprites),
+	TileObjectCollidable(map, position, Vec3<int>{32,32,16}, vehicle.def.voxelMap),
+	vehicle(vehicle)
 {
+	this->active = true;
 }
 
 VehicleTileObject::~VehicleTileObject()

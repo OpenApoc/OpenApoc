@@ -2,6 +2,17 @@
 
 #include "framework/includes.h"
 #include "game/tileview/tile.h"
+#include "game/tileview/tile_visible.h"
+#include "game/tileview/tile_collidable.h"
+
+/* MSVC warns about inherited virtual functions that are implemented
+ * in different superclasses though multiple inheritance, even
+ * if one is a subclass of the other. So disable that as we rely
+ * on inherited subclasses of TileObject overriding various functions */
+#ifdef _MSC_VER
+#pragma warning( disable : 4250 )
+#endif // _MSC_VER
+
 
 namespace OpenApoc {
 
@@ -85,7 +96,7 @@ public:
 	void launch(TileMap &map, Vec3<float> initialPosition);
 };
 
-class VehicleTileObject : public TileObjectDirectionalSprite
+class VehicleTileObject : public TileObjectDirectionalSprite, public TileObjectCollidable
 {
 private:
 	Vehicle &vehicle;
@@ -93,6 +104,15 @@ public:
 	VehicleTileObject(Vehicle &vehicle, TileMap &map, Vec3<float> position);
 	virtual ~VehicleTileObject();
 	virtual void update(unsigned int ticks);
+
+	using TileObjectCollidable::setPosition;
+	using TileObjectCollidable::getTileSizeInVoxels;
+	using TileObjectCollidable::getBounds;
+	using TileObjectCollidable::hasVoxelAt;
+	using TileObjectCollidable::handleCollision;
+	using TileObjectCollidable::removeFromAffectedTiles;
+	using TileObjectCollidable::addToAffectedTiles;
+	using TileObjectDirectionalSprite::getSprite;
 };
 
 }; //namespace OpenApoc

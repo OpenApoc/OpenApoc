@@ -2,6 +2,7 @@
 
 #include "framework/framework.h"
 #include "game/resources/gamecore.h"
+#include "game/tileview/voxel.h"
 
 namespace OpenApoc {
 
@@ -160,6 +161,18 @@ VehicleFactory::ParseVehicleDefinition(tinyxml2::XMLElement *root)
 		v.z = -1;
 		v = glm::normalize(v);
 		def.directionalSprites.emplace_back(v, s.second);
+	}
+
+	if (!def.voxelMap)
+	{
+		static std::weak_ptr<VoxelMap> stubVoxelMap;
+		LogWarning("Using stub voxel map for vehicle \"%s\"", def.name.str().c_str());
+		def.voxelMap = stubVoxelMap.lock();
+		if (!def.voxelMap)
+		{
+			def.voxelMap = std::make_shared<VoxelMap>(Vec3<int>{32,32,16});
+			stubVoxelMap = def.voxelMap;
+		}
 	}
 
 	this->defs[def.name] = def;

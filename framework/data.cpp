@@ -182,7 +182,7 @@ IFile::readule16(uint16_t &val)
 {
 	this->read((char*)&val, sizeof(val));
 	val = le16toh(val);
-	return !!this;
+	return !!(*this);
 }
 
 bool
@@ -190,7 +190,7 @@ IFile::readule32(uint32_t &val)
 {
 	this->read((char*)&val, sizeof(val));
 	val = le32toh(val);
-	return !!this;
+	return !!(*this);
 }
 
 size_t

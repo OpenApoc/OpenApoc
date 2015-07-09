@@ -38,6 +38,7 @@ SOURCES += main.cpp \
     game/apocresources/apocfont.cpp \
     game/apocresources/apocpalette.cpp \
     game/apocresources/cursor.cpp \
+	game/apocresources/loftemps.cpp \
     game/apocresources/music.cpp \
     game/apocresources/pck.cpp \
     game/apocresources/rawimage.cpp \
@@ -57,8 +58,12 @@ SOURCES += main.cpp \
     game/general/optionsmenu.cpp \
     game/resources/gamecore.cpp \
     game/resources/vehiclefactory.cpp \
-    game/tileview/tile.cpp \
+    game/tileview/projectile.cpp \
+	game/tileview/tile.cpp \
+	game/tileview/tile_collidable.cpp \
+	game/tileview/tile_visible.cpp \
     game/tileview/tileview.cpp \
+	game/tileview/voxel.cpp \
     library/configfile.cpp \
     library/memory.cpp \
     library/strings.cpp \
@@ -104,6 +109,7 @@ HEADERS += \
     game/apocresources/apocpalette.h \
     game/apocresources/apocresource.h \
     game/apocresources/cursor.h \
+	game/apocresources/loftemps.h \
     game/apocresources/pck.h \
 	game/apocresources/rawimage.h \
     game/city/building.h \
@@ -121,8 +127,12 @@ HEADERS += \
     game/general/optionsmenu.h \
     game/resources/gamecore.h \
     game/resources/vehiclefactory.h \
-    game/tileview/tile.h \
+    game/tileview/projectile.h \
+	game/tileview/tile.h \
+	game/tileview/tile_collidable.h \
+	game/tileview/tile_visible.h \
     game/tileview/tileview.h \
+	game/tileview/voxel.h \
     library/angle.h \
     library/box.h \
     library/colour.h \

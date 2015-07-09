@@ -255,6 +255,11 @@
 	<ClCompile Include="game\city\scorescreen.cpp" />
 	<ClCompile Include="game\city\infiltrationscreen.cpp" />
 	<ClCompile Include="game\general\ingameoptions.cpp" />
+	<ClCompile Include="game\tileview\voxel.cpp" />
+	<ClCompile Include="game\apocresources\loftemps.cpp" />
+	<ClCompile Include="game\tileview\tile_visible.cpp" />
+	<ClCompile Include="game\tileview\tile_collidable.cpp" />
+	<ClCompile Include="game\tileview\projectile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="forms\checkbox.h" />
@@ -330,6 +335,10 @@
 	<ClInclude Include="game\city\scorescreen.h" />
 	<ClInclude Include="game\city\infiltrationscreen.h" />
 	<ClInclude Include="game\general\ingameoptions.h" />
+	<ClInclude Include="game\apocresources\loftemps.h" />
+	<ClInclude Include="game\tileview\tile_visible.h" />
+	<ClInclude Include="game\tileview\tile_collidable.h" />
+	<ClInclude Include="game\tileview\projectile.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="dependencies\allegro5.vcxproj">

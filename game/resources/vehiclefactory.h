@@ -17,6 +17,7 @@ public:
 	//The same sprites but using vectors for directions
 	std::vector<std::pair<Vec3<float>, std::shared_ptr<Image>>> directionalSprites;
 	Vec3<float> size;
+	std::shared_ptr<VoxelMap> voxelMap;
 };
 
 class VehicleFactory
