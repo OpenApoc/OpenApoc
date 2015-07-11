@@ -45,9 +45,9 @@ class Vehicle : public std::enable_shared_from_this<Vehicle>
 {
 public:
 	virtual ~Vehicle();
-	Vehicle(VehicleDefinition &def, Organisation &owner);
+	Vehicle(const VehicleDefinition &def, Organisation &owner);
 
-	VehicleDefinition &def;
+	const VehicleDefinition &def;
 	Organisation &owner;
 
 	enum class Type

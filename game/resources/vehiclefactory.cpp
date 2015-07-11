@@ -175,7 +175,7 @@ VehicleFactory::ParseVehicleDefinition(tinyxml2::XMLElement *root)
 		}
 	}
 
-	this->defs[def.name] = def;
+	this->defs.emplace(def.name, def);
 
 }
 

@@ -26,7 +26,7 @@ private:
 
 	Framework &fw;
 
-	std::map<UString, VehicleDefinition> defs;
+	std::map<UString, const VehicleDefinition> defs;
 public:
 	VehicleFactory(Framework &fw);
 	~VehicleFactory();

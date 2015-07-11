@@ -145,7 +145,7 @@ VehicleMover::~VehicleMover()
 
 }
 
-Vehicle::Vehicle(VehicleDefinition &def, Organisation &owner)
+Vehicle::Vehicle(const VehicleDefinition &def, Organisation &owner)
 	: def(def), owner(owner)
 {
 
