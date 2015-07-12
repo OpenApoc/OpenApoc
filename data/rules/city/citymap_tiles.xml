@@ -3542,7 +3542,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
         </lof>
       </tile>
-      <tile id="177" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:177">
+      <tile id="177" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:177" landingpad="true">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:50</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:50</loflayer>

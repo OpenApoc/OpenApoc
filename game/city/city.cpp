@@ -42,7 +42,7 @@ City::City(Framework &fw, GameState &state)
 
 				for (auto &b: this->buildings)
 				{
-					if (b.def.getBounds().within(Vec2<int>{x,y}))
+					if (b.def.getBounds().withinInclusive(Vec2<int>{x,y}))
 					{
 						if (bld)
 						{
@@ -68,6 +68,15 @@ City::City(Framework &fw, GameState &state)
 				auto tile = std::make_shared<BuildingTile>(*this, cityTileDef, Vec3<int>{x,y,z}, bld);
 				this->addObject(std::dynamic_pointer_cast<TileObject>(tile));
 			}
+		}
+	}
+	/* Sanity check - all buildings should at have least one landing pad */
+	for (auto &b : this->buildings)
+	{
+		if (b.landingPadLocations.empty())
+		{
+			LogError("Building \"%s\" has no landing pads",
+				b.def.getName().str().c_str());
 		}
 	}
 }

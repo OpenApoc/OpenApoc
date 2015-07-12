@@ -23,6 +23,12 @@ class Rect
 			        p.y >= p0.y &&
 			        p.y < p1.y);
 		};
+		bool withinInclusive(Vec2<T> p) const {
+			return (p.x >= p0.x &&
+					p.x <= p1.x &&
+					p.y >= p0.y &&
+					p.y <= p1.y);
+		};
 		bool within(Rect<T> r) const {
 			return (r.p0.x >= p0.x &&
 			        r.p1.x <= p1.x &&
