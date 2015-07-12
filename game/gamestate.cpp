@@ -15,7 +15,8 @@ GameState::GameState(Framework &fw, Rules &rules)
 		this->organisations.emplace_back(orgdef);
 	}
 
-	this->city.reset(new City(fw));
+	this->city.reset(new City(fw, *this));
+
 	//Place some random testing vehicles
 	std::default_random_engine generator;
 	//FIXME: Read size from city? (Only 'temporary' code anyway)

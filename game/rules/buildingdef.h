@@ -9,14 +9,14 @@ namespace OpenApoc
 	class BuildingDef
 	{
 	private:
-		BuildingDef();
+		BuildingDef(){};
 		UString name;
 		Rect<int> bounds;
-		int ownerIdx;
+		UString ownerName;
 		friend class RulesLoader;
 	public:
 		const UString& getName() const {return this->name;}
 		const Rect<int>& getBounds() const {return this->bounds;}
-		int getOwnerIdx() const {return this->ownerIdx;}
+		const UString &getOwnerName() const {return this->ownerName;}
 	};
 };

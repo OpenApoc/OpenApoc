@@ -91,7 +91,7 @@ namespace
 		return true;
 	}
 
-	bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID, std::shared_ptr<Image> &sprite, std::shared_ptr<VoxelMap> &voxelMap)
+	bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID, std::shared_ptr<Image> &sprite, std::shared_ptr<VoxelMap> &voxelMap, std::vector<UString> &landingPadList)
 	{
 		std::shared_ptr<Image> readSprite = nullptr;
 		std::shared_ptr<VoxelMap> readVoxelMap = nullptr;
@@ -104,7 +104,6 @@ namespace
 			return false;
 		}
 
-		//FIXME: Check 'idx' to allow out-of-order (or a non-int id?)
 		tileID = root->Attribute("id");
 		if (tileID == "")
 		{
@@ -117,6 +116,13 @@ namespace
 		{
 			LogError("No sprite in tile");
 			return false;
+		}
+
+		UString landingPad = root->Attribute("landingpad");
+		if (landingPad != "")
+		{
+			LogInfo("Tile \"%s\" is a landing pad", tileID.str().c_str());
+			landingPadList.push_back(tileID);
 		}
 
 		readSprite = fw.data->load_image(spriteString);
@@ -288,8 +294,61 @@ namespace
 			}
 			else if (name == "buildings")
 			{
-				//TODO: Building loading
-				LogError("FIXME: No buildings implemented (yet)");
+				for (tinyxml2::XMLElement *bld = e->FirstChildElement();
+					bld != nullptr;
+					bld = bld->NextSiblingElement())
+				{
+					BuildingDef def;
+					UString bldNodeName = bld->Name();
+					if (bldNodeName != "building")
+					{
+						LogError("Unexpected node \"%s\" - expected \"building\"",
+							bldNodeName.str().c_str());
+						return false;
+					}
+					UString bldName = bld->Attribute("name");
+					if (bldName == "")
+					{
+						LogError("Building has no name");
+						return false;
+					}
+					UString owner = bld->Attribute("owner");
+					if (owner == "")
+					{
+						LogError("Building \"%s\" has no owner", bldName.str().c_str());
+						return false;
+					}
+					int x0, x1, y0, y1;
+					auto err = bld->QueryIntAttribute("x0", &x0);
+					if (err != tinyxml2::XML_SUCCESS)
+					{
+						LogError("Building \"%s\" has invalid x0 bound", bldName.str().c_str());
+						return false;
+					}
+					err = bld->QueryIntAttribute("x1", &x1);
+					if (err != tinyxml2::XML_SUCCESS)
+					{
+						LogError("Building \"%s\" has invalid x1 bound", bldName.str().c_str());
+						return false;
+					}
+					err = bld->QueryIntAttribute("y0", &y0);
+					if (err != tinyxml2::XML_SUCCESS)
+					{
+						LogError("Building \"%s\" has invalid y0 bound", bldName.str().c_str());
+						return false;
+					}
+					err = bld->QueryIntAttribute("y1", &y1);
+					if (err != tinyxml2::XML_SUCCESS)
+					{
+						LogError("Building \"%s\" has invalid y1 bound", bldName.str().c_str());
+						return false;
+					}
+					def.name = bldName;
+					def.ownerName = owner;
+					def.bounds = {x0,y0,x1,y1};
+					rules.buildings.emplace_back(def);
+
+				}
 			}
 			else if (name == "tiles")
 			{
@@ -323,7 +382,7 @@ namespace
 						}
 						BuildingTileDef def;
 
-						if (!LoadCityTile(fw, tile, tileID, def.sprite, def.voxelMap))
+						if (!LoadCityTile(fw, tile, tileID, def.sprite, def.voxelMap, rules.landingPadTiles))
 						{
 							LogError("Error loading tile %d", numRead);
 							return false;

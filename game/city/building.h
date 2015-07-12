@@ -15,6 +15,7 @@ class Building
 		Building(BuildingDef &def, Organisation &owner);
 		BuildingDef &def;
 		Organisation &owner;
+		std::vector<Vec3<int>> landingPadLocations;
 };
 
 }; //namespace OpenApoc

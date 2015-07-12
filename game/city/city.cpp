@@ -4,17 +4,29 @@
 #include "game/city/buildingtile.h"
 #include "framework/framework.h"
 #include "game/resources/gamecore.h"
-#include <random>
 
 namespace OpenApoc {
 
-City::City(Framework &fw)
+City::City(Framework &fw, GameState &state)
 	: TileMap(fw, fw.rules->getCitySize())
 {
 	for (auto &def : fw.rules->getBuildingDefs())
 	{
-		auto &owner = fw.state->organisations[def.getOwnerIdx()];
-		this->buildings.emplace_back(def, owner);
+		Organisation *owner = nullptr;
+		for (auto &org : state.organisations)
+		{
+			if (org.def.getName() == def.getOwnerName())
+			{
+				owner = &org;
+			}
+		}
+		if (!owner)
+		{
+			LogError("No organisation found matching building \"%s\" owner \"%s\"",
+				def.getName().str().c_str(), def.getOwnerName().str().c_str());
+			return;
+		}
+		this->buildings.emplace_back(def, *owner);
 	}
 
 	for (int z = 0; z < this->size.z; z++)
@@ -37,7 +49,18 @@ City::City(Framework &fw)
 							LogError("Multiple buildings on tile at %d,%d,%d", x, y, z);
 						}
 						bld = &b;
+						for (auto &padID : fw.rules->getLandingPadTiles())
+						{
+							if (padID == tileID)
+							{
+								LogInfo("Building %s has landing pad at {%d,%d,%d}",
+									b.def.getName().str().c_str(), x, y, z);
+								b.landingPadLocations.emplace_back(x,y,z);
+								break;
+							}
+						}
 					}
+
 				}
 
 

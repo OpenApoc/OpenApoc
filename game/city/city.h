@@ -13,12 +13,13 @@ namespace OpenApoc {
 #define CITY_TILE_Z (16)
 
 class Vehicle;
+class GameState;
 
 class City : public TileMap
 {
 	private:
 	public:
-		City(Framework &fw);
+		City(Framework &fw, GameState &state);
 		~City();
 	std::vector<std::shared_ptr<Vehicle>> vehicles;
 

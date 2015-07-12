@@ -23,6 +23,7 @@ private:
 	std::vector<BuildingDef> buildings;
 	std::vector<OrganisationDef> organisations;
 	std::map<UString, BuildingTileDef> buildingTiles;
+	std::vector<UString> landingPadTiles;
 	Vec3<int> citySize;
 	std::vector<UString> tileIDs;
 	friend class RulesLoader;
@@ -38,6 +39,11 @@ public:
 	std::vector<BuildingDef> &getBuildingDefs()
 	{
 		return buildings;
+	}
+	
+	std::vector<UString> &getLandingPadTiles()
+	{
+		return landingPadTiles;
 	}
 
 	std::vector<OrganisationDef> &getOrganisationDefs()
