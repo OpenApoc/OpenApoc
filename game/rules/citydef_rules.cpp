@@ -19,9 +19,72 @@ namespace
 {
 	bool LoadCityMap(Framework &fw, Vec3<int> size, tinyxml2::XMLElement *root, std::vector<UString> &tileIDs)
 	{
+		std::ignore = fw;
 		size_t tileCount = size.x * size.y * size.z;
 
 		tileIDs.resize(tileCount);
+		for (tinyxml2::XMLElement *e = root->FirstChildElement();
+			e != nullptr;
+			e = e->NextSiblingElement())
+		{
+			UString name = e->Name();
+			if (name != "tile")
+			{
+				LogError("Unexpected node \"%s\" - expected \"tile\"",
+					name.str().c_str());
+				return false;
+			}
+			int x, y, z;
+			auto err = e->QueryIntAttribute("x", &x);
+			if (err != tinyxml2::XML_SUCCESS)
+			{
+				LogError("City map tile missing \"x\" attribute");
+			}
+			if (x >= size.x || x < 0)
+			{
+				LogError("City map tile has invalid x %d - city size {%d,%d,%d}",
+					x, size.x, size.y, size.z);
+				return false;
+			}
+			err = e->QueryIntAttribute("y", &y);
+			if (err != tinyxml2::XML_SUCCESS)
+			{
+				LogError("City map tile missing \"y\" attribute");
+			}
+			if (y >= size.y || y < 0)
+			{
+				LogError("City map tile has invalid y %d - city size {%d,%d,%d}",
+					y, size.x, size.y, size.z);
+				return false;
+			}
+			err = e->QueryIntAttribute("z", &z);
+			if (err != tinyxml2::XML_SUCCESS)
+			{
+				LogError("City map tile missing \"z\" attribute");
+			}
+			if (z >= size.z || z < 0)
+			{
+				LogError("City map tile has invalid y %d - city size {%d,%d,%d}",
+					z, size.x, size.y, size.z);
+				return false;
+			}
+
+			UString tileID = e->GetText();
+			if (tileID == "")
+			{
+				LogError("Tile at {%d,%d,%d} missing tile ID",
+					x, y, z);
+				return false;
+			}
+			unsigned offset = (size.y * size.x) * z + (size.x) * y + x;
+			if (tileIDs[offset] != "")
+			{
+				LogError("Multiple city tiles defined at {%d,%d,%d}",
+					x, y, z);
+				return false;
+			}
+			tileIDs[offset] = tileID;
+		}
 
 		LogInfo("Loaded city of size {%d,%d,%d}", size.x, size.y, size.z);
 
@@ -265,6 +328,13 @@ namespace
 							LogError("Error loading tile %d", numRead);
 							return false;
 						}
+						if (rules.buildingTiles.find(tileID) != rules.buildingTiles.end())
+						{
+							LogError("Multiple tiles with ID \"%s\"", tileID.str().c_str());
+							return false;
+						}
+						rules.buildingTiles.emplace(tileID, def);
+
 					}
 					else
 					{
