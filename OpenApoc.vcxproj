@@ -230,7 +230,8 @@
     <ClCompile Include="game\resources\gamecore.cpp" />
     <ClCompile Include="game\apocresources\apocfont.cpp" />
     <ClCompile Include="game\boot.cpp" />
-    <ClCompile Include="game\resources\vehiclefactory.cpp" />
+    <ClCompile Include="game\rules\rules.cpp" />
+    <ClCompile Include="game\rules\vehicledef_rules.cpp" />
     <ClCompile Include="game\tileview\tile.cpp" />
     <ClCompile Include="game\tileview\tileview.cpp" />
     <ClCompile Include="game\ufopaedia\ufopaedia.cpp" />
@@ -250,16 +251,16 @@
     <ClCompile Include="game\general\difficultymenu.cpp" />
     <ClCompile Include="game\general\basescreen.cpp" />
     <ClCompile Include="library\strings.cpp" />
-	<ClCompile Include="game\apocresources\rawimage.cpp" />
-	<ClCompile Include="game\city\cityview.cpp" />
-	<ClCompile Include="game\city\scorescreen.cpp" />
-	<ClCompile Include="game\city\infiltrationscreen.cpp" />
-	<ClCompile Include="game\general\ingameoptions.cpp" />
-	<ClCompile Include="game\tileview\voxel.cpp" />
-	<ClCompile Include="game\apocresources\loftemps.cpp" />
-	<ClCompile Include="game\tileview\tile_visible.cpp" />
-	<ClCompile Include="game\tileview\tile_collidable.cpp" />
-	<ClCompile Include="game\tileview\projectile.cpp" />
+    <ClCompile Include="game\apocresources\rawimage.cpp" />
+    <ClCompile Include="game\city\cityview.cpp" />
+    <ClCompile Include="game\city\scorescreen.cpp" />
+    <ClCompile Include="game\city\infiltrationscreen.cpp" />
+    <ClCompile Include="game\general\ingameoptions.cpp" />
+    <ClCompile Include="game\tileview\voxel.cpp" />
+    <ClCompile Include="game\apocresources\loftemps.cpp" />
+    <ClCompile Include="game\tileview\tile_visible.cpp" />
+    <ClCompile Include="game\tileview\tile_collidable.cpp" />
+    <ClCompile Include="game\tileview\projectile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="forms\checkbox.h" />
@@ -300,7 +301,9 @@
     <ClInclude Include="game\resources\gamecore.h" />
     <ClInclude Include="game\resources\ifont.h" />
     <ClInclude Include="game\resources\ttffont.h" />
-    <ClInclude Include="game\resources\vehiclefactory.h" />
+    <ClInclude Include="game\rules\rules.h" />
+    <ClInclude Include="game\rules\rules_private.h" />
+    <ClInclude Include="game\rules\vehicledef.h" />
     <ClInclude Include="game\tileview\tile.h" />
     <ClInclude Include="game\tileview\tileview.h" />
     <ClInclude Include="game\ufopaedia\ufopaedia.h" />
@@ -330,15 +333,15 @@
     <ClInclude Include="game\city\city.h" />
     <ClInclude Include="game\general\difficultymenu.h" />
     <ClInclude Include="game\general\basescreen.h" />
-	<ClInclude Include="game\apocresources\rawimage.h" />
-	<ClInclude Include="game\city\cityview.h" />
-	<ClInclude Include="game\city\scorescreen.h" />
-	<ClInclude Include="game\city\infiltrationscreen.h" />
-	<ClInclude Include="game\general\ingameoptions.h" />
-	<ClInclude Include="game\apocresources\loftemps.h" />
-	<ClInclude Include="game\tileview\tile_visible.h" />
-	<ClInclude Include="game\tileview\tile_collidable.h" />
-	<ClInclude Include="game\tileview\projectile.h" />
+    <ClInclude Include="game\apocresources\rawimage.h" />
+    <ClInclude Include="game\city\cityview.h" />
+    <ClInclude Include="game\city\scorescreen.h" />
+    <ClInclude Include="game\city\infiltrationscreen.h" />
+    <ClInclude Include="game\general\ingameoptions.h" />
+    <ClInclude Include="game\apocresources\loftemps.h" />
+    <ClInclude Include="game\tileview\tile_visible.h" />
+    <ClInclude Include="game\tileview\tile_collidable.h" />
+    <ClInclude Include="game\tileview\projectile.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="dependencies\allegro5.vcxproj">
