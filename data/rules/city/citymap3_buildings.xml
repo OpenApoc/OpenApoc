@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <city>
-    <building count="84">
+    <buildings count="84">
       <building x0="1" x1="6" y0="1" y1="6" owner="Solmine" name="Quadrax Tower"/>
       <building x0="8" x1="13" y0="3" y1="9" owner="Nutrivend" name="Gygax Memorial Building"/>
       <building x0="3" x1="6" y0="8" y1="14" owner="Government" name="Parallax Tower"/>
@@ -86,6 +86,6 @@
       <building x0="30" x1="39" y0="53" y1="57" owner="Osiron" name="Saturn Block"/>
       <building x0="84" x1="87" y0="20" y1="25" owner="Government" name="Hades Block"/>
       <building x0="74" x1="81" y0="28" y1="32" owner="Mutant Alliance" name="Neptune Towers"/>
-    </building>
+    </buildings>
   </city>
 </openapoc_rules>

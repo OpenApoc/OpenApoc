@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <city>
-    <building count="78">
+    <buildings count="78">
       <building x0="10" x1="15" y0="9" y1="15" owner="Sanctuary Clinic" name="Eden Mansions"/>
       <building x0="17" x1="25" y0="12" y1="16" owner="Nutrivend" name="Aldous Huxley Emporium"/>
       <building x0="12" x1="15" y0="16" y1="23" owner="Synthemesh" name="Uhuru Tower"/>
@@ -80,6 +80,6 @@
       <building x0="65" x1="74" y0="29" y1="50" owner="Mutant Alliance" name="Lovecraft Block"/>
       <building x0="54" x1="63" y0="27" y1="32" owner="Megapol" name="Flyer Two"/>
       <building x0="44" x1="52" y0="37" y1="41" owner="Government" name="Bakunin Block"/>
-    </building>
+    </buildings>
   </city>
 </openapoc_rules>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <city>
-    <building count="109">
+    <buildings count="109">
       <building x0="3" x1="16" y0="3" y1="10" owner="General Metro" name="Car One"/>
       <building x0="3" x1="9" y0="11" y1="14" owner="Government" name="Warehouse One"/>
       <building x0="3" x1="9" y0="15" y1="21" owner="Synthemesh" name="Construction One"/>
@@ -111,6 +111,6 @@
       <building x0="74" x1="77" y0="53" y1="56" owner="Government" name="Warehouse Eleven"/>
       <building x0="23" x1="30" y0="3" y1="9" owner="Mutant Alliance" name="Tsunami Building"/>
       <building x0="32" x1="39" y0="3" y1="9" owner="Nutrivend" name="Venus Spires"/>
-    </building>
+    </buildings>
   </city>
 </openapoc_rules>

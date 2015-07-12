@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <city>
-    <building count="96">
+    <buildings count="96">
       <building x0="0" x1="4" y0="0" y1="6" owner="Osiron" name="George Orwell Block"/>
       <building x0="0" x1="5" y0="7" y1="11" owner="Osiron" name="Thomas More Tower"/>
       <building x0="1" x1="5" y0="12" y1="14" owner="Osiron" name="Dickens Estate"/>
@@ -98,6 +98,6 @@
       <building x0="11" x1="17" y0="76" y1="85" owner="Evonet" name="Recyclotorium Two"/>
       <building x0="26" x1="35" y0="76" y1="80" owner="Superdynamics" name="Flyer Two"/>
       <building x0="37" x1="42" y0="76" y1="80" owner="Superdynamics" name="Warehouse Nine"/>
-    </building>
+    </buildings>
   </city>
 </openapoc_rules>
