@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules name="superhuman">
+<include>rules/common/vehicles.xml</include>
+</openapoc_rules>

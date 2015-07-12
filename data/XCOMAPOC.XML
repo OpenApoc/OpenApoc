@@ -16,6 +16,5 @@
 		<include>UI/CITY/city.xml</include>
 		<include>UI/CITY/infiltration.xml</include>
 		<include>UI/CITY/score.xml</include>
-		<include>CITY/VEHICLES.XML</include>
 	</game>
 </openapoc>

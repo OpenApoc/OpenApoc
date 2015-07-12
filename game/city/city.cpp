@@ -78,7 +78,13 @@ City::City(Framework &fw, UString mapName)
 			z = zdistribution(generator);
 		} while (!this->getTile(x,y,z)->ownedObjects.empty());
 
-		std::shared_ptr<Vehicle> testVehicle(fw.gamecore->vehicleFactory.create("POLICE_HOVERCAR", organisations[0]));
+		auto def = fw.rules->getVehicleDefs().find("POLICE_HOVERCAR");
+		if (def == fw.rules->getVehicleDefs().end())
+		{
+			LogError("Failed to find \"POLICE_HOVERCAR\" vehicle definition");
+			return;
+		}
+		auto testVehicle = std::make_shared<Vehicle>(def->second, organisations[0]);
 		this->vehicles.push_back(testVehicle);
 
 		testVehicle->launch(*this, Vec3<float>{x,y,z});

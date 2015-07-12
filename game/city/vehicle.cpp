@@ -1,6 +1,5 @@
 #include "framework/logger.h"
 #include "game/city/vehicle.h"
-#include "game/resources/vehiclefactory.h"
 #include <cfloat>
 #include <random>
 

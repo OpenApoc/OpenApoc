@@ -4,7 +4,6 @@
 #include "game/apocresources/apocresource.h"
 #include "framework/font.h"
 #include "forms/forms.h"
-#include "vehiclefactory.h"
 
 namespace OpenApoc {
 
@@ -43,7 +42,6 @@ class GameCore
 		bool Loaded;
 		bool DebugModeEnabled;
 		ApocCursor* MouseCursor;
-		VehicleFactory vehicleFactory;
 
 		GameCore(Framework &fw);
 		void Load(UString CoreXMLFilename, UString Language);
