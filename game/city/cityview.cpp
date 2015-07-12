@@ -10,7 +10,7 @@
 namespace OpenApoc {
 
 CityView::CityView(Framework &fw)
-	: TileView(fw, *fw.state.city, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z})
+	: TileView(fw, *fw.state->city, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z})
 {
 	static const std::vector<UString> tabFormNames = 
 	{

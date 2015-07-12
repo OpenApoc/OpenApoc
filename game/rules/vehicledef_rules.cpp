@@ -181,4 +181,4 @@ RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::XMLEl
 
 }
 
-};
+}; //namespace OpenApoc

@@ -5,10 +5,15 @@
 
 namespace OpenApoc {
 
-void
-GameState::clear()
+GameState::GameState(Framework &fw, Rules &rules)
 {
-	this->city.reset();
+	for (auto &orgdef : rules.getOrganisationDefs())
+	{
+		this->organisations.emplace_back(orgdef);
+	}
+
+	this->city.reset(new City(fw));
 }
+
 
 }; //namespace OpenApoc

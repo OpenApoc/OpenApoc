@@ -65,6 +65,16 @@ RulesLoader::ParseRules(Framework &fw, Rules& rules, tinyxml2::XMLElement *root)
 			if (!ParseVehicleDefinition(fw, rules, e))
 				return false;
 		}
+		else if (name == "organisation")
+		{
+			if (!ParseOrganisationDefinition(fw, rules, e))
+				return false;
+		}
+		else if (name == "city")
+		{
+			if (!ParseCityDefinition(fw, rules, e))
+				return false;
+		}
 		else if (name == "include")
 		{
 			UString rootFileName = e->GetText();
