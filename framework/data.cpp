@@ -3,6 +3,7 @@
 #include "game/apocresources/pck.h"
 #include "game/apocresources/rawimage.h"
 #include "game/apocresources/apocpalette.h"
+#include "game/apocresources/loftemps.h"
 #include "framework/palette.h"
 #include "framework/ignorecase.h"
 #include "library/strings.h"
@@ -249,7 +250,7 @@ void registerMusicLoader(MusicLoaderFactory *factory, UString name)
 	registeredMusicLoaders->emplace(name, std::unique_ptr<MusicLoaderFactory>(factory));
 }
 
-Data::Data(Framework &fw, std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize)
+Data::Data(Framework &fw, std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize, int voxelCacheSize)
 {
 	for (auto &imageBackend : *registeredImageBackends)
 	{
@@ -296,6 +297,8 @@ Data::Data(Framework &fw, std::vector<UString> paths, int imageCacheSize, int im
 		pinnedImages.push(nullptr);
 	for (int i = 0; i < imageSetCacheSize; i++)
 		pinnedImageSets.push(nullptr);
+	for (int i = 0; i < voxelCacheSize; i++)
+		pinnedLOFVoxels.push(nullptr);
 
 	//Paths are supplied in inverse-search order (IE the last in 'paths' should be the first searched)
 	for(auto &p : paths)
@@ -315,6 +318,60 @@ Data::Data(Framework &fw, std::vector<UString> paths, int imageCacheSize, int im
 Data::~Data()
 {
 
+}
+
+std::shared_ptr<VoxelSlice>
+Data::load_voxel_slice(const UString &path)
+{
+	std::shared_ptr<VoxelSlice> slice;
+	if (path.substr(0, 9) == "LOFTEMPS:")
+	{
+		auto splitString = path.split(':');
+		//"LOFTEMPS:DATFILE:TABFILE:INDEX"
+		if (splitString.size() != 4)
+		{
+			LogError("Invalid LOFTEMPS string \"%s\"", path.str().c_str());
+			return nullptr;
+		}
+		//Cut off the index to get the LOFTemps file
+		UString cacheKey = splitString[0] + splitString[1] + splitString[2];
+		cacheKey = cacheKey.toUpper();
+		std::shared_ptr<LOFTemps> lofTemps = this->LOFVoxelCache[cacheKey].lock();
+		if (!lofTemps)
+		{
+			auto datFile = this->load_file(splitString[1]);
+			if (!datFile)
+			{
+				LogError("Failed to open LOFTemps dat file \"%s\"",
+					splitString[1].str().c_str());
+				return nullptr;
+			}
+			auto tabFile = this->load_file(splitString[2]);
+			if (!tabFile)
+			{
+				LogError("Failed to open LOFTemps tab file \"%s\"",
+					splitString[2].str().c_str());
+				return nullptr;
+			}
+			lofTemps = std::make_shared<LOFTemps>(datFile, tabFile);
+			this->LOFVoxelCache[cacheKey] = lofTemps;
+			this->pinnedLOFVoxels.push(lofTemps);
+			this->pinnedLOFVoxels.pop();
+		}
+		int idx = Strings::ToInteger(splitString[3]);
+		slice = lofTemps->getSlice(idx);
+		if (!slice)
+		{
+			LogError("Invalid idx %d", idx);
+		}
+	}
+
+	if (!slice)
+	{
+		LogError("Failed to load VoxelSlice \"%s\"", path.str().c_str());
+		return nullptr;
+	}
+	return slice;
 }
 
 std::shared_ptr<ImageSet>

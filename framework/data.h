@@ -17,6 +17,8 @@ class ImageLoader;
 class SampleLoader;
 class MusicLoader;
 class Framework;
+class VoxelSlice;
+class LOFTemps;
 
 class IFileImpl
 {
@@ -50,17 +52,19 @@ class Data
 
 		std::map<UString, std::weak_ptr<Sample> >sampleCache;
 		std::map<UString, std::weak_ptr<MusicTrack> >musicCache;
+		std::map<UString, std::weak_ptr<LOFTemps> >LOFVoxelCache;
 
 		//Pin open 'imageCacheSize' images
 		std::queue<std::shared_ptr<Image> > pinnedImages;
 		//Pin open 'imageSetCacheSize' image sets
 		std::queue<std::shared_ptr<ImageSet> > pinnedImageSets;
+		std::queue<std::shared_ptr<LOFTemps> > pinnedLOFVoxels;
 		std::list<std::unique_ptr<ImageLoader>> imageLoaders;
 		std::list<std::unique_ptr<SampleLoader>> sampleLoaders;
 		std::list<std::unique_ptr<MusicLoader>> musicLoaders;
 
 	public:
-		Data(Framework &fw, std::vector<UString> paths, int imageCacheSize = 10, int imageSetCacheSize = 10);
+		Data(Framework &fw, std::vector<UString> paths, int imageCacheSize = 10, int imageSetCacheSize = 10, int voxelCacheSize = 1);
 		~Data();
 
 		enum class FileMode
@@ -75,6 +79,7 @@ class Data
 		std::shared_ptr<Image> load_image(const UString& path);
 		std::shared_ptr<ImageSet> load_image_set(const UString& path);
 		std::shared_ptr<Palette> load_palette(const UString& path);
+		std::shared_ptr<VoxelSlice> load_voxel_slice(const UString& path);
 		IFile load_file(const UString& path, FileMode mode = FileMode::Read);
 
 };

@@ -17,37 +17,156 @@ namespace OpenApoc
 {
 namespace 
 {
-	bool LoadCityMap(Framework &fw, Vec3<int> size, const UString &fileName, std::vector<int> &tileIndices)
+	bool LoadCityMap(Framework &fw, Vec3<int> size, tinyxml2::XMLElement *root, std::vector<UString> &tileIDs)
 	{
-		auto file = fw.data->load_file(fileName);
-		if (!file)
-		{
-			LogError("Failed to open file \"%s\"", fileName.str().c_str());
-			return false;
-		}
-
 		size_t tileCount = size.x * size.y * size.z;
 
-		if (file.size() != 2*tileCount)
+		tileIDs.resize(tileCount);
+
+		LogInfo("Loaded city of size {%d,%d,%d}", size.x, size.y, size.z);
+
+		return true;
+	}
+
+	bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID, std::shared_ptr<Image> &sprite, std::shared_ptr<VoxelMap> &voxelMap)
+	{
+		std::shared_ptr<Image> readSprite = nullptr;
+		std::shared_ptr<VoxelMap> readVoxelMap = nullptr;
+
+		int numVoxelLayers = 0;
+
+		if (UString(root->Name()) != "tile")
 		{
-			LogError("Unexpected file size %zu - expected %zu for a {%d,%d,%d} city",
-				file.size(), 2*tileCount, size.x, size.y, size.z);
+			LogError("Called on unexpected node \"%s\"", root->Name());
 			return false;
 		}
 
-		tileIndices.resize(tileCount);
-
-		for (size_t i = 0; i < tileCount; i++)
+		//FIXME: Check 'idx' to allow out-of-order (or a non-int id?)
+		tileID = root->Attribute("id");
+		if (tileID == "")
 		{
-			uint16_t val;
-			if (!file.readule16(val))
-			{
-				LogError("Unexpected EOF at tile %zu", i);
-				return false;
-			}
-			tileIndices[i] = val;
+			LogError("Tile with no ID");
+			return false;
+		}
+		UString spriteString = root->Attribute("sprite");
+
+		if (spriteString == "")
+		{
+			LogError("No sprite in tile");
+			return false;
 		}
 
+		readSprite = fw.data->load_image(spriteString);
+		if (!readSprite)
+		{
+			LogError("Failed to load image \"%s\"", spriteString.str().c_str());
+			return false;
+		}
+
+		for (tinyxml2::XMLElement *e = root->FirstChildElement();
+			e != nullptr;
+			e = e->NextSiblingElement())
+		{
+			UString name = e->Name();
+			if (name == "lof")
+			{
+				int voxelSizeX = 0, voxelSizeY = 0, voxelSizeZ = 0;
+				auto err = e->QueryIntAttribute("sizeX", &voxelSizeX);
+				if (err != tinyxml2::XML_SUCCESS)
+				{
+					LogError("Failed to load voxel \"sizeX\" attribute");
+					return false;
+				}
+				err = e->QueryIntAttribute("sizeY", &voxelSizeY);
+				if (err != tinyxml2::XML_SUCCESS)
+				{
+					LogError("Failed to load voxel \"sizeY\" attribute");
+					return false;
+				}
+				err = e->QueryIntAttribute("sizeZ", &voxelSizeZ);
+				if (err != tinyxml2::XML_SUCCESS)
+				{
+					LogError("Failed to load voxel \"sizeZ\" attribute");
+					return false;
+				}
+				//FIXME: Support non-32x32x16 tile voxels?
+				//Would that then be 'scaled' into a single tile, or allow larger/smaller tiles?
+				//Would cause a lot of effort for little obvious use
+				if (voxelSizeX != 32 || voxelSizeY != 32 || voxelSizeZ != 16)
+				{
+					LogError("Unexpected LOF voxel size {%d,%d,%d} - expected {32,32,16}",
+						voxelSizeX, voxelSizeY, voxelSizeZ);
+					return false;
+				}
+				
+				readVoxelMap.reset(new VoxelMap(Vec3<int>{voxelSizeX, voxelSizeY, voxelSizeZ}));
+				
+
+
+				for (tinyxml2::XMLElement *layer = e->FirstChildElement();
+					layer != nullptr;
+					layer = layer->NextSiblingElement())
+				{
+					UString layerName = layer->Name();
+					if (layerName != "loflayer")
+					{
+						LogError("Unexpected node \"%s\" - expected \"loflayer\"",
+							name.str().c_str());
+						return false;
+
+					}
+					if (numVoxelLayers >= voxelSizeZ)
+					{
+						LogError("Too many lof layers specified (sizeZ %d)",
+							voxelSizeZ);
+						return false;
+					}
+					UString voxelSliceString = layer->GetText();
+					if (voxelSliceString == "")
+					{
+						LogError("No loflayer specified");
+						return false;
+					}
+					auto lofSlice = fw.data->load_voxel_slice(voxelSliceString);
+					if (!lofSlice)
+					{
+						LogError("Failed to load loflayer \"%s\"",
+							voxelSliceString.str().c_str());
+						return false;
+					}
+					if (lofSlice->getSize().x != voxelSizeX
+					 || lofSlice->getSize().y != voxelSizeY)
+					{
+						LogError("Voxel slice size {%d,%d} in {%d,%d} tile",
+							lofSlice->getSize().x, lofSlice->getSize().y,
+							voxelSizeX, voxelSizeY);
+						return false;
+					}
+					readVoxelMap->setSlice(numVoxelLayers, lofSlice);
+					numVoxelLayers++;
+				}
+			}
+			else
+			{
+				LogError("Unexpected node \"%s\" - expected \"lof\"",
+					name.str().c_str());
+				return false;
+			}
+		}
+
+		if (!readSprite)
+		{
+			LogError("Tile with no sprite");
+			return false;
+		}
+		if (!readVoxelMap)
+		{
+			LogError("Tile with no voxel map");
+			return false;
+		}
+
+		sprite = readSprite;
+		voxelMap = readVoxelMap;
 
 		return true;
 	}
@@ -62,11 +181,6 @@ namespace
 			return false;
 		}
 
-		bool loadedMap = false;
-		bool loadedBuildings = false;
-		bool loadedTiles = false;
-
-
 		for (tinyxml2::XMLElement *e = root->FirstChildElement();
 			e != nullptr;
 			e = e->NextSiblingElement())
@@ -74,11 +188,6 @@ namespace
 			UString name = e->Name();
 			if (name == "map")
 			{
-				if (loadedMap)
-				{
-					LogError("Multiple map nodes read");
-					return false;
-				}
 				int sizeX, sizeY, sizeZ;
 				auto error = e->QueryIntAttribute("sizeX", &sizeX);
 				if (error != tinyxml2::XML_SUCCESS)
@@ -107,33 +216,22 @@ namespace
 					LogError("Invalid map size {%d,%d,%d}", size.x, size.y, size.z);
 					return false;
 				}
-				if (!LoadCityMap(fw, size, e->GetText(), rules.tileIndices))
+				if (!LoadCityMap(fw, size, e, rules.tileIDs))
 				{
 					LogError("Error parsing map \"%s\"", e->GetText());
 					return false;
 				}
 				rules.citySize = size;
-				loadedMap = true;
 			}
 			else if (name == "buildings")
 			{
-				if (loadedBuildings)
-				{
-					LogError("Multiple buildings nodes read");
-					return false;
-				}
 				//TODO: Building loading
 				LogError("FIXME: No buildings implemented (yet)");
-				loadedBuildings = true;
 			}
 			else if (name == "tiles")
 			{
-				if (loadedTiles)
-				{
-					LogError("Multiple tiles nodes read");
-					return false;
-				}
 				int count;
+				int numRead = 0;
 				auto error = e->QueryIntAttribute("count", &count);
 				if (error != tinyxml2::XML_SUCCESS)
 				{
@@ -145,52 +243,44 @@ namespace
 					LogError("Invalid tile count %d", count);
 					return false;
 				}
-				UString sprite = e->Attribute("sprites");
-				if (sprite == "")
+				for (tinyxml2::XMLElement *tile = e->FirstChildElement();
+					tile != nullptr;
+					tile = tile->NextSiblingElement())
 				{
-					LogError("Tile list has no sprite set");
-					return false;
-				}
-				auto spriteSet = fw.data->load_image_set(sprite);
-				if (!spriteSet)
-				{
-					LogError("Failed to load sprite set \"%s\"", sprite.str().c_str());
-					return false;
-				}
-				if (spriteSet->images.size() < (unsigned)count)
-				{
-					LogError("Tile count %d but only %zu entries in sprite set \"%s\"",
-						count, spriteSet->images.size(), sprite.str().c_str());
-					return false;
-				}
+					UString tileNodeName = tile->Name();
+					if (tileNodeName == "tile")
+					{
+						UString tileID = "";
+						numRead++;
+						if (numRead > count)
+						{
+							LogError("Skipping tile %d (%d listed in count)",
+								numRead, count);
+							continue;
+						}
+						BuildingTileDef def;
 
-				UString datPath = e->GetText();
-				if (datPath == "")
-				{
-					LogError("Empty tile list declaration?");
-					return false;
+						if (!LoadCityTile(fw, tile, tileID, def.sprite, def.voxelMap))
+						{
+							LogError("Error loading tile %d", numRead);
+							return false;
+						}
+					}
+					else
+					{
+						LogError("Unexpected node \"%s\" (expected \"tile\")", tileNodeName.str().c_str());
+						return false;
+					}
+
 				}
-				auto datFile = fw.data->load_file(datPath);
-				if (!datFile)
+				if (numRead != count)
 				{
-					LogError("Failed to open file list file \"%s\"",
-						datPath.str().c_str());
-					return false;
+					LogError("Tile list count is %d but only read %d",
+						count, numRead);
 				}
-				if (datFile.size() != sizeof(struct citymap_dat_chunk)*count)
+				else
 				{
-					LogError("Unexpected tile data file size - expected %zu for %d entries but got %zu",
-						sizeof(citymap_dat_chunk)*count, count, datFile.size());
-					return false;
-				}
-				//FIXME: Read loftemps
-				for (int i = 0; i < count; i++)
-				{
-					BuildingTileDef t;
-					t.sprite = spriteSet->images[i];
-					// All city tiles are 32x32x16 voxels
-					t.voxelMap = std::make_shared<VoxelMap>(Vec3<int>{32,32,16});
-					rules.buildingTiles.push_back(t);
+					LogInfo("Loaded %d tiles", count);
 				}
 			}
 			else
@@ -199,24 +289,6 @@ namespace
 				return false;
 			}
 		}
-
-
-		if (!loadedMap)
-		{
-			LogError("No map specified in city");
-			return false;
-		}
-		if (!loadedBuildings)
-		{
-			LogError("No buildings specified in city");
-			return false;
-		}
-		if (!loadedTiles)
-		{
-			LogError("No tiles specified in city");
-			return false;
-		}
-
 		return true;
 	}
 }; //namespace OpenApoc

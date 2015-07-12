@@ -23,8 +23,8 @@ City::City(Framework &fw)
 		{
 			for (int x = 0; x < this->size.x; x++)
 			{
-				int tileID = fw.rules->getBuildingTileAt(Vec3<int>{x,y,z});
-				if (tileID == 0)
+				auto tileID = fw.rules->getBuildingTileAt(Vec3<int>{x,y,z});
+				if (tileID == "")
 					continue;
 				Building *bld = nullptr;
 
@@ -41,12 +41,9 @@ City::City(Framework &fw)
 				}
 
 
-				auto &cityTileDef = fw.rules->getBuildingTileDefs()[tileID];
-				if (tileID)
-				{
-					auto tile = std::make_shared<BuildingTile>(*this, cityTileDef, Vec3<int>{x,y,z}, bld);
-					this->addObject(std::dynamic_pointer_cast<TileObject>(tile));
-				}
+				auto &cityTileDef = fw.rules->getBuildingTileDef(tileID);
+				auto tile = std::make_shared<BuildingTile>(*this, cityTileDef, Vec3<int>{x,y,z}, bld);
+				this->addObject(std::dynamic_pointer_cast<TileObject>(tile));
 			}
 		}
 	}

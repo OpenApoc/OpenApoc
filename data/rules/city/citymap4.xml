@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<openapoc_rules>
+  <include>rules/city/citymap_tiles.xml</include>
+  <include>rules/city/citymap4_map.xml</include>
+  <include>rules/city/citymap4_buildings.xml</include>
+</openapoc_rules>

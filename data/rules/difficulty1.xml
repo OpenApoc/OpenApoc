@@ -2,9 +2,5 @@
 <openapoc_rules name="novice">
   <include>rules/common/vehicles.xml</include>
   <include>rules/common/organisations.xml</include>
-  <city>
-    <map sizeX="100" sizeY="100" sizeZ="10">xcom3/ufodata/citymap1</map>
-    <buildings count="68">xcom3/ufodata/citymap1.bld</buildings>
-    <tiles count="957" sprites="PCK:xcom3/ufodata/CITY.PCK:xcom3/ufodata/CITY.TAB">xcom3/ufodata/citymap.dat</tiles>
-  </city>
+  <include>rules/city/citymap1.xml</include>
 </openapoc_rules>

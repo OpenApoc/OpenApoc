@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+    <city>
+        <building count="84">
+            <building x0="1" x1="6" y0="1" y1="6" owner="Solmine" name="Quadrax Tower"/>
+            <building x0="8" x1="13" y0="3" y1="9" owner="Nutrivend" name="Gygax Memorial Building"/>
+            <building x0="3" x1="6" y0="8" y1="14" owner="Government" name="Parallax Tower"/>
+            <building x0="8" x1="13" y0="11" y1="14" owner="Energen" name="Uhuru Tower"/>
+            <building x0="3" x1="10" y0="16" y1="22" owner="Megapol" name="Judgment Central"/>
+            <building x0="12" x1="19" y0="16" y1="21" owner="Gravball League" name="Megatribe Warriors"/>
+            <building x0="2" x1="5" y0="24" y1="30" owner="Synthemesh" name="The Karpov Building"/>
+            <building x0="6" x1="13" y0="27" y1="33" owner="Sensovision" name="Acropolis Apartments"/>
+            <building x0="3" x1="8" y0="37" y1="44" owner="Lifetree" name="Eden Mansions"/>
+            <building x0="2" x1="8" y0="46" y1="53" owner="Government" name="The Senate"/>
+            <building x0="6" x1="11" y0="58" y1="65" owner="Government" name="Utopia Mansions"/>
+            <building x0="15" x1="22" y0="2" y1="9" owner="Lifetree" name="Iliad Institute"/>
+            <building x0="25" x1="32" y0="2" y1="9" owner="Nanotech" name="Nietzsche Institute"/>
+            <building x0="35" x1="40" y0="2" y1="9" owner="Sanctuary Clinic" name="Garden of Delights"/>
+            <building x0="42" x1="49" y0="2" y1="9" owner="Nutrivend" name="Cultivator One"/>
+            <building x0="51" x1="55" y0="1" y1="9" owner="Evonet" name="Hydrozone One"/>
+            <building x0="33" x1="43" y0="11" y1="19" owner="Megapol" name="Enforcer Academy"/>
+            <building x0="16" x1="18" y0="28" y1="33" owner="Sensovision" name="Megavision One"/>
+            <building x0="19" x1="29" y0="25" y1="33" owner="Nutrivend" name="Aldous Huxley Emporium"/>
+            <building x0="29" x1="36" y0="20" y1="24" owner="Sanctuary Clinic" name="Phoenix Sanatorium"/>
+            <building x0="33" x1="37" y0="29" y1="33" owner="Cult of Sirius" name="Temple of the Apocalypse"/>
+            <building x0="13" x1="21" y0="35" y1="42" owner="Transtellar" name="Atlantis Apartments"/>
+            <building x0="23" x1="26" y0="35" y1="39" owner="Megapol" name="Rescue One"/>
+            <building x0="19" x1="25" y0="44" y1="48" owner="Gravball League" name="Meteor Kings"/>
+            <building x0="16" x1="21" y0="52" y1="58" owner="Sanctuary Clinic" name="Nirvana Mansions"/>
+            <building x0="14" x1="20" y0="61" y1="66" owner="Sensovision" name="Babylon Apartments"/>
+            <building x0="1" x1="3" y0="65" y1="68" owner="Cult of Sirius" name="Temple of the Millenium"/>
+            <building x0="4" x1="21" y0="68" y1="76" owner="Nutrivend" name="Hypermart Zone"/>
+            <building x0="23" x1="26" y0="61" y1="66" owner="Sanctuary Clinic" name="Ptolemy Apartments"/>
+            <building x0="28" x1="31" y0="61" y1="66" owner="Cult of Sirius" name="Temple of the Visitors"/>
+            <building x0="23" x1="31" y0="68" y1="76" owner="Lifetree" name="Bosch Institute"/>
+            <building x0="1" x1="10" y0="92" y1="96" owner="Evonet" name="Hydrozone Two"/>
+            <building x0="7" x1="13" y0="86" y1="90" owner="Government" name="Warehouse One"/>
+            <building x0="12" x1="26" y0="91" y1="96" owner="Nutrivend" name="Cultivator Two"/>
+            <building x0="21" x1="24" y0="87" y1="89" owner="Cult of Sirius" name="Temple of Humility"/>
+            <building x0="17" x1="24" y0="78" y1="85" owner="Cyberweb" name="Foucault Tower"/>
+            <building x0="26" x1="33" y0="85" y1="89" owner="Sensovision" name="Megavision Two"/>
+            <building x0="26" x1="31" y0="79" y1="83" owner="Megapol" name="Rescue Two"/>
+            <building x0="2" x1="4" y0="83" y1="90" owner="Solmine" name="Warehouse Two"/>
+            <building x0="5" x1="12" y0="79" y1="85" owner="Technocrats" name="Edifice Tower"/>
+            <building x0="28" x1="33" y0="91" y1="96" owner="Cyberweb" name="Robot One"/>
+            <building x0="35" x1="45" y0="85" y1="96" owner="Superdynamics" name="Flyer One"/>
+            <building x0="47" x1="55" y0="90" y1="96" owner="Superdynamics" name="Appliances One"/>
+            <building x0="51" x1="55" y0="85" y1="88" owner="Government" name="Warehouse Three"/>
+            <building x0="33" x1="37" y0="73" y1="77" owner="Megapol" name="Law Control Station"/>
+            <building x0="33" x1="37" y0="67" y1="71" owner="Extropians" name="The Ozone Building"/>
+            <building x0="39" x1="43" y0="73" y1="77" owner="Solmine" name="Warehouse Four"/>
+            <building x0="45" x1="49" y0="79" y1="83" owner="Osiron" name="Warehouse Five"/>
+            <building x0="57" x1="63" y0="90" y1="96" owner="Energen" name="Energen Building"/>
+            <building x0="68" x1="72" y0="90" y1="95" owner="Evonet" name="Recyclotorium One"/>
+            <building x0="81" x1="86" y0="90" y1="95" owner="Superdynamics" name="Megaflyer One"/>
+            <building x0="73" x1="80" y0="90" y1="95" owner="Government" name="Warehouse Six"/>
+            <building x0="89" x1="97" y0="89" y1="97" owner="Evonet" name="Cityclean One"/>
+            <building x0="66" x1="74" y0="80" y1="86" owner="Osiron" name="George Orwell Block"/>
+            <building x0="60" x1="63" y0="79" y1="84" owner="Osiron" name="Thomas More Tower"/>
+            <building x0="60" x1="66" y0="72" y1="76" owner="Osiron" name="Dickens Estate"/>
+            <building x0="49" x1="55" y0="70" y1="74" owner="Government" name="Oliver Twist Block"/>
+            <building x0="29" x1="33" y0="43" y1="47" owner="Government" name="Campesino Apartments"/>
+            <building x0="35" x1="41" y0="41" y1="47" owner="S.E.L.F." name="Grey Visitor Towers"/>
+            <building x0="44" x1="48" y0="35" y1="38" owner="Diablo" name="Scrooge Mansions"/>
+            <building x0="45" x1="55" y0="40" y1="44" owner="Diablo" name="Borstal Block"/>
+            <building x0="50" x1="57" y0="30" y1="38" owner="Diablo" name="Heavenly Towers"/>
+            <building x0="61" x1="66" y0="56" y1="62" owner="Psyke" name="Civic Project"/>
+            <building x0="69" x1="74" y0="60" y1="66" owner="Psyke" name="Chronos Block"/>
+            <building x0="70" x1="74" y0="53" y1="58" owner="Psyke" name="Necronomicon Mansions"/>
+            <building x0="80" x1="86" y0="61" y1="65" owner="Government" name="Warehouse Seven"/>
+            <building x0="89" x1="95" y0="61" y1="66" owner="Solmine" name="Warehouse Eight"/>
+            <building x0="81" x1="94" y0="38" y1="59" owner="Transtellar" name="Transtellar Spacelines"/>
+            <building x0="68" x1="75" y0="33" y1="40" owner="Mutant Alliance" name="Angel Heart Heights"/>
+            <building x0="91" x1="99" y0="21" y1="26" owner="S.E.L.F." name="Lovecraft Block"/>
+            <building x0="80" x1="84" y0="15" y1="19" owner="Marsec" name="Arms One"/>
+            <building x0="94" x1="98" y0="15" y1="19" owner="Megapol" name="Arms Two"/>
+            <building x0="57" x1="62" y0="3" y1="9" owner="Marsec" name="Megaflyer Two"/>
+            <building x0="64" x1="69" y0="1" y1="6" owner="Megapol" name="Flyer Two"/>
+            <building x0="71" x1="75" y0="3" y1="6" owner="Synthemesh" name="Construction One"/>
+            <building x0="78" x1="84" y0="2" y1="6" owner="Nanotech" name="Appliances Two"/>
+            <building x0="86" x1="90" y0="2" y1="6" owner="General Metro" name="Car One"/>
+            <building x0="92" x1="98" y0="6" y1="10" owner="Marsec" name="Warehouse Nine"/>
+            <building x0="93" x1="98" y0="1" y1="4" owner="Evonet" name="Cityclean Two"/>
+            <building x0="33" x1="37" y0="79" y1="83" owner="Sanctuary Clinic" name="The Lineage Foundation"/>
+            <building x0="53" x1="58" y0="75" y1="80" owner="Osiron" name="Bakunin Block"/>
+            <building x0="30" x1="39" y0="53" y1="57" owner="Osiron" name="Saturn Block"/>
+            <building x0="84" x1="87" y0="20" y1="25" owner="Government" name="Hades Block"/>
+            <building x0="74" x1="81" y0="28" y1="32" owner="Mutant Alliance" name="Neptune Towers"/>
+        </building>
+    </city>
+</openapoc_rules>

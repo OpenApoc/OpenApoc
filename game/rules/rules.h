@@ -22,9 +22,9 @@ private:
 	std::map<UString, VehicleDefinition> vehicleDefs;
 	std::vector<BuildingDef> buildings;
 	std::vector<OrganisationDef> organisations;
-	std::vector<BuildingTileDef> buildingTiles;
+	std::map<UString, BuildingTileDef> buildingTiles;
 	Vec3<int> citySize;
-	std::vector<int> tileIndices;
+	std::vector<UString> tileIDs;
 	friend class RulesLoader;
 public:
 
@@ -45,9 +45,18 @@ public:
 		return organisations;
 	}
 
-	std::vector<BuildingTileDef> &getBuildingTileDefs()
+	BuildingTileDef &getBuildingTileDef(const UString& id)
 	{
-		return buildingTiles;
+		auto pair = buildingTiles.find(id);
+		if (pair != buildingTiles.end())
+		{
+			return pair->second;
+		}
+		else
+		{
+			LogError("No building tile found with ID \"%s\"", id.str().c_str());
+			return buildingTiles.find("0")->second;
+		}
 	}
 
 	Vec3<int> &getCitySize()
@@ -55,19 +64,25 @@ public:
 		return this->citySize;
 	}
 	
-	int getBuildingTileAt(Vec3<int> offset)
+	const UString& getBuildingTileAt(Vec3<int> offset)
 	{
+		static const UString noTile = "";
 		if (offset.x < 0 || offset.x >= citySize.x
 		 || offset.y < 0 || offset.y >= citySize.y
 		 || offset.z < 0 || offset.z >= citySize.z)
 		{
 			LogError("Trying to get tile {%d,%d,%d} in city of size {%d,%d,%d}",
 				offset.x, offset.y, offset.z, citySize.x, citySize.y, citySize.z);
-			return 0;
+			return noTile;
 		}
 		unsigned index = offset.z * citySize.x * citySize.y + offset.y * citySize.x + offset.x;
-		assert(index < tileIndices.size());
-		return tileIndices[index];
+		if(index >= tileIDs.size())
+		{
+			LogError("Tile {%d,%d,%d} would go over ID array! (city size {%d,%d,%d}, id offset %u, id array size %u",
+				offset.x, offset.y, offset.z, citySize.x, citySize.y, citySize.z, index, tileIDs.size());
+			return noTile;
+		}
+		return tileIDs[index];
 	}
 };
 
