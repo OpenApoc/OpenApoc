@@ -111,9 +111,6 @@
     <ClCompile Include="game\city\building.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\city\organisation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="game\tileview\tile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -205,6 +202,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game\rules\vehicledef_rules.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\rules\citydef_rules.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\rules\organisationdef_rules.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\organisation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -338,9 +344,6 @@
     <ClInclude Include="game\city\building.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\city\organisation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game\city\vehicle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -444,6 +447,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\rules\vehicledef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\rules\buildingdef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\rules\buildingtiledef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\rules\organisationdef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\organisation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
