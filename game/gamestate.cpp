@@ -4,6 +4,8 @@
 #include "framework/includes.h"
 #include "framework/framework.h"
 
+#include <random>
+
 namespace OpenApoc {
 
 GameState::GameState(Framework &fw, Rules &rules)
