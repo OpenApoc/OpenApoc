@@ -88,7 +88,7 @@ UString
 UString::substr(size_t offset, size_t length) const
 {
 	UString other;
-	other.pimpl->setTo(*this->pimpl, offset, length);
+	other.pimpl->setTo(*this->pimpl, offset, std::min(length, this->length()));
 	return other;
 }
 
@@ -157,22 +157,16 @@ std::vector<UString>
 UString::split(const UString& delims) const
 {
 	std::vector<UString> strings;
-	strings.push_back("");
-	for (auto c : *this)
+	int start = 0;
+	int end = this->pimpl->indexOf(*delims.pimpl, start); 
+	while (end != -1)
 	{
-			bool delim = false;
-			for (auto d : delims)
-			{
-					if (c == d)
-					{
-							strings.push_back("");
-							delim = true;
-							break;
-					}
-			}
-			if (!delim)
-					strings.back() += c;
+		strings.push_back(this->substr(start, (unsigned)(end - start)));
+		start = end+1;
+		end = this->pimpl->indexOf(*delims.pimpl, start); 
 	}
+	strings.push_back(this->substr(start, unsigned(end-start)));
+
 	return strings;
 }
 
