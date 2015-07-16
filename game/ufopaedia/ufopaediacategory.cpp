@@ -8,6 +8,8 @@ UfopaediaCategory::UfopaediaCategory(Framework &fw, tinyxml2::XMLElement* Elemen
 {
 	UString nodename;
 
+	ViewingEntry = 0;
+
 	if( Element->Attribute("id") != nullptr && UString(Element->Attribute("id")) != "" )
 	{
 		ID = Element->Attribute("id");
@@ -52,19 +54,21 @@ UfopaediaCategory::~UfopaediaCategory()
 
 void UfopaediaCategory::Begin()
 {
-	((Graphic*)menuform->FindControl("BACKGROUND_PICTURE"))->SetImage( fw.data->load_image(BackgroundImageFilename) );
 	Label* infolabel = ((Label*)menuform->FindControl("TEXT_INFO"));
-	infolabel->SetText( fw.gamecore->GetString(BodyInformation) );
 	ListBox* entrylist = ((ListBox*)menuform->FindControl("LISTBOX_SHORTCUTS"));
 	entrylist->Clear();
-
+	entrylist->ItemHeight = infolabel->GetFont()->GetFontHeight() + 2;
 	for( auto entry = Entries.begin(); entry != Entries.end(); entry++ )
 	{
 		std::shared_ptr<UfopaediaEntry> e = (std::shared_ptr<UfopaediaEntry>)*entry;
 		TextButton* tb = new TextButton( fw, entrylist, fw.gamecore->GetString(e->Title), infolabel->GetFont() );
+		tb->RenderStyle = TextButton::TextButtonRenderStyles::SolidButtonStyle;
+		tb->TextHAlign = HorizontalAlignment::Left;
+		tb->TextVAlign = VerticalAlignment::Centre;
 		entrylist->AddItem( tb );
 	}
 
+	SetupForm();
 }
 
 void UfopaediaCategory::Pause()
@@ -77,8 +81,8 @@ void UfopaediaCategory::Resume()
 
 void UfopaediaCategory::Finish()
 {
-	ListBox* entrylist = ((ListBox*)menuform->FindControl("LISTBOX_SHORTCUTS"));
-	entrylist->Clear();
+	//ListBox* entrylist = ((ListBox*)menuform->FindControl("LISTBOX_SHORTCUTS"));
+	//entrylist->Clear();
 }
 
 void UfopaediaCategory::EventOccurred(Event *e)
@@ -112,10 +116,18 @@ void UfopaediaCategory::EventOccurred(Event *e)
 		}
 		else if( e->Data.Forms.RaisedBy->Name == "BUTTON_NEXT_TOPIC" )
 		{
+			if( ViewingEntry < Entries.size() )
+			{
+				SetTopic( ViewingEntry + 1 );
+			}
 			return;
 		}
 		else if( e->Data.Forms.RaisedBy->Name == "BUTTON_PREVIOUS_TOPIC" )
 		{
+			if( ViewingEntry > 0 )
+			{
+				SetTopic( ViewingEntry - 1 );
+			}
 			return;
 		}
 		else if( e->Data.Forms.RaisedBy->Name == "BUTTON_PREVIOUS_SECTION" )
@@ -150,5 +162,29 @@ bool UfopaediaCategory::IsTransition()
 	return false;
 }
 
+void UfopaediaCategory::SetTopic(int Index)
+{
+	ViewingEntry = Index;
+	SetupForm();
+}
+
+void UfopaediaCategory::SetupForm()
+{
+	if( ViewingEntry == 0 )
+	{
+		((Graphic*)menuform->FindControl("BACKGROUND_PICTURE"))->SetImage( fw.data->load_image(BackgroundImageFilename) );
+		Label* infolabel = ((Label*)menuform->FindControl("TEXT_INFO"));
+		infolabel->SetText( fw.gamecore->GetString(BodyInformation) );
+		infolabel = ((Label*)menuform->FindControl("TEXT_TITLE_DATA"));
+		infolabel->SetText( fw.gamecore->GetString(Title).toUpper() );
+	} else {
+		std::shared_ptr<UfopaediaEntry> e = Entries.at( ViewingEntry - 1 );
+		((Graphic*)menuform->FindControl("BACKGROUND_PICTURE"))->SetImage( fw.data->load_image( e->BackgroundImageFilename ) );
+		Label* infolabel = ((Label*)menuform->FindControl("TEXT_INFO"));
+		infolabel->SetText( fw.gamecore->GetString( e->BodyInformation ) );
+		infolabel = ((Label*)menuform->FindControl("TEXT_TITLE_DATA"));
+		infolabel->SetText( fw.gamecore->GetString( e->Title ).toUpper() );
+	}
+}
 
 }; //namespace OpenApoc

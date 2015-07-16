@@ -56,6 +56,7 @@ void Ufopaedia::EventOccurred(Event *e)
 		else if( e->Data.Forms.RaisedBy->Name.substr(0, 7) == "BUTTON_" )
 		{
 			UString categoryname = e->Data.Forms.RaisedBy->Name.substr(7, e->Data.Forms.RaisedBy->Name.length() - 7);
+			std::string btnname = e->Data.Forms.RaisedBy->Name.str();
 			
 			for( auto dbcat = UfopaediaDB.begin(); dbcat != UfopaediaDB.end(); dbcat++ )
 			{

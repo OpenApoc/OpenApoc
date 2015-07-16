@@ -63,8 +63,14 @@ void Control::ResolveLocation()
 		resolvedLocation.x = Location.x;
 		resolvedLocation.y = Location.y;
 	} else {
-		resolvedLocation.x = owningControl->resolvedLocation.x + Location.x;
-		resolvedLocation.y = owningControl->resolvedLocation.y + Location.y;
+		if( Location.x > owningControl->Size.x || Location.y > owningControl->Size.y )
+		{
+			resolvedLocation.x = -99999;
+			resolvedLocation.y = -99999;
+		} else {
+			resolvedLocation.x = owningControl->resolvedLocation.x + Location.x;
+			resolvedLocation.y = owningControl->resolvedLocation.y + Location.y;
+		}
 	}
 
 	for( auto ctrlidx = Controls.rbegin(); ctrlidx != Controls.rend(); ctrlidx++ )

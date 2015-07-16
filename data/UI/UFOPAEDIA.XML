@@ -177,6 +177,13 @@
 				<position x="2" y="2" />
 				<size width="640" height="480" />
 				
+				<label id="TEXT_TITLE_DATA" text="">
+					<backcolour r="0" g="0" b="0" a="0" />
+					<position x="12" y="22" />
+					<size width="350" height="22" />
+					<alignment horizontal="left" vertical="centre" />
+					<font>BIGFONT</font>
+				</label>
 					
 				<label id="TEXT_ORG_DATA" text="">
 					<backcolour r="0" g="0" b="0" a="0" />

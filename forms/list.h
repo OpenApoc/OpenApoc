@@ -21,6 +21,8 @@ class ListBox : public Control
 		virtual void OnRender();
 
 	public:
+		int ItemHeight;
+
 		ListBox( Framework &fw, Control* Owner );
 		ListBox( Framework &fw, Control* Owner, VScrollBar* ExternalScrollBar );
 		virtual ~ListBox();

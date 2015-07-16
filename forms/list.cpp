@@ -4,12 +4,12 @@
 
 namespace OpenApoc {
 
-ListBox::ListBox( Framework &fw, Control* Owner ) : Control( fw, Owner )
+ListBox::ListBox( Framework &fw, Control* Owner ) : Control( fw, Owner ), ItemHeight( 64 )
 {
 	ConfigureInternalScrollBar();
 }
 
-ListBox::ListBox( Framework &fw, Control* Owner, VScrollBar* ExternalScrollBar ) : Control( fw, Owner )
+ListBox::ListBox( Framework &fw, Control* Owner, VScrollBar* ExternalScrollBar ) : Control( fw, Owner ), ItemHeight( 64 )
 {
 	if( ExternalScrollBar == nullptr )
 	{
@@ -53,7 +53,7 @@ void ListBox::OnRender()
 			ctrl->Location.x = 0;
 			ctrl->Location.y = yoffset - scroller->Value;
 			ctrl->Size.x = ( scroller_is_internal ? scroller->Location.x : this->Size.x );
-			ctrl->Size.y = 64;
+			ctrl->Size.y = ItemHeight;
 			yoffset += ctrl->Size.y + 1;
 		}
 	}

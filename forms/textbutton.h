@@ -26,8 +26,16 @@ class TextButton : public Control
 		virtual void OnRender();
 
 	public:
+
+		enum TextButtonRenderStyles
+		{
+			SolidButtonStyle,
+			MenuButtonStyle
+		};
+
 		HorizontalAlignment TextHAlign;
 		VerticalAlignment TextVAlign;
+		TextButtonRenderStyles RenderStyle;
 
 		TextButton(Framework &fw, Control* Owner, UString Text, std::shared_ptr<BitmapFont> font);
 		virtual ~TextButton();

@@ -18,6 +18,8 @@ class UfopaediaCategory : public Stage
 		UString BackgroundImageFilename;
 		std::vector<std::shared_ptr<UfopaediaEntry>> Entries;
 
+		int ViewingEntry;
+
 		UfopaediaCategory(Framework &fw, tinyxml2::XMLElement* Element);
 		~UfopaediaCategory();
 
@@ -30,5 +32,8 @@ class UfopaediaCategory : public Stage
 		virtual void Update(StageCmd * const cmd);
 		virtual void Render();
 		virtual bool IsTransition();
+
+		void SetTopic(int Index);
+		void SetupForm();
 };
 }; //namespace OpenApoc
