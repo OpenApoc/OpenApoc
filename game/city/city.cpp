@@ -67,6 +67,7 @@ City::City(Framework &fw, GameState &state)
 				auto &cityTileDef = fw.rules->getBuildingTileDef(tileID);
 				auto tile = std::make_shared<BuildingTile>(*this, cityTileDef, Vec3<int>{x,y,z}, bld);
 				this->addObject(std::dynamic_pointer_cast<TileObject>(tile));
+				tile->setPosition(Vec3<int>{x,y,z});
 			}
 		}
 	}
