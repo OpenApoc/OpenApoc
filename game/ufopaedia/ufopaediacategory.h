@@ -1,3 +1,4 @@
+#pragma once
 
 #include "framework/stage.h"
 #include "framework/includes.h"
