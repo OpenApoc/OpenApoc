@@ -195,6 +195,7 @@ void TileView::Render()
 		{
 			for (int x = minX; x < maxX; x++)
 			{
+				bool showOrigin = fw.gamecore->DebugModeEnabled;
 				bool showSelected =
 					(fw.gamecore->DebugModeEnabled &&
 					 z == selectedTilePosition.z &&
@@ -221,6 +222,14 @@ void TileView::Render()
 					objScreenPos.x += offsetX;
 					objScreenPos.y += offsetY;
 					r.draw(img, objScreenPos);
+					if (showOrigin)
+					{
+						objScreenPos = tileToScreenCoords(obj->getPosition());
+						objScreenPos.x += offsetX;
+						objScreenPos.y += offsetY;
+						r.drawLine(objScreenPos - Vec2<float>{5,0}, objScreenPos +Vec2<float>{5,0}, Colour{255,0,0,255});
+						r.drawLine(objScreenPos - Vec2<float>{0,5}, objScreenPos +Vec2<float>{0,5}, Colour{255,0,0,255});
+					}
 				}
 
 				if (showSelected)
