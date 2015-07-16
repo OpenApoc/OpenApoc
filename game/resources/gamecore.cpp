@@ -2,6 +2,8 @@
 #include "game/resources/gamecore.h"
 #include "framework/framework.h"
 
+#include "game/ufopaedia/ufopaedia.h"
+
 namespace OpenApoc {
 
 GameCore::GameCore(Framework &fw)
@@ -115,7 +117,15 @@ void GameCore::ParseXMLDoc( UString XMLFilename )
 			}
 			else if (nodename == "ufopaedia")
 			{
-				// TODO: Handle UFOpaedia nodes
+				tinyxml2::XMLElement* nodeufo;
+				for( nodeufo = node->FirstChildElement(); nodeufo != nullptr; nodeufo = nodeufo->NextSiblingElement() )
+				{
+					nodename = nodeufo->Name();
+					if( nodename == "category" )
+					{
+						Ufopaedia::UfopaediaDB.push_back( std::make_shared<UfopaediaCategory>( nodeufo ) );
+					}
+				}
 			}
 			else
 			{

@@ -234,6 +234,8 @@
     <ClCompile Include="game\tileview\tile.cpp" />
     <ClCompile Include="game\tileview\tileview.cpp" />
     <ClCompile Include="game\ufopaedia\ufopaedia.cpp" />
+    <ClCompile Include="game\ufopaedia\ufopaediacategory.cpp" />
+    <ClCompile Include="game\ufopaedia\ufopaediaentry.cpp" />
     <ClCompile Include="library\configfile.cpp" />
     <ClCompile Include="game\apocresources\cursor.cpp" />
     <ClCompile Include="framework\event.cpp" />
@@ -250,16 +252,16 @@
     <ClCompile Include="game\general\difficultymenu.cpp" />
     <ClCompile Include="game\general\basescreen.cpp" />
     <ClCompile Include="library\strings.cpp" />
-	<ClCompile Include="game\apocresources\rawimage.cpp" />
-	<ClCompile Include="game\city\cityview.cpp" />
-	<ClCompile Include="game\city\scorescreen.cpp" />
-	<ClCompile Include="game\city\infiltrationscreen.cpp" />
-	<ClCompile Include="game\general\ingameoptions.cpp" />
-	<ClCompile Include="game\tileview\voxel.cpp" />
-	<ClCompile Include="game\apocresources\loftemps.cpp" />
-	<ClCompile Include="game\tileview\tile_visible.cpp" />
-	<ClCompile Include="game\tileview\tile_collidable.cpp" />
-	<ClCompile Include="game\tileview\projectile.cpp" />
+    <ClCompile Include="game\apocresources\rawimage.cpp" />
+    <ClCompile Include="game\city\cityview.cpp" />
+    <ClCompile Include="game\city\scorescreen.cpp" />
+    <ClCompile Include="game\city\infiltrationscreen.cpp" />
+    <ClCompile Include="game\general\ingameoptions.cpp" />
+    <ClCompile Include="game\tileview\voxel.cpp" />
+    <ClCompile Include="game\apocresources\loftemps.cpp" />
+    <ClCompile Include="game\tileview\tile_visible.cpp" />
+    <ClCompile Include="game\tileview\tile_collidable.cpp" />
+    <ClCompile Include="game\tileview\projectile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="forms\checkbox.h" />
@@ -304,6 +306,8 @@
     <ClInclude Include="game\tileview\tile.h" />
     <ClInclude Include="game\tileview\tileview.h" />
     <ClInclude Include="game\ufopaedia\ufopaedia.h" />
+    <ClInclude Include="game\ufopaedia\ufopaediacategory.h" />
+    <ClInclude Include="game\ufopaedia\ufopaediaentry.h" />
     <ClInclude Include="library\angle.h" />
     <ClInclude Include="game\apocresources\apocfont.h" />
     <ClInclude Include="game\boot.h" />
@@ -330,15 +334,15 @@
     <ClInclude Include="game\city\city.h" />
     <ClInclude Include="game\general\difficultymenu.h" />
     <ClInclude Include="game\general\basescreen.h" />
-	<ClInclude Include="game\apocresources\rawimage.h" />
-	<ClInclude Include="game\city\cityview.h" />
-	<ClInclude Include="game\city\scorescreen.h" />
-	<ClInclude Include="game\city\infiltrationscreen.h" />
-	<ClInclude Include="game\general\ingameoptions.h" />
-	<ClInclude Include="game\apocresources\loftemps.h" />
-	<ClInclude Include="game\tileview\tile_visible.h" />
-	<ClInclude Include="game\tileview\tile_collidable.h" />
-	<ClInclude Include="game\tileview\projectile.h" />
+    <ClInclude Include="game\apocresources\rawimage.h" />
+    <ClInclude Include="game\city\cityview.h" />
+    <ClInclude Include="game\city\scorescreen.h" />
+    <ClInclude Include="game\city\infiltrationscreen.h" />
+    <ClInclude Include="game\general\ingameoptions.h" />
+    <ClInclude Include="game\apocresources\loftemps.h" />
+    <ClInclude Include="game\tileview\tile_visible.h" />
+    <ClInclude Include="game\tileview\tile_collidable.h" />
+    <ClInclude Include="game\tileview\projectile.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="dependencies\allegro5.vcxproj">

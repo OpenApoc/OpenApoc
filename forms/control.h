@@ -50,6 +50,7 @@ class Control
 		Colour BackgroundColour;
 		bool takesFocus;
 		bool showBounds;
+		bool Visible;
 
 		std::vector<Control*> Controls;
 

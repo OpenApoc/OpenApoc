@@ -4,6 +4,8 @@
 
 namespace OpenApoc {
 
+std::vector<std::shared_ptr<UfopaediaCategory>> Ufopaedia::UfopaediaDB;
+
 Ufopaedia::Ufopaedia(Framework &fw)
 	: Stage(fw)
 {
@@ -50,6 +52,10 @@ void Ufopaedia::EventOccurred(Event *e)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
+		}
+		else if( e->Data.Forms.RaisedBy->Name == "BUTTON_INFORMATION" )
+		{
+			menuform->FindControl("INFORMATION_PANEL")->Visible = !menuform->FindControl("INFORMATION_PANEL")->Visible;
 		}
 		else
 		{

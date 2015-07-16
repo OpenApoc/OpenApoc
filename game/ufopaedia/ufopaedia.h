@@ -8,6 +8,8 @@
 #include "game/apocresources/apocresource.h"
 #include "forms/forms.h"
 
+#include "ufopaediacategory.h"
+
 namespace OpenApoc {
 
 class Ufopaedia : public Stage
@@ -18,6 +20,8 @@ class Ufopaedia : public Stage
 
 
 	public:
+		static std::vector<std::shared_ptr<UfopaediaCategory>> UfopaediaDB;
+
 		Ufopaedia(Framework &fw);
 		~Ufopaedia();
 		// Stage control
