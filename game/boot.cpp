@@ -7,12 +7,26 @@
 
 namespace OpenApoc {
 
+static void CreateGameCore(Framework *fw, std::atomic<bool> *isComplete)
+{
+	UString ruleset = fw->Settings->getString( "GameRules" );
+	UString language = fw->Settings->getString( "Language" );
+
+	fw->gamecore.reset(new GameCore(*fw));
+
+	fw->gamecore->Load(ruleset, language);
+	*isComplete = true;
+}
+
 void BootUp::Begin()
 {
 	loadingimage = fw.data->load_image( "UI/LOADING.PNG" );
 	logoimage = fw.data->load_image( "UI/LOGO.PNG" );
 	loadtime = 0;
 	fw.Display_SetTitle("OpenApocalypse");
+
+	this->gamecoreLoadComplete = false;
+	this->asyncGamecoreLoad = std::async(std::launch::async, CreateGameCore, &fw, &this->gamecoreLoadComplete);
 }
 
 void BootUp::Pause()
@@ -37,14 +51,9 @@ void BootUp::Update(StageCmd * const cmd)
 	loadtime++;
 	loadingimageangle.Add( 5 );
 
-	if(fw.gamecore == nullptr)
+	if(gamecoreLoadComplete)
 	{
-		CreateGameCore(fw);
-	}
-
-	if(fw.gamecore && fw.gamecore->Loaded)
-	{
-		StartGame();
+		asyncGamecoreLoad.wait();
 		cmd->cmd = StageCmd::Command::REPLACE;
 		cmd->nextStage = std::make_shared<MainMenu>(fw);
 	}
@@ -69,23 +78,10 @@ void BootUp::Render()
 	fw.renderer->drawRotated(loadingimage, Vec2<float>{24, 24}, Vec2<float>{fw.Display_GetWidth() - 50, fw.Display_GetHeight() - 50}, loadingimageangle.ToRadians() );
 }
 
-void BootUp::StartGame()
-{
-}
-
 bool BootUp::IsTransition()
 {
 	return false;
 }
 
-void BootUp::CreateGameCore(Framework &fw)
-{
-	UString ruleset = fw.Settings->getString( "GameRules" );
-	UString language = fw.Settings->getString( "Language" );
-
-	fw.gamecore.reset(new GameCore(fw));
-
-	fw.gamecore->Load(ruleset, language);
-}
 
 }; //namespace OpenApoc
