@@ -79,7 +79,7 @@
 	</string>
 	<string id="STR_VEHICLE_EQUIPMENT_INFO">
 		<en_gb>All military vehicles can be equipped with a variety of weapons, engines and special equipment. The engines and weapons are divided into road 	and airborne categories. Careful attention to improving vehicle equipment is an essential part of military strategy.</en_gb>	
-		<es_la>Todos los vehículos militares pueden ser equipados con una variedad de armas, motores y equipos especiales. Los motores y las armas se dividen en categorías terrestres y aereas. Se debe tomar mucho cuidado en la mejora del equipo de vehiculos ya que es una parte esencial de la estrategia militar.</es_la>
+		<es_la>Todos los vehículos militares pueden ser equipados con una variedad de armas, motores y equipos especiales. Los motores y las armas se dividen en categorías terrestres y aereas. Se debe tomar mucho cuidado en la mejora del equipo de vehiculos ya que es una parte esencial de la estrategia militar.</es_la>	
 		<fr_fr>Les véhicules militaires peuvent tous être équipés d&apos;une variété d&apos;armes, de moteurs et d&apos;équipement spécial. Les moteurs et les armes sont classés par catégorie: terrestre ou aérienne. L&apos;amélioration de l&apos;équipement des véhicules est l&apos;un des facteurs essentiels de la stratégie militaire.</fr_fr>
 		<de_de>Alle Militärfahrzeuge können mit zahlreichen Waffen, Antriebseinheiten sowie besonderer Ausrüstung bestückt werden. Die Waffen und Antriebseinheiten gibt es jeweils für Straßen oder Luftfahrzeuge. Die Optimierung der Fahrzeugausrüstung ist ein wichtiger Teil der militärischen Strategie.</de_de>
 	</string>	
@@ -193,7 +193,7 @@
 	</string>
 	<string id="STR_FAST_ATTACK_SHIP">
 		<en_gb>Alien Fast Attack Ship</en_gb>
-		<es_la>Acorazado alienígena</es_la>
+		<es_la>Nave de ataque rápido alienígena</es_la>
 		<fr_fr>Vaisseau d&apos;attaque rapide alien</fr_fr>
 		<de_de>Alien-Blitzangriffsschiff</de_de>
 	</string>
@@ -301,25 +301,25 @@
 	</string>
 	<string id="STR_RESCUE_TRANSPORT">
 		<en_gb>Rescue Transport</en_gb>
-		<es_la>Rescue Transport</es_la>
+		<es_la>Transporte de rescate</es_la>
 		<fr_fr>Transport de secours</fr_fr>
 		<de_de>Rettungstransporter</de_de>
 	</string>
 	<string id="STR_RESCUE_TRANSPORT_INFO">
 		<en_gb>The airborne rescue vehicle serves as an ambulance and fire engine. It is specially equipped to deal with rescue situations involving car accidents and other disasters. However dealing with the Alien invasion is well beyond the scope of the rescue service which normally has little to do given the strict safety regulations governing all aspects of city life.</en_gb>
-		<es_la>The airborne rescue vehicle serves as an ambulance and fire engine. It is specially equipped to deal with rescue situations involving car accidents and other disasters. However dealing with the Alien invasion is well beyond the scope of the rescue service which normally has little to do given the strict safety regulations governing all aspects of city life.</es_la>
+		<es_la>El vehículo aéreo de rescate sirve como ambulancia y carro de bomberos. Está especialmente equipado para hacer frente a situaciones de rescate que implican accidentes de tráfico y otros desastres. Sin embargo una invasión alienigena esta mucho más allá del ámbito de aplicación del servicio de rescate lo cual tiene poco que ver dadas las estrictas normas de seguridad que rigen todos los aspectos de la vida en la ciudad.</es_la>
 		<fr_fr>Le véhicule de secours aérien sert d&apos;ambulance et de voiture de pompier. Il est spécialement équipé pour apporter des secours dans des situations telles que des accidents d&apos;auto ou autres catastrophes dans la ville. Cependant le service de secours, qui n&apos;a pratiquement jamais à intervenir en raison des règles de sécurité extrêmement strictes de la ville, ne dispose pas des compétences nécessaires pour faire face à l&apos;invasion alienne.</fr_fr>
 		<de_de>Dieses Luftfahrzeug wird als Krankenwagen und Feuerwehrfahrzeug eingesetzt. Durch seine spezielle Ausrüstung ist es für Rettungsaktionen wie beispielsweise Autounfälle und andere Notfälle bestens geeignet. Für Auseinandersetzungen mit den Aliens sind die Rettungsdienste nicht gerüstet, und aufgrund der strikten Sicherheitsbestimmungen, die alle Einzelheiten des Stadtlebens regeln, haben sie meist nicht viel zu tun.</de_de>
 	</string>
 	<string id="STR_CONSTRUCTION_VEHICLE">
 		<en_gb>Construction Vehicle</en_gb>
-		<es_la>Construction Vehicle</es_la>
+		<es_la>Vehículo de construcción</es_la>
 		<fr_fr>Véhicule de construction</fr_fr>
 		<de_de>Konstruktionsfahrzeug</de_de>
 	</string>
 	<string id="STR_CONSTRUCTION_VEHICLE_INFO">
 		<en_gb>This multipurpose craft is used to build and repair any type of building within the city boundary. It will also repair roads, bridges and other structures. The aesthetic regulations also require construction vehicles to be equipped for landscape gardening and forestry work.</en_gb>
-		<es_la>This multipurpose craft is used to build and repair any type of building within the city boundary. It will also repair roads, bridges and other structures. The aesthetic regulations also require construction vehicles to be equipped for landscape gardening and forestry work.</es_la>
+		<es_la>Esta embarcación multipropósito se utiliza para construir y reparar cualquier tipo de edificio dentro de los límites de la ciudad. También se usa para reparar carreteras, puentes y otras estructuras. Las normas estéticas también requieren que los vehículos de construcción sean equipados para jardinería y trabajo forestal.</es_la>
 		<fr_fr>Ce vaisseau polyvalent est utilisé pour construire et réparer tous les types de bâtiment se trouvant dans les limites de la ville. Il répare également les routes, les ponts et autres structures. Selon les décrets sur l&apos;esthétisme, les véhicules de construction doivent aussi être équipés pour le jardinage paysagiste et les travaux forestiers.</fr_fr>
 		<de_de>Dieses Vielzweck-Fahrzeug wird zum Bau bzw. zur Instandhaltung jeglicher Art von Gebäuden sowie von Straßen, Brücken und ähnlichem verwendet. In Übereinstimmung mit den Ästhetikbestimmungen müssen Konstruktionsfahrzeuge auch für die Landschaftspflege und Forstarbeiten einsetzbar sein.</de_de>
 	</string>
@@ -331,55 +331,55 @@
 	</string>
 	<string id="STR_AIRTRANS_INFO">
 		<en_gb>Heavy transportation is mainly undertaken by these heavy duty air transports. Manufactured goods are transported entirely by air, given the unreliability and dangers of road transport in the deregulated areas, or slums. The Airtrans is a computer controlled craft, but must be manned by law according to the inter-personal contact ordinances.</en_gb>
-		<es_la>Heavy transportation is mainly undertaken by these heavy duty air transports. Manufactured goods are transported entirely by air, given the unreliability and dangers of road transport in the deregulated areas, or slums. The Airtrans is a computer controlled craft, but must be manned by law according to the inter-personal contact ordinances.</es_la>
+		<es_la>Transportación pesada se lleva a cabo principalmente por estos transportes aéreos pesados. Los productos manufacturados son transportados en su totalidad por aire, dada la falta de fiabilidad y peligros del transporte por carretera en las zonas desreguladas, o barrios marginales. El Airtrans es  controlado por ordenador, pero que debe ser atendido de acuerdo con las ordenanzas de contacto inter-personal.</es_la>
 		<fr_fr>L&apos;Airtrans est un transporteur aérien résistant destiné aux produits lourds ou encombrants. En raison du manque de fiabilité et des dangers des transports routiers dans les zones non réglementées ou les taudis, les produits manufacturés sont toujours transportés par les airs. Ce vaisseau contrôlé par ordinateur doit obligatoirement posséder un équipage, conformément aux décrets de contacts interpersonnels.</fr_fr>
 		<de_de>Die Beförderung von schweren Gütern erfolgt in der Regel mit den Lufttransportern. Aufgrund der Unzuverlässigkeit und der Gefahren des Straßentransports in den deregulierten Gebieten (oder Slums) werden Güter zumeist auf dem Luftweg transportiert. Obwohl der Lufttransporter computergesteuert ist, schreiben die interpersonellen Kontaktbestimmungen eine Besatzung vor.</de_de>
 	</string>
 	<string id="STR_SPACE_LINER">
 		<en_gb>Space Liner</en_gb>
-		<es_la>Space Liner</es_la>
+		<es_la>Nave espacial</es_la>
 		<fr_fr>Cargo spatial</fr_fr>
 		<de_de>Raumkreuzer</de_de>
 	</string>
 	<string id="STR_SPACE_LINER_INFO">
 		<en_gb>The huge Space Liners enable commerce with Mars, the Moon and the deep space mining colonies. Huge quantities of manufactured goods are transported outwards, the Space Liners then return laden with raw materials and small quantities of the precious Elerium.</en_gb>
-		<es_la>The huge Space Liners enable commerce with Mars, the Moon and the deep space mining colonies. Huge quantities of manufactured goods are transported outwards, the Space Liners then return laden with raw materials and small quantities of the precious Elerium.</es_la>
+		<es_la>Las enormes naves espaciales permiten el comercio con Marte, la Luna y las colonias mineras en el espacio profundo. Vastas cantidades de productos manufacturados son transportados hacia el exterior, la naves espaciales luego regresar cargados de materia prima y pequeñas cantidades del valioso Elerium.</es_la>
 		<fr_fr>Les énormes cargos spatiaux permettent des actes de commerce entre Mars, la Lune et les colonies minières spatiales. D&apos;énormes quantités de produits manufacturés y sont transportées. Au retour, les cargos spatiaux sont chargés de matières premières et de petites quantités du précieux élérium.</fr_fr>
 		<de_de>Diese riesigen Raumkreuzer ermöglichen Handelsverbindungen mit dem Mars, dem Mond und den Bergbaukolonien im Weltraum. Mit Hilfe dieser Kreuzer werden große Mengen an Produktionsgütern ausgeliefert und Rohstoffe und kleinere Mengen des wertvollen Eleriums zur Erde zurücktransportiert.</de_de>
 	</string>
 	<string id="STR_PHOENIX_HOVERCAR">
 		<en_gb>Phoenix Hovercar</en_gb>
-		<es_la>Phoenix Hovercar</es_la>
+		<es_la>Aerodeslizador Phoenix</es_la>
 		<fr_fr>Hovercar Phénix</fr_fr>
 		<de_de>Phoenix-Schwebefahrzeug</de_de>
 	</string>
 	<string id="STR_PHOENIX_HOVERCAR_INFO">
 		<en_gb>The Phoenix is manufactured by Marsec mainly for military purposes. This sleek but rugged vehicle is used for reconnaissance in dangerous environments such as the Mars colony. A variety of weapon and engine configurations can be used and a well equipped Phoenix is more than a match for a police Hovercar.</en_gb>
-		<es_la>The Phoenix is manufactured by Marsec mainly for military purposes. This sleek but rugged vehicle is used for reconnaissance in dangerous environments such as the Mars colony. A variety of weapon and engine configurations can be used and a well equipped Phoenix is more than a match for a police Hovercar.</es_la>
+		<es_la>El Phoenix es fabricado por Marsec principalmente para fines militares. Este elegante pero robusto vehículo se utiliza para el reconocimiento en zonas peligrosas, como la colonia de Marte. Puede utilizar una variedad de configuraciones de armas y motores, un Phoenix bien equipado es más que parejo para un aerodeslizador policíal.</es_la>
 		<fr_fr>Le Phénix est fabriqué par Marsec, essentiellement à des fins militaires. Ce vaisseau robuste aux lignes pures est utilisé pour les missions de reconnaissance dans des environnements dangereux tels que la colonie de Mars. Une grande diversité de configurations d&apos;armes et de moteurs peut être utilisée, et un Phénix bien équipé aura de meilleures performances qu&apos;une hovercar de police.</fr_fr>
 		<de_de>Der Phoenix wird von Marsec hauptsächlich für militärische Zwecke produziert. Das elegante und gleichzeitig sehr robuste Schiff wird für Aufklärungseinsätze in gefährlichen Umgebungen wie der Mars-Kolonie verwendet. Eine Vielzahl von Waffen- und Triebwerkskonfigurationen kann eingesetzt werden, und ein gut ausgerüsteter Phoenix nimmt es mit einem Polizei-Schwebefahrzeug mit Leichtigkeit auf.</de_de>
 	</string>
 	<string id="STR_HOVERBIKE">
 		<en_gb>Hoverbike</en_gb>
-		<es_la>Hoverbike</es_la>
+		<es_la>Motoaerodeslizadora</es_la>
 		<fr_fr>Hoverbike</fr_fr>
 		<de_de>Schwebemotorrad</de_de>
 	</string>
 	<string id="STR_HOVERBIKE_INFO">
 		<en_gb>The unusual Hoverbike with &amp;apos;side car&amp;apos; is used for military purposes or for the personal pleasure of wayward youth who enjoy speed and altitude. Its good power to weight ratio means that this is the most maneuverable air vehicle but it can only carry light armaments. The Hoverbike can be a valuable means of transport for the  Agent on investigative missions where speed of response is essential.</en_gb>
-		<es_la>The unusual Hoverbike with &amp;apos;side car&amp;apos; is used for military purposes or for the personal pleasure of wayward youth who enjoy speed and altitude. Its good power to weight ratio means that this is the most maneuverable air vehicle but it can only carry light armaments. The Hoverbike can be a valuable means of transport for the  Agent on investigative missions where speed of response is essential.</es_la>
+		<es_la>El inusual Motoaerodeslizador con &amp;apos;vehículo lateral&amp;apos; se utiliza para fines militares o para el placer personal de la juventud descarriada que disfrutan de la velocidad y altitud. Su buena proporción de peso con potencia significa que este es el vehículo aéreo más maniobrable pero sólo puede llevar armamentos ligeros. El Motoaerodeslizador puede ser un medio de transporte valioso para un agente en misiones de investigación, donde la velocidad de respuesta es esencial.</es_la>
 		<fr_fr>L&apos;étrange hoverbike &quot;side-car&quot; est utilisée à des fins essentiellement militaires ou par les adolescents rebelles qui se grisent de vitesse et d&apos;altitude. Son impressionnant rapport puissance-poids en fait un véhicule extrêmement maniable dans les airs, mais elle ne peut être équipée que d&apos;armes légères. L&apos;hoverbike peut se révéler un moyen de transport précieux pour les agents d&apos;X-COM menant des enquêtes où la rapidité de réponse est essentielle.</fr_fr>
 		<de_de>Das ungewöhnliche Schwebemotorrad mit Seitenwagen wird vor allem für militärische Zwecke eingesetzt, doch auch wohlhabende Jugendliche fahren es aufgrund seiner Geschwindigkeit und seiner enormen Flughöhe gern. Wegen seines beeindruckenden Kraft-Gewicht-Verhältnisses ist es sehr manövrierfähig, es kann jedoch nur mit leichten Waffen bestückt werden. Das Schwebemotorrad ist für X-COM-Agenten besonders auf Aufklärungseinsätzen nützlich, wenn es auf schnelle Reaktion ankommt.</de_de>
 	</string>
 	<string id="STR_VALKYRIE">
 		<en_gb>Valkyrie Interceptor</en_gb>
-		<es_la>Valkyrie Interceptor</es_la>
+		<es_la>Interceptor Valkyrie</es_la>
 		<fr_fr>Intercepteur Valkyrie</fr_fr>
 		<de_de>Valkyrie-Abfangjäger</de_de>
 	</string>
 	<string id="STR_VALKYRIE_INFO">
 		<en_gb>The Valkyrie is the standard military vehicle manufactured by Marsec. Its sleek lines appear reminiscent of old rocket designs, but it is a fully capable anti-grav dependent craft with a variety of engine configurations. There is space for many types of armaments and equipment loads. It is capable of solar system travel and is feared by the criminal cartels when it is used to police the space lanes to Mars and beyond.</en_gb>
-		<es_la>The Valkyrie is the standard military vehicle manufactured by Marsec. Its sleek lines appear reminiscent of old rocket designs, but it is a fully capable anti-grav dependent craft with a variety of engine configurations. There is space for many types of armaments and equipment loads. It is capable of solar system travel and is feared by the criminal cartels when it is used to police the space lanes to Mars and beyond.</es_la>
+		<es_la>El Valkyrie es el vehículo estándar militar fabricado por Marsec. Sus líneas elegantes son reminiscentes de viejos diseños de cohetes, pero es una nave con anti-gravedad competente con una variada configuracion de motores. No hay espacio para muchos tipos de armamentos y dispositivos de equipos. Es capaz de viajar atraves del sistema solar y es temido por los cárteles criminales cuando se utiliza para vigilar las rutas espaciales a Marte y más allá.</es_la>
 		<fr_fr>Le Valkyrie est le véhicule militaire standard conçu par Marsec. Ses lignes pures rappellent les premiers designs de fusées inventées au XXème siècle; c&apos;est cependant un vaisseau anti-gravité entièrement autonome avec plusieurs configurations de moteur possible. Il peut contenir une grande variété d&apos;armes et d&apos;équipements. Il peut voyager dans le système solaire et nombreux sont les cartels de criminels qui le craignent.</fr_fr>
 		<de_de>Der Valkyrie-Abfangjäger ist das Standard-Militärfahrzeug von Marsec. Seine elegante Stromlinienform erinnert an die erste Raketengeneration aus dem 20. Jahrhundert. Es handelt sich jedoch um ein voll funktionsfähiges Anti-Schwerkraftschiff mit einer Vielzahl von Triebwerkskonfigurationen. Es ist ausreichend Raum für verschiedene Waffenarten und Ausrüstungsgegenstände vorhanden. Es ist für intersolare Reisen geeignet und flößt kriminellen Kartellen gehörigen Respekt ein, wenn es zur Überwachung der Raumstraßen zum Mars und zu anderen Systemen genutzt wird.</de_de>
 	</string>
@@ -391,19 +391,19 @@
 	</string>
 	<string id="STR_HAWK_AIR_WARRIOR_INFO">
 		<en_gb>The Hawk is essentially a heavy weapons platform capable of carrying a significant payload. It is the most powerful vehicle manufactured by Marsec and should be the first line of defense against any invasion force, wherever it comes from.</en_gb>
-		<es_la>The Hawk is essentially a heavy weapons platform capable of carrying a significant payload. It is the most powerful vehicle manufactured by Marsec and should be the first line of defense against any invasion force, wherever it comes from.</es_la>
+		<es_la>El Hawk es fundamentalmente una plataforma de armas pesada, capaz de llevar un numero significante de armameto. Es el vehículo más potente fabricado por Marsec y debe ser la primera línea de defensa contra cualquier fuerza invasora, venga de donde venga.</es_la>
 		<fr_fr>L&apos;Hawk est essentiellement une plate-forme d&apos;armes lourdes capable de stocker un nombre d&apos;armes impressionnant. C&apos;est le véhicule le plus puissant fabriqué par Marsec et il devrait se trouver dans les premières lignes de défense contre les forces d&apos;invasion, d&apos;où qu&apos;elles viennent.</fr_fr>
 		<de_de>Der Hawk ist im Prinzip ein Waffenträger für schwere Geschütze, der außerdem beachtliche Nutzlasten tragen kann. Es ist das leistungsfähigste Fahrzeug der Firma Marsec und sollte das primäre Verteidigungsmittel gegen jede Invasionsmacht darstellen, wo immer sie auch herkommen mag.</de_de>
 	</string>
 	<string id="STR_DIMENSION_PROBE">
 		<en_gb>Dimension Probe</en_gb>
-		<es_la>Dimension Probe</es_la>
+		<es_la>Sonda Dimensional</es_la>
 		<fr_fr>Sonde dimensionnelle</fr_fr>
 		<de_de>Dimensionssonde</de_de>
 	</string>
 	<string id="STR_DIMENSION_PROBE_INFO">
 		<en_gb>This unmanned automated probe is designed to explore the Alien Dimension and has minimal armaments and defenses. The Probe will enable X-COM to test its new adaptation of the Aliens inter-dimensional technology. Exploration is a vital requirement for developing further knowledge of the Alien threat and the probe is just the first step.</en_gb>
-		<es_la>This unmanned automated probe is designed to explore the Alien Dimension and has minimal armaments and defenses. The Probe will enable X-COM to test its new adaptation of the Aliens inter-dimensional technology. Exploration is a vital requirement for developing further knowledge of the Alien threat and the probe is just the first step.</es_la>
+		<es_la>Esta sonda automatica está diseñada para explorar la dimensión alienígena y tiene mínimo armamento y defensas. La sonda permitirá a X-COM probar las nuevas adaptaciónes tecnologicas interdimensional alienígenas. La exploración es un requisito fundamental para un mayor conocimiento de la amenaza alienígena y la sonda es sólo el primer paso.</es_la>
 		<fr_fr>Cette sonde automatisée fonctionnant sans aucun équipage à bord est conçue pour explorer la dimension alienne et ne possède ni armement, ni défense. Elle permettra aux scientifiques d&apos;X-COM de tester sa nouvelle technologie interdimensionnelle basée sur celle des aliens. L&apos;exploration est un facteur vital pour approfondir la connaissance de la menace alienne; la sonde en représente la toute première étape.</fr_fr>
 		<de_de>Diese unbemannte, automatisierte Sonde wurde zur Erforschung der Alien-Dimension gebaut und ist daher nur mit minimalen Waffen und Verteidigungsfunktionen ausgestattet. Mit Hilfe dieser Sonde können die X-COM-Wissenschaftler ihre Weiterentwicklungen der Interdimensionstechnik der Aliens testen. Dieses Forschungsgebiet ist überaus wichtig, um die Kenntnisse über die Alien-Bedrohung zu vertiefen. Die Sonde stellt allerdings nur den ersten Schritt dar.</de_de>
 	</string>
@@ -415,13 +415,13 @@
 	</string>
 	<string id="STR_BIOTRANS_INFO">
 		<en_gb>This inter-dimensional transport is designed for transporting Alien life forms or Alien technology captured during tactical missions in the Alien Dimension.</en_gb>
-		<es_la>This inter-dimensional transport is designed for transporting Alien life forms or Alien technology captured during tactical missions in the Alien Dimension.</es_la>
+		<es_la>Este transporte interdimensional está diseñado para el transporte de alienígenas o tecnología alienígena capturada durante las misiones tácticas en la dimensión alienígena.</es_la>
 		<fr_fr>Ce moyen de transport interdimensionnel est spécifiquement conçu pour transporter les formes de vie et la technologie aliennes capturées au cours des missions tactiques dans la dimension alienne.</fr_fr>
 		<de_de>Dieser interdimensionale Transporter wurde für den Transport lebender Aliens und ihrer Technologie entworfen, die auf taktischen Einsätzen in der Alien-Dimension erbeutet werden.</de_de>
 	</string>
 	<string id="STR_EXPLORER">
 		<en_gb>Explorer</en_gb>
-		<es_la>Explorer</es_la>
+		<es_la>Explorador</es_la>
 		<fr_fr>Explorateur</fr_fr>
 		<de_de>Forschungsschiff</de_de>
 	</string>
@@ -433,25 +433,25 @@
 	</string>
 	<string id="STR_RETALIATOR">
 		<en_gb>Retaliator</en_gb>
-		<es_la>Retaliator</es_la>
+		<es_la>Vengador</es_la>
 		<fr_fr>Riposteur</fr_fr>
 		<de_de>Retaliator</de_de>
 	</string>
 	<string id="STR_RETALIATOR_INFO">
 		<en_gb>The development of the Retaliator shifts the emphasis from exploration to attack. Our Engineers have at last produced a craft which can match the capabilities of many of the Alien ships.</en_gb>
-		<es_la>The development of the Retaliator shifts the emphasis from exploration to attack. Our Engineers have at last produced a craft which can match the capabilities of many of the Alien ships.</es_la>
+		<es_la>El desarrollo del Vengador cambia el énfasis de la exploración a ataque. Nuestros ingenieros han producido en la última nave que puede igualar las capacidades de muchas de las naves alienígenas.</es_la>
 		<fr_fr>Avec le développement du Riposteur, l&apos;accent est porté sur l&apos;attaque plutôt que sur l&apos;exploration. Nos ingénieurs ont enfin développé un vaisseau pouvant se mesurer à de nombreux vaisseaux aliens.</fr_fr>
 		<de_de>Mit der Entwicklung des Retaliator wurde der Einsatzschwerpunkt von der Erforschung der Alien-Dimension auf den Angriff verlegt. X-COM-Technikern ist es endlich gelungen, ein Fahrzeug zu produzieren, das den meisten Alien-Raumschiffen das Wasser reichen kann.</de_de>
 	</string>
 	<string id="STR_ANNIHILATOR">
 		<en_gb>Annihilator</en_gb>
-		<es_la>Annihilator</es_la>
+		<es_la>Aniquilador</es_la>
 		<fr_fr>Anéantisseur</fr_fr>
 		<de_de>Annihilator</de_de>
 	</string>
 	<string id="STR_ANNIHILATOR_INFO">
 		<en_gb>The ultimate expression of X-COM technology - a mean, fast and devastating craft which, if properly equipped, is more than a match for the biggest Alien attack ships. The Annihilator will help secure X-COM domination of the Alien Dimension.</en_gb>
-		<es_la>The ultimate expression of X-COM technology - a mean, fast and devastating craft which, if properly equipped, is more than a match for the biggest Alien attack ships. The Annihilator will help secure X-COM domination of the Alien Dimension.</es_la>
+		<es_la>La cumbre de la tecnología de X-COM - una nave agresiva,, rápido y devastadora que, si debidamente equipada, es más que un reto para los mayores naves de ataque alienígenas. El Aniquilador ayudará a asegurar el dominio de X-COM de la dimensión alienígena.</es_la>
 		<fr_fr>Le nec plus ultra en matière de technologie automobile X-COM: un vaisseau rapide, terrifiant et destructeur qui, s&apos;il est bien équipé, éclipsera même le plus puissant des vaisseaux d&apos;attaque aliens. L&apos;anéantisseur aidera à assurer la domination d&apos;X-COM sur la dimension alienne.</fr_fr>
 		<de_de>Der ultimative Inbegriff moderner X-COM-Fahrzeugtechnologie - ein mächtiges, schnelles Fahrzeug von enormer Durchschlagskraft, das bei angemessener Ausstattung auch mit den größten Alien-Angriffsschiffen fertig wird. Der Annihilator sollte dazu beitragen, die X-COM-Vorherrschaft über die Alien-Dimension zu sichern.</de_de>
 	</string>
@@ -2773,7 +2773,7 @@
 	</string>
 	<string id="STR_ENTROPY_POD">
 		<en_gb>Entropy Pod</en_gb>
-		<es_la>Entropy Pod</es_la>
+		<es_la>Cápsula de entropía</es_la>
 		<fr_fr>Capsule d&apos;entropie</fr_fr>
 		<de_de>Entropiekapsel</de_de>
 	</string>
@@ -2785,133 +2785,133 @@
 	</string>
 	<string id="STR_DIMENSION_MISSILE_LAUNCHER">
 		<en_gb>Dimension Missile Launcher</en_gb>
-		<es_la>Dimension Missile Launcher</es_la>
+		<es_la>Lanzador de misil dimensional</es_la>
 		<fr_fr>Rampe de missiles dimensionnels</fr_fr>
 		<de_de>Dimensions-Raketenabschussvorrichtung</de_de>
 	</string>
 	<string id="STR_DIMENSION_MISSILE_LAUNCHER_INFO">
 		<en_gb>This launcher propels devastating Dimension Missiles which contain an immensely powerful explosive system. The missile is guided to its target and is very accurate at long ranges. The technology is reproducible and quite distinct from the organic weaponry that is used by most Aliens.</en_gb>
-		<es_la>This launcher propels devastating Dimension Missiles which contain an immensely powerful explosive system. The missile is guided to its target and is very accurate at long ranges. The technology is reproducible and quite distinct from the organic weaponry that is used by most Aliens.</es_la>
+		<es_la>Este lanzador propulsa devastadores misiles dimensioanles que contienen un sistema explosivo inmensamente potente. Este misil es guiado hacia su blanco y es muy certero a largo alcance. Esta tecnología es reproducible y dista bastante del armamento orgánico utilizado por muchos aliens.</es_la>
 		<fr_fr>Cette arme lance des missiles dimensionnels dévastateurs qui contiennent un système explosif d&apos;une puissance extrême. Le missile est guidé jusqu&apos;à sa cible et il est très précis sur de longues distances. Il est possible de reproduire cette technologie qui est relativement différente de l&apos;armement organique utilisé par la plupart des aliens.</fr_fr>
 		<de_de>Diese Abschußvorrichtung feuert gewaltige Dimensionsraketen ab, in denen sich ein unglaublich starkes Sprengsystem befindet. Die Lenkrakete ist auch auf große Reichweiten äußerst treffsicher. Die dem System zugrundeliegende Technologie ist reproduzierbar und unterscheidet sich deutlich von den organischen Waffen, die von den meisten Aliens benutzt werden.</de_de>
 	</string>
 	<string id="STR_DIMENSION_MISSILE">
 		<en_gb>Dimension Missile</en_gb>
-		<es_la>Dimension Missile</es_la>
+		<es_la>Misil dimensional</es_la>
 		<fr_fr>Missile interdimensionnel</fr_fr>
 		<de_de>Dimensionsrakete</de_de>
 	</string>
 	<string id="STR_DIMENSION_MISSILE_INFO">
 		<en_gb>The missile explodes with devastating power. It seems to use an inter-dimensional flux to suck in anti-matter from an alternate dimension. This instantly generates an atomic reaction which destroys the missile and most of its surrounding matter. It should not be used in situations where buildings and civilians need to be protected.</en_gb>
-		<es_la>The missile explodes with devastating power. It seems to use an inter-dimensional flux to suck in anti-matter from an alternate dimension. This instantly generates an atomic reaction which destroys the missile and most of its surrounding matter. It should not be used in situations where buildings and civilians need to be protected.</es_la>
+		<es_la>Este misil explota con un poder devastador. Parace usar flujo interdimensioanl para absorver antimateria de una dimensión paralela. Esto genera instáneamente una reacción atómica que destruye al misil y toda materia a su alrededor. No se debe utilizar en situaciónes donde edificios y civiles deban ser protegidos.</es_la>
 		<fr_fr>Ce missile déploie une puissance dévastatrice lorsqu&apos;il explose. Il semble utiliser un flux interdimensionnel pour aspirer l&apos;antimatière venant d&apos;une autre dimension. Ceci génère une réaction atomique immédiate qui détruit le missile et la plupart des choses qui l&apos;entourent. Cette arme ne doit pas être utilisée dans les situations impliquant la protection de bâtiments et de civils.</fr_fr>
 		<de_de>Die Sprengkraft dieser Rakete ist gewaltig. Sie scheint ein interdimensionales Magnetfeld zu nutzen, um Anti-Materie aus anderen Dimensionen 'anzusaugen'. Dadurch wird augenblicklich eine atomare Reaktion in Gang gesetzt, und die Rakete explodiert. Die Waffe sollte nicht eingesetzt werden, wenn Gebäude oder Zivilisten in Mitleidenschaft gezogen werden könnten.</de_de>
 	</string>
 	<string id="STR_VORTEX_MINE">
 		<en_gb>Vortex Mine</en_gb>
-		<es_la>Vortex Mine</es_la>
+		<es_la>Mina Vórtex</es_la>
 		<fr_fr>Mine Vortex</fr_fr>
 		<de_de>Wirbelmine</de_de>
 	</string>
 	<string id="STR_VORTEX_MINE_INFO">
 		<en_gb>This explosive device uses a tiny dimensional flux generator which allows anti-matter to seep through a tiny dimensional warp. The resultant explosion is very powerful.</en_gb>
-		<es_la>This explosive device uses a tiny dimensional flux generator which allows anti-matter to seep through a tiny dimensional warp. The resultant explosion is very powerful.</es_la>
+		<es_la>Este explosivo usa un pequeño generador de flujo dimensional que permite a la antimateria fluir por la pequeña grieta dimensional. La explosión resultante es muy potente.</es_la>
 		<fr_fr>Ce mécanisme explosif utilise un générateur de flux interdimensionnel minuscule qui permet à l&apos;antimatière de s&apos;infiltrer par une fissure interdimensionnelle minuscule. L&apos;explosion qui en résulte est très puissante.</fr_fr>
 		<de_de>Dieser Sprengkörper nutzt einen winzigen Magnetfluß-Generator, mit dessen Hilfe Anti-Materie durch einen kleine Dimensionsschleife gelangen kann. Die daraus resultierende Explosion ist gewaltig.</de_de>
 	</string>
 	<string id="STR_PERSONAL_DISRUPTOR_SHIELD">
 		<en_gb>Personal Disruptor Shield</en_gb>
-		<es_la>Personal Disruptor Shield</es_la>
+		<es_la>Escudo disruptor personal</es_la>
 		<fr_fr>Bouclier disrupteur personnel</fr_fr>
 		<de_de>Persönlicher Disruptor-Schild</de_de>
 	</string>
 	<string id="STR_PERSONAL_DISRUPTOR_SHIELD_INFO">
 		<en_gb>The Personal Disruptor Shield generates an energy field which warps the space around the user. This causes beams or projectiles to be deflected and dissipated. Any hit causes the shield&amp;apos;s energy to drain and if it reaches a critically low level it will malfunction. It is a highly sophisticated device that we can reproduce only with great effort.</en_gb>
-		<es_la>The Personal Disruptor Shield generates an energy field which warps the space around the user. This causes beams or projectiles to be deflected and dissipated. Any hit causes the shield&amp;apos;s energy to drain and if it reaches a critically low level it will malfunction. It is a highly sophisticated device that we can reproduce only with great effort.</es_la>
+		<es_la>El escudo disruptor personal genera un campo de energía que retuerce el espacio alrededor del usuario. Esto causa que descargas o proyectiles sean desviadas y disipadas.</es_la>
 		<fr_fr>Ce bouclier disrupteur génère un champ d&apos;énergie qui déforme l&apos;espace autour de celui qui l&apos;utilise. Les rayons ou projectiles sont ainsi déviés et anéantis. Les coups reçus épuisent l&apos;énergie du bouclier et si son niveau baisse trop, il fonctionnera mal. La reproduction de ce mécanisme hyper sophistiqué demande de gros efforts.</fr_fr>
 		<de_de>Der Disruptor-Schild erzeugt ein Energiefeld, das den Raum um den Verwender herum verzerrt. Dadurch werden Strahlen oder Projektile abgehalten bzw. abgelenkt. Jeder Treffer entzieht dem Schild Energie, bis es einen kritischen Punkt erreicht und nicht mehr funktioniert. Es handelt sich um ein technisch äußerst fortschrittliches Gerät, das nur mit gewaltigem Aufwand reproduziert werden kann.</de_de>
 	</string>
 	<string id="STR_PERSONAL_TELEPORTER">
 		<en_gb>Personal Teleporter</en_gb>
-		<es_la>Personal Teleporter</es_la>
+		<es_la>Teletransportador personal</es_la>
 		<fr_fr>Téléporteur personnel</fr_fr>
 		<de_de>Persönlicher Teleporter</de_de>
 	</string>
 	<string id="STR_PERSONAL_TELEPORTER_INFO">
 		<en_gb>This extraordinary device uses inter-dimensional capability to transport the user over short distances via a dimensional flux. The energy level depletes according to the distance jumped, but it recovers over time.</en_gb>
-		<es_la>This extraordinary device uses inter-dimensional capability to transport the user over short distances via a dimensional flux. The energy level depletes according to the distance jumped, but it recovers over time.</es_la>
+		<es_la>Este extraordinario dispositivo usa propiedades interdimensionales para transportar al usuario a cortas distancias mediante fluido dimensional. La cantidad de energía consumida depende de la distancia recorrida, aunque se recarga con el tiempo.</es_la>
 		<fr_fr>Ce mécanisme extraordinaire se sert de la capacité interdimensionnelle pour transporter celui qui l&apos;utilise sur des courtes distances via un flux interdimensionnel. Le niveau d&apos;énergie s&apos;épuise en fonction de la distance parcourue, mais il retrouve son niveau maximum avec le temps.</fr_fr>
 		<de_de>Dieses außergewöhnliche Gerät verwendet die Interdimensions-Technologie, um eine Person mit Hilfe eines Dimensions-Magnetflusses über kurze Distanzen zu befördern. Das Energie-Niveau fällt je nach zurückgelegter Distanz ab, wird aber nach einiger Zeit automatisch aufgeladen.</de_de>
 	</string>
 	<string id="STR_PERSONAL_CLOAKING_FIELD">
 		<en_gb>Personal Cloaking Field</en_gb>
-		<es_la>Personal Cloaking Field</es_la>
+		<es_la>Campo de invisibilidad personal</es_la>
 		<fr_fr>Champ de camouflage personnel</fr_fr>
 		<de_de>Persönliches Tarnfeld</de_de>
 	</string>
 	<string id="STR_PERSONAL_CLOAKING_FIELD_INFO">
 		<en_gb>The Personal Cloaking Field generates a warping effect that bends various wave forms. Effectively this means that the user is considerably less visible to radar, infra-red and visual sighting. The field is disabled temporarily if the user initiates combat.</en_gb>
-		<es_la>The Personal Cloaking Field generates a warping effect that bends various wave forms. Effectively this means that the user is considerably less visible to radar, infra-red and visual sighting. The field is disabled temporarily if the user initiates combat.</es_la>
+		<es_la>El campo de invisibilidad personal genera un desdoblamiento que tuerce varias formas de onda. En la práctica esto significa que el usuario es considerablemente menos visible al radar, y a la observación visual e infraroja. El campo se desactiva temporalmente si el usuario entra en combate.</es_la>
 		<fr_fr>Le champ de camouflage personnel sert à dévier les faisceaux d&apos;ondes des radars. En clair, cela signifie que l&apos;utilisateur est bien moins visible aux radars ou systèmes de visée infrarouge ou visuel. Ce champ est temporairement désactivé si l&apos;utilisateur lance une attaque.</fr_fr>
 		<de_de>Das Tarnfeld erzeugt einen Warp-Effekt, der verschiedene Wellenformen verzerrt. Dadurch wird der Verwender für Radar- und Infrarotgeräte sowie für das menschliche Auge praktisch unsichtbar. Das Feld wird zeitweise deaktiviert, wenn der Verwender einen Angriff startet.</de_de>
 	</string>
 	<string id="STR_THE_ALIEN_GENETIC_STRUCTURE">
 		<en_gb>The Alien genetic structure</en_gb>
-		<es_la>The Alien genetic structure</es_la>
+		<es_la>Estructura genética alienígena</es_la>
 		<fr_fr>La structure génétique alienne</fr_fr>
 		<de_de>Die genetische Struktur der Aliens</de_de>
 	</string>
 	<string id="STR_THE_ALIEN_GENETIC_STRUCTURE_INFO">
 		<en_gb>Our initial results show that the distinct Alien life forms are related genetically and form part of a complex life cycle.</en_gb>
-		<es_la>Our initial results show that the distinct Alien life forms are related genetically and form part of a complex life cycle.</es_la>
+		<es_la>Nuestros resultados iniciales muestran que las diversas formas de vida alienígena están genéticamente relacionadas y forman parte de un complejo ciclo vital.</es_la>
 		<fr_fr>Nos résultats initiaux prouvent que les différentes formes de vie alienne sont génétiquement liées et forment un cycle de vie complexe.</fr_fr>
 		<de_de>Unsere ersten Untersuchungen haben ergeben, daß die einzelnen Alien-Lebensformen miteinander verwandt sind und gemeinsam einen komplexen Lebenszyklus bilden.</de_de>
 	</string>
 	<string id="STR_THE_ALIEN_LIFE_CYCLE">
 		<en_gb>The Alien life cycle</en_gb>
-		<es_la>The Alien life cycle</es_la>
+		<es_la>El cíclo de vida alien</es_la>
 		<fr_fr>Le cycle de vie alien</fr_fr>
 		<de_de>Der Alien-Lebenszyklus</de_de>
 	</string>
 	<string id="STR_THE_ALIEN_LIFE_CYCLE_INFO">
 		<en_gb>It is clear that the Alien life cycle is an extremely rapid sequence of changes. The eggs always develop into Multiworms which then give birth to Hyperworms which form a Chrysalis. At this stage the genetic variation produces a variety of Alien types which develop inside the Chrysalis. The whole process from the egg hatching to emergence from the Chrysalis only seems to take about ten days, provided that there is an adequate supply of food. Fortunately these life forms do not survive very well in our world and it is unclear how an invasion could be successful.</en_gb>
-		<es_la>It is clear that the Alien life cycle is an extremely rapid sequence of changes. The eggs always develop into Multiworms which then give birth to Hyperworms which form a Chrysalis. At this stage the genetic variation produces a variety of Alien types which develop inside the Chrysalis. The whole process from the egg hatching to emergence from the Chrysalis only seems to take about ten days, provided that there is an adequate supply of food. Fortunately these life forms do not survive very well in our world and it is unclear how an invasion could be successful.</es_la>
+		<es_la>Está claro que el ciclo de vida alienígena es una secuencia de cambios extremadamente rápida. Los huevos siempre se desarrollan en los Multigusanos que dan a luz a los Hipergusanos quienes formarán una Crisálida. En esta etapa la variación genética produce tipos de alien cuya variedad se desarrolla dentro de la Crisálida. El proceso completo desde que se rompe el huevo hasta que se emerge de la crisálida solo toma unos diez días, si se cuenta con una fuente adecuada de alimento. Por fortuna estas formas de vida no se adaptan bien en nuestro mundo y no se entiende como una invasión podría serles exitosa.</es_la>
 		<fr_fr>Il est clair que le cycle de vie alien est constitué d&apos;une succession extrêmement rapide de changements. Les oeufs se transforment toujours en multivers, qui donnent à leur tour naissance à des chrysalides. A ce stade, les variations génétiques produisent une variété de types aliens qui se développent à l&apos;intérieur de la chrysalide. Le processus commençant lors de l&apos;éclosion de l&apos;oeuf et se terminant lors de l&apos;émergence de la chrysalide ne dure qu&apos;une dizaine de jours environ, à condition qu&apos;il y ait une réserve de nourriture suffisante. Heureusement, ces formes de vie ne survivent pas très bien dans notre monde et nous ne voyons pas comment une invasion pourrait réussir.</fr_fr>
 		<de_de>Durch unsere Untersuchungen ist deutlich geworden, daß der Alien-Lebenszyklus einer extrem schnellen Folge von Veränderungen unterworfen ist. Die Eier entwickeln sich stets zu Multiwürmern, aus denen dann Kokons hervorkommen. Bei guten Nahrungsbedingungen scheint der gesamte Prozeß von der Eiablage bis zum Schlüpfvorgang nur etwa 10 Tage zu dauern. Glücklicherweise haben diese Kreaturen in unserer Welt keine guten Überlebenschancen, und es ist unklar, ob eine Invasion der Aliens eine realistische Bedrohung darstellt.</de_de>
 	</string>
 	<string id="STR_THE_REAL_ALIEN_THREAT">
 		<en_gb>The Real Alien Threat</en_gb>
-		<es_la>The Real Alien Threat</es_la>
+		<es_la>La verdadera amenaza alienígena</es_la>
 		<fr_fr>La véritable menace alienne</fr_fr>
 		<de_de>Die wahre Alien-Bedrohung</de_de>
 	</string>
 	<string id="STR_THE_REAL_ALIEN_THREAT_INFO">
 		<en_gb>It is now clear to us that the Micronoid organisms are the source of the Alien intelligence and they are using the various Alien forms to initiate an assault on our dimension. The large Alien life forms cannot survive in our dimension - the Micronoids must transfer to a new host in order to conquer our world and the ideal host is our own race. Brainsuckers are used to introduce Micronoids into the human bloodstream which then gain control of the brain and have access to all the knowledge and abilities of the host. We now understand the physiology of the Micronoids sufficiently in order to develop a specific toxin that will kill the organisms in the bloodstream.</en_gb>
-		<es_la>It is now clear to us that the Micronoid organisms are the source of the Alien intelligence and they are using the various Alien forms to initiate an assault on our dimension. The large Alien life forms cannot survive in our dimension - the Micronoids must transfer to a new host in order to conquer our world and the ideal host is our own race. Brainsuckers are used to introduce Micronoids into the human bloodstream which then gain control of the brain and have access to all the knowledge and abilities of the host. We now understand the physiology of the Micronoids sufficiently in order to develop a specific toxin that will kill the organisms in the bloodstream.</es_la>
+		<es_la>Ya tenemos claro que los organismos Mironoides son el origen de la inteligencia alienígena y están utilizando varias formas de vida alien para asaltar nuestra dimensión. Los aliens grandes no pueden sobrevivir en nuestra dimensión – los Micronoides deben transferirse a un nuevo huésped para conquistar nuestro mundo y nuestra propia raza es el huésped ideal. Los Chupacerebros son utilizados para introducir Micronoides dentro del torrente sanguíneo humano donde tienen acceso a todo el conocimiento y habilidades del huésped. Ahora conocemos suficientemente la fisiología de los Micronoides para desarrollar una toxina específica que matará a los organismos en la sangre.</es_la>
 		<fr_fr>Il nous apparaît maintenant évident que les organismes micronoïdes sont la source de l&apos;intelligence alienne et qu&apos;ils utilisent différentes formes aliennes pour attaquer notre dimension. Les grandes formes de vie aliennes ne peuvent pas survivre dans notre dimension; les micronoïdes doivent passer dans un nouvel hôte pour conquérir notre monde. L&apos;hôte idéal est notre propre race. Les lobotomiseurs introduisent des micronoïdes dans le sang humain, qui prennent le contrôle du cerveau et peuvent accéder à toutes les connaissances et capacités de l&apos;hôte. Nous comprenons à présent suffisamment la physiologie des micronoïdes pour développer une toxine spécifique qui tuera les organismes à l&apos;intérieur du système sanguin.</fr_fr>
 		<de_de>Wir wissen heute, daß die Mikronoid-Organismen die Quelle aller außerirdischen Intelligenz sind, und sie versuchen, mit Hilfe verschiedener Alien-Lebensformen einen Angriff auf unsere Dimension durchzuführen. Die großen Alien-Lebensformen können in unserer Dimension nicht überleben. Die Mikronoid-Parasiten müssen zu einem anderen Wirt überwechseln, um die Macht über unsere Welt an sich zu reißen, und was böte sich da mehr an als unsere Spezies - die Menschheit. Mit Hilfe der Brainsucker werden Mikronoide in den menschlichen Blutkreislauf gepflanzt, die dann das Gehirn befallen und so auf alle Kenntnisse und Fähigkeiten zugreifen können. Wir wissen mittlerweile genug über die Physiologie der Mikronoiden, um ein spezifisches Toxin entwickeln zu können, das die Organismen im Blutkreislauf tötet.</de_de>
 	</string>
 	<string id="STR_DIMENSION_GATES">
 		<en_gb>Dimension Gates</en_gb>
-		<es_la>Dimension Gates</es_la>
+		<es_la>Portales dimensionales</es_la>
 		<fr_fr>Portails interdimensionnels</fr_fr>
 		<de_de>Dimensionstore</de_de>
 	</string>
 	<string id="STR_DIMENSION_GATES_INFO">
 		<en_gb>The Dimension Gates appear to be the means by which the Alien craft travel from their home world. Our craft cannot travel through these gates without being annihilated by an anti-matter implosion. We must disable a UFO and recover its control systems, propulsion systems and power sources for research.</en_gb>
-		<es_la>The Dimension Gates appear to be the means by which the Alien craft travel from their home world. Our craft cannot travel through these gates without being annihilated by an anti-matter implosion. We must disable a UFO and recover its control systems, propulsion systems and power sources for research.</es_la>
+		<es_la>Los portales dimensionales parecen ser el medio por el cual las naves alienígenas viajan desde su mundo. Nuestras naves no pueden atravesar estos portales sin ser aniquilados por una implosión de antimateria. Debemos desmantelar un OVNI y recuperar sus sistemas de control, propulsión y fuentes de potencia para su estudio.</es_la>
 		<fr_fr>Les portails interdimentionnels sont, en toute apparence, le moyen par lequel les vaisseaux aliens quittent leur monde. Nos vaisseaux ne peuvent pas franchir ces portails sans être détruits par une implosion d&apos;antimatière. Nous devons capturer un OVNI et faire des recherches sur ses systèmes de contrôle et de propulsion, ainsi que sur ses sources d&apos;énergie.</fr_fr>
 		<de_de>Die Dimensionstore scheinen die Öffnungen zu sein, durch die Alien-Raumschiffe aus ihrer Welt in unsere Dimension eindringen. Unsere eigenen Raumfahrzeuge können diese Tore nicht durchfliegen, ohne mittels einer Anti-Materie-Implosion vernichtet zu werden. Wir müssen ein UFO kapern und Steuersystem, Antriebssysteme sowie Energiequellen analysieren.</de_de>
 	</string>
 	<string id="STR_THE_ALIEN_DIMENSION">
 		<en_gb>The Alien Dimension</en_gb>
-		<es_la>The Alien Dimension</es_la>
+		<es_la>La dimensión alienígena</es_la>
 		<fr_fr>La dimension alienne</fr_fr>
 		<de_de>Die Alien-Dimension</de_de>
 	</string>
 	<string id="STR_THE_ALIEN_DIMENSION_INFO">
 		<en_gb>The Alien Dimension consists of a bleak, hostile environment with an organic city. This city undoubtedly constructs Alien craft and nurtures the Alien brood. The structure of the buildings is immensely strong, but there appears to be weak point which will allow our Agents and vehicles to gain access to the building south of the dimension gates. If we can research this building further then we will have the necessary information to send in our squads to destroy it. We should then be able to gain access to the next building via the organic tubing that joins the Alien city together like a giant umbilical cord.</en_gb>
-		<es_la>The Alien Dimension consists of a bleak, hostile environment with an organic city. This city undoubtedly constructs Alien craft and nurtures the Alien brood. The structure of the buildings is immensely strong, but there appears to be weak point which will allow our Agents and vehicles to gain access to the building south of the dimension gates. If we can research this building further then we will have the necessary information to send in our squads to destroy it. We should then be able to gain access to the next building via the organic tubing that joins the Alien city together like a giant umbilical cord.</es_la>
+		<es_la>La dimensión alienígena consiste en un inhóspito ambiente con una ciudad orgánica. Sin dudas esta ciudad construye naves alienígenas y nutre la camada alien. La estructura de estos edificios es inmensamente resistente, pero parece haber un punto débil que permitiría a nuestros agentes y vehículos acceder al edificio al sur de los portales dimensionales. Si pudiéramos estudiar a fondo este edificio tendríamos la información necesaria para enviar un destacamento a destruirlo. Entonces podríamos acceder a la siguiente edificación mediante la tubería orgánica que une la ciudad alienígena como un gigante cordón umbilical.</es_la>
 		<fr_fr>La dimension alienne est constituée d&apos;une ville organique située dans un environnement lugubre et hostile. C&apos;est sûrement dans la ville que les vaisseaux sont construits et que les espèces aliennes se développent. La structure des bâtiments est compacte, mais il semble qu&apos;il y ait des points d&apos;accès permettant à nos vaisseaux d&apos;atterrir afin de déployer nos forces au sol. Notre priorité est de construire des véhicules interdimensionnels équipés pour les missions d&apos;exploration des structures aliennes. Si d&apos;importantes structures internes peuvent êtres détruites, les bâtiments cesseront peut-être de fonctionner.</fr_fr>
 		<de_de>Die Alien-Dimension ist eine trostlose, feindselige Welt mit einer organischen Stadt. In dieser Stadt werden zweifelsohne Raumschiffe konstruiert und die Alien-Nachkommen aufgezogen. Die Struktur der Gebäude ist äußerst widerstandsfähig, aber es scheint eine Schwachstelle südlich der Dimensionstore zu geben, durch die unsere Raumschiffe und Bodentruppen eindringen können. Wenn wir das Gebäude ausreichend erforschen können, erhalten wir die notwendigen Informationen, um unsere Truppen mit der Zerstörung zu beauftragen. Durch die organischen Röhrenverbindungen, die die Strukturen der Alienstadt wie eine Nabelschnur verbinden, müßten wir dann auch in das nächste Gebäude gelangen. </de_de>
 	</string>
@@ -2935,7 +2935,7 @@
 	</string>
 	<string id="STR_SENATE_INFO">
 		<en_gb>The Senate building accommodates the civil service, law courts and the Senate chamber. It is a maze of lavish marble interiors and large corridors. It is a building which should be protected from Alien infiltration at all costs.</en_gb>
-		<es_la>El edificio del senado aloja el registro civil, cortes generales y la cámara del senado. Es un laberinto de costosos interiores de marfil y debe ser protegido de la infiltración alienígena a cualquier precio.</es_la>
+		<es_la>El edificio del senado aloja el registro civil, las cortes generales y la cámara del senado. Es un laberinto con interiores de caro marfil y debe ser protegido de la infiltración alienígena a cualquier precio.</es_la>
 		<fr_fr>Le bâtiment du sénat abrite les services administratifs, les tribunaux de justice et la chambre du sénat. C&apos;est un labyrinthe d&apos;intérieurs de marbres richement décorés et de couloirs interminables. C&apos;est un bâtiment qui doit être protégé de l&apos;infiltration alienne à n&apos;importe quel prix.</fr_fr>
 		<de_de>Im Senatsgebäude befinden sich die Beamtenschaft, die Gerichte und die Senatskammer. Das Gebäude ist ein wahrer Irrgarten von prächtigen Marmorsälen und riesigen Korridoren. Das Gebäude muß unter allen Umständen vor der Unterwanderung durch Aliens geschützt werden.</de_de>
 	</string>
@@ -2947,7 +2947,7 @@
 	</string>
 	<string id="STR_POLICE_STATION_INFO">
 		<en_gb>Mega-Primus has numerous police stations equipped with Hovercars, road vehicles and substantial armories. These stations are generally well defended against raiders or Alien infiltration.</en_gb>
-		<es_la>Mega-Primus tiene numerosas comisarias equipadas con aeropatrullas, vehículos de calle y sustanciales armerías. En general estas estaciónes están bien defendidas contra asaltantes o infiltración alienígena.</es_la>
+		<es_la>Mega-Primus tiene numerosas comisarias equipadas con aerodeslizadores, vehículos de calle y sustanciales armerías. En general estas estaciónes están bien defendidas contra asaltantes o infiltración alienígena.</es_la>
 		<fr_fr>Mega-Primus a de nombreux postes de police équipés d&apos;hovercars, de véhicules terrestres et de dépôts d&apos;armes substantiels. Ces postes sont en général bien défendus contre les voleurs ou l&apos;infiltration alienne.</fr_fr>
 		<de_de>In Mega-Primus gibt es zahlreiche Polizeistationen, die mit Schwebe- und Straßenfahrzeugen sowie umfangreichen Waffenkammern ausgestattet sind. Diese Stationen sind im allgemeinen gegen Eindringlinge oder Alien-Übergriffe gefeit.</de_de>
 	</string>
@@ -2959,19 +2959,19 @@
 	</string>
 	<string id="STR_HOSPITAL_INFO">
 		<en_gb>The large hospitals of Mega-Primus are important buildings with high revenue potential. The very best Nano technology is used for the benefit of those that can afford it. Life extension is the service in most demand, but there is also the possibility of limb replacements and strength enhancements which are popular with GravBall players.</en_gb>
-		<es_la>Los enormes hospitales de Mega-Primus son importantes edificios con gran potencial en beneficios. Lo mejor de la nanotecnología  es utilizada en beneficio de todo aquél que pueda pagarlo. El servicio mas demandado es el de extensión de vida, pero también existe la posibilidad de remplazo de organos y aumento de fuerza, muy populares en jugadores de GravBall.</es_la>
+		<es_la>Los enormes hospitales de Mega-Primus son edificios importantes con gran potencial en económico. Lo mejor de la nanotecnología es uasada en beneficio de todo aquél que pueda pagarla. El servicio mas demandado es el de extensión de vida, pero también existe la posibilidad de remplazo de organos y aumento de fuerza, muy populares en jugadores de GravBall.</es_la>
 		<fr_fr>Les grands hôpitaux de Mega-Primus sont des bâtiment importants aux revenus potentiels élevés. La nanotechnologie la plus sophistiquée est mise à la disposition de ceux qui peuvent se le permettre. Le service le plus demandé est la prolongation de la vie, mais il est également possible de remplacer des membres et d&apos;augmenter la force des gens, comme le demandent souvent les joueurs de gravball.</fr_fr>
 		<de_de>Die großen Hospitäler von Mega-Primus sind wichtige Gebäude, die hohen Profit abwerfen. Die fortschrittlichste Nanotechnologie wird eingesetzt, um jenen zu helfen, die es sich leisten können. Die am häufigsten gewünschte Behandlung ist eine Lebensverlängerung, es werden aber auch künstliche Gliedmaßen und Kraftverstärker eingesetzt, wobei letztere vor allem bei Gravball-Spielern beliebt sind.</de_de>
 	</string>
 	<string id="STR_SCHOOL">
 		<en_gb>School</en_gb>
-		<es_la>Colegio</es_la>
+		<es_la>Colégio</es_la>
 		<fr_fr>École</fr_fr>
 		<de_de>Schule</de_de>
 	</string>
 	<string id="STR_SCHOOL_INFO">
 		<en_gb>Education is a serious matter for citizens of Mega-Primus and the latest Psionic devices are used to fill students&amp;apos; minds with the correct understanding of any topic in the curriculum. The buildings themselves are reminiscent of the old style schools and contain little more than corridors and classrooms.</en_gb>
-		<es_la>La educación es un asunto serio para los ciudadanos de Mega-Primus y los últimos dispositivos psiónicos son utilizados para llenar las mentes de los estudiantes con el entendimiento correcto de cualquier tema del currículo. Los propios edificios son una reminiscencia del antiguo estilo de los colegios y contienen poco mas que corredores y aulas.</es_la>
+		<es_la>La educación es un asunto serio para los ciudadanos de Mega-Primus y los últimos dispositivos psiónicos son utilizados para llenar las mentes de los estudiantes con el conocimiento correcto de cualquier tema del currículo. Los propios edificios son una reminiscencia del antiguo estilo de los colegios y contienen poco mas que corredores y aulas.</es_la>
 		<fr_fr>L&apos;éducation est une chose sérieuse pour les citoyens de Mega-Primus et les procédés psioniques les plus sophistiqués sont utilisés pour enseigner tous les sujets de la meilleure façon possible aux étudiants. Les bâtiments eux-mêmes font penser aux anciennes écoles et sont constitués principalement de salles de classe et de couloirs.</fr_fr>
 		<de_de>Das Thema Bildung wird von den Bewohnern von Mega-Primus sehr ernst genommen, und die neuesten Psi-Geräte werden eingesetzt, um die Köpfe der Schüler mit umfassenden Kenntnissen zu jedem Lehrplanthema anzufüllen. Die Gebäude selbst erinnern an Schulen im alten Stil und bestehen im Prinzip nur aus Korridoren und Klassenzimmern.</de_de>
 	</string>
@@ -2995,7 +2995,7 @@
 	</string>
 	<string id="STR_OFFICES_INFO">
 		<en_gb>Office buildings are designed to be attractive work environments. They are heavily populated and any Alien activity would soon be discovered. However, the ducting between floors and walls could be the ideal places for Aliens to hide and move around.</en_gb>
-		<es_la>Los bloques de oficina están diseñados para ser unos centros de trabajo atractivos. Están densamente ocupados y cualquier actividad alienígena sería descubierta pronto. No obstante, las canalizaciones entre plantas y paredes pueden ser lugares idealies para los aliens para esconderse y moverse.</es_la>
+		<es_la>Los bloques de oficina están diseñados para ser centros de trabajo atractivos. Están densamente ocupados y cualquier actividad alienígena sería descubierta pronto. No obstante, las canalizaciones entre plantas y paredes pueden ser lugares idealies para los aliens para esconderse y desplazarse.</es_la>
 		<fr_fr>Les bureaux offrent un environnement de travail agréable. Ils sont densément peuplés et toute activité alienne serait immédiatement découverte. Cependant, les canalisations entre les murs et les étages pourraient offrir une cachette idéale pour les aliens.</fr_fr>
 		<de_de>Das Design der Bürogebäude soll dazu beitragen, eine angenehme Arbeitsumgebung zu schaffen. Da viele Menschen in ihnen tätig sind, würde jeder Alien-Übergriff sofort auffallen. Allerdings bietet das Röhrensystem zwischen Fußböden und Wänden den Aliens Gelegenheit, sich zu verstecken und umherzubewegen.</de_de>
 	</string>
@@ -3007,7 +3007,7 @@
 	</string>
 	<string id="STR_CORPORATE_HQ_INFO">
 		<en_gb>Larger corporations may have a prestigious and expensive office building as a corporate head quarters. No expense would be spared on the interior decoration of these buildings. The equally lavish ventilation system may also be appreciated by Alien life forms.</en_gb>
-		<es_la>Las corporaciones grandes pueden tener caros y prestigiosos bloques de oficinas como sede central. No se escatima en gastos en la decoración interior de estos edificios. Su igualmente genroso sistema de ventilación también es apreciado por las formas de vida alien.</es_la>
+		<es_la>Las grandes corporaciones pueden tener caros y prestigiosos bloques de oficinas como sede central. No se escatima en gastos en la decoración interior de estos edificios. Su igualmente opulento sistema de ventilación es también apreciado por las formas de vida alien.</es_la>
 		<fr_fr>Les grandes sociétés ont établi leur siège social dans des bâtiments prestigieux et onéreux. On ne regarde pas à la dépense pour la décoration intérieure de ces bâtiments. Les systèmes de ventilation gigantesques peuvent fournir un abri apprécié des formes de vie aliennes.</fr_fr>
 		<de_de>Die größeren Konzerne haben ihren Firmenhauptsitz oft in prestigeträchtigen und teuren Bürogebäuden. Bei der Innenausstattung werden weder Kosten noch Mühen gescheut. Das komplizierte Ventilationssystem könnte den Aliens zugute kommen.</de_de>
 	</string>
@@ -3031,7 +3031,7 @@
 	</string>
 	<string id="STR_ASTRODOME_INFO">
 		<en_gb>The Astrodome contains huge stadiums and other facilities for various modern sports. GravBall is the most popular sport in the city, despite being dangerous. Five players in each team are equipped with anti-grav units and ball throwers. The six remaining team members are firmly routed on the ground and are used to protect the goal area or retrieve fallen balls. The maze of corridors and high stands makes the Astrodome a dangerous place for combat.</en_gb>
-		<es_la>El Astrodómo contiene enormes estadios y otras dependencias para varios deportes modernos. GravBall es el mas deporte mas popular en la ciudad, a pesar de ser peligroso. Cinco jugadores en cada equipo se equipan con unidades antigravedad y lanzapelotas. Los seis miembros restantes del equipo son guiados en el suelo y son utilizados para proteger el área de meta yo devolver pelotas caídas. El laberínto de corredores y las gradas hacen del Astródomo un peligroso lugar para el combate.</es_la>
+		<es_la>El Astrodómo contiene enormes estadios y otras dependencias para varios deportes modernos. GravBall es el mas deporte mas popular en la ciudad, a pesar de ser peligroso. Cinco jugadores en cada equipo se dotan con unidades antigravedad y lanzapelotas. Los seis miembros restantes del equipo son guiados desde el suelo y son utilizados para proteger el área de meta o devolver pelotas caídas. El laberínto de corredores y las gradas hacen del Astródomo un peligroso lugar para el combate.</es_la>
 		<fr_fr>L&apos;astrodrome contient des stades immenses et autres infrastructures pour différentes sortes de sport. Le gravball est le sport le plus populaire de la ville, bien que dangereux. Chaque équipe est composée de cinq joueurs munis d&apos;équipements anti-gravité et de lanceurs de balle. Les six autres membres de l&apos;équipe sont solidement ancrés au sol et protègent la zone de but ou vont chercher les ballons tombés. Le labyrinthes de couloirs et les immenses tribunes font de l&apos;astrodrome un endroit dangereux pour les combats.</fr_fr>
 		<de_de>Im Astrodom befinden sich riesige Stadien und andere Einrichtungen für verschiedene moderne Sportarten. Gravball ist trotz der damit verbundenen Gefahren der beliebteste Sport in der Stadt. Jeweils 5 Spieler eines Teams sind mit Anti-Schwerkraft-Ausrüstung und Ballwerfern ausgestattet. Die übrigen 6 spielen auf dem Boden und schützen den Torbereich oder sammeln heruntergefallene Bälle auf. Die hohen Stadien mit ihren Korridor-Irrgärten machen den Astrodom zu einem gefährlichen Gefechtsfeld.</de_de>
 	</string>
@@ -3067,7 +3067,7 @@
 	</string>
 	<string id="STR_APARTMENTS_INFO">
 		<en_gb>Vast apartment blocks are standard accommodation in the city. They should be treated carefully in any combat situation because of the high density of civilians at all times of day. An Alien incident in an accommodation block should be dealt with promptly.</en_gb>
-		<es_la>Los amplios bloques de apartamentos son las residencias estándar de la ciudad. Deben ser tratados con precaución por la alta densidad de civiles a todas horas del dia. Un incidente alien en un bloque residencial debería ser atendido a la brevedad.</es_la>
+		<es_la>Los amplios bloques de apartamentos son las residencias estándar de la ciudad. Deben ser tratados con precaución por la alta densidad de civiles a todas horas del dia. Un incidente alien en un bloque residencial debe ser atendido a la brevedad.</es_la>
 		<fr_fr>Les grands blocs d&apos;appartements sont le logement standard dans la ville. Il faut y faire attention en situation de combat en raison de la densité importante de population s&apos;y trouvant à toutes heures de la journée. Les incidents impliquant des aliens dans les appartements doivent être résolus sur-le-champ.</fr_fr>
 		<de_de>Die riesigen Apartmentblöcke sind die Standardwohnanlagen in der Stadt. Sie sollten vor allem in Kampfsituationen geschont werden, da sich dort zu jeder Tageszeit zahlreiche Zivilisten aufhalten. Auf einen Alien-Übergriff in einem solchen Gebäude muß sofort reagiert werden.</de_de>
 	</string>
@@ -3163,7 +3163,7 @@
 	</string>
 	<string id="STR_FLYER_FACTORY_INFO">
 		<en_gb>All kinds of small flying vehicles are produced here, such as Hovercars, Hoverbikes and transports. There are many Elerium supplies stored here which could be the target of hostile raiders.</en_gb>
-		<es_la>Todos los tipos de aeronaves pequeñas son producidas aquí, por ejemplo Hovercars, Hovermotos y transportes. Hay varios suministros de Elérium almacenado que pueden ser el objetivo de asaltantes hostiles.</es_la>
+		<es_la>Todos los tipos de aeronaves pequeñas son producidas aquí, por ejemplo aerodeslizadores, aeromotos y transportes. Hay varios suministros de Elérium almacenado que pueden ser el objetivo de asaltantes hostiles.</es_la>
 		<fr_fr>Tous les petits véhicules aériens sont fabriqués dans cette usine: hovercars, hoverbikes et transports. Les importantes réserves d&apos;élérium entreposées dans ce bâtiment en font une cible pour les voleurs hostiles.</fr_fr>
 		<de_de>Hier werden alle Arten von kleineren Luftfahrzeugen produziert, beispielsweise Schwebefahrzeuge und -Motorräder und Transporter. Die großen Eleriumlager sind ein potentielles Angriffsziel für den Gegner.</de_de>
 	</string>
@@ -3175,7 +3175,7 @@
 	</string>
 	<string id="STR_LARGE_FLYER_FACTORY_INFO">
 		<en_gb>The cavernous interior of this factory is designed for construction of the largest vehicles such as the Valkyrie Interceptor, or the great Space Liners. There are large quantities of valuable construction materials, such as Elerium, stored in various parts of the building.</en_gb>
-		<es_la>El cavernoso interior de esta fábrica está diseñado para la construcción de los vehículos mas grandes por ejemplo el interceptor Valkyrie, o el gran Crucero espacial. Contienen grandes cantidades de valiosos materiales de construcción,por ejemplo elérium, almacenado varios rincones del edificio.</es_la>
+		<es_la>El cavernoso interior de esta fábrica está diseñado para la construcción de los vehículos mas grandes por ejemplo el interceptor Valkyrie, o el gran Crucero Espacial. Contienen grandes cantidades de valiosos materiales de construcción, por ejemplo elérium, almacenado varios rincones del edificio.</es_la>
 		<fr_fr>L&apos;intérieur de cette usine, en forme de caverne, est conçu pour la fabrication de grands véhicules tels que l&apos;intercepteur Valkyrie ou les grands cargos spatiaux. De grandes quantités de matériaux de construction précieux, tels l&apos;élérium, sont stockées dans divers endroits de ce bâtiment.</fr_fr>
 		<de_de>Das höhlenartige Innere dieser Fabrik ist dazu angelegt, größere Fahrzeuge wie z.B. den Valkyrie-Abfangjäger oder die großen Raumkreuzer zu produzieren. In verschiedenen Bereichen des Gebäudes werden große Mengen wertvoller Konstruktionsmaterialien gelagert, z.B. Elerium.</de_de>
 	</string>
@@ -3199,7 +3199,7 @@
 	</string>
 	<string id="STR_SLUMS_INFO">
 		<en_gb>The slum dwellings located outside the city boundaries are the remnants of an old civilization. They are still heavily populated and used by gangsters and political groups as a base of support. They are dangerous places which are difficult to attack with ground forces. There is always the prospect of finding Psiclone or Elerium during a successful raid.</en_gb>
-		<es_la>Las viviendas de los suburbios que se encuentran fuera del perímetro de la ciudad son los remanentesexitoso vieja sociedad. Aún se encuentran densamente poblados y utilizados por gángsters y grupos políticos como base de apoyo. Son lugares peligrosos y difíciles de atacar con personal de a pie. Siempre existe la posibilidad de encontrar psiclones o elérium tras un asalto exitoso.</es_la>
+		<es_la>Las viviendas de los suburbios que se encuentran fuera del perímetro de la ciudad son los remanentes de una vieja sociedad. Aún se encuentran densamente poblados y utilizados por gángsters y grupos políticos como base de apoyo. Son lugares peligrosos y difíciles de atacar con tropas de a pie. Siempre existe la posibilidad de encontrar psiclones o elérium tras un asalto exitoso.</es_la>
 		<fr_fr>Les quartiers pauvres, situés hors des limites de la ville, sont les vestiges d&apos;une civilisation ancienne. Beaucoup de gens y vivent encore et ils sont le repaire des gangsters et des groupes politiques. Ce sont des endroits dangereux qui sont difficiles à attaquer avec des forces au sol. Il n&apos;est pas rare de trouver du Psiclone ou de l&apos;élérium lors des raids.</fr_fr>
 		<de_de>Die Slumsiedlungen außerhalb der Stadtgrenze sind Reste einer alten Zivilisation. Sie sind auch heute noch dicht bevölkert, und werden von Gangstern und politischen Gruppierungen als eine Art 'Basislager' benutzt. Diese gefährlichen Orte können mit Bodentruppen kaum angegriffen werden. Bei Razzien wird oft Psiklon oder Elerium gefunden.</de_de>
 	</string>
@@ -3211,7 +3211,7 @@
 	</string>
 	<string id="STR_WAREHOUSE_INFO">
 		<en_gb>The warehouse is used to store large quantities of merchandise for import or export. The cavernous interiors are easy to defend and raiders should be careful.</en_gb>
-		<es_la>Los almacenes son empleados para alojar grandes cantidades de mercancía de importación o para exportar. Sus cavernosos interiores son fáciles de defender y los asaltantes deben ser cuidadosos.</es_la>
+		<es_la>Los almacenes son empleados para alojar grandes cantidades de mercancía de importación o para exportar. Sus cavernosos interiores son fáciles de defender y sus asaltantes deben ser precavidos.</es_la>
 		<fr_fr>L&apos;entrepôt est utilisé pour stocker de large quantités de marchandises destinées à l&apos;exportation ou l&apos;importation. L&apos;intérieur caverneux du bâtiment est facile à défendre, et les voleurs doivent se montrer prudents.</fr_fr>
 		<de_de>Das Lagerhaus wird dazu verwendet, große Mengen von Gütern für den Import und Export aufzubewahren. Die höhlenartigen Hallen können problemlos verteidigt werden, was es potentiellen Eindringlingen schwermacht.</de_de>
 	</string>
@@ -3223,7 +3223,7 @@
 	</string>
 	<string id="STR_POWER_STATION_INFO">
 		<en_gb>The highly efficient Power Stations use cold fusion technology to generate energy for the city. They should be protected from Alien infiltration as far as possible. Any damage to them could result in serious power shortages.</en_gb>
-		<es_la>Estas centrales eléctricas altamente eficientes utilizan tecnología de fusión fría para generar electricidadposición ciudad. Deberían ser protegidas de infiltración alienígena tanto como sea posible. Cualquier daño que reciban puede resultar en graves cortes de suministro.</es_la>
+		<es_la>Estas centrales eléctricas altamente eficientes utilizan tecnología de fusión fría para generar electricidad para la ciudad. Deben ser protegidas de infiltración alienígena tanto como sea posible. Cualquier daño que reciban puede resultar en graves cortes de suministro.</es_la>
 		<fr_fr>Les centrales énergétiques, extrêmement efficaces, utilisent la technologie de la fusion à froid pour générer de l&apos;énergie pour la ville. Elles doivent être protégées de l&apos;infiltration alienne autant que possible. Tout dégât entraînerait des pénuries d&apos;énergie importantes.</fr_fr>
 		<de_de>Die äußerst effektiven Kraftwerke nutzen Kaltfusionstechnologie, um Strom für die Stadt zu erzeugen. Sie sollten so gut wie möglich gegen Alien-Übergriffe geschützt werden. Jede Beschädigung könnte zu ernster Energieknappheit führen.</de_de>
 	</string>
@@ -3247,7 +3247,7 @@
 	</string>
 	<string id="STR_PEOPLE_TUBES_INFO">
 		<en_gb>The People Tube network is the mass transit system for the whole city. The anti-gravity pathways suspend the traveler above the floor and safely propels them at speeds of about 25 miles an hour.</en_gb>
-		<es_la>La red de tubos de transporte es el sistema de transporte público de la ciudad. Los senderos antigravitatorios suspenden al viajero sobre el suelo y le impulsan a velocidades de 25 millas por hora con seguridad.</es_la>
+		<es_la>La red de tubos de transporte es el sistema de transporte público de la ciudad. Los senderos antigravitatorios suspenden al viajero sobre el suelo y le impulsan con seguridad a velocidades de 25 millas por hora.</es_la>
 		<fr_fr>Le réseau de Tube constitue le système de transport public pour toute la ville. Les passerelles anti-gravité mettent le voyageur en état de lévitation au-dessus du sol et le projettent à des vitesses de quarante kilomètres/heure.</fr_fr>
 		<de_de>Das 'Personenrohr'-Netz ist das wichtigste Transportsystem der Stadt. Die Anti-Schwerkraft-Pfade lassen den Benutzer über dem Boden schweben und transportieren ihn mit einer Geschwindigkeit von ca. 40km/h.</de_de>
 	</string>
@@ -3259,7 +3259,7 @@
 	</string>
 	<string id="STR_TEMPLE_OF_SIRIUS_INFO">
 		<en_gb>The Cult Of Sirius builds temples to worship the superior Alien master race. It is rumored that these temples contain altars where bizarre rituals take place.</en_gb>
-		<es_la>El Culto de Sirius construye templos para adorar a la raza maestra superior Alien. Se rumorea que estos templos contienen altares donde tienen lugar bizarros rituales. </es_la>
+		<es_la>El Culto de Sirius construye templos para adorar a la raza maestra superior alienigena. Se rumora que estos templos contienen altares donde tienen lugar rituales extraños. </es_la>
 		<fr_fr>Le culte de Sirius crée des temples où l&apos;on adore la race alienne supérieure. On raconte que ces temples abritent des autels où ont lieu d&apos;étranges rituels.</fr_fr>
 		<de_de>Der Sirius-Kult nutzt verschiedene Gebäude im gesamten Stadtbereich als Tempel, um ein überlegenes Alien-Volk anzubeten. Gerüchten zufolge sollen sich in diesen Tempeln Altare befinden, die für seltsame Rituale benutzt werden.</de_de>
 	</string>
@@ -3271,7 +3271,7 @@
 	</string>
 	<string id="STR_SENSODROME_INFO">
 		<en_gb>Sensodromes contain studios for all types of Sensovision broadcasting. The Psionic projectors on top of the building send signals to Sensovision arenas and into peoples homes.</en_gb>
-		<es_la>Los sensódromos alojan estudios para todo tipo de transmisión de Sensovisión. Los proyectores psiónicos en las azoteas del edificio envían señales a los ecenarios de Sensovisión y la los hogares de los ciudadanos.</es_la>
+		<es_la>Los sensódromos alojan estudios para todo tipo de transmisión de Sensovisión. Los proyectores psiónicos en las azoteas del edificio envían señales a los ecenarios de Sensovisión y la los hogares de los ciudadanos./es_la>
 		<fr_fr>Les stations de Sensovision contiennent des studios pour tous les types d&apos;émissions en sensovision. Les projecteurs psioniques se trouvant en haut des bâtiments envoient des signaux dans l&apos;arène de sensovision et dans les appartements privés des gens.</fr_fr>
 		<de_de>In den Sensodrömen befinden sich Studios für alle Arten von Sensovisionsausstrahlungen. Die psionischen Projektoren auf dem Gebäude senden Signale zur Sensovisionsarena und in die Privathaushalte.</de_de>
 	</string>
@@ -3319,7 +3319,7 @@
 	</string>
 	<string id="STR_PSICLONE_INFO">
 		<en_gb>The Psiclone implant is manufactured and distributed by criminal gangs. It allows the user to experience any mental state or images just by imagining them. Its widespread popularity and detrimental effect on the health of young citizens led the Senate to ban the use or distribution of the device. The price of Psiclone implants has subsequently soared and this has resulted in open warfare between the criminal gangs and Megapol.</en_gb>
-		<es_la>Los implantes Psiclone son manufacturados y distribuidos por las bandas criminales. Permiten al usuario experimentar cualquier imagen o estado mental sólo con imaginarlo. Su extendida popularidad y sus efectos nocivos en la salud de los jóvenes condujo al senado a prohibir el uso o la distribución de este dispositivo. Consecuentemente, el precio de los implantes Psiclone se ha disparado lo que ha resultado en una guerra abierta entre grupos criminales y Megapol.</es_la>
+		<es_la>Los implantes psiclone son manufacturados y distribuidos por las bandas criminales. Permiten al usuario experimentar cualquier imagen o estado mental sólo con imaginarlo. Su extendida popularidad y sus efectos nocivos en la salud de los jóvenes condujo al senado a prohibir el uso o la distribución de este dispositivo. Consecuentemente, el precio de los implantes psiclone se ha disparado lo que ha resultado en una guerra abierta entre los grupos criminales y Megapol.</es_la>
 		<fr_fr>L&apos;implant de Psiclone est fabriqué et distribué par des gangs criminels. Il permet à l&apos;utilisateur de ressentir un état mental quelconque ou des images simplement en les imaginant. Sa popularité très étendue et son effet nocif sur la santé des jeunes citoyens a poussé le Sénat à interdire l&apos;utilisation ou la distribution de cet implant. Le prix des implants de Psiclone a ensuite considérablement augmenté et a engendré une guerre ouverte entre les gangs criminels et Mégapol.</fr_fr>
 		<de_de>Das Psiklon-Implantat wird von kriminellen Banden hergestellt und in Umlauf gebracht. Der Verwender kann durch dieses Implantat jeden geistigen Zustand und jede beliebige Erfahrung allein durch seine Vorstellungskraft herbeiführen. Seine Verbreitung und der negative Effekt auf die jugendlichen Bürger hat den Senat dazu veranlaßt, den Gebrauch und Vertrieb des Geräts zu verbieten. Daraufhin stieg der Preis des Implantats rapide an, und es kam zu einem offenen Krieg zwischen den Banden und Megapol. </de_de>
 	</string>
@@ -3331,7 +3331,7 @@
 	</string>
 	<string id="STR_ELERIUM_INFO">
 		<en_gb>Since its introduction during the first Alien invasion, Elerium has proved to be an essential power source for interplanetary travel and military use. It is mined from distant planetary systems and transported back to Earth where its rarity ensures a high price. Tiny quantities contained in small pods fetch a high price. Corporations store pods in preference to gold because the stability of its value is guaranteed.</en_gb>
-		<es_la>Desde su introducción durante la primera invasión alienígena, el Elérium ha demostrado ser una fuente de energía esencial para el viaje interplanetario y el uso militar. Es recolectado en distantes sistemas planetarios y transportado a la tierra donde su rareza garantiza un alto precio. Diminutas cantidades contenidas en pequeños cargadores adquieren un alto costo. Las empresas almacenan cargadores en lugar de oro ya que la estabilidad de su valor está garantizada.</es_la>
+		<es_la>Desde su aparición durante la primera invasión alienígena, el Elérium ha demostrado ser una fuente de energía esencial para el viaje interplanetario y el uso militar. Es recolectado en distantes sistemas planetarios y transportado a la tierra donde su rareza garantiza un alto costo. Diminutas cantidades contenidas en pequeñas cápsulas adquieren un alto precio. Las empresas almacenan cápsulas en lugar de oro ya que la estabilidad de su valor está garantizada.</es_la>
 		<fr_fr>Depuis son lancement durant la première invasion alienne, l&apos;élérium s&apos;est avéré une source d&apos;énergie essentielle pour les voyages interplanétaires et les applications militaires. Il est extrait dans de lointains systèmes planétaires et transporté vers la Terre où, en tant que métal précieux, il est vendu à prix d&apos;or. Les infimes quantités contenues dans de petites capsules se vendent très cher. Les compagnies préfèrent l&apos;élérium à l&apos;or car la stabilité de sa valeur est garantie.</fr_fr>
 		<de_de>Seit seiner Einführung während der ersten Alien-Invasion hat sich Elerium als wichtige Energiequelle für interplanetare Reisen und Militärzwecke erwiesen. Es wird in weit entfernten Planetensystemen gewonnen und zur Erde befördert, wo seine Seltenheit hohe Preise garantiert. Schon mit winzigen Mengen in kleinen Kapseln erzielt der Verkäufer hohe Profite, und die Firmen ziehen Elerium sogar dem Gold vor, da die Preisstabilität gewährleistet ist. </de_de>
 	</string>
