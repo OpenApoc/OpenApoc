@@ -61,7 +61,7 @@ void UfopaediaCategory::Begin()
 	for( auto entry = Entries.begin(); entry != Entries.end(); entry++ )
 	{
 		std::shared_ptr<UfopaediaEntry> e = (std::shared_ptr<UfopaediaEntry>)*entry;
-		TextButton* tb = new TextButton( fw, entrylist, fw.gamecore->GetString(e->Title), infolabel->GetFont() );
+		TextButton* tb = new TextButton( fw, nullptr, fw.gamecore->GetString(e->Title), infolabel->GetFont() );
 		tb->RenderStyle = TextButton::TextButtonRenderStyles::SolidButtonStyle;
 		tb->TextHAlign = HorizontalAlignment::Left;
 		tb->TextVAlign = VerticalAlignment::Centre;
