@@ -55,6 +55,7 @@ City::City(Framework &fw, UString mapName)
 					{
 						auto tile = std::make_shared<BuildingSection>(*this, this->cityTiles[tileID], Vec3<int>{x,y,z}, bld);
 						this->addObject(std::dynamic_pointer_cast<TileObject>(tile));
+						tile->setPosition(Vec3<int>{x,y,z});
 					}
 				}
 			}
