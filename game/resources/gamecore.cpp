@@ -123,7 +123,7 @@ void GameCore::ParseXMLDoc( UString XMLFilename )
 					nodename = nodeufo->Name();
 					if( nodename == "category" )
 					{
-						Ufopaedia::UfopaediaDB.push_back( std::make_shared<UfopaediaCategory>( nodeufo ) );
+						Ufopaedia::UfopaediaDB.push_back( std::make_shared<UfopaediaCategory>( fw, nodeufo ) );
 					}
 				}
 			}

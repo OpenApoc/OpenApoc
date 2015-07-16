@@ -120,4 +120,14 @@ void TextButton::SetText( UString Text )
 	text = Text;
 }
 
+std::shared_ptr<BitmapFont> TextButton::GetFont()
+{
+	return font;
+}
+
+void TextButton::SetFont(std::shared_ptr<BitmapFont> NewFont)
+{
+	font = NewFont;
+}
+
 }; //namespace OpenApoc

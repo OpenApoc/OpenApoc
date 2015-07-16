@@ -53,14 +53,20 @@ void Ufopaedia::EventOccurred(Event *e)
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
-		else if( e->Data.Forms.RaisedBy->Name == "BUTTON_INFORMATION" )
+		else if( e->Data.Forms.RaisedBy->Name.substr(0, 7) == "BUTTON_" )
 		{
-			menuform->FindControl("INFORMATION_PANEL")->Visible = !menuform->FindControl("INFORMATION_PANEL")->Visible;
-		}
-		else
-		{
-			//delete menuform;
-			menuform = fw.gamecore->GetForm("FORM_UFOPAEDIA_BASE");
+			UString categoryname = e->Data.Forms.RaisedBy->Name.substr(7, e->Data.Forms.RaisedBy->Name.length() - 7);
+			
+			for( auto dbcat = UfopaediaDB.begin(); dbcat != UfopaediaDB.end(); dbcat++ )
+			{
+				std::shared_ptr<UfopaediaCategory> catrecord = (std::shared_ptr<UfopaediaCategory>)*dbcat;
+				if( catrecord->ID == categoryname )
+				{
+					stageCmd.cmd = StageCmd::Command::PUSH;
+					stageCmd.nextStage = catrecord;
+				}
+			}
+
 			return;
 		}
 	}

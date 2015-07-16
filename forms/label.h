@@ -33,6 +33,9 @@ class Label : public Control
 
 		UString GetText();
 		void SetText( UString Text );
+
+		std::shared_ptr<BitmapFont> GetFont();
+		void SetFont(std::shared_ptr<BitmapFont> NewFont);
 };
 
 }; //namespace OpenApoc
