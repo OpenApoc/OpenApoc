@@ -154,6 +154,15 @@ TileObject::getSprite()
 	return nullptr;
 }
 
+Vec3<float>
+TileObject::getDrawPosition() const
+{
+	//Override this for visible objects
+	LogWarning("Called on non-visible object");
+	assert(!this->isVisible());
+	return this->getPosition();
+}
+
 const Vec3<int>&
 TileObject::getTileSizeInVoxels() const
 {

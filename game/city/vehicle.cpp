@@ -194,5 +194,11 @@ VehicleTileObject::update(unsigned int ticks)
 	this->setDirection(this->vehicle.direction);
 }
 
+Vec3<float> VehicleTileObject::getDrawPosition() const
+{
+	return this->getPosition() - Vec3<float>{0.5,0.5,0};
+}
+
+
 
 }; //namespace OpenApoc

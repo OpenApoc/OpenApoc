@@ -216,7 +216,7 @@ void TileView::Render()
 				{
 					assert(obj->isVisible());
 					auto img = obj->getSprite();
-					auto pos = obj->getPosition();
+					auto pos = obj->getDrawPosition();
 					auto objScreenPos = tileToScreenCoords(pos);
 					objScreenPos.x += offsetX;
 					objScreenPos.y += offsetY;
