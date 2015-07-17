@@ -5,7 +5,7 @@
 #include <memory>
 #include <array>
 
-#include "framework/render/gl_3_0.cpp"
+#include "framework/render/gl30/gl_3_0.hpp"
 
 namespace {
 
