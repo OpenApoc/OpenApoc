@@ -4,11 +4,14 @@
 #include "game/general/mainmenu.h"
 #include "game/resources/gamecore.h"
 #include <tuple>
+#include <allegro5/allegro_physfs.h>
 
 namespace OpenApoc {
 
 static void CreateGameCore(Framework *fw, std::atomic<bool> *isComplete)
 {
+	//FIXME: The allegro file interface is a TLS, so we need to reset it if there's a new thread.
+	al_set_physfs_file_interface();
 	UString ruleset = fw->Settings->getString( "GameRules" );
 	UString language = fw->Settings->getString( "Language" );
 
