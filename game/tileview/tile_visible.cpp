@@ -39,4 +39,18 @@ TileObjectDirectionalSprite::getSprite()
 	   return closestImage;
 }
 
+Vec3<float>
+TileObjectSprite::getDrawPosition() const
+{
+	/* By default the sprite draw position starts at the same point as the object position */
+	return this->getPosition();
+}
+
+Vec3<float>
+TileObjectDirectionalSprite::getDrawPosition() const
+{
+	/* By default the sprite draw position starts at the same point as the object position */
+	return this->getPosition();
+}
+
 };

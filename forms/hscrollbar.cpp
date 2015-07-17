@@ -90,8 +90,7 @@ void HScrollBar::OnRender()
 	}
 
 	int xpos = segmentsize * (Value - Minimum);
-	fw.renderer->drawRect(Vec2<float>{xpos, 0}, Vec2<float>{grippersize, Size.y},
-		GripperColour);
+	fw.renderer->drawFilledRect(Vec2<float>{xpos, 0}, Vec2<float>{grippersize, Size.y}, GripperColour);
 }
 
 void HScrollBar::Update()

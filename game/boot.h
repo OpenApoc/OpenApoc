@@ -4,6 +4,9 @@
 #include "framework/stage.h"
 #include "framework/includes.h"
 
+#include <future>
+#include <atomic>
+
 namespace OpenApoc {
 
 class Image;
@@ -16,9 +19,8 @@ class BootUp : public Stage
 		int loadtime;
 		Angle<float> loadingimageangle;
 
-		void StartGame();
-
-		static void CreateGameCore(Framework &fw);
+		std::future<void> asyncGamecoreLoad;
+		std::atomic<bool> gamecoreLoadComplete;
 
 	public:
 		BootUp(Framework &fw) : Stage(fw){};

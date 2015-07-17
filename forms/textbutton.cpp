@@ -4,7 +4,7 @@
 
 namespace OpenApoc {
 
-TextButton::TextButton( Framework &fw, Control* Owner, UString Text, std::shared_ptr<BitmapFont> font ) : Control( fw, Owner ), text( Text ), font( font ), buttonbackground(fw.data->load_image( "UI/TEXTBUTTONBACK.PNG" )), TextHAlign( HorizontalAlignment::Centre ), TextVAlign( VerticalAlignment::Centre )
+TextButton::TextButton( Framework &fw, Control* Owner, UString Text, std::shared_ptr<BitmapFont> font ) : Control( fw, Owner ), text( Text ), font( font ), buttonbackground(fw.data->load_image( "UI/TEXTBUTTONBACK.PNG" )), TextHAlign( HorizontalAlignment::Centre ), TextVAlign( VerticalAlignment::Centre ), RenderStyle( TextButtonRenderStyles::MenuButtonStyle )
 {
 	this->buttonclick = fw.data->load_sample("xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW" );
 	cached = nullptr;
@@ -41,12 +41,21 @@ void TextButton::OnRender()
 
 		RendererSurfaceBinding b(*fw.renderer, cached);
 
-		fw.renderer->drawScaled(buttonbackground, Vec2<float>{0,0}, Vec2<float>{Size.x, Size.y}); 
-		fw.renderer->drawFilledRect(Vec2<float>{3,3}, Vec2<float>{Size.x-6, Size.y-6}, Colour{160,160,160});
-		fw.renderer->drawLine(Vec2<float>{2,4}, Vec2<float>{Size.x-2, 4}, Colour{220,220,220});
-		fw.renderer->drawLine(Vec2<float>{2, Size.y - 4}, Vec2<float>{Size.x - 2, Size.y - 4}, Colour{80,80,80});
-		fw.renderer->drawLine(Vec2<float>{2, Size.y - 3}, Vec2<float>{Size.x - 2, Size.y - 3}, Colour{64,64,64});
-		fw.renderer->drawRect(Vec2<float>{3,3}, Vec2<float>{Size.x-3, Size.y-3}, Colour{48,48,48});
+		switch( RenderStyle )
+		{
+			case TextButtonRenderStyles::SolidButtonStyle:
+				fw.renderer->drawFilledRect(Vec2<float>{0,0}, Vec2<float>{Size.x, Size.y}, BackgroundColour);
+				break;
+			case TextButtonRenderStyles::MenuButtonStyle:
+				fw.renderer->drawScaled(buttonbackground, Vec2<float>{0,0}, Vec2<float>{Size.x, Size.y}); 
+				fw.renderer->drawFilledRect(Vec2<float>{3,3}, Vec2<float>{Size.x-6, Size.y-6}, Colour{160,160,160});
+				fw.renderer->drawLine(Vec2<float>{2,4}, Vec2<float>{Size.x-2, 4}, Colour{220,220,220});
+				fw.renderer->drawLine(Vec2<float>{2, Size.y - 4}, Vec2<float>{Size.x - 2, Size.y - 4}, Colour{80,80,80});
+				fw.renderer->drawLine(Vec2<float>{2, Size.y - 3}, Vec2<float>{Size.x - 2, Size.y - 3}, Colour{64,64,64});
+				fw.renderer->drawRect(Vec2<float>{3,3}, Vec2<float>{Size.x-3, Size.y-3}, Colour{48,48,48});
+				break;
+		}
+
 
 		int xpos;
 		int ypos;
@@ -97,7 +106,16 @@ void TextButton::OnRender()
 
 	if( mouseDepressed && mouseInside )
 	{
-		fw.renderer->drawRect(Vec2<float>{1,1}, Vec2<float>{Size.x-2, Size.y-2}, Colour{255,255,255}, 2);
+		switch( RenderStyle )
+		{
+			case TextButtonRenderStyles::SolidButtonStyle:
+				fw.renderer->drawFilledRect(Vec2<float>{0,0}, Vec2<float>{Size.x, Size.y}, Colour{255,255,255});
+				break;
+			case TextButtonRenderStyles::MenuButtonStyle:
+				fw.renderer->drawRect(Vec2<float>{1,1}, Vec2<float>{Size.x-2, Size.y-2}, Colour{255,255,255}, 2);
+				break;
+		}
+		
 	}
 }
 
@@ -118,6 +136,16 @@ UString TextButton::GetText()
 void TextButton::SetText( UString Text )
 {
 	text = Text;
+}
+
+std::shared_ptr<BitmapFont> TextButton::GetFont()
+{
+	return font;
+}
+
+void TextButton::SetFont(std::shared_ptr<BitmapFont> NewFont)
+{
+	font = NewFont;
 }
 
 }; //namespace OpenApoc

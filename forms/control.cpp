@@ -7,7 +7,7 @@
 namespace OpenApoc {
 
 Control::Control(Framework &fw, Control* Owner, bool takesFocus)
-	: owningControl(Owner), focusedChild(nullptr), mouseInside(false), mouseDepressed(false), resolvedLocation(0,0), fw(fw), Name("Control"),Location(0,0), Size(0,0), BackgroundColour( 128, 80, 80 ), takesFocus(takesFocus), showBounds(false)
+	: owningControl(Owner), focusedChild(nullptr), mouseInside(false), mouseDepressed(false), resolvedLocation(0,0), fw(fw), Name("Control"),Location(0,0), Size(0,0), BackgroundColour( 128, 80, 80 ), takesFocus(takesFocus), showBounds(false), Visible(true)
 {
 	if( Owner != nullptr )
 	{
@@ -63,8 +63,14 @@ void Control::ResolveLocation()
 		resolvedLocation.x = Location.x;
 		resolvedLocation.y = Location.y;
 	} else {
-		resolvedLocation.x = owningControl->resolvedLocation.x + Location.x;
-		resolvedLocation.y = owningControl->resolvedLocation.y + Location.y;
+		if( Location.x > owningControl->Size.x || Location.y > owningControl->Size.y )
+		{
+			resolvedLocation.x = -99999;
+			resolvedLocation.y = -99999;
+		} else {
+			resolvedLocation.x = owningControl->resolvedLocation.x + Location.x;
+			resolvedLocation.y = owningControl->resolvedLocation.y + Location.y;
+		}
 	}
 
 	for( auto ctrlidx = Controls.rbegin(); ctrlidx != Controls.rend(); ctrlidx++ )
@@ -79,10 +85,13 @@ void Control::EventOccured( Event* e )
 	for( auto ctrlidx = Controls.rbegin(); ctrlidx != Controls.rend(); ctrlidx++ )
 	{
 		Control* c = (Control*)*ctrlidx;
-		c->EventOccured( e );
-		if( e->Handled )
+		if( c->Visible )
 		{
-			return;
+			c->EventOccured( e );
+			if( e->Handled )
+			{
+				return;
+			}
 		}
 	}
 
@@ -255,7 +264,10 @@ void Control::PostRender()
 	for( auto ctrlidx = Controls.begin(); ctrlidx != Controls.end(); ctrlidx++ )
 	{
 		Control* c = (Control*)*ctrlidx;
-		c->Render();
+		if( c->Visible )
+		{
+			c->Render();
+		}
 	}
 	if (showBounds)
 	{
@@ -284,6 +296,13 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 	{
 		nodename = Element->Attribute("id");
 		this->Name = nodename;
+	}
+
+	if( Element->Attribute("visible") != nullptr && UString(Element->Attribute("visible")) != "" )
+	{
+		UString vistxt = Element->Attribute("visible");
+		vistxt = vistxt.substr( 0, 1 ).toUpper();
+		this->Visible = ( vistxt == "Y" || vistxt == "T" );
 	}
 
 	tinyxml2::XMLElement* node;

@@ -4,6 +4,8 @@
 
 namespace OpenApoc {
 
+std::vector<std::shared_ptr<UfopaediaCategory>> Ufopaedia::UfopaediaDB;
+
 Ufopaedia::Ufopaedia(Framework &fw)
 	: Stage(fw)
 {
@@ -51,10 +53,21 @@ void Ufopaedia::EventOccurred(Event *e)
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
-		else
+		else if( e->Data.Forms.RaisedBy->Name.substr(0, 7) == "BUTTON_" )
 		{
-			//delete menuform;
-			menuform = fw.gamecore->GetForm("FORM_UFOPAEDIA_BASE");
+			UString categoryname = e->Data.Forms.RaisedBy->Name.substr(7, e->Data.Forms.RaisedBy->Name.length() - 7);
+			std::string btnname = e->Data.Forms.RaisedBy->Name.str();
+			
+			for( auto dbcat = UfopaediaDB.begin(); dbcat != UfopaediaDB.end(); dbcat++ )
+			{
+				std::shared_ptr<UfopaediaCategory> catrecord = (std::shared_ptr<UfopaediaCategory>)*dbcat;
+				if( catrecord->ID == categoryname )
+				{
+					stageCmd.cmd = StageCmd::Command::PUSH;
+					stageCmd.nextStage = catrecord;
+				}
+			}
+
 			return;
 		}
 	}

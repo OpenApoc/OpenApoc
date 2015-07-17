@@ -231,4 +231,14 @@ void TextEdit::RaiseEvent( FormEventType Type )
 	fw.PushEvent( ce );
 }
 
+std::shared_ptr<BitmapFont> TextEdit::GetFont()
+{
+	return font;
+}
+
+void TextEdit::SetFont(std::shared_ptr<BitmapFont> NewFont)
+{
+	font = NewFont;
+}
+
 }; //namespace OpenApoc

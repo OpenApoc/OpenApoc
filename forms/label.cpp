@@ -84,4 +84,14 @@ void Label::SetText( UString Text )
 	text = Text;
 }
 
+std::shared_ptr<BitmapFont> Label::GetFont()
+{
+	return font;
+}
+
+void Label::SetFont(std::shared_ptr<BitmapFont> NewFont)
+{
+	font = NewFont;
+}
+
 }; //namespace OpenApoc

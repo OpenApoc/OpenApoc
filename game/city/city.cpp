@@ -60,7 +60,6 @@ City::City(Framework &fw, GameState &state)
 							}
 						}
 					}
-
 				}
 
 

@@ -1,29 +1,29 @@
-
 #pragma once
 
 #include "framework/stage.h"
 #include "framework/includes.h"
-
-#include "game/resources/gamecore.h"
-#include "game/apocresources/apocresource.h"
-#include "forms/forms.h"
-
-#include "ufopaediacategory.h"
+#include "ufopaediaentry.h"
 
 namespace OpenApoc {
 
-class Ufopaedia : public Stage
+class UfopaediaCategory : public Stage
 {
 	private:
 		Form* menuform;
 		StageCmd stageCmd;
 
-
 	public:
-		static std::vector<std::shared_ptr<UfopaediaCategory>> UfopaediaDB;
+		UString ID;
+		UString Title;
+		UString BodyInformation;
+		UString BackgroundImageFilename;
+		std::vector<std::shared_ptr<UfopaediaEntry>> Entries;
 
-		Ufopaedia(Framework &fw);
-		~Ufopaedia();
+		int ViewingEntry;
+
+		UfopaediaCategory(Framework &fw, tinyxml2::XMLElement* Element);
+		~UfopaediaCategory();
+
 		// Stage control
 		virtual void Begin();
 		virtual void Pause();
@@ -33,5 +33,8 @@ class Ufopaedia : public Stage
 		virtual void Update(StageCmd * const cmd);
 		virtual void Render();
 		virtual bool IsTransition();
+
+		void SetTopic(int Index);
+		void SetupForm();
 };
 }; //namespace OpenApoc

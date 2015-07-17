@@ -68,6 +68,8 @@ SOURCES += main.cpp \
     library/memory.cpp \
     library/strings.cpp \
     game/ufopaedia/ufopaedia.cpp \
+		game/ufopaedia/ufopaediacategory.cpp \
+		game/ufopaedia/ufopaediaentry.cpp \
     game/debugtools/debugmenu.cpp
 
 HEADERS += \
@@ -144,6 +146,8 @@ HEADERS += \
     library/strings.h \
     library/vec.h \
     game/ufopaedia/ufopaedia.h \
+		game/ufopaedia/ufopaediacategory.h \
+		game/ufopaedia/ufopaediaentry.h \
     game/debugtools/debugmenu.h
 
 OTHER_FILES += \

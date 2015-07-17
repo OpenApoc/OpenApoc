@@ -72,6 +72,7 @@ public:
 	VehicleTileObject(Vehicle &vehicle, TileMap &map, Vec3<float> position);
 	virtual ~VehicleTileObject();
 	virtual void update(unsigned int ticks);
+	Vec3<float> getDrawPosition() const override;
 
 	using TileObjectCollidable::setPosition;
 	using TileObjectCollidable::getTileSizeInVoxels;

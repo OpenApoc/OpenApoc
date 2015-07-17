@@ -37,6 +37,7 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 		virtual void update(unsigned int ticks);
 
 		bool isVisible() const {return visible;}
+		virtual Vec3<float> getDrawPosition() const;
 		virtual std::shared_ptr<Image> getSprite();
 
 		bool isCollidable() const {return collides;}

@@ -82,3 +82,5 @@ nbproject/
 # Default "out-of-source build" directory
 build/
 [Tt]emp/
+
+openapoc_log.txt

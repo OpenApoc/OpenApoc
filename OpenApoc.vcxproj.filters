@@ -213,6 +213,12 @@
     <ClCompile Include="game\organisation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\ufopaedia\ufopaediaentry.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\ufopaedia\ufopaediacategory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -459,6 +465,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\organisation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\ufopaedia\ufopaediaentry.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\ufopaedia\ufopaediacategory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
