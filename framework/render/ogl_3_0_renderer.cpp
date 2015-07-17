@@ -711,15 +711,15 @@ public:
 			p->rendererPrivateData.reset(new GLPalette(p));
 		this->currentPalette = p;
 	}
-	
+
 	virtual void draw(std::shared_ptr<Image> i, Vec2<float> position);
 	virtual void drawRotated(std::shared_ptr<Image> i, Vec2<float> center, Vec2<float> position, float angle)
 	{
-		LogError("Unimplemented function");
-		std::ignore = i;
+		LogWarning("Rotation unimplemented");
+		//TODO: Actually rotate
 		std::ignore = center;
-		std::ignore = position;
 		std::ignore = angle;
+		this->draw(i, position);
 	};
 	virtual void drawScaled(std::shared_ptr<Image> image, Vec2<float> position, Vec2<float> size, Scaler scaler = Scaler::Linear)
 	{
