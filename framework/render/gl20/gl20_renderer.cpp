@@ -1,5 +1,9 @@
 #include "framework/renderer_interface.h"
 #include "framework/render/gl20/gl20.h"
+#include "framework/render/gl20/gl20_helpers.h"
+
+#include "framework/render/gl20/gl20_shaders.inl"
+
 
 namespace
 {
