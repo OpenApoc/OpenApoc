@@ -88,6 +88,9 @@ public:
 		this->defaultSurface->rendererPrivateData.reset(new FBOData(*gl, 0));
 		currentBoundFBO = 0;
 		this->currentSurface = this->defaultSurface;
+
+		this->has_texture_array = (gl->driverExtensions.find("GL_EXT_texture_array") != gl->driverExtensions.end());
+
 	}
 	virtual void clear(Colour c = Colour{0,0,0,0})
 	{
