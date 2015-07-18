@@ -82,6 +82,7 @@ public:
 		TEXTURE30 = 0x84DE,
 		TEXTURE31 = 0x84DF,
 		ACTIVE_TEXTURE = 0x84E0,
+		FRAMEBUFFER = 0x8D40,
 		DRAW_FRAMEBUFFER = 0x8CA9, /* GL_ARB_framebuffer_object */
 		DRAW_FRAMEBUFFER_BINDING = 0x8CA6, /* GL_ARB_framebuffer_object */
 		FRAGMENT_SHADER = 0x8B30,
@@ -89,6 +90,17 @@ public:
 		COMPILE_STATUS = 0x8B81,
 		LINK_STATUS = 0x8B82,
 		INFO_LOG_LENGTH = 0x8B84,
+		RGBA8 = 0x8058,
+		RGBA = 0x1908,
+		UNSIGNED_BYTE = 0x1401,
+		TEXTURE_MAG_FILTER = 0x2800,
+		TEXTURE_MIN_FILTER = 0x2801,
+		NEAREST = 0x2600,
+		LINEAR = 0x2601,
+		COLOR_ATTACHMENT0 = 0x8CE0,
+		FRAMEBUFFER_COMPLETE = 0x8CD5,
+		VIEWPORT = 0x0BA2,
+		
 	};
 
 	GL20();
@@ -102,14 +114,21 @@ public:
 
 	std::function<void(GLuint, GLuint)>AttachShader;
 	std::function<void(GLenum)>ActiveTexture;
+	std::function<void(GLenum, GLuint)>BindFramebuffer;
 	std::function<void(GLenum, GLuint)>BindTexture;
+	std::function<GLenum(GLenum)>CheckFramebufferStatus;
 	std::function<void(GLenum)>Clear;
 	std::function<void(GLfloat, GLfloat, GLfloat)> ClearColor;
 	std::function<void(GLuint)> CompileShader;
 	std::function<GLuint(void)> CreateProgram;
 	std::function<GLuint(GLenum)> CreateShader;
+	std::function<void(GLsizei, const GLuint*)> DeleteFramebuffers;
 	std::function<void(GLuint)> DeleteProgram;
 	std::function<void(GLuint)> DeleteShader;
+	std::function<void(GLsizei, const GLuint*)> DeleteTextures;
+	std::function<void(GLenum, GLenum, GLenum, GLuint, GLint)> FramebufferTexture2D;
+	std::function<void(GLsizei, GLuint*)> GenFramebuffers;
+	std::function<void(GLsizei, GLuint*)> GenTextures;
 	std::function<void(GLenum, GLint*)> GetIntegerv;
 	std::function<void(GLuint, GLsizei, GLsizei*, GLchar*)> GetProgramInfoLog;
 	std::function<void(GLuint, GLenum, GLint*)> GetProgramiv;
@@ -120,10 +139,9 @@ public:
 	std::function<void(GLuint)> LinkProgram;
 	std::function<void(GLenum, GLint)> PixelStorei;
 	std::function<void(GLuint, GLsizei, const GLchar *const*, const GLint*)> ShaderSource;
+	std::function<void(GLenum, GLint, GLint, GLsizei, GLsizei, GLint, GLenum, GLenum, const void*)> TexImage2D;
 	std::function<void(GLenum, GLenum, GLint)> TexParameteri;
-
-	/* GL_ARB_framebuffer_object */
-	std::function<void(GLenum, GLuint)> BindFramebuffer;
+	std::function<void(GLint, GLint, GLsizei, GLsizei)> Viewport;
 
 };
 

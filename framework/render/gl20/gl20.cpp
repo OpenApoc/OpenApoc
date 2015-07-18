@@ -81,14 +81,21 @@ GL20::GL20()
 
 	LOAD_FN("AttachShader", AttachShader);
 	LOAD_FN("ActiveTexture", ActiveTexture);
+	LOAD_FN("BindFramebuffer", BindFramebuffer);
 	LOAD_FN("BindTexture", BindTexture);
+	LOAD_FN("CheckFramebufferStatus", CheckFramebufferStatus);
 	LOAD_FN("Clear", Clear);
 	LOAD_FN("ClearColor", ClearColor);
 	LOAD_FN("CompileShader", CompileShader);
 	LOAD_FN("CreateProgram", CreateProgram);
 	LOAD_FN("CreateShader", CreateShader);
+	LOAD_FN("DeleteFramebuffers", DeleteFramebuffers);
 	LOAD_FN("DeleteProgram", DeleteProgram);
 	LOAD_FN("DeleteShader", DeleteShader);
+	LOAD_FN("DeleteTextures", DeleteTextures);
+	LOAD_FN("FramebufferTexture2D", FramebufferTexture2D);
+	LOAD_FN("GenFramebuffers", GenFramebuffers);
+	LOAD_FN("GenTextures", GenTextures);
 	LOAD_FN("GetIntegerv", GetIntegerv);
 	LOAD_FN("GetProgramInfoLog", GetProgramInfoLog);
 	LOAD_FN("GetProgramiv", GetProgramiv);
@@ -96,10 +103,12 @@ GL20::GL20()
 	LOAD_FN("GetShaderiv", GetShaderiv);
 	//LOAD_FN("GetString", GetString); - GetString is loaded first to check version
 	LOAD_FN("GetTexParameteriv", GetTexParameteriv);
+	LOAD_FN("LinkProgram", LinkProgram);
 	LOAD_FN("PixelStorei", PixelStorei);
 	LOAD_FN("ShaderSource", ShaderSource);
+	LOAD_FN("TexImage2D", TexImage2D);
 	LOAD_FN("TexParameteri", TexParameteri);
-	LOAD_FN("BindFramebuffer", BindFramebuffer);
+	LOAD_FN("Viewport", Viewport);
 
 	LogWarning("Successfully loaded GL20 entrypoints");
 	this->loadedSuccessfully = true;
