@@ -31,7 +31,7 @@ if(BUILD_GL_2_0_RENDERER)
 		else()
 			set(RENDERERS "${RENDERERS}:GL_2_0")
 		endif()
-		AUX_SOURCE_DIRECTORY(framework/render/ogl2_0 RENDERER_SOURCES)
+		AUX_SOURCE_DIRECTORY(framework/render/gl20 RENDERER_SOURCES)
 endif()
 
 message("Building renderers: ${RENDERERS}")
