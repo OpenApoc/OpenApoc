@@ -34,9 +34,11 @@ public:
 	typedef unsigned int GLuint;
 	typedef char GLchar;
 	typedef int GLsizei;
+	typedef unsigned char GLboolean;
 
 	enum GLEnumValues
 	{
+		FALSE = 0x0000,
 		TRUE = 0x0001,
 		UNPACK_ALIGNMENT = 0x0CF5,
 		TEXTURE_1D = 0x0DE0,
@@ -100,7 +102,12 @@ public:
 		COLOR_ATTACHMENT0 = 0x8CE0,
 		FRAMEBUFFER_COMPLETE = 0x8CD5,
 		VIEWPORT = 0x0BA2,
-		
+		COLOR_BUFFER_BIT = 0x00004000,
+		FLOAT = 0x1406,
+		TRIANGLE_STRIP = 0x0005,
+		BLEND = 0x0BE2,
+		SRC_ALPHA = 0x0302,
+		ONE_MINUS_SRC_ALPHA = 0x0303,
 	};
 
 	GL20();
@@ -116,9 +123,10 @@ public:
 	std::function<void(GLenum)>ActiveTexture;
 	std::function<void(GLenum, GLuint)>BindFramebuffer;
 	std::function<void(GLenum, GLuint)>BindTexture;
+	std::function<void(GLenum, GLenum)>BlendFunc;
 	std::function<GLenum(GLenum)>CheckFramebufferStatus;
 	std::function<void(GLenum)>Clear;
-	std::function<void(GLfloat, GLfloat, GLfloat)> ClearColor;
+	std::function<void(GLfloat, GLfloat, GLfloat, GLfloat)> ClearColor;
 	std::function<void(GLuint)> CompileShader;
 	std::function<GLuint(void)> CreateProgram;
 	std::function<GLuint(GLenum)> CreateShader;
@@ -126,9 +134,13 @@ public:
 	std::function<void(GLuint)> DeleteProgram;
 	std::function<void(GLuint)> DeleteShader;
 	std::function<void(GLsizei, const GLuint*)> DeleteTextures;
+	std::function<void(GLenum, GLint, GLsizei)> DrawArrays;
+	std::function<void(GLenum)> Enable;
+	std::function<void(GLint)> EnableVertexAttribArray;
 	std::function<void(GLenum, GLenum, GLenum, GLuint, GLint)> FramebufferTexture2D;
 	std::function<void(GLsizei, GLuint*)> GenFramebuffers;
 	std::function<void(GLsizei, GLuint*)> GenTextures;
+	std::function<GLint(GLuint, const GLchar*)> GetAttribLocation;
 	std::function<void(GLenum, GLint*)> GetIntegerv;
 	std::function<void(GLuint, GLsizei, GLsizei*, GLchar*)> GetProgramInfoLog;
 	std::function<void(GLuint, GLenum, GLint*)> GetProgramiv;
@@ -136,11 +148,17 @@ public:
 	std::function<void(GLuint, GLenum, GLint*)> GetShaderiv;
 	std::function<const GLubyte*(GLenum)> GetString;
 	std::function<void(GLenum, GLenum, GLint*)> GetTexParameteriv;
+	std::function<GLint(GLuint, const GLchar*)> GetUniformLocation;
 	std::function<void(GLuint)> LinkProgram;
 	std::function<void(GLenum, GLint)> PixelStorei;
 	std::function<void(GLuint, GLsizei, const GLchar *const*, const GLint*)> ShaderSource;
 	std::function<void(GLenum, GLint, GLint, GLsizei, GLsizei, GLint, GLenum, GLenum, const void*)> TexImage2D;
 	std::function<void(GLenum, GLenum, GLint)> TexParameteri;
+	std::function<void(GLint, GLint)> Uniform1i;
+	std::function<void(GLint, GLfloat)> Uniform1f;
+	std::function<void(GLint, GLfloat, GLfloat)> Uniform2f;
+	std::function<void(GLuint)> UseProgram;
+	std::function<void(GLuint, GLint, GLenum, GLboolean, GLsizei, const void*)> VertexAttribPointer;
 	std::function<void(GLint, GLint, GLsizei, GLsizei)> Viewport;
 
 };

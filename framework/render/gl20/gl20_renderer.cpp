@@ -51,6 +51,36 @@ public:
 	}
 };
 
+class GLRGBImage : public RendererImageData
+{
+private:
+	const GL20 &gl;
+public:
+	GL20::GLuint texID;
+	Vec2<int> size;
+	std::weak_ptr<RGBImage> parent;
+	GLRGBImage(const GL20 &gl, std::shared_ptr<RGBImage> parent)
+		: gl(gl), texID(0), size(parent->size), parent(parent)
+	{
+		RGBImageLock l(parent, ImageLockUse::Read);
+		gl.GenTextures(1, &this->texID);
+		if (!this->texID)
+		{
+			LogError("Failed to gen tex ID");
+			return;
+		}
+		BindTexture b(gl, this->texID);
+		gl.TexParameteri(GL20::TEXTURE_2D, GL20::TEXTURE_MIN_FILTER, GL20::NEAREST);
+		gl.TexParameteri(GL20::TEXTURE_2D, GL20::TEXTURE_MAG_FILTER, GL20::NEAREST);
+		gl.TexImage2D(GL20::TEXTURE_2D, 0, GL20::RGBA, parent->size.x, parent->size.y, 0, GL20::RGBA, GL20::UNSIGNED_BYTE, l.getData());
+	}
+	~GLRGBImage()
+	{
+		if (this->texID)
+			gl.DeleteTextures(1, &this->texID);
+	}
+};
+
 class GL20Renderer : public OpenApoc::Renderer
 {
 private:
@@ -59,6 +89,8 @@ private:
 	std::shared_ptr<Surface> defaultSurface;
 	std::shared_ptr<Surface> currentSurface;
 	GL20::GLuint currentBoundFBO;
+
+	std::unique_ptr<Program> RGBProgram;
 
 	virtual void setSurface(std::shared_ptr<Surface> s)
 	{
@@ -76,6 +108,78 @@ private:
 	{
 		return this->currentSurface;
 	}
+
+	void DrawRGB(GL20::GLuint texID, Vec2<float> position, Vec2<float> size, Scaler scaler, Vec2<float> center, float rotationAngleDegrees)
+	{
+		static const Vec2<float> texCoords[] = {
+			{0.0f, 0.0f},
+			{1.0f, 0.0f},
+			{0.0f, 1.0f},
+			{1.0f, 1.0f},
+		};
+		Vec2<float> positions[] = {
+			{position.x, position.y},
+			{position.x + size.x, position.y},
+			{position.x, position.y + size.y},
+			{position.x + size.x, position.y + size.y},
+		};
+		gl->UseProgram(this->RGBProgram->id);
+		BindTexture b(*gl, texID);
+		GL20::GLint texFilter;
+		switch (scaler)
+		{
+			default:
+				LogError("Unknown scaler requested");
+				assert(0);
+				//Fall-through to nearest
+			case Scaler::Nearest:
+				texFilter = GL20::NEAREST;
+				break;
+			case Scaler::Linear:
+				texFilter = GL20::LINEAR;
+				break;
+		}
+		RGBProgram->Uniform("screen_size", this->currentSurface->size);
+		GL20::GLfloat flipY = this->currentSurface == this->defaultSurface ? 1.0f : 0.0f;
+		RGBProgram->Uniform("flipY", flipY);
+		RGBProgram->Uniform("tex", 0);
+		gl->EnableVertexAttribArray(this->RGBProgram->attribLoc("texcoord"));
+		gl->VertexAttribPointer(this->RGBProgram->attribLoc("texcoord"), 2, GL20::FLOAT, GL20::FALSE, 0, (const void*)texCoords);
+		gl->EnableVertexAttribArray(this->RGBProgram->attribLoc("position"));
+		gl->VertexAttribPointer(this->RGBProgram->attribLoc("position"), 2, GL20::FLOAT, GL20::FALSE, 0, (const void*)positions);
+
+		gl->DrawArrays(GL20::TRIANGLE_STRIP, 0, 4);
+
+
+	}
+	
+
+	void draw(std::shared_ptr<Image> i, Vec2<float> position, Vec2<float> size, Scaler scaler, Vec2<float> center, float rotationAngleDegrees)
+	{
+		std::shared_ptr<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(i);
+		if (rgbImage)
+		{
+			GLRGBImage *img = dynamic_cast<GLRGBImage*>(rgbImage->rendererPrivateData.get());
+			if (!img)
+			{
+				img = new GLRGBImage(*gl, rgbImage);
+				i->rendererPrivateData.reset(img);
+			}
+			DrawRGB(img->texID, position, size, scaler, center, rotationAngleDegrees);
+		}
+		std::shared_ptr<Surface> surface = std::dynamic_pointer_cast<Surface>(i);
+		if (surface)
+		{
+			FBOData *fbo = dynamic_cast<FBOData*>(surface->rendererPrivateData.get());
+			if (!fbo)
+			{
+				fbo = new FBOData(*gl, surface->size);
+				i->rendererPrivateData.reset(fbo);
+			}
+			DrawRGB(fbo->tex, position, size, scaler, center, rotationAngleDegrees);
+		}
+	}
+
 public:
 	GL20Renderer(std::unique_ptr<OpenApoc::GL20> ingl)
 		: gl(std::move(ingl))
@@ -91,10 +195,17 @@ public:
 
 		this->has_texture_array = (gl->driverExtensions.find("GL_EXT_texture_array") != gl->driverExtensions.end());
 
+		this->RGBProgram.reset(new Program(*gl, UString(RGBProgram_vertexSource), UString(RGBProgram_fragmentSource)));
+		gl->Enable(GL20::BLEND);
+		gl->BlendFunc(GL20::SRC_ALPHA, GL20::ONE_MINUS_SRC_ALPHA);
+
 	}
+
 	virtual void clear(Colour c = Colour{0,0,0,0})
 	{
-		LogError("Unimplemented");
+		this->flush();
+		gl->ClearColor(c.r/255.0f, c.g/255.0f, c.b/255.0f, c.a/255.0f);
+		gl->Clear(GL20::COLOR_BUFFER_BIT);
 	}
 	virtual void setPalette(std::shared_ptr<Palette> p)
 	{
@@ -102,15 +213,15 @@ public:
 	}
 	virtual void draw(std::shared_ptr<Image> i, Vec2<float> position)
 	{
-		LogError("Unimplemented");
+		this->draw(i, position, i->size, Scaler::Nearest, Vec2<float>{0,0}, 0);
 	}
 	virtual void drawRotated(std::shared_ptr<Image> i, Vec2<float> center, Vec2<float> position, float angle)
 	{
-		LogError("Unimplemented");
+		this->draw(i, position, i->size, Scaler::Nearest, center, angle);
 	}
 	virtual void drawScaled(std::shared_ptr<Image> i, Vec2<float> position, Vec2<float> size, Scaler scaler = Scaler::Linear)
 	{
-		LogError("Unimplemented");
+		this->draw(i, position, size, scaler, Vec2<float>{0,0}, 0);
 	}
 	virtual void drawTinted(std::shared_ptr<Image> i, Vec2<float> position, Colour tint)
 	{
@@ -130,7 +241,7 @@ public:
 	}
 	virtual void flush()
 	{
-		LogError("Unimplemented");
+		//NOP as yet
 	}
 	virtual UString getName()
 	{

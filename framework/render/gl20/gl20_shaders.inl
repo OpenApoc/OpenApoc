@@ -11,18 +11,17 @@ namespace
 
 static const std::string RGBProgram_vertexSource =
 	"uniform vec2 screen_size;\n"
-	"uniform vec2 sprite_size;\n"
 	"uniform bool flipY;\n"
 	"attribute vec2 texcoord;\n"
 	"attribute vec2 position;\n"
 	"varying vec2 texcoord_out;\n"
 	"void main() {\n"
 	"  texcoord_out = texcoord;\n"
-	"  position /= screen_size;\n"
-	"  position -= vec2(0.5,0.5);\n"
-	"  position *= 2;\n"
-	"  if (flipY) position.y = -position.y;\n"
-	"  gl_position = vec4(position.x, position.y, 0, 1);\n"
+	"  vec2 screenPosition = position / screen_size;\n"
+	"  screenPosition -= vec2(0.5,0.5);\n"
+	"  screenPosition *= vec2(2,2);\n"
+	"  if (flipY) screenPosition.y = -screenPosition.y;\n"
+	"  gl_Position = vec4(screenPosition.x, screenPosition.y, 0, 1);\n"
 	"}\n";
 
 

@@ -248,6 +248,39 @@ public:
 		if (id)
 			gl.DeleteProgram(id);
 	}
+	std::map<std::string, GL20::GLint> uniformLocations;
+	GL20::GLint uniformLoc(const std::string &name)
+	{
+		auto it = uniformLocations.find(name);
+		if (it != uniformLocations.end())
+			return it->second;
+		GL20::GLint loc = gl.GetUniformLocation(this->id, name.c_str());
+		uniformLocations.emplace(name, loc);
+		return loc;
+
+	}
+	std::map<std::string, GL20::GLint> attribLocations;
+	GL20::GLint attribLoc(const std::string &name)
+	{
+		auto it = attribLocations.find(name);
+		if (it != attribLocations.end())
+			return it->second;
+		GL20::GLint loc = gl.GetAttribLocation(this->id, name.c_str());
+		attribLocations.emplace(name, loc);
+		return loc;
+	}
+	void Uniform(const std::string &name, GL20::GLfloat val)
+	{
+		gl.Uniform1f(this->uniformLoc(name), val);
+	}
+	void Uniform(const std::string &name, const Vec2<float> &val)
+	{
+		gl.Uniform2f(this->uniformLoc(name), val.x, val.y);
+	}
+	void Uniform(const std::string &name, int val)
+	{
+		gl.Uniform1i(this->uniformLoc(name), val);
+	}
 };
 
 };
