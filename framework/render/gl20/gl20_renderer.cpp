@@ -2,6 +2,7 @@
 #include "framework/render/gl20/gl20.h"
 #include "framework/render/gl20/gl20_helpers.h"
 #include "framework/image.h"
+#include "framework/palette.h"
 
 #include "framework/render/gl20/gl20_shaders.inl"
 
@@ -81,6 +82,55 @@ public:
 	}
 };
 
+class GLPalImage : public RendererImageData
+{
+private:
+	const GL20 &gl;
+public:
+	GL20::GLuint texID;
+	Vec2<int> size;
+	std::weak_ptr<PaletteImage> parent;
+	GLPalImage(const GL20 &gl, std::shared_ptr<PaletteImage> parent)
+		: gl(gl), texID(0), size(parent->size), parent(parent)
+	{
+		PaletteImageLock l(parent, ImageLockUse::Read);
+		gl.GenTextures(1, &this->texID);
+		if (!this->texID)
+		{
+			LogError("Failed to gen tex ID");
+			return;
+		}
+		BindTexture b(gl, this->texID);
+		UnpackAlignment pack(gl, 1);
+		gl.TexParameteri(GL20::TEXTURE_2D, GL20::TEXTURE_MIN_FILTER, GL20::NEAREST);
+		gl.TexParameteri(GL20::TEXTURE_2D, GL20::TEXTURE_MAG_FILTER, GL20::NEAREST);
+		gl.TexImage2D(GL20::TEXTURE_2D, 0, GL20::LUMINANCE, parent->size.x, parent->size.y, 0, GL20::LUMINANCE, GL20::UNSIGNED_BYTE, l.getData());
+	}
+	~GLPalImage()
+	{
+		if (this->texID)
+			gl.DeleteTextures(1, &this->texID);
+	}
+};
+
+class GLPalette : public RendererImageData
+{
+private:
+	const GL20 &gl;
+public:
+	GL20::GLuint palID;
+
+	GLPalette(const GL20 &gl, std::shared_ptr<Palette> p)
+		: gl(gl), palID(0)
+	{
+		gl.GenTextures(1, &this->palID);
+		BindTexture b(gl, this->palID);
+		gl.TexParameteri(GL20::TEXTURE_2D, GL20::TEXTURE_MIN_FILTER, GL20::NEAREST);
+		gl.TexParameteri(GL20::TEXTURE_2D, GL20::TEXTURE_MAG_FILTER, GL20::NEAREST);
+		gl.TexImage1D(GL20::TEXTURE_1D, 0, GL20::RGBA, p->colours.size(), 0, GL20::RGBA, GL20::UNSIGNED_BYTE, p->colours.data());
+	}
+};
+
 class GL20Renderer : public OpenApoc::Renderer
 {
 private:
@@ -91,6 +141,10 @@ private:
 	GL20::GLuint currentBoundFBO;
 
 	std::unique_ptr<Program> RGBProgram;
+	std::unique_ptr<Program> PalProgram;
+
+	std::shared_ptr<Palette> currentPalette;
+	GL20::GLuint currentPaletteID;
 
 	virtual void setSurface(std::shared_ptr<Surface> s)
 	{
@@ -152,6 +206,49 @@ private:
 
 
 	}
+	void DrawPal(GL20::GLuint texID, GL20::GLuint palID, Vec2<float> position, Vec2<float> size, Scaler scaler, Vec2<float> center, float rotationAngleDegrees)
+	{
+		static const Vec2<float> texCoords[] = {
+			{0.0f, 0.0f},
+			{1.0f, 0.0f},
+			{0.0f, 1.0f},
+			{1.0f, 1.0f},
+		};
+		Vec2<float> positions[] = {
+			{position.x, position.y},
+			{position.x + size.x, position.y},
+			{position.x, position.y + size.y},
+			{position.x + size.x, position.y + size.y},
+		};
+		gl->UseProgram(this->PalProgram->id);
+		BindTexture b(*gl, texID, 0);
+		BindTexture p(*gl, palID, 1);
+		GL20::GLint texFilter;
+		switch (scaler)
+		{
+			default:
+				LogError("Unknown scaler requested");
+				assert(0);
+				//Fall-through to nearest
+			case Scaler::Nearest:
+				texFilter = GL20::NEAREST;
+				break;
+			case Scaler::Linear:
+				texFilter = GL20::LINEAR;
+				break;
+		}
+		PalProgram->Uniform("screen_size", this->currentSurface->size);
+		GL20::GLfloat flipY = this->currentSurface == this->defaultSurface ? 1.0f : 0.0f;
+		PalProgram->Uniform("flipY", flipY);
+		PalProgram->Uniform("tex", 0);
+		PalProgram->Uniform("pal", 1);
+		gl->EnableVertexAttribArray(this->PalProgram->attribLoc("texcoord"));
+		gl->VertexAttribPointer(this->PalProgram->attribLoc("texcoord"), 2, GL20::FLOAT, GL20::FALSE, 0, (const void*)texCoords);
+		gl->EnableVertexAttribArray(this->PalProgram->attribLoc("position"));
+		gl->VertexAttribPointer(this->PalProgram->attribLoc("position"), 2, GL20::FLOAT, GL20::FALSE, 0, (const void*)positions);
+	
+		gl->DrawArrays(GL20::TRIANGLE_STRIP, 0, 4);
+	}
 	
 
 	void draw(std::shared_ptr<Image> i, Vec2<float> position, Vec2<float> size, Scaler scaler, Vec2<float> center, float rotationAngleDegrees)
@@ -166,6 +263,7 @@ private:
 				i->rendererPrivateData.reset(img);
 			}
 			DrawRGB(img->texID, position, size, scaler, center, rotationAngleDegrees);
+			return;
 		}
 		std::shared_ptr<Surface> surface = std::dynamic_pointer_cast<Surface>(i);
 		if (surface)
@@ -177,7 +275,21 @@ private:
 				i->rendererPrivateData.reset(fbo);
 			}
 			DrawRGB(fbo->tex, position, size, scaler, center, rotationAngleDegrees);
+			return;
 		}
+		std::shared_ptr<PaletteImage> palImage = std::dynamic_pointer_cast<PaletteImage>(i);
+		if (palImage)
+		{
+			GLPalImage *img = dynamic_cast<GLPalImage*>(palImage->rendererPrivateData.get());
+			if (!img)
+			{
+				img = new GLPalImage(*gl, palImage);
+				i->rendererPrivateData.reset(img);
+			}
+			DrawPal(img->texID, currentPaletteID, position, size, scaler, center, rotationAngleDegrees);
+			return;
+		}
+		LogError("Unsupport image type");
 	}
 
 public:
@@ -196,6 +308,7 @@ public:
 		this->has_texture_array = (gl->driverExtensions.find("GL_EXT_texture_array") != gl->driverExtensions.end());
 
 		this->RGBProgram.reset(new Program(*gl, UString(RGBProgram_vertexSource), UString(RGBProgram_fragmentSource)));
+		this->PalProgram.reset(new Program(*gl, UString(RGBProgram_vertexSource), UString(PalProgram_fragmentSource)));
 		gl->Enable(GL20::BLEND);
 		gl->BlendFunc(GL20::SRC_ALPHA, GL20::ONE_MINUS_SRC_ALPHA);
 
@@ -209,7 +322,14 @@ public:
 	}
 	virtual void setPalette(std::shared_ptr<Palette> p)
 	{
-		LogError("Unimplemented");
+		auto *glPal = dynamic_cast<GLPalette*>(p->rendererPrivateData.get());
+		if (!glPal)
+		{
+			glPal = new GLPalette(*gl, p);
+			p->rendererPrivateData.reset(glPal);
+		}
+		this->currentPalette = p;
+		this->currentPaletteID = glPal->palID;
 	}
 	virtual void draw(std::shared_ptr<Image> i, Vec2<float> position)
 	{

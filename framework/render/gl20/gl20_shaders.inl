@@ -31,4 +31,12 @@ static const std::string RGBProgram_fragmentSource =
 	"void main() {\n"
 	"  gl_FragColor = texture2D(tex, texcoord_out);\n"
 	"}\n";
+
+static const std::string PalProgram_fragmentSource =
+	"uniform sampler2D tex;\n"
+	"uniform sampler1D pal;\n"
+	"varying vec2 texcoord_out;\n"
+	"void main() {\n"
+	"  gl_FragColor = texture1D(pal, texture2D(tex, texcoord_out).r);\n"
+	"}\n";
 }; //anonymous namespace

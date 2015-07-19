@@ -112,6 +112,7 @@ GL20::GL20()
 	LOAD_FN("LinkProgram", LinkProgram);
 	LOAD_FN("PixelStorei", PixelStorei);
 	LOAD_FN("ShaderSource", ShaderSource);
+	LOAD_FN("TexImage1D", TexImage1D);
 	LOAD_FN("TexImage2D", TexImage2D);
 	LOAD_FN("TexParameteri", TexParameteri);
 	LOAD_FN("Uniform1i", Uniform1i);

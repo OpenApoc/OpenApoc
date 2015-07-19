@@ -108,6 +108,7 @@ public:
 		BLEND = 0x0BE2,
 		SRC_ALPHA = 0x0302,
 		ONE_MINUS_SRC_ALPHA = 0x0303,
+		LUMINANCE = 0x1909,
 	};
 
 	GL20();
@@ -152,6 +153,7 @@ public:
 	std::function<void(GLuint)> LinkProgram;
 	std::function<void(GLenum, GLint)> PixelStorei;
 	std::function<void(GLuint, GLsizei, const GLchar *const*, const GLint*)> ShaderSource;
+	std::function<void(GLenum, GLint, GLint, GLsizei, GLint, GLenum, GLenum, const void*)> TexImage1D;
 	std::function<void(GLenum, GLint, GLint, GLsizei, GLsizei, GLint, GLenum, GLenum, const void*)> TexImage2D;
 	std::function<void(GLenum, GLenum, GLint)> TexParameteri;
 	std::function<void(GLint, GLint)> Uniform1i;
