@@ -163,7 +163,7 @@ public:
 		gl.CompileShader(id);
 		GL20::GLint status;
 		gl.GetShaderiv(id, GL20::COMPILE_STATUS, &status);
-		if (status == GL20::TRUE)
+		if (status == GL20::_TRUE)
 		{
 			//success
 			return;
@@ -222,7 +222,7 @@ public:
 
 		GL20::GLint status;
 		gl.GetProgramiv(id, GL20::LINK_STATUS, &status);
-		if (status == GL20::TRUE)
+		if (status == GL20::_TRUE)
 		{
 			//Success`
 			return;

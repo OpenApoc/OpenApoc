@@ -198,9 +198,9 @@ private:
 		RGBProgram->Uniform("flipY", flipY);
 		RGBProgram->Uniform("tex", 0);
 		gl->EnableVertexAttribArray(this->RGBProgram->attribLoc("texcoord"));
-		gl->VertexAttribPointer(this->RGBProgram->attribLoc("texcoord"), 2, GL20::FLOAT, GL20::FALSE, 0, (const void*)texCoords);
+		gl->VertexAttribPointer(this->RGBProgram->attribLoc("texcoord"), 2, GL20::FLOAT, GL20::_FALSE, 0, (const void*)texCoords);
 		gl->EnableVertexAttribArray(this->RGBProgram->attribLoc("position"));
-		gl->VertexAttribPointer(this->RGBProgram->attribLoc("position"), 2, GL20::FLOAT, GL20::FALSE, 0, (const void*)positions);
+		gl->VertexAttribPointer(this->RGBProgram->attribLoc("position"), 2, GL20::FLOAT, GL20::_FALSE, 0, (const void*)positions);
 
 		gl->DrawArrays(GL20::TRIANGLE_STRIP, 0, 4);
 
@@ -243,9 +243,9 @@ private:
 		PalProgram->Uniform("tex", 0);
 		PalProgram->Uniform("pal", 1);
 		gl->EnableVertexAttribArray(this->PalProgram->attribLoc("texcoord"));
-		gl->VertexAttribPointer(this->PalProgram->attribLoc("texcoord"), 2, GL20::FLOAT, GL20::FALSE, 0, (const void*)texCoords);
+		gl->VertexAttribPointer(this->PalProgram->attribLoc("texcoord"), 2, GL20::FLOAT, GL20::_FALSE, 0, (const void*)texCoords);
 		gl->EnableVertexAttribArray(this->PalProgram->attribLoc("position"));
-		gl->VertexAttribPointer(this->PalProgram->attribLoc("position"), 2, GL20::FLOAT, GL20::FALSE, 0, (const void*)positions);
+		gl->VertexAttribPointer(this->PalProgram->attribLoc("position"), 2, GL20::FLOAT, GL20::_FALSE, 0, (const void*)positions);
 	
 		gl->DrawArrays(GL20::TRIANGLE_STRIP, 0, 4);
 	}

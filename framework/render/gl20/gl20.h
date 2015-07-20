@@ -38,8 +38,8 @@ public:
 
 	enum GLEnumValues
 	{
-		FALSE = 0x0000,
-		TRUE = 0x0001,
+		_FALSE = 0x0000,
+		_TRUE = 0x0001,
 		UNPACK_ALIGNMENT = 0x0CF5,
 		TEXTURE_1D = 0x0DE0,
 		TEXTURE_2D = 0x0DE1,
