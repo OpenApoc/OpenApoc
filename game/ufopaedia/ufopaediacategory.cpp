@@ -65,6 +65,7 @@ void UfopaediaCategory::Begin()
 		tb->RenderStyle = TextButton::TextButtonRenderStyles::SolidButtonStyle;
 		tb->TextHAlign = HorizontalAlignment::Left;
 		tb->TextVAlign = VerticalAlignment::Centre;
+		tb->BackgroundColour.a = 0;
 		entrylist->AddItem( tb );
 	}
 
