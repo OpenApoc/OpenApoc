@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<openapoc>
-<vehicle id="PHOENIX_HOVERCAR" type="flying" sizeX="1.0" sizeY="1.0" sizeZ="1.0">
+<openapoc_rules>
+<vehicledef id="PHOENIX_HOVERCAR" type="flying" sizeX="1.0" sizeY="1.0" sizeZ="1.0">
 <flat>
 	<N>PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:391</N>
 	<NE>PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:392</NE>
@@ -67,5 +67,5 @@
 	<NNW>PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:445</NNW>
 	<NW>PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:446</NW>
 </banking_left>
-</vehicle>
-</openapoc>
+</vehicledef>
+</openapoc_rules>

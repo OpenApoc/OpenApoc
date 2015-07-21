@@ -1,75 +1,67 @@
-#include "game/resources/vehiclefactory.h"
-
+#include "game/rules/rules_private.h"
+#include "library/strings.h"
 #include "framework/framework.h"
-#include "game/resources/gamecore.h"
 #include "game/tileview/voxel.h"
 
-namespace OpenApoc {
+#include <glm/glm.hpp>
+#include <map>
 
-VehicleFactory::VehicleFactory(Framework &fw)
-	: fw(fw)
+namespace OpenApoc
 {
 
-}
-
-VehicleFactory::~VehicleFactory()
+static std::map<VehicleDefinition::Direction, Vec3<float>> directionsToVec =
 {
-
-}
-
-std::map<Vehicle::Direction, Vec3<float>> directionsToVec =
-{
-	{Vehicle::Direction::N,  { 0,-1, 0}}, 
-	{Vehicle::Direction::NE, { 1,-1, 0}}, 
-	{Vehicle::Direction::E,  { 1, 0, 0}}, 
-	{Vehicle::Direction::SE, { 1, 1, 0}}, 
-	{Vehicle::Direction::S,  { 0, 1, 0}}, 
-	{Vehicle::Direction::SW, {-1, 1, 0}}, 
-	{Vehicle::Direction::W,  {-1, 0, 0}}, 
-	{Vehicle::Direction::NW, {-1,-1, 0}}, 
+	{VehicleDefinition::Direction::N,  { 0,-1, 0}}, 
+	{VehicleDefinition::Direction::NE, { 1,-1, 0}}, 
+	{VehicleDefinition::Direction::E,  { 1, 0, 0}}, 
+	{VehicleDefinition::Direction::SE, { 1, 1, 0}}, 
+	{VehicleDefinition::Direction::S,  { 0, 1, 0}}, 
+	{VehicleDefinition::Direction::SW, {-1, 1, 0}}, 
+	{VehicleDefinition::Direction::W,  {-1, 0, 0}}, 
+	{VehicleDefinition::Direction::NW, {-1,-1, 0}}, 
 };
 
-static std::map<Vehicle::Direction, std::shared_ptr<Image> >
+static std::map<VehicleDefinition::Direction, std::shared_ptr<Image> >
 parseDirectionalSprites(Framework &fw, tinyxml2::XMLElement *root)
 {
-	std::map<Vehicle::Direction, std::shared_ptr<Image> > sprites;
+	std::map<VehicleDefinition::Direction, std::shared_ptr<Image> > sprites;
 
 	for (tinyxml2::XMLElement* node = root->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
 	{
 		UString name = node->Name();
-		Vehicle::Direction dir;
+		VehicleDefinition::Direction dir;
 		if (name == "N")
-			dir = Vehicle::Direction::N;
+			dir = VehicleDefinition::Direction::N;
 		else if (name == "NNE")
-			dir = Vehicle::Direction::NNE;
+			dir = VehicleDefinition::Direction::NNE;
 		else if (name == "NE")
-			dir = Vehicle::Direction::NE;
+			dir = VehicleDefinition::Direction::NE;
 		else if (name == "NEE")
-			dir = Vehicle::Direction::NEE;
+			dir = VehicleDefinition::Direction::NEE;
 		else if (name == "E")
-			dir = Vehicle::Direction::E;
+			dir = VehicleDefinition::Direction::E;
 		else if (name == "SEE")
-			dir = Vehicle::Direction::SEE;
+			dir = VehicleDefinition::Direction::SEE;
 		else if (name == "SE")
-			dir = Vehicle::Direction::SE;
+			dir = VehicleDefinition::Direction::SE;
 		else if (name == "SSE")
-			dir = Vehicle::Direction::SSE;
+			dir = VehicleDefinition::Direction::SSE;
 		else if (name == "S")
-			dir = Vehicle::Direction::S;
+			dir = VehicleDefinition::Direction::S;
 		else if (name == "SSW")
-			dir = Vehicle::Direction::SSW;
+			dir = VehicleDefinition::Direction::SSW;
 		else if (name == "SW")
-			dir = Vehicle::Direction::SW;
+			dir = VehicleDefinition::Direction::SW;
 		else if (name == "SWW")
-			dir = Vehicle::Direction::SWW;
+			dir = VehicleDefinition::Direction::SWW;
 		else if (name == "W")
-			dir = Vehicle::Direction::W;
+			dir = VehicleDefinition::Direction::W;
 		else if (name == "NWW")
-			dir = Vehicle::Direction::NWW;
+			dir = VehicleDefinition::Direction::NWW;
 		else if (name == "NW")
-			dir = Vehicle::Direction::NW;
+			dir = VehicleDefinition::Direction::NW;
 		else if (name == "NNW")
-			dir = Vehicle::Direction::NNW;
+			dir = VehicleDefinition::Direction::NNW;
 		else
 		{
 			LogError("Unknown sprite direction \"%s\"", name.str().c_str());
@@ -89,22 +81,30 @@ parseDirectionalSprites(Framework &fw, tinyxml2::XMLElement *root)
 	return sprites;
 }
 
-void
-VehicleFactory::ParseVehicleDefinition(tinyxml2::XMLElement *root)
+bool
+RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::XMLElement *root)
 {
+
 	VehicleDefinition def;
+
+	if (UString(root->Name()) != "vehicledef")
+	{
+		LogError("Called on unexpected node \"%s\"", root->Name());
+		return false;
+	}
+
 	def.name = root->Attribute("id");
 
 	UString type = root->Attribute("type");
 
 	if (type == "flying")
-		def.type = Vehicle::Type::Flying;
+		def.type = VehicleDefinition::Type::Flying;
 	else if (type == "ground")
-		def.type = Vehicle::Type::Ground;
+		def.type = VehicleDefinition::Type::Ground;
 	else
 	{
 		LogError("Unknown vehicle type \"%s\"", type.str().c_str());
-		return;
+		return false;
 	}
 
 	def.size.x = root->FloatAttribute("sizeX");
@@ -116,23 +116,23 @@ VehicleFactory::ParseVehicleDefinition(tinyxml2::XMLElement *root)
 		UString tag = node->Name();
 		if (tag == "flat")
 		{
-			def.sprites[Vehicle::Banking::Flat] = parseDirectionalSprites(fw, node);
+			def.sprites[VehicleDefinition::Banking::Flat] = parseDirectionalSprites(fw, node);
 		}
 		else if (tag == "ascending")
 		{
-			def.sprites[Vehicle::Banking::Ascending] = parseDirectionalSprites(fw, node);
+			def.sprites[VehicleDefinition::Banking::Ascending] = parseDirectionalSprites(fw, node);
 		}
 		else if (tag == "decending")
 		{
-			def.sprites[Vehicle::Banking::Decending] = parseDirectionalSprites(fw, node);
+			def.sprites[VehicleDefinition::Banking::Decending] = parseDirectionalSprites(fw, node);
 		}
 		else if (tag == "banking_left")
 		{
-			def.sprites[Vehicle::Banking::Left] = parseDirectionalSprites(fw, node);
+			def.sprites[VehicleDefinition::Banking::Left] = parseDirectionalSprites(fw, node);
 		}
 		else if (tag == "banking_right")
 		{
-			def.sprites[Vehicle::Banking::Right] = parseDirectionalSprites(fw, node);
+			def.sprites[VehicleDefinition::Banking::Right] = parseDirectionalSprites(fw, node);
 		}
 		else
 		{
@@ -142,20 +142,20 @@ VehicleFactory::ParseVehicleDefinition(tinyxml2::XMLElement *root)
 	}
 	//Push all directional sprites into 'directional vector' space
 	//FIXME: How to do banking left/right?
-	for (auto &s : def.sprites[Vehicle::Banking::Flat])
+	for (auto &s : def.sprites[VehicleDefinition::Banking::Flat])
 	{
 		Vec3<float> v = directionsToVec[s.first];
 		v = glm::normalize(v);
 		def.directionalSprites.emplace_back(v, s.second);
 	}
-	for (auto &s : def.sprites[Vehicle::Banking::Ascending])
+	for (auto &s : def.sprites[VehicleDefinition::Banking::Ascending])
 	{
 		Vec3<float> v = directionsToVec[s.first];
 		v.z = 1;
 		v = glm::normalize(v);
 		def.directionalSprites.emplace_back(v, s.second);
 	}
-	for (auto &s : def.sprites[Vehicle::Banking::Decending])
+	for (auto &s : def.sprites[VehicleDefinition::Banking::Decending])
 	{
 		Vec3<float> v = directionsToVec[s.first];
 		v.z = -1;
@@ -175,18 +175,10 @@ VehicleFactory::ParseVehicleDefinition(tinyxml2::XMLElement *root)
 		}
 	}
 
-	this->defs.emplace(def.name, def);
+	rules.vehicleDefs.emplace(def.name, def);
 
-}
+	return true;
 
-std::shared_ptr<Vehicle>
-VehicleFactory::create(const UString name, Organisation &owner)
-{
-	auto &def = this->defs[name];
-	auto v = std::shared_ptr<Vehicle>(new Vehicle(def, owner));
-
-
-	return v;
 }
 
 }; //namespace OpenApoc

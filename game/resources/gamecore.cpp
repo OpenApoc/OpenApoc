@@ -7,7 +7,7 @@
 namespace OpenApoc {
 
 GameCore::GameCore(Framework &fw)
-	: supportedlanguages(), languagetext(), fonts(), forms(), fw(fw), vehicleFactory(fw)
+	: supportedlanguages(), languagetext(), fonts(), forms(), fw(fw)
 {
 	Loaded = false;
 }
@@ -80,10 +80,6 @@ void GameCore::ParseXMLDoc( UString XMLFilename )
 			else if( nodename == "form" )
 			{
 				ParseFormXML( node );
-			}
-			else if( nodename == "vehicle" )
-			{
-				vehicleFactory.ParseVehicleDefinition( node );
 			}
 			else if (nodename == "apocfont" )
 			{

@@ -17,19 +17,25 @@ class Rect
 
 		Vec2<T> p0, p1;
 
-		bool within(Vec2<T> p){
+		bool within(Vec2<T> p) const {
 			return (p.x >= p0.x &&
 			        p.x < p1.x &&
 			        p.y >= p0.y &&
 			        p.y < p1.y);
 		};
-		bool within(Rect<T> r){
+		bool withinInclusive(Vec2<T> p) const {
+			return (p.x >= p0.x &&
+					p.x <= p1.x &&
+					p.y >= p0.y &&
+					p.y <= p1.y);
+		};
+		bool within(Rect<T> r) const {
 			return (r.p0.x >= p0.x &&
 			        r.p1.x <= p1.x &&
 			        r.p0.y >= p0.y &&
 			        r.p1.y <= p1.y);
 		};
-		bool intersects(Rect<T> r){
+		bool intersects(Rect<T> r) const {
 			return !(r.p1.x <= p0.x ||
 			         r.p0.x >= p1.x ||
 			         r.p1.y <= p0.y ||

@@ -19,6 +19,8 @@
 #include "library/strings.h"
 
 #include "game/gamestate.h"
+#include "game/resources/gamecore.h"
+#include "game/rules/rules.h"
 
 //FIXME: Remove core-allegro
 //Required for input types
@@ -46,7 +48,8 @@ class Framework
 		void Audio_Shutdown();
 	public:
 		std::unique_ptr<Data> data;
-		GameState state;
+		std::unique_ptr<GameState> state;
+		std::unique_ptr<Rules> rules;
 		std::unique_ptr<GameCore> gamecore;
 
 		std::unique_ptr<ConfigFile> Settings;

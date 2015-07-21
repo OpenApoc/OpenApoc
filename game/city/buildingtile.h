@@ -3,6 +3,7 @@
 #include "game/tileview/tile.h"
 #include "game/tileview/tile_visible.h"
 #include "game/tileview/tile_collidable.h"
+#include "game/rules/rules.h"
 
 /* MSVC warns about inherited virtual functions that are implemented
  * in different superclasses though multiple inheritance, even
@@ -16,25 +17,17 @@ namespace OpenApoc {
 
 class Building;
 
-class CityTile
-{
-public:
-	std::shared_ptr<Image> sprite;
-	std::shared_ptr<VoxelMap> voxelMap;
-
-	static std::vector<CityTile> loadTilesFromFile(Framework &fw);
-};
-
-class BuildingSection : public TileObjectSprite, public TileObjectCollidable
+class BuildingTile : public TileObjectSprite, public TileObjectCollidable
 {
 	private:
-		CityTile &cityTile;
+		BuildingTileDef &tileDef;
 		Vec3<int> pos;
+		//May be NULL for no building
 		Building *building;
 	public:
 
-		BuildingSection(TileMap &map, CityTile &cityTile, Vec3<int> pos, Building *building);
-		virtual ~BuildingSection();
+		BuildingTile(TileMap &map, BuildingTileDef &tileDef, Vec3<int> pos, Building *building);
+		virtual ~BuildingTile();
 };
 
 }; //namespace OpenApoc

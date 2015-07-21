@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules name="novice">
+  <include>rules/common/vehicles.xml</include>
+  <include>rules/common/organisations.xml</include>
+  <include>rules/city/citymap5.xml</include>
+</openapoc_rules>

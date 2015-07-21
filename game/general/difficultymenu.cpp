@@ -49,34 +49,37 @@ void DifficultyMenu::EventOccurred(Event *e)
 
 	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick )
 	{
-		UString citymapName;
+		UString ruleName;
 		if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY1") == 0)
 		{
-			citymapName = "CITYMAP1";
+			ruleName = "rules/difficulty1.xml";
 		}
 		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY2") == 0)
 		{
-			citymapName = "CITYMAP2";
+			ruleName = "rules/difficulty2.xml";
 		}
 		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY3") == 0)
 		{
-			citymapName = "CITYMAP3";
+			ruleName = "rules/difficulty3.xml";
 		}
 		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY4") == 0)
 		{
-			citymapName = "CITYMAP4";
+			ruleName = "rules/difficulty4.xml";
 		}
 		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY5") == 0)
 		{
-			citymapName = "CITYMAP5";
+			ruleName = "rules/difficulty5.xml";
 		}
 		else
 		{
 			LogWarning("Unknown button pressed: %s", e->Data.Forms.RaisedBy->Name.str().c_str());
-			citymapName = "CITYMAP1";
+			ruleName = "rules/difficulty1.xml";
 			return;
 		}
-		fw.state.city.reset(new City(fw, citymapName));
+
+		fw.rules.reset(new Rules(fw, ruleName));
+		fw.state.reset(new GameState(fw, *fw.rules));
+
 		stageCmd.cmd = StageCmd::Command::REPLACE;
 		stageCmd.nextStage = std::make_shared<CityView>(fw);
 		return;

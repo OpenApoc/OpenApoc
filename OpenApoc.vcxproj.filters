@@ -111,9 +111,6 @@
     <ClCompile Include="game\city\building.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\city\organisation.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="game\tileview\tile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -127,9 +124,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game\city\vehicle.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="game\resources\vehiclefactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="framework\palette.cpp">
@@ -202,6 +196,21 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game\tileview\projectile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\rules\rules.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\rules\vehicledef_rules.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\rules\citydef_rules.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\rules\organisationdef_rules.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\organisation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game\ufopaedia\ufopaediaentry.cpp">
@@ -341,9 +350,6 @@
     <ClInclude Include="game\city\building.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\city\organisation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game\city\vehicle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -366,9 +372,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\gamestate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game\resources\vehiclefactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework\palette.h">
@@ -441,6 +444,27 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\tileview\projectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\rules\rules.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\rules\rules_private.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\rules\vehicledef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\rules\buildingdef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\rules\buildingtiledef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\rules\organisationdef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\organisation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\ufopaedia\ufopaediaentry.h">

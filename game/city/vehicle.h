@@ -4,6 +4,7 @@
 #include "game/tileview/tile.h"
 #include "game/tileview/tile_visible.h"
 #include "game/tileview/tile_collidable.h"
+#include "game/rules/vehicledef.h"
 
 /* MSVC warns about inherited virtual functions that are implemented
  * in different superclasses though multiple inheritance, even
@@ -49,39 +50,6 @@ public:
 
 	const VehicleDefinition &def;
 	Organisation &owner;
-
-	enum class Type
-	{
-		Flying,
-		Ground,
-	};
-	enum class Direction
-	{
-		N,
-		NNE,
-		NE,
-		NEE,
-		E,
-		SEE,
-		SE,
-		SSE,
-		S,
-		SSW,
-		SW,
-		SWW,
-		W,
-		NWW,
-		NW,
-		NNW,
-	};
-	enum class Banking
-	{
-		Flat,
-		Left,
-		Right,
-		Ascending,
-		Decending,
-	};
 
 	std::shared_ptr<VehicleTileObject> tileObject;
 	/* FIXME: Merge with tileObject? */
