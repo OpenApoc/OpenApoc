@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
-option (BUILD_GL_2_0_RENDERER "Build an OpenGL 2.0 renderer backend" ON)
+option (BUILD_GL_2_0_RENDERER "Build an OpenGL 2.0 renderer backend (NON-FUNCTIONAL)" OFF)
 option (BUILD_GL_3_0_RENDERER "Build an OpenGL 3.0 renderer backend" ON)
 
 set (RENDERERS "")
