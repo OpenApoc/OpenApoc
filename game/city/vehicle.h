@@ -23,6 +23,7 @@ class VehicleDefinition;
 class VehicleTileObject;
 class Vehicle;
 class Organisation;
+class Weapon;
 
 class VehicleMission
 {
@@ -62,6 +63,8 @@ public:
 	/* 'launch' the vehicle into the city */
 	/* FIXME: Make this take initial mission/mover? */
 	void launch(TileMap &map, Vec3<float> initialPosition);
+
+	std::vector<std::unique_ptr<Weapon>> weapons;
 };
 
 class VehicleTileObject : public TileObjectDirectionalSprite, public TileObjectCollidable

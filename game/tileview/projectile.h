@@ -5,6 +5,7 @@ namespace OpenApoc
 {
 
 class Vehicle;
+class Weapon;
 
 class Projectile : virtual public TileObject
 {
@@ -15,6 +16,7 @@ protected:
 	std::shared_ptr<Vehicle> firer;
 
 	Vec3<float> previousPosition;
+	friend class Weapon;
 public:
 	Projectile(TileMap &map, std::shared_ptr<Vehicle> firer, Vec3<float> position, Vec3<float> velocity, unsigned int lifetime);
 	virtual void checkProjectileCollision() override;

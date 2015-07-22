@@ -1,5 +1,6 @@
 #include "framework/logger.h"
 #include "game/city/vehicle.h"
+#include "game/city/weapon.h"
 #include <cfloat>
 #include <random>
 
