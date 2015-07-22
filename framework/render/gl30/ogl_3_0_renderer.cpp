@@ -128,8 +128,7 @@ class SpriteProgram : public Program
 			}
 	public:
 		GLuint posLoc;
-		GLuint sizeLoc;
-		GLuint offsetLoc;
+		GLuint texcoordLoc;
 		GLuint screenSizeLoc;
 		GLuint texLoc;
 		GLuint flipYLoc;
@@ -137,16 +136,13 @@ class SpriteProgram : public Program
 const char* RGBProgram_vertexSource = {
 	"#version 130\n"
 	"in vec2 position;\n"
-	"uniform vec2 size;\n"
-	"uniform vec2 offset;\n"
+	"in vec2 texcoord_in;\n"
 	"out vec2 texcoord;\n"
 	"uniform vec2 screenSize;\n"
 	"uniform bool flipY;\n"
 	"void main() {\n"
-	"  texcoord = position;\n"
+	"  texcoord = texcoord_in;\n"
 	"  vec2 tmpPos = position;\n"
-	"  tmpPos *= size;\n"
-	"  tmpPos += offset;\n"
 	"  tmpPos /= screenSize;\n"
 	"  tmpPos -= vec2(0.5,0.5);\n"
 	"  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
@@ -169,18 +165,15 @@ class RGBProgram : public SpriteProgram
 	public:
 		RGBProgram()
 			: SpriteProgram(RGBProgram_vertexSource, RGBProgram_fragmentSource)
-			{
-				this->posLoc = gl::GetAttribLocation(this->prog, "position");
-				this->sizeLoc = gl::GetUniformLocation(this->prog, "size");
-				this->offsetLoc = gl::GetUniformLocation(this->prog, "offset");
-				this->screenSizeLoc = gl::GetUniformLocation(this->prog, "screenSize");
-				this->texLoc = gl::GetUniformLocation(this->prog, "tex");
-				this->flipYLoc = gl::GetUniformLocation(this->prog, "flipY");
-			}
-		void setUniforms(Vec2<float> offset, Vec2<float> size, Vec2<int> screenSize, bool flipY, GLint texUnit = 0)
 		{
-			this->Uniform(this->offsetLoc, offset);
-			this->Uniform(this->sizeLoc, size);
+			this->posLoc = gl::GetAttribLocation(this->prog, "position");
+			this->texcoordLoc = gl::GetAttribLocation(this->prog, "texcoord_in");
+			this->screenSizeLoc = gl::GetUniformLocation(this->prog, "screenSize");
+			this->texLoc = gl::GetUniformLocation(this->prog, "tex");
+			this->flipYLoc = gl::GetUniformLocation(this->prog, "flipY");
+		}
+		void setUniforms(Vec2<int> screenSize, bool flipY, GLint texUnit = 0)
+		{
 			this->Uniform(this->screenSizeLoc, screenSize);
 			this->Uniform(this->texLoc, texUnit);
 			this->Uniform(this->flipYLoc, flipY);
@@ -189,16 +182,14 @@ class RGBProgram : public SpriteProgram
 const char* PaletteProgram_vertexSource = {
 	"#version 130\n"
 	"in vec2 position;\n"
-	"uniform vec2 size;\n"
-	"uniform vec2 offset;\n"
+	"in vec2 texcoord_in;\n"
 	"out vec2 texcoord;\n"
+	"flat out int sprite;\n"
 	"uniform vec2 screenSize;\n"
 	"uniform bool flipY;\n"
 	"void main() {\n"
-	"  texcoord = position;\n"
+	"  texcoord = texcoord_in;\n"
 	"  vec2 tmpPos = position;\n"
-	"  tmpPos *= size;\n"
-	"  tmpPos += offset;\n"
 	"  tmpPos /= screenSize;\n"
 	"  tmpPos -= vec2(0.5,0.5);\n"
 	"  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
@@ -224,17 +215,14 @@ class PaletteProgram : public SpriteProgram
 			: SpriteProgram(PaletteProgram_vertexSource, PaletteProgram_fragmentSource)
 			{
 				this->posLoc = gl::GetAttribLocation(this->prog, "position");
-				this->sizeLoc = gl::GetUniformLocation(this->prog, "size");
-				this->offsetLoc = gl::GetUniformLocation(this->prog, "offset");
+				this->texcoordLoc = gl::GetAttribLocation(this->prog, "texcoord_in");
 				this->screenSizeLoc = gl::GetUniformLocation(this->prog, "screenSize");
 				this->texLoc = gl::GetUniformLocation(this->prog, "tex");
 				this->palLoc = gl::GetUniformLocation(this->prog, "pal");
 				this->flipYLoc = gl::GetUniformLocation(this->prog, "flipY");
 			}
-		void setUniforms(Vec2<float> offset, Vec2<float> size, Vec2<int> screenSize, bool flipY, GLint texUnit = 0, GLint palUnit = 1)
+		void setUniforms(Vec2<int> screenSize, bool flipY, GLint texUnit = 0, GLint palUnit = 1)
 		{
-			this->Uniform(this->offsetLoc, offset);
-			this->Uniform(this->sizeLoc, size);
 			this->Uniform(this->screenSizeLoc, screenSize);
 			this->Uniform(this->texLoc, texUnit);
 			this->Uniform(this->palLoc, palUnit);
@@ -336,14 +324,10 @@ class PaletteSetProgram : public Program
 const char* SolidColourProgram_vertexSource = {
 	"#version 130\n"
 	"in vec2 position;\n"
-	"uniform vec2 size;\n"
-	"uniform vec2 offset;\n"
 	"uniform vec2 screenSize;\n"
 	"uniform bool flipY;\n"
 	"void main() {\n"
 	"  vec2 tmpPos = position;\n"
-	"  tmpPos *= size;\n"
-	"  tmpPos += offset;\n"
 	"  tmpPos /= screenSize;\n"
 	"  tmpPos -= vec2(0.5,0.5);\n"
 	"  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
@@ -365,8 +349,6 @@ class SolidColourProgram : public Program
 		
 	public:
 		GLuint posLoc;
-		GLuint sizeLoc;
-		GLuint offsetLoc;
 		GLuint screenSizeLoc;
 		GLuint colourLoc;
 		GLuint flipYLoc;
@@ -374,36 +356,52 @@ class SolidColourProgram : public Program
 			: Program(SolidColourProgram_vertexSource, SolidColourProgram_fragmentSource)
 			{
 				this->posLoc = gl::GetAttribLocation(this->prog, "position");
-				this->sizeLoc = gl::GetUniformLocation(this->prog, "size");
-				this->offsetLoc = gl::GetUniformLocation(this->prog, "offset");
 				this->screenSizeLoc = gl::GetUniformLocation(this->prog, "screenSize");
 				this->colourLoc = gl::GetUniformLocation(this->prog, "colour");
 				this->flipYLoc = gl::GetUniformLocation(this->prog, "flipY");
 			}
-		void setUniforms(Vec2<float> offset, Vec2<float> size, Vec2<int> screenSize, bool flipY, Colour colour)
+		void setUniforms(Vec2<int> screenSize, bool flipY, Colour colour)
 		{
-			this->Uniform(this->offsetLoc, offset);
-			this->Uniform(this->sizeLoc, size);
 			this->Uniform(this->screenSizeLoc, screenSize);
 			this->Uniform(this->colourLoc, colour);
 			this->Uniform(this->flipYLoc, flipY);
 		}
 };
 
-class IdentityQuad
+class Quad
 {
 public:
-	static void draw(GLuint attribPos)
+	std::array<Vec2<float>, 4> vertices;
+	std::array<Vec2<float>, 4> texcoords;
+	Quad(const Rect<float> &position, const Rect<float> &texCoords = {0.0f, 0.0f, 1.0f, 1.0f})
 	{
-		static const float vertices[] =
+		vertices = 
 		{
-			0.0f, 0.0f,
-			0.0f, 1.0f,
-			1.0f, 0.0f,
-			1.0f, 1.0f
+			position.p0,
+			{position.p1.x, position.p0.y},
+			{position.p0.x, position.p1.y},
+			position.p1,
 		};
-		gl::EnableVertexAttribArray(attribPos);
-		gl::VertexAttribPointer(attribPos, 2, gl::FLOAT, gl::FALSE_, 0, &vertices);
+		texcoords = 
+		{
+			texCoords.p0,
+			{texCoords.p1.x, texCoords.p0.y},
+			{texCoords.p0.x, texCoords.p1.y},
+			texCoords.p1,
+		};
+	}
+	void draw(GLuint vertexAttribPos, GLuint texcoordAttribPos)
+	{
+		gl::EnableVertexAttribArray(vertexAttribPos);
+		gl::VertexAttribPointer(vertexAttribPos, 2, gl::FLOAT, gl::FALSE_, 0, &vertices);
+		gl::EnableVertexAttribArray(texcoordAttribPos);
+		gl::VertexAttribPointer(texcoordAttribPos, 2, gl::FLOAT, gl::FALSE_, 0, &texcoords);
+		gl::DrawArrays(gl::TRIANGLE_STRIP, 0, 4);
+	}
+	void draw(GLuint vertexAttribPos)
+	{
+		gl::EnableVertexAttribArray(vertexAttribPos);
+		gl::VertexAttribPointer(vertexAttribPos, 2, gl::FLOAT, gl::FALSE_, 0, &vertices);
 		gl::DrawArrays(gl::TRIANGLE_STRIP, 0, 4);
 	}
 };
@@ -826,6 +824,7 @@ public:
 	void DrawRGB(GLRGBImage &img, Vec2<float> offset, Vec2<float> size, Scaler scaler)
 	{
 		GLenum filter;
+		Rect<float> pos(offset, offset + size);
 		switch (scaler)
 		{
 			case Scaler::Linear:
@@ -843,30 +842,34 @@ public:
 		bool flipY = false;
 		if (currentBoundFBO == 0)
 			flipY = true;
-		rgbProgram->setUniforms(offset, size, this->currentSurface->size, flipY);
+		rgbProgram->setUniforms(this->currentSurface->size, flipY);
 		BindTexture t(img.texID);
 		TexParam<gl::TEXTURE_MAG_FILTER> mag(img.texID, filter);
 		TexParam<gl::TEXTURE_MIN_FILTER> min(img.texID, filter);
-		IdentityQuad::draw(rgbProgram->posLoc);
+		Quad q(pos);
+		q.draw(rgbProgram->posLoc, rgbProgram->texcoordLoc);
 	}
 
 	void DrawPalette(GLPaletteImage &img, Vec2<float> offset, Vec2<float> size)
 	{
 		BindProgram(paletteProgram);
+		Rect<float> pos(offset, offset + size);
 		bool flipY = false;
 		if (currentBoundFBO == 0)
 			flipY = true;
-		paletteProgram->setUniforms(offset, size, this->currentSurface->size, flipY);
+		paletteProgram->setUniforms(this->currentSurface->size, flipY);
 		BindTexture t(img.texID, 0);
 
 		BindTexture p(static_cast<GLPalette*>(this->currentPalette->rendererPrivateData.get())->texID, 1);
+		Quad q(pos);
+		q.draw(paletteProgram->posLoc, paletteProgram->texcoordLoc);
 
-		IdentityQuad::draw(paletteProgram->posLoc);
 	}
 
 	void DrawSurface(FBOData &fbo, Vec2<float> offset, Vec2<float> size, Scaler scaler)
 	{
 		GLenum filter;
+		Rect<float> pos(offset, offset + size);
 		switch (scaler)
 		{
 			case Scaler::Linear:
@@ -884,21 +887,24 @@ public:
 		bool flipY = false;
 		if (currentBoundFBO == 0)
 			flipY = true;
-		rgbProgram->setUniforms(offset, size, this->currentSurface->size, flipY);
+		rgbProgram->setUniforms(this->currentSurface->size, flipY);
 		BindTexture t(fbo.tex);
 		TexParam<gl::TEXTURE_MAG_FILTER> mag(fbo.tex, filter);
 		TexParam<gl::TEXTURE_MIN_FILTER> min(fbo.tex, filter);
-		IdentityQuad::draw(rgbProgram->posLoc);
+		Quad q(pos);
+		q.draw(rgbProgram->posLoc, rgbProgram->texcoordLoc);
 	}
 
 	void DrawRect(Vec2<float> offset, Vec2<float> size, Colour c)
 	{
 		BindProgram(colourProgram);
+		Rect<float> pos(offset, offset + size);
 		bool flipY = false;
 		if (currentBoundFBO == 0)
 			flipY = true;
-		colourProgram->setUniforms(offset, size, this->currentSurface->size, flipY, c);
-		IdentityQuad::draw(colourProgram->posLoc);
+		colourProgram->setUniforms(this->currentSurface->size, flipY, c);
+		Quad q(pos);
+		q.draw(colourProgram->posLoc);
 	}
 
 	class BatchedVertex
