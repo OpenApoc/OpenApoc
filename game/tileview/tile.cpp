@@ -130,6 +130,11 @@ TileObject::setPosition(Vec3<float> newPos)
 	auto newOwner = map.getTile(this->position);
 	if (newOwner != this->owningTile)
 	{
+		if (this->isVisible())
+		{
+			this->owningTile->visibleObjects.erase(thisPtr);
+			newOwner->visibleObjects.insert(thisPtr);
+		}
 		this->owningTile->ownedObjects.erase(thisPtr);
 		newOwner->ownedObjects.insert(thisPtr);
 		this->owningTile = newOwner;

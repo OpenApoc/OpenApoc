@@ -183,16 +183,11 @@ void TileView::Render()
 	auto bottomLeft = screenToTileCoords(Vec2<int>{-offsetX, -offsetY + dpyHeight}, map.size.z);
 	auto bottomRight = screenToTileCoords(Vec2<int>{-offsetX + dpyWidth, -offsetY + dpyHeight}, map.size.z);
 
-	//FIXME: Enabling this causes (high in z?) vehicles to be clipped too early
-	//int minX = std::max(0, topLeft.x);
-	int minX = 0;
-	//int maxX = std::min(map.size.x, bottomRight.x);
-	int maxX = map.size.x;
+	int minX = std::max(0, topLeft.x);
+	int maxX = std::min(map.size.x, bottomRight.x);
 
-	//int minY = std::max(0, topRight.y);
-	int minY = 0;
-	//int maxY = std::min(map.size.y, bottomLeft.y);
-	int maxY = map.size.y;
+	int minY = std::max(0, topRight.y);
+	int maxY = std::min(map.size.y, bottomLeft.y);
 
 	for (int z = 0; z < maxZDraw; z++)
 	{
@@ -207,7 +202,6 @@ void TileView::Render()
 					 y == selectedTilePosition.y &&
 					 x == selectedTilePosition.x);
 				auto tile = map.getTile(x, y, z);
-				// Skip over transparent (missing) tiles
 				auto screenPos = tileToScreenCoords(Vec3<float>{(float)x,(float)y,(float)z});
 				screenPos.x += offsetX;
 				screenPos.y += offsetY;
@@ -223,6 +217,14 @@ void TileView::Render()
 					objScreenPos.x += offsetX;
 					objScreenPos.y += offsetY;
 					r.draw(img, objScreenPos);
+					if (x != obj->getOwningTile()->position.x ||
+					    y != obj->getOwningTile()->position.y ||
+						z != obj->getOwningTile()->position.z)
+					{
+						LogError("Object has mismatches owning tile / visible object link"
+							" visible in {%d,%d,%d} owned by {%d,%d,%d}",
+							x, y, z, obj->getOwningTile()->position.x, obj->getOwningTile()->position.y, obj->getOwningTile()->position.z);
+					}
 					if (showOrigin)
 					{
 						Vec2<float> offset{offsetX, offsetY};
