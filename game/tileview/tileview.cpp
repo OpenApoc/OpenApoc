@@ -183,11 +183,16 @@ void TileView::Render()
 	auto bottomLeft = screenToTileCoords(Vec2<int>{-offsetX, -offsetY + dpyHeight}, map.size.z);
 	auto bottomRight = screenToTileCoords(Vec2<int>{-offsetX + dpyWidth, -offsetY + dpyHeight}, map.size.z);
 
-	int minX = std::max(0, topLeft.x);
-	int maxX = std::min(map.size.x, bottomRight.x);
+	//FIXME: Enabling this causes (high in z?) vehicles to be clipped too early
+	//int minX = std::max(0, topLeft.x);
+	int minX = 0;
+	//int maxX = std::min(map.size.x, bottomRight.x);
+	int maxX = map.size.x;
 
-	int minY = std::max(0, topRight.y);
-	int maxY = std::min(map.size.y, bottomLeft.y);
+	//int minY = std::max(0, topRight.y);
+	int minY = 0;
+	//int maxY = std::min(map.size.y, bottomLeft.y);
+	int maxY = map.size.y;
 
 	for (int z = 0; z < maxZDraw; z++)
 	{
@@ -206,10 +211,6 @@ void TileView::Render()
 				auto screenPos = tileToScreenCoords(Vec3<float>{(float)x,(float)y,(float)z});
 				screenPos.x += offsetX;
 				screenPos.y += offsetY;
-				//Skip over tiles that would be outside the window
-				if (screenPos.x + tileSize.x < 0 || screenPos.y + tileSize.y < 0
-					|| screenPos.x - tileSize.x > dpyWidth || screenPos.y - tileSize.y > dpyHeight)
-					continue;
 
 				if (showSelected)
 					r.draw(selectedTileImageBack, screenPos);
