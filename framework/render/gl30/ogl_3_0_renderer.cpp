@@ -668,6 +668,8 @@ class GLPaletteSpritesheet : public RendererImageData
 			std::unique_ptr<char[]> zeros(new char[maxSize.x * maxSize.y]);
 			memset(zeros.get(), 1, maxSize.x * maxSize.y);
 
+			LogInfo("Uploading %d sprites in {%d,%d} spritesheet", numSprites, maxSize.x, maxSize.y);
+
 			for (unsigned int i = 0; i < numSprites; i++)
 			{
 				std::shared_ptr<PaletteImage> img =
@@ -680,6 +682,7 @@ class GLPaletteSpritesheet : public RendererImageData
 				gl::TexSubImage3D(gl::TEXTURE_2D_ARRAY, 0, 0, 0, i, img->size.x, img->size.y, 1, gl::RED_INTEGER, gl::UNSIGNED_BYTE, l.getData());
 
 			}
+			LogInfo("Uploading spritesheet complete", numSprites);
 
 		}
 		virtual ~GLPaletteSpritesheet()
