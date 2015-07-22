@@ -590,6 +590,8 @@ void Framework::Display_Initialise()
 
 	al_set_new_display_flags(display_flags);
 
+	al_set_new_display_option(ALLEGRO_VSYNC, 1, ALLEGRO_SUGGEST);
+
 	p->screen = al_create_display( scrW, scrH );
 
 	if (!p->screen)
