@@ -225,9 +225,6 @@ void TileView::Render()
 					if (showOrigin)
 					{
 						Vec2<float> offset{offsetX, offsetY};
-						objScreenPos = tileToScreenCoords(obj->getPosition());
-						objScreenPos.x += offsetX;
-						objScreenPos.y += offsetY;
 						auto linePos0 = tileToScreenCoords(obj->getPosition() + Vec3<float>{0,0,0.5});
 						auto linePos1 = tileToScreenCoords(obj->getPosition() + Vec3<float>{0,0,-0.5});
 						linePos1 += offset;
@@ -243,6 +240,22 @@ void TileView::Render()
 						linePos1 += offset;
 						linePos0 += offset;
 						r.drawLine(linePos0, linePos1, Colour{255,0,0,255});
+
+						linePos0 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} + Vec3<float>{0,0,0.5});
+						linePos1 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} + Vec3<float>{0,0,-0.5});
+						linePos1 += offset;
+						linePos0 += offset;
+						r.drawLine(linePos0, linePos1, Colour{255,255,0,255});
+						linePos0 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} + Vec3<float>{0,0.5,0});
+						linePos1 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} + Vec3<float>{0,-0.5,0});
+						linePos1 += offset;
+						linePos0 += offset;
+						r.drawLine(linePos0, linePos1, Colour{255,255,0,255});
+						linePos0 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} + Vec3<float>{0.5,0,0});
+						linePos1 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} + Vec3<float>{-0.5,0,0});
+						linePos1 += offset;
+						linePos0 += offset;
+						r.drawLine(linePos0, linePos1, Colour{255,255,0,255});
 					}
 				}
 
