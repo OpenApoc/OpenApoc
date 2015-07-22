@@ -431,7 +431,23 @@ public:
 		gl::DrawArrays(gl::TRIANGLE_STRIP, 0, 4);
 	}
 };
-
+class Line
+{
+public:
+	std::array<Vec2<float>, 2> vertices;
+	float thickness;
+	Line(Vec2<float> p0, Vec2<float> p1, float thickness)
+		: vertices{p0, p1}, thickness(thickness)
+	{
+	}
+	void draw(GLuint vertexAttribPos)
+	{
+		gl::LineWidth(thickness);
+		gl::EnableVertexAttribArray(vertexAttribPos);
+		gl::VertexAttribPointer(vertexAttribPos, 2, gl::FLOAT, gl::FALSE_, 0, &vertices);
+		gl::DrawArrays(gl::LINES, 0, 2);
+	}
+};
 class ActiveTexture
 {
 	ActiveTexture(const ActiveTexture &) = delete;
@@ -829,23 +845,9 @@ public:
 	};
 	virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0)
 	{
-		//FIXME: Hack - allow axis-aligned lines to be drawn using the drawFilledRect() fn
-		if (p1.x == p2.x)
-		{
-			if (p1.y > p2.y)
-				std::swap(p1, p2);
-			this->drawFilledRect(p1, Vec2<float>{thickness, p2.y - p1.y}, c);
-		}
-		else if (p1.y == p2.y)
-		{
-			if (p1.x > p2.x)
-				std::swap(p1, p2);
-			this->drawFilledRect(p1, Vec2<float>{p2.x - p1.x, thickness}, c);
-		}
-		else
-		{
-			LogError("Unimplemented function {%f,%f},{%f,%f}", p1.x, p1.y, p2.x, p2.y);
-		}
+		if (this->state != RendererState::Idle)
+			this->flush();
+		this->DrawLine(p1, p2, c, thickness);
 	};
 	virtual void flush();
 	virtual UString getName();
@@ -947,6 +949,17 @@ public:
 		colourProgram->setUniforms(this->currentSurface->size, flipY, c);
 		Quad q(pos);
 		q.draw(colourProgram->posLoc);
+	}
+
+	void DrawLine(Vec2<float> p0, Vec2<float> p1, Colour c, float thickness)
+	{
+		BindProgram(colourProgram);
+		bool flipY = false;
+		if (currentBoundFBO == 0)
+			flipY = true;
+		colourProgram->setUniforms(this->currentSurface->size, flipY, c);
+		Line l(p0, p1, thickness);
+		l.draw(colourProgram->posLoc);
 	}
 
 	class BatchedVertex
