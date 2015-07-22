@@ -373,22 +373,48 @@ class Quad
 public:
 	std::array<Vec2<float>, 4> vertices;
 	std::array<Vec2<float>, 4> texcoords;
-	Quad(const Rect<float> &position, const Rect<float> &texCoords = {0.0f, 0.0f, 1.0f, 1.0f})
+	Quad(const Rect<float> &position, const Vec2<float> &rotationCenter = {0.0f,0.0f}, float rotationAngleRadians = 0.0f, const Rect<float> &texCoords = {0.0f, 0.0f, 1.0f, 1.0f})
 	{
-		vertices = 
-		{
-			position.p0,
-			{position.p1.x, position.p0.y},
-			{position.p0.x, position.p1.y},
-			position.p1,
-		};
 		texcoords = 
 		{
-			texCoords.p0,
-			{texCoords.p1.x, texCoords.p0.y},
-			{texCoords.p0.x, texCoords.p1.y},
-			texCoords.p1,
+			Vec2<float>{texCoords.p0},
+			Vec2<float>{texCoords.p1.x, texCoords.p0.y},
+			Vec2<float>{texCoords.p0.x, texCoords.p1.y},
+			Vec2<float>{texCoords.p1},
 		};
+
+		if (rotationAngleRadians != 0.0f)
+		{
+			auto rotMatrix = glm::rotate(rotationAngleRadians, Vec3<float>{0.0f, 0.0f, 1.0f});
+			Vec2<float> size = position.p1 - position.p0;
+			vertices =
+			{
+				Vec2<float>{0.0f, 0.0f},
+				Vec2<float>{size.x, 0.0f},
+				Vec2<float>{0.0f, size.y},
+				Vec2<float>{size},
+			};
+			for (auto &p : vertices)
+			{
+				p -= rotationCenter;
+				glm::vec4 transformed = rotMatrix * glm::vec4{p.x, p.y, 0.0f, 1.0f};
+				p.x = transformed.x;
+				p.y = transformed.y;
+				p += rotationCenter;
+				p += position.p0;
+			}
+
+		}
+		else
+		{
+			vertices = 
+			{
+				Vec2<float>{position.p0},
+				Vec2<float>{position.p1.x, position.p0.y},
+				Vec2<float>{position.p0.x, position.p1.y},
+				Vec2<float>{position.p1},
+			};
+		}
 	}
 	void draw(GLuint vertexAttribPos, GLuint texcoordAttribPos)
 	{
@@ -711,13 +737,26 @@ public:
 	}
 
 	virtual void draw(std::shared_ptr<Image> i, Vec2<float> position);
-	virtual void drawRotated(std::shared_ptr<Image> i, Vec2<float> center, Vec2<float> position, float angle)
+	virtual void drawRotated(std::shared_ptr<Image> image, Vec2<float> center, Vec2<float> position, float angle)
 	{
-		LogWarning("Rotation unimplemented");
-		//TODO: Actually rotate
-		std::ignore = center;
-		std::ignore = angle;
-		this->draw(i, position);
+		auto size = image->size;
+		if (this->state != RendererState::Idle)
+			this->flush();
+		std::shared_ptr<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
+		if (rgbImage)
+		{
+			GLRGBImage *img = dynamic_cast<GLRGBImage*>(rgbImage->rendererPrivateData.get());
+			if (!img)
+			{
+				img = new GLRGBImage(rgbImage);
+				image->rendererPrivateData.reset(img);
+			}
+			DrawRGB(*img, position, size, Scaler::Linear, center, angle);
+			return;
+		}
+
+		std::shared_ptr<PaletteImage> paletteImage = std::dynamic_pointer_cast<PaletteImage>(image);
+		LogError("Unsupported image type");
 	};
 	virtual void drawScaled(std::shared_ptr<Image> image, Vec2<float> position, Vec2<float> size, Scaler scaler = Scaler::Linear)
 	{
@@ -821,7 +860,7 @@ public:
 	}
 
 
-	void DrawRGB(GLRGBImage &img, Vec2<float> offset, Vec2<float> size, Scaler scaler)
+	void DrawRGB(GLRGBImage &img, Vec2<float> offset, Vec2<float> size, Scaler scaler, Vec2<float> rotationCenter = {0,0}, float rotationAngleRadians = 0)
 	{
 		GLenum filter;
 		Rect<float> pos(offset, offset + size);
@@ -846,7 +885,7 @@ public:
 		BindTexture t(img.texID);
 		TexParam<gl::TEXTURE_MAG_FILTER> mag(img.texID, filter);
 		TexParam<gl::TEXTURE_MIN_FILTER> min(img.texID, filter);
-		Quad q(pos);
+		Quad q(pos, rotationCenter, rotationAngleRadians);
 		q.draw(rgbProgram->posLoc, rgbProgram->texcoordLoc);
 	}
 
