@@ -178,9 +178,9 @@ void TileView::Render()
 
 	// offsetX/offsetY is the 'amount added to the tile coords' - so we want
 	// the inverse to tell which tiles are at the screen bounds
-	auto topLeft = screenToTileCoords(Vec2<int>{-offsetX, -offsetY}, 0);
-	auto topRight = screenToTileCoords(Vec2<int>{-offsetX + dpyWidth, -offsetY}, 0);
-	auto bottomLeft = screenToTileCoords(Vec2<int>{-offsetX, -offsetY + dpyHeight}, map.size.z);
+	auto topLeft = screenToTileCoords(Vec2<int>{-offsetX - tileSize.x, -offsetY - tileSize.y}, 0);
+	auto topRight = screenToTileCoords(Vec2<int>{-offsetX + dpyWidth, -offsetY - tileSize.y}, 0);
+	auto bottomLeft = screenToTileCoords(Vec2<int>{-offsetX - tileSize.x, -offsetY + dpyHeight}, map.size.z);
 	auto bottomRight = screenToTileCoords(Vec2<int>{-offsetX + dpyWidth, -offsetY + dpyHeight}, map.size.z);
 
 	int minX = std::max(0, topLeft.x);
