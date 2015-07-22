@@ -437,8 +437,9 @@ public:
 	std::array<Vec2<float>, 2> vertices;
 	float thickness;
 	Line(Vec2<float> p0, Vec2<float> p1, float thickness)
-		: vertices{p0, p1}, thickness(thickness)
+		: thickness(thickness)
 	{
+		vertices = { p0, p1 };
 	}
 	void draw(GLuint vertexAttribPos)
 	{

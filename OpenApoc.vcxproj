@@ -215,7 +215,8 @@
     <ClCompile Include="framework\logger.cpp" />
     <ClCompile Include="framework\palette.cpp" />
     <ClCompile Include="framework\renderer.cpp" />
-    <ClCompile Include="framework\render\ogl_3_0_renderer.cpp" />
+    <ClCompile Include="framework\render\gl30\gl_3_0.cpp" />
+    <ClCompile Include="framework\render\gl30\ogl_3_0_renderer.cpp" />
     <ClCompile Include="framework\sound.cpp" />
     <ClCompile Include="framework\sound\allegro_backend.cpp" />
     <ClCompile Include="framework\sound\null_backend.cpp" />
@@ -289,7 +290,7 @@
     <ClInclude Include="framework\palette.h" />
     <ClInclude Include="framework\renderer.h" />
     <ClInclude Include="framework\renderer_interface.h" />
-    <ClInclude Include="framework\render\gl_3_0.hpp" />
+    <ClInclude Include="framework\render\gl30\gl_3_0.hpp" />
     <ClInclude Include="framework\sampleloader_interface.h" />
     <ClInclude Include="framework\sound.h" />
     <ClInclude Include="framework\sound_interface.h" />
