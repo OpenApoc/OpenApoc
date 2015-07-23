@@ -75,6 +75,11 @@ RulesLoader::ParseRules(Framework &fw, Rules& rules, tinyxml2::XMLElement *root)
 			if (!ParseCityDefinition(fw, rules, e))
 				return false;
 		}
+		else if (name == "weapon")
+		{
+			if (!ParseWeaponDefinition(fw, rules, e))
+				return false;
+		}
 		else if (name == "include")
 		{
 			UString rootFileName = e->GetText();

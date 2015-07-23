@@ -4,6 +4,7 @@
 #include "game/rules/organisationdef.h"
 #include "game/rules/buildingdef.h"
 #include "game/rules/buildingtiledef.h"
+#include "game/rules/weapondef.h"
 
 #include "framework/logger.h"
 #include "library/vec.h"
@@ -23,6 +24,7 @@ private:
 	std::vector<BuildingDef> buildings;
 	std::vector<OrganisationDef> organisations;
 	std::map<UString, BuildingTileDef> buildingTiles;
+	std::map<UString, WeaponDef> weapons;
 	std::vector<UString> landingPadTiles;
 	Vec3<int> citySize;
 	std::vector<UString> tileIDs;
@@ -34,6 +36,11 @@ public:
 	std::map<UString, VehicleDefinition> &getVehicleDefs() 
 	{
 		return vehicleDefs;
+	}
+
+	std::map<UString, WeaponDef> &getWeaponDefs() 
+	{
+		return weapons;
 	}
 
 	std::vector<BuildingDef> &getBuildingDefs()

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <include>rules/common/organisations.xml</include>
+  <include>rules/common/vehicles.xml</include>
+  <include>rules/common/vehicle_weapons.xml</include>
+</openapoc_rules>
