@@ -304,6 +304,7 @@
     <ClInclude Include="game\city\building.h" />
     <ClInclude Include="game\city\buildingtile.h" />
     <ClInclude Include="game\city\vehicle.h" />
+    <ClInclude Include="game\city\weapon.h" />
     <ClInclude Include="game\debugtools\debugmenu.h" />
     <ClInclude Include="game\gamestate.h" />
     <ClInclude Include="game\general\optionsmenu.h" />

@@ -470,6 +470,9 @@
     <ClInclude Include="game\rules\weapondef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="game\city\weapon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="apocicon.rc">
