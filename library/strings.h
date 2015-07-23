@@ -93,7 +93,8 @@ class Strings
 {
 
 	public:
-		static bool IsNumeric(const UString &s);
+		static bool IsFloat(const UString &s);
+		static bool IsInteger(const UString &s);
 		static int ToInteger(const UString &s);
 		static uint8_t ToU8(const UString &s);
 		static float ToFloat(const UString &s);

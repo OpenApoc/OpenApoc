@@ -223,6 +223,12 @@ Strings::ToInteger(const UString &s)
 	return (int)strtol(u8str.c_str(), NULL, 0);
 }
 
+float Strings::ToFloat(const UString &s)
+{
+	std::string u8str = s.str();
+	return (float)strtod(u8str.c_str(), NULL);
+}
+
 uint8_t
 Strings::ToU8(const UString &s)
 {
@@ -230,11 +236,20 @@ Strings::ToU8(const UString &s)
 }
 
 bool
-Strings::IsNumeric(const UString &s)
+Strings::IsInteger(const UString &s)
 {
 	std::string u8str = s.str();
 	char *endpos;
 	std::ignore = strtol(u8str.c_str(), &endpos, 0);
+	return (endpos != u8str.c_str());
+}
+
+bool
+Strings::IsFloat(const UString &s)
+{
+	std::string u8str = s.str();
+	char *endpos;
+	std::ignore = strtod(u8str.c_str(), &endpos);
 	return (endpos != u8str.c_str());
 }
 

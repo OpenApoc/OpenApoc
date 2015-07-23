@@ -113,7 +113,7 @@ public:
 			return nullptr;
 		}
 
-		if (!Strings::IsNumeric(strings[1]))
+		if (!Strings::IsInteger(strings[1]))
 		{
 			LogInfo("Raw music track \"%s\" doesn't look like a number", strings[1].str().c_str());
 			return nullptr;

@@ -321,13 +321,13 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		}
 		if( nodename == "position" )
 		{
-			if( Strings::IsNumeric( node->Attribute("x") ) )
+			if( Strings::IsInteger( node->Attribute("x") ) )
 			{
 				Location.x = Strings::ToInteger( node->Attribute("x") );
 			} else {
 				specialpositionx = node->Attribute("x");
 			}
-			if( Strings::IsNumeric( node->Attribute("y") ) )
+			if( Strings::IsInteger( node->Attribute("y") ) )
 			{
 				Location.y = Strings::ToInteger( node->Attribute("y") );
 			} else {

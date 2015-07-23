@@ -63,7 +63,7 @@ Event::Event(const UString &str)
 			LogError("Invalid event string \"%s\" - couldn't parse argument \"%s\"", str.str().c_str(), args[i].str().c_str());
 			return;
 		}
-		if (!Strings::IsNumeric(opts[1]))
+		if (!Strings::IsInteger(opts[1]))
 		{
 			LogError("Invalid event string \"%s\" - couldn't parse option value \"%s\"", str.str().c_str(), args[i].str().c_str());
 			return;
