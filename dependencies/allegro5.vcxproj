@@ -93,6 +93,7 @@
       <PreprocessorDefinitions>WIN32;ALLEGRO_SRC;ALLEGRO_LIB_BUILD;_CRT_SECURE_NO_DEPRECATE;_CRT_NOSTDC_NO_DEPRECATE;ALLEGRO_PRIMITIVES_SRC;ALLEGRO_FONT_SRC;ALLEGRO_TTF_SRC;ALLEGRO_KCM_AUDIO_SRC;ALLEGRO_IIO_SRC;ALLEGRO_ACODEC_SRC;_CRT_NONSTDC_NO_WARNINGS;PATH_MAX=MAX_PATH;_DEBUG;_WINDOWS;_USRDLL;ALLEGRO5_EXPORTS</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <BrowseInformation>true</BrowseInformation>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -111,6 +112,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;ALLEGRO_SRC;ALLEGRO_LIB_BUILD;_CRT_SECURE_NO_DEPRECATE;_CRT_NOSTDC_NO_DEPRECATE;ALLEGRO_PRIMITIVES_SRC;ALLEGRO_FONT_SRC;ALLEGRO_TTF_SRC;ALLEGRO_KCM_AUDIO_SRC;ALLEGRO_IIO_SRC;ALLEGRO_ACODEC_SRC;_CRT_NONSTDC_NO_WARNINGS;PATH_MAX=MAX_PATH;_DEBUG;_WINDOWS;_USRDLL;ALLEGRO5_EXPORTS</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -128,6 +130,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;ALLEGRO_SRC;ALLEGRO_LIB_BUILD;_CRT_SECURE_NO_DEPRECATE;_CRT_NOSTDC_NO_DEPRECATE;ALLEGRO_PRIMITIVES_SRC;ALLEGRO_FONT_SRC;ALLEGRO_TTF_SRC;ALLEGRO_KCM_AUDIO_SRC;ALLEGRO_IIO_SRC;ALLEGRO_ACODEC_SRC;_CRT_NONSTDC_NO_WARNINGS;PATH_MAX=MAX_PATH;NDEBUG;_WINDOWS;_USRDLL;ALLEGRO5_EXPORTS</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -147,6 +150,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;ALLEGRO_SRC;ALLEGRO_LIB_BUILD;_CRT_SECURE_NO_DEPRECATE;_CRT_NOSTDC_NO_DEPRECATE;ALLEGRO_PRIMITIVES_SRC;ALLEGRO_FONT_SRC;ALLEGRO_TTF_SRC;ALLEGRO_KCM_AUDIO_SRC;ALLEGRO_IIO_SRC;ALLEGRO_ACODEC_SRC;_CRT_NONSTDC_NO_WARNINGS;PATH_MAX=MAX_PATH;NDEBUG;_WINDOWS;_USRDLL;ALLEGRO5_EXPORTS</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
