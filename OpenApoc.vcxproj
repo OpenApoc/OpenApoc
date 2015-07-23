@@ -304,8 +304,6 @@
     <ClInclude Include="game\general\optionsmenu.h" />
     <ClInclude Include="game\organisation.h" />
     <ClInclude Include="game\resources\gamecore.h" />
-    <ClInclude Include="game\resources\ifont.h" />
-    <ClInclude Include="game\resources\ttffont.h" />
     <ClInclude Include="game\rules\buildingdef.h" />
     <ClInclude Include="game\rules\buildingtiledef.h" />
     <ClInclude Include="game\rules\organisationdef.h" />
@@ -334,9 +332,7 @@
     <ClInclude Include="game\general\mainmenu.h" />
     <ClInclude Include="library\maths.h" />
     <ClInclude Include="library\memory.h" />
-    <ClInclude Include="game\apocresources\music.h" />
     <ClInclude Include="game\apocresources\pck.h" />
-    <ClInclude Include="game\apocresources\rawsound.h" />
     <ClInclude Include="framework\stage.h" />
     <ClInclude Include="framework\stagestack.h" />
     <ClInclude Include="framework\data.h" />

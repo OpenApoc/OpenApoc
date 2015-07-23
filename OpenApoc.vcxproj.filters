@@ -263,13 +263,7 @@
     <ClInclude Include="library\memory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\apocresources\music.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game\apocresources\pck.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game\apocresources\rawsound.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework\stage.h">
@@ -309,12 +303,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\resources\gamecore.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game\resources\ifont.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game\resources\ttffont.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="library\strings.h">
