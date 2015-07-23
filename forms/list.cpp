@@ -82,11 +82,14 @@ void ListBox::Clear()
 		delete Controls.back();
 		Controls.pop_back();
 	}
+	ResolveLocation();
 }
 
 void ListBox::AddItem( Control* Item )
 {
 	Controls.push_back( Item );
+	Item->SetParent( this );
+	ResolveLocation();
 }
 
 Control* ListBox::RemoveItem( Control* Item )
@@ -96,6 +99,7 @@ Control* ListBox::RemoveItem( Control* Item )
 		if( (Control*)*i == Item )
 		{
 			Controls.erase( i );
+			ResolveLocation();
 			return Item;
 		}
 	}
@@ -106,6 +110,7 @@ Control* ListBox::RemoveItem( int Index )
 {
 	Control* c = Controls.at(Index);
 	Controls.erase( Controls.begin() + Index );
+	ResolveLocation();
 	return c;
 }
 

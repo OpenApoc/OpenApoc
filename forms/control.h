@@ -70,6 +70,7 @@ class Control
 
 		Control* GetParent();
 		Form* GetForm();
+		void SetParent(Control* Parent);
 };
 
 }; //namespace OpenApoc
