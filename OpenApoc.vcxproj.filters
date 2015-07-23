@@ -222,6 +222,9 @@
     <ClCompile Include="framework\render\gl30\gl_3_0.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\rules\weapondef_rules.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -462,6 +465,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework\render\gl30\gl_3_0.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\rules\weapondef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

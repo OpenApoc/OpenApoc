@@ -239,6 +239,7 @@
     <ClCompile Include="game\rules\organisationdef_rules.cpp" />
     <ClCompile Include="game\rules\rules.cpp" />
     <ClCompile Include="game\rules\vehicledef_rules.cpp" />
+    <ClCompile Include="game\rules\weapondef_rules.cpp" />
     <ClCompile Include="game\tileview\tile.cpp" />
     <ClCompile Include="game\tileview\tileview.cpp" />
     <ClCompile Include="game\ufopaedia\ufopaedia.cpp" />
@@ -314,6 +315,7 @@
     <ClInclude Include="game\rules\rules.h" />
     <ClInclude Include="game\rules\rules_private.h" />
     <ClInclude Include="game\rules\vehicledef.h" />
+    <ClInclude Include="game\rules\weapondef.h" />
     <ClInclude Include="game\tileview\tile.h" />
     <ClInclude Include="game\tileview\tileview.h" />
     <ClInclude Include="game\ufopaedia\ufopaedia.h" />
