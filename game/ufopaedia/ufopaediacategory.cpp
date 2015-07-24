@@ -58,15 +58,18 @@ void UfopaediaCategory::Begin()
 	ListBox* entrylist = ((ListBox*)menuform->FindControl("LISTBOX_SHORTCUTS"));
 	entrylist->Clear();
 	entrylist->ItemHeight = infolabel->GetFont()->GetFontHeight() + 2;
+	int idx = 1;
 	for( auto entry = Entries.begin(); entry != Entries.end(); entry++ )
 	{
 		std::shared_ptr<UfopaediaEntry> e = (std::shared_ptr<UfopaediaEntry>)*entry;
 		TextButton* tb = new TextButton( fw, nullptr, fw.gamecore->GetString(e->Title), infolabel->GetFont() );
+		tb->Name = "Index" + Strings::FromInteger( idx );
 		tb->RenderStyle = TextButton::TextButtonRenderStyles::SolidButtonStyle;
 		tb->TextHAlign = HorizontalAlignment::Left;
 		tb->TextVAlign = VerticalAlignment::Centre;
 		tb->BackgroundColour.a = 0;
 		entrylist->AddItem( tb );
+		idx++;
 	}
 
 	SetupForm();
@@ -104,6 +107,7 @@ void UfopaediaCategory::EventOccurred(Event *e)
 	{
 		if( e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT" )
 		{
+			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
@@ -113,10 +117,12 @@ void UfopaediaCategory::EventOccurred(Event *e)
 		}
 		else if( e->Data.Forms.RaisedBy->Name == "BUTTON_NEXT_SECTION" )
 		{
+			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
 			return;
 		}
 		else if( e->Data.Forms.RaisedBy->Name == "BUTTON_NEXT_TOPIC" )
 		{
+			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
 			if( ViewingEntry < Entries.size() )
 			{
 				SetTopic( ViewingEntry + 1 );
@@ -125,6 +131,7 @@ void UfopaediaCategory::EventOccurred(Event *e)
 		}
 		else if( e->Data.Forms.RaisedBy->Name == "BUTTON_PREVIOUS_TOPIC" )
 		{
+			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
 			if( ViewingEntry > 0 )
 			{
 				SetTopic( ViewingEntry - 1 );
@@ -133,6 +140,15 @@ void UfopaediaCategory::EventOccurred(Event *e)
 		}
 		else if( e->Data.Forms.RaisedBy->Name == "BUTTON_PREVIOUS_SECTION" )
 		{
+			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
+			return;
+		}
+		else if( e->Data.Forms.RaisedBy->Name.substr( 0, 5 ) == "Index" )
+		{
+			UString nameidx = e->Data.Forms.RaisedBy->Name.substr( 5, e->Data.Forms.RaisedBy->Name.length() - 5 );
+			int idx = Strings::ToInteger( nameidx );
+			SetTopic( idx );
+			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
 			return;
 		}
 		else
