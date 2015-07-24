@@ -1,5 +1,6 @@
 
 #include "ufopaediacategory.h"
+#include "ufopaedia.h"
 #include "framework/framework.h"
 
 namespace OpenApoc {
@@ -73,6 +74,7 @@ void UfopaediaCategory::Begin()
 	}
 
 	SetupForm();
+	SetTopic( 0 );
 }
 
 void UfopaediaCategory::Pause()
@@ -118,6 +120,7 @@ void UfopaediaCategory::EventOccurred(Event *e)
 		else if( e->Data.Forms.RaisedBy->Name == "BUTTON_NEXT_SECTION" )
 		{
 			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
+			SetNextCat();
 			return;
 		}
 		else if( e->Data.Forms.RaisedBy->Name == "BUTTON_NEXT_TOPIC" )
@@ -126,6 +129,8 @@ void UfopaediaCategory::EventOccurred(Event *e)
 			if( ViewingEntry < Entries.size() )
 			{
 				SetTopic( ViewingEntry + 1 );
+			} else {
+				SetNextCat();
 			}
 			return;
 		}
@@ -135,12 +140,15 @@ void UfopaediaCategory::EventOccurred(Event *e)
 			if( ViewingEntry > 0 )
 			{
 				SetTopic( ViewingEntry - 1 );
+			} else {
+				SetPrevCat();
 			}
 			return;
 		}
 		else if( e->Data.Forms.RaisedBy->Name == "BUTTON_PREVIOUS_SECTION" )
 		{
 			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
+			SetPrevCat();
 			return;
 		}
 		else if( e->Data.Forms.RaisedBy->Name.substr( 0, 5 ) == "Index" )
@@ -201,6 +209,29 @@ void UfopaediaCategory::SetupForm()
 		infolabel->SetText( fw.gamecore->GetString( e->BodyInformation ) );
 		infolabel = ((Label*)menuform->FindControl("TEXT_TITLE_DATA"));
 		infolabel->SetText( fw.gamecore->GetString( e->Title ).toUpper() );
+	}
+}
+
+void UfopaediaCategory::SetPrevCat()
+{
+	SetCatOffset( -1 );
+}
+
+void UfopaediaCategory::SetNextCat()
+{
+	SetCatOffset( 1 );
+}
+
+void UfopaediaCategory::SetCatOffset(int Direction)
+{
+	for( size_t idx = ( Direction > 0 ? 0 : 1 ); idx < Ufopaedia::UfopaediaDB.size() - (Direction < 0 ? 0 : 1 ); idx++ )
+	{
+		if( Ufopaedia::UfopaediaDB.at( idx ).get() == this )
+		{
+			std::shared_ptr<UfopaediaCategory> nxt = (std::shared_ptr<UfopaediaCategory>)Ufopaedia::UfopaediaDB.at( idx + Direction );
+			stageCmd.cmd = StageCmd::Command::REPLACE;
+			stageCmd.nextStage = (std::shared_ptr<Stage>)nxt;
+		}
 	}
 }
 
