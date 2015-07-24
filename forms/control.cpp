@@ -682,4 +682,10 @@ std::list<UString> Control::WordWrapText( std::shared_ptr<OpenApoc::BitmapFont> 
 	return lines;
 }
 
+
+void Control::SetParent(Control* Parent)
+{
+	owningControl = Parent;
+}
+
 }; //namespace OpenApoc
