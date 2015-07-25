@@ -1,5 +1,6 @@
 
 #include "ufopaediacategory.h"
+#include "ufopaedia.h"
 #include "framework/framework.h"
 
 namespace OpenApoc {
@@ -58,18 +59,22 @@ void UfopaediaCategory::Begin()
 	ListBox* entrylist = ((ListBox*)menuform->FindControl("LISTBOX_SHORTCUTS"));
 	entrylist->Clear();
 	entrylist->ItemHeight = infolabel->GetFont()->GetFontHeight() + 2;
+	int idx = 1;
 	for( auto entry = Entries.begin(); entry != Entries.end(); entry++ )
 	{
 		std::shared_ptr<UfopaediaEntry> e = (std::shared_ptr<UfopaediaEntry>)*entry;
 		TextButton* tb = new TextButton( fw, nullptr, fw.gamecore->GetString(e->Title), infolabel->GetFont() );
+		tb->Name = "Index" + Strings::FromInteger( idx );
 		tb->RenderStyle = TextButton::TextButtonRenderStyles::SolidButtonStyle;
 		tb->TextHAlign = HorizontalAlignment::Left;
 		tb->TextVAlign = VerticalAlignment::Centre;
 		tb->BackgroundColour.a = 0;
 		entrylist->AddItem( tb );
+		idx++;
 	}
 
 	SetupForm();
+	SetTopic( 0 );
 }
 
 void UfopaediaCategory::Pause()
@@ -104,6 +109,7 @@ void UfopaediaCategory::EventOccurred(Event *e)
 	{
 		if( e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT" )
 		{
+			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
@@ -113,26 +119,44 @@ void UfopaediaCategory::EventOccurred(Event *e)
 		}
 		else if( e->Data.Forms.RaisedBy->Name == "BUTTON_NEXT_SECTION" )
 		{
+			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
+			SetNextCat();
 			return;
 		}
 		else if( e->Data.Forms.RaisedBy->Name == "BUTTON_NEXT_TOPIC" )
 		{
+			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
 			if( ViewingEntry < Entries.size() )
 			{
 				SetTopic( ViewingEntry + 1 );
+			} else {
+				SetNextCat();
 			}
 			return;
 		}
 		else if( e->Data.Forms.RaisedBy->Name == "BUTTON_PREVIOUS_TOPIC" )
 		{
+			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
 			if( ViewingEntry > 0 )
 			{
 				SetTopic( ViewingEntry - 1 );
+			} else {
+				SetPrevCat();
 			}
 			return;
 		}
 		else if( e->Data.Forms.RaisedBy->Name == "BUTTON_PREVIOUS_SECTION" )
 		{
+			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
+			SetPrevCat();
+			return;
+		}
+		else if( e->Data.Forms.RaisedBy->Name.substr( 0, 5 ) == "Index" )
+		{
+			UString nameidx = e->Data.Forms.RaisedBy->Name.substr( 5, e->Data.Forms.RaisedBy->Name.length() - 5 );
+			int idx = Strings::ToInteger( nameidx );
+			SetTopic( idx );
+			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
 			return;
 		}
 		else
@@ -185,6 +209,29 @@ void UfopaediaCategory::SetupForm()
 		infolabel->SetText( fw.gamecore->GetString( e->BodyInformation ) );
 		infolabel = ((Label*)menuform->FindControl("TEXT_TITLE_DATA"));
 		infolabel->SetText( fw.gamecore->GetString( e->Title ).toUpper() );
+	}
+}
+
+void UfopaediaCategory::SetPrevCat()
+{
+	SetCatOffset( -1 );
+}
+
+void UfopaediaCategory::SetNextCat()
+{
+	SetCatOffset( 1 );
+}
+
+void UfopaediaCategory::SetCatOffset(int Direction)
+{
+	for( size_t idx = ( Direction > 0 ? 0 : 1 ); idx < Ufopaedia::UfopaediaDB.size() - (Direction < 0 ? 0 : 1 ); idx++ )
+	{
+		if( Ufopaedia::UfopaediaDB.at( idx ).get() == this )
+		{
+			std::shared_ptr<UfopaediaCategory> nxt = (std::shared_ptr<UfopaediaCategory>)Ufopaedia::UfopaediaDB.at( idx + Direction );
+			stageCmd.cmd = StageCmd::Command::REPLACE;
+			stageCmd.nextStage = (std::shared_ptr<Stage>)nxt;
+		}
 	}
 }
 

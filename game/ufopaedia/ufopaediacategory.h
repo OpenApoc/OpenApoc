@@ -6,11 +6,13 @@
 
 namespace OpenApoc {
 
-class UfopaediaCategory : public Stage
+class UfopaediaCategory : public Stage // , public std::enable_shared_from_this<UfopaediaCategory>
 {
 	private:
 		Form* menuform;
 		StageCmd stageCmd;
+
+		void SetCatOffset(int Direction);
 
 	public:
 		UString ID;
@@ -36,5 +38,8 @@ class UfopaediaCategory : public Stage
 
 		void SetTopic(int Index);
 		void SetupForm();
+
+		void SetPrevCat();
+		void SetNextCat();
 };
 }; //namespace OpenApoc
