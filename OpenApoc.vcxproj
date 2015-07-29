@@ -70,29 +70,29 @@
     <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\</IncludePath>
+    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\native_dialog;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\</IncludePath>
+    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\native_dialog;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\</IncludePath>
+    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\native_dialog;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\</IncludePath>
+    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\native_dialog;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;ERROR_DIALOG;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -122,7 +122,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;ERROR_DIALOG;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>
@@ -148,7 +148,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;ERROR_DIALOG;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader />
@@ -176,7 +176,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;ERROR_DIALOG;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader>
