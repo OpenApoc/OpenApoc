@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 
 option(BACKTRACE_ON_ERROR "Print backtrace on logging an error (Requires libunwind on linux)" ON)
+option(DIALOG_ON_ERROR "Pop up a dialog box showing errors (Requires allegro_dialog)" ON)
 
 INCLUDE(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
@@ -42,6 +43,11 @@ list(APPEND FRAMEWORK_INCLUDE_DIRS ${SOUNDBACKEND_INCLUDE_DIRS})
 list(APPEND FRAMEWORK_LIBRARIES ${SOUNDBACKEND_LIBRARIES})
 
 find_package(PkgConfig)
+
+if(DIALOG_ON_ERROR)
+		list(APPEND FRAMEWORK_ALLEGRO_LIBRARIES allegro_dialog)
+		add_definitions(-DERROR_DIALOG)
+endif()
 
 if(BACKTRACE_ON_ERROR)
 		pkg_check_modules(PC_UNWIND libunwind)
