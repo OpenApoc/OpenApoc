@@ -154,8 +154,9 @@ ApocalypseFont::getGlyph(UniChar codepoint)
 	{
 		//FIXME: Hack - assume all missing glyphs are spaces
 		//TODO: Fallback fonts?
-		LogError("Font %s missing glyph for character \"%s\"", this->getName().str().c_str(), UString(codepoint).str().c_str());
-		return this->getGlyph(UString::u8Char(' '));
+		LogWarning("Font %s missing glyph for character \"%s\" (codepoint %u)", this->getName().str().c_str(), UString(codepoint).str().c_str(), codepoint);
+		auto missingGlyph = this->getGlyph(UString::u8Char(' '));
+		fontbitmaps.emplace(codepoint, missingGlyph);
 	}
 	return fontbitmaps[codepoint];
 }
