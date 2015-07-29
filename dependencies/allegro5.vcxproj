@@ -163,6 +163,7 @@
   <ItemGroup>
     <ClInclude Include="allegro\addons\acodec\helper.h" />
     <ClInclude Include="allegro\addons\image\iio.h" />
+    <ClInclude Include="allegro\addons\native_dialog\allegro5\allegro_native_dialog.h" />
     <ClInclude Include="allegro\addons\physfs\allegro_physfs_intern.h" />
     <ClInclude Include="allegro\include\allegro5\alcompat.h" />
     <ClInclude Include="allegro\include\allegro5\alinline.h" />
@@ -296,6 +297,7 @@
     <ClInclude Include="allegro\src\win\wgl.h" />
     <ClInclude Include="include\allegro5\internal\aintern_audio_cfg.h" />
     <ClInclude Include="include\allegro5\internal\aintern_image_cfg.h" />
+    <ClInclude Include="include\allegro5\internal\aintern_native_dialog_cfg.h" />
     <ClInclude Include="include\allegro5\platform\alplatf.h" />
   </ItemGroup>
   <ItemGroup>
@@ -325,6 +327,10 @@
     <ClCompile Include="allegro\addons\image\iio.c" />
     <ClCompile Include="allegro\addons\image\pcx.c" />
     <ClCompile Include="allegro\addons\image\tga.c" />
+    <ClCompile Include="allegro\addons\native_dialog\dialog.c" />
+    <ClCompile Include="allegro\addons\native_dialog\menu.c" />
+    <ClCompile Include="allegro\addons\native_dialog\textlog.c" />
+    <ClCompile Include="allegro\addons\native_dialog\win_dialog.c" />
     <ClCompile Include="allegro\addons\physfs\a5_physfs.c" />
     <ClCompile Include="allegro\addons\physfs\a5_physfs_dir.c" />
     <ClCompile Include="allegro\addons\primitives\high_primitives.c" />

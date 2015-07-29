@@ -22,6 +22,10 @@
 #define LOGFILE "openapoc_log.txt"
 #endif
 
+#if defined(ERROR_DIALOG)
+#include <allegro5/allegro_native_dialog.h>
+#endif
+
 #define MAX_SYMBOL_LENGTH 1000
 
 namespace OpenApoc {
@@ -169,6 +173,26 @@ void Log (LogLevel level, UString prefix, UString format, ...)
 		fprintf(stderr, "\n");
 		va_end(arglist);
 	}
+
+#if defined(ERROR_DIALOG)
+	if (level == LogLevel::Error)
+	{
+		/* How big should the string be? */
+		va_start(arglist, format);
+		auto strSize = vsnprintf(NULL, 0, format.str().c_str(), arglist);
+		strSize += 1;//NULL terminator
+		std::unique_ptr<char[]> string(new char[strSize]);
+		va_end(arglist);
+
+		/* Now format the string */
+		va_start(arglist, format);
+		vsnprintf(string.get(), strSize, format.str().c_str(), arglist);
+		va_end(arglist);
+
+		al_show_native_message_box(NULL, "OpenApoc ERROR", "A fatal error has occurred", string.get(), NULL, ALLEGRO_MESSAGEBOX_ERROR);
+
+	}
+#endif
 
 	logMutex.unlock();
 }
