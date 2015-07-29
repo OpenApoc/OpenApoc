@@ -2,6 +2,7 @@
 
 #include <unicode/unistr.h>
 #include <unicode/umachine.h>
+#include <unicode/uchar.h>
 
 #ifdef _MSC_VER
 #define snprintf _snprintf
@@ -265,6 +266,11 @@ UString Strings::FromFloat(float f)
 	char buffer[50];
 	snprintf( buffer, 50, "%f", f );
 	return UString(buffer);
+}
+
+bool Strings::IsWhiteSpace(UniChar c)
+{
+	return u_isWhitespace(c);
 }
 
 }; //namespace OpenApoc

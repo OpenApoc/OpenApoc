@@ -100,5 +100,6 @@ class Strings
 		static float ToFloat(const UString &s);
 		static UString FromInteger(int i);
 		static UString FromFloat(float f);
+		static bool IsWhiteSpace(UniChar c);
 };;
 }; //namespace OpenApoc
