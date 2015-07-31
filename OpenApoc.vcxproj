@@ -238,6 +238,7 @@
     <ClCompile Include="game\rules\citydef_rules.cpp" />
     <ClCompile Include="game\rules\organisationdef_rules.cpp" />
     <ClCompile Include="game\rules\rules.cpp" />
+    <ClCompile Include="game\rules\rules_helper.cpp" />
     <ClCompile Include="game\rules\vehicledef_rules.cpp" />
     <ClCompile Include="game\rules\weapondef_rules.cpp" />
     <ClCompile Include="game\tileview\tile.cpp" />
@@ -314,6 +315,7 @@
     <ClInclude Include="game\rules\buildingtiledef.h" />
     <ClInclude Include="game\rules\organisationdef.h" />
     <ClInclude Include="game\rules\rules.h" />
+    <ClInclude Include="game\rules\rules_helper.h" />
     <ClInclude Include="game\rules\rules_private.h" />
     <ClInclude Include="game\rules\vehicledef.h" />
     <ClInclude Include="game\rules\weapondef.h" />
