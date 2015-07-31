@@ -8,20 +8,9 @@ static bool
 ParseVehicleWeaponDefinition(WeaponDef &def, tinyxml2::XMLElement *root)
 {
 	//FIXME: A lot of these could be shared for all weapon types?
-
-	if (!root->Attribute("projectile"))
+	if (!ReadAttribute(root, "projectile", {{"beam", WeaponDef::ProjectileType::Beam}}, def.projectileType))
 	{
-		LogWarning("No 'projectile' attribute");
-		return false;
-	}
-	UString projectile = root->Attribute("projectile");
-	if (projectile == "beam")
-	{
-		def.projectileType = WeaponDef::ProjectileType::Beam;
-	}
-	else
-	{
-		LogWarning("Unknown projectile type \"%s\"", projectile.str().c_str());
+		LogWarning("Failed to read 'projectile' attribute");
 		return false;
 	}
 

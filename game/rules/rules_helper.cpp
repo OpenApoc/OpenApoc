@@ -36,6 +36,24 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, 
 
 }
 
+bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, UString &output)
+{
+	if (!element)
+	{
+		LogError("Invalid element pointer");
+		return false;
+	}
+
+	if (!element->Attribute(attributeName.str().c_str()))
+	{
+		return false;
+	}
+
+	output = element->Attribute(attributeName.str().c_str());
+
+	return true;
+}
+
 bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, float &output)
 {
 	if (!element)

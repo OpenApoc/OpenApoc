@@ -2,6 +2,7 @@
 #include "library/strings.h"
 #include "framework/framework.h"
 #include "game/tileview/voxel.h"
+#include "game/rules/rules_helper.h"
 
 #include <glm/glm.hpp>
 #include <map>
@@ -96,14 +97,12 @@ RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::XMLEl
 	def.name = root->Attribute("id");
 
 	UString type = root->Attribute("type");
-
-	if (type == "flying")
-		def.type = VehicleDefinition::Type::Flying;
-	else if (type == "ground")
-		def.type = VehicleDefinition::Type::Ground;
-	else
+	if (!ReadAttribute(root, "type",
+		{{"flying", VehicleDefinition::Type::Flying},
+		 {"ground", VehicleDefinition::Type::Ground}},
+		def.type))
 	{
-		LogError("Unknown vehicle type \"%s\"", type.str().c_str());
+		LogWarning("Failed to read vehicle 'type' attribute");
 		return false;
 	}
 
