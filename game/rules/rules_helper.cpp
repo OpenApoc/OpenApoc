@@ -6,7 +6,7 @@
 namespace OpenApoc
 {
 
-bool ReadAttributeBool(tinyxml2::XMLElement *element, const UString &attributeName, bool &output)
+bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, bool &output)
 {
 	if (!element)
 	{
@@ -36,16 +36,7 @@ bool ReadAttributeBool(tinyxml2::XMLElement *element, const UString &attributeNa
 
 }
 
-bool ReadAttributeBool(tinyxml2::XMLElement *element, const UString &attributeName, bool &output, bool defaultValue)
-{
-	bool found = ReadAttributeBool(element, attributeName, output);
-	if (found)
-		return true;
-	output = defaultValue;
-	return false;
-}
-
-bool ReadAttributeFloat(tinyxml2::XMLElement *element, const UString &attributeName, float &output)
+bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, float &output)
 {
 	if (!element)
 	{
@@ -71,16 +62,7 @@ bool ReadAttributeFloat(tinyxml2::XMLElement *element, const UString &attributeN
 
 }
 
-bool ReadAttributeFloat(tinyxml2::XMLElement *element, const UString &attributeName, float &output, float defaultValue)
-{
-	bool found = ReadAttributeFloat(element, attributeName, output);
-	if (found)
-		return true;
-	output = defaultValue;
-	return false;
-}
-
-bool ReadAttributeInt(tinyxml2::XMLElement *element, const UString &attributeName, int &output)
+bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, int &output)
 {
 	if (!element)
 	{
@@ -106,16 +88,7 @@ bool ReadAttributeInt(tinyxml2::XMLElement *element, const UString &attributeNam
 
 }
 
-bool ReadAttributeInt(tinyxml2::XMLElement *element, const UString &attributeName, int &output, int defaultValue)
-{
-	bool found = ReadAttributeInt(element, attributeName, output);
-	if (found)
-		return true;
-	output = defaultValue;
-	return false;
-}
-
-bool ReadAttributeColour(tinyxml2::XMLElement *element, const UString &attributeName, Colour &output)
+bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, Colour &output)
 {
 	if (!element)
 	{
@@ -183,15 +156,6 @@ bool ReadAttributeColour(tinyxml2::XMLElement *element, const UString &attribute
 	output = Colour{(unsigned char)r,(unsigned char)g,(unsigned char)b,(unsigned char)a};
 	return true;
 
-}
-
-bool ReadAttributeColour(tinyxml2::XMLElement *element, const UString &attributeName, Colour &output, Colour defaultValue)
-{
-	bool found = ReadAttributeColour(element, attributeName, output);
-	if (found)
-		return true;
-	output = defaultValue;
-	return false;
 }
 
 }; //namespace OpenApoc

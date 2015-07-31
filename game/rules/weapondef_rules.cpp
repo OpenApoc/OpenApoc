@@ -29,66 +29,66 @@ ParseVehicleWeaponDefinition(WeaponDef &def, tinyxml2::XMLElement *root)
 	def.firingSFX = root->Attribute("firingSFX");
 
 	/* pointDefence is optional */
-	ReadAttributeBool(root, "pointDefence", def.pointDefence, false);
+	ReadAttribute(root, "pointDefence", def.pointDefence, false);
 
 	/* arc is optional */
-	ReadAttributeFloat(root, "arc", def.arc, 0.0f);
+	ReadAttribute(root, "arc", def.arc, 0.0f);
 
 	/* accuracy is optional */
-	ReadAttributeFloat(root, "accuracy", def.accuracy, 0.0f);
+	ReadAttribute(root, "accuracy", def.accuracy, 0.0f);
 
 	/* range is required */
-	if (!ReadAttributeFloat(root, "range", def.range))
+	if (!ReadAttribute(root, "range", def.range))
 	{
 		LogWarning("Failed to read 'range' attribute");
 		return false;
 	}
 
 	/* firingDelay is required */
-	if (!ReadAttributeFloat(root, "firingDelay", def.firingDelay))
+	if (!ReadAttribute(root, "firingDelay", def.firingDelay))
 	{
 		LogWarning("Failed to read 'firingDelay' attribute");
 		return false;
 	}
 
 	/* projectileDamage is required */
-	if (!ReadAttributeFloat(root, "projectileDamage", def.projectileDamage))
+	if (!ReadAttribute(root, "projectileDamage", def.projectileDamage))
 	{
 		LogWarning("Failed to read 'projectileDamage' attribute");
 		return false;
 	}
 
 	/* projetileTailLength is optional */
-	ReadAttributeFloat(root, "projectileTailLength", def.projectileTailLength, 0.0f);
+	ReadAttribute(root, "projectileTailLength", def.projectileTailLength, 0.0f);
 
 	/* projectileSpeed is required */
-	if (!ReadAttributeFloat(root, "projectileSpeed", def.projectileSpeed))
+	if (!ReadAttribute(root, "projectileSpeed", def.projectileSpeed))
 	{
 		LogWarning("Failed to read 'projectileSpeed' attribute");
 		return false;
 	}
 
 	/* projectileTurnRate is optional */
-	ReadAttributeFloat(root, "projectileTurnRate", def.projectileTurnRate, 0.0f);
+	ReadAttribute(root, "projectileTurnRate", def.projectileTurnRate, 0.0f);
 
 	/* hitSprite is optional */
 	def.hitSprite = root->Attribute("hitSprite");
 
 	/* beamWidth is optional */
-	ReadAttributeFloat(root, "beamWidth", def.beamWidth, 1.0f);
+	ReadAttribute(root, "beamWidth", def.beamWidth, 1.0f);
 
 	/* beamColour is optional */
-	ReadAttributeColour(root, "beamColour", def.beamColour, {255,255,255,255});
+	ReadAttribute(root, "beamColour", def.beamColour, {255,255,255,255});
 
 	/* ammoCapacity is required */
-	if (!ReadAttributeInt(root, "ammoCapacity", def.ammoCapacity))
+	if (!ReadAttribute(root, "ammoCapacity", def.ammoCapacity))
 	{
 		LogWarning("Failed to read 'ammoCapacity' attribute");
 		return false;
 	}
 
 	/* ammoPerShot is optional */
-	ReadAttributeInt(root, "ammoPerShot", def.ammoPerShot, 1);
+	ReadAttribute(root, "ammoPerShot", def.ammoPerShot, 1);
 
 	def.ammoType = root->Attribute("ammoType");
 
