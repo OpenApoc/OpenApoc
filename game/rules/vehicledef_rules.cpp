@@ -98,6 +98,7 @@ RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::XMLEl
 
 	UString type = root->Attribute("type");
 	if (!ReadAttribute(root, "type",
+		std::map<UString, VehicleDefinition::Type>
 		{{"flying", VehicleDefinition::Type::Flying},
 		 {"ground", VehicleDefinition::Type::Ground}},
 		def.type))
