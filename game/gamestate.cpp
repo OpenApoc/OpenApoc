@@ -1,5 +1,6 @@
 #include "game/gamestate.h"
 #include "game/city/city.h"
+#include "game/city/weapon.h"
 
 #include "framework/includes.h"
 #include "framework/framework.h"
@@ -25,6 +26,8 @@ GameState::GameState(Framework &fw, Rules &rules)
 	// inescapeable gaps in buildings
 	std::uniform_int_distribution<int> zdistribution(8,9);
 
+	auto weaponIt = rules.getWeaponDefs().begin();
+
 	for (int i = 0; i < 50; i++)
 	{
 		int x = 0;
@@ -44,6 +47,17 @@ GameState::GameState(Framework &fw, Rules &rules)
 		}
 		//Organisations[3] == megapol
 		auto testVehicle = std::make_shared<Vehicle>(vehicleDefIt->second, this->organisations[3]);
+		
+		auto &weaponDef = weaponIt->second;
+		LogWarning("Equipping with weapon \"%s\"", weaponDef.name.str().c_str());
+
+		weaponIt++;
+		if (weaponIt == rules.getWeaponDefs().end())
+			weaponIt = rules.getWeaponDefs().begin();
+		
+		auto *testWeapon = new Weapon(weaponDef, testVehicle, weaponDef.ammoCapacity);
+		testVehicle->weapons.emplace_back(testWeapon);
+
 		this->city->vehicles.push_back(testVehicle);
 		testVehicle->launch(*this->city, Vec3<float>{x,y,z});
 	}
@@ -67,6 +81,18 @@ GameState::GameState(Framework &fw, Rules &rules)
 		//Organisations[3] == X-Com
 		auto testVehicle = std::make_shared<Vehicle>(vehicleDefIt->second, this->organisations[0]);
 		this->city->vehicles.push_back(testVehicle);
+
+		
+		auto &weaponDef = weaponIt->second;
+		LogWarning("Equipping with weapon \"%s\"", weaponDef.name.str().c_str());
+
+		weaponIt++;
+		if (weaponIt == rules.getWeaponDefs().end())
+			weaponIt = rules.getWeaponDefs().begin();
+		
+		auto *testWeapon = new Weapon(weaponDef, testVehicle, weaponDef.ammoCapacity);
+		testVehicle->weapons.emplace_back(testWeapon);
+
 		testVehicle->launch(*this->city, Vec3<float>{x,y,z});
 	}
 }
