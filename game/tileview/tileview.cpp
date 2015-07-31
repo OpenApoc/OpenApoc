@@ -261,6 +261,8 @@ void TileView::Render()
 						r.drawLine(linePos0, linePos1, Colour{255,255,0,255});
 					}
 				}
+				for (auto &p : tile->ownedProjectiles)
+					p->drawProjectile(*this, r, Vec2<int>{offsetX, offsetY});
 
 				if (showSelected)
 					r.draw(selectedTileImageFront, screenPos);

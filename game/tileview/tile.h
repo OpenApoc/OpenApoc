@@ -66,7 +66,7 @@ class Tile
 		std::set<std::shared_ptr<TileObject> > visibleObjects;
 		std::set<std::shared_ptr<TileObject> > collideableObjects;
 
-		std::set<std::shared_ptr<TileObject> > ownedProjecties;
+		std::set<std::shared_ptr<TileObject> > ownedProjectiles;
 
 		Tile(TileMap &map, Vec3<int> position);
 

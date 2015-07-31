@@ -1,6 +1,7 @@
 #include "framework/logger.h"
 #include "game/city/vehicle.h"
 #include "game/city/weapon.h"
+#include "game/tileview/projectile.h"
 #include "game/organisation.h"
 #include <cfloat>
 #include <random>
@@ -162,6 +163,14 @@ public:
 				{
 					//Only fire if we're in range
 					auto projectile = weapon->fire(closestEnemy->getPosition());
+					if (projectile)
+					{
+						vehicle.tileObject->getOwningTile()->map.addObject(projectile);
+					}
+					else
+					{
+						LogWarning("Fire() produced no object");
+					}
 				}
 			}
 		}

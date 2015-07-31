@@ -32,6 +32,8 @@ ParseVehicleWeaponDefinition(WeaponDef &def, tinyxml2::XMLElement *root)
 		LogWarning("Failed to read 'range' attribute");
 		return false;
 	}
+	//FIXME: Figure out range units. For now treating at '1/10 tiles'
+	def.range /= 10.0f;
 
 	/* firingDelay is required */
 	if (!ReadAttribute(root, "firingDelay", def.firingDelay))
@@ -49,6 +51,8 @@ ParseVehicleWeaponDefinition(WeaponDef &def, tinyxml2::XMLElement *root)
 
 	/* projetileTailLength is optional */
 	ReadAttribute(root, "projectileTailLength", def.projectileTailLength, 0.0f);
+	//FIXME: Figure out tail length units. For now treating at '1/10 tiles'
+	def.projectileTailLength /= 10.0f;
 
 	/* projectileSpeed is required */
 	if (!ReadAttribute(root, "projectileSpeed", def.projectileSpeed))
@@ -56,6 +60,8 @@ ParseVehicleWeaponDefinition(WeaponDef &def, tinyxml2::XMLElement *root)
 		LogWarning("Failed to read 'projectileSpeed' attribute");
 		return false;
 	}
+	//FIXME: Figure out speed units. For now treating as 1/100 tiles per tick
+	def.projectileSpeed /= 100.0f;
 
 	/* projectileTurnRate is optional */
 	ReadAttribute(root, "projectileTurnRate", def.projectileTurnRate, 0.0f);

@@ -69,6 +69,7 @@ TileMap::addObject(std::shared_ptr<TileObject> obj)
 		obj->addToAffectedTiles();
 	if (obj->isProjectile())
 		this->projectiles.insert(obj);
+
 }
 
 void
@@ -82,7 +83,10 @@ TileMap::removeObject(std::shared_ptr<TileObject> obj)
 	if (obj->isActive())
 		this->activeObjects.erase(obj);
 	if (obj->isProjectile())
+	{
+		obj->getOwningTile()->ownedProjectiles.erase(obj);
 		this->projectiles.erase(obj);
+	}
 	if (obj->isVisible())
 		obj->getOwningTile()->visibleObjects.erase(obj);
 	if (obj->isCollidable())
@@ -134,6 +138,11 @@ TileObject::setPosition(Vec3<float> newPos)
 		{
 			this->owningTile->visibleObjects.erase(thisPtr);
 			newOwner->visibleObjects.insert(thisPtr);
+		}
+		if (this->isProjectile())
+		{
+			this->owningTile->ownedProjectiles.erase(thisPtr);
+			newOwner->ownedProjectiles.insert(thisPtr);
 		}
 		this->owningTile->ownedObjects.erase(thisPtr);
 		newOwner->ownedObjects.insert(thisPtr);

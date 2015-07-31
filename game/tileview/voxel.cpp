@@ -278,14 +278,17 @@ TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd)
 	LineSegment<float, true> line{lineSegmentStart, lineSegmentEnd};
 	for (auto &point : line)
 	{
-		Tile *t = this->getTile(point);
-		//May be null if out of bounds
-		if (t)
+		if (point.x < 0 || point.x >= size.x ||
+		    point.y < 0 || point.y >= size.y ||
+			point.z < 0 || point.z >= size.z)
 		{
-			c = t->findCollision(lineSegmentStart, lineSegmentEnd);
-			if (c)
-				return c;
+			return c;
 		}
+
+		Tile *t = this->getTile(point);
+		c = t->findCollision(lineSegmentStart, lineSegmentEnd);
+		if (c)
+			return c;
 	}
 	return c;
 }
