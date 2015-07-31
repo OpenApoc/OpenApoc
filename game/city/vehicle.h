@@ -77,6 +77,8 @@ public:
 	virtual void update(unsigned int ticks);
 	Vec3<float> getDrawPosition() const override;
 
+	Vehicle &getVehicle() const {return this->vehicle;}
+
 	using TileObjectCollidable::setPosition;
 	using TileObjectCollidable::getTileSizeInVoxels;
 	using TileObjectCollidable::getBounds;

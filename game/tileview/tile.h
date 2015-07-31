@@ -77,9 +77,9 @@ class TileMap
 {
 	private:
 		std::vector <Tile> tiles;
-		std::set<std::shared_ptr<TileObject>> activeObjects;
 		std::set<std::shared_ptr<TileObject>> projectiles;
 	public:
+		std::set<std::shared_ptr<TileObject>> activeObjects;
 		Framework &fw;
 		Tile* getTile(int x, int y, int z);
 		Tile* getTile(Vec3<int> pos);

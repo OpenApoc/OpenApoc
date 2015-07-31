@@ -1,8 +1,10 @@
 #include "framework/logger.h"
 #include "game/city/vehicle.h"
 #include "game/city/weapon.h"
+#include "game/organisation.h"
 #include <cfloat>
 #include <random>
+#include <limits>
 
 std::default_random_engine rng;
 
@@ -118,6 +120,49 @@ public:
 				vehicle.direction = vectorToGoal;
 				vehicle.position += distanceLeft * glm::normalize(vectorToGoal);
 				distanceLeft = -1;
+			}
+		}
+		for (auto &weapon : vehicle.weapons)
+		{
+			weapon->update(ticks);
+			if (weapon->canFire())
+			{
+				//Find something to shoot at!
+				//FIXME: Only run on 'aggressive'? And not already a manually-selected target?
+				float range = weapon->getWeaponDef().range;
+				//Find the closest enemy within the firing arc
+				float closestEnemyRange = std::numeric_limits<float>::max();
+				std::shared_ptr<VehicleTileObject> closestEnemy;
+				for (auto obj : vehicle.tileObject->getOwningTile()->map.activeObjects)
+				{
+					auto vehicleObj = std::dynamic_pointer_cast<VehicleTileObject>(obj);
+					if (!vehicleObj)
+					{
+						/* Not a vehicle, skip */
+						continue;
+					}
+					auto &otherVehicle = vehicleObj->getVehicle();
+					if (!vehicle.owner.isHostileTo(otherVehicle.owner))
+					{
+						/* Not hostile, skip */
+						continue;
+					}
+					//FIXME: Check weapon arc against otherVehicle
+					auto offset = vehicle.position - otherVehicle.position;
+					float distance = offset.length();
+
+					if (distance < closestEnemyRange)
+					{
+						closestEnemyRange = distance;
+						closestEnemy = vehicleObj;
+					}
+				}
+
+				if (closestEnemyRange <= range)
+				{
+					//Only fire if we're in range
+					auto projectile = weapon->fire(closestEnemy->getPosition());
+				}
 			}
 		}
 	}
