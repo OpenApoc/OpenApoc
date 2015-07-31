@@ -67,7 +67,7 @@ ParseVehicleWeaponDefinition(WeaponDef &def, tinyxml2::XMLElement *root)
 	ReadAttribute(root, "beamWidth", def.beamWidth, 1.0f);
 
 	/* beamColour is optional */
-	ReadAttribute(root, "beamColour", def.beamColour, {255,255,255,255});
+	ReadAttribute(root, "beamColour", def.beamColour, Colour{255,255,255,255});
 
 	/* ammoCapacity is required */
 	if (!ReadAttribute(root, "ammoCapacity", def.ammoCapacity))
