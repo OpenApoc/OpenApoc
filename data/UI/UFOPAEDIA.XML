@@ -546,239 +546,239 @@
 			<text_info>STR_VEHICLE_EQUIPMENT_INFO</text_info>
 			<entries>
 				
-				<entry id="BOLTER_4000_GUN" name="STR_BOLTER_4000_GUN">
+				<entry id="BOLTER_4000" name="STR_BOLTER_4000">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_BOLTER_4000_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
-				<entry id="LANCER_7000_GUN" name="STR_LANCER_7000_GUN">
+				<entry id="LANCER_7000" name="STR_LANCER_7000">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_LANCER_7000_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="RENDOR_PLASMA_GUN" name="STR_RENDOR_PLASMA_GUN">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_RENDOR_PLASMA_GUN_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="LINEAGE_PLASMA_CANNON" name="STR_LINEAGE_PLASMA_CANNON">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_LINEAGE_PLASMA_CANNON_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
-				<entry id="PLASMA_MULTISYSTEM" name="STR_PLASMA_MULTISYSTEM">
+				<entry id="PLASMA_MULTISYSTEM" name="STR_PLASMA_MULTI_SYSTEM">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_PLASMA_MULTI_SYSTEM_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="LIGHT_DISRUPTOR_BEAM" name="STR_LIGHT_DISRUPTOR_BEAM">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_LIGHT_DISRUPTOR_BEAM_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="MEDIUM_DISRUPTOR_BEAM" name="STR_MEDIUM_DISRUPTOR_BEAM">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_MEDIUM_DISRUPTOR_BEAM_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="HEAVY_DISRUPTOR_BEAM" name="STR_HEAVY_DISRUPTOR_BEAM">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_HEAVY_DISRUPTOR_BEAM_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="40MM_AUTO_CANNON" name="STR_40MM_AUTO_CANNON">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_40MM_AUTO_CANNON_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="JANITOR_MISSILE_ARRAY" name="STR_JANITOR_MISSILE_ARRAY">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_JANITOR_MISSILE_ARRAY_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="JUSTICE_MISSILE_LAUNCHER" name="STR_JUSTICE_MISSILE_LAUNCHER">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_JUSTICE_MISSILE_LAUNCHER_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="PROPHET_MISSILE_ARRAY" name="STR_PROPHET_MISSILE_ARRAY">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_PROPHET_MISSILE_ARRAY_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="RETRIBUTION_MISSILE_LAUNCHER" name="STR_RETRIBUTION_MISSILE_LAUNCHER">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_RETRIBUTION_MISSILE_LAUNCHER_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="DISRUPTOR_BOMB_LAUNCHER" name="STR_DISRUPTOR_BOMB_LAUNCHER">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_DISRUPTOR_BOMB_LAUNCHER_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
-				<entry id="STATIS_BOMB_LAUNCHER" name="STR_STATIS_BOMB_LAUNCHER">
+				<entry id="STATIS_BOMB_LAUNCHER" name="STR_STASIS_BOMB_LAUNCHER">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_STASIS_BOMB_LAUNCHER_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="DISRUPTOR_MULTI_BOMB_LAUNCHER" name="STR_DISRUPTOR_MULTI_BOMB_LAUNCHER">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_DISRUPTOR_MULTI_BOMB_LAUNCHER_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="LASER_DEFENSE_ARRAY" name="STR_LASER_DEFENSE_ARRAY">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_LASER_DEFENSE_ARRAY_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="PLASMA_DEFENSE_ARRAY" name="STR_PLASMA_DEFENSE_ARRAY">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_PLASMA_DEFENSE_ARRAY_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="SD_STANDARD" name="STR_SD_STANDARD">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_SD_STANDARD_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="SD_DELUXE" name="STR_SD_DELUXE">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_SD_DELUXE_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="SD_SPORTS" name="STR_SD_SPORTS">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_SD_SPORTS_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="SD_TURBO" name="STR_SD_TURBO">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_SD_TURBO_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="SD_ELITE" name="STR_SD_ELITE">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_SD_ELITE_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="SD_SPECIAL" name="STR_SD_SPECIAL">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_SD_SPECIAL_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="40MM_AUTO_CANNON_TURRET" name="STR_40MM_AUTO_CANNON_TURRET">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_40MM_AUTO_CANNON_TURRET_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="AIRGUARD_ANTI_AIR_CANNON" name="STR_AIRGUARD_ANTI_AIR_CANNON">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_AIRGUARD_ANTI_AIR_CANNON_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="GLM_ARRAY" name="STR_GLM_ARRAY">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_GLM_ARRAY_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="PLASMA_TURRET_CANNON" name="STR_PLASMA_TURRET_CANNON">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_PLASMA_TURRET_CANNON_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="GLM_AIR_DEFENSE" name="STR_GLM_AIR_DEFENSE">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_GLM_AIR_DEFENSE_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="RUMBLE_CANNON" name="STR_RUMBLE_CANNON">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_RUMBLE_CANNON_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="METRO_ROADHOG" name="STR_METRO_ROADHOG">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_METRO_ROADHOG_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="METRO_ROADGRAV" name="STR_METRO_ROADGRAV">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_METRO_ROADGRAV_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="METRO_TURBOGRAV" name="STR_METRO_TURBOGRAV">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_METRO_TURBOGRAV_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="METRO_POWERGRAV" name="STR_METRO_POWERGRAV">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_METRO_POWERGRAV_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="METRO_MULTIPOWER_PLUS" name="STR_METRO_MULTIPOWER_PLUS">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_METRO_MULTIPOWER_PLUS_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="LIGHT_WEAPONS_CONTROL" name="STR_LIGHT_WEAPONS_CONTROL">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_LIGHT_WEAPONS_CONTROL_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="MEDIUM_WEAPONS_CONTROL" name="STR_MEDIUM_WEAPONS_CONTROL">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_MEDIUM_WEAPONS_CONTROL_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="HEAVY_WEAPONS_CONTROL" name="STR_HEAVY_WEAPONS_CONTROL">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_HEAVY_WEAPONS_CONTROL_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="CARGO_MODULE" name="STR_CARGO_MODULE">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_CARGO_MODULE_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="PASSENGER_MODULE" name="STR_PASSENGER_MODULE">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_PASSENGER_MODULE_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="BIO_TRANSPORT_MODULE" name="STR_BIO_TRANSPORT_MODULE">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_BIO_TRANSPORT_MODULE_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="MISSILE_EVASION_MATRIX" name="STR_MISSILE_EVASION_MATRIX">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_MISSILE_EVASION_MATRIX_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
-				<entry id="SMALL_DISRUPTOR_SHIELD" name="STR_SMALL_DISRUPTOR_SHIELD">
+				<entry id="SMALL_DISRUPTION_SHIELD" name="STR_SMALL_DISRUPTION_SHIELD">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_SMALL_DISRUPTION_SHIELD_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
-				<entry id="LARGE_DISRUPTOR_SHIELD" name="STR_LARGE_DISRUPTOR_SHIELD">
+				<entry id="LARGE_DISRUPTION_SHIELD" name="STR_LARGE_DISRUPTION_SHIELD">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_LARGE_DISRUPTION_SHIELD_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="CLOAKING_FIELD" name="STR_CLOAKING_FIELD">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_CLOAKING_FIELD_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="TELEPORTER" name="STR_TELEPORTER">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_TELEPORTER_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				<entry id="DIMENSION_SHIFTER" name="STR_DIMENSION_SHIFTER">
 					<backgroundimage>xcom3/UFOPAEDI/03POLIC2.PCX</backgroundimage>
-					<text_info>STR_POLICE_HOVERCAR_INFO</text_info>
+					<text_info>STR_DIMENSION_SHIFTER_INFO</text_info>
 					<dynamic_data>VEHICLE</dynamic_data>
 				</entry>
 				
