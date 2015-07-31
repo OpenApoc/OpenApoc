@@ -228,6 +228,7 @@
     <ClCompile Include="game\city\building.cpp" />
     <ClCompile Include="game\city\buildingtile.cpp" />
     <ClCompile Include="game\city\vehicle.cpp" />
+    <ClCompile Include="game\city\weapon.cpp" />
     <ClCompile Include="game\debugtools\debugmenu.cpp" />
     <ClCompile Include="game\gamestate.cpp" />
     <ClCompile Include="game\general\optionsmenu.cpp" />

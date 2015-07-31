@@ -228,6 +228,9 @@
     <ClCompile Include="game\rules\rules_helper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\city\weapon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
