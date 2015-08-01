@@ -53,9 +53,6 @@ public:
 	Organisation &owner;
 
 	std::shared_ptr<VehicleTileObject> tileObject;
-	/* FIXME: Merge with tileObject? */
-	Vec3<float> position;
-	Vec3<float> direction;
 
 	std::unique_ptr<VehicleMission> mission;
 	std::unique_ptr<VehicleMover> mover;

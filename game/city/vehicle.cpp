@@ -25,7 +25,7 @@ public:
 		Vec3<int> nextPosition;
 		int tries = 0;
 		do {
-			nextPosition = {vehicle.position.x, vehicle.position.y, vehicle.position.z};
+			nextPosition = vehicle.tileObject->getPosition();
 			Vec3<int> diff {distribution(rng), distribution(rng), distribution(rng)};
 			nextPosition += diff;
 			//FIXME HACK - abort after some attempts (e.g. if we're completely trapped)
@@ -108,18 +108,18 @@ public:
 		while (distanceLeft > 0)
 		{
 			Vec3<float> vectorToGoal = goalPosition -
-				vehicle.position;
+				vehicle.tileObject->getPosition();
 			float distanceToGoal = glm::length(vectorToGoal);
 			if (distanceToGoal <= distanceLeft)
 			{
 				distanceLeft -= distanceToGoal;
-				vehicle.position = goalPosition;
+				vehicle.tileObject->setPosition(goalPosition);
 				goalPosition = vehicle.mission->getNextDestination();
 			}
 			else
 			{
-				vehicle.direction = vectorToGoal;
-				vehicle.position += distanceLeft * glm::normalize(vectorToGoal);
+				vehicle.tileObject->setDirection(vectorToGoal);
+				vehicle.tileObject->setPosition(vehicle.tileObject->getPosition() + distanceLeft * glm::normalize(vectorToGoal));
 				distanceLeft = -1;
 			}
 		}
@@ -220,7 +220,6 @@ Vehicle::launch(TileMap &map, Vec3<float> initialPosition)
 		LogError("Trying to launch already-launched vehicle");
 		return;
 	}
-	this->position = initialPosition;
 	this->mover.reset(new FlyingVehicleMover(*this, initialPosition));
 	this->mission.reset(new VehicleRandomDestination(*this));
 	this->tileObject = std::make_shared<VehicleTileObject>(*this, map, initialPosition);
@@ -245,9 +244,6 @@ VehicleTileObject::update(unsigned int ticks)
 {
 	if (this->vehicle.mover)
 		this->vehicle.mover->update(ticks);
-	//FIXME: Better way instead of mirroring pos/direction?
-	this->setPosition(this->vehicle.position);
-	this->setDirection(this->vehicle.direction);
 }
 
 Vec3<float> VehicleTileObject::getDrawPosition() const
