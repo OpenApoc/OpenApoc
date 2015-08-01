@@ -22,10 +22,24 @@ TileMap::TileMap(Framework &fw, Vec3<int> size)
 void
 TileMap::update(unsigned int ticks)
 {
-	for (auto& object : this->activeObjects)
-		object->update(ticks);
-	for (auto& object : this->projectiles)
-		object->checkProjectileCollision();
+	//Objects may remove themselves from these lists in their update functions.
+	//So we can't just use the foreach iterator stuff as we need to
+	//store the next iterator before calling update
+	auto activeIt = this->activeObjects.begin();
+	while (activeIt != this->activeObjects.end())
+	{
+		//Post-increment to store a copy of the 'next' object iterator
+		//before calling the update, as ->update() may destroy the 'current'
+		//iterator if it removes the object from the set
+		auto objIt = activeIt++;
+		(*objIt)->update(ticks);
+	}
+	auto projIt = this->projectiles.begin();
+	while (projIt != this->projectiles.end())
+	{
+		auto objIt = projIt++;
+		(*objIt)->update(ticks);
+	}
 }
 
 Tile*
