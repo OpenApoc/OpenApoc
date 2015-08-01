@@ -148,9 +148,11 @@ public:
 						/* Not hostile, skip */
 						continue;
 					}
+					auto myPosition = vehicle.tileObject->getPosition();
+					auto enemyPosition = otherVehicle.tileObject->getPosition();
 					//FIXME: Check weapon arc against otherVehicle
-					auto offset = vehicle.position - otherVehicle.position;
-					float distance = offset.length();
+					auto offset = enemyPosition - myPosition;
+					float distance = glm::length(offset);
 
 					if (distance < closestEnemyRange)
 					{
