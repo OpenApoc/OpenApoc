@@ -14,6 +14,16 @@ Weapon::Weapon(const WeaponDef &def, std::shared_ptr<Vehicle> owner, int initial
 std::shared_ptr<Projectile>
 Weapon::fire(Vec3<float> target)
 {
+	auto owner = this->owner.lock();
+	if (!owner)
+	{
+		LogError("Called on weapon with no owner?");
+	}
+	auto vehicleTile = owner->tileObject.lock();
+	if (!vehicleTile)
+	{
+		LogError("Called on vehicle with no tile object?");
+	}
 	if (this->state != State::Ready)
 	{
 		LogWarning("Trying to fire weapon in state %d", this->state);
@@ -37,12 +47,12 @@ Weapon::fire(Vec3<float> target)
 	{
 		case WeaponDef::ProjectileType::Beam:
 		{
-			Vec3<float> velocity = target - this->owner->tileObject->getPosition();
+			Vec3<float> velocity = target - vehicleTile->getPosition();
 			velocity = glm::normalize(velocity);
 			velocity *= this->def.projectileSpeed;
-			auto &map = this->owner->tileObject->getOwningTile()->map;
+			auto &map = vehicleTile->getOwningTile()->map;
 			return std::make_shared<BeamProjectile>(
-				map, this->owner, this->owner->tileObject->getPosition(), velocity, def.range,
+				map, owner, vehicleTile->getPosition(), velocity, def.range,
 				def.beamColour, def.projectileTailLength, def.beamWidth);
 		}
 		default:

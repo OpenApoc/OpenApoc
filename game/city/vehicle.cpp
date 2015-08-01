@@ -21,11 +21,16 @@ public:
 			{};
 	virtual Vec3<float> getNextDestination()
 	{
-		TileMap &map = this->vehicle.tileObject->getOwningTile()->map;
+		auto vehicleTile = this->vehicle.tileObject.lock();
+		if (!vehicleTile)
+		{
+			LogError("Calling on vehicle with no tile object?");
+		}
+		TileMap &map = vehicleTile->getOwningTile()->map;
 		Vec3<int> nextPosition;
 		int tries = 0;
 		do {
-			nextPosition = vehicle.tileObject->getPosition();
+			nextPosition = vehicleTile->getPosition();
 			Vec3<int> diff {distribution(rng), distribution(rng), distribution(rng)};
 			nextPosition += diff;
 			//FIXME HACK - abort after some attempts (e.g. if we're completely trapped)
@@ -53,12 +58,17 @@ public:
 	std::list<Tile*> path;
 	virtual Vec3<float> getNextDestination()
 	{
+		auto vehicleTile = this->vehicle.tileObject.lock();
+		if (!vehicleTile)
+		{
+			LogError("Calling on vehicle with no tile object?");
+		}
 		while (path.empty())
 		{
 			Vec3<int> newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
-			while (!vehicle.tileObject->getOwningTile()->map.getTile(newTarget)->ownedObjects.empty())
+			while (!vehicleTile->getOwningTile()->map.getTile(newTarget)->ownedObjects.empty())
 				newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
-			path = vehicle.tileObject->getOwningTile()->map.findShortestPath(vehicle.tileObject->getOwningTile()->position, newTarget);
+			path = vehicleTile->getOwningTile()->map.findShortestPath(vehicleTile->getOwningTile()->position, newTarget);
 			if (path.empty())
 			{
 				LogInfo("Failed to path - retrying");
@@ -70,7 +80,7 @@ public:
 		if (!path.front()->ownedObjects.empty())
 		{
 			Vec3<int> target = path.back()->position;
-			path = vehicle.tileObject->getOwningTile()->map.findShortestPath(vehicle.tileObject->getOwningTile()->position, target);
+			path = vehicleTile->getOwningTile()->map.findShortestPath(vehicleTile->getOwningTile()->position, target);
 			if (path.empty())
 			{
 				LogInfo("Failed to path after obstruction");
@@ -104,22 +114,27 @@ public:
 	}
 	virtual void update(unsigned int ticks)
 	{
+		auto vehicleTile = this->vehicle.tileObject.lock();
+		if (!vehicleTile)
+		{
+			LogError("Calling on vehicle with no tile object?");
+		}
 		float distanceLeft = speed * ticks;
 		while (distanceLeft > 0)
 		{
 			Vec3<float> vectorToGoal = goalPosition -
-				vehicle.tileObject->getPosition();
+				vehicleTile->getPosition();
 			float distanceToGoal = glm::length(vectorToGoal);
 			if (distanceToGoal <= distanceLeft)
 			{
 				distanceLeft -= distanceToGoal;
-				vehicle.tileObject->setPosition(goalPosition);
+				vehicleTile->setPosition(goalPosition);
 				goalPosition = vehicle.mission->getNextDestination();
 			}
 			else
 			{
-				vehicle.tileObject->setDirection(vectorToGoal);
-				vehicle.tileObject->setPosition(vehicle.tileObject->getPosition() + distanceLeft * glm::normalize(vectorToGoal));
+				vehicleTile->setDirection(vectorToGoal);
+				vehicleTile->setPosition(vehicleTile->getPosition() + distanceLeft * glm::normalize(vectorToGoal));
 				distanceLeft = -1;
 			}
 		}
@@ -134,7 +149,7 @@ public:
 				//Find the closest enemy within the firing arc
 				float closestEnemyRange = std::numeric_limits<float>::max();
 				std::shared_ptr<VehicleTileObject> closestEnemy;
-				for (auto obj : vehicle.tileObject->getOwningTile()->map.activeObjects)
+				for (auto obj : vehicleTile->getOwningTile()->map.activeObjects)
 				{
 					auto vehicleObj = std::dynamic_pointer_cast<VehicleTileObject>(obj);
 					if (!vehicleObj)
@@ -148,8 +163,13 @@ public:
 						/* Not hostile, skip */
 						continue;
 					}
-					auto myPosition = vehicle.tileObject->getPosition();
-					auto enemyPosition = otherVehicle.tileObject->getPosition();
+					auto myPosition = vehicleTile->getPosition();
+					auto otherVehicleTile = otherVehicle.tileObject.lock();
+					if (!otherVehicleTile)
+					{
+						LogError("Firing on vehicle with no tile object?");
+					}
+					auto enemyPosition = otherVehicleTile->getPosition();
 					//FIXME: Check weapon arc against otherVehicle
 					auto offset = enemyPosition - myPosition;
 					float distance = glm::length(offset);
@@ -167,7 +187,7 @@ public:
 					auto projectile = weapon->fire(closestEnemy->getPosition());
 					if (projectile)
 					{
-						vehicle.tileObject->getOwningTile()->map.addObject(projectile);
+						vehicleTile->getOwningTile()->map.addObject(projectile);
 					}
 					else
 					{
@@ -215,15 +235,16 @@ Vehicle::~Vehicle()
 void
 Vehicle::launch(TileMap &map, Vec3<float> initialPosition)
 {
-	if (this->tileObject)
+	if (this->tileObject.lock())
 	{
 		LogError("Trying to launch already-launched vehicle");
 		return;
 	}
 	this->mover.reset(new FlyingVehicleMover(*this, initialPosition));
 	this->mission.reset(new VehicleRandomDestination(*this));
-	this->tileObject = std::make_shared<VehicleTileObject>(*this, map, initialPosition);
-	map.addObject(this->tileObject);
+	auto vehicleTile = std::make_shared<VehicleTileObject>(*this, map, initialPosition);
+	this->tileObject = vehicleTile;
+	map.addObject(vehicleTile);
 }
 
 VehicleTileObject::VehicleTileObject(Vehicle &vehicle, TileMap &map, Vec3<float> position)

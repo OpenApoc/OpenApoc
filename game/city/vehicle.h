@@ -52,7 +52,7 @@ public:
 	const VehicleDefinition &def;
 	Organisation &owner;
 
-	std::shared_ptr<VehicleTileObject> tileObject;
+	std::weak_ptr<VehicleTileObject> tileObject;
 
 	std::unique_ptr<VehicleMission> mission;
 	std::unique_ptr<VehicleMover> mover;

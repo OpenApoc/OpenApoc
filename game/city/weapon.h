@@ -21,7 +21,7 @@ namespace OpenApoc
 	private:
 		State state;
 		const WeaponDef &def;
-		std::shared_ptr<Vehicle> owner;
+		std::weak_ptr<Vehicle> owner;
 		int ammo;
 		int reloadTime;
 	public:
