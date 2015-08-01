@@ -52,7 +52,7 @@ Weapon::fire(Vec3<float> target)
 			velocity *= this->def.projectileSpeed;
 			auto &map = vehicleTile->getOwningTile()->map;
 			return std::make_shared<BeamProjectile>(
-				map, owner, vehicleTile->getPosition(), velocity, def.range,
+				map, owner, vehicleTile->getPosition(), velocity, (int) (def.range / this->def.projectileSpeed),
 				def.beamColour, def.projectileTailLength, def.beamWidth);
 		}
 		default:
