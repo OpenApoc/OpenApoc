@@ -272,6 +272,15 @@ void InGameOptions::EventOccurred(Event *e)
 		}
 
 	}
+	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::CheckBoxChange)
+	{
+		if (e->Data.Forms.RaisedBy->Name == "SHOW_VEHICLE_PATH")
+		{
+			CheckBox *box = dynamic_cast<CheckBox*>(e->Data.Forms.RaisedBy);
+			fw.state->showVehiclePath = box->Checked;
+			LogWarning("Set SHOW_VEHICLE_PATH to %d", box->Checked);
+		}
+	}
 }
 
 void InGameOptions::Update(StageCmd * const cmd)

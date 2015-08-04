@@ -14,6 +14,9 @@ public:
 	std::unique_ptr<City> city;
 
 	std::vector<Organisation> organisations;
+
+
+	bool showVehiclePath;
 };
 
 }; //namespace OpenApoc

@@ -19,6 +19,7 @@ public:
 	VehicleRandomWalk(Vehicle &vehicle)
 		: VehicleMission(vehicle), distribution(-1,1)
 			{};
+	std::list<Tile*> destination;
 	virtual Vec3<float> getNextDestination()
 	{
 		auto vehicleTile = this->vehicle.tileObject.lock();
@@ -43,7 +44,12 @@ public:
 			//FIXME: Proper routing/obstruction handling
 			//(This below could cause an infinite loop if a vehicle gets 'trapped'
 			|| (tries < 50 && !map.getTile(nextPosition)->ownedObjects.empty()));
+		destination = std::list<Tile*>{map.getTile(nextPosition)};
 		return Vec3<float>{nextPosition.x, nextPosition.y, nextPosition.z};
+	}
+	virtual const std::list<Tile*> &getCurrentPlannedPath()
+	{
+		return destination;
 	}
 };
 
@@ -95,6 +101,10 @@ public:
 		return Vec3<float>{nextTile->position.x, nextTile->position.y, nextTile->position.z}
 			//Add {0.5,0.5,0.5} to make it route to the center of the tile
 			+ Vec3<float>{0.5,0.5,0.5};
+	}
+	virtual const std::list<Tile*> &getCurrentPlannedPath()
+	{
+		return path;
 	}
 
 };

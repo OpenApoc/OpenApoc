@@ -47,6 +47,33 @@ void
 CityView::Render()
 {
 	TileView::Render();
+	if (fw.state->showVehiclePath)
+	{
+		for (auto obj : this->map.activeObjects)
+		{
+			auto vTile = std::dynamic_pointer_cast<VehicleTileObject>(obj);
+			if (!vTile)
+				continue;
+			auto &v = vTile->getVehicle();
+			auto &path = v.mission->getCurrentPlannedPath();
+			Vec3<float> prevPos = vTile->getPosition();
+			for (auto *tile : path)
+			{
+				Vec3<float> pos = tile->position;
+				Vec2<float> screenPosA = this->tileToScreenCoords(prevPos);
+				screenPosA.x += this->offsetX;
+				screenPosA.y += this->offsetX;
+				Vec2<float> screenPosB = this->tileToScreenCoords(pos);
+				screenPosB.x += this->offsetX;
+				screenPosB.y += this->offsetX;
+
+				fw.renderer->drawLine(screenPosA, screenPosB, Colour{255,0,0,128});
+
+				prevPos = pos;
+			}
+		}
+
+	}
 	activeTab->Render();
 	fw.gamecore->MouseCursor->Render();
 }
