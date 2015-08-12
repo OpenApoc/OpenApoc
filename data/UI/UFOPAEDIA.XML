@@ -202,7 +202,7 @@
 				</label>
 				
 				<graphicbutton id="BUTTON_QUIT">
-					<position x="604" y="444" />
+					<position x="602" y="442" />
 					<size width="35" height="34" />
 					<backcolour a="0"/>
 					<image />
@@ -210,7 +210,7 @@
 				</graphicbutton>
 				
 				<graphicbutton id="BUTTON_NEXT_SECTION">
-					<position x="570" y="449" />
+					<position x="568" y="447" />
 					<size width="26" height="24" />
 					<backcolour a="0"/>
 					<image />
@@ -218,7 +218,7 @@
 				</graphicbutton>
 				
 				<graphicbutton id="BUTTON_NEXT_TOPIC">
-					<position x="538" y="449" />
+					<position x="536" y="447" />
 					<size width="26" height="24" />
 					<backcolour a="0"/>
 					<image />
@@ -226,7 +226,7 @@
 				</graphicbutton>
 
 				<graphicbutton id="BUTTON_PREVIOUS_TOPIC">
-					<position x="507" y="449" />
+					<position x="505" y="447" />
 					<size width="26" height="24" />
 					<backcolour a="0"/>
 					<image />
@@ -234,7 +234,7 @@
 				</graphicbutton>
 
 				<graphicbutton id="BUTTON_PREVIOUS_SECTION">
-					<position x="475" y="449" />
+					<position x="473" y="447" />
 					<size width="26" height="24" />
 					<backcolour a="0"/>
 					<image />
@@ -242,7 +242,7 @@
 				</graphicbutton>
 				
 				<graphicbutton id="BUTTON_INFORMATION">
-					<position x="433" y="444" />
+					<position x="431" y="442" />
 					<size width="35" height="34" />
 					<backcolour a="0"/>
 					<image />
