@@ -27,7 +27,7 @@ public:
 	virtual unsigned int getAge() const {return this->age;}
 	virtual std::shared_ptr<Vehicle> getFiredBy() const {return this->firer;}
 
-	virtual void drawProjectile(TileView &v, Renderer &r, Vec2<int> screenPosition) = 0;
+	virtual void drawProjectile(TileView &v, Renderer &r, Vec2<int> screenPosition) override = 0;
 
 	virtual ~Projectile() = default;
 
