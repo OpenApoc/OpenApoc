@@ -104,7 +104,7 @@ public:
 	{
 	}
 
-	virtual std::shared_ptr<MusicTrack> loadMusic(UString path)
+	virtual std::shared_ptr<MusicTrack> loadMusic(UString path) override
 	{
 		auto strings = path.split(':');
 		if (strings.size() != 2)
@@ -133,7 +133,7 @@ public:
 class RawMusicLoaderFactory : public MusicLoaderFactory
 {
 public:
-	virtual MusicLoader *create(Framework &fw)
+	virtual MusicLoader *create(Framework &fw) override
 	{
 		return new RawMusicLoader(fw);
 	}

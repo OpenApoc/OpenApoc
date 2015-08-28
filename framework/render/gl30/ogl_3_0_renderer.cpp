@@ -728,7 +728,7 @@ private:
 	std::shared_ptr<Palette> currentPalette;
 
 	friend class RendererSurfaceBinding;
-	virtual void setSurface(std::shared_ptr<Surface> s)
+	virtual void setSurface(std::shared_ptr<Surface> s) override
 	{
 		this->flush();
 		this->currentSurface = s;
@@ -740,7 +740,7 @@ private:
 		this->currentBoundFBO = fbo->fbo;
 		gl::Viewport(0, 0, s->size.x, s->size.y);
 	};
-	virtual std::shared_ptr<Surface> getSurface()
+	virtual std::shared_ptr<Surface> getSurface() override
 	{
 		return currentSurface;
 	};
@@ -748,16 +748,16 @@ private:
 public:
 	OGL30Renderer();
 	virtual ~OGL30Renderer();
-	virtual void clear(Colour c = Colour{0,0,0,0});
-	virtual void setPalette(std::shared_ptr<Palette> p)
+	virtual void clear(Colour c = Colour{0,0,0,0}) override;
+	virtual void setPalette(std::shared_ptr<Palette> p) override
 	{
 		if (!p->rendererPrivateData)
 			p->rendererPrivateData.reset(new GLPalette(p));
 		this->currentPalette = p;
 	}
 
-	virtual void draw(std::shared_ptr<Image> i, Vec2<float> position);
-	virtual void drawRotated(std::shared_ptr<Image> image, Vec2<float> center, Vec2<float> position, float angle)
+	virtual void draw(std::shared_ptr<Image> i, Vec2<float> position) override;
+	virtual void drawRotated(std::shared_ptr<Image> image, Vec2<float> center, Vec2<float> position, float angle) override
 	{
 		auto size = image->size;
 		if (this->state != RendererState::Idle)
@@ -778,7 +778,7 @@ public:
 		std::shared_ptr<PaletteImage> paletteImage = std::dynamic_pointer_cast<PaletteImage>(image);
 		LogError("Unsupported image type");
 	};
-	virtual void drawScaled(std::shared_ptr<Image> image, Vec2<float> position, Vec2<float> size, Scaler scaler = Scaler::Linear)
+	virtual void drawScaled(std::shared_ptr<Image> image, Vec2<float> position, Vec2<float> size, Scaler scaler = Scaler::Linear) override
 	{
 
 		if (this->state != RendererState::Idle)
@@ -829,30 +829,30 @@ public:
 		}
 		LogError("Unsupported image type");
 	};
-	virtual void drawTinted(std::shared_ptr<Image> i, Vec2<float> position, Colour tint)
+	virtual void drawTinted(std::shared_ptr<Image> i, Vec2<float> position, Colour tint) override
 	{
 		LogError("Unimplemented function");
 		std::ignore = i;
 		std::ignore = position;
 		std::ignore = tint;
 	};
-	virtual void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c);
-	virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c, float thickness = 1.0)
+	virtual void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c) override;
+	virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c, float thickness = 1.0) override
 	{
 		this->drawLine(position, Vec2<float>{position.x + size.x, position.y}, c, thickness);
 		this->drawLine(Vec2<float>{position.x + size.x, position.y}, Vec2<float>{position.x + size.x, position.y + size.y}, c, thickness);
 		this->drawLine(Vec2<float>{position.x + size.x, position.y + size.y}, Vec2<float>{position.x, position.y + size.y}, c, thickness);
 		this->drawLine(Vec2<float>{position.x, position.y + size.y}, position, c, thickness);
 	};
-	virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0)
+	virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0) override
 	{
 		if (this->state != RendererState::Idle)
 			this->flush();
 		this->DrawLine(p1, p2, c, thickness);
 	};
-	virtual void flush();
-	virtual UString getName();
-	virtual std::shared_ptr<Surface>getDefaultSurface()
+	virtual void flush() override;
+	virtual UString getName() override;
+	virtual std::shared_ptr<Surface>getDefaultSurface() override
 	{
 		return this->defaultSurface;
 	};
@@ -1174,7 +1174,7 @@ bool functionLoadSuccess;
 public:
 	OGL30RendererFactory()
 		: alreadyInitialised(false), functionLoadSuccess(false){}
-	virtual OpenApoc::Renderer *create()
+	virtual OpenApoc::Renderer *create() override
 	{
 		if (!alreadyInitialised)
 		{

@@ -45,13 +45,13 @@ class TileView : public Stage
 			return Vec3<T>{x,y,z};
 		};
 		// Stage control
-		virtual void Begin();
-		virtual void Pause();
-		virtual void Resume();
-		virtual void Finish();
-		virtual void EventOccurred(Event *e);
-		virtual void Update(StageCmd * const cmd);
-		virtual void Render();
-		virtual bool IsTransition();
+		virtual void Begin() override;
+		virtual void Pause() override;
+		virtual void Resume() override;
+		virtual void Finish() override;
+		virtual void EventOccurred(Event *e) override;
+		virtual void Update(StageCmd * const cmd) override;
+		virtual void Render() override;
+		virtual bool IsTransition() override;
 };
 }; //namespace OpenApoc

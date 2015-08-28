@@ -15,7 +15,7 @@ class VScrollBar : public Control
 		void LoadResources();
 
 	protected:
-		virtual void OnRender();
+		virtual void OnRender() override;
 
 	public:
 		Colour GripperColour;
@@ -27,9 +27,9 @@ class VScrollBar : public Control
 		VScrollBar( Framework &fw, Control* Owner );
 		virtual ~VScrollBar();
 
-		virtual void EventOccured( Event* e );
-		virtual void Update();
-		virtual void UnloadResources();
+		virtual void EventOccured( Event* e ) override;
+		virtual void Update() override;
+		virtual void UnloadResources() override;
 };
 
 }; //namespace OpenApoc

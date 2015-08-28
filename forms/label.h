@@ -17,7 +17,7 @@ class Label : public Control
 		std::shared_ptr<BitmapFont> font;
 
 	protected:
-		virtual void OnRender();
+		virtual void OnRender() override;
 
 	public:
 		HorizontalAlignment TextHAlign;
@@ -27,9 +27,9 @@ class Label : public Control
 		Label(Framework &fw, Control* Owner, UString Text, std::shared_ptr<BitmapFont> font);
 		virtual ~Label();
 
-		virtual void EventOccured(Event* e);
-		virtual void Update();
-		virtual void UnloadResources();
+		virtual void EventOccured(Event* e) override;
+		virtual void Update() override;
+		virtual void UnloadResources() override;
 
 		UString GetText();
 		void SetText( UString Text );

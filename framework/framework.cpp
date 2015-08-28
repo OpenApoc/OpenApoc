@@ -93,7 +93,7 @@ public:
 		this->stop();
 	}
 
-	virtual void play(std::vector<UString> tracks, JukeBox::PlayMode mode)
+	virtual void play(std::vector<UString> tracks, JukeBox::PlayMode mode) override
 	{
 		this->trackList.clear();
 		this->position = 0;
@@ -126,7 +126,7 @@ public:
 		if (jukebox->mode == JukeBox::PlayMode::Loop)
 			jukebox->position = jukebox->position % jukebox->trackList.size();
 	}
-	virtual void stop()
+	virtual void stop() override
 	{
 		fw.soundBackend->stopMusic();
 	}

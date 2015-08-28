@@ -72,7 +72,7 @@ private:
 public:
 	VehicleTileObject(Vehicle &vehicle, TileMap &map, Vec3<float> position);
 	virtual ~VehicleTileObject();
-	virtual void update(unsigned int ticks);
+	virtual void update(unsigned int ticks) override;
 	Vec3<float> getDrawPosition() const override;
 
 	Vehicle &getVehicle() const {return this->vehicle;}

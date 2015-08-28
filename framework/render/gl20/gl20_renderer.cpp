@@ -146,7 +146,7 @@ private:
 	std::shared_ptr<Palette> currentPalette;
 	GL20::GLuint currentPaletteID;
 
-	virtual void setSurface(std::shared_ptr<Surface> s)
+	virtual void setSurface(std::shared_ptr<Surface> s) override
 	{
 		this->flush();
 		this->currentSurface = s;
@@ -158,7 +158,7 @@ private:
 		this->currentBoundFBO = fbo->fbo;
 		gl->Viewport(0, 0, s->size.x, s->size.y);
 	}
-	virtual std::shared_ptr<Surface> getSurface()
+	virtual std::shared_ptr<Surface> getSurface() override
 	{
 		return this->currentSurface;
 	}
@@ -314,13 +314,13 @@ public:
 
 	}
 
-	virtual void clear(Colour c = Colour{0,0,0,0})
+	virtual void clear(Colour c = Colour{0,0,0,0}) override
 	{
 		this->flush();
 		gl->ClearColor(c.r/255.0f, c.g/255.0f, c.b/255.0f, c.a/255.0f);
 		gl->Clear(GL20::COLOR_BUFFER_BIT);
 	}
-	virtual void setPalette(std::shared_ptr<Palette> p)
+	virtual void setPalette(std::shared_ptr<Palette> p) override
 	{
 		auto *glPal = dynamic_cast<GLPalette*>(p->rendererPrivateData.get());
 		if (!glPal)
@@ -331,46 +331,46 @@ public:
 		this->currentPalette = p;
 		this->currentPaletteID = glPal->palID;
 	}
-	virtual void draw(std::shared_ptr<Image> i, Vec2<float> position)
+	virtual void draw(std::shared_ptr<Image> i, Vec2<float> position) override
 	{
 		this->draw(i, position, i->size, Scaler::Nearest, Vec2<float>{0,0}, 0);
 	}
-	virtual void drawRotated(std::shared_ptr<Image> i, Vec2<float> center, Vec2<float> position, float angle)
+	virtual void drawRotated(std::shared_ptr<Image> i, Vec2<float> center, Vec2<float> position, float angle) override
 	{
 		this->draw(i, position, i->size, Scaler::Nearest, center, angle);
 	}
-	virtual void drawScaled(std::shared_ptr<Image> i, Vec2<float> position, Vec2<float> size, Scaler scaler = Scaler::Linear)
+	virtual void drawScaled(std::shared_ptr<Image> i, Vec2<float> position, Vec2<float> size, Scaler scaler = Scaler::Linear) override
 	{
 		this->draw(i, position, size, scaler, Vec2<float>{0,0}, 0);
 	}
-	virtual void drawTinted(std::shared_ptr<Image> i, Vec2<float> position, Colour tint)
+	virtual void drawTinted(std::shared_ptr<Image> i, Vec2<float> position, Colour tint) override
 	{
 		LogError("Unimplemented");
 	}
-	virtual void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c)
+	virtual void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c) override
 	{
 		LogError("Unimplemented");
 	}
-	virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c, float thickness = 1.0)
+	virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c, float thickness = 1.0) override
 	{
 		LogError("Unimplemented");
 	}
-	virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0)
+	virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0) override
 	{
 		LogError("Unimplemented");
 	}
-	virtual void flush()
+	virtual void flush() override
 	{
 		//NOP as yet
 	}
-	virtual UString getName()
+	virtual UString getName() override
 	{
 		UString str = "GL20 renderer w/extensions:";
 		if (has_texture_array)
 			str += " texture_array";
 		return str;
 	}
-	virtual std::shared_ptr<Surface> getDefaultSurface()
+	virtual std::shared_ptr<Surface> getDefaultSurface() override
 	{
 		return this->defaultSurface;
 	}
@@ -384,7 +384,7 @@ bool functionLoadSuccess;
 public:
 	OGL20RendererFactory()
 		: alreadyInitialised(false), functionLoadSuccess(false){}
-	virtual OpenApoc::Renderer *create()
+	virtual OpenApoc::Renderer *create() override
 	{
 		if (!alreadyInitialised)
 		{

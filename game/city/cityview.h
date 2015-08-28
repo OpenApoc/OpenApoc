@@ -14,9 +14,9 @@ private:
 public:
 	CityView(Framework &fw);
 	virtual ~CityView();
-	virtual void Update(StageCmd * const cmd);
-	virtual void Render();
-	virtual void EventOccurred(Event *e);
+	virtual void Update(StageCmd * const cmd) override;
+	virtual void Render() override;
+	virtual void EventOccurred(Event *e) override;
 };
 
 }; //namespace OpenApoc

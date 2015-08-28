@@ -77,7 +77,7 @@ public:
 	{
 	}
 
-	virtual float getGain(Gain g)
+	virtual float getGain(Gain g) override
 	{
 		switch (g)
 		{
@@ -93,7 +93,7 @@ public:
 		}
 	}
 
-	virtual void setGain(Gain g, float v)
+	virtual void setGain(Gain g, float v) override
 	{
 		v = std::min(1.0f, v);
 		v = std::max(0.0f, v);
@@ -114,7 +114,7 @@ public:
 		}
 	}
 
-	virtual void playSample(std::shared_ptr<Sample> sample)
+	virtual void playSample(std::shared_ptr<Sample> sample) override
 	{
 		if (!sample->backendData)
 			sample->backendData.reset(new AllegroSampleData(sample));
@@ -210,14 +210,14 @@ public:
 
 	}
 
-	virtual void playMusic(std::shared_ptr<MusicTrack> track, std::function<void(void*)> finishedCallback, void *callbackData)
+	virtual void playMusic(std::shared_ptr<MusicTrack> track, std::function<void(void*)> finishedCallback, void *callbackData) override
 	{
 		this->stopMusic();
 		stopThread = false;
 		this->musicThread.reset(new std::thread(musicThreadFunction, std::ref(*this), track, finishedCallback, callbackData));
 	}
 
-	virtual void stopMusic()
+	virtual void stopMusic() override
 	{
 		if (musicThread)
 		{
@@ -244,7 +244,7 @@ class AllegroSoundBackendFactory : public SoundBackendFactory
 public:
 	AllegroSoundBackendFactory()
 		: initialised(false) {}
-	virtual SoundBackend *create()
+	virtual SoundBackend *create() override
 	{
 		if (initialised)
 		{

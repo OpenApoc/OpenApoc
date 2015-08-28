@@ -13,7 +13,7 @@ protected:
 public:
 	BeamProjectile(TileMap &map, std::shared_ptr<Vehicle> firer, Vec3<float> position, Vec3<float> velocity, unsigned int lifetime, const Colour &colour, float beamLength, float beamWidth);
 
-	virtual void drawProjectile(TileView &v, Renderer &r, Vec2<int> screenPosition);
+	virtual void drawProjectile(TileView &v, Renderer &r, Vec2<int> screenPosition) override;
 };
 
 }; //namespace OpenApoc

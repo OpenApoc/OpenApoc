@@ -15,13 +15,13 @@ public:
 		preferredFormat.format = AudioFormat::SampleFormat::PCM_SINT16;
 		preferredFormat.frequency = 22050;
 	}
-	virtual void playSample(std::shared_ptr<Sample> sample)
+	virtual void playSample(std::shared_ptr<Sample> sample) override
 	{
 		std::ignore = sample;
 		LogWarning("Called on NULL backend");
 	}
 
-	virtual void playMusic(std::shared_ptr<MusicTrack> track, std::function<void(void*)> finishedCallback, void *callbackData)
+	virtual void playMusic(std::shared_ptr<MusicTrack> track, std::function<void(void*)> finishedCallback, void *callbackData) override
 	{
 		std::ignore = track;
 		std::ignore = finishedCallback;
@@ -29,7 +29,7 @@ public:
 		LogWarning("Called on NULL backend");
 	}
 
-	virtual void stopMusic()
+	virtual void stopMusic() override
 	{
 		LogWarning("Called on NULL backend");
 	}
@@ -44,11 +44,11 @@ public:
 		return preferredFormat;
 	}
 
-	virtual float getGain(Gain g)
+	virtual float getGain(Gain g) override
 	{
 		return 0.0;
 	}
-	virtual void setGain(Gain g, float f)
+	virtual void setGain(Gain g, float f) override
 	{
 		return;
 	}
@@ -57,7 +57,7 @@ public:
 class NullSoundBackendFactory : public SoundBackendFactory
 {
 public:
-	virtual SoundBackend *create()
+	virtual SoundBackend *create() override
 	{
 		LogWarning("Creating NULL sound backend (Sound disabled)");
 		return new NullSoundBackend();

@@ -24,7 +24,7 @@ public:
 		al_shutdown_image_addon();
 	}
 
-	virtual std::shared_ptr<OpenApoc::Image> loadImage(UString path)
+	virtual std::shared_ptr<OpenApoc::Image> loadImage(UString path) override
 	{
 		ALLEGRO_BITMAP *bmp = al_load_bitmap(path.str().c_str());
 		if (!bmp)
@@ -56,7 +56,7 @@ public:
 		return img;
 	}
 
-	virtual UString getName()
+	virtual UString getName() override
 	{
 		return "allegro";
 	}
@@ -65,7 +65,7 @@ public:
 class AllegroImageLoaderFactory : public OpenApoc::ImageLoaderFactory
 {
 public:
-	virtual OpenApoc::ImageLoader *create()
+	virtual OpenApoc::ImageLoader *create() override
 	{
 		return new AllegroImageLoader();
 	}

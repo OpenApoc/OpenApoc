@@ -11,7 +11,7 @@ class RawSampleLoader : public SampleLoader
 public:
 	RawSampleLoader(Framework &fw)
 		:fw(fw){}
-	virtual std::shared_ptr<Sample> loadSample(UString path)
+	virtual std::shared_ptr<Sample> loadSample(UString path) override
 	{
 		auto file = fw.data->load_file(path);
 		if (!file)
@@ -32,7 +32,7 @@ public:
 class RawSampleLoaderFactory : public SampleLoaderFactory
 {
 public:
-	virtual SampleLoader *create(Framework &fw)
+	virtual SampleLoader *create(Framework &fw) override
 	{
 		return new RawSampleLoader(fw);
 	}

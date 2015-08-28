@@ -79,7 +79,7 @@ public:
 			PHYSFS_close(file);
 	}
 
-	int_type underflow()
+	int_type underflow() override
 	{
 		if (PHYSFS_eof(file))
 		{
@@ -94,7 +94,7 @@ public:
 		return (unsigned char) *gptr();
 	}
 
-	pos_type seekoff(off_type pos, std::ios_base::seekdir dir, std::ios_base::openmode mode)
+	pos_type seekoff(off_type pos, std::ios_base::seekdir dir, std::ios_base::openmode mode) override
 	{
 		switch (dir)
 		{
@@ -127,7 +127,7 @@ public:
 		return PHYSFS_tell(file);
 	}
 
-	pos_type seekpos(pos_type pos, std::ios_base::openmode mode)
+	pos_type seekpos(pos_type pos, std::ios_base::openmode mode) override
 	{
 		PHYSFS_seek(file, pos);
 		if (mode & std::ios_base::in)
@@ -145,7 +145,7 @@ public:
 		return PHYSFS_tell(file);
 	}
 
-	int_type overflow(int_type c = traits_type::eof())
+	int_type overflow(int_type c = traits_type::eof()) override
 	{
 		LogError("overflow called on read-only IFile \"%s\"", this->suppliedPath.str().c_str());
 		assert(0);

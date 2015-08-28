@@ -20,7 +20,7 @@ public:
 		: VehicleMission(vehicle), distribution(-1,1)
 			{};
 	std::list<Tile*> destination;
-	virtual Vec3<float> getNextDestination()
+	virtual Vec3<float> getNextDestination() override
 	{
 		auto vehicleTile = this->vehicle.tileObject.lock();
 		if (!vehicleTile)
@@ -47,7 +47,7 @@ public:
 		destination = std::list<Tile*>{map.getTile(nextPosition)};
 		return Vec3<float>{nextPosition.x, nextPosition.y, nextPosition.z};
 	}
-	virtual const std::list<Tile*> &getCurrentPlannedPath()
+	virtual const std::list<Tile*> &getCurrentPlannedPath() override
 	{
 		return destination;
 	}
@@ -62,7 +62,7 @@ public:
 		: VehicleMission(v), xydistribution(0,99), zdistribution(0,9)
 			{};
 	std::list<Tile*> path;
-	virtual Vec3<float> getNextDestination()
+	virtual Vec3<float> getNextDestination() override
 	{
 		auto vehicleTile = this->vehicle.tileObject.lock();
 		if (!vehicleTile)
@@ -102,7 +102,7 @@ public:
 			//Add {0.5,0.5,0.5} to make it route to the center of the tile
 			+ Vec3<float>{0.5,0.5,0.5};
 	}
-	virtual const std::list<Tile*> &getCurrentPlannedPath()
+	virtual const std::list<Tile*> &getCurrentPlannedPath() override
 	{
 		return path;
 	}
@@ -122,7 +122,7 @@ public:
 		//Tweak the speed slightly, makes everything a little less synchronised
 		speed = 0.05 + distribution(rng);
 	}
-	virtual void update(unsigned int ticks)
+	virtual void update(unsigned int ticks) override
 	{
 		auto vehicleTile = this->vehicle.tileObject.lock();
 		if (!vehicleTile)

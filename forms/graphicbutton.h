@@ -22,16 +22,16 @@ class GraphicButton : public Control
 		std::shared_ptr<Sample> buttonclick;
 
 	protected:
-		virtual void OnRender();
+		virtual void OnRender() override;
 
 	public:
 		GraphicButton( Framework &fw, Control* Owner, UString Image, UString ImageDepressed );
 		GraphicButton( Framework &fw, Control* Owner, UString Image, UString ImageDepressed, UString ImageHover );
 		virtual ~GraphicButton();
 
-		virtual void EventOccured( Event* e );
-		virtual void Update();
-		virtual void UnloadResources();
+		virtual void EventOccured( Event* e ) override;
+		virtual void Update() override;
+		virtual void UnloadResources() override;
 
 		std::shared_ptr<Image> GetImage();
 		void SetImage( std::shared_ptr<Image> Image );
