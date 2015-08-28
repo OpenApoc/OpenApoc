@@ -36,14 +36,14 @@ void VScrollBar::EventOccured( Event* e )
 		if( e->Data.Forms.MouseInfo.Y >= (segmentsize * (Value - Minimum)) + grippersize )
 		{
 			Value = Maths::Min(Maximum, Value + LargeChange);
-			Event* ce = new Event();
+			auto   ce = new Event();
 			ce->Type = e->Type;
 			memcpy( (void*)&(ce->Data.Forms), (void*)&(e->Data.Forms), sizeof( FRAMEWORK_FORMS_EVENT ) );
 			ce->Data.Forms.EventFlag = FormEventType::ScrollBarChange;
 			fw.PushEvent( ce );
 		} else if ( e->Data.Forms.MouseInfo.Y <= segmentsize * (Value - Minimum) ) {
 			Value = Maths::Max(Minimum, Value - LargeChange);
-			Event* ce = new Event();
+			auto   ce = new Event();
 			ce->Type = e->Type;
 			memcpy( (void*)&(ce->Data.Forms), (void*)&(e->Data.Forms), sizeof( FRAMEWORK_FORMS_EVENT ) );
 			ce->Data.Forms.EventFlag = FormEventType::ScrollBarChange;
@@ -63,7 +63,7 @@ void VScrollBar::EventOccured( Event* e )
 		int segments = (Maximum - Minimum) + 1;
 		float segmentsize = Size.y / (float)segments;
 		Value = Maths::Max(Minimum, Minimum + (int)(e->Data.Forms.MouseInfo.Y / segmentsize));
-		Event* ce = new Event();
+		auto   ce = new Event();
 		ce->Type = e->Type;
 		memcpy( (void*)&(ce->Data.Forms), (void*)&(e->Data.Forms), sizeof( FRAMEWORK_FORMS_EVENT ) );
 		ce->Data.Forms.EventFlag = FormEventType::ScrollBarChange;

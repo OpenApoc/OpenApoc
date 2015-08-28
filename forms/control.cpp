@@ -343,7 +343,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		// Child controls
 		if( nodename == "control" )
 		{
-			Control* c = new Control( fw, this );
+			auto   c = new Control( fw, this );
 			c->ConfigureFromXML( node );
 		}
 		if( nodename == "label" )
@@ -420,12 +420,12 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 		}
 		if( nodename == "checkbox" )
 		{
-			CheckBox* cb = new CheckBox( fw, this );
+			auto   cb = new CheckBox( fw, this );
 			cb->ConfigureFromXML( node );
 		}
 		if( nodename == "vscroll" )
 		{
-			VScrollBar* vsb = new VScrollBar( fw, this );
+			auto   vsb = new VScrollBar( fw, this );
 			vsb->ConfigureFromXML( node );
 
 			subnode = node->FirstChildElement("grippercolour");
@@ -454,7 +454,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 
 		if( nodename == "hscroll" )
 		{
-			HScrollBar* hsb = new HScrollBar( fw, this );
+			auto   hsb = new HScrollBar( fw, this );
 			hsb->ConfigureFromXML( node );
 
 			subnode = node->FirstChildElement("grippercolour");
@@ -490,7 +490,7 @@ void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
 				attribvalue = node->Attribute("scrollbarid");
 				vsb = (VScrollBar*)this->FindControl( attribvalue );
 			}
-			ListBox* lb = new ListBox( fw, this, vsb );
+			auto   lb = new ListBox( fw, this, vsb );
 			lb->ConfigureFromXML( node );
 		}
 

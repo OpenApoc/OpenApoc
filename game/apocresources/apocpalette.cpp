@@ -11,7 +11,7 @@ loadApocPalette(Data &data, const UString fileName)
 	if (!f)
 		return nullptr;
 	auto numEntries = f.size() / 3;
-	Palette *p = new Palette(numEntries);
+	auto  p = new Palette(numEntries);
 	for (unsigned int i = 0; i < numEntries; i++)
 	{
 		uint8_t colour[3];

@@ -342,7 +342,7 @@ void Framework::Run()
 		if (this->dumpEvents)
 		{
 			//insert END_OF_FRAME to mark the end of each frame
-			Event *e = new Event();
+			auto  e = new Event();
 			e->Type = EVENT_END_OF_FRAME;
 			DumpEvent(e);
 			delete e;
@@ -363,7 +363,7 @@ void Framework::ReadRecordedEvents()
 	if (!this->eventStream)
 	{
 		LogInfo("Reached end of reply, appending CLOSE");
-		Event *e = new Event();
+		auto  e = new Event();
 		e->Type = EVENT_WINDOW_CLOSED;
 		PushEvent( e );
 	}

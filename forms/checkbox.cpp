@@ -47,7 +47,7 @@ void CheckBox::EventOccured( Event* e )
 	if( e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this && e->Data.Forms.EventFlag == FormEventType::MouseClick )
 	{
 		Checked = !Checked;
-		Event* ce = new Event();
+		auto   ce = new Event();
 		ce->Type = e->Type;
 		memcpy( (void*)&(ce->Data.Forms), (void*)&(e->Data.Forms), sizeof( FRAMEWORK_FORMS_EVENT ) );
 		ce->Data.Forms.EventFlag = FormEventType::CheckBoxChange;

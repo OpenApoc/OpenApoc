@@ -223,7 +223,7 @@ void TextEdit::SetText( UString Text )
 void TextEdit::RaiseEvent( FormEventType Type )
 {
 	std::ignore = Type;
-	Event* ce = new Event();
+	auto   ce = new Event();
 	ce->Type = EVENT_FORM_INTERACTION;
 	memset( (void*)&(ce->Data.Forms), 0, sizeof( FRAMEWORK_FORMS_EVENT ) );
 	ce->Data.Forms.RaisedBy = this;

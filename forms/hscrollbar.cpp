@@ -26,7 +26,7 @@ void HScrollBar::SetValue(int newValue)
 	if (newValue == Value)
 		return;
 
-	Event* e = new Event();
+	auto   e = new Event();
 	e->Type = EVENT_FORM_INTERACTION;
 	e->Data.Forms.RaisedBy = this;
 	e->Data.Forms.EventFlag = FormEventType::ScrollBarChange;
