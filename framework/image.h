@@ -26,7 +26,7 @@ class Image
 
 		std::unique_ptr<RendererImageData> rendererPrivateData;
 		bool dirty;
-		Rect<int> bounds;
+		Rect<unsigned int> bounds;
 
 		std::weak_ptr<ImageSet> owningSet;
 		unsigned indexInSet;
