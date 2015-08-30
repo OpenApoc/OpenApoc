@@ -96,10 +96,10 @@
 			<font>SMALLSET</font>
 			<size width="300" height="16"/>
 		</label>
-		<checkbox id="SHOW_VEHICLE_BOUNDS">
+		<checkbox id="SHOW_SELECTABLE_BOUNDS">
 			<position x="310" y="120"/>
 		</checkbox>
-		<label text="STR_SHOW_VEHICLE_BOUNDS">
+		<label text="STR_SHOW_SELECTABLE_BOUNDS">
 			<backcolour r="128" g="128" b="128" a="0"/>
 			<position x="330" y="120"/>
 			<font>SMALLSET</font>
