@@ -195,7 +195,7 @@ void TileView::Render()
 		{
 			for (int x = minX; x < maxX; x++)
 			{
-				bool showOrigin = fw.gamecore->DebugModeEnabled;
+				bool showOrigin = fw.state->showTileOrigin;
 				bool showSelected =
 					(fw.gamecore->DebugModeEnabled &&
 					 z == selectedTilePosition.z &&

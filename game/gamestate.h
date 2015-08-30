@@ -16,6 +16,7 @@ public:
 	std::vector<Organisation> organisations;
 
 
+	bool showTileOrigin;
 	bool showVehiclePath;
 };
 

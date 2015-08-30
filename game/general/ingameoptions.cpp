@@ -11,94 +11,24 @@ InGameOptions::InGameOptions(Framework &fw)
 
 	/* Initialse all initial values */
 
-	Control *c = menuform->FindControl("GLOBAL_GAIN_SLIDER");
-	if (!c)
-	{
-		LogError("Failed to find \"GLOBAL_GAIN_SLIDER\" control");
-		return;
-	}
-	HScrollBar *slider = dynamic_cast<HScrollBar*>(c);
-	if (!slider)
-	{
-		LogError("Failed to cast \"GLOBAL_GAIN_SLIDER\" control to HScrollBar");
-		return;
-	}
-	slider->SetValue(fw.Settings->getInt("Audio.GlobalGain"));
+	menuform->FindControlTyped<HScrollBar>("GLOBAL_GAIN_SLIDER")->SetValue(fw.Settings->getInt("Audio.GlobalGain"));
 
-	c = menuform->FindControl("MUSIC_GAIN_SLIDER");
-	if (!c)
-	{
-		LogError("Failed to find \"MUSIC_GAIN_SLIDER\" control");
-		return;
-	}
-	slider = dynamic_cast<HScrollBar*>(c);
-	if (!slider)
-	{
-		LogError("Failed to cast \"MUSIC_GAIN_SLIDER\" control to HScrollBar");
-		return;
-	}
-	slider->SetValue(fw.Settings->getInt("Audio.MusicGain"));
+	menuform->FindControlTyped<HScrollBar>("MUSIC_GAIN_SLIDER")->SetValue(fw.Settings->getInt("Audio.MusicGain"));
 
-	c = menuform->FindControl("SAMPLE_GAIN_SLIDER");
-	if (!c)
-	{
-		LogError("Failed to find \"SAMPLE_GAIN_SLIDER\" control");
-		return;
-	}
-	slider = dynamic_cast<HScrollBar*>(c);
-	if (!slider)
-	{
-		LogError("Failed to cast \"SAMPLE_GAIN_SLIDER\" control to HScrollBar");
-		return;
-	}
-	slider->SetValue(fw.Settings->getInt("Audio.SampleGain"));
+	menuform->FindControlTyped<HScrollBar>("SAMPLE_GAIN_SLIDER")->SetValue(fw.Settings->getInt("Audio.SampleGain"));
+	
+	menuform->FindControlTyped<CheckBox>("SHOW_VEHICLE_PATH")->Checked = fw.state->showVehiclePath;
+	menuform->FindControlTyped<CheckBox>("SHOW_TILE_ORIGIN")->Checked = fw.state->showTileOrigin;
+	
 }
 
 InGameOptions::~InGameOptions()
 {
 	/* Store persistent options */
 
-	Control *c = menuform->FindControl("GLOBAL_GAIN_SLIDER");
-	if (!c)
-	{
-		LogError("Failed to find \"GLOBAL_GAIN_SLIDER\" control");
-		return;
-	}
-	HScrollBar *slider = dynamic_cast<HScrollBar*>(c);
-	if (!slider)
-	{
-		LogError("Failed to cast \"GLOBAL_GAIN_SLIDER\" control to HScrollBar");
-		return;
-	}
-	fw.Settings->set("Audio.GlobalGain", slider->Value);
-
-	c = menuform->FindControl("MUSIC_GAIN_SLIDER");
-	if (!c)
-	{
-		LogError("Failed to find \"MUSIC_GAIN_SLIDER\" control");
-		return;
-	}
-	slider = dynamic_cast<HScrollBar*>(c);
-	if (!slider)
-	{
-		LogError("Failed to cast \"MUSIC_GAIN_SLIDER\" control to HScrollBar");
-		return;
-	}
-	fw.Settings->set("Audio.MusicGain", slider->Value);
-
-	c = menuform->FindControl("SAMPLE_GAIN_SLIDER");
-	if (!c)
-	{
-		LogError("Failed to find \"SAMPLE_GAIN_SLIDER\" control");
-		return;
-	}
-	slider = dynamic_cast<HScrollBar*>(c);
-	if (!slider)
-	{
-		LogError("Failed to cast \"SAMPLE_GAIN_SLIDER\" control to HScrollBar");
-		return;
-	}
-	fw.Settings->set("Audio.SampleGain", slider->Value);
+	fw.Settings->set("Audio.GlobalGain", menuform->FindControlTyped<HScrollBar>("GLOBAL_GAIN_SLIDER")->Value);
+	fw.Settings->set("Audio.MusicGain", menuform->FindControlTyped<HScrollBar>("MUSIC_GAIN_SLIDER")->Value);
+	fw.Settings->set("Audio.SampleGain", menuform->FindControlTyped<HScrollBar>("SAMPLE_GAIN_SLIDER")->Value);
 }
 
 void InGameOptions::Begin()
@@ -279,6 +209,12 @@ void InGameOptions::EventOccurred(Event *e)
 			CheckBox *box = dynamic_cast<CheckBox*>(e->Data.Forms.RaisedBy);
 			fw.state->showVehiclePath = box->Checked;
 			LogWarning("Set SHOW_VEHICLE_PATH to %d", box->Checked);
+		}
+		if (e->Data.Forms.RaisedBy->Name == "SHOW_TILE_ORIGIN")
+		{
+			CheckBox *box = dynamic_cast<CheckBox*>(e->Data.Forms.RaisedBy);
+			fw.state->showTileOrigin = box->Checked;
+			LogWarning("Set SHOW_TILE_ORIGIN to %d", box->Checked);
 		}
 	}
 }

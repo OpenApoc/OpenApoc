@@ -78,12 +78,21 @@
 			<grippercolour r="255" g="255" b="255" a="255"/>
 			<range min="0" max="20"/>
 		</hscroll>
-		<checkbox id="SHOW_VEHICLE_PATH">
+		<checkbox id="SHOW_TILE_ORIGIN">
 			<position x="310" y="80"/>
+		</checkbox>
+		<label text="STR_SHOW_TILE_ORIGIN">
+			<backcolour r="128" g="128" b="128" a="0"/>
+			<position x="330" y="80"/>
+			<font>SMALLSET</font>
+			<size width="300" height="16"/>
+		</label>
+		<checkbox id="SHOW_VEHICLE_PATH">
+			<position x="310" y="100"/>
 		</checkbox>
 		<label text="STR_SHOW_VEHICLE_PATH">
 			<backcolour r="128" g="128" b="128" a="0"/>
-			<position x="330" y="80"/>
+			<position x="330" y="100"/>
 			<font>SMALLSET</font>
 			<size width="300" height="16"/>
 		</label>
