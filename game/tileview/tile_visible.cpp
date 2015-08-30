@@ -10,7 +10,7 @@ TileObjectSprite::TileObjectSprite(TileMap &map, Vec3<float> position, std::shar
 }
 
 std::shared_ptr<Image>
-TileObjectSprite::getSprite()
+TileObjectSprite::getSprite() const
 {
 	return this->sprite;
 }
@@ -23,7 +23,7 @@ TileObjectDirectionalSprite::TileObjectDirectionalSprite(TileMap &map, Vec3<floa
 }
 
 std::shared_ptr<Image>
-TileObjectDirectionalSprite::getSprite()
+TileObjectDirectionalSprite::getSprite() const
 {
 	   float closestAngle = FLT_MAX;
 	   std::shared_ptr<Image> closestImage;

@@ -3,6 +3,7 @@
 #include "game/city/weapon.h"
 #include "game/tileview/projectile.h"
 #include "game/organisation.h"
+#include "framework/image.h"
 #include <cfloat>
 #include <random>
 #include <limits>
@@ -264,6 +265,7 @@ VehicleTileObject::VehicleTileObject(Vehicle &vehicle, TileMap &map, Vec3<float>
 	vehicle(vehicle)
 {
 	this->active = true;
+	this->selectable = true;
 }
 
 VehicleTileObject::~VehicleTileObject()
@@ -280,6 +282,21 @@ VehicleTileObject::update(unsigned int ticks)
 Vec3<float> VehicleTileObject::getDrawPosition() const
 {
 	return this->getPosition() - Vec3<float>{2,1,1};
+}
+
+Rect<float> VehicleTileObject::getSelectableBounds() const
+{
+	auto spriteBounds = std::dynamic_pointer_cast<PaletteImage>(this->getSprite())->bounds;
+	return Rect<float>{(float)spriteBounds.p0.x, (float)spriteBounds.p0.y, (float)spriteBounds.p1.x, (float)spriteBounds.p1.y};
+}
+
+void
+VehicleTileObject::setSelected(bool selected)
+{
+	if (selected)
+		LogWarning("Selected vehicle");
+	else
+		LogWarning("De-Selected vehicle");
 }
 
 

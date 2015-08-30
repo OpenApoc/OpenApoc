@@ -75,6 +75,8 @@ TileMap::addObject(std::shared_ptr<TileObject> obj)
 		assert(0);
 	}
 	obj->getOwningTile()->ownedObjects.insert(obj);
+	if (obj->isSelectable())
+		this->selectableObjects.insert(obj);
 	if (obj->isActive())
 		this->activeObjects.insert(obj);
 	if (obj->isVisible())
@@ -94,6 +96,8 @@ TileMap::removeObject(std::shared_ptr<TileObject> obj)
 		LogError("Removing object with no owner");
 		assert(0);
 	}
+	if (obj->isSelectable())
+		this->selectableObjects.erase(obj);
 	if (obj->isActive())
 		this->activeObjects.erase(obj);
 	if (obj->isProjectile())
@@ -121,8 +125,8 @@ Tile::Tile(TileMap &map, Vec3<int> position)
 {
 }
 
-TileObject::TileObject(TileMap &map, Vec3<float> position, bool active, bool collides, bool visible, bool projectile)
-	: position(position), owningTile(map.getTile(position)), active(active), collides(collides), visible(visible), projectile(projectile)
+TileObject::TileObject(TileMap &map, Vec3<float> position, bool active, bool collides, bool visible, bool projectile, bool selectable)
+	: position(position), owningTile(map.getTile(position)), active(active), collides(collides), visible(visible), projectile(projectile), selectable(selectable)
 {
 	//May be called by multiple subclass constructors - don't do anything
 	//non-repeatable here
@@ -174,7 +178,7 @@ TileObject::update(unsigned int ticks)
 }
 
 std::shared_ptr<Image>
-TileObject::getSprite()
+TileObject::getSprite() const
 {
 	//Override this for visible objects
 	LogWarning("Called on non-visible object");
@@ -268,6 +272,25 @@ TileObject::drawProjectile(TileView &v, Renderer &r, Vec2<int> screenPosition)
 	std::ignore = r;
 	std::ignore = screenPosition;
 	return;
+}
+
+Rect<float>
+TileObject::getSelectableBounds() const
+{
+	Rect<float> invalidBounds{0,0,0,0};
+	//Override this for selectable objects
+	LogWarning("Called on non-selectable object");
+	assert(!this->isSelectable());
+	return invalidBounds;
+}
+
+void
+TileObject::setSelected(bool selected)
+{
+	//Override this for selectable objects
+	LogWarning("Called on non-selectable object");
+	assert(!this->isSelectable());
+	std::ignore = selected;
 }
 
 class PathComparer

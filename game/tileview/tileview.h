@@ -8,6 +8,7 @@ namespace OpenApoc {
 
 class TileMap;
 class Image;
+class TileObject;
 
 class TileView : public Stage
 {
@@ -24,6 +25,8 @@ class TileView : public Stage
 		Vec3<int> selectedTilePosition;
 		std::shared_ptr<Image> selectedTileImageBack, selectedTileImageFront;
 		std::shared_ptr<Palette> pal;
+
+		std::shared_ptr<TileObject> selectedTileObject;
 
 		TileView(Framework &fw, TileMap &map, Vec3<int> tileSize);
 		~TileView();

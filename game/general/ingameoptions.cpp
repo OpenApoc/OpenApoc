@@ -19,7 +19,7 @@ InGameOptions::InGameOptions(Framework &fw)
 	
 	menuform->FindControlTyped<CheckBox>("SHOW_VEHICLE_PATH")->Checked = fw.state->showVehiclePath;
 	menuform->FindControlTyped<CheckBox>("SHOW_TILE_ORIGIN")->Checked = fw.state->showTileOrigin;
-	menuform->FindControlTyped<CheckBox>("SHOW_VEHICLE_BOUNDS")->Checked = fw.state->showVehicleBounds;
+	menuform->FindControlTyped<CheckBox>("SHOW_SELECTABLE_BOUNDS")->Checked = fw.state->showSelectableBounds;
 	
 }
 
@@ -217,11 +217,11 @@ void InGameOptions::EventOccurred(Event *e)
 			fw.state->showTileOrigin = box->Checked;
 			LogWarning("Set SHOW_TILE_ORIGIN to %d", box->Checked);
 		}
-		if (e->Data.Forms.RaisedBy->Name == "SHOW_VEHICLE_BOUNDS")
+		if (e->Data.Forms.RaisedBy->Name == "SHOW_SELECTABLE_BOUNDS")
 		{
 			CheckBox *box = dynamic_cast<CheckBox*>(e->Data.Forms.RaisedBy);
-			fw.state->showVehicleBounds = box->Checked;
-			LogWarning("Set SHOW_VEHICLE_BOUNDS to %d", box->Checked);
+			fw.state->showSelectableBounds = box->Checked;
+			LogWarning("Set SHOW_SELECTABLE_BOUNDS to %d", box->Checked);
 		}
 	}
 }

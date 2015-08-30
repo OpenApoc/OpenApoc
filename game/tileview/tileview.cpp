@@ -127,14 +127,37 @@ void TileView::EventOccurred(Event *e)
 	else if (e->Type == EVENT_MOUSE_DOWN)
 	{
 		auto &ev = e->Data.Mouse;
-		auto selected = screenToTileCoords(Vec2<float>{(float)ev.X - offsetX, (float)ev.Y - offsetY}, (float)maxZDraw-1);
+		auto selectedPos = Vec2<float>{(float)ev.X - offsetX, (float)ev.Y - offsetY};
+		std::shared_ptr<TileObject> newSelectedTileObject;
 
-		if (selected.x < 0) selected.x = 0;
-		if (selected.y < 0) selected.y = 0;
-		if (selected.x > 99) selected.x = 99;
-		if (selected.y > 99) selected.y = 99;
-		selectedTilePosition = Vec3<int>{(int)selected.x, (int)selected.y, (int)selected.z};
-		selectionChanged = true;
+		for (auto &obj : this->map.selectableObjects)
+		{
+			auto bounds = obj->getSelectableBounds();
+			auto tileOffset = tileToScreenCoords(obj->getDrawPosition());
+			bounds.p0 += tileOffset;
+			bounds.p1 += tileOffset;
+			if (bounds.within(selectedPos))
+			{
+				if (newSelectedTileObject)
+				{
+					if (newSelectedTileObject->getDrawPosition().z < obj->getDrawPosition().z)
+						newSelectedTileObject = obj;
+				}
+				else
+					newSelectedTileObject = obj;
+			}
+			if (newSelectedTileObject != this->selectedTileObject)
+			{
+				/* Either could be nullptr if there's nothing currently selected
+				 * or if you've clicked somewhere with no selectable objects
+				 * (IE deselected) */
+				if (this->selectedTileObject)
+					this->selectedTileObject->setSelected(false);
+				if (newSelectedTileObject)
+					newSelectedTileObject->setSelected(true);
+				this->selectedTileObject = newSelectedTileObject;
+			}
+		}
 	} else if( e->Type == EVENT_KEY_UP )
 	{
 		switch (e->Data.Keyboard.KeyCode)
@@ -212,7 +235,8 @@ void TileView::Render()
 				for (auto obj : tile->visibleObjects)
 				{
 					assert(obj->isVisible());
-					bool showBounds = (fw.state->showVehicleBounds && std::dynamic_pointer_cast<VehicleTileObject>(obj));
+					bool showBounds = obj == this->selectedTileObject ||
+						(fw.state->showSelectableBounds && obj->isSelectable());
 					auto img = obj->getSprite();
 					auto pos = obj->getDrawPosition();
 					auto objScreenPos = tileToScreenCoords(pos);
@@ -265,13 +289,13 @@ void TileView::Render()
 					if (showBounds)
 					{
 						Vec2<float> offset{offsetX, offsetY};
-						auto image = obj->getSprite();
+						auto bounds = obj->getSelectableBounds();
 						auto p00 = tileToScreenCoords(obj->getDrawPosition());
 						p00 += offset;
-						p00 += image->bounds.p0;
+						p00 += bounds.p0;
 						auto p11 = tileToScreenCoords(obj->getDrawPosition());
 						p11 += offset;
-						p11 += image->bounds.p1;
+						p11 += bounds.p1;
 						auto p10 = Vec2<float>{p11.x, p00.y};
 						auto p01 = Vec2<float>{p00.x, p11.y};
 

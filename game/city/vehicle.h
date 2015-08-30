@@ -75,6 +75,9 @@ public:
 	virtual void update(unsigned int ticks) override;
 	Vec3<float> getDrawPosition() const override;
 
+	virtual Rect<float> getSelectableBounds() const override;
+	virtual void setSelected(bool selected) override;
+
 	Vehicle &getVehicle() const {return this->vehicle;}
 
 	using TileObjectCollidable::setPosition;

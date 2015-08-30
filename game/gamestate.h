@@ -18,7 +18,7 @@ public:
 
 	bool showTileOrigin;
 	bool showVehiclePath;
-	bool showVehicleBounds;
+	bool showSelectableBounds;
 };
 
 }; //namespace OpenApoc
