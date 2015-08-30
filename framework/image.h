@@ -50,6 +50,8 @@ class PaletteImage : public Image
 		~PaletteImage();
 		std::shared_ptr<RGBImage> toRGBImage(std::shared_ptr<Palette> p);
 		static void blit(std::shared_ptr<PaletteImage> src, Vec2<unsigned int> offset, std::shared_ptr<PaletteImage> dst);
+
+		void CalculateBounds();
 };
 
 class PaletteImageLock

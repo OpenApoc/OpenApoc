@@ -195,4 +195,30 @@ PaletteImageLock::getData()
 	return this->img->indices.get();
 }
 
+void
+PaletteImage::CalculateBounds()
+{
+	unsigned int minX = this->size.x, minY = this->size.y, maxX = 0, maxY = 0;
+
+	for (unsigned int y = 0; y < this->size.y; y++)
+	{
+		for (unsigned int x = 0; x < this->size.x; x++)
+		{
+			unsigned int offset = y * this->size.x + x;
+			if (this->indices[offset])
+			{
+				if (minX > x)
+					minX = x;
+				if (minY > y)
+					minY = y;
+				if (maxX < x)
+					maxX = x;
+				if (maxY < y)
+					maxY = y;
+			}
+		}
+	}
+	this->bounds = {minX, minY, maxX, maxY};
+}
+
 }; //namespace OpenApoc

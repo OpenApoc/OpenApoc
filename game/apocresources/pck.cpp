@@ -324,6 +324,7 @@ PCKLoader::load(Data &data, UString PckFilename, UString TabFilename)
 	imageSet->images.resize(p->images.size());
 	for (unsigned int i = 0; i < p->images.size(); i++)
 	{
+		p->images[i]->CalculateBounds();
 		imageSet->images[i] = p->images[i];
 		imageSet->images[i]->owningSet = imageSet;
 		imageSet->images[i]->indexInSet = i;
