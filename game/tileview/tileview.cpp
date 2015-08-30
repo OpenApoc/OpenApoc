@@ -11,7 +11,8 @@
 namespace OpenApoc {
 
 TileView::TileView(Framework &fw, TileMap &map, Vec3<int> tileSize)
-	: Stage(fw), map(map), tileSize(tileSize), maxZDraw(10), offsetX(0), offsetY(0),
+	: Stage(fw), map(map), tileSize(tileSize), updateSpeed(UpdateSpeed::Speed1),
+	  maxZDraw(10), offsetX(0), offsetY(0),
 	  cameraScrollX(0), cameraScrollY(0), selectedTilePosition(0,0,0),
 	  selectedTileImageBack(fw.data->load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
 	  selectedTileImageFront(fw.data->load_image("CITY/SELECTED-CITYTILE-FRONT.PNG")),
@@ -181,14 +182,36 @@ void TileView::EventOccurred(Event *e)
 
 void TileView::Update(StageCmd * const cmd)
 {
+	int ticks = 0;
+
 	*cmd = stageCmd;
 	stageCmd = StageCmd();
 
 	offsetX += cameraScrollX;
 	offsetY += cameraScrollY;
 
-	//TODO: Map wall-time to ticks?
-	this->map.update(1);
+	switch (this->updateSpeed)
+	{
+		case UpdateSpeed::Pause:
+			ticks = 0;
+			break;
+		case UpdateSpeed::Speed1:
+			ticks = 1;
+			break;
+		case UpdateSpeed::Speed2:
+			ticks = 2;
+			break;
+		default:
+			LogWarning("FIXME: Sort out higher speed to not just hammer update (GOD-SLOW) - demoting to speed3");
+			this->updateSpeed = UpdateSpeed::Speed3;
+		case UpdateSpeed::Speed3:
+			ticks = 5;
+			break;
+	}
+
+	/* TODO: MAke non-'1' update ticks work (e.g. projectile paths & vehicle movement intersection) */
+	while (ticks--)
+		this->map.update(1);
 
 }
 

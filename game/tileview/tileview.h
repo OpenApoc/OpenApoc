@@ -10,12 +10,23 @@ class TileMap;
 class Image;
 class TileObject;
 
+enum class UpdateSpeed
+{
+	Pause,
+	Speed1,
+	Speed2,
+	Speed3,
+	Speed4,
+	Speed5,
+};
+
 class TileView : public Stage
 {
 	protected:
 		StageCmd stageCmd;
 		TileMap &map;
 		Vec3<int> tileSize;
+		UpdateSpeed updateSpeed;
 
 	public:
 		int maxZDraw;

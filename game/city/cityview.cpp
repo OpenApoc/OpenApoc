@@ -140,21 +140,39 @@ CityView::EventOccurred(Event *e)
 					return;
 				}
 				else if (cname == "BUTTON_SHOW_LOG")
-					LogError("Show log");
+					LogWarning("Show log");
 				else if (cname == "BUTTON_ZOOM_EVENT")
-					LogError("Zoom to event");
+					LogWarning("Zoom to event");
 				else if (cname == "BUTTON_SPEED0")
-					LogError("Set speed 0");
+				{
+					LogWarning("Set speed 0");
+					this->updateSpeed = UpdateSpeed::Pause;
+				}
 				else if (cname == "BUTTON_SPEED1")
-					LogError("Set speed 1");
+				{
+					LogWarning("Set speed 1");
+					this->updateSpeed = UpdateSpeed::Speed1;
+				}
 				else if (cname == "BUTTON_SPEED2")
-					LogError("Set speed 2");
+				{
+					LogWarning("Set speed 2");
+					this->updateSpeed = UpdateSpeed::Speed2;
+				}
 				else if (cname == "BUTTON_SPEED3")
-					LogError("Set speed 3");
+				{
+					LogWarning("Set speed 3");
+					this->updateSpeed = UpdateSpeed::Speed3;
+				}
 				else if (cname == "BUTTON_SPEED4")
-					LogError("Set speed 4");
+				{
+					LogWarning("Set speed 4");
+					this->updateSpeed = UpdateSpeed::Speed4;
+				}
 				else if (cname == "BUTTON_SPEED5")
-					LogError("Set speed 5");
+				{
+					LogWarning("Set speed 5");
+					this->updateSpeed = UpdateSpeed::Speed5;
+				}
 					
 			}
 
