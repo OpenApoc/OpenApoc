@@ -96,6 +96,15 @@
 			<font>SMALLSET</font>
 			<size width="300" height="16"/>
 		</label>
+		<checkbox id="SHOW_VEHICLE_BOUNDS">
+			<position x="310" y="120"/>
+		</checkbox>
+		<label text="STR_SHOW_VEHICLE_BOUNDS">
+			<backcolour r="128" g="128" b="128" a="0"/>
+			<position x="330" y="120"/>
+			<font>SMALLSET</font>
+			<size width="300" height="16"/>
+		</label>
       </graphic>
     </style>
   </form>

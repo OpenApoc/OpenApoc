@@ -14,7 +14,7 @@ Image::~Image()
 }
 
 Image::Image(Vec2<unsigned int> size)
-	: size(size), dirty(true)
+	: size(size), dirty(true), bounds(0,0,size.x,size.y)
 {}
 
 Surface::Surface(Vec2<unsigned int> size)

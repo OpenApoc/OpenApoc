@@ -5,6 +5,7 @@
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "game/resources/gamecore.h"
+#include "game/city/vehicle.h"
 
 
 namespace OpenApoc {
@@ -211,6 +212,7 @@ void TileView::Render()
 				for (auto obj : tile->visibleObjects)
 				{
 					assert(obj->isVisible());
+					bool showBounds = (fw.state->showVehicleBounds && std::dynamic_pointer_cast<VehicleTileObject>(obj));
 					auto img = obj->getSprite();
 					auto pos = obj->getDrawPosition();
 					auto objScreenPos = tileToScreenCoords(pos);
@@ -259,6 +261,31 @@ void TileView::Render()
 						linePos1 += offset;
 						linePos0 += offset;
 						r.drawLine(linePos0, linePos1, Colour{255,255,0,255});
+					}
+					if (showBounds)
+					{
+						Vec2<float> offset{offsetX, offsetY};
+						auto image = obj->getSprite();
+						auto p00 = tileToScreenCoords(obj->getDrawPosition());
+						p00 += offset;
+						p00 += image->bounds.p0;
+						auto p11 = tileToScreenCoords(obj->getDrawPosition());
+						p11 += offset;
+						p11 += image->bounds.p1;
+						auto p10 = Vec2<float>{p11.x, p00.y};
+						auto p01 = Vec2<float>{p00.x, p11.y};
+
+						r.drawLine(p00, p00 + Vec2<float>{0,5}, Colour{255,0,0,255});
+						r.drawLine(p00, p00 + Vec2<float>{5,0}, Colour{255,0,0,255});
+
+						r.drawLine(p01, p01 + Vec2<float>{0,-5}, Colour{255,0,0,255});
+						r.drawLine(p01, p01 + Vec2<float>{5,0}, Colour{255,0,0,255});
+
+						r.drawLine(p10, p10 + Vec2<float>{0,5}, Colour{255,0,0,255});
+						r.drawLine(p10, p10 + Vec2<float>{-5,0}, Colour{255,0,0,255});
+
+						r.drawLine(p11, p11 + Vec2<float>{0,-5}, Colour{255,0,0,255});
+						r.drawLine(p11, p11 + Vec2<float>{-5,0}, Colour{255,0,0,255});
 					}
 				}
 				for (auto &p : tile->ownedProjectiles)

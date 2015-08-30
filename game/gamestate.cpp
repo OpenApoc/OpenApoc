@@ -10,7 +10,7 @@
 namespace OpenApoc {
 
 GameState::GameState(Framework &fw, Rules &rules)
-	:showTileOrigin(false), showVehiclePath(false)
+	:showTileOrigin(false), showVehiclePath(false), showVehicleBounds(false)
 {
 	for (auto &orgdef : rules.getOrganisationDefs())
 	{
