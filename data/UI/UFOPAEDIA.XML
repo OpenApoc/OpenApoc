@@ -549,242 +549,242 @@
 				<entry id="BOLTER_4000" name="STR_BOLTER_4000">
 					<backgroundimage>xcom3/UFOPAEDI/V02.PCX</backgroundimage>
 					<text_info>STR_BOLTER_4000_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="LANCER_7000" name="STR_LANCER_7000">
 					<backgroundimage>xcom3/UFOPAEDI/V10.PCX</backgroundimage>
 					<text_info>STR_LANCER_7000_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="RENDOR_PLASMA_GUN" name="STR_RENDOR_PLASMA_GUN">
 					<backgroundimage>xcom3/UFOPAEDI/V15.PCX</backgroundimage>
 					<text_info>STR_RENDOR_PLASMA_GUN_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="LINEAGE_PLASMA_CANNON" name="STR_LINEAGE_PLASMA_CANNON">
 					<backgroundimage>xcom3/UFOPAEDI/V11.PCX</backgroundimage>
 					<text_info>STR_LINEAGE_PLASMA_CANNON_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="PLASMA_MULTISYSTEM" name="STR_PLASMA_MULTI_SYSTEM">
 					<backgroundimage>xcom3/UFOPAEDI/V12.PCX</backgroundimage>
 					<text_info>STR_PLASMA_MULTI_SYSTEM_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="LIGHT_DISRUPTOR_BEAM" name="STR_LIGHT_DISRUPTOR_BEAM">
 					<backgroundimage>xcom3/UFOPAEDI/V29.PCX</backgroundimage>
 					<text_info>STR_LIGHT_DISRUPTOR_BEAM_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="MEDIUM_DISRUPTOR_BEAM" name="STR_MEDIUM_DISRUPTOR_BEAM">
 					<backgroundimage>xcom3/UFOPAEDI/V30.PCX</backgroundimage>
 					<text_info>STR_MEDIUM_DISRUPTOR_BEAM_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="HEAVY_DISRUPTOR_BEAM" name="STR_HEAVY_DISRUPTOR_BEAM">
 					<backgroundimage>xcom3/UFOPAEDI/V31.PCX</backgroundimage>
 					<text_info>STR_HEAVY_DISRUPTOR_BEAM_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="40MM_AUTO_CANNON" name="STR_40MM_AUTO_CANNON">
 					<backgroundimage>xcom3/UFOPAEDI/V13.PCX</backgroundimage>
 					<text_info>STR_40MM_AUTO_CANNON_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="JANITOR_MISSILE_ARRAY" name="STR_JANITOR_MISSILE_ARRAY">
 					<backgroundimage>xcom3/UFOPAEDI/V19.PCX</backgroundimage>
 					<text_info>STR_JANITOR_MISSILE_ARRAY_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="JUSTICE_MISSILE_LAUNCHER" name="STR_JUSTICE_MISSILE_LAUNCHER">
 					<backgroundimage>xcom3/UFOPAEDI/V05.PCX</backgroundimage>
 					<text_info>STR_JUSTICE_MISSILE_LAUNCHER_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="PROPHET_MISSILE_ARRAY" name="STR_PROPHET_MISSILE_ARRAY">
 					<backgroundimage>xcom3/UFOPAEDI/V18.PCX</backgroundimage>
 					<text_info>STR_PROPHET_MISSILE_ARRAY_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="RETRIBUTION_MISSILE_LAUNCHER" name="STR_RETRIBUTION_MISSILE_LAUNCHER">
 					<backgroundimage>xcom3/UFOPAEDI/V17.PCX</backgroundimage>
 					<text_info>STR_RETRIBUTION_MISSILE_LAUNCHER_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="DISRUPTOR_BOMB_LAUNCHER" name="STR_DISRUPTOR_BOMB_LAUNCHER">
 					<backgroundimage>xcom3/UFOPAEDI/V21.PCX</backgroundimage>
 					<text_info>STR_DISRUPTOR_BOMB_LAUNCHER_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="STATIS_BOMB_LAUNCHER" name="STR_STASIS_BOMB_LAUNCHER">
 					<backgroundimage>xcom3/UFOPAEDI/V22.PCX</backgroundimage>
 					<text_info>STR_STASIS_BOMB_LAUNCHER_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="DISRUPTOR_MULTI_BOMB_LAUNCHER" name="STR_DISRUPTOR_MULTI_BOMB_LAUNCHER">
 					<backgroundimage>xcom3/UFOPAEDI/V20.PCX</backgroundimage>
 					<text_info>STR_DISRUPTOR_MULTI_BOMB_LAUNCHER_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="LASER_DEFENSE_ARRAY" name="STR_LASER_DEFENSE_ARRAY">
 					<backgroundimage>xcom3/UFOPAEDI/V04.PCX</backgroundimage>
 					<text_info>STR_LASER_DEFENSE_ARRAY_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="PLASMA_DEFENSE_ARRAY" name="STR_PLASMA_DEFENSE_ARRAY">
 					<backgroundimage>xcom3/UFOPAEDI/V14.PCX</backgroundimage>
 					<text_info>STR_PLASMA_DEFENSE_ARRAY_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="SD_STANDARD" name="STR_SD_STANDARD">
 					<backgroundimage>xcom3/UFOPAEDI/F01.PCX</backgroundimage>
 					<text_info>STR_SD_STANDARD_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="SD_DELUXE" name="STR_SD_DELUXE">
 					<backgroundimage>xcom3/UFOPAEDI/F02.PCX</backgroundimage>
 					<text_info>STR_SD_DELUXE_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="SD_SPORTS" name="STR_SD_SPORTS">
 					<backgroundimage>xcom3/UFOPAEDI/F03.PCX</backgroundimage>
 					<text_info>STR_SD_SPORTS_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="SD_TURBO" name="STR_SD_TURBO">
 					<backgroundimage>xcom3/UFOPAEDI/F04.PCX</backgroundimage>
 					<text_info>STR_SD_TURBO_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="SD_ELITE" name="STR_SD_ELITE">
 					<backgroundimage>xcom3/UFOPAEDI/F05.PCX</backgroundimage>
 					<text_info>STR_SD_ELITE_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="SD_SPECIAL" name="STR_SD_SPECIAL">
 					<backgroundimage>xcom3/UFOPAEDI/F06.PCX</backgroundimage>
 					<text_info>STR_SD_SPECIAL_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="40MM_AUTO_CANNON_TURRET" name="STR_40MM_AUTO_CANNON_TURRET">
 					<backgroundimage>xcom3/UFOPAEDI/V01.PCX</backgroundimage>
 					<text_info>STR_40MM_AUTO_CANNON_TURRET_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="AIRGUARD_ANTI_AIR_CANNON" name="STR_AIRGUARD_ANTI_AIR_CANNON">
 					<backgroundimage>xcom3/UFOPAEDI/V16.PCX</backgroundimage>
 					<text_info>STR_AIRGUARD_ANTI_AIR_CANNON_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="GLM_ARRAY" name="STR_GLM_ARRAY">
 					<backgroundimage>xcom3/UFOPAEDI/V03.PCX</backgroundimage>
 					<text_info>STR_GLM_ARRAY_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="PLASMA_TURRET_CANNON" name="STR_PLASMA_TURRET_CANNON">
 					<backgroundimage>xcom3/UFOPAEDI/23TANK2.PCX</backgroundimage>
 					<text_info>STR_PLASMA_TURRET_CANNON_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="GLM_AIR_DEFENSE" name="STR_GLM_AIR_DEFENSE">
 					<backgroundimage>xcom3/UFOPAEDI/23TANK3.PCX</backgroundimage>
 					<text_info>STR_GLM_AIR_DEFENSE_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="RUMBLE_CANNON" name="STR_RUMBLE_CANNON">
 					<backgroundimage>xcom3/UFOPAEDI/23TANK4.PCX</backgroundimage>
 					<text_info>STR_RUMBLE_CANNON_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="METRO_ROADHOG" name="STR_METRO_ROADHOG">
 					<backgroundimage>xcom3/UFOPAEDI/H01.PCX</backgroundimage>
 					<text_info>STR_METRO_ROADHOG_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="METRO_ROADGRAV" name="STR_METRO_ROADGRAV">
 					<backgroundimage>xcom3/UFOPAEDI/H02.PCX</backgroundimage>
 					<text_info>STR_METRO_ROADGRAV_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="METRO_TURBOGRAV" name="STR_METRO_TURBOGRAV">
 					<backgroundimage>xcom3/UFOPAEDI/H03.PCX</backgroundimage>
 					<text_info>STR_METRO_TURBOGRAV_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="METRO_POWERGRAV" name="STR_METRO_POWERGRAV">
 					<backgroundimage>xcom3/UFOPAEDI/H04.PCX</backgroundimage>
 					<text_info>STR_METRO_POWERGRAV_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="METRO_MULTIPOWER_PLUS" name="STR_METRO_MULTIPOWER_PLUS">
 					<backgroundimage>xcom3/UFOPAEDI/H05.PCX</backgroundimage>
 					<text_info>STR_METRO_MULTIPOWER_PLUS_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="LIGHT_WEAPONS_CONTROL" name="STR_LIGHT_WEAPONS_CONTROL">
 					<backgroundimage>xcom3/UFOPAEDI/V06.PCX</backgroundimage>
 					<text_info>STR_LIGHT_WEAPONS_CONTROL_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="MEDIUM_WEAPONS_CONTROL" name="STR_MEDIUM_WEAPONS_CONTROL">
 					<backgroundimage>xcom3/UFOPAEDI/V07.PCX</backgroundimage>
 					<text_info>STR_MEDIUM_WEAPONS_CONTROL_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="HEAVY_WEAPONS_CONTROL" name="STR_HEAVY_WEAPONS_CONTROL">
 					<backgroundimage>xcom3/UFOPAEDI/V08.PCX</backgroundimage>
 					<text_info>STR_HEAVY_WEAPONS_CONTROL_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="ADVANCED_CONTROL_SYSTEM" name="STR_ADVANCED_CONTROL_SYSTEM">
 					<backgroundimage>xcom3/UFOPAEDI/V28.PCX</backgroundimage>
 					<text_info>STR_ADVANCED_CONTROL_SYSTEM</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="CARGO_MODULE" name="STR_CARGO_MODULE">
 					<backgroundimage>xcom3/UFOPAEDI/V33.PCX</backgroundimage>
 					<text_info>STR_CARGO_MODULE_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="PASSENGER_MODULE" name="STR_PASSENGER_MODULE">
 					<backgroundimage>xcom3/UFOPAEDI/V34.PCX</backgroundimage>
 					<text_info>STR_PASSENGER_MODULE_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="BIO_TRANSPORT_MODULE" name="STR_BIO_TRANSPORT_MODULE">
 					<backgroundimage>xcom3/UFOPAEDI/V32.PCX</backgroundimage>
 					<text_info>STR_BIO_TRANSPORT_MODULE_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="MISSILE_EVASION_MATRIX" name="STR_MISSILE_EVASION_MATRIX">
 					<backgroundimage>xcom3/UFOPAEDI/V09.PCX</backgroundimage>
 					<text_info>STR_MISSILE_EVASION_MATRIX_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="SMALL_DISRUPTION_SHIELD" name="STR_SMALL_DISRUPTION_SHIELD">
 					<backgroundimage>xcom3/UFOPAEDI/V23.PCX</backgroundimage>
 					<text_info>STR_SMALL_DISRUPTION_SHIELD_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="LARGE_DISRUPTION_SHIELD" name="STR_LARGE_DISRUPTION_SHIELD">
 					<backgroundimage>xcom3/UFOPAEDI/V24.PCX</backgroundimage>
 					<text_info>STR_LARGE_DISRUPTION_SHIELD_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="CLOAKING_FIELD" name="STR_CLOAKING_FIELD">
 					<backgroundimage>xcom3/UFOPAEDI/V25.PCX</backgroundimage>
 					<text_info>STR_CLOAKING_FIELD_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="TELEPORTER" name="STR_TELEPORTER">
 					<backgroundimage>xcom3/UFOPAEDI/V27.PCX</backgroundimage>
 					<text_info>STR_TELEPORTER_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				<entry id="DIMENSION_SHIFTER" name="STR_DIMENSION_SHIFTER">
 					<backgroundimage>xcom3/UFOPAEDI/V26.PCX</backgroundimage>
 					<text_info>STR_DIMENSION_SHIFTER_INFO</text_info>
-					<dynamic_data>VEHICLE</dynamic_data>
+					<dynamic_data>VEHICLEEQUIP</dynamic_data>
 				</entry>
 				
 			</entries>
@@ -794,6 +794,279 @@
 			<title>STR_EQUIPMENT</title>
 			<text_info>STR_EQUIPMENT_INFO</text_info>
 			<entries>
+				
+				<entry id="MEGAPOL_AP_GRENADE" name="STR_MEGAPOL_AP_GRENADE">
+					<backgroundimage>xcom3/UFOPAEDI/W01.PCX</backgroundimage>
+					<text_info>STR_MEGAPOL_AP_GRENADE_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MEGAPOL_STUN_GRENADE" name="STR_MEGAPOL_STUN_GRENADE">
+					<backgroundimage>xcom3/UFOPAEDI/W02.PCX</backgroundimage>
+					<text_info>STR_MEGAPOL_STUN_GRENADE_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MEGAPOL_SMOKE_GRENADE" name="STR_MEGAPOL_SMOKE_GRENADE">
+					<backgroundimage>xcom3/UFOPAEDI/W03.PCX</backgroundimage>
+					<text_info>STR_MEGAPOL_SMOKE_GRENADE_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MARSEC_PROXIMITY_MINE" name="STR_MARSEC_PROXIMITY_MINE">
+					<backgroundimage>xcom3/UFOPAEDI/W04.PCX</backgroundimage>
+					<text_info>STR_MARSEC_PROXIMITY_MINE_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MARSEC_HIGH_EXPLOSIVE" name="STR_MARSEC_HIGH_EXPLOSIVE">
+					<backgroundimage>xcom3/UFOPAEDI/W05.PCX</backgroundimage>
+					<text_info>STR_MARSEC_HIGH_EXPLOSIVE_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MEGAPOL_LAWPISTOL" name="STR_MEGAPOL_LAWPISTOL">
+					<backgroundimage>xcom3/UFOPAEDI/W06.PCX</backgroundimage>
+					<text_info>STR_MEGAPOL_LAWPISTOL_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MEGAPOL_LAWPISTOL_CLIP" name="STR_MEGAPOL_LAWPISTOL_CLIP">
+					<backgroundimage>xcom3/UFOPAEDI/W07.PCX</backgroundimage>
+					<text_info>STR_MEGAPOL_LAWPISTOL_CLIP_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MARSEC_M4000_MACHINE_GUN" name="STR_MARSEC_M4000_MACHINE_GUN">
+					<backgroundimage>xcom3/UFOPAEDI/W08.PCX</backgroundimage>
+					<text_info>STR_MARSEC_M4000_MACHINE_GUN_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MARSEC_M4000_GUN_CLIP" name="STR_MARSEC_M4000_GUN_CLIP">
+					<backgroundimage>xcom3/UFOPAEDI/W09.PCX</backgroundimage>
+					<text_info>STR_MARSEC_M4000_GUN_CLIP_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MEGAPOL_LASER_SNIPER_GUN" name="STR_MEGAPOL_LASER_SNIPER_GUN">
+					<backgroundimage>xcom3/UFOPAEDI/W10.PCX</backgroundimage>
+					<text_info>STR_MEGAPOL_LASER_SNIPER_GUN_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MEGAPOL_LASER_POD" name="STR_MEGAPOL_LASER_POD">
+					<backgroundimage>xcom3/UFOPAEDI/W11.PCX</backgroundimage>
+					<text_info>STR_MEGAPOL_LASER_POD_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MEGAPOL_AUTO_CANNON" name="STR_MEGAPOL_AUTO_CANNON">
+					<backgroundimage>xcom3/UFOPAEDI/W12.PCX</backgroundimage>
+					<text_info>STR_MEGAPOL_AUTO_CANNON_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="AUTO_CANNON_AP_CLIP" name="STR_AUTO_CANNON_AP_CLIP">
+					<backgroundimage>xcom3/UFOPAEDI/W13.PCX</backgroundimage>
+					<text_info>STR_AUTO_CANNON_AP_CLIP_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="AUTO_CANNON_HE_CLIP" name="STR_AUTO_CANNON_HE_CLIP">
+					<backgroundimage>xcom3/UFOPAEDI/W14.PCX</backgroundimage>
+					<text_info>STR_AUTO_CANNON_HE_CLIP_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="AUTO_CANNON_IN_CLIP" name="STR_AUTO_CANNON_IN_CLIP">
+					<backgroundimage>xcom3/UFOPAEDI/W15.PCX</backgroundimage>
+					<text_info>STR_AUTO_CANNON_IN_CLIP_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MEGAPOL_PLASMA_GUN" name="STR_MEGAPOL_PLASMA_GUN">
+					<backgroundimage>xcom3/UFOPAEDI/W16.PCX</backgroundimage>
+					<text_info>STR_MEGAPOL_PLASMA_GUN_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MEGAPOL_PLASMA_POD" name="STR_MEGAPOL_PLASMA_POD">
+					<backgroundimage>xcom3/UFOPAEDI/W17.PCX</backgroundimage>
+					<text_info>STR_MEGAPOL_PLASMA_POD_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MARSEC_HEAVY_LAUNCHER" name="STR_MARSEC_HEAVY_LAUNCHER">
+					<backgroundimage>xcom3/UFOPAEDI/W18.PCX</backgroundimage>
+					<text_info>STR_MARSEC_HEAVY_LAUNCHER_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="HEAVY_LAUNCHER_AG_MISSILE" name="STR_HEAVY_LAUNCHER_AG_MISSILE">
+					<backgroundimage>xcom3/UFOPAEDI/W19.PCX</backgroundimage>
+					<text_info>STR_HEAVY_LAUNCHER_AG_MISSILE_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="HEAVY_LAUNCHER_HE_MISSILE" name="STR_HEAVY_LAUNCHER_HE_MISSILE">
+					<backgroundimage>xcom3/UFOPAEDI/W20.PCX</backgroundimage>
+					<text_info>STR_HEAVY_LAUNCHER_HE_MISSILE_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="HEAVY_LAUNCHER_IN_MISSILE" name="STR_HEAVY_LAUNCHER_IN_MISSILE">
+					<backgroundimage>xcom3/UFOPAEDI/W21.PCX</backgroundimage>
+					<text_info>STR_HEAVY_LAUNCHER_IN_MISSILE_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MARSEC_MINILAUNCHER" name="STR_MARSEC_MINILAUNCHER">
+					<backgroundimage>xcom3/UFOPAEDI/W22.PCX</backgroundimage>
+					<text_info>STR_MARSEC_MINILAUNCHER_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MINILAUNCHER_AG_MISSILE" name="STR_MINILAUNCHER_AG_MISSILE">
+					<backgroundimage>xcom3/UFOPAEDI/W23.PCX</backgroundimage>
+					<text_info>STR_MINILAUNCHER_AG_MISSILE_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MINILAUNCHER_HE_MISSILE" name="STR_MINILAUNCHER_HE_MISSILE">
+					<backgroundimage>xcom3/UFOPAEDI/W24.PCX</backgroundimage>
+					<text_info>STR_MINILAUNCHER_HE_MISSILE_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MINILAUNCHER_IN_MISSILE" name="STR_MINILAUNCHER_IN_MISSILE">
+					<backgroundimage>xcom3/UFOPAEDI/W25.PCX</backgroundimage>
+					<text_info>STR_MINILAUNCHER_IN_MISSILE_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MEGAPOL_STUN_GRAPPLE" name="STR_MEGAPOL_STUN_GRAPPLE">
+					<backgroundimage>xcom3/UFOPAEDI/W26.PCX</backgroundimage>
+					<text_info>STR_MEGAPOL_STUN_GRAPPLE_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="ALIEN_GAS_GRENADE" name="STR_ALIEN_GAS_GRENADE">
+					<backgroundimage>xcom3/UFOPAEDI/W27.PCX</backgroundimage>
+					<text_info>STR_ALIEN_GAS_GRENADE_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="TOXIGUN" name="STR_TOXIGUN">
+					<backgroundimage>xcom3/UFOPAEDI/W28.PCX</backgroundimage>
+					<text_info>STR_TOXIGUN_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="TOXIGUN_A_CLIP" name="STR_TOXIGUN_A_CLIP">
+					<backgroundimage>xcom3/UFOPAEDI/W29.PCX</backgroundimage>
+					<text_info>STR_TOXIGUN_A_CLIP_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="TOXIGUN_B_CLIP" name="STR_TOXIGUN_B_CLIP">
+					<backgroundimage>xcom3/UFOPAEDI/W30.PCX</backgroundimage>
+					<text_info>STR_TOXIGUN_B_CLIP_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="TOXIGUN_C_CLIP" name="STR_TOXIGUN_C_CLIP">
+					<backgroundimage>xcom3/UFOPAEDI/W31.PCX</backgroundimage>
+					<text_info>STR_TOXIGUN_C_CLIP_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="DIMENSION_DESTABILISER" name="STR_DIMENSION_DESTABILISER">
+					<backgroundimage>xcom3/UFOPAEDI/W32.PCX</backgroundimage>
+					<text_info>STR_DIMENSION_DESTABILISER_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MIND_BENDER" name="STR_MIND_BENDER">
+					<backgroundimage>xcom3/UFOPAEDI/W33.PCX</backgroundimage>
+					<text_info>STR_MIND_BENDER_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="DISRIPTOR_GUN" name="STR_DISRIPTOR_GUN">
+					<backgroundimage>xcom3/UFOPAEDI/W34.PCX</backgroundimage>
+					<text_info>STR_DISRIPTOR_GUN_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="DEVASTATOR_CANNON" name="STR_DEVASTATOR_CANNON">
+					<backgroundimage>xcom3/UFOPAEDI/W35.PCX</backgroundimage>
+					<text_info>STR_DEVASTATOR_CANNON_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="BOOMEROID" name="STR_BOOMEROID">
+					<backgroundimage>xcom3/UFOPAEDI/W36.PCX</backgroundimage>
+					<text_info>STR_BOOMEROID_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="POWER_SWORD" name="STR_POWER_SWORD">
+					<backgroundimage>xcom3/UFOPAEDI/W37.PCX</backgroundimage>
+					<text_info>STR_POWER_SWORD_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="BRAINSUCKER_LAUNCHER" name="STR_BRAINSUCKER_LAUNCHER">
+					<backgroundimage>xcom3/UFOPAEDI/W38.PCX</backgroundimage>
+					<text_info>STR_BRAINSUCKER_LAUNCHER_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="ENTROPY_LAUNCHER" name="STR_ENTROPY_LAUNCHER">
+					<backgroundimage>xcom3/UFOPAEDI/W39.PCX</backgroundimage>
+					<text_info>STR_ENTROPY_LAUNCHER_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="DIMENSION_MISSILE_LAUNCHER" name="STR_DIMENSION_MISSILE_LAUNCHER">
+					<backgroundimage>xcom3/UFOPAEDI/W40.PCX</backgroundimage>
+					<text_info>STR_DIMENSION_MISSILE_LAUNCHER_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="DIMENSION_MISSILE" name="STR_DIMENSION_MISSILE">
+					<backgroundimage>xcom3/UFOPAEDI/W41.PCX</backgroundimage>
+					<text_info>STR_DIMENSION_MISSILE_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="VORTEX_MINE" name="STR_VORTEX_MINE">
+					<backgroundimage>xcom3/UFOPAEDI/W42.PCX</backgroundimage>
+					<text_info>STR_VORTEX_MINE_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="PERSONAL_DISRUPTOR_SHIELD" name="STR_PERSONAL_DISRUPTOR_SHIELD">
+					<backgroundimage>xcom3/UFOPAEDI/W43.PCX</backgroundimage>
+					<text_info>STR_PERSONAL_DISRUPTOR_SHIELD_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="PERSONAL_TELEPORTER" name="STR_PERSONAL_TELEPORTER">
+					<backgroundimage>xcom3/UFOPAEDI/W44.PCX</backgroundimage>
+					<text_info>STR_PERSONAL_TELEPORTER_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="PERSONAL_CLOAKING_FIELD" name="STR_PERSONAL_CLOAKING_FIELD">
+					<backgroundimage>xcom3/UFOPAEDI/W45.PCX</backgroundimage>
+					<text_info>STR_PERSONAL_CLOAKING_FIELD_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MEDIKIT" name="STR_MEDIKIT">
+					<backgroundimage>xcom3/UFOPAEDI/W46.PCX</backgroundimage>
+					<text_info>STR_MEDIKIT_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MOTION_SCANNER" name="STR_MOTION_SCANNER">
+					<backgroundimage>xcom3/UFOPAEDI/W47.PCX</backgroundimage>
+					<text_info>STR_MOTION_SCANNER_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="ENTROPY_POD" name="STR_ENTROPY_POD">
+					<backgroundimage>xcom3/UFOPAEDI/W48.PCX</backgroundimage>
+					<text_info>STR_ENTROPY_POD_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="INCENDIARY_GRENADE" name="STR_INCENDIARY_GRENADE">
+					<backgroundimage>xcom3/UFOPAEDI/W49.PCX</backgroundimage>
+					<text_info>STR_INCENDIARY_GRENADE_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MEGAPOL_BODY_ARMOUR" name="STR_MEGAPOL_BODY_ARMOUR">
+					<backgroundimage>xcom3/UFOPAEDI/W50.PCX</backgroundimage>
+					<text_info>STR_MEGAPOL_BODY_ARMOUR_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="MARSEC_BODY_UNIT" name="STR_MARSEC_BODY_UNIT">
+					<backgroundimage>xcom3/UFOPAEDI/W51.PCX</backgroundimage>
+					<text_info>STR_MARSEC_BODY_UNIT_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="XCOM_BODY_SHIELD" name="STR_XCOM_BODY_SHIELD">
+					<backgroundimage>xcom3/UFOPAEDI/W52.PCX</backgroundimage>
+					<text_info>STR_XCOM_BODY_SHIELD_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="PSICLONE" name="STR_PSICLONE">
+					<backgroundimage>xcom3/UFOPAEDI/W53.PCX</backgroundimage>
+					<text_info>STR_PSICLONE_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+				<entry id="ELERIUM" name="STR_ELERIUM">
+					<backgroundimage>xcom3/UFOPAEDI/W54.PCX</backgroundimage>
+					<text_info>STR_ELERIUM_INFO</text_info>
+					<dynamic_data>EQUIPMENT</dynamic_data>
+				</entry>
+
+				
 			</entries>
 		</category>
 		<category id="FACILITIES">
