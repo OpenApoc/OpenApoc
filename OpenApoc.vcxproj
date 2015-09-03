@@ -113,7 +113,7 @@
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)\dependencies\icu55\bin\*.dll" "$(SolutionDir)bin\$(Configuration)\"</Command>
+      <Command>copy "$(SolutionDir)\dependencies\icu55\bin\*.dll" "$(SolutionDir)bin\$(Configuration)"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copy ICU DLLs</Message>
@@ -138,7 +138,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)\dependencies\icu55\bin\*.dll" "$(SolutionDir)bin\$(Configuration)\"</Command>
+      <Command>copy "$(SolutionDir)\dependencies\icu55\bin64\*.dll" "$(SolutionDir)bin\$(Configuration)"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copy ICU DLLs</Message>
@@ -166,7 +166,7 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)\dependencies\icu55\bin\*.dll" "$(SolutionDir)bin\$(Configuration)\"</Command>
+      <Command>copy "$(SolutionDir)\dependencies\icu55\bin\*.dll" "$(SolutionDir)bin\$(Configuration)"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copy ICU DLLs</Message>
@@ -194,7 +194,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)\dependencies\icu55\bin\*.dll" "$(SolutionDir)bin\$(Configuration)\"</Command>
+      <Command>copy "$(SolutionDir)\dependencies\icu55\bin64\*.dll" "$(SolutionDir)bin\$(Configuration)"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copy ICU DLLs</Message>
