@@ -138,7 +138,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)\dependencies\icu55\bin64\*.dll" "$(SolutionDir)bin\$(Configuration)"</Command>
+      <Command>copy "$(SolutionDir)\dependencies\icu55\bin64\*.dll" "$(SolutionDir)\x64\$(Configuration)"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copy ICU DLLs</Message>
@@ -194,7 +194,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
     </Link>
     <PostBuildEvent>
-      <Command>copy "$(SolutionDir)\dependencies\icu55\bin64\*.dll" "$(SolutionDir)bin\$(Configuration)"</Command>
+      <Command>copy "$(SolutionDir)\dependencies\icu55\bin64\*.dll" "$(SolutionDir)\x64\$(Configuration)"</Command>
     </PostBuildEvent>
     <PostBuildEvent>
       <Message>Copy ICU DLLs</Message>
