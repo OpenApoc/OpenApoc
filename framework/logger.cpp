@@ -45,8 +45,11 @@ static void print_backtrace(FILE *f)
 	while (unw_step(&cursor) > 0) {
 		Dl_info info;
 		unw_get_reg(&cursor, UNW_REG_IP, &ip);
-		if (ip == 0)
-			break;
+		if (ip == 0) {
+			{
+				break;
+			}
+		}
 		dladdr((void *)ip, &info);
 		if (info.dli_sname) {
 			fprintf(f, "  0x%p %s+0x%lx (%s)\n", (void *)ip, info.dli_sname,
@@ -59,8 +62,11 @@ static void print_backtrace(FILE *f)
 		if (!unw_get_proc_name(&cursor, fnName, MAX_SYMBOL_LENGTH, &offsetInFn)) {
 			fprintf(f, "  0x%p %s+0x%lx (%s)\n", (void *)ip, fnName, offsetInFn, info.dli_fname);
 			continue;
-		} else
-			fprintf(f, "  0x%p\n", (void *)ip);
+		} else {
+			{
+				fprintf(f, "  0x%p\n", (void *)ip);
+			}
+		}
 	}
 }
 #elif defined(BACKTRACE_WINDOWS)
@@ -154,8 +160,11 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 	fprintf(outFile, "%s %llu %s: ", level_prefix, clockns, prefix.str().c_str());
 	vfprintf(outFile, format.str().c_str(), arglist);
 	// On error print a backtrace to the log file
-	if (level == LogLevel::Error)
-		print_backtrace(outFile);
+	if (level == LogLevel::Error) {
+		{
+			print_backtrace(outFile);
+		}
+	}
 	fprintf(outFile, "\n");
 	va_end(arglist);
 

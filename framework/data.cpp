@@ -69,8 +69,9 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 	}
 	virtual ~PhysfsIFileImpl()
 	{
-		if (file)
+		if (file) {
 			PHYSFS_close(file);
+		}
 	}
 
 	int_type underflow() override
@@ -176,24 +177,27 @@ bool IFile::readule32(uint32_t &val)
 
 size_t IFile::size() const
 {
-	if (this->f)
+	if (this->f) {
 		return PHYSFS_fileLength(dynamic_cast<PhysfsIFileImpl *>(f.get())->file);
+	}
 	return 0;
 }
 
 const UString &IFile::fileName() const
 {
 	static const UString emptyString = "";
-	if (this->f)
+	if (this->f) {
 		return dynamic_cast<PhysfsIFileImpl *>(f.get())->suppliedPath;
+	}
 	return emptyString;
 }
 
 const UString &IFile::systemPath() const
 {
 	static const UString emptyString = "";
-	if (this->f)
+	if (this->f) {
 		return dynamic_cast<PhysfsIFileImpl *>(f.get())->systemPath;
+	}
 	return emptyString;
 }
 
@@ -259,12 +263,15 @@ Data::Data(Framework &fw, std::vector<UString> paths, int imageCacheSize, int im
 	this->writeDir = PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME);
 	LogInfo("Setting write directory to \"%s\"", this->writeDir.str().c_str());
 	PHYSFS_setWriteDir(this->writeDir.str().c_str());
-	for (int i = 0; i < imageCacheSize; i++)
+	for (int i = 0; i < imageCacheSize; i++) {
 		pinnedImages.push(nullptr);
-	for (int i = 0; i < imageSetCacheSize; i++)
+	}
+	for (int i = 0; i < imageSetCacheSize; i++) {
 		pinnedImageSets.push(nullptr);
-	for (int i = 0; i < voxelCacheSize; i++)
+	}
+	for (int i = 0; i < voxelCacheSize; i++) {
 		pinnedLOFVoxels.push(nullptr);
+	}
 
 	// Paths are supplied in inverse-search order (IE the last in 'paths' should be the first
 	// searched)
@@ -354,13 +361,15 @@ std::shared_ptr<Sample> Data::load_sample(const UString &path)
 {
 	UString cacheKey = path.toUpper();
 	std::shared_ptr<Sample> sample = this->sampleCache[cacheKey].lock();
-	if (sample)
+	if (sample) {
 		return sample;
+	}
 
 	for (auto &loader : this->sampleLoaders) {
 		sample = loader->loadSample(path);
-		if (sample)
+		if (sample) {
 			break;
+		}
 	}
 	if (!sample) {
 		LogInfo("Failed to load sample \"%s\"", path.str().c_str());
@@ -375,8 +384,9 @@ std::shared_ptr<MusicTrack> Data::load_music(const UString &path)
 	// No cache for music tracks, just stream of disk
 	for (auto &loader : this->musicLoaders) {
 		auto track = loader->loadMusic(path);
-		if (track)
+		if (track) {
 			return track;
+		}
 	}
 	LogInfo("Failed to load music track \"%s\"", path.str().c_str());
 	return nullptr;

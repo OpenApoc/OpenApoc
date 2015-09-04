@@ -6,8 +6,9 @@ namespace OpenApoc
 
 Palette::Palette(unsigned int size, Colour initialColour) : colours(size)
 {
-	for (unsigned int i = 0; i < size; i++)
+	for (unsigned int i = 0; i < size; i++) {
 		colours[i] = initialColour;
+	}
 }
 
 Palette::~Palette() {}

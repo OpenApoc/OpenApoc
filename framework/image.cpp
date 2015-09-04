@@ -21,8 +21,9 @@ Surface::~Surface() {}
 PaletteImage::PaletteImage(Vec2<unsigned int> size, uint8_t initialIndex)
     : Image(size), indices(new uint8_t[size.x * size.y])
 {
-	for (unsigned int i = 0; i < size.x * size.y; i++)
+	for (unsigned int i = 0; i < size.x * size.y; i++) {
 		this->indices[i] = initialIndex;
+	}
 }
 
 PaletteImage::~PaletteImage() {}
@@ -52,8 +53,9 @@ void PaletteImage::blit(std::shared_ptr<PaletteImage> src, Vec2<unsigned int> of
 		for (unsigned int x = 0; x < src->size.x; x++) {
 			Vec2<unsigned int> readPos{x, y};
 			Vec2<unsigned int> writePos{readPos + offset};
-			if (writePos.x >= dst->size.x || writePos.y >= dst->size.y)
+			if (writePos.x >= dst->size.x || writePos.y >= dst->size.y) {
 				break;
+			}
 			writer.set(writePos, reader.get(readPos));
 		}
 	}
@@ -62,8 +64,9 @@ void PaletteImage::blit(std::shared_ptr<PaletteImage> src, Vec2<unsigned int> of
 RGBImage::RGBImage(Vec2<unsigned int> size, Colour initialColour)
     : Image(size), pixels(new Colour[size.x * size.y])
 {
-	for (unsigned int i = 0; i < size.x * size.y; i++)
+	for (unsigned int i = 0; i < size.x * size.y; i++) {
 		this->pixels[i] = initialColour;
+	}
 }
 
 void RGBImage::saveBitmap(const UString &filename)
@@ -169,14 +172,18 @@ void PaletteImage::CalculateBounds()
 		for (unsigned int x = 0; x < this->size.x; x++) {
 			unsigned int offset = y * this->size.x + x;
 			if (this->indices[offset]) {
-				if (minX > x)
+				if (minX > x) {
 					minX = x;
-				if (minY > y)
+				}
+				if (minY > y) {
 					minY = y;
-				if (maxX < x)
+				}
+				if (maxX < x) {
 					maxX = x;
-				if (maxY < y)
+				}
+				if (maxY < y) {
 					maxY = y;
+				}
 			}
 		}
 	}

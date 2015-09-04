@@ -16,10 +16,12 @@ ConfigFile::ConfigFile(const UString fileName, std::map<UString, UString> defaul
 		lineNo++;
 		std::string line;
 		std::getline(inFile, line);
-		if (!inFile)
+		if (!inFile) {
 			break;
-		if (line[0] == '#')
+		}
+		if (line[0] == '#') {
 			continue;
+		}
 		auto splitPos = line.find_first_of('=');
 		if (splitPos == line.npos) {
 			LogError("Error reading config \"%s\" line %d", fileName.str().c_str(), lineNo);
@@ -43,8 +45,9 @@ void ConfigFile::save(const UString fileName)
 
 	for (auto &pair : this->values) {
 		// If the value is the default, print it commented out
-		if (pair.second == defaults[pair.first])
+		if (pair.second == defaults[pair.first]) {
 			outFile << "#";
+		}
 		outFile << pair.first.str() << "=" << pair.second.str() << "\n";
 	}
 }
@@ -52,12 +55,14 @@ void ConfigFile::save(const UString fileName)
 UString ConfigFile::getString(UString key)
 {
 	auto it = this->values.find(key);
-	if (it != this->values.end())
+	if (it != this->values.end()) {
 		return it->second;
+	}
 
 	it = this->defaults.find(key);
-	if (it != this->defaults.end())
+	if (it != this->defaults.end()) {
 		return it->second;
+	}
 
 	LogError("Config key \"%s\" not found", key.str().c_str());
 	return "";
@@ -85,12 +90,14 @@ bool ConfigFile::getBool(UString key)
 {
 	auto value = this->getString(key);
 	for (auto &v : trueValues) {
-		if (v == value)
+		if (v == value) {
 			return true;
+		}
 	}
 	for (auto &v : falseValues) {
-		if (v == value)
+		if (v == value) {
 			return false;
+		}
 	}
 	LogError("Invalid boolean value of \"%s\" in key \"%s\"", value.str().c_str(),
 	         key.str().c_str());
@@ -101,10 +108,11 @@ void ConfigFile::set(const UString key, const UString value) { this->values[key]
 
 void ConfigFile::set(const UString key, bool value)
 {
-	if (value)
+	if (value) {
 		this->set(key, trueValues[0]);
-	else
+	} else {
 		this->set(key, falseValues[0]);
+	}
 }
 
 void ConfigFile::set(const UString key, int value)

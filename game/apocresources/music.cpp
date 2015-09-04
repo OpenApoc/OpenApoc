@@ -85,8 +85,9 @@ class RawMusicTrack : public MusicTrack
 			samples = 0;
 		}
 		*returnedSamples = samples;
-		if (samples < maxSamples)
+		if (samples < maxSamples) {
 			return MusicTrack::MusicCallbackReturn::End;
+		}
 		return MusicTrack::MusicCallbackReturn::Continue;
 	}
 

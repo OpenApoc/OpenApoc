@@ -18,8 +18,9 @@ class AllegroSampleData : public BackendSampleData
 	ALLEGRO_SAMPLE *s;
 	virtual ~AllegroSampleData()
 	{
-		if (s)
+		if (s) {
 			al_destroy_sample(s);
+		}
 	}
 	AllegroSampleData(std::shared_ptr<Sample> sample)
 	{
@@ -50,8 +51,9 @@ class AllegroSampleData : public BackendSampleData
 
 		this->s = al_create_sample(sample->data.get(), sample->sampleCount,
 		                           sample->format.frequency, depth, channels, false);
-		if (!this->s)
+		if (!this->s) {
 			LogError("Failed to create sample");
+		}
 	}
 };
 
@@ -109,11 +111,13 @@ class AllegroSoundBackend : public SoundBackend
 
 	virtual void playSample(std::shared_ptr<Sample> sample) override
 	{
-		if (!sample->backendData)
+		if (!sample->backendData) {
 			sample->backendData.reset(new AllegroSampleData(sample));
+		}
 		liveSamples.push_back(sample);
-		if (liveSamples.size() > max_samples)
+		if (liveSamples.size() > max_samples) {
 			liveSamples.pop_front();
+		}
 		AllegroSampleData *sampleData = static_cast<AllegroSampleData *>(sample->backendData.get());
 
 		LogWarning("Playing sample with gain %f (%f * %f)", this->globalGain * this->sampleGain,

@@ -69,33 +69,39 @@ void TileView::EventOccurred(Event *e)
 			break;
 		case ALLEGRO_KEY_S:
 			selectionChanged = true;
-			if (selectedTilePosition.y < (map.size.y - 1))
+			if (selectedTilePosition.y < (map.size.y - 1)) {
 				selectedTilePosition.y++;
+			}
 			break;
 		case ALLEGRO_KEY_W:
 			selectionChanged = true;
-			if (selectedTilePosition.y > 0)
+			if (selectedTilePosition.y > 0) {
 				selectedTilePosition.y--;
+			}
 			break;
 		case ALLEGRO_KEY_A:
 			selectionChanged = true;
-			if (selectedTilePosition.x > 0)
+			if (selectedTilePosition.x > 0) {
 				selectedTilePosition.x--;
+			}
 			break;
 		case ALLEGRO_KEY_D:
 			selectionChanged = true;
-			if (selectedTilePosition.x < (map.size.x - 1))
+			if (selectedTilePosition.x < (map.size.x - 1)) {
 				selectedTilePosition.x++;
+			}
 			break;
 		case ALLEGRO_KEY_R:
 			selectionChanged = true;
-			if (selectedTilePosition.z < (map.size.z - 1))
+			if (selectedTilePosition.z < (map.size.z - 1)) {
 				selectedTilePosition.z++;
+			}
 			break;
 		case ALLEGRO_KEY_F:
 			selectionChanged = true;
-			if (selectedTilePosition.z > 0)
+			if (selectedTilePosition.z > 0) {
 				selectedTilePosition.z--;
+			}
 			break;
 		case ALLEGRO_KEY_1:
 			pal = fw.data->load_palette("xcom3/ufodata/PAL_01.DAT");
@@ -119,19 +125,23 @@ void TileView::EventOccurred(Event *e)
 			bounds.p1 += tileOffset;
 			if (bounds.within(selectedPos)) {
 				if (newSelectedTileObject) {
-					if (newSelectedTileObject->getDrawPosition().z < obj->getDrawPosition().z)
+					if (newSelectedTileObject->getDrawPosition().z < obj->getDrawPosition().z) {
 						newSelectedTileObject = obj;
-				} else
+					}
+				} else {
 					newSelectedTileObject = obj;
+				}
 			}
 			if (newSelectedTileObject != this->selectedTileObject) {
 				/* Either could be nullptr if there's nothing currently selected
 				 * or if you've clicked somewhere with no selectable objects
 				 * (IE deselected) */
-				if (this->selectedTileObject)
+				if (this->selectedTileObject) {
 					this->selectedTileObject->setSelected(false);
-				if (newSelectedTileObject)
+				}
+				if (newSelectedTileObject) {
 					newSelectedTileObject->setSelected(true);
+				}
 				this->selectedTileObject = newSelectedTileObject;
 			}
 		}
@@ -184,8 +194,9 @@ void TileView::Update(StageCmd *const cmd)
 
 	/* TODO: MAke non-'1' update ticks work (e.g. projectile paths & vehicle movement intersection)
 	 */
-	while (ticks--)
+	while (ticks--) {
 		this->map.update(1);
+	}
 }
 
 void TileView::Render()
@@ -222,8 +233,9 @@ void TileView::Render()
 				screenPos.x += offsetX;
 				screenPos.y += offsetY;
 
-				if (showSelected)
+				if (showSelected) {
 					r.draw(selectedTileImageBack, screenPos);
+				}
 				for (auto obj : tile->visibleObjects) {
 					assert(obj->isVisible());
 					bool showBounds = obj == this->selectedTileObject ||
@@ -310,11 +322,13 @@ void TileView::Render()
 						r.drawLine(p11, p11 + Vec2<float>{-5, 0}, Colour{255, 0, 0, 255});
 					}
 				}
-				for (auto &p : tile->ownedProjectiles)
+				for (auto &p : tile->ownedProjectiles) {
 					p->drawProjectile(*this, r, Vec2<int>{offsetX, offsetY});
+				}
 
-				if (showSelected)
+				if (showSelected) {
 					r.draw(selectedTileImageFront, screenPos);
+				}
 			}
 		}
 	}

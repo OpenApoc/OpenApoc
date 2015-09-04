@@ -51,8 +51,9 @@ GameState::GameState(Framework &fw, Rules &rules)
 		LogWarning("Equipping with weapon \"%s\"", weaponDef.name.str().c_str());
 
 		weaponIt++;
-		if (weaponIt == rules.getWeaponDefs().end())
+		if (weaponIt == rules.getWeaponDefs().end()) {
 			weaponIt = rules.getWeaponDefs().begin();
+		}
 
 		auto *testWeapon = new Weapon(weaponDef, testVehicle, weaponDef.ammoCapacity);
 		testVehicle->weapons.emplace_back(testWeapon);
@@ -83,8 +84,9 @@ GameState::GameState(Framework &fw, Rules &rules)
 		LogWarning("Equipping with weapon \"%s\"", weaponDef.name.str().c_str());
 
 		weaponIt++;
-		if (weaponIt == rules.getWeaponDefs().end())
+		if (weaponIt == rules.getWeaponDefs().end()) {
 			weaponIt = rules.getWeaponDefs().begin();
+		}
 
 		auto *testWeapon = new Weapon(weaponDef, testVehicle, weaponDef.ammoCapacity);
 		testVehicle->weapons.emplace_back(testWeapon);

@@ -29,8 +29,9 @@ City::City(Framework &fw, GameState &state) : TileMap(fw, fw.rules->getCitySize(
 		for (int y = 0; y < this->size.y; y++) {
 			for (int x = 0; x < this->size.x; x++) {
 				auto tileID = fw.rules->getBuildingTileAt(Vec3<int>{x, y, z});
-				if (tileID == "")
+				if (tileID == "") {
 					continue;
+				}
 				Building *bld = nullptr;
 
 				for (auto &b : this->buildings) {

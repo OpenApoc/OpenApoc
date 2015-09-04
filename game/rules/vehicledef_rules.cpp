@@ -26,39 +26,39 @@ parseDirectionalSprites(Framework &fw, tinyxml2::XMLElement *root)
 	     node = node->NextSiblingElement()) {
 		UString name = node->Name();
 		VehicleDefinition::Direction dir;
-		if (name == "N")
+		if (name == "N") {
 			dir = VehicleDefinition::Direction::N;
-		else if (name == "NNE")
+		} else if (name == "NNE") {
 			dir = VehicleDefinition::Direction::NNE;
-		else if (name == "NE")
+		} else if (name == "NE") {
 			dir = VehicleDefinition::Direction::NE;
-		else if (name == "NEE")
+		} else if (name == "NEE") {
 			dir = VehicleDefinition::Direction::NEE;
-		else if (name == "E")
+		} else if (name == "E") {
 			dir = VehicleDefinition::Direction::E;
-		else if (name == "SEE")
+		} else if (name == "SEE") {
 			dir = VehicleDefinition::Direction::SEE;
-		else if (name == "SE")
+		} else if (name == "SE") {
 			dir = VehicleDefinition::Direction::SE;
-		else if (name == "SSE")
+		} else if (name == "SSE") {
 			dir = VehicleDefinition::Direction::SSE;
-		else if (name == "S")
+		} else if (name == "S") {
 			dir = VehicleDefinition::Direction::S;
-		else if (name == "SSW")
+		} else if (name == "SSW") {
 			dir = VehicleDefinition::Direction::SSW;
-		else if (name == "SW")
+		} else if (name == "SW") {
 			dir = VehicleDefinition::Direction::SW;
-		else if (name == "SWW")
+		} else if (name == "SWW") {
 			dir = VehicleDefinition::Direction::SWW;
-		else if (name == "W")
+		} else if (name == "W") {
 			dir = VehicleDefinition::Direction::W;
-		else if (name == "NWW")
+		} else if (name == "NWW") {
 			dir = VehicleDefinition::Direction::NWW;
-		else if (name == "NW")
+		} else if (name == "NW") {
 			dir = VehicleDefinition::Direction::NW;
-		else if (name == "NNW")
+		} else if (name == "NNW") {
 			dir = VehicleDefinition::Direction::NNW;
-		else {
+		} else {
 			LogError("Unknown sprite direction \"%s\"", name.str().c_str());
 			continue;
 		}

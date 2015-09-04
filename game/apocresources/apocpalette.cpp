@@ -8,8 +8,9 @@ namespace OpenApoc
 Palette *loadApocPalette(Data &data, const UString fileName)
 {
 	auto f = data.load_file(fileName);
-	if (!f)
+	if (!f) {
 		return nullptr;
+	}
 	auto numEntries = f.size() / 3;
 	auto p = new Palette(numEntries);
 	for (unsigned int i = 0; i < numEntries; i++) {
@@ -17,13 +18,19 @@ Palette *loadApocPalette(Data &data, const UString fileName)
 		Colour c;
 
 		f.read((char *)&colour, 3);
-		if (!f)
+		if (!f) {
 			break;
-		if (i == 0)
+		}
+		if (i == 0) {
 			c = {0, 0, 0, 0};
-		else
-			c = {(uint8_t)(colour[0] << 2), (uint8_t)(colour[1] << 2), (uint8_t)(colour[2] << 2),
-			     255};
+		} else {
+			c = {
+				(uint8_t)(colour[0] << 2),
+				(uint8_t)(colour[1] << 2),
+				(uint8_t)(colour[2] << 2),
+				255
+			};
+		}
 		p->SetColour(i, c);
 	}
 

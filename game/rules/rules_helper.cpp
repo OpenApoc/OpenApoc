@@ -128,8 +128,9 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, 
 			return false;
 		}
 		a = Strings::ToInteger(splitString[3]);
-	} else
+	} else {
 		a = 255;
+	}
 
 	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255 || a < 0 || a > 255) {
 		LogWarning("Element \"%s\" doesn't look like a colour (out-of-range element)");

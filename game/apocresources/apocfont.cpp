@@ -122,8 +122,9 @@ std::shared_ptr<ApocalypseFont> ApocalypseFont::loadFont(Framework &fw,
 					uint8_t idx;
 					file.read((char *)&idx, 1);
 					imgLock.set(Vec2<int>{x, y}, idx);
-					if (idx != 0 && glyphWidth < x)
+					if (idx != 0 && glyphWidth < x) {
 						glyphWidth = x;
+					}
 				}
 			}
 		}

@@ -58,15 +58,17 @@ std::shared_ptr<Projectile> Weapon::fire(Vec3<float> target)
 void Weapon::update(int ticks)
 {
 	if (this->reloadTime != 0) {
-		if (ticks >= this->reloadTime)
+		if (ticks >= this->reloadTime) {
 			this->reloadTime = 0;
-		else
+		} else {
 			this->reloadTime -= ticks;
+		}
 	}
 	switch (this->state) {
 	case State::Reloading:
-		if (this->reloadTime == 0)
+		if (this->reloadTime == 0) {
 			this->state = State::Ready;
+		}
 		return;
 	default:
 		return;

@@ -72,8 +72,9 @@ void TileObjectCollidable::addToAffectedTiles()
 			for (int x = 0; x < this->bounds.x; x++) {
 				Tile *t = this->owningTile->map.getTile(this->getPosition() + Vec3<float>{x, y, z});
 				// Can be null if out of bounds
-				if (!t)
+				if (!t) {
 					continue;
+				}
 				this->affectedTiles.insert(t);
 				t->collideableObjects.insert(thisPtr);
 			}

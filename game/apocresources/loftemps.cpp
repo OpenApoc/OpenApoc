@@ -53,13 +53,15 @@ LOFTemps::LOFTemps(IFile &datFile, IFile &tabFile)
 					return;
 				}
 				for (unsigned int bit = 0; bit < 32; bit++) {
-					if (x >= width)
+					if (x >= width) {
 						break;
+					}
 					bool b;
-					if (bitmask & 0x80000000)
+					if (bitmask & 0x80000000) {
 						b = true;
-					else
+					} else {
 						b = false;
+					}
 					bitmask >>= 1;
 					slice->setBit(Vec2<int>{x + bit, y}, b);
 				}

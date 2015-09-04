@@ -53,17 +53,21 @@ bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *
 	     e = e->NextSiblingElement()) {
 		UString name = e->Name();
 		if (name == "vehicledef") {
-			if (!ParseVehicleDefinition(fw, rules, e))
+			if (!ParseVehicleDefinition(fw, rules, e)) {
 				return false;
+			}
 		} else if (name == "organisation") {
-			if (!ParseOrganisationDefinition(fw, rules, e))
+			if (!ParseOrganisationDefinition(fw, rules, e)) {
 				return false;
+			}
 		} else if (name == "city") {
-			if (!ParseCityDefinition(fw, rules, e))
+			if (!ParseCityDefinition(fw, rules, e)) {
 				return false;
+			}
 		} else if (name == "weapon") {
-			if (!ParseWeaponDefinition(fw, rules, e))
+			if (!ParseWeaponDefinition(fw, rules, e)) {
 				return false;
+			}
 		} else if (name == "include") {
 			UString rootFileName = e->GetText();
 			UString systemPath;

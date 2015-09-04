@@ -45,7 +45,7 @@ class MusicTrack
 	AudioFormat format;
 
 	enum class MusicCallbackReturn {
-		End, // This track ends after *returnedSamples have been played
+		End,      // This track ends after *returnedSamples have been played
 		Continue, // There is more to come, even if we didn't fill the output buffer
 	};
 

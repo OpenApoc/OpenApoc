@@ -22,8 +22,9 @@ void HScrollBar::SetValue(int newValue)
 {
 	newValue = std::max(newValue, Minimum);
 	newValue = std::min(newValue, Maximum);
-	if (newValue == Value)
+	if (newValue == Value) {
 		return;
+	}
 
 	auto e = new Event();
 	e->Type = EVENT_FORM_INTERACTION;

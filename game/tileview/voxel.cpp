@@ -34,13 +34,16 @@ VoxelMap::VoxelMap(Vec3<int> size) : size(size) { slices.resize(size.z); }
 bool VoxelMap::getBit(Vec3<int> pos) const
 {
 	if (pos.x < 0 || pos.x >= this->size.x || pos.y < 0 || pos.y >= this->size.y || pos.z < 0 ||
-	    pos.z >= this->size.z)
+	    pos.z >= this->size.z) {
 		return false;
+	}
 
-	if (slices.size() <= (unsigned)pos.z)
+	if (slices.size() <= (unsigned)pos.z) {
 		return false;
-	if (!slices[pos.z])
+	}
+	if (!slices[pos.z]) {
 		return false;
+	}
 
 	return slices[pos.z]->getBit({pos.x, pos.y});
 }
@@ -232,8 +235,9 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 
 		Tile *t = this->getTile(point);
 		c = t->findCollision(lineSegmentStart, lineSegmentEnd);
-		if (c)
+		if (c) {
 			return c;
+		}
 	}
 	return c;
 }

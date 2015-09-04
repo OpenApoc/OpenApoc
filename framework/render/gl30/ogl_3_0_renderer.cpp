@@ -26,8 +26,9 @@ class Program
 		gl::CompileShader(shader);
 		GLint compileStatus;
 		gl::GetShaderiv(shader, gl::COMPILE_STATUS, &compileStatus);
-		if (compileStatus == gl::TRUE_)
+		if (compileStatus == gl::TRUE_) {
 			return shader;
+		}
 
 		GLint logLength;
 		gl::GetShaderiv(shader, gl::INFO_LOG_LENGTH, &logLength);
@@ -65,8 +66,9 @@ class Program
 
 		GLint linkStatus;
 		gl::GetProgramiv(prog, gl::LINK_STATUS, &linkStatus);
-		if (linkStatus == gl::TRUE_)
+		if (linkStatus == gl::TRUE_) {
 			return;
+		}
 
 		GLint logLength;
 		gl::GetProgramiv(prog, gl::INFO_LOG_LENGTH, &logLength);
@@ -99,8 +101,9 @@ class Program
 
 	virtual ~Program()
 	{
-		if (prog)
+		if (prog) {
 			gl::DeleteProgram(prog);
+		}
 	};
 };
 
@@ -542,10 +545,12 @@ class FBOData : public RendererImageData
 	}
 	virtual ~FBOData()
 	{
-		if (tex)
+		if (tex) {
 			gl::DeleteTextures(1, &tex);
-		if (fbo)
+		}
+		if (fbo) {
 			gl::DeleteFramebuffers(1, &fbo);
+		}
 	}
 };
 
@@ -670,8 +675,9 @@ class OGL30Renderer : public Renderer
 	{
 		this->flush();
 		this->currentSurface = s;
-		if (!s->rendererPrivateData)
+		if (!s->rendererPrivateData) {
 			s->rendererPrivateData.reset(new FBOData(s->size));
+		}
 
 		FBOData *fbo = static_cast<FBOData *>(s->rendererPrivateData.get());
 		gl::BindFramebuffer(gl::FRAMEBUFFER, fbo->fbo);
@@ -687,8 +693,9 @@ class OGL30Renderer : public Renderer
 	virtual void clear(Colour c = Colour{0, 0, 0, 0}) override;
 	virtual void setPalette(std::shared_ptr<Palette> p) override
 	{
-		if (!p->rendererPrivateData)
+		if (!p->rendererPrivateData) {
 			p->rendererPrivateData.reset(new GLPalette(p));
+		}
 		this->currentPalette = p;
 	}
 
@@ -697,8 +704,9 @@ class OGL30Renderer : public Renderer
 	                         float angle) override
 	{
 		auto size = image->size;
-		if (this->state != RendererState::Idle)
+		if (this->state != RendererState::Idle) {
 			this->flush();
+		}
 		std::shared_ptr<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
 		if (rgbImage) {
 			GLRGBImage *img = dynamic_cast<GLRGBImage *>(rgbImage->rendererPrivateData.get());
@@ -717,8 +725,9 @@ class OGL30Renderer : public Renderer
 	                        Scaler scaler = Scaler::Linear) override
 	{
 
-		if (this->state != RendererState::Idle)
+		if (this->state != RendererState::Idle) {
 			this->flush();
+		}
 		std::shared_ptr<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
 		if (rgbImage) {
 			GLRGBImage *img = dynamic_cast<GLRGBImage *>(rgbImage->rendererPrivateData.get());
@@ -779,8 +788,9 @@ class OGL30Renderer : public Renderer
 	};
 	virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0) override
 	{
-		if (this->state != RendererState::Idle)
+		if (this->state != RendererState::Idle) {
 			this->flush();
+		}
 		this->DrawLine(p1, p2, c, thickness);
 	};
 	virtual void flush() override;
@@ -789,8 +799,9 @@ class OGL30Renderer : public Renderer
 
 	void BindProgram(std::shared_ptr<Program> p)
 	{
-		if (this->currentBoundProgram == p->prog)
+		if (this->currentBoundProgram == p->prog) {
 			return;
+		}
 		gl::UseProgram(p->prog);
 		this->currentBoundProgram = p->prog;
 	}
@@ -814,8 +825,9 @@ class OGL30Renderer : public Renderer
 		}
 		BindProgram(rgbProgram);
 		bool flipY = false;
-		if (currentBoundFBO == 0)
+		if (currentBoundFBO == 0) {
 			flipY = true;
+		}
 		rgbProgram->setUniforms(this->currentSurface->size, flipY);
 		BindTexture t(img.texID);
 		TexParam<gl::TEXTURE_MAG_FILTER> mag(img.texID, filter);
@@ -829,8 +841,9 @@ class OGL30Renderer : public Renderer
 		BindProgram(paletteProgram);
 		Rect<float> pos(offset, offset + size);
 		bool flipY = false;
-		if (currentBoundFBO == 0)
+		if (currentBoundFBO == 0) {
 			flipY = true;
+		}
 		paletteProgram->setUniforms(this->currentSurface->size, flipY);
 		BindTexture t(img.texID, 0);
 
@@ -858,8 +871,9 @@ class OGL30Renderer : public Renderer
 		}
 		BindProgram(rgbProgram);
 		bool flipY = false;
-		if (currentBoundFBO == 0)
+		if (currentBoundFBO == 0) {
 			flipY = true;
+		}
 		rgbProgram->setUniforms(this->currentSurface->size, flipY);
 		BindTexture t(fbo.tex);
 		TexParam<gl::TEXTURE_MAG_FILTER> mag(fbo.tex, filter);
@@ -873,8 +887,9 @@ class OGL30Renderer : public Renderer
 		BindProgram(colourProgram);
 		Rect<float> pos(offset, offset + size);
 		bool flipY = false;
-		if (currentBoundFBO == 0)
+		if (currentBoundFBO == 0) {
 			flipY = true;
+		}
 		colourProgram->setUniforms(this->currentSurface->size, flipY, c);
 		Quad q(pos);
 		q.draw(colourProgram->posLoc);
@@ -884,8 +899,9 @@ class OGL30Renderer : public Renderer
 	{
 		BindProgram(colourProgram);
 		bool flipY = false;
-		if (currentBoundFBO == 0)
+		if (currentBoundFBO == 0) {
 			flipY = true;
+		}
 		colourProgram->setUniforms(this->currentSurface->size, flipY, c);
 		Line l(p0, p1, thickness);
 		l.draw(colourProgram->posLoc);
@@ -936,8 +952,9 @@ class OGL30Renderer : public Renderer
 	{
 		BindProgram(paletteSetProgram);
 		bool flipY = false;
-		if (currentBoundFBO == 0)
+		if (currentBoundFBO == 0) {
 			flipY = true;
+		}
 		paletteSetProgram->setUniforms(this->currentSurface->size, flipY);
 		BindTexture t(this->boundSpritesheet->texID, 0, gl::TEXTURE_2D_ARRAY);
 		BindTexture p(
@@ -1080,14 +1097,17 @@ class OGL30RendererFactory : public OpenApoc::RendererFactory
 		if (!alreadyInitialised) {
 			alreadyInitialised = true;
 			auto success = gl::sys::LoadFunctions();
-			if (!success)
+			if (!success) {
 				return nullptr;
-			if (success.GetNumMissing())
+			}
+			if (success.GetNumMissing()) {
 				return nullptr;
+			}
 			functionLoadSuccess = true;
 		}
-		if (functionLoadSuccess)
+		if (functionLoadSuccess) {
 			return new OGL30Renderer();
+		}
 		return nullptr;
 	}
 };

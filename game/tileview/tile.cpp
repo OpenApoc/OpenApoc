@@ -57,16 +57,21 @@ void TileMap::addObject(std::shared_ptr<TileObject> obj)
 		assert(0);
 	}
 	obj->getOwningTile()->ownedObjects.insert(obj);
-	if (obj->isSelectable())
+	if (obj->isSelectable()) {
 		this->selectableObjects.insert(obj);
-	if (obj->isActive())
+	}
+	if (obj->isActive()) {
 		this->activeObjects.insert(obj);
-	if (obj->isVisible())
+	}
+	if (obj->isVisible()) {
 		obj->getOwningTile()->visibleObjects.insert(obj);
-	if (obj->isCollidable())
+	}
+	if (obj->isCollidable()) {
 		obj->addToAffectedTiles();
-	if (obj->isProjectile())
+	}
+	if (obj->isProjectile()) {
 		this->projectiles.insert(obj);
+	}
 }
 
 void TileMap::removeObject(std::shared_ptr<TileObject> obj)
@@ -75,18 +80,22 @@ void TileMap::removeObject(std::shared_ptr<TileObject> obj)
 		LogError("Removing object with no owner");
 		assert(0);
 	}
-	if (obj->isSelectable())
+	if (obj->isSelectable()) {
 		this->selectableObjects.erase(obj);
-	if (obj->isActive())
+	}
+	if (obj->isActive()) {
 		this->activeObjects.erase(obj);
+	}
 	if (obj->isProjectile()) {
 		obj->getOwningTile()->ownedProjectiles.erase(obj);
 		this->projectiles.erase(obj);
 	}
-	if (obj->isVisible())
+	if (obj->isVisible()) {
 		obj->getOwningTile()->visibleObjects.erase(obj);
-	if (obj->isCollidable())
+	}
+	if (obj->isCollidable()) {
 		obj->removeFromAffectedTiles();
+	}
 	auto count = obj->getOwningTile()->ownedObjects.erase(obj);
 	if (count != 1) {
 		LogError("Removed %u objects from owning tile", (unsigned)count);
@@ -272,50 +281,59 @@ class PathComparer
 static bool findNextNodeOnPath(PathComparer &comparer, TileMap &map, std::list<Tile *> &currentPath,
                                Vec3<int> destination, volatile unsigned long *numIterations)
 {
-	if (currentPath.back()->position == destination)
+	if (currentPath.back()->position == destination) {
 		return true;
-	if (*numIterations > THRESHOLD_ITERATIONS)
+	}
+	if (*numIterations > THRESHOLD_ITERATIONS) {
 		return false;
+	}
 	*numIterations = (*numIterations) + 1;
 	std::vector<Tile *> fringe;
 	for (int x = -1; x <= 1; x++) {
 		for (int y = -1; y <= 1; y++) {
 			for (int z = -1; z <= 1; z++) {
 				Vec3<int> currentPosition = currentPath.back()->position;
-				if (z == 0 && y == 0 && x == 0)
+				if (z == 0 && y == 0 && x == 0) {
 					continue;
+				}
 				Vec3<int> nextPosition = currentPosition;
 				nextPosition.x += x;
 				nextPosition.y += y;
 				nextPosition.z += z;
 				if (nextPosition.z < 0 || nextPosition.z >= map.size.z || nextPosition.y < 0 ||
 				    nextPosition.y >= map.size.y || nextPosition.x < 0 ||
-				    nextPosition.x >= map.size.x)
+				    nextPosition.x >= map.size.x) {
 					continue;
+				}
 				Tile *tile = map.getTile(nextPosition);
 				// FIXME: Make 'blocked' tiles cleverer (e.g. don't plan around objects that will
 				// move anyway?)
-				if (!tile->collideableObjects.empty())
+				if (!tile->collideableObjects.empty()) {
 					continue;
+				}
 				// Check for diagonal routes that the 'corner' tiles we touch are empty
 				Vec3<int> cornerPosition = currentPosition;
 				cornerPosition += Vec3<int>{0, y, z};
 				if (cornerPosition != currentPosition &&
-				    !map.getTile(cornerPosition)->ownedObjects.empty())
+				    !map.getTile(cornerPosition)->ownedObjects.empty()) {
 					continue;
+				}
 				cornerPosition = currentPosition;
 				cornerPosition += Vec3<int>{x, 0, z};
 				if (cornerPosition != currentPosition &&
-				    !map.getTile(cornerPosition)->ownedObjects.empty())
+				    !map.getTile(cornerPosition)->ownedObjects.empty()) {
 					continue;
+				}
 				cornerPosition = currentPosition;
 				cornerPosition += Vec3<int>{x, y, 0};
 				if (cornerPosition != currentPosition &&
-				    !map.getTile(cornerPosition)->ownedObjects.empty())
+				    !map.getTile(cornerPosition)->ownedObjects.empty()) {
 					continue;
+				}
 				// Already visited this tile
-				if (std::find(currentPath.begin(), currentPath.end(), tile) != currentPath.end())
+				if (std::find(currentPath.begin(), currentPath.end(), tile) != currentPath.end()) {
 					continue;
+				}
 				fringe.push_back(tile);
 			}
 		}
@@ -324,8 +342,9 @@ static bool findNextNodeOnPath(PathComparer &comparer, TileMap &map, std::list<T
 	for (auto tile : fringe) {
 		currentPath.push_back(tile);
 		comparer.origin = {tile->position.x, tile->position.y, tile->position.z};
-		if (findNextNodeOnPath(comparer, map, currentPath, destination, numIterations))
+		if (findNextNodeOnPath(comparer, map, currentPath, destination, numIterations)) {
 			return true;
+		}
 		currentPath.pop_back();
 	}
 	return false;

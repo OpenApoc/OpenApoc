@@ -64,8 +64,9 @@ class VehicleRandomDestination : public VehicleMission
 		}
 		while (path.empty()) {
 			Vec3<int> newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
-			while (!vehicleTile->getOwningTile()->map.getTile(newTarget)->ownedObjects.empty())
-				newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
+			while (!vehicleTile->getOwningTile()->map.getTile(newTarget)->ownedObjects.empty()) {
+				newTarget = { xydistribution(rng), xydistribution(rng), zdistribution(rng) };
+			}
 			path = vehicleTile->getOwningTile()->map.findShortestPath(
 			    vehicleTile->getOwningTile()->position, newTarget);
 			if (path.empty()) {
@@ -218,8 +219,9 @@ VehicleTileObject::~VehicleTileObject() {}
 
 void VehicleTileObject::update(unsigned int ticks)
 {
-	if (this->vehicle.mover)
+	if (this->vehicle.mover) {
 		this->vehicle.mover->update(ticks);
+	}
 }
 
 Vec3<float> VehicleTileObject::getDrawPosition() const

@@ -8,8 +8,9 @@ void StageStack::Push(std::shared_ptr<Stage> newStage)
 {
 
 	// Pause any current stage
-	if (this->Current())
+	if (this->Current()) {
 		this->Current()->Pause();
+	}
 
 	this->Stack.push_back(newStage);
 	newStage->Begin();
@@ -25,18 +26,20 @@ std::shared_ptr<Stage> StageStack::Pop()
 	}
 
 	// If there's still an item on the stack, resume it
-	if (this->Current())
+	if (this->Current()) {
 		this->Current()->Resume();
+	}
 
 	return result;
 }
 
 std::shared_ptr<Stage> StageStack::Current()
 {
-	if (this->Stack.empty())
+	if (this->Stack.empty()) {
 		return nullptr;
-	else
+	} else {
 		return this->Stack.back();
+	}
 }
 
 std::shared_ptr<Stage> StageStack::Previous() { return Previous(Current()); }
@@ -57,8 +60,9 @@ bool StageStack::IsEmpty() { return this->Stack.empty(); }
 
 void StageStack::Clear()
 {
-	while (!this->IsEmpty())
+	while (!this->IsEmpty()) {
 		this->Pop();
+	}
 }
 
 } // namespace OpenApoc

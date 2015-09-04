@@ -38,8 +38,9 @@ void CityView::Render()
 	if (fw.state->showVehiclePath) {
 		for (auto obj : this->map.activeObjects) {
 			auto vTile = std::dynamic_pointer_cast<VehicleTileObject>(obj);
-			if (!vTile)
+			if (!vTile) {
 				continue;
+			}
 			auto &v = vTile->getVehicle();
 			auto &path = v.mission->getCurrentPlannedPath();
 			Vec3<float> prevPos = vTile->getPosition();
@@ -76,23 +77,23 @@ void CityView::EventOccurred(Event *e)
 		if (e->Type == EVENT_FORM_INTERACTION) {
 			if (e->Data.Forms.EventFlag == FormEventType::ButtonClick) {
 				auto &cname = e->Data.Forms.RaisedBy->Name;
-				if (cname == "BUTTON_TAB_1")
+				if (cname == "BUTTON_TAB_1") {
 					this->activeTab = uiTabs[0];
-				else if (cname == "BUTTON_TAB_2")
+				} else if (cname == "BUTTON_TAB_2") {
 					this->activeTab = uiTabs[1];
-				else if (cname == "BUTTON_TAB_3")
+				} else if (cname == "BUTTON_TAB_3") {
 					this->activeTab = uiTabs[2];
-				else if (cname == "BUTTON_TAB_4")
+				} else if (cname == "BUTTON_TAB_4") {
 					this->activeTab = uiTabs[3];
-				else if (cname == "BUTTON_TAB_5")
+				} else if (cname == "BUTTON_TAB_5") {
 					this->activeTab = uiTabs[4];
-				else if (cname == "BUTTON_TAB_6")
+				} else if (cname == "BUTTON_TAB_6") {
 					this->activeTab = uiTabs[5];
-				else if (cname == "BUTTON_TAB_7")
+				} else if (cname == "BUTTON_TAB_7") {
 					this->activeTab = uiTabs[6];
-				else if (cname == "BUTTON_TAB_8")
+				} else if (cname == "BUTTON_TAB_8") {
 					this->activeTab = uiTabs[7];
-				else if (cname == "BUTTON_TOGGLE_STRATMAP")
+				} else if (cname == "BUTTON_TOGGLE_STRATMAP")
 					LogError("Toggle stratmap");
 				else if (cname == "BUTTON_SHOW_ALIEN_INFILTRATION") {
 					stageCmd.cmd = StageCmd::Command::PUSH;

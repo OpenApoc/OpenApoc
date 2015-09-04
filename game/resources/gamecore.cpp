@@ -26,8 +26,9 @@ void GameCore::Load(UString CoreXMLFilename, UString Language)
 
 GameCore::~GameCore()
 {
-	for (auto &form : forms)
+	for (auto &form : forms) {
 		delete form.second;
+	}
 	delete MouseCursor;
 }
 

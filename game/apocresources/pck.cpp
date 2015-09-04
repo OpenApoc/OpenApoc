@@ -301,10 +301,12 @@ std::shared_ptr<ImageSet> PCKLoader::load(Data &data, UString PckFilename, UStri
 		imageSet->images[i] = p->images[i];
 		imageSet->images[i]->owningSet = imageSet;
 		imageSet->images[i]->indexInSet = i;
-		if (imageSet->images[i]->size.x > imageSet->maxSize.x)
+		if (imageSet->images[i]->size.x > imageSet->maxSize.x) {
 			imageSet->maxSize.x = imageSet->images[i]->size.x;
-		if (imageSet->images[i]->size.y > imageSet->maxSize.y)
+		}
+		if (imageSet->images[i]->size.y > imageSet->maxSize.y) {
 			imageSet->maxSize.y = imageSet->images[i]->size.y;
+		}
 	}
 	delete p;
 

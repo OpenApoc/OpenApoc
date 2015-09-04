@@ -1425,2062 +1425,2697 @@ static int LoadCoreFunctions()
 {
 	int numFailed = 0;
 	Accum = reinterpret_cast<PFNACCUM>(IntGetProcAddress("glAccum"));
-	if (!Accum)
+	if (!Accum) {
 		++numFailed;
+	}
 	AlphaFunc = reinterpret_cast<PFNALPHAFUNC>(IntGetProcAddress("glAlphaFunc"));
-	if (!AlphaFunc)
+	if (!AlphaFunc) {
 		++numFailed;
+	}
 	Begin = reinterpret_cast<PFNBEGIN>(IntGetProcAddress("glBegin"));
-	if (!Begin)
+	if (!Begin) {
 		++numFailed;
+	}
 	Bitmap = reinterpret_cast<PFNBITMAP>(IntGetProcAddress("glBitmap"));
-	if (!Bitmap)
+	if (!Bitmap) {
 		++numFailed;
+	}
 	BlendFunc = reinterpret_cast<PFNBLENDFUNC>(IntGetProcAddress("glBlendFunc"));
-	if (!BlendFunc)
+	if (!BlendFunc) {
 		++numFailed;
+	}
 	CallList = reinterpret_cast<PFNCALLLIST>(IntGetProcAddress("glCallList"));
-	if (!CallList)
+	if (!CallList) {
 		++numFailed;
+	}
 	CallLists = reinterpret_cast<PFNCALLLISTS>(IntGetProcAddress("glCallLists"));
-	if (!CallLists)
+	if (!CallLists) {
 		++numFailed;
+	}
 	Clear = reinterpret_cast<PFNCLEAR>(IntGetProcAddress("glClear"));
-	if (!Clear)
+	if (!Clear) {
 		++numFailed;
+	}
 	ClearAccum = reinterpret_cast<PFNCLEARACCUM>(IntGetProcAddress("glClearAccum"));
-	if (!ClearAccum)
+	if (!ClearAccum) {
 		++numFailed;
+	}
 	ClearColor = reinterpret_cast<PFNCLEARCOLOR>(IntGetProcAddress("glClearColor"));
-	if (!ClearColor)
+	if (!ClearColor) {
 		++numFailed;
+	}
 	ClearDepth = reinterpret_cast<PFNCLEARDEPTH>(IntGetProcAddress("glClearDepth"));
-	if (!ClearDepth)
+	if (!ClearDepth) {
 		++numFailed;
+	}
 	ClearIndex = reinterpret_cast<PFNCLEARINDEX>(IntGetProcAddress("glClearIndex"));
-	if (!ClearIndex)
+	if (!ClearIndex) {
 		++numFailed;
+	}
 	ClearStencil = reinterpret_cast<PFNCLEARSTENCIL>(IntGetProcAddress("glClearStencil"));
-	if (!ClearStencil)
+	if (!ClearStencil) {
 		++numFailed;
+	}
 	ClipPlane = reinterpret_cast<PFNCLIPPLANE>(IntGetProcAddress("glClipPlane"));
-	if (!ClipPlane)
+	if (!ClipPlane) {
 		++numFailed;
+	}
 	Color3b = reinterpret_cast<PFNCOLOR3B>(IntGetProcAddress("glColor3b"));
-	if (!Color3b)
+	if (!Color3b) {
 		++numFailed;
+	}
 	Color3bv = reinterpret_cast<PFNCOLOR3BV>(IntGetProcAddress("glColor3bv"));
-	if (!Color3bv)
+	if (!Color3bv) {
 		++numFailed;
+	}
 	Color3d = reinterpret_cast<PFNCOLOR3D>(IntGetProcAddress("glColor3d"));
-	if (!Color3d)
+	if (!Color3d) {
 		++numFailed;
+	}
 	Color3dv = reinterpret_cast<PFNCOLOR3DV>(IntGetProcAddress("glColor3dv"));
-	if (!Color3dv)
+	if (!Color3dv) {
 		++numFailed;
+	}
 	Color3f = reinterpret_cast<PFNCOLOR3F>(IntGetProcAddress("glColor3f"));
-	if (!Color3f)
+	if (!Color3f) {
 		++numFailed;
+	}
 	Color3fv = reinterpret_cast<PFNCOLOR3FV>(IntGetProcAddress("glColor3fv"));
-	if (!Color3fv)
+	if (!Color3fv) {
 		++numFailed;
+	}
 	Color3i = reinterpret_cast<PFNCOLOR3I>(IntGetProcAddress("glColor3i"));
-	if (!Color3i)
+	if (!Color3i) {
 		++numFailed;
+	}
 	Color3iv = reinterpret_cast<PFNCOLOR3IV>(IntGetProcAddress("glColor3iv"));
-	if (!Color3iv)
+	if (!Color3iv) {
 		++numFailed;
+	}
 	Color3s = reinterpret_cast<PFNCOLOR3S>(IntGetProcAddress("glColor3s"));
-	if (!Color3s)
+	if (!Color3s) {
 		++numFailed;
+	}
 	Color3sv = reinterpret_cast<PFNCOLOR3SV>(IntGetProcAddress("glColor3sv"));
-	if (!Color3sv)
+	if (!Color3sv) {
 		++numFailed;
+	}
 	Color3ub = reinterpret_cast<PFNCOLOR3UB>(IntGetProcAddress("glColor3ub"));
-	if (!Color3ub)
+	if (!Color3ub) {
 		++numFailed;
+	}
 	Color3ubv = reinterpret_cast<PFNCOLOR3UBV>(IntGetProcAddress("glColor3ubv"));
-	if (!Color3ubv)
+	if (!Color3ubv) {
 		++numFailed;
+	}
 	Color3ui = reinterpret_cast<PFNCOLOR3UI>(IntGetProcAddress("glColor3ui"));
-	if (!Color3ui)
+	if (!Color3ui) {
 		++numFailed;
+	}
 	Color3uiv = reinterpret_cast<PFNCOLOR3UIV>(IntGetProcAddress("glColor3uiv"));
-	if (!Color3uiv)
+	if (!Color3uiv) {
 		++numFailed;
+	}
 	Color3us = reinterpret_cast<PFNCOLOR3US>(IntGetProcAddress("glColor3us"));
-	if (!Color3us)
+	if (!Color3us) {
 		++numFailed;
+	}
 	Color3usv = reinterpret_cast<PFNCOLOR3USV>(IntGetProcAddress("glColor3usv"));
-	if (!Color3usv)
+	if (!Color3usv) {
 		++numFailed;
+	}
 	Color4b = reinterpret_cast<PFNCOLOR4B>(IntGetProcAddress("glColor4b"));
-	if (!Color4b)
+	if (!Color4b) {
 		++numFailed;
+	}
 	Color4bv = reinterpret_cast<PFNCOLOR4BV>(IntGetProcAddress("glColor4bv"));
-	if (!Color4bv)
+	if (!Color4bv) {
 		++numFailed;
+	}
 	Color4d = reinterpret_cast<PFNCOLOR4D>(IntGetProcAddress("glColor4d"));
-	if (!Color4d)
+	if (!Color4d) {
 		++numFailed;
+	}
 	Color4dv = reinterpret_cast<PFNCOLOR4DV>(IntGetProcAddress("glColor4dv"));
-	if (!Color4dv)
+	if (!Color4dv) {
 		++numFailed;
+	}
 	Color4f = reinterpret_cast<PFNCOLOR4F>(IntGetProcAddress("glColor4f"));
-	if (!Color4f)
+	if (!Color4f) {
 		++numFailed;
+	}
 	Color4fv = reinterpret_cast<PFNCOLOR4FV>(IntGetProcAddress("glColor4fv"));
-	if (!Color4fv)
+	if (!Color4fv) {
 		++numFailed;
+	}
 	Color4i = reinterpret_cast<PFNCOLOR4I>(IntGetProcAddress("glColor4i"));
-	if (!Color4i)
+	if (!Color4i) {
 		++numFailed;
+	}
 	Color4iv = reinterpret_cast<PFNCOLOR4IV>(IntGetProcAddress("glColor4iv"));
-	if (!Color4iv)
+	if (!Color4iv) {
 		++numFailed;
+	}
 	Color4s = reinterpret_cast<PFNCOLOR4S>(IntGetProcAddress("glColor4s"));
-	if (!Color4s)
+	if (!Color4s) {
 		++numFailed;
+	}
 	Color4sv = reinterpret_cast<PFNCOLOR4SV>(IntGetProcAddress("glColor4sv"));
-	if (!Color4sv)
+	if (!Color4sv) {
 		++numFailed;
+	}
 	Color4ub = reinterpret_cast<PFNCOLOR4UB>(IntGetProcAddress("glColor4ub"));
-	if (!Color4ub)
+	if (!Color4ub) {
 		++numFailed;
+	}
 	Color4ubv = reinterpret_cast<PFNCOLOR4UBV>(IntGetProcAddress("glColor4ubv"));
-	if (!Color4ubv)
+	if (!Color4ubv) {
 		++numFailed;
+	}
 	Color4ui = reinterpret_cast<PFNCOLOR4UI>(IntGetProcAddress("glColor4ui"));
-	if (!Color4ui)
+	if (!Color4ui) {
 		++numFailed;
+	}
 	Color4uiv = reinterpret_cast<PFNCOLOR4UIV>(IntGetProcAddress("glColor4uiv"));
-	if (!Color4uiv)
+	if (!Color4uiv) {
 		++numFailed;
+	}
 	Color4us = reinterpret_cast<PFNCOLOR4US>(IntGetProcAddress("glColor4us"));
-	if (!Color4us)
+	if (!Color4us) {
 		++numFailed;
+	}
 	Color4usv = reinterpret_cast<PFNCOLOR4USV>(IntGetProcAddress("glColor4usv"));
-	if (!Color4usv)
+	if (!Color4usv) {
 		++numFailed;
+	}
 	ColorMask = reinterpret_cast<PFNCOLORMASK>(IntGetProcAddress("glColorMask"));
-	if (!ColorMask)
+	if (!ColorMask) {
 		++numFailed;
+	}
 	ColorMaterial = reinterpret_cast<PFNCOLORMATERIAL>(IntGetProcAddress("glColorMaterial"));
-	if (!ColorMaterial)
+	if (!ColorMaterial) {
 		++numFailed;
+	}
 	CopyPixels = reinterpret_cast<PFNCOPYPIXELS>(IntGetProcAddress("glCopyPixels"));
-	if (!CopyPixels)
+	if (!CopyPixels) {
 		++numFailed;
+	}
 	CullFace = reinterpret_cast<PFNCULLFACE>(IntGetProcAddress("glCullFace"));
-	if (!CullFace)
+	if (!CullFace) {
 		++numFailed;
+	}
 	DeleteLists = reinterpret_cast<PFNDELETELISTS>(IntGetProcAddress("glDeleteLists"));
-	if (!DeleteLists)
+	if (!DeleteLists) {
 		++numFailed;
+	}
 	DepthFunc = reinterpret_cast<PFNDEPTHFUNC>(IntGetProcAddress("glDepthFunc"));
-	if (!DepthFunc)
+	if (!DepthFunc) {
 		++numFailed;
+	}
 	DepthMask = reinterpret_cast<PFNDEPTHMASK>(IntGetProcAddress("glDepthMask"));
-	if (!DepthMask)
+	if (!DepthMask) {
 		++numFailed;
+	}
 	DepthRange = reinterpret_cast<PFNDEPTHRANGE>(IntGetProcAddress("glDepthRange"));
-	if (!DepthRange)
+	if (!DepthRange) {
 		++numFailed;
+	}
 	Disable = reinterpret_cast<PFNDISABLE>(IntGetProcAddress("glDisable"));
-	if (!Disable)
+	if (!Disable) {
 		++numFailed;
+	}
 	DrawBuffer = reinterpret_cast<PFNDRAWBUFFER>(IntGetProcAddress("glDrawBuffer"));
-	if (!DrawBuffer)
+	if (!DrawBuffer) {
 		++numFailed;
+	}
 	DrawPixels = reinterpret_cast<PFNDRAWPIXELS>(IntGetProcAddress("glDrawPixels"));
-	if (!DrawPixels)
+	if (!DrawPixels) {
 		++numFailed;
+	}
 	EdgeFlag = reinterpret_cast<PFNEDGEFLAG>(IntGetProcAddress("glEdgeFlag"));
-	if (!EdgeFlag)
+	if (!EdgeFlag) {
 		++numFailed;
+	}
 	EdgeFlagv = reinterpret_cast<PFNEDGEFLAGV>(IntGetProcAddress("glEdgeFlagv"));
-	if (!EdgeFlagv)
+	if (!EdgeFlagv) {
 		++numFailed;
+	}
 	Enable = reinterpret_cast<PFNENABLE>(IntGetProcAddress("glEnable"));
-	if (!Enable)
+	if (!Enable) {
 		++numFailed;
+	}
 	End = reinterpret_cast<PFNEND>(IntGetProcAddress("glEnd"));
-	if (!End)
+	if (!End) {
 		++numFailed;
+	}
 	EndList = reinterpret_cast<PFNENDLIST>(IntGetProcAddress("glEndList"));
-	if (!EndList)
+	if (!EndList) {
 		++numFailed;
+	}
 	EvalCoord1d = reinterpret_cast<PFNEVALCOORD1D>(IntGetProcAddress("glEvalCoord1d"));
-	if (!EvalCoord1d)
+	if (!EvalCoord1d) {
 		++numFailed;
+	}
 	EvalCoord1dv = reinterpret_cast<PFNEVALCOORD1DV>(IntGetProcAddress("glEvalCoord1dv"));
-	if (!EvalCoord1dv)
+	if (!EvalCoord1dv) {
 		++numFailed;
+	}
 	EvalCoord1f = reinterpret_cast<PFNEVALCOORD1F>(IntGetProcAddress("glEvalCoord1f"));
-	if (!EvalCoord1f)
+	if (!EvalCoord1f) {
 		++numFailed;
+	}
 	EvalCoord1fv = reinterpret_cast<PFNEVALCOORD1FV>(IntGetProcAddress("glEvalCoord1fv"));
-	if (!EvalCoord1fv)
+	if (!EvalCoord1fv) {
 		++numFailed;
+	}
 	EvalCoord2d = reinterpret_cast<PFNEVALCOORD2D>(IntGetProcAddress("glEvalCoord2d"));
-	if (!EvalCoord2d)
+	if (!EvalCoord2d) {
 		++numFailed;
+	}
 	EvalCoord2dv = reinterpret_cast<PFNEVALCOORD2DV>(IntGetProcAddress("glEvalCoord2dv"));
-	if (!EvalCoord2dv)
+	if (!EvalCoord2dv) {
 		++numFailed;
+	}
 	EvalCoord2f = reinterpret_cast<PFNEVALCOORD2F>(IntGetProcAddress("glEvalCoord2f"));
-	if (!EvalCoord2f)
+	if (!EvalCoord2f) {
 		++numFailed;
+	}
 	EvalCoord2fv = reinterpret_cast<PFNEVALCOORD2FV>(IntGetProcAddress("glEvalCoord2fv"));
-	if (!EvalCoord2fv)
+	if (!EvalCoord2fv) {
 		++numFailed;
+	}
 	EvalMesh1 = reinterpret_cast<PFNEVALMESH1>(IntGetProcAddress("glEvalMesh1"));
-	if (!EvalMesh1)
+	if (!EvalMesh1) {
 		++numFailed;
+	}
 	EvalMesh2 = reinterpret_cast<PFNEVALMESH2>(IntGetProcAddress("glEvalMesh2"));
-	if (!EvalMesh2)
+	if (!EvalMesh2) {
 		++numFailed;
+	}
 	EvalPoint1 = reinterpret_cast<PFNEVALPOINT1>(IntGetProcAddress("glEvalPoint1"));
-	if (!EvalPoint1)
+	if (!EvalPoint1) {
 		++numFailed;
+	}
 	EvalPoint2 = reinterpret_cast<PFNEVALPOINT2>(IntGetProcAddress("glEvalPoint2"));
-	if (!EvalPoint2)
+	if (!EvalPoint2) {
 		++numFailed;
+	}
 	FeedbackBuffer = reinterpret_cast<PFNFEEDBACKBUFFER>(IntGetProcAddress("glFeedbackBuffer"));
-	if (!FeedbackBuffer)
+	if (!FeedbackBuffer) {
 		++numFailed;
+	}
 	Finish = reinterpret_cast<PFNFINISH>(IntGetProcAddress("glFinish"));
-	if (!Finish)
+	if (!Finish) {
 		++numFailed;
+	}
 	Flush = reinterpret_cast<PFNFLUSH>(IntGetProcAddress("glFlush"));
-	if (!Flush)
+	if (!Flush) {
 		++numFailed;
+	}
 	Fogf = reinterpret_cast<PFNFOGF>(IntGetProcAddress("glFogf"));
-	if (!Fogf)
+	if (!Fogf) {
 		++numFailed;
+	}
 	Fogfv = reinterpret_cast<PFNFOGFV>(IntGetProcAddress("glFogfv"));
-	if (!Fogfv)
+	if (!Fogfv) {
 		++numFailed;
+	}
 	Fogi = reinterpret_cast<PFNFOGI>(IntGetProcAddress("glFogi"));
-	if (!Fogi)
+	if (!Fogi) {
 		++numFailed;
+	}
 	Fogiv = reinterpret_cast<PFNFOGIV>(IntGetProcAddress("glFogiv"));
-	if (!Fogiv)
+	if (!Fogiv) {
 		++numFailed;
+	}
 	FrontFace = reinterpret_cast<PFNFRONTFACE>(IntGetProcAddress("glFrontFace"));
-	if (!FrontFace)
+	if (!FrontFace) {
 		++numFailed;
+	}
 	Frustum = reinterpret_cast<PFNFRUSTUM>(IntGetProcAddress("glFrustum"));
-	if (!Frustum)
+	if (!Frustum) {
 		++numFailed;
+	}
 	GenLists = reinterpret_cast<PFNGENLISTS>(IntGetProcAddress("glGenLists"));
-	if (!GenLists)
+	if (!GenLists) {
 		++numFailed;
+	}
 	GetBooleanv = reinterpret_cast<PFNGETBOOLEANV>(IntGetProcAddress("glGetBooleanv"));
-	if (!GetBooleanv)
+	if (!GetBooleanv) {
 		++numFailed;
+	}
 	GetClipPlane = reinterpret_cast<PFNGETCLIPPLANE>(IntGetProcAddress("glGetClipPlane"));
-	if (!GetClipPlane)
+	if (!GetClipPlane) {
 		++numFailed;
+	}
 	GetDoublev = reinterpret_cast<PFNGETDOUBLEV>(IntGetProcAddress("glGetDoublev"));
-	if (!GetDoublev)
+	if (!GetDoublev) {
 		++numFailed;
+	}
 	GetError = reinterpret_cast<PFNGETERROR>(IntGetProcAddress("glGetError"));
-	if (!GetError)
+	if (!GetError) {
 		++numFailed;
+	}
 	GetFloatv = reinterpret_cast<PFNGETFLOATV>(IntGetProcAddress("glGetFloatv"));
-	if (!GetFloatv)
+	if (!GetFloatv) {
 		++numFailed;
+	}
 	GetIntegerv = reinterpret_cast<PFNGETINTEGERV>(IntGetProcAddress("glGetIntegerv"));
-	if (!GetIntegerv)
+	if (!GetIntegerv) {
 		++numFailed;
+	}
 	GetLightfv = reinterpret_cast<PFNGETLIGHTFV>(IntGetProcAddress("glGetLightfv"));
-	if (!GetLightfv)
+	if (!GetLightfv) {
 		++numFailed;
+	}
 	GetLightiv = reinterpret_cast<PFNGETLIGHTIV>(IntGetProcAddress("glGetLightiv"));
-	if (!GetLightiv)
+	if (!GetLightiv) {
 		++numFailed;
+	}
 	GetMapdv = reinterpret_cast<PFNGETMAPDV>(IntGetProcAddress("glGetMapdv"));
-	if (!GetMapdv)
+	if (!GetMapdv) {
 		++numFailed;
+	}
 	GetMapfv = reinterpret_cast<PFNGETMAPFV>(IntGetProcAddress("glGetMapfv"));
-	if (!GetMapfv)
+	if (!GetMapfv) {
 		++numFailed;
+	}
 	GetMapiv = reinterpret_cast<PFNGETMAPIV>(IntGetProcAddress("glGetMapiv"));
-	if (!GetMapiv)
+	if (!GetMapiv) {
 		++numFailed;
+	}
 	GetMaterialfv = reinterpret_cast<PFNGETMATERIALFV>(IntGetProcAddress("glGetMaterialfv"));
-	if (!GetMaterialfv)
+	if (!GetMaterialfv) {
 		++numFailed;
+	}
 	GetMaterialiv = reinterpret_cast<PFNGETMATERIALIV>(IntGetProcAddress("glGetMaterialiv"));
-	if (!GetMaterialiv)
+	if (!GetMaterialiv) {
 		++numFailed;
+	}
 	GetPixelMapfv = reinterpret_cast<PFNGETPIXELMAPFV>(IntGetProcAddress("glGetPixelMapfv"));
-	if (!GetPixelMapfv)
+	if (!GetPixelMapfv) {
 		++numFailed;
+	}
 	GetPixelMapuiv = reinterpret_cast<PFNGETPIXELMAPUIV>(IntGetProcAddress("glGetPixelMapuiv"));
-	if (!GetPixelMapuiv)
+	if (!GetPixelMapuiv) {
 		++numFailed;
+	}
 	GetPixelMapusv = reinterpret_cast<PFNGETPIXELMAPUSV>(IntGetProcAddress("glGetPixelMapusv"));
-	if (!GetPixelMapusv)
+	if (!GetPixelMapusv) {
 		++numFailed;
+	}
 	GetPolygonStipple =
 	    reinterpret_cast<PFNGETPOLYGONSTIPPLE>(IntGetProcAddress("glGetPolygonStipple"));
-	if (!GetPolygonStipple)
+	if (!GetPolygonStipple) {
 		++numFailed;
+	}
 	GetString = reinterpret_cast<PFNGETSTRING>(IntGetProcAddress("glGetString"));
-	if (!GetString)
+	if (!GetString) {
 		++numFailed;
+	}
 	GetTexEnvfv = reinterpret_cast<PFNGETTEXENVFV>(IntGetProcAddress("glGetTexEnvfv"));
-	if (!GetTexEnvfv)
+	if (!GetTexEnvfv) {
 		++numFailed;
+	}
 	GetTexEnviv = reinterpret_cast<PFNGETTEXENVIV>(IntGetProcAddress("glGetTexEnviv"));
-	if (!GetTexEnviv)
+	if (!GetTexEnviv) {
 		++numFailed;
+	}
 	GetTexGendv = reinterpret_cast<PFNGETTEXGENDV>(IntGetProcAddress("glGetTexGendv"));
-	if (!GetTexGendv)
+	if (!GetTexGendv) {
 		++numFailed;
+	}
 	GetTexGenfv = reinterpret_cast<PFNGETTEXGENFV>(IntGetProcAddress("glGetTexGenfv"));
-	if (!GetTexGenfv)
+	if (!GetTexGenfv) {
 		++numFailed;
+	}
 	GetTexGeniv = reinterpret_cast<PFNGETTEXGENIV>(IntGetProcAddress("glGetTexGeniv"));
-	if (!GetTexGeniv)
+	if (!GetTexGeniv) {
 		++numFailed;
+	}
 	GetTexImage = reinterpret_cast<PFNGETTEXIMAGE>(IntGetProcAddress("glGetTexImage"));
-	if (!GetTexImage)
+	if (!GetTexImage) {
 		++numFailed;
+	}
 	GetTexLevelParameterfv =
 	    reinterpret_cast<PFNGETTEXLEVELPARAMETERFV>(IntGetProcAddress("glGetTexLevelParameterfv"));
-	if (!GetTexLevelParameterfv)
+	if (!GetTexLevelParameterfv) {
 		++numFailed;
+	}
 	GetTexLevelParameteriv =
 	    reinterpret_cast<PFNGETTEXLEVELPARAMETERIV>(IntGetProcAddress("glGetTexLevelParameteriv"));
-	if (!GetTexLevelParameteriv)
+	if (!GetTexLevelParameteriv) {
 		++numFailed;
+	}
 	GetTexParameterfv =
 	    reinterpret_cast<PFNGETTEXPARAMETERFV>(IntGetProcAddress("glGetTexParameterfv"));
-	if (!GetTexParameterfv)
+	if (!GetTexParameterfv) {
 		++numFailed;
+	}
 	GetTexParameteriv =
 	    reinterpret_cast<PFNGETTEXPARAMETERIV>(IntGetProcAddress("glGetTexParameteriv"));
-	if (!GetTexParameteriv)
+	if (!GetTexParameteriv) {
 		++numFailed;
+	}
 	Hint = reinterpret_cast<PFNHINT>(IntGetProcAddress("glHint"));
-	if (!Hint)
+	if (!Hint) {
 		++numFailed;
+	}
 	IndexMask = reinterpret_cast<PFNINDEXMASK>(IntGetProcAddress("glIndexMask"));
-	if (!IndexMask)
+	if (!IndexMask) {
 		++numFailed;
+	}
 	Indexd = reinterpret_cast<PFNINDEXD>(IntGetProcAddress("glIndexd"));
-	if (!Indexd)
+	if (!Indexd) {
 		++numFailed;
+	}
 	Indexdv = reinterpret_cast<PFNINDEXDV>(IntGetProcAddress("glIndexdv"));
-	if (!Indexdv)
+	if (!Indexdv) {
 		++numFailed;
+	}
 	Indexf = reinterpret_cast<PFNINDEXF>(IntGetProcAddress("glIndexf"));
-	if (!Indexf)
+	if (!Indexf) {
 		++numFailed;
+	}
 	Indexfv = reinterpret_cast<PFNINDEXFV>(IntGetProcAddress("glIndexfv"));
-	if (!Indexfv)
+	if (!Indexfv) {
 		++numFailed;
+	}
 	Indexi = reinterpret_cast<PFNINDEXI>(IntGetProcAddress("glIndexi"));
-	if (!Indexi)
+	if (!Indexi) {
 		++numFailed;
+	}
 	Indexiv = reinterpret_cast<PFNINDEXIV>(IntGetProcAddress("glIndexiv"));
-	if (!Indexiv)
+	if (!Indexiv) {
 		++numFailed;
+	}
 	Indexs = reinterpret_cast<PFNINDEXS>(IntGetProcAddress("glIndexs"));
-	if (!Indexs)
+	if (!Indexs) {
 		++numFailed;
+	}
 	Indexsv = reinterpret_cast<PFNINDEXSV>(IntGetProcAddress("glIndexsv"));
-	if (!Indexsv)
+	if (!Indexsv) {
 		++numFailed;
+	}
 	InitNames = reinterpret_cast<PFNINITNAMES>(IntGetProcAddress("glInitNames"));
-	if (!InitNames)
+	if (!InitNames) {
 		++numFailed;
+	}
 	IsEnabled = reinterpret_cast<PFNISENABLED>(IntGetProcAddress("glIsEnabled"));
-	if (!IsEnabled)
+	if (!IsEnabled) {
 		++numFailed;
+	}
 	IsList = reinterpret_cast<PFNISLIST>(IntGetProcAddress("glIsList"));
-	if (!IsList)
+	if (!IsList) {
 		++numFailed;
+	}
 	LightModelf = reinterpret_cast<PFNLIGHTMODELF>(IntGetProcAddress("glLightModelf"));
-	if (!LightModelf)
+	if (!LightModelf) {
 		++numFailed;
+	}
 	LightModelfv = reinterpret_cast<PFNLIGHTMODELFV>(IntGetProcAddress("glLightModelfv"));
-	if (!LightModelfv)
+	if (!LightModelfv) {
 		++numFailed;
+	}
 	LightModeli = reinterpret_cast<PFNLIGHTMODELI>(IntGetProcAddress("glLightModeli"));
-	if (!LightModeli)
+	if (!LightModeli) {
 		++numFailed;
+	}
 	LightModeliv = reinterpret_cast<PFNLIGHTMODELIV>(IntGetProcAddress("glLightModeliv"));
-	if (!LightModeliv)
+	if (!LightModeliv) {
 		++numFailed;
+	}
 	Lightf = reinterpret_cast<PFNLIGHTF>(IntGetProcAddress("glLightf"));
-	if (!Lightf)
+	if (!Lightf) {
 		++numFailed;
+	}
 	Lightfv = reinterpret_cast<PFNLIGHTFV>(IntGetProcAddress("glLightfv"));
-	if (!Lightfv)
+	if (!Lightfv) {
 		++numFailed;
+	}
 	Lighti = reinterpret_cast<PFNLIGHTI>(IntGetProcAddress("glLighti"));
-	if (!Lighti)
+	if (!Lighti) {
 		++numFailed;
+	}
 	Lightiv = reinterpret_cast<PFNLIGHTIV>(IntGetProcAddress("glLightiv"));
-	if (!Lightiv)
+	if (!Lightiv) {
 		++numFailed;
+	}
 	LineStipple = reinterpret_cast<PFNLINESTIPPLE>(IntGetProcAddress("glLineStipple"));
-	if (!LineStipple)
+	if (!LineStipple) {
 		++numFailed;
+	}
 	LineWidth = reinterpret_cast<PFNLINEWIDTH>(IntGetProcAddress("glLineWidth"));
-	if (!LineWidth)
+	if (!LineWidth) {
 		++numFailed;
+	}
 	ListBase = reinterpret_cast<PFNLISTBASE>(IntGetProcAddress("glListBase"));
-	if (!ListBase)
+	if (!ListBase) {
 		++numFailed;
+	}
 	LoadIdentity = reinterpret_cast<PFNLOADIDENTITY>(IntGetProcAddress("glLoadIdentity"));
-	if (!LoadIdentity)
+	if (!LoadIdentity) {
 		++numFailed;
+	}
 	LoadMatrixd = reinterpret_cast<PFNLOADMATRIXD>(IntGetProcAddress("glLoadMatrixd"));
-	if (!LoadMatrixd)
+	if (!LoadMatrixd) {
 		++numFailed;
+	}
 	LoadMatrixf = reinterpret_cast<PFNLOADMATRIXF>(IntGetProcAddress("glLoadMatrixf"));
-	if (!LoadMatrixf)
+	if (!LoadMatrixf) {
 		++numFailed;
+	}
 	LoadName = reinterpret_cast<PFNLOADNAME>(IntGetProcAddress("glLoadName"));
-	if (!LoadName)
+	if (!LoadName) {
 		++numFailed;
+	}
 	LogicOp = reinterpret_cast<PFNLOGICOP>(IntGetProcAddress("glLogicOp"));
-	if (!LogicOp)
+	if (!LogicOp) {
 		++numFailed;
+	}
 	Map1d = reinterpret_cast<PFNMAP1D>(IntGetProcAddress("glMap1d"));
-	if (!Map1d)
+	if (!Map1d) {
 		++numFailed;
+	}
 	Map1f = reinterpret_cast<PFNMAP1F>(IntGetProcAddress("glMap1f"));
-	if (!Map1f)
+	if (!Map1f) {
 		++numFailed;
+	}
 	Map2d = reinterpret_cast<PFNMAP2D>(IntGetProcAddress("glMap2d"));
-	if (!Map2d)
+	if (!Map2d) {
 		++numFailed;
+	}
 	Map2f = reinterpret_cast<PFNMAP2F>(IntGetProcAddress("glMap2f"));
-	if (!Map2f)
+	if (!Map2f) {
 		++numFailed;
+	}
 	MapGrid1d = reinterpret_cast<PFNMAPGRID1D>(IntGetProcAddress("glMapGrid1d"));
-	if (!MapGrid1d)
+	if (!MapGrid1d) {
 		++numFailed;
+	}
 	MapGrid1f = reinterpret_cast<PFNMAPGRID1F>(IntGetProcAddress("glMapGrid1f"));
-	if (!MapGrid1f)
+	if (!MapGrid1f) {
 		++numFailed;
+	}
 	MapGrid2d = reinterpret_cast<PFNMAPGRID2D>(IntGetProcAddress("glMapGrid2d"));
-	if (!MapGrid2d)
+	if (!MapGrid2d) {
 		++numFailed;
+	}
 	MapGrid2f = reinterpret_cast<PFNMAPGRID2F>(IntGetProcAddress("glMapGrid2f"));
-	if (!MapGrid2f)
+	if (!MapGrid2f) {
 		++numFailed;
+	}
 	Materialf = reinterpret_cast<PFNMATERIALF>(IntGetProcAddress("glMaterialf"));
-	if (!Materialf)
+	if (!Materialf) {
 		++numFailed;
+	}
 	Materialfv = reinterpret_cast<PFNMATERIALFV>(IntGetProcAddress("glMaterialfv"));
-	if (!Materialfv)
+	if (!Materialfv) {
 		++numFailed;
+	}
 	Materiali = reinterpret_cast<PFNMATERIALI>(IntGetProcAddress("glMateriali"));
-	if (!Materiali)
+	if (!Materiali) {
 		++numFailed;
+	}
 	Materialiv = reinterpret_cast<PFNMATERIALIV>(IntGetProcAddress("glMaterialiv"));
-	if (!Materialiv)
+	if (!Materialiv) {
 		++numFailed;
+	}
 	MatrixMode = reinterpret_cast<PFNMATRIXMODE>(IntGetProcAddress("glMatrixMode"));
-	if (!MatrixMode)
+	if (!MatrixMode) {
 		++numFailed;
+	}
 	MultMatrixd = reinterpret_cast<PFNMULTMATRIXD>(IntGetProcAddress("glMultMatrixd"));
-	if (!MultMatrixd)
+	if (!MultMatrixd) {
 		++numFailed;
+	}
 	MultMatrixf = reinterpret_cast<PFNMULTMATRIXF>(IntGetProcAddress("glMultMatrixf"));
-	if (!MultMatrixf)
+	if (!MultMatrixf) {
 		++numFailed;
+	}
 	NewList = reinterpret_cast<PFNNEWLIST>(IntGetProcAddress("glNewList"));
-	if (!NewList)
+	if (!NewList) {
 		++numFailed;
+	}
 	Normal3b = reinterpret_cast<PFNNORMAL3B>(IntGetProcAddress("glNormal3b"));
-	if (!Normal3b)
+	if (!Normal3b) {
 		++numFailed;
+	}
 	Normal3bv = reinterpret_cast<PFNNORMAL3BV>(IntGetProcAddress("glNormal3bv"));
-	if (!Normal3bv)
+	if (!Normal3bv) {
 		++numFailed;
+	}
 	Normal3d = reinterpret_cast<PFNNORMAL3D>(IntGetProcAddress("glNormal3d"));
-	if (!Normal3d)
+	if (!Normal3d) {
 		++numFailed;
+	}
 	Normal3dv = reinterpret_cast<PFNNORMAL3DV>(IntGetProcAddress("glNormal3dv"));
-	if (!Normal3dv)
+	if (!Normal3dv) {
 		++numFailed;
+	}
 	Normal3f = reinterpret_cast<PFNNORMAL3F>(IntGetProcAddress("glNormal3f"));
-	if (!Normal3f)
+	if (!Normal3f) {
 		++numFailed;
+	}
 	Normal3fv = reinterpret_cast<PFNNORMAL3FV>(IntGetProcAddress("glNormal3fv"));
-	if (!Normal3fv)
+	if (!Normal3fv) {
 		++numFailed;
+	}
 	Normal3i = reinterpret_cast<PFNNORMAL3I>(IntGetProcAddress("glNormal3i"));
-	if (!Normal3i)
+	if (!Normal3i) {
 		++numFailed;
+	}
 	Normal3iv = reinterpret_cast<PFNNORMAL3IV>(IntGetProcAddress("glNormal3iv"));
-	if (!Normal3iv)
+	if (!Normal3iv) {
 		++numFailed;
+	}
 	Normal3s = reinterpret_cast<PFNNORMAL3S>(IntGetProcAddress("glNormal3s"));
-	if (!Normal3s)
+	if (!Normal3s) {
 		++numFailed;
+	}
 	Normal3sv = reinterpret_cast<PFNNORMAL3SV>(IntGetProcAddress("glNormal3sv"));
-	if (!Normal3sv)
+	if (!Normal3sv) {
 		++numFailed;
+	}
 	Ortho = reinterpret_cast<PFNORTHO>(IntGetProcAddress("glOrtho"));
-	if (!Ortho)
+	if (!Ortho) {
 		++numFailed;
+	}
 	PassThrough = reinterpret_cast<PFNPASSTHROUGH>(IntGetProcAddress("glPassThrough"));
-	if (!PassThrough)
+	if (!PassThrough) {
 		++numFailed;
+	}
 	PixelMapfv = reinterpret_cast<PFNPIXELMAPFV>(IntGetProcAddress("glPixelMapfv"));
-	if (!PixelMapfv)
+	if (!PixelMapfv) {
 		++numFailed;
+	}
 	PixelMapuiv = reinterpret_cast<PFNPIXELMAPUIV>(IntGetProcAddress("glPixelMapuiv"));
-	if (!PixelMapuiv)
+	if (!PixelMapuiv) {
 		++numFailed;
+	}
 	PixelMapusv = reinterpret_cast<PFNPIXELMAPUSV>(IntGetProcAddress("glPixelMapusv"));
-	if (!PixelMapusv)
+	if (!PixelMapusv) {
 		++numFailed;
+	}
 	PixelStoref = reinterpret_cast<PFNPIXELSTOREF>(IntGetProcAddress("glPixelStoref"));
-	if (!PixelStoref)
+	if (!PixelStoref) {
 		++numFailed;
+	}
 	PixelStorei = reinterpret_cast<PFNPIXELSTOREI>(IntGetProcAddress("glPixelStorei"));
-	if (!PixelStorei)
+	if (!PixelStorei) {
 		++numFailed;
+	}
 	PixelTransferf = reinterpret_cast<PFNPIXELTRANSFERF>(IntGetProcAddress("glPixelTransferf"));
-	if (!PixelTransferf)
+	if (!PixelTransferf) {
 		++numFailed;
+	}
 	PixelTransferi = reinterpret_cast<PFNPIXELTRANSFERI>(IntGetProcAddress("glPixelTransferi"));
-	if (!PixelTransferi)
+	if (!PixelTransferi) {
 		++numFailed;
+	}
 	PixelZoom = reinterpret_cast<PFNPIXELZOOM>(IntGetProcAddress("glPixelZoom"));
-	if (!PixelZoom)
+	if (!PixelZoom) {
 		++numFailed;
+	}
 	PointSize = reinterpret_cast<PFNPOINTSIZE>(IntGetProcAddress("glPointSize"));
-	if (!PointSize)
+	if (!PointSize) {
 		++numFailed;
+	}
 	PolygonMode = reinterpret_cast<PFNPOLYGONMODE>(IntGetProcAddress("glPolygonMode"));
-	if (!PolygonMode)
+	if (!PolygonMode) {
 		++numFailed;
+	}
 	PolygonStipple = reinterpret_cast<PFNPOLYGONSTIPPLE>(IntGetProcAddress("glPolygonStipple"));
-	if (!PolygonStipple)
+	if (!PolygonStipple) {
 		++numFailed;
+	}
 	PopAttrib = reinterpret_cast<PFNPOPATTRIB>(IntGetProcAddress("glPopAttrib"));
-	if (!PopAttrib)
+	if (!PopAttrib) {
 		++numFailed;
+	}
 	PopMatrix = reinterpret_cast<PFNPOPMATRIX>(IntGetProcAddress("glPopMatrix"));
-	if (!PopMatrix)
+	if (!PopMatrix) {
 		++numFailed;
+	}
 	PopName = reinterpret_cast<PFNPOPNAME>(IntGetProcAddress("glPopName"));
-	if (!PopName)
+	if (!PopName) {
 		++numFailed;
+	}
 	PushAttrib = reinterpret_cast<PFNPUSHATTRIB>(IntGetProcAddress("glPushAttrib"));
-	if (!PushAttrib)
+	if (!PushAttrib) {
 		++numFailed;
+	}
 	PushMatrix = reinterpret_cast<PFNPUSHMATRIX>(IntGetProcAddress("glPushMatrix"));
-	if (!PushMatrix)
+	if (!PushMatrix) {
 		++numFailed;
+	}
 	PushName = reinterpret_cast<PFNPUSHNAME>(IntGetProcAddress("glPushName"));
-	if (!PushName)
+	if (!PushName) {
 		++numFailed;
+	}
 	RasterPos2d = reinterpret_cast<PFNRASTERPOS2D>(IntGetProcAddress("glRasterPos2d"));
-	if (!RasterPos2d)
+	if (!RasterPos2d) {
 		++numFailed;
+	}
 	RasterPos2dv = reinterpret_cast<PFNRASTERPOS2DV>(IntGetProcAddress("glRasterPos2dv"));
-	if (!RasterPos2dv)
+	if (!RasterPos2dv) {
 		++numFailed;
+	}
 	RasterPos2f = reinterpret_cast<PFNRASTERPOS2F>(IntGetProcAddress("glRasterPos2f"));
-	if (!RasterPos2f)
+	if (!RasterPos2f) {
 		++numFailed;
+	}
 	RasterPos2fv = reinterpret_cast<PFNRASTERPOS2FV>(IntGetProcAddress("glRasterPos2fv"));
-	if (!RasterPos2fv)
+	if (!RasterPos2fv) {
 		++numFailed;
+	}
 	RasterPos2i = reinterpret_cast<PFNRASTERPOS2I>(IntGetProcAddress("glRasterPos2i"));
-	if (!RasterPos2i)
+	if (!RasterPos2i) {
 		++numFailed;
+	}
 	RasterPos2iv = reinterpret_cast<PFNRASTERPOS2IV>(IntGetProcAddress("glRasterPos2iv"));
-	if (!RasterPos2iv)
+	if (!RasterPos2iv) {
 		++numFailed;
+	}
 	RasterPos2s = reinterpret_cast<PFNRASTERPOS2S>(IntGetProcAddress("glRasterPos2s"));
-	if (!RasterPos2s)
+	if (!RasterPos2s) {
 		++numFailed;
+	}
 	RasterPos2sv = reinterpret_cast<PFNRASTERPOS2SV>(IntGetProcAddress("glRasterPos2sv"));
-	if (!RasterPos2sv)
+	if (!RasterPos2sv) {
 		++numFailed;
+	}
 	RasterPos3d = reinterpret_cast<PFNRASTERPOS3D>(IntGetProcAddress("glRasterPos3d"));
-	if (!RasterPos3d)
+	if (!RasterPos3d) {
 		++numFailed;
+	}
 	RasterPos3dv = reinterpret_cast<PFNRASTERPOS3DV>(IntGetProcAddress("glRasterPos3dv"));
-	if (!RasterPos3dv)
+	if (!RasterPos3dv) {
 		++numFailed;
+	}
 	RasterPos3f = reinterpret_cast<PFNRASTERPOS3F>(IntGetProcAddress("glRasterPos3f"));
-	if (!RasterPos3f)
+	if (!RasterPos3f) {
 		++numFailed;
+	}
 	RasterPos3fv = reinterpret_cast<PFNRASTERPOS3FV>(IntGetProcAddress("glRasterPos3fv"));
-	if (!RasterPos3fv)
+	if (!RasterPos3fv) {
 		++numFailed;
+	}
 	RasterPos3i = reinterpret_cast<PFNRASTERPOS3I>(IntGetProcAddress("glRasterPos3i"));
-	if (!RasterPos3i)
+	if (!RasterPos3i) {
 		++numFailed;
+	}
 	RasterPos3iv = reinterpret_cast<PFNRASTERPOS3IV>(IntGetProcAddress("glRasterPos3iv"));
-	if (!RasterPos3iv)
+	if (!RasterPos3iv) {
 		++numFailed;
+	}
 	RasterPos3s = reinterpret_cast<PFNRASTERPOS3S>(IntGetProcAddress("glRasterPos3s"));
-	if (!RasterPos3s)
+	if (!RasterPos3s) {
 		++numFailed;
+	}
 	RasterPos3sv = reinterpret_cast<PFNRASTERPOS3SV>(IntGetProcAddress("glRasterPos3sv"));
-	if (!RasterPos3sv)
+	if (!RasterPos3sv) {
 		++numFailed;
+	}
 	RasterPos4d = reinterpret_cast<PFNRASTERPOS4D>(IntGetProcAddress("glRasterPos4d"));
-	if (!RasterPos4d)
+	if (!RasterPos4d) {
 		++numFailed;
+	}
 	RasterPos4dv = reinterpret_cast<PFNRASTERPOS4DV>(IntGetProcAddress("glRasterPos4dv"));
-	if (!RasterPos4dv)
+	if (!RasterPos4dv) {
 		++numFailed;
+	}
 	RasterPos4f = reinterpret_cast<PFNRASTERPOS4F>(IntGetProcAddress("glRasterPos4f"));
-	if (!RasterPos4f)
+	if (!RasterPos4f) {
 		++numFailed;
+	}
 	RasterPos4fv = reinterpret_cast<PFNRASTERPOS4FV>(IntGetProcAddress("glRasterPos4fv"));
-	if (!RasterPos4fv)
+	if (!RasterPos4fv) {
 		++numFailed;
+	}
 	RasterPos4i = reinterpret_cast<PFNRASTERPOS4I>(IntGetProcAddress("glRasterPos4i"));
-	if (!RasterPos4i)
+	if (!RasterPos4i) {
 		++numFailed;
+	}
 	RasterPos4iv = reinterpret_cast<PFNRASTERPOS4IV>(IntGetProcAddress("glRasterPos4iv"));
-	if (!RasterPos4iv)
+	if (!RasterPos4iv) {
 		++numFailed;
+	}
 	RasterPos4s = reinterpret_cast<PFNRASTERPOS4S>(IntGetProcAddress("glRasterPos4s"));
-	if (!RasterPos4s)
+	if (!RasterPos4s) {
 		++numFailed;
+	}
 	RasterPos4sv = reinterpret_cast<PFNRASTERPOS4SV>(IntGetProcAddress("glRasterPos4sv"));
-	if (!RasterPos4sv)
+	if (!RasterPos4sv) {
 		++numFailed;
+	}
 	ReadBuffer = reinterpret_cast<PFNREADBUFFER>(IntGetProcAddress("glReadBuffer"));
-	if (!ReadBuffer)
+	if (!ReadBuffer) {
 		++numFailed;
+	}
 	ReadPixels = reinterpret_cast<PFNREADPIXELS>(IntGetProcAddress("glReadPixels"));
-	if (!ReadPixels)
+	if (!ReadPixels) {
 		++numFailed;
+	}
 	Rectd = reinterpret_cast<PFNRECTD>(IntGetProcAddress("glRectd"));
-	if (!Rectd)
+	if (!Rectd) {
 		++numFailed;
+	}
 	Rectdv = reinterpret_cast<PFNRECTDV>(IntGetProcAddress("glRectdv"));
-	if (!Rectdv)
+	if (!Rectdv) {
 		++numFailed;
+	}
 	Rectf = reinterpret_cast<PFNRECTF>(IntGetProcAddress("glRectf"));
-	if (!Rectf)
+	if (!Rectf) {
 		++numFailed;
+	}
 	Rectfv = reinterpret_cast<PFNRECTFV>(IntGetProcAddress("glRectfv"));
-	if (!Rectfv)
+	if (!Rectfv) {
 		++numFailed;
+	}
 	Recti = reinterpret_cast<PFNRECTI>(IntGetProcAddress("glRecti"));
-	if (!Recti)
+	if (!Recti) {
 		++numFailed;
+	}
 	Rectiv = reinterpret_cast<PFNRECTIV>(IntGetProcAddress("glRectiv"));
-	if (!Rectiv)
+	if (!Rectiv) {
 		++numFailed;
+	}
 	Rects = reinterpret_cast<PFNRECTS>(IntGetProcAddress("glRects"));
-	if (!Rects)
+	if (!Rects) {
 		++numFailed;
+	}
 	Rectsv = reinterpret_cast<PFNRECTSV>(IntGetProcAddress("glRectsv"));
-	if (!Rectsv)
+	if (!Rectsv) {
 		++numFailed;
+	}
 	RenderMode = reinterpret_cast<PFNRENDERMODE>(IntGetProcAddress("glRenderMode"));
-	if (!RenderMode)
+	if (!RenderMode) {
 		++numFailed;
+	}
 	Rotated = reinterpret_cast<PFNROTATED>(IntGetProcAddress("glRotated"));
-	if (!Rotated)
+	if (!Rotated) {
 		++numFailed;
+	}
 	Rotatef = reinterpret_cast<PFNROTATEF>(IntGetProcAddress("glRotatef"));
-	if (!Rotatef)
+	if (!Rotatef) {
 		++numFailed;
+	}
 	Scaled = reinterpret_cast<PFNSCALED>(IntGetProcAddress("glScaled"));
-	if (!Scaled)
+	if (!Scaled) {
 		++numFailed;
+	}
 	Scalef = reinterpret_cast<PFNSCALEF>(IntGetProcAddress("glScalef"));
-	if (!Scalef)
+	if (!Scalef) {
 		++numFailed;
+	}
 	Scissor = reinterpret_cast<PFNSCISSOR>(IntGetProcAddress("glScissor"));
-	if (!Scissor)
+	if (!Scissor) {
 		++numFailed;
+	}
 	SelectBuffer = reinterpret_cast<PFNSELECTBUFFER>(IntGetProcAddress("glSelectBuffer"));
-	if (!SelectBuffer)
+	if (!SelectBuffer) {
 		++numFailed;
+	}
 	ShadeModel = reinterpret_cast<PFNSHADEMODEL>(IntGetProcAddress("glShadeModel"));
-	if (!ShadeModel)
+	if (!ShadeModel) {
 		++numFailed;
+	}
 	StencilFunc = reinterpret_cast<PFNSTENCILFUNC>(IntGetProcAddress("glStencilFunc"));
-	if (!StencilFunc)
+	if (!StencilFunc) {
 		++numFailed;
+	}
 	StencilMask = reinterpret_cast<PFNSTENCILMASK>(IntGetProcAddress("glStencilMask"));
-	if (!StencilMask)
+	if (!StencilMask) {
 		++numFailed;
+	}
 	StencilOp = reinterpret_cast<PFNSTENCILOP>(IntGetProcAddress("glStencilOp"));
-	if (!StencilOp)
+	if (!StencilOp) {
 		++numFailed;
+	}
 	TexCoord1d = reinterpret_cast<PFNTEXCOORD1D>(IntGetProcAddress("glTexCoord1d"));
-	if (!TexCoord1d)
+	if (!TexCoord1d) {
 		++numFailed;
+	}
 	TexCoord1dv = reinterpret_cast<PFNTEXCOORD1DV>(IntGetProcAddress("glTexCoord1dv"));
-	if (!TexCoord1dv)
+	if (!TexCoord1dv) {
 		++numFailed;
+	}
 	TexCoord1f = reinterpret_cast<PFNTEXCOORD1F>(IntGetProcAddress("glTexCoord1f"));
-	if (!TexCoord1f)
+	if (!TexCoord1f) {
 		++numFailed;
+	}
 	TexCoord1fv = reinterpret_cast<PFNTEXCOORD1FV>(IntGetProcAddress("glTexCoord1fv"));
-	if (!TexCoord1fv)
+	if (!TexCoord1fv) {
 		++numFailed;
+	}
 	TexCoord1i = reinterpret_cast<PFNTEXCOORD1I>(IntGetProcAddress("glTexCoord1i"));
-	if (!TexCoord1i)
+	if (!TexCoord1i) {
 		++numFailed;
+	}
 	TexCoord1iv = reinterpret_cast<PFNTEXCOORD1IV>(IntGetProcAddress("glTexCoord1iv"));
-	if (!TexCoord1iv)
+	if (!TexCoord1iv) {
 		++numFailed;
+	}
 	TexCoord1s = reinterpret_cast<PFNTEXCOORD1S>(IntGetProcAddress("glTexCoord1s"));
-	if (!TexCoord1s)
+	if (!TexCoord1s) {
 		++numFailed;
+	}
 	TexCoord1sv = reinterpret_cast<PFNTEXCOORD1SV>(IntGetProcAddress("glTexCoord1sv"));
-	if (!TexCoord1sv)
+	if (!TexCoord1sv) {
 		++numFailed;
+	}
 	TexCoord2d = reinterpret_cast<PFNTEXCOORD2D>(IntGetProcAddress("glTexCoord2d"));
-	if (!TexCoord2d)
+	if (!TexCoord2d) {
 		++numFailed;
+	}
 	TexCoord2dv = reinterpret_cast<PFNTEXCOORD2DV>(IntGetProcAddress("glTexCoord2dv"));
-	if (!TexCoord2dv)
+	if (!TexCoord2dv) {
 		++numFailed;
+	}
 	TexCoord2f = reinterpret_cast<PFNTEXCOORD2F>(IntGetProcAddress("glTexCoord2f"));
-	if (!TexCoord2f)
+	if (!TexCoord2f) {
 		++numFailed;
+	}
 	TexCoord2fv = reinterpret_cast<PFNTEXCOORD2FV>(IntGetProcAddress("glTexCoord2fv"));
-	if (!TexCoord2fv)
+	if (!TexCoord2fv) {
 		++numFailed;
+	}
 	TexCoord2i = reinterpret_cast<PFNTEXCOORD2I>(IntGetProcAddress("glTexCoord2i"));
-	if (!TexCoord2i)
+	if (!TexCoord2i) {
 		++numFailed;
+	}
 	TexCoord2iv = reinterpret_cast<PFNTEXCOORD2IV>(IntGetProcAddress("glTexCoord2iv"));
-	if (!TexCoord2iv)
+	if (!TexCoord2iv) {
 		++numFailed;
+	}
 	TexCoord2s = reinterpret_cast<PFNTEXCOORD2S>(IntGetProcAddress("glTexCoord2s"));
-	if (!TexCoord2s)
+	if (!TexCoord2s) {
 		++numFailed;
+	}
 	TexCoord2sv = reinterpret_cast<PFNTEXCOORD2SV>(IntGetProcAddress("glTexCoord2sv"));
-	if (!TexCoord2sv)
+	if (!TexCoord2sv) {
 		++numFailed;
+	}
 	TexCoord3d = reinterpret_cast<PFNTEXCOORD3D>(IntGetProcAddress("glTexCoord3d"));
-	if (!TexCoord3d)
+	if (!TexCoord3d) {
 		++numFailed;
+	}
 	TexCoord3dv = reinterpret_cast<PFNTEXCOORD3DV>(IntGetProcAddress("glTexCoord3dv"));
-	if (!TexCoord3dv)
+	if (!TexCoord3dv) {
 		++numFailed;
+	}
 	TexCoord3f = reinterpret_cast<PFNTEXCOORD3F>(IntGetProcAddress("glTexCoord3f"));
-	if (!TexCoord3f)
+	if (!TexCoord3f) {
 		++numFailed;
+	}
 	TexCoord3fv = reinterpret_cast<PFNTEXCOORD3FV>(IntGetProcAddress("glTexCoord3fv"));
-	if (!TexCoord3fv)
+	if (!TexCoord3fv) {
 		++numFailed;
+	}
 	TexCoord3i = reinterpret_cast<PFNTEXCOORD3I>(IntGetProcAddress("glTexCoord3i"));
-	if (!TexCoord3i)
+	if (!TexCoord3i) {
 		++numFailed;
+	}
 	TexCoord3iv = reinterpret_cast<PFNTEXCOORD3IV>(IntGetProcAddress("glTexCoord3iv"));
-	if (!TexCoord3iv)
+	if (!TexCoord3iv) {
 		++numFailed;
+	}
 	TexCoord3s = reinterpret_cast<PFNTEXCOORD3S>(IntGetProcAddress("glTexCoord3s"));
-	if (!TexCoord3s)
+	if (!TexCoord3s) {
 		++numFailed;
+	}
 	TexCoord3sv = reinterpret_cast<PFNTEXCOORD3SV>(IntGetProcAddress("glTexCoord3sv"));
-	if (!TexCoord3sv)
+	if (!TexCoord3sv) {
 		++numFailed;
+	}
 	TexCoord4d = reinterpret_cast<PFNTEXCOORD4D>(IntGetProcAddress("glTexCoord4d"));
-	if (!TexCoord4d)
+	if (!TexCoord4d) {
 		++numFailed;
+	}
 	TexCoord4dv = reinterpret_cast<PFNTEXCOORD4DV>(IntGetProcAddress("glTexCoord4dv"));
-	if (!TexCoord4dv)
+	if (!TexCoord4dv) {
 		++numFailed;
+	}
 	TexCoord4f = reinterpret_cast<PFNTEXCOORD4F>(IntGetProcAddress("glTexCoord4f"));
-	if (!TexCoord4f)
+	if (!TexCoord4f) {
 		++numFailed;
+	}
 	TexCoord4fv = reinterpret_cast<PFNTEXCOORD4FV>(IntGetProcAddress("glTexCoord4fv"));
-	if (!TexCoord4fv)
+	if (!TexCoord4fv) {
 		++numFailed;
+	}
 	TexCoord4i = reinterpret_cast<PFNTEXCOORD4I>(IntGetProcAddress("glTexCoord4i"));
-	if (!TexCoord4i)
+	if (!TexCoord4i) {
 		++numFailed;
+	}
 	TexCoord4iv = reinterpret_cast<PFNTEXCOORD4IV>(IntGetProcAddress("glTexCoord4iv"));
-	if (!TexCoord4iv)
+	if (!TexCoord4iv) {
 		++numFailed;
+	}
 	TexCoord4s = reinterpret_cast<PFNTEXCOORD4S>(IntGetProcAddress("glTexCoord4s"));
-	if (!TexCoord4s)
+	if (!TexCoord4s) {
 		++numFailed;
+	}
 	TexCoord4sv = reinterpret_cast<PFNTEXCOORD4SV>(IntGetProcAddress("glTexCoord4sv"));
-	if (!TexCoord4sv)
+	if (!TexCoord4sv) {
 		++numFailed;
+	}
 	TexEnvf = reinterpret_cast<PFNTEXENVF>(IntGetProcAddress("glTexEnvf"));
-	if (!TexEnvf)
+	if (!TexEnvf) {
 		++numFailed;
+	}
 	TexEnvfv = reinterpret_cast<PFNTEXENVFV>(IntGetProcAddress("glTexEnvfv"));
-	if (!TexEnvfv)
+	if (!TexEnvfv) {
 		++numFailed;
+	}
 	TexEnvi = reinterpret_cast<PFNTEXENVI>(IntGetProcAddress("glTexEnvi"));
-	if (!TexEnvi)
+	if (!TexEnvi) {
 		++numFailed;
+	}
 	TexEnviv = reinterpret_cast<PFNTEXENVIV>(IntGetProcAddress("glTexEnviv"));
-	if (!TexEnviv)
+	if (!TexEnviv) {
 		++numFailed;
+	}
 	TexGend = reinterpret_cast<PFNTEXGEND>(IntGetProcAddress("glTexGend"));
-	if (!TexGend)
+	if (!TexGend) {
 		++numFailed;
+	}
 	TexGendv = reinterpret_cast<PFNTEXGENDV>(IntGetProcAddress("glTexGendv"));
-	if (!TexGendv)
+	if (!TexGendv) {
 		++numFailed;
+	}
 	TexGenf = reinterpret_cast<PFNTEXGENF>(IntGetProcAddress("glTexGenf"));
-	if (!TexGenf)
+	if (!TexGenf) {
 		++numFailed;
+	}
 	TexGenfv = reinterpret_cast<PFNTEXGENFV>(IntGetProcAddress("glTexGenfv"));
-	if (!TexGenfv)
+	if (!TexGenfv) {
 		++numFailed;
+	}
 	TexGeni = reinterpret_cast<PFNTEXGENI>(IntGetProcAddress("glTexGeni"));
-	if (!TexGeni)
+	if (!TexGeni) {
 		++numFailed;
+	}
 	TexGeniv = reinterpret_cast<PFNTEXGENIV>(IntGetProcAddress("glTexGeniv"));
-	if (!TexGeniv)
+	if (!TexGeniv) {
 		++numFailed;
+	}
 	TexImage1D = reinterpret_cast<PFNTEXIMAGE1D>(IntGetProcAddress("glTexImage1D"));
-	if (!TexImage1D)
+	if (!TexImage1D) {
 		++numFailed;
+	}
 	TexImage2D = reinterpret_cast<PFNTEXIMAGE2D>(IntGetProcAddress("glTexImage2D"));
-	if (!TexImage2D)
+	if (!TexImage2D) {
 		++numFailed;
+	}
 	TexParameterf = reinterpret_cast<PFNTEXPARAMETERF>(IntGetProcAddress("glTexParameterf"));
-	if (!TexParameterf)
+	if (!TexParameterf) {
 		++numFailed;
+	}
 	TexParameterfv = reinterpret_cast<PFNTEXPARAMETERFV>(IntGetProcAddress("glTexParameterfv"));
-	if (!TexParameterfv)
+	if (!TexParameterfv) {
 		++numFailed;
+	}
 	TexParameteri = reinterpret_cast<PFNTEXPARAMETERI>(IntGetProcAddress("glTexParameteri"));
-	if (!TexParameteri)
+	if (!TexParameteri) {
 		++numFailed;
+	}
 	TexParameteriv = reinterpret_cast<PFNTEXPARAMETERIV>(IntGetProcAddress("glTexParameteriv"));
-	if (!TexParameteriv)
+	if (!TexParameteriv) {
 		++numFailed;
+	}
 	Translated = reinterpret_cast<PFNTRANSLATED>(IntGetProcAddress("glTranslated"));
-	if (!Translated)
+	if (!Translated) {
 		++numFailed;
+	}
 	Translatef = reinterpret_cast<PFNTRANSLATEF>(IntGetProcAddress("glTranslatef"));
-	if (!Translatef)
+	if (!Translatef) {
 		++numFailed;
+	}
 	Vertex2d = reinterpret_cast<PFNVERTEX2D>(IntGetProcAddress("glVertex2d"));
-	if (!Vertex2d)
+	if (!Vertex2d) {
 		++numFailed;
+	}
 	Vertex2dv = reinterpret_cast<PFNVERTEX2DV>(IntGetProcAddress("glVertex2dv"));
-	if (!Vertex2dv)
+	if (!Vertex2dv) {
 		++numFailed;
+	}
 	Vertex2f = reinterpret_cast<PFNVERTEX2F>(IntGetProcAddress("glVertex2f"));
-	if (!Vertex2f)
+	if (!Vertex2f) {
 		++numFailed;
+	}
 	Vertex2fv = reinterpret_cast<PFNVERTEX2FV>(IntGetProcAddress("glVertex2fv"));
-	if (!Vertex2fv)
+	if (!Vertex2fv) {
 		++numFailed;
+	}
 	Vertex2i = reinterpret_cast<PFNVERTEX2I>(IntGetProcAddress("glVertex2i"));
-	if (!Vertex2i)
+	if (!Vertex2i) {
 		++numFailed;
+	}
 	Vertex2iv = reinterpret_cast<PFNVERTEX2IV>(IntGetProcAddress("glVertex2iv"));
-	if (!Vertex2iv)
+	if (!Vertex2iv) {
 		++numFailed;
+	}
 	Vertex2s = reinterpret_cast<PFNVERTEX2S>(IntGetProcAddress("glVertex2s"));
-	if (!Vertex2s)
+	if (!Vertex2s) {
 		++numFailed;
+	}
 	Vertex2sv = reinterpret_cast<PFNVERTEX2SV>(IntGetProcAddress("glVertex2sv"));
-	if (!Vertex2sv)
+	if (!Vertex2sv) {
 		++numFailed;
+	}
 	Vertex3d = reinterpret_cast<PFNVERTEX3D>(IntGetProcAddress("glVertex3d"));
-	if (!Vertex3d)
+	if (!Vertex3d) {
 		++numFailed;
+	}
 	Vertex3dv = reinterpret_cast<PFNVERTEX3DV>(IntGetProcAddress("glVertex3dv"));
-	if (!Vertex3dv)
+	if (!Vertex3dv) {
 		++numFailed;
+	}
 	Vertex3f = reinterpret_cast<PFNVERTEX3F>(IntGetProcAddress("glVertex3f"));
-	if (!Vertex3f)
+	if (!Vertex3f) {
 		++numFailed;
+	}
 	Vertex3fv = reinterpret_cast<PFNVERTEX3FV>(IntGetProcAddress("glVertex3fv"));
-	if (!Vertex3fv)
+	if (!Vertex3fv) {
 		++numFailed;
+	}
 	Vertex3i = reinterpret_cast<PFNVERTEX3I>(IntGetProcAddress("glVertex3i"));
-	if (!Vertex3i)
+	if (!Vertex3i) {
 		++numFailed;
+	}
 	Vertex3iv = reinterpret_cast<PFNVERTEX3IV>(IntGetProcAddress("glVertex3iv"));
-	if (!Vertex3iv)
+	if (!Vertex3iv) {
 		++numFailed;
+	}
 	Vertex3s = reinterpret_cast<PFNVERTEX3S>(IntGetProcAddress("glVertex3s"));
-	if (!Vertex3s)
+	if (!Vertex3s) {
 		++numFailed;
+	}
 	Vertex3sv = reinterpret_cast<PFNVERTEX3SV>(IntGetProcAddress("glVertex3sv"));
-	if (!Vertex3sv)
+	if (!Vertex3sv) {
 		++numFailed;
+	}
 	Vertex4d = reinterpret_cast<PFNVERTEX4D>(IntGetProcAddress("glVertex4d"));
-	if (!Vertex4d)
+	if (!Vertex4d) {
 		++numFailed;
+	}
 	Vertex4dv = reinterpret_cast<PFNVERTEX4DV>(IntGetProcAddress("glVertex4dv"));
-	if (!Vertex4dv)
+	if (!Vertex4dv) {
 		++numFailed;
+	}
 	Vertex4f = reinterpret_cast<PFNVERTEX4F>(IntGetProcAddress("glVertex4f"));
-	if (!Vertex4f)
+	if (!Vertex4f) {
 		++numFailed;
+	}
 	Vertex4fv = reinterpret_cast<PFNVERTEX4FV>(IntGetProcAddress("glVertex4fv"));
-	if (!Vertex4fv)
+	if (!Vertex4fv) {
 		++numFailed;
+	}
 	Vertex4i = reinterpret_cast<PFNVERTEX4I>(IntGetProcAddress("glVertex4i"));
-	if (!Vertex4i)
+	if (!Vertex4i) {
 		++numFailed;
+	}
 	Vertex4iv = reinterpret_cast<PFNVERTEX4IV>(IntGetProcAddress("glVertex4iv"));
-	if (!Vertex4iv)
+	if (!Vertex4iv) {
 		++numFailed;
+	}
 	Vertex4s = reinterpret_cast<PFNVERTEX4S>(IntGetProcAddress("glVertex4s"));
-	if (!Vertex4s)
+	if (!Vertex4s) {
 		++numFailed;
+	}
 	Vertex4sv = reinterpret_cast<PFNVERTEX4SV>(IntGetProcAddress("glVertex4sv"));
-	if (!Vertex4sv)
+	if (!Vertex4sv) {
 		++numFailed;
+	}
 	Viewport = reinterpret_cast<PFNVIEWPORT>(IntGetProcAddress("glViewport"));
-	if (!Viewport)
+	if (!Viewport) {
 		++numFailed;
+	}
 	AreTexturesResident =
 	    reinterpret_cast<PFNARETEXTURESRESIDENT>(IntGetProcAddress("glAreTexturesResident"));
-	if (!AreTexturesResident)
+	if (!AreTexturesResident) {
 		++numFailed;
+	}
 	ArrayElement = reinterpret_cast<PFNARRAYELEMENT>(IntGetProcAddress("glArrayElement"));
-	if (!ArrayElement)
+	if (!ArrayElement) {
 		++numFailed;
+	}
 	BindTexture = reinterpret_cast<PFNBINDTEXTURE>(IntGetProcAddress("glBindTexture"));
-	if (!BindTexture)
+	if (!BindTexture) {
 		++numFailed;
+	}
 	ColorPointer = reinterpret_cast<PFNCOLORPOINTER>(IntGetProcAddress("glColorPointer"));
-	if (!ColorPointer)
+	if (!ColorPointer) {
 		++numFailed;
+	}
 	CopyTexImage1D = reinterpret_cast<PFNCOPYTEXIMAGE1D>(IntGetProcAddress("glCopyTexImage1D"));
-	if (!CopyTexImage1D)
+	if (!CopyTexImage1D) {
 		++numFailed;
+	}
 	CopyTexImage2D = reinterpret_cast<PFNCOPYTEXIMAGE2D>(IntGetProcAddress("glCopyTexImage2D"));
-	if (!CopyTexImage2D)
+	if (!CopyTexImage2D) {
 		++numFailed;
+	}
 	CopyTexSubImage1D =
 	    reinterpret_cast<PFNCOPYTEXSUBIMAGE1D>(IntGetProcAddress("glCopyTexSubImage1D"));
-	if (!CopyTexSubImage1D)
+	if (!CopyTexSubImage1D) {
 		++numFailed;
+	}
 	CopyTexSubImage2D =
 	    reinterpret_cast<PFNCOPYTEXSUBIMAGE2D>(IntGetProcAddress("glCopyTexSubImage2D"));
-	if (!CopyTexSubImage2D)
+	if (!CopyTexSubImage2D) {
 		++numFailed;
+	}
 	DeleteTextures = reinterpret_cast<PFNDELETETEXTURES>(IntGetProcAddress("glDeleteTextures"));
-	if (!DeleteTextures)
+	if (!DeleteTextures) {
 		++numFailed;
+	}
 	DisableClientState =
 	    reinterpret_cast<PFNDISABLECLIENTSTATE>(IntGetProcAddress("glDisableClientState"));
-	if (!DisableClientState)
+	if (!DisableClientState) {
 		++numFailed;
+	}
 	DrawArrays = reinterpret_cast<PFNDRAWARRAYS>(IntGetProcAddress("glDrawArrays"));
-	if (!DrawArrays)
+	if (!DrawArrays) {
 		++numFailed;
+	}
 	DrawElements = reinterpret_cast<PFNDRAWELEMENTS>(IntGetProcAddress("glDrawElements"));
-	if (!DrawElements)
+	if (!DrawElements) {
 		++numFailed;
+	}
 	EdgeFlagPointer = reinterpret_cast<PFNEDGEFLAGPOINTER>(IntGetProcAddress("glEdgeFlagPointer"));
-	if (!EdgeFlagPointer)
+	if (!EdgeFlagPointer) {
 		++numFailed;
+	}
 	EnableClientState =
 	    reinterpret_cast<PFNENABLECLIENTSTATE>(IntGetProcAddress("glEnableClientState"));
-	if (!EnableClientState)
+	if (!EnableClientState) {
 		++numFailed;
+	}
 	GenTextures = reinterpret_cast<PFNGENTEXTURES>(IntGetProcAddress("glGenTextures"));
-	if (!GenTextures)
+	if (!GenTextures) {
 		++numFailed;
+	}
 	GetPointerv = reinterpret_cast<PFNGETPOINTERV>(IntGetProcAddress("glGetPointerv"));
-	if (!GetPointerv)
+	if (!GetPointerv) {
 		++numFailed;
+	}
 	IndexPointer = reinterpret_cast<PFNINDEXPOINTER>(IntGetProcAddress("glIndexPointer"));
-	if (!IndexPointer)
+	if (!IndexPointer) {
 		++numFailed;
+	}
 	Indexub = reinterpret_cast<PFNINDEXUB>(IntGetProcAddress("glIndexub"));
-	if (!Indexub)
+	if (!Indexub) {
 		++numFailed;
+	}
 	Indexubv = reinterpret_cast<PFNINDEXUBV>(IntGetProcAddress("glIndexubv"));
-	if (!Indexubv)
+	if (!Indexubv) {
 		++numFailed;
+	}
 	InterleavedArrays =
 	    reinterpret_cast<PFNINTERLEAVEDARRAYS>(IntGetProcAddress("glInterleavedArrays"));
-	if (!InterleavedArrays)
+	if (!InterleavedArrays) {
 		++numFailed;
+	}
 	IsTexture = reinterpret_cast<PFNISTEXTURE>(IntGetProcAddress("glIsTexture"));
-	if (!IsTexture)
+	if (!IsTexture) {
 		++numFailed;
+	}
 	NormalPointer = reinterpret_cast<PFNNORMALPOINTER>(IntGetProcAddress("glNormalPointer"));
-	if (!NormalPointer)
+	if (!NormalPointer) {
 		++numFailed;
+	}
 	PolygonOffset = reinterpret_cast<PFNPOLYGONOFFSET>(IntGetProcAddress("glPolygonOffset"));
-	if (!PolygonOffset)
+	if (!PolygonOffset) {
 		++numFailed;
+	}
 	PopClientAttrib = reinterpret_cast<PFNPOPCLIENTATTRIB>(IntGetProcAddress("glPopClientAttrib"));
-	if (!PopClientAttrib)
+	if (!PopClientAttrib) {
 		++numFailed;
+	}
 	PrioritizeTextures =
 	    reinterpret_cast<PFNPRIORITIZETEXTURES>(IntGetProcAddress("glPrioritizeTextures"));
-	if (!PrioritizeTextures)
+	if (!PrioritizeTextures) {
 		++numFailed;
+	}
 	PushClientAttrib =
 	    reinterpret_cast<PFNPUSHCLIENTATTRIB>(IntGetProcAddress("glPushClientAttrib"));
-	if (!PushClientAttrib)
+	if (!PushClientAttrib) {
 		++numFailed;
+	}
 	TexCoordPointer = reinterpret_cast<PFNTEXCOORDPOINTER>(IntGetProcAddress("glTexCoordPointer"));
-	if (!TexCoordPointer)
+	if (!TexCoordPointer) {
 		++numFailed;
+	}
 	TexSubImage1D = reinterpret_cast<PFNTEXSUBIMAGE1D>(IntGetProcAddress("glTexSubImage1D"));
-	if (!TexSubImage1D)
+	if (!TexSubImage1D) {
 		++numFailed;
+	}
 	TexSubImage2D = reinterpret_cast<PFNTEXSUBIMAGE2D>(IntGetProcAddress("glTexSubImage2D"));
-	if (!TexSubImage2D)
+	if (!TexSubImage2D) {
 		++numFailed;
+	}
 	VertexPointer = reinterpret_cast<PFNVERTEXPOINTER>(IntGetProcAddress("glVertexPointer"));
-	if (!VertexPointer)
+	if (!VertexPointer) {
 		++numFailed;
+	}
 	BlendColor = reinterpret_cast<PFNBLENDCOLOR>(IntGetProcAddress("glBlendColor"));
-	if (!BlendColor)
+	if (!BlendColor) {
 		++numFailed;
+	}
 	BlendEquation = reinterpret_cast<PFNBLENDEQUATION>(IntGetProcAddress("glBlendEquation"));
-	if (!BlendEquation)
+	if (!BlendEquation) {
 		++numFailed;
+	}
 	CopyTexSubImage3D =
 	    reinterpret_cast<PFNCOPYTEXSUBIMAGE3D>(IntGetProcAddress("glCopyTexSubImage3D"));
-	if (!CopyTexSubImage3D)
+	if (!CopyTexSubImage3D) {
 		++numFailed;
+	}
 	DrawRangeElements =
 	    reinterpret_cast<PFNDRAWRANGEELEMENTS>(IntGetProcAddress("glDrawRangeElements"));
-	if (!DrawRangeElements)
+	if (!DrawRangeElements) {
 		++numFailed;
+	}
 	TexImage3D = reinterpret_cast<PFNTEXIMAGE3D>(IntGetProcAddress("glTexImage3D"));
-	if (!TexImage3D)
+	if (!TexImage3D) {
 		++numFailed;
+	}
 	TexSubImage3D = reinterpret_cast<PFNTEXSUBIMAGE3D>(IntGetProcAddress("glTexSubImage3D"));
-	if (!TexSubImage3D)
+	if (!TexSubImage3D) {
 		++numFailed;
+	}
 	ActiveTexture = reinterpret_cast<PFNACTIVETEXTURE>(IntGetProcAddress("glActiveTexture"));
-	if (!ActiveTexture)
+	if (!ActiveTexture) {
 		++numFailed;
+	}
 	ClientActiveTexture =
 	    reinterpret_cast<PFNCLIENTACTIVETEXTURE>(IntGetProcAddress("glClientActiveTexture"));
-	if (!ClientActiveTexture)
+	if (!ClientActiveTexture) {
 		++numFailed;
+	}
 	CompressedTexImage1D =
 	    reinterpret_cast<PFNCOMPRESSEDTEXIMAGE1D>(IntGetProcAddress("glCompressedTexImage1D"));
-	if (!CompressedTexImage1D)
+	if (!CompressedTexImage1D) {
 		++numFailed;
+	}
 	CompressedTexImage2D =
 	    reinterpret_cast<PFNCOMPRESSEDTEXIMAGE2D>(IntGetProcAddress("glCompressedTexImage2D"));
-	if (!CompressedTexImage2D)
+	if (!CompressedTexImage2D) {
 		++numFailed;
+	}
 	CompressedTexImage3D =
 	    reinterpret_cast<PFNCOMPRESSEDTEXIMAGE3D>(IntGetProcAddress("glCompressedTexImage3D"));
-	if (!CompressedTexImage3D)
+	if (!CompressedTexImage3D) {
 		++numFailed;
+	}
 	CompressedTexSubImage1D = reinterpret_cast<PFNCOMPRESSEDTEXSUBIMAGE1D>(
 	    IntGetProcAddress("glCompressedTexSubImage1D"));
-	if (!CompressedTexSubImage1D)
+	if (!CompressedTexSubImage1D) {
 		++numFailed;
+	}
 	CompressedTexSubImage2D = reinterpret_cast<PFNCOMPRESSEDTEXSUBIMAGE2D>(
 	    IntGetProcAddress("glCompressedTexSubImage2D"));
-	if (!CompressedTexSubImage2D)
+	if (!CompressedTexSubImage2D) {
 		++numFailed;
+	}
 	CompressedTexSubImage3D = reinterpret_cast<PFNCOMPRESSEDTEXSUBIMAGE3D>(
 	    IntGetProcAddress("glCompressedTexSubImage3D"));
-	if (!CompressedTexSubImage3D)
+	if (!CompressedTexSubImage3D) {
 		++numFailed;
+	}
 	GetCompressedTexImage =
 	    reinterpret_cast<PFNGETCOMPRESSEDTEXIMAGE>(IntGetProcAddress("glGetCompressedTexImage"));
-	if (!GetCompressedTexImage)
+	if (!GetCompressedTexImage) {
 		++numFailed;
+	}
 	LoadTransposeMatrixd =
 	    reinterpret_cast<PFNLOADTRANSPOSEMATRIXD>(IntGetProcAddress("glLoadTransposeMatrixd"));
-	if (!LoadTransposeMatrixd)
+	if (!LoadTransposeMatrixd) {
 		++numFailed;
+	}
 	LoadTransposeMatrixf =
 	    reinterpret_cast<PFNLOADTRANSPOSEMATRIXF>(IntGetProcAddress("glLoadTransposeMatrixf"));
-	if (!LoadTransposeMatrixf)
+	if (!LoadTransposeMatrixf) {
 		++numFailed;
+	}
 	MultTransposeMatrixd =
 	    reinterpret_cast<PFNMULTTRANSPOSEMATRIXD>(IntGetProcAddress("glMultTransposeMatrixd"));
-	if (!MultTransposeMatrixd)
+	if (!MultTransposeMatrixd) {
 		++numFailed;
+	}
 	MultTransposeMatrixf =
 	    reinterpret_cast<PFNMULTTRANSPOSEMATRIXF>(IntGetProcAddress("glMultTransposeMatrixf"));
-	if (!MultTransposeMatrixf)
+	if (!MultTransposeMatrixf) {
 		++numFailed;
+	}
 	MultiTexCoord1d = reinterpret_cast<PFNMULTITEXCOORD1D>(IntGetProcAddress("glMultiTexCoord1d"));
-	if (!MultiTexCoord1d)
+	if (!MultiTexCoord1d) {
 		++numFailed;
+	}
 	MultiTexCoord1dv =
 	    reinterpret_cast<PFNMULTITEXCOORD1DV>(IntGetProcAddress("glMultiTexCoord1dv"));
-	if (!MultiTexCoord1dv)
+	if (!MultiTexCoord1dv) {
 		++numFailed;
+	}
 	MultiTexCoord1f = reinterpret_cast<PFNMULTITEXCOORD1F>(IntGetProcAddress("glMultiTexCoord1f"));
-	if (!MultiTexCoord1f)
+	if (!MultiTexCoord1f) {
 		++numFailed;
+	}
 	MultiTexCoord1fv =
 	    reinterpret_cast<PFNMULTITEXCOORD1FV>(IntGetProcAddress("glMultiTexCoord1fv"));
-	if (!MultiTexCoord1fv)
+	if (!MultiTexCoord1fv) {
 		++numFailed;
+	}
 	MultiTexCoord1i = reinterpret_cast<PFNMULTITEXCOORD1I>(IntGetProcAddress("glMultiTexCoord1i"));
-	if (!MultiTexCoord1i)
+	if (!MultiTexCoord1i) {
 		++numFailed;
+	}
 	MultiTexCoord1iv =
 	    reinterpret_cast<PFNMULTITEXCOORD1IV>(IntGetProcAddress("glMultiTexCoord1iv"));
-	if (!MultiTexCoord1iv)
+	if (!MultiTexCoord1iv) {
 		++numFailed;
+	}
 	MultiTexCoord1s = reinterpret_cast<PFNMULTITEXCOORD1S>(IntGetProcAddress("glMultiTexCoord1s"));
-	if (!MultiTexCoord1s)
+	if (!MultiTexCoord1s) {
 		++numFailed;
+	}
 	MultiTexCoord1sv =
 	    reinterpret_cast<PFNMULTITEXCOORD1SV>(IntGetProcAddress("glMultiTexCoord1sv"));
-	if (!MultiTexCoord1sv)
+	if (!MultiTexCoord1sv) {
 		++numFailed;
+	}
 	MultiTexCoord2d = reinterpret_cast<PFNMULTITEXCOORD2D>(IntGetProcAddress("glMultiTexCoord2d"));
-	if (!MultiTexCoord2d)
+	if (!MultiTexCoord2d) {
 		++numFailed;
+	}
 	MultiTexCoord2dv =
 	    reinterpret_cast<PFNMULTITEXCOORD2DV>(IntGetProcAddress("glMultiTexCoord2dv"));
-	if (!MultiTexCoord2dv)
+	if (!MultiTexCoord2dv) {
 		++numFailed;
+	}
 	MultiTexCoord2f = reinterpret_cast<PFNMULTITEXCOORD2F>(IntGetProcAddress("glMultiTexCoord2f"));
-	if (!MultiTexCoord2f)
+	if (!MultiTexCoord2f) {
 		++numFailed;
+	}
 	MultiTexCoord2fv =
 	    reinterpret_cast<PFNMULTITEXCOORD2FV>(IntGetProcAddress("glMultiTexCoord2fv"));
-	if (!MultiTexCoord2fv)
+	if (!MultiTexCoord2fv) {
 		++numFailed;
+	}
 	MultiTexCoord2i = reinterpret_cast<PFNMULTITEXCOORD2I>(IntGetProcAddress("glMultiTexCoord2i"));
-	if (!MultiTexCoord2i)
+	if (!MultiTexCoord2i) {
 		++numFailed;
+	}
 	MultiTexCoord2iv =
 	    reinterpret_cast<PFNMULTITEXCOORD2IV>(IntGetProcAddress("glMultiTexCoord2iv"));
-	if (!MultiTexCoord2iv)
+	if (!MultiTexCoord2iv) {
 		++numFailed;
+	}
 	MultiTexCoord2s = reinterpret_cast<PFNMULTITEXCOORD2S>(IntGetProcAddress("glMultiTexCoord2s"));
-	if (!MultiTexCoord2s)
+	if (!MultiTexCoord2s) {
 		++numFailed;
+	}
 	MultiTexCoord2sv =
 	    reinterpret_cast<PFNMULTITEXCOORD2SV>(IntGetProcAddress("glMultiTexCoord2sv"));
-	if (!MultiTexCoord2sv)
+	if (!MultiTexCoord2sv) {
 		++numFailed;
+	}
 	MultiTexCoord3d = reinterpret_cast<PFNMULTITEXCOORD3D>(IntGetProcAddress("glMultiTexCoord3d"));
-	if (!MultiTexCoord3d)
+	if (!MultiTexCoord3d) {
 		++numFailed;
+	}
 	MultiTexCoord3dv =
 	    reinterpret_cast<PFNMULTITEXCOORD3DV>(IntGetProcAddress("glMultiTexCoord3dv"));
-	if (!MultiTexCoord3dv)
+	if (!MultiTexCoord3dv) {
 		++numFailed;
+	}
 	MultiTexCoord3f = reinterpret_cast<PFNMULTITEXCOORD3F>(IntGetProcAddress("glMultiTexCoord3f"));
-	if (!MultiTexCoord3f)
+	if (!MultiTexCoord3f) {
 		++numFailed;
+	}
 	MultiTexCoord3fv =
 	    reinterpret_cast<PFNMULTITEXCOORD3FV>(IntGetProcAddress("glMultiTexCoord3fv"));
-	if (!MultiTexCoord3fv)
+	if (!MultiTexCoord3fv) {
 		++numFailed;
+	}
 	MultiTexCoord3i = reinterpret_cast<PFNMULTITEXCOORD3I>(IntGetProcAddress("glMultiTexCoord3i"));
-	if (!MultiTexCoord3i)
+	if (!MultiTexCoord3i) {
 		++numFailed;
+	}
 	MultiTexCoord3iv =
 	    reinterpret_cast<PFNMULTITEXCOORD3IV>(IntGetProcAddress("glMultiTexCoord3iv"));
-	if (!MultiTexCoord3iv)
+	if (!MultiTexCoord3iv) {
 		++numFailed;
+	}
 	MultiTexCoord3s = reinterpret_cast<PFNMULTITEXCOORD3S>(IntGetProcAddress("glMultiTexCoord3s"));
-	if (!MultiTexCoord3s)
+	if (!MultiTexCoord3s) {
 		++numFailed;
+	}
 	MultiTexCoord3sv =
 	    reinterpret_cast<PFNMULTITEXCOORD3SV>(IntGetProcAddress("glMultiTexCoord3sv"));
-	if (!MultiTexCoord3sv)
+	if (!MultiTexCoord3sv) {
 		++numFailed;
+	}
 	MultiTexCoord4d = reinterpret_cast<PFNMULTITEXCOORD4D>(IntGetProcAddress("glMultiTexCoord4d"));
-	if (!MultiTexCoord4d)
+	if (!MultiTexCoord4d) {
 		++numFailed;
+	}
 	MultiTexCoord4dv =
 	    reinterpret_cast<PFNMULTITEXCOORD4DV>(IntGetProcAddress("glMultiTexCoord4dv"));
-	if (!MultiTexCoord4dv)
+	if (!MultiTexCoord4dv) {
 		++numFailed;
+	}
 	MultiTexCoord4f = reinterpret_cast<PFNMULTITEXCOORD4F>(IntGetProcAddress("glMultiTexCoord4f"));
-	if (!MultiTexCoord4f)
+	if (!MultiTexCoord4f) {
 		++numFailed;
+	}
 	MultiTexCoord4fv =
 	    reinterpret_cast<PFNMULTITEXCOORD4FV>(IntGetProcAddress("glMultiTexCoord4fv"));
-	if (!MultiTexCoord4fv)
+	if (!MultiTexCoord4fv) {
 		++numFailed;
+	}
 	MultiTexCoord4i = reinterpret_cast<PFNMULTITEXCOORD4I>(IntGetProcAddress("glMultiTexCoord4i"));
-	if (!MultiTexCoord4i)
+	if (!MultiTexCoord4i) {
 		++numFailed;
+	}
 	MultiTexCoord4iv =
 	    reinterpret_cast<PFNMULTITEXCOORD4IV>(IntGetProcAddress("glMultiTexCoord4iv"));
-	if (!MultiTexCoord4iv)
+	if (!MultiTexCoord4iv) {
 		++numFailed;
+	}
 	MultiTexCoord4s = reinterpret_cast<PFNMULTITEXCOORD4S>(IntGetProcAddress("glMultiTexCoord4s"));
-	if (!MultiTexCoord4s)
+	if (!MultiTexCoord4s) {
 		++numFailed;
+	}
 	MultiTexCoord4sv =
 	    reinterpret_cast<PFNMULTITEXCOORD4SV>(IntGetProcAddress("glMultiTexCoord4sv"));
-	if (!MultiTexCoord4sv)
+	if (!MultiTexCoord4sv) {
 		++numFailed;
+	}
 	SampleCoverage = reinterpret_cast<PFNSAMPLECOVERAGE>(IntGetProcAddress("glSampleCoverage"));
-	if (!SampleCoverage)
+	if (!SampleCoverage) {
 		++numFailed;
+	}
 	BlendFuncSeparate =
 	    reinterpret_cast<PFNBLENDFUNCSEPARATE>(IntGetProcAddress("glBlendFuncSeparate"));
-	if (!BlendFuncSeparate)
+	if (!BlendFuncSeparate) {
 		++numFailed;
+	}
 	FogCoordPointer = reinterpret_cast<PFNFOGCOORDPOINTER>(IntGetProcAddress("glFogCoordPointer"));
-	if (!FogCoordPointer)
+	if (!FogCoordPointer) {
 		++numFailed;
+	}
 	FogCoordd = reinterpret_cast<PFNFOGCOORDD>(IntGetProcAddress("glFogCoordd"));
-	if (!FogCoordd)
+	if (!FogCoordd) {
 		++numFailed;
+	}
 	FogCoorddv = reinterpret_cast<PFNFOGCOORDDV>(IntGetProcAddress("glFogCoorddv"));
-	if (!FogCoorddv)
+	if (!FogCoorddv) {
 		++numFailed;
+	}
 	FogCoordf = reinterpret_cast<PFNFOGCOORDF>(IntGetProcAddress("glFogCoordf"));
-	if (!FogCoordf)
+	if (!FogCoordf) {
 		++numFailed;
+	}
 	FogCoordfv = reinterpret_cast<PFNFOGCOORDFV>(IntGetProcAddress("glFogCoordfv"));
-	if (!FogCoordfv)
+	if (!FogCoordfv) {
 		++numFailed;
+	}
 	MultiDrawArrays = reinterpret_cast<PFNMULTIDRAWARRAYS>(IntGetProcAddress("glMultiDrawArrays"));
-	if (!MultiDrawArrays)
+	if (!MultiDrawArrays) {
 		++numFailed;
+	}
 	MultiDrawElements =
 	    reinterpret_cast<PFNMULTIDRAWELEMENTS>(IntGetProcAddress("glMultiDrawElements"));
-	if (!MultiDrawElements)
+	if (!MultiDrawElements) {
 		++numFailed;
+	}
 	PointParameterf = reinterpret_cast<PFNPOINTPARAMETERF>(IntGetProcAddress("glPointParameterf"));
-	if (!PointParameterf)
+	if (!PointParameterf) {
 		++numFailed;
+	}
 	PointParameterfv =
 	    reinterpret_cast<PFNPOINTPARAMETERFV>(IntGetProcAddress("glPointParameterfv"));
-	if (!PointParameterfv)
+	if (!PointParameterfv) {
 		++numFailed;
+	}
 	PointParameteri = reinterpret_cast<PFNPOINTPARAMETERI>(IntGetProcAddress("glPointParameteri"));
-	if (!PointParameteri)
+	if (!PointParameteri) {
 		++numFailed;
+	}
 	PointParameteriv =
 	    reinterpret_cast<PFNPOINTPARAMETERIV>(IntGetProcAddress("glPointParameteriv"));
-	if (!PointParameteriv)
+	if (!PointParameteriv) {
 		++numFailed;
+	}
 	SecondaryColor3b =
 	    reinterpret_cast<PFNSECONDARYCOLOR3B>(IntGetProcAddress("glSecondaryColor3b"));
-	if (!SecondaryColor3b)
+	if (!SecondaryColor3b) {
 		++numFailed;
+	}
 	SecondaryColor3bv =
 	    reinterpret_cast<PFNSECONDARYCOLOR3BV>(IntGetProcAddress("glSecondaryColor3bv"));
-	if (!SecondaryColor3bv)
+	if (!SecondaryColor3bv) {
 		++numFailed;
+	}
 	SecondaryColor3d =
 	    reinterpret_cast<PFNSECONDARYCOLOR3D>(IntGetProcAddress("glSecondaryColor3d"));
-	if (!SecondaryColor3d)
+	if (!SecondaryColor3d) {
 		++numFailed;
+	}
 	SecondaryColor3dv =
 	    reinterpret_cast<PFNSECONDARYCOLOR3DV>(IntGetProcAddress("glSecondaryColor3dv"));
-	if (!SecondaryColor3dv)
+	if (!SecondaryColor3dv) {
 		++numFailed;
+	}
 	SecondaryColor3f =
 	    reinterpret_cast<PFNSECONDARYCOLOR3F>(IntGetProcAddress("glSecondaryColor3f"));
-	if (!SecondaryColor3f)
+	if (!SecondaryColor3f) {
 		++numFailed;
+	}
 	SecondaryColor3fv =
 	    reinterpret_cast<PFNSECONDARYCOLOR3FV>(IntGetProcAddress("glSecondaryColor3fv"));
-	if (!SecondaryColor3fv)
+	if (!SecondaryColor3fv) {
 		++numFailed;
+	}
 	SecondaryColor3i =
 	    reinterpret_cast<PFNSECONDARYCOLOR3I>(IntGetProcAddress("glSecondaryColor3i"));
-	if (!SecondaryColor3i)
+	if (!SecondaryColor3i) {
 		++numFailed;
+	}
 	SecondaryColor3iv =
 	    reinterpret_cast<PFNSECONDARYCOLOR3IV>(IntGetProcAddress("glSecondaryColor3iv"));
-	if (!SecondaryColor3iv)
+	if (!SecondaryColor3iv) {
 		++numFailed;
+	}
 	SecondaryColor3s =
 	    reinterpret_cast<PFNSECONDARYCOLOR3S>(IntGetProcAddress("glSecondaryColor3s"));
-	if (!SecondaryColor3s)
+	if (!SecondaryColor3s) {
 		++numFailed;
+	}
 	SecondaryColor3sv =
 	    reinterpret_cast<PFNSECONDARYCOLOR3SV>(IntGetProcAddress("glSecondaryColor3sv"));
-	if (!SecondaryColor3sv)
+	if (!SecondaryColor3sv) {
 		++numFailed;
+	}
 	SecondaryColor3ub =
 	    reinterpret_cast<PFNSECONDARYCOLOR3UB>(IntGetProcAddress("glSecondaryColor3ub"));
-	if (!SecondaryColor3ub)
+	if (!SecondaryColor3ub) {
 		++numFailed;
+	}
 	SecondaryColor3ubv =
 	    reinterpret_cast<PFNSECONDARYCOLOR3UBV>(IntGetProcAddress("glSecondaryColor3ubv"));
-	if (!SecondaryColor3ubv)
+	if (!SecondaryColor3ubv) {
 		++numFailed;
+	}
 	SecondaryColor3ui =
 	    reinterpret_cast<PFNSECONDARYCOLOR3UI>(IntGetProcAddress("glSecondaryColor3ui"));
-	if (!SecondaryColor3ui)
+	if (!SecondaryColor3ui) {
 		++numFailed;
+	}
 	SecondaryColor3uiv =
 	    reinterpret_cast<PFNSECONDARYCOLOR3UIV>(IntGetProcAddress("glSecondaryColor3uiv"));
-	if (!SecondaryColor3uiv)
+	if (!SecondaryColor3uiv) {
 		++numFailed;
+	}
 	SecondaryColor3us =
 	    reinterpret_cast<PFNSECONDARYCOLOR3US>(IntGetProcAddress("glSecondaryColor3us"));
-	if (!SecondaryColor3us)
+	if (!SecondaryColor3us) {
 		++numFailed;
+	}
 	SecondaryColor3usv =
 	    reinterpret_cast<PFNSECONDARYCOLOR3USV>(IntGetProcAddress("glSecondaryColor3usv"));
-	if (!SecondaryColor3usv)
+	if (!SecondaryColor3usv) {
 		++numFailed;
+	}
 	SecondaryColorPointer =
 	    reinterpret_cast<PFNSECONDARYCOLORPOINTER>(IntGetProcAddress("glSecondaryColorPointer"));
-	if (!SecondaryColorPointer)
+	if (!SecondaryColorPointer) {
 		++numFailed;
+	}
 	WindowPos2d = reinterpret_cast<PFNWINDOWPOS2D>(IntGetProcAddress("glWindowPos2d"));
-	if (!WindowPos2d)
+	if (!WindowPos2d) {
 		++numFailed;
+	}
 	WindowPos2dv = reinterpret_cast<PFNWINDOWPOS2DV>(IntGetProcAddress("glWindowPos2dv"));
-	if (!WindowPos2dv)
+	if (!WindowPos2dv) {
 		++numFailed;
+	}
 	WindowPos2f = reinterpret_cast<PFNWINDOWPOS2F>(IntGetProcAddress("glWindowPos2f"));
-	if (!WindowPos2f)
+	if (!WindowPos2f) {
 		++numFailed;
+	}
 	WindowPos2fv = reinterpret_cast<PFNWINDOWPOS2FV>(IntGetProcAddress("glWindowPos2fv"));
-	if (!WindowPos2fv)
+	if (!WindowPos2fv) {
 		++numFailed;
+	}
 	WindowPos2i = reinterpret_cast<PFNWINDOWPOS2I>(IntGetProcAddress("glWindowPos2i"));
-	if (!WindowPos2i)
+	if (!WindowPos2i) {
 		++numFailed;
+	}
 	WindowPos2iv = reinterpret_cast<PFNWINDOWPOS2IV>(IntGetProcAddress("glWindowPos2iv"));
-	if (!WindowPos2iv)
+	if (!WindowPos2iv) {
 		++numFailed;
+	}
 	WindowPos2s = reinterpret_cast<PFNWINDOWPOS2S>(IntGetProcAddress("glWindowPos2s"));
-	if (!WindowPos2s)
+	if (!WindowPos2s) {
 		++numFailed;
+	}
 	WindowPos2sv = reinterpret_cast<PFNWINDOWPOS2SV>(IntGetProcAddress("glWindowPos2sv"));
-	if (!WindowPos2sv)
+	if (!WindowPos2sv) {
 		++numFailed;
+	}
 	WindowPos3d = reinterpret_cast<PFNWINDOWPOS3D>(IntGetProcAddress("glWindowPos3d"));
-	if (!WindowPos3d)
+	if (!WindowPos3d) {
 		++numFailed;
+	}
 	WindowPos3dv = reinterpret_cast<PFNWINDOWPOS3DV>(IntGetProcAddress("glWindowPos3dv"));
-	if (!WindowPos3dv)
+	if (!WindowPos3dv) {
 		++numFailed;
+	}
 	WindowPos3f = reinterpret_cast<PFNWINDOWPOS3F>(IntGetProcAddress("glWindowPos3f"));
-	if (!WindowPos3f)
+	if (!WindowPos3f) {
 		++numFailed;
+	}
 	WindowPos3fv = reinterpret_cast<PFNWINDOWPOS3FV>(IntGetProcAddress("glWindowPos3fv"));
-	if (!WindowPos3fv)
+	if (!WindowPos3fv) {
 		++numFailed;
+	}
 	WindowPos3i = reinterpret_cast<PFNWINDOWPOS3I>(IntGetProcAddress("glWindowPos3i"));
-	if (!WindowPos3i)
+	if (!WindowPos3i) {
 		++numFailed;
+	}
 	WindowPos3iv = reinterpret_cast<PFNWINDOWPOS3IV>(IntGetProcAddress("glWindowPos3iv"));
-	if (!WindowPos3iv)
+	if (!WindowPos3iv) {
 		++numFailed;
+	}
 	WindowPos3s = reinterpret_cast<PFNWINDOWPOS3S>(IntGetProcAddress("glWindowPos3s"));
-	if (!WindowPos3s)
+	if (!WindowPos3s) {
 		++numFailed;
+	}
 	WindowPos3sv = reinterpret_cast<PFNWINDOWPOS3SV>(IntGetProcAddress("glWindowPos3sv"));
-	if (!WindowPos3sv)
+	if (!WindowPos3sv) {
 		++numFailed;
+	}
 	BeginQuery = reinterpret_cast<PFNBEGINQUERY>(IntGetProcAddress("glBeginQuery"));
-	if (!BeginQuery)
+	if (!BeginQuery) {
 		++numFailed;
+	}
 	BindBuffer = reinterpret_cast<PFNBINDBUFFER>(IntGetProcAddress("glBindBuffer"));
-	if (!BindBuffer)
+	if (!BindBuffer) {
 		++numFailed;
+	}
 	BufferData = reinterpret_cast<PFNBUFFERDATA>(IntGetProcAddress("glBufferData"));
-	if (!BufferData)
+	if (!BufferData) {
 		++numFailed;
+	}
 	BufferSubData = reinterpret_cast<PFNBUFFERSUBDATA>(IntGetProcAddress("glBufferSubData"));
-	if (!BufferSubData)
+	if (!BufferSubData) {
 		++numFailed;
+	}
 	DeleteBuffers = reinterpret_cast<PFNDELETEBUFFERS>(IntGetProcAddress("glDeleteBuffers"));
-	if (!DeleteBuffers)
+	if (!DeleteBuffers) {
 		++numFailed;
+	}
 	DeleteQueries = reinterpret_cast<PFNDELETEQUERIES>(IntGetProcAddress("glDeleteQueries"));
-	if (!DeleteQueries)
+	if (!DeleteQueries) {
 		++numFailed;
+	}
 	EndQuery = reinterpret_cast<PFNENDQUERY>(IntGetProcAddress("glEndQuery"));
-	if (!EndQuery)
+	if (!EndQuery) {
 		++numFailed;
+	}
 	GenBuffers = reinterpret_cast<PFNGENBUFFERS>(IntGetProcAddress("glGenBuffers"));
-	if (!GenBuffers)
+	if (!GenBuffers) {
 		++numFailed;
+	}
 	GenQueries = reinterpret_cast<PFNGENQUERIES>(IntGetProcAddress("glGenQueries"));
-	if (!GenQueries)
+	if (!GenQueries) {
 		++numFailed;
+	}
 	GetBufferParameteriv =
 	    reinterpret_cast<PFNGETBUFFERPARAMETERIV>(IntGetProcAddress("glGetBufferParameteriv"));
-	if (!GetBufferParameteriv)
+	if (!GetBufferParameteriv) {
 		++numFailed;
+	}
 	GetBufferPointerv =
 	    reinterpret_cast<PFNGETBUFFERPOINTERV>(IntGetProcAddress("glGetBufferPointerv"));
-	if (!GetBufferPointerv)
+	if (!GetBufferPointerv) {
 		++numFailed;
+	}
 	GetBufferSubData =
 	    reinterpret_cast<PFNGETBUFFERSUBDATA>(IntGetProcAddress("glGetBufferSubData"));
-	if (!GetBufferSubData)
+	if (!GetBufferSubData) {
 		++numFailed;
+	}
 	GetQueryObjectiv =
 	    reinterpret_cast<PFNGETQUERYOBJECTIV>(IntGetProcAddress("glGetQueryObjectiv"));
-	if (!GetQueryObjectiv)
+	if (!GetQueryObjectiv) {
 		++numFailed;
+	}
 	GetQueryObjectuiv =
 	    reinterpret_cast<PFNGETQUERYOBJECTUIV>(IntGetProcAddress("glGetQueryObjectuiv"));
-	if (!GetQueryObjectuiv)
+	if (!GetQueryObjectuiv) {
 		++numFailed;
+	}
 	GetQueryiv = reinterpret_cast<PFNGETQUERYIV>(IntGetProcAddress("glGetQueryiv"));
-	if (!GetQueryiv)
+	if (!GetQueryiv) {
 		++numFailed;
+	}
 	IsBuffer = reinterpret_cast<PFNISBUFFER>(IntGetProcAddress("glIsBuffer"));
-	if (!IsBuffer)
+	if (!IsBuffer) {
 		++numFailed;
+	}
 	IsQuery = reinterpret_cast<PFNISQUERY>(IntGetProcAddress("glIsQuery"));
-	if (!IsQuery)
+	if (!IsQuery) {
 		++numFailed;
+	}
 	MapBuffer = reinterpret_cast<PFNMAPBUFFER>(IntGetProcAddress("glMapBuffer"));
-	if (!MapBuffer)
+	if (!MapBuffer) {
 		++numFailed;
+	}
 	UnmapBuffer = reinterpret_cast<PFNUNMAPBUFFER>(IntGetProcAddress("glUnmapBuffer"));
-	if (!UnmapBuffer)
+	if (!UnmapBuffer) {
 		++numFailed;
+	}
 	AttachShader = reinterpret_cast<PFNATTACHSHADER>(IntGetProcAddress("glAttachShader"));
-	if (!AttachShader)
+	if (!AttachShader) {
 		++numFailed;
+	}
 	BindAttribLocation =
 	    reinterpret_cast<PFNBINDATTRIBLOCATION>(IntGetProcAddress("glBindAttribLocation"));
-	if (!BindAttribLocation)
+	if (!BindAttribLocation) {
 		++numFailed;
+	}
 	BlendEquationSeparate =
 	    reinterpret_cast<PFNBLENDEQUATIONSEPARATE>(IntGetProcAddress("glBlendEquationSeparate"));
-	if (!BlendEquationSeparate)
+	if (!BlendEquationSeparate) {
 		++numFailed;
+	}
 	CompileShader = reinterpret_cast<PFNCOMPILESHADER>(IntGetProcAddress("glCompileShader"));
-	if (!CompileShader)
+	if (!CompileShader) {
 		++numFailed;
+	}
 	CreateProgram = reinterpret_cast<PFNCREATEPROGRAM>(IntGetProcAddress("glCreateProgram"));
-	if (!CreateProgram)
+	if (!CreateProgram) {
 		++numFailed;
+	}
 	CreateShader = reinterpret_cast<PFNCREATESHADER>(IntGetProcAddress("glCreateShader"));
-	if (!CreateShader)
+	if (!CreateShader) {
 		++numFailed;
+	}
 	DeleteProgram = reinterpret_cast<PFNDELETEPROGRAM>(IntGetProcAddress("glDeleteProgram"));
-	if (!DeleteProgram)
+	if (!DeleteProgram) {
 		++numFailed;
+	}
 	DeleteShader = reinterpret_cast<PFNDELETESHADER>(IntGetProcAddress("glDeleteShader"));
-	if (!DeleteShader)
+	if (!DeleteShader) {
 		++numFailed;
+	}
 	DetachShader = reinterpret_cast<PFNDETACHSHADER>(IntGetProcAddress("glDetachShader"));
-	if (!DetachShader)
+	if (!DetachShader) {
 		++numFailed;
+	}
 	DisableVertexAttribArray = reinterpret_cast<PFNDISABLEVERTEXATTRIBARRAY>(
 	    IntGetProcAddress("glDisableVertexAttribArray"));
-	if (!DisableVertexAttribArray)
+	if (!DisableVertexAttribArray) {
 		++numFailed;
+	}
 	DrawBuffers = reinterpret_cast<PFNDRAWBUFFERS>(IntGetProcAddress("glDrawBuffers"));
-	if (!DrawBuffers)
+	if (!DrawBuffers) {
 		++numFailed;
+	}
 	EnableVertexAttribArray = reinterpret_cast<PFNENABLEVERTEXATTRIBARRAY>(
 	    IntGetProcAddress("glEnableVertexAttribArray"));
-	if (!EnableVertexAttribArray)
+	if (!EnableVertexAttribArray) {
 		++numFailed;
+	}
 	GetActiveAttrib = reinterpret_cast<PFNGETACTIVEATTRIB>(IntGetProcAddress("glGetActiveAttrib"));
-	if (!GetActiveAttrib)
+	if (!GetActiveAttrib) {
 		++numFailed;
+	}
 	GetActiveUniform =
 	    reinterpret_cast<PFNGETACTIVEUNIFORM>(IntGetProcAddress("glGetActiveUniform"));
-	if (!GetActiveUniform)
+	if (!GetActiveUniform) {
 		++numFailed;
+	}
 	GetAttachedShaders =
 	    reinterpret_cast<PFNGETATTACHEDSHADERS>(IntGetProcAddress("glGetAttachedShaders"));
-	if (!GetAttachedShaders)
+	if (!GetAttachedShaders) {
 		++numFailed;
+	}
 	GetAttribLocation =
 	    reinterpret_cast<PFNGETATTRIBLOCATION>(IntGetProcAddress("glGetAttribLocation"));
-	if (!GetAttribLocation)
+	if (!GetAttribLocation) {
 		++numFailed;
+	}
 	GetProgramInfoLog =
 	    reinterpret_cast<PFNGETPROGRAMINFOLOG>(IntGetProcAddress("glGetProgramInfoLog"));
-	if (!GetProgramInfoLog)
+	if (!GetProgramInfoLog) {
 		++numFailed;
+	}
 	GetProgramiv = reinterpret_cast<PFNGETPROGRAMIV>(IntGetProcAddress("glGetProgramiv"));
-	if (!GetProgramiv)
+	if (!GetProgramiv) {
 		++numFailed;
+	}
 	GetShaderInfoLog =
 	    reinterpret_cast<PFNGETSHADERINFOLOG>(IntGetProcAddress("glGetShaderInfoLog"));
-	if (!GetShaderInfoLog)
+	if (!GetShaderInfoLog) {
 		++numFailed;
+	}
 	GetShaderSource = reinterpret_cast<PFNGETSHADERSOURCE>(IntGetProcAddress("glGetShaderSource"));
-	if (!GetShaderSource)
+	if (!GetShaderSource) {
 		++numFailed;
+	}
 	GetShaderiv = reinterpret_cast<PFNGETSHADERIV>(IntGetProcAddress("glGetShaderiv"));
-	if (!GetShaderiv)
+	if (!GetShaderiv) {
 		++numFailed;
+	}
 	GetUniformLocation =
 	    reinterpret_cast<PFNGETUNIFORMLOCATION>(IntGetProcAddress("glGetUniformLocation"));
-	if (!GetUniformLocation)
+	if (!GetUniformLocation) {
 		++numFailed;
+	}
 	GetUniformfv = reinterpret_cast<PFNGETUNIFORMFV>(IntGetProcAddress("glGetUniformfv"));
-	if (!GetUniformfv)
+	if (!GetUniformfv) {
 		++numFailed;
+	}
 	GetUniformiv = reinterpret_cast<PFNGETUNIFORMIV>(IntGetProcAddress("glGetUniformiv"));
-	if (!GetUniformiv)
+	if (!GetUniformiv) {
 		++numFailed;
+	}
 	GetVertexAttribPointerv = reinterpret_cast<PFNGETVERTEXATTRIBPOINTERV>(
 	    IntGetProcAddress("glGetVertexAttribPointerv"));
-	if (!GetVertexAttribPointerv)
+	if (!GetVertexAttribPointerv) {
 		++numFailed;
+	}
 	GetVertexAttribdv =
 	    reinterpret_cast<PFNGETVERTEXATTRIBDV>(IntGetProcAddress("glGetVertexAttribdv"));
-	if (!GetVertexAttribdv)
+	if (!GetVertexAttribdv) {
 		++numFailed;
+	}
 	GetVertexAttribfv =
 	    reinterpret_cast<PFNGETVERTEXATTRIBFV>(IntGetProcAddress("glGetVertexAttribfv"));
-	if (!GetVertexAttribfv)
+	if (!GetVertexAttribfv) {
 		++numFailed;
+	}
 	GetVertexAttribiv =
 	    reinterpret_cast<PFNGETVERTEXATTRIBIV>(IntGetProcAddress("glGetVertexAttribiv"));
-	if (!GetVertexAttribiv)
+	if (!GetVertexAttribiv) {
 		++numFailed;
+	}
 	IsProgram = reinterpret_cast<PFNISPROGRAM>(IntGetProcAddress("glIsProgram"));
-	if (!IsProgram)
+	if (!IsProgram) {
 		++numFailed;
+	}
 	IsShader = reinterpret_cast<PFNISSHADER>(IntGetProcAddress("glIsShader"));
-	if (!IsShader)
+	if (!IsShader) {
 		++numFailed;
+	}
 	LinkProgram = reinterpret_cast<PFNLINKPROGRAM>(IntGetProcAddress("glLinkProgram"));
-	if (!LinkProgram)
+	if (!LinkProgram) {
 		++numFailed;
+	}
 	ShaderSource = reinterpret_cast<PFNSHADERSOURCE>(IntGetProcAddress("glShaderSource"));
-	if (!ShaderSource)
+	if (!ShaderSource) {
 		++numFailed;
+	}
 	StencilFuncSeparate =
 	    reinterpret_cast<PFNSTENCILFUNCSEPARATE>(IntGetProcAddress("glStencilFuncSeparate"));
-	if (!StencilFuncSeparate)
+	if (!StencilFuncSeparate) {
 		++numFailed;
+	}
 	StencilMaskSeparate =
 	    reinterpret_cast<PFNSTENCILMASKSEPARATE>(IntGetProcAddress("glStencilMaskSeparate"));
-	if (!StencilMaskSeparate)
+	if (!StencilMaskSeparate) {
 		++numFailed;
+	}
 	StencilOpSeparate =
 	    reinterpret_cast<PFNSTENCILOPSEPARATE>(IntGetProcAddress("glStencilOpSeparate"));
-	if (!StencilOpSeparate)
+	if (!StencilOpSeparate) {
 		++numFailed;
+	}
 	Uniform1f = reinterpret_cast<PFNUNIFORM1F>(IntGetProcAddress("glUniform1f"));
-	if (!Uniform1f)
+	if (!Uniform1f) {
 		++numFailed;
+	}
 	Uniform1fv = reinterpret_cast<PFNUNIFORM1FV>(IntGetProcAddress("glUniform1fv"));
-	if (!Uniform1fv)
+	if (!Uniform1fv) {
 		++numFailed;
+	}
 	Uniform1i = reinterpret_cast<PFNUNIFORM1I>(IntGetProcAddress("glUniform1i"));
-	if (!Uniform1i)
+	if (!Uniform1i) {
 		++numFailed;
+	}
 	Uniform1iv = reinterpret_cast<PFNUNIFORM1IV>(IntGetProcAddress("glUniform1iv"));
-	if (!Uniform1iv)
+	if (!Uniform1iv) {
 		++numFailed;
+	}
 	Uniform2f = reinterpret_cast<PFNUNIFORM2F>(IntGetProcAddress("glUniform2f"));
-	if (!Uniform2f)
+	if (!Uniform2f) {
 		++numFailed;
+	}
 	Uniform2fv = reinterpret_cast<PFNUNIFORM2FV>(IntGetProcAddress("glUniform2fv"));
-	if (!Uniform2fv)
+	if (!Uniform2fv) {
 		++numFailed;
+	}
 	Uniform2i = reinterpret_cast<PFNUNIFORM2I>(IntGetProcAddress("glUniform2i"));
-	if (!Uniform2i)
+	if (!Uniform2i) {
 		++numFailed;
+	}
 	Uniform2iv = reinterpret_cast<PFNUNIFORM2IV>(IntGetProcAddress("glUniform2iv"));
-	if (!Uniform2iv)
+	if (!Uniform2iv) {
 		++numFailed;
+	}
 	Uniform3f = reinterpret_cast<PFNUNIFORM3F>(IntGetProcAddress("glUniform3f"));
-	if (!Uniform3f)
+	if (!Uniform3f) {
 		++numFailed;
+	}
 	Uniform3fv = reinterpret_cast<PFNUNIFORM3FV>(IntGetProcAddress("glUniform3fv"));
-	if (!Uniform3fv)
+	if (!Uniform3fv) {
 		++numFailed;
+	}
 	Uniform3i = reinterpret_cast<PFNUNIFORM3I>(IntGetProcAddress("glUniform3i"));
-	if (!Uniform3i)
+	if (!Uniform3i) {
 		++numFailed;
+	}
 	Uniform3iv = reinterpret_cast<PFNUNIFORM3IV>(IntGetProcAddress("glUniform3iv"));
-	if (!Uniform3iv)
+	if (!Uniform3iv) {
 		++numFailed;
+	}
 	Uniform4f = reinterpret_cast<PFNUNIFORM4F>(IntGetProcAddress("glUniform4f"));
-	if (!Uniform4f)
+	if (!Uniform4f) {
 		++numFailed;
+	}
 	Uniform4fv = reinterpret_cast<PFNUNIFORM4FV>(IntGetProcAddress("glUniform4fv"));
-	if (!Uniform4fv)
+	if (!Uniform4fv) {
 		++numFailed;
+	}
 	Uniform4i = reinterpret_cast<PFNUNIFORM4I>(IntGetProcAddress("glUniform4i"));
-	if (!Uniform4i)
+	if (!Uniform4i) {
 		++numFailed;
+	}
 	Uniform4iv = reinterpret_cast<PFNUNIFORM4IV>(IntGetProcAddress("glUniform4iv"));
-	if (!Uniform4iv)
+	if (!Uniform4iv) {
 		++numFailed;
+	}
 	UniformMatrix2fv =
 	    reinterpret_cast<PFNUNIFORMMATRIX2FV>(IntGetProcAddress("glUniformMatrix2fv"));
-	if (!UniformMatrix2fv)
+	if (!UniformMatrix2fv) {
 		++numFailed;
+	}
 	UniformMatrix3fv =
 	    reinterpret_cast<PFNUNIFORMMATRIX3FV>(IntGetProcAddress("glUniformMatrix3fv"));
-	if (!UniformMatrix3fv)
+	if (!UniformMatrix3fv) {
 		++numFailed;
+	}
 	UniformMatrix4fv =
 	    reinterpret_cast<PFNUNIFORMMATRIX4FV>(IntGetProcAddress("glUniformMatrix4fv"));
-	if (!UniformMatrix4fv)
+	if (!UniformMatrix4fv) {
 		++numFailed;
+	}
 	UseProgram = reinterpret_cast<PFNUSEPROGRAM>(IntGetProcAddress("glUseProgram"));
-	if (!UseProgram)
+	if (!UseProgram) {
 		++numFailed;
+	}
 	ValidateProgram = reinterpret_cast<PFNVALIDATEPROGRAM>(IntGetProcAddress("glValidateProgram"));
-	if (!ValidateProgram)
+	if (!ValidateProgram) {
 		++numFailed;
+	}
 	VertexAttrib1d = reinterpret_cast<PFNVERTEXATTRIB1D>(IntGetProcAddress("glVertexAttrib1d"));
-	if (!VertexAttrib1d)
+	if (!VertexAttrib1d) {
 		++numFailed;
+	}
 	VertexAttrib1dv = reinterpret_cast<PFNVERTEXATTRIB1DV>(IntGetProcAddress("glVertexAttrib1dv"));
-	if (!VertexAttrib1dv)
+	if (!VertexAttrib1dv) {
 		++numFailed;
+	}
 	VertexAttrib1f = reinterpret_cast<PFNVERTEXATTRIB1F>(IntGetProcAddress("glVertexAttrib1f"));
-	if (!VertexAttrib1f)
+	if (!VertexAttrib1f) {
 		++numFailed;
+	}
 	VertexAttrib1fv = reinterpret_cast<PFNVERTEXATTRIB1FV>(IntGetProcAddress("glVertexAttrib1fv"));
-	if (!VertexAttrib1fv)
+	if (!VertexAttrib1fv) {
 		++numFailed;
+	}
 	VertexAttrib1s = reinterpret_cast<PFNVERTEXATTRIB1S>(IntGetProcAddress("glVertexAttrib1s"));
-	if (!VertexAttrib1s)
+	if (!VertexAttrib1s) {
 		++numFailed;
+	}
 	VertexAttrib1sv = reinterpret_cast<PFNVERTEXATTRIB1SV>(IntGetProcAddress("glVertexAttrib1sv"));
-	if (!VertexAttrib1sv)
+	if (!VertexAttrib1sv) {
 		++numFailed;
+	}
 	VertexAttrib2d = reinterpret_cast<PFNVERTEXATTRIB2D>(IntGetProcAddress("glVertexAttrib2d"));
-	if (!VertexAttrib2d)
+	if (!VertexAttrib2d) {
 		++numFailed;
+	}
 	VertexAttrib2dv = reinterpret_cast<PFNVERTEXATTRIB2DV>(IntGetProcAddress("glVertexAttrib2dv"));
-	if (!VertexAttrib2dv)
+	if (!VertexAttrib2dv) {
 		++numFailed;
+	}
 	VertexAttrib2f = reinterpret_cast<PFNVERTEXATTRIB2F>(IntGetProcAddress("glVertexAttrib2f"));
-	if (!VertexAttrib2f)
+	if (!VertexAttrib2f) {
 		++numFailed;
+	}
 	VertexAttrib2fv = reinterpret_cast<PFNVERTEXATTRIB2FV>(IntGetProcAddress("glVertexAttrib2fv"));
-	if (!VertexAttrib2fv)
+	if (!VertexAttrib2fv) {
 		++numFailed;
+	}
 	VertexAttrib2s = reinterpret_cast<PFNVERTEXATTRIB2S>(IntGetProcAddress("glVertexAttrib2s"));
-	if (!VertexAttrib2s)
+	if (!VertexAttrib2s) {
 		++numFailed;
+	}
 	VertexAttrib2sv = reinterpret_cast<PFNVERTEXATTRIB2SV>(IntGetProcAddress("glVertexAttrib2sv"));
-	if (!VertexAttrib2sv)
+	if (!VertexAttrib2sv) {
 		++numFailed;
+	}
 	VertexAttrib3d = reinterpret_cast<PFNVERTEXATTRIB3D>(IntGetProcAddress("glVertexAttrib3d"));
-	if (!VertexAttrib3d)
+	if (!VertexAttrib3d) {
 		++numFailed;
+	}
 	VertexAttrib3dv = reinterpret_cast<PFNVERTEXATTRIB3DV>(IntGetProcAddress("glVertexAttrib3dv"));
-	if (!VertexAttrib3dv)
+	if (!VertexAttrib3dv) {
 		++numFailed;
+	}
 	VertexAttrib3f = reinterpret_cast<PFNVERTEXATTRIB3F>(IntGetProcAddress("glVertexAttrib3f"));
-	if (!VertexAttrib3f)
+	if (!VertexAttrib3f) {
 		++numFailed;
+	}
 	VertexAttrib3fv = reinterpret_cast<PFNVERTEXATTRIB3FV>(IntGetProcAddress("glVertexAttrib3fv"));
-	if (!VertexAttrib3fv)
+	if (!VertexAttrib3fv) {
 		++numFailed;
+	}
 	VertexAttrib3s = reinterpret_cast<PFNVERTEXATTRIB3S>(IntGetProcAddress("glVertexAttrib3s"));
-	if (!VertexAttrib3s)
+	if (!VertexAttrib3s) {
 		++numFailed;
+	}
 	VertexAttrib3sv = reinterpret_cast<PFNVERTEXATTRIB3SV>(IntGetProcAddress("glVertexAttrib3sv"));
-	if (!VertexAttrib3sv)
+	if (!VertexAttrib3sv) {
 		++numFailed;
+	}
 	VertexAttrib4Nbv =
 	    reinterpret_cast<PFNVERTEXATTRIB4NBV>(IntGetProcAddress("glVertexAttrib4Nbv"));
-	if (!VertexAttrib4Nbv)
+	if (!VertexAttrib4Nbv) {
 		++numFailed;
+	}
 	VertexAttrib4Niv =
 	    reinterpret_cast<PFNVERTEXATTRIB4NIV>(IntGetProcAddress("glVertexAttrib4Niv"));
-	if (!VertexAttrib4Niv)
+	if (!VertexAttrib4Niv) {
 		++numFailed;
+	}
 	VertexAttrib4Nsv =
 	    reinterpret_cast<PFNVERTEXATTRIB4NSV>(IntGetProcAddress("glVertexAttrib4Nsv"));
-	if (!VertexAttrib4Nsv)
+	if (!VertexAttrib4Nsv) {
 		++numFailed;
+	}
 	VertexAttrib4Nub =
 	    reinterpret_cast<PFNVERTEXATTRIB4NUB>(IntGetProcAddress("glVertexAttrib4Nub"));
-	if (!VertexAttrib4Nub)
+	if (!VertexAttrib4Nub) {
 		++numFailed;
+	}
 	VertexAttrib4Nubv =
 	    reinterpret_cast<PFNVERTEXATTRIB4NUBV>(IntGetProcAddress("glVertexAttrib4Nubv"));
-	if (!VertexAttrib4Nubv)
+	if (!VertexAttrib4Nubv) {
 		++numFailed;
+	}
 	VertexAttrib4Nuiv =
 	    reinterpret_cast<PFNVERTEXATTRIB4NUIV>(IntGetProcAddress("glVertexAttrib4Nuiv"));
-	if (!VertexAttrib4Nuiv)
+	if (!VertexAttrib4Nuiv) {
 		++numFailed;
+	}
 	VertexAttrib4Nusv =
 	    reinterpret_cast<PFNVERTEXATTRIB4NUSV>(IntGetProcAddress("glVertexAttrib4Nusv"));
-	if (!VertexAttrib4Nusv)
+	if (!VertexAttrib4Nusv) {
 		++numFailed;
+	}
 	VertexAttrib4bv = reinterpret_cast<PFNVERTEXATTRIB4BV>(IntGetProcAddress("glVertexAttrib4bv"));
-	if (!VertexAttrib4bv)
+	if (!VertexAttrib4bv) {
 		++numFailed;
+	}
 	VertexAttrib4d = reinterpret_cast<PFNVERTEXATTRIB4D>(IntGetProcAddress("glVertexAttrib4d"));
-	if (!VertexAttrib4d)
+	if (!VertexAttrib4d) {
 		++numFailed;
+	}
 	VertexAttrib4dv = reinterpret_cast<PFNVERTEXATTRIB4DV>(IntGetProcAddress("glVertexAttrib4dv"));
-	if (!VertexAttrib4dv)
+	if (!VertexAttrib4dv) {
 		++numFailed;
+	}
 	VertexAttrib4f = reinterpret_cast<PFNVERTEXATTRIB4F>(IntGetProcAddress("glVertexAttrib4f"));
-	if (!VertexAttrib4f)
+	if (!VertexAttrib4f) {
 		++numFailed;
+	}
 	VertexAttrib4fv = reinterpret_cast<PFNVERTEXATTRIB4FV>(IntGetProcAddress("glVertexAttrib4fv"));
-	if (!VertexAttrib4fv)
+	if (!VertexAttrib4fv) {
 		++numFailed;
+	}
 	VertexAttrib4iv = reinterpret_cast<PFNVERTEXATTRIB4IV>(IntGetProcAddress("glVertexAttrib4iv"));
-	if (!VertexAttrib4iv)
+	if (!VertexAttrib4iv) {
 		++numFailed;
+	}
 	VertexAttrib4s = reinterpret_cast<PFNVERTEXATTRIB4S>(IntGetProcAddress("glVertexAttrib4s"));
-	if (!VertexAttrib4s)
+	if (!VertexAttrib4s) {
 		++numFailed;
+	}
 	VertexAttrib4sv = reinterpret_cast<PFNVERTEXATTRIB4SV>(IntGetProcAddress("glVertexAttrib4sv"));
-	if (!VertexAttrib4sv)
+	if (!VertexAttrib4sv) {
 		++numFailed;
+	}
 	VertexAttrib4ubv =
 	    reinterpret_cast<PFNVERTEXATTRIB4UBV>(IntGetProcAddress("glVertexAttrib4ubv"));
-	if (!VertexAttrib4ubv)
+	if (!VertexAttrib4ubv) {
 		++numFailed;
+	}
 	VertexAttrib4uiv =
 	    reinterpret_cast<PFNVERTEXATTRIB4UIV>(IntGetProcAddress("glVertexAttrib4uiv"));
-	if (!VertexAttrib4uiv)
+	if (!VertexAttrib4uiv) {
 		++numFailed;
+	}
 	VertexAttrib4usv =
 	    reinterpret_cast<PFNVERTEXATTRIB4USV>(IntGetProcAddress("glVertexAttrib4usv"));
-	if (!VertexAttrib4usv)
+	if (!VertexAttrib4usv) {
 		++numFailed;
+	}
 	VertexAttribPointer =
 	    reinterpret_cast<PFNVERTEXATTRIBPOINTER>(IntGetProcAddress("glVertexAttribPointer"));
-	if (!VertexAttribPointer)
+	if (!VertexAttribPointer) {
 		++numFailed;
+	}
 	UniformMatrix2x3fv =
 	    reinterpret_cast<PFNUNIFORMMATRIX2X3FV>(IntGetProcAddress("glUniformMatrix2x3fv"));
-	if (!UniformMatrix2x3fv)
+	if (!UniformMatrix2x3fv) {
 		++numFailed;
+	}
 	UniformMatrix2x4fv =
 	    reinterpret_cast<PFNUNIFORMMATRIX2X4FV>(IntGetProcAddress("glUniformMatrix2x4fv"));
-	if (!UniformMatrix2x4fv)
+	if (!UniformMatrix2x4fv) {
 		++numFailed;
+	}
 	UniformMatrix3x2fv =
 	    reinterpret_cast<PFNUNIFORMMATRIX3X2FV>(IntGetProcAddress("glUniformMatrix3x2fv"));
-	if (!UniformMatrix3x2fv)
+	if (!UniformMatrix3x2fv) {
 		++numFailed;
+	}
 	UniformMatrix3x4fv =
 	    reinterpret_cast<PFNUNIFORMMATRIX3X4FV>(IntGetProcAddress("glUniformMatrix3x4fv"));
-	if (!UniformMatrix3x4fv)
+	if (!UniformMatrix3x4fv) {
 		++numFailed;
+	}
 	UniformMatrix4x2fv =
 	    reinterpret_cast<PFNUNIFORMMATRIX4X2FV>(IntGetProcAddress("glUniformMatrix4x2fv"));
-	if (!UniformMatrix4x2fv)
+	if (!UniformMatrix4x2fv) {
 		++numFailed;
+	}
 	UniformMatrix4x3fv =
 	    reinterpret_cast<PFNUNIFORMMATRIX4X3FV>(IntGetProcAddress("glUniformMatrix4x3fv"));
-	if (!UniformMatrix4x3fv)
+	if (!UniformMatrix4x3fv) {
 		++numFailed;
+	}
 	BeginConditionalRender =
 	    reinterpret_cast<PFNBEGINCONDITIONALRENDER>(IntGetProcAddress("glBeginConditionalRender"));
-	if (!BeginConditionalRender)
+	if (!BeginConditionalRender) {
 		++numFailed;
+	}
 	BeginTransformFeedback =
 	    reinterpret_cast<PFNBEGINTRANSFORMFEEDBACK>(IntGetProcAddress("glBeginTransformFeedback"));
-	if (!BeginTransformFeedback)
+	if (!BeginTransformFeedback) {
 		++numFailed;
+	}
 	BindBufferBase = reinterpret_cast<PFNBINDBUFFERBASE>(IntGetProcAddress("glBindBufferBase"));
-	if (!BindBufferBase)
+	if (!BindBufferBase) {
 		++numFailed;
+	}
 	BindBufferRange = reinterpret_cast<PFNBINDBUFFERRANGE>(IntGetProcAddress("glBindBufferRange"));
-	if (!BindBufferRange)
+	if (!BindBufferRange) {
 		++numFailed;
+	}
 	BindFragDataLocation =
 	    reinterpret_cast<PFNBINDFRAGDATALOCATION>(IntGetProcAddress("glBindFragDataLocation"));
-	if (!BindFragDataLocation)
+	if (!BindFragDataLocation) {
 		++numFailed;
+	}
 	BindFramebuffer = reinterpret_cast<PFNBINDFRAMEBUFFER>(IntGetProcAddress("glBindFramebuffer"));
-	if (!BindFramebuffer)
+	if (!BindFramebuffer) {
 		++numFailed;
+	}
 	BindRenderbuffer =
 	    reinterpret_cast<PFNBINDRENDERBUFFER>(IntGetProcAddress("glBindRenderbuffer"));
-	if (!BindRenderbuffer)
+	if (!BindRenderbuffer) {
 		++numFailed;
+	}
 	BindVertexArray = reinterpret_cast<PFNBINDVERTEXARRAY>(IntGetProcAddress("glBindVertexArray"));
-	if (!BindVertexArray)
+	if (!BindVertexArray) {
 		++numFailed;
+	}
 	BlitFramebuffer = reinterpret_cast<PFNBLITFRAMEBUFFER>(IntGetProcAddress("glBlitFramebuffer"));
-	if (!BlitFramebuffer)
+	if (!BlitFramebuffer) {
 		++numFailed;
+	}
 	CheckFramebufferStatus =
 	    reinterpret_cast<PFNCHECKFRAMEBUFFERSTATUS>(IntGetProcAddress("glCheckFramebufferStatus"));
-	if (!CheckFramebufferStatus)
+	if (!CheckFramebufferStatus) {
 		++numFailed;
+	}
 	ClampColor = reinterpret_cast<PFNCLAMPCOLOR>(IntGetProcAddress("glClampColor"));
-	if (!ClampColor)
+	if (!ClampColor) {
 		++numFailed;
+	}
 	ClearBufferfi = reinterpret_cast<PFNCLEARBUFFERFI>(IntGetProcAddress("glClearBufferfi"));
-	if (!ClearBufferfi)
+	if (!ClearBufferfi) {
 		++numFailed;
+	}
 	ClearBufferfv = reinterpret_cast<PFNCLEARBUFFERFV>(IntGetProcAddress("glClearBufferfv"));
-	if (!ClearBufferfv)
+	if (!ClearBufferfv) {
 		++numFailed;
+	}
 	ClearBufferiv = reinterpret_cast<PFNCLEARBUFFERIV>(IntGetProcAddress("glClearBufferiv"));
-	if (!ClearBufferiv)
+	if (!ClearBufferiv) {
 		++numFailed;
+	}
 	ClearBufferuiv = reinterpret_cast<PFNCLEARBUFFERUIV>(IntGetProcAddress("glClearBufferuiv"));
-	if (!ClearBufferuiv)
+	if (!ClearBufferuiv) {
 		++numFailed;
+	}
 	ColorMaski = reinterpret_cast<PFNCOLORMASKI>(IntGetProcAddress("glColorMaski"));
-	if (!ColorMaski)
+	if (!ColorMaski) {
 		++numFailed;
+	}
 	DeleteFramebuffers =
 	    reinterpret_cast<PFNDELETEFRAMEBUFFERS>(IntGetProcAddress("glDeleteFramebuffers"));
-	if (!DeleteFramebuffers)
+	if (!DeleteFramebuffers) {
 		++numFailed;
+	}
 	DeleteRenderbuffers =
 	    reinterpret_cast<PFNDELETERENDERBUFFERS>(IntGetProcAddress("glDeleteRenderbuffers"));
-	if (!DeleteRenderbuffers)
+	if (!DeleteRenderbuffers) {
 		++numFailed;
+	}
 	DeleteVertexArrays =
 	    reinterpret_cast<PFNDELETEVERTEXARRAYS>(IntGetProcAddress("glDeleteVertexArrays"));
-	if (!DeleteVertexArrays)
+	if (!DeleteVertexArrays) {
 		++numFailed;
+	}
 	Disablei = reinterpret_cast<PFNDISABLEI>(IntGetProcAddress("glDisablei"));
-	if (!Disablei)
+	if (!Disablei) {
 		++numFailed;
+	}
 	Enablei = reinterpret_cast<PFNENABLEI>(IntGetProcAddress("glEnablei"));
-	if (!Enablei)
+	if (!Enablei) {
 		++numFailed;
+	}
 	EndConditionalRender =
 	    reinterpret_cast<PFNENDCONDITIONALRENDER>(IntGetProcAddress("glEndConditionalRender"));
-	if (!EndConditionalRender)
+	if (!EndConditionalRender) {
 		++numFailed;
+	}
 	EndTransformFeedback =
 	    reinterpret_cast<PFNENDTRANSFORMFEEDBACK>(IntGetProcAddress("glEndTransformFeedback"));
-	if (!EndTransformFeedback)
+	if (!EndTransformFeedback) {
 		++numFailed;
+	}
 	FlushMappedBufferRange =
 	    reinterpret_cast<PFNFLUSHMAPPEDBUFFERRANGE>(IntGetProcAddress("glFlushMappedBufferRange"));
-	if (!FlushMappedBufferRange)
+	if (!FlushMappedBufferRange) {
 		++numFailed;
+	}
 	FramebufferRenderbuffer = reinterpret_cast<PFNFRAMEBUFFERRENDERBUFFER>(
 	    IntGetProcAddress("glFramebufferRenderbuffer"));
-	if (!FramebufferRenderbuffer)
+	if (!FramebufferRenderbuffer) {
 		++numFailed;
+	}
 	FramebufferTexture1D =
 	    reinterpret_cast<PFNFRAMEBUFFERTEXTURE1D>(IntGetProcAddress("glFramebufferTexture1D"));
-	if (!FramebufferTexture1D)
+	if (!FramebufferTexture1D) {
 		++numFailed;
+	}
 	FramebufferTexture2D =
 	    reinterpret_cast<PFNFRAMEBUFFERTEXTURE2D>(IntGetProcAddress("glFramebufferTexture2D"));
-	if (!FramebufferTexture2D)
+	if (!FramebufferTexture2D) {
 		++numFailed;
+	}
 	FramebufferTexture3D =
 	    reinterpret_cast<PFNFRAMEBUFFERTEXTURE3D>(IntGetProcAddress("glFramebufferTexture3D"));
-	if (!FramebufferTexture3D)
+	if (!FramebufferTexture3D) {
 		++numFailed;
+	}
 	FramebufferTextureLayer = reinterpret_cast<PFNFRAMEBUFFERTEXTURELAYER>(
 	    IntGetProcAddress("glFramebufferTextureLayer"));
-	if (!FramebufferTextureLayer)
+	if (!FramebufferTextureLayer) {
 		++numFailed;
+	}
 	GenFramebuffers = reinterpret_cast<PFNGENFRAMEBUFFERS>(IntGetProcAddress("glGenFramebuffers"));
-	if (!GenFramebuffers)
+	if (!GenFramebuffers) {
 		++numFailed;
+	}
 	GenRenderbuffers =
 	    reinterpret_cast<PFNGENRENDERBUFFERS>(IntGetProcAddress("glGenRenderbuffers"));
-	if (!GenRenderbuffers)
+	if (!GenRenderbuffers) {
 		++numFailed;
+	}
 	GenVertexArrays = reinterpret_cast<PFNGENVERTEXARRAYS>(IntGetProcAddress("glGenVertexArrays"));
-	if (!GenVertexArrays)
+	if (!GenVertexArrays) {
 		++numFailed;
+	}
 	GenerateMipmap = reinterpret_cast<PFNGENERATEMIPMAP>(IntGetProcAddress("glGenerateMipmap"));
-	if (!GenerateMipmap)
+	if (!GenerateMipmap) {
 		++numFailed;
+	}
 	GetBooleani_v = reinterpret_cast<PFNGETBOOLEANI_V>(IntGetProcAddress("glGetBooleani_v"));
-	if (!GetBooleani_v)
+	if (!GetBooleani_v) {
 		++numFailed;
+	}
 	GetFragDataLocation =
 	    reinterpret_cast<PFNGETFRAGDATALOCATION>(IntGetProcAddress("glGetFragDataLocation"));
-	if (!GetFragDataLocation)
+	if (!GetFragDataLocation) {
 		++numFailed;
+	}
 	GetFramebufferAttachmentParameteriv = reinterpret_cast<PFNGETFRAMEBUFFERATTACHMENTPARAMETERIV>(
 	    IntGetProcAddress("glGetFramebufferAttachmentParameteriv"));
-	if (!GetFramebufferAttachmentParameteriv)
+	if (!GetFramebufferAttachmentParameteriv) {
 		++numFailed;
+	}
 	GetIntegeri_v = reinterpret_cast<PFNGETINTEGERI_V>(IntGetProcAddress("glGetIntegeri_v"));
-	if (!GetIntegeri_v)
+	if (!GetIntegeri_v) {
 		++numFailed;
+	}
 	GetRenderbufferParameteriv = reinterpret_cast<PFNGETRENDERBUFFERPARAMETERIV>(
 	    IntGetProcAddress("glGetRenderbufferParameteriv"));
-	if (!GetRenderbufferParameteriv)
+	if (!GetRenderbufferParameteriv) {
 		++numFailed;
+	}
 	GetStringi = reinterpret_cast<PFNGETSTRINGI>(IntGetProcAddress("glGetStringi"));
-	if (!GetStringi)
+	if (!GetStringi) {
 		++numFailed;
+	}
 	GetTexParameterIiv =
 	    reinterpret_cast<PFNGETTEXPARAMETERIIV>(IntGetProcAddress("glGetTexParameterIiv"));
-	if (!GetTexParameterIiv)
+	if (!GetTexParameterIiv) {
 		++numFailed;
+	}
 	GetTexParameterIuiv =
 	    reinterpret_cast<PFNGETTEXPARAMETERIUIV>(IntGetProcAddress("glGetTexParameterIuiv"));
-	if (!GetTexParameterIuiv)
+	if (!GetTexParameterIuiv) {
 		++numFailed;
+	}
 	GetTransformFeedbackVarying = reinterpret_cast<PFNGETTRANSFORMFEEDBACKVARYING>(
 	    IntGetProcAddress("glGetTransformFeedbackVarying"));
-	if (!GetTransformFeedbackVarying)
+	if (!GetTransformFeedbackVarying) {
 		++numFailed;
+	}
 	GetUniformuiv = reinterpret_cast<PFNGETUNIFORMUIV>(IntGetProcAddress("glGetUniformuiv"));
-	if (!GetUniformuiv)
+	if (!GetUniformuiv) {
 		++numFailed;
+	}
 	GetVertexAttribIiv =
 	    reinterpret_cast<PFNGETVERTEXATTRIBIIV>(IntGetProcAddress("glGetVertexAttribIiv"));
-	if (!GetVertexAttribIiv)
+	if (!GetVertexAttribIiv) {
 		++numFailed;
+	}
 	GetVertexAttribIuiv =
 	    reinterpret_cast<PFNGETVERTEXATTRIBIUIV>(IntGetProcAddress("glGetVertexAttribIuiv"));
-	if (!GetVertexAttribIuiv)
+	if (!GetVertexAttribIuiv) {
 		++numFailed;
+	}
 	IsEnabledi = reinterpret_cast<PFNISENABLEDI>(IntGetProcAddress("glIsEnabledi"));
-	if (!IsEnabledi)
+	if (!IsEnabledi) {
 		++numFailed;
+	}
 	IsFramebuffer = reinterpret_cast<PFNISFRAMEBUFFER>(IntGetProcAddress("glIsFramebuffer"));
-	if (!IsFramebuffer)
+	if (!IsFramebuffer) {
 		++numFailed;
+	}
 	IsRenderbuffer = reinterpret_cast<PFNISRENDERBUFFER>(IntGetProcAddress("glIsRenderbuffer"));
-	if (!IsRenderbuffer)
+	if (!IsRenderbuffer) {
 		++numFailed;
+	}
 	IsVertexArray = reinterpret_cast<PFNISVERTEXARRAY>(IntGetProcAddress("glIsVertexArray"));
-	if (!IsVertexArray)
+	if (!IsVertexArray) {
 		++numFailed;
+	}
 	MapBufferRange = reinterpret_cast<PFNMAPBUFFERRANGE>(IntGetProcAddress("glMapBufferRange"));
-	if (!MapBufferRange)
+	if (!MapBufferRange) {
 		++numFailed;
+	}
 	RenderbufferStorage =
 	    reinterpret_cast<PFNRENDERBUFFERSTORAGE>(IntGetProcAddress("glRenderbufferStorage"));
-	if (!RenderbufferStorage)
+	if (!RenderbufferStorage) {
 		++numFailed;
+	}
 	RenderbufferStorageMultisample = reinterpret_cast<PFNRENDERBUFFERSTORAGEMULTISAMPLE>(
 	    IntGetProcAddress("glRenderbufferStorageMultisample"));
-	if (!RenderbufferStorageMultisample)
+	if (!RenderbufferStorageMultisample) {
 		++numFailed;
+	}
 	TexParameterIiv = reinterpret_cast<PFNTEXPARAMETERIIV>(IntGetProcAddress("glTexParameterIiv"));
-	if (!TexParameterIiv)
+	if (!TexParameterIiv) {
 		++numFailed;
+	}
 	TexParameterIuiv =
 	    reinterpret_cast<PFNTEXPARAMETERIUIV>(IntGetProcAddress("glTexParameterIuiv"));
-	if (!TexParameterIuiv)
+	if (!TexParameterIuiv) {
 		++numFailed;
+	}
 	TransformFeedbackVaryings = reinterpret_cast<PFNTRANSFORMFEEDBACKVARYINGS>(
 	    IntGetProcAddress("glTransformFeedbackVaryings"));
-	if (!TransformFeedbackVaryings)
+	if (!TransformFeedbackVaryings) {
 		++numFailed;
+	}
 	Uniform1ui = reinterpret_cast<PFNUNIFORM1UI>(IntGetProcAddress("glUniform1ui"));
-	if (!Uniform1ui)
+	if (!Uniform1ui) {
 		++numFailed;
+	}
 	Uniform1uiv = reinterpret_cast<PFNUNIFORM1UIV>(IntGetProcAddress("glUniform1uiv"));
-	if (!Uniform1uiv)
+	if (!Uniform1uiv) {
 		++numFailed;
+	}
 	Uniform2ui = reinterpret_cast<PFNUNIFORM2UI>(IntGetProcAddress("glUniform2ui"));
-	if (!Uniform2ui)
+	if (!Uniform2ui) {
 		++numFailed;
+	}
 	Uniform2uiv = reinterpret_cast<PFNUNIFORM2UIV>(IntGetProcAddress("glUniform2uiv"));
-	if (!Uniform2uiv)
+	if (!Uniform2uiv) {
 		++numFailed;
+	}
 	Uniform3ui = reinterpret_cast<PFNUNIFORM3UI>(IntGetProcAddress("glUniform3ui"));
-	if (!Uniform3ui)
+	if (!Uniform3ui) {
 		++numFailed;
+	}
 	Uniform3uiv = reinterpret_cast<PFNUNIFORM3UIV>(IntGetProcAddress("glUniform3uiv"));
-	if (!Uniform3uiv)
+	if (!Uniform3uiv) {
 		++numFailed;
+	}
 	Uniform4ui = reinterpret_cast<PFNUNIFORM4UI>(IntGetProcAddress("glUniform4ui"));
-	if (!Uniform4ui)
+	if (!Uniform4ui) {
 		++numFailed;
+	}
 	Uniform4uiv = reinterpret_cast<PFNUNIFORM4UIV>(IntGetProcAddress("glUniform4uiv"));
-	if (!Uniform4uiv)
+	if (!Uniform4uiv) {
 		++numFailed;
+	}
 	VertexAttribI1i = reinterpret_cast<PFNVERTEXATTRIBI1I>(IntGetProcAddress("glVertexAttribI1i"));
-	if (!VertexAttribI1i)
+	if (!VertexAttribI1i) {
 		++numFailed;
+	}
 	VertexAttribI1iv =
 	    reinterpret_cast<PFNVERTEXATTRIBI1IV>(IntGetProcAddress("glVertexAttribI1iv"));
-	if (!VertexAttribI1iv)
+	if (!VertexAttribI1iv) {
 		++numFailed;
+	}
 	VertexAttribI1ui =
 	    reinterpret_cast<PFNVERTEXATTRIBI1UI>(IntGetProcAddress("glVertexAttribI1ui"));
-	if (!VertexAttribI1ui)
+	if (!VertexAttribI1ui) {
 		++numFailed;
+	}
 	VertexAttribI1uiv =
 	    reinterpret_cast<PFNVERTEXATTRIBI1UIV>(IntGetProcAddress("glVertexAttribI1uiv"));
-	if (!VertexAttribI1uiv)
+	if (!VertexAttribI1uiv) {
 		++numFailed;
+	}
 	VertexAttribI2i = reinterpret_cast<PFNVERTEXATTRIBI2I>(IntGetProcAddress("glVertexAttribI2i"));
-	if (!VertexAttribI2i)
+	if (!VertexAttribI2i) {
 		++numFailed;
+	}
 	VertexAttribI2iv =
 	    reinterpret_cast<PFNVERTEXATTRIBI2IV>(IntGetProcAddress("glVertexAttribI2iv"));
-	if (!VertexAttribI2iv)
+	if (!VertexAttribI2iv) {
 		++numFailed;
+	}
 	VertexAttribI2ui =
 	    reinterpret_cast<PFNVERTEXATTRIBI2UI>(IntGetProcAddress("glVertexAttribI2ui"));
-	if (!VertexAttribI2ui)
+	if (!VertexAttribI2ui) {
 		++numFailed;
+	}
 	VertexAttribI2uiv =
 	    reinterpret_cast<PFNVERTEXATTRIBI2UIV>(IntGetProcAddress("glVertexAttribI2uiv"));
-	if (!VertexAttribI2uiv)
+	if (!VertexAttribI2uiv) {
 		++numFailed;
+	}
 	VertexAttribI3i = reinterpret_cast<PFNVERTEXATTRIBI3I>(IntGetProcAddress("glVertexAttribI3i"));
-	if (!VertexAttribI3i)
+	if (!VertexAttribI3i) {
 		++numFailed;
+	}
 	VertexAttribI3iv =
 	    reinterpret_cast<PFNVERTEXATTRIBI3IV>(IntGetProcAddress("glVertexAttribI3iv"));
-	if (!VertexAttribI3iv)
+	if (!VertexAttribI3iv) {
 		++numFailed;
+	}
 	VertexAttribI3ui =
 	    reinterpret_cast<PFNVERTEXATTRIBI3UI>(IntGetProcAddress("glVertexAttribI3ui"));
-	if (!VertexAttribI3ui)
+	if (!VertexAttribI3ui) {
 		++numFailed;
+	}
 	VertexAttribI3uiv =
 	    reinterpret_cast<PFNVERTEXATTRIBI3UIV>(IntGetProcAddress("glVertexAttribI3uiv"));
-	if (!VertexAttribI3uiv)
+	if (!VertexAttribI3uiv) {
 		++numFailed;
+	}
 	VertexAttribI4bv =
 	    reinterpret_cast<PFNVERTEXATTRIBI4BV>(IntGetProcAddress("glVertexAttribI4bv"));
-	if (!VertexAttribI4bv)
+	if (!VertexAttribI4bv) {
 		++numFailed;
+	}
 	VertexAttribI4i = reinterpret_cast<PFNVERTEXATTRIBI4I>(IntGetProcAddress("glVertexAttribI4i"));
-	if (!VertexAttribI4i)
+	if (!VertexAttribI4i) {
 		++numFailed;
+	}
 	VertexAttribI4iv =
 	    reinterpret_cast<PFNVERTEXATTRIBI4IV>(IntGetProcAddress("glVertexAttribI4iv"));
-	if (!VertexAttribI4iv)
+	if (!VertexAttribI4iv) {
 		++numFailed;
+	}
 	VertexAttribI4sv =
 	    reinterpret_cast<PFNVERTEXATTRIBI4SV>(IntGetProcAddress("glVertexAttribI4sv"));
-	if (!VertexAttribI4sv)
+	if (!VertexAttribI4sv) {
 		++numFailed;
+	}
 	VertexAttribI4ubv =
 	    reinterpret_cast<PFNVERTEXATTRIBI4UBV>(IntGetProcAddress("glVertexAttribI4ubv"));
-	if (!VertexAttribI4ubv)
+	if (!VertexAttribI4ubv) {
 		++numFailed;
+	}
 	VertexAttribI4ui =
 	    reinterpret_cast<PFNVERTEXATTRIBI4UI>(IntGetProcAddress("glVertexAttribI4ui"));
-	if (!VertexAttribI4ui)
+	if (!VertexAttribI4ui) {
 		++numFailed;
+	}
 	VertexAttribI4uiv =
 	    reinterpret_cast<PFNVERTEXATTRIBI4UIV>(IntGetProcAddress("glVertexAttribI4uiv"));
-	if (!VertexAttribI4uiv)
+	if (!VertexAttribI4uiv) {
 		++numFailed;
+	}
 	VertexAttribI4usv =
 	    reinterpret_cast<PFNVERTEXATTRIBI4USV>(IntGetProcAddress("glVertexAttribI4usv"));
-	if (!VertexAttribI4usv)
+	if (!VertexAttribI4usv) {
 		++numFailed;
+	}
 	VertexAttribIPointer =
 	    reinterpret_cast<PFNVERTEXATTRIBIPOINTER>(IntGetProcAddress("glVertexAttribIPointer"));
-	if (!VertexAttribIPointer)
+	if (!VertexAttribIPointer) {
 		++numFailed;
+	}
 	return numFailed;
 }
 
@@ -3520,10 +4155,11 @@ void LoadExtByName(std::vector<MapEntry> &table, const char *extensionName)
 	auto entry = std::find_if(table.begin(), table.end(), MapCompare(extensionName));
 
 	if (entry != table.end()) {
-		if (entry->loaderFunc)
+		if (entry->loaderFunc) {
 			(*entry->extVariable) = exts::LoadTest(true, entry->loaderFunc());
-		else
+		} else {
 			(*entry->extVariable) = exts::LoadTest(true, 0);
+		}
 	}
 }
 } // namespace
@@ -3551,11 +4187,13 @@ exts::LoadTest LoadFunctions()
 	InitializeMappingTable(table);
 
 	GetIntegerv = reinterpret_cast<PFNGETINTEGERV>(IntGetProcAddress("glGetIntegerv"));
-	if (!GetIntegerv)
+	if (!GetIntegerv) {
 		return exts::LoadTest();
+	}
 	GetStringi = reinterpret_cast<PFNGETSTRINGI>(IntGetProcAddress("glGetStringi"));
-	if (!GetStringi)
+	if (!GetStringi) {
 		return exts::LoadTest();
+	}
 
 	ProcExtsFromExtList(table);
 
@@ -3574,29 +4212,35 @@ static void GetGLVersion()
 
 int GetMajorVersion()
 {
-	if (g_major_version == 0)
+	if (g_major_version == 0) {
 		GetGLVersion();
+	}
 	return g_major_version;
 }
 
 int GetMinorVersion()
 {
-	if (g_major_version == 0) // Yes, check the major version to get the minor one.
+	if (g_major_version == 0) { // Yes, check the major version to get the minor one.
 		GetGLVersion();
+	}
 	return g_minor_version;
 }
 
 bool IsVersionGEQ(int majorVersion, int minorVersion)
 {
-	if (g_major_version == 0)
+	if (g_major_version == 0) {
 		GetGLVersion();
+	}
 
-	if (majorVersion > g_major_version)
+	if (majorVersion > g_major_version) {
 		return true;
-	if (majorVersion < g_major_version)
+	}
+	if (majorVersion < g_major_version) {
 		return false;
-	if (minorVersion >= g_minor_version)
+	}
+	if (minorVersion >= g_minor_version) {
 		return true;
+	}
 	return false;
 }
 

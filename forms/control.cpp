@@ -41,8 +41,9 @@ void Control::Focus()
 
 bool Control::IsFocused()
 {
-	if (!this->takesFocus)
+	if (!this->takesFocus) {
 		return false;
+	}
 	if (owningControl != nullptr) {
 		return (owningControl->GetActiveControl() == this);
 	}
@@ -541,8 +542,9 @@ Control *Control::FindControl(UString ID)
 			return ctrl;
 		}
 		Control *childControl = ctrl->FindControl(ID);
-		if (childControl)
+		if (childControl) {
 			return childControl;
+		}
 	}
 	return nullptr;
 }

@@ -64,16 +64,18 @@ namespace OpenApoc
 
 void registerRenderer(RendererFactory *factory, UString name)
 {
-	if (!registeredRenderers)
+	if (!registeredRenderers) {
 		registeredRenderers = new std::map<UString, std::unique_ptr<OpenApoc::RendererFactory>>();
+	}
 	registeredRenderers->emplace(name, std::unique_ptr<RendererFactory>(factory));
 }
 
 void registerSoundBackend(SoundBackendFactory *factory, UString name)
 {
-	if (!registeredSoundBackends)
+	if (!registeredSoundBackends) {
 		registeredSoundBackends =
 		    new std::map<UString, std::unique_ptr<OpenApoc::SoundBackendFactory>>();
+	}
 	registeredSoundBackends->emplace(name, std::unique_ptr<SoundBackendFactory>(factory));
 }
 
@@ -97,8 +99,9 @@ class JukeBoxImpl : public JukeBox
 			auto musicTrack = fw.data->load_music(track);
 			if (!musicTrack)
 				LogError("Failed to load music track \"%s\" - skipping", track.str().c_str());
-			else
+			else {
 				this->trackList.push_back(musicTrack);
+			}
 		}
 		this->progressTrack(this);
 	}
@@ -116,8 +119,9 @@ class JukeBoxImpl : public JukeBox
 		jukebox->fw.soundBackend->playMusic(jukebox->trackList[jukebox->position], progressTrack,
 		                                    jukebox);
 		jukebox->position++;
-		if (jukebox->mode == JukeBox::PlayMode::Loop)
+		if (jukebox->mode == JukeBox::PlayMode::Loop) {
 			jukebox->position = jukebox->position % jukebox->trackList.size();
+		}
 	}
 	virtual void stop() override { fw.soundBackend->stopMusic(); }
 };
@@ -321,8 +325,9 @@ void Framework::ReadRecordedEvents()
 	while (std::getline(this->eventStream, line)) {
 		Event *e = new Event(UString(line));
 		PushEvent(e);
-		if (e->Type == EVENT_END_OF_FRAME)
+		if (e->Type == EVENT_END_OF_FRAME) {
 			break;
+		}
 	}
 	if (!this->eventStream) {
 		LogInfo("Reached end of reply, appending CLOSE");
@@ -341,10 +346,11 @@ void Framework::ProcessEvents()
 
 	// Convert Allegro events before we process
 	// TODO: Consider threading the translation
-	if (this->replayEvents)
+	if (this->replayEvents) {
 		ReadRecordedEvents();
-	else
+	} else {
 		TranslateAllegroEvents();
+	}
 
 	al_lock_mutex(p->eventMutex);
 
@@ -356,8 +362,9 @@ void Framework::ProcessEvents()
 			LogError("Invalid event on queue");
 			continue;
 		}
-		if (this->dumpEvents)
+		if (this->dumpEvents) {
 			DumpEvent(e);
+		}
 		switch (e->Type) {
 		case EVENT_WINDOW_CLOSED:
 			delete e;
