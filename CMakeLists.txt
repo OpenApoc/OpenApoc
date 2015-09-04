@@ -141,3 +141,17 @@ ADD_CUSTOM_COMMAND( TARGET OpenApoc
 
 enable_testing()
 add_subdirectory(tests)
+
+SET(CLANG_FORMAT_COMMAND clang_format)
+
+UNSET(FORMAT_SOURCES)
+
+foreach(SOURCE ${sources})
+		list(APPEND FORMAT_SOURCES ${CMAKE_SOURCE_DIR}/${SOURCE})
+endforeach()
+foreach(SOURCE ${FRAMEWORK_SOURCES})
+		list(APPEND FORMAT_SOURCES ${CMAKE_SOURCE_DIR}/${SOURCE})
+endforeach()
+
+add_custom_target(format clang-format -i ${FORMAT_SOURCES}
+		DEPENDS ${FORMAT_SOURCES} .clang-format)
