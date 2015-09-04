@@ -3,7 +3,8 @@
 
 #include "framework/includes.h"
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 class Palette;
 class Event;
@@ -13,31 +14,30 @@ class Image;
 class ApocCursor
 {
 
-	private:
-		std::vector<std::shared_ptr<Image> > images;
-		Framework &fw;
-		Vec2<int> cursorPos;
+  private:
+	std::vector<std::shared_ptr<Image>> images;
+	Framework &fw;
+	Vec2<int> cursorPos;
 
-	public:
-		enum CursorType
-		{
-			Normal,
-			ThrowTarget,
-			PsiTarget,
-			NoTarget,
-			Add,
-			Shoot,
-			Control,
-			Teleport,
-			NoTeleport
-		};
+  public:
+	enum CursorType {
+		Normal,
+		ThrowTarget,
+		PsiTarget,
+		NoTarget,
+		Add,
+		Shoot,
+		Control,
+		Teleport,
+		NoTeleport
+	};
 
-		CursorType CurrentType;
+	CursorType CurrentType;
 
-		ApocCursor( Framework &fw, std::shared_ptr<Palette> ColourPalette );
-		~ApocCursor();
+	ApocCursor(Framework &fw, std::shared_ptr<Palette> ColourPalette);
+	~ApocCursor();
 
-		void EventOccured( Event* e );
-		void Render();
+	void EventOccured(Event *e);
+	void Render();
 };
-}; //namespace OpenApoc
+} // namespace OpenApoc

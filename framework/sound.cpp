@@ -5,8 +5,10 @@
 #include <map>
 #include <memory>
 
-namespace {
-}; //anonymous namespace
+namespace
+{
+} // namespace
 
-namespace OpenApoc {
-}; //namespace OpenApoc
+namespace OpenApoc
+{
+} // namespace OpenApoc

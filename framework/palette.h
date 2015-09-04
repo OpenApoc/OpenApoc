@@ -5,19 +5,20 @@
 #include "image.h"
 #include "renderer.h"
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 class Palette
 {
-	public:
-		std::vector<Colour> colours;
-		std::unique_ptr<RendererImageData> rendererPrivateData;
+  public:
+	std::vector<Colour> colours;
+	std::unique_ptr<RendererImageData> rendererPrivateData;
 
-		Palette(unsigned int size, Colour initialColour = {0,0,0,0});
-		~Palette();
+	Palette(unsigned int size, Colour initialColour = {0, 0, 0, 0});
+	~Palette();
 
-		Colour &GetColour(unsigned int Index);
-		void SetColour(unsigned int Index, Colour &Col);
+	Colour &GetColour(unsigned int Index);
+	void SetColour(unsigned int Index, Colour &Col);
 };
 
-}; //namespace OpenApoc
+} // namespace OpenApoc

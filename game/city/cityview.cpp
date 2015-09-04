@@ -7,28 +7,20 @@
 #include "game/city/scorescreen.h"
 #include "game/general/ingameoptions.h"
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 CityView::CityView(Framework &fw)
-	: TileView(fw, *fw.state->city, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z})
+    : TileView(fw, *fw.state->city, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z})
 {
-	static const std::vector<UString> tabFormNames = 
-	{
-		"FORM_CITY_UI_1",
-		"FORM_CITY_UI_2",
-		"FORM_CITY_UI_3",
-		"FORM_CITY_UI_4",
-		"FORM_CITY_UI_5",
-		"FORM_CITY_UI_6",
-		"FORM_CITY_UI_7",
-		"FORM_CITY_UI_8",
+	static const std::vector<UString> tabFormNames = {
+	    "FORM_CITY_UI_1", "FORM_CITY_UI_2", "FORM_CITY_UI_3", "FORM_CITY_UI_4",
+	    "FORM_CITY_UI_5", "FORM_CITY_UI_6", "FORM_CITY_UI_7", "FORM_CITY_UI_8",
 	};
 
-	for (auto &formName : tabFormNames)
-	{
+	for (auto &formName : tabFormNames) {
 		Form *f = fw.gamecore->GetForm(formName);
-		if (!f)
-		{
+		if (!f) {
 			LogError("Failed to load form \"%s\"", formName.str().c_str());
 			return;
 		}
@@ -38,27 +30,20 @@ CityView::CityView(Framework &fw)
 	this->activeTab = this->uiTabs[0];
 }
 
-CityView::~CityView()
-{
+CityView::~CityView() {}
 
-}
-
-void
-CityView::Render()
+void CityView::Render()
 {
 	TileView::Render();
-	if (fw.state->showVehiclePath)
-	{
-		for (auto obj : this->map.activeObjects)
-		{
+	if (fw.state->showVehiclePath) {
+		for (auto obj : this->map.activeObjects) {
 			auto vTile = std::dynamic_pointer_cast<VehicleTileObject>(obj);
 			if (!vTile)
 				continue;
 			auto &v = vTile->getVehicle();
 			auto &path = v.mission->getCurrentPlannedPath();
 			Vec3<float> prevPos = vTile->getPosition();
-			for (auto *tile : path)
-			{
+			for (auto *tile : path) {
 				Vec3<float> pos = tile->position;
 				Vec2<float> screenPosA = this->tileToScreenCoords(prevPos);
 				screenPosA.x += this->offsetX;
@@ -67,35 +52,29 @@ CityView::Render()
 				screenPosB.x += this->offsetX;
 				screenPosB.y += this->offsetX;
 
-				fw.renderer->drawLine(screenPosA, screenPosB, Colour{255,0,0,128});
+				fw.renderer->drawLine(screenPosA, screenPosB, Colour{255, 0, 0, 128});
 
 				prevPos = pos;
 			}
 		}
-
 	}
 	activeTab->Render();
 	fw.gamecore->MouseCursor->Render();
 }
 
-void
-CityView::Update(StageCmd * const cmd)
+void CityView::Update(StageCmd *const cmd)
 {
 	TileView::Update(cmd);
 	activeTab->Update();
 }
 
-void
-CityView::EventOccurred(Event *e)
+void CityView::EventOccurred(Event *e)
 {
-	fw.gamecore->MouseCursor->EventOccured( e );
+	fw.gamecore->MouseCursor->EventOccured(e);
 	activeTab->EventOccured(e);
-	if (!e->Handled)
-	{
-		if (e->Type == EVENT_FORM_INTERACTION)
-		{
-			if (e->Data.Forms.EventFlag == FormEventType::ButtonClick)
-			{
+	if (!e->Handled) {
+		if (e->Type == EVENT_FORM_INTERACTION) {
+			if (e->Data.Forms.EventFlag == FormEventType::ButtonClick) {
 				auto &cname = e->Data.Forms.RaisedBy->Name;
 				if (cname == "BUTTON_TAB_1")
 					this->activeTab = uiTabs[0];
@@ -115,73 +94,51 @@ CityView::EventOccurred(Event *e)
 					this->activeTab = uiTabs[7];
 				else if (cname == "BUTTON_TOGGLE_STRATMAP")
 					LogError("Toggle stratmap");
-				else if (cname == "BUTTON_SHOW_ALIEN_INFILTRATION")
-				{
+				else if (cname == "BUTTON_SHOW_ALIEN_INFILTRATION") {
 					stageCmd.cmd = StageCmd::Command::PUSH;
 					stageCmd.nextStage = std::make_shared<InfiltrationScreen>(fw);
 					return;
-				}
-				else if (cname == "BUTTON_SHOW_SCORE")
-				{
+				} else if (cname == "BUTTON_SHOW_SCORE") {
 					stageCmd.cmd = StageCmd::Command::PUSH;
 					stageCmd.nextStage = std::make_shared<ScoreScreen>(fw);
 					return;
-				}
-				else if (cname == "BUTTON_SHOW_UFOPAEDIA")
-				{
+				} else if (cname == "BUTTON_SHOW_UFOPAEDIA") {
 					stageCmd.cmd = StageCmd::Command::PUSH;
 					stageCmd.nextStage = std::make_shared<Ufopaedia>(fw);
 					return;
-				}
-				else if (cname == "BUTTON_SHOW_OPTIONS")
-				{
+				} else if (cname == "BUTTON_SHOW_OPTIONS") {
 					stageCmd.cmd = StageCmd::Command::PUSH;
 					stageCmd.nextStage = std::make_shared<InGameOptions>(fw);
 					return;
-				}
-				else if (cname == "BUTTON_SHOW_LOG")
+				} else if (cname == "BUTTON_SHOW_LOG")
 					LogWarning("Show log");
 				else if (cname == "BUTTON_ZOOM_EVENT")
 					LogWarning("Zoom to event");
-				else if (cname == "BUTTON_SPEED0")
-				{
+				else if (cname == "BUTTON_SPEED0") {
 					LogWarning("Set speed 0");
 					this->updateSpeed = UpdateSpeed::Pause;
-				}
-				else if (cname == "BUTTON_SPEED1")
-				{
+				} else if (cname == "BUTTON_SPEED1") {
 					LogWarning("Set speed 1");
 					this->updateSpeed = UpdateSpeed::Speed1;
-				}
-				else if (cname == "BUTTON_SPEED2")
-				{
+				} else if (cname == "BUTTON_SPEED2") {
 					LogWarning("Set speed 2");
 					this->updateSpeed = UpdateSpeed::Speed2;
-				}
-				else if (cname == "BUTTON_SPEED3")
-				{
+				} else if (cname == "BUTTON_SPEED3") {
 					LogWarning("Set speed 3");
 					this->updateSpeed = UpdateSpeed::Speed3;
-				}
-				else if (cname == "BUTTON_SPEED4")
-				{
+				} else if (cname == "BUTTON_SPEED4") {
 					LogWarning("Set speed 4");
 					this->updateSpeed = UpdateSpeed::Speed4;
-				}
-				else if (cname == "BUTTON_SPEED5")
-				{
+				} else if (cname == "BUTTON_SPEED5") {
 					LogWarning("Set speed 5");
 					this->updateSpeed = UpdateSpeed::Speed5;
 				}
-					
 			}
 
-		}
-		else
-		{
+		} else {
 			TileView::EventOccurred(e);
 		}
 	}
 }
 
-}; //namespace OpenApoc
+} // namespace OpenApoc

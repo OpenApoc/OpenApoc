@@ -1,14 +1,16 @@
 #include "framework/sound_interface.h"
 #include "framework/logger.h"
 
-namespace {
+namespace
+{
 
 using namespace OpenApoc;
 
 class NullSoundBackend : public SoundBackend
 {
 	AudioFormat preferredFormat;
-public:
+
+  public:
 	NullSoundBackend()
 	{
 		preferredFormat.channels = 2;
@@ -21,7 +23,9 @@ public:
 		LogWarning("Called on NULL backend");
 	}
 
-	virtual void playMusic(std::shared_ptr<MusicTrack> track, std::function<void(void*)> finishedCallback, void *callbackData) override
+	virtual void playMusic(std::shared_ptr<MusicTrack> track,
+	                       std::function<void(void *)> finishedCallback,
+	                       void *callbackData) override
 	{
 		std::ignore = track;
 		std::ignore = finishedCallback;
@@ -29,45 +33,28 @@ public:
 		LogWarning("Called on NULL backend");
 	}
 
-	virtual void stopMusic() override
-	{
-		LogWarning("Called on NULL backend");
-	}
+	virtual void stopMusic() override { LogWarning("Called on NULL backend"); }
 
-	virtual ~NullSoundBackend()
-	{
-		this->stopMusic();
-	}
+	virtual ~NullSoundBackend() { this->stopMusic(); }
 
-	virtual const AudioFormat& getPreferredFormat()
-	{
-		return preferredFormat;
-	}
+	virtual const AudioFormat &getPreferredFormat() { return preferredFormat; }
 
-	virtual float getGain(Gain g) override
-	{
-		return 0.0;
-	}
-	virtual void setGain(Gain g, float f) override
-	{
-		return;
-	}
+	virtual float getGain(Gain g) override { return 0.0; }
+	virtual void setGain(Gain g, float f) override { return; }
 };
 
 class NullSoundBackendFactory : public SoundBackendFactory
 {
-public:
+  public:
 	virtual SoundBackend *create() override
 	{
 		LogWarning("Creating NULL sound backend (Sound disabled)");
 		return new NullSoundBackend();
 	};
 
-	virtual ~NullSoundBackendFactory()
-	{
-	}
+	virtual ~NullSoundBackendFactory() {}
 };
 
 SoundBackendRegister<NullSoundBackendFactory> load_at_init_null_sound("null");
 
-}; //anonymous namespace
+} // namespace

@@ -5,94 +5,76 @@
 
 #include <iterator>
 
-namespace OpenApoc {
-
-VoxelSlice::VoxelSlice(Vec2<int> size)
-	: size(size), bits(size.x * size.y)
-{}
-
-bool
-VoxelSlice::getBit(Vec2<int> pos) const
+namespace OpenApoc
 {
-	if (pos.x < 0 || pos.x >= this->size.x
-	 || pos.y < 0 || pos.y >= this->size.y)
-	{
-		LogError("Invalid position {%d,%d} in slice sized {%d,%d}",
-			pos.x, pos.x, size.x, size.y);
+
+VoxelSlice::VoxelSlice(Vec2<int> size) : size(size), bits(size.x * size.y) {}
+
+bool VoxelSlice::getBit(Vec2<int> pos) const
+{
+	if (pos.x < 0 || pos.x >= this->size.x || pos.y < 0 || pos.y >= this->size.y) {
+		LogError("Invalid position {%d,%d} in slice sized {%d,%d}", pos.x, pos.x, size.x, size.y);
 		return false;
 	}
 
 	return this->bits[pos.y * this->size.x + pos.x];
 }
 
-void
-VoxelSlice::setBit(Vec2<int> pos, bool b)
+void VoxelSlice::setBit(Vec2<int> pos, bool b)
 {
-	if (pos.x < 0 || pos.x >= this->size.x
-	 || pos.y < 0 || pos.y >= this->size.y)
-	{
-		LogError("Invalid position {%d,%d} in slice sized {%d,%d}",
-			pos.x, pos.x, size.x, size.y);
+	if (pos.x < 0 || pos.x >= this->size.x || pos.y < 0 || pos.y >= this->size.y) {
+		LogError("Invalid position {%d,%d} in slice sized {%d,%d}", pos.x, pos.x, size.x, size.y);
 		return;
 	}
 	this->bits[pos.y * this->size.x + pos.x] = b;
 }
 
-VoxelMap::VoxelMap(Vec3<int> size)
-	: size(size)
-{
-	slices.resize(size.z);
-}
+VoxelMap::VoxelMap(Vec3<int> size) : size(size) { slices.resize(size.z); }
 
-bool
-VoxelMap::getBit(Vec3<int> pos) const
+bool VoxelMap::getBit(Vec3<int> pos) const
 {
-	if (pos.x < 0 || pos.x >= this->size.x
-	 || pos.y < 0 || pos.y >= this->size.y
-	 || pos.z < 0 || pos.z >= this->size.z)
+	if (pos.x < 0 || pos.x >= this->size.x || pos.y < 0 || pos.y >= this->size.y || pos.z < 0 ||
+	    pos.z >= this->size.z)
 		return false;
 
 	if (slices.size() <= (unsigned)pos.z)
 		return false;
 	if (!slices[pos.z])
 		return false;
-	
+
 	return slices[pos.z]->getBit({pos.x, pos.y});
 }
 
 void VoxelMap::setSlice(int z, std::shared_ptr<VoxelSlice> slice)
 {
-	if (z < 0 || (unsigned)z >= this->slices.size())
-	{
-		LogError("Trying to set slice %d in a {%d,%d,%d} sized voxelMap",
-			z, this->size.x, this->size.y, this->size.z);
+	if (z < 0 || (unsigned)z >= this->slices.size()) {
+		LogError("Trying to set slice %d in a {%d,%d,%d} sized voxelMap", z, this->size.x,
+		         this->size.y, this->size.z);
 		return;
 	}
-	if (slice->getSize() != Vec2<int>{this->size.x, this->size.y})
-	{
+	if (slice->getSize() != Vec2<int>{this->size.x, this->size.y}) {
 		LogError("Trying to set slice of size {%d,%d} in {%d,%d,%d} sized voxelMap",
-			slice->getSize().x, slice->getSize().y,
-			this->size.x, this->size.y, this->size.z);
+		         slice->getSize().x, slice->getSize().y, this->size.x, this->size.y, this->size.z);
 		return;
 	}
 	this->slices[z] = slice;
 }
 
-namespace {
-
-template<typename T, bool conservative>
-class LineSegmentIterator;
-
-
-template <typename T, bool conservative>
-class LineSegment
+namespace
 {
-public:
+
+template <typename T, bool conservative> class LineSegmentIterator;
+
+template <typename T, bool conservative> class LineSegment
+{
+  public:
 	Vec3<T> startPoint;
 	Vec3<T> endPoint;
 	T increment;
 	LineSegment(Vec3<T> start, Vec3<T> end, T increment = 1)
-		: startPoint(start), endPoint(end), increment(increment){}
+	    : startPoint(start), endPoint(end), increment(increment)
+	{
+	}
 	LineSegmentIterator<T, conservative> begin();
 	LineSegmentIterator<T, conservative> end();
 };
@@ -100,7 +82,7 @@ public:
 template <typename T, bool conservative>
 class LineSegmentIterator : public std::iterator<std::forward_iterator_tag, Vec3<T>>
 {
-private:
+  private:
 	Vec3<T> point;
 	Vec3<T> err;
 	Vec3<T> inc;
@@ -109,12 +91,12 @@ private:
 	T dstep2;
 
 	LineSegment<T, conservative> &line;
-public:
-	LineSegmentIterator(Vec3<T> start, LineSegment<T, conservative> &l)
-		: point(start), line(l)
+
+  public:
+	LineSegmentIterator(Vec3<T> start, LineSegment<T, conservative> &l) : point(start), line(l)
 	{
-		err = {(T)0,(T)0,(T)0};
-		step = {(T)0,(T)0,(T)0};
+		err = {(T)0, (T)0, (T)0};
+		step = {(T)0, (T)0, (T)0};
 		Vec3<T> d = l.endPoint - l.startPoint;
 		inc.x = (d.x < (T)0) ? -l.increment : l.increment;
 		inc.y = (d.y < (T)0) ? -l.increment : l.increment;
@@ -122,65 +104,47 @@ public:
 
 		Vec3<T> absd = glm::abs(d);
 		d2 = absd * (T)2;
-		if (absd.x >= absd.y && absd.x >= absd.z)
-		{
+		if (absd.x >= absd.y && absd.x >= absd.z) {
 			step.x = inc.x;
 			dstep2 = d2.x;
 			d2.x = (T)0;
-		}
-		else if (absd.y >= absd.x && absd.y >= absd.z)
-		{
+		} else if (absd.y >= absd.x && absd.y >= absd.z) {
 			step.y = inc.y;
 			dstep2 = d2.y;
 			d2.y = (T)0;
-		}
-		else if (absd.z >= absd.x && absd.z >= absd.y)
-		{
+		} else if (absd.z >= absd.x && absd.z >= absd.y) {
 			step.z = inc.z;
 			dstep2 = d2.z;
 			d2.z = (T)0;
 		}
 	}
 
-	LineSegmentIterator& operator++()
+	LineSegmentIterator &operator++()
 	{
-		if (conservative)
-		{
-			if (err.x > (T)0)
-			{
+		if (conservative) {
+			if (err.x > (T)0) {
 				point.x += inc.x;
 				err.x -= dstep2;
-			}
-			else if (err.y > (T)0)
-			{
+			} else if (err.y > (T)0) {
 				point.y += inc.y;
 				err.y -= dstep2;
-			}
-			else if (err.z > (T)0)
-			{
+			} else if (err.z > (T)0) {
 				point.z += inc.z;
 				err.z -= dstep2;
-			}
-			else
-			{
+			} else {
 				err += d2;
 				point += step;
 			}
-		}
-		else
-		{
-			if (err.x > (T)0)
-			{
+		} else {
+			if (err.x > (T)0) {
 				point.x += inc.x;
 				err.x -= dstep2;
 			}
-			if (err.y > (T)0)
-			{
+			if (err.y > (T)0) {
 				point.y += inc.y;
 				err.y -= dstep2;
 			}
-			if (err.z > (T)0)
-			{
+			if (err.z > (T)0) {
 				point.z += inc.z;
 				err.z -= dstep2;
 			}
@@ -190,40 +154,31 @@ public:
 		return *this;
 	}
 
-	bool operator==(const LineSegmentIterator& other)
+	bool operator==(const LineSegmentIterator &other)
 	{
 		return (this->point * step == other.point * step);
 	}
 
-	bool operator!=(const LineSegmentIterator& other)
-	{
-		return !(*this == other);
-	}
+	bool operator!=(const LineSegmentIterator &other) { return !(*this == other); }
 
-	Vec3<T>& operator*()
-	{
-		return point;
-	}
+	Vec3<T> &operator*() { return point; }
 };
 
 template <typename T, bool conservative>
-LineSegmentIterator<T, conservative>
-LineSegment<T, conservative>::begin()
+LineSegmentIterator<T, conservative> LineSegment<T, conservative>::begin()
 {
 	return LineSegmentIterator<T, conservative>(this->startPoint, *this);
 }
 
 template <typename T, bool conservative>
-LineSegmentIterator<T, conservative>
-LineSegment<T, conservative>::end()
+LineSegmentIterator<T, conservative> LineSegment<T, conservative>::end()
 {
-	return LineSegmentIterator<T, conservative>(this->endPoint + Vec3<T>{1,1,1}, *this);
+	return LineSegmentIterator<T, conservative>(this->endPoint + Vec3<T>{1, 1, 1}, *this);
 }
 
-};//anonymous namespace
+} // namespace
 
-Collision
-Tile::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd)
+Collision Tile::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd)
 {
 	lineSegmentStart -= position;
 	lineSegmentEnd -= position;
@@ -231,36 +186,30 @@ Tile::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd)
 	Collision c;
 	c.tileObject = nullptr;
 
-	Vec3<int> tileSize = {32,32,16};
+	Vec3<int> tileSize = {32, 32, 16};
 
-	//FIXME: This aligns the beginning/end to 
-	Vec3<int> voxelLineStart = Vec3<int> {lineSegmentStart.x * tileSize.x,
-		lineSegmentStart.y * tileSize.y,
-		lineSegmentStart.z * tileSize.z};
-	Vec3<int> voxelLineEnd = Vec3<int> {lineSegmentEnd.x * tileSize.x,
-		lineSegmentEnd.y * tileSize.y,
-		lineSegmentEnd.z * tileSize.z};
-	//Treat voxel collisions as conservative (IE if /any/ part of the voxel
-	//touches the line it's a 'hit'
+	// FIXME: This aligns the beginning/end to
+	Vec3<int> voxelLineStart =
+	    Vec3<int>{lineSegmentStart.x * tileSize.x, lineSegmentStart.y * tileSize.y,
+	              lineSegmentStart.z * tileSize.z};
+	Vec3<int> voxelLineEnd = Vec3<int>{lineSegmentEnd.x * tileSize.x, lineSegmentEnd.y * tileSize.y,
+	                                   lineSegmentEnd.z * tileSize.z};
+	// Treat voxel collisions as conservative (IE if /any/ part of the voxel
+	// touches the line it's a 'hit'
 	LineSegment<int, true> line{voxelLineStart, voxelLineEnd};
-	for (auto &point : line)
-	{
-		for (auto &obj : collideableObjects)
-		{
-			if (!obj->isCollidable())
-			{
+	for (auto &point : line) {
+		for (auto &obj : collideableObjects) {
+			if (!obj->isCollidable()) {
 				LogError("non-collidable object stored in tile {%d,%d,%d} collidableObjects",
-					this->position.x, this->position.y, this->position.z);
+				         this->position.x, this->position.y, this->position.z);
 				continue;
 			}
 			auto &objPos = obj->getPosition();
-			Vec3<int> objOffset = point - Vec3<int>{objPos.x * tileSize.x,
-				objPos.y * tileSize.y,
-				objPos.z * tileSize.z};
-			if (obj->hasVoxelAt(objOffset))
-			{
+			Vec3<int> objOffset = point - Vec3<int>{objPos.x * tileSize.x, objPos.y * tileSize.y,
+			                                        objPos.z * tileSize.z};
+			if (obj->hasVoxelAt(objOffset)) {
 				c.tileObject = obj;
-				c.position =  Vec3<float>{point.x, point.y, point.z};
+				c.position = Vec3<float>{point.x, point.y, point.z};
 				c.position /= tileSize;
 				return c;
 			}
@@ -269,19 +218,15 @@ Tile::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd)
 	return c;
 }
 
-Collision
-TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd)
+Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd)
 {
 	Collision c;
 	c.tileObject = nullptr;
-	//We can increment by '1f' and still get a point in every affected tile
+	// We can increment by '1f' and still get a point in every affected tile
 	LineSegment<float, true> line{lineSegmentStart, lineSegmentEnd};
-	for (auto &point : line)
-	{
-		if (point.x < 0 || point.x >= size.x ||
-		    point.y < 0 || point.y >= size.y ||
-			point.z < 0 || point.z >= size.z)
-		{
+	for (auto &point : line) {
+		if (point.x < 0 || point.x >= size.x || point.y < 0 || point.y >= size.y || point.z < 0 ||
+		    point.z >= size.z) {
 			return c;
 		}
 
@@ -293,8 +238,7 @@ TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd)
 	return c;
 }
 
-
-}; //namespace OpenApoc
+} // namespace OpenApoc
 
 #if 0
 

@@ -6,7 +6,8 @@
 #include "game/city/buildingtile.h"
 #include "game/city/vehicle.h"
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 #define CITY_TILE_X (64)
 #define CITY_TILE_Y (32)
@@ -17,14 +18,13 @@ class GameState;
 
 class City : public TileMap
 {
-	private:
-	public:
-		City(Framework &fw, GameState &state);
-		~City();
+  private:
+  public:
+	City(Framework &fw, GameState &state);
+	~City();
 	std::vector<std::shared_ptr<Vehicle>> vehicles;
 
 	std::vector<Building> buildings;
-
 };
 
-}; //namespace OpenApoc
+} // namespace OpenApoc

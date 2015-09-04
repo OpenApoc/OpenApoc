@@ -1,7 +1,7 @@
 #ifndef __OPENAPOC_FRAMEWORK_INCLUDES_H
 #define __OPENAPOC_FRAMEWORK_INCLUDES_H
 
-//This is apparently required to stop namespace conflicts with GetForm (and possibly others)
+// This is apparently required to stop namespace conflicts with GetForm (and possibly others)
 #define WIN32_LEAN_AND_MEAN
 
 #include <tinyxml2.h>
