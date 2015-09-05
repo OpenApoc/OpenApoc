@@ -6,6 +6,7 @@
 #include "game/city/infiltrationscreen.h"
 #include "game/city/scorescreen.h"
 #include "game/general/ingameoptions.h"
+#include "game/city/vehiclemission.h"
 
 namespace OpenApoc
 {

@@ -4,106 +4,20 @@
 #include "game/tileview/projectile.h"
 #include "game/organisation.h"
 #include "framework/image.h"
+#include "game/city/vehicle.h"
+#include "game/city/vehiclemission.h"
+
 #include <cfloat>
 #include <random>
 #include <limits>
 
-std::default_random_engine rng;
+namespace
+{
+std::default_random_engine speed_rng;
+} // anonymous namespace
 
 namespace OpenApoc
 {
-
-class VehicleRandomWalk : public VehicleMission
-{
-  public:
-	std::uniform_int_distribution<int> distribution;
-	VehicleRandomWalk(Vehicle &vehicle) : VehicleMission(vehicle), distribution(-1, 1) {}
-	std::list<Tile *> destination;
-	virtual Vec3<float> getNextDestination() override
-	{
-		auto vehicleTile = this->vehicle.tileObject.lock();
-		if (!vehicleTile)
-		{
-			LogError("Calling on vehicle with no tile object?");
-		}
-		TileMap &map = vehicleTile->getOwningTile()->map;
-		Vec3<int> nextPosition;
-		int tries = 0;
-		do
-		{
-			nextPosition = vehicleTile->getPosition();
-			Vec3<int> diff{distribution(rng), distribution(rng), distribution(rng)};
-			nextPosition += diff;
-			// FIXME HACK - abort after some attempts (e.g. if we're completely trapped)
-			// and just phase through whatever obstruction is there
-			tries++;
-			// Keep looping until we find an empty tile within the map
-		} while (nextPosition.x >= map.size.x || nextPosition.x < 0 ||
-		         nextPosition.y >= map.size.y || nextPosition.y < 0 ||
-		         nextPosition.z >= map.size.z || nextPosition.z < 0
-		         // FIXME: Proper routing/obstruction handling
-		         //(This below could cause an infinite loop if a vehicle gets 'trapped'
-		         || (tries < 50 && !map.getTile(nextPosition)->ownedObjects.empty()));
-		destination = std::list<Tile *>{map.getTile(nextPosition)};
-		return Vec3<float>{nextPosition.x, nextPosition.y, nextPosition.z};
-	}
-	virtual const std::list<Tile *> &getCurrentPlannedPath() override { return destination; }
-};
-
-class VehicleRandomDestination : public VehicleMission
-{
-  public:
-	std::uniform_int_distribution<int> xydistribution;
-	std::uniform_int_distribution<int> zdistribution;
-	VehicleRandomDestination(Vehicle &v)
-	    : VehicleMission(v), xydistribution(0, 99), zdistribution(0, 9)
-	{
-	}
-	std::list<Tile *> path;
-	virtual Vec3<float> getNextDestination() override
-	{
-		auto vehicleTile = this->vehicle.tileObject.lock();
-		if (!vehicleTile)
-		{
-			LogError("Calling on vehicle with no tile object?");
-		}
-		while (path.empty())
-		{
-			Vec3<int> newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
-			while (!vehicleTile->getOwningTile()->map.getTile(newTarget)->ownedObjects.empty())
-				newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
-			path = vehicleTile->getOwningTile()->map.findShortestPath(
-			    vehicleTile->getOwningTile()->position, newTarget);
-			if (path.empty())
-			{
-				LogInfo("Failed to path - retrying");
-				continue;
-			}
-			// Skip first in the path (as that's current tile)
-			path.pop_front();
-		}
-		if (!path.front()->ownedObjects.empty())
-		{
-			Vec3<int> target = path.back()->position;
-			path = vehicleTile->getOwningTile()->map.findShortestPath(
-			    vehicleTile->getOwningTile()->position, target);
-			if (path.empty())
-			{
-				LogInfo("Failed to path after obstruction");
-				path.clear();
-				return this->getNextDestination();
-			}
-			// Skip first in the path (as that's current tile)
-			path.pop_front();
-		}
-		Tile *nextTile = path.front();
-		path.pop_front();
-		return Vec3<float>{nextTile->position.x, nextTile->position.y, nextTile->position.z}
-		       // Add {0.5,0.5,0.5} to make it route to the center of the tile
-		       + Vec3<float>{0.5, 0.5, 0.5};
-	}
-	virtual const std::list<Tile *> &getCurrentPlannedPath() override { return path; }
-};
 
 class FlyingVehicleMover : public VehicleMover
 {
@@ -115,7 +29,7 @@ class FlyingVehicleMover : public VehicleMover
 	{
 		std::uniform_real_distribution<float> distribution(-0.02, 0.02);
 		// Tweak the speed slightly, makes everything a little less synchronised
-		speed = 0.05 + distribution(rng);
+		speed = 0.05 + distribution(speed_rng);
 	}
 	virtual void update(unsigned int ticks) override
 	{
@@ -204,10 +118,6 @@ class FlyingVehicleMover : public VehicleMover
 	}
 };
 
-VehicleMission::VehicleMission(Vehicle &v) : vehicle(v) {}
-
-VehicleMission::~VehicleMission() {}
-
 VehicleMover::VehicleMover(Vehicle &v) : vehicle(v) {}
 
 VehicleMover::~VehicleMover() {}
@@ -224,7 +134,7 @@ void Vehicle::launch(TileMap &map, Vec3<float> initialPosition)
 		return;
 	}
 	this->mover.reset(new FlyingVehicleMover(*this, initialPosition));
-	this->mission.reset(new VehicleRandomDestination(*this));
+	this->mission.reset(VehicleMission::randomDestination(*this));
 	auto vehicleTile = std::make_shared<VehicleTileObject>(*this, map, initialPosition);
 	this->tileObject = vehicleTile;
 	map.addObject(vehicleTile);
