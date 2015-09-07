@@ -47,7 +47,7 @@ class FlyingVehicleMover : public VehicleMover
 			{
 				distanceLeft -= distanceToGoal;
 				vehicleTile->setPosition(goalPosition);
-				goalPosition = vehicle.mission->getNextDestination();
+				goalPosition = vehicle.missions.front()->getNextDestination();
 			}
 			else
 			{
@@ -134,7 +134,8 @@ void Vehicle::launch(TileMap &map, Vec3<float> initialPosition)
 		return;
 	}
 	this->mover.reset(new FlyingVehicleMover(*this, initialPosition));
-	this->mission.reset(VehicleMission::randomDestination(*this));
+	this->missions.clear();
+	this->missions.emplace_back(VehicleMission::randomDestination(*this));
 	auto vehicleTile = std::make_shared<VehicleTileObject>(*this, map, initialPosition);
 	this->tileObject = vehicleTile;
 	map.addObject(vehicleTile);

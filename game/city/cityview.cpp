@@ -46,7 +46,7 @@ void CityView::Render()
 			if (!vTile)
 				continue;
 			auto &v = vTile->getVehicle();
-			auto &path = v.mission->getCurrentPlannedPath();
+			auto &path = v.missions.front()->getCurrentPlannedPath();
 			Vec3<float> prevPos = vTile->getPosition();
 			for (auto *tile : path)
 			{

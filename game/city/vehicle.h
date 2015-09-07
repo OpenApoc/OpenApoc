@@ -6,6 +6,8 @@
 #include "game/tileview/tile_collidable.h"
 #include "game/rules/vehicledef.h"
 
+#include <deque>
+
 /* MSVC warns about inherited virtual functions that are implemented
  * in different superclasses though multiple inheritance, even
  * if one is a subclass of the other. So disable that as we rely
@@ -46,7 +48,7 @@ class Vehicle : public std::enable_shared_from_this<Vehicle>
 
 	std::weak_ptr<VehicleTileObject> tileObject;
 
-	std::unique_ptr<VehicleMission> mission;
+	std::deque<std::unique_ptr<VehicleMission>> missions;
 	std::unique_ptr<VehicleMover> mover;
 
 	/* 'launch' the vehicle into the city */
