@@ -39,22 +39,39 @@ class FlyingVehicleMover : public VehicleMover
 			LogError("Calling on vehicle with no tile object?");
 		}
 		float distanceLeft = speed * ticks;
-		while (distanceLeft > 0)
+		if (!vehicle.missions.empty())
 		{
-			Vec3<float> vectorToGoal = goalPosition - vehicleTile->getPosition();
-			float distanceToGoal = glm::length(vectorToGoal);
-			if (distanceToGoal <= distanceLeft)
+			vehicle.missions.front()->update(ticks);
+			while (distanceLeft > 0)
 			{
-				distanceLeft -= distanceToGoal;
-				vehicleTile->setPosition(goalPosition);
-				goalPosition = vehicle.missions.front()->getNextDestination();
-			}
-			else
-			{
-				vehicleTile->setDirection(vectorToGoal);
-				vehicleTile->setPosition(vehicleTile->getPosition() +
-				                         distanceLeft * glm::normalize(vectorToGoal));
-				distanceLeft = -1;
+				Vec3<float> vectorToGoal = goalPosition - vehicleTile->getPosition();
+				float distanceToGoal = glm::length(vectorToGoal);
+				if (distanceToGoal <= distanceLeft)
+				{
+					distanceLeft -= distanceToGoal;
+					vehicleTile->setPosition(goalPosition);
+					if (vehicle.missions.front()->isFinished())
+					{
+						vehicle.missions.pop_front();
+						if (!vehicle.missions.empty())
+						{
+							vehicle.missions.front()->start();
+						}
+						else
+						{
+							distanceLeft = 0;
+							break;
+						}
+					}
+					goalPosition = vehicle.missions.front()->getNextDestination();
+				}
+				else
+				{
+					vehicleTile->setDirection(vectorToGoal);
+					vehicleTile->setPosition(vehicleTile->getPosition() +
+					                         distanceLeft * glm::normalize(vectorToGoal));
+					distanceLeft = -1;
+				}
 			}
 		}
 		for (auto &weapon : vehicle.weapons)

@@ -66,6 +66,9 @@ class VehicleRandomDestination : public VehicleMission
 		       + Vec3<float>{0.5, 0.5, 0.5};
 	}
 	virtual const std::list<Tile *> &getCurrentPlannedPath() override { return path; }
+	virtual void start() {}
+	virtual bool isFinished() { return false; }
+	virtual void update(unsigned int ticks) { std::ignore = ticks; }
 };
 
 VehicleMission::VehicleMission(Vehicle &v) : vehicle(v) {}
