@@ -268,6 +268,7 @@
     <ClCompile Include="game\city\building.cpp" />
     <ClCompile Include="game\city\buildingtile.cpp" />
     <ClCompile Include="game\city\vehicle.cpp" />
+    <ClCompile Include="game\city\vehiclemission.cpp" />
     <ClCompile Include="game\city\weapon.cpp" />
     <ClCompile Include="game\debugtools\debugmenu.cpp" />
     <ClCompile Include="game\gamestate.cpp" />
@@ -347,6 +348,7 @@
     <ClInclude Include="game\city\building.h" />
     <ClInclude Include="game\city\buildingtile.h" />
     <ClInclude Include="game\city\vehicle.h" />
+    <ClInclude Include="game\city\vehiclemission.h" />
     <ClInclude Include="game\city\weapon.h" />
     <ClInclude Include="game\debugtools\debugmenu.h" />
     <ClInclude Include="game\gamestate.h" />
