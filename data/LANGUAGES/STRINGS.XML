@@ -563,13 +563,13 @@
 		<fr_fr>La liaison entre le sous-sol et le monde extérieur se fait par un réseau d&apos;ascenseurs anti-gravité résistants.</fr_fr>
 		<de_de>Ein System von Hochleistungs-Schwerkraftlifts stellt die Verbindung zwischen der unteren Ebene und der Außenwelt dar.</de_de>
 	</string>
-	<string id="STR_LIVING_QUATER">
+	<string id="STR_LIVING_QUARTERS">
 		<en_gb>Living Quarters</en_gb>
 		<es_la>Living Quarters</es_la>
 		<fr_fr>Quartiers d&apos;habitation</fr_fr>
 		<de_de>Wohnquartiere</de_de>
 	</string>
-	<string id="STR_LIVING_QUATER_INFO">
+	<string id="STR_LIVING_QUARTERS_INFO">
 		<en_gb>Accommodation and recreation for X-COM Agents. New living quarters will have to be built as more Agents, Scientists and Engineers are hired.</en_gb>
 		<es_la>Accommodation and recreation for X-COM Agents. New living quarters will have to be built as more Agents, Scientists and Engineers are hired.</es_la>
 		<fr_fr>Les bâtiments d&apos;habitation et de loisir des agents d&apos;X-COM. De nouveaux quartiers d&apos;habitation devront être construits à mesure que de nouveaux agents, scientifiques et ingénieurs sont embauchés.</fr_fr>
@@ -1235,13 +1235,13 @@
 		<fr_fr>Le système de contrôle d&apos;armes le plus grand et le plus complexe fabriqué par Cyberweb. Une unité onéreuse qu&apos;il est préférable d&apos;utiliser uniquement avec les plates-formes lourdement armées.</fr_fr>
 		<de_de>Das größte und komplexeste Waffenkontrollsystem von Cyberweb. Eine teure Einheit, die nur im Zusammenhang mit schwerer Bewaffnung zum Einsatz kommen sollte.</de_de>
 	</string>
-	<string id="STR_ADVANCED_CONTROL-SYSTEM">
+	<string id="STR_ADVANCED_CONTROL_SYSTEM">
 		<en_gb>Advanced Control System</en_gb>
 		<es_la>Advanced Control System</es_la>
 		<fr_fr>Système de contrôle avancé</fr_fr>
 		<de_de>Verbessertes Kontrollsystem</de_de>
 	</string>
-	<string id="STR_ADVANCED_CONTROL_INFO">
+	<string id="STR_ADVANCED_CONTROL_SYSTEM_INFO">
 		<en_gb>X-COM Scientists have devised a superior and more compact weapons control system designed specifically for X-COM vehicles. It assists targeting of the more agile UFOs.</en_gb>
 		<es_la>X-COM Scientists have devised a superior and more compact weapons control system designed specifically for X-COM vehicles. It assists targeting of the more agile UFOs.</es_la>
 		<fr_fr>Les scientifiques d&apos;X-COM ont inventé un système de contrôle des armes plus compact et plus efficace, conçu spécifiquement pour les véhicules X-COM. Il permet de mieux viser les ovnis les plus agiles.</fr_fr>
@@ -2591,13 +2591,13 @@
 		<fr_fr>Munitions pour le fusil toxique. C&apos;est un poison foudroyant qui s&apos;attaque aux formes de vie alienne avec des effets ravageurs. Cette toxine est plus efficace que les toxines A ou B.</fr_fr>
 		<de_de>Munition für das ToxiGewehr. Ein schnellwirkendes Gift mit verheerender Wirkung. Das Gift ist wirksamer als die Toxine vom Typ A und B.</de_de>
 	</string>
-	<string id="STR_DIMENSION_DESTABILIZER">
-		<en_gb>Dimension Destabilizer</en_gb>
+	<string id="STR_DIMENSION_DESTABILISER">
+		<en_gb>Dimension Destabiliser</en_gb>
 		<es_la>Dimension Destabilizer</es_la>
 		<fr_fr>Déstabilisateur dimensionnel</fr_fr>
 		<de_de>Dimensions-Destabilisator</de_de>
 	</string>
-	<string id="STR_DIMENSION_DESTABILIZER_INFO">
+	<string id="STR_DIMENSION_DESTABILISER_INFO">
 		<en_gb>An X-COM developed Disruptor Beam weapon based on Alien technology. It is a faster firing and more effective weapon than the Devastator Cannon.</en_gb>
 		<es_la>An X-COM developed Disruptor Beam weapon based on Alien technology. It is a faster firing and more effective weapon than the Devastator Cannon.</es_la>
 		<fr_fr>Une arme à rayon disrupteur conçue par X-COM et basée sur la technologie alienne. C&apos;est une arme plus efficace, à cadence de tir plus rapide que le canon dévastateur.</fr_fr>
@@ -2675,38 +2675,38 @@
 		<fr_fr>Une grenade qui dégage un agent incendiaire enflammant tout ce qui se trouve dans un rayon assez important. La grenade incendiaire a d&apos;abord été conçue par Diablo, et les gangs de criminels de la ville s&apos;en servent relativement souvent.</fr_fr>
 		<de_de>Beim Aufprall dieser Granate wird eine brennbare Substanz freigesetzt, die alles in einem großen Umkreis in Brand setzt. Die Brandgranate wurde ursprünglich von Diablo entworfen und ist bei vielen der kriminellen Gangs in der Stadt sehr beliebt.</de_de>
 	</string>
-	<string id="STR_MEGAPOL_ARMOR">
-		<en_gb>Megapol Armor</en_gb>
+	<string id="STR_MEGAPOL_ARMOUR">
+		<en_gb>Megapol Armour</en_gb>
 		<es_la>Megapol Armor</es_la>
 		<fr_fr>Blindage Megapol</fr_fr>
 		<de_de>Megapol-Panzerung</de_de>
 	</string>
-	<string id="STR_MEGAPOL_ARMOR_INFO">
-		<en_gb>This is a standard issue armor which provides very effective protection but inhibits the wearer&amp;apos;s speed. The leg, torso, arms and helmet are all separate components and can be mixed with other armor types. Under no circumstances should an Agent be sent into combat without full armor cover.</en_gb>
+	<string id="STR_MEGAPOL_ARMOUR_INFO">
+		<en_gb>This is a standard issue armour which provides very effective protection but inhibits the wearer&amp;apos;s speed. The leg, torso, arms and helmet are all separate components and can be mixed with other armour types. Under no circumstances should an Agent be sent into combat without full armour cover.</en_gb>
 		<es_la>This is a standard issue armor which provides very effective protection but inhibits the wearer&amp;apos;s speed. The leg, torso, arms and helmet are all separate components and can be mixed with other armor types. Under no circumstances should an Agent be sent into combat without full armor cover.</es_la>
 		<fr_fr>C&apos;est une armure standard qui offre une protection très efficace à celui qui la porte, mais ralentit ses mouvements. Les protections pour les jambes, le torse et les bras ainsi que le casque sont des éléments autonomes qui peuvent être mélangés à d&apos;autres types de protection. Un agent ne doit être envoyé au combat sans une protection complète sous aucun prétexte.</fr_fr>
 		<de_de>Diese Standard-Panzerung bietet wirksamen Schutz, aber verlangsamt den, der sie trägt. Die Rüstungsteile für Beine, Torso, Arme und Kopf können separat angelegt und mit anderen Panzerungen kombiniert werden. Ein Agent sollte nie ohne vollständige Panzerung in den Kampf ziehen.</de_de>
 	</string>
-	<string id="STR_MARSEC_ARMOR">
-		<en_gb>Marsec Armor</en_gb>
+	<string id="STR_MARSEC_ARMOUR">
+		<en_gb>Marsec Armour</en_gb>
 		<es_la>Marsec Armor</es_la>
 		<fr_fr>Blindage Marsec</fr_fr>
 		<de_de>Marsec-Panzerung</de_de>
 	</string>
-	<string id="STR_MARSEC_ARMOR_INFO">
-		<en_gb>An expensive, Elerium powered armor system. This armor offers less protection than the Megapol armor on average but will not slow down the wearer so much. The expensive torso section also has an integrated levitation unit which will allow the wearer to fly or hover in the air. This is an extremely useful ability, but an airborne Agent will suffer an accuracy penalty while using weapons or throwing grenades.</en_gb>
+	<string id="STR_MARSEC_ARMOUR_INFO">
+		<en_gb>An expensive, Elerium powered armor system. This armour offers less protection than the Megapol armour on average but will not slow down the wearer so much. The expensive torso section also has an integrated levitation unit which will allow the wearer to fly or hover in the air. This is an extremely useful ability, but an airborne Agent will suffer an accuracy penalty while using weapons or throwing grenades.</en_gb>
 		<es_la>An expensive, Elerium powered armor system. This armor offers less protection than the Megapol armor on average but will not slow down the wearer so much. The expensive torso section also has an integrated levitation unit which will allow the wearer to fly or hover in the air. This is an extremely useful ability, but an airborne Agent will suffer an accuracy penalty while using weapons or throwing grenades.</es_la>
 		<fr_fr>Une protection onéreuse, renforcée à l&apos;élérium. Dans l&apos;ensemble, cette armure n&apos;est pas aussi efficace que la protection Megapol, mais la rapidité de mouvement est moins affectée. La section du torse possède une unité de lévitation intégrée qui permet à celui qui la porte de voler.</fr_fr>
 		<de_de>Ein teures, eleriumbetriebenes Panzerungssystem, das im Durchschnitt keinen so wirksamen Schutz wie die Megapol-Panzerung bietet, dafür seinen Träger aber auch nicht so stark verlangsamt. Der teure Körperschild ist mit einer integrierten Levitationseinheit versehen, mit deren Hilfe der Träger fliegen oder schweben kann. Dies ist eine extrem nützliche Fähigkeit, aber ein fliegender Agent erleidet einen Treffsicherheits-Punktverlust, wenn er Waffen verwendet oder Granaten wirft.</de_de>
 	</string>
-	<string id="STR_X_COM_DISRUPTOR_ARMOR">
-		<en_gb>X-COM Disruptor Armor</en_gb>
+	<string id="STR_X_COM_DISRUPTOR_ARMOUR">
+		<en_gb>X-COM Disruptor Armour</en_gb>
 		<es_la>X-COM Disruptor Armor</es_la>
 		<fr_fr>Blindage déviant X-COM</fr_fr>
 		<de_de>X-COM-Disruptor-Rüstung</de_de>
 	</string>
-	<string id="STR_X_COM_DISRUPTOR_ARMOR_INFO">
-		<en_gb>A lightweight armor developed by X-COM using Alien disruption field technology. This offers superb protection and excellent mobility.</en_gb>
+	<string id="STR_X_COM_DISRUPTOR_ARMOUR_INFO">
+		<en_gb>A lightweight armour developed by X-COM using Alien disruption field technology. This offers superb protection and excellent mobility.</en_gb>
 		<es_la>A lightweight armor developed by X-COM using Alien disruption field technology. This offers superb protection and excellent mobility.</es_la>
 		<fr_fr>Une protection légère conçue par X-COM, basée sur la technologie de champ de disruption alien. Cette armure offre une protection et une rapidité de mouvements excellentes.</fr_fr>
 		<de_de>Eine leichtgewichtige, von X-COM entwickelte Panzerung, die sich die Disruptorfeld-Technologie der Aliens zunutze macht. Dadurch bietet sie hervorragenden Schutz bei optimaler Beweglichkeit.</de_de>

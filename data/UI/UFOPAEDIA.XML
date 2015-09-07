@@ -541,7 +541,7 @@
 			</entries>
 		</category>
 		<category id="VEHICLEEQUIPMENT">
-			<backgroundimage>xcom3/UFOPAEDI/VW-TITLE.PCX</backgroundimage>
+			<backgroundimage>xcom3/UFOPAEDI/VW-TTL.PCX</backgroundimage>
 			<title>STR_VEHICLE_EQUIPMENT</title>
 			<text_info>STR_VEHICLE_EQUIPMENT_INFO</text_info>
 			<entries>
@@ -960,9 +960,9 @@
 					<text_info>STR_MIND_BENDER_INFO</text_info>
 					<dynamic_data>EQUIPMENT</dynamic_data>
 				</entry>
-				<entry id="DISRIPTOR_GUN" name="STR_DISRIPTOR_GUN">
+				<entry id="DISRUPTOR_GUN" name="STR_DISRUPTOR_GUN">
 					<backgroundimage>xcom3/UFOPAEDI/W41.PCX</backgroundimage>
-					<text_info>STR_DISRIPTOR_GUN_INFO</text_info>
+					<text_info>STR_DISRUPTOR_GUN_INFO</text_info>
 					<dynamic_data>EQUIPMENT</dynamic_data>
 				</entry>
 				<entry id="DEVASTATOR_CANNON" name="STR_DEVASTATOR_CANNON">
@@ -1020,9 +1020,9 @@
 					<text_info>STR_PERSONAL_CLOAKING_FIELD_INFO</text_info>
 					<dynamic_data>EQUIPMENT</dynamic_data>
 				</entry>
-				<entry id="MEDIKIT" name="STR_MEDIKIT">
+				<entry id="MEDIKIT" name="STR_MEDI_KIT">
 					<backgroundimage>xcom3/UFOPAEDI/W55.PCX</backgroundimage>
-					<text_info>STR_MEDIKIT_INFO</text_info>
+					<text_info>STR_MEDI_KIT_INFO</text_info>
 					<dynamic_data>EQUIPMENT</dynamic_data>
 				</entry>
 				<entry id="MOTION_SCANNER" name="STR_MOTION_SCANNER">
@@ -1074,6 +1074,91 @@
 			<title>STR_FACILITIES</title>
 			<text_info>STR_FACILITIES_INFO</text_info>
 			<entries>
+				<entry id="ACCESS_LIFT" name="STR_ACCESS_LIFT">
+					<backgroundimage>xcom3/UFOPAEDI/19LIFT-F.PCX</backgroundimage>
+					<text_info>STR_ACCESS_LIFT_INFO</text_info>
+					<dynamic_data>FACILITY</dynamic_data>
+				</entry>
+				<entry id="LIVING_QUARTERS" name="STR_LIVING_QUARTERS">
+					<backgroundimage>xcom3/UFOPAEDI/18BAR-F.PCX</backgroundimage>
+					<text_info>STR_LIVING_QUARTERS_INFO</text_info>
+					<dynamic_data>FACILITY</dynamic_data>
+				</entry>
+				<entry id="STORES" name="STR_STORES">
+					<backgroundimage>xcom3/UFOPAEDI/20STOR-F.PCX</backgroundimage>
+					<text_info>STR_STORES_INFO</text_info>
+					<dynamic_data>FACILITY</dynamic_data>
+				</entry>
+				<entry id="MEDICAL_BAY" name="STR_MEDICAL_BAY">
+					<backgroundimage>xcom3/UFOPAEDI/24MEDB-F.PCX</backgroundimage>
+					<text_info>STR_MEDICAL_BAY_INFO</text_info>
+					<dynamic_data>FACILITY</dynamic_data>
+				</entry>
+				<entry id="TRAINING_AREA" name="STR_TRAINING_AREA">
+					<backgroundimage>xcom3/UFOPAEDI/25TRAI-F.PCX</backgroundimage>
+					<text_info>STR_TRAINING_AREA_INFO</text_info>
+					<dynamic_data>FACILITY</dynamic_data>
+				</entry>
+				<entry id="PSI-GYM" name="STR_PSI_GYM">
+					<backgroundimage>xcom3/UFOPAEDI/26PSI-F.PCX</backgroundimage>
+					<text_info>STR_PSI_GYM_INFO</text_info>
+					<dynamic_data>FACILITY</dynamic_data>
+				</entry>
+				<entry id="SECURITY_STATION" name="STR_SECURITY_STATION">
+					<backgroundimage>xcom3/UFOPAEDI/28SECU-F.PCX</backgroundimage>
+					<text_info>STR_SECURITY_STATION_INFO</text_info>
+					<dynamic_data>FACILITY</dynamic_data>
+				</entry>
+				<entry id="ADVANCED_SECURITY_STATION" name="STR_ADVANCED_SECURITY_STATION">
+					<backgroundimage>xcom3/UFOPAEDI/27ADS-F.PCX</backgroundimage>
+					<text_info>STR_ADVANCED_SECURITY_STATION_INFO</text_info>
+					<dynamic_data>FACILITY</dynamic_data>
+				</entry>
+				<entry id="VEHICLE_REPAIR_BAY" name="STR_VEHICLE_REPAIR_BAY">
+					<backgroundimage>xcom3/UFOPAEDI/17VBAY-F.PCX</backgroundimage>
+					<text_info>STR_VEHICLE_REPAIR_BAY_INFO</text_info>
+					<dynamic_data>FACILITY</dynamic_data>
+				</entry>
+				<entry id="BIOCHEMISTRY_LAB" name="STR_BIOCHEMISTRY_LAB">
+					<backgroundimage>xcom3/UFOPAEDI/32BIOL-F.PCX</backgroundimage>
+					<text_info>STR_BIOCHEMISTRY_LAB_INFO</text_info>
+					<dynamic_data>FACILITY</dynamic_data>
+				</entry>
+				<entry id="ADVANCED_BIOCHEMISTRY_LAB" name="STR_ADVANCED_BIOCHEMISTRY_LAB">
+					<backgroundimage>xcom3/UFOPAEDI/31ABIO-F.PCX</backgroundimage>
+					<text_info>STR_ADVANCED_BIOCHEMISTRY_LAB_INFO</text_info>
+					<dynamic_data>FACILITY</dynamic_data>
+				</entry>
+				<entry id="QUANTUM_PHYSICS_LAB" name="STR_QUANTUM_PHYSICS_LAB">
+					<backgroundimage>xcom3/UFOPAEDI/29QLAB-F.PCX</backgroundimage>
+					<text_info>STR_QUANTUM_PHYSICS_LAB_INFO</text_info>
+					<dynamic_data>FACILITY</dynamic_data>
+				</entry>
+				<entry id="ADVANCED_QUANTUM_PHYSICS_LAB" name="STR_ADVANCED_QUANTUM_PHYSICS_LAB">
+					<backgroundimage>xcom3/UFOPAEDI/30ADQ-F.PCX</backgroundimage>
+					<text_info>STR_ADVANCED_QUANTUM_PHYSICS_LAB_INFO</text_info>
+					<dynamic_data>FACILITY</dynamic_data>
+				</entry>
+				<entry id="ALIEN_CONTAINMENT" name="STR_ALIEN_CONTAINMENT">
+					<backgroundimage>xcom3/UFOPAEDI/22ACON-F.PCX</backgroundimage>
+					<text_info>STR_ALIEN_CONTAINMENT_INFO</text_info>
+					<dynamic_data>FACILITY</dynamic_data>
+				</entry>
+				<entry id="ADVANCED_ALIEN_CONTAINMENT" name="STR_ADVANCED_ALIEN_CONTAINMENT">
+					<backgroundimage>xcom3/UFOPAEDI/23AACN-F.PCX</backgroundimage>
+					<text_info>STR_ADVANCED_ALIEN_CONTAINMENT_INFO</text_info>
+					<dynamic_data>FACILITY</dynamic_data>
+				</entry>
+				<entry id="WORKSHOP" name="STR_WORKSHOP">
+					<backgroundimage>xcom3/UFOPAEDI/34CONS-F.PCX</backgroundimage>
+					<text_info>STR_WORKSHOP_INFO</text_info>
+					<dynamic_data>FACILITY</dynamic_data>
+				</entry>
+				<entry id="ADVANCED_WORKSHOP" name="STR_ADVANCED_WORKSHOP">
+					<backgroundimage>xcom3/UFOPAEDI/33ACON-F.PCX</backgroundimage>
+					<text_info>STR_ADVANCED_WORKSHOP_INFO</text_info>
+					<dynamic_data>FACILITY</dynamic_data>
+				</entry>
 			</entries>
 		</category>
 		<category id="ALIENCRAFT">
