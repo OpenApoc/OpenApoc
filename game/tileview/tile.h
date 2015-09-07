@@ -101,7 +101,8 @@ class TileMap
 	~TileMap();
 	virtual void update(unsigned int ticks);
 
-	std::list<Tile *> findShortestPath(Vec3<int> origin, Vec3<int> destination);
+	std::list<Tile *> findShortestPath(Vec3<int> origin, Vec3<int> destination,
+	                                   unsigned int iterationLimit);
 
 	void removeObject(std::shared_ptr<TileObject> obj);
 	void addObject(std::shared_ptr<TileObject> obj);

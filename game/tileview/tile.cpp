@@ -280,16 +280,14 @@ class PathComparer
 	}
 };
 
-#define THRESHOLD_ITERATIONS 500
-
 static bool findNextNodeOnPath(PathComparer &comparer, TileMap &map, std::list<Tile *> &currentPath,
-                               Vec3<int> destination, volatile unsigned long *numIterations)
+                               Vec3<int> destination, unsigned int *iterationsLeft)
 {
 	if (currentPath.back()->position == destination)
 		return true;
-	if (*numIterations > THRESHOLD_ITERATIONS)
-		return false;
-	*numIterations = (*numIterations) + 1;
+	if (*iterationsLeft == 0)
+		return true;
+	*iterationsLeft = (*iterationsLeft) - 1;
 	std::vector<Tile *> fringe;
 	for (int x = -1; x <= 1; x++)
 	{
@@ -341,18 +339,19 @@ static bool findNextNodeOnPath(PathComparer &comparer, TileMap &map, std::list<T
 	{
 		currentPath.push_back(tile);
 		comparer.origin = {tile->position.x, tile->position.y, tile->position.z};
-		if (findNextNodeOnPath(comparer, map, currentPath, destination, numIterations))
+		if (findNextNodeOnPath(comparer, map, currentPath, destination, iterationsLeft))
 			return true;
 		currentPath.pop_back();
 	}
 	return false;
 }
 
-std::list<Tile *> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination)
+std::list<Tile *> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination,
+                                            unsigned int iterationLimit)
 {
-	volatile unsigned long numIterations = 0;
 	std::list<Tile *> path;
 	PathComparer pc(destination);
+	unsigned int iterationsLeft = iterationLimit;
 	if (origin.x < 0 || origin.x >= this->size.x || origin.y < 0 || origin.y >= this->size.y ||
 	    origin.z < 0 || origin.z >= this->size.z)
 	{
@@ -366,12 +365,45 @@ std::list<Tile *> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destinat
 		return path;
 	}
 	path.push_back(this->getTile(origin));
-	if (!findNextNodeOnPath(pc, *this, path, destination, &numIterations))
+	if (!findNextNodeOnPath(pc, *this, path, destination, &iterationsLeft))
 	{
 		LogWarning("No route found from origin {%d,%d,%d} to desination {%d,%d,%d}", origin.x,
 		           origin.y, origin.z, destination.x, destination.y, destination.z);
-		path.clear();
-		return path;
+		return {};
+	}
+	auto &currentHeadPos = path.back()->position;
+	if (currentHeadPos != destination)
+	{
+		/* Step back up the path until we find the node 'closest' to the target
+		 * as if we're blocked by something that will move that's probably a
+		 * better starting point for the next loop instead of after possibly
+		 * starting to move further from the obstacle trying to path round it*/
+		Vec3<float> dest_float{destination.x, destination.y, destination.z};
+		/* Start at the origin, as otherwise there's no benefit to the path
+		 * at all */
+		float closestCost = glm::length(Vec3<float>{origin.x, origin.y, origin.z} - dest_float);
+		Tile *closestTile = path.front();
+
+		for (auto *t : path)
+		{
+			float cost =
+			    glm::length(Vec3<float>{t->position.x, t->position.y, t->position.z} - dest_float);
+			if (cost < closestCost)
+			{
+				closestCost = cost;
+				closestTile = t;
+			}
+		}
+
+		while (path.back() != closestTile)
+		{
+			path.pop_back();
+		}
+
+		LogInfo("No route found from origin {%d,%d,%d} to desination {%d,%d,%d} in %u iterations, "
+		        "closest node {%d,%d,%d}",
+		        origin.x, origin.y, origin.z, destination.x, destination.y, destination.z,
+		        iterationLimit, currentHeadPos.x, currentHeadPos.y, currentHeadPos.z);
 	}
 	return path;
 }

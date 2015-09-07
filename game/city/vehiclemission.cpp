@@ -36,7 +36,7 @@ class VehicleRandomDestination : public VehicleMission
 				newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
 			}
 			path = vehicleTile->getOwningTile()->map.findShortestPath(
-			    vehicleTile->getOwningTile()->position, newTarget);
+			    vehicleTile->getOwningTile()->position, newTarget, 500);
 			if (path.empty())
 			{
 				LogInfo("Failed to path - retrying");
@@ -49,7 +49,7 @@ class VehicleRandomDestination : public VehicleMission
 		{
 			Vec3<int> target = path.back()->position;
 			path = vehicleTile->getOwningTile()->map.findShortestPath(
-			    vehicleTile->getOwningTile()->position, target);
+			    vehicleTile->getOwningTile()->position, target, 500);
 			if (path.empty())
 			{
 				LogInfo("Failed to path after obstruction");
