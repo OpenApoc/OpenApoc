@@ -15,18 +15,16 @@ class VoxelMap;
 
 class VehicleDefinition
 {
-private:
+  private:
 	VehicleDefinition(){};
 	friend class RulesLoader;
-public:
 
-	enum class Type
-	{
+  public:
+	enum class Type {
 		Flying,
 		Ground,
 	};
-	enum class Direction
-	{
+	enum class Direction {
 		N,
 		NNE,
 		NE,
@@ -44,8 +42,7 @@ public:
 		NW,
 		NNW,
 	};
-	enum class Banking
-	{
+	enum class Banking {
 		Flat,
 		Left,
 		Right,
@@ -55,11 +52,11 @@ public:
 
 	UString name;
 	Type type;
-	std::map<Banking, std::map<Direction, std::shared_ptr<Image> > > sprites;
-	//The same sprites but using vectors for directions
+	std::map<Banking, std::map<Direction, std::shared_ptr<Image>>> sprites;
+	// The same sprites but using vectors for directions
 	std::vector<std::pair<Vec3<float>, std::shared_ptr<Image>>> directionalSprites;
 	Vec3<float> size;
 	std::shared_ptr<VoxelMap> voxelMap;
 };
 
-}; //namespace OpenApoc
+} // namespace OpenApoc

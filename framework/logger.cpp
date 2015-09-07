@@ -1,4 +1,4 @@
-#ifdef _WIN32 //Seems to be set even on win64?
+#ifdef _WIN32 // Seems to be set even on win64?
 #define BACKTRACE_WINDOWS
 #endif
 
@@ -28,7 +28,8 @@
 
 #define MAX_SYMBOL_LENGTH 1000
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 #if defined(BACKTRACE_LIBUNWIND)
 static void print_backtrace(FILE *f)
@@ -41,34 +42,37 @@ static void print_backtrace(FILE *f)
 	unw_init_local(&cursor, &ctx);
 
 	fprintf(f, "  called by:\n");
-	while (unw_step(&cursor) > 0)
-	{
+	while (unw_step(&cursor) > 0) {
 		Dl_info info;
 		unw_get_reg(&cursor, UNW_REG_IP, &ip);
-		if (ip == 0)
-			break;
-		dladdr((void*)ip, &info);
-		if (info.dli_sname)
-		{
-			fprintf(f, "  0x%p %s+0x%lx (%s)\n", (void*)ip, info.dli_sname, (uintptr_t)ip - (uintptr_t)info.dli_saddr, info.dli_fname);
+		if (ip == 0) {
+			{
+				break;
+			}
+		}
+		dladdr((void *)ip, &info);
+		if (info.dli_sname) {
+			fprintf(f, "  0x%p %s+0x%lx (%s)\n", (void *)ip, info.dli_sname,
+			        (uintptr_t)ip - (uintptr_t)info.dli_saddr, info.dli_fname);
 			continue;
 		}
-		//If dladdr() failed, try libunwind
+		// If dladdr() failed, try libunwind
 		unw_word_t offsetInFn;
 		char fnName[MAX_SYMBOL_LENGTH];
-		if (!unw_get_proc_name(&cursor, fnName, MAX_SYMBOL_LENGTH, &offsetInFn))
-		{
-			fprintf(f, "  0x%p %s+0x%lx (%s)\n", (void*)ip, fnName, offsetInFn, info.dli_fname);
+		if (!unw_get_proc_name(&cursor, fnName, MAX_SYMBOL_LENGTH, &offsetInFn)) {
+			fprintf(f, "  0x%p %s+0x%lx (%s)\n", (void *)ip, fnName, offsetInFn, info.dli_fname);
 			continue;
+		} else {
+			{
+				fprintf(f, "  0x%p\n", (void *)ip);
+			}
 		}
-		else
-			fprintf(f, "  0x%p\n", (void*)ip);
 	}
 }
 #elif defined(BACKTRACE_WINDOWS)
 #define MAX_STACK_FRAMES 100
-//Stub implementation
-//TODO: Implement for windows?
+// Stub implementation
+// TODO: Implement for windows?
 static void print_backtrace(FILE *f)
 {
 	static bool initialised = false;
@@ -89,8 +93,8 @@ static void print_backtrace(FILE *f)
 		return;
 	}
 
-	sym = (SYMBOL_INFO*)calloc(sizeof(SYMBOL_INFO) + MAX_SYMBOL_LENGTH * (sizeof(char)), 1);
-	if (!sym){
+	sym = (SYMBOL_INFO *)calloc(sizeof(SYMBOL_INFO) + MAX_SYMBOL_LENGTH * (sizeof(char)), 1);
+	if (!sym) {
 		fprintf(f, "Failed to allocate symbol info for backtrace\n");
 		return;
 	}
@@ -100,10 +104,10 @@ static void print_backtrace(FILE *f)
 	/* Skip 2 frames (print_backtrace and the LogError function itself) */
 	frames = CaptureStackBackTrace(2, MAX_STACK_FRAMES, ip, NULL);
 
-	for (unsigned int frame = 0; frame < frames; frame++)
-	{
+	for (unsigned int frame = 0; frame < frames; frame++) {
 		SymFromAddr(process, (DWORD64)(ip[frame]), 0, sym);
-		fprintf(f, "  0x%p %s+0x%lx\n", ip[frame], sym->Name, (uintptr_t)ip[frame] - (uintptr_t)sym->Address);
+		fprintf(f, "  0x%p %s+0x%lx\n", ip[frame], sym->Name,
+		        (uintptr_t)ip[frame] - (uintptr_t)sym->Address);
 	}
 
 	free(sym);
@@ -112,60 +116,61 @@ static void print_backtrace(FILE *f)
 #warning no backtrace enabled for this platform
 static void print_backtrace(FILE *f)
 {
-	//TODO: Other platform backtrace?
+	// TODO: Other platform backtrace?
 }
 #endif
-
 
 static FILE *outFile = nullptr;
 
 static std::mutex logMutex;
-static std::chrono::time_point<std::chrono::high_resolution_clock> timeInit = std::chrono::high_resolution_clock::now();
+static std::chrono::time_point<std::chrono::high_resolution_clock> timeInit =
+    std::chrono::high_resolution_clock::now();
 
-void Log (LogLevel level, UString prefix, UString format, ...)
+void Log(LogLevel level, UString prefix, UString format, ...)
 {
 	const char *level_prefix;
 	auto timeNow = std::chrono::high_resolution_clock::now();
-	unsigned long long clockns = std::chrono::duration<unsigned long long, std::nano>(timeNow - timeInit).count();
+	unsigned long long clockns =
+	    std::chrono::duration<unsigned long long, std::nano>(timeNow - timeInit).count();
 
 	logMutex.lock();
-	if (!outFile)
-	{
+	if (!outFile) {
 		outFile = fopen(LOGFILE, "w");
-		if (!outFile)
-		{
-			//No log file, have to hope stderr goes somewhere useful
+		if (!outFile) {
+			// No log file, have to hope stderr goes somewhere useful
 			fprintf(stderr, "Failed to open logfile \"%s\"\n", LOGFILE);
 			return;
 		}
 	}
 
-	switch (level)
-	{
-		case LogLevel::Info:
-			level_prefix = "I";
-			break;
-		case LogLevel::Warning:
-			level_prefix = "W";
-			break;
-		default:
-			level_prefix = "E";
-			break;
+	switch (level) {
+	case LogLevel::Info:
+		level_prefix = "I";
+		break;
+	case LogLevel::Warning:
+		level_prefix = "W";
+		break;
+	default:
+		level_prefix = "E";
+		break;
 	}
 
 	va_list arglist;
 	va_start(arglist, format);
 	fprintf(outFile, "%s %llu %s: ", level_prefix, clockns, prefix.str().c_str());
 	vfprintf(outFile, format.str().c_str(), arglist);
-	//On error print a backtrace to the log file
-	if (level == LogLevel::Error)
-		print_backtrace(outFile);
+	// On error print a backtrace to the log file
+	if (level == LogLevel::Error) {
+		{
+			print_backtrace(outFile);
+		}
+	}
 	fprintf(outFile, "\n");
 	va_end(arglist);
 
-	//If it's a warning or error flush the outfile (in case we crash 'soon') and also print to stderr
-	if (level != LogLevel::Info)
-	{
+	// If it's a warning or error flush the outfile (in case we crash 'soon') and also print to
+	// stderr
+	if (level != LogLevel::Info) {
 		fflush(outFile);
 		va_start(arglist, format);
 		fprintf(stderr, "%s %llu %s: ", level_prefix, clockns, prefix.str().c_str());
@@ -175,12 +180,11 @@ void Log (LogLevel level, UString prefix, UString format, ...)
 	}
 
 #if defined(ERROR_DIALOG)
-	if (level == LogLevel::Error)
-	{
+	if (level == LogLevel::Error) {
 		/* How big should the string be? */
 		va_start(arglist, format);
 		auto strSize = vsnprintf(NULL, 0, format.str().c_str(), arglist);
-		strSize += 1;//NULL terminator
+		strSize += 1; // NULL terminator
 		std::unique_ptr<char[]> string(new char[strSize]);
 		va_end(arglist);
 
@@ -189,12 +193,12 @@ void Log (LogLevel level, UString prefix, UString format, ...)
 		vsnprintf(string.get(), strSize, format.str().c_str(), arglist);
 		va_end(arglist);
 
-		al_show_native_message_box(NULL, "OpenApoc ERROR", "A fatal error has occurred", string.get(), NULL, ALLEGRO_MESSAGEBOX_ERROR);
-
+		al_show_native_message_box(NULL, "OpenApoc ERROR", "A fatal error has occurred",
+		                           string.get(), NULL, ALLEGRO_MESSAGEBOX_ERROR);
 	}
 #endif
 
 	logMutex.unlock();
 }
 
-}; //namespace OpenApoc
+} // namespace OpenApoc

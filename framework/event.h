@@ -5,12 +5,12 @@
 
 #include "forms/forms_enums.h"
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 class Control;
 
-enum EventTypes
-{
+enum EventTypes {
 	EVENT_WINDOW_ACTIVATE,
 	EVENT_WINDOW_DEACTIVATE,
 	EVENT_WINDOW_RESIZE,
@@ -35,8 +35,7 @@ enum EventTypes
 	EVENT_UNDEFINED
 };
 
-typedef struct FRAMEWORK_DISPLAY_EVENT
-{
+typedef struct FRAMEWORK_DISPLAY_EVENT {
 	bool Active;
 	int X;
 	int Y;
@@ -44,8 +43,7 @@ typedef struct FRAMEWORK_DISPLAY_EVENT
 	int Height;
 } FRAMEWORK_DISPLAY_EVENT;
 
-typedef struct FRAMEWORK_JOYSTICK_EVENT
-{
+typedef struct FRAMEWORK_JOYSTICK_EVENT {
 	int ID;
 	int Stick;
 	int Axis;
@@ -53,8 +51,7 @@ typedef struct FRAMEWORK_JOYSTICK_EVENT
 	int Button;
 } FRAMEWORK_JOYSTICK_EVENT;
 
-typedef struct FRAMEWORK_MOUSE_EVENT
-{
+typedef struct FRAMEWORK_MOUSE_EVENT {
 	int X;
 	int Y;
 	int WheelVertical;
@@ -64,63 +61,59 @@ typedef struct FRAMEWORK_MOUSE_EVENT
 	int Button;
 } FRAMEWORK_MOUSE_EVENT;
 
-typedef struct FRAMEWORK_KEYBOARD_EVENT
-{
+typedef struct FRAMEWORK_KEYBOARD_EVENT {
 	int KeyCode;
 	int UniChar;
 	unsigned int Modifiers;
 } FRAMEWORK_KEYBOARD_EVENT;
 
-typedef struct FRAMEWORK_TIMER_EVENT
-{
-	void* TimerObject;
+typedef struct FRAMEWORK_TIMER_EVENT {
+	void *TimerObject;
 } FRAMEWORK_TIMER_EVENT;
 
-typedef struct FRAMEWORK_FORMS_EVENT
-{
-	Control* RaisedBy;
+typedef struct FRAMEWORK_FORMS_EVENT {
+	Control *RaisedBy;
 	FormEventType EventFlag;
 	FRAMEWORK_MOUSE_EVENT MouseInfo;
 	FRAMEWORK_KEYBOARD_EVENT KeyInfo;
 } FRAMEWORK_FORMS_EVENT;
 
-
-typedef union EventData
-{
-	FRAMEWORK_DISPLAY_EVENT		Display;
-	FRAMEWORK_JOYSTICK_EVENT	Joystick;
-	FRAMEWORK_KEYBOARD_EVENT	Keyboard;
-	FRAMEWORK_MOUSE_EVENT			Mouse;
-	FRAMEWORK_TIMER_EVENT			Timer;
-	FRAMEWORK_FORMS_EVENT			Forms;
+typedef union EventData {
+	FRAMEWORK_DISPLAY_EVENT Display;
+	FRAMEWORK_JOYSTICK_EVENT Joystick;
+	FRAMEWORK_KEYBOARD_EVENT Keyboard;
+	FRAMEWORK_MOUSE_EVENT Mouse;
+	FRAMEWORK_TIMER_EVENT Timer;
+	FRAMEWORK_FORMS_EVENT Forms;
 } EventData;
 
 /*
-	 Class: Event
-	 Provides data regarding events that occur within the system
+     Class: Event
+     Provides data regarding events that occur within the system
 */
 class Event
 {
-	public:
-		bool Handled;
-		EventTypes Type;
-		EventData Data;
+  public:
+	bool Handled;
+	EventTypes Type;
+	EventData Data;
 
-		UString toString();
+	UString toString();
 
-		/*
-			Constructor: Event
-			Defaults the <Type> to Undefined
-		*/
-		Event();
-		// Constructs an Event from event->toString() output
-		Event(const UString &str);
+	/*
+	    Constructor: Event
+	    Defaults the <Type> to Undefined
+	*/
+	Event();
+	// Constructs an Event from event->toString() output
+	Event(const UString &str);
 
-		/*
-			Destructor: ~Event
-			For network packets, it calls enet's packet delete.
-			For download packets, url and the data are deleted (assumption is that the program will have processed the data)
-		*/
-		~Event();
+	/*
+	    Destructor: ~Event
+	    For network packets, it calls enet's packet delete.
+	    For download packets, url and the data are deleted (assumption is that the program will have
+	   processed the data)
+	*/
+	~Event();
 };
-}; //namespace OpenApoc
+} // namespace OpenApoc

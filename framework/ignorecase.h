@@ -81,7 +81,6 @@ int PHYSFSEXT_locateCorrectCase(char *buf);
 }
 #endif
 
-#endif  /* include-once blocker. */
+#endif /* include-once blocker. */
 
 /* end of ignorecase.h ... */
-

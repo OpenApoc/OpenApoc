@@ -3,32 +3,33 @@
 
 #include "control.h"
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 class HScrollBar : public Control
 {
-	private:
-		bool capture;
+  private:
+	bool capture;
 
-		void LoadResources();
+	void LoadResources();
 
-	protected:
-		virtual void OnRender() override;
+  protected:
+	virtual void OnRender() override;
 
-	public:
-		Colour GripperColour;
-		int Minimum;
-		int Maximum;
-		int Value;
-		int LargeChange;
+  public:
+	Colour GripperColour;
+	int Minimum;
+	int Maximum;
+	int Value;
+	int LargeChange;
 
-		HScrollBar( Framework &fw, Control* Owner );
-		virtual ~HScrollBar();
+	HScrollBar(Framework &fw, Control *Owner);
+	virtual ~HScrollBar();
 
-		virtual void EventOccured( Event* e ) override;
-		virtual void Update() override;
-		virtual void UnloadResources() override;
-		virtual void SetValue(int newValue);
+	virtual void EventOccured(Event *e) override;
+	virtual void Update() override;
+	virtual void UnloadResources() override;
+	virtual void SetValue(int newValue);
 };
 
-}; //namespace OpenApoc
+} // namespace OpenApoc

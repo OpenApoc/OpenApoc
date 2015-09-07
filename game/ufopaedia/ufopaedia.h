@@ -10,28 +10,28 @@
 
 #include "ufopaediacategory.h"
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 class Ufopaedia : public Stage
 {
-	private:
-		Form* menuform;
-		StageCmd stageCmd;
+  private:
+	Form *menuform;
+	StageCmd stageCmd;
 
+  public:
+	static std::vector<std::shared_ptr<UfopaediaCategory>> UfopaediaDB;
 
-	public:
-		static std::vector<std::shared_ptr<UfopaediaCategory>> UfopaediaDB;
-
-		Ufopaedia(Framework &fw);
-		~Ufopaedia();
-		// Stage control
-		virtual void Begin() override;
-		virtual void Pause() override;
-		virtual void Resume() override;
-		virtual void Finish() override;
-		virtual void EventOccurred(Event *e) override;
-		virtual void Update(StageCmd * const cmd) override;
-		virtual void Render() override;
-		virtual bool IsTransition() override;
+	Ufopaedia(Framework &fw);
+	~Ufopaedia();
+	// Stage control
+	virtual void Begin() override;
+	virtual void Pause() override;
+	virtual void Resume() override;
+	virtual void Finish() override;
+	virtual void EventOccurred(Event *e) override;
+	virtual void Update(StageCmd *const cmd) override;
+	virtual void Render() override;
+	virtual bool IsTransition() override;
 };
-}; //namespace OpenApoc
+} // namespace OpenApoc

@@ -8,26 +8,26 @@
 #include "game/apocresources/apocresource.h"
 #include "forms/forms.h"
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 class InfiltrationScreen : public Stage
 {
-	private:
-		Form* menuform;
-		StageCmd stageCmd;
+  private:
+	Form *menuform;
+	StageCmd stageCmd;
 
-
-	public:
-		InfiltrationScreen(Framework &fw);
-		~InfiltrationScreen();
-		// Stage control
-		virtual void Begin() override;
-		virtual void Pause() override;
-		virtual void Resume() override;
-		virtual void Finish() override;
-		virtual void EventOccurred(Event *e) override;
-		virtual void Update(StageCmd * const cmd) override;
-		virtual void Render() override;
-		virtual bool IsTransition() override;
+  public:
+	InfiltrationScreen(Framework &fw);
+	~InfiltrationScreen();
+	// Stage control
+	virtual void Begin() override;
+	virtual void Pause() override;
+	virtual void Resume() override;
+	virtual void Finish() override;
+	virtual void EventOccurred(Event *e) override;
+	virtual void Update(StageCmd *const cmd) override;
+	virtual void Render() override;
+	virtual bool IsTransition() override;
 };
-}; //namespace OpenApoc
+} // namespace OpenApoc

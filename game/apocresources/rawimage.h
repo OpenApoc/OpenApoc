@@ -12,8 +12,9 @@ class PaletteImage;
 
 class RawImage
 {
-public:
-	static std::shared_ptr<PaletteImage> load(Data& data, const UString &fileName, const Vec2<int> &size);
+  public:
+	static std::shared_ptr<PaletteImage> load(Data &data, const UString &fileName,
+	                                          const Vec2<int> &size);
 };
 
-}; //namespace OpenApoc
+} // namespace OpenApoc

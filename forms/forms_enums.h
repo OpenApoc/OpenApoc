@@ -1,15 +1,15 @@
 
 #pragma once
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 /* Work around for X11 headers defining KeyPress */
 #ifdef KeyPress
 #undef KeyPress
 #endif
 
-enum class FormEventType
-{
+enum class FormEventType {
 	GotFocus,
 	LostFocus,
 	MouseEnter,
@@ -29,18 +29,8 @@ enum class FormEventType
 	TextEditFinish
 };
 
-enum class HorizontalAlignment
-{
-	Left,
-	Centre,
-	Right
-};
+enum class HorizontalAlignment { Left, Centre, Right };
 
-enum class VerticalAlignment
-{
-	Top,
-	Centre,
-	Bottom
-};
+enum class VerticalAlignment { Top, Centre, Bottom };
 
-}; //namespace OpenApoc
+} // namespace OpenApoc
