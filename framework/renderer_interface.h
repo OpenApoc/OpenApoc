@@ -1,25 +1,22 @@
 #pragma once
 #include "renderer.h"
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 class RendererFactory
 {
-public:
+  public:
 	virtual Renderer *create() = 0;
-	virtual ~RendererFactory() {};
+	virtual ~RendererFactory(){};
 };
 
 void registerRenderer(RendererFactory *factory, UString name);
 
-template <typename T>
-class RendererRegister
+template <typename T> class RendererRegister
 {
-public:
-	RendererRegister(UString name)
-	{
-		registerRenderer(new T, name);
-	}
+  public:
+	RendererRegister(UString name) { registerRenderer(new T, name); }
 };
 
-}; //namespace OpenApoc
+}; // namespace OpenApoc

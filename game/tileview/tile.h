@@ -3,7 +3,8 @@
 #include "framework/includes.h"
 #include <set>
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 class Framework;
 class Image;
@@ -16,92 +17,95 @@ class TileView;
 
 class TileObject : public std::enable_shared_from_this<TileObject>
 {
-	protected:
-		TileObject(TileMap &map, Vec3<float> position, bool active = false, bool collides = false, bool visible = false, bool projectile = false, bool selectable = false);
-		Vec3<float> position;
-		Tile *owningTile;
-		bool active;
-		bool collides;
-		bool visible;
-		bool projectile;
-		bool selectable;
-	public:
-		//Every object is 'owned' by a single tile - this defines the point the
-		//sprite will be drawn (so it will have the same x/y/z as the owning tile)
+  protected:
+	TileObject(TileMap &map, Vec3<float> position, bool active = false, bool collides = false,
+	           bool visible = false, bool projectile = false, bool selectable = false);
+	Vec3<float> position;
+	Tile *owningTile;
+	bool active;
+	bool collides;
+	bool visible;
+	bool projectile;
+	bool selectable;
 
-		Tile* getOwningTile() const {return this->owningTile;}
-		virtual ~TileObject();
-		virtual void setPosition(Vec3<float> newPos);
-		const Vec3<float>& getPosition() const;
-		
-		bool isActive() const {return active;}
-		virtual void update(unsigned int ticks);
+  public:
+	// Every object is 'owned' by a single tile - this defines the point the
+	// sprite will be drawn (so it will have the same x/y/z as the owning tile)
 
-		bool isVisible() const {return visible;}
-		virtual Vec3<float> getDrawPosition() const;
-		virtual std::shared_ptr<Image> getSprite() const;
+	Tile *getOwningTile() const { return this->owningTile; }
+	virtual ~TileObject();
+	virtual void setPosition(Vec3<float> newPos);
+	const Vec3<float> &getPosition() const;
 
-		bool isCollidable() const {return collides;}
-		//Returns the number of voxels per tile
-		virtual const Vec3<int> &getTileSizeInVoxels() const;
-		//returns bounds in /number of voxels/
-		virtual const Vec3<int> &getBounds() const;
-		//Takes position in world space
-		virtual bool hasVoxelAt(const Vec3<float> &worldPosition) const;
-		virtual void handleCollision(const Collision &c);
-		virtual void removeFromAffectedTiles();
-		virtual void addToAffectedTiles();
+	bool isActive() const { return active; }
+	virtual void update(unsigned int ticks);
 
-		bool isProjectile() const {return projectile;}
-		virtual void checkProjectileCollision();
-		virtual void drawProjectile(TileView &v, Renderer &r, Vec2<int> screenPosition); 
+	bool isVisible() const { return visible; }
+	virtual Vec3<float> getDrawPosition() const;
+	virtual std::shared_ptr<Image> getSprite() const;
 
-		bool isSelectable() const{return selectable;};
-		virtual Rect<float> getSelectableBounds() const;
-		virtual void setSelected(bool selected);
+	bool isCollidable() const { return collides; }
+	// Returns the number of voxels per tile
+	virtual const Vec3<int> &getTileSizeInVoxels() const;
+	// returns bounds in /number of voxels/
+	virtual const Vec3<int> &getBounds() const;
+	// Takes position in world space
+	virtual bool hasVoxelAt(const Vec3<float> &worldPosition) const;
+	virtual void handleCollision(const Collision &c);
+	virtual void removeFromAffectedTiles();
+	virtual void addToAffectedTiles();
+
+	bool isProjectile() const { return projectile; }
+	virtual void checkProjectileCollision();
+	virtual void drawProjectile(TileView &v, Renderer &r, Vec2<int> screenPosition);
+
+	bool isSelectable() const { return selectable; };
+	virtual Rect<float> getSelectableBounds() const;
+	virtual void setSelected(bool selected);
 };
 
 class Tile
 {
-	public:
-		TileMap &map;
-		Vec3<int> position;
+  public:
+	TileMap &map;
+	Vec3<int> position;
 
-		std::set<std::shared_ptr<TileObject> > ownedObjects;
-		std::set<std::shared_ptr<TileObject> > visibleObjects;
-		std::set<std::shared_ptr<TileObject> > collideableObjects;
+	std::set<std::shared_ptr<TileObject>> ownedObjects;
+	std::set<std::shared_ptr<TileObject>> visibleObjects;
+	std::set<std::shared_ptr<TileObject>> collideableObjects;
 
-		std::set<std::shared_ptr<TileObject> > ownedProjectiles;
+	std::set<std::shared_ptr<TileObject>> ownedProjectiles;
 
-		Tile(TileMap &map, Vec3<int> position);
+	Tile(TileMap &map, Vec3<int> position);
 
-		Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd);
+	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd);
 };
 
 class TileMap
 {
-	private:
-		std::vector <Tile> tiles;
-		std::set<std::shared_ptr<TileObject>> projectiles;
-	public:
-		std::set<std::shared_ptr<TileObject>> activeObjects;
-		std::set<std::shared_ptr<TileObject>> selectableObjects;
-		Framework &fw;
-		Tile* getTile(int x, int y, int z);
-		Tile* getTile(Vec3<int> pos);
-		//Returns the tile this point is 'within'
-		Tile* getTile(Vec3<float> pos);
-		Vec3<int> size;
+  private:
+	std::vector<Tile> tiles;
+	std::set<std::shared_ptr<TileObject>> projectiles;
 
-		TileMap (Framework &fw, Vec3<int> size);
-		~TileMap();
-		virtual void update(unsigned int ticks);
+  public:
+	std::set<std::shared_ptr<TileObject>> activeObjects;
+	std::set<std::shared_ptr<TileObject>> selectableObjects;
+	Framework &fw;
+	Tile *getTile(int x, int y, int z);
+	Tile *getTile(Vec3<int> pos);
+	// Returns the tile this point is 'within'
+	Tile *getTile(Vec3<float> pos);
+	Vec3<int> size;
 
-		std::list<Tile*> findShortestPath(Vec3<int> origin, Vec3<int> destination);
+	TileMap(Framework &fw, Vec3<int> size);
+	~TileMap();
+	virtual void update(unsigned int ticks);
 
-		void removeObject(std::shared_ptr<TileObject> obj);
-		void addObject(std::shared_ptr<TileObject> obj);
+	std::list<Tile *> findShortestPath(Vec3<int> origin, Vec3<int> destination);
 
-		Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd);
+	void removeObject(std::shared_ptr<TileObject> obj);
+	void addObject(std::shared_ptr<TileObject> obj);
+
+	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd);
 };
-}; //namespace OpenApoc
+}; // namespace OpenApoc

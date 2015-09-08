@@ -2,28 +2,26 @@
 #include "forms/label.h"
 #include "framework/framework.h"
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
-Label::Label( Framework &fw, Control* Owner, UString Text, std::shared_ptr<BitmapFont> font ) : Control( fw, Owner ), text( Text ), font( font ), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Top ), WordWrap(true)
+Label::Label(Framework &fw, Control *Owner, UString Text, std::shared_ptr<BitmapFont> font)
+    : Control(fw, Owner), text(Text), font(font), TextHAlign(HorizontalAlignment::Left),
+      TextVAlign(VerticalAlignment::Top), WordWrap(true)
 {
 }
 
-Label::~Label()
-{
-}
+Label::~Label() {}
 
-void Label::EventOccured( Event* e )
-{
-	Control::EventOccured( e );
-}
+void Label::EventOccured(Event *e) { Control::EventOccured(e); }
 
 void Label::OnRender()
 {
 	int xpos;
 	int ypos;
-	std::list<UString> lines = WordWrapText( font, text );
+	std::list<UString> lines = WordWrapText(font, text);
 
-	switch( TextVAlign )
+	switch (TextVAlign)
 	{
 		case VerticalAlignment::Top:
 			ypos = 0;
@@ -39,18 +37,18 @@ void Label::OnRender()
 			return;
 	}
 
-	while( lines.size() > 0 )
+	while (lines.size() > 0)
 	{
-		switch( TextHAlign )
+		switch (TextHAlign)
 		{
 			case HorizontalAlignment::Left:
 				xpos = 0;
 				break;
 			case HorizontalAlignment::Centre:
-				xpos = (Size.x / 2) - (font->GetFontWidth( lines.front() ) / 2);
+				xpos = (Size.x / 2) - (font->GetFontWidth(lines.front()) / 2);
 				break;
 			case HorizontalAlignment::Right:
-				xpos = Size.x - font->GetFontWidth( lines.front() );
+				xpos = Size.x - font->GetFontWidth(lines.front());
 				break;
 			default:
 				LogError("Unknown TextHAlign");
@@ -70,28 +68,14 @@ void Label::Update()
 	// No "updates"
 }
 
-void Label::UnloadResources()
-{
-}
+void Label::UnloadResources() {}
 
-UString Label::GetText()
-{
-	return text;
-}
+UString Label::GetText() { return text; }
 
-void Label::SetText( UString Text )
-{
-	text = Text;
-}
+void Label::SetText(UString Text) { text = Text; }
 
-std::shared_ptr<BitmapFont> Label::GetFont()
-{
-	return font;
-}
+std::shared_ptr<BitmapFont> Label::GetFont() { return font; }
 
-void Label::SetFont(std::shared_ptr<BitmapFont> NewFont)
-{
-	font = NewFont;
-}
+void Label::SetFont(std::shared_ptr<BitmapFont> NewFont) { font = NewFont; }
 
-}; //namespace OpenApoc
+}; // namespace OpenApoc

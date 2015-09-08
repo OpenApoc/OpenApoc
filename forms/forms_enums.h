@@ -1,7 +1,8 @@
 
 #pragma once
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 /* Work around for X11 headers defining KeyPress */
 #ifdef KeyPress
@@ -43,4 +44,4 @@ enum class VerticalAlignment
 	Bottom
 };
 
-}; //namespace OpenApoc
+}; // namespace OpenApoc

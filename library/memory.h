@@ -3,24 +3,25 @@
 
 #include "framework/includes.h"
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 class Memory
 {
 
-	private:
-		std::vector<char> data;
+  private:
+	std::vector<char> data;
 
-	public:
-		Memory(size_t InitialSize = 0);
-		~Memory();
+  public:
+	Memory(size_t InitialSize = 0);
+	~Memory();
 
-		void Clear();
-		void Resize( size_t length );
-		void AppendData( void* data, size_t length );
-		size_t GetSize();
-		void* GetData();
-		void* GetDataOffset( size_t offset );
+	void Clear();
+	void Resize(size_t length);
+	void AppendData(void *data, size_t length);
+	size_t GetSize();
+	void *GetData();
+	void *GetDataOffset(size_t offset);
 };
 
-}; //namespace OpenApoc
+}; // namespace OpenApoc

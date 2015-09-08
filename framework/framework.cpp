@@ -15,7 +15,8 @@
 
 using namespace OpenApoc;
 
-namespace {
+namespace
+{
 
 #ifndef DATA_DIRECTORY
 #define DATA_DIRECTORY "./data"
@@ -23,45 +24,45 @@ namespace {
 
 #ifndef RENDERERS
 #ifdef _WIN32
-#pragma message ( "WARNING: Using default renderer list" )
+#pragma message("WARNING: Using default renderer list")
 #else
 #warning RENDERERS not set - using default list
 #endif
 #define RENDERERS "GL_3_0:GLES_2_0"
 #endif
 
-static std::map<UString, UString> defaultConfig =
-{
+static std::map<UString, UString> defaultConfig = {
 #ifdef PANDORA
-	{"Visual.ScreenWidth", "800"},
-	{"Visual.ScreenHeight", "480"},
-	{"Visual.FullScreen", "true"},
+    {"Visual.ScreenWidth", "800"},
+    {"Visual.ScreenHeight", "480"},
+    {"Visual.FullScreen", "true"},
 #else
-	{"Visual.ScreenWidth", "1600"},
-	{"Visual.ScreenHeight", "900"},
-	{"Visual.FullScreen", "false"},
+    {"Visual.ScreenWidth", "1600"},
+    {"Visual.ScreenHeight", "900"},
+    {"Visual.FullScreen", "false"},
 #endif
-	{"Language", "en_gb"},
-	{"GameRules", "XCOMAPOC.XML"},
-	{"Resource.LocalDataDir", "./data"},
-	{"Resource.SystemDataDir", DATA_DIRECTORY},
-	{"Resource.LocalCDPath", "./data/cd.iso"},
-	{"Resource.SystemCDPath", DATA_DIRECTORY "/cd.iso"},
-	{"Visual.Renderers", RENDERERS},
-	{"Audio.Backends", "allegro:null"},
-	{"Audio.GlobalGain", "20"},
-	{"Audio.SampleGain", "20"},
-	{"Audio.MusicGain", "20"},
+    {"Language", "en_gb"},
+    {"GameRules", "XCOMAPOC.XML"},
+    {"Resource.LocalDataDir", "./data"},
+    {"Resource.SystemDataDir", DATA_DIRECTORY},
+    {"Resource.LocalCDPath", "./data/cd.iso"},
+    {"Resource.SystemCDPath", DATA_DIRECTORY "/cd.iso"},
+    {"Visual.Renderers", RENDERERS},
+    {"Audio.Backends", "allegro:null"},
+    {"Audio.GlobalGain", "20"},
+    {"Audio.SampleGain", "20"},
+    {"Audio.MusicGain", "20"},
 };
 
 std::map<UString, std::unique_ptr<OpenApoc::RendererFactory>> *registeredRenderers = nullptr;
-std::map<UString, std::unique_ptr<OpenApoc::SoundBackendFactory>> *registeredSoundBackends = nullptr;
-
+std::map<UString, std::unique_ptr<OpenApoc::SoundBackendFactory>> *registeredSoundBackends =
+    nullptr;
 };
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
-void registerRenderer(RendererFactory* factory, UString name)
+void registerRenderer(RendererFactory *factory, UString name)
 {
 	if (!registeredRenderers)
 		registeredRenderers = new std::map<UString, std::unique_ptr<OpenApoc::RendererFactory>>();
@@ -71,10 +72,10 @@ void registerRenderer(RendererFactory* factory, UString name)
 void registerSoundBackend(SoundBackendFactory *factory, UString name)
 {
 	if (!registeredSoundBackends)
-		registeredSoundBackends = new std::map<UString, std::unique_ptr<OpenApoc::SoundBackendFactory>>();
+		registeredSoundBackends =
+		    new std::map<UString, std::unique_ptr<OpenApoc::SoundBackendFactory>>();
 	registeredSoundBackends->emplace(name, std::unique_ptr<SoundBackendFactory>(factory));
 }
-
 
 class JukeBoxImpl : public JukeBox
 {
@@ -82,16 +83,10 @@ class JukeBoxImpl : public JukeBox
 	unsigned int position;
 	std::vector<std::shared_ptr<MusicTrack>> trackList;
 	JukeBox::PlayMode mode;
-public:
-	JukeBoxImpl(Framework &fw)
-		:fw(fw), mode(JukeBox::PlayMode::Loop)
-	{
 
-	}
-	virtual ~JukeBoxImpl()
-	{
-		this->stop();
-	}
+  public:
+	JukeBoxImpl(Framework &fw) : fw(fw), mode(JukeBox::PlayMode::Loop) {}
+	virtual ~JukeBoxImpl() { this->stop(); }
 
 	virtual void play(std::vector<UString> tracks, JukeBox::PlayMode mode) override
 	{
@@ -110,7 +105,7 @@ public:
 	}
 	static void progressTrack(void *data)
 	{
-		JukeBoxImpl *jukebox = static_cast<JukeBoxImpl*>(data);
+		JukeBoxImpl *jukebox = static_cast<JukeBoxImpl *>(data);
 		if (jukebox->trackList.size() == 0)
 		{
 			LogWarning("Trying to play empty jukebox");
@@ -121,58 +116,53 @@ public:
 			LogInfo("End of jukebox playlist");
 			return;
 		}
-		jukebox->fw.soundBackend->playMusic(jukebox->trackList[jukebox->position], progressTrack, jukebox);
+		jukebox->fw.soundBackend->playMusic(jukebox->trackList[jukebox->position], progressTrack,
+		                                    jukebox);
 		jukebox->position++;
 		if (jukebox->mode == JukeBox::PlayMode::Loop)
 			jukebox->position = jukebox->position % jukebox->trackList.size();
 	}
-	virtual void stop() override
-	{
-		fw.soundBackend->stopMusic();
-	}
+	virtual void stop() override { fw.soundBackend->stopMusic(); }
 };
 
 class FrameworkPrivate
 {
-	private:
-		friend class Framework;
-		bool quitProgram;
+  private:
+	friend class Framework;
+	bool quitProgram;
 
+	ALLEGRO_DISPLAY_MODE screenMode;
+	ALLEGRO_DISPLAY *screen;
 
-		ALLEGRO_DISPLAY_MODE screenMode;
-		ALLEGRO_DISPLAY *screen;
+	ALLEGRO_EVENT_QUEUE *eventAllegro;
+	std::list<Event *> eventQueue;
+	ALLEGRO_MUTEX *eventMutex;
 
-		ALLEGRO_EVENT_QUEUE *eventAllegro;
-		std::list<Event*> eventQueue;
-		ALLEGRO_MUTEX *eventMutex;
-
-		StageStack ProgramStages;
-		std::shared_ptr<Surface> defaultSurface;
+	StageStack ProgramStages;
+	std::shared_ptr<Surface> defaultSurface;
 };
 
-
-
 Framework::Framework(const UString programName, const std::vector<UString> cmdline)
-	: dumpEvents(false), replayEvents(false), p(new FrameworkPrivate), programName(programName)
+    : dumpEvents(false), replayEvents(false), p(new FrameworkPrivate), programName(programName)
 {
 	LogInfo("Starting framework");
 	PHYSFS_init(programName.str().c_str());
 
-	if( !al_init() )
+	if (!al_init())
 	{
 		LogError("Cannot init Allegro");
 		p->quitProgram = true;
 		return;
 	}
 
-	if( !al_install_keyboard() || !al_install_mouse())
+	if (!al_install_keyboard() || !al_install_mouse())
 	{
 		LogError(" Cannot init Allegro plugins");
 		p->quitProgram = true;
 		return;
 	}
 
-	LogInfo("Loading config\n" );
+	LogInfo("Loading config\n");
 	p->quitProgram = false;
 	UString settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
 	settingsPath += "/settings.cfg";
@@ -190,14 +180,18 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 		{
 			if (this->replayEvents || this->dumpEvents)
 			{
-				LogError("Only one --dumpevents or --replayevents should be supplied, ignoring \"%s\"", option.str().c_str());
+				LogError(
+				    "Only one --dumpevents or --replayevents should be supplied, ignoring \"%s\"",
+				    option.str().c_str());
 			}
 			else
 			{
 				this->eventStream.open(splitString[1].str(), std::ios::out);
 				if (!this->eventStream)
 				{
-					LogError("Failed to open event file \"%s\" for writing - ignoring --dumpevents option", splitString[1].str().c_str());
+					LogError("Failed to open event file \"%s\" for writing - ignoring --dumpevents "
+					         "option",
+					         splitString[1].str().c_str());
 				}
 				else
 				{
@@ -210,14 +204,18 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 		{
 			if (this->replayEvents || this->dumpEvents)
 			{
-				LogError("Only one --dumpevents or --replayevents should be supplied, ignoring \"%s\"", option.str().c_str());
+				LogError(
+				    "Only one --dumpevents or --replayevents should be supplied, ignoring \"%s\"",
+				    option.str().c_str());
 			}
 			else
 			{
 				this->eventStream.open(splitString[1].str(), std::ios::in);
 				if (!this->eventStream)
 				{
-					LogError("Failed to open event file \"%s\" for reading - ignoring --replayevents option", splitString[1].str().c_str());
+					LogError("Failed to open event file \"%s\" for reading - ignoring "
+					         "--replayevents option",
+					         splitString[1].str().c_str());
 				}
 				else
 				{
@@ -228,10 +226,10 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 		}
 		else
 		{
-			LogInfo("Setting option \"%s\" to \"%s\" from command line", splitString[0].str().c_str(), splitString[1].str().c_str());
+			LogInfo("Setting option \"%s\" to \"%s\" from command line",
+			        splitString[0].str().c_str(), splitString[1].str().c_str());
 			Settings->set(splitString[0], splitString[1]);
 		}
-
 	}
 
 	std::vector<UString> resourcePaths;
@@ -245,34 +243,35 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 	auto testFile = this->data->load_file("MUSIC");
 	if (!testFile)
 	{
-		LogError("Failed to open \"music\" from the CD - likely the cd couldn't be loaded or paths are incorrect if using an extracted CD image");
+		LogError("Failed to open \"music\" from the CD - likely the cd couldn't be loaded or paths "
+		         "are incorrect if using an extracted CD image");
 	}
 
 	auto testFile2 = this->data->load_file("FileDoesntExist");
 	if (testFile2)
 	{
-		LogError("Succeded in opening \"FileDoesntExist\" - either you have the weirdest filename preferences or something is wrong");
+		LogError("Succeded in opening \"FileDoesntExist\" - either you have the weirdest filename "
+		         "preferences or something is wrong");
 	}
 
 	p->eventAllegro = al_create_event_queue();
 	p->eventMutex = al_create_mutex_recursive();
 
-	srand( (unsigned int)al_get_time() );
+	srand((unsigned int)al_get_time());
 
 	Display_Initialise();
 	Audio_Initialise();
 
-	al_register_event_source( p->eventAllegro, al_get_display_event_source( p->screen ) );
-	al_register_event_source( p->eventAllegro, al_get_keyboard_event_source() );
-	al_register_event_source( p->eventAllegro, al_get_mouse_event_source() );
-
+	al_register_event_source(p->eventAllegro, al_get_display_event_source(p->screen));
+	al_register_event_source(p->eventAllegro, al_get_keyboard_event_source());
+	al_register_event_source(p->eventAllegro, al_get_mouse_event_source());
 }
 
 Framework::~Framework()
 {
 	LogInfo("Destroying framework");
-	//Kill gamecore and program stages first, so any resources are cleaned before
-	//allegro is de-inited
+	// Kill gamecore and program stages first, so any resources are cleaned before
+	// allegro is de-inited
 	state.reset();
 	gamecore.reset();
 	p->ProgramStages.Clear();
@@ -282,8 +281,8 @@ Framework::~Framework()
 	LogInfo("Shutdown");
 	Display_Shutdown();
 	Audio_Shutdown();
-	al_destroy_event_queue( p->eventAllegro );
-	al_destroy_mutex( p->eventMutex );
+	al_destroy_event_queue(p->eventAllegro);
+	al_destroy_mutex(p->eventMutex);
 
 	LogInfo("Allegro shutdown");
 	al_uninstall_mouse();
@@ -297,19 +296,18 @@ void Framework::Run()
 {
 	LogInfo("Program loop started");
 
-	p->ProgramStages.Push( std::make_shared<BootUp>(*this) );
+	p->ProgramStages.Push(std::make_shared<BootUp>(*this));
 
 	this->renderer->setPalette(this->data->load_palette("xcom3/ufodata/PAL_06.DAT"));
 
-
-	while( !p->quitProgram )
+	while (!p->quitProgram)
 	{
 		RendererSurfaceBinding b(*this->renderer, p->defaultSurface);
 		this->renderer->clear();
 		ProcessEvents();
 
 		StageCmd cmd;
-		if( p->ProgramStages.IsEmpty() )
+		if (p->ProgramStages.IsEmpty())
 		{
 			break;
 		}
@@ -332,17 +330,16 @@ void Framework::Run()
 				p->quitProgram = true;
 				p->ProgramStages.Clear();
 				break;
-
 		}
-		if( !p->ProgramStages.IsEmpty() )
+		if (!p->ProgramStages.IsEmpty())
 		{
 			p->ProgramStages.Current()->Render();
 			al_flip_display();
 		}
 		if (this->dumpEvents)
 		{
-			//insert END_OF_FRAME to mark the end of each frame
-			auto  e = new Event();
+			// insert END_OF_FRAME to mark the end of each frame
+			auto e = new Event();
 			e->Type = EVENT_END_OF_FRAME;
 			DumpEvent(e);
 			delete e;
@@ -363,15 +360,15 @@ void Framework::ReadRecordedEvents()
 	if (!this->eventStream)
 	{
 		LogInfo("Reached end of reply, appending CLOSE");
-		auto  e = new Event();
+		auto e = new Event();
 		e->Type = EVENT_WINDOW_CLOSED;
-		PushEvent( e );
+		PushEvent(e);
 	}
 }
 
 void Framework::ProcessEvents()
 {
-	if( p->ProgramStages.IsEmpty() )
+	if (p->ProgramStages.IsEmpty())
 	{
 		p->quitProgram = true;
 		return;
@@ -384,45 +381,46 @@ void Framework::ProcessEvents()
 	else
 		TranslateAllegroEvents();
 
-	al_lock_mutex( p->eventMutex );
+	al_lock_mutex(p->eventMutex);
 
-	while( p->eventQueue.size() > 0 && !p->ProgramStages.IsEmpty() )
+	while (p->eventQueue.size() > 0 && !p->ProgramStages.IsEmpty())
 	{
-		Event* e;
+		Event *e;
 		e = p->eventQueue.front();
 		p->eventQueue.pop_front();
-		if (!e) {
+		if (!e)
+		{
 			LogError("Invalid event on queue");
 			continue;
 		}
 		if (this->dumpEvents)
 			DumpEvent(e);
-		switch( e->Type )
+		switch (e->Type)
 		{
 			case EVENT_WINDOW_CLOSED:
 				delete e;
-				al_unlock_mutex( p->eventMutex );
+				al_unlock_mutex(p->eventMutex);
 				ShutdownFramework();
 				return;
 				break;
 			default:
-				p->ProgramStages.Current()->EventOccurred( e );
+				p->ProgramStages.Current()->EventOccurred(e);
 				break;
 		}
 		delete e;
 	}
 
-	al_unlock_mutex( p->eventMutex );
+	al_unlock_mutex(p->eventMutex);
 }
 
-void Framework::PushEvent( Event* e )
+void Framework::PushEvent(Event *e)
 {
-	al_lock_mutex( p->eventMutex );
-	p->eventQueue.push_back( e );
-	al_unlock_mutex( p->eventMutex );
+	al_lock_mutex(p->eventMutex);
+	p->eventQueue.push_back(e);
+	al_unlock_mutex(p->eventMutex);
 }
 
-void Framework::DumpEvent(Event* e)
+void Framework::DumpEvent(Event *e)
 {
 	assert(e);
 	assert(this->eventStream);
@@ -433,16 +431,16 @@ void Framework::DumpEvent(Event* e)
 void Framework::TranslateAllegroEvents()
 {
 	ALLEGRO_EVENT e;
-	Event* fwE;
+	Event *fwE;
 
-	while( al_get_next_event( p->eventAllegro, &e ) )
+	while (al_get_next_event(p->eventAllegro, &e))
 	{
-		switch( e.type )
+		switch (e.type)
 		{
 			case ALLEGRO_EVENT_DISPLAY_CLOSE:
 				fwE = new Event();
 				fwE->Type = EVENT_WINDOW_CLOSED;
-				PushEvent( fwE );
+				PushEvent(fwE);
 				break;
 			case ALLEGRO_EVENT_JOYSTICK_CONFIGURATION:
 				al_reconfigure_joysticks();
@@ -450,8 +448,8 @@ void Framework::TranslateAllegroEvents()
 			case ALLEGRO_EVENT_TIMER:
 				fwE = new Event();
 				fwE->Type = EVENT_TIMER_TICK;
-				fwE->Data.Timer.TimerObject = (void*)e.timer.source;
-				PushEvent( fwE );
+				fwE->Data.Timer.TimerObject = (void *)e.timer.source;
+				PushEvent(fwE);
 				break;
 			case ALLEGRO_EVENT_KEY_DOWN:
 				fwE = new Event();
@@ -459,7 +457,7 @@ void Framework::TranslateAllegroEvents()
 				fwE->Data.Keyboard.KeyCode = e.keyboard.keycode;
 				fwE->Data.Keyboard.UniChar = e.keyboard.unichar;
 				fwE->Data.Keyboard.Modifiers = e.keyboard.modifiers;
-				PushEvent( fwE );
+				PushEvent(fwE);
 				break;
 			case ALLEGRO_EVENT_KEY_UP:
 				fwE = new Event();
@@ -467,7 +465,7 @@ void Framework::TranslateAllegroEvents()
 				fwE->Data.Keyboard.KeyCode = e.keyboard.keycode;
 				fwE->Data.Keyboard.UniChar = e.keyboard.unichar;
 				fwE->Data.Keyboard.Modifiers = e.keyboard.modifiers;
-				PushEvent( fwE );
+				PushEvent(fwE);
 				break;
 			case ALLEGRO_EVENT_KEY_CHAR:
 				fwE = new Event();
@@ -475,7 +473,7 @@ void Framework::TranslateAllegroEvents()
 				fwE->Data.Keyboard.KeyCode = e.keyboard.keycode;
 				fwE->Data.Keyboard.UniChar = e.keyboard.unichar;
 				fwE->Data.Keyboard.Modifiers = e.keyboard.modifiers;
-				PushEvent( fwE );
+				PushEvent(fwE);
 				break;
 			case ALLEGRO_EVENT_MOUSE_AXES:
 				fwE = new Event();
@@ -487,7 +485,7 @@ void Framework::TranslateAllegroEvents()
 				fwE->Data.Mouse.WheelVertical = e.mouse.dz;
 				fwE->Data.Mouse.WheelHorizontal = e.mouse.dw;
 				fwE->Data.Mouse.Button = e.mouse.button;
-				PushEvent( fwE );
+				PushEvent(fwE);
 				break;
 			case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
 				fwE = new Event();
@@ -499,7 +497,7 @@ void Framework::TranslateAllegroEvents()
 				fwE->Data.Mouse.WheelVertical = e.mouse.dz;
 				fwE->Data.Mouse.WheelHorizontal = e.mouse.dw;
 				fwE->Data.Mouse.Button = e.mouse.button;
-				PushEvent( fwE );
+				PushEvent(fwE);
 				break;
 			case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
 				fwE = new Event();
@@ -511,42 +509,42 @@ void Framework::TranslateAllegroEvents()
 				fwE->Data.Mouse.WheelVertical = e.mouse.dz;
 				fwE->Data.Mouse.WheelHorizontal = e.mouse.dw;
 				fwE->Data.Mouse.Button = e.mouse.button;
-				PushEvent( fwE );
+				PushEvent(fwE);
 				break;
 			case ALLEGRO_EVENT_DISPLAY_RESIZE:
 				fwE = new Event();
 				fwE->Type = EVENT_WINDOW_RESIZE;
 				fwE->Data.Display.X = 0;
 				fwE->Data.Display.Y = 0;
-				fwE->Data.Display.Width = al_get_display_width( p->screen );
-				fwE->Data.Display.Height = al_get_display_height( p->screen );
+				fwE->Data.Display.Width = al_get_display_width(p->screen);
+				fwE->Data.Display.Height = al_get_display_height(p->screen);
 				fwE->Data.Display.Active = true;
-				PushEvent( fwE );
+				PushEvent(fwE);
 				break;
 			case ALLEGRO_EVENT_DISPLAY_SWITCH_IN:
 				fwE = new Event();
 				fwE->Type = EVENT_WINDOW_ACTIVATE;
 				fwE->Data.Display.X = 0;
 				fwE->Data.Display.Y = 0;
-				fwE->Data.Display.Width = al_get_display_width( p->screen );
-				fwE->Data.Display.Height = al_get_display_height( p->screen );
+				fwE->Data.Display.Width = al_get_display_width(p->screen);
+				fwE->Data.Display.Height = al_get_display_height(p->screen);
 				fwE->Data.Display.Active = true;
-				PushEvent( fwE );
+				PushEvent(fwE);
 				break;
 			case ALLEGRO_EVENT_DISPLAY_SWITCH_OUT:
 				fwE = new Event();
 				fwE->Type = EVENT_WINDOW_DEACTIVATE;
 				fwE->Data.Display.X = 0;
 				fwE->Data.Display.Y = 0;
-				fwE->Data.Display.Width = al_get_display_width( p->screen );
-				fwE->Data.Display.Height = al_get_display_height( p->screen );
+				fwE->Data.Display.Width = al_get_display_width(p->screen);
+				fwE->Data.Display.Height = al_get_display_height(p->screen);
 				fwE->Data.Display.Active = false;
-				PushEvent( fwE );
+				PushEvent(fwE);
 				break;
 			default:
 				fwE = new Event();
 				fwE->Type = EVENT_UNDEFINED;
-				PushEvent( fwE );
+				PushEvent(fwE);
 				break;
 		}
 	}
@@ -564,7 +562,7 @@ void Framework::SaveSettings()
 	// Just to keep the filename consistant
 	UString settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
 	settingsPath += "/settings.cfg";
-	Settings->save( settingsPath );
+	Settings->save(settingsPath);
 }
 
 void Framework::Display_Initialise()
@@ -583,7 +581,7 @@ void Framework::Display_Initialise()
 	int scrH = Settings->getInt("Visual.ScreenHeight");
 	bool scrFS = Settings->getBool("Visual.FullScreen");
 
-	if( scrFS )
+	if (scrFS)
 	{
 		display_flags |= ALLEGRO_FULLSCREEN;
 	}
@@ -592,17 +590,18 @@ void Framework::Display_Initialise()
 
 	al_set_new_display_option(ALLEGRO_VSYNC, 1, ALLEGRO_SUGGEST);
 
-	p->screen = al_create_display( scrW, scrH );
+	p->screen = al_create_display(scrW, scrH);
 
 	if (!p->screen)
 	{
-		LogError("Failed to create screen");;
+		LogError("Failed to create screen");
+		;
 		exit(1);
 	}
 
-	al_set_blender( ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA );
+	al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
 
-	al_hide_mouse_cursor( p->screen );
+	al_hide_mouse_cursor(p->screen);
 
 	for (auto &rendererName : Settings->getString("Visual.Renderers").split(':'))
 	{
@@ -628,8 +627,6 @@ void Framework::Display_Initialise()
 		abort();
 	}
 	this->p->defaultSurface = this->renderer->getDefaultSurface();
-
-
 }
 
 void Framework::Display_Shutdown()
@@ -638,26 +635,20 @@ void Framework::Display_Shutdown()
 	p->defaultSurface.reset();
 	renderer.reset();
 
-	al_unregister_event_source( p->eventAllegro, al_get_display_event_source( p->screen ) );
-	al_destroy_display( p->screen );
+	al_unregister_event_source(p->eventAllegro, al_get_display_event_source(p->screen));
+	al_destroy_display(p->screen);
 }
 
-int Framework::Display_GetWidth()
-{
-	return al_get_display_width( p->screen );
-}
+int Framework::Display_GetWidth() { return al_get_display_width(p->screen); }
 
-int Framework::Display_GetHeight()
-{
-	return al_get_display_height( p->screen );
-}
+int Framework::Display_GetHeight() { return al_get_display_height(p->screen); }
 
 Vec2<int> Framework::Display_GetSize()
 {
 	return Vec2<int>(this->Display_GetWidth(), this->Display_GetHeight());
 }
 
-void Framework::Display_SetTitle( UString NewTitle )
+void Framework::Display_SetTitle(UString NewTitle)
 {
 #ifdef _WIN32
 	al_set_app_name(NewTitle.str().c_str());
@@ -697,9 +688,12 @@ void Framework::Audio_Initialise()
 	this->jukebox.reset(new JukeBoxImpl(*this));
 
 	/* Setup initial gain */
-	this->soundBackend->setGain(SoundBackend::Gain::Global, (float)this->Settings->getInt("Audio.GlobalGain") / 20.0f);
-	this->soundBackend->setGain(SoundBackend::Gain::Music, (float)this->Settings->getInt("Audio.MusicGain") / 20.0f);
-	this->soundBackend->setGain(SoundBackend::Gain::Sample, (float)this->Settings->getInt("Audio.SampleGain") / 20.0f);
+	this->soundBackend->setGain(SoundBackend::Gain::Global,
+	                            (float)this->Settings->getInt("Audio.GlobalGain") / 20.0f);
+	this->soundBackend->setGain(SoundBackend::Gain::Music,
+	                            (float)this->Settings->getInt("Audio.MusicGain") / 20.0f);
+	this->soundBackend->setGain(SoundBackend::Gain::Sample,
+	                            (float)this->Settings->getInt("Audio.SampleGain") / 20.0f);
 }
 
 void Framework::Audio_Shutdown()
@@ -709,14 +703,11 @@ void Framework::Audio_Shutdown()
 	this->soundBackend.reset();
 }
 
-std::shared_ptr<Stage> Framework::Stage_GetPrevious()
-{
-	return p->ProgramStages.Previous();
-}
+std::shared_ptr<Stage> Framework::Stage_GetPrevious() { return p->ProgramStages.Previous(); }
 
 std::shared_ptr<Stage> Framework::Stage_GetPrevious(std::shared_ptr<Stage> From)
 {
 	return p->ProgramStages.Previous(From);
 }
 
-}; //namespace OpenApoc
+}; // namespace OpenApoc

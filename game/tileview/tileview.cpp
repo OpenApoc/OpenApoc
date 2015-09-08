@@ -7,47 +7,35 @@
 #include "game/resources/gamecore.h"
 #include "game/city/vehicle.h"
 
-
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 TileView::TileView(Framework &fw, TileMap &map, Vec3<int> tileSize)
-	: Stage(fw), map(map), tileSize(tileSize), updateSpeed(UpdateSpeed::Speed1),
-	  maxZDraw(10), offsetX(0), offsetY(0),
-	  cameraScrollX(0), cameraScrollY(0), selectedTilePosition(0,0,0),
-	  selectedTileImageBack(fw.data->load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
-	  selectedTileImageFront(fw.data->load_image("CITY/SELECTED-CITYTILE-FRONT.PNG")),
-	  pal(fw.data->load_palette("xcom3/ufodata/PAL_01.DAT"))
+    : Stage(fw), map(map), tileSize(tileSize), updateSpeed(UpdateSpeed::Speed1), maxZDraw(10),
+      offsetX(0), offsetY(0), cameraScrollX(0), cameraScrollY(0), selectedTilePosition(0, 0, 0),
+      selectedTileImageBack(fw.data->load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
+      selectedTileImageFront(fw.data->load_image("CITY/SELECTED-CITYTILE-FRONT.PNG")),
+      pal(fw.data->load_palette("xcom3/ufodata/PAL_01.DAT"))
 {
 }
 
-TileView::~TileView()
-{
-}
+TileView::~TileView() {}
 
-void TileView::Begin()
-{
-}
+void TileView::Begin() {}
 
-void TileView::Pause()
-{
-}
+void TileView::Pause() {}
 
-void TileView::Resume()
-{
-}
+void TileView::Resume() {}
 
-void TileView::Finish()
-{
-}
-
+void TileView::Finish() {}
 
 void TileView::EventOccurred(Event *e)
 {
 	bool selectionChanged = false;
 
-	if( e->Type == EVENT_KEY_DOWN )
+	if (e->Type == EVENT_KEY_DOWN)
 	{
-		if( e->Data.Keyboard.KeyCode == ALLEGRO_KEY_ESCAPE )
+		if (e->Data.Keyboard.KeyCode == ALLEGRO_KEY_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
@@ -56,37 +44,37 @@ void TileView::EventOccurred(Event *e)
 		switch (e->Data.Keyboard.KeyCode)
 		{
 			case ALLEGRO_KEY_UP:
-				//offsetY += tileSize.y;
+				// offsetY += tileSize.y;
 				cameraScrollY = tileSize.y / 8;
 				break;
 			case ALLEGRO_KEY_DOWN:
-				//offsetY -= tileSize.y;
+				// offsetY -= tileSize.y;
 				cameraScrollY = -tileSize.y / 8;
 				break;
 			case ALLEGRO_KEY_LEFT:
-				//offsetX += tileSize.x;
+				// offsetX += tileSize.x;
 				cameraScrollX = tileSize.x / 8;
 				break;
 			case ALLEGRO_KEY_RIGHT:
-				//offsetX -= tileSize.x;
+				// offsetX -= tileSize.x;
 				cameraScrollX = -tileSize.x / 8;
 				break;
 
 			case ALLEGRO_KEY_PGDN:
-				if( fw.gamecore->DebugModeEnabled && maxZDraw > 1)
+				if (fw.gamecore->DebugModeEnabled && maxZDraw > 1)
 				{
 					maxZDraw--;
 				}
 				break;
 			case ALLEGRO_KEY_PGUP:
-				if( fw.gamecore->DebugModeEnabled && maxZDraw < map.size.z)
+				if (fw.gamecore->DebugModeEnabled && maxZDraw < map.size.z)
 				{
 					maxZDraw++;
 				}
 				break;
 			case ALLEGRO_KEY_S:
 				selectionChanged = true;
-				if (selectedTilePosition.y < (map.size.y-1))
+				if (selectedTilePosition.y < (map.size.y - 1))
 					selectedTilePosition.y++;
 				break;
 			case ALLEGRO_KEY_W:
@@ -101,12 +89,12 @@ void TileView::EventOccurred(Event *e)
 				break;
 			case ALLEGRO_KEY_D:
 				selectionChanged = true;
-				if (selectedTilePosition.x < (map.size.x-1))
+				if (selectedTilePosition.x < (map.size.x - 1))
 					selectedTilePosition.x++;
 				break;
 			case ALLEGRO_KEY_R:
 				selectionChanged = true;
-				if (selectedTilePosition.z < (map.size.z-1))
+				if (selectedTilePosition.z < (map.size.z - 1))
 					selectedTilePosition.z++;
 				break;
 			case ALLEGRO_KEY_F:
@@ -159,7 +147,8 @@ void TileView::EventOccurred(Event *e)
 				this->selectedTileObject = newSelectedTileObject;
 			}
 		}
-	} else if( e->Type == EVENT_KEY_UP )
+	}
+	else if (e->Type == EVENT_KEY_UP)
 	{
 		switch (e->Data.Keyboard.KeyCode)
 		{
@@ -173,14 +162,14 @@ void TileView::EventOccurred(Event *e)
 				break;
 		}
 	}
-	if (fw.gamecore->DebugModeEnabled &&
-	    selectionChanged)
+	if (fw.gamecore->DebugModeEnabled && selectionChanged)
 	{
-		LogInfo("Selected tile {%d,%d,%d}", selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z);
+		LogInfo("Selected tile {%d,%d,%d}", selectedTilePosition.x, selectedTilePosition.y,
+		        selectedTilePosition.z);
 	}
 }
 
-void TileView::Update(StageCmd * const cmd)
+void TileView::Update(StageCmd *const cmd)
 {
 	int ticks = 0;
 
@@ -202,17 +191,18 @@ void TileView::Update(StageCmd * const cmd)
 			ticks = 2;
 			break;
 		default:
-			LogWarning("FIXME: Sort out higher speed to not just hammer update (GOD-SLOW) - demoting to speed3");
+			LogWarning("FIXME: Sort out higher speed to not just hammer update (GOD-SLOW) - "
+			           "demoting to speed3");
 			this->updateSpeed = UpdateSpeed::Speed3;
 		case UpdateSpeed::Speed3:
 			ticks = 5;
 			break;
 	}
 
-	/* TODO: MAke non-'1' update ticks work (e.g. projectile paths & vehicle movement intersection) */
+	/* TODO: MAke non-'1' update ticks work (e.g. projectile paths & vehicle movement intersection)
+	 */
 	while (ticks--)
 		this->map.update(1);
-
 }
 
 void TileView::Render()
@@ -227,8 +217,10 @@ void TileView::Render()
 	// the inverse to tell which tiles are at the screen bounds
 	auto topLeft = screenToTileCoords(Vec2<int>{-offsetX - tileSize.x, -offsetY - tileSize.y}, 0);
 	auto topRight = screenToTileCoords(Vec2<int>{-offsetX + dpyWidth, -offsetY - tileSize.y}, 0);
-	auto bottomLeft = screenToTileCoords(Vec2<int>{-offsetX - tileSize.x, -offsetY + dpyHeight}, map.size.z);
-	auto bottomRight = screenToTileCoords(Vec2<int>{-offsetX + dpyWidth, -offsetY + dpyHeight}, map.size.z);
+	auto bottomLeft =
+	    screenToTileCoords(Vec2<int>{-offsetX - tileSize.x, -offsetY + dpyHeight}, map.size.z);
+	auto bottomRight =
+	    screenToTileCoords(Vec2<int>{-offsetX + dpyWidth, -offsetY + dpyHeight}, map.size.z);
 
 	int minX = std::max(0, topLeft.x);
 	int maxX = std::min(map.size.x, bottomRight.x);
@@ -243,13 +235,10 @@ void TileView::Render()
 			for (int x = minX; x < maxX; x++)
 			{
 				bool showOrigin = fw.state->showTileOrigin;
-				bool showSelected =
-					(fw.gamecore->DebugModeEnabled &&
-					 z == selectedTilePosition.z &&
-					 y == selectedTilePosition.y &&
-					 x == selectedTilePosition.x);
+				bool showSelected = (fw.gamecore->DebugModeEnabled && z == selectedTilePosition.z &&
+				                     y == selectedTilePosition.y && x == selectedTilePosition.x);
 				auto tile = map.getTile(x, y, z);
-				auto screenPos = tileToScreenCoords(Vec3<float>{(float)x,(float)y,(float)z});
+				auto screenPos = tileToScreenCoords(Vec3<float>{(float)x, (float)y, (float)z});
 				screenPos.x += offsetX;
 				screenPos.y += offsetY;
 
@@ -259,7 +248,7 @@ void TileView::Render()
 				{
 					assert(obj->isVisible());
 					bool showBounds = obj == this->selectedTileObject ||
-						(fw.state->showSelectableBounds && obj->isSelectable());
+					                  (fw.state->showSelectableBounds && obj->isSelectable());
 					auto img = obj->getSprite();
 					auto pos = obj->getDrawPosition();
 					auto objScreenPos = tileToScreenCoords(pos);
@@ -268,46 +257,56 @@ void TileView::Render()
 					r.draw(img, objScreenPos);
 					if (x != obj->getOwningTile()->position.x ||
 					    y != obj->getOwningTile()->position.y ||
-						z != obj->getOwningTile()->position.z)
+					    z != obj->getOwningTile()->position.z)
 					{
 						LogError("Object has mismatches owning tile / visible object link"
-							" visible in {%d,%d,%d} owned by {%d,%d,%d}",
-							x, y, z, obj->getOwningTile()->position.x, obj->getOwningTile()->position.y, obj->getOwningTile()->position.z);
+						         " visible in {%d,%d,%d} owned by {%d,%d,%d}",
+						         x, y, z, obj->getOwningTile()->position.x,
+						         obj->getOwningTile()->position.y,
+						         obj->getOwningTile()->position.z);
 					}
 					if (showOrigin)
 					{
 						Vec2<float> offset{offsetX, offsetY};
-						auto linePos0 = tileToScreenCoords(obj->getPosition() + Vec3<float>{0,0,0.5});
-						auto linePos1 = tileToScreenCoords(obj->getPosition() + Vec3<float>{0,0,-0.5});
+						auto linePos0 =
+						    tileToScreenCoords(obj->getPosition() + Vec3<float>{0, 0, 0.5});
+						auto linePos1 =
+						    tileToScreenCoords(obj->getPosition() + Vec3<float>{0, 0, -0.5});
 						linePos1 += offset;
 						linePos0 += offset;
-						r.drawLine(linePos0, linePos1, Colour{255,0,0,255});
-						linePos0 = tileToScreenCoords(obj->getPosition() + Vec3<float>{0,0.5,0});
-						linePos1 = tileToScreenCoords(obj->getPosition() + Vec3<float>{0,-0.5,0});
+						r.drawLine(linePos0, linePos1, Colour{255, 0, 0, 255});
+						linePos0 = tileToScreenCoords(obj->getPosition() + Vec3<float>{0, 0.5, 0});
+						linePos1 = tileToScreenCoords(obj->getPosition() + Vec3<float>{0, -0.5, 0});
 						linePos1 += offset;
 						linePos0 += offset;
-						r.drawLine(linePos0, linePos1, Colour{255,0,0,255});
-						linePos0 = tileToScreenCoords(obj->getPosition() + Vec3<float>{0.5,0,0});
-						linePos1 = tileToScreenCoords(obj->getPosition() + Vec3<float>{-0.5,0,0});
+						r.drawLine(linePos0, linePos1, Colour{255, 0, 0, 255});
+						linePos0 = tileToScreenCoords(obj->getPosition() + Vec3<float>{0.5, 0, 0});
+						linePos1 = tileToScreenCoords(obj->getPosition() + Vec3<float>{-0.5, 0, 0});
 						linePos1 += offset;
 						linePos0 += offset;
-						r.drawLine(linePos0, linePos1, Colour{255,0,0,255});
+						r.drawLine(linePos0, linePos1, Colour{255, 0, 0, 255});
 
-						linePos0 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} + Vec3<float>{0,0,0.5});
-						linePos1 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} + Vec3<float>{0,0,-0.5});
+						linePos0 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} +
+						                              Vec3<float>{0, 0, 0.5});
+						linePos1 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} +
+						                              Vec3<float>{0, 0, -0.5});
 						linePos1 += offset;
 						linePos0 += offset;
-						r.drawLine(linePos0, linePos1, Colour{255,255,0,255});
-						linePos0 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} + Vec3<float>{0,0.5,0});
-						linePos1 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} + Vec3<float>{0,-0.5,0});
+						r.drawLine(linePos0, linePos1, Colour{255, 255, 0, 255});
+						linePos0 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} +
+						                              Vec3<float>{0, 0.5, 0});
+						linePos1 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} +
+						                              Vec3<float>{0, -0.5, 0});
 						linePos1 += offset;
 						linePos0 += offset;
-						r.drawLine(linePos0, linePos1, Colour{255,255,0,255});
-						linePos0 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} + Vec3<float>{0.5,0,0});
-						linePos1 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} + Vec3<float>{-0.5,0,0});
+						r.drawLine(linePos0, linePos1, Colour{255, 255, 0, 255});
+						linePos0 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} +
+						                              Vec3<float>{0.5, 0, 0});
+						linePos1 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} +
+						                              Vec3<float>{-0.5, 0, 0});
 						linePos1 += offset;
 						linePos0 += offset;
-						r.drawLine(linePos0, linePos1, Colour{255,255,0,255});
+						r.drawLine(linePos0, linePos1, Colour{255, 255, 0, 255});
 					}
 					if (showBounds)
 					{
@@ -322,17 +321,17 @@ void TileView::Render()
 						auto p10 = Vec2<float>{p11.x, p00.y};
 						auto p01 = Vec2<float>{p00.x, p11.y};
 
-						r.drawLine(p00, p00 + Vec2<float>{0,5}, Colour{255,0,0,255});
-						r.drawLine(p00, p00 + Vec2<float>{5,0}, Colour{255,0,0,255});
+						r.drawLine(p00, p00 + Vec2<float>{0, 5}, Colour{255, 0, 0, 255});
+						r.drawLine(p00, p00 + Vec2<float>{5, 0}, Colour{255, 0, 0, 255});
 
-						r.drawLine(p01, p01 + Vec2<float>{0,-5}, Colour{255,0,0,255});
-						r.drawLine(p01, p01 + Vec2<float>{5,0}, Colour{255,0,0,255});
+						r.drawLine(p01, p01 + Vec2<float>{0, -5}, Colour{255, 0, 0, 255});
+						r.drawLine(p01, p01 + Vec2<float>{5, 0}, Colour{255, 0, 0, 255});
 
-						r.drawLine(p10, p10 + Vec2<float>{0,5}, Colour{255,0,0,255});
-						r.drawLine(p10, p10 + Vec2<float>{-5,0}, Colour{255,0,0,255});
+						r.drawLine(p10, p10 + Vec2<float>{0, 5}, Colour{255, 0, 0, 255});
+						r.drawLine(p10, p10 + Vec2<float>{-5, 0}, Colour{255, 0, 0, 255});
 
-						r.drawLine(p11, p11 + Vec2<float>{0,-5}, Colour{255,0,0,255});
-						r.drawLine(p11, p11 + Vec2<float>{-5,0}, Colour{255,0,0,255});
+						r.drawLine(p11, p11 + Vec2<float>{0, -5}, Colour{255, 0, 0, 255});
+						r.drawLine(p11, p11 + Vec2<float>{-5, 0}, Colour{255, 0, 0, 255});
 					}
 				}
 				for (auto &p : tile->ownedProjectiles)
@@ -345,9 +344,6 @@ void TileView::Render()
 	}
 }
 
-bool TileView::IsTransition()
-{
-	return false;
-}
+bool TileView::IsTransition() { return false; }
 
-}; //namespace OpenApoc
+}; // namespace OpenApoc

@@ -3,10 +3,10 @@
 #include "framework/framework.h"
 #include "framework/palette.h"
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
-ApocCursor::ApocCursor( Framework &fw, std::shared_ptr<Palette> pal )
-	: fw(fw), cursorPos{0,0}
+ApocCursor::ApocCursor(Framework &fw, std::shared_ptr<Palette> pal) : fw(fw), cursorPos{0, 0}
 {
 	auto f = fw.data->load_file("xcom3/TACDATA/MOUSE.DAT");
 	if (!f)
@@ -17,17 +17,17 @@ ApocCursor::ApocCursor( Framework &fw, std::shared_ptr<Palette> pal )
 
 	auto cursorCount = f.size() / 576;
 
-	while( images.size() < cursorCount )
+	while (images.size() < cursorCount)
 	{
-		auto palImg = std::make_shared<PaletteImage>(Vec2<int>{24,24});
+		auto palImg = std::make_shared<PaletteImage>(Vec2<int>{24, 24});
 		PaletteImageLock l(palImg, ImageLockUse::Write);
-		for( int y = 0; y < 24; y++ )
+		for (int y = 0; y < 24; y++)
 		{
-			for( int x = 0; x < 24; x++ )
+			for (int x = 0; x < 24; x++)
 			{
 				char palidx;
 				f.read(&palidx, 1);
-				l.set(Vec2<int>{x,y}, palidx);
+				l.set(Vec2<int>{x, y}, palidx);
 			}
 		}
 		images.push_back(palImg->toRGBImage(pal));
@@ -36,13 +36,11 @@ ApocCursor::ApocCursor( Framework &fw, std::shared_ptr<Palette> pal )
 	CurrentType = ApocCursor::Normal;
 }
 
-ApocCursor::~ApocCursor()
-{
-}
+ApocCursor::~ApocCursor() {}
 
-void ApocCursor::EventOccured( Event* e )
+void ApocCursor::EventOccured(Event *e)
 {
-	if( e->Type == EVENT_MOUSE_MOVE )
+	if (e->Type == EVENT_MOUSE_MOVE)
 	{
 		cursorPos.x = e->Data.Mouse.X;
 		cursorPos.y = e->Data.Mouse.Y;
@@ -53,4 +51,4 @@ void ApocCursor::Render()
 {
 	fw.renderer->draw(images.at((int)CurrentType), Vec2<float>{cursorPos.x, cursorPos.y});
 }
-}; //namespace OpenApoc
+}; // namespace OpenApoc

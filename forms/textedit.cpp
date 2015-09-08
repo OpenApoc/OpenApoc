@@ -5,72 +5,78 @@
 #include <allegro5/keycodes.h>
 #include <allegro5/allegro.h>
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
-TextEdit::TextEdit( Framework &fw, Control* Owner, UString Text, std::shared_ptr<BitmapFont> font ) : Control( fw, Owner ), caretDraw(false), caretTimer(0), text( Text ), font( font ), editting(false), editShift(false), editAltGr(false),  SelectionStart(Text.length()), TextHAlign( HorizontalAlignment::Left ), TextVAlign( VerticalAlignment::Centre )
+TextEdit::TextEdit(Framework &fw, Control *Owner, UString Text, std::shared_ptr<BitmapFont> font)
+    : Control(fw, Owner), caretDraw(false), caretTimer(0), text(Text), font(font), editting(false),
+      editShift(false), editAltGr(false), SelectionStart(Text.length()),
+      TextHAlign(HorizontalAlignment::Left), TextVAlign(VerticalAlignment::Centre)
 {
 }
 
-TextEdit::~TextEdit()
-{
-}
+TextEdit::~TextEdit() {}
 
-void TextEdit::EventOccured( Event* e )
+void TextEdit::EventOccured(Event *e)
 {
 	UString keyname;
 
-	Control::EventOccured( e );
+	Control::EventOccured(e);
 
-	if( e->Type == EVENT_FORM_INTERACTION )
+	if (e->Type == EVENT_FORM_INTERACTION)
 	{
-		if( e->Data.Forms.RaisedBy == this )
+		if (e->Data.Forms.RaisedBy == this)
 		{
-			if( e->Data.Forms.EventFlag == FormEventType::GotFocus || e->Data.Forms.EventFlag == FormEventType::MouseClick || e->Data.Forms.EventFlag == FormEventType::KeyDown )
+			if (e->Data.Forms.EventFlag == FormEventType::GotFocus ||
+			    e->Data.Forms.EventFlag == FormEventType::MouseClick ||
+			    e->Data.Forms.EventFlag == FormEventType::KeyDown)
 			{
 				editting = true;
-				//e->Handled = true;
+				// e->Handled = true;
 			}
-			if( e->Data.Forms.EventFlag == FormEventType::LostFocus )
+			if (e->Data.Forms.EventFlag == FormEventType::LostFocus)
 			{
 				editting = false;
-				RaiseEvent( FormEventType::TextEditFinish );
-				//e->Handled = true;
+				RaiseEvent(FormEventType::TextEditFinish);
+				// e->Handled = true;
 			}
-		} else if( e->Data.Forms.EventFlag == FormEventType::MouseClick ) {
+		}
+		else if (e->Data.Forms.EventFlag == FormEventType::MouseClick)
+		{
 			editting = false;
-			RaiseEvent( FormEventType::TextEditFinish );
+			RaiseEvent(FormEventType::TextEditFinish);
 		}
 
-		if( e->Data.Forms.EventFlag == FormEventType::KeyPress && editting )
+		if (e->Data.Forms.EventFlag == FormEventType::KeyPress && editting)
 		{
-			switch( e->Data.Forms.KeyInfo.KeyCode )
+			switch (e->Data.Forms.KeyInfo.KeyCode)
 			{
 				case ALLEGRO_KEY_BACKSPACE:
-					if( SelectionStart > 0 )
+					if (SelectionStart > 0)
 					{
 						text.remove(SelectionStart, 1);
 						SelectionStart--;
-						RaiseEvent( FormEventType::TextChanged );
+						RaiseEvent(FormEventType::TextChanged);
 					}
 					e->Handled = true;
 					break;
 				case ALLEGRO_KEY_DELETE:
-					if( SelectionStart < text.length() )
+					if (SelectionStart < text.length())
 					{
-						text.remove(SelectionStart+1, 1);
-						RaiseEvent( FormEventType::TextChanged );
+						text.remove(SelectionStart + 1, 1);
+						RaiseEvent(FormEventType::TextChanged);
 					}
 					e->Handled = true;
 					break;
 				case ALLEGRO_KEY_LEFT:
-					if( SelectionStart > 0 )
+					if (SelectionStart > 0)
 					{
 						SelectionStart--;
 					}
 					e->Handled = true;
 					break;
 				case ALLEGRO_KEY_RIGHT:
-					if( SelectionStart < text.length() )
+					if (SelectionStart < text.length())
 					{
 						SelectionStart++;
 					}
@@ -95,25 +101,25 @@ void TextEdit::EventOccured( Event* e )
 
 				case ALLEGRO_KEY_ENTER:
 					editting = false;
-					RaiseEvent( FormEventType::TextEditFinish );
+					RaiseEvent(FormEventType::TextEditFinish);
 					break;
 
 				default:
-					ALLEGRO_USTR* convert = al_ustr_new("");
-					al_ustr_append_chr( convert, e->Data.Forms.KeyInfo.UniChar );
-					if( convert->slen == 1 && al_cstr(convert)[0] != 0 )
+					ALLEGRO_USTR *convert = al_ustr_new("");
+					al_ustr_append_chr(convert, e->Data.Forms.KeyInfo.UniChar);
+					if (convert->slen == 1 && al_cstr(convert)[0] != 0)
 					{
-						text.insert( SelectionStart, al_cstr(convert) );
+						text.insert(SelectionStart, al_cstr(convert));
 						SelectionStart++;
-						RaiseEvent( FormEventType::TextChanged );
+						RaiseEvent(FormEventType::TextChanged);
 					}
 			}
 		}
 
-		if( e->Data.Forms.EventFlag == FormEventType::KeyUp && editting )
+		if (e->Data.Forms.EventFlag == FormEventType::KeyUp && editting)
 		{
 
-			switch( e->Data.Forms.KeyInfo.KeyCode )
+			switch (e->Data.Forms.KeyInfo.KeyCode)
 			{
 				case ALLEGRO_KEY_LSHIFT:
 				case ALLEGRO_KEY_RSHIFT:
@@ -127,7 +133,6 @@ void TextEdit::EventOccured( Event* e )
 			}
 		}
 	}
-
 }
 
 void TextEdit::OnRender()
@@ -135,23 +140,23 @@ void TextEdit::OnRender()
 	int xpos;
 	int ypos;
 
-	switch( TextHAlign )
+	switch (TextHAlign)
 	{
 		case HorizontalAlignment::Left:
 			xpos = 0;
 			break;
 		case HorizontalAlignment::Centre:
-			xpos = (Size.x / 2) - (font->GetFontWidth( text ) / 2);
+			xpos = (Size.x / 2) - (font->GetFontWidth(text) / 2);
 			break;
 		case HorizontalAlignment::Right:
-			xpos = Size.x - font->GetFontWidth( text );
+			xpos = Size.x - font->GetFontWidth(text);
 			break;
 		default:
 			LogError("Unknown TextHAlign");
 			return;
 	}
 
-	switch( TextVAlign )
+	switch (TextVAlign)
 	{
 		case VerticalAlignment::Top:
 			ypos = 0;
@@ -167,24 +172,26 @@ void TextEdit::OnRender()
 			return;
 	}
 
-	if( editting )
+	if (editting)
 	{
-		int cxpos = xpos + font->GetFontWidth( text.substr( 0, SelectionStart ) ) + 1;
+		int cxpos = xpos + font->GetFontWidth(text.substr(0, SelectionStart)) + 1;
 
-		if( cxpos < 0 )
+		if (cxpos < 0)
 		{
 			xpos += cxpos;
-			cxpos = xpos + font->GetFontWidth( text.substr( 0, SelectionStart ) ) + 1;
+			cxpos = xpos + font->GetFontWidth(text.substr(0, SelectionStart)) + 1;
 		}
-		if( cxpos > Size.x )
+		if (cxpos > Size.x)
 		{
 			xpos -= cxpos - Size.x;
-			cxpos = xpos + font->GetFontWidth( text.substr( 0, SelectionStart ) ) + 1;
+			cxpos = xpos + font->GetFontWidth(text.substr(0, SelectionStart)) + 1;
 		}
 
-		if( caretDraw )
+		if (caretDraw)
 		{
-			fw.renderer->drawLine(Vec2<float>{cxpos, ypos}, Vec2<float>{cxpos, ypos + font->GetFontHeight()}, Colour{255,255,255});
+			fw.renderer->drawLine(Vec2<float>{cxpos, ypos},
+			                      Vec2<float>{cxpos, ypos + font->GetFontHeight()},
+			                      Colour{255, 255, 255});
 		}
 	}
 
@@ -194,51 +201,40 @@ void TextEdit::OnRender()
 
 void TextEdit::Update()
 {
-	if( editting )
+	if (editting)
 	{
 		caretTimer = (caretTimer + 1) % TEXTEDITOR_CARET_TOGGLE_TIME;
-		if( caretTimer == 0 )
+		if (caretTimer == 0)
 		{
 			caretDraw = !caretDraw;
 		}
 	}
 }
 
-void TextEdit::UnloadResources()
-{
-}
+void TextEdit::UnloadResources() {}
 
-UString TextEdit::GetText()
-{
-	return text;
-}
+UString TextEdit::GetText() { return text; }
 
-void TextEdit::SetText( UString Text )
+void TextEdit::SetText(UString Text)
 {
 	text = Text;
 	SelectionStart = text.length();
-	RaiseEvent( FormEventType::TextChanged );
+	RaiseEvent(FormEventType::TextChanged);
 }
 
-void TextEdit::RaiseEvent( FormEventType Type )
+void TextEdit::RaiseEvent(FormEventType Type)
 {
 	std::ignore = Type;
-	auto   ce = new Event();
+	auto ce = new Event();
 	ce->Type = EVENT_FORM_INTERACTION;
-	memset( (void*)&(ce->Data.Forms), 0, sizeof( FRAMEWORK_FORMS_EVENT ) );
+	memset((void *)&(ce->Data.Forms), 0, sizeof(FRAMEWORK_FORMS_EVENT));
 	ce->Data.Forms.RaisedBy = this;
 	ce->Data.Forms.EventFlag = FormEventType::TextChanged;
-	fw.PushEvent( ce );
+	fw.PushEvent(ce);
 }
 
-std::shared_ptr<BitmapFont> TextEdit::GetFont()
-{
-	return font;
-}
+std::shared_ptr<BitmapFont> TextEdit::GetFont() { return font; }
 
-void TextEdit::SetFont(std::shared_ptr<BitmapFont> NewFont)
-{
-	font = NewFont;
-}
+void TextEdit::SetFont(std::shared_ptr<BitmapFont> NewFont) { font = NewFont; }
 
-}; //namespace OpenApoc
+}; // namespace OpenApoc

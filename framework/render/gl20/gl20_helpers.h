@@ -11,67 +11,63 @@ class ActiveTexture
 	ActiveTexture(const ActiveTexture &) = delete;
 	const GL20 &gl;
 
-public:
+  public:
 	GL20::GLenum prevUnit;
-	GL20::GLenum getUnitEnum(int unit)
-	{
-		return GL20::TEXTURE0 + unit;
-	}
+	GL20::GLenum getUnitEnum(int unit) { return GL20::TEXTURE0 + unit; }
 
-	ActiveTexture(const GL20 &gl, int unit)
-		: gl(gl)
+	ActiveTexture(const GL20 &gl, int unit) : gl(gl)
 	{
-		gl.GetIntegerv(GL20::ACTIVE_TEXTURE, (GL20::GLint*)&prevUnit);
+		gl.GetIntegerv(GL20::ACTIVE_TEXTURE, (GL20::GLint *)&prevUnit);
 		gl.ActiveTexture(getUnitEnum(unit));
 	}
-	~ActiveTexture()
-	{
-		gl.ActiveTexture(prevUnit);
-	}
+	~ActiveTexture() { gl.ActiveTexture(prevUnit); }
 };
 
 class UnpackAlignment
 {
 	UnpackAlignment(const UnpackAlignment &) = delete;
 	const GL20 &gl;
-public:
+
+  public:
 	GL20::GLint prevAlign;
-	UnpackAlignment(const GL20 &gl, int align)
-		: gl(gl)
+	UnpackAlignment(const GL20 &gl, int align) : gl(gl)
 	{
 		gl.GetIntegerv(GL20::UNPACK_ALIGNMENT, &prevAlign);
 		gl.PixelStorei(GL20::UNPACK_ALIGNMENT, align);
 	}
-	~UnpackAlignment()
-	{
-		gl.PixelStorei(GL20::UNPACK_ALIGNMENT, prevAlign);
-	}
+	~UnpackAlignment() { gl.PixelStorei(GL20::UNPACK_ALIGNMENT, prevAlign); }
 };
 
 class BindTexture
 {
 	BindTexture(const BindTexture &) = delete;
 	const GL20 &gl;
-public:
+
+  public:
 	GL20::GLenum bind;
 	GL20::GLuint prevID;
 	int unit;
 	static GL20::GLenum getBindEnum(GL20::GLenum e)
 	{
-		switch (e) {
-			case GL20::TEXTURE_1D: return GL20::TEXTURE_BINDING_1D;
-			case GL20::TEXTURE_2D: return GL20::TEXTURE_BINDING_2D;
-			case GL20::TEXTURE_2D_ARRAY: return GL20::TEXTURE_BINDING_2D_ARRAY;
+		switch (e)
+		{
+			case GL20::TEXTURE_1D:
+				return GL20::TEXTURE_BINDING_1D;
+			case GL20::TEXTURE_2D:
+				return GL20::TEXTURE_BINDING_2D;
+			case GL20::TEXTURE_2D_ARRAY:
+				return GL20::TEXTURE_BINDING_2D_ARRAY;
 			default:
 				LogError("Unknown texture enum %d", (int)e);
 				return GL20::TEXTURE_BINDING_2D;
 		}
 	}
-	BindTexture(const GL20 &gl, GL20::GLuint id, GL20::GLint unit = 0, GL20::GLenum bind = GL20::TEXTURE_2D)
-		: gl(gl), bind(bind), unit(unit) 
+	BindTexture(const GL20 &gl, GL20::GLuint id, GL20::GLint unit = 0,
+	            GL20::GLenum bind = GL20::TEXTURE_2D)
+	    : gl(gl), bind(bind), unit(unit)
 	{
 		ActiveTexture a(gl, unit);
-		gl.GetIntegerv(getBindEnum(bind), (GL20::GLint*)&prevID);
+		gl.GetIntegerv(getBindEnum(bind), (GL20::GLint *)&prevID);
 		gl.BindTexture(bind, id);
 	}
 	~BindTexture()
@@ -81,18 +77,19 @@ public:
 	}
 };
 
-template <GL20::GLenum param>
-class TexParam
+template <GL20::GLenum param> class TexParam
 {
-	TexParam(const TexParam&) = delete;
+	TexParam(const TexParam &) = delete;
 	const GL20 &gl;
-public:
+
+  public:
 	GL20::GLint prevValue;
 	GL20::GLuint id;
 	GL20::GLenum type;
 
-	TexParam(const GL20 &gl, GL20::GLuint id, GL20::GLint value, GL20::GLenum type = GL20::TEXTURE_2D)
-		: gl(gl), id(id), type(type)
+	TexParam(const GL20 &gl, GL20::GLuint id, GL20::GLint value,
+	         GL20::GLenum type = GL20::TEXTURE_2D)
+	    : gl(gl), id(id), type(type)
 	{
 		BindTexture b(gl, id, 0, type);
 		gl.GetTexParameteriv(type, param, &prevValue);
@@ -109,32 +106,28 @@ class BindFramebuffer
 {
 	BindFramebuffer(const BindFramebuffer &) = delete;
 	const GL20 &gl;
-public:
-	GL20::GLuint prevID;
-	BindFramebuffer(const GL20 &gl, GL20::GLuint id)
-		: gl(gl)
-	{
-		gl.GetIntegerv(GL20::DRAW_FRAMEBUFFER_BINDING, (GL20::GLint*)&prevID);
-		gl.BindFramebuffer(GL20::DRAW_FRAMEBUFFER, id);
 
-	}
-	~BindFramebuffer()
+  public:
+	GL20::GLuint prevID;
+	BindFramebuffer(const GL20 &gl, GL20::GLuint id) : gl(gl)
 	{
-		gl.BindFramebuffer(GL20::DRAW_FRAMEBUFFER, prevID);
+		gl.GetIntegerv(GL20::DRAW_FRAMEBUFFER_BINDING, (GL20::GLint *)&prevID);
+		gl.BindFramebuffer(GL20::DRAW_FRAMEBUFFER, id);
 	}
+	~BindFramebuffer() { gl.BindFramebuffer(GL20::DRAW_FRAMEBUFFER, prevID); }
 };
 
 class Shader
 {
-private:
-	Shader(const Shader&) = delete;
+  private:
+	Shader(const Shader &) = delete;
 	const GL20 &gl;
-public:
+
+  public:
 	GL20::GLuint id;
 	UString name;
 
-	Shader(const GL20 &gl, GL20::GLenum type, const UString &source)
-		: gl(gl), id(0)
+	Shader(const GL20 &gl, GL20::GLenum type, const UString &source) : gl(gl), id(0)
 	{
 		switch (type)
 		{
@@ -165,7 +158,7 @@ public:
 		gl.GetShaderiv(id, GL20::COMPILE_STATUS, &status);
 		if (status == GL20::_TRUE)
 		{
-			//success
+			// success
 			return;
 		}
 
@@ -179,10 +172,7 @@ public:
 		return;
 	}
 
-	explicit operator bool() const
-	{
-		return id != 0;
-	}
+	explicit operator bool() const { return id != 0; }
 
 	~Shader()
 	{
@@ -193,13 +183,13 @@ public:
 
 class Program
 {
-private:
-	Program(const Program&) = delete;
+  private:
+	Program(const Program &) = delete;
 	const GL20 &gl;
-public:
+
+  public:
 	GL20::GLuint id;
-	Program(const GL20 &gl, const UString &vSource, const UString &fSource)
-		: gl(gl), id(0)
+	Program(const GL20 &gl, const UString &vSource, const UString &fSource) : gl(gl), id(0)
 	{
 		Shader vShader(gl, GL20::VERTEX_SHADER, vSource);
 		if (!vShader)
@@ -224,7 +214,7 @@ public:
 		gl.GetProgramiv(id, GL20::LINK_STATUS, &status);
 		if (status == GL20::_TRUE)
 		{
-			//Success`
+			// Success`
 			return;
 		}
 		GL20::GLint logLength;
@@ -237,12 +227,8 @@ public:
 
 		gl.DeleteProgram(id);
 		id = 0;
-
 	}
-	explicit operator bool() const
-	{
-		return id != 0;
-	}
+	explicit operator bool() const { return id != 0; }
 	~Program()
 	{
 		if (id)
@@ -257,7 +243,6 @@ public:
 		GL20::GLint loc = gl.GetUniformLocation(this->id, name.c_str());
 		uniformLocations.emplace(name, loc);
 		return loc;
-
 	}
 	std::map<std::string, GL20::GLint> attribLocations;
 	GL20::GLint attribLoc(const std::string &name)
@@ -277,10 +262,6 @@ public:
 	{
 		gl.Uniform2f(this->uniformLoc(name), val.x, val.y);
 	}
-	void Uniform(const std::string &name, int val)
-	{
-		gl.Uniform1i(this->uniformLoc(name), val);
-	}
+	void Uniform(const std::string &name, int val) { gl.Uniform1i(this->uniformLoc(name), val); }
 };
-
 };

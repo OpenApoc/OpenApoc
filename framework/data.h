@@ -8,7 +8,8 @@
 #include <vector>
 #include <fstream>
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 #define PROGRAM_NAME "OpenApoc"
 #define PROGRAM_ORGANISATION "OpenApoc"
@@ -22,17 +23,18 @@ class LOFTemps;
 
 class IFileImpl
 {
-public:
+  public:
 	virtual ~IFileImpl();
 };
 
 class IFile : public std::istream
 {
-private:
+  private:
 	std::unique_ptr<IFileImpl> f;
 	IFile();
 	friend class Data;
-public:
+
+  public:
 	~IFile();
 	size_t size() const;
 	bool readule16(uint16_t &val);
@@ -45,43 +47,43 @@ public:
 class Data
 {
 
-	private:
-		UString writeDir;
-		std::map<UString, std::weak_ptr<Image> >imageCache;
-		std::map<UString, std::weak_ptr<ImageSet> >imageSetCache;
+  private:
+	UString writeDir;
+	std::map<UString, std::weak_ptr<Image>> imageCache;
+	std::map<UString, std::weak_ptr<ImageSet>> imageSetCache;
 
-		std::map<UString, std::weak_ptr<Sample> >sampleCache;
-		std::map<UString, std::weak_ptr<MusicTrack> >musicCache;
-		std::map<UString, std::weak_ptr<LOFTemps> >LOFVoxelCache;
+	std::map<UString, std::weak_ptr<Sample>> sampleCache;
+	std::map<UString, std::weak_ptr<MusicTrack>> musicCache;
+	std::map<UString, std::weak_ptr<LOFTemps>> LOFVoxelCache;
 
-		//Pin open 'imageCacheSize' images
-		std::queue<std::shared_ptr<Image> > pinnedImages;
-		//Pin open 'imageSetCacheSize' image sets
-		std::queue<std::shared_ptr<ImageSet> > pinnedImageSets;
-		std::queue<std::shared_ptr<LOFTemps> > pinnedLOFVoxels;
-		std::list<std::unique_ptr<ImageLoader>> imageLoaders;
-		std::list<std::unique_ptr<SampleLoader>> sampleLoaders;
-		std::list<std::unique_ptr<MusicLoader>> musicLoaders;
+	// Pin open 'imageCacheSize' images
+	std::queue<std::shared_ptr<Image>> pinnedImages;
+	// Pin open 'imageSetCacheSize' image sets
+	std::queue<std::shared_ptr<ImageSet>> pinnedImageSets;
+	std::queue<std::shared_ptr<LOFTemps>> pinnedLOFVoxels;
+	std::list<std::unique_ptr<ImageLoader>> imageLoaders;
+	std::list<std::unique_ptr<SampleLoader>> sampleLoaders;
+	std::list<std::unique_ptr<MusicLoader>> musicLoaders;
 
-	public:
-		Data(Framework &fw, std::vector<UString> paths, int imageCacheSize = 10, int imageSetCacheSize = 10, int voxelCacheSize = 1);
-		~Data();
+  public:
+	Data(Framework &fw, std::vector<UString> paths, int imageCacheSize = 10,
+	     int imageSetCacheSize = 10, int voxelCacheSize = 1);
+	~Data();
 
-		enum class FileMode
-		{
-			Read,
-			Write,
-			ReadWrite,
-		};
+	enum class FileMode
+	{
+		Read,
+		Write,
+		ReadWrite,
+	};
 
-		std::shared_ptr<Sample> load_sample(const UString& path);
-		std::shared_ptr<MusicTrack> load_music(const UString& path);
-		std::shared_ptr<Image> load_image(const UString& path);
-		std::shared_ptr<ImageSet> load_image_set(const UString& path);
-		std::shared_ptr<Palette> load_palette(const UString& path);
-		std::shared_ptr<VoxelSlice> load_voxel_slice(const UString& path);
-		IFile load_file(const UString& path, FileMode mode = FileMode::Read);
-
+	std::shared_ptr<Sample> load_sample(const UString &path);
+	std::shared_ptr<MusicTrack> load_music(const UString &path);
+	std::shared_ptr<Image> load_image(const UString &path);
+	std::shared_ptr<ImageSet> load_image_set(const UString &path);
+	std::shared_ptr<Palette> load_palette(const UString &path);
+	std::shared_ptr<VoxelSlice> load_voxel_slice(const UString &path);
+	IFile load_file(const UString &path, FileMode mode = FileMode::Read);
 };
 
-}; //namspace OpenApoc
+}; // namspace OpenApoc

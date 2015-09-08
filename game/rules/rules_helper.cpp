@@ -2,7 +2,6 @@
 
 #include "framework/logger.h"
 
-
 namespace OpenApoc
 {
 
@@ -31,9 +30,9 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, 
 		return true;
 	}
 
-	LogWarning("Invalid string for bool attribute \"%s\" - \"%s\"", attributeName.str().c_str(), str.str().c_str());
+	LogWarning("Invalid string for bool attribute \"%s\" - \"%s\"", attributeName.str().c_str(),
+	           str.str().c_str());
 	return false;
-
 }
 
 bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, UString &output)
@@ -77,7 +76,6 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, 
 
 	output = Strings::ToFloat(str);
 	return true;
-
 }
 
 bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, int &output)
@@ -103,7 +101,6 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, 
 
 	output = Strings::ToInteger(str);
 	return true;
-
 }
 
 bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, Colour &output)
@@ -121,7 +118,7 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, 
 
 	UString str = element->Attribute(attributeName.str().c_str());
 
-	int r,g,b,a;
+	int r, g, b, a;
 
 	auto splitString = str.split(",");
 
@@ -131,9 +128,8 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, 
 		return false;
 	}
 
-	if (!Strings::IsInteger(splitString[0]) ||
-	    !Strings::IsInteger(splitString[1]) ||
-		!Strings::IsInteger(splitString[2]))
+	if (!Strings::IsInteger(splitString[0]) || !Strings::IsInteger(splitString[1]) ||
+	    !Strings::IsInteger(splitString[2]))
 	{
 		LogWarning("Element \"%s\" doesn't look like a colour (non-integer element)");
 		return false;
@@ -155,15 +151,11 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, 
 	else
 		a = 255;
 
-	if (r < 0 || r > 255
-	 || g < 0 || g > 255
-	 || b < 0 || b > 255
-	 || a < 0 || a > 255)
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255 || a < 0 || a > 255)
 	{
 		LogWarning("Element \"%s\" doesn't look like a colour (out-of-range element)");
 		return false;
 	}
-
 
 	if (!Strings::IsInteger(str))
 	{
@@ -171,9 +163,8 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, 
 		return false;
 	}
 
-	output = Colour{(unsigned char)r,(unsigned char)g,(unsigned char)b,(unsigned char)a};
+	output = Colour{(unsigned char)r, (unsigned char)g, (unsigned char)b, (unsigned char)a};
 	return true;
-
 }
 
-}; //namespace OpenApoc
+}; // namespace OpenApoc

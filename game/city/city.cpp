@@ -5,10 +5,10 @@
 #include "framework/framework.h"
 #include "game/resources/gamecore.h"
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
-City::City(Framework &fw, GameState &state)
-	: TileMap(fw, fw.rules->getCitySize())
+City::City(Framework &fw, GameState &state) : TileMap(fw, fw.rules->getCitySize())
 {
 	for (auto &def : fw.rules->getBuildingDefs())
 	{
@@ -23,7 +23,7 @@ City::City(Framework &fw, GameState &state)
 		if (!owner)
 		{
 			LogError("No organisation found matching building \"%s\" owner \"%s\"",
-				def.getName().str().c_str(), def.getOwnerName().str().c_str());
+			         def.getName().str().c_str(), def.getOwnerName().str().c_str());
 			return;
 		}
 		this->buildings.emplace_back(def, *owner);
@@ -35,14 +35,14 @@ City::City(Framework &fw, GameState &state)
 		{
 			for (int x = 0; x < this->size.x; x++)
 			{
-				auto tileID = fw.rules->getBuildingTileAt(Vec3<int>{x,y,z});
+				auto tileID = fw.rules->getBuildingTileAt(Vec3<int>{x, y, z});
 				if (tileID == "")
 					continue;
 				Building *bld = nullptr;
 
-				for (auto &b: this->buildings)
+				for (auto &b : this->buildings)
 				{
-					if (b.def.getBounds().withinInclusive(Vec2<int>{x,y}))
+					if (b.def.getBounds().withinInclusive(Vec2<int>{x, y}))
 					{
 						if (bld)
 						{
@@ -54,19 +54,19 @@ City::City(Framework &fw, GameState &state)
 							if (padID == tileID)
 							{
 								LogInfo("Building %s has landing pad at {%d,%d,%d}",
-									b.def.getName().str().c_str(), x, y, z);
-								b.landingPadLocations.emplace_back(x,y,z);
+								        b.def.getName().str().c_str(), x, y, z);
+								b.landingPadLocations.emplace_back(x, y, z);
 								break;
 							}
 						}
 					}
 				}
 
-
 				auto &cityTileDef = fw.rules->getBuildingTileDef(tileID);
-				auto tile = std::make_shared<BuildingTile>(*this, cityTileDef, Vec3<int>{x,y,z}, bld);
+				auto tile =
+				    std::make_shared<BuildingTile>(*this, cityTileDef, Vec3<int>{x, y, z}, bld);
 				this->addObject(std::dynamic_pointer_cast<TileObject>(tile));
-				tile->setPosition(Vec3<int>{x,y,z});
+				tile->setPosition(Vec3<int>{x, y, z});
 			}
 		}
 	}
@@ -75,15 +75,11 @@ City::City(Framework &fw, GameState &state)
 	{
 		if (b.landingPadLocations.empty())
 		{
-			LogError("Building \"%s\" has no landing pads",
-				b.def.getName().str().c_str());
+			LogError("Building \"%s\" has no landing pads", b.def.getName().str().c_str());
 		}
 	}
 }
 
-City::~City()
-{
+City::~City() {}
 
-}
-
-}; //namespace OpenApoc
+}; // namespace OpenApoc

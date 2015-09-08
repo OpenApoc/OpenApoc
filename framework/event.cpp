@@ -3,16 +3,16 @@
 
 #include <sstream>
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 Event::Event()
 {
-  Type = EVENT_UNDEFINED;
+	Type = EVENT_UNDEFINED;
 	Handled = false;
 }
 
-Event::Event(const UString &str)
-	: Event()
+Event::Event(const UString &str) : Event()
 {
 	auto args = str.split(' ');
 	if (args.size() < 2 || args[0] != "EVENT")
@@ -26,31 +26,56 @@ Event::Event(const UString &str)
 		LogError("Invalid event string \"%s\" - couldn't parse TYPE", str.str().c_str());
 		return;
 	}
-	if (type[1] == "WINDOW_CLOSED") {
+	if (type[1] == "WINDOW_CLOSED")
+	{
 		this->Type = EVENT_WINDOW_CLOSED;
-	} else if (type[1] == "KEY_DOWN") {
+	}
+	else if (type[1] == "KEY_DOWN")
+	{
 		this->Type = EVENT_KEY_DOWN;
-	} else if (type[1] == "KEY_UP") {
+	}
+	else if (type[1] == "KEY_UP")
+	{
 		this->Type = EVENT_KEY_UP;
-	} else if (type[1] == "KEY_PRESS") {
+	}
+	else if (type[1] == "KEY_PRESS")
+	{
 		this->Type = EVENT_KEY_PRESS;
-	} else if (type[1] == "MOUSE_MOVE") {
+	}
+	else if (type[1] == "MOUSE_MOVE")
+	{
 		this->Type = EVENT_MOUSE_MOVE;
-	} else if (type[1] == "MOUSE_DOWN") {
+	}
+	else if (type[1] == "MOUSE_DOWN")
+	{
 		this->Type = EVENT_MOUSE_DOWN;
-	} else if (type[1] == "MOUSE_UP") {
+	}
+	else if (type[1] == "MOUSE_UP")
+	{
 		this->Type = EVENT_MOUSE_UP;
-	} else if (type[1] == "WINDOW_RESIZE") {
+	}
+	else if (type[1] == "WINDOW_RESIZE")
+	{
 		this->Type = EVENT_WINDOW_RESIZE;
-	} else if (type[1] == "WINDOW_ACTIVATE") {
+	}
+	else if (type[1] == "WINDOW_ACTIVATE")
+	{
 		this->Type = EVENT_WINDOW_ACTIVATE;
-	} else if (type[1] == "WINDOW_DEACTIVATE") {
+	}
+	else if (type[1] == "WINDOW_DEACTIVATE")
+	{
 		this->Type = EVENT_WINDOW_DEACTIVATE;
-	} else if (type[1] == "END_OF_FRAME") {
+	}
+	else if (type[1] == "END_OF_FRAME")
+	{
 		this->Type = EVENT_END_OF_FRAME;
-	} else if (type[1] == "UNDEFINED") {
+	}
+	else if (type[1] == "UNDEFINED")
+	{
 		this->Type = EVENT_UNDEFINED;
-	} else {
+	}
+	else
+	{
 		LogError("Invalid event string \"%s\" - unhandled TYPE", str.str().c_str());
 		return;
 	}
@@ -60,109 +85,157 @@ Event::Event(const UString &str)
 		auto opts = args[i].split('=');
 		if (opts.size() != 2)
 		{
-			LogError("Invalid event string \"%s\" - couldn't parse argument \"%s\"", str.str().c_str(), args[i].str().c_str());
+			LogError("Invalid event string \"%s\" - couldn't parse argument \"%s\"",
+			         str.str().c_str(), args[i].str().c_str());
 			return;
 		}
 		if (!Strings::IsInteger(opts[1]))
 		{
-			LogError("Invalid event string \"%s\" - couldn't parse option value \"%s\"", str.str().c_str(), args[i].str().c_str());
+			LogError("Invalid event string \"%s\" - couldn't parse option value \"%s\"",
+			         str.str().c_str(), args[i].str().c_str());
 			return;
 		}
 		int value = Strings::ToInteger(opts[1]);
-		if (opts[0] == "keycode") {
-			if (this->Type != EVENT_KEY_DOWN && this->Type != EVENT_KEY_UP && this->Type != EVENT_KEY_PRESS)
+		if (opts[0] == "keycode")
+		{
+			if (this->Type != EVENT_KEY_DOWN && this->Type != EVENT_KEY_UP &&
+			    this->Type != EVENT_KEY_PRESS)
 			{
-				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type", str.str().c_str(), args[i].str().c_str());
+				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
+				         str.str().c_str(), args[i].str().c_str());
 				return;
 			}
 			this->Data.Keyboard.KeyCode = value;
-		} else if (opts[0] == "unichar") {
-			if (this->Type != EVENT_KEY_DOWN && this->Type != EVENT_KEY_UP && this->Type != EVENT_KEY_PRESS)
+		}
+		else if (opts[0] == "unichar")
+		{
+			if (this->Type != EVENT_KEY_DOWN && this->Type != EVENT_KEY_UP &&
+			    this->Type != EVENT_KEY_PRESS)
 			{
-				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type", str.str().c_str(), args[i].str().c_str());
+				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
+				         str.str().c_str(), args[i].str().c_str());
 				return;
 			}
 			this->Data.Keyboard.UniChar = value;
-		} else if (opts[0] == "modifiers") {
-			if (this->Type != EVENT_KEY_DOWN && this->Type != EVENT_KEY_UP && this->Type != EVENT_KEY_PRESS)
+		}
+		else if (opts[0] == "modifiers")
+		{
+			if (this->Type != EVENT_KEY_DOWN && this->Type != EVENT_KEY_UP &&
+			    this->Type != EVENT_KEY_PRESS)
 			{
-				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type", str.str().c_str(), args[i].str().c_str());
+				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
+				         str.str().c_str(), args[i].str().c_str());
 				return;
 			}
 			this->Data.Keyboard.Modifiers = value;
-		} else if (opts[0] == "x") {
-			if (this->Type != EVENT_MOUSE_MOVE && this->Type != EVENT_MOUSE_UP && this->Type != EVENT_MOUSE_DOWN)
+		}
+		else if (opts[0] == "x")
+		{
+			if (this->Type != EVENT_MOUSE_MOVE && this->Type != EVENT_MOUSE_UP &&
+			    this->Type != EVENT_MOUSE_DOWN)
 			{
-				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type", str.str().c_str(), args[i].str().c_str());
+				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
+				         str.str().c_str(), args[i].str().c_str());
 				return;
 			}
 			this->Data.Mouse.X = value;
-		} else if (opts[0] == "y") {
-			if (this->Type != EVENT_MOUSE_MOVE && this->Type != EVENT_MOUSE_UP && this->Type != EVENT_MOUSE_DOWN)
+		}
+		else if (opts[0] == "y")
+		{
+			if (this->Type != EVENT_MOUSE_MOVE && this->Type != EVENT_MOUSE_UP &&
+			    this->Type != EVENT_MOUSE_DOWN)
 			{
-				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type", str.str().c_str(), args[i].str().c_str());
+				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
+				         str.str().c_str(), args[i].str().c_str());
 				return;
 			}
 			this->Data.Mouse.Y = value;
-		} else if (opts[0] == "dx") {
-			if (this->Type != EVENT_MOUSE_MOVE && this->Type != EVENT_MOUSE_UP && this->Type != EVENT_MOUSE_DOWN)
+		}
+		else if (opts[0] == "dx")
+		{
+			if (this->Type != EVENT_MOUSE_MOVE && this->Type != EVENT_MOUSE_UP &&
+			    this->Type != EVENT_MOUSE_DOWN)
 			{
-				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type", str.str().c_str(), args[i].str().c_str());
+				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
+				         str.str().c_str(), args[i].str().c_str());
 				return;
 			}
 			this->Data.Mouse.DeltaX = value;
-		} else if (opts[0] == "dy") {
-			if (this->Type != EVENT_MOUSE_MOVE && this->Type != EVENT_MOUSE_UP && this->Type != EVENT_MOUSE_DOWN)
+		}
+		else if (opts[0] == "dy")
+		{
+			if (this->Type != EVENT_MOUSE_MOVE && this->Type != EVENT_MOUSE_UP &&
+			    this->Type != EVENT_MOUSE_DOWN)
 			{
-				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type", str.str().c_str(), args[i].str().c_str());
+				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
+				         str.str().c_str(), args[i].str().c_str());
 				return;
 			}
 			this->Data.Mouse.DeltaY = value;
-		} else if (opts[0] == "dv") {
-			if (this->Type != EVENT_MOUSE_MOVE && this->Type != EVENT_MOUSE_UP && this->Type != EVENT_MOUSE_DOWN)
+		}
+		else if (opts[0] == "dv")
+		{
+			if (this->Type != EVENT_MOUSE_MOVE && this->Type != EVENT_MOUSE_UP &&
+			    this->Type != EVENT_MOUSE_DOWN)
 			{
-				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type", str.str().c_str(), args[i].str().c_str());
+				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
+				         str.str().c_str(), args[i].str().c_str());
 				return;
 			}
 			this->Data.Mouse.WheelVertical = value;
-		} else if (opts[0] == "dw") {
-			if (this->Type != EVENT_MOUSE_MOVE && this->Type != EVENT_MOUSE_UP && this->Type != EVENT_MOUSE_DOWN)
+		}
+		else if (opts[0] == "dw")
+		{
+			if (this->Type != EVENT_MOUSE_MOVE && this->Type != EVENT_MOUSE_UP &&
+			    this->Type != EVENT_MOUSE_DOWN)
 			{
-				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type", str.str().c_str(), args[i].str().c_str());
+				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
+				         str.str().c_str(), args[i].str().c_str());
 				return;
 			}
 			this->Data.Mouse.WheelHorizontal = value;
-		} else if (opts[0] == "button") {
-			if (this->Type != EVENT_MOUSE_MOVE && this->Type != EVENT_MOUSE_UP && this->Type != EVENT_MOUSE_DOWN)
+		}
+		else if (opts[0] == "button")
+		{
+			if (this->Type != EVENT_MOUSE_MOVE && this->Type != EVENT_MOUSE_UP &&
+			    this->Type != EVENT_MOUSE_DOWN)
 			{
-				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type", str.str().c_str(), args[i].str().c_str());
+				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
+				         str.str().c_str(), args[i].str().c_str());
 				return;
 			}
 			this->Data.Mouse.Button = value;
-		} else if (opts[0] == "w") {
+		}
+		else if (opts[0] == "w")
+		{
 			if (this->Type != EVENT_WINDOW_RESIZE)
 			{
-				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type", str.str().c_str(), args[i].str().c_str());
+				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
+				         str.str().c_str(), args[i].str().c_str());
 				return;
 			}
 			this->Data.Display.Width = value;
-		} else if (opts[0] == "h") {
+		}
+		else if (opts[0] == "h")
+		{
 			if (this->Type != EVENT_WINDOW_RESIZE)
 			{
-				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type", str.str().c_str(), args[i].str().c_str());
+				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
+				         str.str().c_str(), args[i].str().c_str());
 				return;
 			}
 			this->Data.Display.Height = value;
-		} else {
-			LogError("Invalid event string \"%s\" - unhandled option \"%s\"", str.str().c_str(), args[i].str().c_str());
+		}
+		else
+		{
+			LogError("Invalid event string \"%s\" - unhandled option \"%s\"", str.str().c_str(),
+			         args[i].str().c_str());
 			return;
 		}
 	}
-
 }
 
-UString
-Event::toString()
+UString Event::toString()
 {
 	std::stringstream ss;
 	ss << std::dec;
@@ -242,9 +315,6 @@ Event::toString()
 	return UString(ss.str());
 }
 
-Event::~Event()
-{
+Event::~Event() {}
 
-}
-
-}; //namespace OpenApoc
+}; // namespace OpenApoc

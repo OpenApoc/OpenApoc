@@ -6,14 +6,13 @@
 namespace OpenApoc
 {
 
-
-
 class WeaponDef
 {
-private:
+  private:
 	WeaponDef(){};
 	friend class RulesLoader;
-public:
+
+  public:
 	enum class Type
 	{
 		Unknown,
@@ -45,7 +44,7 @@ public:
 
 	int ammoCapacity;
 	int ammoPerShot;
-	UString ammoType; //empty string for recharging
+	UString ammoType; // empty string for recharging
 };
 
-}; //namespace OpenApoc
+}; // namespace OpenApoc

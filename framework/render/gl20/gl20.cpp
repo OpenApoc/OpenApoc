@@ -9,11 +9,14 @@
 namespace OpenApoc
 {
 
-#define LOAD_FN(name, member) \
-	if (!lib->load(name, member)) {LogWarning("Failed to load GL function gl%s", name); return;}
+#define LOAD_FN(name, member)                                                                      \
+	if (!lib->load(name, member))                                                                  \
+	{                                                                                              \
+		LogWarning("Failed to load GL function gl%s", name);                                       \
+		return;                                                                                    \
+	}
 
-GL20::GL20()
-	: lib(new GLLib), loadedSuccessfully(false)
+GL20::GL20() : lib(new GLLib), loadedSuccessfully(false)
 {
 	if (!lib->loaded)
 	{
@@ -22,10 +25,10 @@ GL20::GL20()
 	}
 	LOAD_FN("GetString", GetString);
 
-	this->vendorString = (const char*)this->GetString(VENDOR);
-	this->rendererString = (const char*)this->GetString(RENDERER);
-	this->versionString = (const char*)this->GetString(VERSION);
-	this->extensionsString = (const char*)this->GetString(EXTENSIONS);
+	this->vendorString = (const char *)this->GetString(VENDOR);
+	this->rendererString = (const char *)this->GetString(RENDERER);
+	this->versionString = (const char *)this->GetString(VERSION);
+	this->extensionsString = (const char *)this->GetString(EXTENSIONS);
 
 	LogInfo("GL vendor: \"%s\"", this->vendorString.str().c_str());
 	LogInfo("GL renderer: \"%s\"", this->rendererString.str().c_str());
@@ -48,7 +51,7 @@ GL20::GL20()
 		return;
 	}
 
-	for (auto &num :pointSplitVersion)
+	for (auto &num : pointSplitVersion)
 	{
 		if (!Strings::IsNumeric(num))
 		{
@@ -106,7 +109,7 @@ GL20::GL20()
 	LOAD_FN("GetProgramiv", GetProgramiv);
 	LOAD_FN("GetShaderInfoLog", GetShaderInfoLog);
 	LOAD_FN("GetShaderiv", GetShaderiv);
-	//LOAD_FN("GetString", GetString); - GetString is loaded first to check version
+	// LOAD_FN("GetString", GetString); - GetString is loaded first to check version
 	LOAD_FN("GetTexParameteriv", GetTexParameteriv);
 	LOAD_FN("GetUniformLocation", GetUniformLocation);
 	LOAD_FN("LinkProgram", LinkProgram);
@@ -126,8 +129,6 @@ GL20::GL20()
 	this->loadedSuccessfully = true;
 }
 
-GL20::~GL20()
-{
-}
+GL20::~GL20() {}
 
-}; //namespace OpenApoc
+}; // namespace OpenApoc

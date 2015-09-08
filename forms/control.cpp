@@ -4,14 +4,17 @@
 #include "forms/forms.h"
 #include "game/resources/gamecore.h"
 
-namespace OpenApoc {
-
-Control::Control(Framework &fw, Control* Owner, bool takesFocus)
-	: owningControl(Owner), focusedChild(nullptr), mouseInside(false), mouseDepressed(false), resolvedLocation(0,0), fw(fw), Name("Control"),Location(0,0), Size(0,0), BackgroundColour( 128, 80, 80 ), takesFocus(takesFocus), showBounds(false), Visible(true)
+namespace OpenApoc
 {
-	if( Owner != nullptr )
+
+Control::Control(Framework &fw, Control *Owner, bool takesFocus)
+    : owningControl(Owner), focusedChild(nullptr), mouseInside(false), mouseDepressed(false),
+      resolvedLocation(0, 0), fw(fw), Name("Control"), Location(0, 0), Size(0, 0),
+      BackgroundColour(128, 80, 80), takesFocus(takesFocus), showBounds(false), Visible(true)
+{
+	if (Owner != nullptr)
 	{
-		Owner->Controls.push_back( this );
+		Owner->Controls.push_back(this);
 	}
 }
 
@@ -19,29 +22,23 @@ Control::~Control()
 {
 	UnloadResources();
 	// Delete controls
-	while( Controls.size() > 0 )
+	while (Controls.size() > 0)
 	{
-		Control* c = Controls.back();
+		Control *c = Controls.back();
 		Controls.pop_back();
 		delete c;
 	}
 }
 
-void Control::SetFocus(Control* Child)
-{
-	focusedChild = Child;
-}
+void Control::SetFocus(Control *Child) { focusedChild = Child; }
 
-Control* Control::GetActiveControl()
-{
-	return focusedChild;
-}
+Control *Control::GetActiveControl() { return focusedChild; }
 
 void Control::Focus()
 {
-	if( owningControl != nullptr )
+	if (owningControl != nullptr)
 	{
-		owningControl->SetFocus( this );
+		owningControl->SetFocus(this);
 	}
 }
 
@@ -49,7 +46,7 @@ bool Control::IsFocused()
 {
 	if (!this->takesFocus)
 		return false;
-	if( owningControl != nullptr )
+	if (owningControl != nullptr)
 	{
 		return (owningControl->GetActiveControl() == this);
 	}
@@ -58,60 +55,67 @@ bool Control::IsFocused()
 
 void Control::ResolveLocation()
 {
-	if( owningControl == nullptr )
+	if (owningControl == nullptr)
 	{
 		resolvedLocation.x = Location.x;
 		resolvedLocation.y = Location.y;
-	} else {
-		if( Location.x > owningControl->Size.x || Location.y > owningControl->Size.y )
+	}
+	else
+	{
+		if (Location.x > owningControl->Size.x || Location.y > owningControl->Size.y)
 		{
 			resolvedLocation.x = -99999;
 			resolvedLocation.y = -99999;
-		} else {
+		}
+		else
+		{
 			resolvedLocation.x = owningControl->resolvedLocation.x + Location.x;
 			resolvedLocation.y = owningControl->resolvedLocation.y + Location.y;
 		}
 	}
 
-	for( auto ctrlidx = Controls.rbegin(); ctrlidx != Controls.rend(); ctrlidx++ )
+	for (auto ctrlidx = Controls.rbegin(); ctrlidx != Controls.rend(); ctrlidx++)
 	{
-		Control* c = (Control*)*ctrlidx;
+		Control *c = (Control *)*ctrlidx;
 		c->ResolveLocation();
 	}
 }
 
-void Control::EventOccured( Event* e )
+void Control::EventOccured(Event *e)
 {
-	for( auto ctrlidx = Controls.rbegin(); ctrlidx != Controls.rend(); ctrlidx++ )
+	for (auto ctrlidx = Controls.rbegin(); ctrlidx != Controls.rend(); ctrlidx++)
 	{
-		Control* c = (Control*)*ctrlidx;
-		if( c->Visible )
+		Control *c = (Control *)*ctrlidx;
+		if (c->Visible)
 		{
-			c->EventOccured( e );
-			if( e->Handled )
+			c->EventOccured(e);
+			if (e->Handled)
 			{
 				return;
 			}
 		}
 	}
 
-	Event* newevent;
+	Event *newevent;
 
-	if( e->Type == EVENT_MOUSE_MOVE )
+	if (e->Type == EVENT_MOUSE_MOVE)
 	{
-		if( e->Data.Mouse.X >= resolvedLocation.x && e->Data.Mouse.X < resolvedLocation.x + Size.x && e->Data.Mouse.Y >= resolvedLocation.y && e->Data.Mouse.Y < resolvedLocation.y + Size.y )
+		if (e->Data.Mouse.X >= resolvedLocation.x &&
+		    e->Data.Mouse.X < resolvedLocation.x + Size.x &&
+		    e->Data.Mouse.Y >= resolvedLocation.y && e->Data.Mouse.Y < resolvedLocation.y + Size.y)
 		{
-			if( !mouseInside )
+			if (!mouseInside)
 			{
 				newevent = new Event();
 				newevent->Type = EVENT_FORM_INTERACTION;
 				newevent->Data.Forms.RaisedBy = this;
 				newevent->Data.Forms.EventFlag = FormEventType::MouseEnter;
-				memcpy( (void*)&newevent->Data.Forms.MouseInfo, (void*)&e->Data.Mouse, sizeof( FRAMEWORK_MOUSE_EVENT ) );
+				memcpy((void *)&newevent->Data.Forms.MouseInfo, (void *)&e->Data.Mouse,
+				       sizeof(FRAMEWORK_MOUSE_EVENT));
 				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
-				memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-				fw.PushEvent( newevent );
+				memset((void *)&newevent->Data.Forms.KeyInfo, 0, sizeof(FRAMEWORK_KEYBOARD_EVENT));
+				fw.PushEvent(newevent);
 				mouseInside = true;
 			}
 
@@ -119,74 +123,81 @@ void Control::EventOccured( Event* e )
 			newevent->Type = EVENT_FORM_INTERACTION;
 			newevent->Data.Forms.RaisedBy = this;
 			newevent->Data.Forms.EventFlag = FormEventType::MouseMove;
-			memcpy( (void*)&newevent->Data.Forms.MouseInfo, (void*)&e->Data.Mouse, sizeof( FRAMEWORK_MOUSE_EVENT ) );
+			memcpy((void *)&newevent->Data.Forms.MouseInfo, (void *)&e->Data.Mouse,
+			       sizeof(FRAMEWORK_MOUSE_EVENT));
 			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
-			memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-			fw.PushEvent( newevent );
+			memset((void *)&newevent->Data.Forms.KeyInfo, 0, sizeof(FRAMEWORK_KEYBOARD_EVENT));
+			fw.PushEvent(newevent);
 
 			e->Handled = true;
-		} else {
-			if( mouseInside )
+		}
+		else
+		{
+			if (mouseInside)
 			{
 				newevent = new Event();
 				newevent->Type = EVENT_FORM_INTERACTION;
 				newevent->Data.Forms.RaisedBy = this;
 				newevent->Data.Forms.EventFlag = FormEventType::MouseLeave;
-				memcpy( (void*)&newevent->Data.Forms.MouseInfo, (void*)&e->Data.Mouse, sizeof( FRAMEWORK_MOUSE_EVENT ) );
+				memcpy((void *)&newevent->Data.Forms.MouseInfo, (void *)&e->Data.Mouse,
+				       sizeof(FRAMEWORK_MOUSE_EVENT));
 				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
-				memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-				fw.PushEvent( newevent );
+				memset((void *)&newevent->Data.Forms.KeyInfo, 0, sizeof(FRAMEWORK_KEYBOARD_EVENT));
+				fw.PushEvent(newevent);
 				mouseInside = false;
 			}
 		}
 	}
 
-	if( e->Type == EVENT_MOUSE_DOWN )
+	if (e->Type == EVENT_MOUSE_DOWN)
 	{
-		if( mouseInside )
+		if (mouseInside)
 		{
 			newevent = new Event();
 			newevent->Type = EVENT_FORM_INTERACTION;
 			newevent->Data.Forms.RaisedBy = this;
 			newevent->Data.Forms.EventFlag = FormEventType::MouseDown;
-			memcpy( (void*)&newevent->Data.Forms.MouseInfo, (void*)&e->Data.Mouse, sizeof( FRAMEWORK_MOUSE_EVENT ) );
+			memcpy((void *)&newevent->Data.Forms.MouseInfo, (void *)&e->Data.Mouse,
+			       sizeof(FRAMEWORK_MOUSE_EVENT));
 			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
-			memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-			fw.PushEvent( newevent );
+			memset((void *)&newevent->Data.Forms.KeyInfo, 0, sizeof(FRAMEWORK_KEYBOARD_EVENT));
+			fw.PushEvent(newevent);
 			mouseDepressed = true;
 
 			e->Handled = true;
 		}
 	}
 
-	if( e->Type == EVENT_MOUSE_UP )
+	if (e->Type == EVENT_MOUSE_UP)
 	{
-		if( mouseInside )
+		if (mouseInside)
 		{
 			newevent = new Event();
 			newevent->Type = EVENT_FORM_INTERACTION;
 			newevent->Data.Forms.RaisedBy = this;
 			newevent->Data.Forms.EventFlag = FormEventType::MouseUp;
-			memcpy( (void*)&newevent->Data.Forms.MouseInfo, (void*)&e->Data.Mouse, sizeof( FRAMEWORK_MOUSE_EVENT ) );
+			memcpy((void *)&newevent->Data.Forms.MouseInfo, (void *)&e->Data.Mouse,
+			       sizeof(FRAMEWORK_MOUSE_EVENT));
 			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
-			memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-			fw.PushEvent( newevent );
+			memset((void *)&newevent->Data.Forms.KeyInfo, 0, sizeof(FRAMEWORK_KEYBOARD_EVENT));
+			fw.PushEvent(newevent);
 
-			if( mouseDepressed )
+			if (mouseDepressed)
 			{
 				newevent = new Event();
 				newevent->Type = EVENT_FORM_INTERACTION;
 				newevent->Data.Forms.RaisedBy = this;
 				newevent->Data.Forms.EventFlag = FormEventType::MouseClick;
-				memcpy( (void*)&newevent->Data.Forms.MouseInfo, (void*)&e->Data.Mouse, sizeof( FRAMEWORK_MOUSE_EVENT ) );
+				memcpy((void *)&newevent->Data.Forms.MouseInfo, (void *)&e->Data.Mouse,
+				       sizeof(FRAMEWORK_MOUSE_EVENT));
 				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
-				memset( (void*)&newevent->Data.Forms.KeyInfo, 0, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-				fw.PushEvent( newevent );
+				memset((void *)&newevent->Data.Forms.KeyInfo, 0, sizeof(FRAMEWORK_KEYBOARD_EVENT));
+				fw.PushEvent(newevent);
 			}
 
 			e->Handled = true;
@@ -194,32 +205,35 @@ void Control::EventOccured( Event* e )
 		mouseDepressed = false;
 	}
 
-	if( e->Type == EVENT_KEY_DOWN || e->Type == EVENT_KEY_UP )
+	if (e->Type == EVENT_KEY_DOWN || e->Type == EVENT_KEY_UP)
 	{
-		if( IsFocused() )
+		if (IsFocused())
 		{
 			newevent = new Event();
 			newevent->Type = EVENT_FORM_INTERACTION;
 			newevent->Data.Forms.RaisedBy = this;
-			newevent->Data.Forms.EventFlag = (e->Type == EVENT_KEY_DOWN ? FormEventType::KeyDown : FormEventType::KeyUp);
-			memcpy( (void*)&newevent->Data.Forms.KeyInfo, (void*)&e->Data.Keyboard, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-			memset( (void*)&newevent->Data.Forms.MouseInfo, 0, sizeof( FRAMEWORK_MOUSE_EVENT ) );
-			fw.PushEvent( newevent );
+			newevent->Data.Forms.EventFlag =
+			    (e->Type == EVENT_KEY_DOWN ? FormEventType::KeyDown : FormEventType::KeyUp);
+			memcpy((void *)&newevent->Data.Forms.KeyInfo, (void *)&e->Data.Keyboard,
+			       sizeof(FRAMEWORK_KEYBOARD_EVENT));
+			memset((void *)&newevent->Data.Forms.MouseInfo, 0, sizeof(FRAMEWORK_MOUSE_EVENT));
+			fw.PushEvent(newevent);
 
 			e->Handled = true;
 		}
 	}
-	if( e->Type == EVENT_KEY_PRESS )
+	if (e->Type == EVENT_KEY_PRESS)
 	{
-		if( IsFocused() )
+		if (IsFocused())
 		{
 			newevent = new Event();
 			newevent->Type = EVENT_FORM_INTERACTION;
 			newevent->Data.Forms.RaisedBy = this;
 			newevent->Data.Forms.EventFlag = FormEventType::KeyPress;
-			memcpy( (void*)&newevent->Data.Forms.KeyInfo, (void*)&e->Data.Keyboard, sizeof( FRAMEWORK_KEYBOARD_EVENT ) );
-			memset( (void*)&newevent->Data.Forms.MouseInfo, 0, sizeof( FRAMEWORK_MOUSE_EVENT ) );
-			fw.PushEvent( newevent );
+			memcpy((void *)&newevent->Data.Forms.KeyInfo, (void *)&e->Data.Keyboard,
+			       sizeof(FRAMEWORK_KEYBOARD_EVENT));
+			memset((void *)&newevent->Data.Forms.MouseInfo, 0, sizeof(FRAMEWORK_MOUSE_EVENT));
+			fw.PushEvent(newevent);
 
 			e->Handled = true;
 		}
@@ -228,13 +242,12 @@ void Control::EventOccured( Event* e )
 
 void Control::Render()
 {
-	if( Size.x == 0 || Size.y == 0 )
+	if (Size.x == 0 || Size.y == 0)
 	{
 		return;
 	}
 
-	if( controlArea == nullptr ||
-		controlArea->size != Vec2<unsigned int>{Size.x, Size.y})
+	if (controlArea == nullptr || controlArea->size != Vec2<unsigned int>{Size.x, Size.y})
 	{
 		controlArea.reset(new Surface{Vec2<unsigned int>{Size.x, Size.y}});
 	}
@@ -249,10 +262,7 @@ void Control::Render()
 	fw.renderer->draw(controlArea, Vec2<float>{Location.x, Location.y});
 }
 
-void Control::PreRender()
-{
-	fw.renderer->clear(BackgroundColour);
-}
+void Control::PreRender() { fw.renderer->clear(BackgroundColour); }
 
 void Control::OnRender()
 {
@@ -261,352 +271,391 @@ void Control::OnRender()
 
 void Control::PostRender()
 {
-	for( auto ctrlidx = Controls.begin(); ctrlidx != Controls.end(); ctrlidx++ )
+	for (auto ctrlidx = Controls.begin(); ctrlidx != Controls.end(); ctrlidx++)
 	{
-		Control* c = (Control*)*ctrlidx;
-		if( c->Visible )
+		Control *c = (Control *)*ctrlidx;
+		if (c->Visible)
 		{
 			c->Render();
 		}
 	}
 	if (showBounds)
 	{
-		fw.renderer->drawRect({0,0}, Size, Colour{255,0,0,255});
+		fw.renderer->drawRect({0, 0}, Size, Colour{255, 0, 0, 255});
 	}
 }
 
 void Control::Update()
 {
-	for( auto ctrlidx = Controls.begin(); ctrlidx != Controls.end(); ctrlidx++ )
+	for (auto ctrlidx = Controls.begin(); ctrlidx != Controls.end(); ctrlidx++)
 	{
-		Control* c = (Control*)*ctrlidx;
+		Control *c = (Control *)*ctrlidx;
 		c->Update();
 	}
 }
 
-void Control::ConfigureFromXML( tinyxml2::XMLElement* Element )
+void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 {
 	UString nodename;
 	UString specialpositionx = "";
 	UString specialpositiony = "";
-	tinyxml2::XMLElement* subnode;
+	tinyxml2::XMLElement *subnode;
 	UString attribvalue;
 
-	if( Element->Attribute("id") != nullptr && UString(Element->Attribute("id")) != "" )
+	if (Element->Attribute("id") != nullptr && UString(Element->Attribute("id")) != "")
 	{
 		nodename = Element->Attribute("id");
 		this->Name = nodename;
 	}
 
-	if( Element->Attribute("visible") != nullptr && UString(Element->Attribute("visible")) != "" )
+	if (Element->Attribute("visible") != nullptr && UString(Element->Attribute("visible")) != "")
 	{
 		UString vistxt = Element->Attribute("visible");
-		vistxt = vistxt.substr( 0, 1 ).toUpper();
-		this->Visible = ( vistxt == "Y" || vistxt == "T" );
+		vistxt = vistxt.substr(0, 1).toUpper();
+		this->Visible = (vistxt == "Y" || vistxt == "T");
 	}
 
-	tinyxml2::XMLElement* node;
-	for( node = Element->FirstChildElement(); node != nullptr; node = node->NextSiblingElement() )
+	tinyxml2::XMLElement *node;
+	for (node = Element->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
 	{
 		nodename = node->Name();
 
-		if( nodename == "backcolour" )
+		if (nodename == "backcolour")
 		{
-			if( node->Attribute("a") != nullptr && UString(node->Attribute("a")) != "" )
+			if (node->Attribute("a") != nullptr && UString(node->Attribute("a")) != "")
 			{
-				this->BackgroundColour = Colour{ Strings::ToU8( node->Attribute("r") ), Strings::ToU8( node->Attribute("g") ), Strings::ToU8( node->Attribute("b") ), Strings::ToU8( node->Attribute("a") ) };
-			} else {
-				this->BackgroundColour = Colour{ Strings::ToU8( node->Attribute("r") ), Strings::ToU8( node->Attribute("g") ), Strings::ToU8( node->Attribute("b") ) };
+				this->BackgroundColour = Colour{
+				    Strings::ToU8(node->Attribute("r")), Strings::ToU8(node->Attribute("g")),
+				    Strings::ToU8(node->Attribute("b")), Strings::ToU8(node->Attribute("a"))};
+			}
+			else
+			{
+				this->BackgroundColour =
+				    Colour{Strings::ToU8(node->Attribute("r")), Strings::ToU8(node->Attribute("g")),
+				           Strings::ToU8(node->Attribute("b"))};
 			}
 		}
-		if( nodename == "position" )
+		if (nodename == "position")
 		{
-			if( Strings::IsInteger( node->Attribute("x") ) )
+			if (Strings::IsInteger(node->Attribute("x")))
 			{
-				Location.x = Strings::ToInteger( node->Attribute("x") );
-			} else {
+				Location.x = Strings::ToInteger(node->Attribute("x"));
+			}
+			else
+			{
 				specialpositionx = node->Attribute("x");
 			}
-			if( Strings::IsInteger( node->Attribute("y") ) )
+			if (Strings::IsInteger(node->Attribute("y")))
 			{
-				Location.y = Strings::ToInteger( node->Attribute("y") );
-			} else {
+				Location.y = Strings::ToInteger(node->Attribute("y"));
+			}
+			else
+			{
 				specialpositiony = node->Attribute("y");
 			}
 		}
-		if( nodename == "size" )
+		if (nodename == "size")
 		{
-			Size.x = Strings::ToInteger( node->Attribute("width") );
-			Size.y = Strings::ToInteger( node->Attribute("height") );
+			Size.x = Strings::ToInteger(node->Attribute("width"));
+			Size.y = Strings::ToInteger(node->Attribute("height"));
 		}
 
 		// Child controls
-		if( nodename == "control" )
+		if (nodename == "control")
 		{
-			auto   c = new Control( fw, this );
-			c->ConfigureFromXML( node );
+			auto c = new Control(fw, this);
+			c->ConfigureFromXML(node);
 		}
-		if( nodename == "label" )
+		if (nodename == "label")
 		{
-			Label* l = new Label( fw, this, fw.gamecore->GetString( node->Attribute("text") ), fw.gamecore->GetFont( node->FirstChildElement("font")->GetText() ) );
-			l->ConfigureFromXML( node );
+			Label *l = new Label(fw, this, fw.gamecore->GetString(node->Attribute("text")),
+			                     fw.gamecore->GetFont(node->FirstChildElement("font")->GetText()));
+			l->ConfigureFromXML(node);
 			subnode = node->FirstChildElement("alignment");
-			if( subnode != nullptr )
+			if (subnode != nullptr)
 			{
-				if( subnode->Attribute("horizontal") != nullptr )
+				if (subnode->Attribute("horizontal") != nullptr)
 				{
 					attribvalue = subnode->Attribute("horizontal");
-					if( attribvalue == "left" )
+					if (attribvalue == "left")
 					{
 						l->TextHAlign = HorizontalAlignment::Left;
 					}
-					if( attribvalue == "centre" )
+					if (attribvalue == "centre")
 					{
 						l->TextHAlign = HorizontalAlignment::Centre;
 					}
-					if( attribvalue == "right" )
+					if (attribvalue == "right")
 					{
 						l->TextHAlign = HorizontalAlignment::Right;
 					}
 				}
-				if( subnode->Attribute("vertical") != nullptr )
+				if (subnode->Attribute("vertical") != nullptr)
 				{
 					attribvalue = subnode->Attribute("vertical");
-					if( attribvalue == "top" )
+					if (attribvalue == "top")
 					{
 						l->TextVAlign = VerticalAlignment::Top;
 					}
-					if( attribvalue == "centre" )
+					if (attribvalue == "centre")
 					{
 						l->TextVAlign = VerticalAlignment::Centre;
 					}
-					if( attribvalue == "bottom" )
+					if (attribvalue == "bottom")
 					{
 						l->TextVAlign = VerticalAlignment::Bottom;
 					}
 				}
 			}
 		}
-		if( nodename == "graphic" )
+		if (nodename == "graphic")
 		{
-			Graphic* g = new Graphic( fw, this, node->FirstChildElement("image")->GetText() );
-			g->ConfigureFromXML( node );
+			Graphic *g = new Graphic(fw, this, node->FirstChildElement("image")->GetText());
+			g->ConfigureFromXML(node);
 		}
-		if( nodename == "textbutton" )
+		if (nodename == "textbutton")
 		{
-			TextButton* tb = new TextButton( fw, this,  fw.gamecore->GetString( node->Attribute("text") ), fw.gamecore->GetFont( node->FirstChildElement("font")->GetText() ) );
-			tb->ConfigureFromXML( node );
+			TextButton *tb =
+			    new TextButton(fw, this, fw.gamecore->GetString(node->Attribute("text")),
+			                   fw.gamecore->GetFont(node->FirstChildElement("font")->GetText()));
+			tb->ConfigureFromXML(node);
 		}
-		if( nodename == "graphicbutton" )
+		if (nodename == "graphicbutton")
 		{
-			GraphicButton* gb;
+			GraphicButton *gb;
 			UString gb_image = "";
-			if( node->FirstChildElement("image")->GetText() != nullptr )
+			if (node->FirstChildElement("image")->GetText() != nullptr)
 			{
 				gb_image = node->FirstChildElement("image")->GetText();
 			}
 			UString gb_dep = node->FirstChildElement("imagedepressed")->GetText();
-			if( node->FirstChildElement("imagedepressed")->GetText() != nullptr )
+			if (node->FirstChildElement("imagedepressed")->GetText() != nullptr)
 			{
 				gb_dep = node->FirstChildElement("imagedepressed")->GetText();
 			}
-			if( node->FirstChildElement("imagehover") == nullptr )
+			if (node->FirstChildElement("imagehover") == nullptr)
 			{
-				gb = new GraphicButton( fw, this, gb_image, gb_dep );
-			} else {
-				gb = new GraphicButton( fw, this, gb_image, gb_dep, node->FirstChildElement("imagehover")->GetText() );
+				gb = new GraphicButton(fw, this, gb_image, gb_dep);
 			}
-			gb->ConfigureFromXML( node );
+			else
+			{
+				gb = new GraphicButton(fw, this, gb_image, gb_dep,
+				                       node->FirstChildElement("imagehover")->GetText());
+			}
+			gb->ConfigureFromXML(node);
 		}
-		if( nodename == "checkbox" )
+		if (nodename == "checkbox")
 		{
-			auto   cb = new CheckBox( fw, this );
-			cb->ConfigureFromXML( node );
+			auto cb = new CheckBox(fw, this);
+			cb->ConfigureFromXML(node);
 		}
-		if( nodename == "vscroll" )
+		if (nodename == "vscroll")
 		{
-			auto   vsb = new VScrollBar( fw, this );
-			vsb->ConfigureFromXML( node );
+			auto vsb = new VScrollBar(fw, this);
+			vsb->ConfigureFromXML(node);
 
 			subnode = node->FirstChildElement("grippercolour");
-			if( subnode != nullptr )
+			if (subnode != nullptr)
 			{
-				if( subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "" )
+				if (subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "")
 				{
-					vsb->GripperColour = Colour( Strings::ToU8( subnode->Attribute("r") ), Strings::ToU8( subnode->Attribute("g") ), Strings::ToU8( subnode->Attribute("b") ), Strings::ToU8( subnode->Attribute("a") ) );
-				} else {
-					vsb->GripperColour = Colour( Strings::ToU8( subnode->Attribute("r") ), Strings::ToU8( subnode->Attribute("g") ), Strings::ToU8( subnode->Attribute("b") ) );
+					vsb->GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
+					                            Strings::ToU8(subnode->Attribute("g")),
+					                            Strings::ToU8(subnode->Attribute("b")),
+					                            Strings::ToU8(subnode->Attribute("a")));
+				}
+				else
+				{
+					vsb->GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
+					                            Strings::ToU8(subnode->Attribute("g")),
+					                            Strings::ToU8(subnode->Attribute("b")));
 				}
 			}
 			subnode = node->FirstChildElement("range");
-			if( subnode != nullptr )
+			if (subnode != nullptr)
 			{
-				if( subnode->Attribute("min") != nullptr && UString(subnode->Attribute("min")) != "" )
+				if (subnode->Attribute("min") != nullptr &&
+				    UString(subnode->Attribute("min")) != "")
 				{
-					vsb->Minimum = Strings::ToInteger( subnode->Attribute("min") );
+					vsb->Minimum = Strings::ToInteger(subnode->Attribute("min"));
 				}
-				if( subnode->Attribute("max") != nullptr && UString(subnode->Attribute("max")) != "" )
+				if (subnode->Attribute("max") != nullptr &&
+				    UString(subnode->Attribute("max")) != "")
 				{
-					vsb->Maximum = Strings::ToInteger( subnode->Attribute("max") );
+					vsb->Maximum = Strings::ToInteger(subnode->Attribute("max"));
 				}
 			}
 		}
 
-		if( nodename == "hscroll" )
+		if (nodename == "hscroll")
 		{
-			auto   hsb = new HScrollBar( fw, this );
-			hsb->ConfigureFromXML( node );
+			auto hsb = new HScrollBar(fw, this);
+			hsb->ConfigureFromXML(node);
 
 			subnode = node->FirstChildElement("grippercolour");
-			if( subnode != nullptr )
+			if (subnode != nullptr)
 			{
-				if( subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "" )
+				if (subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "")
 				{
-					hsb->GripperColour = Colour( Strings::ToU8( subnode->Attribute("r") ), Strings::ToU8( subnode->Attribute("g") ), Strings::ToU8( subnode->Attribute("b") ), Strings::ToU8( subnode->Attribute("a") ) );
-				} else {
-					hsb->GripperColour = Colour( Strings::ToU8( subnode->Attribute("r") ), Strings::ToU8( subnode->Attribute("g") ), Strings::ToU8( subnode->Attribute("b") ) );
+					hsb->GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
+					                            Strings::ToU8(subnode->Attribute("g")),
+					                            Strings::ToU8(subnode->Attribute("b")),
+					                            Strings::ToU8(subnode->Attribute("a")));
+				}
+				else
+				{
+					hsb->GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
+					                            Strings::ToU8(subnode->Attribute("g")),
+					                            Strings::ToU8(subnode->Attribute("b")));
 				}
 			}
 			subnode = node->FirstChildElement("range");
-			if( subnode != nullptr )
+			if (subnode != nullptr)
 			{
-				if( subnode->Attribute("min") != nullptr && UString(subnode->Attribute("min")) != "" )
+				if (subnode->Attribute("min") != nullptr &&
+				    UString(subnode->Attribute("min")) != "")
 				{
-					hsb->Minimum = Strings::ToInteger( subnode->Attribute("min") );
+					hsb->Minimum = Strings::ToInteger(subnode->Attribute("min"));
 				}
-				if( subnode->Attribute("max") != nullptr && UString(subnode->Attribute("max")) != "" )
+				if (subnode->Attribute("max") != nullptr &&
+				    UString(subnode->Attribute("max")) != "")
 				{
-					hsb->Maximum = Strings::ToInteger( subnode->Attribute("max") );
+					hsb->Maximum = Strings::ToInteger(subnode->Attribute("max"));
 				}
 			}
 		}
 
-		if( nodename == "listbox" )
+		if (nodename == "listbox")
 		{
-			VScrollBar* vsb = nullptr;
+			VScrollBar *vsb = nullptr;
 
-			if( node->Attribute("scrollbarid") != nullptr && UString(node->Attribute("scrollbarid")) != "" )
+			if (node->Attribute("scrollbarid") != nullptr &&
+			    UString(node->Attribute("scrollbarid")) != "")
 			{
 				attribvalue = node->Attribute("scrollbarid");
-				vsb = (VScrollBar*)this->FindControl( attribvalue );
+				vsb = (VScrollBar *)this->FindControl(attribvalue);
 			}
-			auto   lb = new ListBox( fw, this, vsb );
-			lb->ConfigureFromXML( node );
+			auto lb = new ListBox(fw, this, vsb);
+			lb->ConfigureFromXML(node);
 		}
 
-		if( nodename == "textedit" )
+		if (nodename == "textedit")
 		{
-			TextEdit* te = new TextEdit( fw, this, "", fw.gamecore->GetFont( node->FirstChildElement("font")->GetText() ) );
-			te->ConfigureFromXML( node );
+			TextEdit *te = new TextEdit(
+			    fw, this, "", fw.gamecore->GetFont(node->FirstChildElement("font")->GetText()));
+			te->ConfigureFromXML(node);
 			subnode = node->FirstChildElement("alignment");
-			if( subnode != nullptr )
+			if (subnode != nullptr)
 			{
-				if( subnode->Attribute("horizontal") != nullptr )
+				if (subnode->Attribute("horizontal") != nullptr)
 				{
 					attribvalue = subnode->Attribute("horizontal");
-					if( attribvalue == "left" )
+					if (attribvalue == "left")
 					{
 						te->TextHAlign = HorizontalAlignment::Left;
 					}
-					if( attribvalue == "centre" )
+					if (attribvalue == "centre")
 					{
 						te->TextHAlign = HorizontalAlignment::Centre;
 					}
-					if( attribvalue == "right" )
+					if (attribvalue == "right")
 					{
 						te->TextHAlign = HorizontalAlignment::Right;
 					}
 				}
-				if( subnode->Attribute("vertical") != nullptr )
+				if (subnode->Attribute("vertical") != nullptr)
 				{
 					attribvalue = subnode->Attribute("vertical");
-					if( attribvalue == "top" )
+					if (attribvalue == "top")
 					{
 						te->TextVAlign = VerticalAlignment::Top;
 					}
-					if( attribvalue == "centre" )
+					if (attribvalue == "centre")
 					{
 						te->TextVAlign = VerticalAlignment::Centre;
 					}
-					if( attribvalue == "bottom" )
+					if (attribvalue == "bottom")
 					{
 						te->TextVAlign = VerticalAlignment::Bottom;
 					}
 				}
 			}
 		}
-
 	}
 
-	if( specialpositionx != "" )
+	if (specialpositionx != "")
 	{
-		if( specialpositionx == "left" )
+		if (specialpositionx == "left")
 		{
 			Location.x = 0;
 		}
-		if( specialpositionx == "centre" )
+		if (specialpositionx == "centre")
 		{
-			if( owningControl == nullptr )
+			if (owningControl == nullptr)
 			{
 				Location.x = (fw.Display_GetWidth() / 2) - (Size.x / 2);
-			} else {
+			}
+			else
+			{
 				Location.x = (owningControl->Size.x / 2) - (Size.x / 2);
 			}
 		}
-		if( specialpositionx == "right" )
+		if (specialpositionx == "right")
 		{
-			if( owningControl == nullptr )
+			if (owningControl == nullptr)
 			{
 				Location.x = fw.Display_GetWidth() - Size.x;
-			} else {
+			}
+			else
+			{
 				Location.x = owningControl->Size.x - Size.x;
 			}
 		}
 	}
 
-	if( specialpositiony != "" )
+	if (specialpositiony != "")
 	{
-		if( specialpositiony == "top" )
+		if (specialpositiony == "top")
 		{
 			Location.y = 0;
 		}
-		if( specialpositiony == "centre" )
+		if (specialpositiony == "centre")
 		{
-			if( owningControl == nullptr )
+			if (owningControl == nullptr)
 			{
 				Location.y = (fw.Display_GetHeight() / 2) - (Size.y / 2);
-			} else {
+			}
+			else
+			{
 				Location.y = (owningControl->Size.y / 2) - (Size.y / 2);
 			}
 		}
-		if( specialpositiony == "bottom" )
+		if (specialpositiony == "bottom")
 		{
-			if( owningControl == nullptr )
+			if (owningControl == nullptr)
 			{
 				Location.y = fw.Display_GetHeight() - Size.y;
-			} else {
+			}
+			else
+			{
 				Location.y = owningControl->Size.y - Size.y;
 			}
 		}
 	}
-	LogInfo("Control \"%s\" has %d subcontrols (%d, %d, %d, %d)", this->Name.str().c_str(), Controls.size(), Location.x, Location.y, Size.x, Size.y);
+	LogInfo("Control \"%s\" has %d subcontrols (%d, %d, %d, %d)", this->Name.str().c_str(),
+	        Controls.size(), Location.x, Location.y, Size.x, Size.y);
 }
 
-void Control::UnloadResources()
-{
-}
+void Control::UnloadResources() {}
 
-Control* Control::operator[]( int Index )
-{
-	return Controls.at( Index );
-}
+Control *Control::operator[](int Index) { return Controls.at(Index); }
 
-Control* Control::FindControl( UString ID )
+Control *Control::FindControl(UString ID)
 {
-	for( auto c = Controls.begin(); c != Controls.end(); c++ )
+	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
-		Control* ctrl = (Control*)*c;
-		if( ctrl->Name == ID )
+		Control *ctrl = (Control *)*c;
+		if (ctrl->Name == ID)
 		{
 			return ctrl;
 		}
@@ -617,75 +666,74 @@ Control* Control::FindControl( UString ID )
 	return nullptr;
 }
 
-Control* Control::GetParent()
-{
-	return owningControl;
-}
+Control *Control::GetParent() { return owningControl; }
 
-Control* Control::GetRootControl()
+Control *Control::GetRootControl()
 {
-	if( owningControl == nullptr )
+	if (owningControl == nullptr)
 	{
 		return this;
-	} else {
+	}
+	else
+	{
 		return owningControl->GetRootControl();
 	}
 }
 
-Form* Control::GetForm()
+Form *Control::GetForm()
 {
-	Control* c = GetRootControl();
-	if( dynamic_cast<Form*>( c ) != nullptr )
+	Control *c = GetRootControl();
+	if (dynamic_cast<Form *>(c) != nullptr)
 	{
-		return (Form*)c;
+		return (Form *)c;
 	}
 	return nullptr;
 }
 
-std::list<UString> Control::WordWrapText( std::shared_ptr<OpenApoc::BitmapFont> Font, UString WrapText )
+std::list<UString> Control::WordWrapText(std::shared_ptr<OpenApoc::BitmapFont> Font,
+                                         UString WrapText)
 {
 	int txtwidth;
 	std::list<UString> lines;
 
-	txtwidth = Font->GetFontWidth( WrapText );
+	txtwidth = Font->GetFontWidth(WrapText);
 
-	if( txtwidth > Size.x )
+	if (txtwidth > Size.x)
 	{
 		UString textleft = WrapText;
-		int estlinelength = Font->GetEstimateCharacters( Size.x );
+		int estlinelength = Font->GetEstimateCharacters(Size.x);
 
-		while( textleft.length() > 0 )
+		while (textleft.length() > 0)
 		{
-			if( textleft.length() > estlinelength )
+			if (textleft.length() > estlinelength)
 			{
 				int charidx;
-				for( charidx = estlinelength - 1; charidx > 1; charidx-- )
+				for (charidx = estlinelength - 1; charidx > 1; charidx--)
 				{
 					// TODO: Need to implement a list of line break characters
-					if( textleft.substr( charidx, 1 ) == UString(" ") )
+					if (textleft.substr(charidx, 1) == UString(" "))
 					{
-						lines.push_back( textleft.substr( 0, charidx ) );
-						textleft = textleft.substr( charidx, textleft.length() - charidx );
+						lines.push_back(textleft.substr(0, charidx));
+						textleft = textleft.substr(charidx, textleft.length() - charidx);
 						break;
 					}
 				}
-
-			} else {
-				lines.push_back( textleft );
+			}
+			else
+			{
+				lines.push_back(textleft);
 				textleft = "";
 			}
 		}
-	} else {
-		lines.push_back( WrapText );
+	}
+	else
+	{
+		lines.push_back(WrapText);
 	}
 
 	return lines;
 }
 
+void Control::SetParent(Control *Parent) { owningControl = Parent; }
 
-void Control::SetParent(Control* Parent)
-{
-	owningControl = Parent;
-}
-
-}; //namespace OpenApoc
+}; // namespace OpenApoc

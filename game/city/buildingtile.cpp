@@ -5,20 +5,17 @@
 #include "game/tileview/voxel.h"
 #include "game/apocresources/loftemps.h"
 
-namespace OpenApoc {
-
-BuildingTile::BuildingTile(TileMap &map, BuildingTileDef &tileDef, Vec3<int> pos, Building *building)
-	: TileObject(map, pos),
-	TileObjectSprite(map, pos, tileDef.getSprite()),
-	TileObjectCollidable(map, pos, {32,32,16}, tileDef.getVoxelMap()),
-	tileDef(tileDef), pos(pos), building(building)
+namespace OpenApoc
 {
 
-}
-
-BuildingTile::~BuildingTile()
+BuildingTile::BuildingTile(TileMap &map, BuildingTileDef &tileDef, Vec3<int> pos,
+                           Building *building)
+    : TileObject(map, pos), TileObjectSprite(map, pos, tileDef.getSprite()),
+      TileObjectCollidable(map, pos, {32, 32, 16}, tileDef.getVoxelMap()), tileDef(tileDef),
+      pos(pos), building(building)
 {
-
 }
 
-};//namesapce OpenApoc
+BuildingTile::~BuildingTile() {}
+
+}; // namesapce OpenApoc

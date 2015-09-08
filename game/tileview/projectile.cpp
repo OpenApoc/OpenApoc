@@ -2,17 +2,17 @@
 #include "game/tileview/tile_collidable.h"
 #include "framework/logger.h"
 
-namespace OpenApoc {
-
-Projectile::Projectile(TileMap &map, std::shared_ptr<Vehicle> firer, Vec3<float> position, Vec3<float> velocity, unsigned int lifetime)
-	: TileObject(map, position, true, false, false, true),
-	velocity(velocity), age(0), lifetime(lifetime), firer(firer), previousPosition(position)
+namespace OpenApoc
 {
 
+Projectile::Projectile(TileMap &map, std::shared_ptr<Vehicle> firer, Vec3<float> position,
+                       Vec3<float> velocity, unsigned int lifetime)
+    : TileObject(map, position, true, false, false, true), velocity(velocity), age(0),
+      lifetime(lifetime), firer(firer), previousPosition(position)
+{
 }
 
-void
-Projectile::update(unsigned int ticks)
+void Projectile::update(unsigned int ticks)
 {
 	this->age += ticks;
 	this->previousPosition = this->getPosition();
@@ -20,11 +20,10 @@ Projectile::update(unsigned int ticks)
 
 	auto mapSize = this->owningTile->map.size;
 
-	//Remove projectile if it's ran out of life or fell off the end of the world
-	if (newPosition.x < 0 || newPosition.x >= mapSize.x
-	 || newPosition.y < 0 || newPosition.y >= mapSize.y
-	 || newPosition.z < 0 || newPosition.z >= mapSize.z
-	 || this->age >= this->lifetime)
+	// Remove projectile if it's ran out of life or fell off the end of the world
+	if (newPosition.x < 0 || newPosition.x >= mapSize.x || newPosition.y < 0 ||
+	    newPosition.y >= mapSize.y || newPosition.z < 0 || newPosition.z >= mapSize.z ||
+	    this->age >= this->lifetime)
 	{
 		this->owningTile->map.removeObject(shared_from_this());
 	}
@@ -34,8 +33,7 @@ Projectile::update(unsigned int ticks)
 	}
 }
 
-void
-Projectile::checkProjectileCollision()
+void Projectile::checkProjectileCollision()
 {
 	auto &map = this->owningTile->map;
 
@@ -54,8 +52,6 @@ Projectile::checkProjectileCollision()
 			this->owningTile->map.removeObject(shared_from_this());
 		}
 	}
-
 }
 
-
-}; //namespace OpenApoc
+}; // namespace OpenApoc

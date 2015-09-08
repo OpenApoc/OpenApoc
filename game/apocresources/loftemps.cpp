@@ -2,7 +2,8 @@
 #include "framework/logger.h"
 #include "framework/data.h"
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 LOFTemps::LOFTemps(IFile &datFile, IFile &tabFile)
 {
@@ -51,9 +52,9 @@ LOFTemps::LOFTemps(IFile &datFile, IFile &tabFile)
 
 		for (unsigned int y = 0; y < height; y++)
 		{
-			//Bitmasks are packed into a 32-bit word, so all strides will
-			//be 4-byte aligned
-			for (unsigned int x = 0; x < width; x+= 32)
+			// Bitmasks are packed into a 32-bit word, so all strides will
+			// be 4-byte aligned
+			for (unsigned int x = 0; x < width; x += 32)
 			{
 				uint32_t bitmask;
 				if (!datFile.readule32(bitmask))
@@ -71,7 +72,7 @@ LOFTemps::LOFTemps(IFile &datFile, IFile &tabFile)
 					else
 						b = false;
 					bitmask >>= 1;
-					slice->setBit(Vec2<int>{x+bit, y}, b);
+					slice->setBit(Vec2<int>{x + bit, y}, b);
 				}
 			}
 		}
@@ -80,8 +81,7 @@ LOFTemps::LOFTemps(IFile &datFile, IFile &tabFile)
 	}
 }
 
-std::shared_ptr<VoxelSlice>
-LOFTemps::getSlice(unsigned int idx)
+std::shared_ptr<VoxelSlice> LOFTemps::getSlice(unsigned int idx)
 {
 	if (idx >= this->slices.size())
 	{
@@ -91,6 +91,4 @@ LOFTemps::getSlice(unsigned int idx)
 	return this->slices[idx];
 }
 
-
-
-}; //namespace OpenApoc
+}; // namespace OpenApoc

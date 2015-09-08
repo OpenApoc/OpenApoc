@@ -18,24 +18,20 @@
 #include <endian.h>
 #else
 /* Windows is always little endian? */
-static inline uint16_t le16toh(uint16_t val)
-{
-	return val;
-}
-static inline uint32_t le32toh(uint32_t val)
-{
-	return val;
-}
+static inline uint16_t le16toh(uint16_t val) { return val; }
+static inline uint32_t le32toh(uint32_t val) { return val; }
 #endif
 
 using namespace OpenApoc;
 
-namespace {
-	std::map<UString, std::unique_ptr<OpenApoc::ImageLoaderFactory>> *registeredImageBackends = nullptr;
-	std::map<UString, std::unique_ptr<OpenApoc::MusicLoaderFactory>> *registeredMusicLoaders = nullptr;
-	std::map<UString, std::unique_ptr<OpenApoc::SampleLoaderFactory>> *registeredSampleLoaders = nullptr;
+namespace
+{
+std::map<UString, std::unique_ptr<OpenApoc::ImageLoaderFactory>> *registeredImageBackends = nullptr;
+std::map<UString, std::unique_ptr<OpenApoc::MusicLoaderFactory>> *registeredMusicLoaders = nullptr;
+std::map<UString, std::unique_ptr<OpenApoc::SampleLoaderFactory>> *registeredSampleLoaders =
+    nullptr;
 
-static UString GetCorrectCaseFilename(const UString& Filename)
+static UString GetCorrectCaseFilename(const UString &Filename)
 {
 	std::string u8Filename = Filename.str();
 	std::unique_ptr<char[]> buf(new char[u8Filename.length() + 1]);
@@ -51,7 +47,7 @@ static UString GetCorrectCaseFilename(const UString& Filename)
 
 class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 {
-public:
+  public:
 	size_t bufferSize;
 	std::unique_ptr<char[]> buffer;
 	UString systemPath;
@@ -61,17 +57,17 @@ public:
 	PHYSFS_File *file;
 
 	PhysfsIFileImpl(const UString &path, const UString &suppliedPath, size_t bufferSize = 512)
-		: bufferSize(bufferSize), buffer(new char[bufferSize]), suppliedPath(suppliedPath)
+	    : bufferSize(bufferSize), buffer(new char[bufferSize]), suppliedPath(suppliedPath)
 	{
 		file = PHYSFS_openRead(path.str().c_str());
 		if (!file)
 		{
-			LogError("Failed to open file \"%s\" : \"%s\"", path.str().c_str(), PHYSFS_getLastError());
+			LogError("Failed to open file \"%s\" : \"%s\"", path.str().c_str(),
+			         PHYSFS_getLastError());
 			return;
 		}
 		systemPath = PHYSFS_getRealDir(path.str().c_str());
 		systemPath += "/" + path;
-
 	}
 	virtual ~PhysfsIFileImpl()
 	{
@@ -91,10 +87,11 @@ public:
 			return traits_type::eof();
 		}
 		setg(buffer.get(), buffer.get(), buffer.get() + bytesRead);
-		return (unsigned char) *gptr();
+		return (unsigned char)*gptr();
 	}
 
-	pos_type seekoff(off_type pos, std::ios_base::seekdir dir, std::ios_base::openmode mode) override
+	pos_type seekoff(off_type pos, std::ios_base::seekdir dir,
+	                 std::ios_base::openmode mode) override
 	{
 		switch (dir)
 		{
@@ -154,19 +151,15 @@ public:
 	}
 };
 
-}; //anonymous namespace
+}; // anonymous namespace
 
-namespace OpenApoc {
-
-IFile::IFile()
-	: std::istream(nullptr)
+namespace OpenApoc
 {
 
-}
-//FIXME: MSVC needs this, GCC fails with it?
+IFile::IFile() : std::istream(nullptr) {}
+// FIXME: MSVC needs this, GCC fails with it?
 #ifdef _WIN32
-IFile::IFile(IFile&& other)
-	: std::istream(std::move(other))
+IFile::IFile(IFile &&other) : std::istream(std::move(other))
 {
 	this->f = std::move(other.f);
 	rdbuf(other.rdbuf());
@@ -174,62 +167,53 @@ IFile::IFile(IFile&& other)
 }
 #endif
 
-IFileImpl::~IFileImpl()
-{
-}
+IFileImpl::~IFileImpl() {}
 
-bool
-IFile::readule16(uint16_t &val)
+bool IFile::readule16(uint16_t &val)
 {
-	this->read((char*)&val, sizeof(val));
+	this->read((char *)&val, sizeof(val));
 	val = le16toh(val);
 	return !!(*this);
 }
 
-bool
-IFile::readule32(uint32_t &val)
+bool IFile::readule32(uint32_t &val)
 {
-	this->read((char*)&val, sizeof(val));
+	this->read((char *)&val, sizeof(val));
 	val = le32toh(val);
 	return !!(*this);
 }
 
-size_t
-IFile::size() const
+size_t IFile::size() const
 {
 	if (this->f)
-		return PHYSFS_fileLength(dynamic_cast<PhysfsIFileImpl*>(f.get())->file);
+		return PHYSFS_fileLength(dynamic_cast<PhysfsIFileImpl *>(f.get())->file);
 	return 0;
 }
 
-const UString&
-IFile::fileName() const
+const UString &IFile::fileName() const
 {
 	static const UString emptyString = "";
 	if (this->f)
-		return dynamic_cast<PhysfsIFileImpl*>(f.get())->suppliedPath;
+		return dynamic_cast<PhysfsIFileImpl *>(f.get())->suppliedPath;
 	return emptyString;
 }
 
-const UString&
-IFile::systemPath() const
+const UString &IFile::systemPath() const
 {
 	static const UString emptyString = "";
 	if (this->f)
-		return dynamic_cast<PhysfsIFileImpl*>(f.get())->systemPath;
+		return dynamic_cast<PhysfsIFileImpl *>(f.get())->systemPath;
 	return emptyString;
 }
 
-IFile::~IFile()
-{
+IFile::~IFile() {}
 
-}
-
-void registerImageLoader(ImageLoaderFactory* factory, UString name)
+void registerImageLoader(ImageLoaderFactory *factory, UString name)
 {
 	if (!registeredImageBackends)
 	{
-		registeredImageBackends = new std::map<UString, std::unique_ptr<OpenApoc::ImageLoaderFactory>>();
+		registeredImageBackends =
+		    new std::map<UString, std::unique_ptr<OpenApoc::ImageLoaderFactory>>();
 	}
 	registeredImageBackends->emplace(name, std::unique_ptr<ImageLoaderFactory>(factory));
 }
@@ -237,7 +221,8 @@ void registerSampleLoader(SampleLoaderFactory *factory, UString name)
 {
 	if (!registeredSampleLoaders)
 	{
-		registeredSampleLoaders = new std::map<UString, std::unique_ptr<OpenApoc::SampleLoaderFactory>>();
+		registeredSampleLoaders =
+		    new std::map<UString, std::unique_ptr<OpenApoc::SampleLoaderFactory>>();
 	}
 	registeredSampleLoaders->emplace(name, std::unique_ptr<SampleLoaderFactory>(factory));
 }
@@ -245,12 +230,14 @@ void registerMusicLoader(MusicLoaderFactory *factory, UString name)
 {
 	if (!registeredMusicLoaders)
 	{
-		registeredMusicLoaders = new std::map<UString, std::unique_ptr<OpenApoc::MusicLoaderFactory>>();
+		registeredMusicLoaders =
+		    new std::map<UString, std::unique_ptr<OpenApoc::MusicLoaderFactory>>();
 	}
 	registeredMusicLoaders->emplace(name, std::unique_ptr<MusicLoaderFactory>(factory));
 }
 
-Data::Data(Framework &fw, std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize, int voxelCacheSize)
+Data::Data(Framework &fw, std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize,
+           int voxelCacheSize)
 {
 	for (auto &imageBackend : *registeredImageBackends)
 	{
@@ -300,8 +287,9 @@ Data::Data(Framework &fw, std::vector<UString> paths, int imageCacheSize, int im
 	for (int i = 0; i < voxelCacheSize; i++)
 		pinnedLOFVoxels.push(nullptr);
 
-	//Paths are supplied in inverse-search order (IE the last in 'paths' should be the first searched)
-	for(auto &p : paths)
+	// Paths are supplied in inverse-search order (IE the last in 'paths' should be the first
+	// searched)
+	for (auto &p : paths)
 	{
 		if (!PHYSFS_mount(p.str().c_str(), "/", 0))
 		{
@@ -309,19 +297,16 @@ Data::Data(Framework &fw, std::vector<UString> paths, int imageCacheSize, int im
 			continue;
 		}
 		else
-			LogInfo("Resource dir \"%s\" mounted to \"%s\"", p.str().c_str(), PHYSFS_getMountPoint(p.str().c_str()));
+			LogInfo("Resource dir \"%s\" mounted to \"%s\"", p.str().c_str(),
+			        PHYSFS_getMountPoint(p.str().c_str()));
 	}
-	//Finally, the write directory trumps all
+	// Finally, the write directory trumps all
 	PHYSFS_mount(this->writeDir.str().c_str(), "/", 0);
 }
 
-Data::~Data()
-{
+Data::~Data() {}
 
-}
-
-std::shared_ptr<VoxelSlice>
-Data::load_voxel_slice(const UString &path)
+std::shared_ptr<VoxelSlice> Data::load_voxel_slice(const UString &path)
 {
 	std::shared_ptr<VoxelSlice> slice;
 	if (path.substr(0, 9) == "LOFTEMPS:")
@@ -333,7 +318,7 @@ Data::load_voxel_slice(const UString &path)
 			LogError("Invalid LOFTEMPS string \"%s\"", path.str().c_str());
 			return nullptr;
 		}
-		//Cut off the index to get the LOFTemps file
+		// Cut off the index to get the LOFTemps file
 		UString cacheKey = splitString[0] + splitString[1] + splitString[2];
 		cacheKey = cacheKey.toUpper();
 		std::shared_ptr<LOFTemps> lofTemps = this->LOFVoxelCache[cacheKey].lock();
@@ -342,15 +327,13 @@ Data::load_voxel_slice(const UString &path)
 			auto datFile = this->load_file(splitString[1]);
 			if (!datFile)
 			{
-				LogError("Failed to open LOFTemps dat file \"%s\"",
-					splitString[1].str().c_str());
+				LogError("Failed to open LOFTemps dat file \"%s\"", splitString[1].str().c_str());
 				return nullptr;
 			}
 			auto tabFile = this->load_file(splitString[2]);
 			if (!tabFile)
 			{
-				LogError("Failed to open LOFTemps tab file \"%s\"",
-					splitString[2].str().c_str());
+				LogError("Failed to open LOFTemps tab file \"%s\"", splitString[2].str().c_str());
 				return nullptr;
 			}
 			lofTemps = std::make_shared<LOFTemps>(datFile, tabFile);
@@ -374,8 +357,7 @@ Data::load_voxel_slice(const UString &path)
 	return slice;
 }
 
-std::shared_ptr<ImageSet>
-Data::load_image_set(const UString& path)
+std::shared_ptr<ImageSet> Data::load_image_set(const UString &path)
 {
 	UString cacheKey = path.toUpper();
 	std::shared_ptr<ImageSet> imgSet = this->imageSetCache[cacheKey].lock();
@@ -383,7 +365,7 @@ Data::load_image_set(const UString& path)
 	{
 		return imgSet;
 	}
-	//PCK resources come in the format:
+	// PCK resources come in the format:
 	//"PCK:PCKFILE:TABFILE[:optional/ignored]"
 	if (path.substr(0, 4) == "PCK:")
 	{
@@ -403,8 +385,7 @@ Data::load_image_set(const UString& path)
 	return imgSet;
 }
 
-std::shared_ptr<Sample>
-Data::load_sample(const UString& path)
+std::shared_ptr<Sample> Data::load_sample(const UString &path)
 {
 	UString cacheKey = path.toUpper();
 	std::shared_ptr<Sample> sample = this->sampleCache[cacheKey].lock();
@@ -426,10 +407,9 @@ Data::load_sample(const UString& path)
 	return sample;
 }
 
-std::shared_ptr<MusicTrack>
-Data::load_music(const UString& path)
+std::shared_ptr<MusicTrack> Data::load_music(const UString &path)
 {
-	//No cache for music tracks, just stream of disk
+	// No cache for music tracks, just stream of disk
 	for (auto &loader : this->musicLoaders)
 	{
 		auto track = loader->loadMusic(path);
@@ -440,10 +420,9 @@ Data::load_music(const UString& path)
 	return nullptr;
 }
 
-std::shared_ptr<Image>
-Data::load_image(const UString& path)
+std::shared_ptr<Image> Data::load_image(const UString &path)
 {
-	//Use an uppercase version of the path for the cache key
+	// Use an uppercase version of the path for the cache key
 	UString cacheKey = path.toUpper();
 	std::shared_ptr<Image> img = this->imageCache[cacheKey].lock();
 	if (img)
@@ -451,24 +430,22 @@ Data::load_image(const UString& path)
 		return img;
 	}
 
-
-	if (path.substr(0,4) == "RAW:")
+	if (path.substr(0, 4) == "RAW:")
 	{
 		auto splitString = path.split(':');
 		// RAW:PATH:WIDTH:HEIGHT
 		if (splitString.size() != 4 && splitString.size() != 5)
 		{
-			LogError("Invalid RAW resource string: \"%s\"",
-				path.str().c_str());
+			LogError("Invalid RAW resource string: \"%s\"", path.str().c_str());
 			return nullptr;
 		}
 
-		auto pImg = RawImage::load(*this, splitString[1],
-			Vec2<int>{Strings::ToInteger(splitString[2]), Strings::ToInteger(splitString[3])});
+		auto pImg =
+		    RawImage::load(*this, splitString[1], Vec2<int>{Strings::ToInteger(splitString[2]),
+		                                                    Strings::ToInteger(splitString[3])});
 		if (!pImg)
 		{
-			LogError("Failed to load RAW image: \"%s\"",
-				path.str().c_str());
+			LogError("Failed to load RAW image: \"%s\"", path.str().c_str());
 			return nullptr;
 		}
 		if (splitString.size() == 5)
@@ -476,36 +453,33 @@ Data::load_image(const UString& path)
 			auto pal = this->load_palette(splitString[4]);
 			if (!pal)
 			{
-				LogError("Failed to load palette for RAW image: \"%s\"",
-					path.str().c_str());
+				LogError("Failed to load palette for RAW image: \"%s\"", path.str().c_str());
 				return nullptr;
 			}
 			img = pImg->toRGBImage(pal);
-
 		}
 		else
 		{
 			img = pImg;
 		}
-
 	}
-	else if (path.substr(0,4) == "PCK:")
+	else if (path.substr(0, 4) == "PCK:")
 	{
 		auto splitString = path.split(':');
 		if (splitString.size() != 3 && splitString.size() != 4 && splitString.size() != 5)
 		{
-			LogError("Invalid PCK resource string: \"%s\"",
-				path.str().c_str());
+			LogError("Invalid PCK resource string: \"%s\"", path.str().c_str());
 			return nullptr;
 		}
-		auto imageSet = this->load_image_set(splitString[0] + ":" + splitString[1] + ":" + splitString[2]);
+		auto imageSet =
+		    this->load_image_set(splitString[0] + ":" + splitString[1] + ":" + splitString[2]);
 		if (!imageSet)
 		{
 			return nullptr;
 		}
-		//PCK resources come in the format:
+		// PCK resources come in the format:
 		//"PCK:PCKFILE:TABFILE:INDEX"
-		//or
+		// or
 		//"PCK:PCKFILE:TABFILE:INDEX:PALETTE" if we want them already in rgb space
 		switch (splitString.size())
 		{
@@ -516,9 +490,9 @@ Data::load_image(const UString& path)
 			}
 			case 5:
 			{
-				std::shared_ptr<PaletteImage> pImg = 
-					std::dynamic_pointer_cast<PaletteImage>(
-						this->load_image("PCK:" + splitString[1] + ":" + splitString[2] + ":" + splitString[3]));
+				std::shared_ptr<PaletteImage> pImg =
+				    std::dynamic_pointer_cast<PaletteImage>(this->load_image(
+				        "PCK:" + splitString[1] + ":" + splitString[2] + ":" + splitString[3]));
 				assert(pImg);
 				auto pal = this->load_palette(splitString[4]);
 				assert(pal);
@@ -554,7 +528,7 @@ Data::load_image(const UString& path)
 	return img;
 }
 
-IFile Data::load_file(const UString& path, Data::FileMode mode)
+IFile Data::load_file(const UString &path, Data::FileMode mode)
 {
 	IFile f;
 	if (mode != Data::FileMode::Read)
@@ -570,13 +544,12 @@ IFile Data::load_file(const UString& path, Data::FileMode mode)
 		return f;
 	}
 	f.f.reset(new PhysfsIFileImpl(foundPath, path));
-	f.rdbuf(dynamic_cast<PhysfsIFileImpl*>(f.f.get()));
+	f.rdbuf(dynamic_cast<PhysfsIFileImpl *>(f.f.get()));
 	LogInfo("Loading \"%s\" from \"%s\"", path.str().c_str(), f.systemPath().str().c_str());
 	return f;
 }
 
-std::shared_ptr<Palette>
-Data::load_palette(const UString& path)
+std::shared_ptr<Palette> Data::load_palette(const UString &path)
 {
 	std::shared_ptr<RGBImage> img = std::dynamic_pointer_cast<RGBImage>(this->load_image(path));
 	if (img)
@@ -588,7 +561,7 @@ Data::load_palette(const UString& path)
 		{
 			for (unsigned int x = 0; x < img->size.x; x++)
 			{
-				Colour c = src.get(Vec2<int>{x,y});
+				Colour c = src.get(Vec2<int>{x, y});
 				p->SetColour(idx, c);
 				idx++;
 			}
@@ -607,5 +580,4 @@ Data::load_palette(const UString& path)
 	}
 }
 
-
-}; //namespace OpenApoc
+}; // namespace OpenApoc

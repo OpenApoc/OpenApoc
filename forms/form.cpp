@@ -1,51 +1,45 @@
 #include "form.h"
 
-namespace OpenApoc {
-
-Form::Form( Framework &fw, tinyxml2::XMLElement* FormConfiguration ) : Control( fw, nullptr )
+namespace OpenApoc
 {
-	if( FormConfiguration == nullptr )
+
+Form::Form(Framework &fw, tinyxml2::XMLElement *FormConfiguration) : Control(fw, nullptr)
+{
+	if (FormConfiguration == nullptr)
 	{
 		return;
 	}
 
-	tinyxml2::XMLElement* node;
-	tinyxml2::XMLElement* usenode = nullptr;
+	tinyxml2::XMLElement *node;
+	tinyxml2::XMLElement *usenode = nullptr;
 	UString nodename;
 
 	if (FormConfiguration->Attribute("id"))
 		this->Name = FormConfiguration->Attribute("id");
 
-	for( node = FormConfiguration->FirstChildElement(); node != nullptr; node = node->NextSiblingElement() )
+	for (node = FormConfiguration->FirstChildElement(); node != nullptr;
+	     node = node->NextSiblingElement())
 	{
 		nodename = node->Name();
-		if( nodename == "style" )
+		if (nodename == "style")
 		{
 			// TODO: Determine best "style" based on minwidth and minheight attributes
 			usenode = node;
 		}
 	}
 
-	if( usenode != nullptr )
+	if (usenode != nullptr)
 	{
-		ConfigureFromXML( usenode );
+		ConfigureFromXML(usenode);
 		ResolveLocation();
 	}
-
 }
 
-Form::~Form()
-{
-}
+Form::~Form() {}
 
-void Form::EventOccured( Event* e )
-{
-	Control::EventOccured( e );
-}
+void Form::EventOccured(Event *e) { Control::EventOccured(e); }
 
-void Form::OnRender()
-{
-}
+void Form::OnRender() {}
 
 void Form::Update()
 {
@@ -53,9 +47,6 @@ void Form::Update()
 	ResolveLocation();
 }
 
-void Form::UnloadResources()
-{
-	Control::UnloadResources();
-}
+void Form::UnloadResources() { Control::UnloadResources(); }
 
-}; //namespace OpenApoc
+}; // namespace OpenApoc

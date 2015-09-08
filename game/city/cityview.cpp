@@ -7,21 +7,15 @@
 #include "game/city/scorescreen.h"
 #include "game/general/ingameoptions.h"
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 CityView::CityView(Framework &fw)
-	: TileView(fw, *fw.state->city, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z})
+    : TileView(fw, *fw.state->city, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z})
 {
-	static const std::vector<UString> tabFormNames = 
-	{
-		"FORM_CITY_UI_1",
-		"FORM_CITY_UI_2",
-		"FORM_CITY_UI_3",
-		"FORM_CITY_UI_4",
-		"FORM_CITY_UI_5",
-		"FORM_CITY_UI_6",
-		"FORM_CITY_UI_7",
-		"FORM_CITY_UI_8",
+	static const std::vector<UString> tabFormNames = {
+	    "FORM_CITY_UI_1", "FORM_CITY_UI_2", "FORM_CITY_UI_3", "FORM_CITY_UI_4",
+	    "FORM_CITY_UI_5", "FORM_CITY_UI_6", "FORM_CITY_UI_7", "FORM_CITY_UI_8",
 	};
 
 	for (auto &formName : tabFormNames)
@@ -38,13 +32,9 @@ CityView::CityView(Framework &fw)
 	this->activeTab = this->uiTabs[0];
 }
 
-CityView::~CityView()
-{
+CityView::~CityView() {}
 
-}
-
-void
-CityView::Render()
+void CityView::Render()
 {
 	TileView::Render();
 	if (fw.state->showVehiclePath)
@@ -67,28 +57,25 @@ CityView::Render()
 				screenPosB.x += this->offsetX;
 				screenPosB.y += this->offsetX;
 
-				fw.renderer->drawLine(screenPosA, screenPosB, Colour{255,0,0,128});
+				fw.renderer->drawLine(screenPosA, screenPosB, Colour{255, 0, 0, 128});
 
 				prevPos = pos;
 			}
 		}
-
 	}
 	activeTab->Render();
 	fw.gamecore->MouseCursor->Render();
 }
 
-void
-CityView::Update(StageCmd * const cmd)
+void CityView::Update(StageCmd *const cmd)
 {
 	TileView::Update(cmd);
 	activeTab->Update();
 }
 
-void
-CityView::EventOccurred(Event *e)
+void CityView::EventOccurred(Event *e)
 {
-	fw.gamecore->MouseCursor->EventOccured( e );
+	fw.gamecore->MouseCursor->EventOccured(e);
 	activeTab->EventOccured(e);
 	if (!e->Handled)
 	{
@@ -173,9 +160,7 @@ CityView::EventOccurred(Event *e)
 					LogWarning("Set speed 5");
 					this->updateSpeed = UpdateSpeed::Speed5;
 				}
-					
 			}
-
 		}
 		else
 		{
@@ -184,4 +169,4 @@ CityView::EventOccurred(Event *e)
 	}
 }
 
-}; //namespace OpenApoc
+}; // namespace OpenApoc

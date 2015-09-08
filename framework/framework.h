@@ -1,7 +1,7 @@
 
 #pragma once
 
-//windows workaround
+// windows workaround
 #ifndef __func__
 #define __func__ __FUNCTION__
 #endif
@@ -22,12 +22,13 @@
 #include "game/resources/gamecore.h"
 #include "game/rules/rules.h"
 
-//FIXME: Remove core-allegro
-//Required for input types
+// FIXME: Remove core-allegro
+// Required for input types
 #include <allegro5/allegro.h>
 #include <fstream>
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 class Shader;
 class GameCore;
@@ -38,51 +39,52 @@ class FrameworkPrivate;
 
 class Framework
 {
-	private:
-		bool dumpEvents;
-		bool replayEvents;
-		std::fstream eventStream;
-		std::unique_ptr<FrameworkPrivate> p;
-		UString programName;
-		void Audio_Initialise();
-		void Audio_Shutdown();
-	public:
-		std::unique_ptr<Data> data;
-		std::unique_ptr<GameState> state;
-		std::unique_ptr<Rules> rules;
-		std::unique_ptr<GameCore> gamecore;
+  private:
+	bool dumpEvents;
+	bool replayEvents;
+	std::fstream eventStream;
+	std::unique_ptr<FrameworkPrivate> p;
+	UString programName;
+	void Audio_Initialise();
+	void Audio_Shutdown();
 
-		std::unique_ptr<ConfigFile> Settings;
-		std::unique_ptr<Renderer> renderer;
-		std::unique_ptr<SoundBackend> soundBackend;
-		std::unique_ptr<JukeBox> jukebox;
+  public:
+	std::unique_ptr<Data> data;
+	std::unique_ptr<GameState> state;
+	std::unique_ptr<Rules> rules;
+	std::unique_ptr<GameCore> gamecore;
 
-		Framework(const UString programName, const std::vector<UString> cmdline);
-		~Framework();
+	std::unique_ptr<ConfigFile> Settings;
+	std::unique_ptr<Renderer> renderer;
+	std::unique_ptr<SoundBackend> soundBackend;
+	std::unique_ptr<JukeBox> jukebox;
 
-		void Run();
-		void ProcessEvents();
-		void PushEvent( Event* e );
-		void DumpEvent( Event* e );
-		void TranslateAllegroEvents();
-		void ReadRecordedEvents();
-		void ShutdownFramework();
-		bool IsShuttingDown();
+	Framework(const UString programName, const std::vector<UString> cmdline);
+	~Framework();
 
-		void SaveSettings();
+	void Run();
+	void ProcessEvents();
+	void PushEvent(Event *e);
+	void DumpEvent(Event *e);
+	void TranslateAllegroEvents();
+	void ReadRecordedEvents();
+	void ShutdownFramework();
+	bool IsShuttingDown();
 
-		void Display_Initialise();
-		void Display_Shutdown();
-		int Display_GetWidth();
-		int Display_GetHeight();
-		Vec2<int> Display_GetSize();
-		void Display_SetTitle( UString NewTitle );
+	void SaveSettings();
 
-		bool IsSlowMode();
-		void SetSlowMode(bool SlowEnabled);
+	void Display_Initialise();
+	void Display_Shutdown();
+	int Display_GetWidth();
+	int Display_GetHeight();
+	Vec2<int> Display_GetSize();
+	void Display_SetTitle(UString NewTitle);
 
-		std::shared_ptr<Stage> Stage_GetPrevious();
-		std::shared_ptr<Stage> Stage_GetPrevious(std::shared_ptr<Stage> From);
+	bool IsSlowMode();
+	void SetSlowMode(bool SlowEnabled);
+
+	std::shared_ptr<Stage> Stage_GetPrevious();
+	std::shared_ptr<Stage> Stage_GetPrevious(std::shared_ptr<Stage> From);
 };
 
-}; //namespace OpenApoc
+}; // namespace OpenApoc

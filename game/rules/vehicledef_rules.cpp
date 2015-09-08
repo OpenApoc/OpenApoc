@@ -10,24 +10,20 @@
 namespace OpenApoc
 {
 
-static std::map<VehicleDefinition::Direction, Vec3<float>> directionsToVec =
-{
-	{VehicleDefinition::Direction::N,  { 0,-1, 0}}, 
-	{VehicleDefinition::Direction::NE, { 1,-1, 0}}, 
-	{VehicleDefinition::Direction::E,  { 1, 0, 0}}, 
-	{VehicleDefinition::Direction::SE, { 1, 1, 0}}, 
-	{VehicleDefinition::Direction::S,  { 0, 1, 0}}, 
-	{VehicleDefinition::Direction::SW, {-1, 1, 0}}, 
-	{VehicleDefinition::Direction::W,  {-1, 0, 0}}, 
-	{VehicleDefinition::Direction::NW, {-1,-1, 0}}, 
+static std::map<VehicleDefinition::Direction, Vec3<float>> directionsToVec = {
+    {VehicleDefinition::Direction::N, {0, -1, 0}}, {VehicleDefinition::Direction::NE, {1, -1, 0}},
+    {VehicleDefinition::Direction::E, {1, 0, 0}},  {VehicleDefinition::Direction::SE, {1, 1, 0}},
+    {VehicleDefinition::Direction::S, {0, 1, 0}},  {VehicleDefinition::Direction::SW, {-1, 1, 0}},
+    {VehicleDefinition::Direction::W, {-1, 0, 0}}, {VehicleDefinition::Direction::NW, {-1, -1, 0}},
 };
 
-static std::map<VehicleDefinition::Direction, std::shared_ptr<Image> >
+static std::map<VehicleDefinition::Direction, std::shared_ptr<Image>>
 parseDirectionalSprites(Framework &fw, tinyxml2::XMLElement *root)
 {
-	std::map<VehicleDefinition::Direction, std::shared_ptr<Image> > sprites;
+	std::map<VehicleDefinition::Direction, std::shared_ptr<Image>> sprites;
 
-	for (tinyxml2::XMLElement* node = root->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
+	for (tinyxml2::XMLElement *node = root->FirstChildElement(); node != nullptr;
+	     node = node->NextSiblingElement())
 	{
 		UString name = node->Name();
 		VehicleDefinition::Direction dir;
@@ -82,8 +78,7 @@ parseDirectionalSprites(Framework &fw, tinyxml2::XMLElement *root)
 	return sprites;
 }
 
-bool
-RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::XMLElement *root)
+bool RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::XMLElement *root)
 {
 
 	VehicleDefinition def;
@@ -97,11 +92,11 @@ RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::XMLEl
 	def.name = root->Attribute("id");
 
 	UString type = root->Attribute("type");
-	if (!ReadAttribute(root, "type",
-		std::map<UString, VehicleDefinition::Type>
-		{{"flying", VehicleDefinition::Type::Flying},
-		 {"ground", VehicleDefinition::Type::Ground}},
-		def.type))
+	if (!ReadAttribute(
+	        root, "type",
+	        std::map<UString, VehicleDefinition::Type>{{"flying", VehicleDefinition::Type::Flying},
+	                                                   {"ground", VehicleDefinition::Type::Ground}},
+	        def.type))
 	{
 		LogWarning("Failed to read vehicle 'type' attribute");
 		return false;
@@ -111,7 +106,8 @@ RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::XMLEl
 	def.size.y = root->FloatAttribute("sizeY");
 	def.size.z = root->FloatAttribute("sizeZ");
 
-	for (tinyxml2::XMLElement* node = root->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
+	for (tinyxml2::XMLElement *node = root->FirstChildElement(); node != nullptr;
+	     node = node->NextSiblingElement())
 	{
 		UString tag = node->Name();
 		if (tag == "flat")
@@ -140,8 +136,8 @@ RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::XMLEl
 			continue;
 		}
 	}
-	//Push all directional sprites into 'directional vector' space
-	//FIXME: How to do banking left/right?
+	// Push all directional sprites into 'directional vector' space
+	// FIXME: How to do banking left/right?
 	for (auto &s : def.sprites[VehicleDefinition::Banking::Flat])
 	{
 		Vec3<float> v = directionsToVec[s.first];
@@ -170,7 +166,7 @@ RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::XMLEl
 		def.voxelMap = stubVoxelMap.lock();
 		if (!def.voxelMap)
 		{
-			def.voxelMap = std::make_shared<VoxelMap>(Vec3<int>{32,32,16});
+			def.voxelMap = std::make_shared<VoxelMap>(Vec3<int>{32, 32, 16});
 			stubVoxelMap = def.voxelMap;
 		}
 	}
@@ -178,7 +174,6 @@ RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::XMLEl
 	rules.vehicleDefs.emplace(def.name, def);
 
 	return true;
-
 }
 
-}; //namespace OpenApoc
+}; // namespace OpenApoc

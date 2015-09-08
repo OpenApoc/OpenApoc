@@ -6,13 +6,12 @@
 namespace OpenApoc
 {
 
-Weapon::Weapon(const WeaponDef &def, std::shared_ptr<Vehicle> owner, int initialAmmo, State initialState)
-	: state(initialState), def(def), owner(owner), ammo(initialAmmo), reloadTime(0)
+Weapon::Weapon(const WeaponDef &def, std::shared_ptr<Vehicle> owner, int initialAmmo,
+               State initialState)
+    : state(initialState), def(def), owner(owner), ammo(initialAmmo), reloadTime(0)
 {
-
 }
-std::shared_ptr<Projectile>
-Weapon::fire(Vec3<float> target)
+std::shared_ptr<Projectile> Weapon::fire(Vec3<float> target)
 {
 	auto owner = this->owner.lock();
 	if (!owner)
@@ -52,8 +51,9 @@ Weapon::fire(Vec3<float> target)
 			velocity *= this->def.projectileSpeed;
 			auto &map = vehicleTile->getOwningTile()->map;
 			return std::make_shared<BeamProjectile>(
-				map, owner, vehicleTile->getPosition(), velocity, (int) (def.range / this->def.projectileSpeed),
-				def.beamColour, def.projectileTailLength, def.beamWidth);
+			    map, owner, vehicleTile->getPosition(), velocity,
+			    (int)(def.range / this->def.projectileSpeed), def.beamColour,
+			    def.projectileTailLength, def.beamWidth);
 		}
 		default:
 			LogWarning("Unknown projectile type");
@@ -62,8 +62,7 @@ Weapon::fire(Vec3<float> target)
 	return nullptr;
 }
 
-void
-Weapon::update(int ticks)
+void Weapon::update(int ticks)
 {
 	if (this->reloadTime != 0)
 	{
@@ -83,5 +82,4 @@ Weapon::update(int ticks)
 	}
 }
 
-
-}; //namespace OpenApoc
+}; // namespace OpenApoc

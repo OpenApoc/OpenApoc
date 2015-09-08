@@ -5,7 +5,8 @@
 #include "library/colour.h"
 #include "framework/font.h"
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 class Form;
 class Event;
@@ -14,63 +15,62 @@ class Surface;
 
 class Control
 {
-	private:
-		std::shared_ptr<Surface> controlArea;
+  private:
+	std::shared_ptr<Surface> controlArea;
 
-		void PreRender();
-		void PostRender();
+	void PreRender();
+	void PostRender();
 
+  protected:
+	Control *owningControl;
+	Control *focusedChild;
+	bool mouseInside;
+	bool mouseDepressed;
+	Vec2<int> resolvedLocation;
 
+	virtual void OnRender();
 
-	protected:
-		Control* owningControl;
-		Control* focusedChild;
-		bool mouseInside;
-		bool mouseDepressed;
-		Vec2<int> resolvedLocation;
+	void SetFocus(Control *Child);
+	bool IsFocused();
 
-		virtual void OnRender();
+	void ResolveLocation();
+	void ConfigureFromXML(tinyxml2::XMLElement *Element);
 
-		void SetFocus(Control* Child);
-		bool IsFocused();
+	Control *GetRootControl();
 
-		void ResolveLocation();
-		void ConfigureFromXML( tinyxml2::XMLElement* Element );
+	std::list<UString> WordWrapText(std::shared_ptr<OpenApoc::BitmapFont> UseFont,
+	                                UString WrapText);
 
-		Control* GetRootControl();
+	Framework &fw;
 
-		std::list<UString> WordWrapText( std::shared_ptr<OpenApoc::BitmapFont> UseFont, UString WrapText );
+  public:
+	UString Name;
+	Vec2<int> Location;
+	Vec2<int> Size;
+	Colour BackgroundColour;
+	bool takesFocus;
+	bool showBounds;
+	bool Visible;
 
-		Framework &fw;
+	std::vector<Control *> Controls;
 
-	public:
-		UString Name;
-		Vec2<int> Location;
-		Vec2<int> Size;
-		Colour BackgroundColour;
-		bool takesFocus;
-		bool showBounds;
-		bool Visible;
+	Control(Framework &fw, Control *Owner, bool takesFocus = true);
+	virtual ~Control();
 
-		std::vector<Control*> Controls;
+	Control *GetActiveControl();
+	void Focus();
 
-		Control(Framework &fw, Control* Owner, bool takesFocus = true);
-		virtual ~Control();
+	virtual void EventOccured(Event *e);
+	void Render();
+	virtual void Update();
+	virtual void UnloadResources();
 
-		Control* GetActiveControl();
-		void Focus();
+	Control *operator[](int Index);
+	Control *FindControl(UString ID);
 
-		virtual void EventOccured(Event* e);
-		void Render();
-		virtual void Update();
-		virtual void UnloadResources();
-
-		Control* operator[]( int Index );
-		Control* FindControl( UString ID );
-
-		Control* GetParent();
-		Form* GetForm();
-		void SetParent(Control* Parent);
+	Control *GetParent();
+	Form *GetForm();
+	void SetParent(Control *Parent);
 };
 
-}; //namespace OpenApoc
+}; // namespace OpenApoc

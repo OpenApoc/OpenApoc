@@ -1,24 +1,18 @@
 #include "framework/renderer.h"
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 RendererSurfaceBinding::RendererSurfaceBinding(Renderer &r, std::shared_ptr<Surface> s)
-	: prevBinding(r.getSurface()), r(r)
+    : prevBinding(r.getSurface()), r(r)
 {
 	r.setSurface(s);
 }
 
-RendererSurfaceBinding::~RendererSurfaceBinding()
-{
-	r.setSurface(prevBinding);
-}
+RendererSurfaceBinding::~RendererSurfaceBinding() { r.setSurface(prevBinding); }
 
-Renderer::~Renderer()
-{
-}
+Renderer::~Renderer() {}
 
-RendererImageData::~RendererImageData()
-{
-}
+RendererImageData::~RendererImageData() {}
 
-}; //namespace OpenApoc
+}; // namespace OpenApoc

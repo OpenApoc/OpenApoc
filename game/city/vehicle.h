@@ -11,11 +11,11 @@
  * if one is a subclass of the other. So disable that as we rely
  * on inherited subclasses of TileObject overriding various functions */
 #ifdef _MSC_VER
-#pragma warning( disable : 4250 )
+#pragma warning(disable : 4250)
 #endif // _MSC_VER
 
-
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 class Image;
 class VehicleFactory;
@@ -27,17 +27,17 @@ class Weapon;
 
 class VehicleMission
 {
-public:
+  public:
 	Vehicle &vehicle;
 	VehicleMission(Vehicle &vehicle);
 	virtual Vec3<float> getNextDestination() = 0;
 	virtual ~VehicleMission();
-	virtual const std::list<Tile*> &getCurrentPlannedPath() = 0;
+	virtual const std::list<Tile *> &getCurrentPlannedPath() = 0;
 };
 
 class VehicleMover
 {
-public:
+  public:
 	Vehicle &vehicle;
 	VehicleMover(Vehicle &vehicle);
 	virtual void update(unsigned int ticks) = 0;
@@ -46,7 +46,7 @@ public:
 
 class Vehicle : public std::enable_shared_from_this<Vehicle>
 {
-public:
+  public:
 	virtual ~Vehicle();
 	Vehicle(const VehicleDefinition &def, Organisation &owner);
 
@@ -67,9 +67,10 @@ public:
 
 class VehicleTileObject : public TileObjectDirectionalSprite, public TileObjectCollidable
 {
-private:
+  private:
 	Vehicle &vehicle;
-public:
+
+  public:
 	VehicleTileObject(Vehicle &vehicle, TileMap &map, Vec3<float> position);
 	virtual ~VehicleTileObject();
 	virtual void update(unsigned int ticks) override;
@@ -78,7 +79,7 @@ public:
 	virtual Rect<float> getSelectableBounds() const override;
 	virtual void setSelected(bool selected) override;
 
-	Vehicle &getVehicle() const {return this->vehicle;}
+	Vehicle &getVehicle() const { return this->vehicle; }
 
 	using TileObjectCollidable::setPosition;
 	using TileObjectCollidable::getTileSizeInVoxels;
@@ -90,4 +91,4 @@ public:
 	using TileObjectDirectionalSprite::getSprite;
 };
 
-}; //namespace OpenApoc
+}; // namespace OpenApoc

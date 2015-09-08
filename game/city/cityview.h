@@ -2,21 +2,23 @@
 
 #include "game/tileview/tileview.h"
 
-namespace OpenApoc {
+namespace OpenApoc
+{
 
 class Form;
 
 class CityView : public TileView
 {
-private:
+  private:
 	Form *activeTab;
-	std::vector<Form*> uiTabs;
-public:
+	std::vector<Form *> uiTabs;
+
+  public:
 	CityView(Framework &fw);
 	virtual ~CityView();
-	virtual void Update(StageCmd * const cmd) override;
+	virtual void Update(StageCmd *const cmd) override;
 	virtual void Render() override;
 	virtual void EventOccurred(Event *e) override;
 };
 
-}; //namespace OpenApoc
+}; // namespace OpenApoc
