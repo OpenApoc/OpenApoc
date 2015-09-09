@@ -39,8 +39,17 @@ class NullSoundBackend : public SoundBackend
 
 	virtual const AudioFormat &getPreferredFormat() { return preferredFormat; }
 
-	virtual float getGain(Gain g) override { return 0.0; }
-	virtual void setGain(Gain g, float f) override { return; }
+	virtual float getGain(Gain g) override
+	{
+		std::ignore = g;
+		return 0.0;
+	}
+	virtual void setGain(Gain g, float f) override
+	{
+		std::ignore = g;
+		std::ignore = f;
+		return;
+	}
 };
 
 class NullSoundBackendFactory : public SoundBackendFactory
