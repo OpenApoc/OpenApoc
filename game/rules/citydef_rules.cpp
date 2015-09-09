@@ -36,6 +36,7 @@ bool LoadCityMap(Framework &fw, Vec3<int> size, tinyxml2::XMLElement *root,
 		if (err != tinyxml2::XML_SUCCESS)
 		{
 			LogError("City map tile missing \"x\" attribute");
+			return false;
 		}
 		if (x >= size.x || x < 0)
 		{
@@ -47,6 +48,7 @@ bool LoadCityMap(Framework &fw, Vec3<int> size, tinyxml2::XMLElement *root,
 		if (err != tinyxml2::XML_SUCCESS)
 		{
 			LogError("City map tile missing \"y\" attribute");
+			return false;
 		}
 		if (y >= size.y || y < 0)
 		{
@@ -58,6 +60,7 @@ bool LoadCityMap(Framework &fw, Vec3<int> size, tinyxml2::XMLElement *root,
 		if (err != tinyxml2::XML_SUCCESS)
 		{
 			LogError("City map tile missing \"z\" attribute");
+			return false;
 		}
 		if (z >= size.z || z < 0)
 		{
