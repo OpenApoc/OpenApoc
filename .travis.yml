@@ -20,8 +20,10 @@ before_install:
   - export PKG_CONFIG_PATH=~/dependency-prefix/lib/pkgconfig
 
 env:
-  - MONOLITHIC_BUILD=on LTO=off
-  - MONOLITHIC_BUILD=off LTO=off
+  - BUILD_TYPE="Release" MONOLITHIC_BUILD=off LTO=on SUGGESTIONS=off
+  - BUILD_TYPE="Release" MONOLITHIC_BUILD=off LTO=off SUGGESTIONS=off
+  - BUILD_TYPE="Release" MONOLITHIC_BUILD=off LTO=on SUGGESTIONS=on
+  - BUILD_TYPE="Release" MONOLITHIC_BUILD=off LTO=off SUGGESTIONS=on
 
 install:
   - pushd ./dependencies/tinyxml2 && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make && make install && popd;
@@ -29,7 +31,7 @@ install:
   - pushd ./dependencies/physfs && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make && make install && popd;
 
 before_script:
-  - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=""  -DCMAKE_CXX_FLAGS="-Wall -Wextra -W -O2" -DCMAKE_C_FLAGS="-Wall -Wextra -W -O2" -DMONOLITHIC_BUILD=${MONOLITHIC_BUILD} -DLTO=${LTO} -DCLANG_TIDY="clang-tidy-3.6"
+  - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DMONOLITHIC_BUILD=${MONOLITHIC_BUILD} -DLTO=${LTO} -DCLANG_TIDY="clang-tidy-3.6" -DEXTRA_SUGGESTIONS=${SUGGESTIONS}
 
 script: make VERBOSE=1 && make test ARGS="-V"
 
