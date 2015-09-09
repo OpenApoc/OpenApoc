@@ -1,11 +1,6 @@
 
 #pragma once
 
-// windows workaround
-#ifndef __func__
-#define __func__ __FUNCTION__
-#endif
-
 #include "logger.h"
 #include "includes.h"
 #include "event.h"
