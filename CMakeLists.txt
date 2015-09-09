@@ -23,6 +23,15 @@ else()
 endif()
 
 option (EXTRA_WARNINGS "Enable extra warning flags (-W -Wall -Wextra)" ON)
+option (EXTRA_SUGGESTIONS "Enable extra 'suggestion' warning flags" ON)
+
+if (EXTRA_SUGGESTIONS)
+	CHECK_CXX_COMPILER_FLAG("-Wsuggest-attribute=pure -Wsuggest-attribute=const -Wsuggest-attribute=noreturn -Wsuggest-attribute=format -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override" COMPILER_SUPPORTS_SUGGESTIONS)
+	if (COMPILER_SUPPORTS_SUGGESTIONS)
+			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wsuggest-attribute=pure -Wsuggest-attribute=const -Wsuggest-attribute=noreturn -Wsuggest-attribute=format -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override")
+			set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wsuggest-attribute=pure -Wsuggest-attribute=const -Wsuggest-attribute=noreturn -Wsuggest-attribute=format -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override")
+	endif(COMPILER_SUPPORTS_SUGGESTIONS)
+endif(EXTRA_SUGGESTIONS)
 
 if(EXTRA_WARNINGS)
 	CHECK_CXX_COMPILER_FLAG("-W -Wall -Wextra" COMPILER_SUPPORTS_WARNINGS)
