@@ -22,7 +22,7 @@ class UfopaediaCategory : public Stage // , public std::enable_shared_from_this<
 	UString BackgroundImageFilename;
 	std::vector<std::shared_ptr<UfopaediaEntry>> Entries;
 
-	int ViewingEntry;
+	unsigned int ViewingEntry;
 
 	UfopaediaCategory(Framework &fw, tinyxml2::XMLElement *Element);
 	~UfopaediaCategory();
