@@ -155,3 +155,9 @@ endforeach()
 
 add_custom_target(format clang-format -i ${FORMAT_SOURCES}
 		DEPENDS ${FORMAT_SOURCES} .clang-format)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CLANG_TIDY clang-tidy CACHE STRING "clang-tidy executable name in PATH")
+
+add_custom_target(tidy ${CLANG_TIDY} ${FORMAT_SOURCES} -p ${CMAKE_BINARY_DIR}
+		DEPENDS ${FORMAT_SOURCES} ${CMAKE_BINARY_DIR}/compile_commands.json)
