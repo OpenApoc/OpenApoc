@@ -29,9 +29,11 @@ install:
   - pushd ./dependencies/physfs && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make && make install && popd;
 
 before_script:
-  - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=""  -DCMAKE_CXX_FLAGS="-Wall -Wextra -W -O2" -DCMAKE_C_FLAGS="-Wall -Wextra -W -O2" -DMONOLITHIC_BUILD=${MONOLITHIC_BUILD} -DLTO=${LTO}
+  - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=""  -DCMAKE_CXX_FLAGS="-Wall -Wextra -W -O2" -DCMAKE_C_FLAGS="-Wall -Wextra -W -O2" -DMONOLITHIC_BUILD=${MONOLITHIC_BUILD} -DLTO=${LTO} -DCLANG_TIDY="clang-tidy-3.6"
 
 script: make VERBOSE=1 && make test ARGS="-V"
+
+after_script: if [ "$CXX" = "clang++" ];then pushd build && make tidy && popd; fi
 
 os:
   - linux
