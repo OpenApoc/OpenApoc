@@ -2,7 +2,7 @@
 PROJECT(OpenApoc CXX C)
 
 # check cmake version
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/framework/cmake/")
 
@@ -10,6 +10,7 @@ include(framework)
 
 # check compiler
 INCLUDE(CheckCXXCompilerFlag)
+INCLUDE(CheckCCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
 if(COMPILER_SUPPORTS_CXX11)
 	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
@@ -25,20 +26,37 @@ endif()
 option (EXTRA_WARNINGS "Enable extra warning flags (-W -Wall -Wextra)" ON)
 option (EXTRA_SUGGESTIONS "Enable extra 'suggestion' warning flags" ON)
 
+function(ADD_OPTIONAL_COMPILER_FLAG FLAG)
+		CHECK_CXX_COMPILER_FLAG("${FLAG}" CXX_COMPILER_SUPPORTS_${FLAG})
+		CHECK_C_COMPILER_FLAG("${FLAG}" C_COMPILER_SUPPORTS_${FLAG})
+		if (CXX_COMPILER_SUPPORTS_${FLAG})
+				set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FLAG}" PARENT_SCOPE)
+		endif(CXX_COMPILER_SUPPORTS_${FLAG})
+		if (C_COMPILER_SUPPORTS_${FLAG})
+				set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${FLAG}" PARENT_SCOPE)
+		endif(C_COMPILER_SUPPORTS_${FLAG})
+endfunction(ADD_OPTIONAL_COMPILER_FLAG)
+
 if (EXTRA_SUGGESTIONS)
-	CHECK_CXX_COMPILER_FLAG("-Wsuggest-attribute=pure -Wsuggest-attribute=const -Wsuggest-attribute=noreturn -Wsuggest-attribute=format -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override" COMPILER_SUPPORTS_SUGGESTIONS)
-	if (COMPILER_SUPPORTS_SUGGESTIONS)
-			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wsuggest-attribute=pure -Wsuggest-attribute=const -Wsuggest-attribute=noreturn -Wsuggest-attribute=format -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override")
-			set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wsuggest-attribute=pure -Wsuggest-attribute=const -Wsuggest-attribute=noreturn -Wsuggest-attribute=format -Wsuggest-final-types -Wsuggest-final-methods -Wsuggest-override")
-	endif(COMPILER_SUPPORTS_SUGGESTIONS)
+		ADD_OPTIONAL_COMPILER_FLAG("-Wsuggest-attribute=pure")
+		ADD_OPTIONAL_COMPILER_FLAG("-Wsuggest-attribute=const")
+		ADD_OPTIONAL_COMPILER_FLAG("-Wsuggest-attribute=noreturn")
+		ADD_OPTIONAL_COMPILER_FLAG("-Wsuggest-attribute=format")
+		ADD_OPTIONAL_COMPILER_FLAG("-Wsuggest-final-types")
+		ADD_OPTIONAL_COMPILER_FLAG("-Wsuggest-final-methods")
+		ADD_OPTIONAL_COMPILER_FLAG("-Wsuggest-override")
+		#Clang has a -Weverything
+		ADD_OPTIONAL_COMPILER_FLAG("-Weverything")
+		#But that's pretty annoying, so disable some stuff we don't carea bout
+		ADD_OPTIONAL_COMPILER_FLAG("-Wno-c++98-compat")
+		ADD_OPTIONAL_COMPILER_FLAG("-Wno-c++98-compat-pedantic")
+		ADD_OPTIONAL_COMPILER_FLAG("-Wno-gnu-zero-variadic-macro-arguments")
 endif(EXTRA_SUGGESTIONS)
 
 if(EXTRA_WARNINGS)
-	CHECK_CXX_COMPILER_FLAG("-W -Wall -Wextra" COMPILER_SUPPORTS_WARNINGS)
-	if (COMPILER_SUPPORTS_WARNINGS)
-			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -W -Wall -Wextra")
-			set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -W -Wall -Wextra")
-	endif(COMPILER_SUPPORTS_WARNINGS)
+	ADD_OPTIONAL_COMPILER_FLAG("-W")
+	ADD_OPTIONAL_COMPILER_FLAG("-Wall")
+	ADD_OPTIONAL_COMPILER_FLAG("-Wextra")
 endif(EXTRA_WARNINGS)
 
 CHECK_CXX_COMPILER_FLAG("-pthread" COMPILER_SUPPORTS_pthread)
@@ -46,14 +64,7 @@ if(COMPILER_SUPPORTS_CXX11)
 	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 endif()
 
-CHECK_CXX_COMPILER_FLAG("-fvisibility=hidden"
-		COMPILER_SUPPORTS_HIDDEN_VISIBILITY)
-if(COMPILER_SUPPORTS_HIDDEN_VISIBILITY)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fvisibility=hidden")
-		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden")
-endif(COMPILER_SUPPORTS_HIDDEN_VISIBILITY)
-
-option(MONOLITHIC_BUILD "Build all source in a single step" OFF)
+ADD_OPTIONAL_COMPILER_FLAG("-fvisibility=hidden")
 
 option(LTO "Build using link-time-optimisations" OFF)
 
@@ -62,10 +73,11 @@ CHECK_CXX_COMPILER_FLAG("-flto"
 
 if (LTO)
 		if (NOT COMPILER_SUPPORTS_LTO)
-				message(FATAL_ERROR "LTO not supported by this compiler")
+				message(WARNING "LTO not supported by this compiler")
+		else()
+			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -flto")
+			set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -flto")
 		endif(NOT COMPILER_SUPPORTS_LTO)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -flto")
-		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -flto")
 endif(LTO)
 
 
@@ -87,17 +99,8 @@ AUX_SOURCE_DIRECTORY(forms sources)
 # declare tinyxml library
 SET(REQUIRED_TINYXML_LIBRARIES tinyxml2)
 
-if (MONOLITHIC_BUILD)
-		add_custom_command(OUTPUT sources.cpp
-				COMMAND ${CMAKE_SOURCE_DIR}/append_sources.sh ${sources} ${FRAMEWORK_SOURCES} >
-				sources.cpp
-				DEPENDS ${sources} ${FRAMEWORK_SOURCES})
-		ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} sources.cpp)
-
-else(MONOLITHIC_BUILD)
 ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} framework/main.cpp ${sources}
 		${FRAMEWORK_SOURCES})
-endif(MONOLITHIC_BUILD)
 
 # check dependencies and include libraries
 FIND_PACKAGE(PkgConfig)
@@ -118,10 +121,10 @@ endif()
 #All platforms that use CMake (Non-windows) have case sensitive filesystems
 ADD_DEFINITIONS(-DDATA_DIRECTORY="${CMAKE_INSTALL_PREFIX}/share/OpenApoc")
 
-INCLUDE_DIRECTORIES(${TINYXML2_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(SYSTEM ${TINYXML2_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(SYSTEM ${GLM_INCLUDE_DIR})
+INCLUDE_DIRECTORIES(SYSTEM ${FRAMEWORK_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(.)
-INCLUDE_DIRECTORIES(${GLM_INCLUDE_DIR})
-INCLUDE_DIRECTORIES(${FRAMEWORK_INCLUDE_DIRS})
 
 foreach (TINYXML2_LIBRARY ${PC_TINYXML2_LIBRARIES})
 		find_library(TINYXML2_LIBRARY_PATH ${TINYXML2_LIBRARY} HINTS
