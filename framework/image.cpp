@@ -76,7 +76,7 @@ void RGBImage::saveBitmap(const UString &filename)
 	std::vector<UString> segs = filename.split('/');
 	UString workingdir("");
 
-	for (int pidx = 0; pidx < segs.size() - 1; pidx++)
+	for (unsigned int pidx = 0; segs.size() > 1 && pidx < segs.size() - 1; pidx++)
 	{
 		workingdir += segs.at(pidx);
 
