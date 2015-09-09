@@ -163,7 +163,8 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, 
 		return false;
 	}
 
-	output = Colour{(unsigned char)r, (unsigned char)g, (unsigned char)b, (unsigned char)a};
+	output = Colour{static_cast<unsigned char>(r), static_cast<unsigned char>(g),
+	                static_cast<unsigned char>(b), static_cast<unsigned char>(a)};
 	return true;
 }
 

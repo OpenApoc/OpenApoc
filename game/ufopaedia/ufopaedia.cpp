@@ -51,8 +51,7 @@ void Ufopaedia::EventOccurred(Event *e)
 
 			for (auto dbcat = UfopaediaDB.begin(); dbcat != UfopaediaDB.end(); dbcat++)
 			{
-				std::shared_ptr<UfopaediaCategory> catrecord =
-				    (std::shared_ptr<UfopaediaCategory>)*dbcat;
+				std::shared_ptr<UfopaediaCategory> catrecord = *dbcat;
 				if (catrecord->ID == categoryname)
 				{
 					stageCmd.cmd = StageCmd::Command::PUSH;

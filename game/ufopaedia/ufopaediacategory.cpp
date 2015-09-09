@@ -53,14 +53,14 @@ UfopaediaCategory::~UfopaediaCategory() {}
 
 void UfopaediaCategory::Begin()
 {
-	Label *infolabel = ((Label *)menuform->FindControl("TEXT_INFO"));
-	ListBox *entrylist = ((ListBox *)menuform->FindControl("LISTBOX_SHORTCUTS"));
+	Label *infolabel = menuform->FindControlTyped<Label>("TEXT_INFO");
+	ListBox *entrylist = menuform->FindControlTyped<ListBox>("LISTBOX_SHORTCUTS");
 	entrylist->Clear();
 	entrylist->ItemHeight = infolabel->GetFont()->GetFontHeight() + 2;
 	int idx = 1;
 	for (auto entry = Entries.begin(); entry != Entries.end(); entry++)
 	{
-		std::shared_ptr<UfopaediaEntry> e = (std::shared_ptr<UfopaediaEntry>)*entry;
+		std::shared_ptr<UfopaediaEntry> e = *entry;
 		TextButton *tb =
 		    new TextButton(fw, nullptr, fw.gamecore->GetString(e->Title), infolabel->GetFont());
 		tb->Name = "Index" + Strings::FromInteger(idx);
@@ -195,21 +195,21 @@ void UfopaediaCategory::SetupForm()
 {
 	if (ViewingEntry == 0)
 	{
-		((Graphic *)menuform->FindControl("BACKGROUND_PICTURE"))
+		menuform->FindControlTyped<Graphic>("BACKGROUND_PICTURE")
 		    ->SetImage(fw.data->load_image(BackgroundImageFilename));
-		Label *infolabel = ((Label *)menuform->FindControl("TEXT_INFO"));
+		Label *infolabel = menuform->FindControlTyped<Label>("TEXT_INFO");
 		infolabel->SetText(fw.gamecore->GetString(BodyInformation));
-		infolabel = ((Label *)menuform->FindControl("TEXT_TITLE_DATA"));
+		infolabel = menuform->FindControlTyped<Label>("TEXT_TITLE_DATA");
 		infolabel->SetText(fw.gamecore->GetString(Title).toUpper());
 	}
 	else
 	{
 		std::shared_ptr<UfopaediaEntry> e = Entries.at(ViewingEntry - 1);
-		((Graphic *)menuform->FindControl("BACKGROUND_PICTURE"))
+		menuform->FindControlTyped<Graphic>("BACKGROUND_PICTURE")
 		    ->SetImage(fw.data->load_image(e->BackgroundImageFilename));
-		Label *infolabel = ((Label *)menuform->FindControl("TEXT_INFO"));
+		Label *infolabel = menuform->FindControlTyped<Label>("TEXT_INFO");
 		infolabel->SetText(fw.gamecore->GetString(e->BodyInformation));
-		infolabel = ((Label *)menuform->FindControl("TEXT_TITLE_DATA"));
+		infolabel = menuform->FindControlTyped<Label>("TEXT_TITLE_DATA");
 		infolabel->SetText(fw.gamecore->GetString(e->Title).toUpper());
 	}
 }
@@ -225,10 +225,9 @@ void UfopaediaCategory::SetCatOffset(int Direction)
 	{
 		if (Ufopaedia::UfopaediaDB.at(idx).get() == this)
 		{
-			std::shared_ptr<UfopaediaCategory> nxt =
-			    (std::shared_ptr<UfopaediaCategory>)Ufopaedia::UfopaediaDB.at(idx + Direction);
+			std::shared_ptr<UfopaediaCategory> nxt = Ufopaedia::UfopaediaDB.at(idx + Direction);
 			stageCmd.cmd = StageCmd::Command::REPLACE;
-			stageCmd.nextStage = (std::shared_ptr<Stage>)nxt;
+			stageCmd.nextStage = nxt;
 		}
 	}
 }

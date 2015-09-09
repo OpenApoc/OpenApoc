@@ -116,7 +116,8 @@ void TileView::EventOccurred(Event *e)
 	else if (e->Type == EVENT_MOUSE_DOWN)
 	{
 		auto &ev = e->Data.Mouse;
-		auto selectedPos = Vec2<float>{(float)ev.X - offsetX, (float)ev.Y - offsetY};
+		auto selectedPos =
+		    Vec2<float>{static_cast<float>(ev.X) - offsetX, static_cast<float>(ev.Y) - offsetY};
 		std::shared_ptr<TileObject> newSelectedTileObject;
 
 		for (auto &obj : this->map.selectableObjects)
@@ -238,7 +239,8 @@ void TileView::Render()
 				bool showSelected = (fw.gamecore->DebugModeEnabled && z == selectedTilePosition.z &&
 				                     y == selectedTilePosition.y && x == selectedTilePosition.x);
 				auto tile = map.getTile(x, y, z);
-				auto screenPos = tileToScreenCoords(Vec3<float>{(float)x, (float)y, (float)z});
+				auto screenPos = tileToScreenCoords(Vec3<float>{
+				    static_cast<float>(x), static_cast<float>(y), static_cast<float>(z)});
 				screenPos.x += offsetX;
 				screenPos.y += offsetY;
 

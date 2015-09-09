@@ -100,8 +100,8 @@ void RGBImage::saveBitmap(const UString &filename)
 		for (unsigned int x = 0; x < size.x; x++)
 		{
 			int offset = (y * rgn->pitch) + (x * 4);
-			uint8_t *bytedata = (uint8_t *)rgn->data;
-			Colour_ARGB8888LE *pxdata = (Colour_ARGB8888LE *)(bytedata + offset);
+			uint8_t *bytedata = reinterpret_cast<uint8_t *>(rgn->data);
+			Colour_ARGB8888LE *pxdata = reinterpret_cast<Colour_ARGB8888LE *>(bytedata + offset);
 			Colour c = pixels[(y * size.x) + x];
 
 			pxdata->r = c.r;

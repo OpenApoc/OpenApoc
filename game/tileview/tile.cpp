@@ -99,7 +99,7 @@ void TileMap::removeObject(std::shared_ptr<TileObject> obj)
 	auto count = obj->getOwningTile()->ownedObjects.erase(obj);
 	if (count != 1)
 	{
-		LogError("Removed %u objects from owning tile", (unsigned)count);
+		LogError("Removed %u objects from owning tile", static_cast<unsigned>(count));
 	}
 }
 

@@ -48,11 +48,12 @@ static void print_backtrace(FILE *f)
 		unw_get_reg(&cursor, UNW_REG_IP, &ip);
 		if (ip == 0)
 			break;
-		dladdr((void *)ip, &info);
+		dladdr(reinterpret_cast<void *>(ip), &info);
 		if (info.dli_sname)
 		{
-			fprintf(f, "  0x%p %s+0x%lx (%s)\n", (void *)ip, info.dli_sname,
-			        (uintptr_t)ip - (uintptr_t)info.dli_saddr, info.dli_fname);
+			fprintf(f, "  0x%lx %s+0x%lx (%s)\n", static_cast<uintptr_t>(ip), info.dli_sname,
+			        static_cast<uintptr_t>(ip) - reinterpret_cast<uintptr_t>(info.dli_saddr),
+			        info.dli_fname);
 			continue;
 		}
 		// If dladdr() failed, try libunwind
@@ -60,11 +61,12 @@ static void print_backtrace(FILE *f)
 		char fnName[MAX_SYMBOL_LENGTH];
 		if (!unw_get_proc_name(&cursor, fnName, MAX_SYMBOL_LENGTH, &offsetInFn))
 		{
-			fprintf(f, "  0x%p %s+0x%lx (%s)\n", (void *)ip, fnName, offsetInFn, info.dli_fname);
+			fprintf(f, "  0x%lx %s+0x%lx (%s)\n", static_cast<uintptr_t>(ip), fnName, offsetInFn,
+			        info.dli_fname);
 			continue;
 		}
 		else
-			fprintf(f, "  0x%p\n", (void *)ip);
+			fprintf(f, "  0x%lx\n", static_cast<uintptr_t>(ip));
 	}
 }
 #elif defined(BACKTRACE_WINDOWS)

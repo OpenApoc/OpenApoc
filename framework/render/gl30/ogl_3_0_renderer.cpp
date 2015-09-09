@@ -421,7 +421,7 @@ class ActiveTexture
 
 	ActiveTexture(int unit)
 	{
-		gl::GetIntegerv(gl::ACTIVE_TEXTURE, (GLint *)&prevUnit);
+		gl::GetIntegerv(gl::ACTIVE_TEXTURE, reinterpret_cast<GLint *>(&prevUnit));
 		gl::ActiveTexture(getUnitEnum(unit));
 	}
 	~ActiveTexture() { gl::ActiveTexture(prevUnit); }
@@ -462,14 +462,14 @@ class BindTexture
 			case gl::TEXTURE_2D_ARRAY:
 				return gl::TEXTURE_BINDING_2D_ARRAY;
 			default:
-				LogError("Unknown texture enum %d", (int)e);
+				LogError("Unknown texture enum %d", static_cast<int>(e));
 				return gl::TEXTURE_BINDING_2D;
 		}
 	}
 	BindTexture(GLuint id, GLint unit = 0, GLenum bind = gl::TEXTURE_2D) : bind(bind), unit(unit)
 	{
 		ActiveTexture a(unit);
-		gl::GetIntegerv(getBindEnum(bind), (GLint *)&prevID);
+		gl::GetIntegerv(getBindEnum(bind), reinterpret_cast<GLint *>(&prevID));
 		gl::BindTexture(bind, id);
 	}
 	~BindTexture()
@@ -509,7 +509,7 @@ class BindFramebuffer
 	GLuint prevID;
 	BindFramebuffer(GLuint id)
 	{
-		gl::GetIntegerv(gl::DRAW_FRAMEBUFFER_BINDING, (GLint *)&prevID);
+		gl::GetIntegerv(gl::DRAW_FRAMEBUFFER_BINDING, reinterpret_cast<GLint *>(&prevID));
 		gl::BindFramebuffer(gl::DRAW_FRAMEBUFFER, id);
 	}
 	~BindFramebuffer() { gl::BindFramebuffer(gl::DRAW_FRAMEBUFFER, prevID); }
@@ -966,7 +966,7 @@ class OGL30Renderer : public Renderer
 		gl::EnableVertexAttribArray(paletteSetProgram->texcoordLoc);
 		gl::EnableVertexAttribArray(paletteSetProgram->spriteLoc);
 
-		const char *vertexPtr = (const char *)this->batchedSprites.data();
+		const char *vertexPtr = reinterpret_cast<const char *>(this->batchedSprites.data());
 
 		gl::VertexAttribPointer(paletteSetProgram->posLoc, 2, gl::FLOAT, gl::FALSE_,
 		                        sizeof(BatchedVertex),

@@ -41,12 +41,12 @@ void HScrollBar::EventOccured(Event *e)
 	    e->Data.Forms.EventFlag == FormEventType::MouseDown)
 	{
 		int segments = (Maximum - Minimum) + 1;
-		float segmentsize = Size.x / (float)segments;
+		float segmentsize = Size.x / static_cast<float>(segments);
 		float grippersize = segmentsize;
 		if (grippersize < 16.0f)
 		{
 			grippersize = 16.0f;
-			segmentsize = (Size.x - grippersize) / (float)(segments - 1);
+			segmentsize = (Size.x - grippersize) / static_cast<float>(segments - 1);
 		}
 
 		if (e->Data.Forms.MouseInfo.X >= (segmentsize * (Value - Minimum)) + grippersize)
@@ -73,7 +73,7 @@ void HScrollBar::EventOccured(Event *e)
 	    e->Data.Forms.EventFlag == FormEventType::MouseMove && capture)
 	{
 		int segments = (Maximum - Minimum) + 1;
-		float segmentsize = Size.x / (float)segments;
+		float segmentsize = Size.x / static_cast<float>(segments);
 		this->SetValue(e->Data.Forms.MouseInfo.X / segmentsize);
 	}
 
@@ -88,12 +88,12 @@ void HScrollBar::OnRender()
 	// LoadResources();
 
 	int segments = (Maximum - Minimum) + 1;
-	float segmentsize = Size.x / (float)segments;
+	float segmentsize = Size.x / static_cast<float>(segments);
 	float grippersize = segmentsize;
 	if (grippersize < 16.0f)
 	{
 		grippersize = 16.0f;
-		segmentsize = (Size.x - grippersize) / (float)(segments - 1);
+		segmentsize = (Size.x - grippersize) / static_cast<float>(segments - 1);
 	}
 
 	int xpos = segmentsize * (Value - Minimum);

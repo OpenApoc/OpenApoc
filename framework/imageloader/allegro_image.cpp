@@ -37,11 +37,11 @@ class AllegroImageLoader : public OpenApoc::ImageLoader
 		ALLEGRO_LOCKED_REGION *src =
 		    al_lock_bitmap(bmp, ALLEGRO_PIXEL_FORMAT_ABGR_8888_LE, ALLEGRO_LOCK_READONLY);
 
-		char *srcLinePtr = (char *)src->data;
+		char *srcLinePtr = reinterpret_cast<char *>(src->data);
 
 		for (int y = 0; y < size.y; y++)
 		{
-			OpenApoc::Colour *c = (OpenApoc::Colour *)srcLinePtr;
+			OpenApoc::Colour *c = reinterpret_cast<OpenApoc::Colour *>(srcLinePtr);
 			for (int x = 0; x < size.x; x++)
 			{
 				dst.set(OpenApoc::Vec2<int>{x, y}, c[x]);

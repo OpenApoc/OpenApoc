@@ -90,7 +90,7 @@ void DebugMenu::BulkExportPCKs()
 	// Load them up
 	for (auto i = PaletteNames.begin(); i != PaletteNames.end(); i++)
 	{
-		UString palname = (UString)(*i);
+		UString palname = (*i);
 		PaletteList.push_back(fw.data->load_palette(palname));
 	}
 
@@ -128,7 +128,7 @@ void DebugMenu::BulkExportPCKs()
 	// Load them up
 	for (auto i = PckNames.begin(); i != PckNames.end(); i++)
 	{
-		UString pckname = (UString)(*i);
+		UString pckname = (*i);
 		UString pckloadstr = UString("PCK:") + pckname + UString(":") +
 		                     pckname.substr(0, pckname.length() - 3) + UString("TAB");
 

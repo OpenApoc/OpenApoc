@@ -76,7 +76,7 @@ void Control::ResolveLocation()
 
 	for (auto ctrlidx = Controls.rbegin(); ctrlidx != Controls.rend(); ctrlidx++)
 	{
-		Control *c = (Control *)*ctrlidx;
+		Control *c = *ctrlidx;
 		c->ResolveLocation();
 	}
 }
@@ -85,7 +85,7 @@ void Control::EventOccured(Event *e)
 {
 	for (auto ctrlidx = Controls.rbegin(); ctrlidx != Controls.rend(); ctrlidx++)
 	{
-		Control *c = (Control *)*ctrlidx;
+		Control *c = *ctrlidx;
 		if (c->Visible)
 		{
 			c->EventOccured(e);
@@ -110,11 +110,10 @@ void Control::EventOccured(Event *e)
 				newevent->Type = EVENT_FORM_INTERACTION;
 				newevent->Data.Forms.RaisedBy = this;
 				newevent->Data.Forms.EventFlag = FormEventType::MouseEnter;
-				memcpy((void *)&newevent->Data.Forms.MouseInfo, (void *)&e->Data.Mouse,
-				       sizeof(FRAMEWORK_MOUSE_EVENT));
+				newevent->Data.Forms.MouseInfo = e->Data.Mouse;
 				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
-				memset((void *)&newevent->Data.Forms.KeyInfo, 0, sizeof(FRAMEWORK_KEYBOARD_EVENT));
+				newevent->Data.Forms.KeyInfo = {0};
 				fw.PushEvent(newevent);
 				mouseInside = true;
 			}
@@ -123,11 +122,10 @@ void Control::EventOccured(Event *e)
 			newevent->Type = EVENT_FORM_INTERACTION;
 			newevent->Data.Forms.RaisedBy = this;
 			newevent->Data.Forms.EventFlag = FormEventType::MouseMove;
-			memcpy((void *)&newevent->Data.Forms.MouseInfo, (void *)&e->Data.Mouse,
-			       sizeof(FRAMEWORK_MOUSE_EVENT));
+			newevent->Data.Forms.MouseInfo = e->Data.Mouse;
 			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
-			memset((void *)&newevent->Data.Forms.KeyInfo, 0, sizeof(FRAMEWORK_KEYBOARD_EVENT));
+			newevent->Data.Forms.KeyInfo = {0};
 			fw.PushEvent(newevent);
 
 			e->Handled = true;
@@ -140,11 +138,10 @@ void Control::EventOccured(Event *e)
 				newevent->Type = EVENT_FORM_INTERACTION;
 				newevent->Data.Forms.RaisedBy = this;
 				newevent->Data.Forms.EventFlag = FormEventType::MouseLeave;
-				memcpy((void *)&newevent->Data.Forms.MouseInfo, (void *)&e->Data.Mouse,
-				       sizeof(FRAMEWORK_MOUSE_EVENT));
+				newevent->Data.Forms.MouseInfo = e->Data.Mouse;
 				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
-				memset((void *)&newevent->Data.Forms.KeyInfo, 0, sizeof(FRAMEWORK_KEYBOARD_EVENT));
+				newevent->Data.Forms.KeyInfo = {0};
 				fw.PushEvent(newevent);
 				mouseInside = false;
 			}
@@ -159,11 +156,10 @@ void Control::EventOccured(Event *e)
 			newevent->Type = EVENT_FORM_INTERACTION;
 			newevent->Data.Forms.RaisedBy = this;
 			newevent->Data.Forms.EventFlag = FormEventType::MouseDown;
-			memcpy((void *)&newevent->Data.Forms.MouseInfo, (void *)&e->Data.Mouse,
-			       sizeof(FRAMEWORK_MOUSE_EVENT));
+			newevent->Data.Forms.MouseInfo = e->Data.Mouse;
 			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
-			memset((void *)&newevent->Data.Forms.KeyInfo, 0, sizeof(FRAMEWORK_KEYBOARD_EVENT));
+			newevent->Data.Forms.KeyInfo = {0};
 			fw.PushEvent(newevent);
 			mouseDepressed = true;
 
@@ -179,11 +175,10 @@ void Control::EventOccured(Event *e)
 			newevent->Type = EVENT_FORM_INTERACTION;
 			newevent->Data.Forms.RaisedBy = this;
 			newevent->Data.Forms.EventFlag = FormEventType::MouseUp;
-			memcpy((void *)&newevent->Data.Forms.MouseInfo, (void *)&e->Data.Mouse,
-			       sizeof(FRAMEWORK_MOUSE_EVENT));
+			newevent->Data.Forms.MouseInfo = e->Data.Mouse;
 			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
-			memset((void *)&newevent->Data.Forms.KeyInfo, 0, sizeof(FRAMEWORK_KEYBOARD_EVENT));
+			newevent->Data.Forms.KeyInfo = {0};
 			fw.PushEvent(newevent);
 
 			if (mouseDepressed)
@@ -192,11 +187,10 @@ void Control::EventOccured(Event *e)
 				newevent->Type = EVENT_FORM_INTERACTION;
 				newevent->Data.Forms.RaisedBy = this;
 				newevent->Data.Forms.EventFlag = FormEventType::MouseClick;
-				memcpy((void *)&newevent->Data.Forms.MouseInfo, (void *)&e->Data.Mouse,
-				       sizeof(FRAMEWORK_MOUSE_EVENT));
+				newevent->Data.Forms.MouseInfo = e->Data.Mouse;
 				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
-				memset((void *)&newevent->Data.Forms.KeyInfo, 0, sizeof(FRAMEWORK_KEYBOARD_EVENT));
+				newevent->Data.Forms.KeyInfo = {0};
 				fw.PushEvent(newevent);
 			}
 
@@ -214,9 +208,8 @@ void Control::EventOccured(Event *e)
 			newevent->Data.Forms.RaisedBy = this;
 			newevent->Data.Forms.EventFlag =
 			    (e->Type == EVENT_KEY_DOWN ? FormEventType::KeyDown : FormEventType::KeyUp);
-			memcpy((void *)&newevent->Data.Forms.KeyInfo, (void *)&e->Data.Keyboard,
-			       sizeof(FRAMEWORK_KEYBOARD_EVENT));
-			memset((void *)&newevent->Data.Forms.MouseInfo, 0, sizeof(FRAMEWORK_MOUSE_EVENT));
+			newevent->Data.Forms.KeyInfo = e->Data.Keyboard;
+			newevent->Data.Forms.MouseInfo = {0};
 			fw.PushEvent(newevent);
 
 			e->Handled = true;
@@ -230,9 +223,8 @@ void Control::EventOccured(Event *e)
 			newevent->Type = EVENT_FORM_INTERACTION;
 			newevent->Data.Forms.RaisedBy = this;
 			newevent->Data.Forms.EventFlag = FormEventType::KeyPress;
-			memcpy((void *)&newevent->Data.Forms.KeyInfo, (void *)&e->Data.Keyboard,
-			       sizeof(FRAMEWORK_KEYBOARD_EVENT));
-			memset((void *)&newevent->Data.Forms.MouseInfo, 0, sizeof(FRAMEWORK_MOUSE_EVENT));
+			newevent->Data.Forms.KeyInfo = e->Data.Keyboard;
+			newevent->Data.Forms.MouseInfo = {0};
 			fw.PushEvent(newevent);
 
 			e->Handled = true;
@@ -273,7 +265,7 @@ void Control::PostRender()
 {
 	for (auto ctrlidx = Controls.begin(); ctrlidx != Controls.end(); ctrlidx++)
 	{
-		Control *c = (Control *)*ctrlidx;
+		Control *c = *ctrlidx;
 		if (c->Visible)
 		{
 			c->Render();
@@ -289,7 +281,7 @@ void Control::Update()
 {
 	for (auto ctrlidx = Controls.begin(); ctrlidx != Controls.end(); ctrlidx++)
 	{
-		Control *c = (Control *)*ctrlidx;
+		Control *c = *ctrlidx;
 		c->Update();
 	}
 }
@@ -533,7 +525,7 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 			    UString(node->Attribute("scrollbarid")) != "")
 			{
 				attribvalue = node->Attribute("scrollbarid");
-				vsb = (VScrollBar *)this->FindControl(attribvalue);
+				vsb = this->FindControlTyped<VScrollBar>(attribvalue);
 			}
 			auto lb = new ListBox(fw, this, vsb);
 			lb->ConfigureFromXML(node);
@@ -654,7 +646,7 @@ Control *Control::FindControl(UString ID)
 {
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
-		Control *ctrl = (Control *)*c;
+		Control *ctrl = *c;
 		if (ctrl->Name == ID)
 		{
 			return ctrl;
@@ -683,11 +675,7 @@ Control *Control::GetRootControl()
 Form *Control::GetForm()
 {
 	Control *c = GetRootControl();
-	if (dynamic_cast<Form *>(c) != nullptr)
-	{
-		return (Form *)c;
-	}
-	return nullptr;
+	return dynamic_cast<Form *>(c);
 }
 
 std::list<UString> Control::WordWrapText(std::shared_ptr<OpenApoc::BitmapFont> Font,

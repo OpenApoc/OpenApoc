@@ -178,7 +178,7 @@ class AllegroSoundBackend : public SoundBackend
 			al_wait_for_event(eventQueue, &event);
 			if (event.type == ALLEGRO_EVENT_AUDIO_STREAM_FRAGMENT)
 			{
-				uint8_t *buf = (uint8_t *)al_get_audio_stream_fragment(stream);
+				uint8_t *buf = reinterpret_cast<uint8_t *>(al_get_audio_stream_fragment(stream));
 				if (!buf)
 				{
 					/* Sometimes we get an event with no buffer? */

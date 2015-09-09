@@ -39,7 +39,7 @@ bool VoxelMap::getBit(Vec3<int> pos) const
 	    pos.z >= this->size.z)
 		return false;
 
-	if (slices.size() <= (unsigned)pos.z)
+	if (slices.size() <= static_cast<unsigned>(pos.z))
 		return false;
 	if (!slices[pos.z])
 		return false;
@@ -49,7 +49,7 @@ bool VoxelMap::getBit(Vec3<int> pos) const
 
 void VoxelMap::setSlice(int z, std::shared_ptr<VoxelSlice> slice)
 {
-	if (z < 0 || (unsigned)z >= this->slices.size())
+	if (z < 0 || static_cast<unsigned>(z) >= this->slices.size())
 	{
 		LogError("Trying to set slice %d in a {%d,%d,%d} sized voxelMap", z, this->size.x,
 		         this->size.y, this->size.z);
@@ -99,32 +99,32 @@ class LineSegmentIterator : public std::iterator<std::forward_iterator_tag, Vec3
   public:
 	LineSegmentIterator(Vec3<T> start, LineSegment<T, conservative> &l) : point(start), line(l)
 	{
-		err = {(T)0, (T)0, (T)0};
-		step = {(T)0, (T)0, (T)0};
+		err = {static_cast<T>(0), static_cast<T>(0), static_cast<T>(0)};
+		step = {static_cast<T>(0), static_cast<T>(0), static_cast<T>(0)};
 		Vec3<T> d = l.endPoint - l.startPoint;
-		inc.x = (d.x < (T)0) ? -l.increment : l.increment;
-		inc.y = (d.y < (T)0) ? -l.increment : l.increment;
-		inc.z = (d.z < (T)0) ? -l.increment : l.increment;
+		inc.x = (d.x < static_cast<T>(0)) ? -l.increment : l.increment;
+		inc.y = (d.y < static_cast<T>(0)) ? -l.increment : l.increment;
+		inc.z = (d.z < static_cast<T>(0)) ? -l.increment : l.increment;
 
 		Vec3<T> absd = glm::abs(d);
-		d2 = absd * (T)2;
+		d2 = absd * static_cast<T>(2);
 		if (absd.x >= absd.y && absd.x >= absd.z)
 		{
 			step.x = inc.x;
 			dstep2 = d2.x;
-			d2.x = (T)0;
+			d2.x = static_cast<T>(0);
 		}
 		else if (absd.y >= absd.x && absd.y >= absd.z)
 		{
 			step.y = inc.y;
 			dstep2 = d2.y;
-			d2.y = (T)0;
+			d2.y = static_cast<T>(0);
 		}
 		else if (absd.z >= absd.x && absd.z >= absd.y)
 		{
 			step.z = inc.z;
 			dstep2 = d2.z;
-			d2.z = (T)0;
+			d2.z = static_cast<T>(0);
 		}
 	}
 
@@ -132,17 +132,17 @@ class LineSegmentIterator : public std::iterator<std::forward_iterator_tag, Vec3
 	{
 		if (conservative)
 		{
-			if (err.x > (T)0)
+			if (err.x > static_cast<T>(0))
 			{
 				point.x += inc.x;
 				err.x -= dstep2;
 			}
-			else if (err.y > (T)0)
+			else if (err.y > static_cast<T>(0))
 			{
 				point.y += inc.y;
 				err.y -= dstep2;
 			}
-			else if (err.z > (T)0)
+			else if (err.z > static_cast<T>(0))
 			{
 				point.z += inc.z;
 				err.z -= dstep2;
@@ -155,17 +155,17 @@ class LineSegmentIterator : public std::iterator<std::forward_iterator_tag, Vec3
 		}
 		else
 		{
-			if (err.x > (T)0)
+			if (err.x > static_cast<T>(0))
 			{
 				point.x += inc.x;
 				err.x -= dstep2;
 			}
-			if (err.y > (T)0)
+			if (err.y > static_cast<T>(0))
 			{
 				point.y += inc.y;
 				err.y -= dstep2;
 			}
-			if (err.z > (T)0)
+			if (err.z > static_cast<T>(0))
 			{
 				point.z += inc.z;
 				err.z -= dstep2;

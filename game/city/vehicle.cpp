@@ -256,8 +256,9 @@ Vec3<float> VehicleTileObject::getDrawPosition() const
 Rect<float> VehicleTileObject::getSelectableBounds() const
 {
 	auto spriteBounds = std::dynamic_pointer_cast<PaletteImage>(this->getSprite())->bounds;
-	return Rect<float>{(float)spriteBounds.p0.x, (float)spriteBounds.p0.y, (float)spriteBounds.p1.x,
-	                   (float)spriteBounds.p1.y};
+	return Rect<float>{static_cast<float>(spriteBounds.p0.x), static_cast<float>(spriteBounds.p0.y),
+	                   static_cast<float>(spriteBounds.p1.x),
+	                   static_cast<float>(spriteBounds.p1.y)};
 }
 
 void VehicleTileObject::setSelected(bool selected)

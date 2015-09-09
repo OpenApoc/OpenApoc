@@ -40,13 +40,13 @@ template <typename T> Angle<T>::Angle(T Degrees) : curAngle(Degrees) {}
 template <typename T> void Angle<T>::Add(T Degrees)
 {
 	curAngle += Degrees;
-	while (curAngle >= (T)360)
+	while (curAngle >= static_cast<T>(360))
 	{
-		curAngle -= (T)360;
+		curAngle -= static_cast<T>(360);
 	}
-	while (curAngle < (T)0)
+	while (curAngle < static_cast<T>(0))
 	{
-		curAngle += (T)360;
+		curAngle += static_cast<T>(360);
 	}
 }
 
@@ -64,15 +64,15 @@ template <typename T> bool Angle<T>::ClockwiseShortestTo(const Angle<T> Destinat
 template <typename T> bool Angle<T>::ClockwiseShortestTo(T DestinationAngle)
 {
 	T diff = DestinationAngle - curAngle;
-	while (diff >= (T)360)
+	while (diff >= static_cast<T>(360))
 	{
-		diff -= (T)360;
+		diff -= static_cast<T>(360);
 	}
-	while (diff < (T)0)
+	while (diff < static_cast<T>(0))
 	{
-		diff += (T)360;
+		diff += static_cast<T>(360);
 	}
-	return (diff < (T)180 && diff > (T)0);
+	return (diff < static_cast<T>(180) && diff > static_cast<T>(0));
 }
 
 template <typename T> void Angle<T>::RotateShortestBy(const Angle<T> DestinationAngle, T ByDegrees)

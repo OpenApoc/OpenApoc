@@ -58,7 +58,7 @@ void BootUp::Update(StageCmd *const cmd)
 void BootUp::Render()
 {
 	int logow = fw.Display_GetWidth() / 3;
-	float logosc = logow / (float)logoimage->size.x;
+	float logosc = logow / static_cast<float>(logoimage->size.x);
 
 	Vec2<float> logoPosition{fw.Display_GetWidth() / 2 - (logoimage->size.x * logosc / 2),
 	                         fw.Display_GetHeight() / 2 - (logoimage->size.y * logosc / 2)};

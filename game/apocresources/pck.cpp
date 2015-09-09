@@ -148,7 +148,8 @@ void PCK::LoadVersion1Format(IFile &pck, IFile &tab, int Index)
 			c0_bufferptr = c0_imagedata->GetSize();
 			c0_imagedata->Resize(c0_bufferptr + c0_width + (c0_offset % 640));
 			memset(c0_imagedata->GetDataOffset(c0_bufferptr), 0, c0_width + (c0_offset % 640));
-			if (!pck.read((char *)c0_imagedata->GetDataOffset(c0_bufferptr + (c0_offset % 640)),
+			if (!pck.read(reinterpret_cast<char *>(
+			                  c0_imagedata->GetDataOffset(c0_bufferptr + (c0_offset % 640))),
 			              c0_width))
 			{
 				LogError("Failed to read pixel data in PCK \"%s\" id %d",
@@ -174,7 +175,7 @@ void PCK::LoadVersion1Format(IFile &pck, IFile &tab, int Index)
 				if (c0_x < c0_rowwidths.at(c0_y))
 				{
 					region.set(Vec2<int>{c0_x, c0_y},
-					           ((char *)c0_imagedata->GetDataOffset(c0_idx))[0]);
+					           (reinterpret_cast<char *>(c0_imagedata->GetDataOffset(c0_idx)))[0]);
 				}
 				else
 				{
@@ -236,7 +237,7 @@ void PCK::LoadVersion2Format(IFile &pck, IFile &tab, int Index)
 			case 1:
 			{
 				// Raw Data with RLE
-				if (!pck.read((char *)&c1_imgheader, sizeof(c1_imgheader)))
+				if (!pck.read(reinterpret_cast<char *>(&c1_imgheader), sizeof(c1_imgheader)))
 				{
 					LogError("Failed to read header for PCK \"%s\" id %d",
 					         pck.fileName().str().c_str(), i);
@@ -254,7 +255,7 @@ void PCK::LoadVersion2Format(IFile &pck, IFile &tab, int Index)
 				}
 				while (c1_pixelstoskip != 0xFFFFFFFF)
 				{
-					if (!pck.read((char *)&c1_header, sizeof(c1_header)))
+					if (!pck.read(reinterpret_cast<char *>(&c1_header), sizeof(c1_header)))
 					{
 						LogError("Failed to read RLE header for PCK \"%s\" id %d",
 						         pck.fileName().str().c_str(), i);
@@ -357,7 +358,8 @@ std::shared_ptr<ImageSet> PCKLoader::load(Data &data, UString PckFilename, UStri
 	delete p;
 
 	LogInfo("Loaded \"%s\" - %u images, max size {%d,%d}", PckFilename.str().c_str(),
-	        (unsigned int)imageSet->images.size(), imageSet->maxSize.x, imageSet->maxSize.y);
+	        static_cast<unsigned int>(imageSet->images.size()), imageSet->maxSize.x,
+	        imageSet->maxSize.y);
 
 	return imageSet;
 }

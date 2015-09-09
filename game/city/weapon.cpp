@@ -52,7 +52,7 @@ std::shared_ptr<Projectile> Weapon::fire(Vec3<float> target)
 			auto &map = vehicleTile->getOwningTile()->map;
 			return std::make_shared<BeamProjectile>(
 			    map, owner, vehicleTile->getPosition(), velocity,
-			    (int)(def.range / this->def.projectileSpeed), def.beamColour,
+			    static_cast<int>(def.range / this->def.projectileSpeed), def.beamColour,
 			    def.projectileTailLength, def.beamWidth);
 		}
 		default:

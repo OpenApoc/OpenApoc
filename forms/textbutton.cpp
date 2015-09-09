@@ -33,7 +33,7 @@ void TextButton::EventOccured(Event *e)
 	{
 		auto ce = new Event();
 		ce->Type = e->Type;
-		memcpy((void *)&(ce->Data.Forms), (void *)&(e->Data.Forms), sizeof(FRAMEWORK_FORMS_EVENT));
+		ce->Data.Forms = e->Data.Forms;
 		ce->Data.Forms.EventFlag = FormEventType::ButtonClick;
 		fw.PushEvent(ce);
 	}

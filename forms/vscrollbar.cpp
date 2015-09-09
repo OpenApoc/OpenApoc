@@ -25,12 +25,12 @@ void VScrollBar::EventOccured(Event *e)
 	    e->Data.Forms.EventFlag == FormEventType::MouseDown)
 	{
 		int segments = (Maximum - Minimum) + 1;
-		float segmentsize = Size.y / (float)segments;
+		float segmentsize = Size.y / static_cast<float>(segments);
 		float grippersize = segmentsize;
 		if (grippersize < 16.0f)
 		{
 			grippersize = 16.0f;
-			segmentsize = (Size.y - grippersize) / (float)(segments - 1);
+			segmentsize = (Size.y - grippersize) / static_cast<float>(segments - 1);
 		}
 
 		if (e->Data.Forms.MouseInfo.Y >= (segmentsize * (Value - Minimum)) + grippersize)
@@ -38,8 +38,7 @@ void VScrollBar::EventOccured(Event *e)
 			Value = std::min(Maximum, Value + LargeChange);
 			auto ce = new Event();
 			ce->Type = e->Type;
-			memcpy((void *)&(ce->Data.Forms), (void *)&(e->Data.Forms),
-			       sizeof(FRAMEWORK_FORMS_EVENT));
+			ce->Data.Forms = e->Data.Forms;
 			ce->Data.Forms.EventFlag = FormEventType::ScrollBarChange;
 			fw.PushEvent(ce);
 		}
@@ -48,8 +47,7 @@ void VScrollBar::EventOccured(Event *e)
 			Value = std::max(Minimum, Value - LargeChange);
 			auto ce = new Event();
 			ce->Type = e->Type;
-			memcpy((void *)&(ce->Data.Forms), (void *)&(e->Data.Forms),
-			       sizeof(FRAMEWORK_FORMS_EVENT));
+			ce->Data.Forms = e->Data.Forms;
 			ce->Data.Forms.EventFlag = FormEventType::ScrollBarChange;
 			fw.PushEvent(ce);
 		}
@@ -69,11 +67,12 @@ void VScrollBar::EventOccured(Event *e)
 	    e->Data.Forms.EventFlag == FormEventType::MouseMove && capture)
 	{
 		int segments = (Maximum - Minimum) + 1;
-		float segmentsize = Size.y / (float)segments;
-		Value = std::max(Minimum, Minimum + (int)(e->Data.Forms.MouseInfo.Y / segmentsize));
+		float segmentsize = Size.y / static_cast<float>(segments);
+		Value =
+		    std::max(Minimum, Minimum + static_cast<int>(e->Data.Forms.MouseInfo.Y / segmentsize));
 		auto ce = new Event();
 		ce->Type = e->Type;
-		memcpy((void *)&(ce->Data.Forms), (void *)&(e->Data.Forms), sizeof(FRAMEWORK_FORMS_EVENT));
+		ce->Data.Forms = e->Data.Forms;
 		ce->Data.Forms.EventFlag = FormEventType::ScrollBarChange;
 		fw.PushEvent(ce);
 	}
@@ -89,12 +88,12 @@ void VScrollBar::OnRender()
 	// LoadResources();
 
 	int segments = (Maximum - Minimum) + 1;
-	float segmentsize = Size.y / (float)segments;
+	float segmentsize = Size.y / static_cast<float>(segments);
 	float grippersize = segmentsize;
 	if (grippersize < 16.0f)
 	{
 		grippersize = 16.0f;
-		segmentsize = (Size.y - grippersize) / (float)(segments - 1);
+		segmentsize = (Size.y - grippersize) / static_cast<float>(segments - 1);
 	}
 
 	int ypos = segmentsize * (Value - Minimum);

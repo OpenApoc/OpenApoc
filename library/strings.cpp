@@ -34,7 +34,10 @@ UString::UString(const UString &other) : pimpl(new UString_impl(*other.pimpl.get
 
 UString::UString(UString &&other) { this->pimpl = std::move(other.pimpl); }
 
-UString::UString(UniChar uc) : pimpl(new UString_impl("")) { pimpl->setTo((UChar32)uc); }
+UString::UString(UniChar uc) : pimpl(new UString_impl(""))
+{
+	pimpl->setTo(static_cast<UChar32>(uc));
+}
 
 std::string UString::str() const
 {
@@ -101,11 +104,11 @@ std::vector<UString> UString::split(const UString &delims) const
 	int end = this->pimpl->indexOf(*delims.pimpl, start);
 	while (end != -1)
 	{
-		strings.push_back(this->substr(start, (unsigned)(end - start)));
+		strings.push_back(this->substr(start, static_cast<unsigned>(end - start)));
 		start = end + 1;
 		end = this->pimpl->indexOf(*delims.pimpl, start);
 	}
-	strings.push_back(this->substr(start, unsigned(end - start)));
+	strings.push_back(this->substr(start, static_cast<unsigned>(end - start)));
 
 	return strings;
 }
@@ -142,16 +145,16 @@ UniChar UString::const_iterator::operator*() const { return this->s[this->offset
 int Strings::ToInteger(const UString &s)
 {
 	std::string u8str = s.str();
-	return (int)strtol(u8str.c_str(), NULL, 0);
+	return static_cast<int>(strtol(u8str.c_str(), NULL, 0));
 }
 
 float Strings::ToFloat(const UString &s)
 {
 	std::string u8str = s.str();
-	return (float)strtod(u8str.c_str(), NULL);
+	return static_cast<float>(strtod(u8str.c_str(), NULL));
 }
 
-uint8_t Strings::ToU8(const UString &s) { return (uint8_t)Strings::ToInteger(s); }
+uint8_t Strings::ToU8(const UString &s) { return static_cast<uint8_t>(Strings::ToInteger(s)); }
 
 bool Strings::IsInteger(const UString &s)
 {

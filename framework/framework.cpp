@@ -257,7 +257,7 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 	p->eventAllegro = al_create_event_queue();
 	p->eventMutex = al_create_mutex_recursive();
 
-	srand((unsigned int)al_get_time());
+	srand(static_cast<unsigned int>(al_get_time()));
 
 	Display_Initialise();
 	Audio_Initialise();
@@ -448,7 +448,7 @@ void Framework::TranslateAllegroEvents()
 			case ALLEGRO_EVENT_TIMER:
 				fwE = new Event();
 				fwE->Type = EVENT_TIMER_TICK;
-				fwE->Data.Timer.TimerObject = (void *)e.timer.source;
+				fwE->Data.Timer.TimerObject = e.timer.source;
 				PushEvent(fwE);
 				break;
 			case ALLEGRO_EVENT_KEY_DOWN:
@@ -689,11 +689,14 @@ void Framework::Audio_Initialise()
 
 	/* Setup initial gain */
 	this->soundBackend->setGain(SoundBackend::Gain::Global,
-	                            (float)this->Settings->getInt("Audio.GlobalGain") / 20.0f);
+	                            static_cast<float>(this->Settings->getInt("Audio.GlobalGain")) /
+	                                20.0f);
 	this->soundBackend->setGain(SoundBackend::Gain::Music,
-	                            (float)this->Settings->getInt("Audio.MusicGain") / 20.0f);
+	                            static_cast<float>(this->Settings->getInt("Audio.MusicGain")) /
+	                                20.0f);
 	this->soundBackend->setGain(SoundBackend::Gain::Sample,
-	                            (float)this->Settings->getInt("Audio.SampleGain") / 20.0f);
+	                            static_cast<float>(this->Settings->getInt("Audio.SampleGain")) /
+	                                20.0f);
 }
 
 void Framework::Audio_Shutdown()

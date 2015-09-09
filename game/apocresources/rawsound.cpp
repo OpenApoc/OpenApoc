@@ -25,7 +25,7 @@ class RawSampleLoader : public SampleLoader
 		sample->format.format = AudioFormat::SampleFormat::PCM_UINT8;
 		sample->sampleCount = file.size();
 		sample->data.reset(new uint8_t[sample->sampleCount]);
-		file.read((char *)sample->data.get(), sample->sampleCount);
+		file.read(reinterpret_cast<char *>(sample->data.get()), sample->sampleCount);
 		return sample;
 	}
 };

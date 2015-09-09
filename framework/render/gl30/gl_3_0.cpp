@@ -100,7 +100,7 @@ static PROC WinGetProcAddress(const char *name)
 #else /* GLX */
 #include <GL/glx.h>
 
-#define IntGetProcAddress(name) (*glXGetProcAddressARB)((const GLubyte *)name)
+#define IntGetProcAddress(name) (*glXGetProcAddressARB)(reinterpret_cast<const GLubyte *>(name))
 #endif
 #endif
 #endif
@@ -3544,7 +3544,8 @@ static void ProcExtsFromExtList(std::vector<MapEntry> &table)
 
 	for (iLoop = 0; iLoop < iNumExtensions; iLoop++)
 	{
-		const char *strExtensionName = (const char *)gl::GetStringi(gl::EXTENSIONS, iLoop);
+		const char *strExtensionName =
+		    reinterpret_cast<const char *>(gl::GetStringi(gl::EXTENSIONS, iLoop));
 		LoadExtByName(table, strExtensionName);
 	}
 }

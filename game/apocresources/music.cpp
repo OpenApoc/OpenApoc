@@ -83,7 +83,8 @@ class RawMusicTrack : public MusicTrack
 
 		this->samplePosition += samples;
 
-		if (!file.read((char *)sampleBuffer, samples * MusicBytesPerSample * MusicChannels))
+		if (!file.read(reinterpret_cast<char *>(sampleBuffer),
+		               samples * MusicBytesPerSample * MusicChannels))
 		{
 			LogError("Failed to read sample data in \"%s\"", file.fileName().str().c_str());
 			this->valid = false;

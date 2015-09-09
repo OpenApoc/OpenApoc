@@ -21,7 +21,7 @@ std::shared_ptr<PaletteImage> RawImage::load(Data &data, const UString &filename
 		return nullptr;
 	}
 
-	if (infile.size() != (size_t)(size.x * size.y))
+	if (infile.size() != static_cast<size_t>(size.x * size.y))
 	{
 		LogWarning("File \"%s\" has incorrect size for raw image of size {%d,%d}",
 		           filename.str().c_str(), size.x, size.y);
@@ -37,7 +37,7 @@ std::shared_ptr<PaletteImage> RawImage::load(Data &data, const UString &filename
 		{
 			// TODO: can read a stride at a time? Or just the whole chunk as it's tightly packed?
 			uint8_t idx;
-			if (!infile.read((char *)&idx, 1))
+			if (!infile.read(reinterpret_cast<char *>(&idx), 1))
 			{
 				LogError("Unexpected EOF in file \"%s\" at {%d,%d}", filename.str().c_str(), x, y);
 				return nullptr;

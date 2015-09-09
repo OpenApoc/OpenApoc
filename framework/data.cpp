@@ -87,7 +87,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 			return traits_type::eof();
 		}
 		setg(buffer.get(), buffer.get(), buffer.get() + bytesRead);
-		return (unsigned char)*gptr();
+		return static_cast<unsigned char>(*gptr());
 	}
 
 	pos_type seekoff(off_type pos, std::ios_base::seekdir dir,
@@ -171,14 +171,14 @@ IFileImpl::~IFileImpl() {}
 
 bool IFile::readule16(uint16_t &val)
 {
-	this->read((char *)&val, sizeof(val));
+	this->read(reinterpret_cast<char *>(&val), sizeof(val));
 	val = le16toh(val);
 	return !!(*this);
 }
 
 bool IFile::readule32(uint32_t &val)
 {
-	this->read((char *)&val, sizeof(val));
+	this->read(reinterpret_cast<char *>(&val), sizeof(val));
 	val = le32toh(val);
 	return !!(*this);
 }

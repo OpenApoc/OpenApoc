@@ -48,7 +48,7 @@ void ListBox::OnRender()
 
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
-		Control *ctrl = (Control *)*c;
+		Control *ctrl = *c;
 		if (ctrl != scroller)
 		{
 			ctrl->Location.x = 0;
@@ -89,7 +89,7 @@ Control *ListBox::RemoveItem(Control *Item)
 {
 	for (auto i = Controls.begin(); i != Controls.end(); i++)
 	{
-		if ((Control *)*i == Item)
+		if (*i == Item)
 		{
 			Controls.erase(i);
 			ResolveLocation();

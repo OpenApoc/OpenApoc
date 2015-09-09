@@ -17,14 +17,14 @@ Palette *loadApocPalette(Data &data, const UString fileName)
 		uint8_t colour[3];
 		Colour c;
 
-		f.read((char *)&colour, 3);
+		f.read(reinterpret_cast<char *>(&colour), 3);
 		if (!f)
 			break;
 		if (i == 0)
 			c = {0, 0, 0, 0};
 		else
-			c = {(uint8_t)(colour[0] << 2), (uint8_t)(colour[1] << 2), (uint8_t)(colour[2] << 2),
-			     255};
+			c = {static_cast<uint8_t>(colour[0] << 2), static_cast<uint8_t>(colour[1] << 2),
+			     static_cast<uint8_t>(colour[2] << 2), 255};
 		p->SetColour(i, c);
 	}
 
