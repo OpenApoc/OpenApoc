@@ -48,7 +48,7 @@ class UString
 
 	UniChar operator[](size_t pos) const;
 
-	static const size_t npos = std::numeric_limits<size_t>::min();
+	static const size_t npos = static_cast<size_t>(-1);
 
 	UString &operator+=(const UString &ustr);
 	// UString& operator+=(const std::string& str);
