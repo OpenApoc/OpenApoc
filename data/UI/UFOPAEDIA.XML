@@ -1065,8 +1065,6 @@
 					<text_info>STR_ELERIUM_INFO</text_info>
 					<dynamic_data>EQUIPMENT</dynamic_data>
 				</entry>
-
-				
 			</entries>
 		</category>
 		<category id="FACILITIES">
@@ -1166,6 +1164,71 @@
 			<title>STR_ALIEN_CRAFT</title>
 			<text_info>STR_ALIEN_CRAFT_INFO</text_info>
 			<entries>
+				<entry id="ALIEN_PROBE" name="STR_ALIEN_PROBE">
+					<backgroundimage>xcom3/UFOPAEDI/02UFO-F.PCX</backgroundimage>
+					<text_info>STR_ALIEN_PROBE_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="ALIEN_SCOUT" name="STR_ALIEN_SCOUT">
+					<backgroundimage>xcom3/UFOPAEDI/03UFO-F.PCX</backgroundimage>
+					<text_info>STR_ALIEN_SCOUT_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="ALIEN_TRANSPORTER" name="STR_ALIEN_TRANSPORTER">
+					<backgroundimage>xcom3/UFOPAEDI/05UFO-F.PCX</backgroundimage>
+					<text_info>STR_ALIEN_TRANSPORTER_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="ALIEN_FAST_ATTACK_SHIP" name="STR_ALIEN_FAST_ATTACK_SHIP">
+					<backgroundimage>xcom3/UFOPAEDI/06UFO-F.PCX</backgroundimage>
+					<text_info>STR_ALIEN_FAST_ATTACK_SHIP_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="ALIEN_DESTROYER" name="STR_ALIEN_DESTROYER">
+					<backgroundimage>xcom3/UFOPAEDI/07UFO-F.PCX</backgroundimage>
+					<text_info>STR_ALIEN_DESTROYER_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="ALIEN_ASSAULT_SHIP" name="STR_ALIEN_ASSAULT_SHIP">
+					<backgroundimage>xcom3/UFOPAEDI/08UFO-F.PCX</backgroundimage>
+					<text_info>STR_ALIEN_ASSAULT_SHIP_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="ALIEN_BOMBER" name="STR_ALIEN_BOMBER">
+					<backgroundimage>xcom3/UFOPAEDI/09UFO-F.PCX</backgroundimage>
+					<text_info>STR_ALIEN_BOMBER_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="ALIEN_ESCORT" name="STR_ALIEN_ESCORT">
+					<backgroundimage>xcom3/UFOPAEDI/10UFO-F.PCX</backgroundimage>
+					<text_info>STR_ALIEN_ESCORT_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="ALIEN_BATTLESHIP" name="STR_ALIEN_BATTLESHIP">
+					<backgroundimage>xcom3/UFOPAEDI/11UFO-F.PCX</backgroundimage>
+					<text_info>STR_ALIEN_BATTLESHIP_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="ALIEN_MOTHERSHIP" name="STR_ALIEN_MOTHERSHIP">
+					<backgroundimage>xcom3/UFOPAEDI/12UFO-F.PCX</backgroundimage>
+					<text_info>STR_ALIEN_MOTHERSHIP_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="ALIEN_CRAFT_PROPULSION" name="STR_ALIEN_CRAFT_PROPULSION">
+					<backgroundimage>xcom3/UFOPAEDI/PROPULS.PCX</backgroundimage>
+					<text_info>STR_ALIEN_CRAFT_PROPULSION_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="ALIEN_CRAFT_CONTROL_SYSTEMS" name="STR_ALIEN_CRAFT_CONTROL_SYSTEMS">
+					<backgroundimage>xcom3/UFOPAEDI/13UFO-G.PCX</backgroundimage>
+					<text_info>STR_ALIEN_CRAFT_CONTROL_SYSTEMS_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="ALIEN_CRAFT_ENERGY_SOURCE" name="STR_ALIEN_CRAFT_ENERGY_SOURCE">
+					<backgroundimage>xcom3/UFOPAEDI/POWER.PCX</backgroundimage>
+					<text_info>STR_ALIEN_CRAFT_ENERGY_SOURCE_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
 			</entries>
 		</category>
 		<category id="ALIENS">
@@ -1173,6 +1236,166 @@
 			<title>STR_ALIENS</title>
 			<text_info>STR_ALIENS_INFO</text_info>
 			<entries>
+				<entry id="BRAINSUCKER_POD" name="STR_BRAINSUCKER_POD">
+					<backgroundimage>xcom3/UFOPAEDI/W57.PCX</backgroundimage>
+					<text_info>STR_BRAINSUCKER_POD_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="BRAINSUCKER" name="STR_BRAINSUCKER">
+					<backgroundimage>xcom3/UFOPAEDI/02BRSUCK.PCX</backgroundimage>
+					<text_info>STR_BRAINSUCKER_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="BRAINSUCKER_AUTOPSY" name="STR_BRAINSUCKER_AUTOPSY">
+					<backgroundimage>xcom3/UFOPAEDI/02AUTOPS.PCX</backgroundimage>
+					<text_info>STR_BRAINSUCKER_AUTOPSY_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="MULTIWORM_EGG" name="STR_MULTIWORM_EGG">
+					<backgroundimage>xcom3/UFOPAEDI/05WRMEGG.PCX</backgroundimage>
+					<text_info>STR_MULTIWORM_EGG_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="MULTIWORM_EGG_AUTOPSY" name="STR_MULTIWORM_EGG_AUTOPSY">
+					<backgroundimage>xcom3/UFOPAEDI/05AUTOPS.PCX</backgroundimage>
+					<text_info>STR_MULTIWORM_EGG_AUTOPSY_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="MULTIWORM" name="STR_MULTIWORM">
+					<backgroundimage>xcom3/UFOPAEDI/07MLTWRM.PCX</backgroundimage>
+					<text_info>STR_MULTIWORM_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="MULTIWORM_AUTOPSY" name="STR_MULTIWORM_AUTOPSY">
+					<backgroundimage>xcom3/UFOPAEDI/07AUTOPS.PCX</backgroundimage>
+					<text_info>STR_MULTIWORM_AUTOPSY_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="HYPERWORM" name="STR_HYPERWORM">
+					<backgroundimage>xcom3/UFOPAEDI/04HPWORM.PCX</backgroundimage>
+					<text_info>STR_HYPERWORM_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="HYPERWORM_AUTOPSY" name="STR_HYPERWORM_AUTOPSY">
+					<backgroundimage>xcom3/UFOPAEDI/04AUTOPS.PCX</backgroundimage>
+					<text_info>STR_HYPERWORM_AUTOPSY_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="CHRYSALIS" name="STR_CHRYSALIS">
+					<backgroundimage>xcom3/UFOPAEDI/03CHRYSL.PCX</backgroundimage>
+					<text_info>STR_CHRYSALIS_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="CHRYSALIS_AUTOPSY" name="STR_CHRYSALIS_AUTOPSY">
+					<backgroundimage>xcom3/UFOPAEDI/03AUTOPS.PCX</backgroundimage>
+					<text_info>STR_CHRYSALIS_AUTOPSY_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="ANTHROPOD" name="STR_ANTHROPOD">
+					<backgroundimage>xcom3/UFOPAEDI/01ANTHPD.PCX</backgroundimage>
+					<text_info>STR_ANTHROPOD_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="ANTHROPOD_AUTOPSY" name="STR_ANTHROPOD_AUTOPSY">
+					<backgroundimage>xcom3/UFOPAEDI/01AUTOPS.PCX</backgroundimage>
+					<text_info>STR_ANTHROPOD_AUTOPSY_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="PSIMORPH" name="STR_PSIMORPH">
+					<backgroundimage>xcom3/UFOPAEDI/10PSMRPH.PCX</backgroundimage>
+					<text_info>STR_PSIMORPH_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="PSIMORPH_AUTOPSY" name="STR_PSIMORPH_AUTOPSY">
+					<backgroundimage>xcom3/UFOPAEDI/10AUTOPS.PCX</backgroundimage>
+					<text_info>STR_PSIMORPH_AUTOPSY_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="SPITTER" name="STR_SPITTER">
+					<backgroundimage>xcom3/UFOPAEDI/13SPTTER.PCX</backgroundimage>
+					<text_info>STR_SPITTER_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="SPITTER_AUTOPSY" name="STR_SPITTER_AUTOPSY">
+					<backgroundimage>xcom3/UFOPAEDI/13AUTOPS.PCX</backgroundimage>
+					<text_info>STR_SPITTER_AUTOPSY_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="MEGASPAWN" name="STR_MEGASPAWN">
+					<backgroundimage>xcom3/UFOPAEDI/06MGTRON.PCX</backgroundimage>
+					<text_info>STR_MEGASPAWN_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="MEGASPAWN_AUTOPSY" name="STR_MEGASPAWN_AUTOPSY">
+					<backgroundimage>xcom3/UFOPAEDI/06AUTOPS.PCX</backgroundimage>
+					<text_info>STR_MEGASPAWN_AUTOPSY_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="POPPER" name="STR_POPPER">
+					<backgroundimage>xcom3/UFOPAEDI/09POPPER.PCX</backgroundimage>
+					<text_info>STR_POPPER_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="POPPER_AUTOPSY" name="STR_POPPER_AUTOPSY">
+					<backgroundimage>xcom3/UFOPAEDI/09AUTOPS.PCX</backgroundimage>
+					<text_info>STR_POPPER_AUTOPSY_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="SKELETOID" name="STR_SKELETOID">
+					<backgroundimage>xcom3/UFOPAEDI/12SKELTD.PCX</backgroundimage>
+					<text_info>STR_SKELETOID_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="SKELETOID_AUTOPSY" name="STR_SKELETOID_AUTOPSY">
+					<backgroundimage>xcom3/UFOPAEDI/12AUTOPS.PCX</backgroundimage>
+					<text_info>STR_SKELETOID_AUTOPSY_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="MICRONOID_AGGREGATE" name="STR_MICRONOID_AGGREGATE">
+					<backgroundimage>xcom3/UFOPAEDI/14MICRON.PCX</backgroundimage>
+					<text_info>STR_MICRONOID_AGGREGATE_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="MICRONOID_AGGREGATE_AUTOPSY" name="STR_MICRONOID_AGGREGATE_AUTOPSY">
+					<backgroundimage>xcom3/UFOPAEDI/14AUTOPS.PCX</backgroundimage>
+					<text_info>STR_MICRONOID_AGGREGATE_AUTOPSY_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="QUEENSPAWN" name="STR_QUEENSPAWN">
+					<backgroundimage>xcom3/UFOPAEDI/11QNSPWN.PCX</backgroundimage>
+					<text_info>STR_QUEENSPAWN_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="QUEENSPAWN_AUTOPSY" name="STR_QUEENSPAWN_AUTOPSY">
+					<backgroundimage>xcom3/UFOPAEDI/11AUTOPS.PCX</backgroundimage>
+					<text_info>STR_QUEENSPAWN_AUTOPSY_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="OVERSPAWN" name="STR_OVERSPAWN">
+					<backgroundimage>xcom3/UFOPAEDI/08VRSPWN.PCX</backgroundimage>
+					<text_info>STR_OVERSPAWN_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="OVERSPAWN_AUTOPSY" name="STR_OVERSPAWN_AUTOPSY">
+					<backgroundimage>xcom3/UFOPAEDI/08AUTOPS.PCX</backgroundimage>
+					<text_info>STR_OVERSPAWN_AUTOPSY_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="THE_ALIEN_GENETIC_STRUCTURE" name="STR_THE_ALIEN_GENETIC_STRUCTURE">
+					<backgroundimage>xcom3/UFOPAEDI/GENETICS.PCX</backgroundimage>
+					<text_info>STR_THE_ALIEN_GENETIC_STRUCTURE_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="THE_ALIEN_LIFE_CYCLE" name="STR_THE_ALIEN_LIFE_CYCLE">
+					<backgroundimage>xcom3/UFOPAEDI/LIFECYCL.PCX</backgroundimage>
+					<text_info>STR_THE_ALIEN_LIFE_CYCLE_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="THE_REAL_ALIEN_THREAT" name="STR_THE_REAL_ALIEN_THREAT">
+					<backgroundimage>xcom3/UFOPAEDI/THREAT.PCX</backgroundimage>
+					<text_info>STR_THE_REAL_ALIEN_THREAT_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
 			</entries>
 		</category>
 		<category id="ALIENDIMENSION">
@@ -1180,6 +1403,72 @@
 			<title>STR_ALIEN_DIMENSION</title>
 			<text_info>STR_ALIEN_DIMENSION_INFO</text_info>
 			<entries>
+				
+				<entry id="INCUBATOR_CHAMBER" name="STR_INCUBATOR_CHAMBER">
+					<backgroundimage>xcom3/UFOPAEDI/00INCUBA.PCX</backgroundimage>
+					<text_info>STR_INCUBATOR_CHAMBER_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="SPAWNING_CHAMBER" name="STR_SPAWNING_CHAMBER">
+					<backgroundimage>xcom3/UFOPAEDI/01SPWNCH.PCX</backgroundimage>
+					<text_info>STR_SPAWNING_CHAMBER_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="FOOD_CHAMBER" name="STR_FOOD_CHAMBER">
+					<backgroundimage>xcom3/UFOPAEDI/02FDCHMB.PCX</backgroundimage>
+					<text_info>STR_FOOD_CHAMBER_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="MEGAPOD_CHAMBER" name="STR_MEGAPOD_CHAMBER">
+					<backgroundimage>xcom3/UFOPAEDI/03MGCHMB.PCX</backgroundimage>
+					<text_info>STR_MEGAPOD_CHAMBER_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="SLEEPING_CHAMBER" name="STR_SLEEPING_CHAMBER">
+					<backgroundimage>xcom3/UFOPAEDI/04SLCHMB.PCX</backgroundimage>
+					<text_info>STR_SLEEPING_CHAMBER_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="ORGANIC_FACTORY" name="STR_ORGANIC_FACTORY">
+					<backgroundimage>xcom3/UFOPAEDI/05ORGFCT.PCX</backgroundimage>
+					<text_info>STR_ORGANIC_FACTORY_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="ALIEN_FARM" name="STR_ALIEN_FARM">
+					<backgroundimage>xcom3/UFOPAEDI/06ALNFRM.PCX</backgroundimage>
+					<text_info>STR_ALIEN_FARM_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="CONTROL_CHAMBER" name="STR_CONTROL_CHAMBER">
+					<backgroundimage>xcom3/UFOPAEDI/07CNTTWR.PCX</backgroundimage>
+					<text_info>STR_CONTROL_CHAMBER_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="MAINTENANCE_FACTORY" name="STR_MAINTENANCE_FACTORY">
+					<backgroundimage>xcom3/UFOPAEDI/08MNTFCT.PCX</backgroundimage>
+					<text_info>STR_MAINTENANCE_FACTORY_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="DIMENSION_GATE_GENERATOR" name="STR_DIMENSION_GATE_GENERATOR">
+					<backgroundimage>xcom3/UFOPAEDI/09DIMGTE.PCX</backgroundimage>
+					<text_info>STR_DIMENSION_GATE_GENERATOR_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="DIMENSION_GATES" name="STR_DIMENSION_GATES">
+					<backgroundimage>xcom3/UFOPAEDI/13GATE.PCX</backgroundimage>
+					<text_info>STR_DIMENSION_GATES_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="THE_ALIEN_DIMENSION" name="STR_THE_ALIEN_DIMENSION">
+					<backgroundimage>xcom3/UFOPAEDI/11DIMENS.PCX</backgroundimage>
+					<text_info>STR_THE_ALIEN_DIMENSION_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
+				<entry id="ONE_WAY_TO_WIN" name="STR_ONE_WAY_TO_WIN">
+					<backgroundimage>xcom3/UFOPAEDI/12TO-WIN.PCX</backgroundimage>
+					<text_info>STR_ONE_WAY_TO_WIN_INFO</text_info>
+					<dynamic_data></dynamic_data>
+				</entry>
 			</entries>
 		</category>
 		<category id="BUILDINGS">
@@ -1187,6 +1476,157 @@
 			<title>STR_BUILDINGS</title>
 			<text_info>STR_BUILDINGS_INFO</text_info>
 			<entries>
+				
+				<entry id="SENATE" name="STR_SENATE">
+					<backgroundimage>xcom3/UFOPAEDI/23SENATE.PCX</backgroundimage>
+					<text_info>STR_SENATE_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="POLICE_STATION" name="STR_POLICE_STATION">
+					<backgroundimage>xcom3/UFOPAEDI/17POLICE.PCX</backgroundimage>
+					<text_info>STR_POLICE_STATION_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="HOSPITAL" name="STR_HOSPITAL">
+					<backgroundimage>xcom3/UFOPAEDI/14HOSPIT.PCX</backgroundimage>
+					<text_info>STR_HOSPITAL_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="SCHOOL" name="STR_SCHOOL">
+					<backgroundimage>xcom3/UFOPAEDI/22SCHOOL.PCX</backgroundimage>
+					<text_info>STR_SCHOOL_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="RESCUE_STATION" name="STR_RESCUE_STATION">
+					<backgroundimage>xcom3/UFOPAEDI/20RESCUE.PCX</backgroundimage>
+					<text_info>STR_RESCUE_STATION_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="OFFICES" name="STR_OFFICES">
+					<backgroundimage>xcom3/UFOPAEDI/15OFFICE.PCX</backgroundimage>
+					<text_info>STR_OFFICES_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="CORPORATE_HQ" name="STR_CORPORATE_HQ">
+					<backgroundimage>xcom3/UFOPAEDI/32CORPHQ.PCX</backgroundimage>
+					<text_info>STR_CORPORATE_HQ_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="SPACE_PORT" name="STR_SPACE_PORT">
+					<backgroundimage>xcom3/UFOPAEDI/28SPACE.PCX</backgroundimage>
+					<text_info>STR_SPACE_PORT_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="SENSODROME" name="STR_SENSODROME">
+					<backgroundimage>xcom3/UFOPAEDI/25SENSOS.PCX</backgroundimage>
+					<text_info>STR_SENSODROME_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="ASTRODOME" name="STR_ASTRODOME">
+					<backgroundimage>xcom3/UFOPAEDI/03ASTRO.PCX</backgroundimage>
+					<text_info>STR_ASTRODOME_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="PROCREATION_PARK" name="STR_PROCREATION_PARK">
+					<backgroundimage>xcom3/UFOPAEDI/19PROCPK.PCX</backgroundimage>
+					<text_info>STR_PROCREATION_PARK_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="SHOPPING_MALL" name="STR_SHOPPING_MALL">
+					<backgroundimage>xcom3/UFOPAEDI/27SHOPS.PCX</backgroundimage>
+					<text_info>STR_SHOPPING_MALL_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="APARTMENTS" name="STR_APARTMENTS">
+					<backgroundimage>xcom3/UFOPAEDI/01ACCOM1.PCX</backgroundimage>
+					<text_info>STR_APARTMENTS_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="LUXURY_APARTMENTS" name="STR_LUXURY_APARTMENTS">
+					<backgroundimage>xcom3/UFOPAEDI/02ACCOM2.PCX</backgroundimage>
+					<text_info>STR_LUXURY_APARTMENTS_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="HYRDO_FARM" name="STR_HYRDO_FARM">
+					<backgroundimage>xcom3/UFOPAEDI/13FARM.PCX</backgroundimage>
+					<text_info>STR_HYRDO_FARM_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="SEWAGE_WORKS" name="STR_SEWAGE_WORKS">
+					<backgroundimage>xcom3/UFOPAEDI/26SEWAGE.PCX</backgroundimage>
+					<text_info>STR_SEWAGE_WORKS_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="WATER_PURIFIER" name="STR_WATER_PURIFIER">
+					<backgroundimage>xcom3/UFOPAEDI/31WATER.PCX</backgroundimage>
+					<text_info>STR_WATER_PURIFIER_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="APPLIANCES_FACTORY" name="STR_APPLIANCES_FACTORY">
+					<backgroundimage>xcom3/UFOPAEDI/06FACT1.PCX</backgroundimage>
+					<text_info>STR_APPLIANCES_FACTORY_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="ARMS_FACTORY" name="STR_ARMS_FACTORY">
+					<backgroundimage>xcom3/UFOPAEDI/07FACT2.PCX</backgroundimage>
+					<text_info>STR_ARMS_FACTORY_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="ROBOT_FACTORY" name="STR_ROBOT_FACTORY">
+					<backgroundimage>xcom3/UFOPAEDI/08FACT3.PCX</backgroundimage>
+					<text_info>STR_ROBOT_FACTORY_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="CAR_FACTORY" name="STR_CAR_FACTORY">
+					<backgroundimage>xcom3/UFOPAEDI/09FACT4.PCX</backgroundimage>
+					<text_info>STR_CAR_FACTORY_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="FLYER_FACTORY" name="STR_FLYER_FACTORY">
+					<backgroundimage>xcom3/UFOPAEDI/10FACT5.PCX</backgroundimage>
+					<text_info>STR_FLYER_FACTORY_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="LARGE_FLYER_FACTORY" name="STR_LARGE_FLYER_FACTORY">
+					<backgroundimage>xcom3/UFOPAEDI/11FACT6.PCX</backgroundimage>
+					<text_info>STR_LARGE_FLYER_FACTORY_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="CONSTRUCTION_FACTORY" name="STR_CONSTRUCTION_FACTORY">
+					<backgroundimage>xcom3/UFOPAEDI/12FACT7.PCX</backgroundimage>
+					<text_info>STR_CONSTRUCTION_FACTORY_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="SLUMS" name="STR_SLUMS">
+					<backgroundimage>xcom3/UFOPAEDI/34SLUMS.PCX</backgroundimage>
+					<text_info>STR_SLUMS_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="WAREHOUSE" name="STR_WAREHOUSE">
+					<backgroundimage>xcom3/UFOPAEDI/30WAREHS.PCX</backgroundimage>
+					<text_info>STR_WAREHOUSE_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="POWER_STATION" name="STR_POWER_STATION">
+					<backgroundimage>xcom3/UFOPAEDI/18POWER.PCX</backgroundimage>
+					<text_info>STR_POWER_STATION_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="RECYCLOTORIUM" name="STR_RECYCLOTORIUM">
+					<backgroundimage>xcom3/UFOPAEDI/21RESYK.PCX</backgroundimage>
+					<text_info>STR_RECYCLOTORIUM_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="PEOPLE_TUBES" name="STR_PEOPLE_TUBES">
+					<backgroundimage>xcom3/UFOPAEDI/16PEOPLE.PCX</backgroundimage>
+					<text_info>STR_PEOPLE_TUBES_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
+				<entry id="TEMPLE_OF_SIRIUS" name="STR_TEMPLE_OF_SIRIUS">
+					<backgroundimage>xcom3/UFOPAEDI/33SIRIUS.PCX</backgroundimage>
+					<text_info>STR_TEMPLE_OF_SIRIUS_INFO</text_info>
+					<dynamic_data>BUILDING</dynamic_data>
+				</entry>
 			</entries>
 		</category>
 
