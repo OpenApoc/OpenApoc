@@ -96,7 +96,7 @@ template <typename T> Vec2<T> Line<T>::GetIntersection(const Line<T> IntersectsW
 
 	if (lx[0] == lx[1])
 	{
-		if (Maths::Min(ix[0], ix[1]) <= lx[0] && Maths::Max(ix[0], ix[1]) >= lx[0])
+		if (std::min(ix[0], ix[1]) <= lx[0] && std::max(ix[0], ix[1]) >= lx[0])
 		{
 			tmp = (m[1] * lx[0]) + b[1];
 			if ((tmp >= ly[0] && tmp <= ly[1]) || (tmp <= ly[0] && tmp >= ly[1]))
@@ -111,7 +111,7 @@ template <typename T> Vec2<T> Line<T>::GetIntersection(const Line<T> IntersectsW
 	}
 	else if (ix[0] == ix[1])
 	{
-		if (Maths::Min(lx[0], lx[1]) <= ix[0] && Maths::Max(lx[0], lx[1]) >= ix[0])
+		if (std::min(lx[0], lx[1]) <= ix[0] && std::max(lx[0], lx[1]) >= ix[0])
 		{
 			tmp = (m[0] * ix[0]) + b[0];
 			if ((tmp >= iy[0] && tmp <= iy[1]) || (tmp <= iy[0] && tmp >= iy[1]))

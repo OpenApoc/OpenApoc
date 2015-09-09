@@ -20,4 +20,3 @@
 #include "library/colour.h"
 #include "library/angle.h"
 #include "library/memory.h"
-#include "library/maths.h"

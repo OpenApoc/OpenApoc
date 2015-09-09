@@ -59,7 +59,7 @@ void ListBox::OnRender()
 		}
 	}
 	scroller->Maximum = (yoffset - this->Size.y);
-	scroller->LargeChange = Maths::Max((scroller->Maximum - scroller->Minimum + 2) / 10.0f, 4.0f);
+	scroller->LargeChange = std::max((scroller->Maximum - scroller->Minimum + 2) / 10.0f, 4.0f);
 }
 
 void ListBox::EventOccured(Event *e) { Control::EventOccured(e); }

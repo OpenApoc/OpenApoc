@@ -2,7 +2,9 @@
 #pragma once
 
 #include "vec.h"
-#include "maths.h"
+#include <algorithm>
+#include <cmath>
+#include <cstdlib>
 
 namespace OpenApoc
 {
@@ -52,7 +54,7 @@ template <typename T> void Angle<T>::Set(T Degrees) { curAngle = Degrees; }
 
 template <typename T> T Angle<T>::ToDegrees() { return curAngle; }
 
-template <typename T> T Angle<T>::ToRadians() { return curAngle * M_DEG_TO_RAD; }
+template <typename T> T Angle<T>::ToRadians() { return glm::radians(curAngle); }
 
 template <typename T> bool Angle<T>::ClockwiseShortestTo(const Angle<T> DestinationAngle)
 {
@@ -97,8 +99,8 @@ template <typename T> T Angle<T>::ShortestAngleTo(const Angle<T> DestinationAngl
 
 template <typename T> T Angle<T>::ShortestAngleTo(T DestinationAngle)
 {
-	T ang = Maths::Min(Maths::Abs(DestinationAngle - curAngle),
-	                   Maths::Abs(curAngle - DestinationAngle));
+	T ang = std::min(std::abs(DestinationAngle - curAngle),
+	                   std::abs(curAngle - DestinationAngle));
 	return ang;
 }
 
