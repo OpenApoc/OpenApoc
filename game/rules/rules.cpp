@@ -114,4 +114,26 @@ bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *
 	return true;
 }
 
+const UString &Rules::getBuildingTileAt(Vec3<int> offset) const
+{
+	static const UString noTile = "";
+	if (offset.x < 0 || offset.x >= citySize.x || offset.y < 0 || offset.y >= citySize.y ||
+	    offset.z < 0 || offset.z >= citySize.z)
+	{
+		LogError("Trying to get tile {%d,%d,%d} in city of size {%d,%d,%d}", offset.x, offset.y,
+		         offset.z, citySize.x, citySize.y, citySize.z);
+		return noTile;
+	}
+	unsigned index = offset.z * citySize.x * citySize.y + offset.y * citySize.x + offset.x;
+	if (index >= tileIDs.size())
+	{
+		LogError("Tile {%d,%d,%d} would go over ID array! (city size {%d,%d,%d}, id offset %u, "
+		         "id array size %u",
+		         offset.x, offset.y, offset.z, citySize.x, citySize.y, citySize.z, index,
+		         tileIDs.size());
+		return noTile;
+	}
+	return tileIDs[index];
+}
+
 }; // namespace OpenApoc
