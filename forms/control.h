@@ -4,6 +4,7 @@
 #include "framework/includes.h"
 #include "library/colour.h"
 #include "framework/font.h"
+#include "framework/logger.h"
 
 namespace OpenApoc
 {
@@ -67,6 +68,25 @@ class Control
 
 	Control *operator[](int Index);
 	Control *FindControl(UString ID);
+
+	template <typename T> T *FindControlTyped(const UString &name)
+	{
+		Control *c = this->FindControl(name);
+		if (!c)
+		{
+			LogError("Failed to find control \"%s\" within form \"%s\"", name.str().c_str(),
+					 this->Name.str().c_str());
+			return nullptr;
+		}
+		T *typedControl = dynamic_cast<T *>(c);
+		if (!c)
+		{
+			LogError("Failed cast  control \"%s\" within form \"%s\" to type \"%s\"",
+					 name.str().c_str(), this->Name.str().c_str(), typeid(T).name());
+			return nullptr;
+		}
+		return typedControl;
+	}
 
 	Control *GetParent();
 	Form *GetForm();
