@@ -1,3 +1,5 @@
+#define _CRT_SECURE_NO_WARNINGS
+
 #include "framework/logger.h"
 #include "library/configfile.h"
 

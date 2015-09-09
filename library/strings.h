@@ -3,6 +3,7 @@
 
 #include "framework/includes.h"
 #include <iterator>
+#include <limits>
 
 namespace OpenApoc
 {
@@ -47,7 +48,7 @@ class UString
 
 	UniChar operator[](size_t pos) const;
 
-	static const size_t npos = -1;
+	static const size_t npos = std::numeric_limits<size_t>::min();
 
 	UString &operator+=(const UString &ustr);
 	// UString& operator+=(const std::string& str);
