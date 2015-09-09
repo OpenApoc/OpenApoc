@@ -59,7 +59,7 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	virtual void checkProjectileCollision();
 	virtual void drawProjectile(TileView &v, Renderer &r, Vec2<int> screenPosition);
 
-	bool isSelectable() const { return selectable; };
+	bool isSelectable() const { return selectable; }
 	virtual Rect<float> getSelectableBounds() const;
 	virtual void setSelected(bool selected);
 };

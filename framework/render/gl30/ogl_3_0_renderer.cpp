@@ -103,7 +103,7 @@ class Program
 	{
 		if (prog)
 			gl::DeleteProgram(prog);
-	};
+	}
 };
 
 class SpriteProgram : public Program
@@ -685,8 +685,8 @@ class OGL30Renderer : public Renderer
 		gl::BindFramebuffer(gl::FRAMEBUFFER, fbo->fbo);
 		this->currentBoundFBO = fbo->fbo;
 		gl::Viewport(0, 0, s->size.x, s->size.y);
-	};
-	virtual std::shared_ptr<Surface> getSurface() override { return currentSurface; };
+	}
+	virtual std::shared_ptr<Surface> getSurface() override { return currentSurface; }
 	std::shared_ptr<Surface> defaultSurface;
 
   public:
@@ -722,7 +722,7 @@ class OGL30Renderer : public Renderer
 
 		std::shared_ptr<PaletteImage> paletteImage = std::dynamic_pointer_cast<PaletteImage>(image);
 		LogError("Unsupported image type");
-	};
+	}
 	virtual void drawScaled(std::shared_ptr<Image> image, Vec2<float> position, Vec2<float> size,
 	                        Scaler scaler = Scaler::Linear) override
 	{
@@ -775,14 +775,14 @@ class OGL30Renderer : public Renderer
 			return;
 		}
 		LogError("Unsupported image type");
-	};
+	}
 	virtual void drawTinted(std::shared_ptr<Image> i, Vec2<float> position, Colour tint) override
 	{
 		LogError("Unimplemented function");
 		std::ignore = i;
 		std::ignore = position;
 		std::ignore = tint;
-	};
+	}
 	virtual void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c) override;
 	virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c,
 	                      float thickness = 1.0) override
@@ -793,16 +793,16 @@ class OGL30Renderer : public Renderer
 		this->drawLine(Vec2<float>{position.x + size.x, position.y + size.y},
 		               Vec2<float>{position.x, position.y + size.y}, c, thickness);
 		this->drawLine(Vec2<float>{position.x, position.y + size.y}, position, c, thickness);
-	};
+	}
 	virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0) override
 	{
 		if (this->state != RendererState::Idle)
 			this->flush();
 		this->DrawLine(p1, p2, c, thickness);
-	};
+	}
 	virtual void flush() override;
 	virtual UString getName() override;
-	virtual std::shared_ptr<Surface> getDefaultSurface() override { return this->defaultSurface; };
+	virtual std::shared_ptr<Surface> getDefaultSurface() override { return this->defaultSurface; }
 
 	void BindProgram(std::shared_ptr<Program> p)
 	{

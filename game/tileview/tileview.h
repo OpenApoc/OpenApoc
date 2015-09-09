@@ -48,14 +48,14 @@ class TileView : public Stage
 		T x = (c.x * tileSize.x / 2) - (c.y * tileSize.x / 2);
 		T y = (c.x * tileSize.y / 2) + (c.y * tileSize.y / 2) - (c.z * tileSize.z);
 		return Vec2<T>{x, y};
-	};
+	}
 	template <typename T> Vec3<T> screenToTileCoords(Vec2<T> screenPos, T z)
 	{
 		screenPos.y += (z * tileSize.z);
 		T y = ((screenPos.y / (tileSize.y / 2)) - (screenPos.x / (tileSize.x / 2))) / 2;
 		T x = ((screenPos.y / (tileSize.y / 2)) + (screenPos.x / (tileSize.x / 2))) / 2;
 		return Vec3<T>{x, y, z};
-	};
+	}
 	// Stage control
 	virtual void Begin() override;
 	virtual void Pause() override;

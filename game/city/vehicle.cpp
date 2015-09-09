@@ -17,7 +17,7 @@ class VehicleRandomWalk : public VehicleMission
 {
   public:
 	std::uniform_int_distribution<int> distribution;
-	VehicleRandomWalk(Vehicle &vehicle) : VehicleMission(vehicle), distribution(-1, 1){};
+	VehicleRandomWalk(Vehicle &vehicle) : VehicleMission(vehicle), distribution(-1, 1) {}
 	std::list<Tile *> destination;
 	virtual Vec3<float> getNextDestination() override
 	{
@@ -56,7 +56,9 @@ class VehicleRandomDestination : public VehicleMission
 	std::uniform_int_distribution<int> xydistribution;
 	std::uniform_int_distribution<int> zdistribution;
 	VehicleRandomDestination(Vehicle &v)
-	    : VehicleMission(v), xydistribution(0, 99), zdistribution(0, 9){};
+	    : VehicleMission(v), xydistribution(0, 99), zdistribution(0, 9)
+	{
+	}
 	std::list<Tile *> path;
 	virtual Vec3<float> getNextDestination() override
 	{

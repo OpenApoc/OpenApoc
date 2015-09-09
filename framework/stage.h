@@ -16,17 +16,17 @@ class StageCmd
 	enum class Command
 	{
 		CONTINUE, // Continue as normal
-		REPLACE, // Remove the current head and replace with nextStage
-		POP, // Remove the current head
-		PUSH, // Push nextStage onto the top of the stack
-		QUIT, // Clear the stage stack, exiting the program
+		REPLACE,  // Remove the current head and replace with nextStage
+		POP,      // Remove the current head
+		PUSH,     // Push nextStage onto the top of the stack
+		QUIT,     // Clear the stage stack, exiting the program
 	};
 
 	Command cmd;
 
 	std::shared_ptr<Stage> nextStage;
 
-	StageCmd() : cmd(Command::CONTINUE){};
+	StageCmd() : cmd(Command::CONTINUE) {}
 };
 
 /*
@@ -40,7 +40,7 @@ class Stage : public std::enable_shared_from_this<Stage>
 	Framework &fw;
 
   public:
-	Stage(Framework &fw) : fw(fw){};
+	Stage(Framework &fw) : fw(fw) {}
 	/*
 	    Function: Begin
 	    This function is called just before the stage becomes the *active* stage.
@@ -102,7 +102,7 @@ class Stage : public std::enable_shared_from_this<Stage>
 	virtual bool IsTransition() = 0;
 
 	/* Need a virtual destructor to correctly call any subclass descructors */
-	virtual ~Stage(){};
+	virtual ~Stage() {}
 };
 
 }; // namespace OpenApoc

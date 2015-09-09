@@ -73,7 +73,7 @@ class UString
 		const UString &s;
 		size_t offset;
 		friend class UString;
-		const_iterator(const UString &s, size_t initial_offset) : s(s), offset(initial_offset){};
+		const_iterator(const UString &s, size_t initial_offset) : s(s), offset(initial_offset) {}
 
 	  public:
 		// Just enough to struggle through a range-based for

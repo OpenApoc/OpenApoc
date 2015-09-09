@@ -9,7 +9,7 @@ class UString;
 class BuildingDef
 {
   private:
-	BuildingDef(){};
+	BuildingDef() {}
 	UString name;
 	Rect<int> bounds;
 	UString ownerName;

@@ -16,7 +16,7 @@ class VoxelMap;
 class VehicleDefinition
 {
   private:
-	VehicleDefinition(){};
+	VehicleDefinition() {}
 	friend class RulesLoader;
 
   public:

@@ -8,7 +8,7 @@ namespace OpenApoc
 class ImageLoader
 {
   public:
-	virtual ~ImageLoader(){};
+	virtual ~ImageLoader() {}
 	virtual std::shared_ptr<Image> loadImage(UString path) = 0;
 	virtual UString getName() = 0;
 };
@@ -17,7 +17,7 @@ class ImageLoaderFactory
 {
   public:
 	virtual ImageLoader *create() = 0;
-	virtual ~ImageLoaderFactory(){};
+	virtual ~ImageLoaderFactory() {}
 };
 
 void registerImageLoader(ImageLoaderFactory *factory, UString name);

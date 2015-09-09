@@ -266,7 +266,7 @@ class AllegroSoundBackendFactory : public SoundBackendFactory
 
 		initialised = true;
 		return new AllegroSoundBackend();
-	};
+	}
 
 	virtual ~AllegroSoundBackendFactory()
 	{

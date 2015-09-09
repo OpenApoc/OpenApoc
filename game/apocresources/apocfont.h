@@ -16,7 +16,7 @@ class ApocalypseFont : public BitmapFont
 {
 
   private:
-	ApocalypseFont(){};
+	ApocalypseFont() {}
 	std::map<UniChar, std::shared_ptr<PaletteImage>> fontbitmaps;
 	int spacewidth;
 	int fontheight;

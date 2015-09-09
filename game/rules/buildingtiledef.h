@@ -7,7 +7,7 @@ namespace OpenApoc
 class BuildingTileDef
 {
   private:
-	BuildingTileDef(){};
+	BuildingTileDef() {}
 	std::shared_ptr<Image> sprite;
 	std::shared_ptr<VoxelMap> voxelMap;
 	friend class RulesLoader;

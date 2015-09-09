@@ -8,7 +8,7 @@ class RendererFactory
 {
   public:
 	virtual Renderer *create() = 0;
-	virtual ~RendererFactory(){};
+	virtual ~RendererFactory() {}
 };
 
 void registerRenderer(RendererFactory *factory, UString name);

@@ -59,7 +59,7 @@ class NullSoundBackendFactory : public SoundBackendFactory
 	{
 		LogWarning("Creating NULL sound backend (Sound disabled)");
 		return new NullSoundBackend();
-	};
+	}
 
 	virtual ~NullSoundBackendFactory() {}
 };

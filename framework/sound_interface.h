@@ -7,7 +7,7 @@ class SoundBackendFactory
 {
   public:
 	virtual SoundBackend *create() = 0;
-	virtual ~SoundBackendFactory(){};
+	virtual ~SoundBackendFactory() {}
 };
 
 void registerSoundBackend(SoundBackendFactory *factory, UString name);

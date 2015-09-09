@@ -10,7 +10,7 @@ class Framework;
 class SampleLoader
 {
   public:
-	virtual ~SampleLoader(){};
+	virtual ~SampleLoader() {}
 	virtual std::shared_ptr<Sample> loadSample(UString path) = 0;
 };
 
@@ -18,7 +18,7 @@ class SampleLoaderFactory
 {
   public:
 	virtual SampleLoader *create(Framework &fw) = 0;
-	virtual ~SampleLoaderFactory(){};
+	virtual ~SampleLoaderFactory() {}
 };
 
 void registerSampleLoader(SampleLoaderFactory *factory, UString name);

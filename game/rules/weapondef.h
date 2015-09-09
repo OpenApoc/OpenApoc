@@ -9,7 +9,7 @@ namespace OpenApoc
 class WeaponDef
 {
   private:
-	WeaponDef(){};
+	WeaponDef() {}
 	friend class RulesLoader;
 
   public:

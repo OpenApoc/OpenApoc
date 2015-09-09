@@ -7,7 +7,7 @@ class RulesLoader;
 class OrganisationDef
 {
   private:
-	OrganisationDef(){};
+	OrganisationDef() {}
 	UString name;
 	friend class RulesLoader;
 

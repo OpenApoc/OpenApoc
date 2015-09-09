@@ -99,8 +99,7 @@ template <typename T> T Angle<T>::ShortestAngleTo(const Angle<T> DestinationAngl
 
 template <typename T> T Angle<T>::ShortestAngleTo(T DestinationAngle)
 {
-	T ang = std::min(std::abs(DestinationAngle - curAngle),
-	                   std::abs(curAngle - DestinationAngle));
+	T ang = std::min(std::abs(DestinationAngle - curAngle), std::abs(curAngle - DestinationAngle));
 	return ang;
 }
 

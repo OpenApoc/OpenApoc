@@ -35,7 +35,7 @@ class Sample
 	std::unique_ptr<uint8_t[]> data;
 	std::unique_ptr<BackendSampleData> backendData;
 
-	virtual ~Sample(){};
+	virtual ~Sample() {}
 };
 
 class MusicTrack
@@ -47,7 +47,7 @@ class MusicTrack
 
 	enum class MusicCallbackReturn
 	{
-		End, // This track ends after *returnedSamples have been played
+		End,      // This track ends after *returnedSamples have been played
 		Continue, // There is more to come, even if we didn't fill the output buffer
 	};
 
@@ -55,13 +55,13 @@ class MusicTrack
 	                                  unsigned int maxSamples, void *sampleBuffer,
 	                                  unsigned int *returnedSamples)> callback;
 
-	virtual ~MusicTrack(){};
+	virtual ~MusicTrack() {}
 };
 
 class SoundBackend
 {
   public:
-	virtual ~SoundBackend(){};
+	virtual ~SoundBackend() {}
 	virtual void playSample(std::shared_ptr<Sample> sample) = 0;
 	virtual void playMusic(std::shared_ptr<MusicTrack>,
 	                       std::function<void(void *)> finishedCallback,
@@ -98,7 +98,7 @@ class JukeBox
 		Once,
 		Loop,
 	};
-	virtual ~JukeBox(){};
+	virtual ~JukeBox() {}
 	virtual void play(std::vector<UString> tracks, PlayMode mode = PlayMode::Loop) = 0;
 	virtual void stop() = 0;
 };
