@@ -90,7 +90,7 @@ void PCK::LoadVersion1Format(IFile &pck, IFile &tab, int Index)
 	uint16_t c0_offset;
 	uint16_t c0_maxwidth;
 	uint16_t c0_height;
-	Memory *c0_imagedata;
+	std::unique_ptr<Memory> c0_imagedata;
 	size_t c0_bufferptr;
 	int c0_idx;
 	std::vector<int16_t> c0_rowwidths;
@@ -125,7 +125,7 @@ void PCK::LoadVersion1Format(IFile &pck, IFile &tab, int Index)
 			         pck.fileName().str().c_str(), i);
 			return;
 		}
-		c0_imagedata = new Memory(0);
+		c0_imagedata.reset(new Memory(0));
 		c0_rowwidths.clear();
 		c0_maxwidth = 0;
 		c0_height = 0;
@@ -184,7 +184,6 @@ void PCK::LoadVersion1Format(IFile &pck, IFile &tab, int Index)
 			}
 		}
 		images.push_back(img);
-		delete c0_imagedata;
 	}
 }
 
