@@ -701,7 +701,7 @@ std::list<UString> Control::WordWrapText(std::shared_ptr<OpenApoc::BitmapFont> F
 	if (txtwidth > Size.x)
 	{
 		UString textleft = WrapText;
-		int estlinelength = Font->GetEstimateCharacters(Size.x);
+		unsigned int estlinelength = Font->GetEstimateCharacters(Size.x);
 
 		while (textleft.length() > 0)
 		{
