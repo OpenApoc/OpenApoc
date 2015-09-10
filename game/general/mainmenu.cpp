@@ -1,4 +1,4 @@
-
+#include "version.h"
 #include "game/general/mainmenu.h"
 #include "framework/framework.h"
 #include "game/general/optionsmenu.h"
@@ -12,6 +12,8 @@ std::vector<UString> tracks{"music:0"};
 MainMenu::MainMenu(Framework &fw) : Stage(fw)
 {
 	mainmenuform = fw.gamecore->GetForm("FORM_MAINMENU");
+	auto versionLabel = mainmenuform->FindControlTyped<Label>("VERSION_LABEL");
+	versionLabel->SetText(OPENAPOC_VERSION);
 }
 
 MainMenu::~MainMenu() {}

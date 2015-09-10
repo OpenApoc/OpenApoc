@@ -1,0 +1,3 @@
+#pragma once
+
+#define OPENAPOC_VERSION "@OPENAPOC_VERSION_STRING@"

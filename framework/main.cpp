@@ -1,8 +1,11 @@
 #include "framework/framework.h"
+#include "version.h"
+
 using namespace OpenApoc;
 
 int main(int argc, char *argv[])
 {
+	LogInfo("Starting OpenApoc \"%s\"", OPENAPOC_VERSION);
 	std::vector<UString> cmdline;
 	for (int i = 1; i < argc; i++)
 	{
