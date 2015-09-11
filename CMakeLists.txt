@@ -176,7 +176,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CLANG_TIDY clang-tidy CACHE STRING "clang-tidy executable name in PATH")
 
 find_package(Git)
-execute_process(COMMAND ${GIT_EXECUTABLE} describe --tags --all --long
+execute_process(COMMAND ${GIT_EXECUTABLE} -C ${CMAKE_SOURCE_DIR} describe --tags --all --long
 		OUTPUT_VARIABLE OPENAPOC_VERSION_STRING_RAW
 		OUTPUT_STRIP_TRAILING_WHITESPACE)
 
