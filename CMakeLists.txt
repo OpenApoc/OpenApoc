@@ -177,8 +177,14 @@ set(CLANG_TIDY clang-tidy CACHE STRING "clang-tidy executable name in PATH")
 
 find_package(Git)
 execute_process(COMMAND ${GIT_EXECUTABLE} describe --tags --all --long
-		OUTPUT_VARIABLE OPENAPOC_VERSION_STRING
+		OUTPUT_VARIABLE OPENAPOC_VERSION_STRING_RAW
 		OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+string(REPLACE "heads/" "branch/" OPENAPOC_VERSION_STRING_RAW ${OPENAPOC_VERSION_STRING_RAW})
+# Remove 'special' character (e.g. '/') as that screws up filenames etc. Abuse
+# MAKE_C_IDENTIFIER for this instead of a list of 'banned' chars
+string(MAKE_C_IDENTIFIER "${OPENAPOC_VERSION_STRING_RAW}" OPENAPOC_VERSION_STRING )
+
 configure_file(version.h.in version.h)
 
 add_custom_target(tidy ${CLANG_TIDY} ${FORMAT_SOURCES} -p ${CMAKE_BINARY_DIR}
