@@ -2,7 +2,7 @@
 PROJECT(OpenApoc CXX C)
 
 # check cmake version
-CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/framework/cmake/")
 
@@ -24,7 +24,7 @@ else()
 endif()
 
 option (EXTRA_WARNINGS "Enable extra warning flags (-W -Wall -Wextra)" ON)
-option (EXTRA_SUGGESTIONS "Enable extra 'suggestion' warning flags" ON)
+option (EXTRA_SUGGESTIONS "Enable extra 'suggestion' warning flags" OFF)
 
 function(ADD_OPTIONAL_COMPILER_FLAG FLAG)
 		CHECK_CXX_COMPILER_FLAG("${FLAG}" CXX_COMPILER_SUPPORTS_${FLAG})
@@ -38,6 +38,9 @@ function(ADD_OPTIONAL_COMPILER_FLAG FLAG)
 endfunction(ADD_OPTIONAL_COMPILER_FLAG)
 
 if (EXTRA_SUGGESTIONS)
+		# Cmake has buggy check_cxx_compiler_flag() before 3.1 (interprets the arg 
+		# as a regex) which breaks at least Wno-c++98-compat
+		CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 		ADD_OPTIONAL_COMPILER_FLAG("-Wsuggest-attribute=pure")
 		ADD_OPTIONAL_COMPILER_FLAG("-Wsuggest-attribute=const")
 		ADD_OPTIONAL_COMPILER_FLAG("-Wsuggest-attribute=noreturn")
