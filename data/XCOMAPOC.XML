@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc>
-	<game>
-		<title>Open Apocalypse</title>
-		<include>LANGUAGES/LANGUAGES.XML</include>
-		<include>LANGUAGES/STRINGS.XML</include>
-		<include>LANGUAGES/FONTS.XML</include>
-		<include>UI/GRAPHICALIAS.XML</include>
-		<include>UI/MAINMENU.XML</include>
-		<include>UI/OPTIONS.XML</include>
-		<include>UI/BASESCREEN.XML</include>
-		<include>UI/UFOPAEDIA.XML</include>
-		<include>UI/DIFFICULTYMENU.XML</include>
-		<include>UI/DEBUGMENU.XML</include>
-		<include>UI/INGAMEOPTIONS.XML</include>
-		<include>UI/CITY/city.xml</include>
-		<include>UI/CITY/infiltration.xml</include>
-		<include>UI/CITY/score.xml</include>
-	</game>
+  <game>
+    <title>Open Apocalypse</title>
+    <include>LANGUAGES/LANGUAGES.XML</include>
+    <include>LANGUAGES/STRINGS.XML</include>
+    <include>LANGUAGES/FONTS.XML</include>
+    <include>UI/GRAPHICALIAS.XML</include>
+    <include>UI/MAINMENU.XML</include>
+    <include>UI/OPTIONS.XML</include>
+    <include>UI/BASESCREEN.XML</include>
+    <include>UI/UFOPAEDIA.XML</include>
+    <include>UI/DIFFICULTYMENU.XML</include>
+    <include>UI/DEBUGMENU.XML</include>
+    <include>UI/INGAMEOPTIONS.XML</include>
+    <include>UI/CITY/city.xml</include>
+    <include>UI/CITY/infiltration.xml</include>
+    <include>UI/CITY/score.xml</include>
+  </game>
 </openapoc>

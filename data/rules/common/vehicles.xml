@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
-<include>rules/common/vehicles/police_hovercar.xml</include>
-<include>rules/common/vehicles/phoenix_hovercar.xml</include>
-<!--
+  <include>rules/common/vehicles/police_hovercar.xml</include>
+  <include>rules/common/vehicles/phoenix_hovercar.xml</include>
+  <!--
 <include>rules/common/vehicles/airtaxi.xml</include>
 <include>rules/common/vehicles/rescue_transport.xml</include>
 <include>rules/common/vehicles/construction_vehicle.xml</include>
