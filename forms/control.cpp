@@ -698,6 +698,13 @@ std::list<UString> Control::WordWrapText(std::shared_ptr<OpenApoc::BitmapFont> F
 						break;
 					}
 				}
+				if (charidx == 1)
+				{
+					LogWarning(
+					    "No break in line \"%s\" found - this will probably overflow the control",
+					    textleft.str().c_str());
+					break;
+				}
 			}
 			else
 			{
