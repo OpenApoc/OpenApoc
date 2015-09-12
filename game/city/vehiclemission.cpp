@@ -35,9 +35,13 @@ class VehicleRandomDestination : public VehicleMission
   public:
 	std::uniform_int_distribution<int> xydistribution;
 	std::uniform_int_distribution<int> zdistribution;
-	VehicleRandomDestination(Vehicle &v)
-	    : VehicleMission(v), xydistribution(0, 99), zdistribution(0, 9){};
 	std::list<Tile *> path;
+	UString name;
+	VehicleRandomDestination(Vehicle &v)
+	    : VehicleMission(v), xydistribution(0, 99), zdistribution(0, 9)
+	{
+		name = "Random destination";
+	}
 	virtual bool getNextDestination(Vec3<float> &dest) override
 	{
 		auto vehicleTile = this->vehicle.tileObject.lock();
@@ -85,18 +89,21 @@ class VehicleRandomDestination : public VehicleMission
 		return true;
 	}
 	virtual const std::list<Tile *> &getCurrentPlannedPath() override { return path; }
-	virtual void start() {}
-	virtual bool isFinished() { return false; }
-	virtual void update(unsigned int ticks) { std::ignore = ticks; }
+	virtual void start() override {}
+	virtual bool isFinished() override { return false; }
+	virtual void update(unsigned int ticks) override { std::ignore = ticks; }
+	virtual const UString &getName() override { return name; }
 };
 
 class VehicleIdleMission : public VehicleMission
 {
   public:
+	UString name;
 	static std::list<Tile *> noPath;
 	unsigned int idleTicks;
 	VehicleIdleMission(Vehicle &v, unsigned int idleTicks) : VehicleMission(v), idleTicks(idleTicks)
 	{
+		name = "Idle for " + Strings::FromInteger(idleTicks) + "ticks";
 	}
 	virtual const std::list<Tile *> &getCurrentPlannedPath() override { return noPath; }
 	virtual void start() override {}
@@ -110,6 +117,7 @@ class VehicleIdleMission : public VehicleMission
 			idleTicks -= ticks;
 	}
 	virtual bool getNextDestination(Vec3<float> &dest) override { return false; }
+	virtual const UString &getName() override { return name; }
 };
 
 VehicleMission::VehicleMission(Vehicle &v) : vehicle(v) {}

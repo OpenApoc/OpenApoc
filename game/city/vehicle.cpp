@@ -52,13 +52,18 @@ class FlyingVehicleMover : public VehicleMover
 					vehicleTile->setPosition(goalPosition);
 					if (vehicle.missions.front()->isFinished())
 					{
+						LogInfo("Vehicle mission \"%s\" finished",
+						        vehicle.missions.front()->getName().str().c_str());
 						vehicle.missions.pop_front();
 						if (!vehicle.missions.empty())
 						{
+							LogInfo("Vehicle mission \"%s\" starting",
+							        vehicle.missions.front()->getName().str().c_str());
 							vehicle.missions.front()->start();
 						}
 						else
 						{
+							LogInfo("No next vehicle mission, going idle");
 							distanceLeft = 0;
 							break;
 						}
