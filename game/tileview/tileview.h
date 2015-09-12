@@ -54,6 +54,6 @@ class TileView : public Stage
 	virtual void Render() override;
 	virtual bool IsTransition() override;
 
-	virtual void Update(unsigned int ticks);
+	virtual void update(unsigned int ticks);
 };
 }; // namespace OpenApoc

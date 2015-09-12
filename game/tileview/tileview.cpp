@@ -164,7 +164,7 @@ void TileView::EventOccurred(Event *e)
 	}
 }
 
-void TileView::Update(unsigned int ticks)
+void TileView::update(unsigned int ticks)
 {
 	offsetX += cameraScrollX;
 	offsetY += cameraScrollY;

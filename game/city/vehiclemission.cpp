@@ -217,11 +217,30 @@ VehicleMission *VehicleMission::randomDestination(Vehicle &v)
 
 VehicleMission *VehicleMission::gotoLocation(Vehicle &v, TileMap &map, Vec3<int> target)
 {
+	//TODO
+	//Pseudocode:
+	// if (in building)
+	// 	prepend(TakeOff)
+	// routeClosestICanTo(target);
 	return nullptr;
 }
 
 VehicleMission *VehicleMission::gotoBuilding(Vehicle &v, TileMap &map, Building &target)
 {
+	//TODO
+	//Pseudocode:
+	// if (in building)
+	// 	queue(TakeOff)
+	// while (!above pad) {
+	//   foreach(pad at target) {
+	//     routes.append(findRouteTo(above pad))
+	//   }
+	//   if (at least one route ends above pad)
+	//     queue(gotoLocation(lowest cost of routes where end == above a pad))
+	//   else
+	//     queue(gotoLocation(lowest cost of routes + estimated distance to closest pad))
+	//  }
+	//  queue(Land)
 	return nullptr;
 }
 

@@ -97,7 +97,7 @@ void CityView::Update(StageCmd *const cmd)
 
 	fw.state->city->update(ticks);
 
-	TileView::Update(ticks);
+	TileView::update(ticks);
 	activeTab->Update();
 }
 

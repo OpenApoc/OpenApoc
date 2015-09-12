@@ -80,7 +80,8 @@ class FlyingVehicleMover : public VehicleMover
 					vehicleTile->setDirection(vectorToGoal);
 					vehicleTile->setPosition(vehicleTile->getPosition() +
 					                         distanceLeft * glm::normalize(vectorToGoal));
-					distanceLeft = -1;
+					distanceLeft = 0;
+					break;
 				}
 			}
 		}
@@ -108,6 +109,7 @@ void Vehicle::launch(TileMap &map, Vec3<float> initialPosition)
 	if (!this->building)
 	{
 		LogError("Vehicle not in a building?");
+		return;
 	}
 	this->building->landed_vehicles.erase(shared_from_this());
 	this->building = nullptr;
