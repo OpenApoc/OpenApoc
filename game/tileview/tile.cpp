@@ -33,12 +33,6 @@ void TileMap::update(unsigned int ticks)
 		auto objIt = activeIt++;
 		(*objIt)->update(ticks);
 	}
-	auto projIt = this->projectiles.begin();
-	while (projIt != this->projectiles.end())
-	{
-		auto objIt = projIt++;
-		(*objIt)->update(ticks);
-	}
 }
 
 Tile *TileMap::getTile(int x, int y, int z)
@@ -66,8 +60,6 @@ void TileMap::addObject(std::shared_ptr<TileObject> obj)
 	obj->getOwningTile()->ownedObjects.insert(obj);
 	if (obj->isSelectable())
 		this->selectableObjects.insert(obj);
-	if (obj->isActive())
-		this->activeObjects.insert(obj);
 	if (obj->isVisible())
 		obj->getOwningTile()->visibleObjects.insert(obj);
 	if (obj->isCollidable())
@@ -85,8 +77,6 @@ void TileMap::removeObject(std::shared_ptr<TileObject> obj)
 	}
 	if (obj->isSelectable())
 		this->selectableObjects.erase(obj);
-	if (obj->isActive())
-		this->activeObjects.erase(obj);
 	if (obj->isProjectile())
 	{
 		obj->getOwningTile()->ownedProjectiles.erase(obj);
@@ -107,10 +97,10 @@ TileMap::~TileMap() {}
 
 Tile::Tile(TileMap &map, Vec3<int> position) : map(map), position(position) {}
 
-TileObject::TileObject(TileMap &map, Vec3<float> position, bool active, bool collides, bool visible,
+TileObject::TileObject(TileMap &map, Vec3<float> position, bool collides, bool visible,
                        bool projectile, bool selectable)
-    : position(position), owningTile(map.getTile(position)), active(active), collides(collides),
-      visible(visible), projectile(projectile), selectable(selectable)
+    : position(position), owningTile(map.getTile(position)), collides(collides), visible(visible),
+      projectile(projectile), selectable(selectable)
 {
 	// May be called by multiple subclass constructors - don't do anything
 	// non-repeatable here
@@ -142,14 +132,6 @@ void TileObject::setPosition(Vec3<float> newPos)
 		newOwner->ownedObjects.insert(thisPtr);
 		this->owningTile = newOwner;
 	}
-}
-
-void TileObject::update(unsigned int ticks)
-{
-	// Override this for active objects
-	LogWarning("Called on non-active object");
-	assert(!this->isActive());
-	std::ignore = ticks;
 }
 
 std::shared_ptr<Image> TileObject::getSprite() const

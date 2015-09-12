@@ -18,11 +18,10 @@ class TileView;
 class TileObject : public std::enable_shared_from_this<TileObject>
 {
   protected:
-	TileObject(TileMap &map, Vec3<float> position, bool active = false, bool collides = false,
-	           bool visible = false, bool projectile = false, bool selectable = false);
+	TileObject(TileMap &map, Vec3<float> position, bool collides = false, bool visible = false,
+	           bool projectile = false, bool selectable = false);
 	Vec3<float> position;
 	Tile *owningTile;
-	bool active;
 	bool collides;
 	bool visible;
 	bool projectile;
@@ -36,9 +35,6 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	virtual ~TileObject();
 	virtual void setPosition(Vec3<float> newPos);
 	const Vec3<float> &getPosition() const;
-
-	bool isActive() const { return active; }
-	virtual void update(unsigned int ticks);
 
 	bool isVisible() const { return visible; }
 	virtual Vec3<float> getDrawPosition() const;
@@ -62,6 +58,13 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	bool isSelectable() const { return selectable; }
 	virtual Rect<float> getSelectableBounds() const;
 	virtual void setSelected(bool selected);
+};
+
+class ActiveObject
+{
+  public:
+	virtual ~ActiveObject() = default;
+	virtual void update(unsigned int ticks) = 0;
 };
 
 class Tile
@@ -88,7 +91,7 @@ class TileMap
 	std::set<std::shared_ptr<TileObject>> projectiles;
 
   public:
-	std::set<std::shared_ptr<TileObject>> activeObjects;
+	std::set<std::shared_ptr<ActiveObject>> activeObjects;
 	std::set<std::shared_ptr<TileObject>> selectableObjects;
 	Framework &fw;
 	Tile *getTile(int x, int y, int z);

@@ -74,64 +74,6 @@ class FlyingVehicleMover : public VehicleMover
 				}
 			}
 		}
-		for (auto &weapon : vehicle.weapons)
-		{
-			weapon->update(ticks);
-			if (weapon->canFire())
-			{
-				// Find something to shoot at!
-				// FIXME: Only run on 'aggressive'? And not already a manually-selected target?
-				float range = weapon->getWeaponDef().range;
-				// Find the closest enemy within the firing arc
-				float closestEnemyRange = std::numeric_limits<float>::max();
-				std::shared_ptr<VehicleTileObject> closestEnemy;
-				for (auto obj : vehicleTile->getOwningTile()->map.activeObjects)
-				{
-					auto vehicleObj = std::dynamic_pointer_cast<VehicleTileObject>(obj);
-					if (!vehicleObj)
-					{
-						/* Not a vehicle, skip */
-						continue;
-					}
-					auto &otherVehicle = vehicleObj->getVehicle();
-					if (!vehicle.owner.isHostileTo(otherVehicle.owner))
-					{
-						/* Not hostile, skip */
-						continue;
-					}
-					auto myPosition = vehicleTile->getPosition();
-					auto otherVehicleTile = otherVehicle.tileObject.lock();
-					if (!otherVehicleTile)
-					{
-						LogError("Firing on vehicle with no tile object?");
-					}
-					auto enemyPosition = otherVehicleTile->getPosition();
-					// FIXME: Check weapon arc against otherVehicle
-					auto offset = enemyPosition - myPosition;
-					float distance = glm::length(offset);
-
-					if (distance < closestEnemyRange)
-					{
-						closestEnemyRange = distance;
-						closestEnemy = vehicleObj;
-					}
-				}
-
-				if (closestEnemyRange <= range)
-				{
-					// Only fire if we're in range
-					auto projectile = weapon->fire(closestEnemy->getPosition());
-					if (projectile)
-					{
-						vehicleTile->getOwningTile()->map.addObject(projectile);
-					}
-					else
-					{
-						LogWarning("Fire() produced no object");
-					}
-				}
-			}
-		}
 	}
 };
 
@@ -156,6 +98,7 @@ void Vehicle::launch(TileMap &map, Vec3<float> initialPosition)
 	auto vehicleTile = std::make_shared<VehicleTileObject>(*this, map, initialPosition);
 	this->tileObject = vehicleTile;
 	map.addObject(vehicleTile);
+	map.activeObjects.insert(std::dynamic_pointer_cast<ActiveObject>(shared_from_this()));
 }
 
 VehicleTileObject::VehicleTileObject(Vehicle &vehicle, TileMap &map, Vec3<float> position)
@@ -164,17 +107,82 @@ VehicleTileObject::VehicleTileObject(Vehicle &vehicle, TileMap &map, Vec3<float>
       TileObjectCollidable(map, position, Vec3<int>{32, 32, 16}, vehicle.def.voxelMap),
       vehicle(vehicle)
 {
-	this->active = true;
 	this->selectable = true;
 }
 
-VehicleTileObject::~VehicleTileObject() {}
+void Vehicle::update(unsigned int ticks)
 
-void VehicleTileObject::update(unsigned int ticks)
 {
-	if (this->vehicle.mover)
-		this->vehicle.mover->update(ticks);
+	if (!this->missions.empty())
+		this->missions.front()->update(ticks);
+	if (this->mover)
+		this->mover->update(ticks);
+	auto vehicleTile = this->tileObject.lock();
+	if (vehicleTile)
+	{
+		for (auto &weapon : this->weapons)
+		{
+			weapon->update(ticks);
+			if (weapon->canFire())
+			{
+				// Find something to shoot at!
+				// FIXME: Only run on 'aggressive'? And not already a manually-selected target?
+				float range = weapon->getWeaponDef().range;
+				// Find the closest enemy within the firing arc
+				float closestEnemyRange = std::numeric_limits<float>::max();
+				std::shared_ptr<VehicleTileObject> closestEnemy;
+				for (auto obj : vehicleTile->getOwningTile()->map.activeObjects)
+				{
+					auto otherVehicle = std::dynamic_pointer_cast<Vehicle>(obj);
+					if (!otherVehicle)
+					{
+						/* Not a vehicle, skip */
+						continue;
+					}
+					if (!this->owner.isHostileTo(otherVehicle->owner))
+					{
+						/* Not hostile, skip */
+						continue;
+					}
+					auto myPosition = vehicleTile->getPosition();
+					auto otherVehicleTile = otherVehicle->tileObject.lock();
+					if (!otherVehicleTile)
+					{
+						LogError("Firing on vehicle with no tile object?");
+					}
+					auto enemyPosition = otherVehicleTile->getPosition();
+					// FIXME: Check weapon arc against otherVehicle
+					auto offset = enemyPosition - myPosition;
+					float distance = glm::length(offset);
+
+					if (distance < closestEnemyRange)
+					{
+						closestEnemyRange = distance;
+						closestEnemy = otherVehicleTile;
+					}
+				}
+
+				if (closestEnemyRange <= range)
+				{
+					// Only fire if we're in range
+					auto projectile = weapon->fire(closestEnemy->getPosition());
+					if (projectile)
+					{
+						vehicleTile->getOwningTile()->map.addObject(projectile);
+						vehicleTile->getOwningTile()->map.activeObjects.insert(
+						    std::dynamic_pointer_cast<ActiveObject>(projectile));
+					}
+					else
+					{
+						LogWarning("Fire() produced no object");
+					}
+				}
+			}
+		}
+	}
 }
+
+VehicleTileObject::~VehicleTileObject() {}
 
 Vec3<float> VehicleTileObject::getDrawPosition() const
 {

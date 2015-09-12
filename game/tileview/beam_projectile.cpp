@@ -8,7 +8,7 @@ namespace OpenApoc
 BeamProjectile::BeamProjectile(TileMap &map, std::shared_ptr<Vehicle> firer, Vec3<float> position,
                                Vec3<float> velocity, unsigned int lifetime, const Colour &colour,
                                float beamLength, float beamWidth)
-    : TileObject(map, position, true, false, false, true),
+    : TileObject(map, position, false, false, true),
       Projectile(map, firer, position, velocity, lifetime), colour(colour), beamLength(beamLength),
       beamWidth(beamWidth)
 {

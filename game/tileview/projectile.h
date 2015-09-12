@@ -7,7 +7,7 @@ namespace OpenApoc
 class Vehicle;
 class Weapon;
 
-class Projectile : virtual public TileObject
+class Projectile : virtual public TileObject, public ActiveObject
 {
   protected:
 	Vec3<float> velocity;

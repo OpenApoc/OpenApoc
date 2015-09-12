@@ -7,8 +7,8 @@ namespace OpenApoc
 
 Projectile::Projectile(TileMap &map, std::shared_ptr<Vehicle> firer, Vec3<float> position,
                        Vec3<float> velocity, unsigned int lifetime)
-    : TileObject(map, position, true, false, false, true), velocity(velocity), age(0),
-      lifetime(lifetime), firer(firer), previousPosition(position)
+    : TileObject(map, position, false, false, true), velocity(velocity), age(0), lifetime(lifetime),
+      firer(firer), previousPosition(position)
 {
 }
 
@@ -25,7 +25,10 @@ void Projectile::update(unsigned int ticks)
 	    newPosition.y >= mapSize.y || newPosition.z < 0 || newPosition.z >= mapSize.z ||
 	    this->age >= this->lifetime)
 	{
-		this->owningTile->map.removeObject(shared_from_this());
+		auto this_shared = shared_from_this();
+		this->owningTile->map.activeObjects.erase(
+		    std::dynamic_pointer_cast<ActiveObject>(this_shared));
+		this->owningTile->map.removeObject(this_shared);
 	}
 	else
 	{

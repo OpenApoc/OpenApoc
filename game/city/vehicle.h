@@ -37,7 +37,7 @@ class VehicleMover
 	virtual ~VehicleMover();
 };
 
-class Vehicle : public std::enable_shared_from_this<Vehicle>
+class Vehicle : public std::enable_shared_from_this<Vehicle>, public ActiveObject
 {
   public:
 	virtual ~Vehicle();
@@ -56,6 +56,8 @@ class Vehicle : public std::enable_shared_from_this<Vehicle>
 	void launch(TileMap &map, Vec3<float> initialPosition);
 
 	std::vector<std::unique_ptr<Weapon>> weapons;
+
+	virtual void update(unsigned int ticks) override;
 };
 
 class VehicleTileObject : public TileObjectDirectionalSprite, public TileObjectCollidable
@@ -66,7 +68,6 @@ class VehicleTileObject : public TileObjectDirectionalSprite, public TileObjectC
   public:
 	VehicleTileObject(Vehicle &vehicle, TileMap &map, Vec3<float> position);
 	virtual ~VehicleTileObject();
-	virtual void update(unsigned int ticks) override;
 	Vec3<float> getDrawPosition() const override;
 
 	virtual Rect<float> getSelectableBounds() const override;
