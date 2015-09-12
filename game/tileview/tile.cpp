@@ -262,8 +262,10 @@ class PathComparer
 	}
 };
 
-static bool findNextNodeOnPath(PathComparer &comparer, TileMap &map, std::list<Tile *> &currentPath,
-                               Vec3<int> destination, unsigned int *iterationsLeft)
+static bool
+findNextNodeOnPath(PathComparer &comparer, TileMap &map, std::list<Tile *> &currentPath,
+                   Vec3<int> destination, unsigned int *iterationsLeft, const Vehicle &v,
+                   std::function<bool(const Tile &tile, const Vehicle &v)> canEnterTileFn)
 {
 	if (currentPath.back()->position == destination)
 		return true;
@@ -291,23 +293,20 @@ static bool findNextNodeOnPath(PathComparer &comparer, TileMap &map, std::list<T
 				Tile *tile = map.getTile(nextPosition);
 				// FIXME: Make 'blocked' tiles cleverer (e.g. don't plan around objects that will
 				// move anyway?)
-				if (!tile->collideableObjects.empty())
+				if (!canEnterTileFn(*tile, v))
 					continue;
 				// Check for diagonal routes that the 'corner' tiles we touch are empty
 				Vec3<int> cornerPosition = currentPosition;
 				cornerPosition += Vec3<int>{0, y, z};
-				if (cornerPosition != currentPosition &&
-				    !map.getTile(cornerPosition)->ownedObjects.empty())
+				if (cornerPosition != currentPosition && !canEnterTileFn(*tile, v))
 					continue;
 				cornerPosition = currentPosition;
 				cornerPosition += Vec3<int>{x, 0, z};
-				if (cornerPosition != currentPosition &&
-				    !map.getTile(cornerPosition)->ownedObjects.empty())
+				if (cornerPosition != currentPosition && !canEnterTileFn(*tile, v))
 					continue;
 				cornerPosition = currentPosition;
 				cornerPosition += Vec3<int>{x, y, 0};
-				if (cornerPosition != currentPosition &&
-				    !map.getTile(cornerPosition)->ownedObjects.empty())
+				if (cornerPosition != currentPosition && !canEnterTileFn(*tile, v))
 					continue;
 				// Already visited this tile
 				if (std::find(currentPath.begin(), currentPath.end(), tile) != currentPath.end())
@@ -321,15 +320,18 @@ static bool findNextNodeOnPath(PathComparer &comparer, TileMap &map, std::list<T
 	{
 		currentPath.push_back(tile);
 		comparer.origin = {tile->position.x, tile->position.y, tile->position.z};
-		if (findNextNodeOnPath(comparer, map, currentPath, destination, iterationsLeft))
+		if (findNextNodeOnPath(comparer, map, currentPath, destination, iterationsLeft, v,
+		                       canEnterTileFn))
 			return true;
 		currentPath.pop_back();
 	}
 	return false;
 }
 
-std::list<Tile *> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination,
-                                            unsigned int iterationLimit)
+std::list<Tile *>
+TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination, unsigned int iterationLimit,
+                          const Vehicle &v,
+                          std::function<bool(const Tile &tile, const Vehicle &v)> canEnterTileFn)
 {
 	std::list<Tile *> path;
 	PathComparer pc(destination);
@@ -347,7 +349,7 @@ std::list<Tile *> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destinat
 		return path;
 	}
 	path.push_back(this->getTile(origin));
-	if (!findNextNodeOnPath(pc, *this, path, destination, &iterationsLeft))
+	if (!findNextNodeOnPath(pc, *this, path, destination, &iterationsLeft, v, canEnterTileFn))
 	{
 		LogWarning("No route found from origin {%d,%d,%d} to desination {%d,%d,%d}", origin.x,
 		           origin.y, origin.z, destination.x, destination.y, destination.z);

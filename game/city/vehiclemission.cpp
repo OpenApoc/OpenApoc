@@ -2,16 +2,33 @@
 #include "game/tileview/tile.h"
 #include "game/city/vehicle.h"
 #include "framework/logger.h"
+#include "game/tileview/tile.h"
 
 #include <random>
 
 namespace
 {
 std::default_random_engine rng;
+
 } // anonymous namespace
 
 namespace OpenApoc
 {
+
+static bool vehicleCanEnterTile(const Tile &t, const Vehicle &v)
+{
+	if (t.collideableObjects.empty())
+		return true;
+	if (t.collideableObjects.size() == 1)
+	{
+		for (auto &obj : t.collideableObjects)
+		{
+			if (obj != v.tileObject.lock())
+				return false;
+		}
+	}
+	return false;
+}
 
 class VehicleRandomDestination : public VehicleMission
 {
@@ -36,7 +53,8 @@ class VehicleRandomDestination : public VehicleMission
 				newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
 			}
 			path = vehicleTile->getOwningTile()->map.findShortestPath(
-			    vehicleTile->getOwningTile()->position, newTarget, 500);
+			    vehicleTile->getOwningTile()->position, newTarget, 500, vehicle,
+			    vehicleCanEnterTile);
 			if (path.empty())
 			{
 				LogInfo("Failed to path - retrying");
@@ -49,7 +67,7 @@ class VehicleRandomDestination : public VehicleMission
 		{
 			Vec3<int> target = path.back()->position;
 			path = vehicleTile->getOwningTile()->map.findShortestPath(
-			    vehicleTile->getOwningTile()->position, target, 500);
+			    vehicleTile->getOwningTile()->position, target, 500, vehicle, vehicleCanEnterTile);
 			if (path.empty())
 			{
 				LogInfo("Failed to path after obstruction");

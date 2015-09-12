@@ -2,6 +2,7 @@
 
 #include "framework/includes.h"
 #include <set>
+#include <functional>
 
 namespace OpenApoc
 {
@@ -14,6 +15,7 @@ class Collision;
 class VoxelMap;
 class Renderer;
 class TileView;
+class Vehicle;
 
 class TileObject : public std::enable_shared_from_this<TileObject>
 {
@@ -104,8 +106,10 @@ class TileMap
 	~TileMap();
 	virtual void update(unsigned int ticks);
 
-	std::list<Tile *> findShortestPath(Vec3<int> origin, Vec3<int> destination,
-	                                   unsigned int iterationLimit);
+	std::list<Tile *>
+	findShortestPath(Vec3<int> origin, Vec3<int> destination, unsigned int iterationLimit,
+	                 const Vehicle &v,
+	                 std::function<bool(const Tile &tile, const Vehicle &v)> canEnterTileFn);
 
 	void removeObject(std::shared_ptr<TileObject> obj);
 	void addObject(std::shared_ptr<TileObject> obj);
