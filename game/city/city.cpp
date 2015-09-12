@@ -95,12 +95,13 @@ void City::update(unsigned int ticks)
 		{
 			if (v->missions.empty())
 			{
-				std::uniform_int_distribution<int> bld_distribution(0, this->buildings.size() - 1);
-				auto &b = this->buildings[bld_distribution(fw.state->rng)];
-				v->missions.emplace_back(VehicleMission::gotoBuilding(*v, *this, b));
+				// FIXME: Implement gotoBuilding
+				v->missions.emplace_back(VehicleMission::takeOff(*v, *this));
+				v->missions.emplace_back(VehicleMission::randomDestination(*v));
 			}
 		}
 	}
+	TileMap::update(ticks);
 }
 
 }; // namespace OpenApoc

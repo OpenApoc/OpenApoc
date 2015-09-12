@@ -5,6 +5,7 @@
 #include "game/organisation.h"
 #include "framework/image.h"
 #include "game/city/vehicle.h"
+#include "game/city/building.h"
 #include "game/city/vehiclemission.h"
 
 #include <cfloat>
@@ -90,7 +91,10 @@ VehicleMover::VehicleMover(Vehicle &v) : vehicle(v) {}
 
 VehicleMover::~VehicleMover() {}
 
-Vehicle::Vehicle(const VehicleDefinition &def, Organisation &owner) : def(def), owner(owner) {}
+Vehicle::Vehicle(const VehicleDefinition &def, Organisation &owner)
+    : def(def), owner(owner), building(nullptr)
+{
+}
 
 Vehicle::~Vehicle() {}
 
@@ -101,12 +105,16 @@ void Vehicle::launch(TileMap &map, Vec3<float> initialPosition)
 		LogError("Trying to launch already-launched vehicle");
 		return;
 	}
+	if (!this->building)
+	{
+		LogError("Vehicle not in a building?");
+	}
+	this->building->landed_vehicles.erase(shared_from_this());
+	this->building = nullptr;
 	this->mover.reset(new FlyingVehicleMover(*this, initialPosition));
-	this->missions.clear();
 	auto vehicleTile = std::make_shared<VehicleTileObject>(*this, map, initialPosition);
 	this->tileObject = vehicleTile;
 	map.addObject(vehicleTile);
-	map.activeObjects.insert(std::dynamic_pointer_cast<ActiveObject>(shared_from_this()));
 }
 
 VehicleTileObject::VehicleTileObject(Vehicle &vehicle, TileMap &map, Vec3<float> position)
@@ -156,7 +164,8 @@ void Vehicle::update(unsigned int ticks)
 					auto otherVehicleTile = otherVehicle->tileObject.lock();
 					if (!otherVehicleTile)
 					{
-						LogError("Firing on vehicle with no tile object?");
+						/* Not in the map, ignore */
+						continue;
 					}
 					auto enemyPosition = otherVehicleTile->getPosition();
 					// FIXME: Check weapon arc against otherVehicle
@@ -173,7 +182,10 @@ void Vehicle::update(unsigned int ticks)
 				if (closestEnemyRange <= range)
 				{
 					// Only fire if we're in range
-					auto projectile = weapon->fire(closestEnemy->getPosition());
+					// and fire at the center of the tile
+					auto target = closestEnemy->getPosition();
+					target += Vec3<float>{0.5, 0.5, 0.5};
+					auto projectile = weapon->fire(target);
 					if (projectile)
 					{
 						vehicleTile->getOwningTile()->map.addObject(projectile);
@@ -194,7 +206,7 @@ VehicleTileObject::~VehicleTileObject() {}
 
 Vec3<float> VehicleTileObject::getDrawPosition() const
 {
-	return this->getPosition() - Vec3<float>{2, 1, 1};
+	return this->getPosition() - Vec3<float>{1, 1, 1};
 }
 
 Rect<float> VehicleTileObject::getSelectableBounds() const

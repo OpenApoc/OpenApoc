@@ -91,10 +91,11 @@ bool LoadCityMap(Framework &fw, Vec3<int> size, tinyxml2::XMLElement *root,
 
 bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID,
                   std::shared_ptr<Image> &sprite, std::shared_ptr<VoxelMap> &voxelMap,
-                  std::vector<UString> &landingPadList)
+                  bool &isLandingPad, std::vector<UString> &landingPadList)
 {
 	std::shared_ptr<Image> readSprite = nullptr;
 	std::shared_ptr<VoxelMap> readVoxelMap = nullptr;
+	isLandingPad = false;
 
 	int numVoxelLayers = 0;
 
@@ -123,6 +124,7 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID,
 	{
 		LogInfo("Tile \"%s\" is a landing pad", tileID.str().c_str());
 		landingPadList.push_back(tileID);
+		isLandingPad = true;
 	}
 
 	readSprite = fw.data->load_image(spriteString);
@@ -364,7 +366,7 @@ bool RulesLoader::ParseCityDefinition(Framework &fw, Rules &rules, tinyxml2::XML
 					}
 					BuildingTileDef def;
 
-					if (!LoadCityTile(fw, tile, tileID, def.sprite, def.voxelMap,
+					if (!LoadCityTile(fw, tile, tileID, def.sprite, def.voxelMap, def.isLandingPad,
 					                  rules.landingPadTiles))
 					{
 						LogError("Error loading tile %d", numRead);

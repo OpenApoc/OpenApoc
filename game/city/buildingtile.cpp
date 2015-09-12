@@ -11,8 +11,8 @@ namespace OpenApoc
 BuildingTile::BuildingTile(TileMap &map, BuildingTileDef &tileDef, Vec3<int> pos,
                            Building *building)
     : TileObject(map, pos), TileObjectSprite(map, pos, tileDef.getSprite()),
-      TileObjectCollidable(map, pos, {32, 32, 16}, tileDef.getVoxelMap()), tileDef(tileDef),
-      pos(pos), building(building)
+      TileObjectCollidable(map, pos, {32, 32, 16}, tileDef.getVoxelMap()), pos(pos),
+      building(building), tileDef(tileDef)
 {
 }
 

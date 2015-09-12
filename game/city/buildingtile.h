@@ -21,12 +21,12 @@ class Building;
 class BuildingTile : public TileObjectSprite, public TileObjectCollidable
 {
   private:
-	BuildingTileDef &tileDef;
 	Vec3<int> pos;
 	// May be NULL for no building
 	Building *building;
 
   public:
+	const BuildingTileDef &tileDef;
 	BuildingTile(TileMap &map, BuildingTileDef &tileDef, Vec3<int> pos, Building *building);
 	virtual ~BuildingTile();
 };

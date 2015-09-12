@@ -1,8 +1,11 @@
 #include "game/city/vehiclemission.h"
 #include "game/tileview/tile.h"
 #include "game/city/vehicle.h"
+#include "game/city/building.h"
+#include "game/rules/buildingdef.h"
 #include "framework/logger.h"
 #include "game/tileview/tile.h"
+#include "game/city/buildingtile.h"
 
 #include <random>
 
@@ -28,6 +31,24 @@ static bool vehicleCanEnterTile(const Tile &t, const Vehicle &v)
 		}
 	}
 	return false;
+}
+
+static bool vehicleCanEnterTileAllowLandingPads(const Tile &t, const Vehicle &v)
+{
+	if (t.collideableObjects.empty())
+		return true;
+	for (auto &obj : t.collideableObjects)
+	{
+		if (obj == v.tileObject.lock())
+			continue;
+
+		auto buildingTileObject = std::dynamic_pointer_cast<BuildingTile>(obj);
+		if (buildingTileObject && buildingTileObject->tileDef.getIsLandingPad())
+			continue;
+
+		return false;
+	}
+	return true;
 }
 
 class VehicleRandomDestination : public VehicleMission
@@ -116,7 +137,72 @@ class VehicleIdleMission : public VehicleMission
 		else
 			idleTicks -= ticks;
 	}
-	virtual bool getNextDestination(Vec3<float> &dest) override { return false; }
+	virtual bool getNextDestination(Vec3<float> &dest) override
+	{
+		dest = {0, 0, 0};
+		return false;
+	}
+	virtual const UString &getName() override { return name; }
+};
+
+class VehicleTakeOffMission : public VehicleMission
+{
+  public:
+	UString name;
+	std::list<Tile *> path;
+	TileMap &map;
+	Building &b;
+
+	VehicleTakeOffMission(Vehicle &v, TileMap &map, Building &b) : VehicleMission(v), map(map), b(b)
+	{
+		name = "Take off from building " + b.def.getName();
+	}
+	virtual const std::list<Tile *> &getCurrentPlannedPath() override { return path; }
+	virtual void start() override {}
+	virtual bool isFinished() override { return (vehicle.tileObject.lock() && path.empty()); }
+	virtual ~VehicleTakeOffMission() = default;
+	virtual void update(unsigned int ticks) override
+	{
+		if (vehicle.tileObject.lock())
+		{
+			// We're already on our way
+			return;
+		}
+		for (auto padLocation : b.landingPadLocations)
+		{
+			auto padTile = map.getTile(padLocation);
+			auto abovePadLocation = padLocation;
+			abovePadLocation.z += 1;
+			auto tileAbovePad = map.getTile(abovePadLocation);
+			if (!padTile || !tileAbovePad)
+			{
+				LogError("Invalid landing pad location {%d,%d,%d} - outside map?", padLocation.x,
+				         padLocation.y, padLocation.z);
+				continue;
+			}
+			if (!vehicleCanEnterTileAllowLandingPads(*padTile, vehicle))
+				continue;
+			if (!vehicleCanEnterTileAllowLandingPads(*tileAbovePad, vehicle))
+				continue;
+			LogInfo("Launching vehicle from building \"%s\" at pad {%d,%d,%d}",
+			        b.def.getName().str().c_str(), padLocation.x, padLocation.y, padLocation.z);
+			path = {padTile, tileAbovePad};
+			vehicle.launch(map, padLocation);
+			return;
+		}
+		LogWarning("No pad in building \"%s\" free - waiting", b.def.getName().str().c_str());
+	}
+	virtual bool getNextDestination(Vec3<float> &dest) override
+	{
+		if (path.empty())
+			return false;
+		Tile *nextTile = path.front();
+		path.pop_front();
+		dest = Vec3<float>{nextTile->position.x, nextTile->position.y, nextTile->position.z}
+		       // Add {0.5,0.5,0.5} to make it route to the center of the tile
+		       + Vec3<float>{0.5, 0.5, 0.5};
+		return true;
+	}
 	virtual const UString &getName() override { return name; }
 };
 
@@ -137,6 +223,16 @@ VehicleMission *VehicleMission::gotoLocation(Vehicle &v, TileMap &map, Vec3<int>
 VehicleMission *VehicleMission::gotoBuilding(Vehicle &v, TileMap &map, Building &target)
 {
 	return nullptr;
+}
+
+VehicleMission *VehicleMission::takeOff(Vehicle &v, TileMap &map)
+{
+	if (!v.building)
+	{
+		LogError("Trying to take off while not in a building");
+		return nullptr;
+	}
+	return new VehicleTakeOffMission(v, map, *v.building);
 }
 
 } // namespace OpenApoc

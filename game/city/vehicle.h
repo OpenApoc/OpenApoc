@@ -27,6 +27,7 @@ class Vehicle;
 class Organisation;
 class Weapon;
 class VehicleMission;
+class Building;
 
 class VehicleMover
 {
@@ -51,8 +52,10 @@ class Vehicle : public std::enable_shared_from_this<Vehicle>, public ActiveObjec
 	std::deque<std::unique_ptr<VehicleMission>> missions;
 	std::unique_ptr<VehicleMover> mover;
 
+	/* The building we are current landed in (May be nullptr if in the air) */
+	Building *building;
+
 	/* 'launch' the vehicle into the city */
-	/* FIXME: Make this take initial mission/mover? */
 	void launch(TileMap &map, Vec3<float> initialPosition);
 
 	std::vector<std::unique_ptr<Weapon>> weapons;

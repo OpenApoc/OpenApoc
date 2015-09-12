@@ -28,7 +28,7 @@ GameState::GameState(Framework &fw, Rules &rules)
 
 	auto weaponIt = rules.getWeaponDefs().begin();
 
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		auto vehicleDefIt = fw.rules->getVehicleDefs().find("POLICE_HOVERCAR");
 		if (vehicleDefIt == fw.rules->getVehicleDefs().end())
@@ -50,9 +50,12 @@ GameState::GameState(Framework &fw, Rules &rules)
 		testVehicle->weapons.emplace_back(testWeapon);
 
 		this->city->vehicles.push_back(testVehicle);
-		this->city->buildings[bld_distribution(rng)].landed_vehicles.insert(testVehicle);
+		auto &b = this->city->buildings[bld_distribution(rng)];
+		b.landed_vehicles.insert(testVehicle);
+		testVehicle->building = &b;
+		city->activeObjects.insert(std::dynamic_pointer_cast<ActiveObject>(testVehicle));
 	}
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		auto vehicleDefIt = fw.rules->getVehicleDefs().find("PHOENIX_HOVERCAR");
 		if (vehicleDefIt == fw.rules->getVehicleDefs().end())
@@ -73,7 +76,10 @@ GameState::GameState(Framework &fw, Rules &rules)
 
 		auto *testWeapon = new Weapon(weaponDef, testVehicle, weaponDef.ammoCapacity);
 		testVehicle->weapons.emplace_back(testWeapon);
-		this->city->buildings[bld_distribution(rng)].landed_vehicles.insert(testVehicle);
+		auto &b = this->city->buildings[bld_distribution(rng)];
+		b.landed_vehicles.insert(testVehicle);
+		testVehicle->building = &b;
+		city->activeObjects.insert(std::dynamic_pointer_cast<ActiveObject>(testVehicle));
 	}
 }
 
