@@ -7,12 +7,14 @@
 #include "game/city/scorescreen.h"
 #include "game/general/ingameoptions.h"
 #include "game/city/vehiclemission.h"
+#include "game/city/vehicle.h"
 
 namespace OpenApoc
 {
 
 CityView::CityView(Framework &fw)
-    : TileView(fw, *fw.state->city, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z})
+    : TileView(fw, *fw.state->city, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z}),
+      updateSpeed(UpdateSpeed::Speed1)
 {
 	static const std::vector<UString> tabFormNames = {
 	    "FORM_CITY_UI_1", "FORM_CITY_UI_2", "FORM_CITY_UI_3", "FORM_CITY_UI_4",
@@ -70,7 +72,32 @@ void CityView::Render()
 
 void CityView::Update(StageCmd *const cmd)
 {
-	TileView::Update(cmd);
+	unsigned int ticks = 0;
+	switch (this->updateSpeed)
+	{
+		case UpdateSpeed::Pause:
+			ticks = 0;
+			break;
+		case UpdateSpeed::Speed1:
+			ticks = 1;
+			break;
+		case UpdateSpeed::Speed2:
+			ticks = 2;
+			break;
+		default:
+			LogWarning("FIXME: Sort out higher speed to not just hammer update (GOD-SLOW) - "
+			           "demoting to speed3");
+			this->updateSpeed = UpdateSpeed::Speed3;
+		case UpdateSpeed::Speed3:
+			ticks = 5;
+			break;
+	}
+	*cmd = stageCmd;
+	stageCmd = StageCmd();
+
+	fw.state->city->update(ticks);
+
+	TileView::Update(ticks);
 	activeTab->Update();
 }
 
@@ -162,6 +189,11 @@ void CityView::EventOccurred(Event *e)
 					this->updateSpeed = UpdateSpeed::Speed5;
 				}
 			}
+		}
+		else if (e->Type == EVENT_KEY_DOWN && e->Data.Keyboard.KeyCode == ALLEGRO_KEY_ESCAPE)
+		{
+			stageCmd.cmd = StageCmd::Command::POP;
+			return;
 		}
 		else
 		{

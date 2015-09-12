@@ -94,7 +94,6 @@ void Vehicle::launch(TileMap &map, Vec3<float> initialPosition)
 	}
 	this->mover.reset(new FlyingVehicleMover(*this, initialPosition));
 	this->missions.clear();
-	this->missions.emplace_back(VehicleMission::randomDestination(*this));
 	auto vehicleTile = std::make_shared<VehicleTileObject>(*this, map, initialPosition);
 	this->tileObject = vehicleTile;
 	map.addObject(vehicleTile);

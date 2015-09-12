@@ -1,6 +1,9 @@
 #include "game/gamestate.h"
 #include "game/city/city.h"
 #include "game/city/weapon.h"
+#include "game/city/building.h"
+#include "game/city/vehicle.h"
+#include "game/organisation.h"
 
 #include "framework/includes.h"
 #include "framework/framework.h"
@@ -21,27 +24,12 @@ GameState::GameState(Framework &fw, Rules &rules)
 	this->city.reset(new City(fw, *this));
 
 	// Place some random testing vehicles
-	std::default_random_engine generator;
-	// FIXME: Read size from city? (Only 'temporary' code anyway)
-	std::uniform_int_distribution<int> xydistribution(0, 99);
-	// Spawn vehicles at the top to avoid creating them in small
-	// inescapeable gaps in buildings
-	std::uniform_int_distribution<int> zdistribution(8, 9);
+	std::uniform_int_distribution<int> bld_distribution(0, this->city->buildings.size() - 1);
 
 	auto weaponIt = rules.getWeaponDefs().begin();
 
 	for (int i = 0; i < 50; i++)
 	{
-		int x = 0;
-		int y = 0;
-		int z = 0;
-		do
-		{
-			x = xydistribution(generator);
-			y = xydistribution(generator);
-			z = zdistribution(generator);
-		} while (!this->city->getTile(x, y, z)->ownedObjects.empty());
-
 		auto vehicleDefIt = fw.rules->getVehicleDefs().find("POLICE_HOVERCAR");
 		if (vehicleDefIt == fw.rules->getVehicleDefs().end())
 		{
@@ -62,20 +50,10 @@ GameState::GameState(Framework &fw, Rules &rules)
 		testVehicle->weapons.emplace_back(testWeapon);
 
 		this->city->vehicles.push_back(testVehicle);
-		testVehicle->launch(*this->city, Vec3<float>{x, y, z});
+		this->city->buildings[bld_distribution(rng)].landed_vehicles.insert(testVehicle);
 	}
 	for (int i = 0; i < 50; i++)
 	{
-		int x = 0;
-		int y = 0;
-		int z = 0;
-		do
-		{
-			x = xydistribution(generator);
-			y = xydistribution(generator);
-			z = zdistribution(generator);
-		} while (!this->city->getTile(x, y, z)->ownedObjects.empty());
-
 		auto vehicleDefIt = fw.rules->getVehicleDefs().find("PHOENIX_HOVERCAR");
 		if (vehicleDefIt == fw.rules->getVehicleDefs().end())
 		{
@@ -95,8 +73,7 @@ GameState::GameState(Framework &fw, Rules &rules)
 
 		auto *testWeapon = new Weapon(weaponDef, testVehicle, weaponDef.ammoCapacity);
 		testVehicle->weapons.emplace_back(testWeapon);
-
-		testVehicle->launch(*this->city, Vec3<float>{x, y, z});
+		this->city->buildings[bld_distribution(rng)].landed_vehicles.insert(testVehicle);
 	}
 }
 

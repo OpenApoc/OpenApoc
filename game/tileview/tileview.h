@@ -11,23 +11,12 @@ class TileMap;
 class Image;
 class TileObject;
 
-enum class UpdateSpeed
-{
-	Pause,
-	Speed1,
-	Speed2,
-	Speed3,
-	Speed4,
-	Speed5,
-};
-
 class TileView : public Stage
 {
   protected:
 	StageCmd stageCmd;
 	TileMap &map;
 	Vec3<int> tileSize;
-	UpdateSpeed updateSpeed;
 
   public:
 	int maxZDraw;
@@ -62,8 +51,9 @@ class TileView : public Stage
 	virtual void Resume() override;
 	virtual void Finish() override;
 	virtual void EventOccurred(Event *e) override;
-	virtual void Update(StageCmd *const cmd) override;
 	virtual void Render() override;
 	virtual bool IsTransition() override;
+
+	virtual void Update(unsigned int ticks);
 };
 }; // namespace OpenApoc

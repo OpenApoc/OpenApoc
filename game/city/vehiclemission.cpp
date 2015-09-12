@@ -80,4 +80,9 @@ VehicleMission *VehicleMission::randomDestination(Vehicle &v)
 	return new VehicleRandomDestination(v);
 }
 
+VehicleMission *VehicleMission::gotoBuilding(Vehicle &v, TileMap &map, Building &target)
+{
+	return nullptr;
+}
+
 } // namespace OpenApoc

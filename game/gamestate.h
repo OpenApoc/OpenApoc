@@ -1,13 +1,16 @@
 #pragma once
 
-#include "framework/includes.h"
-#include "game/rules/rules.h"
-#include "game/organisation.h"
+#include <random>
+#include <memory>
+#include <vector>
 
 namespace OpenApoc
 {
 
 class City;
+class Framework;
+class Rules;
+class Organisation;
 
 class GameState
 {
@@ -20,6 +23,8 @@ class GameState
 	bool showTileOrigin;
 	bool showVehiclePath;
 	bool showSelectableBounds;
+
+	std::default_random_engine rng;
 };
 
 }; // namespace OpenApoc

@@ -7,11 +7,22 @@ namespace OpenApoc
 
 class Form;
 
+enum class UpdateSpeed
+{
+	Pause,
+	Speed1,
+	Speed2,
+	Speed3,
+	Speed4,
+	Speed5,
+};
+
 class CityView : public TileView
 {
   private:
 	Form *activeTab;
 	std::vector<Form *> uiTabs;
+	UpdateSpeed updateSpeed;
 
   public:
 	CityView(Framework &fw);

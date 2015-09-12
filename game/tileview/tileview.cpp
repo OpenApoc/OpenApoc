@@ -11,8 +11,8 @@ namespace OpenApoc
 {
 
 TileView::TileView(Framework &fw, TileMap &map, Vec3<int> tileSize)
-    : Stage(fw), map(map), tileSize(tileSize), updateSpeed(UpdateSpeed::Speed1), maxZDraw(10),
-      offsetX(0), offsetY(0), cameraScrollX(0), cameraScrollY(0), selectedTilePosition(0, 0, 0),
+    : Stage(fw), map(map), tileSize(tileSize), maxZDraw(10), offsetX(0), offsetY(0),
+      cameraScrollX(0), cameraScrollY(0), selectedTilePosition(0, 0, 0),
       selectedTileImageBack(fw.data->load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
       selectedTileImageFront(fw.data->load_image("CITY/SELECTED-CITYTILE-FRONT.PNG")),
       pal(fw.data->load_palette("xcom3/ufodata/PAL_01.DAT"))
@@ -35,12 +35,6 @@ void TileView::EventOccurred(Event *e)
 
 	if (e->Type == EVENT_KEY_DOWN)
 	{
-		if (e->Data.Keyboard.KeyCode == ALLEGRO_KEY_ESCAPE)
-		{
-			stageCmd.cmd = StageCmd::Command::POP;
-			return;
-		}
-
 		switch (e->Data.Keyboard.KeyCode)
 		{
 			case ALLEGRO_KEY_UP:
@@ -170,35 +164,10 @@ void TileView::EventOccurred(Event *e)
 	}
 }
 
-void TileView::Update(StageCmd *const cmd)
+void TileView::Update(unsigned int ticks)
 {
-	int ticks = 0;
-
-	*cmd = stageCmd;
-	stageCmd = StageCmd();
-
 	offsetX += cameraScrollX;
 	offsetY += cameraScrollY;
-
-	switch (this->updateSpeed)
-	{
-		case UpdateSpeed::Pause:
-			ticks = 0;
-			break;
-		case UpdateSpeed::Speed1:
-			ticks = 1;
-			break;
-		case UpdateSpeed::Speed2:
-			ticks = 2;
-			break;
-		default:
-			LogWarning("FIXME: Sort out higher speed to not just hammer update (GOD-SLOW) - "
-			           "demoting to speed3");
-			this->updateSpeed = UpdateSpeed::Speed3;
-		case UpdateSpeed::Speed3:
-			ticks = 5;
-			break;
-	}
 
 	/* TODO: MAke non-'1' update ticks work (e.g. projectile paths & vehicle movement intersection)
 	 */

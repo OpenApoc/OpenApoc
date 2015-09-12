@@ -3,8 +3,6 @@
 #include "framework/includes.h"
 
 #include "game/tileview/tile.h"
-#include "game/city/buildingtile.h"
-#include "game/city/vehicle.h"
 
 namespace OpenApoc
 {
@@ -15,6 +13,7 @@ namespace OpenApoc
 
 class Vehicle;
 class GameState;
+class Building;
 
 class City : public TileMap
 {
@@ -23,8 +22,9 @@ class City : public TileMap
 	City(Framework &fw, GameState &state);
 	~City();
 	std::vector<std::shared_ptr<Vehicle>> vehicles;
-
 	std::vector<Building> buildings;
+
+	void update(unsigned int ticks);
 };
 
 }; // namespace OpenApoc

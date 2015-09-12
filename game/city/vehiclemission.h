@@ -9,6 +9,7 @@ namespace OpenApoc
 class Vehicle;
 class Tile;
 class TileMap;
+class Building;
 
 class VehicleMission
 {
@@ -25,5 +26,6 @@ class VehicleMission
 
 	static VehicleMission *randomDestination(Vehicle &v);
 	static VehicleMission *gotoLocation(Vehicle &v, TileMap &map, Vec3<int> target);
+	static VehicleMission *gotoBuilding(Vehicle &v, TileMap &map, Building &target);
 };
 } // namespace OpenApoc

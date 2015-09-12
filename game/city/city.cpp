@@ -2,6 +2,8 @@
 #include "game/city/building.h"
 #include "game/organisation.h"
 #include "game/city/buildingtile.h"
+#include "game/city/vehicle.h"
+#include "game/city/vehiclemission.h"
 #include "framework/framework.h"
 #include "game/resources/gamecore.h"
 
@@ -81,5 +83,24 @@ City::City(Framework &fw, GameState &state) : TileMap(fw, fw.rules->getCitySize(
 }
 
 City::~City() {}
+
+void City::update(unsigned int ticks)
+{
+	/* FIXME: Temporary 'get something working' HACK
+	 * Every now and then give a landed vehicle a new 'goto random building' mission, so there's
+	 * some activity in the city*/
+	for (auto &b : this->buildings)
+	{
+		for (auto &v : b.landed_vehicles)
+		{
+			if (v->missions.empty())
+			{
+				std::uniform_int_distribution<int> bld_distribution(0, this->buildings.size() - 1);
+				auto &b = this->buildings[bld_distribution(fw.state->rng)];
+				v->missions.emplace_back(VehicleMission::gotoBuilding(*v, *this, b));
+			}
+		}
+	}
+}
 
 }; // namespace OpenApoc
