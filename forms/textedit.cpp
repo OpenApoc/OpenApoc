@@ -227,7 +227,6 @@ void TextEdit::RaiseEvent(FormEventType Type)
 	std::ignore = Type;
 	auto ce = new Event();
 	ce->Type = EVENT_FORM_INTERACTION;
-	ce->Data.Forms = {0};
 	ce->Data.Forms.RaisedBy = this;
 	ce->Data.Forms.EventFlag = FormEventType::TextChanged;
 	fw.PushEvent(ce);

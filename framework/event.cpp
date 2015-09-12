@@ -8,6 +8,7 @@ namespace OpenApoc
 
 Event::Event()
 {
+	memset(this, 0, sizeof(*this));
 	Type = EVENT_UNDEFINED;
 	Handled = false;
 }

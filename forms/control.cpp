@@ -113,7 +113,6 @@ void Control::EventOccured(Event *e)
 				newevent->Data.Forms.MouseInfo = e->Data.Mouse;
 				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
-				newevent->Data.Forms.KeyInfo = {0};
 				fw.PushEvent(newevent);
 				mouseInside = true;
 			}
@@ -125,7 +124,6 @@ void Control::EventOccured(Event *e)
 			newevent->Data.Forms.MouseInfo = e->Data.Mouse;
 			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
-			newevent->Data.Forms.KeyInfo = {0};
 			fw.PushEvent(newevent);
 
 			e->Handled = true;
@@ -141,7 +139,6 @@ void Control::EventOccured(Event *e)
 				newevent->Data.Forms.MouseInfo = e->Data.Mouse;
 				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
-				newevent->Data.Forms.KeyInfo = {0};
 				fw.PushEvent(newevent);
 				mouseInside = false;
 			}
@@ -159,7 +156,6 @@ void Control::EventOccured(Event *e)
 			newevent->Data.Forms.MouseInfo = e->Data.Mouse;
 			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
-			newevent->Data.Forms.KeyInfo = {0};
 			fw.PushEvent(newevent);
 			mouseDepressed = true;
 
@@ -178,7 +174,6 @@ void Control::EventOccured(Event *e)
 			newevent->Data.Forms.MouseInfo = e->Data.Mouse;
 			newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 			newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
-			newevent->Data.Forms.KeyInfo = {0};
 			fw.PushEvent(newevent);
 
 			if (mouseDepressed)
@@ -190,7 +185,6 @@ void Control::EventOccured(Event *e)
 				newevent->Data.Forms.MouseInfo = e->Data.Mouse;
 				newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
 				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
-				newevent->Data.Forms.KeyInfo = {0};
 				fw.PushEvent(newevent);
 			}
 
@@ -209,7 +203,6 @@ void Control::EventOccured(Event *e)
 			newevent->Data.Forms.EventFlag =
 			    (e->Type == EVENT_KEY_DOWN ? FormEventType::KeyDown : FormEventType::KeyUp);
 			newevent->Data.Forms.KeyInfo = e->Data.Keyboard;
-			newevent->Data.Forms.MouseInfo = {0};
 			fw.PushEvent(newevent);
 
 			e->Handled = true;
@@ -224,7 +217,6 @@ void Control::EventOccured(Event *e)
 			newevent->Data.Forms.RaisedBy = this;
 			newevent->Data.Forms.EventFlag = FormEventType::KeyPress;
 			newevent->Data.Forms.KeyInfo = e->Data.Keyboard;
-			newevent->Data.Forms.MouseInfo = {0};
 			fw.PushEvent(newevent);
 
 			e->Handled = true;
