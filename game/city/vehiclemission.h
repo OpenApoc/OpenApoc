@@ -16,7 +16,7 @@ class VehicleMission
   public:
 	Vehicle &vehicle;
 	VehicleMission(Vehicle &vehicle);
-	virtual Vec3<float> getNextDestination() = 0;
+	virtual bool getNextDestination(Vec3<float> &dest) = 0;
 	virtual ~VehicleMission();
 	virtual const std::list<Tile *> &getCurrentPlannedPath() = 0;
 

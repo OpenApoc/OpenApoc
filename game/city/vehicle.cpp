@@ -63,7 +63,11 @@ class FlyingVehicleMover : public VehicleMover
 							break;
 						}
 					}
-					goalPosition = vehicle.missions.front()->getNextDestination();
+					if (!vehicle.missions.front()->getNextDestination(goalPosition))
+					{
+						distanceLeft = 0;
+						break;
+					}
 				}
 				else
 				{

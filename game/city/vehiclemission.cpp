@@ -38,7 +38,7 @@ class VehicleRandomDestination : public VehicleMission
 	VehicleRandomDestination(Vehicle &v)
 	    : VehicleMission(v), xydistribution(0, 99), zdistribution(0, 9){};
 	std::list<Tile *> path;
-	virtual Vec3<float> getNextDestination() override
+	virtual bool getNextDestination(Vec3<float> &dest) override
 	{
 		auto vehicleTile = this->vehicle.tileObject.lock();
 		if (!vehicleTile)
@@ -72,21 +72,44 @@ class VehicleRandomDestination : public VehicleMission
 			{
 				LogInfo("Failed to path after obstruction");
 				path.clear();
-				return this->getNextDestination();
+				return this->getNextDestination(dest);
 			}
 			// Skip first in the path (as that's current tile)
 			path.pop_front();
 		}
 		Tile *nextTile = path.front();
 		path.pop_front();
-		return Vec3<float>{nextTile->position.x, nextTile->position.y, nextTile->position.z}
+		dest = Vec3<float>{nextTile->position.x, nextTile->position.y, nextTile->position.z}
 		       // Add {0.5,0.5,0.5} to make it route to the center of the tile
 		       + Vec3<float>{0.5, 0.5, 0.5};
+		return true;
 	}
 	virtual const std::list<Tile *> &getCurrentPlannedPath() override { return path; }
 	virtual void start() {}
 	virtual bool isFinished() { return false; }
 	virtual void update(unsigned int ticks) { std::ignore = ticks; }
+};
+
+class VehicleIdleMission : public VehicleMission
+{
+  public:
+	static std::list<Tile *> noPath;
+	unsigned int idleTicks;
+	VehicleIdleMission(Vehicle &v, unsigned int idleTicks) : VehicleMission(v), idleTicks(idleTicks)
+	{
+	}
+	virtual const std::list<Tile *> &getCurrentPlannedPath() override { return noPath; }
+	virtual void start() override {}
+	virtual bool isFinished() override { return idleTicks == 0; }
+	virtual ~VehicleIdleMission() = default;
+	virtual void update(unsigned int ticks) override
+	{
+		if (ticks >= idleTicks)
+			idleTicks = 0;
+		else
+			idleTicks -= ticks;
+	}
+	virtual bool getNextDestination(Vec3<float> &dest) override { return false; }
 };
 
 VehicleMission::VehicleMission(Vehicle &v) : vehicle(v) {}
@@ -96,6 +119,11 @@ VehicleMission::~VehicleMission() {}
 VehicleMission *VehicleMission::randomDestination(Vehicle &v)
 {
 	return new VehicleRandomDestination(v);
+}
+
+VehicleMission *VehicleMission::gotoLocation(Vehicle &v, TileMap &map, Vec3<int> target)
+{
+	return nullptr;
 }
 
 VehicleMission *VehicleMission::gotoBuilding(Vehicle &v, TileMap &map, Building &target)
