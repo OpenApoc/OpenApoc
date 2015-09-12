@@ -27,14 +27,14 @@ env:
   - BUILD_TYPE="Release" LTO=on SUGGESTIONS=on
 
 install:
-  - pushd ./dependencies/tinyxml2 && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make && make install && popd;
-  - pushd ./dependencies/glm && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make && make install && popd;
-  - pushd ./dependencies/physfs && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make && make install && popd;
+  - pushd ./dependencies/tinyxml2 && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make -j2 && make install && popd;
+  - pushd ./dependencies/glm && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make -j2 && make install && popd;
+  - pushd ./dependencies/physfs && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make -j2 && make install && popd;
 
 before_script:
   - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DLTO=${LTO} -DCLANG_TIDY="clang-tidy-3.6" -DEXTRA_SUGGESTIONS=${SUGGESTIONS}
 
-script: make && make test ARGS="-V"
+script: make -j2 && make test ARGS="-V"
 
 after_script:
   - if [ "$CXX" = "clang++-3.6" ];then make tidy; fi
