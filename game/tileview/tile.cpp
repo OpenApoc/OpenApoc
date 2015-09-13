@@ -363,13 +363,16 @@ TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination, unsigned int 
 		 * better starting point for the next loop instead of after possibly
 		 * starting to move further from the obstacle trying to path round it*/
 		Vec3<float> dest_float{destination.x, destination.y, destination.z};
-		/* Start at the origin, as otherwise there's no benefit to the path
-		 * at all */
-		float closestCost = glm::length(Vec3<float>{origin.x, origin.y, origin.z} - dest_float);
+		float closestCost = std::numeric_limits<float>::max();
 		Tile *closestTile = path.front();
 
 		for (auto *t : path)
 		{
+			if (t->position == origin)
+			{
+				/* We want to move at least /somewhere/ */
+				continue;
+			}
 			float cost =
 			    glm::length(Vec3<float>{t->position.x, t->position.y, t->position.z} - dest_float);
 			if (cost < closestCost)
@@ -379,15 +382,18 @@ TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination, unsigned int 
 			}
 		}
 
-		while (path.back() != closestTile)
+		while (!path.empty() && path.back() != closestTile)
 		{
 			path.pop_back();
 		}
 
-		LogInfo("No route found from origin {%d,%d,%d} to desination {%d,%d,%d} in %u iterations, "
-		        "closest node {%d,%d,%d}",
-		        origin.x, origin.y, origin.z, destination.x, destination.y, destination.z,
-		        iterationLimit, currentHeadPos.x, currentHeadPos.y, currentHeadPos.z);
+		auto closestPos = closestTile->position;
+
+		LogWarning(
+		    "No route found from origin {%d,%d,%d} to desination {%d,%d,%d} in %u iterations, "
+		    "closest node {%d,%d,%d} (%d steps)",
+		    origin.x, origin.y, origin.z, destination.x, destination.y, destination.z,
+		    iterationLimit, closestPos.x, closestPos.y, closestPos.z, path.size());
 	}
 	return path;
 }
