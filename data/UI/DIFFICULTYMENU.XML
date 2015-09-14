@@ -1,57 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc>
-
-
-	<form id="FORM_DIFFICULTYMENU">
-	
-		<style minwidth="640" minheight="480">
-			<position x="centre" y="centre" />
-			<size width="644" height="484" />
-			<backcolour r="128" g="80" b="80" />
-			
-			<graphic>
-				<image>xcom3/UFODATA/TITLES.PCX</image>
-				<position x="2" y="2" />
-				<size width="640" height="480" />
-				
-				<label text="STR_OPENAPOCALYPSE">
-					<backcolour r="255" g="255" b="255" a="192" />
-					<position x="0" y="0" />
-					<size width="640" height="32" />
-					<alignment horizontal="centre" vertical="centre" />
-					<font>BIGFONT</font>
-				</label>
-			</graphic>
-
-
-			<textbutton id="BUTTON_DIFFICULTY1" text="STR_DIFFICULTY1">
-				<position x="centre" y="190" />
-				<size width="300" height="32" />
-				<font>SMALFONT</font>
-			</textbutton>
-			<textbutton id="BUTTON_DIFFICULTY2" text="STR_DIFFICULTY2">
-				<position x="centre" y="240" />
-				<size width="300" height="32" />
-				<font>SMALFONT</font>
-			</textbutton>
-			<textbutton id="BUTTON_DIFFICULTY3" text="STR_DIFFICULTY3">
-				<position x="centre" y="290" />
-				<size width="300" height="32" />
-				<font>SMALFONT</font>
-			</textbutton>
-			<textbutton id="BUTTON_DIFFICULTY4" text="STR_DIFFICULTY4">
-				<position x="centre" y="340" />
-				<size width="300" height="32" />
-				<font>SMALFONT</font>
-			</textbutton>
-			<textbutton id="BUTTON_DIFFICULTY5" text="STR_DIFFICULTY5">
-				<position x="centre" y="390" />
-				<size width="300" height="32" />
-				<font>SMALFONT</font>
-			</textbutton>
-			
-		</style>
-
-	</form>
-
+  <form id="FORM_DIFFICULTYMENU">
+    <style minwidth="640" minheight="480">
+      <position x="centre" y="centre"/>
+      <size width="644" height="484"/>
+      <backcolour r="128" g="80" b="80"/>
+      <graphic>
+        <image>xcom3/UFODATA/TITLES.PCX</image>
+        <position x="2" y="2"/>
+        <size width="640" height="480"/>
+        <label text="STR_OPENAPOCALYPSE">
+          <backcolour r="255" g="255" b="255" a="192"/>
+          <position x="0" y="0"/>
+          <size width="640" height="32"/>
+          <alignment horizontal="centre" vertical="centre"/>
+          <font>BIGFONT</font>
+        </label>
+      </graphic>
+      <textbutton id="BUTTON_DIFFICULTY1" text="STR_DIFFICULTY1">
+        <position x="centre" y="190"/>
+        <size width="300" height="32"/>
+        <font>SMALFONT</font>
+      </textbutton>
+      <textbutton id="BUTTON_DIFFICULTY2" text="STR_DIFFICULTY2">
+        <position x="centre" y="240"/>
+        <size width="300" height="32"/>
+        <font>SMALFONT</font>
+      </textbutton>
+      <textbutton id="BUTTON_DIFFICULTY3" text="STR_DIFFICULTY3">
+        <position x="centre" y="290"/>
+        <size width="300" height="32"/>
+        <font>SMALFONT</font>
+      </textbutton>
+      <textbutton id="BUTTON_DIFFICULTY4" text="STR_DIFFICULTY4">
+        <position x="centre" y="340"/>
+        <size width="300" height="32"/>
+        <font>SMALFONT</font>
+      </textbutton>
+      <textbutton id="BUTTON_DIFFICULTY5" text="STR_DIFFICULTY5">
+        <position x="centre" y="390"/>
+        <size width="300" height="32"/>
+        <font>SMALFONT</font>
+      </textbutton>
+    </style>
+  </form>
 </openapoc>
