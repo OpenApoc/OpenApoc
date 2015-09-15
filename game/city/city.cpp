@@ -89,14 +89,15 @@ void City::update(unsigned int ticks)
 	/* FIXME: Temporary 'get something working' HACK
 	 * Every now and then give a landed vehicle a new 'goto random building' mission, so there's
 	 * some activity in the city*/
+	std::uniform_int_distribution<int> bld_distribution(0, this->buildings.size() - 1);
 	for (auto &b : this->buildings)
 	{
 		for (auto &v : b.landed_vehicles)
 		{
 			if (v->missions.empty())
 			{
-				// FIXME: Implement gotoBuilding
-				v->missions.emplace_back(VehicleMission::randomDestination(*v, *this));
+				auto &b = this->buildings[bld_distribution(fw.state->rng)];
+				v->missions.emplace_back(VehicleMission::gotoBuilding(*v, *this, b));
 				v->missions.front()->start();
 			}
 		}

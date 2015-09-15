@@ -235,6 +235,7 @@ class VehicleLandMission : public VehicleMission
 			/* FIXME: Overloading isFinished() to complete landing action
 			 * (Should add a ->end() call to mirror ->start()?*/
 			vehicle.land(map, b);
+			LogInfo("Vehicle mission %s: Landed", name.str().c_str());
 			return true;
 		}
 		return false;
@@ -303,6 +304,145 @@ class VehicleGotoLocationMission : public VehicleMission
 	virtual const UString &getName() override { return name; }
 };
 
+class VehicleGotoBuildingMission : public VehicleMission
+{
+  public:
+	UString name;
+	TileMap &map;
+	Building &b;
+
+	std::list<Tile> fakePath;
+
+	VehicleGotoBuildingMission(Vehicle &v, TileMap &map, Building &b)
+	    : VehicleMission(v), map(map), b(b)
+	{
+		name = "Goto building " + b.def.getName();
+	}
+	virtual const std::list<Tile *> &getCurrentPlannedPath() override
+	{
+		static std::list<Tile *> invalidPath{};
+		return invalidPath;
+	}
+	virtual void start() override
+	{
+		LogInfo("Vehicle mission %s checking state", name.str().c_str());
+		if (&b == vehicle.building)
+		{
+			LogInfo("Vehicle mission %s: Already at building", name.str().c_str());
+			return;
+		}
+		auto vehicleTile = vehicle.tileObject.lock();
+		if (!vehicleTile)
+		{
+			LogInfo("Mission %s: Taking off first", this->name.str().c_str());
+			auto *takeoffMission = VehicleMission::takeOff(vehicle, map);
+			vehicle.missions.emplace_front(takeoffMission);
+			takeoffMission->start();
+			return;
+		}
+		/* Am I already above a landing pad? If so land */
+		auto position = vehicleTile->getOwningTile()->position;
+		LogInfo("Vehicle mission %s: at position {%d,%d,%d}", name.str().c_str(), position.x,
+		        position.y, position.z);
+		for (auto padLocation : b.landingPadLocations)
+		{
+			padLocation.z += 1;
+			if (padLocation == position)
+			{
+				LogInfo("Mission %s: Landing on pad {%d,%d,%d}", this->name.str().c_str(),
+				        padLocation.x, padLocation.y, padLocation.z - 1);
+				auto *landMission = VehicleMission::land(vehicle, map, b);
+				vehicle.missions.emplace_front(landMission);
+				landMission->start();
+				return;
+			}
+		}
+		/* I must be in the air and not above a pad - try to find the shortest path to a pad
+		 * (if no successfull paths then choose the incomplete path with the lowest (cost + distance
+		 * to goal)*/
+		Vec3<int> shortestPathPad;
+		float shortestPathCost = std::numeric_limits<float>::max();
+		Vec3<int> closestIncompletePathPad;
+		float closestIncompletePathCost = std::numeric_limits<float>::max();
+
+		Vec3<int> target;
+
+		for (auto dest : b.landingPadLocations)
+		{
+			dest.z += 1; // we want to route to the tile above the pad
+			auto currentPath =
+			    map.findShortestPath(position, dest, 500, vehicle, vehicleCanEnterTile);
+			Vec3<int> pathEnd = currentPath.back()->position;
+			if (pathEnd == dest)
+			{
+				// complete path
+				float pathCost = currentPath.size();
+				if (shortestPathCost > pathCost)
+				{
+					shortestPathCost = pathCost;
+					shortestPathPad = pathEnd;
+				}
+			}
+			else
+			{
+				// partial path
+				float pathCost = currentPath.size();
+				pathCost +=
+				    glm::length(Vec3<float>{currentPath.back()->position} - Vec3<float>{dest});
+				if (closestIncompletePathCost > pathCost)
+				{
+					closestIncompletePathCost = pathCost;
+					closestIncompletePathPad = pathEnd;
+				}
+			}
+		}
+
+		if (shortestPathCost != std::numeric_limits<float>::max())
+		{
+			LogInfo("Vehicle mission %s: Found direct path to {%d,%d,%d}", name.str().c_str(),
+			        shortestPathPad.x, shortestPathPad.y, shortestPathPad.z);
+			auto *gotoMission = VehicleMission::gotoLocation(vehicle, map, shortestPathPad);
+			vehicle.missions.emplace_front(gotoMission);
+			gotoMission->start();
+		}
+		else
+		{
+			LogInfo("Vehicle mission %s: Found no direct path - closest {%d,%d,%d}",
+			        name.str().c_str(), closestIncompletePathPad.x, closestIncompletePathPad.y,
+			        closestIncompletePathPad.z);
+			auto *gotoMission =
+			    VehicleMission::gotoLocation(vehicle, map, closestIncompletePathPad);
+			vehicle.missions.emplace_front(gotoMission);
+			gotoMission->start();
+		}
+	}
+	virtual bool isFinished() override
+	{
+		if (vehicle.building == &b)
+		{
+			LogInfo("Vehicle mission %s: Finished", name.str().c_str());
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	virtual ~VehicleGotoBuildingMission() = default;
+	virtual void update(unsigned int ticks) override { std::ignore = ticks; }
+	virtual bool getNextDestination(Vec3<float> &dest) override
+	{
+		std::ignore = dest;
+		if (vehicle.building != &b)
+		{
+			LogWarning("Should never be unless already landed");
+		}
+		dest = {0, 0, 0};
+		return true;
+	}
+	virtual const UString &getName() override { return name; }
+};
+
 VehicleMission::VehicleMission(Vehicle &v) : vehicle(v) {}
 
 VehicleMission::~VehicleMission() {}
@@ -338,7 +478,7 @@ VehicleMission *VehicleMission::gotoBuilding(Vehicle &v, TileMap &map, Building 
 	//     queue(gotoLocation(lowest cost of routes + estimated distance to closest pad))
 	//  }
 	//  queue(Land)
-	return nullptr;
+	return new VehicleGotoBuildingMission(v, map, target);
 }
 
 VehicleMission *VehicleMission::takeOff(Vehicle &v, TileMap &map)
@@ -351,4 +491,8 @@ VehicleMission *VehicleMission::takeOff(Vehicle &v, TileMap &map)
 	return new VehicleTakeOffMission(v, map, *v.building);
 }
 
+VehicleMission *VehicleMission::land(Vehicle &v, TileMap &map, Building &b)
+{
+	return new VehicleLandMission(v, map, b);
+}
 } // namespace OpenApoc

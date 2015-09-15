@@ -34,15 +34,16 @@ class FlyingVehicleMover : public VehicleMover
 	}
 	virtual void update(unsigned int ticks) override
 	{
-		auto vehicleTile = this->vehicle.tileObject.lock();
-		if (!vehicleTile)
-		{
-			LogError("Calling on vehicle with no tile object?");
-		}
-		float distanceLeft = speed * ticks;
+
 		if (!vehicle.missions.empty())
 		{
 			vehicle.missions.front()->update(ticks);
+			auto vehicleTile = this->vehicle.tileObject.lock();
+			if (!vehicleTile)
+			{
+				return;
+			}
+			float distanceLeft = speed * ticks;
 			while (distanceLeft > 0)
 			{
 				Vec3<float> vectorToGoal = goalPosition - vehicleTile->getPosition();
@@ -51,7 +52,7 @@ class FlyingVehicleMover : public VehicleMover
 				{
 					distanceLeft -= distanceToGoal;
 					vehicleTile->setPosition(goalPosition);
-					if (vehicle.missions.front()->isFinished())
+					while (vehicle.missions.front()->isFinished())
 					{
 						LogInfo("Vehicle mission \"%s\" finished",
 						        vehicle.missions.front()->getName().str().c_str());
@@ -61,15 +62,16 @@ class FlyingVehicleMover : public VehicleMover
 							LogInfo("Vehicle mission \"%s\" starting",
 							        vehicle.missions.front()->getName().str().c_str());
 							vehicle.missions.front()->start();
+							continue;
 						}
 						else
 						{
 							LogInfo("No next vehicle mission, going idle");
-							distanceLeft = 0;
 							break;
 						}
 					}
-					if (!vehicle.missions.front()->getNextDestination(goalPosition))
+					if (vehicle.missions.empty() ||
+					    vehicle.missions.front()->getNextDestination(goalPosition) == false)
 					{
 						distanceLeft = 0;
 						break;

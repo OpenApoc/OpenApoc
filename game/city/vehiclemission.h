@@ -28,7 +28,11 @@ class VehicleMission
 	static VehicleMission *randomDestination(Vehicle &v, TileMap &map);
 	static VehicleMission *gotoLocation(Vehicle &v, TileMap &map, Vec3<int> target);
 	static VehicleMission *gotoBuilding(Vehicle &v, TileMap &map, Building &target);
+
+	//INTERNAL: Not to be used directly (Only works when in building)
 	static VehicleMission *takeOff(Vehicle &v, TileMap &map);
+	//INTERNAL: Not to be used directly (Only works if directly above a pad)
+	static VehicleMission *land(Vehicle &v, TileMap &map, Building &b);
 
 	virtual const UString &getName() = 0;
 };
