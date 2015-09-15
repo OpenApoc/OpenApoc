@@ -54,63 +54,35 @@ static bool vehicleCanEnterTileAllowLandingPads(const Tile &t, const Vehicle &v)
 class VehicleRandomDestination : public VehicleMission
 {
   public:
+	TileMap &map;
 	std::uniform_int_distribution<int> xydistribution;
 	std::uniform_int_distribution<int> zdistribution;
 	std::list<Tile *> path;
 	UString name;
-	VehicleRandomDestination(Vehicle &v)
-	    : VehicleMission(v), xydistribution(0, 99), zdistribution(0, 9)
+	VehicleRandomDestination(Vehicle &v, TileMap &map)
+	    : VehicleMission(v), map(map), xydistribution(0, 99), zdistribution(0, 9)
 	{
 		name = "Random destination";
 	}
 	virtual bool getNextDestination(Vec3<float> &dest) override
 	{
-		auto vehicleTile = this->vehicle.tileObject.lock();
-		if (!vehicleTile)
-		{
-			LogError("Calling on vehicle with no tile object?");
-		}
-		while (path.empty())
-		{
-			Vec3<int> newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
-			while (!vehicleTile->getOwningTile()->map.getTile(newTarget)->ownedObjects.empty())
-			{
-				newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
-			}
-			path = vehicleTile->getOwningTile()->map.findShortestPath(
-			    vehicleTile->getOwningTile()->position, newTarget, 500, vehicle,
-			    vehicleCanEnterTile);
-			if (path.empty())
-			{
-				LogInfo("Failed to path - retrying");
-				continue;
-			}
-			// Skip first in the path (as that's current tile)
-			path.pop_front();
-		}
-		if (!path.front()->ownedObjects.empty())
-		{
-			Vec3<int> target = path.back()->position;
-			path = vehicleTile->getOwningTile()->map.findShortestPath(
-			    vehicleTile->getOwningTile()->position, target, 500, vehicle, vehicleCanEnterTile);
-			if (path.empty())
-			{
-				LogInfo("Failed to path after obstruction");
-				path.clear();
-				return this->getNextDestination(dest);
-			}
-			// Skip first in the path (as that's current tile)
-			path.pop_front();
-		}
-		Tile *nextTile = path.front();
-		path.pop_front();
-		dest = Vec3<float>{nextTile->position.x, nextTile->position.y, nextTile->position.z}
-		       // Add {0.5,0.5,0.5} to make it route to the center of the tile
-		       + Vec3<float>{0.5, 0.5, 0.5};
-		return true;
+		std::ignore = dest;
+		static Vec3<float> invalidDestination{0, 0, 0};
+		LogError("Should never be called");
+		return false;
 	}
 	virtual const std::list<Tile *> &getCurrentPlannedPath() override { return path; }
-	virtual void start() override {}
+	virtual void start() override
+	{
+		Vec3<int> newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
+		while (!map.getTile(newTarget)->ownedObjects.empty())
+		{
+			newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
+		}
+		auto *gotoMission = VehicleMission::gotoLocation(vehicle, map, newTarget);
+		vehicle.missions.emplace_front(gotoMission);
+		gotoMission->start();
+	}
 	virtual bool isFinished() override { return false; }
 	virtual void update(unsigned int ticks) override { std::ignore = ticks; }
 	virtual const UString &getName() override { return name; }
@@ -163,6 +135,7 @@ class VehicleTakeOffMission : public VehicleMission
 	virtual ~VehicleTakeOffMission() = default;
 	virtual void update(unsigned int ticks) override
 	{
+		std::ignore = ticks;
 		if (vehicle.tileObject.lock())
 		{
 			// We're already on our way
@@ -206,29 +179,77 @@ class VehicleTakeOffMission : public VehicleMission
 	virtual const UString &getName() override { return name; }
 };
 
+class VehicleGotoLocationMission : public VehicleMission
+{
+  public:
+	UString name;
+	std::list<Tile *> path;
+	TileMap &map;
+	Vec3<int> target;
+
+	VehicleGotoLocationMission(Vehicle &v, TileMap &map, Vec3<int> target)
+	    : VehicleMission(v), map(map), target(target)
+	{
+		name = "Goto location {" + Strings::FromInteger(target.x) + "," +
+		       Strings::FromInteger(target.y) + "," + Strings::FromInteger(target.z) + "}";
+	}
+	virtual const std::list<Tile *> &getCurrentPlannedPath() override { return path; }
+	virtual void start() override
+	{
+		auto vehicleTile = vehicle.tileObject.lock();
+		if (!vehicleTile)
+		{
+			LogInfo("Mission %s: Taking off first", this->name.str().c_str());
+			auto *takeoffMission = VehicleMission::takeOff(vehicle, map);
+			vehicle.missions.emplace_front(takeoffMission);
+			takeoffMission->start();
+		}
+		else
+		{
+			path = map.findShortestPath(vehicleTile->getOwningTile()->position, target, 500,
+			                            vehicle, vehicleCanEnterTile);
+		}
+	}
+	virtual bool isFinished() override { return (path.empty()); }
+	virtual ~VehicleGotoLocationMission() = default;
+	virtual void update(unsigned int ticks) override { std::ignore = ticks; }
+	virtual bool getNextDestination(Vec3<float> &dest) override
+	{
+		if (path.empty())
+			return false;
+		Tile *nextTile = path.front();
+		path.pop_front();
+		dest = Vec3<float>{nextTile->position.x, nextTile->position.y, nextTile->position.z}
+		       // Add {0.5,0.5,0.5} to make it route to the center of the tile
+		       + Vec3<float>{0.5, 0.5, 0.5};
+		return true;
+	}
+	virtual const UString &getName() override { return name; }
+};
+
 VehicleMission::VehicleMission(Vehicle &v) : vehicle(v) {}
 
 VehicleMission::~VehicleMission() {}
 
-VehicleMission *VehicleMission::randomDestination(Vehicle &v)
+VehicleMission *VehicleMission::randomDestination(Vehicle &v, TileMap &map)
 {
-	return new VehicleRandomDestination(v);
+	return new VehicleRandomDestination(v, map);
 }
 
 VehicleMission *VehicleMission::gotoLocation(Vehicle &v, TileMap &map, Vec3<int> target)
 {
-	//TODO
-	//Pseudocode:
+	// TODO
+	// Pseudocode:
 	// if (in building)
 	// 	prepend(TakeOff)
 	// routeClosestICanTo(target);
-	return nullptr;
+	return new VehicleGotoLocationMission(v, map, target);
 }
 
 VehicleMission *VehicleMission::gotoBuilding(Vehicle &v, TileMap &map, Building &target)
 {
-	//TODO
-	//Pseudocode:
+	// TODO
+	// Pseudocode:
 	// if (in building)
 	// 	queue(TakeOff)
 	// while (!above pad) {

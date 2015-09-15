@@ -96,8 +96,8 @@ void City::update(unsigned int ticks)
 			if (v->missions.empty())
 			{
 				// FIXME: Implement gotoBuilding
-				v->missions.emplace_back(VehicleMission::takeOff(*v, *this));
-				v->missions.emplace_back(VehicleMission::randomDestination(*v));
+				v->missions.emplace_back(VehicleMission::randomDestination(*v, *this));
+				v->missions.front()->start();
 			}
 		}
 	}

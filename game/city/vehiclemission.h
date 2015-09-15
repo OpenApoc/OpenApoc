@@ -25,7 +25,7 @@ class VehicleMission
 	virtual bool isFinished() = 0;
 	virtual void start() = 0;
 
-	static VehicleMission *randomDestination(Vehicle &v);
+	static VehicleMission *randomDestination(Vehicle &v, TileMap &map);
 	static VehicleMission *gotoLocation(Vehicle &v, TileMap &map, Vec3<int> target);
 	static VehicleMission *gotoBuilding(Vehicle &v, TileMap &map, Building &target);
 	static VehicleMission *takeOff(Vehicle &v, TileMap &map);
