@@ -13,11 +13,13 @@ class Form;
 class Event;
 class Framework;
 class Surface;
+class Palette;
 
 class Control
 {
   private:
 	std::shared_ptr<Surface> controlArea;
+	std::shared_ptr<Palette> palette;
 
 	void PreRender();
 	void PostRender();

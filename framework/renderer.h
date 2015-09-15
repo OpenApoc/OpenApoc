@@ -32,6 +32,7 @@ class Renderer
 	virtual ~Renderer();
 	virtual void clear(Colour c = Colour{0, 0, 0, 0}) = 0;
 	virtual void setPalette(std::shared_ptr<Palette> p) = 0;
+	virtual std::shared_ptr<Palette> getPalette() = 0;
 	virtual void draw(std::shared_ptr<Image> i, Vec2<float> position) = 0;
 	virtual void drawRotated(std::shared_ptr<Image> i, Vec2<float> center, Vec2<float> position,
 	                         float angle) = 0;

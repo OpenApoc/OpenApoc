@@ -236,11 +236,21 @@ void Control::Render()
 		controlArea.reset(new Surface{Vec2<unsigned int>{Size.x, Size.y}});
 	}
 	{
+		std::shared_ptr<Palette> previousPalette;
+		if (this->palette)
+		{
+			previousPalette = fw.renderer->getPalette();
+			fw.renderer->setPalette(this->palette);
+		}
 
 		RendererSurfaceBinding b(*fw.renderer, controlArea);
 		PreRender();
 		OnRender();
 		PostRender();
+		if (this->palette)
+		{
+			fw.renderer->setPalette(previousPalette);
+		}
 	}
 
 	fw.renderer->draw(controlArea, Vec2<float>{Location.x, Location.y});
@@ -303,6 +313,17 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 	for (node = Element->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
 	{
 		nodename = node->Name();
+
+		if (nodename == "palette")
+		{
+			auto pal = fw.data->load_palette(node->GetText());
+			if (!pal)
+			{
+				LogError("Control referenced palette \"%s\" that cannot be loaded",
+				         node->GetText());
+			}
+			this->palette = pal;
+		}
 
 		if (nodename == "backcolour")
 		{

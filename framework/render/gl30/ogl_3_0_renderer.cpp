@@ -695,10 +695,14 @@ class OGL30Renderer : public Renderer
 	virtual void clear(Colour c = Colour{0, 0, 0, 0}) override;
 	virtual void setPalette(std::shared_ptr<Palette> p) override
 	{
+		if (p == this->currentPalette)
+			return;
+		this->flush();
 		if (!p->rendererPrivateData)
 			p->rendererPrivateData.reset(new GLPalette(p));
 		this->currentPalette = p;
 	}
+	virtual std::shared_ptr<Palette> getPalette() override { return this->currentPalette; }
 
 	virtual void draw(std::shared_ptr<Image> i, Vec2<float> position) override;
 	virtual void drawRotated(std::shared_ptr<Image> image, Vec2<float> center, Vec2<float> position,
