@@ -57,6 +57,8 @@ class Vehicle : public std::enable_shared_from_this<Vehicle>, public ActiveObjec
 
 	/* 'launch' the vehicle into the city */
 	void launch(TileMap &map, Vec3<float> initialPosition);
+	/* 'land' the vehicle in a building*/
+	void land(TileMap &map, Building &b);
 
 	std::vector<std::unique_ptr<Weapon>> weapons;
 

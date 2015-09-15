@@ -179,6 +179,82 @@ class VehicleTakeOffMission : public VehicleMission
 	virtual const UString &getName() override { return name; }
 };
 
+class VehicleLandMission : public VehicleMission
+{
+  public:
+	UString name;
+	std::list<Tile *> path;
+	TileMap &map;
+	Building &b;
+
+	VehicleLandMission(Vehicle &v, TileMap &map, Building &b) : VehicleMission(v), map(map), b(b)
+	{
+		name = "Land in building " + b.def.getName();
+	}
+	virtual const std::list<Tile *> &getCurrentPlannedPath() override { return path; }
+	virtual void start() override
+	{
+		auto vehicleTile = vehicle.tileObject.lock();
+		if (!vehicleTile)
+		{
+			LogError("Trying to land vehicle not in the air?");
+			return;
+		}
+		auto padPosition = vehicleTile->getOwningTile()->position;
+		if (padPosition.z < 1)
+		{
+			LogError("Vehicle trying to land off bottom of map {%d,%d,%d}", padPosition.x,
+			         padPosition.y, padPosition.z);
+			return;
+		}
+		padPosition.z -= 1;
+
+		bool padFound = false;
+
+		for (auto &landingPadPos : b.landingPadLocations)
+		{
+			if (landingPadPos == padPosition)
+			{
+				padFound = true;
+				break;
+			}
+		}
+		if (!padFound)
+		{
+			LogError("Vehicle at {%d,%d,%d} not directly above a landing pad for building %s",
+			         padPosition.x, padPosition.y, padPosition.z + 1,
+			         b.def.getName().str().c_str());
+			return;
+		}
+		path = {map.getTile(padPosition)};
+	}
+	virtual bool isFinished() override
+	{
+		if (path.empty())
+		{
+			/* FIXME: Overloading isFinished() to complete landing action
+			 * (Should add a ->end() call to mirror ->start()?*/
+			vehicle.land(map, b);
+			return true;
+		}
+		return false;
+	}
+	virtual ~VehicleLandMission() = default;
+	virtual void update(unsigned int ticks) override { std::ignore = ticks; }
+	virtual bool getNextDestination(Vec3<float> &dest) override
+	{
+		if (path.empty())
+			return false;
+		Tile *nextTile = path.front();
+		path.pop_front();
+		dest = Vec3<float>{nextTile->position.x, nextTile->position.y, nextTile->position.z}
+		       // Add {0.5,0.5,0.5} to make it route to the center of the tile
+		       + Vec3<float>{0.5, 0.5, 0.5};
+		return true;
+	}
+	virtual const UString &getName() override { return name; }
+};
+
 class VehicleGotoLocationMission : public VehicleMission
 {
   public:

@@ -119,6 +119,25 @@ void Vehicle::launch(TileMap &map, Vec3<float> initialPosition)
 	map.addObject(vehicleTile);
 }
 
+void Vehicle::land(TileMap &map, Building &b)
+{
+	auto vehicleTile = this->tileObject.lock();
+	if (!vehicleTile)
+	{
+		LogError("Trying to land already-landed vehicle");
+		return;
+	}
+	if (this->building)
+	{
+		LogError("Vehicle already in a building?");
+		return;
+	}
+	this->building = &b;
+	b.landed_vehicles.insert(shared_from_this());
+	this->tileObject.reset();
+	map.removeObject(vehicleTile);
+}
+
 VehicleTileObject::VehicleTileObject(Vehicle &vehicle, TileMap &map, Vec3<float> position)
     : TileObject(map, position),
       TileObjectDirectionalSprite(map, position, vehicle.def.directionalSprites),
