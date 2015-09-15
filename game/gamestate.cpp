@@ -28,7 +28,7 @@ GameState::GameState(Framework &fw, Rules &rules)
 
 	auto weaponIt = rules.getWeaponDefs().begin();
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 50; i++)
 	{
 		auto vehicleDefIt = fw.rules->getVehicleDefs().find("POLICE_HOVERCAR");
 		if (vehicleDefIt == fw.rules->getVehicleDefs().end())
@@ -55,7 +55,7 @@ GameState::GameState(Framework &fw, Rules &rules)
 		testVehicle->building = &b;
 		city->activeObjects.insert(std::dynamic_pointer_cast<ActiveObject>(testVehicle));
 	}
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 50; i++)
 	{
 		auto vehicleDefIt = fw.rules->getVehicleDefs().find("PHOENIX_HOVERCAR");
 		if (vehicleDefIt == fw.rules->getVehicleDefs().end())
