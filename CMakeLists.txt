@@ -57,6 +57,8 @@ if (EXTRA_SUGGESTIONS)
 		ADD_OPTIONAL_COMPILER_FLAG("-Wno-shadow")
 		ADD_OPTIONAL_COMPILER_FLAG("-Wno-weak-vtables")
 		ADD_OPTIONAL_COMPILER_FLAG("-Wno-padded")
+		ADD_OPTIONAL_COMPILER_FLAG("-Wno-exit-time-destructors")
+		ADD_OPTIONAL_COMPILER_FLAG("-Wno-global-constructors")
 endif(EXTRA_SUGGESTIONS)
 
 if(EXTRA_WARNINGS)
