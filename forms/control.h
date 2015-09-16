@@ -76,15 +76,15 @@ class Control
 		Control *c = this->FindControl(name);
 		if (!c)
 		{
-			LogError("Failed to find control \"%s\" within form \"%s\"", name.str().c_str(),
-			         this->Name.str().c_str());
+			LogError("Failed to find control \"%s\" within form \"%s\"", name.c_str(),
+			         this->Name.c_str());
 			return nullptr;
 		}
 		T *typedControl = dynamic_cast<T *>(c);
 		if (!c)
 		{
-			LogError("Failed cast  control \"%s\" within form \"%s\" to type \"%s\"",
-			         name.str().c_str(), this->Name.str().c_str(), typeid(T).name());
+			LogError("Failed cast  control \"%s\" within form \"%s\" to type \"%s\"", name.c_str(),
+			         this->Name.c_str(), typeid(T).name());
 			return nullptr;
 		}
 		return typedControl;

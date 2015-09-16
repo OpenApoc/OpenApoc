@@ -26,7 +26,7 @@ std::shared_ptr<ApocalypseFont> ApocalypseFont::loadFont(Framework &fw,
 	attr = fontElement->Attribute("path");
 	if (!attr)
 	{
-		LogError("apocfont \"%s\" with no \"path\" attribute", fontName.str().c_str());
+		LogError("apocfont \"%s\" with no \"path\" attribute", fontName.c_str());
 		return nullptr;
 	}
 	fileName = attr;
@@ -34,27 +34,27 @@ std::shared_ptr<ApocalypseFont> ApocalypseFont::loadFont(Framework &fw,
 	auto err = fontElement->QueryIntAttribute("height", &height);
 	if (err != tinyxml2::XML_NO_ERROR || height <= 0)
 	{
-		LogError("apocfont \"%s\" with invalid \"height\" attribute", fontName.str().c_str());
+		LogError("apocfont \"%s\" with invalid \"height\" attribute", fontName.c_str());
 		return nullptr;
 	}
 	err = fontElement->QueryIntAttribute("width", &width);
 	if (err != tinyxml2::XML_NO_ERROR || width <= 0)
 	{
-		LogError("apocfont \"%s\" with invalid \"width\" attribute", fontName.str().c_str());
+		LogError("apocfont \"%s\" with invalid \"width\" attribute", fontName.c_str());
 		return nullptr;
 	}
 	err = fontElement->QueryIntAttribute("spacewidth", &spacewidth);
 	if (err != tinyxml2::XML_NO_ERROR || spacewidth <= 0)
 	{
-		LogError("apocfont \"%s\" with invalid \"spacewidth\" attribute", fontName.str().c_str());
+		LogError("apocfont \"%s\" with invalid \"spacewidth\" attribute", fontName.c_str());
 		return nullptr;
 	}
 
 	auto file = fw.data->load_file(fileName);
 	if (!file)
 	{
-		LogError("apocfont \"%s\" - Failed to open font path \"%s\"", fontName.str().c_str(),
-		         fileName.str().c_str());
+		LogError("apocfont \"%s\" - Failed to open font path \"%s\"", fontName.c_str(),
+		         fileName.c_str());
 		return nullptr;
 	}
 
@@ -64,8 +64,8 @@ std::shared_ptr<ApocalypseFont> ApocalypseFont::loadFont(Framework &fw,
 
 	if (!glyphCount)
 	{
-		LogError("apocfont \"%s\" - file \"%s\" contains no glyphs", fontName.str().c_str(),
-		         fileName.str().c_str());
+		LogError("apocfont \"%s\" - file \"%s\" contains no glyphs", fontName.c_str(),
+		         fileName.c_str());
 	}
 	std::shared_ptr<ApocalypseFont> font(new ApocalypseFont);
 
@@ -80,8 +80,8 @@ std::shared_ptr<ApocalypseFont> ApocalypseFont::loadFont(Framework &fw,
 		UString nodeName = glyphNode->Name();
 		if (nodeName != "glyph")
 		{
-			LogError("apocfont \"%s\" has unexpected child node \"%s\", skipping",
-			         fontName.str().c_str(), nodeName.str().c_str());
+			LogError("apocfont \"%s\" has unexpected child node \"%s\", skipping", fontName.c_str(),
+			         nodeName.c_str());
 			continue;
 		}
 		int offset;
@@ -90,14 +90,14 @@ std::shared_ptr<ApocalypseFont> ApocalypseFont::loadFont(Framework &fw,
 		{
 			LogError(
 			    "apocfont \"%s\" has glyph with invalid/missing offset attribute - skipping glyph",
-			    fontName.str().c_str());
+			    fontName.c_str());
 			continue;
 		}
 		attr = glyphNode->Attribute("string");
 		if (!attr)
 		{
 			LogError("apocfont \"%s\" has glyph with missing string attribute - skipping glyph",
-			         fontName.str().c_str());
+			         fontName.c_str());
 			continue;
 		}
 
@@ -106,14 +106,14 @@ std::shared_ptr<ApocalypseFont> ApocalypseFont::loadFont(Framework &fw,
 		{
 			LogError("apocfont \"%s\" glyph w/offset %d has %d codepoints, expected one - skipping "
 			         "glyph",
-			         fontName.str().c_str(), offset, glyphString.length());
+			         fontName.c_str(), offset, glyphString.length());
 			continue;
 		}
 		if (offset >= glyphCount)
 		{
 			LogError("apocfont \"%s\" glyph \"%s\" has invalid offset %d - file contains a max of "
 			         "%d - skipping glyph",
-			         fontName.str().c_str(), glyphString.str().c_str(), offset, glyphCount);
+			         fontName.c_str(), glyphString.c_str(), offset, glyphCount);
 			continue;
 		}
 		UniChar c = glyphString[0];
@@ -121,7 +121,7 @@ std::shared_ptr<ApocalypseFont> ApocalypseFont::loadFont(Framework &fw,
 		{
 			LogError(
 			    "apocfont \"%s\" glyph \"%s\" has multiple definitions - skipping re-definition",
-			    fontName.str().c_str(), glyphString.str().c_str());
+			    fontName.c_str(), glyphString.c_str());
 			continue;
 		}
 		file.seekg(glyphSize * offset, std::ios::beg);
@@ -167,7 +167,7 @@ std::shared_ptr<PaletteImage> ApocalypseFont::getGlyph(UniChar codepoint)
 		// FIXME: Hack - assume all missing glyphs are spaces
 		// TODO: Fallback fonts?
 		LogWarning("Font %s missing glyph for character \"%s\" (codepoint %u)",
-		           this->getName().str().c_str(), UString(codepoint).str().c_str(), codepoint);
+		           this->getName().c_str(), UString(codepoint).c_str(), codepoint);
 		auto missingGlyph = this->getGlyph(UString::u8Char(' '));
 		fontbitmaps.emplace(codepoint, missingGlyph);
 	}

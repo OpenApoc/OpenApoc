@@ -39,7 +39,7 @@ static UString GetCorrectCaseFilename(const UString &Filename)
 	buf[Filename.length()] = '\0';
 	if (PHYSFSEXT_locateCorrectCase(buf.get()))
 	{
-		LogInfo("Failed to find file \"%s\"", Filename.str().c_str());
+		LogInfo("Failed to find file \"%s\"", Filename.c_str());
 		return "";
 	}
 	return buf.get();
@@ -59,14 +59,13 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 	PhysfsIFileImpl(const UString &path, const UString &suppliedPath, size_t bufferSize = 512)
 	    : bufferSize(bufferSize), buffer(new char[bufferSize]), suppliedPath(suppliedPath)
 	{
-		file = PHYSFS_openRead(path.str().c_str());
+		file = PHYSFS_openRead(path.c_str());
 		if (!file)
 		{
-			LogError("Failed to open file \"%s\" : \"%s\"", path.str().c_str(),
-			         PHYSFS_getLastError());
+			LogError("Failed to open file \"%s\" : \"%s\"", path.c_str(), PHYSFS_getLastError());
 			return;
 		}
-		systemPath = PHYSFS_getRealDir(path.str().c_str());
+		systemPath = PHYSFS_getRealDir(path.c_str());
 		systemPath += "/" + path;
 	}
 	virtual ~PhysfsIFileImpl()
@@ -116,7 +115,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 
 		if (mode & std::ios_base::out)
 		{
-			LogError("ios::out set on read-only IFile \"%s\"", this->suppliedPath.str().c_str());
+			LogError("ios::out set on read-only IFile \"%s\"", this->suppliedPath.c_str());
 			assert(0);
 			setp(buffer.get(), buffer.get());
 		}
@@ -134,7 +133,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 
 		if (mode & std::ios_base::out)
 		{
-			LogError("ios::out set on read-only IFile \"%s\"", this->suppliedPath.str().c_str());
+			LogError("ios::out set on read-only IFile \"%s\"", this->suppliedPath.c_str());
 			assert(0);
 			setp(buffer.get(), buffer.get());
 		}
@@ -144,7 +143,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 
 	int_type overflow(int_type c = traits_type::eof()) override
 	{
-		LogError("overflow called on read-only IFile \"%s\"", this->suppliedPath.str().c_str());
+		LogError("overflow called on read-only IFile \"%s\"", this->suppliedPath.c_str());
 		assert(0);
 		std::ignore = c;
 		return 0;
@@ -246,10 +245,10 @@ Data::Data(Framework &fw, std::vector<UString> paths, int imageCacheSize, int im
 		if (l)
 		{
 			this->imageLoaders.emplace_back(l);
-			LogInfo("Initialised image loader %s", t.str().c_str());
+			LogInfo("Initialised image loader %s", t.c_str());
 		}
 		else
-			LogWarning("Failed to load image loader %s", t.str().c_str());
+			LogWarning("Failed to load image loader %s", t.c_str());
 	}
 
 	for (auto &sampleBackend : *registeredSampleLoaders)
@@ -259,10 +258,10 @@ Data::Data(Framework &fw, std::vector<UString> paths, int imageCacheSize, int im
 		if (s)
 		{
 			this->sampleLoaders.emplace_back(s);
-			LogInfo("Initialised sample loader %s", t.str().c_str());
+			LogInfo("Initialised sample loader %s", t.c_str());
 		}
 		else
-			LogWarning("Failed to load sample loader %s", t.str().c_str());
+			LogWarning("Failed to load sample loader %s", t.c_str());
 	}
 
 	for (auto &musicLoader : *registeredMusicLoaders)
@@ -272,14 +271,14 @@ Data::Data(Framework &fw, std::vector<UString> paths, int imageCacheSize, int im
 		if (m)
 		{
 			this->musicLoaders.emplace_back(m);
-			LogInfo("Initialised music loader %s", t.str().c_str());
+			LogInfo("Initialised music loader %s", t.c_str());
 		}
 		else
-			LogWarning("Failed to load music loader %s", t.str().c_str());
+			LogWarning("Failed to load music loader %s", t.c_str());
 	}
 	this->writeDir = PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME);
-	LogInfo("Setting write directory to \"%s\"", this->writeDir.str().c_str());
-	PHYSFS_setWriteDir(this->writeDir.str().c_str());
+	LogInfo("Setting write directory to \"%s\"", this->writeDir.c_str());
+	PHYSFS_setWriteDir(this->writeDir.c_str());
 	for (int i = 0; i < imageCacheSize; i++)
 		pinnedImages.push(nullptr);
 	for (int i = 0; i < imageSetCacheSize; i++)
@@ -291,17 +290,17 @@ Data::Data(Framework &fw, std::vector<UString> paths, int imageCacheSize, int im
 	// searched)
 	for (auto &p : paths)
 	{
-		if (!PHYSFS_mount(p.str().c_str(), "/", 0))
+		if (!PHYSFS_mount(p.c_str(), "/", 0))
 		{
-			LogWarning("Failed to add resource dir \"%s\"", p.str().c_str());
+			LogWarning("Failed to add resource dir \"%s\"", p.c_str());
 			continue;
 		}
 		else
-			LogInfo("Resource dir \"%s\" mounted to \"%s\"", p.str().c_str(),
-			        PHYSFS_getMountPoint(p.str().c_str()));
+			LogInfo("Resource dir \"%s\" mounted to \"%s\"", p.c_str(),
+			        PHYSFS_getMountPoint(p.c_str()));
 	}
 	// Finally, the write directory trumps all
-	PHYSFS_mount(this->writeDir.str().c_str(), "/", 0);
+	PHYSFS_mount(this->writeDir.c_str(), "/", 0);
 }
 
 Data::~Data() {}
@@ -315,7 +314,7 @@ std::shared_ptr<VoxelSlice> Data::load_voxel_slice(const UString &path)
 		//"LOFTEMPS:DATFILE:TABFILE:INDEX"
 		if (splitString.size() != 4)
 		{
-			LogError("Invalid LOFTEMPS string \"%s\"", path.str().c_str());
+			LogError("Invalid LOFTEMPS string \"%s\"", path.c_str());
 			return nullptr;
 		}
 		// Cut off the index to get the LOFTemps file
@@ -327,13 +326,13 @@ std::shared_ptr<VoxelSlice> Data::load_voxel_slice(const UString &path)
 			auto datFile = this->load_file(splitString[1]);
 			if (!datFile)
 			{
-				LogError("Failed to open LOFTemps dat file \"%s\"", splitString[1].str().c_str());
+				LogError("Failed to open LOFTemps dat file \"%s\"", splitString[1].c_str());
 				return nullptr;
 			}
 			auto tabFile = this->load_file(splitString[2]);
 			if (!tabFile)
 			{
-				LogError("Failed to open LOFTemps tab file \"%s\"", splitString[2].str().c_str());
+				LogError("Failed to open LOFTemps tab file \"%s\"", splitString[2].c_str());
 				return nullptr;
 			}
 			lofTemps = std::make_shared<LOFTemps>(datFile, tabFile);
@@ -351,7 +350,7 @@ std::shared_ptr<VoxelSlice> Data::load_voxel_slice(const UString &path)
 
 	if (!slice)
 	{
-		LogError("Failed to load VoxelSlice \"%s\"", path.str().c_str());
+		LogError("Failed to load VoxelSlice \"%s\"", path.c_str());
 		return nullptr;
 	}
 	return slice;
@@ -374,7 +373,7 @@ std::shared_ptr<ImageSet> Data::load_image_set(const UString &path)
 	}
 	else
 	{
-		LogError("Unknown image set format \"%s\"", path.str().c_str());
+		LogError("Unknown image set format \"%s\"", path.c_str());
 		return nullptr;
 	}
 
@@ -400,7 +399,7 @@ std::shared_ptr<Sample> Data::load_sample(const UString &path)
 	}
 	if (!sample)
 	{
-		LogInfo("Failed to load sample \"%s\"", path.str().c_str());
+		LogInfo("Failed to load sample \"%s\"", path.c_str());
 		return nullptr;
 	}
 	this->sampleCache[cacheKey] = sample;
@@ -416,7 +415,7 @@ std::shared_ptr<MusicTrack> Data::load_music(const UString &path)
 		if (track)
 			return track;
 	}
-	LogInfo("Failed to load music track \"%s\"", path.str().c_str());
+	LogInfo("Failed to load music track \"%s\"", path.c_str());
 	return nullptr;
 }
 
@@ -436,7 +435,7 @@ std::shared_ptr<Image> Data::load_image(const UString &path)
 		// RAW:PATH:WIDTH:HEIGHT
 		if (splitString.size() != 4 && splitString.size() != 5)
 		{
-			LogError("Invalid RAW resource string: \"%s\"", path.str().c_str());
+			LogError("Invalid RAW resource string: \"%s\"", path.c_str());
 			return nullptr;
 		}
 
@@ -445,7 +444,7 @@ std::shared_ptr<Image> Data::load_image(const UString &path)
 		                                                    Strings::ToInteger(splitString[3])});
 		if (!pImg)
 		{
-			LogError("Failed to load RAW image: \"%s\"", path.str().c_str());
+			LogError("Failed to load RAW image: \"%s\"", path.c_str());
 			return nullptr;
 		}
 		if (splitString.size() == 5)
@@ -453,7 +452,7 @@ std::shared_ptr<Image> Data::load_image(const UString &path)
 			auto pal = this->load_palette(splitString[4]);
 			if (!pal)
 			{
-				LogError("Failed to load palette for RAW image: \"%s\"", path.str().c_str());
+				LogError("Failed to load palette for RAW image: \"%s\"", path.c_str());
 				return nullptr;
 			}
 			img = pImg->toRGBImage(pal);
@@ -468,7 +467,7 @@ std::shared_ptr<Image> Data::load_image(const UString &path)
 		auto splitString = path.split(':');
 		if (splitString.size() != 3 && splitString.size() != 4 && splitString.size() != 5)
 		{
-			LogError("Invalid PCK resource string: \"%s\"", path.str().c_str());
+			LogError("Invalid PCK resource string: \"%s\"", path.c_str());
 			return nullptr;
 		}
 		auto imageSet =
@@ -500,7 +499,7 @@ std::shared_ptr<Image> Data::load_image(const UString &path)
 				break;
 			}
 			default:
-				LogError("Invalid PCK resource string \"%s\"", path.str().c_str());
+				LogError("Invalid PCK resource string \"%s\"", path.c_str());
 				return nullptr;
 		}
 	}
@@ -516,7 +515,7 @@ std::shared_ptr<Image> Data::load_image(const UString &path)
 		}
 		if (!img)
 		{
-			LogInfo("Failed to load image \"%s\"", path.str().c_str());
+			LogInfo("Failed to load image \"%s\"", path.c_str());
 			return nullptr;
 		}
 	}
@@ -533,19 +532,19 @@ IFile Data::load_file(const UString &path, Data::FileMode mode)
 	IFile f;
 	if (mode != Data::FileMode::Read)
 	{
-		LogError("Invalid FileMode set for \"%s\"", path.str().c_str());
+		LogError("Invalid FileMode set for \"%s\"", path.c_str());
 		return f;
 	}
 	UString foundPath = GetCorrectCaseFilename(path);
 	if (foundPath == "")
 	{
-		LogInfo("Failed to find \"%s\"", path.str().c_str());
+		LogInfo("Failed to find \"%s\"", path.c_str());
 		assert(!f);
 		return f;
 	}
 	f.f.reset(new PhysfsIFileImpl(foundPath, path));
 	f.rdbuf(dynamic_cast<PhysfsIFileImpl *>(f.f.get()));
-	LogInfo("Loading \"%s\" from \"%s\"", path.str().c_str(), f.systemPath().str().c_str());
+	LogInfo("Loading \"%s\" from \"%s\"", path.c_str(), f.systemPath().c_str());
 	return f;
 }
 
@@ -573,7 +572,7 @@ std::shared_ptr<Palette> Data::load_palette(const UString &path)
 		std::shared_ptr<Palette> pal(loadApocPalette(*this, path));
 		if (!pal)
 		{
-			LogError("Failed to open palette \"%s\"", path.str().c_str());
+			LogError("Failed to open palette \"%s\"", path.c_str());
 			return nullptr;
 		}
 		return pal;

@@ -164,8 +164,8 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 
 	va_list arglist;
 	va_start(arglist, format);
-	fprintf(outFile, "%s %llu %s: ", level_prefix, clockns, prefix.str().c_str());
-	vfprintf(outFile, format.str().c_str(), arglist);
+	fprintf(outFile, "%s %llu %s: ", level_prefix, clockns, prefix.c_str());
+	vfprintf(outFile, format.c_str(), arglist);
 	// On error print a backtrace to the log file
 	if (level == LogLevel::Error)
 		print_backtrace(outFile);
@@ -178,8 +178,8 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 	{
 		fflush(outFile);
 		va_start(arglist, format);
-		fprintf(stderr, "%s %llu %s: ", level_prefix, clockns, prefix.str().c_str());
-		vfprintf(stderr, format.str().c_str(), arglist);
+		fprintf(stderr, "%s %llu %s: ", level_prefix, clockns, prefix.c_str());
+		vfprintf(stderr, format.c_str(), arglist);
 		fprintf(stderr, "\n");
 		va_end(arglist);
 	}
@@ -189,14 +189,14 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 	{
 		/* How big should the string be? */
 		va_start(arglist, format);
-		auto strSize = vsnprintf(NULL, 0, format.str().c_str(), arglist);
+		auto strSize = vsnprintf(NULL, 0, format.c_str(), arglist);
 		strSize += 1; // NULL terminator
 		std::unique_ptr<char[]> string(new char[strSize]);
 		va_end(arglist);
 
 		/* Now format the string */
 		va_start(arglist, format);
-		vsnprintf(string.get(), strSize, format.str().c_str(), arglist);
+		vsnprintf(string.get(), strSize, format.c_str(), arglist);
 		va_end(arglist);
 
 		al_show_native_message_box(NULL, "OpenApoc ERROR", "A fatal error has occurred",

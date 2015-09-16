@@ -80,10 +80,10 @@ void RGBImage::saveBitmap(const UString &filename)
 	{
 		workingdir += segs.at(pidx);
 
-		if (!PHYSFS_exists(workingdir.str().c_str()))
+		if (!PHYSFS_exists(workingdir.c_str()))
 		{
-			LogInfo("Building %s", workingdir.str().c_str());
-			PHYSFS_mkdir(workingdir.str().c_str());
+			LogInfo("Building %s", workingdir.c_str());
+			PHYSFS_mkdir(workingdir.c_str());
 		}
 		if (workingdir.substr(workingdir.length() - 1, 1) != "/")
 		{
@@ -112,7 +112,7 @@ void RGBImage::saveBitmap(const UString &filename)
 	}
 
 	al_unlock_bitmap(bmp);
-	al_save_bitmap(filename.str().c_str(), bmp);
+	al_save_bitmap(filename.c_str(), bmp);
 	al_destroy_bitmap(bmp);
 }
 

@@ -26,7 +26,7 @@ CityView::CityView(Framework &fw)
 		Form *f = fw.gamecore->GetForm(formName);
 		if (!f)
 		{
-			LogError("Failed to load form \"%s\"", formName.str().c_str());
+			LogError("Failed to load form \"%s\"", formName.c_str());
 			return;
 		}
 		f->takesFocus = false;

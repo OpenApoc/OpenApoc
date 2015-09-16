@@ -13,12 +13,12 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, 
 		return false;
 	}
 
-	if (!element->Attribute(attributeName.str().c_str()))
+	if (!element->Attribute(attributeName.c_str()))
 	{
 		return false;
 	}
 
-	UString str = element->Attribute(attributeName.str().c_str());
+	UString str = element->Attribute(attributeName.c_str());
 	if (str == "true")
 	{
 		output = true;
@@ -30,8 +30,8 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, 
 		return true;
 	}
 
-	LogWarning("Invalid string for bool attribute \"%s\" - \"%s\"", attributeName.str().c_str(),
-	           str.str().c_str());
+	LogWarning("Invalid string for bool attribute \"%s\" - \"%s\"", attributeName.c_str(),
+	           str.c_str());
 	return false;
 }
 
@@ -43,12 +43,12 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, 
 		return false;
 	}
 
-	if (!element->Attribute(attributeName.str().c_str()))
+	if (!element->Attribute(attributeName.c_str()))
 	{
 		return false;
 	}
 
-	output = element->Attribute(attributeName.str().c_str());
+	output = element->Attribute(attributeName.c_str());
 
 	return true;
 }
@@ -61,12 +61,12 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, 
 		return false;
 	}
 
-	if (!element->Attribute(attributeName.str().c_str()))
+	if (!element->Attribute(attributeName.c_str()))
 	{
 		return false;
 	}
 
-	UString str = element->Attribute(attributeName.str().c_str());
+	UString str = element->Attribute(attributeName.c_str());
 
 	if (!Strings::IsFloat(str))
 	{
@@ -86,12 +86,12 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, 
 		return false;
 	}
 
-	if (!element->Attribute(attributeName.str().c_str()))
+	if (!element->Attribute(attributeName.c_str()))
 	{
 		return false;
 	}
 
-	UString str = element->Attribute(attributeName.str().c_str());
+	UString str = element->Attribute(attributeName.c_str());
 
 	if (!Strings::IsInteger(str))
 	{
@@ -111,12 +111,12 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, 
 		return false;
 	}
 
-	if (!element->Attribute(attributeName.str().c_str()))
+	if (!element->Attribute(attributeName.c_str()))
 	{
 		return false;
 	}
 
-	UString str = element->Attribute(attributeName.str().c_str());
+	UString str = element->Attribute(attributeName.c_str());
 
 	int r, g, b, a;
 

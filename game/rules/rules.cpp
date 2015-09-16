@@ -12,35 +12,34 @@ Rules::Rules(Framework &fw, const UString &rootFileName)
 	auto file = fw.data->load_file(rootFileName);
 	if (!file)
 	{
-		LogError("Failed to find rule file \"%s\"", rootFileName.str().c_str());
+		LogError("Failed to find rule file \"%s\"", rootFileName.c_str());
 		return;
 	}
 	systemPath = file.systemPath();
 
 	tinyxml2::XMLDocument doc;
-	doc.LoadFile(systemPath.str().c_str());
+	doc.LoadFile(systemPath.c_str());
 	tinyxml2::XMLElement *root = doc.RootElement();
 	if (!root)
 	{
-		LogError("Failed to parse rule file \"%s\"", systemPath.str().c_str());
+		LogError("Failed to parse rule file \"%s\"", systemPath.c_str());
 		return;
 	}
 
 	UString nodeName = root->Name();
 	if (nodeName != "openapoc_rules")
 	{
-		LogError("Unexpected root node \"%s\" in \"%s\" - expected \"%s\"", nodeName.str().c_str(),
-		         systemPath.str().c_str(), "openapoc_rules");
+		LogError("Unexpected root node \"%s\" in \"%s\" - expected \"%s\"", nodeName.c_str(),
+		         systemPath.c_str(), "openapoc_rules");
 	}
 
 	UString rulesetName = root->Attribute("name");
-	LogInfo("Loading ruleset \"%s\" from \"%s\"", rulesetName.str().c_str(),
-	        systemPath.str().c_str());
+	LogInfo("Loading ruleset \"%s\" from \"%s\"", rulesetName.c_str(), systemPath.c_str());
 
 	if (!RulesLoader::ParseRules(fw, *this, root))
 	{
-		LogError("Error loading ruleset \"%s\" from \"%s\"", rulesetName.str().c_str(),
-		         systemPath.str().c_str());
+		LogError("Error loading ruleset \"%s\" from \"%s\"", rulesetName.c_str(),
+		         systemPath.c_str());
 	}
 }
 
@@ -49,7 +48,7 @@ bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *
 	UString nodeName = root->Name();
 	if (nodeName != "openapoc_rules")
 	{
-		LogError("Unexpected root node \"%s\" - expected \"%s\"", nodeName.str().c_str(),
+		LogError("Unexpected root node \"%s\" - expected \"%s\"", nodeName.c_str(),
 		         "openapoc_rules");
 		return false;
 	}
@@ -85,28 +84,28 @@ bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *
 			auto file = fw.data->load_file(rootFileName);
 			if (!file)
 			{
-				LogError("Failed to find included rule file \"%s\"", rootFileName.str().c_str());
+				LogError("Failed to find included rule file \"%s\"", rootFileName.c_str());
 				return false;
 			}
 			systemPath = file.systemPath();
-			LogInfo("Loading included ruleset from \"%s\"", systemPath.str().c_str());
+			LogInfo("Loading included ruleset from \"%s\"", systemPath.c_str());
 			tinyxml2::XMLDocument doc;
-			doc.LoadFile(systemPath.str().c_str());
+			doc.LoadFile(systemPath.c_str());
 			tinyxml2::XMLElement *incRoot = doc.RootElement();
 			if (!incRoot)
 			{
-				LogError("Failed to parse included rule file \"%s\"", systemPath.str().c_str());
+				LogError("Failed to parse included rule file \"%s\"", systemPath.c_str());
 				return false;
 			}
 			if (!ParseRules(fw, rules, incRoot))
 			{
-				LogError("Error loading included ruleset \"%s\"", systemPath.str().c_str());
+				LogError("Error loading included ruleset \"%s\"", systemPath.c_str());
 				return false;
 			}
 		}
 		else
 		{
-			LogError("Unexpected node \"%s\"", name.str().c_str());
+			LogError("Unexpected node \"%s\"", name.c_str());
 			return false;
 		}
 	}

@@ -18,13 +18,13 @@ Event::Event(const UString &str) : Event()
 	auto args = str.split(' ');
 	if (args.size() < 2 || args[0] != "EVENT")
 	{
-		LogError("Invalid event string \"%s\"", str.str().c_str());
+		LogError("Invalid event string \"%s\"", str.c_str());
 		return;
 	}
 	auto type = args[1].split('=');
 	if (type.size() != 2)
 	{
-		LogError("Invalid event string \"%s\" - couldn't parse TYPE", str.str().c_str());
+		LogError("Invalid event string \"%s\" - couldn't parse TYPE", str.c_str());
 		return;
 	}
 	if (type[1] == "WINDOW_CLOSED")
@@ -77,7 +77,7 @@ Event::Event(const UString &str) : Event()
 	}
 	else
 	{
-		LogError("Invalid event string \"%s\" - unhandled TYPE", str.str().c_str());
+		LogError("Invalid event string \"%s\" - unhandled TYPE", str.c_str());
 		return;
 	}
 
@@ -86,14 +86,14 @@ Event::Event(const UString &str) : Event()
 		auto opts = args[i].split('=');
 		if (opts.size() != 2)
 		{
-			LogError("Invalid event string \"%s\" - couldn't parse argument \"%s\"",
-			         str.str().c_str(), args[i].str().c_str());
+			LogError("Invalid event string \"%s\" - couldn't parse argument \"%s\"", str.c_str(),
+			         args[i].c_str());
 			return;
 		}
 		if (!Strings::IsInteger(opts[1]))
 		{
 			LogError("Invalid event string \"%s\" - couldn't parse option value \"%s\"",
-			         str.str().c_str(), args[i].str().c_str());
+			         str.c_str(), args[i].c_str());
 			return;
 		}
 		int value = Strings::ToInteger(opts[1]);
@@ -103,7 +103,7 @@ Event::Event(const UString &str) : Event()
 			    this->Type != EVENT_KEY_PRESS)
 			{
 				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
-				         str.str().c_str(), args[i].str().c_str());
+				         str.c_str(), args[i].c_str());
 				return;
 			}
 			this->Data.Keyboard.KeyCode = value;
@@ -114,7 +114,7 @@ Event::Event(const UString &str) : Event()
 			    this->Type != EVENT_KEY_PRESS)
 			{
 				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
-				         str.str().c_str(), args[i].str().c_str());
+				         str.c_str(), args[i].c_str());
 				return;
 			}
 			this->Data.Keyboard.UniChar = value;
@@ -125,7 +125,7 @@ Event::Event(const UString &str) : Event()
 			    this->Type != EVENT_KEY_PRESS)
 			{
 				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
-				         str.str().c_str(), args[i].str().c_str());
+				         str.c_str(), args[i].c_str());
 				return;
 			}
 			this->Data.Keyboard.Modifiers = value;
@@ -136,7 +136,7 @@ Event::Event(const UString &str) : Event()
 			    this->Type != EVENT_MOUSE_DOWN)
 			{
 				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
-				         str.str().c_str(), args[i].str().c_str());
+				         str.c_str(), args[i].c_str());
 				return;
 			}
 			this->Data.Mouse.X = value;
@@ -147,7 +147,7 @@ Event::Event(const UString &str) : Event()
 			    this->Type != EVENT_MOUSE_DOWN)
 			{
 				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
-				         str.str().c_str(), args[i].str().c_str());
+				         str.c_str(), args[i].c_str());
 				return;
 			}
 			this->Data.Mouse.Y = value;
@@ -158,7 +158,7 @@ Event::Event(const UString &str) : Event()
 			    this->Type != EVENT_MOUSE_DOWN)
 			{
 				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
-				         str.str().c_str(), args[i].str().c_str());
+				         str.c_str(), args[i].c_str());
 				return;
 			}
 			this->Data.Mouse.DeltaX = value;
@@ -169,7 +169,7 @@ Event::Event(const UString &str) : Event()
 			    this->Type != EVENT_MOUSE_DOWN)
 			{
 				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
-				         str.str().c_str(), args[i].str().c_str());
+				         str.c_str(), args[i].c_str());
 				return;
 			}
 			this->Data.Mouse.DeltaY = value;
@@ -180,7 +180,7 @@ Event::Event(const UString &str) : Event()
 			    this->Type != EVENT_MOUSE_DOWN)
 			{
 				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
-				         str.str().c_str(), args[i].str().c_str());
+				         str.c_str(), args[i].c_str());
 				return;
 			}
 			this->Data.Mouse.WheelVertical = value;
@@ -191,7 +191,7 @@ Event::Event(const UString &str) : Event()
 			    this->Type != EVENT_MOUSE_DOWN)
 			{
 				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
-				         str.str().c_str(), args[i].str().c_str());
+				         str.c_str(), args[i].c_str());
 				return;
 			}
 			this->Data.Mouse.WheelHorizontal = value;
@@ -202,7 +202,7 @@ Event::Event(const UString &str) : Event()
 			    this->Type != EVENT_MOUSE_DOWN)
 			{
 				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
-				         str.str().c_str(), args[i].str().c_str());
+				         str.c_str(), args[i].c_str());
 				return;
 			}
 			this->Data.Mouse.Button = value;
@@ -212,7 +212,7 @@ Event::Event(const UString &str) : Event()
 			if (this->Type != EVENT_WINDOW_RESIZE)
 			{
 				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
-				         str.str().c_str(), args[i].str().c_str());
+				         str.c_str(), args[i].c_str());
 				return;
 			}
 			this->Data.Display.Width = value;
@@ -222,15 +222,15 @@ Event::Event(const UString &str) : Event()
 			if (this->Type != EVENT_WINDOW_RESIZE)
 			{
 				LogError("Invalid event string \"%s\" - option \"%s\" not valid for type",
-				         str.str().c_str(), args[i].str().c_str());
+				         str.c_str(), args[i].c_str());
 				return;
 			}
 			this->Data.Display.Height = value;
 		}
 		else
 		{
-			LogError("Invalid event string \"%s\" - unhandled option \"%s\"", str.str().c_str(),
-			         args[i].str().c_str());
+			LogError("Invalid event string \"%s\" - unhandled option \"%s\"", str.c_str(),
+			         args[i].c_str());
 			return;
 		}
 	}

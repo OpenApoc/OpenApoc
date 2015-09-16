@@ -28,7 +28,7 @@ bool LoadCityMap(Framework &fw, Vec3<int> size, tinyxml2::XMLElement *root,
 		UString name = e->Name();
 		if (name != "tile")
 		{
-			LogError("Unexpected node \"%s\" - expected \"tile\"", name.str().c_str());
+			LogError("Unexpected node \"%s\" - expected \"tile\"", name.c_str());
 			return false;
 		}
 		int x, y, z;
@@ -122,7 +122,7 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID,
 	UString landingPad = root->Attribute("landingpad");
 	if (landingPad != "")
 	{
-		LogInfo("Tile \"%s\" is a landing pad", tileID.str().c_str());
+		LogInfo("Tile \"%s\" is a landing pad", tileID.c_str());
 		landingPadList.push_back(tileID);
 		isLandingPad = true;
 	}
@@ -130,7 +130,7 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID,
 	readSprite = fw.data->load_image(spriteString);
 	if (!readSprite)
 	{
-		LogError("Failed to load image \"%s\"", spriteString.str().c_str());
+		LogError("Failed to load image \"%s\"", spriteString.c_str());
 		return false;
 	}
 
@@ -177,7 +177,7 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID,
 				UString layerName = layer->Name();
 				if (layerName != "loflayer")
 				{
-					LogError("Unexpected node \"%s\" - expected \"loflayer\"", name.str().c_str());
+					LogError("Unexpected node \"%s\" - expected \"loflayer\"", name.c_str());
 					return false;
 				}
 				if (numVoxelLayers >= voxelSizeZ)
@@ -194,7 +194,7 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID,
 				auto lofSlice = fw.data->load_voxel_slice(voxelSliceString);
 				if (!lofSlice)
 				{
-					LogError("Failed to load loflayer \"%s\"", voxelSliceString.str().c_str());
+					LogError("Failed to load loflayer \"%s\"", voxelSliceString.c_str());
 					return false;
 				}
 				if (lofSlice->getSize().x != voxelSizeX || lofSlice->getSize().y != voxelSizeY)
@@ -209,7 +209,7 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID,
 		}
 		else
 		{
-			LogError("Unexpected node \"%s\" - expected \"lof\"", name.str().c_str());
+			LogError("Unexpected node \"%s\" - expected \"lof\"", name.c_str());
 			return false;
 		}
 	}
@@ -289,8 +289,7 @@ bool RulesLoader::ParseCityDefinition(Framework &fw, Rules &rules, tinyxml2::XML
 				UString bldNodeName = bld->Name();
 				if (bldNodeName != "building")
 				{
-					LogError("Unexpected node \"%s\" - expected \"building\"",
-					         bldNodeName.str().c_str());
+					LogError("Unexpected node \"%s\" - expected \"building\"", bldNodeName.c_str());
 					return false;
 				}
 				UString bldName = bld->Attribute("name");
@@ -302,32 +301,32 @@ bool RulesLoader::ParseCityDefinition(Framework &fw, Rules &rules, tinyxml2::XML
 				UString owner = bld->Attribute("owner");
 				if (owner == "")
 				{
-					LogError("Building \"%s\" has no owner", bldName.str().c_str());
+					LogError("Building \"%s\" has no owner", bldName.c_str());
 					return false;
 				}
 				int x0, x1, y0, y1;
 				auto err = bld->QueryIntAttribute("x0", &x0);
 				if (err != tinyxml2::XML_SUCCESS)
 				{
-					LogError("Building \"%s\" has invalid x0 bound", bldName.str().c_str());
+					LogError("Building \"%s\" has invalid x0 bound", bldName.c_str());
 					return false;
 				}
 				err = bld->QueryIntAttribute("x1", &x1);
 				if (err != tinyxml2::XML_SUCCESS)
 				{
-					LogError("Building \"%s\" has invalid x1 bound", bldName.str().c_str());
+					LogError("Building \"%s\" has invalid x1 bound", bldName.c_str());
 					return false;
 				}
 				err = bld->QueryIntAttribute("y0", &y0);
 				if (err != tinyxml2::XML_SUCCESS)
 				{
-					LogError("Building \"%s\" has invalid y0 bound", bldName.str().c_str());
+					LogError("Building \"%s\" has invalid y0 bound", bldName.c_str());
 					return false;
 				}
 				err = bld->QueryIntAttribute("y1", &y1);
 				if (err != tinyxml2::XML_SUCCESS)
 				{
-					LogError("Building \"%s\" has invalid y1 bound", bldName.str().c_str());
+					LogError("Building \"%s\" has invalid y1 bound", bldName.c_str());
 					return false;
 				}
 				def.name = bldName;
@@ -374,15 +373,14 @@ bool RulesLoader::ParseCityDefinition(Framework &fw, Rules &rules, tinyxml2::XML
 					}
 					if (rules.buildingTiles.find(tileID) != rules.buildingTiles.end())
 					{
-						LogError("Multiple tiles with ID \"%s\"", tileID.str().c_str());
+						LogError("Multiple tiles with ID \"%s\"", tileID.c_str());
 						return false;
 					}
 					rules.buildingTiles.emplace(tileID, def);
 				}
 				else
 				{
-					LogError("Unexpected node \"%s\" (expected \"tile\")",
-					         tileNodeName.str().c_str());
+					LogError("Unexpected node \"%s\" (expected \"tile\")", tileNodeName.c_str());
 					return false;
 				}
 			}
@@ -397,7 +395,7 @@ bool RulesLoader::ParseCityDefinition(Framework &fw, Rules &rules, tinyxml2::XML
 		}
 		else
 		{
-			LogError("Unexpected node \"%s\"", name.str().c_str());
+			LogError("Unexpected node \"%s\"", name.c_str());
 			return false;
 		}
 	}

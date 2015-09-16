@@ -36,7 +36,7 @@ void BaseScreen::EventOccurred(Event *e)
 
 	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick)
 	{
-		LogInfo("Button %s clicked", e->Data.Forms.RaisedBy->Name.str().c_str());
+		LogInfo("Button %s clicked", e->Data.Forms.RaisedBy->Name.c_str());
 		return;
 	}
 }

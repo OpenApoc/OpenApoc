@@ -30,24 +30,24 @@ GL20::GL20() : lib(new GLLib), loadedSuccessfully(false)
 	this->versionString = (const char *)this->GetString(VERSION);
 	this->extensionsString = (const char *)this->GetString(EXTENSIONS);
 
-	LogInfo("GL vendor: \"%s\"", this->vendorString.str().c_str());
-	LogInfo("GL renderer: \"%s\"", this->rendererString.str().c_str());
-	LogInfo("GL version: \"%s\"", this->versionString.str().c_str());
-	LogInfo("GL extensions: \"%s\"", this->extensionsString.str().c_str());
+	LogInfo("GL vendor: \"%s\"", this->vendorString.c_str());
+	LogInfo("GL renderer: \"%s\"", this->rendererString.c_str());
+	LogInfo("GL version: \"%s\"", this->versionString.c_str());
+	LogInfo("GL extensions: \"%s\"", this->extensionsString.c_str());
 
 	/* Parse extension string */
 
 	auto spaceSplitVersion = versionString.split(" ");
 	if (spaceSplitVersion.size() < 1)
 	{
-		LogWarning("version string \"%s\" failed to parse", this->versionString.str().c_str());
+		LogWarning("version string \"%s\" failed to parse", this->versionString.c_str());
 		return;
 	}
 
 	auto pointSplitVersion = versionString.split(".");
 	if (pointSplitVersion.size() < 2)
 	{
-		LogWarning("version string \"%s\" failed to parse", this->versionString.str().c_str());
+		LogWarning("version string \"%s\" failed to parse", this->versionString.c_str());
 		return;
 	}
 
@@ -55,7 +55,7 @@ GL20::GL20() : lib(new GLLib), loadedSuccessfully(false)
 	{
 		if (!Strings::IsNumeric(num))
 		{
-			LogWarning("version string \"%s\" failed to parse", this->versionString.str().c_str());
+			LogWarning("version string \"%s\" failed to parse", this->versionString.c_str());
 			return;
 		}
 		this->version.push_back(Strings::ToInteger(num));
@@ -63,7 +63,7 @@ GL20::GL20() : lib(new GLLib), loadedSuccessfully(false)
 
 	if (version[0] < 2)
 	{
-		LogWarning("Version \"%s\" too old - need at least 2.0", this->versionString.str().c_str());
+		LogWarning("Version \"%s\" too old - need at least 2.0", this->versionString.c_str());
 		return;
 	}
 

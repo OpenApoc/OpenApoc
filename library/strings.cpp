@@ -18,6 +18,9 @@ class UString::UString_impl : public icu::UnicodeString
 	UString_impl(const UChar *ucstr, int len) : icu::UnicodeString() { this->setTo(ucstr, len); }
 	UString_impl(const char *str) : icu::UnicodeString(str, "UTF-8") {}
 	UString_impl(const UString_impl &other) : icu::UnicodeString(other) {}
+	/* A copy of the string in utf8 for c_str() calls, as the pointer needs to be valid for the
+	 * lifetime of the UString object */
+	std::string c_str_contents;
 };
 
 UString::~UString() {}
@@ -45,6 +48,12 @@ std::string UString::str() const
 	this->pimpl->toUTF8String(str);
 	return str;
 };
+
+const char *UString::c_str() const
+{
+	this->pimpl->c_str_contents = this->str();
+	return this->pimpl->c_str_contents.c_str();
+}
 
 bool UString::operator<(const UString &other) const { return (*this->pimpl) < (*other.pimpl); }
 

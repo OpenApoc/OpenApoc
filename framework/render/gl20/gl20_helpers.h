@@ -145,7 +145,7 @@ class Shader
 		id = gl.CreateShader(type);
 		if (!id)
 		{
-			LogError("Failed to create %s shader", name.str().c_str());
+			LogError("Failed to create %s shader", name.c_str());
 			return;
 		}
 

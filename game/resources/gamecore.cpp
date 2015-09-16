@@ -40,25 +40,24 @@ void GameCore::ParseXMLDoc(UString XMLFilename)
 		auto file = fw.data->load_file(XMLFilename);
 		if (!file)
 		{
-			LogError("Failed to open XML file \"%s\"", XMLFilename.str().c_str());
+			LogError("Failed to open XML file \"%s\"", XMLFilename.c_str());
 		}
 		systemPath = file.systemPath();
 	}
 
 	if (systemPath == "")
 	{
-		LogError("Failed to read XML file \"%s\"", XMLFilename.str().c_str());
+		LogError("Failed to read XML file \"%s\"", XMLFilename.c_str());
 		return;
 	}
-	LogInfo("Loading XML file \"%s\" - found at \"%s\"", XMLFilename.str().c_str(),
-	        systemPath.str().c_str());
+	LogInfo("Loading XML file \"%s\" - found at \"%s\"", XMLFilename.c_str(), systemPath.c_str());
 
-	doc.LoadFile(systemPath.str().c_str());
+	doc.LoadFile(systemPath.c_str());
 	node = doc.RootElement();
 
 	if (!node)
 	{
-		LogError("Failed to parse XML file \"%s\"", systemPath.str().c_str());
+		LogError("Failed to parse XML file \"%s\"", systemPath.c_str());
 		return;
 	}
 
@@ -93,13 +92,13 @@ void GameCore::ParseXMLDoc(UString XMLFilename)
 				auto font = ApocalypseFont::loadFont(fw, node);
 				if (!font)
 				{
-					LogError("apocfont element \"%s\" failed to load", fontName.str().c_str());
+					LogError("apocfont element \"%s\" failed to load", fontName.c_str());
 					continue;
 				}
 
 				if (this->fonts.find(fontName) != this->fonts.end())
 				{
-					LogError("multiple fonts with name \"%s\"", fontName.str().c_str());
+					LogError("multiple fonts with name \"%s\"", fontName.c_str());
 					continue;
 				}
 				this->fonts[fontName] = font;
@@ -128,7 +127,7 @@ void GameCore::ParseXMLDoc(UString XMLFilename)
 			}
 			else
 			{
-				LogError("Unknown XML element \"%s\"", nodename.str().c_str());
+				LogError("Unknown XML element \"%s\"", nodename.c_str());
 			}
 		}
 	}
@@ -158,10 +157,10 @@ void GameCore::ParseStringXML(tinyxml2::XMLElement *Source)
 	UString nodename = Source->Name();
 	if (nodename == "string")
 	{
-		if (Source->FirstChildElement(language.str().c_str()) != nullptr)
+		if (Source->FirstChildElement(language.c_str()) != nullptr)
 		{
 			languagetext[Source->Attribute("id")] =
-			    Source->FirstChildElement(language.str().c_str())->GetText();
+			    Source->FirstChildElement(language.c_str())->GetText();
 		}
 	}
 }
@@ -192,7 +191,7 @@ std::shared_ptr<BitmapFont> GameCore::GetFont(UString FontData)
 {
 	if (fonts.find(FontData) == fonts.end())
 	{
-		LogError("Missing font \"%s\"", FontData.str().c_str());
+		LogError("Missing font \"%s\"", FontData.c_str());
 		return nullptr;
 	}
 	return fonts[FontData];
@@ -215,8 +214,8 @@ void GameCore::ApplyAliases(tinyxml2::XMLElement *Source)
 		if (aliases.find(UString(attr->Value())) != aliases.end())
 		{
 			LogInfo("%s attribute \"%s\" value \"%s\" matches alias \"%s\"", Source->Name(),
-			        attr->Name(), attr->Value(), aliases[UString(attr->Value())].str().c_str());
-			Source->SetAttribute(attr->Name(), aliases[UString(attr->Value())].str().c_str());
+			        attr->Name(), attr->Value(), aliases[UString(attr->Value())].c_str());
+			Source->SetAttribute(attr->Name(), aliases[UString(attr->Value())].c_str());
 		}
 
 		attr = attr->Next();
@@ -226,8 +225,8 @@ void GameCore::ApplyAliases(tinyxml2::XMLElement *Source)
 	if (Source->GetText() != nullptr && aliases.find(UString(Source->GetText())) != aliases.end())
 	{
 		LogInfo("%s  value \"%s\" matches alias \"%s\"", Source->Name(), Source->GetText(),
-		        aliases[UString(Source->GetText())].str().c_str());
-		Source->SetText(aliases[UString(Source->GetText())].str().c_str());
+		        aliases[UString(Source->GetText())].c_str());
+		Source->SetText(aliases[UString(Source->GetText())].c_str());
 	}
 
 	// Recurse down tree

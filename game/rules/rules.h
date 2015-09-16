@@ -53,7 +53,7 @@ class Rules
 		}
 		else
 		{
-			LogError("No building tile found with ID \"%s\"", id.str().c_str());
+			LogError("No building tile found with ID \"%s\"", id.c_str());
 			return buildingTiles.find("0")->second;
 		}
 	}

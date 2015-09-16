@@ -122,17 +122,17 @@ bool RulesLoader::ParseWeaponDefinition(Framework &fw, Rules &rules, tinyxml2::X
 		def.type = WeaponDef::Type::Vehicle;
 		if (!ParseVehicleWeaponDefinition(def, root))
 		{
-			LogError("Failed to load weapon \"%s\"", def.name.str().c_str());
+			LogError("Failed to load weapon \"%s\"", def.name.c_str());
 			return false;
 		}
 	}
 	else
 	{
-		LogError("Unknown weapon type \"%s\"", type.str().c_str());
+		LogError("Unknown weapon type \"%s\"", type.c_str());
 		return false;
 	}
 
-	LogInfo("Loading weapon \"%s\"", def.name.str().c_str());
+	LogInfo("Loading weapon \"%s\"", def.name.c_str());
 
 	rules.weapons.emplace(def.name, def);
 

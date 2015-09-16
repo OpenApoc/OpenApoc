@@ -20,7 +20,7 @@ bool RulesLoader::ParseOrganisationDefinition(Framework &fw, Rules &rules,
 
 	rules.organisations.push_back(def);
 
-	LogInfo("Organisation \"%s\" at idx %d", def.name.str().c_str(), rules.organisations.size());
+	LogInfo("Organisation \"%s\" at idx %d", def.name.c_str(), rules.organisations.size());
 
 	return true;
 }

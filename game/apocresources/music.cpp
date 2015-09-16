@@ -43,14 +43,14 @@ class RawMusicTrack : public MusicTrack
 	{
 		if (!file)
 		{
-			LogError("Failed to open file \"%s\"", fileName.str().c_str());
+			LogError("Failed to open file \"%s\"", fileName.c_str());
 			return;
 		}
 		if (file.size() < fileOffset + (numSamples * MusicChannels * MusicBytesPerSample))
 		{
 			LogError("File \"%s\" insufficient size for offset %u + size %zu - returned size %zu",
-			         fileName.str().c_str(), fileOffset,
-			         numSamples * MusicChannels * MusicBytesPerSample, file.size());
+			         fileName.c_str(), fileOffset, numSamples * MusicChannels * MusicBytesPerSample,
+			         file.size());
 			return;
 		}
 		if (!file.seekg(fileOffset))
@@ -74,7 +74,7 @@ class RawMusicTrack : public MusicTrack
 	{
 		if (!valid)
 		{
-			LogError("Playing invalid file \"%s\"", file.fileName().str().c_str());
+			LogError("Playing invalid file \"%s\"", file.fileName().c_str());
 			*returnedSamples = 0;
 			return MusicTrack::MusicCallbackReturn::End;
 		}
@@ -86,7 +86,7 @@ class RawMusicTrack : public MusicTrack
 		if (!file.read(reinterpret_cast<char *>(sampleBuffer),
 		               samples * MusicBytesPerSample * MusicChannels))
 		{
-			LogError("Failed to read sample data in \"%s\"", file.fileName().str().c_str());
+			LogError("Failed to read sample data in \"%s\"", file.fileName().c_str());
 			this->valid = false;
 			samples = 0;
 		}
@@ -121,13 +121,13 @@ class RawMusicLoader : public MusicLoader
 		auto strings = path.split(':');
 		if (strings.size() != 2)
 		{
-			LogInfo("Invalid raw music path string \"%s\"", path.str().c_str());
+			LogInfo("Invalid raw music path string \"%s\"", path.c_str());
 			return nullptr;
 		}
 
 		if (!Strings::IsInteger(strings[1]))
 		{
-			LogInfo("Raw music track \"%s\" doesn't look like a number", strings[1].str().c_str());
+			LogInfo("Raw music track \"%s\" doesn't look like a number", strings[1].c_str());
 			return nullptr;
 		}
 

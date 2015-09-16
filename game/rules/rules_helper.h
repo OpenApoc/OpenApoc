@@ -23,7 +23,7 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName,
 	auto it = valueMap.find(str);
 	if (it == valueMap.end())
 	{
-		LogWarning("No matching value for \"%s\"", str.str().c_str());
+		LogWarning("No matching value for \"%s\"", str.c_str());
 		return false;
 	}
 	output = it->second;

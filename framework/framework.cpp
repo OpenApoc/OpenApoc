@@ -98,7 +98,7 @@ class JukeBoxImpl : public JukeBox
 		{
 			auto musicTrack = fw.data->load_music(track);
 			if (!musicTrack)
-				LogError("Failed to load music track \"%s\" - skipping", track.str().c_str());
+				LogError("Failed to load music track \"%s\" - skipping", track.c_str());
 			else
 				this->trackList.push_back(musicTrack);
 		}
@@ -147,7 +147,7 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
     : dumpEvents(false), replayEvents(false), p(new FrameworkPrivate), programName(programName)
 {
 	LogInfo("Starting framework");
-	PHYSFS_init(programName.str().c_str());
+	PHYSFS_init(programName.c_str());
 
 	if (!al_init())
 	{
@@ -174,7 +174,7 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 		auto splitString = option.split('=');
 		if (splitString.size() != 2)
 		{
-			LogError("Failed to parse command line option \"%s\" - ignoring", option.str().c_str());
+			LogError("Failed to parse command line option \"%s\" - ignoring", option.c_str());
 			continue;
 		}
 		else if (splitString[0] == "--dumpevents")
@@ -183,7 +183,7 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 			{
 				LogError(
 				    "Only one --dumpevents or --replayevents should be supplied, ignoring \"%s\"",
-				    option.str().c_str());
+				    option.c_str());
 			}
 			else
 			{
@@ -192,12 +192,12 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 				{
 					LogError("Failed to open event file \"%s\" for writing - ignoring --dumpevents "
 					         "option",
-					         splitString[1].str().c_str());
+					         splitString[1].c_str());
 				}
 				else
 				{
 					this->dumpEvents = true;
-					LogInfo("Dumping events to file \"%s\"", splitString[1].str().c_str());
+					LogInfo("Dumping events to file \"%s\"", splitString[1].c_str());
 				}
 			}
 		}
@@ -207,7 +207,7 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 			{
 				LogError(
 				    "Only one --dumpevents or --replayevents should be supplied, ignoring \"%s\"",
-				    option.str().c_str());
+				    option.c_str());
 			}
 			else
 			{
@@ -216,19 +216,19 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 				{
 					LogError("Failed to open event file \"%s\" for reading - ignoring "
 					         "--replayevents option",
-					         splitString[1].str().c_str());
+					         splitString[1].c_str());
 				}
 				else
 				{
 					this->replayEvents = true;
-					LogInfo("Replaying events from file \"%s\"", splitString[1].str().c_str());
+					LogInfo("Replaying events from file \"%s\"", splitString[1].c_str());
 				}
 			}
 		}
 		else
 		{
-			LogInfo("Setting option \"%s\" to \"%s\" from command line",
-			        splitString[0].str().c_str(), splitString[1].str().c_str());
+			LogInfo("Setting option \"%s\" to \"%s\" from command line", splitString[0].c_str(),
+			        splitString[1].c_str());
 			Settings->set(splitString[0], splitString[1]);
 		}
 	}
@@ -609,17 +609,17 @@ void Framework::Display_Initialise()
 		auto rendererFactory = registeredRenderers->find(rendererName);
 		if (rendererFactory == registeredRenderers->end())
 		{
-			LogInfo("Renderer \"%s\" not in supported list", rendererName.str().c_str());
+			LogInfo("Renderer \"%s\" not in supported list", rendererName.c_str());
 			continue;
 		}
 		Renderer *r = rendererFactory->second->create();
 		if (!r)
 		{
-			LogInfo("Renderer \"%s\" failed to init", rendererName.str().c_str());
+			LogInfo("Renderer \"%s\" failed to init", rendererName.c_str());
 			continue;
 		}
 		this->renderer.reset(r);
-		LogInfo("Using renderer: %s", this->renderer->getName().str().c_str());
+		LogInfo("Using renderer: %s", this->renderer->getName().c_str());
 		break;
 	}
 	if (!this->renderer)
@@ -652,11 +652,11 @@ Vec2<int> Framework::Display_GetSize()
 void Framework::Display_SetTitle(UString NewTitle)
 {
 #ifdef _WIN32
-	al_set_app_name(NewTitle.str().c_str());
-	al_set_window_title(p->screen, NewTitle.str().c_str());
+	al_set_app_name(NewTitle.c_str());
+	al_set_window_title(p->screen, NewTitle.c_str());
 #else
-	al_set_app_name(NewTitle.str().c_str());
-	al_set_window_title(p->screen, NewTitle.str().c_str());
+	al_set_app_name(NewTitle.c_str());
+	al_set_window_title(p->screen, NewTitle.c_str());
 #endif
 }
 
@@ -669,17 +669,17 @@ void Framework::Audio_Initialise()
 		auto backendFactory = registeredSoundBackends->find(soundBackendName);
 		if (backendFactory == registeredSoundBackends->end())
 		{
-			LogInfo("Sound backend %s not in supported list", soundBackendName.str().c_str());
+			LogInfo("Sound backend %s not in supported list", soundBackendName.c_str());
 			continue;
 		}
 		SoundBackend *backend = backendFactory->second->create();
 		if (!backend)
 		{
-			LogInfo("Sound backend %s failed to init", soundBackendName.str().c_str());
+			LogInfo("Sound backend %s failed to init", soundBackendName.c_str());
 			continue;
 		}
 		this->soundBackend.reset(backend);
-		LogInfo("Using sound backend %s", soundBackendName.str().c_str());
+		LogInfo("Using sound backend %s", soundBackendName.c_str());
 		break;
 	}
 	if (!this->soundBackend)

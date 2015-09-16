@@ -647,7 +647,7 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 			}
 		}
 	}
-	LogInfo("Control \"%s\" has %d subcontrols (%d, %d, %d, %d)", this->Name.str().c_str(),
+	LogInfo("Control \"%s\" has %d subcontrols (%d, %d, %d, %d)", this->Name.c_str(),
 	        Controls.size(), Location.x, Location.y, Size.x, Size.y);
 }
 
@@ -723,7 +723,7 @@ std::list<UString> Control::WordWrapText(std::shared_ptr<OpenApoc::BitmapFont> F
 				{
 					LogWarning(
 					    "No break in line \"%s\" found - this will probably overflow the control",
-					    textleft.str().c_str());
+					    textleft.c_str());
 					break;
 				}
 			}

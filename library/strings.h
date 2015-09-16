@@ -39,6 +39,8 @@ class UString
 	std::string str() const;
 	std::wstring wstr() const;
 
+	const char *c_str() const;
+
 	UString toUpper() const;
 	UString toLower() const;
 	std::vector<UString> split(const UString &delims) const;

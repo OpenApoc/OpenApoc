@@ -61,12 +61,12 @@ parseDirectionalSprites(Framework &fw, tinyxml2::XMLElement *root)
 			dir = VehicleDefinition::Direction::NNW;
 		else
 		{
-			LogError("Unknown sprite direction \"%s\"", name.str().c_str());
+			LogError("Unknown sprite direction \"%s\"", name.c_str());
 			continue;
 		}
 
 		UString spriteName = node->GetText();
-		LogInfo("Loading image \"%s\"", spriteName.str().c_str());
+		LogInfo("Loading image \"%s\"", spriteName.c_str());
 		if (sprites[dir])
 			LogWarning("Replacing directional sprite");
 		auto sprite = fw.gamecore->GetImage(spriteName);
@@ -132,7 +132,7 @@ bool RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::
 		}
 		else
 		{
-			LogError("Unknown vehicle tag \"%s\"", tag.str().c_str());
+			LogError("Unknown vehicle tag \"%s\"", tag.c_str());
 			continue;
 		}
 	}
@@ -162,7 +162,7 @@ bool RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::
 	if (!def.voxelMap)
 	{
 		static std::weak_ptr<VoxelMap> stubVoxelMap;
-		LogWarning("Using stub voxel map for vehicle \"%s\"", def.name.str().c_str());
+		LogWarning("Using stub voxel map for vehicle \"%s\"", def.name.c_str());
 		def.voxelMap = stubVoxelMap.lock();
 		if (!def.voxelMap)
 		{

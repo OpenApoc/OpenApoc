@@ -25,7 +25,7 @@ City::City(Framework &fw, GameState &state) : TileMap(fw, fw.rules->getCitySize(
 		if (!owner)
 		{
 			LogError("No organisation found matching building \"%s\" owner \"%s\"",
-			         def.getName().str().c_str(), def.getOwnerName().str().c_str());
+			         def.getName().c_str(), def.getOwnerName().c_str());
 			return;
 		}
 		this->buildings.emplace_back(def, *owner);
@@ -56,7 +56,7 @@ City::City(Framework &fw, GameState &state) : TileMap(fw, fw.rules->getCitySize(
 							if (padID == tileID)
 							{
 								LogInfo("Building %s has landing pad at {%d,%d,%d}",
-								        b.def.getName().str().c_str(), x, y, z);
+								        b.def.getName().c_str(), x, y, z);
 								b.landingPadLocations.emplace_back(x, y, z);
 								break;
 							}
@@ -77,7 +77,7 @@ City::City(Framework &fw, GameState &state) : TileMap(fw, fw.rules->getCitySize(
 	{
 		if (b.landingPadLocations.empty())
 		{
-			LogError("Building \"%s\" has no landing pads", b.def.getName().str().c_str());
+			LogError("Building \"%s\" has no landing pads", b.def.getName().c_str());
 		}
 	}
 }

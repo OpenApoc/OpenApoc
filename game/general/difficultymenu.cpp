@@ -62,7 +62,7 @@ void DifficultyMenu::EventOccurred(Event *e)
 		}
 		else
 		{
-			LogWarning("Unknown button pressed: %s", e->Data.Forms.RaisedBy->Name.str().c_str());
+			LogWarning("Unknown button pressed: %s", e->Data.Forms.RaisedBy->Name.c_str());
 			ruleName = "rules/difficulty1.xml";
 			return;
 		}

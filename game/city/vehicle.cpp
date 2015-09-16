@@ -55,12 +55,12 @@ class FlyingVehicleMover : public VehicleMover
 					while (vehicle.missions.front()->isFinished())
 					{
 						LogInfo("Vehicle mission \"%s\" finished",
-						        vehicle.missions.front()->getName().str().c_str());
+						        vehicle.missions.front()->getName().c_str());
 						vehicle.missions.pop_front();
 						if (!vehicle.missions.empty())
 						{
 							LogInfo("Vehicle mission \"%s\" starting",
-							        vehicle.missions.front()->getName().str().c_str());
+							        vehicle.missions.front()->getName().c_str());
 							vehicle.missions.front()->start();
 							continue;
 						}

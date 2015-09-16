@@ -158,12 +158,12 @@ class VehicleTakeOffMission : public VehicleMission
 			if (!vehicleCanEnterTileAllowLandingPads(*tileAbovePad, vehicle))
 				continue;
 			LogInfo("Launching vehicle from building \"%s\" at pad {%d,%d,%d}",
-			        b.def.getName().str().c_str(), padLocation.x, padLocation.y, padLocation.z);
+			        b.def.getName().c_str(), padLocation.x, padLocation.y, padLocation.z);
 			path = {padTile, tileAbovePad};
 			vehicle.launch(map, padLocation);
 			return;
 		}
-		LogWarning("No pad in building \"%s\" free - waiting", b.def.getName().str().c_str());
+		LogWarning("No pad in building \"%s\" free - waiting", b.def.getName().c_str());
 	}
 	virtual bool getNextDestination(Vec3<float> &dest) override
 	{
@@ -222,8 +222,7 @@ class VehicleLandMission : public VehicleMission
 		if (!padFound)
 		{
 			LogError("Vehicle at {%d,%d,%d} not directly above a landing pad for building %s",
-			         padPosition.x, padPosition.y, padPosition.z + 1,
-			         b.def.getName().str().c_str());
+			         padPosition.x, padPosition.y, padPosition.z + 1, b.def.getName().c_str());
 			return;
 		}
 		path = {map.getTile(padPosition)};
@@ -235,7 +234,7 @@ class VehicleLandMission : public VehicleMission
 			/* FIXME: Overloading isFinished() to complete landing action
 			 * (Should add a ->end() call to mirror ->start()?*/
 			vehicle.land(map, b);
-			LogInfo("Vehicle mission %s: Landed", name.str().c_str());
+			LogInfo("Vehicle mission %s: Landed", name.c_str());
 			return true;
 		}
 		return false;
@@ -276,7 +275,7 @@ class VehicleGotoLocationMission : public VehicleMission
 		auto vehicleTile = vehicle.tileObject.lock();
 		if (!vehicleTile)
 		{
-			LogInfo("Mission %s: Taking off first", this->name.str().c_str());
+			LogInfo("Mission %s: Taking off first", this->name.c_str());
 			auto *takeoffMission = VehicleMission::takeOff(vehicle, map);
 			vehicle.missions.emplace_front(takeoffMission);
 			takeoffMission->start();
@@ -325,16 +324,16 @@ class VehicleGotoBuildingMission : public VehicleMission
 	}
 	virtual void start() override
 	{
-		LogInfo("Vehicle mission %s checking state", name.str().c_str());
+		LogInfo("Vehicle mission %s checking state", name.c_str());
 		if (&b == vehicle.building)
 		{
-			LogInfo("Vehicle mission %s: Already at building", name.str().c_str());
+			LogInfo("Vehicle mission %s: Already at building", name.c_str());
 			return;
 		}
 		auto vehicleTile = vehicle.tileObject.lock();
 		if (!vehicleTile)
 		{
-			LogInfo("Mission %s: Taking off first", this->name.str().c_str());
+			LogInfo("Mission %s: Taking off first", this->name.c_str());
 			auto *takeoffMission = VehicleMission::takeOff(vehicle, map);
 			vehicle.missions.emplace_front(takeoffMission);
 			takeoffMission->start();
@@ -342,15 +341,15 @@ class VehicleGotoBuildingMission : public VehicleMission
 		}
 		/* Am I already above a landing pad? If so land */
 		auto position = vehicleTile->getOwningTile()->position;
-		LogInfo("Vehicle mission %s: at position {%d,%d,%d}", name.str().c_str(), position.x,
-		        position.y, position.z);
+		LogInfo("Vehicle mission %s: at position {%d,%d,%d}", name.c_str(), position.x, position.y,
+		        position.z);
 		for (auto padLocation : b.landingPadLocations)
 		{
 			padLocation.z += 1;
 			if (padLocation == position)
 			{
-				LogInfo("Mission %s: Landing on pad {%d,%d,%d}", this->name.str().c_str(),
-				        padLocation.x, padLocation.y, padLocation.z - 1);
+				LogInfo("Mission %s: Landing on pad {%d,%d,%d}", this->name.c_str(), padLocation.x,
+				        padLocation.y, padLocation.z - 1);
 				auto *landMission = VehicleMission::land(vehicle, map, b);
 				vehicle.missions.emplace_front(landMission);
 				landMission->start();
@@ -399,7 +398,7 @@ class VehicleGotoBuildingMission : public VehicleMission
 
 		if (shortestPathCost != std::numeric_limits<float>::max())
 		{
-			LogInfo("Vehicle mission %s: Found direct path to {%d,%d,%d}", name.str().c_str(),
+			LogInfo("Vehicle mission %s: Found direct path to {%d,%d,%d}", name.c_str(),
 			        shortestPathPad.x, shortestPathPad.y, shortestPathPad.z);
 			auto *gotoMission = VehicleMission::gotoLocation(vehicle, map, shortestPathPad);
 			vehicle.missions.emplace_front(gotoMission);
@@ -407,8 +406,8 @@ class VehicleGotoBuildingMission : public VehicleMission
 		}
 		else
 		{
-			LogInfo("Vehicle mission %s: Found no direct path - closest {%d,%d,%d}",
-			        name.str().c_str(), closestIncompletePathPad.x, closestIncompletePathPad.y,
+			LogInfo("Vehicle mission %s: Found no direct path - closest {%d,%d,%d}", name.c_str(),
+			        closestIncompletePathPad.x, closestIncompletePathPad.y,
 			        closestIncompletePathPad.z);
 			auto *gotoMission =
 			    VehicleMission::gotoLocation(vehicle, map, closestIncompletePathPad);
@@ -420,7 +419,7 @@ class VehicleGotoBuildingMission : public VehicleMission
 	{
 		if (vehicle.building == &b)
 		{
-			LogInfo("Vehicle mission %s: Finished", name.str().c_str());
+			LogInfo("Vehicle mission %s: Finished", name.c_str());
 			return true;
 		}
 		else

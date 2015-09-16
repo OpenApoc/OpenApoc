@@ -40,7 +40,7 @@ GameState::GameState(Framework &fw, Rules &rules)
 		auto testVehicle = std::make_shared<Vehicle>(vehicleDefIt->second, this->organisations[3]);
 
 		auto &weaponDef = weaponIt->second;
-		LogInfo("Equipping with weapon \"%s\"", weaponDef.name.str().c_str());
+		LogInfo("Equipping with weapon \"%s\"", weaponDef.name.c_str());
 
 		weaponIt++;
 		if (weaponIt == rules.getWeaponDefs().end())
@@ -68,7 +68,7 @@ GameState::GameState(Framework &fw, Rules &rules)
 		this->city->vehicles.push_back(testVehicle);
 
 		auto &weaponDef = weaponIt->second;
-		LogInfo("Equipping with weapon \"%s\"", weaponDef.name.str().c_str());
+		LogInfo("Equipping with weapon \"%s\"", weaponDef.name.c_str());
 
 		weaponIt++;
 		if (weaponIt == rules.getWeaponDefs().end())

@@ -55,20 +55,20 @@ void PCK::ProcessFile(Data &d, UString PckFilename, UString TabFilename, int Ind
 	auto pck = d.load_file(PckFilename);
 	if (!pck)
 	{
-		LogError("Failed to open PCK file \"%s\"", PckFilename.str().c_str());
+		LogError("Failed to open PCK file \"%s\"", PckFilename.c_str());
 		return;
 	}
 	auto tab = d.load_file(TabFilename);
 	if (!tab)
 	{
-		LogError("Failed to open TAB file \"%s\"", TabFilename.str().c_str());
+		LogError("Failed to open TAB file \"%s\"", TabFilename.c_str());
 		return;
 	}
 
 	uint16_t version;
 	if (!pck.readule16(version))
 	{
-		LogError("Failed to read version from \"%s\"", PckFilename.str().c_str());
+		LogError("Failed to read version from \"%s\"", PckFilename.c_str());
 		return;
 	}
 	pck.seekg(0, std::ios::beg);
@@ -101,28 +101,27 @@ void PCK::LoadVersion1Format(IFile &pck, IFile &tab, int Index)
 	{
 		if (!tab.seekg(i * 4, std::ios::beg))
 		{
-			LogError("Failed to seek to record %d in \"%s\"", i, tab.fileName().str().c_str());
+			LogError("Failed to seek to record %d in \"%s\"", i, tab.fileName().c_str());
 			return;
 		}
 		unsigned int offset;
 		if (!tab.readule32(offset))
 		{
-			LogError("Failed to read offset %d from tab \"%s\"", i, tab.fileName().str().c_str());
+			LogError("Failed to read offset %d from tab \"%s\"", i, tab.fileName().c_str());
 			return;
 		}
 
 		if (!pck.seekg(offset, std::ios::beg))
 		{
 			LogError("Failed to seek to offset %u for PCK \"%s\" id %s", offset,
-			         pck.fileName().str().c_str(), i);
+			         pck.fileName().c_str(), i);
 			return;
 		}
 
 		// Raw Data
 		if (!pck.readule16(c0_offset))
 		{
-			LogError("Failed to read offset header in PCK \"%s\" id %d",
-			         pck.fileName().str().c_str(), i);
+			LogError("Failed to read offset header in PCK \"%s\" id %d", pck.fileName().c_str(), i);
 			return;
 		}
 		c0_imagedata.reset(new Memory(0));
@@ -135,8 +134,8 @@ void PCK::LoadVersion1Format(IFile &pck, IFile &tab, int Index)
 			uint16_t c0_width;
 			if (!pck.readule16(c0_width))
 			{
-				LogError("Failed to read width header in PCK \"%s\" id %d",
-				         pck.fileName().str().c_str(), i);
+				LogError("Failed to read width header in PCK \"%s\" id %d", pck.fileName().c_str(),
+				         i);
 				return;
 			}
 			c0_rowwidths.push_back(c0_width);
@@ -152,8 +151,8 @@ void PCK::LoadVersion1Format(IFile &pck, IFile &tab, int Index)
 			                  c0_imagedata->GetDataOffset(c0_bufferptr + (c0_offset % 640))),
 			              c0_width))
 			{
-				LogError("Failed to read pixel data in PCK \"%s\" id %d",
-				         pck.fileName().str().c_str(), i);
+				LogError("Failed to read pixel data in PCK \"%s\" id %d", pck.fileName().c_str(),
+				         i);
 				return;
 			}
 			c0_height++;
@@ -161,7 +160,7 @@ void PCK::LoadVersion1Format(IFile &pck, IFile &tab, int Index)
 			if (!pck.readule16(c0_offset))
 			{
 				LogError("Failed to read offset after %d from tab \"%s\"", i,
-				         tab.fileName().str().c_str());
+				         tab.fileName().c_str());
 				return;
 			}
 		}
@@ -204,13 +203,13 @@ void PCK::LoadVersion2Format(IFile &pck, IFile &tab, int Index)
 	{
 		if (!tab.seekg(i * 4, std::ios::beg))
 		{
-			LogError("Failed to seek to record %d in \"%s\"", i, tab.fileName().str().c_str());
+			LogError("Failed to seek to record %d in \"%s\"", i, tab.fileName().c_str());
 			return;
 		}
 		unsigned int offset;
 		if (!tab.readule32(offset))
 		{
-			LogError("Failed to read offset %d from tab \"%s\"", i, tab.fileName().str().c_str());
+			LogError("Failed to read offset %d from tab \"%s\"", i, tab.fileName().c_str());
 			return;
 		}
 		offset *= 4;
@@ -218,14 +217,14 @@ void PCK::LoadVersion2Format(IFile &pck, IFile &tab, int Index)
 		if (!pck.seekg(offset, std::ios::beg))
 		{
 			LogError("Failed to seek to offset %u for PCK \"%s\" id %s", offset,
-			         pck.fileName().str().c_str(), i);
+			         pck.fileName().c_str(), i);
 			return;
 		}
 
 		if (!pck.readule16(compressionmethod))
 		{
 			LogError("Failed to read compression header for PCK \"%s\" id %d",
-			         pck.fileName().str().c_str(), i);
+			         pck.fileName().c_str(), i);
 			return;
 		}
 		switch (compressionmethod)
@@ -239,8 +238,8 @@ void PCK::LoadVersion2Format(IFile &pck, IFile &tab, int Index)
 				// Raw Data with RLE
 				if (!pck.read(reinterpret_cast<char *>(&c1_imgheader), sizeof(c1_imgheader)))
 				{
-					LogError("Failed to read header for PCK \"%s\" id %d",
-					         pck.fileName().str().c_str(), i);
+					LogError("Failed to read header for PCK \"%s\" id %d", pck.fileName().c_str(),
+					         i);
 					return;
 				}
 				img = std::make_shared<PaletteImage>(
@@ -250,7 +249,7 @@ void PCK::LoadVersion2Format(IFile &pck, IFile &tab, int Index)
 				if (!pck.readule32(c1_pixelstoskip))
 				{
 					LogError("Failed to read pixel skip for PCK \"%s\" id %d",
-					         pck.fileName().str().c_str(), i);
+					         pck.fileName().c_str(), i);
 					return;
 				}
 				while (c1_pixelstoskip != 0xFFFFFFFF)
@@ -258,7 +257,7 @@ void PCK::LoadVersion2Format(IFile &pck, IFile &tab, int Index)
 					if (!pck.read(reinterpret_cast<char *>(&c1_header), sizeof(c1_header)))
 					{
 						LogError("Failed to read RLE header for PCK \"%s\" id %d",
-						         pck.fileName().str().c_str(), i);
+						         pck.fileName().c_str(), i);
 						return;
 					}
 					uint32_t c1_y = (c1_pixelstoskip / 640);
@@ -280,7 +279,7 @@ void PCK::LoadVersion2Format(IFile &pck, IFile &tab, int Index)
 									if (!pck.read(&idx, 1))
 									{
 										LogError("Failed to read pixel data for PCK \"%s\" id %d",
-										         pck.fileName().str().c_str(), i);
+										         pck.fileName().c_str(), i);
 										return;
 									}
 									lock.set(Vec2<int>{c1_x, c1_y}, idx);
@@ -304,7 +303,7 @@ void PCK::LoadVersion2Format(IFile &pck, IFile &tab, int Index)
 									if (!pck.read(&idx, 1))
 									{
 										LogError("Failed to read pixel data for PCK \"%s\" id %d",
-										         pck.fileName().str().c_str(), i);
+										         pck.fileName().c_str(), i);
 										return;
 									}
 									lock.set(Vec2<int>{c1_header.ColumnToStartAt + c1_x, c1_y},
@@ -322,7 +321,7 @@ void PCK::LoadVersion2Format(IFile &pck, IFile &tab, int Index)
 					if (!pck.readule32(c1_pixelstoskip))
 					{
 						LogError("Failed to read pixel skip after PCK \"%s\" id %d",
-						         pck.fileName().str().c_str(), i);
+						         pck.fileName().c_str(), i);
 						return;
 					}
 				}
@@ -357,7 +356,7 @@ std::shared_ptr<ImageSet> PCKLoader::load(Data &data, UString PckFilename, UStri
 	}
 	delete p;
 
-	LogInfo("Loaded \"%s\" - %u images, max size {%d,%d}", PckFilename.str().c_str(),
+	LogInfo("Loaded \"%s\" - %u images, max size {%d,%d}", PckFilename.c_str(),
 	        static_cast<unsigned int>(imageSet->images.size()), imageSet->maxSize.x,
 	        imageSet->maxSize.y);
 

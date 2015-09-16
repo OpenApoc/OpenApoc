@@ -23,10 +23,10 @@ class AllegroImageLoader : public OpenApoc::ImageLoader
 
 	virtual std::shared_ptr<OpenApoc::Image> loadImage(UString path) override
 	{
-		ALLEGRO_BITMAP *bmp = al_load_bitmap(path.str().c_str());
+		ALLEGRO_BITMAP *bmp = al_load_bitmap(path.c_str());
 		if (!bmp)
 		{
-			LogInfo("Failed to read image %s", path.str().c_str());
+			LogInfo("Failed to read image %s", path.c_str());
 			return nullptr;
 		}
 
