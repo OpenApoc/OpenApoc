@@ -122,8 +122,8 @@ class AllegroSoundBackend : public SoundBackend
 			liveSamples.pop_front();
 		AllegroSampleData *sampleData = static_cast<AllegroSampleData *>(sample->backendData.get());
 
-		LogWarning("Playing sample with gain %f (%f * %f)", this->globalGain * this->sampleGain,
-		           this->globalGain, this->sampleGain);
+		LogInfo("Playing sample with gain %f (%f * %f)", this->globalGain * this->sampleGain,
+		        this->globalGain, this->sampleGain);
 		if (!al_play_sample(sampleData->s, this->globalGain * this->sampleGain, 0.0f, 1.0f,
 		                    ALLEGRO_PLAYMODE_ONCE, nullptr))
 		{
@@ -301,7 +301,7 @@ class AllegroSoundBackend : public SoundBackend
 
 	virtual void setTrack(std::shared_ptr<MusicTrack> track) override
 	{
-		LogWarning("Setting track to %p", track.get());
+		LogInfo("Setting track to %p", track.get());
 		this->track = track;
 	}
 

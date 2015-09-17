@@ -118,7 +118,7 @@ class JukeBoxImpl : public JukeBox
 			LogInfo("End of jukebox playlist");
 			return;
 		}
-		LogWarning("Playing track %u", jukebox->position);
+		LogInfo("Playing track %u", jukebox->position);
 		jukebox->fw.soundBackend->setTrack(jukebox->trackList[jukebox->position]);
 
 		jukebox->position++;
