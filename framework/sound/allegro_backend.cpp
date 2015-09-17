@@ -279,6 +279,20 @@ class AllegroSoundBackend : public SoundBackend
 	virtual void playMusic(std::function<void(void *)> finishedCallback,
 	                       void *callbackData) override
 	{
+		if (this->musicThread)
+		{
+			if (stopThread == false)
+			{
+				LogInfo("Already playing");
+				return;
+			}
+			else
+			{
+				/* If we happen to catch the thread in the process of shutting down just wait for it
+				 * and respawn */
+				this->musicThread->join();
+			}
+		}
 		stopThread = false;
 		if (!this->track)
 		{
