@@ -19,6 +19,12 @@ class AudioFormat
 		PCM_UINT8,
 	};
 	SampleFormat format;
+	bool operator==(const AudioFormat &other) const
+	{
+		return (this->frequency == other.frequency && this->channels == other.channels &&
+		        this->format == other.format);
+	}
+	bool operator!=(const AudioFormat &other) const { return !(*this == other); }
 };
 
 class BackendSampleData
@@ -51,10 +57,10 @@ class MusicTrack
 		Continue, // There is more to come, even if we didn't fill the output buffer
 	};
 
-	std::function<MusicCallbackReturn(std::shared_ptr<MusicTrack> thisTrack,
-	                                  unsigned int maxSamples, void *sampleBuffer,
-	                                  unsigned int *returnedSamples)> callback;
+	std::function<MusicCallbackReturn(std::shared_ptr<MusicTrack> track, unsigned int maxSamples,
+	                                  void *sampleBuffer, unsigned int *returnedSamples)> callback;
 
+	std::shared_ptr<MusicTrack> currentTrack;
 	virtual ~MusicTrack() {}
 };
 
@@ -63,10 +69,11 @@ class SoundBackend
   public:
 	virtual ~SoundBackend() {}
 	virtual void playSample(std::shared_ptr<Sample> sample) = 0;
-	virtual void playMusic(std::shared_ptr<MusicTrack>,
-	                       std::function<void(void *)> finishedCallback,
+	virtual void playMusic(std::function<void(void *)> finishedCallback,
 	                       void *callbackData = nullptr) = 0;
 	virtual void stopMusic() = 0;
+
+	virtual void setTrack(std::shared_ptr<MusicTrack> track) = 0;
 
 	/* Gain - a float scale (from 1.0 to 0.0) in 'linear intensity' (IE samples
 	 * are simply multiplied by the 'volume')

@@ -71,6 +71,8 @@ class AllegroSoundBackend : public SoundBackend
 	float sampleGain;
 	float musicGain;
 
+	std::shared_ptr<MusicTrack> track;
+
   public:
 	AllegroSoundBackend() : stopThread(false), globalGain(1.0), sampleGain(1.0), musicGain(1.0) {}
 
@@ -129,12 +131,54 @@ class AllegroSoundBackend : public SoundBackend
 		}
 	}
 
-	static void musicThreadFunction(AllegroSoundBackend &parent, std::shared_ptr<MusicTrack> track,
+	static unsigned int getSampleSize(const AudioFormat &format)
+	{
+		unsigned int channels;
+		switch (format.channels)
+		{
+			case 1:
+				channels = 1;
+				break;
+			case 2:
+				channels = 2;
+				break;
+			default:
+				LogWarning("Unsupported music channels");
+				return 0;
+		}
+		unsigned int bytesPerSample;
+		switch (format.format)
+		{
+			case AudioFormat::SampleFormat::PCM_SINT16:
+				bytesPerSample = 2;
+				break;
+			default:
+				LogWarning("Unsupported music format");
+				return 0;
+		}
+
+		return bytesPerSample * channels;
+	}
+
+	static void musicThreadFunction(AllegroSoundBackend &parent,
 	                                std::function<void(void *)> finishedCallback,
 	                                void *callbackData)
 	{
+		unsigned int sampleBufferSize;
 		ALLEGRO_AUDIO_DEPTH depth;
-		switch (track->format.format)
+
+		auto track = parent.track;
+		if (!track)
+		{
+			LogWarning("Called with no current track");
+			return;
+		}
+
+		sampleBufferSize = track->requestedSampleBufferSize;
+
+		auto format = track->format;
+
+		switch (format.format)
 		{
 			case AudioFormat::SampleFormat::PCM_SINT16:
 				depth = ALLEGRO_AUDIO_DEPTH_INT16;
@@ -144,7 +188,7 @@ class AllegroSoundBackend : public SoundBackend
 				return;
 		}
 		ALLEGRO_CHANNEL_CONF channels;
-		switch (track->format.channels)
+		switch (format.channels)
 		{
 			case 1:
 				channels = ALLEGRO_CHANNEL_CONF_1;
@@ -156,8 +200,8 @@ class AllegroSoundBackend : public SoundBackend
 				LogWarning("Unsupported music channels");
 				return;
 		}
-		ALLEGRO_AUDIO_STREAM *stream = al_create_audio_stream(
-		    2, track->requestedSampleBufferSize, track->format.frequency, depth, channels);
+		ALLEGRO_AUDIO_STREAM *stream =
+		    al_create_audio_stream(2, sampleBufferSize, track->format.frequency, depth, channels);
 		if (!stream)
 		{
 			LogError("Failed to create music stream");
@@ -170,67 +214,95 @@ class AllegroSoundBackend : public SoundBackend
 		al_register_event_source(eventQueue, al_get_audio_stream_event_source(stream));
 		while (!parent.stopThread)
 		{
-			if (!al_set_audio_stream_gain(stream, parent.globalGain * parent.musicGain))
-			{
-				LogError("Failed to set music stream gain");
-			}
+
 			ALLEGRO_EVENT event;
 			al_wait_for_event(eventQueue, &event);
 			if (event.type == ALLEGRO_EVENT_AUDIO_STREAM_FRAGMENT)
 			{
+				if (!al_set_audio_stream_gain(stream, parent.globalGain * parent.musicGain))
+				{
+					LogError("Failed to set music stream gain");
+				}
+				unsigned int samplesLeft = sampleBufferSize;
 				uint8_t *buf = reinterpret_cast<uint8_t *>(al_get_audio_stream_fragment(stream));
 				if (!buf)
 				{
 					/* Sometimes we get an event with no buffer? */
 					continue;
 				}
-				unsigned int returnedSamples;
-				auto callbackReturn =
-				    track->callback(track, track->requestedSampleBufferSize, buf, &returnedSamples);
-				if (returnedSamples != track->requestedSampleBufferSize)
+				while (samplesLeft > 0)
 				{
-					LogWarning("AllegroSoundBackend: Requested %u samples, got %u - buffer "
-					           "underrun not yet handled correctly",
-					           track->requestedSampleBufferSize, returnedSamples);
-				}
+					track = parent.track;
+					if (!track)
+					{
+						LogInfo("No next track, stopping thread ");
+						memset(buf, 0, samplesLeft * getSampleSize(format));
+						al_set_audio_stream_fragment(stream, buf);
+						al_drain_audio_stream(stream);
+						al_destroy_audio_stream(stream);
+						return;
+					}
+					if (track->format != format)
+					{
+						LogError("UNSUPPORTED: Track format changed");
+						al_drain_audio_stream(stream);
+						al_destroy_audio_stream(stream);
+						return;
+					}
+					unsigned int returnedSamples;
+					auto callbackReturn =
+					    track->callback(track, samplesLeft, buf, &returnedSamples);
+					if (returnedSamples > samplesLeft)
+					{
+						LogError("Buffer overflow, requested %u samples, got %u", samplesLeft,
+						         returnedSamples);
+						samplesLeft = 0;
+					}
+					else
+					{
+						samplesLeft -= returnedSamples;
+					}
 
+					if (callbackReturn == MusicTrack::MusicCallbackReturn::End)
+					{
+						LogInfo("Progressing track");
+						finishedCallback(callbackData);
+					}
+				}
 				al_set_audio_stream_fragment(stream, buf);
-
-				if (callbackReturn == MusicTrack::MusicCallbackReturn::End)
-				{
-					al_drain_audio_stream(stream);
-					LogError("Unimplement track progression");
-					std::ignore = finishedCallback;
-					std::ignore = callbackData;
-					// FIXME: finishedCallback() in a way that calling playMusic() won't just wedge
-					// waiting for the same thread to join
-					al_destroy_audio_stream(stream);
-					return;
-				}
 			}
 		}
 		al_drain_audio_stream(stream);
 		al_destroy_audio_stream(stream);
 	}
 
-	virtual void playMusic(std::shared_ptr<MusicTrack> track,
-	                       std::function<void(void *)> finishedCallback,
+	virtual void playMusic(std::function<void(void *)> finishedCallback,
 	                       void *callbackData) override
 	{
-		this->stopMusic();
 		stopThread = false;
-		this->musicThread.reset(new std::thread(musicThreadFunction, std::ref(*this), track,
-		                                        finishedCallback, callbackData));
+		if (!this->track)
+		{
+			LogWarning("Called with no track");
+		}
+		this->musicThread.reset(
+		    new std::thread(musicThreadFunction, std::ref(*this), finishedCallback, callbackData));
 	}
 
 	virtual void stopMusic() override
 	{
+		this->track = nullptr;
 		if (musicThread)
 		{
 			stopThread = true;
 			musicThread->join();
 			musicThread.reset(nullptr);
 		}
+	}
+
+	virtual void setTrack(std::shared_ptr<MusicTrack> track) override
+	{
+		LogWarning("Setting track to %p", track.get());
+		this->track = track;
 	}
 
 	virtual ~AllegroSoundBackend() { this->stopMusic(); }

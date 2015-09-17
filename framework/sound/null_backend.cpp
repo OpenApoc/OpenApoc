@@ -23,13 +23,17 @@ class NullSoundBackend : public SoundBackend
 		LogWarning("Called on NULL backend");
 	}
 
-	virtual void playMusic(std::shared_ptr<MusicTrack> track,
-	                       std::function<void(void *)> finishedCallback,
+	virtual void playMusic(std::function<void(void *)> finishedCallback,
 	                       void *callbackData) override
 	{
-		std::ignore = track;
 		std::ignore = finishedCallback;
 		std::ignore = callbackData;
+		LogWarning("Called on NULL backend");
+	}
+
+	virtual void setTrack(std::shared_ptr<MusicTrack> track) override
+	{
+		std::ignore = track;
 		LogWarning("Called on NULL backend");
 	}
 

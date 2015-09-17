@@ -103,6 +103,7 @@ class JukeBoxImpl : public JukeBox
 				this->trackList.push_back(musicTrack);
 		}
 		this->progressTrack(this);
+		this->fw.soundBackend->playMusic(progressTrack, this);
 	}
 	static void progressTrack(void *data)
 	{
@@ -117,8 +118,9 @@ class JukeBoxImpl : public JukeBox
 			LogInfo("End of jukebox playlist");
 			return;
 		}
-		jukebox->fw.soundBackend->playMusic(jukebox->trackList[jukebox->position], progressTrack,
-		                                    jukebox);
+		LogWarning("Playing track %u", jukebox->position);
+		jukebox->fw.soundBackend->setTrack(jukebox->trackList[jukebox->position]);
+
 		jukebox->position++;
 		if (jukebox->mode == JukeBox::PlayMode::Loop)
 			jukebox->position = jukebox->position % jukebox->trackList.size();
