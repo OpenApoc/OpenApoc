@@ -14,13 +14,20 @@ namespace OpenApoc
 class UString::UString_impl : public icu::UnicodeString
 {
   public:
-	UString_impl(const std::string str) : icu::UnicodeString(str.c_str(), "UTF-8") {}
-	UString_impl(const UChar *ucstr, int len) : icu::UnicodeString() { this->setTo(ucstr, len); }
-	UString_impl(const char *str) : icu::UnicodeString(str, "UTF-8") {}
-	UString_impl(const UString_impl &other) : icu::UnicodeString(other) {}
+	UString_impl(const std::string str)
+	    : icu::UnicodeString(str.c_str(), "UTF-8"), c_str_dirty(true)
+	{
+	}
+	UString_impl(const UChar *ucstr, int len) : icu::UnicodeString(), c_str_dirty(true)
+	{
+		this->setTo(ucstr, len);
+	}
+	UString_impl(const char *str) : icu::UnicodeString(str, "UTF-8"), c_str_dirty(true) {}
+	UString_impl(const UString_impl &other) : icu::UnicodeString(other), c_str_dirty(true) {}
 	/* A copy of the string in utf8 for c_str() calls, as the pointer needs to be valid for the
 	 * lifetime of the UString object */
 	std::string c_str_contents;
+	bool c_str_dirty;
 };
 
 UString::~UString() {}
@@ -51,7 +58,11 @@ std::string UString::str() const
 
 const char *UString::c_str() const
 {
-	this->pimpl->c_str_contents = this->str();
+	if (pimpl->c_str_dirty)
+	{
+		this->pimpl->c_str_contents = this->str();
+		pimpl->c_str_dirty = false;
+	}
 	return this->pimpl->c_str_contents.c_str();
 }
 
@@ -76,12 +87,14 @@ UString UString::toUpper() const
 UString &UString::operator=(const UString &other)
 {
 	this->pimpl->setTo(*other.pimpl);
+	this->pimpl->c_str_dirty = true;
 	return *this;
 }
 
 UString &UString::operator+=(const UString &other)
 {
 	*this->pimpl += *other.pimpl;
+	this->pimpl->c_str_dirty = true;
 	return *this;
 }
 
@@ -92,9 +105,14 @@ size_t UString::length() const { return this->pimpl->countChar32(); }
 void UString::insert(size_t offset, const UString &other)
 {
 	this->pimpl->insert(offset, *other.pimpl);
+	this->pimpl->c_str_dirty = true;
 }
 
-void UString::remove(size_t offset, size_t count) { this->pimpl->remove(offset, count); }
+void UString::remove(size_t offset, size_t count)
+{
+	this->pimpl->remove(offset, count);
+	this->pimpl->c_str_dirty = true;
+}
 
 bool UString::operator!=(const UString &other) const { return *this->pimpl != *other.pimpl; }
 
