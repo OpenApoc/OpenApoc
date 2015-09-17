@@ -2,6 +2,7 @@
 #include "game/rules/rules_private.h"
 #include "framework/framework.h"
 #include <tinyxml2.h>
+#include "game/ufopaedia/ufopaedia.h"
 
 namespace OpenApoc
 {
@@ -76,6 +77,21 @@ bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *
 		{
 			if (!ParseWeaponDefinition(fw, rules, e))
 				return false;
+		}
+		else if (name == "ufopaedia")
+		{
+			tinyxml2::XMLElement *nodeufo;
+			UString nodename;
+			for (nodeufo = e->FirstChildElement(); nodeufo != nullptr;
+				    nodeufo = nodeufo->NextSiblingElement())
+			{
+				nodename = nodeufo->Name();
+				if (nodename == "category")
+				{
+					Ufopaedia::UfopaediaDB.push_back(
+						  std::make_shared<UfopaediaCategory>(fw, nodeufo));
+				}
+			}
 		}
 		else if (name == "include")
 		{
