@@ -35,11 +35,12 @@ class RawMusicTrack : public MusicTrack
 	IFile file;
 	unsigned int samplePosition;
 	bool valid;
+	UString name;
 
   public:
-	RawMusicTrack(Data &data, const UString &fileName, unsigned int fileOffset,
+	RawMusicTrack(Data &data, const UString &name, const UString &fileName, unsigned int fileOffset,
 	              unsigned int numSamples)
-	    : file(data.load_file(fileName)), samplePosition(0), valid(false)
+	    : file(data.load_file(fileName)), samplePosition(0), valid(false), name(name)
 	{
 		if (!file)
 		{
@@ -66,9 +67,11 @@ class RawMusicTrack : public MusicTrack
 		this->format.format = AudioFormat::SampleFormat::PCM_SINT16;
 		this->callback = fillMusicData;
 
-		// Ask for 1/2 a second of buffer by default
-		this->requestedSampleBufferSize = this->format.frequency / 2;
+		// Ask for 1/10 a second of buffer by default
+		// Increase this for
+		this->requestedSampleBufferSize = this->format.frequency / 10;
 	}
+	virtual const UString &getName() const override { return this->name; }
 	MusicTrack::MusicCallbackReturn fillData(unsigned int maxSamples, void *sampleBuffer,
 	                                         unsigned int *returnedSamples)
 	{
@@ -137,7 +140,7 @@ class RawMusicLoader : public MusicLoader
 			LogInfo("Raw music track %d out of bounds", track);
 			return nullptr;
 		}
-		return std::make_shared<RawMusicTrack>(*fw.data, strings[0], starts[track],
+		return std::make_shared<RawMusicTrack>(*fw.data, path, strings[0], starts[track],
 		                                       lengths[track] / MusicChannels /
 		                                           MusicBytesPerSample);
 	}

@@ -7,7 +7,7 @@
 namespace OpenApoc
 {
 
-std::vector<UString> tracks{"music:0"};
+std::vector<UString> tracks{"music:0", "music:1", "music:2"};
 
 MainMenu::MainMenu(Framework &fw) : Stage(fw)
 {

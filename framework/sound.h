@@ -59,8 +59,7 @@ class MusicTrack
 
 	std::function<MusicCallbackReturn(std::shared_ptr<MusicTrack> track, unsigned int maxSamples,
 	                                  void *sampleBuffer, unsigned int *returnedSamples)> callback;
-
-	std::shared_ptr<MusicTrack> currentTrack;
+	virtual const UString &getName() const = 0;
 	virtual ~MusicTrack() {}
 };
 
