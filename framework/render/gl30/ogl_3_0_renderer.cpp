@@ -1044,9 +1044,9 @@ void OGL30Renderer::draw(std::shared_ptr<Image> image, Vec2<float> position)
 			if (!warnonce)
 			{
 				warnonce = true;
-				LogError("Spritesheet size %d would be over max array size %d - falling back to "
-				         "'slow' path",
-				         owningSet->images.size(), maxSpritesheetSize);
+				LogWarning("Spritesheet size %d would be over max array size %d - falling back to "
+				           "'slow' path",
+				           owningSet->images.size(), maxSpritesheetSize);
 			}
 		}
 		else
