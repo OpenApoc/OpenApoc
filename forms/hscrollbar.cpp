@@ -104,11 +104,11 @@ void HScrollBar::OnRender()
 void HScrollBar::Update()
 {
 	Control::Update();
-	if( Value > Maximum )
+	if (Value > Maximum)
 	{
 		Value = Maximum;
 	}
-	if( Value < Minimum )
+	if (Value < Minimum)
 	{
 		Value = Minimum;
 	}

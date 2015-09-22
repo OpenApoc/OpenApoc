@@ -83,13 +83,13 @@ bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *
 			tinyxml2::XMLElement *nodeufo;
 			UString nodename;
 			for (nodeufo = e->FirstChildElement(); nodeufo != nullptr;
-				    nodeufo = nodeufo->NextSiblingElement())
+			     nodeufo = nodeufo->NextSiblingElement())
 			{
 				nodename = nodeufo->Name();
 				if (nodename == "category")
 				{
 					Ufopaedia::UfopaediaDB.push_back(
-						  std::make_shared<UfopaediaCategory>(fw, nodeufo));
+					    std::make_shared<UfopaediaCategory>(fw, nodeufo));
 				}
 			}
 		}
