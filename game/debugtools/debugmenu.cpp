@@ -1,6 +1,7 @@
 
 #include "game/debugtools/debugmenu.h"
 #include "framework/framework.h"
+#include "game/debugtools/formpreview.h"
 
 namespace OpenApoc
 {
@@ -45,6 +46,11 @@ void DebugMenu::EventOccurred(Event *e)
 		{
 			BulkExportPCKs();
 			return;
+		}
+		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_FORMPREVIEW")
+		{
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = std::make_shared<FormPreview>(fw);
 		}
 	}
 }
