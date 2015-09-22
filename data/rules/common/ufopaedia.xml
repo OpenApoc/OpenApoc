@@ -248,7 +248,7 @@
           <text_info>STR_STORMDOG_INFO</text_info>
           <dynamic_data>VEHICLE</dynamic_data>
         </entry>
-        <entry id="WOLFHOUND_APC" name="STR_WOLFHOUND_APCI">
+        <entry id="WOLFHOUND_APC" name="STR_WOLFHOUND_APC">
           <backgroundimage>xcom3/UFOPAEDI/21STALAG.PCX</backgroundimage>
           <text_info>STR_WOLFHOUND_APC_INFO</text_info>
           <dynamic_data>VEHICLE</dynamic_data>
@@ -886,54 +886,54 @@
       <title>STR_ALIEN_CRAFT</title>
       <text_info>STR_ALIEN_CRAFT_INFO</text_info>
       <entries>
-        <entry id="ALIEN_PROBE" name="STR_ALIEN_PROBE">
+        <entry id="ALIEN_PROBE" name="STR_PROBE">
           <backgroundimage>xcom3/UFOPAEDI/02UFO-F.PCX</backgroundimage>
-          <text_info>STR_ALIEN_PROBE_INFO</text_info>
+          <text_info>STR_PROBE_INFO</text_info>
           <dynamic_data/>
         </entry>
-        <entry id="ALIEN_SCOUT" name="STR_ALIEN_SCOUT">
+        <entry id="ALIEN_SCOUT" name="STR_SCOUT">
           <backgroundimage>xcom3/UFOPAEDI/03UFO-F.PCX</backgroundimage>
-          <text_info>STR_ALIEN_SCOUT_INFO</text_info>
+          <text_info>STR_SCOUT_INFO</text_info>
           <dynamic_data/>
         </entry>
-        <entry id="ALIEN_TRANSPORTER" name="STR_ALIEN_TRANSPORTER">
+        <entry id="ALIEN_TRANSPORTER" name="STR_TRANSPORTER">
           <backgroundimage>xcom3/UFOPAEDI/05UFO-F.PCX</backgroundimage>
-          <text_info>STR_ALIEN_TRANSPORTER_INFO</text_info>
+          <text_info>STR_TRANSPORTER_INFO</text_info>
           <dynamic_data/>
         </entry>
-        <entry id="ALIEN_FAST_ATTACK_SHIP" name="STR_ALIEN_FAST_ATTACK_SHIP">
+        <entry id="ALIEN_FAST_ATTACK_SHIP" name="STR_FAST_ATTACK_SHIP">
           <backgroundimage>xcom3/UFOPAEDI/06UFO-F.PCX</backgroundimage>
-          <text_info>STR_ALIEN_FAST_ATTACK_SHIP_INFO</text_info>
+          <text_info>STR_FAST_ATTACK_SHIP_INFO</text_info>
           <dynamic_data/>
         </entry>
-        <entry id="ALIEN_DESTROYER" name="STR_ALIEN_DESTROYER">
+        <entry id="ALIEN_DESTROYER" name="STR_DESTROYER">
           <backgroundimage>xcom3/UFOPAEDI/07UFO-F.PCX</backgroundimage>
-          <text_info>STR_ALIEN_DESTROYER_INFO</text_info>
+          <text_info>STR_DESTROYER_INFO</text_info>
           <dynamic_data/>
         </entry>
-        <entry id="ALIEN_ASSAULT_SHIP" name="STR_ALIEN_ASSAULT_SHIP">
+        <entry id="ALIEN_ASSAULT_SHIP" name="STR_ASSAULT_SHIP">
           <backgroundimage>xcom3/UFOPAEDI/08UFO-F.PCX</backgroundimage>
-          <text_info>STR_ALIEN_ASSAULT_SHIP_INFO</text_info>
+          <text_info>STR_ASSAULT_SHIP_INFO</text_info>
           <dynamic_data/>
         </entry>
-        <entry id="ALIEN_BOMBER" name="STR_ALIEN_BOMBER">
+        <entry id="ALIEN_BOMBER" name="STR_BOMBER">
           <backgroundimage>xcom3/UFOPAEDI/09UFO-F.PCX</backgroundimage>
-          <text_info>STR_ALIEN_BOMBER_INFO</text_info>
+          <text_info>STR_BOMBER_INFO</text_info>
           <dynamic_data/>
         </entry>
-        <entry id="ALIEN_ESCORT" name="STR_ALIEN_ESCORT">
+        <entry id="ALIEN_ESCORT" name="STR_ESCORT">
           <backgroundimage>xcom3/UFOPAEDI/10UFO-F.PCX</backgroundimage>
-          <text_info>STR_ALIEN_ESCORT_INFO</text_info>
+          <text_info>STR_ESCORT_INFO</text_info>
           <dynamic_data/>
         </entry>
-        <entry id="ALIEN_BATTLESHIP" name="STR_ALIEN_BATTLESHIP">
+        <entry id="ALIEN_BATTLESHIP" name="STR_BATTLESHIP">
           <backgroundimage>xcom3/UFOPAEDI/11UFO-F.PCX</backgroundimage>
-          <text_info>STR_ALIEN_BATTLESHIP_INFO</text_info>
+          <text_info>STR_BATTLESHIP_INFO</text_info>
           <dynamic_data/>
         </entry>
-        <entry id="ALIEN_MOTHERSHIP" name="STR_ALIEN_MOTHERSHIP">
+        <entry id="ALIEN_MOTHERSHIP" name="STR_MOTHERSHIP">
           <backgroundimage>xcom3/UFOPAEDI/12UFO-F.PCX</backgroundimage>
-          <text_info>STR_ALIEN_MOTHERSHIP_INFO</text_info>
+          <text_info>STR_MOTHERSHIP_INFO</text_info>
           <dynamic_data/>
         </entry>
         <entry id="ALIEN_CRAFT_PROPULSION" name="STR_ALIEN_CRAFT_PROPULSION">
@@ -993,9 +993,9 @@
           <text_info>STR_MULTIWORM_AUTOPSY_INFO</text_info>
           <dynamic_data/>
         </entry>
-        <entry id="HYPERWORM" name="STR_HYPERWORM">
+        <entry id="HYPERWORM" name="STR_HYPERWORMS">
           <backgroundimage>xcom3/UFOPAEDI/04HPWORM.PCX</backgroundimage>
-          <text_info>STR_HYPERWORM_INFO</text_info>
+          <text_info>STR_HYPERWORMS_INFO</text_info>
           <dynamic_data/>
         </entry>
         <entry id="HYPERWORM_AUTOPSY" name="STR_HYPERWORM_AUTOPSY">
@@ -1093,14 +1093,14 @@
           <text_info>STR_QUEENSPAWN_AUTOPSY_INFO</text_info>
           <dynamic_data/>
         </entry>
-        <entry id="OVERSPAWN" name="STR_OVERSPAWN">
-          <backgroundimage>xcom3/UFOPAEDI/08VRSPWN.PCX</backgroundimage>
-          <text_info>STR_OVERSPAWN_INFO</text_info>
-          <dynamic_data/>
-        </entry>
         <entry id="OVERSPAWN_AUTOPSY" name="STR_OVERSPAWN_AUTOPSY">
           <backgroundimage>xcom3/UFOPAEDI/08AUTOPS.PCX</backgroundimage>
           <text_info>STR_OVERSPAWN_AUTOPSY_INFO</text_info>
+          <dynamic_data/>
+        </entry>
+        <entry id="OVERSPAWN_AUTOPSY_2" name="STR_OVERSPAWN_AUTOPSY_2">
+          <backgroundimage>xcom3/UFOPAEDI/08AUTOPS.PCX</backgroundimage>
+          <text_info>STR_OVERSPAWN_AUTOPSY_2_INFO</text_info>
           <dynamic_data/>
         </entry>
         <entry id="THE_ALIEN_GENETIC_STRUCTURE" name="STR_THE_ALIEN_GENETIC_STRUCTURE">
@@ -1125,9 +1125,9 @@
       <title>STR_ALIEN_DIMENSION</title>
       <text_info>STR_ALIEN_DIMENSION_INFO</text_info>
       <entries>
-        <entry id="INCUBATOR_CHAMBER" name="STR_INCUBATOR_CHAMBER">
+        <entry id="INCUBATOR_CHAMBER" name="STR_INCUBATOR">
           <backgroundimage>xcom3/UFOPAEDI/00INCUBA.PCX</backgroundimage>
-          <text_info>STR_INCUBATOR_CHAMBER_INFO</text_info>
+          <text_info>STR_INCUBATOR_INFO</text_info>
           <dynamic_data/>
         </entry>
         <entry id="SPAWNING_CHAMBER" name="STR_SPAWNING_CHAMBER">
@@ -1267,9 +1267,9 @@
           <text_info>STR_LUXURY_APARTMENTS_INFO</text_info>
           <dynamic_data>BUILDING</dynamic_data>
         </entry>
-        <entry id="HYRDO_FARM" name="STR_HYRDO_FARM">
+        <entry id="HYDRO_FARM" name="STR_HYDRO_FARM">
           <backgroundimage>xcom3/UFOPAEDI/13FARM.PCX</backgroundimage>
-          <text_info>STR_HYRDO_FARM_INFO</text_info>
+          <text_info>STR_HYDRO_FARM_INFO</text_info>
           <dynamic_data>BUILDING</dynamic_data>
         </entry>
         <entry id="SEWAGE_WORKS" name="STR_SEWAGE_WORKS">
