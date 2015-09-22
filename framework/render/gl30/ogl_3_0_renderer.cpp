@@ -676,6 +676,10 @@ class OGL30Renderer : public Renderer
 	friend class RendererSurfaceBinding;
 	virtual void setSurface(std::shared_ptr<Surface> s) override
 	{
+		if (this->currentSurface == s)
+		{
+			return;
+		}
 		this->flush();
 		this->currentSurface = s;
 		if (!s->rendererPrivateData)
