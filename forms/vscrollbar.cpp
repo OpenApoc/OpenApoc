@@ -101,7 +101,18 @@ void VScrollBar::OnRender()
 	                            GripperColour);
 }
 
-void VScrollBar::Update() { Control::Update(); }
+void VScrollBar::Update()
+{
+	Control::Update();
+	if( Value > Maximum )
+	{
+		Value = Maximum;
+	}
+	if( Value < Minimum )
+	{
+		Value = Minimum;
+	}
+}
 
 void VScrollBar::UnloadResources() { Control::UnloadResources(); }
 

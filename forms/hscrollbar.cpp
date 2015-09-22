@@ -101,7 +101,18 @@ void HScrollBar::OnRender()
 	                            GripperColour);
 }
 
-void HScrollBar::Update() { Control::Update(); }
+void HScrollBar::Update()
+{
+	Control::Update();
+	if( Value > Maximum )
+	{
+		Value = Maximum;
+	}
+	if( Value < Minimum )
+	{
+		Value = Minimum;
+	}
+}
 
 void HScrollBar::UnloadResources() { Control::UnloadResources(); }
 

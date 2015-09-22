@@ -64,7 +64,11 @@ void ListBox::OnRender()
 
 void ListBox::EventOccured(Event *e) { Control::EventOccured(e); }
 
-void ListBox::Update() {}
+void ListBox::Update()
+{
+	Control::Update();
+	scroller->Update();
+}
 
 void ListBox::UnloadResources() {}
 

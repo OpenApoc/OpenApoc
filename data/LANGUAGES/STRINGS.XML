@@ -239,13 +239,13 @@
     <fr_fr>Le bombardier alien est équipé d'une étrange rampe de lancement de missiles dont les projectiles se divisent en une multitude de missiles qui ont chacun une cible différente. Ce vaisseau est également armé d'un émetteur de rayons léger pour se protéger lors des combats rapprochés. Le bombardier transporte un équipage limité.</fr_fr>
     <de_de>Dieses Schiff ist mit einer ungewöhnlichen Abschußvorrichtung versehen. Nach dem Abschuß zerfällt das Projektil in mehrere, einzeln lenkbare Raketen. Der Bomber ist außerdem mit einem leichten Disruptorstrahl für den Luftnahkampf ausgestattet. Er verfügt über eine zahlenmäßig begrenzte Besatzung.</de_de>
   </string>
-  <string id="STR_SCORT_SHIP">
+  <string id="STR_ESCORT_SHIP">
     <en_gb>Alien Escort Ship</en_gb>
     <es_la>Escolta alienígena</es_la>
     <fr_fr>Vaisseau d'escorte alien</fr_fr>
     <de_de>Alien-Eskortschiff</de_de>
   </string>
-  <string id="STR_SCORT_SHIP_INFO">
+  <string id="STR_ESCORT_SHIP_INFO">
     <en_gb>This craft is fast and nimble. On its own it represents no threat, but is deadly when combined with other Alien combat ships. It is armed with a missile which generates a Stasis Field on impact. This field holds the target still for a small period of time so craft that rely on evasion for defense, become vulnerable.</en_gb>
     <es_la>Esta nave es rápida y ágil, por sí sola no representa amenaza ninguna, pero es mortal cuando se combina con otras naves de combate alienígena. Está armada con un misil que genera un campo de estasis en impacto. Este campo detiene el blanco por un corto período de tiempo, de esta manera las naves que se basan en evasión para defensa, quedan vulnerables.</es_la>
     <fr_fr>C'est un vaisseau rapide, d'une excellente maniabilité. Il ne constitue pas une menace à lui seul, mais il est extrêmement dangereux lorsqu'il est accompagné d'autres vaisseaux de combat aliens. Il est armé d'un missile qui génère un champ stasique lorsqu'il explose, ce qui contribue à immobiliser la cible pendant une période limitée. Les véhicules qui se défendent en employant des manoeuvres évasives sont extrêmement vulnérables face à ce vaisseau.</fr_fr>

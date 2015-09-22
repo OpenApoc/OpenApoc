@@ -891,14 +891,14 @@
           <text_info>STR_PROBE_INFO</text_info>
           <dynamic_data/>
         </entry>
-        <entry id="ALIEN_SCOUT" name="STR_SCOUT">
+        <entry id="ALIEN_SCOUT" name="STR_SCOUT_SHIP">
           <backgroundimage>xcom3/UFOPAEDI/03UFO-F.PCX</backgroundimage>
-          <text_info>STR_SCOUT_INFO</text_info>
+          <text_info>STR_SCOUT_SHIP_INFO</text_info>
           <dynamic_data/>
         </entry>
-        <entry id="ALIEN_TRANSPORTER" name="STR_TRANSPORTER">
+        <entry id="ALIEN_TRANSPORTER" name="STR_TRANSPORTER_SHIP">
           <backgroundimage>xcom3/UFOPAEDI/05UFO-F.PCX</backgroundimage>
-          <text_info>STR_TRANSPORTER_INFO</text_info>
+          <text_info>STR_TRANSPORTER_SHIP_INFO</text_info>
           <dynamic_data/>
         </entry>
         <entry id="ALIEN_FAST_ATTACK_SHIP" name="STR_FAST_ATTACK_SHIP">
@@ -906,9 +906,9 @@
           <text_info>STR_FAST_ATTACK_SHIP_INFO</text_info>
           <dynamic_data/>
         </entry>
-        <entry id="ALIEN_DESTROYER" name="STR_DESTROYER">
+        <entry id="ALIEN_DESTROYER" name="STR_DESTROYER_SHIP">
           <backgroundimage>xcom3/UFOPAEDI/07UFO-F.PCX</backgroundimage>
-          <text_info>STR_DESTROYER_INFO</text_info>
+          <text_info>STR_DESTROYER_SHIP_INFO</text_info>
           <dynamic_data/>
         </entry>
         <entry id="ALIEN_ASSAULT_SHIP" name="STR_ASSAULT_SHIP">
@@ -916,14 +916,14 @@
           <text_info>STR_ASSAULT_SHIP_INFO</text_info>
           <dynamic_data/>
         </entry>
-        <entry id="ALIEN_BOMBER" name="STR_BOMBER">
+        <entry id="ALIEN_BOMBER" name="STR_BOMBER_SHIP">
           <backgroundimage>xcom3/UFOPAEDI/09UFO-F.PCX</backgroundimage>
-          <text_info>STR_BOMBER_INFO</text_info>
+          <text_info>STR_BOMBER_SHIP_INFO</text_info>
           <dynamic_data/>
         </entry>
-        <entry id="ALIEN_ESCORT" name="STR_ESCORT">
+        <entry id="ALIEN_ESCORT" name="STR_ESCORT_SHIP">
           <backgroundimage>xcom3/UFOPAEDI/10UFO-F.PCX</backgroundimage>
-          <text_info>STR_ESCORT_INFO</text_info>
+          <text_info>STR_ESCORT_SHIP_INFO</text_info>
           <dynamic_data/>
         </entry>
         <entry id="ALIEN_BATTLESHIP" name="STR_BATTLESHIP">
