@@ -115,11 +115,11 @@ class SpriteProgram : public Program
 	}
 
   public:
-	GLuint posLoc;
-	GLuint texcoordLoc;
-	GLuint screenSizeLoc;
-	GLuint texLoc;
-	GLuint flipYLoc;
+	GLint posLoc;
+	GLint texcoordLoc;
+	GLint screenSizeLoc;
+	GLint texLoc;
+	GLint flipYLoc;
 };
 const char *RGBProgram_vertexSource = {
     "#version 130\n"
@@ -150,13 +150,25 @@ class RGBProgram : public SpriteProgram
 	RGBProgram() : SpriteProgram(RGBProgram_vertexSource, RGBProgram_fragmentSource)
 	{
 		this->posLoc = gl::GetAttribLocation(this->prog, "position");
+		if (this->posLoc < 0)
+			LogError("\"position\" attribute not found in shader");
 		this->texcoordLoc = gl::GetAttribLocation(this->prog, "texcoord_in");
+		if (this->texcoordLoc < 0)
+			LogError("\"texcoord_in\" attribute not found in shader");
 		this->screenSizeLoc = gl::GetUniformLocation(this->prog, "screenSize");
+		if (this->screenSizeLoc < 0)
+			LogError("\"screenSize\" uniform not found in shader");
 		this->texLoc = gl::GetUniformLocation(this->prog, "tex");
+		if (this->texLoc < 0)
+			LogError("\"tex\" uniform not found in shader");
 		this->flipYLoc = gl::GetUniformLocation(this->prog, "flipY");
+		if (this->flipYLoc < 0)
+			LogError("\"flipY\" uniform not found in shader");
 	}
 	void setUniforms(Vec2<int> screenSize, bool flipY, GLint texUnit = 0)
 	{
+		LogInfo("Drawing to {%d,%d} surface, flip = %s", screenSize.x, screenSize.y,
+		        flipY ? "true" : "false");
 		this->Uniform(this->screenSizeLoc, screenSize);
 		this->Uniform(this->texLoc, texUnit);
 		this->Uniform(this->flipYLoc, flipY);
@@ -191,7 +203,7 @@ class PaletteProgram : public SpriteProgram
 {
   private:
   public:
-	GLuint palLoc;
+	GLint palLoc;
 	PaletteProgram() : SpriteProgram(PaletteProgram_vertexSource, PaletteProgram_fragmentSource)
 	{
 		this->posLoc = gl::GetAttribLocation(this->prog, "position");
