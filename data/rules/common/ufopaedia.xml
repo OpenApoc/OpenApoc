@@ -762,19 +762,19 @@
           <text_info>STR_INCENDIARY_GRENADE_INFO</text_info>
           <dynamic_data>EQUIPMENT</dynamic_data>
         </entry>
-        <entry id="MEGAPOL_BODY_ARMOUR" name="STR_MEGAPOL_BODY_ARMOUR">
+        <entry id="MEGAPOL_BODY_ARMOUR" name="STR_MEGAPOL_ARMOUR">
           <backgroundimage>xcom3/UFOPAEDI/ARMOUR1.PCX</backgroundimage>
-          <text_info>STR_MEGAPOL_BODY_ARMOUR_INFO</text_info>
+          <text_info>STR_MEGAPOL_ARMOUR_INFO</text_info>
           <dynamic_data>EQUIPMENT</dynamic_data>
         </entry>
-        <entry id="MARSEC_BODY_UNIT" name="STR_MARSEC_BODY_UNIT">
+        <entry id="MARSEC_BODY_UNIT" name="STR_MARSEC_ARMOUR">
           <backgroundimage>xcom3/UFOPAEDI/ARMOUR2.PCX</backgroundimage>
-          <text_info>STR_MARSEC_BODY_UNIT_INFO</text_info>
+          <text_info>STR_MARSEC_ARMOUR_INFO</text_info>
           <dynamic_data>EQUIPMENT</dynamic_data>
         </entry>
-        <entry id="XCOM_BODY_SHIELD" name="STR_XCOM_BODY_SHIELD">
+        <entry id="XCOM_BODY_SHIELD" name="STR_X_COM_DISRUPTOR_ARMOUR">
           <backgroundimage>xcom3/UFOPAEDI/ARMOUR3.PCX</backgroundimage>
-          <text_info>STR_XCOM_BODY_SHIELD_INFO</text_info>
+          <text_info>STR_X_COM_DISRUPTOR_ARMOUR_INFO</text_info>
           <dynamic_data>EQUIPMENT</dynamic_data>
         </entry>
         <entry id="PSICLONE" name="STR_PSICLONE">

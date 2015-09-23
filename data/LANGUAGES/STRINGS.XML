@@ -3389,22 +3389,10 @@
   <string id="STR_DEBUG_MENU">
     <en_gb>Debugging Menu</en_gb>
   </string>
-	<string id="STR_MEGAPOL_BODY_ARMOUR">
-		<en_gb>Megapol Armor</en_gb>
+	<string id="STR_DUMP_PCKS">
+		<en_gb>Dump PCK Images</en_gb>
 	</string>
-	<string id="STR_MEGAPOL_BODY_ARMOUR_INFO">
-		<en_gb>This is a standard issue armor which provides very effective protection but inhibits the wearer's speed. The leg, torso, arms and helmet are all separate components and can be mixed with other armor types. Under no circumstances should an Agent be sent into combat without full armor cover</en_gb>
-	</string>
-	<string id="STR_MARSEC_BODY_UNIT">
-		<en_gb>Marsec Armor</en_gb>
-	</string>
-	<string id="STR_MARSEC_BODY_UNIT_INFO">
-		<en_gb>An expensive, Elerium powered armor system. This armor offers less protection than the Megapol armor on average but will not slow down the wearer so much. The expensive torso section also has an integrated levitation unit which will allow the wearer to fly or hover in the air. This is an extremely useful ability, but an airborne Agent will suffer an accuracy penalty while using weapons or throwing grenades</en_gb>
-	</string>
-	<string id="STR_XCOM_BODY_SHIELD">
-		<en_gb>X-COM Disruptor Armor</en_gb>
-	</string>
-	<string id="STR_XCOM_BODY_SHIELD_INFO">
-		<en_gb>A lightweight armor developed by X-COM using Alien disruption field technology. This offers superb protection and excellent mobility</en_gb>
+	<string id="STR_FORM_PREVIEW">
+		<en_gb>Form Previewer</en_gb>
 	</string>
 </openapoc>
