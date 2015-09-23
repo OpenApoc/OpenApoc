@@ -7,6 +7,11 @@ namespace OpenApoc
 
 FormPreview::FormPreview(Framework &fw) : Stage(fw)
 {
+	displayform = nullptr;
+	currentSelected = nullptr;
+	currentSelectedControl = nullptr;
+	glowindex = 0;
+
 	previewselector = new Form( fw, nullptr );
 	previewselector->Size.x = 200;
 	previewselector->Size.y = 300;
@@ -34,9 +39,6 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 	c->BackgroundColour.g = 80;
 	c->BackgroundColour.b = 80;
 
-
-
-
 	Label* l = new Label( fw, c, "Pick Form:", fw.gamecore->GetFont( "SMALFONT" ) );
 	l->Location.x = 0;
 	l->Location.y = 0;
@@ -53,6 +55,7 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 	interactWithDisplay->BackgroundColour.r = 80;
 	interactWithDisplay->BackgroundColour.g = 80;
 	interactWithDisplay->BackgroundColour.b = 80;
+	interactWithDisplay->Checked = true;
 
 	l = new Label( fw, c, "Interact?", fw.gamecore->GetFont( "SMALFONT" ) );
 	l->Location.x = interactWithDisplay->Size.x + 2;
@@ -86,8 +89,14 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 		// lb->AddItem( l );
 	}
 
-	displayform = nullptr;
-	currentSelected = nullptr;
+	propertyeditor = new Form( fw, nullptr );
+	propertyeditor->Location.x = 2;
+	propertyeditor->Location.y = 304;
+	propertyeditor->Size.x = 200;
+	propertyeditor->Size.y = fw.Display_GetHeight() - propertyeditor->Location.y - 2;
+	propertyeditor->BackgroundColour.r = 192;
+	propertyeditor->BackgroundColour.g = 192;
+	propertyeditor->BackgroundColour.b = 192;
 }
 
 FormPreview::~FormPreview()
@@ -106,6 +115,10 @@ void FormPreview::Finish() {}
 void FormPreview::EventOccurred(Event *e)
 {
 	previewselector->EventOccured(e);
+	if( propertyeditor != nullptr )
+	{
+		propertyeditor->EventOccured(e);
+	}
 	if( displayform != nullptr && interactWithDisplay->Checked )
 	{
 		displayform->EventOccured(e);
@@ -123,23 +136,41 @@ void FormPreview::EventOccurred(Event *e)
 
 	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::MouseClick)
 	{
+
+		if( displayform != nullptr && e->Data.Forms.RaisedBy->GetForm() == displayform )
+		{
+			currentSelectedControl = e->Data.Forms.RaisedBy;
+			ConfigureSelectedControlForm();
+		} else {
+			currentSelectedControl = nullptr;
+			ConfigureSelectedControlForm();
+		}
+
 		if ( e->Data.Forms.RaisedBy->GetForm() == previewselector && e->Data.Forms.RaisedBy->GetParent()->Name == "FORM_LIST")
 		{
+
 			if( currentSelected != nullptr )
 			{
 				currentSelected->BackgroundColour.a = 0;
 			}
+
 			currentSelected = (Label*)e->Data.Forms.RaisedBy;
 			currentSelected->BackgroundColour.a = 255;
-			displayform = fw.gamecore->GetForm( e->Data.Forms.RaisedBy->Name );
+			displayform = fw.gamecore->GetForm( currentSelected->Name );
+
 			return;
 		}
+
 	}
 }
 
 void FormPreview::Update(StageCmd *const cmd)
 {
 	previewselector->Update();
+	if( propertyeditor != nullptr )
+	{
+		propertyeditor->Update();
+	}
 	if( displayform != nullptr )
 	{
 		displayform->Update();
@@ -147,18 +178,51 @@ void FormPreview::Update(StageCmd *const cmd)
 	*cmd = this->stageCmd;
 	// Reset the command to default
 	this->stageCmd = StageCmd();
+
+	glowindex = (glowindex + 4) % 511;
 }
 
 void FormPreview::Render()
 {
-	previewselector->Render();
 	if( displayform != nullptr )
 	{
 		displayform->Render();
 	}
+	previewselector->Render();
+	if( propertyeditor != nullptr )
+	{
+		propertyeditor->Render();
+	}
+
+	if( currentSelectedControl != nullptr )
+	{
+		Vec2<int> border = currentSelectedControl->GetLocationOnScreen();
+		if( glowindex < 256 )
+		{
+			fw.renderer->drawRect( border, currentSelectedControl->Size, OpenApoc::Colour( glowindex, glowindex, glowindex ), 3.0f );
+		} else {
+			int revglow = 255 - (glowindex - 256);
+			fw.renderer->drawRect( border, currentSelectedControl->Size, OpenApoc::Colour( revglow, revglow, revglow ), 3.0f );
+		}
+	}
+
 	fw.gamecore->MouseCursor->Render();
+
+	
+
 }
 
 bool FormPreview::IsTransition() { return false; }
+
+void FormPreview::ConfigureSelectedControlForm()
+{
+
+	if( currentSelectedControl == nullptr )
+	{
+		
+	} else {
+	}
+
+}
 
 }; // namespace OpenApoc

@@ -18,7 +18,14 @@ class FormPreview : public Stage
 	Label* currentSelected;
 	StageCmd stageCmd;
 	Form *previewselector;
+	Form *propertyeditor;
 	Form *displayform;
+
+	int glowindex;
+
+	Control* currentSelectedControl;
+
+	void ConfigureSelectedControlForm();
 
   public:
 	FormPreview(Framework &fw);

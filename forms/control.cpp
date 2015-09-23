@@ -744,4 +744,10 @@ std::list<UString> Control::WordWrapText(std::shared_ptr<OpenApoc::BitmapFont> F
 
 void Control::SetParent(Control *Parent) { owningControl = Parent; }
 
+Vec2<int> Control::GetLocationOnScreen()
+{
+	Vec2<int> r( resolvedLocation.x, resolvedLocation.y );
+	return r;
+}
+
 }; // namespace OpenApoc

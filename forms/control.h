@@ -93,6 +93,8 @@ class Control
 	Control *GetParent();
 	Form *GetForm();
 	void SetParent(Control *Parent);
+
+	Vec2<int> GetLocationOnScreen();
 };
 
 }; // namespace OpenApoc
