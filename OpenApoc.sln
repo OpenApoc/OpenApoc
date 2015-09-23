@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenApoc", "OpenApoc.vcxproj", "{BBD67CA5-14A6-47AB-87A9-FFE0166B5D5C}"
 EndProject
@@ -77,8 +77,8 @@ Global
 		{E68F7D90-9965-42A5-97E5-DF0F12F7DBC4}.Debug Singlethreaded|Win32.ActiveCfg = Debug|Win32
 		{E68F7D90-9965-42A5-97E5-DF0F12F7DBC4}.Debug Singlethreaded|Win32.Build.0 = Debug|Win32
 		{E68F7D90-9965-42A5-97E5-DF0F12F7DBC4}.Debug Singlethreaded|x64.ActiveCfg = Debug|Win32
-		{E68F7D90-9965-42A5-97E5-DF0F12F7DBC4}.Debug|Win32.ActiveCfg = Debug|Win32
-		{E68F7D90-9965-42A5-97E5-DF0F12F7DBC4}.Debug|Win32.Build.0 = Debug|Win32
+		{E68F7D90-9965-42A5-97E5-DF0F12F7DBC4}.Debug|Win32.ActiveCfg = Release|Win32
+		{E68F7D90-9965-42A5-97E5-DF0F12F7DBC4}.Debug|Win32.Build.0 = Release|Win32
 		{E68F7D90-9965-42A5-97E5-DF0F12F7DBC4}.Debug|x64.ActiveCfg = Debug|x64
 		{E68F7D90-9965-42A5-97E5-DF0F12F7DBC4}.Debug|x64.Build.0 = Debug|x64
 		{E68F7D90-9965-42A5-97E5-DF0F12F7DBC4}.Debug-Dll|Win32.ActiveCfg = Debug|Win32
@@ -111,8 +111,8 @@ Global
 		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Debug Singlethreaded|Win32.Build.0 = Debug|Win32
 		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Debug Singlethreaded|x64.ActiveCfg = Debug|x64
 		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Debug Singlethreaded|x64.Build.0 = Debug|x64
-		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Debug|Win32.ActiveCfg = Debug|Win32
-		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Debug|Win32.Build.0 = Debug|Win32
+		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Debug|Win32.ActiveCfg = Release|Win32
+		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Debug|Win32.Build.0 = Release|Win32
 		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Debug|x64.ActiveCfg = Debug|x64
 		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Debug|x64.Build.0 = Debug|x64
 		{D1C528B6-AA02-4D29-9D61-DC08E317A70D}.Debug-Dll|Win32.ActiveCfg = Debug-Lib|Win32
@@ -149,8 +149,8 @@ Global
 		{5A1D2EC4-525E-49B6-9398-BE359E71CB35}.Debug Singlethreaded|Win32.ActiveCfg = Debug|Win32
 		{5A1D2EC4-525E-49B6-9398-BE359E71CB35}.Debug Singlethreaded|Win32.Build.0 = Debug|Win32
 		{5A1D2EC4-525E-49B6-9398-BE359E71CB35}.Debug Singlethreaded|x64.ActiveCfg = Debug|Win32
-		{5A1D2EC4-525E-49B6-9398-BE359E71CB35}.Debug|Win32.ActiveCfg = Debug|Win32
-		{5A1D2EC4-525E-49B6-9398-BE359E71CB35}.Debug|Win32.Build.0 = Debug|Win32
+		{5A1D2EC4-525E-49B6-9398-BE359E71CB35}.Debug|Win32.ActiveCfg = Release|Win32
+		{5A1D2EC4-525E-49B6-9398-BE359E71CB35}.Debug|Win32.Build.0 = Release|Win32
 		{5A1D2EC4-525E-49B6-9398-BE359E71CB35}.Debug|x64.ActiveCfg = Debug|x64
 		{5A1D2EC4-525E-49B6-9398-BE359E71CB35}.Debug|x64.Build.0 = Debug|x64
 		{5A1D2EC4-525E-49B6-9398-BE359E71CB35}.Debug-Dll|Win32.ActiveCfg = Debug|Win32
@@ -223,8 +223,8 @@ Global
 		{203EC78A-0531-43F0-A636-285439BDE025}.Debug Singlethreaded|Win32.Build.0 = Debug|Win32
 		{203EC78A-0531-43F0-A636-285439BDE025}.Debug Singlethreaded|x64.ActiveCfg = Debug|x64
 		{203EC78A-0531-43F0-A636-285439BDE025}.Debug Singlethreaded|x64.Build.0 = Debug|x64
-		{203EC78A-0531-43F0-A636-285439BDE025}.Debug|Win32.ActiveCfg = Debug|Win32
-		{203EC78A-0531-43F0-A636-285439BDE025}.Debug|Win32.Build.0 = Debug|Win32
+		{203EC78A-0531-43F0-A636-285439BDE025}.Debug|Win32.ActiveCfg = Release|Win32
+		{203EC78A-0531-43F0-A636-285439BDE025}.Debug|Win32.Build.0 = Release|Win32
 		{203EC78A-0531-43F0-A636-285439BDE025}.Debug|x64.ActiveCfg = Debug|x64
 		{203EC78A-0531-43F0-A636-285439BDE025}.Debug|x64.Build.0 = Debug|x64
 		{203EC78A-0531-43F0-A636-285439BDE025}.Debug-Dll|Win32.ActiveCfg = Debug|Win32

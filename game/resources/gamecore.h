@@ -50,6 +50,8 @@ class GameCore
 	std::shared_ptr<Image> GetImage(UString ImageData);
 	std::shared_ptr<BitmapFont> GetFont(UString FontData);
 	std::shared_ptr<Palette> GetPalette(UString Path);
+
+	std::vector<UString> GetFormIDs();
 };
 
 }; // namespace OpenApoc

@@ -237,6 +237,9 @@
     <ClCompile Include="game\city\vehiclemission.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\debugtools\formpreview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -495,6 +498,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\city\vehiclemission.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\debugtools\formpreview.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

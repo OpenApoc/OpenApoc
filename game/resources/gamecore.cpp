@@ -238,4 +238,16 @@ void GameCore::ApplyAliases(tinyxml2::XMLElement *Source)
 	}
 }
 
+std::vector<UString> GameCore::GetFormIDs()
+{
+	std::vector<UString> result;
+
+	for( auto idx = forms.begin(); idx != forms.end(); idx++ )
+	{
+		result.push_back( idx->first );
+	}
+
+	return result;
+}
+
 }; // namespace OpenApoc

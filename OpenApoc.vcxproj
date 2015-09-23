@@ -271,6 +271,7 @@
     <ClCompile Include="game\city\vehiclemission.cpp" />
     <ClCompile Include="game\city\weapon.cpp" />
     <ClCompile Include="game\debugtools\debugmenu.cpp" />
+    <ClCompile Include="game\debugtools\formpreview.cpp" />
     <ClCompile Include="game\gamestate.cpp" />
     <ClCompile Include="game\general\optionsmenu.cpp" />
     <ClCompile Include="game\organisation.cpp" />
@@ -351,6 +352,7 @@
     <ClInclude Include="game\city\vehiclemission.h" />
     <ClInclude Include="game\city\weapon.h" />
     <ClInclude Include="game\debugtools\debugmenu.h" />
+    <ClInclude Include="game\debugtools\formpreview.h" />
     <ClInclude Include="game\gamestate.h" />
     <ClInclude Include="game\general\optionsmenu.h" />
     <ClInclude Include="game\organisation.h" />
