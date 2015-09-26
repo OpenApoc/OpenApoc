@@ -279,6 +279,7 @@
     <ClCompile Include="game\apocresources\apocfont.cpp" />
     <ClCompile Include="game\boot.cpp" />
     <ClCompile Include="game\rules\citydef_rules.cpp" />
+    <ClCompile Include="game\rules\facilitydef_rules.cpp" />
     <ClCompile Include="game\rules\organisationdef_rules.cpp" />
     <ClCompile Include="game\rules\rules.cpp" />
     <ClCompile Include="game\rules\rules_helper.cpp" />
@@ -359,6 +360,7 @@
     <ClInclude Include="game\resources\gamecore.h" />
     <ClInclude Include="game\rules\buildingdef.h" />
     <ClInclude Include="game\rules\buildingtiledef.h" />
+    <ClInclude Include="game\rules\facilitydef.h" />
     <ClInclude Include="game\rules\organisationdef.h" />
     <ClInclude Include="game\rules\rules.h" />
     <ClInclude Include="game\rules\rules_helper.h" />

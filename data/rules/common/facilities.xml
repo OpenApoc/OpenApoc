@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openapoc_rules>
+  <facilitydef id="ACCESS_LIFT" name="STR_ACCESS_LIFT">
+    <buildCost>5000</buildCost>
+    <weeklyCost>200</weeklyCost>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:27</sprite>
+  </facilitydef>
+  <facilitydef id="LIVING_QUARTERS" name="STR_LIVING_QUARTERS">
+    <buildCost>5000</buildCost>
+    <buildTime>3</buildTime>
+    <weeklyCost>300</weeklyCost>
+    <capacityType>quarters</capacityType>
+    <capacityAmount>10</capacityAmount>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:28</sprite>
+  </facilitydef>
+  <facilitydef id="STORES" name="STR_STORES">
+    <buildCost>1000</buildCost>
+    <buildTime>2</buildTime>
+    <weeklyCost>100</weeklyCost>
+    <capacityType>stores</capacityType>
+    <capacityAmount>10000</capacityAmount>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:29</sprite>
+  </facilitydef>
+  <facilitydef id="MEDICAL_BAY" name="STR_MEDICAL_BAY">
+    <buildCost>12000</buildCost>
+    <buildTime>4</buildTime>
+    <weeklyCost>800</weeklyCost>
+    <capacityType>medical</capacityType>
+    <capacityAmount>10</capacityAmount>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:31</sprite>
+  </facilitydef>
+  <facilitydef id="TRAINING_AREA" name="STR_TRAINING_AREA">
+    <buildCost>12000</buildCost>
+    <buildTime>4</buildTime>
+    <weeklyCost>800</weeklyCost>
+    <capacityType>training</capacityType>
+    <capacityAmount>10</capacityAmount>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:32</sprite>
+  </facilitydef>
+  <facilitydef id="PSI_GYM" name="STR_PSI_GYM">
+    <buildCost>15000</buildCost>
+    <buildTime>6</buildTime>
+    <weeklyCost>900</weeklyCost>
+    <capacityType>psi</capacityType>
+    <capacityAmount>10</capacityAmount>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:33</sprite>
+  </facilitydef>
+  <facilitydef id="SECURITY_STATION" name="STR_SECURITY_STATION">
+    <buildCost>2000</buildCost>
+    <buildTime>2</buildTime>
+    <weeklyCost>200</weeklyCost>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:34</sprite>
+  </facilitydef>
+  <facilitydef id="ADVANCED_SECURITY_STATION" name="STR_ADVANCED_SECURITY_STATION">
+    <buildCost>15000</buildCost>
+    <buildTime>6</buildTime>
+    <weeklyCost>900</weeklyCost>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:35</sprite>
+  </facilitydef>
+  <facilitydef id="VEHICLE_REPAIR_BAY" name="STR_VEHICLE_REPAIR_BAY">
+    <buildCost>9000</buildCost>
+    <buildTime>5</buildTime>
+    <weeklyCost>500</weeklyCost>
+    <capacityType>repair</capacityType>
+    <capacityAmount>1</capacityAmount>
+    <size>2</size>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:36</sprite>
+  </facilitydef>
+  <facilitydef id="BIOCHEMISTRY_LAB" name="STR_BIOCHEMISTRY_LAB">
+    <buildCost>10000</buildCost>
+    <buildTime>5</buildTime>
+    <weeklyCost>100</weeklyCost>
+    <capacityType>chemistry</capacityType>
+    <capacityAmount>5</capacityAmount>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:37</sprite>
+  </facilitydef>
+  <facilitydef id="ADVANCED_BIOCHEMISTRY_LAB" name="STR_ADVANCED_BIOCHEMISTRY_LAB">
+    <buildCost>20000</buildCost>
+    <buildTime>8</buildTime>
+    <weeklyCost>200</weeklyCost>
+    <capacityType>chemistry</capacityType>
+    <capacityAmount>10</capacityAmount>
+    <size>2</size>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:38</sprite>
+  </facilitydef>
+  <facilitydef id="QUANTUM_PHYSICS_LAB" name="STR_QUANTUM_PHYSICS_LAB">
+    <buildCost>10000</buildCost>
+    <buildTime>5</buildTime>
+    <weeklyCost>100</weeklyCost>
+    <capacityType>physics</capacityType>
+    <capacityAmount>5</capacityAmount>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:39</sprite>
+  </facilitydef>
+  <facilitydef id="ADVANCED_QUANTUM_PHYSICS_LAB" name="STR_ADVANCED_QUANTUM_PHYSICS_LAB">
+    <buildCost>25000</buildCost>
+    <buildTime>8</buildTime>
+    <weeklyCost>200</weeklyCost>
+    <capacityType>physics</capacityType>
+    <capacityAmount>10</capacityAmount>
+    <size>2</size>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:40</sprite>
+  </facilitydef>
+  <facilitydef id="ALIEN_CONTAINMENT" name="STR_ALIEN_CONTAINMENT">
+    <buildCost>7000</buildCost>
+    <buildTime>4</buildTime>
+    <weeklyCost>400</weeklyCost>
+    <capacityType>aliens</capacityType>
+    <capacityAmount>20</capacityAmount>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:41</sprite>
+  </facilitydef>
+  <facilitydef id="WORKSHOP" name="STR_WORKSHOP">
+    <buildCost>6000</buildCost>
+    <buildTime>6</buildTime>
+    <weeklyCost>100</weeklyCost>
+    <capacityType>workshop</capacityType>
+    <capacityAmount>5</capacityAmount>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:43</sprite>
+  </facilitydef>
+  <facilitydef id="ADVANCED_WORKSHOP" name="STR_ADVANCED_WORKSHOP">
+    <buildCost>12000</buildCost>
+    <buildTime>9</buildTime>
+    <weeklyCost>200</weeklyCost>
+    <capacityType>workshop</capacityType>
+    <capacityAmount>10</capacityAmount>
+    <size>2</size>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:44</sprite>
+  </facilitydef>
+</openapoc_rules>

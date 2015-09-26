@@ -16,6 +16,7 @@ class RulesLoader
 	                                        tinyxml2::XMLElement *root);
 	static bool ParseCityDefinition(Framework &fw, Rules &rules, tinyxml2::XMLElement *root);
 	static bool ParseWeaponDefinition(Framework &fw, Rules &rules, tinyxml2::XMLElement *root);
+	static bool ParseFacilityDefinition(Framework &fw, Rules &rules, tinyxml2::XMLElement *root);
 };
 
 }; // namespace OpenApoc
