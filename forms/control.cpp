@@ -746,7 +746,7 @@ void Control::SetParent(Control *Parent) { owningControl = Parent; }
 
 Vec2<int> Control::GetLocationOnScreen()
 {
-	Vec2<int> r( resolvedLocation.x, resolvedLocation.y );
+	Vec2<int> r(resolvedLocation.x, resolvedLocation.y);
 	return r;
 }
 
