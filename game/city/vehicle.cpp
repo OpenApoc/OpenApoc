@@ -229,7 +229,7 @@ VehicleTileObject::~VehicleTileObject() {}
 
 Vec3<float> VehicleTileObject::getDrawPosition() const
 {
-	return this->getPosition() - Vec3<float>{1, 1, 1};
+	return this->getPosition() - Vec3<float>{0, 0, 0};
 }
 
 Rect<float> VehicleTileObject::getSelectableBounds() const
