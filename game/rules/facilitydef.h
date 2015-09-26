@@ -7,7 +7,11 @@ class RulesLoader;
 class FacilityDef
 {
   private:
-	FacilityDef() : buildCost(0), buildTime(0), weeklyCost(0), capacityType(Capacity::None), capacityAmount(0), size(1) {}
+	FacilityDef()
+	    : buildCost(0), buildTime(0), weeklyCost(0), capacityType(Capacity::None),
+	      capacityAmount(0), size(1)
+	{
+	}
 	friend class RulesLoader;
 
   public:

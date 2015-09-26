@@ -5,8 +5,7 @@
 namespace OpenApoc
 {
 
-bool RulesLoader::ParseFacilityDefinition(Framework &fw, Rules &rules,
-                                          tinyxml2::XMLElement *root)
+bool RulesLoader::ParseFacilityDefinition(Framework &fw, Rules &rules, tinyxml2::XMLElement *root)
 {
 	std::ignore = fw;
 	FacilityDef def;
@@ -50,18 +49,19 @@ bool RulesLoader::ParseFacilityDefinition(Framework &fw, Rules &rules,
 		else if (tag == "capacityType")
 		{
 			if (!ReadText(node,
-				std::map<UString, FacilityDef::Capacity>{{"none", FacilityDef::Capacity::None},
-														 {"quarters", FacilityDef::Capacity::Quarters},
-														 {"stores", FacilityDef::Capacity::Stores}, 
-														 {"medical", FacilityDef::Capacity::Medical}, 
-														 {"training", FacilityDef::Capacity::Training}, 
-														 {"psi", FacilityDef::Capacity::Psi}, 
-														 {"repair", FacilityDef::Capacity::Repair}, 
-														 {"chemistry", FacilityDef::Capacity::Chemistry}, 
-														 {"physics", FacilityDef::Capacity::Physics}, 
-														 {"workshop", FacilityDef::Capacity::Workshop}, 
-														 {"aliens", FacilityDef::Capacity::Aliens}},
-				def.capacityType))
+			              std::map<UString, FacilityDef::Capacity>{
+			                  {"none", FacilityDef::Capacity::None},
+			                  {"quarters", FacilityDef::Capacity::Quarters},
+			                  {"stores", FacilityDef::Capacity::Stores},
+			                  {"medical", FacilityDef::Capacity::Medical},
+			                  {"training", FacilityDef::Capacity::Training},
+			                  {"psi", FacilityDef::Capacity::Psi},
+			                  {"repair", FacilityDef::Capacity::Repair},
+			                  {"chemistry", FacilityDef::Capacity::Chemistry},
+			                  {"physics", FacilityDef::Capacity::Physics},
+			                  {"workshop", FacilityDef::Capacity::Workshop},
+			                  {"aliens", FacilityDef::Capacity::Aliens}},
+			              def.capacityType))
 			{
 				LogError("Failed to read facility 'capacityType' attribute");
 				return false;

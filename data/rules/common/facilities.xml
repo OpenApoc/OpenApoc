@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <facilitydef id="ACCESS_LIFT" name="STR_ACCESS_LIFT">
     <buildCost>5000</buildCost>
