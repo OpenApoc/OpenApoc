@@ -123,10 +123,14 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID,
 
 	UString stratmapString = root->Attribute("stratmap");
 
-	if (stratmapString == "")
+	if (stratmapString != "")
 	{
-		LogError("No stratmap in tile \"%s\"", tileID.c_str());
-		return false;
+		readStratmapSprite = fw.data->load_image(stratmapString);
+		if (!readStratmapSprite)
+		{
+			LogInfo("Failed to load stratmap image \"%s\"", stratmapString.c_str());
+			return false;
+		}
 	}
 
 	UString landingPad = root->Attribute("landingpad");
@@ -141,13 +145,6 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID,
 	if (!readSprite)
 	{
 		LogError("Failed to load sprite image \"%s\"", spriteString.c_str());
-		return false;
-	}
-
-	readStratmapSprite = fw.data->load_image(stratmapString);
-	if (!readStratmapSprite)
-	{
-		LogError("Failed to load stratmap image \"%s\"", stratmapString.c_str());
 		return false;
 	}
 
@@ -234,11 +231,6 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID,
 	if (!readSprite)
 	{
 		LogError("Tile with no sprite");
-		return false;
-	}
-	if (!readStratmapSprite)
-	{
-		LogError("Tile with no strategy sprite");
 		return false;
 	}
 	if (!readVoxelMap)

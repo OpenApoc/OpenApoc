@@ -245,7 +245,6 @@ void TileView::Render()
 					}
 					if (!img)
 					{
-						LogWarning("Visible object has no sprite");
 						continue;
 					}
 					auto pos = obj->getDrawPosition();
