@@ -164,6 +164,20 @@
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:33:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
+      <graphicbutton id="BUTTON_SHOW_BASE">
+        <backcolour r="0" g="0" b="0" a="0"/>
+        <position x="408" y="75"/>
+        <size width="27" height="46"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:40:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BUILD_BASE">
+        <backcolour r="0" g="0" b="0" a="0"/>
+        <position x="443" y="75"/>
+        <size width="27" height="46"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:41:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
     </style>
   </form>
   <form id="FORM_CITY_UI_2">

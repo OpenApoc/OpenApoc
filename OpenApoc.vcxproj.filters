@@ -102,9 +102,6 @@
     <ClCompile Include="game\general\difficultymenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\general\basescreen.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="framework\image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -243,6 +240,9 @@
     <ClCompile Include="game\rules\facilitydef_rules.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\base\basescreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -351,9 +351,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\general\difficultymenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game\general\basescreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework\image.h">
@@ -507,6 +504,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\rules\facilitydef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\base\basescreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

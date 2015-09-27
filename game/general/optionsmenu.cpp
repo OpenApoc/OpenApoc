@@ -1,6 +1,6 @@
 
 #include "game/general/optionsmenu.h"
-#include "game/general/basescreen.h"
+#include "game/base/basescreen.h"
 #include "game/ufopaedia/ufopaedia.h"
 #include "game/debugtools/debugmenu.h"
 #include "framework/framework.h"

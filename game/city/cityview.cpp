@@ -8,6 +8,7 @@
 #include "game/general/ingameoptions.h"
 #include "game/city/vehiclemission.h"
 #include "game/city/vehicle.h"
+#include "game/base/basescreen.h"
 
 namespace OpenApoc
 {
@@ -204,6 +205,12 @@ void CityView::EventOccurred(Event *e)
 				{
 					LogWarning("Set speed 5");
 					this->updateSpeed = UpdateSpeed::Speed5;
+				}
+				else if (cname == "BUTTON_SHOW_BASE")
+				{
+					stageCmd.cmd = StageCmd::Command::PUSH;
+					stageCmd.nextStage = std::make_shared<BaseScreen>(fw);
+					return;
 				}
 			}
 		}

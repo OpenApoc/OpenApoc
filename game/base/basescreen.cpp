@@ -1,5 +1,5 @@
 
-#include "game/general/basescreen.h"
+#include "game/base/basescreen.h"
 #include "framework/framework.h"
 
 namespace OpenApoc
@@ -36,8 +36,11 @@ void BaseScreen::EventOccurred(Event *e)
 
 	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick)
 	{
-		LogInfo("Button %s clicked", e->Data.Forms.RaisedBy->Name.c_str());
-		return;
+		if (e->Data.Forms.RaisedBy->Name == "BUTTON_OK")
+		{
+			stageCmd.cmd = StageCmd::Command::POP;
+			return;
+		}
 	}
 }
 
@@ -50,6 +53,8 @@ void BaseScreen::Update(StageCmd *const cmd)
 
 void BaseScreen::Render()
 {
+	fw.Stage_GetPrevious(this->shared_from_this())->Render();
+	fw.renderer->drawFilledRect({ 0, 0 }, fw.Display_GetSize(), Colour{ 0, 0, 0, 128 });
 	basescreenform->Render();
 	fw.gamecore->MouseCursor->Render();
 }

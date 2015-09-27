@@ -305,7 +305,7 @@
     <ClCompile Include="framework\data.cpp" />
     <ClCompile Include="game\city\city.cpp" />
     <ClCompile Include="game\general\difficultymenu.cpp" />
-    <ClCompile Include="game\general\basescreen.cpp" />
+    <ClCompile Include="game\base\basescreen.cpp" />
     <ClCompile Include="library\strings.cpp" />
     <ClCompile Include="game\apocresources\rawimage.cpp" />
     <ClCompile Include="game\city\cityview.cpp" />
@@ -397,7 +397,7 @@
     <ClInclude Include="framework\data.h" />
     <ClInclude Include="game\city\city.h" />
     <ClInclude Include="game\general\difficultymenu.h" />
-    <ClInclude Include="game\general\basescreen.h" />
+    <ClInclude Include="game\base\basescreen.h" />
     <ClInclude Include="game\apocresources\rawimage.h" />
     <ClInclude Include="game\city\cityview.h" />
     <ClInclude Include="game\city\scorescreen.h" />
