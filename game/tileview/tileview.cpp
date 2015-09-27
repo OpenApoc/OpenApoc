@@ -118,7 +118,15 @@ void TileView::EventOccurred(Event *e)
 
 		for (auto &obj : this->map.selectableObjects)
 		{
-			auto bounds = obj->getSelectableBounds();
+			Rect<float> bounds;
+			if (this->viewMode == TileViewMode::Strategy)
+			{
+				bounds = {0, 0, 8, 8};
+			}
+			else
+			{
+				bounds = obj->getSelectableBounds();
+			}
 			auto tileOffset = tileToScreenCoords(obj->getDrawPosition());
 			bounds.p0 += tileOffset;
 			bounds.p1 += tileOffset;
@@ -301,7 +309,16 @@ void TileView::Render()
 					if (showBounds)
 					{
 						Vec2<float> offset{offsetX, offsetY};
-						auto bounds = obj->getSelectableBounds();
+						Rect<float> bounds;
+						if (this->viewMode == TileViewMode::Strategy)
+						{
+							bounds = {0, 0, 8, 8};
+						}
+						else
+						{
+							bounds = obj->getSelectableBounds();
+						}
+
 						auto p00 = tileToScreenCoords(obj->getDrawPosition());
 						p00 += offset;
 						p00 += bounds.p0;
