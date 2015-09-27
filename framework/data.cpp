@@ -371,6 +371,11 @@ std::shared_ptr<ImageSet> Data::load_image_set(const UString &path)
 		auto splitString = path.split(':');
 		imgSet = PCKLoader::load(*this, splitString[1], splitString[2]);
 	}
+	else if (path.substr(0, 9) == "PCKSTRAT:")
+	{
+		auto splitString = path.split(':');
+		imgSet = PCKLoader::load_strat(*this, splitString[1], splitString[2]);
+	}
 	else
 	{
 		LogError("Unknown image set format \"%s\"", path.c_str());
@@ -500,6 +505,47 @@ std::shared_ptr<Image> Data::load_image(const UString &path)
 			}
 			default:
 				LogError("Invalid PCK resource string \"%s\"", path.c_str());
+				return nullptr;
+		}
+	}
+	else if (path.substr(0, 9) == "PCKSTRAT:")
+	{
+		auto splitString = path.split(':');
+		if (splitString.size() != 3 && splitString.size() != 4 && splitString.size() != 5)
+		{
+			LogError("Invalid PCKSTRAT resource string: \"%s\"", path.c_str());
+			return nullptr;
+		}
+		auto imageSet =
+		    this->load_image_set(splitString[0] + ":" + splitString[1] + ":" + splitString[2]);
+		if (!imageSet)
+		{
+			return nullptr;
+		}
+		// PCK resources come in the format:
+		//"PCK:PCKFILE:TABFILE:INDEX"
+		// or
+		//"PCK:PCKFILE:TABFILE:INDEX:PALETTE" if we want them already in rgb space
+		switch (splitString.size())
+		{
+			case 4:
+			{
+				img = imageSet->images[Strings::ToInteger(splitString[3])];
+				break;
+			}
+			case 5:
+			{
+				std::shared_ptr<PaletteImage> pImg = std::dynamic_pointer_cast<PaletteImage>(
+				    this->load_image("PCKSTRAT:" + splitString[1] + ":" + splitString[2] + ":" +
+				                     splitString[3]));
+				assert(pImg);
+				auto pal = this->load_palette(splitString[4]);
+				assert(pal);
+				img = pImg->toRGBImage(pal);
+				break;
+			}
+			default:
+				LogError("Invalid PCKSTRAT resource string \"%s\"", path.c_str());
 				return nullptr;
 		}
 	}

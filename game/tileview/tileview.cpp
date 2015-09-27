@@ -10,9 +10,11 @@
 namespace OpenApoc
 {
 
-TileView::TileView(Framework &fw, TileMap &map, Vec3<int> tileSize)
-    : Stage(fw), map(map), tileSize(tileSize), maxZDraw(10), offsetX(0), offsetY(0),
-      cameraScrollX(0), cameraScrollY(0), selectedTilePosition(0, 0, 0),
+TileView::TileView(Framework &fw, TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
+                   TileViewMode initialMode)
+    : Stage(fw), map(map), isoTileSize(isoTileSize), stratTileSize(stratTileSize),
+      viewMode(initialMode), maxZDraw(10), offsetX(0), offsetY(0), cameraScrollX(0),
+      cameraScrollY(0), selectedTilePosition(0, 0, 0),
       selectedTileImageBack(fw.data->load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
       selectedTileImageFront(fw.data->load_image("CITY/SELECTED-CITYTILE-FRONT.PNG")),
       pal(fw.data->load_palette("xcom3/ufodata/PAL_01.DAT"))
@@ -39,19 +41,19 @@ void TileView::EventOccurred(Event *e)
 		{
 			case ALLEGRO_KEY_UP:
 				// offsetY += tileSize.y;
-				cameraScrollY = tileSize.y / 8;
+				cameraScrollY = isoTileSize.y / 8;
 				break;
 			case ALLEGRO_KEY_DOWN:
 				// offsetY -= tileSize.y;
-				cameraScrollY = -tileSize.y / 8;
+				cameraScrollY = -isoTileSize.y / 8;
 				break;
 			case ALLEGRO_KEY_LEFT:
 				// offsetX += tileSize.x;
-				cameraScrollX = tileSize.x / 8;
+				cameraScrollX = isoTileSize.x / 8;
 				break;
 			case ALLEGRO_KEY_RIGHT:
 				// offsetX -= tileSize.x;
-				cameraScrollX = -tileSize.x / 8;
+				cameraScrollX = -isoTileSize.x / 8;
 				break;
 
 			case ALLEGRO_KEY_PGDN:
@@ -185,10 +187,11 @@ void TileView::Render()
 
 	// offsetX/offsetY is the 'amount added to the tile coords' - so we want
 	// the inverse to tell which tiles are at the screen bounds
-	auto topLeft = screenToTileCoords(Vec2<int>{-offsetX - tileSize.x, -offsetY - tileSize.y}, 0);
-	auto topRight = screenToTileCoords(Vec2<int>{-offsetX + dpyWidth, -offsetY - tileSize.y}, 0);
+	auto topLeft =
+	    screenToTileCoords(Vec2<int>{-offsetX - isoTileSize.x, -offsetY - isoTileSize.y}, 0);
+	auto topRight = screenToTileCoords(Vec2<int>{-offsetX + dpyWidth, -offsetY - isoTileSize.y}, 0);
 	auto bottomLeft =
-	    screenToTileCoords(Vec2<int>{-offsetX - tileSize.x, -offsetY + dpyHeight}, map.size.z);
+	    screenToTileCoords(Vec2<int>{-offsetX - isoTileSize.x, -offsetY + dpyHeight}, map.size.z);
 	auto bottomRight =
 	    screenToTileCoords(Vec2<int>{-offsetX + dpyWidth, -offsetY + dpyHeight}, map.size.z);
 
@@ -220,7 +223,23 @@ void TileView::Render()
 					assert(obj->isVisible());
 					bool showBounds = obj == this->selectedTileObject ||
 					                  (fw.state->showSelectableBounds && obj->isSelectable());
-					auto img = obj->getSprite();
+					std::shared_ptr<Image> img;
+					switch (this->viewMode)
+					{
+						case TileViewMode::Strategy:
+							img = obj->getStrategySprite();
+							break;
+						case TileViewMode::Isometric:
+							img = obj->getSprite();
+							break;
+						default:
+							LogError("Invalid view mode");
+					}
+					if (!img)
+					{
+						LogWarning("Visible object has no sprite");
+						continue;
+					}
 					auto pos = obj->getDrawPosition();
 					auto objScreenPos = tileToScreenCoords(pos);
 					objScreenPos.x += offsetX;
@@ -316,5 +335,9 @@ void TileView::Render()
 }
 
 bool TileView::IsTransition() { return false; }
+
+void TileView::setViewMode(TileViewMode newMode) { this->viewMode = newMode; }
+
+TileViewMode TileView::getViewMode() const { return this->viewMode; }
 
 }; // namespace OpenApoc

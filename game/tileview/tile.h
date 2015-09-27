@@ -41,6 +41,7 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	bool isVisible() const { return visible; }
 	virtual Vec3<float> getDrawPosition() const;
 	virtual std::shared_ptr<Image> getSprite() const;
+	virtual std::shared_ptr<Image> getStrategySprite() const;
 
 	bool isCollidable() const { return collides; }
 	// Returns the number of voxels per tile

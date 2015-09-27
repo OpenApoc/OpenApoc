@@ -13,6 +13,8 @@ class PCKLoader
 {
   public:
 	static std::shared_ptr<ImageSet> load(Data &data, UString PckFilename, UString TabFilename);
+	static std::shared_ptr<ImageSet> load_strat(Data &data, UString PckFilename,
+	                                            UString TabFilename);
 };
 
 }; // namespace OpenApoc

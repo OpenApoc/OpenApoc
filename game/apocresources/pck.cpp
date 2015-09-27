@@ -362,4 +362,95 @@ std::shared_ptr<ImageSet> PCKLoader::load(Data &data, UString PckFilename, UStri
 
 	return imageSet;
 }
+
+struct strat_header
+{
+	uint16_t pixel_skip; // if 0xffff end-of-sprite
+	uint16_t count;      // The number of indices following this
+};
+
+static_assert(sizeof(struct strat_header) == 4, "Invalid strat_header size");
+
+std::shared_ptr<PaletteImage> loadStrategy(IFile &file)
+{
+	auto img = std::make_shared<PaletteImage>(Vec2<int>{8, 8}); // All strategy map tiles are 8x8
+	unsigned int offset = 0;
+
+	struct strat_header header;
+	file.read((char *)&header, sizeof(header));
+	PaletteImageLock region(img);
+	while (file && header.pixel_skip != 0xffff)
+	{
+		unsigned int count = header.count;
+		offset = header.pixel_skip;
+		while (file && count--)
+		{
+			uint8_t idx = 0;
+#define STRIDE 640
+			unsigned int x = offset % STRIDE;
+			unsigned int y = offset / STRIDE;
+#undef STRIDE
+
+			if (x >= 8 || y >= 8)
+			{
+				LogError("Writing to {%d,%d} in 8x8 stratmap image", x, y);
+				return img;
+			}
+
+			file.read((char *)&idx, 1);
+			region.set(Vec2<int>{x, y}, idx);
+
+			offset++;
+		}
+		file.read((char *)&header, sizeof(header));
+	}
+	return img;
+}
+
+std::shared_ptr<ImageSet> PCKLoader::load_strat(Data &data, UString PckFilename,
+                                                UString TabFilename)
+{
+	auto imageSet = std::make_shared<ImageSet>();
+	auto tabFile = data.load_file(TabFilename);
+	if (!tabFile)
+	{
+		LogWarning("Failed to open tab \"%s\"", TabFilename.c_str());
+		return nullptr;
+	}
+	auto pckFile = data.load_file(PckFilename);
+	if (!pckFile)
+	{
+		LogWarning("Failed to open tab \"%s\"", TabFilename.c_str());
+		return nullptr;
+	}
+
+	uint32_t offset = 0;
+	while (tabFile.read((char *)&offset, sizeof(offset)))
+	{
+		pckFile.seekg(offset, std::ios::beg);
+		if (!pckFile)
+		{
+			LogError("Failed to seek to offset %u", offset);
+			return nullptr;
+		}
+		auto img = loadStrategy(pckFile);
+		if (!img)
+		{
+			LogError("Failed to load image");
+			return nullptr;
+		}
+		if (img->size != Vec2<unsigned int>{8, 8})
+		{
+			LogError("Invalid size of {%d,%d} in stratmap image", img->size.x, img->size.y);
+			return nullptr;
+		}
+		imageSet->images.push_back(img);
+	}
+
+	imageSet->maxSize = {8, 8};
+
+	LogInfo("Loaded %d images", (int)imageSet->images.size());
+
+	return imageSet;
+}
 }; // namespace OpenApoc

@@ -13,7 +13,8 @@ namespace OpenApoc
 {
 
 CityView::CityView(Framework &fw)
-    : TileView(fw, *fw.state->city, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z}),
+    : TileView(fw, *fw.state->city, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
+               Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Isometric),
       updateSpeed(UpdateSpeed::Speed1)
 {
 	static const std::vector<UString> tabFormNames = {
@@ -129,7 +130,23 @@ void CityView::EventOccurred(Event *e)
 				else if (cname == "BUTTON_TAB_8")
 					this->activeTab = uiTabs[7];
 				else if (cname == "BUTTON_TOGGLE_STRATMAP")
-					LogError("Toggle stratmap");
+				{
+					auto previousMode = this->getViewMode();
+
+					switch (previousMode)
+					{
+						case TileViewMode::Isometric:
+							this->setViewMode(TileViewMode::Strategy);
+							LogWarning("Changing view to strategy mode");
+							break;
+						case TileViewMode::Strategy:
+							this->setViewMode(TileViewMode::Isometric);
+							LogWarning("Changing view to isometric mode");
+							break;
+						default:
+							LogError("Invalid view mode");
+					}
+				}
 				else if (cname == "BUTTON_SHOW_ALIEN_INFILTRATION")
 				{
 					stageCmd.cmd = StageCmd::Command::PUSH;

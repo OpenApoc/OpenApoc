@@ -90,10 +90,12 @@ bool LoadCityMap(Framework &fw, Vec3<int> size, tinyxml2::XMLElement *root,
 }
 
 bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID,
-                  std::shared_ptr<Image> &sprite, std::shared_ptr<VoxelMap> &voxelMap,
-                  bool &isLandingPad, std::vector<UString> &landingPadList)
+                  std::shared_ptr<Image> &sprite, std::shared_ptr<Image> &stratmapSprite,
+                  std::shared_ptr<VoxelMap> &voxelMap, bool &isLandingPad,
+                  std::vector<UString> &landingPadList)
 {
 	std::shared_ptr<Image> readSprite = nullptr;
+	std::shared_ptr<Image> readStratmapSprite = nullptr;
 	std::shared_ptr<VoxelMap> readVoxelMap = nullptr;
 	isLandingPad = false;
 
@@ -119,6 +121,14 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID,
 		return false;
 	}
 
+	UString stratmapString = root->Attribute("stratmap");
+
+	if (stratmapString == "")
+	{
+		LogError("No stratmap in tile \"%s\"", tileID.c_str());
+		return false;
+	}
+
 	UString landingPad = root->Attribute("landingpad");
 	if (landingPad != "")
 	{
@@ -130,7 +140,14 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID,
 	readSprite = fw.data->load_image(spriteString);
 	if (!readSprite)
 	{
-		LogError("Failed to load image \"%s\"", spriteString.c_str());
+		LogError("Failed to load sprite image \"%s\"", spriteString.c_str());
+		return false;
+	}
+
+	readStratmapSprite = fw.data->load_image(stratmapString);
+	if (!readStratmapSprite)
+	{
+		LogError("Failed to load stratmap image \"%s\"", stratmapString.c_str());
 		return false;
 	}
 
@@ -219,6 +236,11 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID,
 		LogError("Tile with no sprite");
 		return false;
 	}
+	if (!readStratmapSprite)
+	{
+		LogError("Tile with no strategy sprite");
+		return false;
+	}
 	if (!readVoxelMap)
 	{
 		LogError("Tile with no voxel map");
@@ -226,6 +248,7 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID,
 	}
 
 	sprite = readSprite;
+	stratmapSprite = readStratmapSprite;
 	voxelMap = readVoxelMap;
 
 	return true;
@@ -365,8 +388,8 @@ bool RulesLoader::ParseCityDefinition(Framework &fw, Rules &rules, tinyxml2::XML
 					}
 					BuildingTileDef def;
 
-					if (!LoadCityTile(fw, tile, tileID, def.sprite, def.voxelMap, def.isLandingPad,
-					                  rules.landingPadTiles))
+					if (!LoadCityTile(fw, tile, tileID, def.sprite, def.strategySprite,
+					                  def.voxelMap, def.isLandingPad, rules.landingPadTiles))
 					{
 						LogError("Error loading tile %d", numRead);
 						return false;

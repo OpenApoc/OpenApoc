@@ -56,8 +56,10 @@ class VehicleDefinition
 	UString name;
 	Type type;
 	std::map<Banking, std::map<Direction, std::shared_ptr<Image>>> sprites;
+	std::map<Direction, std::shared_ptr<Image>> strategySprites;
 	// The same sprites but using vectors for directions
 	std::vector<std::pair<Vec3<float>, std::shared_ptr<Image>>> directionalSprites;
+	std::vector<std::pair<Vec3<float>, std::shared_ptr<Image>>> directionalStrategySprites;
 	Vec3<float> size;
 	std::shared_ptr<VoxelMap> voxelMap;
 };

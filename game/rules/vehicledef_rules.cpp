@@ -11,14 +11,10 @@ namespace OpenApoc
 {
 
 static std::map<VehicleDefinition::Direction, Vec3<float>> directionsToVec = {
-    {VehicleDefinition::Direction::N, {0, -1, 0}},
-    {VehicleDefinition::Direction::NE, {1, -1, 0}},
-    {VehicleDefinition::Direction::E, {1, 0, 0}},
-    {VehicleDefinition::Direction::SE, {1, 1, 0}},
-    {VehicleDefinition::Direction::S, {0, 1, 0}},
-    {VehicleDefinition::Direction::SW, {-1, 1, 0}},
-    {VehicleDefinition::Direction::W, {-1, 0, 0}},
-    {VehicleDefinition::Direction::NW, {-1, -1, 0}},
+    {VehicleDefinition::Direction::N, {0, -1, 0}}, {VehicleDefinition::Direction::NE, {1, -1, 0}},
+    {VehicleDefinition::Direction::E, {1, 0, 0}},  {VehicleDefinition::Direction::SE, {1, 1, 0}},
+    {VehicleDefinition::Direction::S, {0, 1, 0}},  {VehicleDefinition::Direction::SW, {-1, 1, 0}},
+    {VehicleDefinition::Direction::W, {-1, 0, 0}}, {VehicleDefinition::Direction::NW, {-1, -1, 0}},
 };
 
 static std::map<VehicleDefinition::Direction, std::shared_ptr<Image>>
@@ -133,6 +129,10 @@ bool RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::
 		else if (tag == "banking_right")
 		{
 			def.sprites[VehicleDefinition::Banking::Right] = parseDirectionalSprites(fw, node);
+		}
+		else if (tag == "stratmap")
+		{
+			def.strategySprites = parseDirectionalSprites(fw, node);
 		}
 		else
 		{

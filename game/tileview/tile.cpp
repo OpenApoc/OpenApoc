@@ -142,6 +142,14 @@ std::shared_ptr<Image> TileObject::getSprite() const
 	return nullptr;
 }
 
+std::shared_ptr<Image> TileObject::getStrategySprite() const
+{
+	// Override this for visible objects
+	LogWarning("Called on non-visible object");
+	assert(!this->isVisible());
+	return nullptr;
+}
+
 Vec3<float> TileObject::getDrawPosition() const
 {
 	// Override this for visible objects

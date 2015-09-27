@@ -142,7 +142,8 @@ void Vehicle::land(TileMap &map, Building &b)
 
 VehicleTileObject::VehicleTileObject(Vehicle &vehicle, TileMap &map, Vec3<float> position)
     : TileObject(map, position),
-      TileObjectDirectionalSprite(map, position, vehicle.def.directionalSprites),
+      TileObjectDirectionalSprite(map, position, vehicle.def.directionalSprites,
+                                  vehicle.def.directionalStrategySprites),
       TileObjectCollidable(map, position, Vec3<int>{32, 32, 16}, vehicle.def.voxelMap),
       vehicle(vehicle)
 {
