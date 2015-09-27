@@ -92,6 +92,7 @@ endif(LTO)
 # find openapoc sources
 AUX_SOURCE_DIRECTORY(game sources)
 AUX_SOURCE_DIRECTORY(game/apocresources sources)
+AUX_SOURCE_DIRECTORY(game/base sources)
 AUX_SOURCE_DIRECTORY(game/general sources)
 AUX_SOURCE_DIRECTORY(game/city sources)
 AUX_SOURCE_DIRECTORY(game/rules sources)
