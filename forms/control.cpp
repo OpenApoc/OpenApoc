@@ -717,7 +717,7 @@ std::list<UString> Control::WordWrapText(std::shared_ptr<OpenApoc::BitmapFont> F
 					if (textleft.substr(charidx, 1) == UString(" "))
 					{
 						lines.push_back(textleft.substr(0, charidx));
-						textleft = textleft.substr(charidx, textleft.length() - charidx);
+						textleft = textleft.substr(charidx + 1, textleft.length() - charidx);
 						break;
 					}
 				}

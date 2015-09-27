@@ -462,7 +462,7 @@
         </entry>
         <entry id="ADVANCED_CONTROL_SYSTEM" name="STR_ADVANCED_CONTROL_SYSTEM">
           <backgroundimage>xcom3/UFOPAEDI/V28.PCX</backgroundimage>
-          <text_info>STR_ADVANCED_CONTROL_SYSTEM</text_info>
+          <text_info>STR_ADVANCED_CONTROL_SYSTEM_INFO</text_info>
           <dynamic_data>VEHICLEEQUIP</dynamic_data>
         </entry>
         <entry id="CARGO_MODULE" name="STR_CARGO_MODULE">
