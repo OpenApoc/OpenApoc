@@ -3,6 +3,7 @@
 #include "framework/framework.h"
 #include "game/general/optionsmenu.h"
 #include "game/general/difficultymenu.h"
+#include "game/debugtools/debugmenu.h"
 
 namespace OpenApoc
 {
@@ -59,6 +60,12 @@ void MainMenu::EventOccurred(Event *e)
 			stageCmd.nextStage = std::make_shared<DifficultyMenu>(fw);
 			return;
 		}
+		if (e->Data.Forms.RaisedBy->Name == "BUTTON_DEBUG")
+		{
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = std::make_shared<DebugMenu>(fw);
+			return;
+		}
 	}
 
 	if (e->Type == EVENT_FORM_INTERACTION &&
@@ -68,6 +75,7 @@ void MainMenu::EventOccurred(Event *e)
 		{
 			fw.gamecore->DebugModeEnabled =
 			    static_cast<CheckBox *>(e->Data.Forms.RaisedBy)->Checked;
+			e->Data.Forms.RaisedBy->GetForm()->FindControl("BUTTON_DEBUG")->Visible = fw.gamecore->DebugModeEnabled;
 		}
 	}
 }
