@@ -3395,4 +3395,355 @@
 	<string id="STR_FORM_PREVIEW">
 		<en_gb>Form Previewer</en_gb>
 	</string>
-</openapoc>
+  <string id="STR_DIMENSION_GATES_DESCRIPTION">
+        <en_gb>The mysterious atmospheric phenomenon from which the UFOs are emerging requires urgent attention. We must find out where the Alien craft are coming from.</en_gb>
+  </string>
+  <string id="STR_THE_ALIEN_DIMENSION_DESCRIPTION">
+        <en_gb>We must analyze the data from our Alien Dimension probe.</en_gb>
+  </string>
+  <string id="STR_DIMENSION_PROBE_DESCRIPTION">
+        <en_gb>We need to build an automated device that can be sent through a Dimension gate. This will provide invaluable data which can prepare us for manned missions.</en_gb>
+  </string>
+  <string id="STR_BIO_TRANSPORT_NAME">
+        <en_gb>Bio-Transport</en_gb>
+  </string>
+  <string id="STR_BIO_TRANSPORT_DESCRIPTION">
+        <en_gb>The capture and study of live Alien specimens will help us understand the nature of the Alien threat. In order to do this we need an inter-dimensional transport vehicle that can contain and sustain Alien life forms.</en_gb>
+  </string>
+  <string id="STR_EXPLORER_DESCRIPTION">
+        <en_gb>A craft capable of carrying our agents into the Alien Dimensions is required. The vast Alien structures must be explored and studied. This will help us understand their function and their weaknesses.</en_gb>
+  </string>
+  <string id="STR_RETALIATOR_DESCRIPTION">
+        <en_gb>In order to combat the increasing aggression and power of Alien craft we must build an inter-dimensional weapons platform.</en_gb>
+  </string>
+  <string id="STR_ANNIHILATOR_DESCRIPTION">
+        <en_gb>The Alien threat can only be stopped by destroying their ability to create Dimension gates. A full assault on the Alien Dimensions requires a craft of immense power.</en_gb>
+  </string>
+  <string id="STR_BRAINSUCKER_PODS_NAME">
+        <en_gb>Brainsucker Pods</en_gb>
+  </string>
+  <string id="STR_BRAINSUCKER_PODS_DESCRIPTION">
+        <en_gb>These pods contain a dormant Alien creature.</en_gb>
+  </string>
+  <string id="STR_BRAINSUCKER_AUTOPSY_DESCRIPTION">
+        <en_gb>This small Alien creature has been seen to attack humans by jumping on the head and gripping with all its limbs.</en_gb>
+  </string>
+  <string id="STR_BRAINSUCKER_DESCRIPTION">
+        <en_gb>A live Brainsucker is a valuable specimen - we must research it as soon as possible.</en_gb>
+  </string>
+  <string id="STR_MULTIWORM_EGG_AUTOPSY_DESCRIPTION">
+        <en_gb>This stationary Alien life form appears to be some form of Alien egg.</en_gb>
+  </string>
+  <string id="STR_MULTIWORM_EGG_DESCRIPTION">
+        <en_gb>A live Multiworm egg gives us an excellent opportunity to observe the Alien life cycle in progress.</en_gb>
+  </string>
+  <string id="STR_MULTIWORM_AUTOPSY_DESCRIPTION">
+        <en_gb>The Multiworm corpse decays rapidly, consumed by its own defense mechanisms. If research is not undertaken soon then we will not be able to preserve the remains.</en_gb>
+  </string>
+  <string id="STR_MULTIWORM_DESCRIPTION">
+        <en_gb>A live Multiworm is a rare catch and must be studied immediately as it is a highly unstable life form.</en_gb>
+  </string>
+  <string id="STR_HYPERWORM_AUTOPSY_DESCRIPTION">
+        <en_gb>The Hyperworm corpse is extremely heavy for its size and appears to be a primitive creature.</en_gb>
+  </string>
+  <string id="STR_HYPERWORM_NAME">
+        <en_gb>Hyperworm</en_gb>
+  </string>
+  <string id="STR_HYPERWORM_DESCRIPTION">
+        <en_gb>The Hyperworm is a small, highly active carnivore.</en_gb>
+  </string>
+  <string id="STR_CHRYSALIS_AUTOPSY_DESCRIPTION">
+        <en_gb>The remains of an Alien Chrysalis produces pungent fumes as it decays rapidly.</en_gb>
+  </string>
+  <string id="STR_CHRYSALIS_DESCRIPTION">
+        <en_gb>The study of a live Alien Chrysalis could represent a significant advance in our knowledge of the Alien life cycle.</en_gb>
+  </string>
+  <string id="STR_ANTHROPOD_AUTOPSY_DESCRIPTION">
+        <en_gb>The Anthropod is the Alien creature that most resembles the human form.</en_gb>
+  </string>
+  <string id="STR_ANTHROPOD_DESCRIPTION">
+        <en_gb>The Anthropod is a robust humanoid Alien soldier.</en_gb>
+  </string>
+  <string id="STR_PSIMORPH_AUTOPSY_DESCRIPTION">
+        <en_gb>The Psimorph creature is a large mass of tentacles.</en_gb>
+  </string>
+  <string id="STR_PSIMORPH_DESCRIPTION">
+        <en_gb>A living Psimorph is an extremely dangerous entity which must be kept unconscious, otherwise its Psionic ability would result in subversion of our personnel.</en_gb>
+  </string>
+  <string id="STR_SPITTER_AUTOPSY_DESCRIPTION">
+        <en_gb>This ungainly creature has a huge funnel for propelling a deadly liquid.</en_gb>
+  </string>
+  <string id="STR_SPITTER_DESCRIPTION">
+        <en_gb>The Spitter is humanoid in form but has a funnel shaped head.</en_gb>
+  </string>
+  <string id="STR_MEGASPAWN_AUTOPSY_DESCRIPTION">
+        <en_gb>An extremely large warrior creature.</en_gb>
+  </string>
+  <string id="STR_MEGASPAWN_DESCRIPTION">
+        <en_gb>Due to the size of the Megaspawn we need a lot of free space in the Alien Containment facility to hold it and an advanced Bio-lab to study it.</en_gb>
+  </string>
+  <string id="STR_POPPER_AUTOPSY_DESCRIPTION">
+        <en_gb>A small bipedal Alien creature.</en_gb>
+  </string>
+  <string id="STR_POPPER_DESCRIPTION">
+        <en_gb>An extremely dangerous Alien that must be kept sedated.</en_gb>
+  </string>
+  <string id="STR_SKELETOID_AUTOPSY_DESCRIPTION">
+        <en_gb>A humanoid Alien with an exo-skeleton structure.</en_gb>
+  </string>
+  <string id="STR_SKELETOID_DESCRIPTION">
+        <en_gb>An intelligent, airborne humanoid Alien warrior.</en_gb>
+  </string>
+  <string id="STR_MICRONOID_AUTOPSY_NAME">
+        <en_gb>Micronoid Autopsy</en_gb>
+  </string>
+  <string id="STR_MICRONOID_AUTOPSY_DESCRIPTION">
+        <en_gb>An unusual jelly like Alien life form.</en_gb>
+  </string>
+  <string id="STR_MICRONOID_NAME">
+        <en_gb>Micronoid</en_gb>
+  </string>
+  <string id="STR_MICRONOID_DESCRIPTION">
+        <en_gb>A swarming amoebae-like Alien life form.</en_gb>
+  </string>
+  <string id="STR_QUEENSPAWN_AUTOPSY_DESCRIPTION">
+        <en_gb>This is a huge egg laying Alien creature.</en_gb>
+  </string>
+  <string id="STR_QUEENSPAWN_DESCRIPTION">
+        <en_gb>The enormous hulk of the Queenspawn requires great effort to transport and contain.</en_gb>
+  </string>
+  <string id="STR_OVERSPAWN_AUTOPSY_DESCRIPTION">
+        <en_gb>The Overspawn is an extremely dangerous Alien terror weapon.</en_gb>
+  </string>
+  <string id="STR_OVERSPAWN_AUTOPSY_1_NAME">
+        <en_gb>Overspawn Autopsy 1</en_gb>
+  </string>
+  <string id="STR_OVERSPAWN_AUTOPSY_1_DESCRIPTION">
+        <en_gb>A gigantic monster that has ravaged the city.</en_gb>
+  </string>
+  <string id="STR_THE_ALIEN_GENETIC_STRUCTURE_NAME">
+        <en_gb>The Alien Genetic Structure</en_gb>
+  </string>
+  <string id="STR_THE_ALIEN_GENETIC_STRUCTURE_DESCRIPTION">
+        <en_gb>Investigate the genetic relationships between Alien life forms.</en_gb>
+  </string>
+  <string id="STR_THE_ALIEN_LIFE_CYCLE_NAME">
+        <en_gb>The Alien Life Cycle</en_gb>
+  </string>
+  <string id="STR_THE_ALIEN_LIFE_CYCLE_DESCRIPTION">
+        <en_gb>Research the primary stages of the Alien life cycle.</en_gb>
+  </string>
+  <string id="STR_THE_REAL_ALIEN_THREAT_DESCRIPTION">
+        <en_gb>Investigate the source of the Alien intelligence and their secret purpose.</en_gb>
+  </string>
+  <string id="STR_BIOLOGICAL_WARFARE_NAME">
+        <en_gb>Biological Warfare</en_gb>
+  </string>
+  <string id="STR_BIOLOGICAL_WARFARE_DESCRIPTION">
+        <en_gb>The aim is to develop a toxin that specifically targets the early stages of the Alien life cycle.</en_gb>
+  </string>
+  <string id="STR_TOXIN_TYPE_B_NAME">
+        <en_gb>Toxin Type B</en_gb>
+  </string>
+  <string id="STR_TOXIN_TYPE_B_DESCRIPTION">
+        <en_gb>A toxin needs to be developed to combat the higher Alien life forms.</en_gb>
+  </string>
+  <string id="STR_TOXIN_TYPE_C_NAME">
+        <en_gb>Toxin Type C</en_gb>
+  </string>
+  <string id="STR_TOXIN_TYPE_C_DESCRIPTION">
+        <en_gb>A powerful Biological warfare weapon designed to target the Micronoid parasites.</en_gb>
+  </string>
+  <string id="STR_ALIEN_GAS_NAME">
+        <en_gb>Alien Gas</en_gb>
+  </string>
+  <string id="STR_ALIEN_GAS_DESCRIPTION">
+        <en_gb>There is a possibility that a multi-toxin can be suspended in gaseous form, which would increase the efficiency of our Biological weaponry.</en_gb>
+  </string>
+  <string id="STR_ADVANCED_SECURITY_STATION_DESCRIPTION">
+        <en_gb>A security station using Alien disrupter technology.</en_gb>
+  </string>
+  <string id="STR_ADVANCED_BIOCHEMISTRY_LAB_DESCRIPTION">
+        <en_gb> For researching advanced Alien organic technology.</en_gb>
+  </string>
+  <string id="STR_ADVANCED_QUANTUM_PHYSICS_LAB_DESCRIPTION">
+        <en_gb>For researching advanced Alien technology.</en_gb>
+  </string>
+  <string id="STR_ADVANCED_ALIEN_CONTAINMENT_DESCRIPTION">
+        <en_gb>To secure and research large or dangerous Alien life forms.</en_gb>
+  </string>
+  <string id="STR_ADVANCED_WORKSHOP_DESCRIPTION">
+        <en_gb>Needed for building new vehicle types.</en_gb>
+  </string>
+  <string id="STR_DISRUPTOR_GUN_DESCRIPTION">
+        <en_gb>An Alien beam weapon.</en_gb>
+  </string>
+  <string id="STR_BOOMEROID_DESCRIPTION">
+        <en_gb>An intelligent Alien proximity mine</en_gb>
+  </string>
+  <string id="STR_BRAINSUCKER_LAUNCHER_DESCRIPTION">
+        <en_gb>Fires Brainsucker pods.</en_gb>
+  </string>
+  <string id="STR_ENTROPY_LAUNCHER_DESCRIPTION">
+        <en_gb>An Alien organic weapon.</en_gb>
+  </string>
+  <string id="STR_ENTROPY_POD_DESCRIPTION">
+        <en_gb>Ammunition for an Alien weapon.</en_gb>
+  </string>
+  <string id="STR_DIMENSION_MISSILE_LAUNCHER_DESCRIPTION">
+        <en_gb>An Alien guided missile weapon.</en_gb>
+  </string>
+  <string id="STR_DIMENSION_MISSILE_DESCRIPTION">
+        <en_gb>An Alien guided missile.</en_gb>
+  </string>
+  <string id="STR_VORTEX_MINE_DESCRIPTION">
+        <en_gb>A powerful Alien grenade.</en_gb>
+  </string>
+  <string id="STR_PERSONAL_DISRUPTOR_SHIELD_DESCRIPTION">
+        <en_gb>An Alien energy shield.</en_gb>
+  </string>
+  <string id="STR_PERSONAL_TELEPORTER_DESCRIPTION">
+        <en_gb>An Alien teleportation device.</en_gb>
+  </string>
+  <string id="STR_PERSONAL_CLOAKING_FIELD_DESCRIPTION">
+        <en_gb>An Alien device which limits detection.</en_gb>
+  </string>
+  <string id="STR_DIMENSION_DESTABILISER_DESCRIPTION">
+        <en_gb>A device based on disruption field research which could be used to disable Alien disruption shields.</en_gb>
+  </string>
+  <string id="STR_DISRUPTOR_ARMOR_NAME">
+        <en_gb>Disruptor Armor</en_gb>
+  </string>
+  <string id="STR_DISRUPTOR_ARMOR_DESCRIPTION">
+        <en_gb>Personal armor can be developed based on disrupter research</en_gb>
+  </string>
+  <string id="STR_LIGHT_DISRUPTOR_BEAM_DESCRIPTION">
+        <en_gb>A beam weapon deployed on Alien craft.</en_gb>
+  </string>
+  <string id="STR_DISRUPTOR_INVERSION_BOMB_NAME">
+        <en_gb>Disruptor Inversion Bomb</en_gb>
+  </string>
+  <string id="STR_DISRUPTOR_INVERSION_BOMB_DESCRIPTION">
+        <en_gb>An Alien guided missile launched from Alien craft.</en_gb>
+  </string>
+  <string id="STR_STASIS_FIELD_BOMB_NAME">
+        <en_gb>Stasis Field Bomb</en_gb>
+  </string>
+  <string id="STR_STASIS_FIELD_BOMB_DESCRIPTION">
+        <en_gb>An Alien missile with an immobilizing effect.</en_gb>
+  </string>
+  <string id="STR_DISRUPTOR_MULTI_BOMB_NAME">
+        <en_gb>Disruptor Multi-Bomb</en_gb>
+  </string>
+  <string id="STR_DISRUPTOR_MULTI_BOMB_DESCRIPTION">
+        <en_gb>A multiple warhead missile.</en_gb>
+  </string>
+  <string id="STR_X_COM_ADVANCED_CONTROL_SYSTEM_NAME">
+        <en_gb>X-COM Advanced Control System</en_gb>
+  </string>
+  <string id="STR_X_COM_ADVANCED_CONTROL_SYSTEM_DESCRIPTION">
+        <en_gb>A superior weapons control system.</en_gb>
+  </string>
+  <string id="STR_BIO_TRANSPORT_MODULE_DESCRIPTION">
+        <en_gb>For transporting Alien life forms.</en_gb>
+  </string>
+  <string id="STR_CLOAKING_FIELD_DESCRIPTION">
+        <en_gb>Reduced detection of vehicles.</en_gb>
+  </string>
+  <string id="STR_TELEPORTER_DESCRIPTION">
+        <en_gb>Instantly transports a vehicle over short ranges.</en_gb>
+  </string>
+  <string id="STR_DIMENSION_SHIFTER_DESCRIPTION">
+        <en_gb>Transports a vehicle between Dimensions.</en_gb>
+  </string>
+  <string id="STR_ALIEN_PROPULSION_SYSTEM_NAME">
+        <en_gb>Alien Propulsion System</en_gb>
+  </string>
+  <string id="STR_ALIEN_PROPULSION_SYSTEM_DESCRIPTION">
+        <en_gb>Alien craft propulsion.</en_gb>
+  </string>
+  <string id="STR_ALIEN_CONTROL_SYSTEM_NAME">
+        <en_gb>Alien Control System</en_gb>
+  </string>
+  <string id="STR_ALIEN_CONTROL_SYSTEM_DESCRIPTION">
+        <en_gb>Alien craft guidance System.</en_gb>
+  </string>
+  <string id="STR_ALIEN_ENERGY_SOURCE_NAME">
+        <en_gb>Alien Energy Source</en_gb>
+  </string>
+  <string id="STR_ALIEN_ENERGY_SOURCE_DESCRIPTION">
+        <en_gb>Alien craft energy generator.</en_gb>
+  </string>
+  <string id="STR_UFO_TYPE_1_NAME">
+        <en_gb>UFO type 1</en_gb>
+  </string>
+  <string id="STR_UFO_TYPE_1_DESCRIPTION">
+        <en_gb>Alien inter-dimensional craft</en_gb>
+  </string>
+  <string id="STR_UFO_TYPE_2_NAME">
+        <en_gb>UFO type 2</en_gb>
+  </string>
+  <string id="STR_UFO_TYPE_3_NAME">
+        <en_gb>UFO type 3</en_gb>
+  </string>
+  <string id="STR_UFO_TYPE_4_NAME">
+        <en_gb>UFO type 4</en_gb>
+  </string>
+  <string id="STR_UFO_TYPE_5_NAME">
+        <en_gb>UFO type 5</en_gb>
+  </string>
+  <string id="STR_UFO_TYPE_6_NAME">
+        <en_gb>UFO type 6</en_gb>
+  </string>
+  <string id="STR_UFO_TYPE_7_NAME">
+        <en_gb>UFO type 7</en_gb>
+  </string>
+  <string id="STR_UFO_TYPE_8_NAME">
+        <en_gb>UFO type 8</en_gb>
+  </string>
+  <string id="STR_UFO_TYPE_9_NAME">
+        <en_gb>UFO type 9</en_gb>
+  </string>
+  <string id="STR_UFO_TYPE_10_NAME">
+        <en_gb>UFO type 10</en_gb>
+  </string>
+  <string id="STR_ALIEN_BUILDING_NAME">
+        <en_gb>Alien building</en_gb>
+  </string>
+  <string id="STR_ALIEN_BUILDING_DESCRIPTION">
+        <en_gb>This research could reveal a weakness in the Alien defenses.</en_gb>
+  </string>
+  <string id="STR_ALIEN_BUILDING_1_NAME">
+        <en_gb>Alien building 1</en_gb>
+  </string>
+  <string id="STR_ALIEN_BUILDING_2_NAME">
+        <en_gb>Alien building 2</en_gb>
+  </string>
+  <string id="STR_ALIEN_BUILDING_3_NAME">
+        <en_gb>Alien building 3</en_gb>
+  </string>
+  <string id="STR_ALIEN_BUILDING_4_NAME">
+        <en_gb>Alien building 4</en_gb>
+  </string>
+  <string id="STR_ALIEN_BUILDING_5_NAME">
+        <en_gb>Alien building 5</en_gb>
+  </string>
+  <string id="STR_ALIEN_BUILDING_6_NAME">
+        <en_gb>Alien building 6</en_gb>
+  </string>
+  <string id="STR_ALIEN_BUILDING_7_NAME">
+        <en_gb>Alien building 7</en_gb>
+  </string>
+  <string id="STR_ALIEN_BUILDING_8_NAME">
+        <en_gb>Alien building 8</en_gb>
+  </string>
+  <string id="STR_ALIEN_BUILDING_9_NAME">
+        <en_gb>Alien building 9</en_gb>
+  </string>
+  <string id="STR_ONE_WAY_TO_WIN_NAME">
+        <en_gb>One way to win</en_gb>
+  </string>
+  <string id="STR_ONE_WAY_TO_WIN_DESCRIPTION">
+        <en_gb>We must discover a way to beat the Aliens once and for all</en_gb>
+  </string>
+	</openapoc>
