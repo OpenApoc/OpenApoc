@@ -1,6 +1,5 @@
 
 #include "game/general/optionsmenu.h"
-#include "game/base/basescreen.h"
 #include "game/ufopaedia/ufopaedia.h"
 #include "game/debugtools/debugmenu.h"
 #include "framework/framework.h"
@@ -41,8 +40,6 @@ void OptionsMenu::EventOccurred(Event *e)
 	{
 		if (e->Data.Forms.RaisedBy->Name == "BUTTON_TEST_XCOMBASE")
 		{
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<BaseScreen>(fw);
 			return;
 		}
 		if (e->Data.Forms.RaisedBy->Name == "BUTTON_TEST_UFOPAEDIA")
