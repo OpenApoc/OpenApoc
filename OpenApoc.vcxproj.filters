@@ -243,6 +243,9 @@
     <ClCompile Include="game\base\basescreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\city\buildingscreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -507,6 +510,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\base\basescreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\city\buildingscreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
