@@ -425,6 +425,7 @@ std::shared_ptr<ImageSet> PCKLoader::load_strat(Data &data, UString PckFilename,
 	}
 
 	uint32_t offset = 0;
+	unsigned idx = 0;
 	while (tabFile.read((char *)&offset, sizeof(offset)))
 	{
 		pckFile.seekg(offset, std::ios::beg);
@@ -445,6 +446,9 @@ std::shared_ptr<ImageSet> PCKLoader::load_strat(Data &data, UString PckFilename,
 			return nullptr;
 		}
 		imageSet->images.push_back(img);
+		img->owningSet = imageSet;
+		img->CalculateBounds();
+		img->indexInSet = idx++;
 	}
 
 	imageSet->maxSize = {8, 8};
