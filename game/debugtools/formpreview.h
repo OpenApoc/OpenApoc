@@ -14,8 +14,8 @@ namespace OpenApoc
 class FormPreview : public Stage
 {
   private:
-	CheckBox* interactWithDisplay;
-	Label* currentSelected;
+	CheckBox *interactWithDisplay;
+	Label *currentSelected;
 	StageCmd stageCmd;
 	Form *previewselector;
 	Form *propertyeditor;
@@ -23,7 +23,7 @@ class FormPreview : public Stage
 
 	int glowindex;
 
-	Control* currentSelectedControl;
+	Control *currentSelectedControl;
 
 	void ConfigureSelectedControlForm();
 

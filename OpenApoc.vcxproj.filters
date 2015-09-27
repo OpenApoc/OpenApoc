@@ -240,6 +240,9 @@
     <ClCompile Include="game\debugtools\formpreview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\rules\facilitydef_rules.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -501,6 +504,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\debugtools\formpreview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\rules\facilitydef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

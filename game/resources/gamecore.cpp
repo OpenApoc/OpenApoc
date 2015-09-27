@@ -242,9 +242,9 @@ std::vector<UString> GameCore::GetFormIDs()
 {
 	std::vector<UString> result;
 
-	for( auto idx = forms.begin(); idx != forms.end(); idx++ )
+	for (auto idx = forms.begin(); idx != forms.end(); idx++)
 	{
-		result.push_back( idx->first );
+		result.push_back(idx->first);
 	}
 
 	return result;

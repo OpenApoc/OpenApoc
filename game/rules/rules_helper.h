@@ -40,4 +40,18 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, 
 	return false;
 }
 
+template <typename T>
+bool ReadText(tinyxml2::XMLElement *element, const std::map<UString, T> &valueMap, T &output)
+{
+	UString str = element->GetText();
+	auto it = valueMap.find(str);
+	if (it == valueMap.end())
+	{
+		LogWarning("No matching value for \"%s\"", str.c_str());
+		return false;
+	}
+	output = it->second;
+	return true;
+}
+
 }; // namespace OpenApoc

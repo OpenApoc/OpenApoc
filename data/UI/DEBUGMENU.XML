@@ -1,33 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc>
-	<form id="FORM_DEBUG_MENU">
-		<style minwidth="450" minheight="480">
-			<position x="centre" y="centre"/>
-			<size width="454" height="484"/>
-			<backcolour r="128" g="96" b="80"/>
-			
-			<graphic>
-				<image>xcom3/UFODATA/ENTTACT.PCX</image>
-				<position x="2" y="2"/>
-				<size width="450" height="480"/>
-			
-				<textbutton id="BUTTON_DUMPPCK" text="STR_DUMP_PCKS">
-					<position x="centre" y="24"/>
-					<size width="300" height="32"/>
-					<font>SMALFONT</font>
-				</textbutton>
-				<textbutton id="BUTTON_FORMPREVIEW" text="STR_FORM_PREVIEW">
-					<position x="centre" y="64"/>
-					<size width="300" height="32"/>
-					<font>SMALFONT</font>
-				</textbutton>
-				<textbutton id="BUTTON_QUIT" text="STR_QUIT">
-					<position x="centre" y="440"/>
-					<size width="300" height="32"/>
-					<font>SMALFONT</font>
-				</textbutton>
-				
-			</graphic>
-		</style>
-	</form>
+  <form id="FORM_DEBUG_MENU">
+    <style minwidth="450" minheight="480">
+      <position x="centre" y="centre"/>
+      <size width="454" height="484"/>
+      <backcolour r="128" g="96" b="80"/>
+      <graphic>
+        <image>xcom3/UFODATA/ENTTACT.PCX</image>
+        <position x="2" y="2"/>
+        <size width="450" height="480"/>
+        <textbutton id="BUTTON_DUMPPCK" text="STR_DUMP_PCKS">
+          <position x="centre" y="24"/>
+          <size width="300" height="32"/>
+          <font>SMALFONT</font>
+        </textbutton>
+        <textbutton id="BUTTON_FORMPREVIEW" text="STR_FORM_PREVIEW">
+          <position x="centre" y="64"/>
+          <size width="300" height="32"/>
+          <font>SMALFONT</font>
+        </textbutton>
+        <textbutton id="BUTTON_QUIT" text="STR_QUIT">
+          <position x="centre" y="440"/>
+          <size width="300" height="32"/>
+          <font>SMALFONT</font>
+        </textbutton>
+      </graphic>
+    </style>
+  </form>
 </openapoc>
