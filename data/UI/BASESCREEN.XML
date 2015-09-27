@@ -18,7 +18,7 @@
       </graphic>
       <graphicbutton id="BUTTON_BASE_HIREFIRESTAFF">
         <position x="604" y="42"/>
-        <size width="33" height="32"/>
+        <size width="35" height="34"/>
         <backcolour r="0" g="0" b="0" a="0"/>
         <image/>
         <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:26:xcom3/TACDATA/TACTICAL.PAL</imagedepressed>
