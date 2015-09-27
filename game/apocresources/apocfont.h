@@ -7,7 +7,6 @@
 namespace OpenApoc
 {
 
-class Palette;
 class Framework;
 class Image;
 class Renderer;
@@ -22,6 +21,7 @@ class ApocalypseFont : public BitmapFont
 	int fontheight;
 	UString name;
 	int averagecharacterwidth;
+	std::shared_ptr<Palette> palette;
 
   public:
 	static std::shared_ptr<ApocalypseFont> loadFont(Framework &fw,
@@ -31,5 +31,6 @@ class ApocalypseFont : public BitmapFont
 	virtual int GetFontHeight() override;
 	virtual UString getName() override;
 	virtual int GetEstimateCharacters(int FitInWidth) override;
+	virtual std::shared_ptr<Palette> getPalette();
 };
 }; // namespace OpenApoc

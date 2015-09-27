@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc>
-  <apocfont name="SMALLSET" path="xcom3/ufodata/smallset.dat" height="12" width="8" spacewidth="3">
+  <apocfont name="SMALLSET" path="xcom3/ufodata/smallset.dat" height="12" width="8" spacewidth="3" palette="UI/UI_PALETTE.PNG">
     <glyph string="!" offset="0"/>
     <glyph string="&quot;" offset="1"/>
     <glyph string="#" offset="2"/>

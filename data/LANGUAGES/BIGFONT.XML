@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc>
-  <apocfont name="BIGFONT" path="xcom3/ufodata/bigfont.dat" height="24" width="14" spacewidth="6">
+  <apocfont name="BIGFONT" path="xcom3/ufodata/bigfont.dat" height="24" width="14" spacewidth="6" palette="UI/UI_PALETTE.PNG">
     <glyph string="-" offset="12"/>
     <glyph string="." offset="13"/>
     <glyph string="/" offset="14"/>

@@ -9,6 +9,10 @@ Label::Label(Framework &fw, Control *Owner, UString Text, std::shared_ptr<Bitmap
     : Control(fw, Owner), text(Text), font(font), TextHAlign(HorizontalAlignment::Left),
       TextVAlign(VerticalAlignment::Top), WordWrap(true)
 {
+	if (font)
+	{
+		palette = font->getPalette();
+	}
 }
 
 Label::~Label() {}

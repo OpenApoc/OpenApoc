@@ -12,6 +12,7 @@ namespace OpenApoc
 {
 
 class PaletteImage;
+class Palette;
 
 class BitmapFont
 {
@@ -23,6 +24,7 @@ class BitmapFont
 	virtual int GetFontWidth(const UString &Text);
 	virtual UString getName() = 0;
 	virtual int GetEstimateCharacters(int FitInWidth) = 0;
+	virtual std::shared_ptr<Palette> getPalette() = 0;
 };
 
 }; // namespace OpenApoc

@@ -19,12 +19,12 @@ class Control
 {
   private:
 	std::shared_ptr<Surface> controlArea;
-	std::shared_ptr<Palette> palette;
 
 	void PreRender();
 	void PostRender();
 
   protected:
+	std::shared_ptr<Palette> palette;
 	Control *owningControl;
 	Control *focusedChild;
 	bool mouseInside;

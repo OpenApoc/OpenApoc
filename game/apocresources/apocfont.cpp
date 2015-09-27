@@ -73,6 +73,7 @@ std::shared_ptr<ApocalypseFont> ApocalypseFont::loadFont(Framework &fw,
 	font->spacewidth = spacewidth;
 	font->fontheight = height;
 	font->averagecharacterwidth = 0;
+	font->palette = fw.data->load_palette(fontElement->Attribute("palette"));
 
 	for (auto *glyphNode = fontElement->FirstChildElement(); glyphNode;
 	     glyphNode = glyphNode->NextSiblingElement())
@@ -184,5 +185,7 @@ int ApocalypseFont::GetEstimateCharacters(int FitInWidth)
 {
 	return FitInWidth / averagecharacterwidth;
 }
+
+std::shared_ptr<Palette> ApocalypseFont::getPalette() { return this->palette; }
 
 }; // namespace OpenApoc
