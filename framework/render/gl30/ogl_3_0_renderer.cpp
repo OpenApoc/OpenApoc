@@ -507,26 +507,17 @@ class ActiveTexture
 	ActiveTexture(const ActiveTexture &) = delete;
 
   public:
-	GLenum prevUnit;
-	bool nop;
 	static GLenum getUnitEnum(int unit) { return gl::TEXTURE0 + unit; }
 
 	ActiveTexture(int unit)
 	{
+		GLenum prevUnit;
 		gl::GetIntegerv(gl::ACTIVE_TEXTURE, reinterpret_cast<GLint *>(&prevUnit));
 		if (prevUnit == getUnitEnum(unit))
 		{
-			nop = true;
 			return;
 		}
-		nop = false;
 		gl::ActiveTexture(getUnitEnum(unit));
-	}
-	~ActiveTexture()
-	{
-		if (nop)
-			return;
-		gl::ActiveTexture(prevUnit);
 	}
 };
 
@@ -535,24 +526,15 @@ class UnpackAlignment
 	UnpackAlignment(const UnpackAlignment &) = delete;
 
   public:
-	GLint prevAlign;
-	bool nop;
 	UnpackAlignment(int align)
 	{
+		GLint prevAlign;
 		gl::GetIntegerv(gl::UNPACK_ALIGNMENT, &prevAlign);
 		if (prevAlign == align)
 		{
-			nop = true;
 			return;
 		}
-		nop = false;
 		gl::PixelStorei(gl::UNPACK_ALIGNMENT, align);
-	}
-	~UnpackAlignment()
-	{
-		if (nop)
-			return;
-		gl::PixelStorei(gl::UNPACK_ALIGNMENT, prevAlign);
 	}
 };
 
@@ -562,7 +544,6 @@ class BindTexture
 
   public:
 	GLenum bind;
-	GLuint prevID;
 	int unit;
 	bool nop;
 	static GLenum getBindEnum(GLenum e)
@@ -585,21 +566,13 @@ class BindTexture
 	BindTexture(GLuint id, GLint unit = 0, GLenum bind = gl::TEXTURE_2D) : bind(bind), unit(unit)
 	{
 		ActiveTexture a(unit);
+		GLuint prevID;
 		gl::GetIntegerv(getBindEnum(bind), reinterpret_cast<GLint *>(&prevID));
 		if (prevID == id)
 		{
-			nop = true;
 			return;
 		}
-		nop = false;
 		gl::BindTexture(bind, id);
-	}
-	~BindTexture()
-	{
-		if (nop)
-			return;
-		ActiveTexture a(unit);
-		gl::BindTexture(bind, prevID);
 	}
 };
 
@@ -608,29 +581,20 @@ template <GLenum param> class TexParam
 	TexParam(const TexParam &) = delete;
 
   public:
-	GLint prevValue;
 	GLuint id;
 	GLenum type;
 	bool nop;
 
 	TexParam(GLuint id, GLint value, GLenum type = gl::TEXTURE_2D) : id(id), type(type)
 	{
+		GLint prevValue;
 		BindTexture b(id, 0, type);
 		gl::GetTexParameteriv(type, param, &prevValue);
 		if (prevValue == value)
 		{
-			nop = true;
 			return;
 		}
-		nop = false;
 		gl::TexParameteri(type, param, value);
-	}
-	~TexParam()
-	{
-		if (nop)
-			return;
-		BindTexture b(id, 0, type);
-		gl::TexParameteri(type, param, prevValue);
 	}
 };
 
@@ -639,24 +603,15 @@ class BindFramebuffer
 	BindFramebuffer(const BindFramebuffer &) = delete;
 
   public:
-	GLuint prevID;
-	bool nop;
 	BindFramebuffer(GLuint id)
 	{
+		GLuint prevID;
 		gl::GetIntegerv(gl::DRAW_FRAMEBUFFER_BINDING, reinterpret_cast<GLint *>(&prevID));
 		if (prevID == id)
 		{
-			nop = true;
 			return;
 		}
-		nop = false;
 		gl::BindFramebuffer(gl::DRAW_FRAMEBUFFER, id);
-	}
-	~BindFramebuffer()
-	{
-		if (nop)
-			return;
-		gl::BindFramebuffer(gl::DRAW_FRAMEBUFFER, prevID);
 	}
 };
 
