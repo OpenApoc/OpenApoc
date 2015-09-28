@@ -146,8 +146,14 @@ const char *RGBProgram_fragmentSource = {"#version 130\n"
 class RGBProgram : public SpriteProgram
 {
   private:
+	Vec2<int> currentScreenSize;
+	bool currentFlipY;
+	GLint currentTexUnit;
+
   public:
-	RGBProgram() : SpriteProgram(RGBProgram_vertexSource, RGBProgram_fragmentSource)
+	RGBProgram()
+	    : SpriteProgram(RGBProgram_vertexSource, RGBProgram_fragmentSource),
+	      currentScreenSize(0, 0), currentFlipY(0), currentTexUnit(0)
 	{
 		this->posLoc = gl::GetAttribLocation(this->prog, "position");
 		if (this->posLoc < 0)
@@ -167,11 +173,21 @@ class RGBProgram : public SpriteProgram
 	}
 	void setUniforms(Vec2<int> screenSize, bool flipY, GLint texUnit = 0)
 	{
-		LogInfo("Drawing to {%d,%d} surface, flip = %s", screenSize.x, screenSize.y,
-		        flipY ? "true" : "false");
-		this->Uniform(this->screenSizeLoc, screenSize);
-		this->Uniform(this->texLoc, texUnit);
-		this->Uniform(this->flipYLoc, flipY);
+		if (screenSize != currentScreenSize)
+		{
+			currentScreenSize = screenSize;
+			this->Uniform(this->screenSizeLoc, screenSize);
+		}
+		if (texUnit != currentTexUnit)
+		{
+			currentTexUnit = texUnit;
+			this->Uniform(this->texLoc, texUnit);
+		}
+		if (flipY != currentFlipY)
+		{
+			currentFlipY = flipY;
+			this->Uniform(this->flipYLoc, flipY);
+		}
 	}
 };
 const char *PaletteProgram_vertexSource = {
@@ -202,9 +218,16 @@ const char *PaletteProgram_fragmentSource = {
 class PaletteProgram : public SpriteProgram
 {
   private:
+	Vec2<int> currentScreenSize;
+	bool currentFlipY;
+	GLint currentTexUnit;
+	GLint currentPalUnit;
+
   public:
 	GLint palLoc;
-	PaletteProgram() : SpriteProgram(PaletteProgram_vertexSource, PaletteProgram_fragmentSource)
+	PaletteProgram()
+	    : SpriteProgram(PaletteProgram_vertexSource, PaletteProgram_fragmentSource),
+	      currentScreenSize(0, 0), currentFlipY(false), currentTexUnit(0), currentPalUnit(0)
 	{
 		this->posLoc = gl::GetAttribLocation(this->prog, "position");
 		this->texcoordLoc = gl::GetAttribLocation(this->prog, "texcoord_in");
@@ -215,10 +238,26 @@ class PaletteProgram : public SpriteProgram
 	}
 	void setUniforms(Vec2<int> screenSize, bool flipY, GLint texUnit = 0, GLint palUnit = 1)
 	{
-		this->Uniform(this->screenSizeLoc, screenSize);
-		this->Uniform(this->texLoc, texUnit);
-		this->Uniform(this->palLoc, palUnit);
-		this->Uniform(this->flipYLoc, flipY);
+		if (screenSize != currentScreenSize)
+		{
+			currentScreenSize = screenSize;
+			this->Uniform(this->screenSizeLoc, screenSize);
+		}
+		if (texUnit != currentTexUnit)
+		{
+			currentTexUnit = texUnit;
+			this->Uniform(this->texLoc, texUnit);
+		}
+		if (palUnit != currentPalUnit)
+		{
+			currentPalUnit = palUnit;
+			this->Uniform(this->palLoc, palUnit);
+		}
+		if (currentFlipY != flipY)
+		{
+			currentFlipY = flipY;
+			this->Uniform(this->flipYLoc, flipY);
+		}
 	}
 };
 
@@ -254,6 +293,11 @@ const char *PaletteSetProgram_fragmentSource = {
 class PaletteSetProgram : public Program
 {
   private:
+	Vec2<int> currentScreenSize;
+	bool currentFlipY;
+	GLint currentTexUnit;
+	GLint currentPalUnit;
+
   public:
 	GLuint posLoc;
 	GLuint texcoordLoc;
@@ -262,7 +306,9 @@ class PaletteSetProgram : public Program
 	GLuint texLoc;
 	GLuint palLoc;
 	GLuint flipYLoc;
-	PaletteSetProgram() : Program(PaletteSetProgram_vertexSource, PaletteSetProgram_fragmentSource)
+	PaletteSetProgram()
+	    : Program(PaletteSetProgram_vertexSource, PaletteSetProgram_fragmentSource),
+	      currentScreenSize(0, 0), currentFlipY(false), currentTexUnit(0), currentPalUnit(0)
 	{
 		this->posLoc = gl::GetAttribLocation(this->prog, "position");
 		this->texcoordLoc = gl::GetAttribLocation(this->prog, "texcoord_in");
@@ -275,10 +321,26 @@ class PaletteSetProgram : public Program
 	}
 	void setUniforms(Vec2<int> screenSize, bool flipY, GLint texUnit = 0, GLint palUnit = 1)
 	{
-		this->Uniform(this->screenSizeLoc, screenSize);
-		this->Uniform(this->texLoc, texUnit);
-		this->Uniform(this->palLoc, palUnit);
-		this->Uniform(this->flipYLoc, flipY);
+		if (screenSize != currentScreenSize)
+		{
+			currentScreenSize = screenSize;
+			this->Uniform(this->screenSizeLoc, screenSize);
+		}
+		if (texUnit != currentTexUnit)
+		{
+			currentTexUnit = texUnit;
+			this->Uniform(this->texLoc, texUnit);
+		}
+		if (palUnit != currentPalUnit)
+		{
+			currentPalUnit = palUnit;
+			this->Uniform(this->palLoc, palUnit);
+		}
+		if (currentFlipY != flipY)
+		{
+			currentFlipY = flipY;
+			this->Uniform(this->flipYLoc, flipY);
+		}
 	}
 	class VertexDef
 	{
@@ -331,13 +393,18 @@ const char *SolidColourProgram_fragmentSource = {"#version 130\n"
 class SolidColourProgram : public Program
 {
   private:
+	Vec2<int> currentScreenSize;
+	bool currentFlipY;
+	Colour currentColour;
+
   public:
 	GLuint posLoc;
 	GLuint screenSizeLoc;
 	GLuint colourLoc;
 	GLuint flipYLoc;
 	SolidColourProgram()
-	    : Program(SolidColourProgram_vertexSource, SolidColourProgram_fragmentSource)
+	    : Program(SolidColourProgram_vertexSource, SolidColourProgram_fragmentSource),
+	      currentScreenSize(0, 0), currentFlipY(false), currentColour(0, 0, 0, 0)
 	{
 		this->posLoc = gl::GetAttribLocation(this->prog, "position");
 		this->screenSizeLoc = gl::GetUniformLocation(this->prog, "screenSize");
@@ -346,9 +413,21 @@ class SolidColourProgram : public Program
 	}
 	void setUniforms(Vec2<int> screenSize, bool flipY, Colour colour)
 	{
-		this->Uniform(this->screenSizeLoc, screenSize);
-		this->Uniform(this->colourLoc, colour);
-		this->Uniform(this->flipYLoc, flipY);
+		if (currentScreenSize != screenSize)
+		{
+			currentScreenSize = screenSize;
+			this->Uniform(this->screenSizeLoc, screenSize);
+		}
+		if (currentColour != colour)
+		{
+			currentColour = colour;
+			this->Uniform(this->colourLoc, colour);
+		}
+		if (currentFlipY != flipY)
+		{
+			currentFlipY = flipY;
+			this->Uniform(this->flipYLoc, flipY);
+		}
 	}
 };
 
@@ -362,7 +441,8 @@ class Quad
 	{
 		texcoords = {{
 		    Vec2<float>{texCoords.p0}, Vec2<float>{texCoords.p1.x, texCoords.p0.y},
-		    Vec2<float>{texCoords.p0.x, texCoords.p1.y}, Vec2<float>{texCoords.p1}, }};
+		    Vec2<float>{texCoords.p0.x, texCoords.p1.y}, Vec2<float>{texCoords.p1},
+		}};
 
 		if (rotationAngleRadians != 0.0f)
 		{
@@ -370,7 +450,8 @@ class Quad
 			Vec2<float> size = position.p1 - position.p0;
 			vertices = {{
 			    Vec2<float>{0.0f, 0.0f}, Vec2<float>{size.x, 0.0f}, Vec2<float>{0.0f, size.y},
-			    Vec2<float>{size}, }};
+			    Vec2<float>{size},
+			}};
 			for (auto &p : vertices)
 			{
 				p -= rotationCenter;
@@ -385,7 +466,8 @@ class Quad
 		{
 			vertices = {{
 			    Vec2<float>{position.p0}, Vec2<float>{position.p1.x, position.p0.y},
-			    Vec2<float>{position.p0.x, position.p1.y}, Vec2<float>{position.p1}, }};
+			    Vec2<float>{position.p0.x, position.p1.y}, Vec2<float>{position.p1},
+			}};
 		}
 	}
 	void draw(GLuint vertexAttribPos, GLuint texcoordAttribPos)
@@ -426,14 +508,26 @@ class ActiveTexture
 
   public:
 	GLenum prevUnit;
+	bool nop;
 	static GLenum getUnitEnum(int unit) { return gl::TEXTURE0 + unit; }
 
 	ActiveTexture(int unit)
 	{
 		gl::GetIntegerv(gl::ACTIVE_TEXTURE, reinterpret_cast<GLint *>(&prevUnit));
+		if (prevUnit == getUnitEnum(unit))
+		{
+			nop = true;
+			return;
+		}
+		nop = false;
 		gl::ActiveTexture(getUnitEnum(unit));
 	}
-	~ActiveTexture() { gl::ActiveTexture(prevUnit); }
+	~ActiveTexture()
+	{
+		if (nop)
+			return;
+		gl::ActiveTexture(prevUnit);
+	}
 };
 
 class UnpackAlignment
@@ -442,12 +536,24 @@ class UnpackAlignment
 
   public:
 	GLint prevAlign;
+	bool nop;
 	UnpackAlignment(int align)
 	{
 		gl::GetIntegerv(gl::UNPACK_ALIGNMENT, &prevAlign);
+		if (prevAlign == align)
+		{
+			nop = true;
+			return;
+		}
+		nop = false;
 		gl::PixelStorei(gl::UNPACK_ALIGNMENT, align);
 	}
-	~UnpackAlignment() { gl::PixelStorei(gl::UNPACK_ALIGNMENT, prevAlign); }
+	~UnpackAlignment()
+	{
+		if (nop)
+			return;
+		gl::PixelStorei(gl::UNPACK_ALIGNMENT, prevAlign);
+	}
 };
 
 class BindTexture
@@ -458,6 +564,7 @@ class BindTexture
 	GLenum bind;
 	GLuint prevID;
 	int unit;
+	bool nop;
 	static GLenum getBindEnum(GLenum e)
 	{
 		switch (e)
@@ -479,10 +586,18 @@ class BindTexture
 	{
 		ActiveTexture a(unit);
 		gl::GetIntegerv(getBindEnum(bind), reinterpret_cast<GLint *>(&prevID));
+		if (prevID == id)
+		{
+			nop = true;
+			return;
+		}
+		nop = false;
 		gl::BindTexture(bind, id);
 	}
 	~BindTexture()
 	{
+		if (nop)
+			return;
 		ActiveTexture a(unit);
 		gl::BindTexture(bind, prevID);
 	}
@@ -496,15 +611,24 @@ template <GLenum param> class TexParam
 	GLint prevValue;
 	GLuint id;
 	GLenum type;
+	bool nop;
 
 	TexParam(GLuint id, GLint value, GLenum type = gl::TEXTURE_2D) : id(id), type(type)
 	{
 		BindTexture b(id, 0, type);
 		gl::GetTexParameteriv(type, param, &prevValue);
+		if (prevValue == value)
+		{
+			nop = true;
+			return;
+		}
+		nop = false;
 		gl::TexParameteri(type, param, value);
 	}
 	~TexParam()
 	{
+		if (nop)
+			return;
 		BindTexture b(id, 0, type);
 		gl::TexParameteri(type, param, prevValue);
 	}
@@ -516,12 +640,24 @@ class BindFramebuffer
 
   public:
 	GLuint prevID;
+	bool nop;
 	BindFramebuffer(GLuint id)
 	{
 		gl::GetIntegerv(gl::DRAW_FRAMEBUFFER_BINDING, reinterpret_cast<GLint *>(&prevID));
+		if (prevID == id)
+		{
+			nop = true;
+			return;
+		}
+		nop = false;
 		gl::BindFramebuffer(gl::DRAW_FRAMEBUFFER, id);
 	}
-	~BindFramebuffer() { gl::BindFramebuffer(gl::DRAW_FRAMEBUFFER, prevID); }
+	~BindFramebuffer()
+	{
+		if (nop)
+			return;
+		gl::BindFramebuffer(gl::DRAW_FRAMEBUFFER, prevID);
+	}
 };
 
 class FBOData : public RendererImageData
@@ -1018,7 +1154,7 @@ OGL30Renderer::OGL30Renderer()
 	GLint maxTexArrayLayers;
 	gl::GetIntegerv(gl::MAX_ARRAY_TEXTURE_LAYERS, &maxTexArrayLayers);
 	LogInfo("MAX_ARRAY_TEXTURE_LAYERS: %d", maxTexArrayLayers);
-	this->maxBatchedSprites = 256;
+	this->maxBatchedSprites = 2048;
 	this->maxSpritesheetSize = maxTexArrayLayers;
 
 	this->firstList.reset(new GLint[this->maxBatchedSprites]);
