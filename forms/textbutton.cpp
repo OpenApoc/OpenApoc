@@ -14,6 +14,10 @@ TextButton::TextButton(Framework &fw, Control *Owner, UString Text,
 {
 	this->buttonclick = fw.data->load_sample("xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW");
 	cached = nullptr;
+	if (font)
+	{
+		palette = font->getPalette();
+	}
 }
 
 TextButton::~TextButton() {}

@@ -13,6 +13,10 @@ TextEdit::TextEdit(Framework &fw, Control *Owner, UString Text, std::shared_ptr<
       editShift(false), editAltGr(false), SelectionStart(Text.length()),
       TextHAlign(HorizontalAlignment::Left), TextVAlign(VerticalAlignment::Centre)
 {
+	if (font)
+	{
+		palette = font->getPalette();
+	}
 }
 
 TextEdit::~TextEdit() {}
