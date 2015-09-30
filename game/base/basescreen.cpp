@@ -5,9 +5,9 @@
 namespace OpenApoc
 {
 
-BaseScreen::BaseScreen(Framework &fw) : Stage(fw)
+BaseScreen::BaseScreen(Framework &fw)
+    : Stage(fw), basescreenform(fw.gamecore->GetForm("FORM_BASESCREEN"))
 {
-	basescreenform = fw.gamecore->GetForm("FORM_BASESCREEN");
 }
 
 BaseScreen::~BaseScreen() {}

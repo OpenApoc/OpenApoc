@@ -10,9 +10,8 @@ namespace OpenApoc
 
 std::vector<UString> tracks{"music:0", "music:1", "music:2"};
 
-MainMenu::MainMenu(Framework &fw) : Stage(fw)
+MainMenu::MainMenu(Framework &fw) : Stage(fw), mainmenuform(fw.gamecore->GetForm("FORM_MAINMENU"))
 {
-	mainmenuform = fw.gamecore->GetForm("FORM_MAINMENU");
 	auto versionLabel = mainmenuform->FindControlTyped<Label>("VERSION_LABEL");
 	versionLabel->SetText(OPENAPOC_VERSION);
 }

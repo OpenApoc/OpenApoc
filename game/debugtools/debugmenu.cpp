@@ -6,9 +6,8 @@
 namespace OpenApoc
 {
 
-DebugMenu::DebugMenu(Framework &fw) : Stage(fw)
+DebugMenu::DebugMenu(Framework &fw) : Stage(fw), menuform(fw.gamecore->GetForm("FORM_DEBUG_MENU"))
 {
-	menuform = fw.gamecore->GetForm("FORM_DEBUG_MENU");
 }
 
 DebugMenu::~DebugMenu() {}

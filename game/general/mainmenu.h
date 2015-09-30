@@ -14,7 +14,7 @@ namespace OpenApoc
 class MainMenu : public Stage
 {
   private:
-	Form *mainmenuform;
+	std::unique_ptr<Form> mainmenuform;
 	StageCmd stageCmd;
 
   public:

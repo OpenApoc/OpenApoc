@@ -7,9 +7,9 @@ namespace OpenApoc
 
 std::vector<std::shared_ptr<UfopaediaCategory>> Ufopaedia::UfopaediaDB;
 
-Ufopaedia::Ufopaedia(Framework &fw) : Stage(fw)
+Ufopaedia::Ufopaedia(Framework &fw)
+    : Stage(fw), menuform(fw.gamecore->GetForm("FORM_UFOPAEDIA_TITLE"))
 {
-	menuform = fw.gamecore->GetForm("FORM_UFOPAEDIA_TITLE");
 }
 
 Ufopaedia::~Ufopaedia() {}

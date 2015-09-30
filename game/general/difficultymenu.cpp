@@ -7,9 +7,9 @@
 namespace OpenApoc
 {
 
-DifficultyMenu::DifficultyMenu(Framework &fw) : Stage(fw)
+DifficultyMenu::DifficultyMenu(Framework &fw)
+    : Stage(fw), difficultymenuform(fw.gamecore->GetForm("FORM_DIFFICULTYMENU"))
 {
-	difficultymenuform = fw.gamecore->GetForm("FORM_DIFFICULTYMENU");
 	assert(difficultymenuform);
 }
 

@@ -17,9 +17,9 @@ class FormPreview : public Stage
 	CheckBox *interactWithDisplay;
 	Label *currentSelected;
 	StageCmd stageCmd;
-	Form *previewselector;
-	Form *propertyeditor;
-	Form *displayform;
+	std::unique_ptr<Form> previewselector;
+	std::unique_ptr<Form> propertyeditor;
+	std::unique_ptr<Form> displayform;
 
 	int glowindex;
 

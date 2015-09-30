@@ -12,7 +12,7 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 	currentSelectedControl = nullptr;
 	glowindex = 0;
 
-	previewselector = new Form(fw, nullptr);
+	previewselector.reset(new Form(fw, nullptr));
 	previewselector->Size.x = 200;
 	previewselector->Size.y = 300;
 	previewselector->Location.x = 2;
@@ -21,7 +21,7 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 	previewselector->BackgroundColour.g = 192;
 	previewselector->BackgroundColour.b = 192;
 
-	Control *ch = new Control(fw, previewselector);
+	Control *ch = new Control(fw, previewselector.get());
 	ch->Location.x = 2;
 	ch->Location.y = 2;
 	ch->Size.x = previewselector->Size.x - 4;
@@ -89,7 +89,7 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 		// lb->AddItem( l );
 	}
 
-	propertyeditor = new Form(fw, nullptr);
+	propertyeditor.reset(new Form(fw, nullptr));
 	propertyeditor->Location.x = 2;
 	propertyeditor->Location.y = 304;
 	propertyeditor->Size.x = 200;
@@ -99,7 +99,7 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 	propertyeditor->BackgroundColour.b = 192;
 }
 
-FormPreview::~FormPreview() { delete previewselector; }
+FormPreview::~FormPreview() {}
 
 void FormPreview::Begin() {}
 
@@ -134,7 +134,7 @@ void FormPreview::EventOccurred(Event *e)
 	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::MouseClick)
 	{
 
-		if (displayform != nullptr && e->Data.Forms.RaisedBy->GetForm() == displayform)
+		if (displayform != nullptr && e->Data.Forms.RaisedBy->GetForm() == displayform.get())
 		{
 			currentSelectedControl = e->Data.Forms.RaisedBy;
 			ConfigureSelectedControlForm();
@@ -145,7 +145,7 @@ void FormPreview::EventOccurred(Event *e)
 			ConfigureSelectedControlForm();
 		}
 
-		if (e->Data.Forms.RaisedBy->GetForm() == previewselector &&
+		if (e->Data.Forms.RaisedBy->GetForm() == previewselector.get() &&
 		    e->Data.Forms.RaisedBy->GetParent()->Name == "FORM_LIST")
 		{
 
@@ -156,7 +156,7 @@ void FormPreview::EventOccurred(Event *e)
 
 			currentSelected = (Label *)e->Data.Forms.RaisedBy;
 			currentSelected->BackgroundColour.a = 255;
-			displayform = fw.gamecore->GetForm(currentSelected->Name);
+			displayform.reset(fw.gamecore->GetForm(currentSelected->Name));
 
 			return;
 		}

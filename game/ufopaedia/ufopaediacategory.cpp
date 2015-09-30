@@ -6,7 +6,8 @@
 namespace OpenApoc
 {
 
-UfopaediaCategory::UfopaediaCategory(Framework &fw, tinyxml2::XMLElement *Element) : Stage(fw)
+UfopaediaCategory::UfopaediaCategory(Framework &fw, tinyxml2::XMLElement *Element)
+    : Stage(fw), menuform(fw.gamecore->GetForm("FORM_UFOPAEDIA_BASE"))
 {
 	UString nodename;
 
@@ -45,8 +46,6 @@ UfopaediaCategory::UfopaediaCategory(Framework &fw, tinyxml2::XMLElement *Elemen
 			}
 		}
 	}
-
-	menuform = fw.gamecore->GetForm("FORM_UFOPAEDIA_BASE");
 }
 
 UfopaediaCategory::~UfopaediaCategory() {}

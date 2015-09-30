@@ -7,9 +7,9 @@
 namespace OpenApoc
 {
 
-OptionsMenu::OptionsMenu(Framework &fw) : Stage(fw)
+OptionsMenu::OptionsMenu(Framework &fw)
+    : Stage(fw), menuform(fw.gamecore->GetForm("FORM_OPTIONSMENU"))
 {
-	menuform = fw.gamecore->GetForm("FORM_OPTIONSMENU");
 }
 
 OptionsMenu::~OptionsMenu() {}

@@ -5,9 +5,9 @@
 namespace OpenApoc
 {
 
-ScoreScreen::ScoreScreen(Framework &fw) : Stage(fw)
+ScoreScreen::ScoreScreen(Framework &fw)
+    : Stage(fw), menuform(fw.gamecore->GetForm("FORM_SCORE_SCREEN"))
 {
-	menuform = fw.gamecore->GetForm("FORM_SCORE_SCREEN");
 }
 
 ScoreScreen::~ScoreScreen() {}

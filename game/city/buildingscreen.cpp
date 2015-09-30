@@ -5,9 +5,9 @@
 namespace OpenApoc
 {
 
-BuildingScreen::BuildingScreen(Framework &fw) : Stage(fw)
+BuildingScreen::BuildingScreen(Framework &fw)
+    : Stage(fw), menuform(fw.gamecore->GetForm("FORM_BUILDING_SCREEN"))
 {
-	menuform = fw.gamecore->GetForm("FORM_BUILDING_SCREEN");
 }
 
 BuildingScreen::~BuildingScreen() {}

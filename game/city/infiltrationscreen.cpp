@@ -5,9 +5,9 @@
 namespace OpenApoc
 {
 
-InfiltrationScreen::InfiltrationScreen(Framework &fw) : Stage(fw)
+InfiltrationScreen::InfiltrationScreen(Framework &fw)
+    : Stage(fw), menuform(fw.gamecore->GetForm("FORM_INFILTRATION_SCREEN"))
 {
-	menuform = fw.gamecore->GetForm("FORM_INFILTRATION_SCREEN");
 }
 
 InfiltrationScreen::~InfiltrationScreen() {}

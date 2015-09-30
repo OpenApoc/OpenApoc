@@ -25,7 +25,7 @@ CityView::CityView(Framework &fw)
 
 	for (auto &formName : tabFormNames)
 	{
-		Form *f = fw.gamecore->GetForm(formName);
+		std::shared_ptr<Form> f(fw.gamecore->GetForm(formName));
 		if (!f)
 		{
 			LogError("Failed to load form \"%s\"", formName.c_str());

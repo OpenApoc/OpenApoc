@@ -20,8 +20,8 @@ enum class UpdateSpeed
 class CityView : public TileView
 {
   private:
-	Form *activeTab;
-	std::vector<Form *> uiTabs;
+	std::shared_ptr<Form> activeTab;
+	std::vector<std::shared_ptr<Form>> uiTabs;
 	UpdateSpeed updateSpeed;
 
   public:

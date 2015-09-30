@@ -5,9 +5,9 @@
 namespace OpenApoc
 {
 
-InGameOptions::InGameOptions(Framework &fw) : Stage(fw)
+InGameOptions::InGameOptions(Framework &fw)
+    : Stage(fw), menuform(fw.gamecore->GetForm("FORM_INGAMEOPTIONS"))
 {
-	menuform = fw.gamecore->GetForm("FORM_INGAMEOPTIONS");
 
 	/* Initialse all initial values */
 
