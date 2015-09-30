@@ -67,7 +67,8 @@ void ListBox::EventOccured(Event *e) { Control::EventOccured(e); }
 void ListBox::Update()
 {
 	Control::Update();
-	scroller->Update();
+	if (scroller)
+		scroller->Update();
 }
 
 void ListBox::UnloadResources() {}
@@ -78,6 +79,10 @@ void ListBox::Clear()
 	{
 		delete Controls.back();
 		Controls.pop_back();
+	}
+	if (scroller_is_internal)
+	{
+		ConfigureInternalScrollBar();
 	}
 	ResolveLocation();
 }
