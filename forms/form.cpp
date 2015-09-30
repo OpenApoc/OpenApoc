@@ -49,4 +49,11 @@ void Form::Update()
 
 void Form::UnloadResources() { Control::UnloadResources(); }
 
+Control *Form::CopyTo(Control *CopyParent)
+{
+	Form *copy = new Form(fw, nullptr);
+	CopyControlData((Control *)copy);
+	return (Control *)copy;
+}
+
 }; // namespace OpenApoc

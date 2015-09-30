@@ -30,6 +30,8 @@ class HScrollBar : public Control
 	virtual void Update() override;
 	virtual void UnloadResources() override;
 	virtual void SetValue(int newValue);
+
+	virtual Control *CopyTo(Control *CopyParent) override;
 };
 
 }; // namespace OpenApoc

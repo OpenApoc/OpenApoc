@@ -113,4 +113,21 @@ Control *ListBox::RemoveItem(int Index)
 
 Control *ListBox::operator[](int Index) { return Controls.at(Index); }
 
+Control *ListBox::CopyTo(Control *CopyParent)
+{
+	ListBox *copy;
+	if (scroller_is_internal)
+	{
+		copy = new ListBox(fw, CopyParent);
+	}
+	else
+	{
+		// TODO: Urm, find some way to wire this up to an external scrollbar
+		copy = new ListBox(fw, CopyParent);
+	}
+	copy->ItemHeight = this->ItemHeight;
+	CopyControlData((Control *)copy);
+	return (Control *)copy;
+}
+
 }; // namespace OpenApoc

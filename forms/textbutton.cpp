@@ -152,4 +152,14 @@ std::shared_ptr<BitmapFont> TextButton::GetFont() { return font; }
 
 void TextButton::SetFont(std::shared_ptr<BitmapFont> NewFont) { font = NewFont; }
 
+Control *TextButton::CopyTo(Control *CopyParent)
+{
+	TextButton *copy = new TextButton(fw, CopyParent, this->text, this->font);
+	copy->TextHAlign = this->TextHAlign;
+	copy->TextVAlign = this->TextVAlign;
+	copy->RenderStyle = this->RenderStyle;
+	CopyControlData((Control *)copy);
+	return (Control *)copy;
+}
+
 }; // namespace OpenApoc

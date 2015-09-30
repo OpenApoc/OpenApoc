@@ -37,6 +37,8 @@ class ListBox : public Control
 	Control *RemoveItem(Control *Item);
 	Control *RemoveItem(int Index);
 	Control *operator[](int Index);
+
+	virtual Control *CopyTo(Control *CopyParent) override;
 };
 
 }; // namespace OpenApoc

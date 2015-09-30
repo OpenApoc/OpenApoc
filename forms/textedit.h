@@ -46,6 +46,8 @@ class TextEdit : public Control
 
 	std::shared_ptr<BitmapFont> GetFont();
 	void SetFont(std::shared_ptr<BitmapFont> NewFont);
+
+	virtual Control *CopyTo(Control *CopyParent) override;
 };
 
 }; // namespace OpenApoc

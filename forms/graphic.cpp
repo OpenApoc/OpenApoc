@@ -53,4 +53,11 @@ std::shared_ptr<Image> Graphic::GetImage() { return image; }
 
 void Graphic::SetImage(std::shared_ptr<Image> Image) { image = Image; }
 
+Control *Graphic::CopyTo(Control *CopyParent)
+{
+	Graphic *copy = new Graphic(fw, CopyParent, image_name);
+	CopyControlData((Control *)copy);
+	return (Control *)copy;
+}
+
 }; // namespace OpenApoc

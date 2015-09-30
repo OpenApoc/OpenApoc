@@ -46,6 +46,8 @@ class Control
 
 	Framework &fw;
 
+	void CopyControlData(Control *CopyOf);
+
   public:
 	UString Name;
 	Vec2<int> Location;
@@ -95,6 +97,8 @@ class Control
 	void SetParent(Control *Parent);
 
 	Vec2<int> GetLocationOnScreen();
+
+	virtual Control *CopyTo(Control *CopyParent);
 };
 
 }; // namespace OpenApoc

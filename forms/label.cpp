@@ -82,4 +82,14 @@ std::shared_ptr<BitmapFont> Label::GetFont() { return font; }
 
 void Label::SetFont(std::shared_ptr<BitmapFont> NewFont) { font = NewFont; }
 
+Control *Label::CopyTo(Control *CopyParent)
+{
+	Label *copy = new Label(fw, CopyParent, this->text, this->font);
+	copy->TextHAlign = this->TextHAlign;
+	copy->TextVAlign = this->TextVAlign;
+	copy->WordWrap = this->WordWrap;
+	CopyControlData((Control *)copy);
+	return (Control *)copy;
+}
+
 }; // namespace OpenApoc

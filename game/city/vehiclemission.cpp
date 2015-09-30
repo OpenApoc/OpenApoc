@@ -173,7 +173,8 @@ class VehicleTakeOffMission : public VehicleMission
 		path.pop_front();
 		dest = Vec3<float>{nextTile->position.x, nextTile->position.y, nextTile->position.z}
 		       // Add {0.5,0.5,0.5} to make it route to the center of the tile
-		       + Vec3<float>{0.5, 0.5, 0.5};
+		       +
+		       Vec3<float>{0.5, 0.5, 0.5};
 		return true;
 	}
 	virtual const UString &getName() override { return name; }
@@ -249,7 +250,8 @@ class VehicleLandMission : public VehicleMission
 		path.pop_front();
 		dest = Vec3<float>{nextTile->position.x, nextTile->position.y, nextTile->position.z}
 		       // Add {0.5,0.5,0.5} to make it route to the center of the tile
-		       + Vec3<float>{0.5, 0.5, 0.5};
+		       +
+		       Vec3<float>{0.5, 0.5, 0.5};
 		return true;
 	}
 	virtual const UString &getName() override { return name; }
@@ -297,7 +299,8 @@ class VehicleGotoLocationMission : public VehicleMission
 		path.pop_front();
 		dest = Vec3<float>{nextTile->position.x, nextTile->position.y, nextTile->position.z}
 		       // Add {0.5,0.5,0.5} to make it route to the center of the tile
-		       + Vec3<float>{0.5, 0.5, 0.5};
+		       +
+		       Vec3<float>{0.5, 0.5, 0.5};
 		return true;
 	}
 	virtual const UString &getName() override { return name; }

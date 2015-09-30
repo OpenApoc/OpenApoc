@@ -153,4 +153,12 @@ void GraphicButton::SetHoverImage(std::shared_ptr<Image> Image)
 	imagehover = Image;
 }
 
+Control *GraphicButton::CopyTo(Control *CopyParent)
+{
+	GraphicButton *copy = new GraphicButton(fw, CopyParent, this->image_name,
+	                                        this->imagedepressed_name, this->imagehover_name);
+	CopyControlData((Control *)copy);
+	return (Control *)copy;
+}
+
 }; // namespace OpenApoc

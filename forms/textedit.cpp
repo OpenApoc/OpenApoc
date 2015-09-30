@@ -240,4 +240,13 @@ std::shared_ptr<BitmapFont> TextEdit::GetFont() { return font; }
 
 void TextEdit::SetFont(std::shared_ptr<BitmapFont> NewFont) { font = NewFont; }
 
+Control *TextEdit::CopyTo(Control *CopyParent)
+{
+	TextEdit *copy = new TextEdit(fw, CopyParent, this->text, this->font);
+	copy->TextHAlign = this->TextHAlign;
+	copy->TextVAlign = this->TextVAlign;
+	CopyControlData((Control *)copy);
+	return (Control *)copy;
+}
+
 }; // namespace OpenApoc

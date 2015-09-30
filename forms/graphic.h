@@ -27,6 +27,8 @@ class Graphic : public Control
 
 	std::shared_ptr<Image> GetImage();
 	void SetImage(std::shared_ptr<Image> Image);
+
+	virtual Control *CopyTo(Control *CopyParent) override;
 };
 
 }; // namespace OpenApoc

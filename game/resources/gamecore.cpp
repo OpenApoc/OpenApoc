@@ -180,7 +180,7 @@ UString GameCore::GetString(UString ID)
 	return s;
 }
 
-Form *GameCore::GetForm(UString ID) { return forms[ID]; }
+Form *GameCore::GetForm(UString ID) { return (Form *)forms[ID]->CopyTo(nullptr); }
 
 std::shared_ptr<Image> GameCore::GetImage(UString ImageData)
 {

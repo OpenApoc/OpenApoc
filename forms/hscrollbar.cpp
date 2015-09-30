@@ -116,4 +116,16 @@ void HScrollBar::Update()
 
 void HScrollBar::UnloadResources() { Control::UnloadResources(); }
 
+Control *HScrollBar::CopyTo(Control *CopyParent)
+{
+	HScrollBar *copy = new HScrollBar(fw, CopyParent);
+	copy->Value = this->Value;
+	copy->Maximum = this->Maximum;
+	copy->Minimum = this->Minimum;
+	copy->GripperColour = this->GripperColour;
+	copy->LargeChange = this->LargeChange;
+	CopyControlData((Control *)copy);
+	return (Control *)copy;
+}
+
 }; // namespace OpenApoc

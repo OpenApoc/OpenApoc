@@ -116,4 +116,16 @@ void VScrollBar::Update()
 
 void VScrollBar::UnloadResources() { Control::UnloadResources(); }
 
+Control *VScrollBar::CopyTo(Control *CopyParent)
+{
+	VScrollBar *copy = new VScrollBar(fw, CopyParent);
+	copy->Value = this->Value;
+	copy->Maximum = this->Maximum;
+	copy->Minimum = this->Minimum;
+	copy->GripperColour = this->GripperColour;
+	copy->LargeChange = this->LargeChange;
+	CopyControlData((Control *)copy);
+	return (Control *)copy;
+}
+
 }; // namespace OpenApoc

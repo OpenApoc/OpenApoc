@@ -54,7 +54,7 @@ void BaseScreen::Update(StageCmd *const cmd)
 void BaseScreen::Render()
 {
 	fw.Stage_GetPrevious(this->shared_from_this())->Render();
-	fw.renderer->drawFilledRect({ 0, 0 }, fw.Display_GetSize(), Colour{ 0, 0, 0, 128 });
+	fw.renderer->drawFilledRect({0, 0}, fw.Display_GetSize(), Colour{0, 0, 0, 128});
 	basescreenform->Render();
 	fw.gamecore->MouseCursor->Render();
 }

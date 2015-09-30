@@ -41,6 +41,8 @@ class GraphicButton : public Control
 	void SetDepressedImage(std::shared_ptr<Image> Image);
 	std::shared_ptr<Image> GetHoverImage();
 	void SetHoverImage(std::shared_ptr<Image> Image);
+
+	virtual Control *CopyTo(Control *CopyParent) override;
 };
 
 }; // namespace OpenApoc

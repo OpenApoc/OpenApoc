@@ -101,8 +101,9 @@ void Control::EventOccured(Event *e)
 	if (e->Type == EVENT_MOUSE_MOVE || e->Type == EVENT_MOUSE_DOWN || e->Type == EVENT_MOUSE_UP)
 	{
 		bool newInside = (e->Data.Mouse.X >= resolvedLocation.x &&
-						  e->Data.Mouse.X < resolvedLocation.x + Size.x &&
-						  e->Data.Mouse.Y >= resolvedLocation.y && e->Data.Mouse.Y < resolvedLocation.y + Size.y);
+		                  e->Data.Mouse.X < resolvedLocation.x + Size.x &&
+		                  e->Data.Mouse.Y >= resolvedLocation.y &&
+		                  e->Data.Mouse.Y < resolvedLocation.y + Size.y);
 
 		if (e->Type == EVENT_MOUSE_MOVE)
 		{
@@ -750,6 +751,30 @@ Vec2<int> Control::GetLocationOnScreen()
 {
 	Vec2<int> r(resolvedLocation.x, resolvedLocation.y);
 	return r;
+}
+
+Control *Control::CopyTo(Control *CopyParent)
+{
+	Control *copy = new Control(fw, CopyParent, takesFocus);
+	CopyControlData(copy);
+	return copy;
+}
+
+void Control::CopyControlData(Control *CopyOf)
+{
+	CopyOf->Name = this->Name;
+	CopyOf->Location = this->Location;
+	CopyOf->Size = this->Size;
+	CopyOf->BackgroundColour = this->BackgroundColour;
+	CopyOf->takesFocus = this->takesFocus;
+	CopyOf->showBounds = this->showBounds;
+	CopyOf->Visible = this->Visible;
+
+	for (auto c = Controls.begin(); c != Controls.end(); c++)
+	{
+		Control *ctrl = *c;
+		ctrl->CopyTo(CopyOf);
+	}
 }
 
 }; // namespace OpenApoc

@@ -441,8 +441,7 @@ class Quad
 	{
 		texcoords = {{
 		    Vec2<float>{texCoords.p0}, Vec2<float>{texCoords.p1.x, texCoords.p0.y},
-		    Vec2<float>{texCoords.p0.x, texCoords.p1.y}, Vec2<float>{texCoords.p1},
-		}};
+		    Vec2<float>{texCoords.p0.x, texCoords.p1.y}, Vec2<float>{texCoords.p1}, }};
 
 		if (rotationAngleRadians != 0.0f)
 		{
@@ -450,8 +449,7 @@ class Quad
 			Vec2<float> size = position.p1 - position.p0;
 			vertices = {{
 			    Vec2<float>{0.0f, 0.0f}, Vec2<float>{size.x, 0.0f}, Vec2<float>{0.0f, size.y},
-			    Vec2<float>{size},
-			}};
+			    Vec2<float>{size}, }};
 			for (auto &p : vertices)
 			{
 				p -= rotationCenter;
@@ -466,8 +464,7 @@ class Quad
 		{
 			vertices = {{
 			    Vec2<float>{position.p0}, Vec2<float>{position.p1.x, position.p0.y},
-			    Vec2<float>{position.p0.x, position.p1.y}, Vec2<float>{position.p1},
-			}};
+			    Vec2<float>{position.p0.x, position.p1.y}, Vec2<float>{position.p1}, }};
 		}
 	}
 	void draw(GLuint vertexAttribPos, GLuint texcoordAttribPos)
