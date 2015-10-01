@@ -29,6 +29,7 @@ GameCore::~GameCore()
 	for (auto &form : forms)
 		delete form.second;
 	delete MouseCursor;
+	Ufopaedia::UfopaediaDB.clear();
 }
 
 void GameCore::ParseXMLDoc(UString XMLFilename)
