@@ -6,6 +6,8 @@
 namespace OpenApoc
 {
 
+class Framework;
+
 class HScrollBar : public Control
 {
   private:
@@ -22,8 +24,10 @@ class HScrollBar : public Control
 	int Maximum;
 	int Value;
 	int LargeChange;
+	Control *AssociatedControl;
 
 	HScrollBar(Framework &fw, Control *Owner);
+	HScrollBar(Framework &fw, Control *Owner, Control *AssociateWith);
 	virtual ~HScrollBar();
 
 	virtual void EventOccured(Event *e) override;

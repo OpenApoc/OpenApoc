@@ -56,6 +56,9 @@ class Control
 	bool takesFocus;
 	bool showBounds;
 	bool Visible;
+	
+	bool canCopy;
+	Control *lastCopiedTo;
 
 	std::vector<Control *> Controls;
 

@@ -9,9 +9,17 @@ namespace OpenApoc
 
 HScrollBar::HScrollBar(Framework &fw, Control *Owner)
     : Control(fw, Owner), capture(false), GripperColour(220, 192, 192), Minimum(0), Maximum(10),
+      Value(0), LargeChange(2), AssociatedControl(nullptr)
+{
+	// LoadResources();
+}
+
+HScrollBar::HScrollBar(Framework &fw, Control *Owner, Control *AssociateWith)
+    : Control(fw, Owner), capture(false), GripperColour(220, 192, 192), Minimum(0), Maximum(10),
       Value(0), LargeChange(2)
 {
 	// LoadResources();
+	AssociatedControl = AssociateWith;
 }
 
 HScrollBar::~HScrollBar() {}

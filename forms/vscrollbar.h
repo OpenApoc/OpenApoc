@@ -24,8 +24,10 @@ class VScrollBar : public Control
 	int Maximum;
 	int Value;
 	int LargeChange;
+	Control *AssociatedControl;
 
 	VScrollBar(Framework &fw, Control *Owner);
+	VScrollBar(Framework &fw, Control *Owner, Control *AssociateWith);
 	virtual ~VScrollBar();
 
 	virtual void EventOccured(Event *e) override;

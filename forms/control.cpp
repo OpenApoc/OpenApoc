@@ -10,7 +10,8 @@ namespace OpenApoc
 Control::Control(Framework &fw, Control *Owner, bool takesFocus)
     : owningControl(Owner), focusedChild(nullptr), mouseInside(false), mouseDepressed(false),
       resolvedLocation(0, 0), fw(fw), Name("Control"), Location(0, 0), Size(0, 0),
-      BackgroundColour(128, 80, 80), takesFocus(takesFocus), showBounds(false), Visible(true)
+      BackgroundColour(128, 80, 80), takesFocus(takesFocus), showBounds(false), Visible(true), canCopy(true),
+      lastCopiedTo(nullptr)
 {
 	if (Owner != nullptr)
 	{
@@ -762,6 +763,8 @@ Control *Control::CopyTo(Control *CopyParent)
 
 void Control::CopyControlData(Control *CopyOf)
 {
+	lastCopiedTo = CopyOf;
+
 	CopyOf->Name = this->Name;
 	CopyOf->Location = this->Location;
 	CopyOf->Size = this->Size;
@@ -773,7 +776,10 @@ void Control::CopyControlData(Control *CopyOf)
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
 		Control *ctrl = *c;
-		ctrl->CopyTo(CopyOf);
+		if( ctrl->canCopy )
+		{
+			ctrl->CopyTo(CopyOf);
+		}
 	}
 }
 

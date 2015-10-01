@@ -20,6 +20,7 @@ ListBox::ListBox(Framework &fw, Control *Owner, VScrollBar *ExternalScrollBar)
 	else
 	{
 		scroller = ExternalScrollBar;
+		scroller->AssociatedControl = this;
 		scroller_is_internal = false;
 	}
 }
@@ -33,6 +34,7 @@ void ListBox::ConfigureInternalScrollBar()
 	scroller->Size.y = 16;
 	scroller->Location.x = this->Size.x - 16;
 	scroller->Location.y = 0;
+	scroller->canCopy = false;
 	scroller_is_internal = true;
 }
 
@@ -68,7 +70,9 @@ void ListBox::Update()
 {
 	Control::Update();
 	if (scroller)
+	{
 		scroller->Update();
+	}
 }
 
 void ListBox::UnloadResources() {}
@@ -127,8 +131,7 @@ Control *ListBox::CopyTo(Control *CopyParent)
 	}
 	else
 	{
-		// TODO: Urm, find some way to wire this up to an external scrollbar
-		copy = new ListBox(fw, CopyParent);
+		copy = new ListBox(fw, CopyParent, (VScrollBar *)scroller->lastCopiedTo);
 	}
 	copy->ItemHeight = this->ItemHeight;
 	CopyControlData((Control *)copy);
