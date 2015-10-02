@@ -259,7 +259,7 @@
     <ClCompile Include="framework\logger.cpp" />
     <ClCompile Include="framework\palette.cpp" />
     <ClCompile Include="framework\renderer.cpp" />
-    <ClCompile Include="framework\render\gl30\gl_3_0.cpp" />
+    <ClCompile Include="framework\render\gl20\ogl_2_0_renderer.cpp" />
     <ClCompile Include="framework\render\gl30\ogl_3_0_renderer.cpp" />
     <ClCompile Include="framework\sound.cpp" />
     <ClCompile Include="framework\sound\allegro_backend.cpp" />
@@ -342,6 +342,7 @@
     <ClInclude Include="framework\palette.h" />
     <ClInclude Include="framework\renderer.h" />
     <ClInclude Include="framework\renderer_interface.h" />
+    <ClInclude Include="framework\render\gl20\gl_2_0.hpp" />
     <ClInclude Include="framework\render\gl30\gl_3_0.hpp" />
     <ClInclude Include="framework\sampleloader_interface.h" />
     <ClInclude Include="framework\sound.h" />
@@ -429,6 +430,10 @@
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="apocicon.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="framework\render\gl20\gl_2_0.inl" />
+    <None Include="framework\render\gl30\gl_3_0.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

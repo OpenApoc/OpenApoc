@@ -7,6 +7,8 @@
 
 namespace
 {
+/* Workaround MSVC not liking int64_t being defined here and in allegro */
+#define GLEXT_64_TYPES_DEFINED
 #include "framework/render/gl20/gl_2_0.hpp"
 #include "framework/render/gl20/gl_2_0.inl"
 } // anonymous namespace

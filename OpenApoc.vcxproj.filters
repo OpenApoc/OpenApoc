@@ -216,9 +216,6 @@
     <ClCompile Include="framework\render\gl30\ogl_3_0_renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="framework\render\gl30\gl_3_0.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="game\rules\weapondef_rules.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -244,6 +241,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game\city\buildingscreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\render\threadedrenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\render\gl20\ogl_2_0_renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -515,6 +518,12 @@
     <ClInclude Include="game\city\buildingscreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="framework\render\threadedrenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\render\gl20\gl_2_0.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="apocicon.rc">
@@ -525,5 +534,13 @@
     <Image Include="apocicon.ico">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="framework\render\gl20\gl_2_0.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="framework\render\gl30\gl_3_0.inl">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
