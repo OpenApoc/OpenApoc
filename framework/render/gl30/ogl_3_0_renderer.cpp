@@ -141,7 +141,7 @@ const char *RGBProgram_fragmentSource = {"#version 130\n"
                                          "uniform sampler2D tex;\n"
                                          "out vec4 out_colour;\n"
                                          "void main() {\n"
-                                         " out_colour = texture2D(tex, texcoord);\n"
+                                         " out_colour = texture(tex, texcoord);\n"
                                          "}\n"};
 class RGBProgram : public SpriteProgram
 {
@@ -209,11 +209,13 @@ const char *PaletteProgram_vertexSource = {
 const char *PaletteProgram_fragmentSource = {
     "#version 130\n"
     "in vec2 texcoord;\n"
-    "uniform sampler2D tex;\n"
+    "uniform isampler2D tex;\n"
     "uniform sampler2D pal;\n"
     "out vec4 out_colour;\n"
     "void main() {\n"
-    " out_colour = texture2D(pal, vec2(texture2D(tex,texcoord).r,0));\n"
+    " int idx = texelFetch(tex, ivec2(texcoord.x, texcoord.y),0).r;\n"
+	" if (idx == 0) discard;\n"
+    " out_colour = texelFetch(pal, ivec2(idx,0),0);\n"
     "}\n"};
 class PaletteProgram : public SpriteProgram
 {
@@ -288,6 +290,7 @@ const char *PaletteSetProgram_fragmentSource = {
     "out vec4 out_colour;\n"
     "void main() {\n"
     " int idx = texelFetch(tex, ivec3(texcoord.x, texcoord.y, sprite), 0).r;\n"
+	" if (idx == 0) discard;\n"
     " out_colour = texelFetch(pal, ivec2(idx,0), 0);\n"
     "}\n"};
 class PaletteSetProgram : public Program
@@ -436,12 +439,13 @@ class Quad
   public:
 	std::array<Vec2<float>, 4> vertices;
 	std::array<Vec2<float>, 4> texcoords;
-	Quad(const Rect<float> &position, const Vec2<float> &rotationCenter = {0.0f, 0.0f},
-	     float rotationAngleRadians = 0.0f, const Rect<float> &texCoords = {0.0f, 0.0f, 1.0f, 1.0f})
+	Quad(const Rect<float> &position, const Rect<float> texCoords,
+	     const Vec2<float> &rotationCenter = {0.0f, 0.0f}, float rotationAngleRadians = 0.0f)
 	{
 		texcoords = {{
 		    Vec2<float>{texCoords.p0}, Vec2<float>{texCoords.p1.x, texCoords.p0.y},
-		    Vec2<float>{texCoords.p0.x, texCoords.p1.y}, Vec2<float>{texCoords.p1}, }};
+		    Vec2<float>{texCoords.p0.x, texCoords.p1.y}, Vec2<float>{texCoords.p1},
+		}};
 
 		if (rotationAngleRadians != 0.0f)
 		{
@@ -449,7 +453,8 @@ class Quad
 			Vec2<float> size = position.p1 - position.p0;
 			vertices = {{
 			    Vec2<float>{0.0f, 0.0f}, Vec2<float>{size.x, 0.0f}, Vec2<float>{0.0f, size.y},
-			    Vec2<float>{size}, }};
+			    Vec2<float>{size},
+			}};
 			for (auto &p : vertices)
 			{
 				p -= rotationCenter;
@@ -464,7 +469,8 @@ class Quad
 		{
 			vertices = {{
 			    Vec2<float>{position.p0}, Vec2<float>{position.p1.x, position.p0.y},
-			    Vec2<float>{position.p0.x, position.p1.y}, Vec2<float>{position.p1}, }};
+			    Vec2<float>{position.p0.x, position.p1.y}, Vec2<float>{position.p1},
+			}};
 		}
 	}
 	void draw(GLuint vertexAttribPos, GLuint texcoordAttribPos)
@@ -704,8 +710,8 @@ class GLPaletteImage : public RendererImageData
 		UnpackAlignment align(1);
 		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::NEAREST);
 		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::NEAREST);
-		gl::TexImage2D(gl::TEXTURE_2D, 0, gl::RED, parent->size.x, parent->size.y, 0, gl::RED,
-		               gl::UNSIGNED_BYTE, l.getData());
+		gl::TexImage2D(gl::TEXTURE_2D, 0, gl::R8UI, parent->size.x, parent->size.y, 0,
+		               gl::RED_INTEGER, gl::UNSIGNED_BYTE, l.getData());
 	}
 	virtual ~GLPaletteImage() { gl::DeleteTextures(1, &this->texID); }
 };
@@ -943,7 +949,7 @@ class OGL30Renderer : public Renderer
 		BindTexture t(img.texID);
 		TexParam<gl::TEXTURE_MAG_FILTER> mag(img.texID, filter);
 		TexParam<gl::TEXTURE_MIN_FILTER> min(img.texID, filter);
-		Quad q(pos, rotationCenter, rotationAngleRadians);
+		Quad q(pos, Rect<float>{{0, 0}, {1, 1}}, rotationCenter, rotationAngleRadians);
 		q.draw(rgbProgram->posLoc, rgbProgram->texcoordLoc);
 	}
 
@@ -959,7 +965,7 @@ class OGL30Renderer : public Renderer
 
 		BindTexture p(
 		    static_cast<GLPalette *>(this->currentPalette->rendererPrivateData.get())->texID, 1);
-		Quad q(pos);
+		Quad q(pos, Rect<float>{{0, 0}, {img.size}});
 		q.draw(paletteProgram->posLoc, paletteProgram->texcoordLoc);
 	}
 
@@ -988,7 +994,7 @@ class OGL30Renderer : public Renderer
 		BindTexture t(fbo.tex);
 		TexParam<gl::TEXTURE_MAG_FILTER> mag(fbo.tex, filter);
 		TexParam<gl::TEXTURE_MIN_FILTER> min(fbo.tex, filter);
-		Quad q(pos);
+		Quad q(pos, Rect<float>{{0, 0}, {1, 1}});
 		q.draw(rgbProgram->posLoc, rgbProgram->texcoordLoc);
 	}
 
@@ -1000,7 +1006,7 @@ class OGL30Renderer : public Renderer
 		if (currentBoundFBO == 0)
 			flipY = true;
 		colourProgram->setUniforms(this->currentSurface->size, flipY, c);
-		Quad q(pos);
+		Quad q(pos, Rect<float>{{0, 0}, {0, 0}});
 		q.draw(colourProgram->posLoc);
 	}
 
