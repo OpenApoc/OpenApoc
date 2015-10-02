@@ -29,7 +29,7 @@ namespace
 #else
 #warning RENDERERS not set - using default list
 #endif
-#define RENDERERS "GL_3_0:GLES_2_0"
+#define RENDERERS "GL_3_0:GL_2_0"
 #endif
 
 static std::map<UString, UString> defaultConfig = {

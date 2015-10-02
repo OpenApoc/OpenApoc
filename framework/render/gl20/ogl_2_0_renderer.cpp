@@ -7,8 +7,8 @@
 
 namespace
 {
-#include "framework/render/gl30/gl_3_0.hpp"
-#include "framework/render/gl30/gl_3_0.inl"
+#include "framework/render/gl20/gl_2_0.hpp"
+#include "framework/render/gl20/gl_2_0.inl"
 } // anonymous namespace
 
 namespace
@@ -126,10 +126,10 @@ class SpriteProgram : public Program
 	GLint flipYLoc;
 };
 const char *RGBProgram_vertexSource = {
-    "#version 130\n"
-    "in vec2 position;\n"
-    "in vec2 texcoord_in;\n"
-    "out vec2 texcoord;\n"
+    "#version 110\n"
+    "attribute vec2 position;\n"
+    "attribute vec2 texcoord_in;\n"
+    "varying vec2 texcoord;\n"
     "uniform vec2 screenSize;\n"
     "uniform bool flipY;\n"
     "void main() {\n"
@@ -137,15 +137,14 @@ const char *RGBProgram_vertexSource = {
     "  vec2 tmpPos = position;\n"
     "  tmpPos /= screenSize;\n"
     "  tmpPos -= vec2(0.5,0.5);\n"
-    "  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
-    "  else gl_Position = vec4((tmpPos.x*2), (tmpPos.y*2),0,1);\n"
+    "  if (flipY) gl_Position = vec4((tmpPos.x*2.0), -(tmpPos.y*2.0),0.0,1.0);\n"
+    "  else gl_Position = vec4((tmpPos.x*2.0), (tmpPos.y*2.0),0.0,1.0);\n"
     "}\n"};
-const char *RGBProgram_fragmentSource = {"#version 130\n"
-                                         "in vec2 texcoord;\n"
+const char *RGBProgram_fragmentSource = {"#version 110\n"
+                                         "varying vec2 texcoord;\n"
                                          "uniform sampler2D tex;\n"
-                                         "out vec4 out_colour;\n"
                                          "void main() {\n"
-                                         " out_colour = texture(tex, texcoord);\n"
+                                         " gl_FragColor = texture2D(tex, texcoord);\n"
                                          "}\n"};
 class RGBProgram : public SpriteProgram
 {
@@ -195,11 +194,10 @@ class RGBProgram : public SpriteProgram
 	}
 };
 const char *PaletteProgram_vertexSource = {
-    "#version 130\n"
-    "in vec2 position;\n"
-    "in vec2 texcoord_in;\n"
-    "out vec2 texcoord;\n"
-    "flat out int sprite;\n"
+    "#version 110\n"
+    "attribute vec2 position;\n"
+    "attribute vec2 texcoord_in;\n"
+    "varying vec2 texcoord;\n"
     "uniform vec2 screenSize;\n"
     "uniform bool flipY;\n"
     "void main() {\n"
@@ -207,20 +205,17 @@ const char *PaletteProgram_vertexSource = {
     "  vec2 tmpPos = position;\n"
     "  tmpPos /= screenSize;\n"
     "  tmpPos -= vec2(0.5,0.5);\n"
-    "  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
-    "  else gl_Position = vec4((tmpPos.x*2), (tmpPos.y*2),0,1);\n"
+    "  if (flipY) gl_Position = vec4((tmpPos.x*2.0), -(tmpPos.y*2.0),0.0,1.0);\n"
+    "  else gl_Position = vec4((tmpPos.x*2.0), (tmpPos.y*2.0),0.0,1.0);\n"
     "}\n"};
-const char *PaletteProgram_fragmentSource = {
-    "#version 130\n"
-    "in vec2 texcoord;\n"
-    "uniform isampler2D tex;\n"
-    "uniform sampler2D pal;\n"
-    "out vec4 out_colour;\n"
-    "void main() {\n"
-    " int idx = texelFetch(tex, ivec2(texcoord.x, texcoord.y),0).r;\n"
-    " if (idx == 0) discard;\n"
-    " out_colour = texelFetch(pal, ivec2(idx,0),0);\n"
-    "}\n"};
+const char *PaletteProgram_fragmentSource = {"#version 110\n"
+                                             "varying vec2 texcoord;\n"
+                                             "uniform sampler2D tex;\n"
+                                             "uniform sampler2D pal;\n"
+                                             "void main() {\n"
+                                             " float idx = texture2D(tex, texcoord,0.0).r;\n"
+                                             " gl_FragColor = texture2D(pal, vec2(idx,0.0),0.0);\n"
+                                             "}\n"};
 class PaletteProgram : public SpriteProgram
 {
   private:
@@ -267,135 +262,22 @@ class PaletteProgram : public SpriteProgram
 	}
 };
 
-const char *PaletteSetProgram_vertexSource = {
-    "#version 130\n"
-    "in vec2 position;\n"
-    "in vec2 texcoord_in;\n"
-    "in int sprite_in;\n"
-    "out vec2 texcoord;\n"
-    "flat out int sprite;\n"
-    "uniform vec2 screenSize;\n"
-    "uniform bool flipY;\n"
-    "void main() {\n"
-    "  texcoord = texcoord_in;\n"
-    "  sprite = sprite_in;\n"
-    "  vec2 tmpPos = position;\n"
-    "  tmpPos /= screenSize;\n"
-    "  tmpPos -= vec2(0.5,0.5);\n"
-    "  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
-    "  else gl_Position = vec4((tmpPos.x*2), (tmpPos.y*2),0,1);\n"
-    "}\n"};
-const char *PaletteSetProgram_fragmentSource = {
-    "#version 130\n"
-    "in vec2 texcoord;\n"
-    "flat in int sprite;\n"
-    "uniform isampler2DArray tex;\n"
-    "uniform sampler2D pal;\n"
-    "out vec4 out_colour;\n"
-    "void main() {\n"
-    " int idx = texelFetch(tex, ivec3(texcoord.x, texcoord.y, sprite), 0).r;\n"
-    " if (idx == 0) discard;\n"
-    " out_colour = texelFetch(pal, ivec2(idx,0), 0);\n"
-    "}\n"};
-class PaletteSetProgram : public Program
-{
-  private:
-	Vec2<int> currentScreenSize;
-	bool currentFlipY;
-	GLint currentTexUnit;
-	GLint currentPalUnit;
-
-  public:
-	GLuint posLoc;
-	GLuint texcoordLoc;
-	GLuint spriteLoc;
-	GLuint screenSizeLoc;
-	GLuint texLoc;
-	GLuint palLoc;
-	GLuint flipYLoc;
-	PaletteSetProgram()
-	    : Program(PaletteSetProgram_vertexSource, PaletteSetProgram_fragmentSource),
-	      currentScreenSize(0, 0), currentFlipY(false), currentTexUnit(0), currentPalUnit(0)
-	{
-		this->posLoc = gl::GetAttribLocation(this->prog, "position");
-		this->texcoordLoc = gl::GetAttribLocation(this->prog, "texcoord_in");
-		this->spriteLoc = gl::GetAttribLocation(this->prog, "sprite_in");
-
-		this->screenSizeLoc = gl::GetUniformLocation(this->prog, "screenSize");
-		this->texLoc = gl::GetUniformLocation(this->prog, "tex");
-		this->palLoc = gl::GetUniformLocation(this->prog, "pal");
-		this->flipYLoc = gl::GetUniformLocation(this->prog, "flipY");
-	}
-	void setUniforms(Vec2<int> screenSize, bool flipY, GLint texUnit = 0, GLint palUnit = 1)
-	{
-		if (screenSize != currentScreenSize)
-		{
-			currentScreenSize = screenSize;
-			this->Uniform(this->screenSizeLoc, screenSize);
-		}
-		if (texUnit != currentTexUnit)
-		{
-			currentTexUnit = texUnit;
-			this->Uniform(this->texLoc, texUnit);
-		}
-		if (palUnit != currentPalUnit)
-		{
-			currentPalUnit = palUnit;
-			this->Uniform(this->palLoc, palUnit);
-		}
-		if (currentFlipY != flipY)
-		{
-			currentFlipY = flipY;
-			this->Uniform(this->flipYLoc, flipY);
-		}
-	}
-	class VertexDef
-	{
-	  public:
-		VertexDef(Vec2<float> pos, Vec2<float> texcoords, int sprite)
-		    : pos(pos), texcoords(texcoords), sprite(sprite)
-		{
-		}
-		VertexDef() {}
-
-		Vec2<float> pos;
-		Vec2<float> texcoords;
-		int sprite;
-	};
-	static_assert(sizeof(VertexDef) == 20, "VertexDef should be tightly packed");
-	class SpriteDef
-	{
-	  public:
-		SpriteDef(Vec2<float> offset, Vec2<float> size, int sprite)
-		{
-			v[0] = {offset, Vec2<float>{0, 0}, sprite};
-			v[1] = {offset + size * Vec2<float>{0, 1}, Vec2<float>{0, 1}, sprite};
-			v[2] = {offset + size * Vec2<float>{1, 0}, Vec2<float>{1, 0}, sprite};
-			v[3] = {offset + size * Vec2<float>{1, 0}, Vec2<float>{1, 0}, sprite};
-		}
-
-		VertexDef v[4];
-	};
-	static_assert(sizeof(SpriteDef) == sizeof(VertexDef) * 4, "SpriteDef should be tightly packed");
-};
-
 const char *SolidColourProgram_vertexSource = {
-    "#version 130\n"
-    "in vec2 position;\n"
+    "#version 110\n"
+    "attribute vec2 position;\n"
     "uniform vec2 screenSize;\n"
     "uniform bool flipY;\n"
     "void main() {\n"
     "  vec2 tmpPos = position;\n"
     "  tmpPos /= screenSize;\n"
     "  tmpPos -= vec2(0.5,0.5);\n"
-    "  if (flipY) gl_Position = vec4((tmpPos.x*2), -(tmpPos.y*2),0,1);\n"
-    "  else gl_Position = vec4((tmpPos.x*2), (tmpPos.y*2),0,1);\n"
+    "  if (flipY) gl_Position = vec4((tmpPos.x*2.0), -(tmpPos.y*2.0),0.0,1.0);\n"
+    "  else gl_Position = vec4((tmpPos.x*2.0), (tmpPos.y*2.0),0.0,1.0);\n"
     "}\n"};
-const char *SolidColourProgram_fragmentSource = {"#version 130\n"
+const char *SolidColourProgram_fragmentSource = {"#version 110\n"
                                                  "uniform vec4 colour;\n"
-                                                 "out vec4 out_colour;\n"
                                                  "void main() {\n"
-                                                 " out_colour = colour;\n"
+                                                 " gl_FragColor = colour;\n"
                                                  "}\n"};
 class SolidColourProgram : public Program
 {
@@ -437,13 +319,12 @@ class SolidColourProgram : public Program
 		}
 	}
 };
-
 class Quad
 {
   public:
 	std::array<Vec2<float>, 4> vertices;
 	std::array<Vec2<float>, 4> texcoords;
-	Quad(const Rect<float> &position, const Rect<float> texCoords,
+	Quad(const Rect<float> &position, const Rect<float> texCoords = {{0, 0}, {1, 1}},
 	     const Vec2<float> &rotationCenter = {0.0f, 0.0f}, float rotationAngleRadians = 0.0f)
 	{
 		texcoords = {{
@@ -563,8 +444,6 @@ class BindTexture
 				return gl::TEXTURE_BINDING_2D;
 			case gl::TEXTURE_3D:
 				return gl::TEXTURE_BINDING_3D;
-			case gl::TEXTURE_2D_ARRAY:
-				return gl::TEXTURE_BINDING_2D_ARRAY;
 			default:
 				LogError("Unknown texture enum %d", static_cast<int>(e));
 				return gl::TEXTURE_BINDING_2D;
@@ -613,12 +492,12 @@ class BindFramebuffer
 	BindFramebuffer(GLuint id)
 	{
 		GLuint prevID;
-		gl::GetIntegerv(gl::DRAW_FRAMEBUFFER_BINDING, reinterpret_cast<GLint *>(&prevID));
+		gl::GetIntegerv(gl::FRAMEBUFFER_BINDING_EXT, reinterpret_cast<GLint *>(&prevID));
 		if (prevID == id)
 		{
 			return;
 		}
-		gl::BindFramebuffer(gl::DRAW_FRAMEBUFFER, id);
+		gl::BindFramebufferEXT(gl::FRAMEBUFFER_EXT, id);
 	}
 };
 
@@ -627,7 +506,6 @@ class FBOData : public RendererImageData
   public:
 	GLuint fbo;
 	GLuint tex;
-	GLuint depthBuffer;
 	Vec2<float> size;
 	// Constructor /only/ to be used for default surface (FBO ID == 0)
 	FBOData(GLuint fbo)
@@ -648,27 +526,19 @@ class FBOData : public RendererImageData
 		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::NEAREST);
 		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::NEAREST);
 
-		gl::GenRenderbuffers(1, &depthBuffer);
-		gl::BindRenderbuffer(gl::RENDERBUFFER, depthBuffer);
-		gl::RenderbufferStorage(gl::RENDERBUFFER, gl::DEPTH_COMPONENT24, size.x, size.y);
-
-		gl::GenFramebuffers(1, &this->fbo);
+		gl::GenFramebuffersEXT(1, &this->fbo);
 		BindFramebuffer f(this->fbo);
 
-		gl::FramebufferTexture2D(gl::DRAW_FRAMEBUFFER, gl::COLOR_ATTACHMENT0, gl::TEXTURE_2D,
-		                         this->tex, 0);
-		gl::FramebufferRenderbuffer(gl::DRAW_FRAMEBUFFER, gl::DEPTH_ATTACHMENT, gl::RENDERBUFFER,
-		                            depthBuffer);
-		assert(gl::CheckFramebufferStatus(gl::DRAW_FRAMEBUFFER) == gl::FRAMEBUFFER_COMPLETE);
+		gl::FramebufferTexture2DEXT(gl::FRAMEBUFFER_EXT, gl::COLOR_ATTACHMENT0_EXT, gl::TEXTURE_2D,
+		                            this->tex, 0);
+		assert(gl::CheckFramebufferStatusEXT(gl::FRAMEBUFFER_EXT) == gl::FRAMEBUFFER_COMPLETE_EXT);
 	}
 	virtual ~FBOData()
 	{
 		if (tex)
 			gl::DeleteTextures(1, &tex);
-		if (depthBuffer)
-			gl::DeleteRenderbuffers(1, &depthBuffer);
 		if (fbo)
-			gl::DeleteFramebuffers(1, &fbo);
+			gl::DeleteFramebuffersEXT(1, &fbo);
 	}
 };
 
@@ -724,66 +594,18 @@ class GLPaletteImage : public RendererImageData
 		UnpackAlignment align(1);
 		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::NEAREST);
 		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::NEAREST);
-		gl::TexImage2D(gl::TEXTURE_2D, 0, gl::R8UI, parent->size.x, parent->size.y, 0,
-		               gl::RED_INTEGER, gl::UNSIGNED_BYTE, l.getData());
+		gl::TexImage2D(gl::TEXTURE_2D, 0, 1, parent->size.x, parent->size.y, 0, gl::RED,
+		               gl::UNSIGNED_BYTE, l.getData());
 	}
 	virtual ~GLPaletteImage() { gl::DeleteTextures(1, &this->texID); }
 };
 
-class GLPaletteSpritesheet : public RendererImageData
-{
-  public:
-	std::weak_ptr<ImageSet> parent;
-	Vec2<int> maxSize;
-	unsigned numSprites;
-	GLuint texID;
-	GLPaletteSpritesheet(std::shared_ptr<ImageSet> parent)
-	    : parent(parent), maxSize(parent->maxSize), numSprites(parent->images.size())
-	{
-		gl::GenTextures(1, &this->texID);
-		BindTexture b(this->texID, 0, gl::TEXTURE_2D_ARRAY);
-		UnpackAlignment align(1);
-		gl::TexParameteri(gl::TEXTURE_2D_ARRAY, gl::TEXTURE_MIN_FILTER, gl::NEAREST);
-		gl::TexParameteri(gl::TEXTURE_2D_ARRAY, gl::TEXTURE_MAG_FILTER, gl::NEAREST);
-		gl::TexImage3D(gl::TEXTURE_2D_ARRAY, 0, gl::R8UI, maxSize.x, maxSize.y, numSprites, 0,
-		               gl::RED_INTEGER, gl::UNSIGNED_BYTE, NULL);
-
-		std::unique_ptr<char[]> zeros(new char[maxSize.x * maxSize.y]);
-		memset(zeros.get(), 1, maxSize.x * maxSize.y);
-
-		LogInfo("Uploading %d sprites in {%d,%d} spritesheet", numSprites, maxSize.x, maxSize.y);
-
-		for (unsigned int i = 0; i < numSprites; i++)
-		{
-			std::shared_ptr<PaletteImage> img =
-			    std::dynamic_pointer_cast<PaletteImage>(parent->images[i]);
-			// FIXME: HACK - better way of clearing undefined portions to '0'?
-			gl::TexSubImage3D(gl::TEXTURE_2D_ARRAY, 0, 0, 0, i, maxSize.x, maxSize.y, 1,
-			                  gl::RED_INTEGER, gl::UNSIGNED_BYTE, zeros.get());
-
-			PaletteImageLock l(img, ImageLockUse::Read);
-
-			gl::TexSubImage3D(gl::TEXTURE_2D_ARRAY, 0, 0, 0, i, img->size.x, img->size.y, 1,
-			                  gl::RED_INTEGER, gl::UNSIGNED_BYTE, l.getData());
-		}
-		LogInfo("Uploading spritesheet complete", numSprites);
-	}
-	virtual ~GLPaletteSpritesheet() { gl::DeleteTextures(1, &this->texID); }
-};
-
-class OGL30Renderer : public Renderer
+class OGL20Renderer : public Renderer
 {
   private:
-	enum class RendererState
-	{
-		Idle,
-		BatchingSpritesheet,
-	};
-	RendererState state;
 	std::shared_ptr<RGBProgram> rgbProgram;
 	std::shared_ptr<SolidColourProgram> colourProgram;
 	std::shared_ptr<PaletteProgram> paletteProgram;
-	std::shared_ptr<PaletteSetProgram> paletteSetProgram;
 	GLuint currentBoundProgram;
 	GLuint currentBoundFBO;
 
@@ -803,7 +625,7 @@ class OGL30Renderer : public Renderer
 			s->rendererPrivateData.reset(new FBOData(s->size));
 
 		FBOData *fbo = static_cast<FBOData *>(s->rendererPrivateData.get());
-		gl::BindFramebuffer(gl::FRAMEBUFFER, fbo->fbo);
+		gl::BindFramebufferEXT(gl::FRAMEBUFFER_EXT, fbo->fbo);
 		this->currentBoundFBO = fbo->fbo;
 		gl::Viewport(0, 0, s->size.x, s->size.y);
 	}
@@ -811,9 +633,31 @@ class OGL30Renderer : public Renderer
 	std::shared_ptr<Surface> defaultSurface;
 
   public:
-	OGL30Renderer();
-	virtual ~OGL30Renderer();
-	virtual void clear(Colour c = Colour{0, 0, 0, 0}) override;
+	OGL20Renderer()
+	    : rgbProgram(new RGBProgram()), colourProgram(new SolidColourProgram()),
+	      paletteProgram(new PaletteProgram()), currentBoundProgram(0), currentBoundFBO(0)
+	{
+		GLint viewport[4];
+		gl::GetIntegerv(gl::VIEWPORT, viewport);
+		LogInfo("Viewport {%d,%d,%d,%d}", viewport[0], viewport[1], viewport[2], viewport[3]);
+		assert(viewport[0] == 0 && viewport[1] == 0);
+		this->defaultSurface = std::make_shared<Surface>(Vec2<int>{viewport[2], viewport[3]});
+		this->defaultSurface->rendererPrivateData.reset(new FBOData(0));
+		this->currentSurface = this->defaultSurface;
+
+		GLint maxTexUnits;
+		gl::GetIntegerv(gl::MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTexUnits);
+		LogInfo("MAX_COMBINED_TEXTURE_IMAGE_UNITS: %d", maxTexUnits);
+		gl::Enable(gl::BLEND);
+		gl::BlendFunc(gl::SRC_ALPHA, gl::ONE_MINUS_SRC_ALPHA);
+	}
+	virtual ~OGL20Renderer(){};
+	virtual void clear(Colour c = Colour{0, 0, 0, 0}) override
+	{
+		this->flush();
+		gl::ClearColor(c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, c.a / 255.0f);
+		gl::Clear(gl::COLOR_BUFFER_BIT);
+	}
 	virtual void setPalette(std::shared_ptr<Palette> p) override
 	{
 		if (p == this->currentPalette)
@@ -824,14 +668,14 @@ class OGL30Renderer : public Renderer
 		this->currentPalette = p;
 	}
 	virtual std::shared_ptr<Palette> getPalette() override { return this->currentPalette; }
-
-	virtual void draw(std::shared_ptr<Image> i, Vec2<float> position) override;
+	virtual void draw(std::shared_ptr<Image> image, Vec2<float> position) override
+	{
+		drawScaled(image, position, image->size, Scaler::Nearest);
+	}
 	virtual void drawRotated(std::shared_ptr<Image> image, Vec2<float> center, Vec2<float> position,
 	                         float angle) override
 	{
 		auto size = image->size;
-		if (this->state != RendererState::Idle)
-			this->flush();
 		std::shared_ptr<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
 		if (rgbImage)
 		{
@@ -841,7 +685,7 @@ class OGL30Renderer : public Renderer
 				img = new GLRGBImage(rgbImage);
 				image->rendererPrivateData.reset(img);
 			}
-			DrawRGB(*img, position, size, Scaler::Linear, center, angle);
+			this->DrawRGB(*img, position, size, Scaler::Linear, center, angle);
 			return;
 		}
 
@@ -852,8 +696,6 @@ class OGL30Renderer : public Renderer
 	                        Scaler scaler = Scaler::Linear) override
 	{
 
-		if (this->state != RendererState::Idle)
-			this->flush();
 		std::shared_ptr<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
 		if (rgbImage)
 		{
@@ -863,7 +705,7 @@ class OGL30Renderer : public Renderer
 				img = new GLRGBImage(rgbImage);
 				image->rendererPrivateData.reset(img);
 			}
-			DrawRGB(*img, position, size, scaler);
+			this->DrawRGB(*img, position, size, scaler);
 			return;
 		}
 
@@ -883,7 +725,7 @@ class OGL30Renderer : public Renderer
 				// it to an RGB surface then scale that
 				LogError("Only nearest scaler is supported on paletted images");
 			}
-			DrawPalette(*img, position, size);
+			this->DrawPalette(*img, position, size);
 			return;
 		}
 
@@ -896,11 +738,12 @@ class OGL30Renderer : public Renderer
 				fbo = new FBOData(image->size);
 				image->rendererPrivateData.reset(fbo);
 			}
-			DrawSurface(*fbo, position, size, scaler);
+			this->DrawSurface(*fbo, position, size, scaler);
 			return;
 		}
 		LogError("Unsupported image type");
 	}
+
 	virtual void drawTinted(std::shared_ptr<Image> i, Vec2<float> position, Colour tint) override
 	{
 		LogError("Unimplemented function");
@@ -908,7 +751,10 @@ class OGL30Renderer : public Renderer
 		std::ignore = position;
 		std::ignore = tint;
 	}
-	virtual void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c) override;
+	virtual void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c) override
+	{
+		this->DrawRect(position, size, c);
+	}
 	virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c,
 	                      float thickness = 1.0) override
 	{
@@ -921,12 +767,10 @@ class OGL30Renderer : public Renderer
 	}
 	virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0) override
 	{
-		if (this->state != RendererState::Idle)
-			this->flush();
 		this->DrawLine(p1, p2, c, thickness);
 	}
-	virtual void flush() override;
-	virtual UString getName() override;
+	virtual void flush() override { /* Nothing to flush */}
+	virtual UString getName() override { return "OGL2.0 Renderer"; }
 	virtual std::shared_ptr<Surface> getDefaultSurface() override { return this->defaultSurface; }
 
 	void BindProgram(std::shared_ptr<Program> p)
@@ -936,7 +780,6 @@ class OGL30Renderer : public Renderer
 		gl::UseProgram(p->prog);
 		this->currentBoundProgram = p->prog;
 	}
-
 	void DrawRGB(GLRGBImage &img, Vec2<float> offset, Vec2<float> size, Scaler scaler,
 	             Vec2<float> rotationCenter = {0, 0}, float rotationAngleRadians = 0)
 	{
@@ -966,7 +809,6 @@ class OGL30Renderer : public Renderer
 		Quad q(pos, Rect<float>{{0, 0}, {1, 1}}, rotationCenter, rotationAngleRadians);
 		q.draw(rgbProgram->posLoc, rgbProgram->texcoordLoc);
 	}
-
 	void DrawPalette(GLPaletteImage &img, Vec2<float> offset, Vec2<float> size)
 	{
 		BindProgram(paletteProgram);
@@ -979,7 +821,7 @@ class OGL30Renderer : public Renderer
 
 		BindTexture p(
 		    static_cast<GLPalette *>(this->currentPalette->rendererPrivateData.get())->texID, 1);
-		Quad q(pos, Rect<float>{{0, 0}, {img.size}});
+		Quad q(pos, Rect<float>{{0, 0}, {1, 1}});
 		q.draw(paletteProgram->posLoc, paletteProgram->texcoordLoc);
 	}
 
@@ -1020,7 +862,7 @@ class OGL30Renderer : public Renderer
 		if (currentBoundFBO == 0)
 			flipY = true;
 		colourProgram->setUniforms(this->currentSurface->size, flipY, c);
-		Quad q(pos, Rect<float>{{0, 0}, {0, 0}});
+		Quad q(pos, Rect<float>{{0, 0}, {1, 1}});
 		q.draw(colourProgram->posLoc);
 	}
 
@@ -1034,201 +876,15 @@ class OGL30Renderer : public Renderer
 		Line l(p0, p1, thickness);
 		l.draw(colourProgram->posLoc);
 	}
-
-	class BatchedVertex
-	{
-	  public:
-		Vec2<float> position;
-		Vec2<float> texCoord;
-		int spriteIdx;
-		BatchedVertex() {}
-		BatchedVertex(Vec2<float> p, Vec2<float> tc, int i)
-		    : position(p), texCoord(tc), spriteIdx(i)
-		{
-		}
-	};
-	static_assert(sizeof(BatchedVertex) == 20, "BatchedVertex unexpected size");
-
-	class BatchedSprite
-	{
-	  public:
-		std::array<BatchedVertex, 4> vertices;
-		BatchedSprite(Vec2<float> screenPosition, Vec2<float> spriteSize, int spriteIdx)
-		{
-			Vec2<float> maxTexCoords = spriteSize;
-			Vec2<float> maxPosition = screenPosition + spriteSize;
-			vertices[0] = BatchedVertex{screenPosition, Vec2<float>{0, 0}, spriteIdx};
-			vertices[1] = BatchedVertex{Vec2<float>{screenPosition.x, maxPosition.y},
-			                            Vec2<float>{0, maxTexCoords.y}, spriteIdx};
-			vertices[2] = BatchedVertex{Vec2<float>{maxPosition.x, screenPosition.y},
-			                            Vec2<float>{maxTexCoords.x, 0}, spriteIdx};
-			vertices[3] = BatchedVertex{maxPosition, maxTexCoords, spriteIdx};
-		}
-	};
-	static_assert(sizeof(BatchedSprite) == sizeof(BatchedVertex) * 4,
-	              "BatchedSprite unexpected size");
-
-	std::vector<BatchedSprite> batchedSprites;
-	unsigned maxBatchedSprites;
-	unsigned maxSpritesheetSize;
-	std::shared_ptr<GLPaletteSpritesheet> boundSpritesheet;
-
-	std::unique_ptr<GLint[]> firstList;
-	std::unique_ptr<GLsizei[]> countList;
-
-	void DrawBatchedSpritesheet()
-	{
-		BindProgram(paletteSetProgram);
-		bool flipY = false;
-		if (currentBoundFBO == 0)
-			flipY = true;
-		paletteSetProgram->setUniforms(this->currentSurface->size, flipY);
-		BindTexture t(this->boundSpritesheet->texID, 0, gl::TEXTURE_2D_ARRAY);
-		BindTexture p(
-		    static_cast<GLPalette *>(this->currentPalette->rendererPrivateData.get())->texID, 1);
-
-		gl::EnableVertexAttribArray(paletteSetProgram->posLoc);
-		gl::EnableVertexAttribArray(paletteSetProgram->texcoordLoc);
-		gl::EnableVertexAttribArray(paletteSetProgram->spriteLoc);
-
-		const char *vertexPtr = reinterpret_cast<const char *>(this->batchedSprites.data());
-
-		gl::VertexAttribPointer(paletteSetProgram->posLoc, 2, gl::FLOAT, gl::FALSE_,
-		                        sizeof(BatchedVertex),
-		                        vertexPtr + offsetof(BatchedVertex, position));
-		gl::VertexAttribPointer(paletteSetProgram->texcoordLoc, 2, gl::FLOAT, gl::FALSE_,
-		                        sizeof(BatchedVertex),
-		                        vertexPtr + offsetof(BatchedVertex, texCoord));
-		gl::VertexAttribIPointer(paletteSetProgram->spriteLoc, 1, gl::INT, sizeof(BatchedVertex),
-		                         vertexPtr + offsetof(BatchedVertex, spriteIdx));
-
-		gl::MultiDrawArrays(gl::TRIANGLE_STRIP, this->firstList.get(), this->countList.get(),
-		                    this->batchedSprites.size());
-
-		this->batchedSprites.clear();
-		this->state = RendererState::Idle;
-	}
 };
 
-OGL30Renderer::OGL30Renderer()
-    : state(RendererState::Idle), rgbProgram(new RGBProgram()),
-      colourProgram(new SolidColourProgram()), paletteProgram(new PaletteProgram()),
-      paletteSetProgram(new PaletteSetProgram()), currentBoundProgram(0), currentBoundFBO(0)
-{
-	GLint viewport[4];
-	gl::GetIntegerv(gl::VIEWPORT, viewport);
-	LogInfo("Viewport {%d,%d,%d,%d}", viewport[0], viewport[1], viewport[2], viewport[3]);
-	assert(viewport[0] == 0 && viewport[1] == 0);
-	this->defaultSurface = std::make_shared<Surface>(Vec2<int>{viewport[2], viewport[3]});
-	this->defaultSurface->rendererPrivateData.reset(new FBOData(0));
-	this->currentSurface = this->defaultSurface;
-
-	GLint maxTexArrayLayers;
-	gl::GetIntegerv(gl::MAX_ARRAY_TEXTURE_LAYERS, &maxTexArrayLayers);
-	LogInfo("MAX_ARRAY_TEXTURE_LAYERS: %d", maxTexArrayLayers);
-	this->maxBatchedSprites = 2048;
-	this->maxSpritesheetSize = maxTexArrayLayers;
-
-	this->firstList.reset(new GLint[this->maxBatchedSprites]);
-	this->countList.reset(new GLsizei[this->maxBatchedSprites]);
-
-	for (unsigned int i = 0; i < this->maxBatchedSprites; i++)
-	{
-		this->firstList[i] = 4 * i;
-		this->countList[i] = 4;
-	}
-
-	GLint maxTexUnits;
-	gl::GetIntegerv(gl::MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTexUnits);
-	LogInfo("MAX_COMBINED_TEXTURE_IMAGE_UNITS: %d", maxTexUnits);
-	gl::Enable(gl::BLEND);
-	gl::BlendFunc(gl::SRC_ALPHA, gl::ONE_MINUS_SRC_ALPHA);
-}
-
-OGL30Renderer::~OGL30Renderer() {}
-
-void OGL30Renderer::clear(Colour c)
-{
-	this->flush();
-	gl::ClearColor(c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, c.a / 255.0f);
-	gl::Clear(gl::COLOR_BUFFER_BIT);
-}
-
-void OGL30Renderer::draw(std::shared_ptr<Image> image, Vec2<float> position)
-{
-	std::shared_ptr<ImageSet> owningSet = image->owningSet.lock();
-	if (owningSet)
-	{
-		if (owningSet->images.size() > maxSpritesheetSize)
-		{
-			static bool warnonce = false;
-			if (!warnonce)
-			{
-				warnonce = true;
-				LogWarning("Spritesheet size %d would be over max array size %d - falling back to "
-				           "'slow' path",
-				           owningSet->images.size(), maxSpritesheetSize);
-			}
-		}
-		else
-		{
-			std::shared_ptr<GLPaletteSpritesheet> ss =
-			    std::dynamic_pointer_cast<GLPaletteSpritesheet>(owningSet->rendererPrivateData);
-			if (!ss)
-			{
-				ss = std::make_shared<GLPaletteSpritesheet>(owningSet);
-				owningSet->rendererPrivateData = ss;
-			}
-			switch (this->state)
-			{
-				default:
-					this->flush();
-				case RendererState::BatchingSpritesheet:
-					if (ss != this->boundSpritesheet ||
-					    this->batchedSprites.size() >= this->maxBatchedSprites)
-					{
-						this->flush();
-					}
-				case RendererState::Idle:
-					break;
-			}
-			this->boundSpritesheet = ss;
-			this->state = RendererState::BatchingSpritesheet;
-			this->batchedSprites.emplace_back(position, Vec2<float>(image->size.x, image->size.y),
-			                                  image->indexInSet);
-			return;
-		}
-	}
-	drawScaled(image, position, image->size, Scaler::Nearest);
-}
-void OGL30Renderer::drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c)
-{
-	this->flush();
-	DrawRect(position, size, c);
-}
-
-void OGL30Renderer::flush()
-{
-	switch (this->state)
-	{
-		case RendererState::Idle:
-			break;
-		case RendererState::BatchingSpritesheet:
-			this->DrawBatchedSpritesheet();
-			break;
-	}
-	this->state = RendererState::Idle;
-}
-
-UString OGL30Renderer::getName() { return "OGL3.0 Renderer"; }
-
-class OGL30RendererFactory : public OpenApoc::RendererFactory
+class OGL20RendererFactory : public OpenApoc::RendererFactory
 {
 	bool alreadyInitialised;
 	bool functionLoadSuccess;
 
   public:
-	OGL30RendererFactory() : alreadyInitialised(false), functionLoadSuccess(false) {}
+	OGL20RendererFactory() : alreadyInitialised(false), functionLoadSuccess(false) {}
 	virtual OpenApoc::Renderer *create() override
 	{
 		if (!alreadyInitialised)
@@ -1236,17 +892,30 @@ class OGL30RendererFactory : public OpenApoc::RendererFactory
 			alreadyInitialised = true;
 			auto success = gl::sys::LoadFunctions();
 			if (!success)
+			{
+				LogInfo("failed to load GL implementation functions");
 				return nullptr;
+			}
 			if (success.GetNumMissing())
+			{
+				LogInfo("GL implementation missing %d functions", success.GetNumMissing());
 				return nullptr;
+			}
+			if (!gl::sys::IsVersionGEQ(2, 0))
+			{
+				LogInfo("GL version not at least 2.0");
+				return nullptr;
+			}
 			functionLoadSuccess = true;
 		}
 		if (functionLoadSuccess)
-			return new OGL30Renderer();
+		{
+			return new OGL20Renderer{};
+		}
 		return nullptr;
 	}
 };
 
-OpenApoc::RendererRegister<OGL30RendererFactory> register_at_load_gl_3_0_renderer("GL_3_0");
+OpenApoc::RendererRegister<OGL20RendererFactory> register_at_load_gl_2_0_renderer("GL_2_0");
 
 }; // anonymous namespace
