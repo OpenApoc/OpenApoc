@@ -71,8 +71,6 @@ static void print_backtrace(FILE *f)
 }
 #elif defined(BACKTRACE_WINDOWS)
 #define MAX_STACK_FRAMES 100
-// Stub implementation
-// TODO: Implement for windows?
 static void print_backtrace(FILE *f)
 {
 	static bool initialised = false;
@@ -132,6 +130,7 @@ static std::chrono::time_point<std::chrono::high_resolution_clock> timeInit =
 
 void Log(LogLevel level, UString prefix, UString format, ...)
 {
+	bool exit_app = false;
 	const char *level_prefix;
 	auto timeNow = std::chrono::high_resolution_clock::now();
 	unsigned long long clockns =
@@ -199,12 +198,23 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 		vsnprintf(string.get(), strSize, format.c_str(), arglist);
 		va_end(arglist);
 
-		al_show_native_message_box(NULL, "OpenApoc ERROR", "A fatal error has occurred",
-		                           string.get(), NULL, ALLEGRO_MESSAGEBOX_ERROR);
+		int but = al_show_native_message_box(NULL, "OpenApoc ERROR", "A fatal error has occurred",
+		                                     string.get(), "Exit|Continue (UNSUPPORTED)",
+		                                     ALLEGRO_MESSAGEBOX_ERROR);
+		/* button 1 = "exit", button 2 = "try to limp along" */
+		if (but == 1)
+		{
+			exit_app = true;
+		}
 	}
 #endif
 
 	logMutex.unlock();
+
+	if (exit_app)
+	{
+		exit(EXIT_FAILURE);
+	}
 }
 
 }; // namespace OpenApoc
