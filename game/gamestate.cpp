@@ -4,11 +4,13 @@
 #include "game/city/building.h"
 #include "game/city/vehicle.h"
 #include "game/organisation.h"
+#include "game/base/base.h"
 
 #include "framework/includes.h"
 #include "framework/framework.h"
 
 #include <random>
+#include <sstream>
 
 namespace OpenApoc
 {
@@ -63,7 +65,7 @@ GameState::GameState(Framework &fw, Rules &rules)
 			LogError("No PHOENIX_HOVERCAR vehicle def found?");
 			return;
 		}
-		// Organisations[3] == X-Com
+		// Organisations[0] == X-Com
 		auto testVehicle = std::make_shared<Vehicle>(vehicleDefIt->second, this->organisations[0]);
 		this->city->vehicles.push_back(testVehicle);
 
@@ -81,6 +83,21 @@ GameState::GameState(Framework &fw, Rules &rules)
 		testVehicle->building = &b;
 		city->activeObjects.insert(std::dynamic_pointer_cast<ActiveObject>(testVehicle));
 	}
+
+	// Place a random testing base
+	this->organisations[0].balance = 999999;
+	auto &b = this->city->buildings[bld_distribution(rng)];
+	this->bases.emplace_back(b);
+	this->bases.front().name = "Test Base";
 }
+
+// Just a handy shortcut since it's shown on every single screen
+UString GameState::getPlayerBalance() const
+{
+	std::stringstream ss;
+	ss << this->organisations[0].balance;
+	return ss.str();
+}
+
 
 }; // namespace OpenApoc

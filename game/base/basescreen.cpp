@@ -1,18 +1,26 @@
 
 #include "game/base/basescreen.h"
+#include "game/base/base.h"
 #include "framework/framework.h"
 
 namespace OpenApoc
 {
 
 BaseScreen::BaseScreen(Framework &fw)
-    : Stage(fw), basescreenform(fw.gamecore->GetForm("FORM_BASESCREEN"))
+    : Stage(fw), basescreenform(fw.gamecore->GetForm("FORM_BASESCREEN")), base(fw.state->bases.front())
 {
 }
 
 BaseScreen::~BaseScreen() {}
 
-void BaseScreen::Begin() {}
+void BaseScreen::Begin()
+{
+	Label *funds = basescreenform->FindControlTyped<Label>("TEXT_FUNDS");
+	funds->SetText(fw.state->getPlayerBalance());
+
+	Label *name = basescreenform->FindControlTyped<Label>("TEXT_BASE_NAME");
+	name->SetText(base.name);
+}
 
 void BaseScreen::Pause() {}
 

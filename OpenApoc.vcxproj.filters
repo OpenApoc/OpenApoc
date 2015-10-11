@@ -243,10 +243,13 @@
     <ClCompile Include="game\city\buildingscreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="framework\render\threadedrenderer.cpp">
+    <ClCompile Include="framework\render\gl20\ogl_2_0_renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="framework\render\gl20\ogl_2_0_renderer.cpp">
+    <ClCompile Include="game\base\base.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\base\facility.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -518,10 +521,13 @@
     <ClInclude Include="game\city\buildingscreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\render\threadedrenderer.h">
+    <ClInclude Include="framework\render\gl20\gl_2_0.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="framework\render\gl20\gl_2_0.hpp">
+    <ClInclude Include="game\base\base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\base\facility.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

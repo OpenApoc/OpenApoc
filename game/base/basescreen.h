@@ -11,11 +11,14 @@
 namespace OpenApoc
 {
 
+class Base;
+
 class BaseScreen : public Stage
 {
   private:
 	std::unique_ptr<Form> basescreenform;
 	StageCmd stageCmd;
+	Base &base;
 
   public:
 	BaseScreen(Framework &fw);

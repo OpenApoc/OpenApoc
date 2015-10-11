@@ -9,8 +9,9 @@ class Organisation
 {
   public:
 	const OrganisationDef &def;
-	Organisation(const OrganisationDef &def);
+	int balance;
 
+	Organisation(const OrganisationDef &def);
 	bool isHostileTo(const Organisation &other) const;
 };
 

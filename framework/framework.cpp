@@ -3,7 +3,6 @@
 #include "game/boot.h"
 #include "game/resources/gamecore.h"
 #include "game/city/city.h"
-#include "game/organisation.h"
 #include "framework/renderer.h"
 #include "framework/renderer_interface.h"
 #include "framework/sound_interface.h"

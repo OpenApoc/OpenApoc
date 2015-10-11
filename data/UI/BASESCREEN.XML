@@ -16,6 +16,27 @@
           <size width="180" height="13"/>
         </hscroll>
       </graphic>
+      <label text="BASES">
+        <backcolour r="0" g="0" b="0" a="0"/>
+        <position x="22" y="2"/>
+        <size width="600" height="36"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>BIGFONT</font>
+      </label>
+      <label id="TEXT_FUNDS">
+        <backcolour r="0" g="0" b="0" a="0"/>
+        <position x="574" y="13"/>
+        <size width="60" height="10"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <label id="TEXT_BASE_NAME">
+        <backcolour r="0" g="0" b="0" a="0"/>
+        <position x="251" y="61"/>
+        <size width="157" height="10"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
       <graphicbutton id="BUTTON_BASE_HIREFIRESTAFF">
         <position x="604" y="42"/>
         <size width="35" height="34"/>
