@@ -91,10 +91,10 @@ GameState::GameState(Framework &fw, Rules &rules)
 	this->bases.emplace_back(b);
 	auto &base = this->bases.back();
 	base.name = "Test Base";
-	std::uniform_int_distribution<int> facilityPos(0, Base::SIZE-1);
+	std::uniform_int_distribution<int> facilityPos(0, Base::SIZE - 1);
 	for (auto &i : rules.getFacilityDefs())
 	{
-		base.buildFacility(i.second, { facilityPos(rng), facilityPos(rng) });
+		base.buildFacility(i.second, {facilityPos(rng), facilityPos(rng)});
 	}
 }
 
@@ -105,6 +105,5 @@ UString GameState::getPlayerBalance() const
 	ss << this->organisations[0].balance;
 	return ss.str();
 }
-
 
 }; // namespace OpenApoc

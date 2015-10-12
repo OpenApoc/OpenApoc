@@ -25,6 +25,7 @@ class BaseScreen : public Stage
 	Base &base;
 
 	void RenderBase();
+
   public:
 	BaseScreen(Framework &fw);
 	~BaseScreen();

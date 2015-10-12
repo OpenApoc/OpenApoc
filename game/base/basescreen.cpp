@@ -9,26 +9,14 @@ namespace OpenApoc
 
 // key is 0bUDLR = Up Down Left Right (eg. 0b1111 is surrounded)
 const std::map<int, int> BaseScreen::TILE_CORRIDORS = {
-	{ 0b1000, 4 },
-	{ 0b0001, 5 },
-	{ 0b1001, 6 },
-	{ 0b0100, 7 },
-	{ 0b1100, 8 },
-	{ 0b0101, 9 },
-	{ 0b1101, 10 },
-	{ 0b0010, 11 },
-	{ 0b1010, 12 },
-	{ 0b0011, 13 },
-	{ 0b1011, 14 },
-	{ 0b0110, 15 },
-	{ 0b1110, 16 },
-	{ 0b0111, 17 },
-	{ 0b1111, 18 },
+    {0b1000, 4},  {0b0001, 5},  {0b1001, 6},  {0b0100, 7},  {0b1100, 8},
+    {0b0101, 9},  {0b1101, 10}, {0b0010, 11}, {0b1010, 12}, {0b0011, 13},
+    {0b1011, 14}, {0b0110, 15}, {0b1110, 16}, {0b0111, 17}, {0b1111, 18},
 };
 
-
 BaseScreen::BaseScreen(Framework &fw)
-    : Stage(fw), basescreenform(fw.gamecore->GetForm("FORM_BASESCREEN")), base(fw.state->bases.front())
+    : Stage(fw), basescreenform(fw.gamecore->GetForm("FORM_BASESCREEN")),
+      base(fw.state->bases.front())
 {
 }
 
@@ -94,9 +82,10 @@ bool BaseScreen::IsTransition() { return false; }
 void BaseScreen::RenderBase()
 {
 	const int TILE_SIZE = 32;
-	const Vec2<int> BASE_POS = { 202, 84 };
+	const Vec2<int> BASE_POS = {202, 84};
 
-	std::shared_ptr<Image> grid = fw.data->load_image("PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:xcom3/TACDATA/TACTICAL.PAL");
+	std::shared_ptr<Image> grid = fw.data->load_image(
+	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:xcom3/TACDATA/TACTICAL.PAL");
 	// Draw grid
 	Vec2<int> pos;
 	for (pos.x = BASE_POS.x; pos.x < BASE_POS.x + TILE_SIZE * Base::SIZE; pos.x += TILE_SIZE)
@@ -117,6 +106,5 @@ void BaseScreen::RenderBase()
 		fw.renderer->draw(sprite, basescreenform->Location + pos);
 	}
 }
-
 
 }; // namespace OpenApoc

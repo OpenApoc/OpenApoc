@@ -12,7 +12,7 @@ const Facility *Base::getFacility(Vec2<int> pos) const
 	for (auto &facility : facilities)
 	{
 		if (pos.x >= facility.pos.x && pos.x < facility.pos.x + facility.def.size &&
-			pos.y >= facility.pos.y && pos.y < facility.pos.y + facility.def.size)
+		    pos.y >= facility.pos.y && pos.y < facility.pos.y + facility.def.size)
 		{
 			return &facility;
 		}
@@ -20,12 +20,9 @@ const Facility *Base::getFacility(Vec2<int> pos) const
 	return nullptr;
 }
 
-const std::vector<Facility>& Base::getFacilities() const
-{
-	return facilities;
-}
+const std::vector<Facility> &Base::getFacilities() const { return facilities; }
 
-Base::BuildError Base::canBuildFacility(const FacilityDef& def, Vec2<int> pos) const
+Base::BuildError Base::canBuildFacility(const FacilityDef &def, Vec2<int> pos) const
 {
 	const Facility *facility = getFacility(pos);
 	if (facility != nullptr)
@@ -44,8 +41,7 @@ Base::BuildError Base::canBuildFacility(const FacilityDef& def, Vec2<int> pos) c
 	return BuildError::None;
 }
 
-
-void Base::buildFacility(const FacilityDef& def, Vec2<int> pos)
+void Base::buildFacility(const FacilityDef &def, Vec2<int> pos)
 {
 	if (canBuildFacility(def, pos) == BuildError::None)
 	{
@@ -79,7 +75,7 @@ void Base::destroyFacility(Vec2<int> pos)
 		{
 			if (&*f == facility)
 			{
-				//facilities.erase(f);
+				// facilities.erase(f);
 				break;
 			}
 		}
