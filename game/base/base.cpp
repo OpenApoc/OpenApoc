@@ -20,6 +20,11 @@ const Facility *Base::getFacility(Vec2<int> pos) const
 	return nullptr;
 }
 
+const std::vector<Facility>& Base::getFacilities() const
+{
+	return facilities;
+}
+
 Base::BuildError Base::canBuildFacility(const FacilityDef& def, Vec2<int> pos) const
 {
 	const Facility *facility = getFacility(pos);
@@ -31,9 +36,10 @@ Base::BuildError Base::canBuildFacility(const FacilityDef& def, Vec2<int> pos) c
 	{
 		return BuildError::NoMoney;
 	}
-	else
+	else if (pos.x < 0 || pos.y < 0 || pos.x + def.size >= SIZE || pos.y + def.size >= SIZE)
 	{
-		// TODO: Check if facility is out of bounds
+		// TODO: Check for corridors
+		return BuildError::OutOfBounds;
 	}
 	return BuildError::None;
 }
@@ -71,7 +77,7 @@ void Base::destroyFacility(Vec2<int> pos)
 		const Facility *facility = getFacility(pos);
 		for (auto f = facilities.begin(); f != facilities.end(); ++f)
 		{
-			//if (&*f == facility)
+			if (&*f == facility)
 			{
 				//facilities.erase(f);
 				break;

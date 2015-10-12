@@ -87,8 +87,15 @@ GameState::GameState(Framework &fw, Rules &rules)
 	// Place a random testing base
 	this->organisations[0].balance = 999999;
 	auto &b = this->city->buildings[bld_distribution(rng)];
+	b.owner.balance = 999999;
 	this->bases.emplace_back(b);
-	this->bases.front().name = "Test Base";
+	auto &base = this->bases.back();
+	base.name = "Test Base";
+	std::uniform_int_distribution<int> facilityPos(0, Base::SIZE-1);
+	for (auto &i : rules.getFacilityDefs())
+	{
+		base.buildFacility(i.second, { facilityPos(rng), facilityPos(rng) });
+	}
 }
 
 // Just a handy shortcut since it's shown on every single screen
