@@ -7,7 +7,8 @@
 #include "game/apocresources/apocresource.h"
 #include "forms/forms.h"
 
-#include <map>
+#include <unordered_map>
+#include <bitset>
 
 namespace OpenApoc
 {
@@ -18,7 +19,7 @@ class Image;
 class BaseScreen : public Stage
 {
   private:
-	static const std::map<int, int> TILE_CORRIDORS;
+	static const std::unordered_map<std::bitset<4>, int> TILE_CORRIDORS;
 
 	std::unique_ptr<Form> basescreenform;
 	StageCmd stageCmd;

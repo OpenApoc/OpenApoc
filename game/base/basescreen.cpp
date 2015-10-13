@@ -8,10 +8,12 @@ namespace OpenApoc
 {
 
 // key is 0bUDLR = Up Down Left Right (eg. 0b1111 is surrounded)
-const std::map<int, int> BaseScreen::TILE_CORRIDORS = {
-    {0b1000, 4},  {0b0001, 5},  {0b1001, 6},  {0b0100, 7},  {0b1100, 8},
-    {0b0101, 9},  {0b1101, 10}, {0b0010, 11}, {0b1010, 12}, {0b0011, 13},
-    {0b1011, 14}, {0b0110, 15}, {0b1110, 16}, {0b0111, 17}, {0b1111, 18},
+const std::unordered_map<std::bitset<4>, int> BaseScreen::TILE_CORRIDORS = {
+    {std::bitset<4>{"1000"}, 4},  {std::bitset<4>{"0001"}, 5},  {std::bitset<4>{"1001"}, 6},
+    {std::bitset<4>{"0100"}, 7},  {std::bitset<4>{"1100"}, 8},  {std::bitset<4>{"0101"}, 9},
+    {std::bitset<4>{"1101"}, 10}, {std::bitset<4>{"0010"}, 11}, {std::bitset<4>{"1010"}, 12},
+    {std::bitset<4>{"0011"}, 13}, {std::bitset<4>{"1011"}, 14}, {std::bitset<4>{"0110"}, 15},
+    {std::bitset<4>{"1110"}, 16}, {std::bitset<4>{"0111"}, 17}, {std::bitset<4>{"1111"}, 18},
 };
 
 BaseScreen::BaseScreen(Framework &fw)
