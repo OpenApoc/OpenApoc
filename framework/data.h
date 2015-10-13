@@ -66,7 +66,7 @@ class Data
 	std::list<std::unique_ptr<MusicLoader>> musicLoaders;
 
   public:
-	Data(Framework &fw, std::vector<UString> paths, int imageCacheSize = 10,
+	Data(Framework &fw, std::vector<UString> paths, int imageCacheSize = 100,
 	     int imageSetCacheSize = 10, int voxelCacheSize = 1);
 	~Data();
 
