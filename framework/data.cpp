@@ -235,7 +235,7 @@ void registerMusicLoader(MusicLoaderFactory *factory, UString name)
 	registeredMusicLoaders->emplace(name, std::unique_ptr<MusicLoaderFactory>(factory));
 }
 
-Data::Data(Framework &fw, std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize,
+Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize,
            int voxelCacheSize)
 {
 	for (auto &imageBackend : *registeredImageBackends)
@@ -254,7 +254,7 @@ Data::Data(Framework &fw, std::vector<UString> paths, int imageCacheSize, int im
 	for (auto &sampleBackend : *registeredSampleLoaders)
 	{
 		auto t = sampleBackend.first;
-		SampleLoader *s = sampleBackend.second->create(fw);
+		SampleLoader *s = sampleBackend.second->create(*this);
 		if (s)
 		{
 			this->sampleLoaders.emplace_back(s);
@@ -267,7 +267,7 @@ Data::Data(Framework &fw, std::vector<UString> paths, int imageCacheSize, int im
 	for (auto &musicLoader : *registeredMusicLoaders)
 	{
 		auto t = musicLoader.first;
-		MusicLoader *m = musicLoader.second->create(fw);
+		MusicLoader *m = musicLoader.second->create(*this);
 		if (m)
 		{
 			this->musicLoaders.emplace_back(m);

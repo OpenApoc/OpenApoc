@@ -241,7 +241,7 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 	resourcePaths.push_back(Settings->getString("Resource.SystemDataDir"));
 	resourcePaths.push_back(Settings->getString("Resource.LocalDataDir"));
 
-	this->data.reset(new Data(*this, resourcePaths));
+	this->data.reset(new Data(resourcePaths));
 
 	auto testFile = this->data->load_file("MUSIC");
 	if (!testFile)

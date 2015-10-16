@@ -1,5 +1,5 @@
 #include "framework/sampleloader_interface.h"
-#include "framework/framework.h"
+#include "framework/data.h"
 
 namespace
 {
@@ -8,13 +8,13 @@ using namespace OpenApoc;
 
 class RawSampleLoader : public SampleLoader
 {
-	Framework &fw;
+	Data &data;
 
   public:
-	RawSampleLoader(Framework &fw) : fw(fw) {}
+	RawSampleLoader(Data &data) : data(data) {}
 	virtual std::shared_ptr<Sample> loadSample(UString path) override
 	{
-		auto file = fw.data->load_file(path);
+		auto file = data.load_file(path);
 		if (!file)
 			return nullptr;
 
@@ -33,7 +33,7 @@ class RawSampleLoader : public SampleLoader
 class RawSampleLoaderFactory : public SampleLoaderFactory
 {
   public:
-	virtual SampleLoader *create(Framework &fw) override { return new RawSampleLoader(fw); }
+	virtual SampleLoader *create(Data &data) override { return new RawSampleLoader(data); }
 };
 
 SampleLoaderRegister<RawSampleLoaderFactory> load_at_init_raw_sample("raw");

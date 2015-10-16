@@ -1,6 +1,6 @@
 #include "framework/logger.h"
 #include "framework/musicloader_interface.h"
-#include "framework/framework.h"
+#include "framework/data.h"
 #include <algorithm>
 #include <vector>
 #include <memory>
@@ -113,10 +113,10 @@ MusicTrack::MusicCallbackReturn fillMusicData(std::shared_ptr<MusicTrack> thisTr
 
 class RawMusicLoader : public MusicLoader
 {
-	Framework &fw;
+	Data &data;
 
   public:
-	RawMusicLoader(Framework &fw) : fw(fw) {}
+	RawMusicLoader(Data &data) : data(data) {}
 	virtual ~RawMusicLoader() {}
 
 	virtual std::shared_ptr<MusicTrack> loadMusic(UString path) override
@@ -140,7 +140,7 @@ class RawMusicLoader : public MusicLoader
 			LogInfo("Raw music track %d out of bounds", track);
 			return nullptr;
 		}
-		return std::make_shared<RawMusicTrack>(*fw.data, path, strings[0], starts[track],
+		return std::make_shared<RawMusicTrack>(data, path, strings[0], starts[track],
 		                                       lengths[track] / MusicChannels /
 		                                           MusicBytesPerSample);
 	}
@@ -149,7 +149,7 @@ class RawMusicLoader : public MusicLoader
 class RawMusicLoaderFactory : public MusicLoaderFactory
 {
   public:
-	virtual MusicLoader *create(Framework &fw) override { return new RawMusicLoader(fw); }
+	virtual MusicLoader *create(Data &data) override { return new RawMusicLoader(data); }
 };
 
 MusicLoaderRegister<RawMusicLoaderFactory> load_at_init_raw_music("raw");

@@ -5,7 +5,7 @@
 namespace OpenApoc
 {
 
-class Framework;
+class Data;
 
 class SampleLoader
 {
@@ -17,7 +17,7 @@ class SampleLoader
 class SampleLoaderFactory
 {
   public:
-	virtual SampleLoader *create(Framework &fw) = 0;
+	virtual SampleLoader *create(Data &data) = 0;
 	virtual ~SampleLoaderFactory() {}
 };
 

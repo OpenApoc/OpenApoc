@@ -5,7 +5,7 @@
 namespace OpenApoc
 {
 
-class Framework;
+class Data;
 class MusicLoader
 {
   public:
@@ -16,7 +16,7 @@ class MusicLoader
 class MusicLoaderFactory
 {
   public:
-	virtual MusicLoader *create(Framework &fw) = 0;
+	virtual MusicLoader *create(Data &data) = 0;
 	virtual ~MusicLoaderFactory() {}
 };
 
