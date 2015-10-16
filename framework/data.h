@@ -1,60 +1,24 @@
 #pragma once
 
-#include "includes.h"
-#include "image.h"
-#include "sound.h"
+#include "framework/includes.h"
+#include "framework/image.h"
+#include "framework/sound.h"
+#include "framework/fs.h"
 
+#include <memory>
+#include <map>
 #include <queue>
+#include <list>
 #include <vector>
-#include <fstream>
 
 namespace OpenApoc
 {
-
-#define PROGRAM_NAME "OpenApoc"
-#define PROGRAM_ORGANISATION "OpenApoc"
-
 class ImageLoader;
 class SampleLoader;
 class MusicLoader;
 class Framework;
 class VoxelSlice;
 class LOFTemps;
-
-class IFileImpl
-{
-  public:
-	virtual ~IFileImpl();
-};
-
-class IFile : public std::istream
-{
-  private:
-	std::unique_ptr<IFileImpl> f;
-	IFile();
-	friend class FileSystem;
-
-  public:
-	~IFile();
-	size_t size() const;
-	bool readule16(uint16_t &val);
-	bool readule32(uint32_t &val);
-	const UString &fileName() const;
-	const UString &systemPath() const;
-	IFile(IFile &&other);
-};
-
-class FileSystem
-{
-  private:
-	UString writeDir;
-
-  public:
-	FileSystem(std::vector<UString> paths);
-	~FileSystem();
-	IFile open(const UString &path);
-};
-
 class Data
 {
 
@@ -90,4 +54,4 @@ class Data
 	std::shared_ptr<VoxelSlice> load_voxel_slice(const UString &path);
 };
 
-}; // namspace OpenApoc
+} // namespace OpenApoc

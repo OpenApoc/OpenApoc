@@ -258,6 +258,7 @@
     <ClCompile Include="framework\imageloader\allegro_image.cpp" />
     <ClCompile Include="framework\logger.cpp" />
     <ClCompile Include="framework\palette.cpp" />
+    <ClCompile Include="framework\physfs_fs.cpp" />
     <ClCompile Include="framework\renderer.cpp" />
     <ClCompile Include="framework\render\gl20\ogl_2_0_renderer.cpp" />
     <ClCompile Include="framework\render\gl30\ogl_3_0_renderer.cpp" />
@@ -336,6 +337,7 @@
     <ClInclude Include="forms\textedit.h" />
     <ClInclude Include="forms\vscrollbar.h" />
     <ClInclude Include="framework\font.h" />
+    <ClInclude Include="framework\fs.h" />
     <ClInclude Include="framework\ignorecase.h" />
     <ClInclude Include="framework\image.h" />
     <ClInclude Include="framework\imageloader_interface.h" />

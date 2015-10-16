@@ -1,11 +1,13 @@
 #include "framework/image.h"
 #include "framework/palette.h"
 #include "framework/renderer.h"
+#include "framework/logger.h"
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
+
+// Use physfs for RGBImage::saveBitmap directory creation
 #include <physfs.h>
-#include "logger.h"
 
 namespace OpenApoc
 {

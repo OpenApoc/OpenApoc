@@ -11,6 +11,8 @@
 #include <allegro5/allegro5.h>
 #include <iostream>
 #include <string>
+
+//Use physfs to get prefs dir
 #include <physfs.h>
 
 using namespace OpenApoc;
