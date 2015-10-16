@@ -343,10 +343,68 @@ bool RulesLoader::ParseCityDefinition(Framework &fw, Rules &rules, tinyxml2::XML
 				{
 					LogError("Building \"%s\" has invalid y1 bound", bldName.c_str());
 					return false;
-				}
+				}				
 				def.name = bldName;
 				def.ownerName = owner;
 				def.bounds = {x0, y0, x1, y1};
+				for (tinyxml2::XMLElement *base = bld->FirstChildElement(); base != nullptr;
+				base = base->NextSiblingElement())
+				{
+					UString baseNodeName = base->Name();
+					if (baseNodeName != "base")
+					{
+						LogError("Unexpected node \"%s\" - expected \"base\"", baseNodeName.c_str());
+						return false;
+					}
+					err = base->QueryIntAttribute("x", &x0);
+					if (err != tinyxml2::XML_SUCCESS)
+					{
+						LogError("Building \"%s\" has invalid base x bound", bldName.c_str());
+						return false;
+					}
+					err = base->QueryIntAttribute("y", &y0);
+					if (err != tinyxml2::XML_SUCCESS)
+					{
+						LogError("Building \"%s\" has invalid base y bound", bldName.c_str());
+						return false;
+					}
+					def.baseLift = { x0, y0 };
+					for (tinyxml2::XMLElement *b = base->FirstChildElement(); b != nullptr;
+					b = b->NextSiblingElement())
+					{
+						UString bNodeName = b->Name();
+						if (bNodeName != "corridor")
+						{
+							LogError("Unexpected node \"%s\" - expected \"corridor\"", bNodeName.c_str());
+							return false;
+						}
+						err = b->QueryIntAttribute("x0", &x0);
+						if (err != tinyxml2::XML_SUCCESS)
+						{
+							LogError("Building \"%s\" has invalid corridor x0 bound", bldName.c_str());
+							return false;
+						}
+						err = b->QueryIntAttribute("x1", &x1);
+						if (err != tinyxml2::XML_SUCCESS)
+						{
+							LogError("Building \"%s\" has invalid corridor x1 bound", bldName.c_str());
+							return false;
+						}
+						err = b->QueryIntAttribute("y0", &y0);
+						if (err != tinyxml2::XML_SUCCESS)
+						{
+							LogError("Building \"%s\" has invalid corridor y0 bound", bldName.c_str());
+							return false;
+						}
+						err = b->QueryIntAttribute("y1", &y1);
+						if (err != tinyxml2::XML_SUCCESS)
+						{
+							LogError("Building \"%s\" has invalid corridor y1 bound", bldName.c_str());
+							return false;
+						}
+						def.baseCorridors.push_back({ x0, y0, x1, y1 });
+					}
+				}
 				rules.buildings.emplace_back(def);
 			}
 		}

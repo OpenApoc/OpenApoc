@@ -80,6 +80,15 @@ City::City(Framework &fw, GameState &state) : TileMap(fw, fw.rules->getCitySize(
 			LogError("Building \"%s\" has no landing pads", b.def.getName().c_str());
 		}
 	}
+	/* Keep a cache of base locations (using pointers since you can't have a vector of references) */
+	for (auto &b : this->buildings)
+	{
+		if (!b.def.getBaseCorridors().empty())
+		{
+			b.base = std::make_shared<Base>(b, fw);
+			this->baseBuildings.emplace_back(&b);
+		}
+	}
 }
 
 City::~City() {}

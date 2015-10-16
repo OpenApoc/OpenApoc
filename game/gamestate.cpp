@@ -86,22 +86,21 @@ GameState::GameState(Framework &fw, Rules &rules)
 
 	// Place a random testing base
 	this->organisations[0].balance = 999999;
-	auto &b = this->city->buildings[bld_distribution(rng)];
-	b.owner.balance = 999999;
-	this->bases.emplace_back(b);
-	auto &base = this->bases.back();
-	base.name = "Test Base";
+	std::uniform_int_distribution<int> base_distribution(0, this->city->baseBuildings.size() - 1);
+	auto base = this->city->baseBuildings[base_distribution(rng)]->base;
+	this->playerBases.emplace_back(base);
+	base->name = "Test Base";
 	std::uniform_int_distribution<int> facilityPos(0, Base::SIZE - 1);
 	for (auto &i : rules.getFacilityDefs())
 	{
-		base.buildFacility(i.second, {facilityPos(rng), facilityPos(rng)});
+		base->buildFacility(i.second, {facilityPos(rng), facilityPos(rng)});
 	}
 }
 
 // Just a handy shortcut since it's shown on every single screen
 UString GameState::getPlayerBalance() const
 {
-	std::stringstream ss;
+	std::ostringstream ss;
 	ss << this->organisations[0].balance;
 	return ss.str();
 }

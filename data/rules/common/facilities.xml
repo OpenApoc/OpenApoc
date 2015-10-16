@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <facilitydef id="ACCESS_LIFT" name="STR_ACCESS_LIFT">
+    <fixed>true</fixed>
     <buildCost>5000</buildCost>
     <weeklyCost>200</weeklyCost>
     <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:27:xcom3/TACDATA/TACTICAL.PAL</sprite>

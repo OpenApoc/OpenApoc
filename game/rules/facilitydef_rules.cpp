@@ -22,7 +22,15 @@ bool RulesLoader::ParseFacilityDefinition(Framework &fw, Rules &rules, tinyxml2:
 	for (auto node = root->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
 	{
 		UString tag = node->Name();
-		if (tag == "buildCost")
+		if (tag == "fixed")
+		{
+			if (node->QueryBoolText(&def.fixed) != tinyxml2::XMLError::XML_SUCCESS)
+			{
+				LogError("Failed to read facility 'fixed' attribute");
+				return false;
+			}
+		}
+		else if (tag == "buildCost")
 		{
 			if (node->QueryIntText(&def.buildCost) != tinyxml2::XMLError::XML_SUCCESS)
 			{

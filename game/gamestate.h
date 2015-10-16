@@ -21,7 +21,7 @@ class GameState
 	std::unique_ptr<City> city;
 
 	std::vector<Organisation> organisations;
-	std::vector<Base> bases;
+	std::vector<std::shared_ptr<Base>> playerBases;
 
 	bool showTileOrigin;
 	bool showVehiclePath;

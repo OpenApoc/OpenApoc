@@ -238,7 +238,7 @@ Event::Event(const UString &str) : Event()
 
 UString Event::toString()
 {
-	std::stringstream ss;
+	std::ostringstream ss;
 	ss << std::dec;
 	ss << "EVENT";
 	switch (this->Type)

@@ -1,11 +1,35 @@
 #include "game/base/base.h"
 #include "game/city/building.h"
 #include "game/organisation.h"
+#include "game/rules/buildingdef.h"
+#include "framework/framework.h"
 
 namespace OpenApoc
 {
 
-Base::Base(const Building &building) : building(building) {}
+Base::Base(const Building &building, const Framework &fw) : building(building)
+{
+	corridors = std::vector<std::vector<bool>>(SIZE, std::vector<bool>(SIZE, false));
+	for (auto &rect : building.def.getBaseCorridors())
+	{
+		for (int x = rect.p0.x; x <= rect.p1.x; ++x)
+		{
+			for (int y = rect.p0.y; y <= rect.p1.y; ++y)
+			{
+				corridors[x][y] = true;
+			}
+		}
+	}
+	const FacilityDef &def = fw.rules->getFacilityDefs().at("ACCESS_LIFT");
+	if (canBuildFacility(def, building.def.getBaseLift()) != BuildError::None)
+	{
+		LogError("Building %s has invalid lift location", building.def.getName().c_str());
+	}
+	else
+	{
+		buildFacility(def, building.def.getBaseLift());
+	}
+}
 
 const Facility *Base::getFacility(Vec2<int> pos) const
 {
@@ -20,23 +44,29 @@ const Facility *Base::getFacility(Vec2<int> pos) const
 	return nullptr;
 }
 
-const std::vector<Facility> &Base::getFacilities() const { return facilities; }
-
 Base::BuildError Base::canBuildFacility(const FacilityDef &def, Vec2<int> pos) const
 {
-	const Facility *facility = getFacility(pos);
-	if (facility != nullptr)
+	if (pos.x < 0 || pos.y < 0 || pos.x + def.size > SIZE || pos.y + def.size > SIZE)
+	{
+		return BuildError::OutOfBounds;
+	}
+	if (getFacility(pos) != nullptr)
 	{
 		return BuildError::Occupied;
 	}
-	else if (building.owner.balance - def.buildCost < 0)
+	for (int x = pos.x; x < pos.x + def.size; ++x)
+	{
+		for (int y = pos.y; y < pos.y + def.size; ++y)
+		{
+			if (!corridors[x][y])
+			{
+				return BuildError::OutOfBounds;
+			}
+		}
+	}
+	if (!def.fixed && building.owner.balance - def.buildCost < 0)
 	{
 		return BuildError::NoMoney;
-	}
-	else if (pos.x < 0 || pos.y < 0 || pos.x + def.size >= SIZE || pos.y + def.size >= SIZE)
-	{
-		// TODO: Check for corridors
-		return BuildError::OutOfBounds;
 	}
 	return BuildError::None;
 }
@@ -59,10 +89,11 @@ Base::BuildError Base::canDestroyFacility(Vec2<int> pos) const
 	{
 		return BuildError::OutOfBounds;
 	}
-	else
+	if (facility->def.fixed)
 	{
-		// TODO: Check if facility is in use
+		return BuildError::Occupied;
 	}
+	// TODO: Check if facility is in use
 	return BuildError::None;
 }
 

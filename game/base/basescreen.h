@@ -2,31 +2,31 @@
 
 #include "framework/stage.h"
 #include "framework/includes.h"
+#include "library/vec.h"
 
 #include "game/resources/gamecore.h"
 #include "game/apocresources/apocresource.h"
 #include "forms/forms.h"
 
 #include <unordered_map>
-#include <bitset>
+#include <vector>
 
 namespace OpenApoc
 {
 
 class Base;
-class Image;
 
 class BaseScreen : public Stage
 {
   private:
-	static const std::unordered_map<std::bitset<4>, int> TILE_CORRIDORS;
+	static const std::unordered_map<std::vector<bool>, int> TILE_CORRIDORS;
 
 	std::unique_ptr<Form> basescreenform;
 	StageCmd stageCmd;
 	Base &base;
 
 	void RenderBase();
-
+	int getCorridorSprite(Vec2<int> pos) const;
   public:
 	BaseScreen(Framework &fw);
 	~BaseScreen();

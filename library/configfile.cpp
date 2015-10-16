@@ -117,7 +117,7 @@ void ConfigFile::set(const UString key, bool value)
 
 void ConfigFile::set(const UString key, int value)
 {
-	std::stringstream ss;
+	std::ostringstream ss;
 	ss << std::dec << value;
 	this->set(key, ss.str());
 }

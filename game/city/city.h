@@ -26,8 +26,9 @@ class City : public TileMap
 	~City();
 	std::vector<std::shared_ptr<Vehicle>> vehicles;
 	std::vector<Building> buildings;
+	std::vector<Building*> baseBuildings;
 
-	void update(unsigned int ticks);
+	void update(unsigned int ticks) override;
 };
 
 }; // namespace OpenApoc

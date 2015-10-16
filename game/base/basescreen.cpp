@@ -4,21 +4,46 @@
 #include "framework/framework.h"
 #include "framework/image.h"
 
+#include <sstream>
+
 namespace OpenApoc
 {
 
-// key is 0bUDLR = Up Down Left Right (eg. 0b1111 is surrounded)
-const std::unordered_map<std::bitset<4>, int> BaseScreen::TILE_CORRIDORS = {
-    {std::bitset<4>{"1000"}, 4},  {std::bitset<4>{"0001"}, 5},  {std::bitset<4>{"1001"}, 6},
-    {std::bitset<4>{"0100"}, 7},  {std::bitset<4>{"1100"}, 8},  {std::bitset<4>{"0101"}, 9},
-    {std::bitset<4>{"1101"}, 10}, {std::bitset<4>{"0010"}, 11}, {std::bitset<4>{"1010"}, 12},
-    {std::bitset<4>{"0011"}, 13}, {std::bitset<4>{"1011"}, 14}, {std::bitset<4>{"0110"}, 15},
-    {std::bitset<4>{"1110"}, 16}, {std::bitset<4>{"0111"}, 17}, {std::bitset<4>{"1111"}, 18},
+// key is North South West East (true = occupied, false = vacant)
+const std::unordered_map<std::vector<bool>, int> BaseScreen::TILE_CORRIDORS = {
+	{{true, false, false, false}, 4},
+	{{false, false, false, true}, 5 },
+	{{true, false, false, true}, 6 },
+	{{false, true, false, false}, 7},
+	{{true, true, false, false}, 8},
+	{{false, true, false, true}, 9},
+	{{true, true, false, true}, 10},
+	{{false, false, true, false}, 11},
+	{{true, false, true, false}, 12},
+	{{false, false, true, true}, 13},
+	{{true, false, true, true}, 14},
+	{{false, true, true, false}, 15},
+	{{true, true, true, false}, 16},
+	{{false, true, true, true}, 17},
+	{{true, true, true, true}, 18}
 };
+
+int BaseScreen::getCorridorSprite(Vec2<int> pos) const
+{
+	if (!base.getCorridors()[pos.x][pos.y])
+	{
+		return 0;
+	}
+	bool north = pos.y > 0 && base.getCorridors()[pos.x][pos.y-1];
+	bool south = pos.y < Base::SIZE-1 && base.getCorridors()[pos.x][pos.y+1];
+	bool west = pos.x > 0 && base.getCorridors()[pos.x-1][pos.y];
+	bool east = pos.x < Base::SIZE-1 && base.getCorridors()[pos.x+1][pos.y];
+	return TILE_CORRIDORS.at({north, south, west, east});
+}
 
 BaseScreen::BaseScreen(Framework &fw)
     : Stage(fw), basescreenform(fw.gamecore->GetForm("FORM_BASESCREEN")),
-      base(fw.state->bases.front())
+      base(*fw.state->playerBases.front())
 {
 }
 
@@ -86,19 +111,36 @@ void BaseScreen::RenderBase()
 	const int TILE_SIZE = 32;
 	const Vec2<int> BASE_POS = {202, 84};
 
+	// Draw grid
 	std::shared_ptr<Image> grid = fw.data->load_image(
 	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:xcom3/TACDATA/TACTICAL.PAL");
-	// Draw grid
-	Vec2<int> pos;
-	for (pos.x = BASE_POS.x; pos.x < BASE_POS.x + TILE_SIZE * Base::SIZE; pos.x += TILE_SIZE)
+	Vec2<int> i;
+	for (i.x = 0; i.x < Base::SIZE; ++i.x)
 	{
-		for (pos.y = BASE_POS.y; pos.y < BASE_POS.y + TILE_SIZE * Base::SIZE; pos.y += TILE_SIZE)
+		for (i.y = 0; i.y < Base::SIZE; ++i.y)
 		{
+			Vec2<int> pos = BASE_POS + i * TILE_SIZE;
 			fw.renderer->draw(grid, basescreenform->Location + pos);
 		}
 	}
 
-	// TODO: Draw corridors
+	// Draw corridors
+	for (i.x = 0; i.x < Base::SIZE; ++i.x)
+	{
+		for (i.y = 0; i.y < Base::SIZE; ++i.y)
+		{
+			int sprite = getCorridorSprite(i);
+			if (sprite != 0)
+			{
+				Vec2<int> pos = BASE_POS + i * TILE_SIZE;
+				std::ostringstream ss;
+				ss << "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:"
+					<< sprite
+					<< ":xcom3/TACDATA/TACTICAL.PAL";
+				fw.renderer->draw(fw.data->load_image(ss.str()), basescreenform->Location + pos);
+			}
+		}
+	}
 
 	// Draw facilities
 	for (auto &facility : base.getFacilities())
@@ -108,5 +150,4 @@ void BaseScreen::RenderBase()
 		fw.renderer->draw(sprite, basescreenform->Location + pos);
 	}
 }
-
 }; // namespace OpenApoc
