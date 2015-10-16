@@ -7,7 +7,7 @@ namespace OpenApoc
 
 Palette *loadApocPalette(Data &data, const UString fileName)
 {
-	auto f = data.load_file(fileName);
+	auto f = data.fs.open(fileName);
 	if (!f)
 		return nullptr;
 	auto numEntries = f.size() / 3;

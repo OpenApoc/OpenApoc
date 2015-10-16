@@ -38,7 +38,7 @@ void GameCore::ParseXMLDoc(UString XMLFilename)
 	tinyxml2::XMLElement *node;
 	UString systemPath;
 	{
-		auto file = fw.data->load_file(XMLFilename);
+		auto file = fw.data->fs.open(XMLFilename);
 		if (!file)
 		{
 			LogError("Failed to open XML file \"%s\"", XMLFilename.c_str());

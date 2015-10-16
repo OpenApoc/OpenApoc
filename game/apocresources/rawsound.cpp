@@ -14,7 +14,7 @@ class RawSampleLoader : public SampleLoader
 	RawSampleLoader(Data &data) : data(data) {}
 	virtual std::shared_ptr<Sample> loadSample(UString path) override
 	{
-		auto file = data.load_file(path);
+		auto file = data.fs.open(path);
 		if (!file)
 			return nullptr;
 

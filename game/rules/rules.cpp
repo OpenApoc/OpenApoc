@@ -10,7 +10,7 @@ namespace OpenApoc
 Rules::Rules(Framework &fw, const UString &rootFileName)
 {
 	UString systemPath;
-	auto file = fw.data->load_file(rootFileName);
+	auto file = fw.data->fs.open(rootFileName);
 	if (!file)
 	{
 		LogError("Failed to find rule file \"%s\"", rootFileName.c_str());
@@ -102,7 +102,7 @@ bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *
 		{
 			UString rootFileName = e->GetText();
 			UString systemPath;
-			auto file = fw.data->load_file(rootFileName);
+			auto file = fw.data->fs.open(rootFileName);
 			if (!file)
 			{
 				LogError("Failed to find included rule file \"%s\"", rootFileName.c_str());

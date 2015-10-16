@@ -8,7 +8,7 @@ namespace OpenApoc
 
 ApocCursor::ApocCursor(Framework &fw, std::shared_ptr<Palette> pal) : fw(fw), cursorPos{0, 0}
 {
-	auto f = fw.data->load_file("xcom3/TACDATA/MOUSE.DAT");
+	auto f = fw.data->fs.open("xcom3/TACDATA/MOUSE.DAT");
 	if (!f)
 	{
 		LogError("Failed to open xcom3/TACDATA/MOUSE.DAT");

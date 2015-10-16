@@ -40,7 +40,7 @@ class RawMusicTrack : public MusicTrack
   public:
 	RawMusicTrack(Data &data, const UString &name, const UString &fileName, unsigned int fileOffset,
 	              unsigned int numSamples)
-	    : file(data.load_file(fileName)), samplePosition(0), valid(false), name(name)
+	    : file(data.fs.open(fileName)), samplePosition(0), valid(false), name(name)
 	{
 		if (!file)
 		{

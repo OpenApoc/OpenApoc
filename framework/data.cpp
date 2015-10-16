@@ -237,6 +237,7 @@ void registerMusicLoader(MusicLoaderFactory *factory, UString name)
 
 Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize,
            int voxelCacheSize)
+    : fs(paths)
 {
 	for (auto &imageBackend : *registeredImageBackends)
 	{
@@ -276,31 +277,12 @@ Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize
 		else
 			LogWarning("Failed to load music loader %s", t.c_str());
 	}
-	this->writeDir = PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME);
-	LogInfo("Setting write directory to \"%s\"", this->writeDir.c_str());
-	PHYSFS_setWriteDir(this->writeDir.c_str());
 	for (int i = 0; i < imageCacheSize; i++)
 		pinnedImages.push(nullptr);
 	for (int i = 0; i < imageSetCacheSize; i++)
 		pinnedImageSets.push(nullptr);
 	for (int i = 0; i < voxelCacheSize; i++)
 		pinnedLOFVoxels.push(nullptr);
-
-	// Paths are supplied in inverse-search order (IE the last in 'paths' should be the first
-	// searched)
-	for (auto &p : paths)
-	{
-		if (!PHYSFS_mount(p.c_str(), "/", 0))
-		{
-			LogWarning("Failed to add resource dir \"%s\"", p.c_str());
-			continue;
-		}
-		else
-			LogInfo("Resource dir \"%s\" mounted to \"%s\"", p.c_str(),
-			        PHYSFS_getMountPoint(p.c_str()));
-	}
-	// Finally, the write directory trumps all
-	PHYSFS_mount(this->writeDir.c_str(), "/", 0);
 }
 
 Data::~Data() {}
@@ -323,13 +305,13 @@ std::shared_ptr<VoxelSlice> Data::load_voxel_slice(const UString &path)
 		std::shared_ptr<LOFTemps> lofTemps = this->LOFVoxelCache[cacheKey].lock();
 		if (!lofTemps)
 		{
-			auto datFile = this->load_file(splitString[1]);
+			auto datFile = this->fs.open(splitString[1]);
 			if (!datFile)
 			{
 				LogError("Failed to open LOFTemps dat file \"%s\"", splitString[1].c_str());
 				return nullptr;
 			}
-			auto tabFile = this->load_file(splitString[2]);
+			auto tabFile = this->fs.open(splitString[2]);
 			if (!tabFile)
 			{
 				LogError("Failed to open LOFTemps tab file \"%s\"", splitString[2].c_str());
@@ -573,14 +555,32 @@ std::shared_ptr<Image> Data::load_image(const UString &path)
 	return img;
 }
 
-IFile Data::load_file(const UString &path, Data::FileMode mode)
+FileSystem::FileSystem(std::vector<UString> paths)
+{
+	// Paths are supplied in inverse-search order (IE the last in 'paths' should be the first
+	// searched)
+	for (auto &p : paths)
+	{
+		if (!PHYSFS_mount(p.c_str(), "/", 0))
+		{
+			LogWarning("Failed to add resource dir \"%s\"", p.c_str());
+			continue;
+		}
+		else
+			LogInfo("Resource dir \"%s\" mounted to \"%s\"", p.c_str(),
+			        PHYSFS_getMountPoint(p.c_str()));
+	}
+	this->writeDir = PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME);
+	LogInfo("Setting write directory to \"%s\"", this->writeDir.c_str());
+	PHYSFS_setWriteDir(this->writeDir.c_str());
+	// Finally, the write directory trumps all
+	PHYSFS_mount(this->writeDir.c_str(), "/", 0);
+}
+
+FileSystem::~FileSystem() {}
+IFile FileSystem::open(const UString &path)
 {
 	IFile f;
-	if (mode != Data::FileMode::Read)
-	{
-		LogError("Invalid FileMode set for \"%s\"", path.c_str());
-		return f;
-	}
 	UString foundPath = GetCorrectCaseFilename(path);
 	if (foundPath == "")
 	{

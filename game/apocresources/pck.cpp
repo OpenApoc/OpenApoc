@@ -52,13 +52,13 @@ PCK::~PCK() {}
 
 void PCK::ProcessFile(Data &d, UString PckFilename, UString TabFilename, int Index)
 {
-	auto pck = d.load_file(PckFilename);
+	auto pck = d.fs.open(PckFilename);
 	if (!pck)
 	{
 		LogError("Failed to open PCK file \"%s\"", PckFilename.c_str());
 		return;
 	}
-	auto tab = d.load_file(TabFilename);
+	auto tab = d.fs.open(TabFilename);
 	if (!tab)
 	{
 		LogError("Failed to open TAB file \"%s\"", TabFilename.c_str());
@@ -411,13 +411,13 @@ std::shared_ptr<ImageSet> PCKLoader::load_strat(Data &data, UString PckFilename,
                                                 UString TabFilename)
 {
 	auto imageSet = std::make_shared<ImageSet>();
-	auto tabFile = data.load_file(TabFilename);
+	auto tabFile = data.fs.open(TabFilename);
 	if (!tabFile)
 	{
 		LogWarning("Failed to open tab \"%s\"", TabFilename.c_str());
 		return nullptr;
 	}
-	auto pckFile = data.load_file(PckFilename);
+	auto pckFile = data.fs.open(PckFilename);
 	if (!pckFile)
 	{
 		LogWarning("Failed to open tab \"%s\"", TabFilename.c_str());

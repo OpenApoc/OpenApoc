@@ -9,7 +9,7 @@ namespace OpenApoc
 std::shared_ptr<PaletteImage> RawImage::load(Data &data, const UString &filename,
                                              const Vec2<int> &size)
 {
-	auto infile = data.load_file(filename);
+	auto infile = data.fs.open(filename);
 	if (!infile)
 	{
 		LogWarning("Failed to open file \"%s\"", filename.c_str());

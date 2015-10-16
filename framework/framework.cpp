@@ -243,14 +243,14 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 
 	this->data.reset(new Data(resourcePaths));
 
-	auto testFile = this->data->load_file("MUSIC");
+	auto testFile = this->data->fs.open("MUSIC");
 	if (!testFile)
 	{
 		LogError("Failed to open \"music\" from the CD - likely the cd couldn't be loaded or paths "
 		         "are incorrect if using an extracted CD image");
 	}
 
-	auto testFile2 = this->data->load_file("FileDoesntExist");
+	auto testFile2 = this->data->fs.open("FileDoesntExist");
 	if (testFile2)
 	{
 		LogError("Succeded in opening \"FileDoesntExist\" - either you have the weirdest filename "

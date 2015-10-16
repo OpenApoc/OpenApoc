@@ -50,7 +50,7 @@ std::shared_ptr<ApocalypseFont> ApocalypseFont::loadFont(Framework &fw,
 		return nullptr;
 	}
 
-	auto file = fw.data->load_file(fileName);
+	auto file = fw.data->fs.open(fileName);
 	if (!file)
 	{
 		LogError("apocfont \"%s\" - Failed to open font path \"%s\"", fontName.c_str(),

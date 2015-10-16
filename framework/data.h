@@ -32,7 +32,7 @@ class IFile : public std::istream
   private:
 	std::unique_ptr<IFileImpl> f;
 	IFile();
-	friend class Data;
+	friend class FileSystem;
 
   public:
 	~IFile();
@@ -44,11 +44,21 @@ class IFile : public std::istream
 	IFile(IFile &&other);
 };
 
+class FileSystem
+{
+  private:
+	UString writeDir;
+
+  public:
+	FileSystem(std::vector<UString> paths);
+	~FileSystem();
+	IFile open(const UString &path);
+};
+
 class Data
 {
 
   private:
-	UString writeDir;
 	std::map<UString, std::weak_ptr<Image>> imageCache;
 	std::map<UString, std::weak_ptr<ImageSet>> imageSetCache;
 
@@ -66,16 +76,11 @@ class Data
 	std::list<std::unique_ptr<MusicLoader>> musicLoaders;
 
   public:
+	FileSystem fs;
+
 	Data(std::vector<UString> paths, int imageCacheSize = 100, int imageSetCacheSize = 10,
 	     int voxelCacheSize = 1);
 	~Data();
-
-	enum class FileMode
-	{
-		Read,
-		Write,
-		ReadWrite,
-	};
 
 	std::shared_ptr<Sample> load_sample(const UString &path);
 	std::shared_ptr<MusicTrack> load_music(const UString &path);
@@ -83,7 +88,6 @@ class Data
 	std::shared_ptr<ImageSet> load_image_set(const UString &path);
 	std::shared_ptr<Palette> load_palette(const UString &path);
 	std::shared_ptr<VoxelSlice> load_voxel_slice(const UString &path);
-	IFile load_file(const UString &path, FileMode mode = FileMode::Read);
 };
 
 }; // namspace OpenApoc
