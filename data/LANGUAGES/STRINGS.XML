@@ -24,6 +24,12 @@
     <fr_fr>Options</fr_fr>
     <de_de>Optionen</de_de>
   </string>
+  <string id="STR_ABANDON_GAME">
+    <en_gb>Abandon Game</en_gb>
+    <es_la>Abandonar partida</es_la>
+    <fr_fr>Abandonner la partie</fr_fr>
+    <de_de>Aufzugeben Spiel</de_de>
+  </string>
   <string id="STR_QUIT">
     <en_gb>Quit</en_gb>
     <es_la>Abandonar</es_la>

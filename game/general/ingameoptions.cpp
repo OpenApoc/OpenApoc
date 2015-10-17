@@ -1,6 +1,7 @@
 
 #include "game/general/ingameoptions.h"
 #include "framework/framework.h"
+#include "game/general/mainmenu.h"
 
 namespace OpenApoc
 {
@@ -62,9 +63,20 @@ void InGameOptions::EventOccurred(Event *e)
 
 	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick)
 	{
-		if (e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT")
+		if (e->Data.Forms.RaisedBy->Name == "BUTTON_OK")
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
+			return;
+		}
+		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_ABANDONGAME")
+		{
+			stageCmd.cmd = StageCmd::Command::REPLACE;
+			stageCmd.nextStage = std::make_shared<MainMenu>(fw);
+			return;
+		}
+		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT")
+		{
+			stageCmd.cmd = StageCmd::Command::QUIT;
 			return;
 		}
 		else if (e->Data.Forms.RaisedBy->Name == "GLOBAL_GAIN_DOWN")

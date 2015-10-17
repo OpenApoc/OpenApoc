@@ -8,13 +8,23 @@
         <image>xcom3/UFODATA/MENUOPT.PCX</image>
         <position x="0" y="0"/>
         <size width="640" height="480"/>
-        <graphicbutton id="BUTTON_QUIT">
+        <graphicbutton id="BUTTON_OK">
           <position x="602" y="443"/>
           <size width="35" height="34"/>
           <backcolour a="0"/>
           <image/>
           <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
         </graphicbutton>
+        <textbutton id="BUTTON_ABANDONGAME" text="STR_ABANDON_GAME">
+          <position x="18" y="167"/>
+          <size width="260" height="28"/>
+          <font>SMALFONT</font>
+        </textbutton>
+        <textbutton id="BUTTON_QUIT" text="STR_QUIT">
+          <position x="18" y="195"/>
+          <size width="260" height="28"/>
+          <font>SMALFONT</font>
+        </textbutton>
         <graphicbutton id="GLOBAL_GAIN_DOWN">
           <position x="61" y="262"/>
           <size width="16" height="20"/>
@@ -51,7 +61,7 @@
           <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
         </graphicbutton>
         <hscroll id="MUSIC_GAIN_SLIDER">
-          <position x="76" y="290"/>
+          <position x="76" y="292"/>
           <size width="145" height="14"/>
           <backcolour r="0" g="0" b="0" a="0"/>
           <grippercolour r="255" g="255" b="255" a="255"/>
@@ -72,7 +82,7 @@
           <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
         </graphicbutton>
         <hscroll id="SAMPLE_GAIN_SLIDER">
-          <position x="76" y="318"/>
+          <position x="76" y="319"/>
           <size width="145" height="14"/>
           <backcolour r="0" g="0" b="0" a="0"/>
           <grippercolour r="255" g="255" b="255" a="255"/>

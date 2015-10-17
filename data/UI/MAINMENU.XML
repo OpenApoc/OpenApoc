@@ -35,7 +35,6 @@
         </label>
       </graphic>
       <textbutton id="BUTTON_NEWGAME" text="STR_START_CAMPAIGN">
-        <backcolour r="128" g="128" b="128" a="255"/>
         <position x="centre" y="190"/>
         <size width="300" height="32"/>
         <font>SMALFONT</font>
