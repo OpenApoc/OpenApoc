@@ -113,7 +113,7 @@ void BaseScreen::RenderBase()
 
 	// Draw grid
 	std::shared_ptr<Image> grid = fw.data->load_image(
-	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:xcom3/TACDATA/TACTICAL.PAL");
+	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:UI/menuopt.pal");
 	Vec2<int> i;
 	for (i.x = 0; i.x < Base::SIZE; ++i.x)
 	{
@@ -136,7 +136,7 @@ void BaseScreen::RenderBase()
 				std::ostringstream ss;
 				ss << "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:"
 					<< sprite
-					<< ":xcom3/TACDATA/TACTICAL.PAL";
+					<< ":UI/menuopt.pal";
 				fw.renderer->draw(fw.data->load_image(ss.str()), basescreenform->Location + pos);
 			}
 		}

@@ -85,15 +85,20 @@ GameState::GameState(Framework &fw, Rules &rules)
 	}
 
 	// Place a random testing base
-	this->organisations[0].balance = 999999;
+	for (auto &i : this->organisations)
+	{
+		i.balance = 999999;
+	}
 	std::uniform_int_distribution<int> base_distribution(0, this->city->baseBuildings.size() - 1);
 	auto base = this->city->baseBuildings[base_distribution(rng)]->base;
 	this->playerBases.emplace_back(base);
+	//base->building.owner = this->organisations[0];
 	base->name = "Test Base";
 	std::uniform_int_distribution<int> facilityPos(0, Base::SIZE - 1);
 	for (auto &i : rules.getFacilityDefs())
 	{
-		base->buildFacility(i.second, {facilityPos(rng), facilityPos(rng)});
+		if (!i.second.fixed)
+			base->buildFacility(i.second, {facilityPos(rng), facilityPos(rng)});
 	}
 }
 

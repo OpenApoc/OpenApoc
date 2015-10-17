@@ -4,7 +4,7 @@
     <fixed>true</fixed>
     <buildCost>5000</buildCost>
     <weeklyCost>200</weeklyCost>
-    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:27:xcom3/TACDATA/TACTICAL.PAL</sprite>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:27:UI/menuopt.pal</sprite>
   </facilitydef>
   <facilitydef id="LIVING_QUARTERS" name="STR_LIVING_QUARTERS">
     <buildCost>5000</buildCost>
@@ -12,7 +12,7 @@
     <weeklyCost>300</weeklyCost>
     <capacityType>quarters</capacityType>
     <capacityAmount>10</capacityAmount>
-    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:28:xcom3/TACDATA/TACTICAL.PAL</sprite>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:28:UI/menuopt.pal</sprite>
   </facilitydef>
   <facilitydef id="STORES" name="STR_STORES">
     <buildCost>1000</buildCost>
@@ -20,7 +20,7 @@
     <weeklyCost>100</weeklyCost>
     <capacityType>stores</capacityType>
     <capacityAmount>10000</capacityAmount>
-    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:29:xcom3/TACDATA/TACTICAL.PAL</sprite>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:29:UI/menuopt.pal</sprite>
   </facilitydef>
   <facilitydef id="MEDICAL_BAY" name="STR_MEDICAL_BAY">
     <buildCost>12000</buildCost>
@@ -28,7 +28,7 @@
     <weeklyCost>800</weeklyCost>
     <capacityType>medical</capacityType>
     <capacityAmount>10</capacityAmount>
-    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:31:xcom3/TACDATA/TACTICAL.PAL</sprite>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:31:UI/menuopt.pal</sprite>
   </facilitydef>
   <facilitydef id="TRAINING_AREA" name="STR_TRAINING_AREA">
     <buildCost>12000</buildCost>
@@ -36,7 +36,7 @@
     <weeklyCost>800</weeklyCost>
     <capacityType>training</capacityType>
     <capacityAmount>10</capacityAmount>
-    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:32:xcom3/TACDATA/TACTICAL.PAL</sprite>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:32:UI/menuopt.pal</sprite>
   </facilitydef>
   <facilitydef id="PSI_GYM" name="STR_PSI_GYM">
     <buildCost>15000</buildCost>
@@ -44,19 +44,19 @@
     <weeklyCost>900</weeklyCost>
     <capacityType>psi</capacityType>
     <capacityAmount>10</capacityAmount>
-    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:33:xcom3/TACDATA/TACTICAL.PAL</sprite>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:33:UI/menuopt.pal</sprite>
   </facilitydef>
   <facilitydef id="SECURITY_STATION" name="STR_SECURITY_STATION">
     <buildCost>2000</buildCost>
     <buildTime>2</buildTime>
     <weeklyCost>200</weeklyCost>
-    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:34:xcom3/TACDATA/TACTICAL.PAL</sprite>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:34:UI/menuopt.pal</sprite>
   </facilitydef>
   <facilitydef id="ADVANCED_SECURITY_STATION" name="STR_ADVANCED_SECURITY_STATION">
     <buildCost>15000</buildCost>
     <buildTime>6</buildTime>
     <weeklyCost>900</weeklyCost>
-    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:35:xcom3/TACDATA/TACTICAL.PAL</sprite>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:35:UI/menuopt.pal</sprite>
   </facilitydef>
   <facilitydef id="VEHICLE_REPAIR_BAY" name="STR_VEHICLE_REPAIR_BAY">
     <buildCost>9000</buildCost>
@@ -65,7 +65,7 @@
     <capacityType>repair</capacityType>
     <capacityAmount>1</capacityAmount>
     <size>2</size>
-    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:36:xcom3/TACDATA/TACTICAL.PAL</sprite>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:36:UI/menuopt.pal</sprite>
   </facilitydef>
   <facilitydef id="BIOCHEMISTRY_LAB" name="STR_BIOCHEMISTRY_LAB">
     <buildCost>10000</buildCost>
@@ -73,7 +73,7 @@
     <weeklyCost>100</weeklyCost>
     <capacityType>chemistry</capacityType>
     <capacityAmount>5</capacityAmount>
-    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:37:xcom3/TACDATA/TACTICAL.PAL</sprite>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:37:UI/menuopt.pal</sprite>
   </facilitydef>
   <facilitydef id="ADVANCED_BIOCHEMISTRY_LAB" name="STR_ADVANCED_BIOCHEMISTRY_LAB">
     <buildCost>20000</buildCost>
@@ -82,7 +82,7 @@
     <capacityType>chemistry</capacityType>
     <capacityAmount>10</capacityAmount>
     <size>2</size>
-    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:38:xcom3/TACDATA/TACTICAL.PAL</sprite>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:38:UI/menuopt.pal</sprite>
   </facilitydef>
   <facilitydef id="QUANTUM_PHYSICS_LAB" name="STR_QUANTUM_PHYSICS_LAB">
     <buildCost>10000</buildCost>
@@ -90,7 +90,7 @@
     <weeklyCost>100</weeklyCost>
     <capacityType>physics</capacityType>
     <capacityAmount>5</capacityAmount>
-    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:39:xcom3/TACDATA/TACTICAL.PAL</sprite>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:39:UI/menuopt.pal</sprite>
   </facilitydef>
   <facilitydef id="ADVANCED_QUANTUM_PHYSICS_LAB" name="STR_ADVANCED_QUANTUM_PHYSICS_LAB">
     <buildCost>25000</buildCost>
@@ -99,7 +99,7 @@
     <capacityType>physics</capacityType>
     <capacityAmount>10</capacityAmount>
     <size>2</size>
-    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:40:xcom3/TACDATA/TACTICAL.PAL</sprite>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:40:UI/menuopt.pal</sprite>
   </facilitydef>
   <facilitydef id="ALIEN_CONTAINMENT" name="STR_ALIEN_CONTAINMENT">
     <buildCost>7000</buildCost>
@@ -107,7 +107,7 @@
     <weeklyCost>400</weeklyCost>
     <capacityType>aliens</capacityType>
     <capacityAmount>20</capacityAmount>
-    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:41:xcom3/TACDATA/TACTICAL.PAL</sprite>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:41:UI/menuopt.pal</sprite>
   </facilitydef>
   <facilitydef id="WORKSHOP" name="STR_WORKSHOP">
     <buildCost>6000</buildCost>
@@ -115,7 +115,7 @@
     <weeklyCost>100</weeklyCost>
     <capacityType>workshop</capacityType>
     <capacityAmount>5</capacityAmount>
-    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:43:xcom3/TACDATA/TACTICAL.PAL</sprite>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:43:UI/menuopt.pal</sprite>
   </facilitydef>
   <facilitydef id="ADVANCED_WORKSHOP" name="STR_ADVANCED_WORKSHOP">
     <buildCost>12000</buildCost>
@@ -124,6 +124,6 @@
     <capacityType>workshop</capacityType>
     <capacityAmount>10</capacityAmount>
     <size>2</size>
-    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:44:xcom3/TACDATA/TACTICAL.PAL</sprite>
+    <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:44:UI/menuopt.pal</sprite>
   </facilitydef>
 </openapoc_rules>

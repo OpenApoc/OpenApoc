@@ -50,9 +50,15 @@ Base::BuildError Base::canBuildFacility(const FacilityDef &def, Vec2<int> pos) c
 	{
 		return BuildError::OutOfBounds;
 	}
-	if (getFacility(pos) != nullptr)
+	for (int x = pos.x; x < pos.x + def.size; ++x)
 	{
-		return BuildError::Occupied;
+		for (int y = pos.y; y < pos.y + def.size; ++y)
+		{
+			if (getFacility(pos) != nullptr)
+			{
+				return BuildError::Occupied;
+			}
+		}
 	}
 	for (int x = pos.x; x < pos.x + def.size; ++x)
 	{
