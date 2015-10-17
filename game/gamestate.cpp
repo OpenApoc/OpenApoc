@@ -16,7 +16,7 @@ namespace OpenApoc
 {
 
 GameState::GameState(Framework &fw, Rules &rules)
-    : showTileOrigin(false), showVehiclePath(false), showSelectableBounds(false)
+    : showTileOrigin(false), showVehiclePath(false), showSelectableBounds(false), rng(std::random_device{}())
 {
 	for (auto &orgdef : rules.getOrganisationDefs())
 	{
