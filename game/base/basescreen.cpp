@@ -109,7 +109,7 @@ bool BaseScreen::IsTransition() { return false; }
 void BaseScreen::RenderBase()
 {
 	const int TILE_SIZE = 32;
-	const Vec2<int> BASE_POS = {202, 84};
+	const Vec2<int> BASE_POS = {200, 82};
 
 	// Draw grid
 	std::shared_ptr<Image> grid = fw.data->load_image(
