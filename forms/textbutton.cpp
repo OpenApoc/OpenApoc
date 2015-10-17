@@ -69,7 +69,7 @@ void TextButton::OnRender()
 				                      Vec2<float>{Size.x - 2, Size.y - 4}, Colour{80, 80, 80});
 				fw.renderer->drawLine(Vec2<float>{2, Size.y - 3},
 				                      Vec2<float>{Size.x - 2, Size.y - 3}, Colour{64, 64, 64});
-				fw.renderer->drawRect(Vec2<float>{3, 3}, Vec2<float>{Size.x - 3, Size.y - 3},
+				fw.renderer->drawRect(Vec2<float>{3, 3}, Vec2<float>{Size.x - 6, Size.y - 6},
 				                      Colour{48, 48, 48});
 				break;
 		}

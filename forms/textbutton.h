@@ -27,7 +27,7 @@ class TextButton : public Control
 	virtual void OnRender() override;
 
   public:
-	enum TextButtonRenderStyles
+	enum class TextButtonRenderStyles
 	{
 		SolidButtonStyle,
 		MenuButtonStyle
