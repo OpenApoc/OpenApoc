@@ -22,8 +22,15 @@
 #define LOGFILE "openapoc_log.txt"
 #endif
 
+//Don't have interactive dialogues in unit tests
+#ifdef UNIT_TEST
+#undef ERROR_DIALOG
+#else
+
 #if defined(ERROR_DIALOG)
 #include <allegro5/allegro_native_dialog.h>
+#endif
+
 #endif
 
 #define MAX_SYMBOL_LENGTH 1000
@@ -139,6 +146,9 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 	logMutex.lock();
 	if (!outFile)
 	{
+#ifdef UNIT_TEST
+		outFile = stderr;
+#else
 		outFile = fopen(LOGFILE, "w");
 		if (!outFile)
 		{
@@ -146,6 +156,7 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 			fprintf(stderr, "Failed to open logfile \"%s\"\n", LOGFILE);
 			return;
 		}
+#endif
 	}
 
 	switch (level)
