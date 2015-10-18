@@ -33,6 +33,8 @@ class Image
 
 	std::weak_ptr<ImageSet> owningSet;
 	unsigned indexInSet;
+
+	UString sourcePath;
 };
 
 // A surface is an image you can render to. No SW locking is allowed!

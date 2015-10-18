@@ -368,6 +368,7 @@ sp<Image> Data::load_image(const UString &path)
 	this->pinnedImages.pop();
 
 	this->imageCache[cacheKey] = img;
+	img->sourcePath = path;
 	return img;
 }
 
