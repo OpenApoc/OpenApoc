@@ -1,5 +1,6 @@
 
 #pragma once
+#include "library/sp.h"
 
 #include "framework/stage.h"
 #include "framework/includes.h"
@@ -20,7 +21,7 @@ class Ufopaedia : public Stage
 	StageCmd stageCmd;
 
   public:
-	static std::vector<std::shared_ptr<UfopaediaCategory>> UfopaediaDB;
+	static std::vector<sp<UfopaediaCategory>> UfopaediaDB;
 
 	Ufopaedia(Framework &fw);
 	~Ufopaedia();

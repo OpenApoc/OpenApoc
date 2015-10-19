@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "game/tileview/voxel.h"
 #include "game/tileview/tile.h"
 #include "game/tileview/tile_collidable.h"
@@ -47,7 +48,7 @@ bool VoxelMap::getBit(Vec3<int> pos) const
 	return slices[pos.z]->getBit({pos.x, pos.y});
 }
 
-void VoxelMap::setSlice(int z, std::shared_ptr<VoxelSlice> slice)
+void VoxelMap::setSlice(int z, sp<VoxelSlice> slice)
 {
 	if (z < 0 || static_cast<unsigned>(z) >= this->slices.size())
 	{

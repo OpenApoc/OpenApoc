@@ -1,3 +1,4 @@
+#include "library/sp.h"
 
 #include "forms/textedit.h"
 #include "framework/framework.h"
@@ -8,7 +9,7 @@
 namespace OpenApoc
 {
 
-TextEdit::TextEdit(Framework &fw, Control *Owner, UString Text, std::shared_ptr<BitmapFont> font)
+TextEdit::TextEdit(Framework &fw, Control *Owner, UString Text, sp<BitmapFont> font)
     : Control(fw, Owner), caretDraw(false), caretTimer(0), text(Text), font(font), editting(false),
       editShift(false), editAltGr(false), SelectionStart(Text.length()),
       TextHAlign(HorizontalAlignment::Left), TextVAlign(VerticalAlignment::Centre)
@@ -236,9 +237,9 @@ void TextEdit::RaiseEvent(FormEventType Type)
 	fw.PushEvent(ce);
 }
 
-std::shared_ptr<BitmapFont> TextEdit::GetFont() { return font; }
+sp<BitmapFont> TextEdit::GetFont() { return font; }
 
-void TextEdit::SetFont(std::shared_ptr<BitmapFont> NewFont) { font = NewFont; }
+void TextEdit::SetFont(sp<BitmapFont> NewFont) { font = NewFont; }
 
 Control *TextEdit::CopyTo(Control *CopyParent)
 {

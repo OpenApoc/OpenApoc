@@ -1,5 +1,6 @@
 
 #pragma once
+#include "library/sp.h"
 
 #include "framework/image.h"
 #include "control.h"
@@ -12,7 +13,7 @@ class Graphic : public Control
 
   private:
 	UString image_name;
-	std::shared_ptr<Image> image;
+	sp<Image> image;
 
   protected:
 	virtual void OnRender() override;
@@ -25,8 +26,8 @@ class Graphic : public Control
 	virtual void Update() override;
 	virtual void UnloadResources() override;
 
-	std::shared_ptr<Image> GetImage();
-	void SetImage(std::shared_ptr<Image> Image);
+	sp<Image> GetImage();
+	void SetImage(sp<Image> Image);
 
 	virtual Control *CopyTo(Control *CopyParent) override;
 };

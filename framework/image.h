@@ -1,4 +1,5 @@
 #pragma once
+#include "library/sp.h"
 
 #include "includes.h"
 
@@ -51,9 +52,8 @@ class PaletteImage : public Image
   public:
 	PaletteImage(Vec2<unsigned int> size, uint8_t initialIndex = 0);
 	~PaletteImage();
-	std::shared_ptr<RGBImage> toRGBImage(std::shared_ptr<Palette> p);
-	static void blit(std::shared_ptr<PaletteImage> src, Vec2<unsigned int> offset,
-	                 std::shared_ptr<PaletteImage> dst);
+	sp<RGBImage> toRGBImage(sp<Palette> p);
+	static void blit(sp<PaletteImage> src, Vec2<unsigned int> offset, sp<PaletteImage> dst);
 
 	void CalculateBounds();
 };
@@ -61,13 +61,13 @@ class PaletteImage : public Image
 class PaletteImageLock
 {
   private:
-	std::shared_ptr<PaletteImage> img;
+	sp<PaletteImage> img;
 	// Disallow copy
 	PaletteImageLock(const PaletteImageLock &) = delete;
 	ImageLockUse use;
 
   public:
-	PaletteImageLock(std::shared_ptr<PaletteImage> img, ImageLockUse use = ImageLockUse::Write);
+	PaletteImageLock(sp<PaletteImage> img, ImageLockUse use = ImageLockUse::Write);
 	~PaletteImageLock();
 	uint8_t get(Vec2<unsigned int> pos);
 	void set(Vec2<unsigned int> pos, uint8_t idx);
@@ -86,20 +86,20 @@ class RGBImage : public Image
 	RGBImage(Vec2<unsigned int> size, Colour initialColour = Colour(0, 0, 0, 0));
 	~RGBImage();
 	void saveBitmap(const UString &filename);
-	static void blit(std::shared_ptr<RGBImage> src, Vec2<unsigned int> srcOffset,
-	                 std::shared_ptr<RGBImage> dst, Vec2<unsigned int> dstOffset);
+	static void blit(sp<RGBImage> src, Vec2<unsigned int> srcOffset, sp<RGBImage> dst,
+	                 Vec2<unsigned int> dstOffset);
 };
 
 class RGBImageLock
 {
   private:
-	std::shared_ptr<RGBImage> img;
+	sp<RGBImage> img;
 	// Disallow copy
 	RGBImageLock(const RGBImageLock &) = delete;
 	ImageLockUse use;
 
   public:
-	RGBImageLock(std::shared_ptr<RGBImage> img, ImageLockUse use = ImageLockUse::Write);
+	RGBImageLock(sp<RGBImage> img, ImageLockUse use = ImageLockUse::Write);
 	~RGBImageLock();
 	Colour get(Vec2<unsigned int> pos);
 	void set(Vec2<unsigned int> pos, Colour &c);
@@ -111,10 +111,10 @@ class RGBImageLock
 class ImageSet
 {
   public:
-	std::vector<std::shared_ptr<Image>> images;
+	std::vector<sp<Image>> images;
 	Vec2<unsigned int> maxSize;
 
-	std::shared_ptr<RendererImageData> rendererPrivateData;
+	sp<RendererImageData> rendererPrivateData;
 };
 
 }; // namespace OpenApoc

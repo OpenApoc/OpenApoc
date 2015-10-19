@@ -1,5 +1,6 @@
 
 #pragma once
+#include "library/sp.h"
 
 #include "stage.h"
 
@@ -15,7 +16,7 @@ namespace OpenApoc
 class StageStack
 {
   private:
-	std::vector<std::shared_ptr<Stage>> Stack;
+	std::vector<sp<Stage>> Stack;
 
   public:
 	/*
@@ -26,7 +27,7 @@ class StageStack
 	    Returns:
 	        *Integer* Stack index of the stage
 	*/
-	void Push(std::shared_ptr<Stage> newStage);
+	void Push(sp<Stage> newStage);
 
 	/*
 	    Function: Pop
@@ -36,7 +37,7 @@ class StageStack
 	    Example:
 	        > delete StageStack->Pop();
 	*/
-	std::shared_ptr<Stage> Pop();
+	sp<Stage> Pop();
 
 	/*
 	    Function: Current
@@ -44,7 +45,7 @@ class StageStack
 	    Returns:
 	        *Stage Pointer* Current <Stage>
 	*/
-	std::shared_ptr<Stage> Current();
+	sp<Stage> Current();
 
 	/*
 	    Function: Previous
@@ -52,7 +53,7 @@ class StageStack
 	    Returns:
 	        *Stage Pointer* Current <Stage>
 	*/
-	std::shared_ptr<Stage> Previous();
+	sp<Stage> Previous();
 
 	/*
 	    Function: Previous
@@ -60,7 +61,7 @@ class StageStack
 	    Returns:
 	        *Stage Pointer* Current <Stage>
 	*/
-	std::shared_ptr<Stage> Previous(std::shared_ptr<Stage> From);
+	sp<Stage> Previous(sp<Stage> From);
 
 	bool IsEmpty();
 	void Clear();

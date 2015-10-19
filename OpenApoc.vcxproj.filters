@@ -536,6 +536,9 @@
     <ClInclude Include="framework\fs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="library\sp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="apocicon.rc">

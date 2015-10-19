@@ -1,4 +1,5 @@
 #pragma once
+#include "library/sp.h"
 
 #include "game/tileview/tile.h"
 
@@ -14,7 +15,7 @@ class TileObjectCollidable : virtual public TileObject
 	std::set<Tile *> affectedTiles;
 	Vec3<int> tileSizeInVoxels;
 	Vec3<int> bounds;
-	std::shared_ptr<VoxelMap> voxels;
+	sp<VoxelMap> voxels;
 
   public:
 	virtual const Vec3<int> &getTileSizeInVoxels() const override;
@@ -28,14 +29,14 @@ class TileObjectCollidable : virtual public TileObject
 	virtual void addToAffectedTiles() override;
 
 	TileObjectCollidable(TileMap &map, Vec3<float> position, Vec3<int> tileSizeInVoxels,
-	                     std::shared_ptr<VoxelMap> voxels);
+	                     sp<VoxelMap> voxels);
 };
 
 class Collision
 {
   public:
-	std::shared_ptr<TileObject> tileObject;
-	std::shared_ptr<Projectile> projectile;
+	sp<TileObject> tileObject;
+	sp<Projectile> projectile;
 	Vec3<float> position;
 	bool operator!() { return !!tileObject; }
 	explicit operator bool() const { return tileObject != nullptr; }

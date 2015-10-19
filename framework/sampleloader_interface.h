@@ -1,4 +1,5 @@
 #pragma once
+#include "library/sp.h"
 #include "sound.h"
 #include "library/strings.h"
 
@@ -11,7 +12,7 @@ class SampleLoader
 {
   public:
 	virtual ~SampleLoader() {}
-	virtual std::shared_ptr<Sample> loadSample(UString path) = 0;
+	virtual sp<Sample> loadSample(UString path) = 0;
 };
 
 class SampleLoaderFactory

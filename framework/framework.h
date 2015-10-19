@@ -1,5 +1,6 @@
 
 #pragma once
+#include "library/sp.h"
 
 #include "logger.h"
 #include "includes.h"
@@ -78,8 +79,8 @@ class Framework
 	bool IsSlowMode();
 	void SetSlowMode(bool SlowEnabled);
 
-	std::shared_ptr<Stage> Stage_GetPrevious();
-	std::shared_ptr<Stage> Stage_GetPrevious(std::shared_ptr<Stage> From);
+	sp<Stage> Stage_GetPrevious();
+	sp<Stage> Stage_GetPrevious(sp<Stage> From);
 };
 
 }; // namespace OpenApoc

@@ -1,5 +1,6 @@
 
 #pragma once
+#include "library/sp.h"
 
 #include "game/apocresources/apocresource.h"
 #include "framework/font.h"
@@ -17,7 +18,7 @@ class GameCore
 
 	std::map<UString, UString> supportedlanguages;
 	std::map<UString, UString> languagetext;
-	std::map<UString, std::shared_ptr<BitmapFont>> fonts;
+	std::map<UString, sp<BitmapFont>> fonts;
 	std::map<UString, Form *> forms;
 	std::map<UString, UString> aliases;
 
@@ -47,9 +48,9 @@ class GameCore
 
 	UString GetString(UString ID);
 	Form *GetForm(UString ID);
-	std::shared_ptr<Image> GetImage(UString ImageData);
-	std::shared_ptr<BitmapFont> GetFont(UString FontData);
-	std::shared_ptr<Palette> GetPalette(UString Path);
+	sp<Image> GetImage(UString ImageData);
+	sp<BitmapFont> GetFont(UString FontData);
+	sp<Palette> GetPalette(UString Path);
 
 	std::vector<UString> GetFormIDs();
 };

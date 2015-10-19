@@ -1,3 +1,4 @@
+#include "library/sp.h"
 
 #include "game/ufopaedia/ufopaedia.h"
 #include "framework/framework.h"
@@ -5,7 +6,7 @@
 namespace OpenApoc
 {
 
-std::vector<std::shared_ptr<UfopaediaCategory>> Ufopaedia::UfopaediaDB;
+std::vector<sp<UfopaediaCategory>> Ufopaedia::UfopaediaDB;
 
 Ufopaedia::Ufopaedia(Framework &fw)
     : Stage(fw), menuform(fw.gamecore->GetForm("FORM_UFOPAEDIA_TITLE"))
@@ -51,7 +52,7 @@ void Ufopaedia::EventOccurred(Event *e)
 
 			for (auto dbcat = UfopaediaDB.begin(); dbcat != UfopaediaDB.end(); dbcat++)
 			{
-				std::shared_ptr<UfopaediaCategory> catrecord = *dbcat;
+				sp<UfopaediaCategory> catrecord = *dbcat;
 				if (catrecord->ID == categoryname)
 				{
 					stageCmd.cmd = StageCmd::Command::PUSH;

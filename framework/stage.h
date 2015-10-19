@@ -1,5 +1,6 @@
 
 #pragma once
+#include "library/sp.h"
 
 #include "event.h"
 
@@ -24,7 +25,7 @@ class StageCmd
 
 	Command cmd;
 
-	std::shared_ptr<Stage> nextStage;
+	sp<Stage> nextStage;
 
 	StageCmd() : cmd(Command::CONTINUE) {}
 };

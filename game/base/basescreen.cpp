@@ -1,3 +1,4 @@
+#include "library/sp.h"
 
 #include "game/base/basescreen.h"
 #include "game/base/base.h"
@@ -11,22 +12,14 @@ namespace OpenApoc
 
 // key is North South West East (true = occupied, false = vacant)
 const std::unordered_map<std::vector<bool>, int> BaseScreen::TILE_CORRIDORS = {
-	{{true, false, false, false}, 4},
-	{{false, false, false, true}, 5 },
-	{{true, false, false, true}, 6 },
-	{{false, true, false, false}, 7},
-	{{true, true, false, false}, 8},
-	{{false, true, false, true}, 9},
-	{{true, true, false, true}, 10},
-	{{false, false, true, false}, 11},
-	{{true, false, true, false}, 12},
-	{{false, false, true, true}, 13},
-	{{true, false, true, true}, 14},
-	{{false, true, true, false}, 15},
-	{{true, true, true, false}, 16},
-	{{false, true, true, true}, 17},
-	{{true, true, true, true}, 18}
-};
+    {{true, false, false, false}, 4}, {{false, false, false, true}, 5},
+    {{true, false, false, true}, 6},  {{false, true, false, false}, 7},
+    {{true, true, false, false}, 8},  {{false, true, false, true}, 9},
+    {{true, true, false, true}, 10},  {{false, false, true, false}, 11},
+    {{true, false, true, false}, 12}, {{false, false, true, true}, 13},
+    {{true, false, true, true}, 14},  {{false, true, true, false}, 15},
+    {{true, true, true, false}, 16},  {{false, true, true, true}, 17},
+    {{true, true, true, true}, 18}};
 
 int BaseScreen::getCorridorSprite(Vec2<int> pos) const
 {
@@ -34,10 +27,10 @@ int BaseScreen::getCorridorSprite(Vec2<int> pos) const
 	{
 		return 0;
 	}
-	bool north = pos.y > 0 && base.getCorridors()[pos.x][pos.y-1];
-	bool south = pos.y < Base::SIZE-1 && base.getCorridors()[pos.x][pos.y+1];
-	bool west = pos.x > 0 && base.getCorridors()[pos.x-1][pos.y];
-	bool east = pos.x < Base::SIZE-1 && base.getCorridors()[pos.x+1][pos.y];
+	bool north = pos.y > 0 && base.getCorridors()[pos.x][pos.y - 1];
+	bool south = pos.y < Base::SIZE - 1 && base.getCorridors()[pos.x][pos.y + 1];
+	bool west = pos.x > 0 && base.getCorridors()[pos.x - 1][pos.y];
+	bool east = pos.x < Base::SIZE - 1 && base.getCorridors()[pos.x + 1][pos.y];
 	return TILE_CORRIDORS.at({north, south, west, east});
 }
 
@@ -112,8 +105,8 @@ void BaseScreen::RenderBase()
 	const Vec2<int> BASE_POS = {200, 82};
 
 	// Draw grid
-	std::shared_ptr<Image> grid = fw.data->load_image(
-	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:UI/menuopt.pal");
+	sp<Image> grid =
+	    fw.data->load_image("PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:UI/menuopt.pal");
 	Vec2<int> i;
 	for (i.x = 0; i.x < Base::SIZE; ++i.x)
 	{
@@ -134,9 +127,8 @@ void BaseScreen::RenderBase()
 			{
 				Vec2<int> pos = BASE_POS + i * TILE_SIZE;
 				std::ostringstream ss;
-				ss << "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:"
-					<< sprite
-					<< ":UI/menuopt.pal";
+				ss << "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:" << sprite
+				   << ":UI/menuopt.pal";
 				fw.renderer->draw(fw.data->load_image(ss.str()), basescreenform->Location + pos);
 			}
 		}
@@ -145,7 +137,7 @@ void BaseScreen::RenderBase()
 	// Draw facilities
 	for (auto &facility : base.getFacilities())
 	{
-		std::shared_ptr<Image> sprite = fw.data->load_image(facility.def.sprite);
+		sp<Image> sprite = fw.data->load_image(facility.def.sprite);
 		Vec2<int> pos = BASE_POS + facility.pos * TILE_SIZE;
 		fw.renderer->draw(sprite, basescreenform->Location + pos);
 	}

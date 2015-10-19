@@ -1,3 +1,4 @@
+#include "library/sp.h"
 
 #include "forms/textbutton.h"
 #include "framework/framework.h"
@@ -5,8 +6,7 @@
 namespace OpenApoc
 {
 
-TextButton::TextButton(Framework &fw, Control *Owner, UString Text,
-                       std::shared_ptr<BitmapFont> font)
+TextButton::TextButton(Framework &fw, Control *Owner, UString Text, sp<BitmapFont> font)
     : Control(fw, Owner), text(Text), font(font),
       buttonbackground(fw.data->load_image("UI/TEXTBUTTONBACK.PNG")),
       TextHAlign(HorizontalAlignment::Centre), TextVAlign(VerticalAlignment::Centre),
@@ -148,9 +148,9 @@ UString TextButton::GetText() { return text; }
 
 void TextButton::SetText(UString Text) { text = Text; }
 
-std::shared_ptr<BitmapFont> TextButton::GetFont() { return font; }
+sp<BitmapFont> TextButton::GetFont() { return font; }
 
-void TextButton::SetFont(std::shared_ptr<BitmapFont> NewFont) { font = NewFont; }
+void TextButton::SetFont(sp<BitmapFont> NewFont) { font = NewFont; }
 
 Control *TextButton::CopyTo(Control *CopyParent)
 {

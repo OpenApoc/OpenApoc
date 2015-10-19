@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "framework/logger.h"
 #include "framework/data.h"
 #include "game/apocresources/pck.h"
@@ -104,9 +105,9 @@ Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize
 
 Data::~Data() {}
 
-std::shared_ptr<VoxelSlice> Data::load_voxel_slice(const UString &path)
+sp<VoxelSlice> Data::load_voxel_slice(const UString &path)
 {
-	std::shared_ptr<VoxelSlice> slice;
+	sp<VoxelSlice> slice;
 	if (path.substr(0, 9) == "LOFTEMPS:")
 	{
 		auto splitString = path.split(':');
@@ -119,7 +120,7 @@ std::shared_ptr<VoxelSlice> Data::load_voxel_slice(const UString &path)
 		// Cut off the index to get the LOFTemps file
 		UString cacheKey = splitString[0] + splitString[1] + splitString[2];
 		cacheKey = cacheKey.toUpper();
-		std::shared_ptr<LOFTemps> lofTemps = this->LOFVoxelCache[cacheKey].lock();
+		sp<LOFTemps> lofTemps = this->LOFVoxelCache[cacheKey].lock();
 		if (!lofTemps)
 		{
 			auto datFile = this->fs.open(splitString[1]);
@@ -155,10 +156,10 @@ std::shared_ptr<VoxelSlice> Data::load_voxel_slice(const UString &path)
 	return slice;
 }
 
-std::shared_ptr<ImageSet> Data::load_image_set(const UString &path)
+sp<ImageSet> Data::load_image_set(const UString &path)
 {
 	UString cacheKey = path.toUpper();
-	std::shared_ptr<ImageSet> imgSet = this->imageSetCache[cacheKey].lock();
+	sp<ImageSet> imgSet = this->imageSetCache[cacheKey].lock();
 	if (imgSet)
 	{
 		return imgSet;
@@ -188,10 +189,10 @@ std::shared_ptr<ImageSet> Data::load_image_set(const UString &path)
 	return imgSet;
 }
 
-std::shared_ptr<Sample> Data::load_sample(const UString &path)
+sp<Sample> Data::load_sample(const UString &path)
 {
 	UString cacheKey = path.toUpper();
-	std::shared_ptr<Sample> sample = this->sampleCache[cacheKey].lock();
+	sp<Sample> sample = this->sampleCache[cacheKey].lock();
 	if (sample)
 		return sample;
 
@@ -210,7 +211,7 @@ std::shared_ptr<Sample> Data::load_sample(const UString &path)
 	return sample;
 }
 
-std::shared_ptr<MusicTrack> Data::load_music(const UString &path)
+sp<MusicTrack> Data::load_music(const UString &path)
 {
 	// No cache for music tracks, just stream of disk
 	for (auto &loader : this->musicLoaders)
@@ -223,11 +224,11 @@ std::shared_ptr<MusicTrack> Data::load_music(const UString &path)
 	return nullptr;
 }
 
-std::shared_ptr<Image> Data::load_image(const UString &path)
+sp<Image> Data::load_image(const UString &path)
 {
 	// Use an uppercase version of the path for the cache key
 	UString cacheKey = path.toUpper();
-	std::shared_ptr<Image> img = this->imageCache[cacheKey].lock();
+	sp<Image> img = this->imageCache[cacheKey].lock();
 	if (img)
 	{
 		return img;
@@ -293,9 +294,8 @@ std::shared_ptr<Image> Data::load_image(const UString &path)
 			}
 			case 5:
 			{
-				std::shared_ptr<PaletteImage> pImg =
-				    std::dynamic_pointer_cast<PaletteImage>(this->load_image(
-				        "PCK:" + splitString[1] + ":" + splitString[2] + ":" + splitString[3]));
+				sp<PaletteImage> pImg = std::dynamic_pointer_cast<PaletteImage>(this->load_image(
+				    "PCK:" + splitString[1] + ":" + splitString[2] + ":" + splitString[3]));
 				assert(pImg);
 				auto pal = this->load_palette(splitString[4]);
 				assert(pal);
@@ -334,9 +334,8 @@ std::shared_ptr<Image> Data::load_image(const UString &path)
 			}
 			case 5:
 			{
-				std::shared_ptr<PaletteImage> pImg = std::dynamic_pointer_cast<PaletteImage>(
-				    this->load_image("PCKSTRAT:" + splitString[1] + ":" + splitString[2] + ":" +
-				                     splitString[3]));
+				sp<PaletteImage> pImg = std::dynamic_pointer_cast<PaletteImage>(this->load_image(
+				    "PCKSTRAT:" + splitString[1] + ":" + splitString[2] + ":" + splitString[3]));
 				assert(pImg);
 				auto pal = this->load_palette(splitString[4]);
 				assert(pal);
@@ -372,9 +371,9 @@ std::shared_ptr<Image> Data::load_image(const UString &path)
 	return img;
 }
 
-std::shared_ptr<Palette> Data::load_palette(const UString &path)
+sp<Palette> Data::load_palette(const UString &path)
 {
-	std::shared_ptr<RGBImage> img = std::dynamic_pointer_cast<RGBImage>(this->load_image(path));
+	sp<RGBImage> img = std::dynamic_pointer_cast<RGBImage>(this->load_image(path));
 	if (img)
 	{
 		unsigned int idx = 0;
@@ -393,7 +392,7 @@ std::shared_ptr<Palette> Data::load_palette(const UString &path)
 	}
 	else
 	{
-		std::shared_ptr<Palette> pal(loadApocPalette(*this, path));
+		sp<Palette> pal(loadApocPalette(*this, path));
 		if (!pal)
 		{
 			LogError("Failed to open palette \"%s\"", path.c_str());

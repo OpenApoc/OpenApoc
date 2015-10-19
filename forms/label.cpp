@@ -1,3 +1,4 @@
+#include "library/sp.h"
 
 #include "forms/label.h"
 #include "framework/framework.h"
@@ -5,7 +6,7 @@
 namespace OpenApoc
 {
 
-Label::Label(Framework &fw, Control *Owner, UString Text, std::shared_ptr<BitmapFont> font)
+Label::Label(Framework &fw, Control *Owner, UString Text, sp<BitmapFont> font)
     : Control(fw, Owner), text(Text), font(font), TextHAlign(HorizontalAlignment::Left),
       TextVAlign(VerticalAlignment::Top), WordWrap(true)
 {
@@ -78,9 +79,9 @@ UString Label::GetText() { return text; }
 
 void Label::SetText(UString Text) { text = Text; }
 
-std::shared_ptr<BitmapFont> Label::GetFont() { return font; }
+sp<BitmapFont> Label::GetFont() { return font; }
 
-void Label::SetFont(std::shared_ptr<BitmapFont> NewFont) { font = NewFont; }
+void Label::SetFont(sp<BitmapFont> NewFont) { font = NewFont; }
 
 Control *Label::CopyTo(Control *CopyParent)
 {

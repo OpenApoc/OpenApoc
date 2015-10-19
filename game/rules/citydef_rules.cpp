@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "game/rules/rules_private.h"
 #include "framework/logger.h"
 #include "framework/framework.h"
@@ -89,14 +90,13 @@ bool LoadCityMap(Framework &fw, Vec3<int> size, tinyxml2::XMLElement *root,
 	return true;
 }
 
-bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID,
-                  std::shared_ptr<Image> &sprite, std::shared_ptr<Image> &stratmapSprite,
-                  std::shared_ptr<VoxelMap> &voxelMap, bool &isLandingPad,
+bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID, sp<Image> &sprite,
+                  sp<Image> &stratmapSprite, sp<VoxelMap> &voxelMap, bool &isLandingPad,
                   std::vector<UString> &landingPadList)
 {
-	std::shared_ptr<Image> readSprite = nullptr;
-	std::shared_ptr<Image> readStratmapSprite = nullptr;
-	std::shared_ptr<VoxelMap> readVoxelMap = nullptr;
+	sp<Image> readSprite = nullptr;
+	sp<Image> readStratmapSprite = nullptr;
+	sp<VoxelMap> readVoxelMap = nullptr;
 	isLandingPad = false;
 
 	int numVoxelLayers = 0;
@@ -343,17 +343,18 @@ bool RulesLoader::ParseCityDefinition(Framework &fw, Rules &rules, tinyxml2::XML
 				{
 					LogError("Building \"%s\" has invalid y1 bound", bldName.c_str());
 					return false;
-				}				
+				}
 				def.name = bldName;
 				def.ownerName = owner;
 				def.bounds = {x0, y0, x1, y1};
 				for (tinyxml2::XMLElement *base = bld->FirstChildElement(); base != nullptr;
-				base = base->NextSiblingElement())
+				     base = base->NextSiblingElement())
 				{
 					UString baseNodeName = base->Name();
 					if (baseNodeName != "base")
 					{
-						LogError("Unexpected node \"%s\" - expected \"base\"", baseNodeName.c_str());
+						LogError("Unexpected node \"%s\" - expected \"base\"",
+						         baseNodeName.c_str());
 						return false;
 					}
 					err = base->QueryIntAttribute("x", &x0);
@@ -368,41 +369,46 @@ bool RulesLoader::ParseCityDefinition(Framework &fw, Rules &rules, tinyxml2::XML
 						LogError("Building \"%s\" has invalid base y bound", bldName.c_str());
 						return false;
 					}
-					def.baseLift = { x0, y0 };
+					def.baseLift = {x0, y0};
 					for (tinyxml2::XMLElement *b = base->FirstChildElement(); b != nullptr;
-					b = b->NextSiblingElement())
+					     b = b->NextSiblingElement())
 					{
 						UString bNodeName = b->Name();
 						if (bNodeName != "corridor")
 						{
-							LogError("Unexpected node \"%s\" - expected \"corridor\"", bNodeName.c_str());
+							LogError("Unexpected node \"%s\" - expected \"corridor\"",
+							         bNodeName.c_str());
 							return false;
 						}
 						err = b->QueryIntAttribute("x0", &x0);
 						if (err != tinyxml2::XML_SUCCESS)
 						{
-							LogError("Building \"%s\" has invalid corridor x0 bound", bldName.c_str());
+							LogError("Building \"%s\" has invalid corridor x0 bound",
+							         bldName.c_str());
 							return false;
 						}
 						err = b->QueryIntAttribute("x1", &x1);
 						if (err != tinyxml2::XML_SUCCESS)
 						{
-							LogError("Building \"%s\" has invalid corridor x1 bound", bldName.c_str());
+							LogError("Building \"%s\" has invalid corridor x1 bound",
+							         bldName.c_str());
 							return false;
 						}
 						err = b->QueryIntAttribute("y0", &y0);
 						if (err != tinyxml2::XML_SUCCESS)
 						{
-							LogError("Building \"%s\" has invalid corridor y0 bound", bldName.c_str());
+							LogError("Building \"%s\" has invalid corridor y0 bound",
+							         bldName.c_str());
 							return false;
 						}
 						err = b->QueryIntAttribute("y1", &y1);
 						if (err != tinyxml2::XML_SUCCESS)
 						{
-							LogError("Building \"%s\" has invalid corridor y1 bound", bldName.c_str());
+							LogError("Building \"%s\" has invalid corridor y1 bound",
+							         bldName.c_str());
 							return false;
 						}
-						def.baseCorridors.push_back({ x0, y0, x1, y1 });
+						def.baseCorridors.push_back({x0, y0, x1, y1});
 					}
 				}
 				rules.buildings.emplace_back(def);

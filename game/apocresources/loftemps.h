@@ -1,4 +1,5 @@
 #pragma once
+#include "library/sp.h"
 #include "game/tileview/voxel.h"
 
 namespace OpenApoc
@@ -9,10 +10,10 @@ class IFile;
 class LOFTemps
 {
   private:
-	std::vector<std::shared_ptr<VoxelSlice>> slices;
+	std::vector<sp<VoxelSlice>> slices;
 
   public:
 	LOFTemps(IFile &datFile, IFile &tabFile);
-	std::shared_ptr<VoxelSlice> getSlice(unsigned int idx);
+	sp<VoxelSlice> getSlice(unsigned int idx);
 };
 }; // namespace OpenApoc

@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "framework/logger.h"
 #include "game/city/vehicle.h"
 #include "game/city/weapon.h"
@@ -170,7 +171,7 @@ void Vehicle::update(unsigned int ticks)
 				float range = weapon->getWeaponDef().range;
 				// Find the closest enemy within the firing arc
 				float closestEnemyRange = std::numeric_limits<float>::max();
-				std::shared_ptr<VehicleTileObject> closestEnemy;
+				sp<VehicleTileObject> closestEnemy;
 				for (auto obj : vehicleTile->getOwningTile()->map.activeObjects)
 				{
 					auto otherVehicle = std::dynamic_pointer_cast<Vehicle>(obj);

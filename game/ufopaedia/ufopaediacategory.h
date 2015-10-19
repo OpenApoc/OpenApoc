@@ -1,4 +1,5 @@
 #pragma once
+#include "library/sp.h"
 
 #include "framework/stage.h"
 #include "framework/includes.h"
@@ -20,7 +21,7 @@ class UfopaediaCategory : public Stage // , public std::enable_shared_from_this<
 	UString Title;
 	UString BodyInformation;
 	UString BackgroundImageFilename;
-	std::vector<std::shared_ptr<UfopaediaEntry>> Entries;
+	std::vector<sp<UfopaediaEntry>> Entries;
 
 	unsigned int ViewingEntry;
 

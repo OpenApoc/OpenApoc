@@ -1,4 +1,5 @@
 #pragma once
+#include "library/sp.h"
 
 #include "game/tileview/tileview.h"
 
@@ -20,8 +21,8 @@ enum class UpdateSpeed
 class CityView : public TileView
 {
   private:
-	std::shared_ptr<Form> activeTab;
-	std::vector<std::shared_ptr<Form>> uiTabs;
+	sp<Form> activeTab;
+	std::vector<sp<Form>> uiTabs;
 	UpdateSpeed updateSpeed;
 
   public:

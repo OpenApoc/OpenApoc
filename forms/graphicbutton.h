@@ -1,5 +1,6 @@
 
 #pragma once
+#include "library/sp.h"
 
 #include "control.h"
 
@@ -16,11 +17,11 @@ class GraphicButton : public Control
 	UString image_name;
 	UString imagedepressed_name;
 	UString imagehover_name;
-	std::shared_ptr<Image> image;
-	std::shared_ptr<Image> imagedepressed;
-	std::shared_ptr<Image> imagehover;
+	sp<Image> image;
+	sp<Image> imagedepressed;
+	sp<Image> imagehover;
 
-	std::shared_ptr<Sample> buttonclick;
+	sp<Sample> buttonclick;
 
   protected:
 	virtual void OnRender() override;
@@ -35,12 +36,12 @@ class GraphicButton : public Control
 	virtual void Update() override;
 	virtual void UnloadResources() override;
 
-	std::shared_ptr<Image> GetImage();
-	void SetImage(std::shared_ptr<Image> Image);
-	std::shared_ptr<Image> GetDepressedImage();
-	void SetDepressedImage(std::shared_ptr<Image> Image);
-	std::shared_ptr<Image> GetHoverImage();
-	void SetHoverImage(std::shared_ptr<Image> Image);
+	sp<Image> GetImage();
+	void SetImage(sp<Image> Image);
+	sp<Image> GetDepressedImage();
+	void SetDepressedImage(sp<Image> Image);
+	sp<Image> GetHoverImage();
+	void SetHoverImage(sp<Image> Image);
 
 	virtual Control *CopyTo(Control *CopyParent) override;
 };

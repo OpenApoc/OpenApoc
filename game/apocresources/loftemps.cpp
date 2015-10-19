@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "game/apocresources/loftemps.h"
 #include "framework/logger.h"
 #include "framework/data.h"
@@ -81,7 +82,7 @@ LOFTemps::LOFTemps(IFile &datFile, IFile &tabFile)
 	}
 }
 
-std::shared_ptr<VoxelSlice> LOFTemps::getSlice(unsigned int idx)
+sp<VoxelSlice> LOFTemps::getSlice(unsigned int idx)
 {
 	if (idx >= this->slices.size())
 	{

@@ -1,5 +1,6 @@
 
 #pragma once
+#include "library/sp.h"
 
 #include "control.h"
 
@@ -13,10 +14,10 @@ class CheckBox : public Control
 {
 
   private:
-	std::shared_ptr<Image> imagechecked;
-	std::shared_ptr<Image> imageunchecked;
+	sp<Image> imagechecked;
+	sp<Image> imageunchecked;
 
-	std::shared_ptr<Sample> buttonclick;
+	sp<Sample> buttonclick;
 
 	void LoadResources();
 

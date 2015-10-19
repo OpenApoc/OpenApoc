@@ -1,3 +1,4 @@
+#include "library/sp.h"
 
 #include "game/debugtools/debugmenu.h"
 #include "framework/framework.h"
@@ -77,7 +78,7 @@ bool DebugMenu::IsTransition() { return false; }
 void DebugMenu::BulkExportPCKs()
 {
 	std::vector<UString> PaletteNames;
-	std::vector<std::shared_ptr<Palette>> PaletteList;
+	std::vector<sp<Palette>> PaletteList;
 	std::vector<UString> PckNames;
 
 	// All the palettes
@@ -139,7 +140,7 @@ void DebugMenu::BulkExportPCKs()
 
 		LogInfo(UString("Processing ") + pckloadstr);
 
-		std::shared_ptr<ImageSet> pckset = fw.data->load_image_set(pckloadstr);
+		sp<ImageSet> pckset = fw.data->load_image_set(pckloadstr);
 
 		if (pckset != nullptr)
 		{
@@ -149,7 +150,7 @@ void DebugMenu::BulkExportPCKs()
 			{
 				UString outputname = UString("Extracted/") + pckname + UString("/") +
 				                     Strings::FromInteger(idx) + UString(".PNG");
-				std::shared_ptr<Image> curimg = pckset->images.at(idx);
+				sp<Image> curimg = pckset->images.at(idx);
 
 				if (RGBImage *bi = dynamic_cast<RGBImage *>(curimg.get()))
 				{

@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "framework/logger.h"
 #include "game/apocresources/pck.h"
 #include "framework/data.h"
@@ -41,7 +42,7 @@ class PCK
 	PCK(Data &d, UString PckFilename, UString TabFilename);
 	~PCK();
 
-	std::vector<std::shared_ptr<PaletteImage>> images;
+	std::vector<sp<PaletteImage>> images;
 };
 PCK::PCK(Data &d, UString PckFilename, UString TabFilename)
 {
@@ -85,7 +86,7 @@ void PCK::ProcessFile(Data &d, UString PckFilename, UString TabFilename, int Ind
 
 void PCK::LoadVersion1Format(IFile &pck, IFile &tab, int Index)
 {
-	std::shared_ptr<PaletteImage> img;
+	sp<PaletteImage> img;
 
 	uint16_t c0_offset;
 	uint16_t c0_maxwidth;
@@ -191,7 +192,7 @@ void PCK::LoadVersion2Format(IFile &pck, IFile &tab, int Index)
 {
 	uint16_t compressionmethod;
 
-	std::shared_ptr<PaletteImage> img;
+	sp<PaletteImage> img;
 
 	PCKCompression1ImageHeader c1_imgheader;
 	uint32_t c1_pixelstoskip;
@@ -337,7 +338,7 @@ void PCK::LoadVersion2Format(IFile &pck, IFile &tab, int Index)
 }
 }; // anonymous namespace
 
-std::shared_ptr<ImageSet> PCKLoader::load(Data &data, UString PckFilename, UString TabFilename)
+sp<ImageSet> PCKLoader::load(Data &data, UString PckFilename, UString TabFilename)
 {
 	PCK *p = new PCK(data, PckFilename, TabFilename);
 	auto imageSet = std::make_shared<ImageSet>();
@@ -371,7 +372,7 @@ struct strat_header
 
 static_assert(sizeof(struct strat_header) == 4, "Invalid strat_header size");
 
-std::shared_ptr<PaletteImage> loadStrategy(IFile &file)
+sp<PaletteImage> loadStrategy(IFile &file)
 {
 	auto img = std::make_shared<PaletteImage>(Vec2<int>{8, 8}); // All strategy map tiles are 8x8
 	unsigned int offset = 0;
@@ -407,8 +408,7 @@ std::shared_ptr<PaletteImage> loadStrategy(IFile &file)
 	return img;
 }
 
-std::shared_ptr<ImageSet> PCKLoader::load_strat(Data &data, UString PckFilename,
-                                                UString TabFilename)
+sp<ImageSet> PCKLoader::load_strat(Data &data, UString PckFilename, UString TabFilename)
 {
 	auto imageSet = std::make_shared<ImageSet>();
 	auto tabFile = data.fs.open(TabFilename);

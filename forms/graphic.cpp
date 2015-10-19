@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "forms/graphic.h"
 #include "game/resources/gamecore.h"
 #include "framework/framework.h"
@@ -49,9 +50,9 @@ void Graphic::UnloadResources()
 	Control::UnloadResources();
 }
 
-std::shared_ptr<Image> Graphic::GetImage() { return image; }
+sp<Image> Graphic::GetImage() { return image; }
 
-void Graphic::SetImage(std::shared_ptr<Image> Image) { image = Image; }
+void Graphic::SetImage(sp<Image> Image) { image = Image; }
 
 Control *Graphic::CopyTo(Control *CopyParent)
 {

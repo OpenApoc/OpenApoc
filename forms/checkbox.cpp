@@ -1,3 +1,4 @@
+#include "library/sp.h"
 
 #include "forms/checkbox.h"
 #include "framework/framework.h"
@@ -60,7 +61,7 @@ void CheckBox::EventOccured(Event *e)
 
 void CheckBox::OnRender()
 {
-	std::shared_ptr<Image> useimage;
+	sp<Image> useimage;
 
 	LoadResources();
 

@@ -1,3 +1,4 @@
+#include "library/sp.h"
 
 #include "ufopaediacategory.h"
 #include "ufopaedia.h"
@@ -41,7 +42,7 @@ UfopaediaCategory::UfopaediaCategory(Framework &fw, tinyxml2::XMLElement *Elemen
 			for (node2 = node->FirstChildElement(); node2 != nullptr;
 			     node2 = node2->NextSiblingElement())
 			{
-				std::shared_ptr<UfopaediaEntry> newentry = std::make_shared<UfopaediaEntry>(node2);
+				sp<UfopaediaEntry> newentry = std::make_shared<UfopaediaEntry>(node2);
 				Entries.push_back(newentry);
 			}
 		}
@@ -59,7 +60,7 @@ void UfopaediaCategory::Begin()
 	int idx = 1;
 	for (auto entry = Entries.begin(); entry != Entries.end(); entry++)
 	{
-		std::shared_ptr<UfopaediaEntry> e = *entry;
+		sp<UfopaediaEntry> e = *entry;
 		TextButton *tb =
 		    new TextButton(fw, nullptr, fw.gamecore->GetString(e->Title), infolabel->GetFont());
 		tb->Name = "Index" + Strings::FromInteger(idx);
@@ -203,7 +204,7 @@ void UfopaediaCategory::SetupForm()
 	}
 	else
 	{
-		std::shared_ptr<UfopaediaEntry> e = Entries.at(ViewingEntry - 1);
+		sp<UfopaediaEntry> e = Entries.at(ViewingEntry - 1);
 		menuform->FindControlTyped<Graphic>("BACKGROUND_PICTURE")
 		    ->SetImage(fw.data->load_image(e->BackgroundImageFilename));
 		Label *infolabel = menuform->FindControlTyped<Label>("TEXT_INFO");
@@ -224,7 +225,7 @@ void UfopaediaCategory::SetCatOffset(int Direction)
 	{
 		if (Ufopaedia::UfopaediaDB.at(idx).get() == this)
 		{
-			std::shared_ptr<UfopaediaCategory> nxt = Ufopaedia::UfopaediaDB.at(idx + Direction);
+			sp<UfopaediaCategory> nxt = Ufopaedia::UfopaediaDB.at(idx + Direction);
 			stageCmd.cmd = StageCmd::Command::REPLACE;
 			stageCmd.nextStage = nxt;
 		}

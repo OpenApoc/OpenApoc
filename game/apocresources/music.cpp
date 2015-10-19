@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "framework/logger.h"
 #include "framework/musicloader_interface.h"
 #include "framework/data.h"
@@ -26,9 +27,8 @@ static const std::vector<unsigned int> lengths = {
 static const int MusicChannels = 2;
 static const int MusicBytesPerSample = 2;
 
-MusicTrack::MusicCallbackReturn fillMusicData(std::shared_ptr<MusicTrack> thisTrack,
-                                              unsigned int maxSamples, void *sampleBuffer,
-                                              unsigned int *returnedSamples);
+MusicTrack::MusicCallbackReturn fillMusicData(sp<MusicTrack> thisTrack, unsigned int maxSamples,
+                                              void *sampleBuffer, unsigned int *returnedSamples);
 
 class RawMusicTrack : public MusicTrack
 {
@@ -102,9 +102,8 @@ class RawMusicTrack : public MusicTrack
 	virtual ~RawMusicTrack() {}
 };
 
-MusicTrack::MusicCallbackReturn fillMusicData(std::shared_ptr<MusicTrack> thisTrack,
-                                              unsigned int maxSamples, void *sampleBuffer,
-                                              unsigned int *returnedSamples)
+MusicTrack::MusicCallbackReturn fillMusicData(sp<MusicTrack> thisTrack, unsigned int maxSamples,
+                                              void *sampleBuffer, unsigned int *returnedSamples)
 {
 	auto track = std::dynamic_pointer_cast<RawMusicTrack>(thisTrack);
 	assert(track);
@@ -119,7 +118,7 @@ class RawMusicLoader : public MusicLoader
 	RawMusicLoader(Data &data) : data(data) {}
 	virtual ~RawMusicLoader() {}
 
-	virtual std::shared_ptr<MusicTrack> loadMusic(UString path) override
+	virtual sp<MusicTrack> loadMusic(UString path) override
 	{
 		auto strings = path.split(':');
 		if (strings.size() != 2)

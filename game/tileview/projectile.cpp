@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "game/tileview/projectile.h"
 #include "game/tileview/tile_collidable.h"
 #include "framework/logger.h"
@@ -5,8 +6,8 @@
 namespace OpenApoc
 {
 
-Projectile::Projectile(TileMap &map, std::shared_ptr<Vehicle> firer, Vec3<float> position,
-                       Vec3<float> velocity, unsigned int lifetime)
+Projectile::Projectile(TileMap &map, sp<Vehicle> firer, Vec3<float> position, Vec3<float> velocity,
+                       unsigned int lifetime)
     : TileObject(map, position, false, false, true), velocity(velocity), age(0), lifetime(lifetime),
       firer(firer), previousPosition(position)
 {

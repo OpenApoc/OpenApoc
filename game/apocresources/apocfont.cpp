@@ -1,3 +1,4 @@
+#include "library/sp.h"
 
 #include "game/apocresources/apocfont.h"
 #include "framework/framework.h"
@@ -7,8 +8,7 @@
 namespace OpenApoc
 {
 
-std::shared_ptr<ApocalypseFont> ApocalypseFont::loadFont(Framework &fw,
-                                                         tinyxml2::XMLElement *fontElement)
+sp<ApocalypseFont> ApocalypseFont::loadFont(Framework &fw, tinyxml2::XMLElement *fontElement)
 {
 	int spacewidth = 0;
 	int height = 0;
@@ -67,7 +67,7 @@ std::shared_ptr<ApocalypseFont> ApocalypseFont::loadFont(Framework &fw,
 		LogError("apocfont \"%s\" - file \"%s\" contains no glyphs", fontName.c_str(),
 		         fileName.c_str());
 	}
-	std::shared_ptr<ApocalypseFont> font(new ApocalypseFont);
+	sp<ApocalypseFont> font(new ApocalypseFont);
 
 	font->name = fontName;
 	font->spacewidth = spacewidth;
@@ -161,7 +161,7 @@ std::shared_ptr<ApocalypseFont> ApocalypseFont::loadFont(Framework &fw,
 	return font;
 }
 
-std::shared_ptr<PaletteImage> ApocalypseFont::getGlyph(UniChar codepoint)
+sp<PaletteImage> ApocalypseFont::getGlyph(UniChar codepoint)
 {
 	if (fontbitmaps.find(codepoint) == fontbitmaps.end())
 	{
@@ -186,6 +186,6 @@ int ApocalypseFont::GetEstimateCharacters(int FitInWidth)
 	return FitInWidth / averagecharacterwidth;
 }
 
-std::shared_ptr<Palette> ApocalypseFont::getPalette() { return this->palette; }
+sp<Palette> ApocalypseFont::getPalette() { return this->palette; }
 
 }; // namespace OpenApoc

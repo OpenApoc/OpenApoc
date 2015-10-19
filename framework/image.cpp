@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "framework/image.h"
 #include "framework/palette.h"
 #include "framework/renderer.h"
@@ -29,9 +30,9 @@ PaletteImage::PaletteImage(Vec2<unsigned int> size, uint8_t initialIndex)
 
 PaletteImage::~PaletteImage() {}
 
-std::shared_ptr<RGBImage> PaletteImage::toRGBImage(std::shared_ptr<Palette> p)
+sp<RGBImage> PaletteImage::toRGBImage(sp<Palette> p)
 {
-	std::shared_ptr<RGBImage> i = std::make_shared<RGBImage>(size);
+	sp<RGBImage> i = std::make_shared<RGBImage>(size);
 
 	RGBImageLock imgLock{i, ImageLockUse::Write};
 
@@ -46,8 +47,7 @@ std::shared_ptr<RGBImage> PaletteImage::toRGBImage(std::shared_ptr<Palette> p)
 	return i;
 }
 
-void PaletteImage::blit(std::shared_ptr<PaletteImage> src, Vec2<unsigned int> offset,
-                        std::shared_ptr<PaletteImage> dst)
+void PaletteImage::blit(sp<PaletteImage> src, Vec2<unsigned int> offset, sp<PaletteImage> dst)
 {
 	PaletteImageLock reader(src, ImageLockUse::Read);
 	PaletteImageLock writer(dst, ImageLockUse::Write);
@@ -120,7 +120,7 @@ void RGBImage::saveBitmap(const UString &filename)
 
 RGBImage::~RGBImage() {}
 
-RGBImageLock::RGBImageLock(std::shared_ptr<RGBImage> img, ImageLockUse use) : img(img), use(use)
+RGBImageLock::RGBImageLock(sp<RGBImage> img, ImageLockUse use) : img(img), use(use)
 {
 	// FIXME: Readback from renderer?
 	// FIXME: Disallow multiple locks?
@@ -145,8 +145,7 @@ void RGBImageLock::set(Vec2<unsigned int> pos, Colour &c)
 
 void *RGBImageLock::getData() { return this->img->pixels.get(); }
 
-PaletteImageLock::PaletteImageLock(std::shared_ptr<PaletteImage> img, ImageLockUse use)
-    : img(img), use(use)
+PaletteImageLock::PaletteImageLock(sp<PaletteImage> img, ImageLockUse use) : img(img), use(use)
 {
 	// FIXME: Readback from renderer?
 	// FIXME: Disallow multiple locks?

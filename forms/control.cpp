@@ -1,3 +1,4 @@
+#include "library/sp.h"
 
 #include "forms/control.h"
 #include "framework/framework.h"
@@ -240,7 +241,7 @@ void Control::Render()
 		controlArea.reset(new Surface{Vec2<unsigned int>{Size.x, Size.y}});
 	}
 	{
-		std::shared_ptr<Palette> previousPalette;
+		sp<Palette> previousPalette;
 		if (this->palette)
 		{
 			previousPalette = fw.renderer->getPalette();
@@ -695,8 +696,7 @@ Form *Control::GetForm()
 	return dynamic_cast<Form *>(c);
 }
 
-std::list<UString> Control::WordWrapText(std::shared_ptr<OpenApoc::BitmapFont> Font,
-                                         UString WrapText)
+std::list<UString> Control::WordWrapText(sp<OpenApoc::BitmapFont> Font, UString WrapText)
 {
 	int txtwidth;
 	std::list<UString> lines;

@@ -1,3 +1,4 @@
+#include "library/sp.h"
 
 #include "game/resources/gamecore.h"
 #include "framework/framework.h"
@@ -183,12 +184,9 @@ UString GameCore::GetString(UString ID)
 
 Form *GameCore::GetForm(UString ID) { return (Form *)forms[ID]->CopyTo(nullptr); }
 
-std::shared_ptr<Image> GameCore::GetImage(UString ImageData)
-{
-	return fw.data->load_image(ImageData);
-}
+sp<Image> GameCore::GetImage(UString ImageData) { return fw.data->load_image(ImageData); }
 
-std::shared_ptr<BitmapFont> GameCore::GetFont(UString FontData)
+sp<BitmapFont> GameCore::GetFont(UString FontData)
 {
 	if (fonts.find(FontData) == fonts.end())
 	{
@@ -198,7 +196,7 @@ std::shared_ptr<BitmapFont> GameCore::GetFont(UString FontData)
 	return fonts[FontData];
 }
 
-std::shared_ptr<Palette> GameCore::GetPalette(UString Path) { return fw.data->load_palette(Path); }
+sp<Palette> GameCore::GetPalette(UString Path) { return fw.data->load_palette(Path); }
 
 void GameCore::ApplyAliases(tinyxml2::XMLElement *Source)
 {

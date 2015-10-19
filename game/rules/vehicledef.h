@@ -1,4 +1,5 @@
 #pragma once
+#include "library/sp.h"
 
 #include "library/vec.h"
 #include "library/strings.h"
@@ -55,13 +56,13 @@ class VehicleDefinition
 
 	UString name;
 	Type type;
-	std::map<Banking, std::map<Direction, std::shared_ptr<Image>>> sprites;
-	std::map<Direction, std::shared_ptr<Image>> strategySprites;
+	std::map<Banking, std::map<Direction, sp<Image>>> sprites;
+	std::map<Direction, sp<Image>> strategySprites;
 	// The same sprites but using vectors for directions
-	std::vector<std::pair<Vec3<float>, std::shared_ptr<Image>>> directionalSprites;
-	std::vector<std::pair<Vec3<float>, std::shared_ptr<Image>>> directionalStrategySprites;
+	std::vector<std::pair<Vec3<float>, sp<Image>>> directionalSprites;
+	std::vector<std::pair<Vec3<float>, sp<Image>>> directionalStrategySprites;
 	Vec3<float> size;
-	std::shared_ptr<VoxelMap> voxelMap;
+	sp<VoxelMap> voxelMap;
 };
 
 }; // namespace OpenApoc

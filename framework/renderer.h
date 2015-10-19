@@ -1,4 +1,5 @@
 #pragma once
+#include "library/sp.h"
 #include "library/vec.h"
 #include "library/colour.h"
 #include <memory>
@@ -20,8 +21,8 @@ class Renderer
 {
   private:
 	friend class RendererSurfaceBinding;
-	virtual void setSurface(std::shared_ptr<Surface> s) = 0;
-	virtual std::shared_ptr<Surface> getSurface() = 0;
+	virtual void setSurface(sp<Surface> s) = 0;
+	virtual sp<Surface> getSurface() = 0;
 
   public:
 	enum class Scaler
@@ -31,14 +32,14 @@ class Renderer
 	};
 	virtual ~Renderer();
 	virtual void clear(Colour c = Colour{0, 0, 0, 0}) = 0;
-	virtual void setPalette(std::shared_ptr<Palette> p) = 0;
-	virtual std::shared_ptr<Palette> getPalette() = 0;
-	virtual void draw(std::shared_ptr<Image> i, Vec2<float> position) = 0;
-	virtual void drawRotated(std::shared_ptr<Image> i, Vec2<float> center, Vec2<float> position,
+	virtual void setPalette(sp<Palette> p) = 0;
+	virtual sp<Palette> getPalette() = 0;
+	virtual void draw(sp<Image> i, Vec2<float> position) = 0;
+	virtual void drawRotated(sp<Image> i, Vec2<float> center, Vec2<float> position,
 	                         float angle) = 0;
-	virtual void drawScaled(std::shared_ptr<Image> i, Vec2<float> position, Vec2<float> size,
+	virtual void drawScaled(sp<Image> i, Vec2<float> position, Vec2<float> size,
 	                        Scaler scaler = Scaler::Linear) = 0;
-	virtual void drawTinted(std::shared_ptr<Image> i, Vec2<float> position, Colour tint) = 0;
+	virtual void drawTinted(sp<Image> i, Vec2<float> position, Colour tint) = 0;
 	virtual void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c) = 0;
 	virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c,
 	                      float thickness = 1.0) = 0;
@@ -46,7 +47,7 @@ class Renderer
 	virtual void flush() = 0;
 	virtual UString getName() = 0;
 
-	virtual std::shared_ptr<Surface> getDefaultSurface() = 0;
+	virtual sp<Surface> getDefaultSurface() = 0;
 };
 
 class RendererSurfaceBinding
@@ -54,11 +55,11 @@ class RendererSurfaceBinding
   private:
 	// Disallow copy
 	RendererSurfaceBinding(const RendererSurfaceBinding &) = delete;
-	std::shared_ptr<Surface> prevBinding;
+	sp<Surface> prevBinding;
 	Renderer &r;
 
   public:
-	RendererSurfaceBinding(Renderer &r, std::shared_ptr<Surface> surface);
+	RendererSurfaceBinding(Renderer &r, sp<Surface> surface);
 	~RendererSurfaceBinding();
 };
 

@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "game/tileview/tile.h"
 #include "framework/framework.h"
 
@@ -50,7 +51,7 @@ Tile *TileMap::getTile(Vec3<int> pos) { return getTile(pos.x, pos.y, pos.z); }
 
 Tile *TileMap::getTile(Vec3<float> pos) { return getTile(pos.x, pos.y, pos.z); }
 
-void TileMap::addObject(std::shared_ptr<TileObject> obj)
+void TileMap::addObject(sp<TileObject> obj)
 {
 	if (!obj->getOwningTile())
 	{
@@ -68,7 +69,7 @@ void TileMap::addObject(std::shared_ptr<TileObject> obj)
 		this->projectiles.insert(obj);
 }
 
-void TileMap::removeObject(std::shared_ptr<TileObject> obj)
+void TileMap::removeObject(sp<TileObject> obj)
 {
 	if (!obj->getOwningTile())
 	{
@@ -134,7 +135,7 @@ void TileObject::setPosition(Vec3<float> newPos)
 	}
 }
 
-std::shared_ptr<Image> TileObject::getSprite() const
+sp<Image> TileObject::getSprite() const
 {
 	// Override this for visible objects
 	LogWarning("Called on non-visible object");
@@ -142,7 +143,7 @@ std::shared_ptr<Image> TileObject::getSprite() const
 	return nullptr;
 }
 
-std::shared_ptr<Image> TileObject::getStrategySprite() const
+sp<Image> TileObject::getStrategySprite() const
 {
 	// Override this for visible objects
 	LogWarning("Called on non-visible object");

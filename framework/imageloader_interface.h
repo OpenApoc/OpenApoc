@@ -1,4 +1,5 @@
 #pragma once
+#include "library/sp.h"
 #include "image.h"
 #include "library/strings.h"
 
@@ -9,7 +10,7 @@ class ImageLoader
 {
   public:
 	virtual ~ImageLoader() {}
-	virtual std::shared_ptr<Image> loadImage(UString path) = 0;
+	virtual sp<Image> loadImage(UString path) = 0;
 	virtual UString getName() = 0;
 };
 

@@ -1,4 +1,5 @@
 #pragma once
+#include "library/sp.h"
 #include <functional>
 #include <memory>
 #include <vector>
@@ -57,7 +58,7 @@ class MusicTrack
 		Continue, // There is more to come, even if we didn't fill the output buffer
 	};
 
-	std::function<MusicCallbackReturn(std::shared_ptr<MusicTrack> track, unsigned int maxSamples,
+	std::function<MusicCallbackReturn(sp<MusicTrack> track, unsigned int maxSamples,
 	                                  void *sampleBuffer, unsigned int *returnedSamples)> callback;
 	virtual const UString &getName() const = 0;
 	virtual ~MusicTrack() {}
@@ -67,12 +68,12 @@ class SoundBackend
 {
   public:
 	virtual ~SoundBackend() {}
-	virtual void playSample(std::shared_ptr<Sample> sample) = 0;
+	virtual void playSample(sp<Sample> sample) = 0;
 	virtual void playMusic(std::function<void(void *)> finishedCallback,
 	                       void *callbackData = nullptr) = 0;
 	virtual void stopMusic() = 0;
 
-	virtual void setTrack(std::shared_ptr<MusicTrack> track) = 0;
+	virtual void setTrack(sp<MusicTrack> track) = 0;
 
 	/* Gain - a float scale (from 1.0 to 0.0) in 'linear intensity' (IE samples
 	 * are simply multiplied by the 'volume')

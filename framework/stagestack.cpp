@@ -1,10 +1,11 @@
+#include "library/sp.h"
 
 #include "framework/stagestack.h"
 
 namespace OpenApoc
 {
 
-void StageStack::Push(std::shared_ptr<Stage> newStage)
+void StageStack::Push(sp<Stage> newStage)
 {
 
 	// Pause any current stage
@@ -15,9 +16,9 @@ void StageStack::Push(std::shared_ptr<Stage> newStage)
 	newStage->Begin();
 }
 
-std::shared_ptr<Stage> StageStack::Pop()
+sp<Stage> StageStack::Pop()
 {
-	std::shared_ptr<Stage> result = this->Current();
+	sp<Stage> result = this->Current();
 
 	if (result)
 	{
@@ -32,7 +33,7 @@ std::shared_ptr<Stage> StageStack::Pop()
 	return result;
 }
 
-std::shared_ptr<Stage> StageStack::Current()
+sp<Stage> StageStack::Current()
 {
 	if (this->Stack.empty())
 		return nullptr;
@@ -40,9 +41,9 @@ std::shared_ptr<Stage> StageStack::Current()
 		return this->Stack.back();
 }
 
-std::shared_ptr<Stage> StageStack::Previous() { return Previous(Current()); }
+sp<Stage> StageStack::Previous() { return Previous(Current()); }
 
-std::shared_ptr<Stage> StageStack::Previous(std::shared_ptr<Stage> From)
+sp<Stage> StageStack::Previous(sp<Stage> From)
 {
 	if (!this->Stack.empty())
 	{

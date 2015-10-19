@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "game/tileview/tileview.h"
 #include "game/tileview/tile.h"
 
@@ -114,7 +115,7 @@ void TileView::EventOccurred(Event *e)
 		auto &ev = e->Data.Mouse;
 		auto selectedPos =
 		    Vec2<float>{static_cast<float>(ev.X) - offsetX, static_cast<float>(ev.Y) - offsetY};
-		std::shared_ptr<TileObject> newSelectedTileObject;
+		sp<TileObject> newSelectedTileObject;
 
 		for (auto &obj : this->map.selectableObjects)
 		{
@@ -231,7 +232,7 @@ void TileView::Render()
 					assert(obj->isVisible());
 					bool showBounds = obj == this->selectedTileObject ||
 					                  (fw.state->showSelectableBounds && obj->isSelectable());
-					std::shared_ptr<Image> img;
+					sp<Image> img;
 					switch (this->viewMode)
 					{
 						case TileViewMode::Strategy:

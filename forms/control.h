@@ -1,5 +1,6 @@
 
 #pragma once
+#include "library/sp.h"
 
 #include "framework/includes.h"
 #include "library/colour.h"
@@ -18,13 +19,13 @@ class Palette;
 class Control
 {
   private:
-	std::shared_ptr<Surface> controlArea;
+	sp<Surface> controlArea;
 
 	void PreRender();
 	void PostRender();
 
   protected:
-	std::shared_ptr<Palette> palette;
+	sp<Palette> palette;
 	Control *owningControl;
 	Control *focusedChild;
 	bool mouseInside;
@@ -41,8 +42,7 @@ class Control
 
 	Control *GetRootControl();
 
-	std::list<UString> WordWrapText(std::shared_ptr<OpenApoc::BitmapFont> UseFont,
-	                                UString WrapText);
+	std::list<UString> WordWrapText(sp<OpenApoc::BitmapFont> UseFont, UString WrapText);
 
 	Framework &fw;
 

@@ -392,6 +392,7 @@
     <ClInclude Include="game\apocresources\cursor.h" />
     <ClInclude Include="framework\event.h" />
     <ClInclude Include="library\rect.h" />
+    <ClInclude Include="library\sp.h" />
     <ClInclude Include="library\strings.h" />
     <ClInclude Include="library\vec.h" />
     <ClInclude Include="framework\framework.h" />

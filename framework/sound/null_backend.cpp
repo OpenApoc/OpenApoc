@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "framework/sound_interface.h"
 #include "framework/logger.h"
 
@@ -17,7 +18,7 @@ class NullSoundBackend : public SoundBackend
 		preferredFormat.format = AudioFormat::SampleFormat::PCM_SINT16;
 		preferredFormat.frequency = 22050;
 	}
-	virtual void playSample(std::shared_ptr<Sample> sample) override
+	virtual void playSample(sp<Sample> sample) override
 	{
 		std::ignore = sample;
 		LogWarning("Called on NULL backend");
@@ -31,7 +32,7 @@ class NullSoundBackend : public SoundBackend
 		LogWarning("Called on NULL backend");
 	}
 
-	virtual void setTrack(std::shared_ptr<MusicTrack> track) override
+	virtual void setTrack(sp<MusicTrack> track) override
 	{
 		std::ignore = track;
 		LogWarning("Called on NULL backend");

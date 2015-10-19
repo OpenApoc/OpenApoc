@@ -1,4 +1,5 @@
 #pragma once
+#include "library/sp.h"
 
 #include "framework/stage.h"
 #include "framework/includes.h"
@@ -33,10 +34,10 @@ class TileView : public Stage
 	int cameraScrollX, cameraScrollY;
 
 	Vec3<int> selectedTilePosition;
-	std::shared_ptr<Image> selectedTileImageBack, selectedTileImageFront;
-	std::shared_ptr<Palette> pal;
+	sp<Image> selectedTileImageBack, selectedTileImageFront;
+	sp<Palette> pal;
 
-	std::shared_ptr<TileObject> selectedTileObject;
+	sp<TileObject> selectedTileObject;
 
 	TileView(Framework &fw, TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
 	         TileViewMode initialMode);

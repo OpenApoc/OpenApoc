@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "game/tileview/tile_collidable.h"
 #include "game/tileview/voxel.h"
 #include "framework/logger.h"
@@ -6,8 +7,7 @@ namespace OpenApoc
 {
 
 TileObjectCollidable::TileObjectCollidable(TileMap &map, Vec3<float> position,
-                                           Vec3<int> tileSizeInVoxels,
-                                           std::shared_ptr<VoxelMap> voxels)
+                                           Vec3<int> tileSizeInVoxels, sp<VoxelMap> voxels)
     : TileObject(map, position), tileSizeInVoxels(tileSizeInVoxels), voxels(voxels)
 {
 	this->collides = true;

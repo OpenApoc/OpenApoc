@@ -1,5 +1,6 @@
 
 #pragma once
+#include "library/sp.h"
 
 #include "framework/includes.h"
 
@@ -15,7 +16,7 @@ class ApocCursor
 {
 
   private:
-	std::vector<std::shared_ptr<Image>> images;
+	std::vector<sp<Image>> images;
 	Framework &fw;
 	Vec2<int> cursorPos;
 
@@ -35,7 +36,7 @@ class ApocCursor
 
 	CursorType CurrentType;
 
-	ApocCursor(Framework &fw, std::shared_ptr<Palette> ColourPalette);
+	ApocCursor(Framework &fw, sp<Palette> ColourPalette);
 	~ApocCursor();
 
 	void EventOccured(Event *e);

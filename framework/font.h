@@ -1,5 +1,6 @@
 
 #pragma once
+#include "library/sp.h"
 
 #include "framework/includes.h"
 #include "library/strings.h"
@@ -18,13 +19,13 @@ class BitmapFont
 {
   public:
 	virtual ~BitmapFont();
-	virtual std::shared_ptr<PaletteImage> getGlyph(UniChar codepoint) = 0;
-	virtual std::shared_ptr<PaletteImage> getString(const UString &Text);
+	virtual sp<PaletteImage> getGlyph(UniChar codepoint) = 0;
+	virtual sp<PaletteImage> getString(const UString &Text);
 	virtual int GetFontHeight() = 0;
 	virtual int GetFontWidth(const UString &Text);
 	virtual UString getName() = 0;
 	virtual int GetEstimateCharacters(int FitInWidth) = 0;
-	virtual std::shared_ptr<Palette> getPalette() = 0;
+	virtual sp<Palette> getPalette() = 0;
 };
 
 }; // namespace OpenApoc

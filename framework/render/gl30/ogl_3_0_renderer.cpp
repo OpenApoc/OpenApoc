@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "framework/renderer_interface.h"
 #include "framework/logger.h"
 #include "framework/image.h"
@@ -680,7 +681,7 @@ class GLRGBImage : public RendererImageData
 	GLuint texID;
 	Vec2<float> size;
 	std::weak_ptr<RGBImage> parent;
-	GLRGBImage(std::shared_ptr<RGBImage> parent) : size(parent->size), parent(parent)
+	GLRGBImage(sp<RGBImage> parent) : size(parent->size), parent(parent)
 	{
 		RGBImageLock l(parent, ImageLockUse::Read);
 		gl::GenTextures(1, &this->texID);
@@ -699,8 +700,7 @@ class GLPalette : public RendererImageData
 	GLuint texID;
 	Vec2<float> size;
 	std::weak_ptr<Palette> parent;
-	GLPalette(std::shared_ptr<Palette> parent)
-	    : size(Vec2<float>(parent->colours.size(), 1)), parent(parent)
+	GLPalette(sp<Palette> parent) : size(Vec2<float>(parent->colours.size(), 1)), parent(parent)
 	{
 		gl::GenTextures(1, &this->texID);
 		BindTexture b(this->texID);
@@ -718,7 +718,7 @@ class GLPaletteImage : public RendererImageData
 	GLuint texID;
 	Vec2<float> size;
 	std::weak_ptr<PaletteImage> parent;
-	GLPaletteImage(std::shared_ptr<PaletteImage> parent) : size(parent->size), parent(parent)
+	GLPaletteImage(sp<PaletteImage> parent) : size(parent->size), parent(parent)
 	{
 		PaletteImageLock l(parent, ImageLockUse::Read);
 		gl::GenTextures(1, &this->texID);
@@ -739,7 +739,7 @@ class GLPaletteSpritesheet : public RendererImageData
 	Vec2<int> maxSize;
 	unsigned numSprites;
 	GLuint texID;
-	GLPaletteSpritesheet(std::shared_ptr<ImageSet> parent)
+	GLPaletteSpritesheet(sp<ImageSet> parent)
 	    : parent(parent), maxSize(parent->maxSize), numSprites(parent->images.size())
 	{
 		gl::GenTextures(1, &this->texID);
@@ -757,8 +757,7 @@ class GLPaletteSpritesheet : public RendererImageData
 
 		for (unsigned int i = 0; i < numSprites; i++)
 		{
-			std::shared_ptr<PaletteImage> img =
-			    std::dynamic_pointer_cast<PaletteImage>(parent->images[i]);
+			sp<PaletteImage> img = std::dynamic_pointer_cast<PaletteImage>(parent->images[i]);
 			// FIXME: HACK - better way of clearing undefined portions to '0'?
 			gl::TexSubImage3D(gl::TEXTURE_2D_ARRAY, 0, 0, 0, i, maxSize.x, maxSize.y, 1,
 			                  gl::RED_INTEGER, gl::UNSIGNED_BYTE, zeros.get());
@@ -782,18 +781,18 @@ class OGL30Renderer : public Renderer
 		BatchingSpritesheet,
 	};
 	RendererState state;
-	std::shared_ptr<RGBProgram> rgbProgram;
-	std::shared_ptr<SolidColourProgram> colourProgram;
-	std::shared_ptr<PaletteProgram> paletteProgram;
-	std::shared_ptr<PaletteSetProgram> paletteSetProgram;
+	sp<RGBProgram> rgbProgram;
+	sp<SolidColourProgram> colourProgram;
+	sp<PaletteProgram> paletteProgram;
+	sp<PaletteSetProgram> paletteSetProgram;
 	GLuint currentBoundProgram;
 	GLuint currentBoundFBO;
 
-	std::shared_ptr<Surface> currentSurface;
-	std::shared_ptr<Palette> currentPalette;
+	sp<Surface> currentSurface;
+	sp<Palette> currentPalette;
 
 	friend class RendererSurfaceBinding;
-	virtual void setSurface(std::shared_ptr<Surface> s) override
+	virtual void setSurface(sp<Surface> s) override
 	{
 		if (this->currentSurface == s)
 		{
@@ -809,14 +808,14 @@ class OGL30Renderer : public Renderer
 		this->currentBoundFBO = fbo->fbo;
 		gl::Viewport(0, 0, s->size.x, s->size.y);
 	}
-	virtual std::shared_ptr<Surface> getSurface() override { return currentSurface; }
-	std::shared_ptr<Surface> defaultSurface;
+	virtual sp<Surface> getSurface() override { return currentSurface; }
+	sp<Surface> defaultSurface;
 
   public:
 	OGL30Renderer();
 	virtual ~OGL30Renderer();
 	virtual void clear(Colour c = Colour{0, 0, 0, 0}) override;
-	virtual void setPalette(std::shared_ptr<Palette> p) override
+	virtual void setPalette(sp<Palette> p) override
 	{
 		if (p == this->currentPalette)
 			return;
@@ -825,16 +824,16 @@ class OGL30Renderer : public Renderer
 			p->rendererPrivateData.reset(new GLPalette(p));
 		this->currentPalette = p;
 	}
-	virtual std::shared_ptr<Palette> getPalette() override { return this->currentPalette; }
+	virtual sp<Palette> getPalette() override { return this->currentPalette; }
 
-	virtual void draw(std::shared_ptr<Image> i, Vec2<float> position) override;
-	virtual void drawRotated(std::shared_ptr<Image> image, Vec2<float> center, Vec2<float> position,
+	virtual void draw(sp<Image> i, Vec2<float> position) override;
+	virtual void drawRotated(sp<Image> image, Vec2<float> center, Vec2<float> position,
 	                         float angle) override
 	{
 		auto size = image->size;
 		if (this->state != RendererState::Idle)
 			this->flush();
-		std::shared_ptr<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
+		sp<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
 		if (rgbImage)
 		{
 			GLRGBImage *img = dynamic_cast<GLRGBImage *>(rgbImage->rendererPrivateData.get());
@@ -847,16 +846,16 @@ class OGL30Renderer : public Renderer
 			return;
 		}
 
-		std::shared_ptr<PaletteImage> paletteImage = std::dynamic_pointer_cast<PaletteImage>(image);
+		sp<PaletteImage> paletteImage = std::dynamic_pointer_cast<PaletteImage>(image);
 		LogError("Unsupported image type");
 	}
-	virtual void drawScaled(std::shared_ptr<Image> image, Vec2<float> position, Vec2<float> size,
+	virtual void drawScaled(sp<Image> image, Vec2<float> position, Vec2<float> size,
 	                        Scaler scaler = Scaler::Linear) override
 	{
 
 		if (this->state != RendererState::Idle)
 			this->flush();
-		std::shared_ptr<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
+		sp<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
 		if (rgbImage)
 		{
 			GLRGBImage *img = dynamic_cast<GLRGBImage *>(rgbImage->rendererPrivateData.get());
@@ -869,7 +868,7 @@ class OGL30Renderer : public Renderer
 			return;
 		}
 
-		std::shared_ptr<PaletteImage> paletteImage = std::dynamic_pointer_cast<PaletteImage>(image);
+		sp<PaletteImage> paletteImage = std::dynamic_pointer_cast<PaletteImage>(image);
 		if (paletteImage)
 		{
 			GLPaletteImage *img =
@@ -889,7 +888,7 @@ class OGL30Renderer : public Renderer
 			return;
 		}
 
-		std::shared_ptr<Surface> surface = std::dynamic_pointer_cast<Surface>(image);
+		sp<Surface> surface = std::dynamic_pointer_cast<Surface>(image);
 		if (surface)
 		{
 			FBOData *fbo = dynamic_cast<FBOData *>(surface->rendererPrivateData.get());
@@ -903,7 +902,7 @@ class OGL30Renderer : public Renderer
 		}
 		LogError("Unsupported image type");
 	}
-	virtual void drawTinted(std::shared_ptr<Image> i, Vec2<float> position, Colour tint) override
+	virtual void drawTinted(sp<Image> i, Vec2<float> position, Colour tint) override
 	{
 		LogError("Unimplemented function");
 		std::ignore = i;
@@ -929,9 +928,9 @@ class OGL30Renderer : public Renderer
 	}
 	virtual void flush() override;
 	virtual UString getName() override;
-	virtual std::shared_ptr<Surface> getDefaultSurface() override { return this->defaultSurface; }
+	virtual sp<Surface> getDefaultSurface() override { return this->defaultSurface; }
 
-	void BindProgram(std::shared_ptr<Program> p)
+	void BindProgram(sp<Program> p)
 	{
 		if (this->currentBoundProgram == p->prog)
 			return;
@@ -1073,7 +1072,7 @@ class OGL30Renderer : public Renderer
 	std::vector<BatchedSprite> batchedSprites;
 	unsigned maxBatchedSprites;
 	unsigned maxSpritesheetSize;
-	std::shared_ptr<GLPaletteSpritesheet> boundSpritesheet;
+	sp<GLPaletteSpritesheet> boundSpritesheet;
 
 	std::unique_ptr<GLint[]> firstList;
 	std::unique_ptr<GLsizei[]> countList;
@@ -1156,9 +1155,9 @@ void OGL30Renderer::clear(Colour c)
 	gl::Clear(gl::COLOR_BUFFER_BIT);
 }
 
-void OGL30Renderer::draw(std::shared_ptr<Image> image, Vec2<float> position)
+void OGL30Renderer::draw(sp<Image> image, Vec2<float> position)
 {
-	std::shared_ptr<ImageSet> owningSet = image->owningSet.lock();
+	sp<ImageSet> owningSet = image->owningSet.lock();
 	if (owningSet)
 	{
 		if (owningSet->images.size() > maxSpritesheetSize)
@@ -1174,7 +1173,7 @@ void OGL30Renderer::draw(std::shared_ptr<Image> image, Vec2<float> position)
 		}
 		else
 		{
-			std::shared_ptr<GLPaletteSpritesheet> ss =
+			sp<GLPaletteSpritesheet> ss =
 			    std::dynamic_pointer_cast<GLPaletteSpritesheet>(owningSet->rendererPrivateData);
 			if (!ss)
 			{

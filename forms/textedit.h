@@ -1,5 +1,6 @@
 
 #pragma once
+#include "library/sp.h"
 
 #include "control.h"
 #include "forms_enums.h"
@@ -19,7 +20,7 @@ class TextEdit : public Control
 	bool caretDraw;
 	int caretTimer;
 	UString text;
-	std::shared_ptr<BitmapFont> font;
+	sp<BitmapFont> font;
 	bool editting;
 	bool editShift;
 	bool editAltGr;
@@ -34,7 +35,7 @@ class TextEdit : public Control
 	HorizontalAlignment TextHAlign;
 	VerticalAlignment TextVAlign;
 
-	TextEdit(Framework &fw, Control *Owner, UString Text, std::shared_ptr<BitmapFont> font);
+	TextEdit(Framework &fw, Control *Owner, UString Text, sp<BitmapFont> font);
 	virtual ~TextEdit();
 
 	virtual void EventOccured(Event *e) override;
@@ -44,8 +45,8 @@ class TextEdit : public Control
 	UString GetText();
 	void SetText(UString Text);
 
-	std::shared_ptr<BitmapFont> GetFont();
-	void SetFont(std::shared_ptr<BitmapFont> NewFont);
+	sp<BitmapFont> GetFont();
+	void SetFont(sp<BitmapFont> NewFont);
 
 	virtual Control *CopyTo(Control *CopyParent) override;
 };

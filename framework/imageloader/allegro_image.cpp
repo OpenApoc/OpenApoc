@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "framework/imageloader_interface.h"
 #include "framework/logger.h"
 #include "library/vec.h"
@@ -21,7 +22,7 @@ class AllegroImageLoader : public OpenApoc::ImageLoader
 	}
 	virtual ~AllegroImageLoader() { al_shutdown_image_addon(); }
 
-	virtual std::shared_ptr<OpenApoc::Image> loadImage(UString path) override
+	virtual sp<OpenApoc::Image> loadImage(UString path) override
 	{
 		ALLEGRO_BITMAP *bmp = al_load_bitmap(path.c_str());
 		if (!bmp)

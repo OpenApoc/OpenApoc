@@ -1,3 +1,4 @@
+#include "library/sp.h"
 
 #include "game/apocresources/cursor.h"
 #include "framework/framework.h"
@@ -6,7 +7,7 @@
 namespace OpenApoc
 {
 
-ApocCursor::ApocCursor(Framework &fw, std::shared_ptr<Palette> pal) : fw(fw), cursorPos{0, 0}
+ApocCursor::ApocCursor(Framework &fw, sp<Palette> pal) : fw(fw), cursorPos{0, 0}
 {
 	auto f = fw.data->fs.open("xcom3/TACDATA/MOUSE.DAT");
 	if (!f)

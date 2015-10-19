@@ -27,6 +27,7 @@ class BaseScreen : public Stage
 
 	void RenderBase();
 	int getCorridorSprite(Vec2<int> pos) const;
+
   public:
 	BaseScreen(Framework &fw);
 	~BaseScreen();

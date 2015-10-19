@@ -1,3 +1,4 @@
+#include "library/sp.h"
 
 #include "framework/framework.h"
 #include "game/boot.h"
@@ -12,7 +13,7 @@
 #include <iostream>
 #include <string>
 
-//Use physfs to get prefs dir
+// Use physfs to get prefs dir
 #include <physfs.h>
 
 using namespace OpenApoc;
@@ -83,7 +84,7 @@ class JukeBoxImpl : public JukeBox
 {
 	Framework &fw;
 	unsigned int position;
-	std::vector<std::shared_ptr<MusicTrack>> trackList;
+	std::vector<sp<MusicTrack>> trackList;
 	JukeBox::PlayMode mode;
 
   public:
@@ -144,7 +145,7 @@ class FrameworkPrivate
 	ALLEGRO_MUTEX *eventMutex;
 
 	StageStack ProgramStages;
-	std::shared_ptr<Surface> defaultSurface;
+	sp<Surface> defaultSurface;
 };
 
 Framework::Framework(const UString programName, const std::vector<UString> cmdline)
@@ -711,11 +712,8 @@ void Framework::Audio_Shutdown()
 	this->soundBackend.reset();
 }
 
-std::shared_ptr<Stage> Framework::Stage_GetPrevious() { return p->ProgramStages.Previous(); }
+sp<Stage> Framework::Stage_GetPrevious() { return p->ProgramStages.Previous(); }
 
-std::shared_ptr<Stage> Framework::Stage_GetPrevious(std::shared_ptr<Stage> From)
-{
-	return p->ProgramStages.Previous(From);
-}
+sp<Stage> Framework::Stage_GetPrevious(sp<Stage> From) { return p->ProgramStages.Previous(From); }
 
 }; // namespace OpenApoc

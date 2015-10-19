@@ -1,4 +1,5 @@
 #pragma once
+#include "library/sp.h"
 
 #include "framework/includes.h"
 #include "framework/image.h"
@@ -31,10 +32,10 @@ class Data
 	std::map<UString, std::weak_ptr<LOFTemps>> LOFVoxelCache;
 
 	// Pin open 'imageCacheSize' images
-	std::queue<std::shared_ptr<Image>> pinnedImages;
+	std::queue<sp<Image>> pinnedImages;
 	// Pin open 'imageSetCacheSize' image sets
-	std::queue<std::shared_ptr<ImageSet>> pinnedImageSets;
-	std::queue<std::shared_ptr<LOFTemps>> pinnedLOFVoxels;
+	std::queue<sp<ImageSet>> pinnedImageSets;
+	std::queue<sp<LOFTemps>> pinnedLOFVoxels;
 	std::list<std::unique_ptr<ImageLoader>> imageLoaders;
 	std::list<std::unique_ptr<SampleLoader>> sampleLoaders;
 	std::list<std::unique_ptr<MusicLoader>> musicLoaders;
@@ -46,12 +47,12 @@ class Data
 	     int voxelCacheSize = 1);
 	~Data();
 
-	std::shared_ptr<Sample> load_sample(const UString &path);
-	std::shared_ptr<MusicTrack> load_music(const UString &path);
-	std::shared_ptr<Image> load_image(const UString &path);
-	std::shared_ptr<ImageSet> load_image_set(const UString &path);
-	std::shared_ptr<Palette> load_palette(const UString &path);
-	std::shared_ptr<VoxelSlice> load_voxel_slice(const UString &path);
+	sp<Sample> load_sample(const UString &path);
+	sp<MusicTrack> load_music(const UString &path);
+	sp<Image> load_image(const UString &path);
+	sp<ImageSet> load_image_set(const UString &path);
+	sp<Palette> load_palette(const UString &path);
+	sp<VoxelSlice> load_voxel_slice(const UString &path);
 };
 
 } // namespace OpenApoc

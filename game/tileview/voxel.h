@@ -1,4 +1,5 @@
 #pragma once
+#include "library/sp.h"
 
 #include "library/vec.h"
 #include <vector>
@@ -25,11 +26,11 @@ class VoxelMap
 {
   private:
 	Vec3<int> size;
-	std::vector<std::shared_ptr<VoxelSlice>> slices;
+	std::vector<sp<VoxelSlice>> slices;
 
   public:
 	bool getBit(Vec3<int> pos) const;
-	void setSlice(int z, std::shared_ptr<VoxelSlice> slice);
+	void setSlice(int z, sp<VoxelSlice> slice);
 
 	const Vec3<int> &getSize() const { return this->size; }
 

@@ -1,4 +1,5 @@
 #pragma once
+#include "library/sp.h"
 
 #include "library/vec.h"
 
@@ -22,8 +23,8 @@ class Building
 	BuildingDef &def;
 	Organisation &owner;
 	std::vector<Vec3<int>> landingPadLocations;
-	std::set<std::shared_ptr<Vehicle>> landed_vehicles;
-	std::shared_ptr<Base> base;
+	std::set<sp<Vehicle>> landed_vehicles;
+	sp<Base> base;
 };
 
 }; // namespace OpenApoc

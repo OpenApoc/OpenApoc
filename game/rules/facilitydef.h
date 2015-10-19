@@ -8,8 +8,8 @@ class FacilityDef
 {
   private:
 	FacilityDef()
-	    : fixed(false), buildCost(0), buildTime(0), weeklyCost(0),
-		  capacityType(Capacity::None), capacityAmount(0), size(1)
+	    : fixed(false), buildCost(0), buildTime(0), weeklyCost(0), capacityType(Capacity::None),
+	      capacityAmount(0), size(1)
 	{
 	}
 	friend class RulesLoader;

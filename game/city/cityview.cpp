@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "game/city/city.h"
 #include "game/city/cityview.h"
 #include "framework/framework.h"
@@ -25,7 +26,7 @@ CityView::CityView(Framework &fw)
 
 	for (auto &formName : tabFormNames)
 	{
-		std::shared_ptr<Form> f(fw.gamecore->GetForm(formName));
+		sp<Form> f(fw.gamecore->GetForm(formName));
 		if (!f)
 		{
 			LogError("Failed to load form \"%s\"", formName.c_str());

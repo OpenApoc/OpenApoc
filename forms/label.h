@@ -1,5 +1,6 @@
 
 #pragma once
+#include "library/sp.h"
 
 #include "control.h"
 #include "framework/font.h"
@@ -15,7 +16,7 @@ class Label : public Control
 
   private:
 	UString text;
-	std::shared_ptr<BitmapFont> font;
+	sp<BitmapFont> font;
 
   protected:
 	virtual void OnRender() override;
@@ -25,7 +26,7 @@ class Label : public Control
 	VerticalAlignment TextVAlign;
 	bool WordWrap;
 
-	Label(Framework &fw, Control *Owner, UString Text, std::shared_ptr<BitmapFont> font);
+	Label(Framework &fw, Control *Owner, UString Text, sp<BitmapFont> font);
 	virtual ~Label();
 
 	virtual void EventOccured(Event *e) override;
@@ -35,8 +36,8 @@ class Label : public Control
 	UString GetText();
 	void SetText(UString Text);
 
-	std::shared_ptr<BitmapFont> GetFont();
-	void SetFont(std::shared_ptr<BitmapFont> NewFont);
+	sp<BitmapFont> GetFont();
+	void SetFont(sp<BitmapFont> NewFont);
 
 	virtual Control *CopyTo(Control *CopyParent) override;
 };

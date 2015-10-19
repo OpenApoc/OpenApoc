@@ -1,5 +1,6 @@
 
 #pragma once
+#include "library/sp.h"
 
 #include "control.h"
 #include "forms_enums.h"
@@ -17,11 +18,11 @@ class TextButton : public Control
 
   private:
 	UString text;
-	std::shared_ptr<BitmapFont> font;
-	std::shared_ptr<Surface> cached;
+	sp<BitmapFont> font;
+	sp<Surface> cached;
 
-	std::shared_ptr<Sample> buttonclick;
-	std::shared_ptr<Image> buttonbackground;
+	sp<Sample> buttonclick;
+	sp<Image> buttonbackground;
 
   protected:
 	virtual void OnRender() override;
@@ -37,7 +38,7 @@ class TextButton : public Control
 	VerticalAlignment TextVAlign;
 	TextButtonRenderStyles RenderStyle;
 
-	TextButton(Framework &fw, Control *Owner, UString Text, std::shared_ptr<BitmapFont> font);
+	TextButton(Framework &fw, Control *Owner, UString Text, sp<BitmapFont> font);
 	virtual ~TextButton();
 
 	virtual void EventOccured(Event *e) override;
@@ -47,8 +48,8 @@ class TextButton : public Control
 	UString GetText();
 	void SetText(UString Text);
 
-	std::shared_ptr<BitmapFont> GetFont();
-	void SetFont(std::shared_ptr<BitmapFont> NewFont);
+	sp<BitmapFont> GetFont();
+	void SetFont(sp<BitmapFont> NewFont);
 
 	virtual Control *CopyTo(Control *CopyParent) override;
 };

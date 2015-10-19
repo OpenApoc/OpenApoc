@@ -1,4 +1,5 @@
 #pragma once
+#include "library/sp.h"
 #include "sound.h"
 #include "library/strings.h"
 
@@ -10,7 +11,7 @@ class MusicLoader
 {
   public:
 	virtual ~MusicLoader() {}
-	virtual std::shared_ptr<MusicTrack> loadMusic(UString path) = 0;
+	virtual sp<MusicTrack> loadMusic(UString path) = 0;
 };
 
 class MusicLoaderFactory

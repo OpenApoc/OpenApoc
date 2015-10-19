@@ -1,4 +1,5 @@
 #pragma once
+#include "library/sp.h"
 
 #include "framework/includes.h"
 
@@ -24,9 +25,9 @@ class City : public TileMap
   public:
 	City(Framework &fw, GameState &state);
 	~City();
-	std::vector<std::shared_ptr<Vehicle>> vehicles;
+	std::vector<sp<Vehicle>> vehicles;
 	std::vector<Building> buildings;
-	std::vector<Building*> baseBuildings;
+	std::vector<Building *> baseBuildings;
 
 	void update(unsigned int ticks) override;
 };

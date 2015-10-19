@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "game/city/weapon.h"
 #include "framework/logger.h"
 #include "game/city/vehicle.h"
@@ -6,12 +7,11 @@
 namespace OpenApoc
 {
 
-Weapon::Weapon(const WeaponDef &def, std::shared_ptr<Vehicle> owner, int initialAmmo,
-               State initialState)
+Weapon::Weapon(const WeaponDef &def, sp<Vehicle> owner, int initialAmmo, State initialState)
     : state(initialState), def(def), owner(owner), ammo(initialAmmo), reloadTime(0)
 {
 }
-std::shared_ptr<Projectile> Weapon::fire(Vec3<float> target)
+sp<Projectile> Weapon::fire(Vec3<float> target)
 {
 	auto owner = this->owner.lock();
 	if (!owner)

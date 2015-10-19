@@ -1,3 +1,4 @@
+#include "library/sp.h"
 
 #include "forms/graphicbutton.h"
 #include "framework/framework.h"
@@ -56,7 +57,7 @@ void GraphicButton::EventOccured(Event *e)
 
 void GraphicButton::OnRender()
 {
-	std::shared_ptr<Image> useimage;
+	sp<Image> useimage;
 
 	if (!image && image_name != "")
 	{
@@ -129,25 +130,25 @@ void GraphicButton::UnloadResources()
 	Control::UnloadResources();
 }
 
-std::shared_ptr<Image> GraphicButton::GetImage() { return image; }
+sp<Image> GraphicButton::GetImage() { return image; }
 
-void GraphicButton::SetImage(std::shared_ptr<Image> Image)
+void GraphicButton::SetImage(sp<Image> Image)
 {
 	image_name = "";
 	image = Image;
 }
 
-std::shared_ptr<Image> GraphicButton::GetDepressedImage() { return imagedepressed; }
+sp<Image> GraphicButton::GetDepressedImage() { return imagedepressed; }
 
-void GraphicButton::SetDepressedImage(std::shared_ptr<Image> Image)
+void GraphicButton::SetDepressedImage(sp<Image> Image)
 {
 	imagedepressed_name = "";
 	imagedepressed = Image;
 }
 
-std::shared_ptr<Image> GraphicButton::GetHoverImage() { return imagehover; }
+sp<Image> GraphicButton::GetHoverImage() { return imagehover; }
 
-void GraphicButton::SetHoverImage(std::shared_ptr<Image> Image)
+void GraphicButton::SetHoverImage(sp<Image> Image)
 {
 	imagehover_name = "";
 	imagehover = Image;

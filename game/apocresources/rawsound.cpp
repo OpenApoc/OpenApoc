@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "framework/sampleloader_interface.h"
 #include "framework/data.h"
 
@@ -12,7 +13,7 @@ class RawSampleLoader : public SampleLoader
 
   public:
 	RawSampleLoader(Data &data) : data(data) {}
-	virtual std::shared_ptr<Sample> loadSample(UString path) override
+	virtual sp<Sample> loadSample(UString path) override
 	{
 		auto file = data.fs.open(path);
 		if (!file)

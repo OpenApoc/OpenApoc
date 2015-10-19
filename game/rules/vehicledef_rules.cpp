@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "game/rules/rules_private.h"
 #include "library/strings.h"
 #include "framework/framework.h"
@@ -17,10 +18,10 @@ static std::map<VehicleDefinition::Direction, Vec3<float>> directionsToVec = {
     {VehicleDefinition::Direction::W, {-1, 0, 0}}, {VehicleDefinition::Direction::NW, {-1, -1, 0}},
 };
 
-static std::map<VehicleDefinition::Direction, std::shared_ptr<Image>>
+static std::map<VehicleDefinition::Direction, sp<Image>>
 parseDirectionalSprites(Framework &fw, tinyxml2::XMLElement *root)
 {
-	std::map<VehicleDefinition::Direction, std::shared_ptr<Image>> sprites;
+	std::map<VehicleDefinition::Direction, sp<Image>> sprites;
 
 	for (tinyxml2::XMLElement *node = root->FirstChildElement(); node != nullptr;
 	     node = node->NextSiblingElement())

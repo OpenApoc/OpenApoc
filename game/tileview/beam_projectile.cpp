@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "game/tileview/beam_projectile.h"
 #include "framework/logger.h"
 #include "game/tileview/tileview.h"
@@ -5,7 +6,7 @@
 namespace OpenApoc
 {
 
-BeamProjectile::BeamProjectile(TileMap &map, std::shared_ptr<Vehicle> firer, Vec3<float> position,
+BeamProjectile::BeamProjectile(TileMap &map, sp<Vehicle> firer, Vec3<float> position,
                                Vec3<float> velocity, unsigned int lifetime, const Colour &colour,
                                float beamLength, float beamWidth)
     : TileObject(map, position, false, false, true),

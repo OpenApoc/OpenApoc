@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "game/apocresources/rawimage.h"
 #include "framework/logger.h"
 #include "framework/data.h"
@@ -6,8 +7,7 @@
 namespace OpenApoc
 {
 
-std::shared_ptr<PaletteImage> RawImage::load(Data &data, const UString &filename,
-                                             const Vec2<int> &size)
+sp<PaletteImage> RawImage::load(Data &data, const UString &filename, const Vec2<int> &size)
 {
 	auto infile = data.fs.open(filename);
 	if (!infile)

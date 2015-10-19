@@ -4,7 +4,6 @@
 
 #include <physfs.h>
 
-
 #ifndef _WIN32
 #include <endian.h>
 #else

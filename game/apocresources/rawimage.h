@@ -1,4 +1,5 @@
 #pragma once
+#include "library/sp.h"
 
 #include "library/vec.h"
 #include <memory>
@@ -13,8 +14,7 @@ class PaletteImage;
 class RawImage
 {
   public:
-	static std::shared_ptr<PaletteImage> load(Data &data, const UString &fileName,
-	                                          const Vec2<int> &size);
+	static sp<PaletteImage> load(Data &data, const UString &fileName, const Vec2<int> &size);
 };
 
 }; // namespace OpenApoc

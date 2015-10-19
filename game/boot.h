@@ -1,5 +1,6 @@
 
 #pragma once
+#include "library/sp.h"
 
 #include "framework/stage.h"
 #include "framework/includes.h"
@@ -15,8 +16,8 @@ class Image;
 class BootUp : public Stage
 {
   private:
-	std::shared_ptr<Image> loadingimage;
-	std::shared_ptr<Image> logoimage;
+	sp<Image> loadingimage;
+	sp<Image> logoimage;
 	int loadtime;
 	Angle<float> loadingimageangle;
 

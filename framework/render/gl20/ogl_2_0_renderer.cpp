@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "framework/renderer_interface.h"
 #include "framework/logger.h"
 #include "framework/image.h"
@@ -550,7 +551,7 @@ class GLRGBImage : public RendererImageData
 	GLuint texID;
 	Vec2<float> size;
 	std::weak_ptr<RGBImage> parent;
-	GLRGBImage(std::shared_ptr<RGBImage> parent) : size(parent->size), parent(parent)
+	GLRGBImage(sp<RGBImage> parent) : size(parent->size), parent(parent)
 	{
 		RGBImageLock l(parent, ImageLockUse::Read);
 		gl::GenTextures(1, &this->texID);
@@ -569,8 +570,7 @@ class GLPalette : public RendererImageData
 	GLuint texID;
 	Vec2<float> size;
 	std::weak_ptr<Palette> parent;
-	GLPalette(std::shared_ptr<Palette> parent)
-	    : size(Vec2<float>(parent->colours.size(), 1)), parent(parent)
+	GLPalette(sp<Palette> parent) : size(Vec2<float>(parent->colours.size(), 1)), parent(parent)
 	{
 		gl::GenTextures(1, &this->texID);
 		BindTexture b(this->texID);
@@ -588,7 +588,7 @@ class GLPaletteImage : public RendererImageData
 	GLuint texID;
 	Vec2<float> size;
 	std::weak_ptr<PaletteImage> parent;
-	GLPaletteImage(std::shared_ptr<PaletteImage> parent) : size(parent->size), parent(parent)
+	GLPaletteImage(sp<PaletteImage> parent) : size(parent->size), parent(parent)
 	{
 		PaletteImageLock l(parent, ImageLockUse::Read);
 		gl::GenTextures(1, &this->texID);
@@ -605,17 +605,17 @@ class GLPaletteImage : public RendererImageData
 class OGL20Renderer : public Renderer
 {
   private:
-	std::shared_ptr<RGBProgram> rgbProgram;
-	std::shared_ptr<SolidColourProgram> colourProgram;
-	std::shared_ptr<PaletteProgram> paletteProgram;
+	sp<RGBProgram> rgbProgram;
+	sp<SolidColourProgram> colourProgram;
+	sp<PaletteProgram> paletteProgram;
 	GLuint currentBoundProgram;
 	GLuint currentBoundFBO;
 
-	std::shared_ptr<Surface> currentSurface;
-	std::shared_ptr<Palette> currentPalette;
+	sp<Surface> currentSurface;
+	sp<Palette> currentPalette;
 
 	friend class RendererSurfaceBinding;
-	virtual void setSurface(std::shared_ptr<Surface> s) override
+	virtual void setSurface(sp<Surface> s) override
 	{
 		if (this->currentSurface == s)
 		{
@@ -631,8 +631,8 @@ class OGL20Renderer : public Renderer
 		this->currentBoundFBO = fbo->fbo;
 		gl::Viewport(0, 0, s->size.x, s->size.y);
 	}
-	virtual std::shared_ptr<Surface> getSurface() override { return currentSurface; }
-	std::shared_ptr<Surface> defaultSurface;
+	virtual sp<Surface> getSurface() override { return currentSurface; }
+	sp<Surface> defaultSurface;
 
   public:
 	OGL20Renderer()
@@ -660,7 +660,7 @@ class OGL20Renderer : public Renderer
 		gl::ClearColor(c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, c.a / 255.0f);
 		gl::Clear(gl::COLOR_BUFFER_BIT);
 	}
-	virtual void setPalette(std::shared_ptr<Palette> p) override
+	virtual void setPalette(sp<Palette> p) override
 	{
 		if (p == this->currentPalette)
 			return;
@@ -669,16 +669,16 @@ class OGL20Renderer : public Renderer
 			p->rendererPrivateData.reset(new GLPalette(p));
 		this->currentPalette = p;
 	}
-	virtual std::shared_ptr<Palette> getPalette() override { return this->currentPalette; }
-	virtual void draw(std::shared_ptr<Image> image, Vec2<float> position) override
+	virtual sp<Palette> getPalette() override { return this->currentPalette; }
+	virtual void draw(sp<Image> image, Vec2<float> position) override
 	{
 		drawScaled(image, position, image->size, Scaler::Nearest);
 	}
-	virtual void drawRotated(std::shared_ptr<Image> image, Vec2<float> center, Vec2<float> position,
+	virtual void drawRotated(sp<Image> image, Vec2<float> center, Vec2<float> position,
 	                         float angle) override
 	{
 		auto size = image->size;
-		std::shared_ptr<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
+		sp<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
 		if (rgbImage)
 		{
 			GLRGBImage *img = dynamic_cast<GLRGBImage *>(rgbImage->rendererPrivateData.get());
@@ -691,14 +691,14 @@ class OGL20Renderer : public Renderer
 			return;
 		}
 
-		std::shared_ptr<PaletteImage> paletteImage = std::dynamic_pointer_cast<PaletteImage>(image);
+		sp<PaletteImage> paletteImage = std::dynamic_pointer_cast<PaletteImage>(image);
 		LogError("Unsupported image type");
 	}
-	virtual void drawScaled(std::shared_ptr<Image> image, Vec2<float> position, Vec2<float> size,
+	virtual void drawScaled(sp<Image> image, Vec2<float> position, Vec2<float> size,
 	                        Scaler scaler = Scaler::Linear) override
 	{
 
-		std::shared_ptr<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
+		sp<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
 		if (rgbImage)
 		{
 			GLRGBImage *img = dynamic_cast<GLRGBImage *>(rgbImage->rendererPrivateData.get());
@@ -711,7 +711,7 @@ class OGL20Renderer : public Renderer
 			return;
 		}
 
-		std::shared_ptr<PaletteImage> paletteImage = std::dynamic_pointer_cast<PaletteImage>(image);
+		sp<PaletteImage> paletteImage = std::dynamic_pointer_cast<PaletteImage>(image);
 		if (paletteImage)
 		{
 			GLPaletteImage *img =
@@ -731,7 +731,7 @@ class OGL20Renderer : public Renderer
 			return;
 		}
 
-		std::shared_ptr<Surface> surface = std::dynamic_pointer_cast<Surface>(image);
+		sp<Surface> surface = std::dynamic_pointer_cast<Surface>(image);
 		if (surface)
 		{
 			FBOData *fbo = dynamic_cast<FBOData *>(surface->rendererPrivateData.get());
@@ -746,7 +746,7 @@ class OGL20Renderer : public Renderer
 		LogError("Unsupported image type");
 	}
 
-	virtual void drawTinted(std::shared_ptr<Image> i, Vec2<float> position, Colour tint) override
+	virtual void drawTinted(sp<Image> i, Vec2<float> position, Colour tint) override
 	{
 		LogError("Unimplemented function");
 		std::ignore = i;
@@ -773,9 +773,9 @@ class OGL20Renderer : public Renderer
 	}
 	virtual void flush() override { /* Nothing to flush */}
 	virtual UString getName() override { return "OGL2.0 Renderer"; }
-	virtual std::shared_ptr<Surface> getDefaultSurface() override { return this->defaultSurface; }
+	virtual sp<Surface> getDefaultSurface() override { return this->defaultSurface; }
 
-	void BindProgram(std::shared_ptr<Program> p)
+	void BindProgram(sp<Program> p)
 	{
 		if (this->currentBoundProgram == p->prog)
 			return;

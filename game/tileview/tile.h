@@ -1,4 +1,5 @@
 #pragma once
+#include "library/sp.h"
 
 #include "framework/includes.h"
 #include <set>
@@ -40,8 +41,8 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 
 	bool isVisible() const { return visible; }
 	virtual Vec3<float> getDrawPosition() const;
-	virtual std::shared_ptr<Image> getSprite() const;
-	virtual std::shared_ptr<Image> getStrategySprite() const;
+	virtual sp<Image> getSprite() const;
+	virtual sp<Image> getStrategySprite() const;
 
 	bool isCollidable() const { return collides; }
 	// Returns the number of voxels per tile
@@ -76,11 +77,11 @@ class Tile
 	TileMap &map;
 	Vec3<int> position;
 
-	std::set<std::shared_ptr<TileObject>> ownedObjects;
-	std::set<std::shared_ptr<TileObject>> visibleObjects;
-	std::set<std::shared_ptr<TileObject>> collideableObjects;
+	std::set<sp<TileObject>> ownedObjects;
+	std::set<sp<TileObject>> visibleObjects;
+	std::set<sp<TileObject>> collideableObjects;
 
-	std::set<std::shared_ptr<TileObject>> ownedProjectiles;
+	std::set<sp<TileObject>> ownedProjectiles;
 
 	Tile(TileMap &map, Vec3<int> position);
 
@@ -91,11 +92,11 @@ class TileMap
 {
   private:
 	std::vector<Tile> tiles;
-	std::set<std::shared_ptr<TileObject>> projectiles;
+	std::set<sp<TileObject>> projectiles;
 
   public:
-	std::set<std::shared_ptr<ActiveObject>> activeObjects;
-	std::set<std::shared_ptr<TileObject>> selectableObjects;
+	std::set<sp<ActiveObject>> activeObjects;
+	std::set<sp<TileObject>> selectableObjects;
 	Framework &fw;
 	Tile *getTile(int x, int y, int z);
 	Tile *getTile(Vec3<int> pos);
@@ -112,8 +113,8 @@ class TileMap
 	                 const Vehicle &v,
 	                 std::function<bool(const Tile &tile, const Vehicle &v)> canEnterTileFn);
 
-	void removeObject(std::shared_ptr<TileObject> obj);
-	void addObject(std::shared_ptr<TileObject> obj);
+	void removeObject(sp<TileObject> obj);
+	void addObject(sp<TileObject> obj);
 
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd);
 };

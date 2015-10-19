@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "framework/framework.h"
 #include "framework/image.h"
 
@@ -6,7 +7,7 @@ namespace OpenApoc
 
 BitmapFont::~BitmapFont() {}
 
-std::shared_ptr<PaletteImage> BitmapFont::getString(const UString &Text)
+sp<PaletteImage> BitmapFont::getString(const UString &Text)
 {
 	int height = this->GetFontHeight();
 	int width = this->GetFontWidth(Text);

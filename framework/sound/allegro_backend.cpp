@@ -1,3 +1,4 @@
+#include "library/sp.h"
 #include "framework/sound_interface.h"
 #include "framework/logger.h"
 #include <iostream>
@@ -21,7 +22,7 @@ class AllegroSampleData : public BackendSampleData
 		if (s)
 			al_destroy_sample(s);
 	}
-	AllegroSampleData(std::shared_ptr<Sample> sample)
+	AllegroSampleData(sp<Sample> sample)
 	{
 		ALLEGRO_AUDIO_DEPTH depth;
 		switch (sample->format.format)
@@ -62,7 +63,7 @@ class AllegroSoundBackend : public SoundBackend
 	AudioFormat preferredFormat;
 	// FIXME: Keep last max_samples live as they may still be playing (no way
 	// to tell if allegro is finished without managing the stream outselves?)
-	std::list<std::shared_ptr<Sample>> liveSamples;
+	std::list<sp<Sample>> liveSamples;
 
 	bool stopThread;
 	std::unique_ptr<std::thread> musicThread;
@@ -71,7 +72,7 @@ class AllegroSoundBackend : public SoundBackend
 	float sampleGain;
 	float musicGain;
 
-	std::shared_ptr<MusicTrack> track;
+	sp<MusicTrack> track;
 
   public:
 	AllegroSoundBackend() : stopThread(false), globalGain(1.0), sampleGain(1.0), musicGain(1.0) {}
@@ -113,7 +114,7 @@ class AllegroSoundBackend : public SoundBackend
 		}
 	}
 
-	virtual void playSample(std::shared_ptr<Sample> sample) override
+	virtual void playSample(sp<Sample> sample) override
 	{
 		if (!sample->backendData)
 			sample->backendData.reset(new AllegroSampleData(sample));
@@ -313,7 +314,7 @@ class AllegroSoundBackend : public SoundBackend
 		}
 	}
 
-	virtual void setTrack(std::shared_ptr<MusicTrack> track) override
+	virtual void setTrack(sp<MusicTrack> track) override
 	{
 		LogInfo("Setting track to %p", track.get());
 		this->track = track;
