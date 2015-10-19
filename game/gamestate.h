@@ -18,13 +18,13 @@ class Rules;
 class GameState
 {
   private:
-	Organisation *player;
+	sp<Organisation> player;
 
   public:
 	GameState(Framework &fw, Rules &rules);
 	std::unique_ptr<City> city;
 
-	std::map<UString, Organisation> organisations;
+	std::map<UString, sp<Organisation>> organisations;
 	std::vector<sp<Base>> playerBases;
 
 	bool showTileOrigin;
@@ -34,8 +34,8 @@ class GameState
 	std::default_random_engine rng;
 
 	UString getPlayerBalance() const;
-	Organisation &getOrganisation(const UString &orgID);
-	Organisation &getPlayer() const;
+	sp<Organisation> getOrganisation(const UString &orgID);
+	sp<Organisation> getPlayer() const;
 };
 
 }; // namespace OpenApoc

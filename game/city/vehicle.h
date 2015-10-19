@@ -42,10 +42,10 @@ class Vehicle : public std::enable_shared_from_this<Vehicle>, public ActiveObjec
 {
   public:
 	virtual ~Vehicle();
-	Vehicle(const VehicleDefinition &def, Organisation &owner);
+	Vehicle(const VehicleDefinition &def, sp<Organisation> owner);
 
 	const VehicleDefinition &def;
-	Organisation &owner;
+	sp<Organisation> owner;
 
 	std::weak_ptr<VehicleTileObject> tileObject;
 

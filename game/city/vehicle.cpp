@@ -95,7 +95,7 @@ VehicleMover::VehicleMover(Vehicle &v) : vehicle(v) {}
 
 VehicleMover::~VehicleMover() {}
 
-Vehicle::Vehicle(const VehicleDefinition &def, Organisation &owner)
+Vehicle::Vehicle(const VehicleDefinition &def, sp<Organisation> owner)
     : def(def), owner(owner), building(nullptr)
 {
 }
@@ -180,7 +180,7 @@ void Vehicle::update(unsigned int ticks)
 						/* Not a vehicle, skip */
 						continue;
 					}
-					if (!this->owner.isHostileTo(otherVehicle->owner))
+					if (!this->owner->isHostileTo(*otherVehicle->owner))
 					{
 						/* Not hostile, skip */
 						continue;

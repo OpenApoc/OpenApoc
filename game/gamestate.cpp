@@ -25,11 +25,11 @@ GameState::GameState(Framework &fw, Rules &rules)
 		{
 			LogError("Multiple organisations with ID \"%s\"", org.ID.c_str());
 		}
-		this->organisations[org.ID] = org;
+		this->organisations[org.ID] = std::make_shared<Organisation>(org);
 		/* FIXME: Make 'player' organisation selectable? */
 		if (org.ID == "ORG_X-COM")
 		{
-			this->player = &this->organisations[org.ID];
+			this->player = this->organisations[org.ID];
 		}
 	}
 
@@ -115,11 +115,11 @@ GameState::GameState(Framework &fw, Rules &rules)
 UString GameState::getPlayerBalance() const
 {
 	std::ostringstream ss;
-	ss << this->getPlayer().balance;
+	ss << this->getPlayer()->balance;
 	return ss.str();
 }
 
-Organisation &GameState::getOrganisation(const UString &orgID)
+sp<Organisation> GameState::getOrganisation(const UString &orgID)
 {
 	auto f = this->organisations.find(orgID);
 	if (f == this->organisations.end())
@@ -129,6 +129,6 @@ Organisation &GameState::getOrganisation(const UString &orgID)
 	return f->second;
 }
 
-Organisation &GameState::getPlayer() const { return *this->player; }
+sp<Organisation> GameState::getPlayer() const { return this->player; }
 
 }; // namespace OpenApoc

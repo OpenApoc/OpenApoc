@@ -70,7 +70,7 @@ Base::BuildError Base::canBuildFacility(const FacilityDef &def, Vec2<int> pos) c
 			}
 		}
 	}
-	if (!def.fixed && building.owner.balance - def.buildCost < 0)
+	if (!def.fixed && building.owner->balance - def.buildCost < 0)
 	{
 		return BuildError::NoMoney;
 	}
@@ -81,7 +81,7 @@ void Base::buildFacility(const FacilityDef &def, Vec2<int> pos)
 {
 	if (canBuildFacility(def, pos) == BuildError::None)
 	{
-		building.owner.balance -= def.buildCost;
+		building.owner->balance -= def.buildCost;
 		facilities.emplace_back(def);
 		facilities.back().buildTime = def.buildTime;
 		facilities.back().pos = pos;
