@@ -1,4 +1,5 @@
 #include "game/rules/rules_private.h"
+#include "game/rules/rules_helper.h"
 #include "framework/logger.h"
 
 namespace OpenApoc
@@ -14,13 +15,30 @@ bool RulesLoader::ParseOrganisationDefinition(Framework &fw, Rules &rules,
 		return false;
 	}
 
-	OrganisationDef def;
+	Organisation org;
 
-	def.name = root->GetText();
+	if (!ReadAttribute(root, "ID", org.ID))
+	{
+		LogError("Organisation with no ID");
+		return false;
+	}
 
-	rules.organisations.push_back(def);
+	if (org.ID.substr(0, 4) != "ORG_")
+	{
+		LogError("Organisation ID \"%s\" doesn't start with \"ORG_\"", org.ID.c_str());
+		return false;
+	}
 
-	LogInfo("Organisation \"%s\" at idx %d", def.name.c_str(), rules.organisations.size());
+	if (!ReadAttribute(root, "name", org.name))
+	{
+		LogError("Organisation ID \"%s\" has no name", org.ID.c_str());
+		return false;
+	}
+
+	ReadAttribute(root, "balance", org.balance, 0);
+	ReadAttribute(root, "income", org.income, 0);
+
+	rules.organisations.push_back(org);
 
 	return true;
 }

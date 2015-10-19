@@ -16,11 +16,26 @@ namespace OpenApoc
 {
 
 GameState::GameState(Framework &fw, Rules &rules)
-    : showTileOrigin(false), showVehiclePath(false), showSelectableBounds(false), rng(std::random_device{}())
+    : player(nullptr), showTileOrigin(false), showVehiclePath(false), showSelectableBounds(false),
+      rng(std::random_device{}())
 {
-	for (auto &orgdef : rules.getOrganisationDefs())
+	for (auto &org : rules.getOrganisations())
 	{
-		this->organisations.emplace_back(orgdef);
+		if (this->organisations.find(org.ID) != this->organisations.end())
+		{
+			LogError("Multiple organisations with ID \"%s\"", org.ID.c_str());
+		}
+		this->organisations[org.ID] = org;
+		/* FIXME: Make 'player' organisation selectable? */
+		if (org.ID == "ORG_X-COM")
+		{
+			this->player = &this->organisations[org.ID];
+		}
+	}
+
+	if (!this->player)
+	{
+		LogError("No player organisation defined");
 	}
 
 	this->city.reset(new City(fw, *this));
@@ -38,8 +53,8 @@ GameState::GameState(Framework &fw, Rules &rules)
 			LogError("No POLICE_HOVERCAR vehicle def found?");
 			return;
 		}
-		// Organisations[3] == megapol
-		auto testVehicle = std::make_shared<Vehicle>(vehicleDefIt->second, this->organisations[3]);
+		auto testVehicle =
+		    std::make_shared<Vehicle>(vehicleDefIt->second, this->getOrganisation("ORG_MEGAPOL"));
 
 		auto &weaponDef = weaponIt->second;
 		LogInfo("Equipping with weapon \"%s\"", weaponDef.name.c_str());
@@ -65,8 +80,7 @@ GameState::GameState(Framework &fw, Rules &rules)
 			LogError("No PHOENIX_HOVERCAR vehicle def found?");
 			return;
 		}
-		// Organisations[0] == X-Com
-		auto testVehicle = std::make_shared<Vehicle>(vehicleDefIt->second, this->organisations[0]);
+		auto testVehicle = std::make_shared<Vehicle>(vehicleDefIt->second, this->getPlayer());
 		this->city->vehicles.push_back(testVehicle);
 
 		auto &weaponDef = weaponIt->second;
@@ -84,15 +98,10 @@ GameState::GameState(Framework &fw, Rules &rules)
 		city->activeObjects.insert(std::dynamic_pointer_cast<ActiveObject>(testVehicle));
 	}
 
-	// Place a random testing base
-	for (auto &i : this->organisations)
-	{
-		i.balance = 999999;
-	}
 	std::uniform_int_distribution<int> base_distribution(0, this->city->baseBuildings.size() - 1);
 	auto base = this->city->baseBuildings[base_distribution(rng)]->base;
 	this->playerBases.emplace_back(base);
-	//base->building.owner = this->organisations[0];
+	// base->building.owner = this->organisations[0];
 	base->name = "Test Base";
 	std::uniform_int_distribution<int> facilityPos(0, Base::SIZE - 1);
 	for (auto &i : rules.getFacilityDefs())
@@ -106,8 +115,20 @@ GameState::GameState(Framework &fw, Rules &rules)
 UString GameState::getPlayerBalance() const
 {
 	std::ostringstream ss;
-	ss << this->organisations[0].balance;
+	ss << this->getPlayer().balance;
 	return ss.str();
 }
+
+Organisation &GameState::getOrganisation(const UString &orgID)
+{
+	auto f = this->organisations.find(orgID);
+	if (f == this->organisations.end())
+	{
+		LogError("No organisation matching ID \"%s\"", orgID.c_str());
+	}
+	return f->second;
+}
+
+Organisation &GameState::getPlayer() const { return *this->player; }
 
 }; // namespace OpenApoc

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game/rules/organisationdef.h"
+#include "library/strings.h"
 
 namespace OpenApoc
 {
@@ -8,10 +8,12 @@ namespace OpenApoc
 class Organisation
 {
   public:
-	const OrganisationDef &def;
+	UString ID;
+	UString name;
 	int balance;
+	int income;
 
-	Organisation(const OrganisationDef &def);
+	Organisation(const UString &ID = "", const UString &name = "", int balance = 0, int income = 0);
 	bool isHostileTo(const Organisation &other) const;
 };
 

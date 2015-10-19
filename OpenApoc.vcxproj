@@ -370,7 +370,6 @@
     <ClInclude Include="game\rules\buildingdef.h" />
     <ClInclude Include="game\rules\buildingtiledef.h" />
     <ClInclude Include="game\rules\facilitydef.h" />
-    <ClInclude Include="game\rules\organisationdef.h" />
     <ClInclude Include="game\rules\rules.h" />
     <ClInclude Include="game\rules\rules_helper.h" />
     <ClInclude Include="game\rules\rules_private.h" />

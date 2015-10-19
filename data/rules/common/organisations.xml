@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
-  <organisation>X-COM</organisation>
-  <organisation>Alien</organisation>
-  <organisation>Government</organisation>
-  <organisation>Megapol</organisation>
-  <organisation>Cult of Sirius</organisation>
-  <organisation>Marsec</organisation>
-  <organisation>Superdynamics</organisation>
-  <organisation>General Metro</organisation>
-  <organisation>Cyberweb</organisation>
-  <organisation>Transtellar</organisation>
-  <organisation>Solmine</organisation>
-  <organisation>Sensovision</organisation>
-  <organisation>Lifetree</organisation>
-  <organisation>Nutrivend</organisation>
-  <organisation>Evonet</organisation>
-  <organisation>Sanctuary Clinic</organisation>
-  <organisation>Nanotech</organisation>
-  <organisation>Energen</organisation>
-  <organisation>Synthemesh</organisation>
-  <organisation>Gravball League</organisation>
-  <organisation>Psyke</organisation>
-  <organisation>Diablo</organisation>
-  <organisation>Osiron</organisation>
-  <organisation>S.E.L.F.</organisation>
-  <organisation>Mutant Alliance</organisation>
-  <organisation>Extropians</organisation>
-  <organisation>Technocrats</organisation>
-  <organisation>Civilian</organisation>
+  <organisation ID="ORG_X-COM" balance="199" income="0" name="STR_X-COM"/>
+  <organisation ID="ORG_ALIEN" balance="0" income="0" name="STR_ALIEN"/>
+  <organisation ID="ORG_GOVERNMENT" balance="0" income="0" name="STR_GOVERNMENT"/>
+  <organisation ID="ORG_MEGAPOL" balance="0" income="0" name="STR_MEGAPOL"/>
+  <organisation ID="ORG_CULT_OF_SIRIUS" balance="0" income="0" name="STR_CULT_OF_SIRIUS"/>
+  <organisation ID="ORG_MARSEC" balance="0" income="0" name="STR_MARSEC"/>
+  <organisation ID="ORG_SUPERDYNAMICS" balance="0" income="0" name="STR_SUPERDYNAMICS"/>
+  <organisation ID="ORG_GENERAL_METRO" balance="0" income="0" name="STR_GENERAL_METRO"/>
+  <organisation ID="ORG_CYBERWEB" balance="0" income="0" name="STR_CYBERWEB"/>
+  <organisation ID="ORG_TRANSTELLAR" balance="0" income="0" name="STR_TRANSTELLAR"/>
+  <organisation ID="ORG_SOLMINE" balance="0" income="0" name="STR_SOLMINE"/>
+  <organisation ID="ORG_SENSOVISION" balance="0" income="0" name="STR_SENSOVISION"/>
+  <organisation ID="ORG_LIFETREE" balance="0" income="0" name="STR_LIFETREE"/>
+  <organisation ID="ORG_NUTRIVEND" balance="0" income="0" name="STR_NUTRIVEND"/>
+  <organisation ID="ORG_EVONET" balance="0" income="0" name="STR_EVONET"/>
+  <organisation ID="ORG_SANCTUARY_CLINIC" balance="0" income="0" name="STR_SANCTUARY_CLINIT"/>
+  <organisation ID="ORG_NANOTECH" balance="0" income="0" name="STR_NANOTECH"/>
+  <organisation ID="ORG_ENERGEN" balance="0" income="0" name="STR_ENERGEN"/>
+  <organisation ID="ORG_SYNTHEMESH" balance="0" income="0" name="STR_SYNTHEMESH"/>
+  <organisation ID="ORG_GRAVBALL_LEAGUE" balance="0" income="0" name="STR_GRAVBALL_LEAGUE"/>
+  <organisation ID="ORG_PSYKE" balance="0" income="0" name="STR_PSYKE"/>
+  <organisation ID="ORG_DIABLO" balance="0" income="0" name="STR_DIABLO"/>
+  <organisation ID="ORG_OSIRON" balance="0" income="0" name="STR_OSIRON"/>
+  <organisation ID="ORG_S_E_L_F_" balance="0" income="0" name="STR_S_E_L_F_"/>
+  <organisation ID="ORG_MUTANT_ALLIANCE" balance="0" income="0" name="STR_MUTANT_ALLIANCE"/>
+  <organisation ID="ORG_EXTROPIANS" balance="0" income="0" name="STR_EXTROPIANS"/>
+  <organisation ID="ORG_TECHNOCRATS" balance="0" income="0" name="STR_TECHNOCRATS"/>
+  <organisation ID="ORG_CIVILIAN" balance="0" income="0" name="STR_CIVILIAN"/>
 </openapoc_rules>

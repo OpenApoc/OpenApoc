@@ -1,11 +1,12 @@
 #pragma once
 
 #include "game/rules/vehicledef.h"
-#include "game/rules/organisationdef.h"
 #include "game/rules/buildingdef.h"
 #include "game/rules/buildingtiledef.h"
 #include "game/rules/weapondef.h"
 #include "game/rules/facilitydef.h"
+
+#include "game/organisation.h"
 
 #include "framework/logger.h"
 #include "library/vec.h"
@@ -24,7 +25,7 @@ class Rules
   private:
 	std::map<UString, VehicleDefinition> vehicleDefs;
 	std::vector<BuildingDef> buildings;
-	std::vector<OrganisationDef> organisations;
+	std::vector<Organisation> organisations;
 	std::map<UString, BuildingTileDef> buildingTiles;
 	std::map<UString, WeaponDef> weapons;
 	std::map<UString, FacilityDef> facilities;
@@ -44,7 +45,7 @@ class Rules
 
 	std::vector<UString> &getLandingPadTiles() { return landingPadTiles; }
 
-	std::vector<OrganisationDef> &getOrganisationDefs() { return organisations; }
+	std::vector<Organisation> &getOrganisations() { return organisations; }
 
 	std::map<UString, FacilityDef> &getFacilityDefs() { return facilities; }
 

@@ -4,7 +4,10 @@
 namespace OpenApoc
 {
 
-Organisation::Organisation(const OrganisationDef &def) : def(def), balance(0) {}
+Organisation::Organisation(const UString &ID, const UString &name, int balance, int income)
+    : ID(ID), name(name), balance(balance), income(income)
+{
+}
 
 bool Organisation::isHostileTo(const Organisation &other) const
 {

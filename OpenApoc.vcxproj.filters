@@ -479,9 +479,6 @@
     <ClInclude Include="game\rules\buildingtiledef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\rules\organisationdef.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game\organisation.h">
       <Filter>Header Files</Filter>
     </ClInclude>

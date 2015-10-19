@@ -14,21 +14,7 @@ City::City(Framework &fw, GameState &state) : TileMap(fw, fw.rules->getCitySize(
 {
 	for (auto &def : fw.rules->getBuildingDefs())
 	{
-		Organisation *owner = nullptr;
-		for (auto &org : state.organisations)
-		{
-			if (org.def.getName() == def.getOwnerName())
-			{
-				owner = &org;
-			}
-		}
-		if (!owner)
-		{
-			LogError("No organisation found matching building \"%s\" owner \"%s\"",
-			         def.getName().c_str(), def.getOwnerName().c_str());
-			return;
-		}
-		this->buildings.emplace_back(def, *owner);
+		this->buildings.emplace_back(def, state.getOrganisation(def.getOwnerName()));
 	}
 
 	for (int z = 0; z < this->size.z; z++)
