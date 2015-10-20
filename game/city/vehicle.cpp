@@ -95,10 +95,7 @@ VehicleMover::VehicleMover(Vehicle &v) : vehicle(v) {}
 
 VehicleMover::~VehicleMover() {}
 
-Vehicle::Vehicle(const VehicleDefinition &def, sp<Organisation> owner)
-    : def(def), owner(owner), building(nullptr)
-{
-}
+Vehicle::Vehicle(const VehicleDefinition &def, sp<Organisation> owner) : def(def), owner(owner) {}
 
 Vehicle::~Vehicle() {}
 
@@ -109,20 +106,21 @@ void Vehicle::launch(TileMap &map, Vec3<float> initialPosition)
 		LogError("Trying to launch already-launched vehicle");
 		return;
 	}
-	if (!this->building)
+	auto bld = this->building.lock();
+	if (!bld)
 	{
 		LogError("Vehicle not in a building?");
 		return;
 	}
-	this->building->landed_vehicles.erase(shared_from_this());
-	this->building = nullptr;
+	bld->landed_vehicles.erase(shared_from_this());
+	this->building.reset();
 	this->mover.reset(new FlyingVehicleMover(*this, initialPosition));
 	auto vehicleTile = std::make_shared<VehicleTileObject>(*this, map, initialPosition);
 	this->tileObject = vehicleTile;
 	map.addObject(vehicleTile);
 }
 
-void Vehicle::land(TileMap &map, Building &b)
+void Vehicle::land(TileMap &map, sp<Building> b)
 {
 	auto vehicleTile = this->tileObject.lock();
 	if (!vehicleTile)
@@ -130,13 +128,13 @@ void Vehicle::land(TileMap &map, Building &b)
 		LogError("Trying to land already-landed vehicle");
 		return;
 	}
-	if (this->building)
+	if (this->building.lock())
 	{
 		LogError("Vehicle already in a building?");
 		return;
 	}
-	this->building = &b;
-	b.landed_vehicles.insert(shared_from_this());
+	this->building = b;
+	b->landed_vehicles.insert(shared_from_this());
 	this->tileObject.reset();
 	map.removeObject(vehicleTile);
 }

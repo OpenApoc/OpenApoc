@@ -53,12 +53,12 @@ class Vehicle : public std::enable_shared_from_this<Vehicle>, public ActiveObjec
 	std::unique_ptr<VehicleMover> mover;
 
 	/* The building we are current landed in (May be nullptr if in the air) */
-	Building *building;
+	std::weak_ptr<Building> building;
 
 	/* 'launch' the vehicle into the city */
 	void launch(TileMap &map, Vec3<float> initialPosition);
 	/* 'land' the vehicle in a building*/
-	void land(TileMap &map, Building &b);
+	void land(TileMap &map, sp<Building> b);
 
 	std::vector<std::unique_ptr<Weapon>> weapons;
 

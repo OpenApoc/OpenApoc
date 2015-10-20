@@ -9,7 +9,7 @@ namespace OpenApoc
 {
 
 BuildingTile::BuildingTile(TileMap &map, BuildingTileDef &tileDef, Vec3<int> pos,
-                           Building *building)
+                           sp<Building> building)
     : TileObject(map, pos),
       TileObjectSprite(map, pos, tileDef.getSprite(), tileDef.getStrategySprite()),
       TileObjectCollidable(map, pos, {32, 32, 16}, tileDef.getVoxelMap()), pos(pos),

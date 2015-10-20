@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
-  <organisation ID="ORG_X-COM" balance="199" income="0" name="STR_X-COM"/>
+  <organisation ID="ORG_X-COM" balance="5000000" income="0" name="STR_X-COM"/>
   <organisation ID="ORG_ALIEN" balance="0" income="0" name="STR_ALIEN"/>
   <organisation ID="ORG_GOVERNMENT" balance="0" income="0" name="STR_GOVERNMENT"/>
   <organisation ID="ORG_MEGAPOL" balance="0" income="0" name="STR_MEGAPOL"/>

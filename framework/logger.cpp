@@ -22,7 +22,7 @@
 #define LOGFILE "openapoc_log.txt"
 #endif
 
-//Don't have interactive dialogues in unit tests
+// Don't have interactive dialogues in unit tests
 #ifdef UNIT_TEST
 #undef ERROR_DIALOG
 #else

@@ -26,8 +26,8 @@ class City : public TileMap
 	City(Framework &fw, GameState &state);
 	~City();
 	std::vector<sp<Vehicle>> vehicles;
-	std::vector<Building> buildings;
-	std::vector<Building *> baseBuildings;
+	std::vector<sp<Building>> buildings;
+	std::vector<sp<Building>> baseBuildings;
 
 	void update(unsigned int ticks) override;
 };

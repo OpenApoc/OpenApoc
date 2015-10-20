@@ -67,9 +67,9 @@ GameState::GameState(Framework &fw, Rules &rules)
 		testVehicle->weapons.emplace_back(testWeapon);
 
 		this->city->vehicles.push_back(testVehicle);
-		auto &b = this->city->buildings[bld_distribution(rng)];
-		b.landed_vehicles.insert(testVehicle);
-		testVehicle->building = &b;
+		auto b = this->city->buildings[bld_distribution(rng)];
+		b->landed_vehicles.insert(testVehicle);
+		testVehicle->building = b;
 		city->activeObjects.insert(std::dynamic_pointer_cast<ActiveObject>(testVehicle));
 	}
 	for (int i = 0; i < 50; i++)
@@ -93,8 +93,8 @@ GameState::GameState(Framework &fw, Rules &rules)
 		auto *testWeapon = new Weapon(weaponDef, testVehicle, weaponDef.ammoCapacity);
 		testVehicle->weapons.emplace_back(testWeapon);
 		auto &b = this->city->buildings[bld_distribution(rng)];
-		b.landed_vehicles.insert(testVehicle);
-		testVehicle->building = &b;
+		b->landed_vehicles.insert(testVehicle);
+		testVehicle->building = b;
 		city->activeObjects.insert(std::dynamic_pointer_cast<ActiveObject>(testVehicle));
 	}
 
@@ -103,7 +103,9 @@ GameState::GameState(Framework &fw, Rules &rules)
 	this->playerBases.emplace_back(base);
 	// base->building.owner = this->organisations[0];
 	base->name = "Test Base";
+	base->bld.lock()->owner = this->getPlayer();
 	std::uniform_int_distribution<int> facilityPos(0, Base::SIZE - 1);
+	LogWarning("Read %u facilities", rules.getFacilityDefs().size());
 	for (auto &i : rules.getFacilityDefs())
 	{
 		if (!i.second.fixed)

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "library/sp.h"
 #include "game/tileview/tile.h"
 #include "game/tileview/tile_visible.h"
 #include "game/tileview/tile_collidable.h"
@@ -23,11 +24,11 @@ class BuildingTile : public TileObjectSprite, public TileObjectCollidable
   private:
 	Vec3<int> pos;
 	// May be NULL for no building
-	Building *building;
+	sp<Building> building;
 
   public:
 	const BuildingTileDef &tileDef;
-	BuildingTile(TileMap &map, BuildingTileDef &tileDef, Vec3<int> pos, Building *building);
+	BuildingTile(TileMap &map, BuildingTileDef &tileDef, Vec3<int> pos, sp<Building> building);
 	virtual ~BuildingTile();
 };
 

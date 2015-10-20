@@ -123,11 +123,12 @@ class VehicleTakeOffMission : public VehicleMission
 	UString name;
 	std::list<Tile *> path;
 	TileMap &map;
-	Building &b;
+	std::weak_ptr<Building> bld;
 
-	VehicleTakeOffMission(Vehicle &v, TileMap &map, Building &b) : VehicleMission(v), map(map), b(b)
+	VehicleTakeOffMission(Vehicle &v, TileMap &map, sp<Building> b)
+	    : VehicleMission(v), map(map), bld(b)
 	{
-		name = "Take off from building " + b.def.getName();
+		name = "Take off from building " + b->def.getName();
 	}
 	virtual const std::list<Tile *> &getCurrentPlannedPath() override { return path; }
 	virtual void start() override {}
@@ -136,12 +137,18 @@ class VehicleTakeOffMission : public VehicleMission
 	virtual void update(unsigned int ticks) override
 	{
 		std::ignore = ticks;
+		auto b = bld.lock();
+		if (!b)
+		{
+			LogError("Building disappeared");
+			return;
+		}
 		if (vehicle.tileObject.lock())
 		{
 			// We're already on our way
 			return;
 		}
-		for (auto padLocation : b.landingPadLocations)
+		for (auto padLocation : b->landingPadLocations)
 		{
 			auto padTile = map.getTile(padLocation);
 			auto abovePadLocation = padLocation;
@@ -158,12 +165,12 @@ class VehicleTakeOffMission : public VehicleMission
 			if (!vehicleCanEnterTileAllowLandingPads(*tileAbovePad, vehicle))
 				continue;
 			LogInfo("Launching vehicle from building \"%s\" at pad {%d,%d,%d}",
-			        b.def.getName().c_str(), padLocation.x, padLocation.y, padLocation.z);
+			        b->def.getName().c_str(), padLocation.x, padLocation.y, padLocation.z);
 			path = {padTile, tileAbovePad};
 			vehicle.launch(map, padLocation);
 			return;
 		}
-		LogWarning("No pad in building \"%s\" free - waiting", b.def.getName().c_str());
+		LogWarning("No pad in building \"%s\" free - waiting", b->def.getName().c_str());
 	}
 	virtual bool getNextDestination(Vec3<float> &dest) override
 	{
@@ -185,15 +192,22 @@ class VehicleLandMission : public VehicleMission
 	UString name;
 	std::list<Tile *> path;
 	TileMap &map;
-	Building &b;
+	std::weak_ptr<Building> bld;
 
-	VehicleLandMission(Vehicle &v, TileMap &map, Building &b) : VehicleMission(v), map(map), b(b)
+	VehicleLandMission(Vehicle &v, TileMap &map, sp<Building> b)
+	    : VehicleMission(v), map(map), bld(b)
 	{
-		name = "Land in building " + b.def.getName();
+		name = "Land in building " + b->def.getName();
 	}
 	virtual const std::list<Tile *> &getCurrentPlannedPath() override { return path; }
 	virtual void start() override
 	{
+		auto b = bld.lock();
+		if (!b)
+		{
+			LogError("Building disappeared");
+			return;
+		}
 		auto vehicleTile = vehicle.tileObject.lock();
 		if (!vehicleTile)
 		{
@@ -211,7 +225,7 @@ class VehicleLandMission : public VehicleMission
 
 		bool padFound = false;
 
-		for (auto &landingPadPos : b.landingPadLocations)
+		for (auto &landingPadPos : b->landingPadLocations)
 		{
 			if (landingPadPos == padPosition)
 			{
@@ -222,13 +236,19 @@ class VehicleLandMission : public VehicleMission
 		if (!padFound)
 		{
 			LogError("Vehicle at {%d,%d,%d} not directly above a landing pad for building %s",
-			         padPosition.x, padPosition.y, padPosition.z + 1, b.def.getName().c_str());
+			         padPosition.x, padPosition.y, padPosition.z + 1, b->def.getName().c_str());
 			return;
 		}
 		path = {map.getTile(padPosition)};
 	}
 	virtual bool isFinished() override
 	{
+		auto b = bld.lock();
+		if (!b)
+		{
+			LogError("Building disappeared");
+			return true;
+		}
 		if (path.empty())
 		{
 			/* FIXME: Overloading isFinished() to complete landing action
@@ -308,14 +328,14 @@ class VehicleGotoBuildingMission : public VehicleMission
   public:
 	UString name;
 	TileMap &map;
-	Building &b;
+	std::weak_ptr<Building> bld;
 
 	std::list<Tile> fakePath;
 
-	VehicleGotoBuildingMission(Vehicle &v, TileMap &map, Building &b)
-	    : VehicleMission(v), map(map), b(b)
+	VehicleGotoBuildingMission(Vehicle &v, TileMap &map, sp<Building> b)
+	    : VehicleMission(v), map(map), bld(b)
 	{
-		name = "Goto building " + b.def.getName();
+		name = "Goto building " + b->def.getName();
 	}
 	virtual const std::list<Tile *> &getCurrentPlannedPath() override
 	{
@@ -325,7 +345,13 @@ class VehicleGotoBuildingMission : public VehicleMission
 	virtual void start() override
 	{
 		LogInfo("Vehicle mission %s checking state", name.c_str());
-		if (&b == vehicle.building)
+		auto b = bld.lock();
+		if (!b)
+		{
+			LogError("Building disappeared");
+			return;
+		}
+		if (b == vehicle.building.lock())
 		{
 			LogInfo("Vehicle mission %s: Already at building", name.c_str());
 			return;
@@ -343,7 +369,7 @@ class VehicleGotoBuildingMission : public VehicleMission
 		auto position = vehicleTile->getOwningTile()->position;
 		LogInfo("Vehicle mission %s: at position {%d,%d,%d}", name.c_str(), position.x, position.y,
 		        position.z);
-		for (auto padLocation : b.landingPadLocations)
+		for (auto padLocation : b->landingPadLocations)
 		{
 			padLocation.z += 1;
 			if (padLocation == position)
@@ -366,7 +392,7 @@ class VehicleGotoBuildingMission : public VehicleMission
 
 		Vec3<int> target;
 
-		for (auto dest : b.landingPadLocations)
+		for (auto dest : b->landingPadLocations)
 		{
 			dest.z += 1; // we want to route to the tile above the pad
 			auto currentPath =
@@ -417,7 +443,13 @@ class VehicleGotoBuildingMission : public VehicleMission
 	}
 	virtual bool isFinished() override
 	{
-		if (vehicle.building == &b)
+		auto b = bld.lock();
+		if (!b)
+		{
+			LogError("Building disappeared");
+			return true;
+		}
+		if (vehicle.building.lock() == b)
 		{
 			LogInfo("Vehicle mission %s: Finished", name.c_str());
 			return true;
@@ -432,7 +464,12 @@ class VehicleGotoBuildingMission : public VehicleMission
 	virtual bool getNextDestination(Vec3<float> &dest) override
 	{
 		std::ignore = dest;
-		if (vehicle.building != &b)
+		auto b = bld.lock();
+		if (!b)
+		{
+			LogError("Building disappered");
+		}
+		if (vehicle.building.lock() != b)
 		{
 			LogWarning("Should never be unless already landed");
 		}
@@ -461,7 +498,7 @@ VehicleMission *VehicleMission::gotoLocation(Vehicle &v, TileMap &map, Vec3<int>
 	return new VehicleGotoLocationMission(v, map, target);
 }
 
-VehicleMission *VehicleMission::gotoBuilding(Vehicle &v, TileMap &map, Building &target)
+VehicleMission *VehicleMission::gotoBuilding(Vehicle &v, TileMap &map, sp<Building> target)
 {
 	// TODO
 	// Pseudocode:
@@ -482,15 +519,16 @@ VehicleMission *VehicleMission::gotoBuilding(Vehicle &v, TileMap &map, Building 
 
 VehicleMission *VehicleMission::takeOff(Vehicle &v, TileMap &map)
 {
-	if (!v.building)
+	auto bld = v.building.lock();
+	if (!bld)
 	{
 		LogError("Trying to take off while not in a building");
 		return nullptr;
 	}
-	return new VehicleTakeOffMission(v, map, *v.building);
+	return new VehicleTakeOffMission(v, map, bld);
 }
 
-VehicleMission *VehicleMission::land(Vehicle &v, TileMap &map, Building &b)
+VehicleMission *VehicleMission::land(Vehicle &v, TileMap &map, sp<Building> b)
 {
 	return new VehicleLandMission(v, map, b);
 }

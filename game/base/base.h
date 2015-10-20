@@ -1,5 +1,6 @@
 #pragma once
 
+#include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
 #include "game/base/facility.h"
@@ -27,10 +28,10 @@ class Base
 		NoMoney
 	};
 
-	const Building &building;
+	std::weak_ptr<Building> bld;
 	UString name;
 
-	Base(const Building &building, const Framework &fw);
+	Base(sp<Building> building, const Framework &fw);
 
 	const Facility *getFacility(Vec2<int> pos) const;
 	const std::vector<std::vector<bool>> &getCorridors() const { return corridors; };

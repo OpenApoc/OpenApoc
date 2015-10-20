@@ -14,7 +14,8 @@ City::City(Framework &fw, GameState &state) : TileMap(fw, fw.rules->getCitySize(
 {
 	for (auto &def : fw.rules->getBuildingDefs())
 	{
-		this->buildings.emplace_back(def, state.getOrganisation(def.getOwnerName()));
+		this->buildings.emplace_back(
+		    std::make_shared<Building>(def, state.getOrganisation(def.getOwnerName())));
 	}
 
 	for (int z = 0; z < this->size.z; z++)
@@ -26,24 +27,24 @@ City::City(Framework &fw, GameState &state) : TileMap(fw, fw.rules->getCitySize(
 				auto tileID = fw.rules->getBuildingTileAt(Vec3<int>{x, y, z});
 				if (tileID == "")
 					continue;
-				Building *bld = nullptr;
+				sp<Building> bld = nullptr;
 
-				for (auto &b : this->buildings)
+				for (auto b : this->buildings)
 				{
-					if (b.def.getBounds().withinInclusive(Vec2<int>{x, y}))
+					if (b->def.getBounds().withinInclusive(Vec2<int>{x, y}))
 					{
 						if (bld)
 						{
 							LogError("Multiple buildings on tile at %d,%d,%d", x, y, z);
 						}
-						bld = &b;
+						bld = b;
 						for (auto &padID : fw.rules->getLandingPadTiles())
 						{
 							if (padID == tileID)
 							{
 								LogInfo("Building %s has landing pad at {%d,%d,%d}",
-								        b.def.getName().c_str(), x, y, z);
-								b.landingPadLocations.emplace_back(x, y, z);
+								        b->def.getName().c_str(), x, y, z);
+								b->landingPadLocations.emplace_back(x, y, z);
 								break;
 							}
 						}
@@ -59,21 +60,21 @@ City::City(Framework &fw, GameState &state) : TileMap(fw, fw.rules->getCitySize(
 		}
 	}
 	/* Sanity check - all buildings should at have least one landing pad */
-	for (auto &b : this->buildings)
+	for (auto b : this->buildings)
 	{
-		if (b.landingPadLocations.empty())
+		if (b->landingPadLocations.empty())
 		{
-			LogError("Building \"%s\" has no landing pads", b.def.getName().c_str());
+			LogError("Building \"%s\" has no landing pads", b->def.getName().c_str());
 		}
 	}
 	/* Keep a cache of base locations (using pointers since you can't have a vector of references)
 	 */
-	for (auto &b : this->buildings)
+	for (auto b : this->buildings)
 	{
-		if (!b.def.getBaseCorridors().empty())
+		if (!b->def.getBaseCorridors().empty())
 		{
-			b.base = std::make_shared<Base>(b, fw);
-			this->baseBuildings.emplace_back(&b);
+			b->base = std::make_shared<Base>(b, fw);
+			this->baseBuildings.emplace_back(b);
 		}
 	}
 }
@@ -86,9 +87,9 @@ void City::update(unsigned int ticks)
 	 * Every now and then give a landed vehicle a new 'goto random building' mission, so there's
 	 * some activity in the city*/
 	std::uniform_int_distribution<int> bld_distribution(0, this->buildings.size() - 1);
-	for (auto &b : this->buildings)
+	for (auto b : this->buildings)
 	{
-		for (auto &v : b.landed_vehicles)
+		for (auto &v : b->landed_vehicles)
 		{
 			if (v->missions.empty())
 			{

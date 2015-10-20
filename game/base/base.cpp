@@ -7,10 +7,10 @@
 namespace OpenApoc
 {
 
-Base::Base(const Building &building, const Framework &fw) : building(building)
+Base::Base(sp<Building> building, const Framework &fw) : bld(building)
 {
 	corridors = std::vector<std::vector<bool>>(SIZE, std::vector<bool>(SIZE, false));
-	for (auto &rect : building.def.getBaseCorridors())
+	for (auto &rect : building->def.getBaseCorridors())
 	{
 		for (int x = rect.p0.x; x <= rect.p1.x; ++x)
 		{
@@ -21,13 +21,13 @@ Base::Base(const Building &building, const Framework &fw) : building(building)
 		}
 	}
 	const FacilityDef &def = fw.rules->getFacilityDefs().at("ACCESS_LIFT");
-	if (canBuildFacility(def, building.def.getBaseLift()) != BuildError::None)
+	if (canBuildFacility(def, building->def.getBaseLift()) != BuildError::None)
 	{
-		LogError("Building %s has invalid lift location", building.def.getName().c_str());
+		LogError("Building %s has invalid lift location", building->def.getName().c_str());
 	}
 	else
 	{
-		buildFacility(def, building.def.getBaseLift());
+		buildFacility(def, building->def.getBaseLift());
 	}
 }
 
@@ -46,6 +46,12 @@ const Facility *Base::getFacility(Vec2<int> pos) const
 
 Base::BuildError Base::canBuildFacility(const FacilityDef &def, Vec2<int> pos) const
 {
+	auto building = bld.lock();
+	if (!building)
+	{
+		LogError("Building disappeared");
+		return BuildError::OutOfBounds;
+	}
 	if (pos.x < 0 || pos.y < 0 || pos.x + def.size > SIZE || pos.y + def.size > SIZE)
 	{
 		return BuildError::OutOfBounds;
@@ -70,7 +76,7 @@ Base::BuildError Base::canBuildFacility(const FacilityDef &def, Vec2<int> pos) c
 			}
 		}
 	}
-	if (!def.fixed && building.owner->balance - def.buildCost < 0)
+	if (!def.fixed && building->owner->balance - def.buildCost < 0)
 	{
 		return BuildError::NoMoney;
 	}
@@ -79,9 +85,15 @@ Base::BuildError Base::canBuildFacility(const FacilityDef &def, Vec2<int> pos) c
 
 void Base::buildFacility(const FacilityDef &def, Vec2<int> pos)
 {
+	auto building = bld.lock();
+	if (!building)
+	{
+		LogError("Building disappeared");
+		return;
+	}
 	if (canBuildFacility(def, pos) == BuildError::None)
 	{
-		building.owner->balance -= def.buildCost;
+		building->owner->balance -= def.buildCost;
 		facilities.emplace_back(def);
 		facilities.back().buildTime = def.buildTime;
 		facilities.back().pos = pos;
