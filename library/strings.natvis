@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AutoVisualizer xmlns="http://schemas.microsoft.com/vstudio/debugger/natvis/2010">
+  <Type Name="OpenApoc::UString">
+    <DisplayString Condition="pimpl._Myptr-&gt;fUnion.fFields.fLengthAndFlags&amp;pimpl._Myptr-&gt;kUsingStackBuffer">
+      {pimpl._Myptr-&gt;fUnion.fStackFields.fBuffer,su}
+    </DisplayString>
+    <DisplayString>
+      {pimpl._Myptr-&gt;fUnion.fFields.fArray,su}
+    </DisplayString>
+    <StringView Condition="pimpl._Myptr-&gt;fUnion.fFields.fLengthAndFlags&amp;pimpl._Myptr-&gt;kUsingStackBuffer">
+      pimpl._Myptr-&gt;fUnion.fStackFields.fBuffer,su
+    </StringView>
+    <StringView>
+      pimpl._Myptr-&gt;fUnion.fFields.fArray,su
+    </StringView>
+  </Type>
+</AutoVisualizer>

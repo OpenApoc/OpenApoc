@@ -554,5 +554,6 @@
     <None Include="framework\render\gl30\gl_3_0.inl">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="library\strings.natvis" />
   </ItemGroup>
 </Project>
