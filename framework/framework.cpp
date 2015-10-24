@@ -16,6 +16,10 @@
 // Use physfs to get prefs dir
 #include <physfs.h>
 
+#ifdef _WIN32
+#include <allegro5/allegro_windows.h>
+#endif
+
 using namespace OpenApoc;
 
 namespace
@@ -656,12 +660,20 @@ Vec2<int> Framework::Display_GetSize()
 
 void Framework::Display_SetTitle(UString NewTitle)
 {
+	al_set_app_name(NewTitle.c_str());
+	al_set_window_title(p->screen, NewTitle.c_str());
+}
+
+void Framework::Display_SetIcon()
+{
 #ifdef _WIN32
-	al_set_app_name(NewTitle.c_str());
-	al_set_window_title(p->screen, NewTitle.c_str());
+	HINSTANCE handle = GetModuleHandle(NULL);
+	HICON icon = LoadIcon(handle, L"ALLEGRO_ICON");
+	HWND hwnd = al_get_win_window_handle(p->screen);
+	SetClassLongPtr(hwnd, GCLP_HICON, (LONG_PTR)icon);
 #else
-	al_set_app_name(NewTitle.c_str());
-	al_set_window_title(p->screen, NewTitle.c_str());
+	// TODO: Figure out how this works
+	// al_set_display_icon(p->screen, ...);
 #endif
 }
 

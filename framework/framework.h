@@ -75,6 +75,7 @@ class Framework
 	int Display_GetHeight();
 	Vec2<int> Display_GetSize();
 	void Display_SetTitle(UString NewTitle);
+	void Display_SetIcon();
 
 	bool IsSlowMode();
 	void SetSlowMode(bool SlowEnabled);
