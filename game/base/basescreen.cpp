@@ -2,6 +2,7 @@
 
 #include "game/base/basescreen.h"
 #include "game/base/base.h"
+#include "game/base/facility.h"
 #include "framework/framework.h"
 #include "framework/image.h"
 
@@ -36,7 +37,7 @@ int BaseScreen::getCorridorSprite(Vec2<int> pos) const
 
 BaseScreen::BaseScreen(Framework &fw)
     : Stage(fw), basescreenform(fw.gamecore->GetForm("FORM_BASESCREEN")),
-      base(*fw.state->playerBases.front())
+      base(*fw.state->playerBases.front()), selection(-1, -1)
 {
 }
 
@@ -49,6 +50,10 @@ void BaseScreen::Begin()
 
 	Label *name = basescreenform->FindControlTyped<Label>("TEXT_BASE_NAME");
 	name->SetText(base.name);
+	
+	baseView = basescreenform->FindControl("BASE_VIEW");
+	selText = basescreenform->FindControlTyped<Label>("TEXT_SELECTED_FACILITY");
+	selGraphic = basescreenform->FindControlTyped<Graphic>("GRAPHIC_SELECTED_FACILITY");
 }
 
 void BaseScreen::Pause() {}
@@ -68,6 +73,44 @@ void BaseScreen::EventOccurred(Event *e)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
+		}
+	}
+
+	if (e->Type == EVENT_MOUSE_MOVE)
+	{
+		selection = {e->Data.Mouse.X, e->Data.Mouse.Y};
+		selection -= (basescreenform->Location + baseView->Location);
+		selection /= TILE_SIZE;
+		if (selection.x >= 0 && selection.y >= 0 && selection.x < Base::SIZE && selection.y < Base::SIZE)
+		{
+			selFacility = base.getFacility(selection);
+			if (selFacility != nullptr)
+			{
+				selText->SetText(fw.gamecore->GetString(selFacility->def.name));
+				selGraphic->SetImage(fw.data->load_image(selFacility->def.sprite));
+			}
+			else
+			{
+				int sprite = getCorridorSprite(selection);
+				if (sprite != 0)
+				{
+					std::ostringstream ss;
+					ss << "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:" << sprite
+					   << ":UI/menuopt.pal";
+					selText->SetText("Corridor");
+					selGraphic->SetImage(fw.data->load_image(ss.str()));
+				}
+				else
+				{
+					selText->SetText("Earth");
+					selGraphic->SetImage(fw.data->load_image("PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:UI/menuopt.pal"));
+				}
+			}
+		}
+		else
+		{
+			selText->SetText("");
+			selGraphic->SetImage(nullptr);
 		}
 	}
 
@@ -101,8 +144,7 @@ bool BaseScreen::IsTransition() { return false; }
 
 void BaseScreen::RenderBase()
 {
-	const int TILE_SIZE = 32;
-	const Vec2<int> BASE_POS = {200, 82};
+	const Vec2<int> BASE_POS = basescreenform->Location + baseView->Location;
 
 	// Draw grid
 	sp<Image> grid =
@@ -113,7 +155,7 @@ void BaseScreen::RenderBase()
 		for (i.y = 0; i.y < Base::SIZE; ++i.y)
 		{
 			Vec2<int> pos = BASE_POS + i * TILE_SIZE;
-			fw.renderer->draw(grid, basescreenform->Location + pos);
+			fw.renderer->draw(grid, pos);
 		}
 	}
 
@@ -129,7 +171,7 @@ void BaseScreen::RenderBase()
 				std::ostringstream ss;
 				ss << "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:" << sprite
 				   << ":UI/menuopt.pal";
-				fw.renderer->draw(fw.data->load_image(ss.str()), basescreenform->Location + pos);
+				fw.renderer->draw(fw.data->load_image(ss.str()), pos);
 			}
 		}
 	}
@@ -137,9 +179,22 @@ void BaseScreen::RenderBase()
 	// Draw facilities
 	for (auto &facility : base.getFacilities())
 	{
-		sp<Image> sprite = fw.data->load_image(facility.def.sprite);
-		Vec2<int> pos = BASE_POS + facility.pos * TILE_SIZE;
-		fw.renderer->draw(sprite, basescreenform->Location + pos);
+		sp<Image> sprite = fw.data->load_image(facility->def.sprite);
+		Vec2<int> pos = BASE_POS + facility->pos * TILE_SIZE;
+		fw.renderer->draw(sprite, pos);
+	}
+
+	// Draw selection
+	if (selection.x >= 0 && selection.y >= 0 && selection.x < Base::SIZE && selection.y < Base::SIZE)
+	{
+		Vec2<int> pos = selection;
+		Vec2<int> size = {TILE_SIZE, TILE_SIZE};
+		if (selFacility != nullptr)
+		{
+			pos = selFacility->pos;
+			size *= selFacility->def.size;
+		}
+		fw.renderer->drawRect(BASE_POS + pos * TILE_SIZE, size, Colour{255, 255, 255});
 	}
 }
 }; // namespace OpenApoc

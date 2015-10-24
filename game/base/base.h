@@ -3,20 +3,22 @@
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
-#include "game/base/facility.h"
+
+#include <random>
 
 namespace OpenApoc
 {
 
+class Framework;
 class Building;
 class FacilityDef;
-class Framework;
+class Facility;
 
 class Base
 {
   private:
 	std::vector<std::vector<bool>> corridors;
-	std::vector<Facility> facilities;
+	std::vector<sp<Facility>> facilities;
 
   public:
 	static const int SIZE = 8;
@@ -33,11 +35,13 @@ class Base
 
 	Base(sp<Building> building, const Framework &fw);
 
-	const Facility *getFacility(Vec2<int> pos) const;
+	sp<const Facility> getFacility(Vec2<int> pos) const;
 	const std::vector<std::vector<bool>> &getCorridors() const { return corridors; };
-	const std::vector<Facility> &getFacilities() const { return facilities; };
-	BuildError canBuildFacility(const FacilityDef &def, Vec2<int> pos) const;
-	void buildFacility(const FacilityDef &def, Vec2<int> pos);
+	const std::vector<sp<Facility>> &getFacilities() const { return facilities; };
+
+	void startingBase(const Framework &fw, std::default_random_engine &rng);
+	BuildError canBuildFacility(const FacilityDef &def, Vec2<int> pos, bool free = false) const;
+	void buildFacility(const FacilityDef &def, Vec2<int> pos, bool free = false);
 	BuildError canDestroyFacility(Vec2<int> pos) const;
 	void destroyFacility(Vec2<int> pos);
 };

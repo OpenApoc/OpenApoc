@@ -9,7 +9,6 @@ namespace OpenApoc
 Graphic::Graphic(Framework &fw, Control *Owner, UString Image) : Control(fw, Owner)
 {
 	image_name = Image;
-	image = nullptr;
 	image = fw.gamecore->GetImage(image_name);
 }
 
@@ -22,6 +21,10 @@ void Graphic::OnRender()
 	if (!image)
 	{
 		image = fw.gamecore->GetImage(image_name);
+		if (!image)
+		{
+			return;
+		}
 		if (Size.x == 0)
 		{
 			Size.x = image->size.x;
@@ -32,7 +35,7 @@ void Graphic::OnRender()
 		}
 	}
 
-	if (Vec2<unsigned int>{Size.x, Size.y} == image->size)
+	if (Vec2<unsigned int>(Size) == image->size)
 	{
 		fw.renderer->draw(image, Vec2<float>{0, 0});
 	}

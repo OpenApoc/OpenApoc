@@ -10,7 +10,6 @@
 #include "framework/framework.h"
 
 #include <random>
-#include <sstream>
 
 namespace OpenApoc
 {
@@ -101,24 +100,15 @@ GameState::GameState(Framework &fw, Rules &rules)
 	std::uniform_int_distribution<int> base_distribution(0, this->city->baseBuildings.size() - 1);
 	auto base = this->city->baseBuildings[base_distribution(rng)]->base;
 	this->playerBases.emplace_back(base);
-	// base->building.owner = this->organisations[0];
 	base->name = "Test Base";
 	base->bld.lock()->owner = this->getPlayer();
-	std::uniform_int_distribution<int> facilityPos(0, Base::SIZE - 1);
-	LogWarning("Read %u facilities", rules.getFacilityDefs().size());
-	for (auto &i : rules.getFacilityDefs())
-	{
-		if (!i.second.fixed)
-			base->buildFacility(i.second, {facilityPos(rng), facilityPos(rng)});
-	}
+	base->startingBase(fw, rng);
 }
 
 // Just a handy shortcut since it's shown on every single screen
 UString GameState::getPlayerBalance() const
 {
-	std::ostringstream ss;
-	ss << this->getPlayer()->balance;
-	return ss.str();
+	return Strings::FromInteger(this->getPlayer()->balance);
 }
 
 sp<Organisation> GameState::getOrganisation(const UString &orgID)

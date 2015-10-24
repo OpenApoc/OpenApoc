@@ -15,15 +15,23 @@ namespace OpenApoc
 {
 
 class Base;
+class Facility;
 
 class BaseScreen : public Stage
 {
   private:
 	static const std::unordered_map<std::vector<bool>, int> TILE_CORRIDORS;
+	static const int TILE_SIZE = 32;
 
 	std::unique_ptr<Form> basescreenform;
 	StageCmd stageCmd;
 	Base &base;
+	Vec2<int> selection;
+	sp<const Facility> selFacility;
+	
+	Control *baseView;
+	Label *selText;
+	Graphic *selGraphic;
 
 	void RenderBase();
 	int getCorridorSprite(Vec2<int> pos) const;
