@@ -59,7 +59,7 @@ void TextEdit::EventOccured(Event *e)
 				case ALLEGRO_KEY_BACKSPACE:
 					if (SelectionStart > 0)
 					{
-						text.remove(SelectionStart, 1);
+						text.remove(SelectionStart - 1, 1);
 						SelectionStart--;
 						RaiseEvent(FormEventType::TextChanged);
 					}
@@ -68,7 +68,7 @@ void TextEdit::EventOccured(Event *e)
 				case ALLEGRO_KEY_DELETE:
 					if (SelectionStart < text.length())
 					{
-						text.remove(SelectionStart + 1, 1);
+						text.remove(SelectionStart, 1);
 						RaiseEvent(FormEventType::TextChanged);
 					}
 					e->Handled = true;
