@@ -44,4 +44,11 @@ enum class VerticalAlignment
 	Bottom
 };
 
+enum class FillMethod
+{
+	Stretch,
+	Fit,
+	Tile
+};
+
 }; // namespace OpenApoc

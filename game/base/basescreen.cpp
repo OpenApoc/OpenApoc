@@ -48,10 +48,10 @@ void BaseScreen::Begin()
 	Label *funds = basescreenform->FindControlTyped<Label>("TEXT_FUNDS");
 	funds->SetText(fw.state->getPlayerBalance());
 
-	Label *name = basescreenform->FindControlTyped<Label>("TEXT_BASE_NAME");
+	TextEdit *name = basescreenform->FindControlTyped<TextEdit>("TEXT_BASE_NAME");
 	name->SetText(base.name);
 	
-	baseView = basescreenform->FindControl("BASE_VIEW");
+	baseView = basescreenform->FindControlTyped<Graphic>("GRAPHIC_BASE_VIEW");
 	selText = basescreenform->FindControlTyped<Label>("TEXT_SELECTED_FACILITY");
 	selGraphic = basescreenform->FindControlTyped<Graphic>("GRAPHIC_SELECTED_FACILITY");
 }
@@ -80,7 +80,10 @@ void BaseScreen::EventOccurred(Event *e)
 	{
 		selection = {e->Data.Mouse.X, e->Data.Mouse.Y};
 		selection -= (basescreenform->Location + baseView->Location);
-		selection /= TILE_SIZE;
+		if (selection.x >= 0 && selection.y >= 0)
+		{
+			selection /= TILE_SIZE;
+		}
 		if (selection.x >= 0 && selection.y >= 0 && selection.x < Base::SIZE && selection.y < Base::SIZE)
 		{
 			selFacility = base.getFacility(selection);
@@ -122,6 +125,16 @@ void BaseScreen::EventOccurred(Event *e)
 			return;
 		}
 	}
+
+	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::TextEditFinish)
+	{
+		if (e->Data.Forms.RaisedBy->Name == "TEXT_BASE_NAME")
+		{
+			TextEdit *name = basescreenform->FindControlTyped<TextEdit>("TEXT_BASE_NAME");
+			base.name = name->GetText();
+			return;
+		}
+	}
 }
 
 void BaseScreen::Update(StageCmd *const cmd)
@@ -148,7 +161,7 @@ void BaseScreen::RenderBase()
 
 	// Draw grid
 	sp<Image> grid =
-	    fw.data->load_image("PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:UI/menuopt.pal");
+		fw.data->load_image("PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:UI/menuopt.pal");
 	Vec2<int> i;
 	for (i.x = 0; i.x < Base::SIZE; ++i.x)
 	{
@@ -194,7 +207,8 @@ void BaseScreen::RenderBase()
 			pos = selFacility->pos;
 			size *= selFacility->def.size;
 		}
-		fw.renderer->drawRect(BASE_POS + pos * TILE_SIZE, size, Colour{255, 255, 255});
+		pos = BASE_POS + pos * TILE_SIZE;
+		fw.renderer->drawRect(pos, size, Colour{255, 255, 255});
 	}
 }
 }; // namespace OpenApoc

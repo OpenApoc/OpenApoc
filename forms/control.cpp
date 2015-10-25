@@ -231,14 +231,14 @@ void Control::EventOccured(Event *e)
 
 void Control::Render()
 {
-	if (Size.x == 0 || Size.y == 0)
+	if (!Visible || Size.x == 0 || Size.y == 0)
 	{
 		return;
 	}
 
-	if (controlArea == nullptr || controlArea->size != Vec2<unsigned int>{Size.x, Size.y})
+	if (controlArea == nullptr || controlArea->size != Vec2<unsigned int>(Size))
 	{
-		controlArea.reset(new Surface{Vec2<unsigned int>{Size.x, Size.y}});
+		controlArea.reset(new Surface{Vec2<unsigned int>(Size)});
 	}
 	{
 		sp<Palette> previousPalette;
@@ -258,7 +258,7 @@ void Control::Render()
 		}
 	}
 
-	fw.renderer->draw(controlArea, Vec2<float>{Location.x, Location.y});
+	fw.renderer->draw(controlArea, Location);
 }
 
 void Control::PreRender() { fw.renderer->clear(BackgroundColour); }
@@ -422,6 +422,70 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 		{
 			Graphic *g = new Graphic(fw, this, node->FirstChildElement("image")->GetText());
 			g->ConfigureFromXML(node);
+			subnode = node->FirstChildElement("alignment");
+			if (subnode != nullptr)
+			{
+				if (subnode->Attribute("horizontal") != nullptr)
+				{
+					attribvalue = subnode->Attribute("horizontal");
+					if (attribvalue == "left")
+					{
+						g->ImageHAlign = HorizontalAlignment::Left;
+					}
+					if (attribvalue == "centre")
+					{
+						g->ImageHAlign = HorizontalAlignment::Centre;
+					}
+					if (attribvalue == "right")
+					{
+						g->ImageHAlign = HorizontalAlignment::Right;
+					}
+				}
+				if (subnode->Attribute("vertical") != nullptr)
+				{
+					attribvalue = subnode->Attribute("vertical");
+					if (attribvalue == "top")
+					{
+						g->ImageVAlign = VerticalAlignment::Top;
+					}
+					if (attribvalue == "centre")
+					{
+						g->ImageVAlign = VerticalAlignment::Centre;
+					}
+					if (attribvalue == "bottom")
+					{
+						g->ImageVAlign = VerticalAlignment::Bottom;
+					}
+				}
+			}
+			subnode = node->FirstChildElement("imageposition");
+			if (subnode != nullptr)
+			{
+				if (subnode->GetText() != nullptr)
+				{
+					attribvalue = subnode->GetText();
+					if (attribvalue == "stretch")
+					{
+						g->ImagePosition = FillMethod::Stretch;
+					}
+					if (attribvalue == "fit")
+					{
+						g->ImagePosition = FillMethod::Fit;
+					}
+					if (attribvalue == "tile")
+					{
+						g->ImagePosition = FillMethod::Tile;
+					}
+				}
+			}
+			subnode = node->FirstChildElement("autosize");
+			if (subnode != nullptr)
+			{
+				if (subnode->QueryBoolText(&g->AutoSize) != tinyxml2::XML_SUCCESS)
+				{
+					LogError("Unknown AutoSize attribute");
+				}
+			}
 		}
 		if (nodename == "textbutton")
 		{

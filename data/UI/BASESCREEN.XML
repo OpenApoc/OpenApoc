@@ -29,23 +29,26 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <label id="TEXT_BASE_NAME">
+      <textedit id="TEXT_BASE_NAME">
         <backcolour r="0" g="0" b="0" a="0"/>
-        <position x="249" y="59"/>
-        <size width="157" height="10"/>
+        <position x="249" y="57"/>
+        <size width="157" height="15"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>SMALFONT</font>
-      </label>
-      <control id="BASE_VIEW">
+      </textedit>
+      <graphic id="GRAPHIC_BASE_VIEW">
         <position x="200" y="82"/>
         <size width="256" height="256"/>
         <backcolour r="0" g="0" b="0" a="0"/>
-      </control>
+        <imageposition>tile</imageposition>
+        <image/>
+      </graphic>
       <graphic id="GRAPHIC_SELECTED_FACILITY">
         <position x="62" y="186"/>
         <size width="64" height="64"/>
         <backcolour r="0" g="0" b="0" a="0"/>
         <alignment horizontal="centre" vertical="centre"/>
+        <imageposition>fit</imageposition>
         <image/>
       </graphic>
       <label id="TEXT_SELECTED_FACILITY">

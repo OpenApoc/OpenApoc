@@ -4,6 +4,7 @@
 
 #include "framework/image.h"
 #include "control.h"
+#include "forms_enums.h"
 
 namespace OpenApoc
 {
@@ -19,6 +20,11 @@ class Graphic : public Control
 	virtual void OnRender() override;
 
   public:
+	HorizontalAlignment ImageHAlign;
+	VerticalAlignment ImageVAlign;
+	FillMethod ImagePosition;
+	bool AutoSize;
+
 	Graphic(Framework &fw, Control *Owner, UString Image);
 	virtual ~Graphic();
 
