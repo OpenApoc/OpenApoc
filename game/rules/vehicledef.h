@@ -54,7 +54,9 @@ class VehicleDefinition
 		Decending,
 	};
 
+	UString ID;
 	UString name;
+	UString manufacturer;
 	Type type;
 	std::map<Banking, std::map<Direction, sp<Image>>> sprites;
 	std::map<Direction, sp<Image>> strategySprites;
@@ -62,6 +64,7 @@ class VehicleDefinition
 	std::vector<std::pair<Vec3<float>, sp<Image>>> directionalSprites;
 	std::vector<std::pair<Vec3<float>, sp<Image>>> directionalStrategySprites;
 	Vec3<float> size;
+	Vec2<float> imageOffset;
 	sp<VoxelMap> voxelMap;
 };
 

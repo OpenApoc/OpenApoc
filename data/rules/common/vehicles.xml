@@ -2,18 +2,16 @@
 <openapoc_rules>
   <include>rules/common/vehicles/police_hovercar.xml</include>
   <include>rules/common/vehicles/phoenix_hovercar.xml</include>
-  <!--
-<include>rules/common/vehicles/airtaxi.xml</include>
-<include>rules/common/vehicles/rescue_transport.xml</include>
-<include>rules/common/vehicles/construction_vehicle.xml</include>
-<include>rules/common/vehicles/airtrans.xml</include>
-<include>rules/common/vehicles/space_liner.xml</include>
-<include>rules/common/vehicles/valkyrie_interceptor.xml</include>
-<include>rules/common/vehicles/hawk_air_warrior.xml</include>
-<include>rules/common/vehicles/dimension_probe.xml</include>
-<include>rules/common/vehicles/bio_trans.xml</include>
-<include>rules/common/vehicles/explorer.xml</include>
-<include>rules/common/vehicles/retaliator.xml</include>
-<include>rules/common/vehicles/annihilator.xml</include>
--->
+  <include>rules/common/vehicles/airtaxi.xml</include>
+  <include>rules/common/vehicles/rescue_transport.xml</include>
+  <include>rules/common/vehicles/construction_vehicle.xml</include>
+  <include>rules/common/vehicles/airtrans.xml</include>
+  <include>rules/common/vehicles/space_liner.xml</include>
+  <include>rules/common/vehicles/valkyrie_interceptor.xml</include>
+  <include>rules/common/vehicles/hawk_air_warrior.xml</include>
+  <include>rules/common/vehicles/dimension_probe.xml</include>
+  <include>rules/common/vehicles/biotrans.xml</include>
+  <include>rules/common/vehicles/explorer.xml</include>
+  <include>rules/common/vehicles/retaliator.xml</include>
+  <include>rules/common/vehicles/annihilator.xml</include>
 </openapoc_rules>

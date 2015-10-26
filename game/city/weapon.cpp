@@ -2,7 +2,8 @@
 #include "game/city/weapon.h"
 #include "framework/logger.h"
 #include "game/city/vehicle.h"
-#include "game/tileview/beam_projectile.h"
+#include "game/city/projectile.h"
+#include "game/tileview/tileobject_vehicle.h"
 
 namespace OpenApoc
 {
@@ -18,7 +19,7 @@ sp<Projectile> Weapon::fire(Vec3<float> target)
 	{
 		LogError("Called on weapon with no owner?");
 	}
-	auto vehicleTile = owner->tileObject.lock();
+	auto vehicleTile = owner->tileObject;
 	if (!vehicleTile)
 	{
 		LogError("Called on vehicle with no tile object?");
@@ -49,9 +50,8 @@ sp<Projectile> Weapon::fire(Vec3<float> target)
 			Vec3<float> velocity = target - vehicleTile->getPosition();
 			velocity = glm::normalize(velocity);
 			velocity *= this->def.projectileSpeed;
-			auto &map = vehicleTile->getOwningTile()->map;
-			return std::make_shared<BeamProjectile>(
-			    map, owner, vehicleTile->getPosition(), velocity,
+			return std::make_shared<Projectile>(
+			    owner, vehicleTile->getPosition(), velocity,
 			    static_cast<int>(def.range / this->def.projectileSpeed), def.beamColour,
 			    def.projectileTailLength, def.beamWidth);
 		}

@@ -1,6 +1,12 @@
 #include "library/sp.h"
 #include "game/tileview/tile.h"
 #include "framework/framework.h"
+#include "game/tileview/tileobject_projectile.h"
+#include "game/city/projectile.h"
+#include "game/tileview/tileobject_vehicle.h"
+#include "game/city/vehicle.h"
+#include "game/tileview/tileobject_scenery.h"
+#include "game/city/scenery.h"
 
 namespace OpenApoc
 {
@@ -20,22 +26,6 @@ TileMap::TileMap(Framework &fw, Vec3<int> size) : fw(fw), size(size)
 	}
 }
 
-void TileMap::update(unsigned int ticks)
-{
-	// Objects may remove themselves from these lists in their update functions.
-	// So we can't just use the foreach iterator stuff as we need to
-	// store the next iterator before calling update
-	auto activeIt = this->activeObjects.begin();
-	while (activeIt != this->activeObjects.end())
-	{
-		// Post-increment to store a copy of the 'next' object iterator
-		// before calling the update, as ->update() may destroy the 'current'
-		// iterator if it removes the object from the set
-		auto objIt = activeIt++;
-		(*objIt)->update(ticks);
-	}
-}
-
 Tile *TileMap::getTile(int x, int y, int z)
 {
 	if (x >= size.x || y >= size.y || z >= size.z)
@@ -51,201 +41,18 @@ Tile *TileMap::getTile(Vec3<int> pos) { return getTile(pos.x, pos.y, pos.z); }
 
 Tile *TileMap::getTile(Vec3<float> pos) { return getTile(pos.x, pos.y, pos.z); }
 
-void TileMap::addObject(sp<TileObject> obj)
+TileMap::~TileMap()
 {
-	if (!obj->getOwningTile())
+	for (auto &t : tiles)
 	{
-		LogError("Adding object with no owner");
-		assert(0);
-	}
-	obj->getOwningTile()->ownedObjects.insert(obj);
-	if (obj->isSelectable())
-		this->selectableObjects.insert(obj);
-	if (obj->isVisible())
-		obj->getOwningTile()->visibleObjects.insert(obj);
-	if (obj->isCollidable())
-		obj->addToAffectedTiles();
-	if (obj->isProjectile())
-		this->projectiles.insert(obj);
-}
-
-void TileMap::removeObject(sp<TileObject> obj)
-{
-	if (!obj->getOwningTile())
-	{
-		LogError("Removing object with no owner");
-		assert(0);
-	}
-	if (obj->isSelectable())
-		this->selectableObjects.erase(obj);
-	if (obj->isProjectile())
-	{
-		obj->getOwningTile()->ownedProjectiles.erase(obj);
-		this->projectiles.erase(obj);
-	}
-	if (obj->isVisible())
-		obj->getOwningTile()->visibleObjects.erase(obj);
-	if (obj->isCollidable())
-		obj->removeFromAffectedTiles();
-	auto count = obj->getOwningTile()->ownedObjects.erase(obj);
-	if (count != 1)
-	{
-		LogError("Removed %u objects from owning tile", static_cast<unsigned>(count));
+		for (auto &obj : t.ownedObjectsNew)
+		{
+			obj->removeFromMap();
+		}
 	}
 }
-
-TileMap::~TileMap() {}
 
 Tile::Tile(TileMap &map, Vec3<int> position) : map(map), position(position) {}
-
-TileObject::TileObject(TileMap &map, Vec3<float> position, bool collides, bool visible,
-                       bool projectile, bool selectable)
-    : position(position), owningTile(map.getTile(position)), collides(collides), visible(visible),
-      projectile(projectile), selectable(selectable)
-{
-	// May be called by multiple subclass constructors - don't do anything
-	// non-repeatable here
-}
-
-TileObject::~TileObject() {}
-
-const Vec3<float> &TileObject::getPosition() const { return this->position; }
-
-void TileObject::setPosition(Vec3<float> newPos)
-{
-	auto thisPtr = shared_from_this();
-	this->position = newPos;
-	auto &map = this->owningTile->map;
-	auto newOwner = map.getTile(this->position);
-	if (newOwner != this->owningTile)
-	{
-		if (this->isVisible())
-		{
-			this->owningTile->visibleObjects.erase(thisPtr);
-			newOwner->visibleObjects.insert(thisPtr);
-		}
-		if (this->isProjectile())
-		{
-			this->owningTile->ownedProjectiles.erase(thisPtr);
-			newOwner->ownedProjectiles.insert(thisPtr);
-		}
-		this->owningTile->ownedObjects.erase(thisPtr);
-		newOwner->ownedObjects.insert(thisPtr);
-		this->owningTile = newOwner;
-	}
-}
-
-sp<Image> TileObject::getSprite() const
-{
-	// Override this for visible objects
-	LogWarning("Called on non-visible object");
-	assert(!this->isVisible());
-	return nullptr;
-}
-
-sp<Image> TileObject::getStrategySprite() const
-{
-	// Override this for visible objects
-	LogWarning("Called on non-visible object");
-	assert(!this->isVisible());
-	return nullptr;
-}
-
-Vec3<float> TileObject::getDrawPosition() const
-{
-	// Override this for visible objects
-	LogWarning("Called on non-visible object");
-	assert(!this->isVisible());
-	return this->getPosition();
-}
-
-const Vec3<int> &TileObject::getTileSizeInVoxels() const
-{
-	static Vec3<int> invalidSize{0, 0, 0};
-	// Override this for collidable objects
-	LogWarning("Called on non-collidable object");
-	assert(!this->isCollidable());
-	return invalidSize;
-}
-
-const Vec3<int> &TileObject::getBounds() const
-{
-	static Vec3<int> invalidSize{0, 0, 0};
-	// Override this for collidable objects
-	LogWarning("Called on non-collidable object");
-	assert(!this->isCollidable());
-	return invalidSize;
-}
-
-bool TileObject::hasVoxelAt(const Vec3<float> &worldPosition) const
-{
-	// Override this for collidable objects
-	LogWarning("Called on non-collidable object");
-	assert(!this->isCollidable());
-	std::ignore = worldPosition;
-	return false;
-}
-
-void TileObject::handleCollision(const Collision &c)
-{
-	// Override this for collidable objects
-	LogWarning("Called on non-collidable object");
-	assert(!this->isCollidable());
-	std::ignore = c;
-	return;
-}
-
-void TileObject::removeFromAffectedTiles()
-{
-	// Override this for collidable objects
-	LogWarning("Called on non-collidable object");
-	assert(!this->isCollidable());
-	return;
-}
-
-void TileObject::addToAffectedTiles()
-{
-	// Override this for collidable objects
-	LogWarning("Called on non-collidable object");
-	assert(!this->isCollidable());
-	return;
-}
-
-void TileObject::checkProjectileCollision()
-{
-	// Override this for projectile objects
-	LogWarning("Called on non-projectile object");
-	assert(!this->isProjectile());
-	return;
-}
-
-void TileObject::drawProjectile(TileView &v, Renderer &r, Vec2<int> screenPosition)
-{
-	// Override this for projectile objects
-	LogWarning("Called on non-projectile object");
-	assert(!this->isProjectile());
-	std::ignore = v;
-	std::ignore = r;
-	std::ignore = screenPosition;
-	return;
-}
-
-Rect<float> TileObject::getSelectableBounds() const
-{
-	Rect<float> invalidBounds{0, 0, 0, 0};
-	// Override this for selectable objects
-	LogWarning("Called on non-selectable object");
-	assert(!this->isSelectable());
-	return invalidBounds;
-}
-
-void TileObject::setSelected(bool selected)
-{
-	// Override this for selectable objects
-	LogWarning("Called on non-selectable object");
-	assert(!this->isSelectable());
-	std::ignore = selected;
-}
 
 class PathComparer
 {
@@ -407,4 +214,48 @@ TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination, unsigned int 
 	return path;
 }
 
+sp<TileObjectProjectile> TileMap::addObjectToMap(sp<Projectile> projectile)
+{
+	if (projectile->tileObject)
+	{
+		LogError("Projectile already has tile object");
+	}
+	// FIXME: std::make_shared<> doesn't work for private (but accessible due to friend)
+	// constructors?
+	sp<TileObjectProjectile> obj(new TileObjectProjectile(*this, projectile));
+	obj->setPosition(projectile->getPosition());
+	projectile->tileObject = obj;
+
+	return obj;
+}
+
+sp<TileObjectVehicle> TileMap::addObjectToMap(sp<Vehicle> vehicle)
+{
+	if (vehicle->tileObject)
+	{
+		LogError("Vehicle already has tile object");
+	}
+	// FIXME: std::make_shared<> doesn't work for private (but accessible due to friend)
+	// constructors?
+	sp<TileObjectVehicle> obj(new TileObjectVehicle(*this, vehicle));
+	obj->setPosition(vehicle->getPosition());
+	vehicle->tileObject = obj;
+
+	return obj;
+}
+
+sp<TileObjectScenery> TileMap::addObjectToMap(sp<Scenery> scenery)
+{
+	if (scenery->tileObject)
+	{
+		LogError("Scenery already has tile object");
+	}
+	// FIXME: std::make_shared<> doesn't work for private (but accessible due to friend)
+	// constructors?
+	sp<TileObjectScenery> obj(new TileObjectScenery(*this, scenery));
+	obj->setPosition(scenery->getPosition());
+	scenery->tileObject = obj;
+
+	return obj;
+}
 }; // namespace OpenApoc

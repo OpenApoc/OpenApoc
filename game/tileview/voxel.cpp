@@ -1,7 +1,7 @@
 #include "library/sp.h"
 #include "game/tileview/voxel.h"
 #include "game/tileview/tile.h"
-#include "game/tileview/tile_collidable.h"
+#include "game/tileview/tileobject.h"
 #include "framework/logger.h"
 
 #include <iterator>
@@ -207,7 +207,7 @@ Collision Tile::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegm
 	lineSegmentEnd -= position;
 
 	Collision c;
-	c.tileObject = nullptr;
+	c.obj = nullptr;
 
 	Vec3<int> tileSize = {32, 32, 16};
 
@@ -222,20 +222,19 @@ Collision Tile::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegm
 	LineSegment<int, true> line{voxelLineStart, voxelLineEnd};
 	for (auto &point : line)
 	{
-		for (auto &obj : collideableObjects)
+		for (auto &obj : intersectingObjectsNew)
 		{
-			if (!obj->isCollidable())
+			auto voxelMap = obj->getVoxelMap();
+			if (!voxelMap)
 			{
-				LogError("non-collidable object stored in tile {%d,%d,%d} collidableObjects",
-				         this->position.x, this->position.y, this->position.z);
 				continue;
 			}
 			auto &objPos = obj->getPosition();
 			Vec3<int> objOffset = point - Vec3<int>{objPos.x * tileSize.x, objPos.y * tileSize.y,
 			                                        objPos.z * tileSize.z};
-			if (obj->hasVoxelAt(objOffset))
+			if (voxelMap->getBit(objOffset))
 			{
-				c.tileObject = obj;
+				c.obj = obj;
 				c.position = Vec3<float>{point.x, point.y, point.z};
 				c.position /= tileSize;
 				return c;
@@ -248,7 +247,7 @@ Collision Tile::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegm
 Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd)
 {
 	Collision c;
-	c.tileObject = nullptr;
+	c.obj = nullptr;
 	// We can increment by '1f' and still get a point in every affected tile
 	LineSegment<float, true> line{lineSegmentStart, lineSegmentEnd};
 	for (auto &point : line)

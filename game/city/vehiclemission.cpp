@@ -2,10 +2,13 @@
 #include "game/tileview/tile.h"
 #include "game/city/vehicle.h"
 #include "game/city/building.h"
+#include "game/city/scenery.h"
 #include "game/rules/buildingdef.h"
 #include "framework/logger.h"
 #include "game/tileview/tile.h"
-#include "game/city/buildingtile.h"
+#include "game/tileview/tileobject_vehicle.h"
+#include "game/tileview/tileobject_scenery.h"
+#include "game/rules/scenerytiledef.h"
 
 #include <random>
 
@@ -20,34 +23,38 @@ namespace OpenApoc
 
 static bool vehicleCanEnterTile(const Tile &t, const Vehicle &v)
 {
-	if (t.collideableObjects.empty())
-		return true;
-	if (t.collideableObjects.size() == 1)
+	for (auto obj : t.intersectingObjectsNew)
 	{
-		for (auto &obj : t.collideableObjects)
-		{
-			if (obj != v.tileObject.lock())
-				return false;
-		}
+		if (obj == v.tileObject)
+			continue;
+		if (obj->getType() == TileObject::Type::Vehicle)
+			return false;
+		if (obj->getType() == TileObject::Type::Scenery)
+			return false;
 	}
-	return false;
+
+	return true;
 }
 
 static bool vehicleCanEnterTileAllowLandingPads(const Tile &t, const Vehicle &v)
 {
-	if (t.collideableObjects.empty())
-		return true;
-	for (auto &obj : t.collideableObjects)
+	for (auto obj : t.intersectingObjectsNew)
 	{
-		if (obj == v.tileObject.lock())
+		if (obj == v.tileObject)
 			continue;
-
-		auto buildingTileObject = std::dynamic_pointer_cast<BuildingTile>(obj);
-		if (buildingTileObject && buildingTileObject->tileDef.getIsLandingPad())
-			continue;
-
-		return false;
+		if (obj->getType() == TileObject::Type::Vehicle)
+			return false;
+		if (obj->getType() == TileObject::Type::Scenery)
+		{
+			auto sceneryTile = std::static_pointer_cast<TileObjectScenery>(obj);
+			if (sceneryTile->scenery.lock()->tileDef.getIsLandingPad())
+			{
+				continue;
+			}
+			return false;
+		}
 	}
+
 	return true;
 }
 
@@ -75,7 +82,7 @@ class VehicleRandomDestination : public VehicleMission
 	virtual void start() override
 	{
 		Vec3<int> newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
-		while (!map.getTile(newTarget)->ownedObjects.empty())
+		while (!map.getTile(newTarget)->ownedObjectsNew.empty())
 		{
 			newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
 		}
@@ -132,7 +139,7 @@ class VehicleTakeOffMission : public VehicleMission
 	}
 	virtual const std::list<Tile *> &getCurrentPlannedPath() override { return path; }
 	virtual void start() override {}
-	virtual bool isFinished() override { return (vehicle.tileObject.lock() && path.empty()); }
+	virtual bool isFinished() override { return (vehicle.tileObject && path.empty()); }
 	virtual ~VehicleTakeOffMission() = default;
 	virtual void update(unsigned int ticks) override
 	{
@@ -143,7 +150,7 @@ class VehicleTakeOffMission : public VehicleMission
 			LogError("Building disappeared");
 			return;
 		}
-		if (vehicle.tileObject.lock())
+		if (vehicle.tileObject)
 		{
 			// We're already on our way
 			return;
@@ -170,7 +177,7 @@ class VehicleTakeOffMission : public VehicleMission
 			vehicle.launch(map, padLocation);
 			return;
 		}
-		LogWarning("No pad in building \"%s\" free - waiting", b->def.getName().c_str());
+		LogInfo("No pad in building \"%s\" free - waiting", b->def.getName().c_str());
 	}
 	virtual bool getNextDestination(Vec3<float> &dest) override
 	{
@@ -208,7 +215,7 @@ class VehicleLandMission : public VehicleMission
 			LogError("Building disappeared");
 			return;
 		}
-		auto vehicleTile = vehicle.tileObject.lock();
+		auto vehicleTile = vehicle.tileObject;
 		if (!vehicleTile)
 		{
 			LogError("Trying to land vehicle not in the air?");
@@ -292,7 +299,7 @@ class VehicleGotoLocationMission : public VehicleMission
 	virtual const std::list<Tile *> &getCurrentPlannedPath() override { return path; }
 	virtual void start() override
 	{
-		auto vehicleTile = vehicle.tileObject.lock();
+		auto vehicleTile = vehicle.tileObject;
 		if (!vehicleTile)
 		{
 			LogInfo("Mission %s: Taking off first", this->name.c_str());
@@ -356,7 +363,7 @@ class VehicleGotoBuildingMission : public VehicleMission
 			LogInfo("Vehicle mission %s: Already at building", name.c_str());
 			return;
 		}
-		auto vehicleTile = vehicle.tileObject.lock();
+		auto vehicleTile = vehicle.tileObject;
 		if (!vehicleTile)
 		{
 			LogInfo("Mission %s: Taking off first", this->name.c_str());

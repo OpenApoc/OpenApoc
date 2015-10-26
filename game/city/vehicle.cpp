@@ -2,12 +2,14 @@
 #include "framework/logger.h"
 #include "game/city/vehicle.h"
 #include "game/city/weapon.h"
-#include "game/tileview/projectile.h"
+#include "game/city/projectile.h"
 #include "game/organisation.h"
 #include "framework/image.h"
-#include "game/city/vehicle.h"
+#include "game/city/city.h"
 #include "game/city/building.h"
 #include "game/city/vehiclemission.h"
+#include "game/gamestate.h"
+#include "game/tileview/tileobject_vehicle.h"
 
 #include <cfloat>
 #include <random>
@@ -39,7 +41,7 @@ class FlyingVehicleMover : public VehicleMover
 		if (!vehicle.missions.empty())
 		{
 			vehicle.missions.front()->update(ticks);
-			auto vehicleTile = this->vehicle.tileObject.lock();
+			auto vehicleTile = this->vehicle.tileObject;
 			if (!vehicleTile)
 			{
 				return;
@@ -53,6 +55,14 @@ class FlyingVehicleMover : public VehicleMover
 				{
 					distanceLeft -= distanceToGoal;
 					vehicleTile->setPosition(goalPosition);
+					auto dir = glm::normalize(vectorToGoal);
+					if (dir.z >= 0.9f || dir.z <= -0.9f)
+					{
+						dir = vehicleTile->getDirection();
+						dir.z = 0;
+						dir = glm::normalize(vectorToGoal);
+					}
+					vehicleTile->setDirection(dir);
 					while (vehicle.missions.front()->isFinished())
 					{
 						LogInfo("Vehicle mission \"%s\" finished",
@@ -80,7 +90,17 @@ class FlyingVehicleMover : public VehicleMover
 				}
 				else
 				{
-					vehicleTile->setDirection(vectorToGoal);
+					// If we're going straight up/down  use the horizontal version of the last
+					// direction
+					// instead
+					auto dir = glm::normalize(vectorToGoal);
+					if (dir.z >= 0.9f || dir.z <= -0.9f)
+					{
+						dir = vehicleTile->getDirection();
+						dir.z = 0;
+						dir = glm::normalize(vectorToGoal);
+					}
+					vehicleTile->setDirection(dir);
 					vehicleTile->setPosition(vehicleTile->getPosition() +
 					                         distanceLeft * glm::normalize(vectorToGoal));
 					distanceLeft = 0;
@@ -101,7 +121,7 @@ Vehicle::~Vehicle() {}
 
 void Vehicle::launch(TileMap &map, Vec3<float> initialPosition)
 {
-	if (this->tileObject.lock())
+	if (this->tileObject)
 	{
 		LogError("Trying to launch already-launched vehicle");
 		return;
@@ -112,17 +132,18 @@ void Vehicle::launch(TileMap &map, Vec3<float> initialPosition)
 		LogError("Vehicle not in a building?");
 		return;
 	}
+	this->position = initialPosition;
 	bld->landed_vehicles.erase(shared_from_this());
 	this->building.reset();
 	this->mover.reset(new FlyingVehicleMover(*this, initialPosition));
-	auto vehicleTile = std::make_shared<VehicleTileObject>(*this, map, initialPosition);
+	auto vehicleTile = map.addObjectToMap(shared_from_this());
 	this->tileObject = vehicleTile;
-	map.addObject(vehicleTile);
 }
 
 void Vehicle::land(TileMap &map, sp<Building> b)
 {
-	auto vehicleTile = this->tileObject.lock();
+	std::ignore = map;
+	auto vehicleTile = this->tileObject;
 	if (!vehicleTile)
 	{
 		LogError("Trying to land already-landed vehicle");
@@ -135,28 +156,19 @@ void Vehicle::land(TileMap &map, sp<Building> b)
 	}
 	this->building = b;
 	b->landed_vehicles.insert(shared_from_this());
+	this->tileObject->removeFromMap();
 	this->tileObject.reset();
-	map.removeObject(vehicleTile);
+	this->position = {0, 0, 0};
 }
 
-VehicleTileObject::VehicleTileObject(Vehicle &vehicle, TileMap &map, Vec3<float> position)
-    : TileObject(map, position),
-      TileObjectDirectionalSprite(map, position, vehicle.def.directionalSprites,
-                                  vehicle.def.directionalStrategySprites),
-      TileObjectCollidable(map, position, Vec3<int>{32, 32, 16}, vehicle.def.voxelMap),
-      vehicle(vehicle)
-{
-	this->selectable = true;
-}
-
-void Vehicle::update(unsigned int ticks)
+void Vehicle::update(GameState &state, unsigned int ticks)
 
 {
 	if (!this->missions.empty())
 		this->missions.front()->update(ticks);
 	if (this->mover)
 		this->mover->update(ticks);
-	auto vehicleTile = this->tileObject.lock();
+	auto vehicleTile = this->tileObject;
 	if (vehicleTile)
 	{
 		for (auto &weapon : this->weapons)
@@ -169,13 +181,12 @@ void Vehicle::update(unsigned int ticks)
 				float range = weapon->getWeaponDef().range;
 				// Find the closest enemy within the firing arc
 				float closestEnemyRange = std::numeric_limits<float>::max();
-				sp<VehicleTileObject> closestEnemy;
-				for (auto obj : vehicleTile->getOwningTile()->map.activeObjects)
+				sp<TileObjectVehicle> closestEnemy;
+				for (auto otherVehicle : state.city->vehicles)
 				{
-					auto otherVehicle = std::dynamic_pointer_cast<Vehicle>(obj);
-					if (!otherVehicle)
+					if (otherVehicle.get() == this)
 					{
-						/* Not a vehicle, skip */
+						/* Can't fire at yourself */
 						continue;
 					}
 					if (!this->owner->isHostileTo(*otherVehicle->owner))
@@ -184,7 +195,7 @@ void Vehicle::update(unsigned int ticks)
 						continue;
 					}
 					auto myPosition = vehicleTile->getPosition();
-					auto otherVehicleTile = otherVehicle->tileObject.lock();
+					auto otherVehicleTile = otherVehicle->tileObject;
 					if (!otherVehicleTile)
 					{
 						/* Not in the map, ignore */
@@ -211,9 +222,8 @@ void Vehicle::update(unsigned int ticks)
 					auto projectile = weapon->fire(target);
 					if (projectile)
 					{
-						vehicleTile->getOwningTile()->map.addObject(projectile);
-						vehicleTile->getOwningTile()->map.activeObjects.insert(
-						    std::dynamic_pointer_cast<ActiveObject>(projectile));
+						vehicleTile->map.addObjectToMap(projectile);
+						state.city->projectiles.insert(projectile);
 					}
 					else
 					{
@@ -223,29 +233,6 @@ void Vehicle::update(unsigned int ticks)
 			}
 		}
 	}
-}
-
-VehicleTileObject::~VehicleTileObject() {}
-
-Vec3<float> VehicleTileObject::getDrawPosition() const
-{
-	return this->getPosition() - Vec3<float>{0, 0, 0};
-}
-
-Rect<float> VehicleTileObject::getSelectableBounds() const
-{
-	auto spriteBounds = std::dynamic_pointer_cast<PaletteImage>(this->getSprite())->bounds;
-	return Rect<float>{static_cast<float>(spriteBounds.p0.x), static_cast<float>(spriteBounds.p0.y),
-	                   static_cast<float>(spriteBounds.p1.x),
-	                   static_cast<float>(spriteBounds.p1.y)};
-}
-
-void VehicleTileObject::setSelected(bool selected)
-{
-	if (selected)
-		LogWarning("Selected vehicle");
-	else
-		LogWarning("De-Selected vehicle");
 }
 
 }; // namespace OpenApoc

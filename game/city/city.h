@@ -18,18 +18,24 @@ namespace OpenApoc
 class Vehicle;
 class GameState;
 class Building;
+class Projectile;
+class Scenery;
 
-class City : public TileMap
+class City
 {
   private:
   public:
 	City(Framework &fw, GameState &state);
 	~City();
 	std::vector<sp<Vehicle>> vehicles;
+	std::set<sp<Projectile>> projectiles;
 	std::vector<sp<Building>> buildings;
 	std::vector<sp<Building>> baseBuildings;
+	std::set<sp<Scenery>> scenery;
 
-	void update(unsigned int ticks) override;
+	TileMap map;
+
+	void update(GameState &state, unsigned int ticks);
 };
 
 }; // namespace OpenApoc

@@ -442,7 +442,10 @@ bool RulesLoader::ParseCityDefinition(Framework &fw, Rules &rules, tinyxml2::XML
 						LogError("Skipping tile %d (%d listed in count)", numRead, count);
 						continue;
 					}
-					BuildingTileDef def;
+					SceneryTileDef def;
+					// FIXME: I /think/ all scenery tiles have an offset of {32,32} to the center
+					// (0.5,0.5,0) point
+					def.imageOffset = {32, 32};
 
 					if (!LoadCityTile(fw, tile, tileID, def.sprite, def.strategySprite,
 					                  def.voxelMap, def.isLandingPad, rules.landingPadTiles))

@@ -2,7 +2,7 @@
 
 #include "game/rules/vehicledef.h"
 #include "game/rules/buildingdef.h"
-#include "game/rules/buildingtiledef.h"
+#include "game/rules/scenerytiledef.h"
 #include "game/rules/weapondef.h"
 #include "game/rules/facilitydef.h"
 
@@ -26,7 +26,7 @@ class Rules
 	std::map<UString, VehicleDefinition> vehicleDefs;
 	std::vector<BuildingDef> buildings;
 	std::vector<Organisation> organisations;
-	std::map<UString, BuildingTileDef> buildingTiles;
+	std::map<UString, SceneryTileDef> buildingTiles;
 	std::map<UString, WeaponDef> weapons;
 	std::map<UString, FacilityDef> facilities;
 	std::vector<UString> landingPadTiles;
@@ -49,7 +49,7 @@ class Rules
 
 	std::map<UString, FacilityDef> &getFacilityDefs() { return facilities; }
 
-	BuildingTileDef &getBuildingTileDef(const UString &id)
+	SceneryTileDef &getSceneryTileDef(const UString &id)
 	{
 		auto pair = buildingTiles.find(id);
 		if (pair != buildingTiles.end())
@@ -65,7 +65,7 @@ class Rules
 
 	Vec3<int> &getCitySize() { return this->citySize; }
 
-	const UString &getBuildingTileAt(Vec3<int> offset) const;
+	const UString &getSceneryTileAt(Vec3<int> offset) const;
 };
 
 }; // namespace OpenApoc

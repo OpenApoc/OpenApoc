@@ -114,9 +114,6 @@
     <ClCompile Include="game\tileview\tileview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\city\buildingtile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="game\gamestate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -255,6 +252,12 @@
     <ClCompile Include="framework\physfs_fs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\city\scenery.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\tileview\scenerytile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -386,9 +389,6 @@
     <ClInclude Include="game\tileview\tileview.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\city\buildingtile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="library\colour.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -476,7 +476,7 @@
     <ClInclude Include="game\rules\buildingdef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\rules\buildingtiledef.h">
+    <ClInclude Include="game\rules\scenerytiledef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\organisation.h">
@@ -534,6 +534,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="library\sp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\city\scenery.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\tileview\scenerytile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

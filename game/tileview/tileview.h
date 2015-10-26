@@ -11,7 +11,7 @@ namespace OpenApoc
 
 class TileMap;
 class Image;
-class TileObject;
+class TileObjectOld;
 
 enum class TileViewMode
 {
@@ -37,7 +37,7 @@ class TileView : public Stage
 	sp<Image> selectedTileImageBack, selectedTileImageFront;
 	sp<Palette> pal;
 
-	sp<TileObject> selectedTileObject;
+	sp<TileObjectOld> selectedTileObjectOld;
 
 	TileView(Framework &fw, TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
 	         TileViewMode initialMode);
@@ -90,8 +90,6 @@ class TileView : public Stage
 	virtual void EventOccurred(Event *e) override;
 	virtual void Render() override;
 	virtual bool IsTransition() override;
-
-	virtual void update(unsigned int ticks);
 
 	virtual void setViewMode(TileViewMode newMode);
 	virtual TileViewMode getViewMode() const;

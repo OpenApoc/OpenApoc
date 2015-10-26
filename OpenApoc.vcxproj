@@ -270,7 +270,7 @@
     <ClCompile Include="game\base\facility.cpp" />
     <ClCompile Include="game\city\building.cpp" />
     <ClCompile Include="game\city\buildingscreen.cpp" />
-    <ClCompile Include="game\city\buildingtile.cpp" />
+    <ClCompile Include="game\city\scenery.cpp" />
     <ClCompile Include="game\city\vehicle.cpp" />
     <ClCompile Include="game\city\vehiclemission.cpp" />
     <ClCompile Include="game\city\weapon.cpp" />
@@ -290,6 +290,7 @@
     <ClCompile Include="game\rules\vehicledef_rules.cpp" />
     <ClCompile Include="game\rules\weapondef_rules.cpp" />
     <ClCompile Include="game\tileview\beam_projectile.cpp" />
+    <ClCompile Include="game\tileview\scenerytile.cpp" />
     <ClCompile Include="game\tileview\tile.cpp" />
     <ClCompile Include="game\tileview\tileview.cpp" />
     <ClCompile Include="game\ufopaedia\ufopaedia.cpp" />
@@ -357,7 +358,7 @@
     <ClInclude Include="game\base\facility.h" />
     <ClInclude Include="game\city\building.h" />
     <ClInclude Include="game\city\buildingscreen.h" />
-    <ClInclude Include="game\city\buildingtile.h" />
+    <ClInclude Include="game\city\scenery.h" />
     <ClInclude Include="game\city\vehicle.h" />
     <ClInclude Include="game\city\vehiclemission.h" />
     <ClInclude Include="game\city\weapon.h" />
@@ -368,7 +369,7 @@
     <ClInclude Include="game\organisation.h" />
     <ClInclude Include="game\resources\gamecore.h" />
     <ClInclude Include="game\rules\buildingdef.h" />
-    <ClInclude Include="game\rules\buildingtiledef.h" />
+    <ClInclude Include="game\rules\scenerytiledef.h" />
     <ClInclude Include="game\rules\facilitydef.h" />
     <ClInclude Include="game\rules\rules.h" />
     <ClInclude Include="game\rules\rules_helper.h" />
@@ -376,6 +377,7 @@
     <ClInclude Include="game\rules\vehicledef.h" />
     <ClInclude Include="game\rules\weapondef.h" />
     <ClInclude Include="game\tileview\beam_projectile.h" />
+    <ClInclude Include="game\tileview\scenerytile.h" />
     <ClInclude Include="game\tileview\tile.h" />
     <ClInclude Include="game\tileview\tileview.h" />
     <ClInclude Include="game\tileview\voxel.h" />

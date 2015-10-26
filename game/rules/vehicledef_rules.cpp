@@ -90,9 +90,24 @@ bool RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::
 		return false;
 	}
 
-	def.name = root->Attribute("id");
+	if (!ReadAttribute(root, "id", def.ID))
+	{
+		LogError("No \"id\" in vehicle");
+		return false;
+	}
 
-	UString type = root->Attribute("type");
+	if (!ReadAttribute(root, "name", def.name))
+	{
+		LogError("No \"name\" in vehicle ID \"%s\"", def.ID.c_str());
+		return false;
+	}
+
+	if (!ReadAttribute(root, "manufacturer", def.manufacturer))
+	{
+		LogError("No \"manufacturer\" in vehicle ID \"%s\"", def.ID.c_str());
+		return false;
+	}
+
 	if (!ReadAttribute(
 	        root, "type",
 	        std::map<UString, VehicleDefinition::Type>{{"flying", VehicleDefinition::Type::Flying},
@@ -102,10 +117,31 @@ bool RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::
 		LogWarning("Failed to read vehicle 'type' attribute");
 		return false;
 	}
-
-	def.size.x = root->FloatAttribute("sizeX");
-	def.size.y = root->FloatAttribute("sizeY");
-	def.size.z = root->FloatAttribute("sizeZ");
+	if (!ReadAttribute(root, "sizeX", def.size.x))
+	{
+		LogError("No \"sizeX\" in vehicle ID \"%s\"", def.ID.c_str());
+		return false;
+	}
+	if (!ReadAttribute(root, "sizeY", def.size.y))
+	{
+		LogError("No \"sizeY\" in vehicle ID \"%s\"", def.ID.c_str());
+		return false;
+	}
+	if (!ReadAttribute(root, "sizeZ", def.size.z))
+	{
+		LogError("No \"sizeZ\" in vehicle ID \"%s\"", def.ID.c_str());
+		return false;
+	}
+	if (!ReadAttribute(root, "imageOffsetX", def.imageOffset.x))
+	{
+		LogError("No \"imageOffsetX\" in vehicle ID \"%s\"", def.ID.c_str());
+		return false;
+	}
+	if (!ReadAttribute(root, "imageOffsetY", def.imageOffset.y))
+	{
+		LogError("No \"imageOffsetY\" in vehicle ID \"%s\"", def.ID.c_str());
+		return false;
+	}
 
 	for (tinyxml2::XMLElement *node = root->FirstChildElement(); node != nullptr;
 	     node = node->NextSiblingElement())

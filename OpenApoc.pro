@@ -44,7 +44,7 @@ SOURCES += main.cpp \
     game/apocresources/rawimage.cpp \
     game/apocresources/rawsound.cpp \
     game/city/building.cpp \
-    game/city/buildingtile.cpp \
+    game/city/scenerytile.cpp \
     game/city/city.cpp \
 	game/city/cityview.cpp \
 	game/city/infiltrationscreen.cpp \
@@ -115,7 +115,7 @@ HEADERS += \
     game/apocresources/pck.h \
 	game/apocresources/rawimage.h \
     game/city/building.h \
-    game/city/buildingtile.h \
+    game/city/scenerytile.h \
     game/city/city.h \
 	game/city/cityview.h \
 	game/city/infiltrationscreen.h \

@@ -10,12 +10,13 @@
 #include "game/city/vehiclemission.h"
 #include "game/city/vehicle.h"
 #include "game/base/basescreen.h"
+#include "game/tileview/tileobject_vehicle.h"
 
 namespace OpenApoc
 {
 
 CityView::CityView(Framework &fw)
-    : TileView(fw, *fw.state->city, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
+    : TileView(fw, fw.state->city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
                Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Isometric),
       updateSpeed(UpdateSpeed::Speed1)
 {
@@ -45,13 +46,12 @@ void CityView::Render()
 	TileView::Render();
 	if (fw.state->showVehiclePath)
 	{
-		for (auto obj : this->map.activeObjects)
+		for (auto v : fw.state->city->vehicles)
 		{
-			auto vTile = std::dynamic_pointer_cast<VehicleTileObject>(obj);
+			auto vTile = v->tileObject;
 			if (!vTile)
 				continue;
-			auto &v = vTile->getVehicle();
-			auto &path = v.missions.front()->getCurrentPlannedPath();
+			auto &path = v->missions.front()->getCurrentPlannedPath();
 			Vec3<float> prevPos = vTile->getPosition();
 			for (auto *tile : path)
 			{
@@ -98,9 +98,8 @@ void CityView::Update(StageCmd *const cmd)
 	*cmd = stageCmd;
 	stageCmd = StageCmd();
 
-	fw.state->city->update(ticks);
+	fw.state->city->update(*fw.state, ticks);
 
-	TileView::update(ticks);
 	activeTab->Update();
 }
 

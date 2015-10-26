@@ -1,16 +1,20 @@
 #include "game/city/city.h"
 #include "game/city/building.h"
 #include "game/organisation.h"
-#include "game/city/buildingtile.h"
+#include "game/city/scenery.h"
 #include "game/city/vehicle.h"
 #include "game/city/vehiclemission.h"
 #include "framework/framework.h"
 #include "game/resources/gamecore.h"
+#include "game/city/projectile.h"
+#include "game/tileview/tileobject_vehicle.h"
+#include "game/tileview/tileobject_scenery.h"
+#include "game/tileview/tileobject_projectile.h"
 
 namespace OpenApoc
 {
 
-City::City(Framework &fw, GameState &state) : TileMap(fw, fw.rules->getCitySize())
+City::City(Framework &fw, GameState &state) : map(fw, fw.rules->getCitySize())
 {
 	for (auto &def : fw.rules->getBuildingDefs())
 	{
@@ -18,13 +22,13 @@ City::City(Framework &fw, GameState &state) : TileMap(fw, fw.rules->getCitySize(
 		    std::make_shared<Building>(def, state.getOrganisation(def.getOwnerName())));
 	}
 
-	for (int z = 0; z < this->size.z; z++)
+	for (int z = 0; z < this->map.size.z; z++)
 	{
-		for (int y = 0; y < this->size.y; y++)
+		for (int y = 0; y < this->map.size.y; y++)
 		{
-			for (int x = 0; x < this->size.x; x++)
+			for (int x = 0; x < this->map.size.x; x++)
 			{
-				auto tileID = fw.rules->getBuildingTileAt(Vec3<int>{x, y, z});
+				auto tileID = fw.rules->getSceneryTileAt(Vec3<int>{x, y, z});
 				if (tileID == "")
 					continue;
 				sp<Building> bld = nullptr;
@@ -51,11 +55,10 @@ City::City(Framework &fw, GameState &state) : TileMap(fw, fw.rules->getCitySize(
 					}
 				}
 
-				auto &cityTileDef = fw.rules->getBuildingTileDef(tileID);
-				auto tile =
-				    std::make_shared<BuildingTile>(*this, cityTileDef, Vec3<int>{x, y, z}, bld);
-				this->addObject(std::dynamic_pointer_cast<TileObject>(tile));
-				tile->setPosition(Vec3<int>{x, y, z});
+				auto &cityTileDef = fw.rules->getSceneryTileDef(tileID);
+				auto scenery = std::make_shared<Scenery>(cityTileDef, Vec3<int>{x, y, z}, bld);
+				auto tile = map.addObjectToMap(scenery);
+				this->scenery.insert(scenery);
 			}
 		}
 	}
@@ -79,9 +82,33 @@ City::City(Framework &fw, GameState &state) : TileMap(fw, fw.rules->getCitySize(
 	}
 }
 
-City::~City() {}
+City::~City()
+{
+	// Note due to backrefs to Tile*s etc. we need to destroy all tile objects
+	// before the TileMap
+	for (auto &v : this->vehicles)
+	{
+		if (v->tileObject)
+			v->tileObject->removeFromMap();
+	}
+	this->vehicles.clear();
+	for (auto &p : this->projectiles)
+	{
+		if (p->tileObject)
+			p->tileObject->removeFromMap();
+	}
+	this->projectiles.clear();
+	for (auto &s : this->scenery)
+	{
+		if (s->tileObject)
+			s->tileObject->removeFromMap();
+	}
+	this->scenery.clear();
+	this->buildings.clear();
+	this->baseBuildings.clear();
+}
 
-void City::update(unsigned int ticks)
+void City::update(GameState &state, unsigned int ticks)
 {
 	/* FIXME: Temporary 'get something working' HACK
 	 * Every now and then give a landed vehicle a new 'goto random building' mission, so there's
@@ -93,13 +120,20 @@ void City::update(unsigned int ticks)
 		{
 			if (v->missions.empty())
 			{
-				auto &b = this->buildings[bld_distribution(fw.state->rng)];
-				v->missions.emplace_back(VehicleMission::gotoBuilding(*v, *this, b));
+				auto &b = this->buildings[bld_distribution(state.rng)];
+				v->missions.emplace_back(VehicleMission::gotoBuilding(*v, this->map, b));
 				v->missions.front()->start();
 			}
 		}
 	}
-	TileMap::update(ticks);
+	for (auto v : this->vehicles)
+	{
+		v->update(state, ticks);
+	}
+	for (auto p : this->projectiles)
+	{
+		p->update(state, ticks);
+	}
 }
 
-}; // namespace OpenApoc
+} // namespace OpenApoc

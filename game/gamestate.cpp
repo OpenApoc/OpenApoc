@@ -42,18 +42,15 @@ GameState::GameState(Framework &fw, Rules &rules)
 	// Place some random testing vehicles
 	std::uniform_int_distribution<int> bld_distribution(0, this->city->buildings.size() - 1);
 
+	// Loop through all vehicle types and weapons to get a decent spread for testing
 	auto weaponIt = rules.getWeaponDefs().begin();
+	auto vehicleDefIt = rules.getVehicleDefs().begin();
 
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < 100; i++)
 	{
-		auto vehicleDefIt = fw.rules->getVehicleDefs().find("POLICE_HOVERCAR");
-		if (vehicleDefIt == fw.rules->getVehicleDefs().end())
-		{
-			LogError("No POLICE_HOVERCAR vehicle def found?");
-			return;
-		}
-		auto testVehicle =
-		    std::make_shared<Vehicle>(vehicleDefIt->second, this->getOrganisation("ORG_MEGAPOL"));
+
+		auto testVehicle = std::make_shared<Vehicle>(
+		    vehicleDefIt->second, this->getOrganisation((vehicleDefIt->second.manufacturer)));
 
 		auto &weaponDef = weaponIt->second;
 		LogInfo("Equipping with weapon \"%s\"", weaponDef.name.c_str());
@@ -61,6 +58,9 @@ GameState::GameState(Framework &fw, Rules &rules)
 		weaponIt++;
 		if (weaponIt == rules.getWeaponDefs().end())
 			weaponIt = rules.getWeaponDefs().begin();
+		vehicleDefIt++;
+		if (vehicleDefIt == rules.getVehicleDefs().end())
+			vehicleDefIt = rules.getVehicleDefs().begin();
 
 		auto *testWeapon = new Weapon(weaponDef, testVehicle, weaponDef.ammoCapacity);
 		testVehicle->weapons.emplace_back(testWeapon);
@@ -69,32 +69,6 @@ GameState::GameState(Framework &fw, Rules &rules)
 		auto b = this->city->buildings[bld_distribution(rng)];
 		b->landed_vehicles.insert(testVehicle);
 		testVehicle->building = b;
-		city->activeObjects.insert(std::dynamic_pointer_cast<ActiveObject>(testVehicle));
-	}
-	for (int i = 0; i < 50; i++)
-	{
-		auto vehicleDefIt = fw.rules->getVehicleDefs().find("PHOENIX_HOVERCAR");
-		if (vehicleDefIt == fw.rules->getVehicleDefs().end())
-		{
-			LogError("No PHOENIX_HOVERCAR vehicle def found?");
-			return;
-		}
-		auto testVehicle = std::make_shared<Vehicle>(vehicleDefIt->second, this->getPlayer());
-		this->city->vehicles.push_back(testVehicle);
-
-		auto &weaponDef = weaponIt->second;
-		LogInfo("Equipping with weapon \"%s\"", weaponDef.name.c_str());
-
-		weaponIt++;
-		if (weaponIt == rules.getWeaponDefs().end())
-			weaponIt = rules.getWeaponDefs().begin();
-
-		auto *testWeapon = new Weapon(weaponDef, testVehicle, weaponDef.ammoCapacity);
-		testVehicle->weapons.emplace_back(testWeapon);
-		auto &b = this->city->buildings[bld_distribution(rng)];
-		b->landed_vehicles.insert(testVehicle);
-		testVehicle->building = b;
-		city->activeObjects.insert(std::dynamic_pointer_cast<ActiveObject>(testVehicle));
 	}
 
 	std::uniform_int_distribution<int> base_distribution(0, this->city->baseBuildings.size() - 1);

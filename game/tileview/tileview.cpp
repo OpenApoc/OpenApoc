@@ -1,6 +1,7 @@
 #include "library/sp.h"
 #include "game/tileview/tileview.h"
 #include "game/tileview/tile.h"
+#include "game/tileview/tileobject.h"
 
 #include "framework/includes.h"
 #include "framework/framework.h"
@@ -112,47 +113,7 @@ void TileView::EventOccurred(Event *e)
 	}
 	else if (e->Type == EVENT_MOUSE_DOWN)
 	{
-		auto &ev = e->Data.Mouse;
-		auto selectedPos =
-		    Vec2<float>{static_cast<float>(ev.X) - offsetX, static_cast<float>(ev.Y) - offsetY};
-		sp<TileObject> newSelectedTileObject;
-
-		for (auto &obj : this->map.selectableObjects)
-		{
-			Rect<float> bounds;
-			if (this->viewMode == TileViewMode::Strategy)
-			{
-				bounds = {0, 0, 8, 8};
-			}
-			else
-			{
-				bounds = obj->getSelectableBounds();
-			}
-			auto tileOffset = tileToScreenCoords(obj->getDrawPosition());
-			bounds.p0 += tileOffset;
-			bounds.p1 += tileOffset;
-			if (bounds.within(selectedPos))
-			{
-				if (newSelectedTileObject)
-				{
-					if (newSelectedTileObject->getDrawPosition().z < obj->getDrawPosition().z)
-						newSelectedTileObject = obj;
-				}
-				else
-					newSelectedTileObject = obj;
-			}
-			if (newSelectedTileObject != this->selectedTileObject)
-			{
-				/* Either could be nullptr if there's nothing currently selected
-				 * or if you've clicked somewhere with no selectable objects
-				 * (IE deselected) */
-				if (this->selectedTileObject)
-					this->selectedTileObject->setSelected(false);
-				if (newSelectedTileObject)
-					newSelectedTileObject->setSelected(true);
-				this->selectedTileObject = newSelectedTileObject;
-			}
-		}
+		// FIXME: Object selection
 	}
 	else if (e->Type == EVENT_KEY_UP)
 	{
@@ -175,17 +136,6 @@ void TileView::EventOccurred(Event *e)
 	}
 }
 
-void TileView::update(unsigned int ticks)
-{
-	offsetX += cameraScrollX;
-	offsetY += cameraScrollY;
-
-	/* TODO: MAke non-'1' update ticks work (e.g. projectile paths & vehicle movement intersection)
-	 */
-	while (ticks--)
-		this->map.update(1);
-}
-
 void TileView::Render()
 {
 	int dpyWidth = fw.Display_GetWidth();
@@ -193,6 +143,9 @@ void TileView::Render()
 	Renderer &r = *fw.renderer;
 	r.clear();
 	r.setPalette(this->pal);
+
+	offsetX += cameraScrollX;
+	offsetY += cameraScrollY;
 
 	// offsetX/offsetY is the 'amount added to the tile coords' - so we want
 	// the inverse to tell which tiles are at the screen bounds
@@ -227,122 +180,14 @@ void TileView::Render()
 
 				if (showSelected)
 					r.draw(selectedTileImageBack, screenPos);
-				for (auto obj : tile->visibleObjects)
+
+				for (auto obj : tile->ownedObjectsNew)
 				{
-					assert(obj->isVisible());
-					bool showBounds = obj == this->selectedTileObject ||
-					                  (fw.state->showSelectableBounds && obj->isSelectable());
-					sp<Image> img;
-					switch (this->viewMode)
-					{
-						case TileViewMode::Strategy:
-							img = obj->getStrategySprite();
-							break;
-						case TileViewMode::Isometric:
-							img = obj->getSprite();
-							break;
-						default:
-							LogError("Invalid view mode");
-					}
-					if (!img)
-					{
-						continue;
-					}
-					auto pos = obj->getDrawPosition();
-					auto objScreenPos = tileToScreenCoords(pos);
-					objScreenPos.x += offsetX;
-					objScreenPos.y += offsetY;
-					r.draw(img, objScreenPos);
-					if (x != obj->getOwningTile()->position.x ||
-					    y != obj->getOwningTile()->position.y ||
-					    z != obj->getOwningTile()->position.z)
-					{
-						LogError("Object has mismatches owning tile / visible object link"
-						         " visible in {%d,%d,%d} owned by {%d,%d,%d}",
-						         x, y, z, obj->getOwningTile()->position.x,
-						         obj->getOwningTile()->position.y,
-						         obj->getOwningTile()->position.z);
-					}
-					if (showOrigin)
-					{
-						Vec2<float> offset{offsetX, offsetY};
-						auto linePos0 =
-						    tileToScreenCoords(obj->getPosition() + Vec3<float>{0, 0, 0.5});
-						auto linePos1 =
-						    tileToScreenCoords(obj->getPosition() + Vec3<float>{0, 0, -0.5});
-						linePos1 += offset;
-						linePos0 += offset;
-						r.drawLine(linePos0, linePos1, Colour{255, 0, 0, 255});
-						linePos0 = tileToScreenCoords(obj->getPosition() + Vec3<float>{0, 0.5, 0});
-						linePos1 = tileToScreenCoords(obj->getPosition() + Vec3<float>{0, -0.5, 0});
-						linePos1 += offset;
-						linePos0 += offset;
-						r.drawLine(linePos0, linePos1, Colour{255, 0, 0, 255});
-						linePos0 = tileToScreenCoords(obj->getPosition() + Vec3<float>{0.5, 0, 0});
-						linePos1 = tileToScreenCoords(obj->getPosition() + Vec3<float>{-0.5, 0, 0});
-						linePos1 += offset;
-						linePos0 += offset;
-						r.drawLine(linePos0, linePos1, Colour{255, 0, 0, 255});
-
-						linePos0 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} +
-						                              Vec3<float>{0, 0, 0.5});
-						linePos1 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} +
-						                              Vec3<float>{0, 0, -0.5});
-						linePos1 += offset;
-						linePos0 += offset;
-						r.drawLine(linePos0, linePos1, Colour{255, 255, 0, 255});
-						linePos0 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} +
-						                              Vec3<float>{0, 0.5, 0});
-						linePos1 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} +
-						                              Vec3<float>{0, -0.5, 0});
-						linePos1 += offset;
-						linePos0 += offset;
-						r.drawLine(linePos0, linePos1, Colour{255, 255, 0, 255});
-						linePos0 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} +
-						                              Vec3<float>{0.5, 0, 0});
-						linePos1 = tileToScreenCoords(Vec3<float>{obj->getOwningTile()->position} +
-						                              Vec3<float>{-0.5, 0, 0});
-						linePos1 += offset;
-						linePos0 += offset;
-						r.drawLine(linePos0, linePos1, Colour{255, 255, 0, 255});
-					}
-					if (showBounds)
-					{
-						Vec2<float> offset{offsetX, offsetY};
-						Rect<float> bounds;
-						if (this->viewMode == TileViewMode::Strategy)
-						{
-							bounds = {0, 0, 8, 8};
-						}
-						else
-						{
-							bounds = obj->getSelectableBounds();
-						}
-
-						auto p00 = tileToScreenCoords(obj->getDrawPosition());
-						p00 += offset;
-						p00 += bounds.p0;
-						auto p11 = tileToScreenCoords(obj->getDrawPosition());
-						p11 += offset;
-						p11 += bounds.p1;
-						auto p10 = Vec2<float>{p11.x, p00.y};
-						auto p01 = Vec2<float>{p00.x, p11.y};
-
-						r.drawLine(p00, p00 + Vec2<float>{0, 5}, Colour{255, 0, 0, 255});
-						r.drawLine(p00, p00 + Vec2<float>{5, 0}, Colour{255, 0, 0, 255});
-
-						r.drawLine(p01, p01 + Vec2<float>{0, -5}, Colour{255, 0, 0, 255});
-						r.drawLine(p01, p01 + Vec2<float>{5, 0}, Colour{255, 0, 0, 255});
-
-						r.drawLine(p10, p10 + Vec2<float>{0, 5}, Colour{255, 0, 0, 255});
-						r.drawLine(p10, p10 + Vec2<float>{-5, 0}, Colour{255, 0, 0, 255});
-
-						r.drawLine(p11, p11 + Vec2<float>{0, -5}, Colour{255, 0, 0, 255});
-						r.drawLine(p11, p11 + Vec2<float>{-5, 0}, Colour{255, 0, 0, 255});
-					}
+					Vec2<float> pos = tileToScreenCoords(obj->getPosition());
+					pos.x += offsetX;
+					pos.y += offsetY;
+					obj->draw(r, *this, pos, this->viewMode);
 				}
-				for (auto &p : tile->ownedProjectiles)
-					p->drawProjectile(*this, r, Vec2<int>{offsetX, offsetY});
 
 				if (showSelected)
 					r.draw(selectedTileImageFront, screenPos);

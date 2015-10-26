@@ -134,7 +134,7 @@ bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *
 	return true;
 }
 
-const UString &Rules::getBuildingTileAt(Vec3<int> offset) const
+const UString &Rules::getSceneryTileAt(Vec3<int> offset) const
 {
 	static const UString noTile = "";
 	if (offset.x < 0 || offset.x >= citySize.x || offset.y < 0 || offset.y >= citySize.y ||
