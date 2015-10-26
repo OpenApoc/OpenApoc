@@ -11,6 +11,8 @@
 namespace OpenApoc
 {
 
+const int BaseScreen::TILE_SIZE = 32;
+
 // key is North South West East (true = occupied, false = vacant)
 const std::unordered_map<std::vector<bool>, int> BaseScreen::TILE_CORRIDORS = {
     {{true, false, false, false}, 4}, {{false, false, false, true}, 5},

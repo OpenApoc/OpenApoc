@@ -21,7 +21,7 @@ class BaseScreen : public Stage
 {
   private:
 	static const std::unordered_map<std::vector<bool>, int> TILE_CORRIDORS;
-	static const int TILE_SIZE = 32;
+	static const int TILE_SIZE;
 
 	std::unique_ptr<Form> basescreenform;
 	StageCmd stageCmd;
