@@ -270,6 +270,7 @@
     <ClCompile Include="game\base\facility.cpp" />
     <ClCompile Include="game\city\building.cpp" />
     <ClCompile Include="game\city\buildingscreen.cpp" />
+    <ClCompile Include="game\city\projectile.cpp" />
     <ClCompile Include="game\city\scenery.cpp" />
     <ClCompile Include="game\city\vehicle.cpp" />
     <ClCompile Include="game\city\vehiclemission.cpp" />
@@ -289,9 +290,11 @@
     <ClCompile Include="game\rules\rules_helper.cpp" />
     <ClCompile Include="game\rules\vehicledef_rules.cpp" />
     <ClCompile Include="game\rules\weapondef_rules.cpp" />
-    <ClCompile Include="game\tileview\beam_projectile.cpp" />
-    <ClCompile Include="game\tileview\scenerytile.cpp" />
     <ClCompile Include="game\tileview\tile.cpp" />
+    <ClCompile Include="game\tileview\tileobject.cpp" />
+    <ClCompile Include="game\tileview\tileobject_projectile.cpp" />
+    <ClCompile Include="game\tileview\tileobject_scenery.cpp" />
+    <ClCompile Include="game\tileview\tileobject_vehicle.cpp" />
     <ClCompile Include="game\tileview\tileview.cpp" />
     <ClCompile Include="game\ufopaedia\ufopaedia.cpp" />
     <ClCompile Include="game\ufopaedia\ufopaediacategory.cpp" />
@@ -319,9 +322,6 @@
     <ClCompile Include="game\general\ingameoptions.cpp" />
     <ClCompile Include="game\tileview\voxel.cpp" />
     <ClCompile Include="game\apocresources\loftemps.cpp" />
-    <ClCompile Include="game\tileview\tile_visible.cpp" />
-    <ClCompile Include="game\tileview\tile_collidable.cpp" />
-    <ClCompile Include="game\tileview\projectile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="forms\checkbox.h" />
@@ -358,6 +358,7 @@
     <ClInclude Include="game\base\facility.h" />
     <ClInclude Include="game\city\building.h" />
     <ClInclude Include="game\city\buildingscreen.h" />
+    <ClInclude Include="game\city\projectile.h" />
     <ClInclude Include="game\city\scenery.h" />
     <ClInclude Include="game\city\vehicle.h" />
     <ClInclude Include="game\city\vehiclemission.h" />
@@ -376,9 +377,11 @@
     <ClInclude Include="game\rules\rules_private.h" />
     <ClInclude Include="game\rules\vehicledef.h" />
     <ClInclude Include="game\rules\weapondef.h" />
-    <ClInclude Include="game\tileview\beam_projectile.h" />
-    <ClInclude Include="game\tileview\scenerytile.h" />
     <ClInclude Include="game\tileview\tile.h" />
+    <ClInclude Include="game\tileview\tileobject.h" />
+    <ClInclude Include="game\tileview\tileobject_projectile.h" />
+    <ClInclude Include="game\tileview\tileobject_scenery.h" />
+    <ClInclude Include="game\tileview\tileobject_vehicle.h" />
     <ClInclude Include="game\tileview\tileview.h" />
     <ClInclude Include="game\tileview\voxel.h" />
     <ClInclude Include="game\ufopaedia\ufopaedia.h" />
@@ -400,7 +403,6 @@
     <ClInclude Include="framework\includes.h" />
     <ClInclude Include="library\line.h" />
     <ClInclude Include="game\general\mainmenu.h" />
-    <ClInclude Include="library\maths.h" />
     <ClInclude Include="library\memory.h" />
     <ClInclude Include="game\apocresources\pck.h" />
     <ClInclude Include="framework\stage.h" />
@@ -415,9 +417,6 @@
     <ClInclude Include="game\city\infiltrationscreen.h" />
     <ClInclude Include="game\general\ingameoptions.h" />
     <ClInclude Include="game\apocresources\loftemps.h" />
-    <ClInclude Include="game\tileview\tile_visible.h" />
-    <ClInclude Include="game\tileview\tile_collidable.h" />
-    <ClInclude Include="game\tileview\projectile.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="dependencies\allegro5.vcxproj">

@@ -180,15 +180,6 @@
     <ClCompile Include="game\apocresources\loftemps.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\tileview\tile_visible.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="game\tileview\tile_collidable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="game\tileview\projectile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="game\rules\rules.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -222,9 +213,6 @@
     <ClCompile Include="game\city\weapon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\tileview\beam_projectile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="game\city\vehiclemission.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -255,7 +243,19 @@
     <ClCompile Include="game\city\scenery.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\tileview\scenerytile.cpp">
+    <ClCompile Include="game\tileview\tileobject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\tileview\tileobject_projectile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\tileview\tileobject_scenery.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\tileview\tileobject_vehicle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\city\projectile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -291,9 +291,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\general\mainmenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="library\maths.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="library\memory.h">
@@ -455,15 +452,6 @@
     <ClInclude Include="game\apocresources\loftemps.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\tileview\tile_visible.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game\tileview\tile_collidable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game\tileview\projectile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game\rules\rules.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -498,9 +486,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\rules\rules_helper.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game\tileview\beam_projectile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\tileview\voxel.h">
@@ -539,7 +524,19 @@
     <ClInclude Include="game\city\scenery.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\tileview\scenerytile.h">
+    <ClInclude Include="game\tileview\tileobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\tileview\tileobject_scenery.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\tileview\tileobject_vehicle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\tileview\tileobject_projectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\city\projectile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
