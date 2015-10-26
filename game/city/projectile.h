@@ -10,6 +10,8 @@ class Vehicle;
 class Weapon;
 class GameState;
 class TileObjectProjectile;
+class TileMap;
+class Collision;
 
 class Projectile : public std::enable_shared_from_this<Projectile>
 {
@@ -33,7 +35,7 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 	sp<Vehicle> getFiredBy() const { return this->firer; }
 	Vec3<float> getPosition() const { return this->position; }
 
-	void checkProjectileCollision();
+	Collision checkProjectileCollision(TileMap &map);
 
 	virtual ~Projectile();
 

@@ -5,6 +5,7 @@
 #include "game/rules/scenerytiledef.h"
 #include "game/rules/weapondef.h"
 #include "game/rules/facilitydef.h"
+#include "game/rules/doodaddef.h"
 
 #include "game/organisation.h"
 
@@ -29,6 +30,7 @@ class Rules
 	std::map<UString, SceneryTileDef> buildingTiles;
 	std::map<UString, WeaponDef> weapons;
 	std::map<UString, FacilityDef> facilities;
+	std::map<UString, DoodadDef> doodads;
 	std::vector<UString> landingPadTiles;
 	Vec3<int> citySize;
 	std::vector<UString> tileIDs;
@@ -48,6 +50,23 @@ class Rules
 	std::vector<Organisation> &getOrganisations() { return organisations; }
 
 	std::map<UString, FacilityDef> &getFacilityDefs() { return facilities; }
+
+	std::map<UString, DoodadDef> &getDoodadDefs() { return doodads; }
+
+	DoodadDef &getDoodadDef(const UString &id)
+	{
+		auto pair = doodads.find(id);
+		if (pair != doodads.end())
+		{
+			return pair->second;
+		}
+		else
+		{
+			LogError("No doodads tile found with ID \"%s\"", id.c_str());
+			// return _something_
+			return doodads.begin()->second;
+		}
+	}
 
 	SceneryTileDef &getSceneryTileDef(const UString &id)
 	{

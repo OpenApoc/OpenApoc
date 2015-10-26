@@ -22,6 +22,7 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 		Projectile,
 		Vehicle,
 		Scenery,
+		Doodad,
 	};
 
 	/* 'screenPosition' is where the center of the object should be drawn */

@@ -23,6 +23,8 @@ class Vehicle;
 class TileObjectVehicle;
 class Scenery;
 class TileObjectScenery;
+class Doodad;
+class TileObjectDoodad;
 
 class Tile
 {
@@ -64,5 +66,6 @@ class TileMap
 	sp<TileObjectProjectile> addObjectToMap(sp<Projectile>);
 	sp<TileObjectVehicle> addObjectToMap(sp<Vehicle>);
 	sp<TileObjectScenery> addObjectToMap(sp<Scenery>);
+	sp<TileObjectDoodad> addObjectToMap(sp<Doodad>);
 };
 }; // namespace OpenApoc

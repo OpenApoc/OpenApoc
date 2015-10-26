@@ -258,6 +258,15 @@
     <ClCompile Include="game\city\projectile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\city\doodad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\rules\doodad_rules.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\tileview\tileobject_doodad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -537,6 +546,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\city\projectile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\city\doodad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\rules\doodaddef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\tileview\tileobject_doodad.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,6 +4,7 @@
 #include "game/gamestate.h"
 #include "game/city/city.h"
 #include "game/tileview/tileobject_projectile.h"
+#include "game/tileview/voxel.h"
 
 namespace OpenApoc
 {
@@ -42,7 +43,10 @@ void Projectile::update(GameState &state, unsigned int ticks)
 	}
 }
 
-void Projectile::checkProjectileCollision() {}
+Collision Projectile::checkProjectileCollision(TileMap &map)
+{
+	return map.findCollision(this->previousPosition, this->position);
+}
 
 Projectile::~Projectile()
 {

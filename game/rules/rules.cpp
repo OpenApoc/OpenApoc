@@ -124,6 +124,11 @@ bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *
 				return false;
 			}
 		}
+		else if (name == "doodad")
+		{
+			if (!ParseDoodadDefinition(fw, rules, e))
+				return false;
+		}
 		else
 		{
 			LogError("Unexpected node \"%s\"", name.c_str());

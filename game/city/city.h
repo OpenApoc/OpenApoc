@@ -20,10 +20,14 @@ class GameState;
 class Building;
 class Projectile;
 class Scenery;
+class Doodad;
+class DoodadDef;
 
 class City
 {
   private:
+	Framework &fw;
+
   public:
 	City(Framework &fw, GameState &state);
 	~City();
@@ -32,10 +36,13 @@ class City
 	std::vector<sp<Building>> buildings;
 	std::vector<sp<Building>> baseBuildings;
 	std::set<sp<Scenery>> scenery;
+	std::set<sp<Doodad>> doodads;
 
 	TileMap map;
 
 	void update(GameState &state, unsigned int ticks);
+
+	sp<Doodad> placeDoodad(DoodadDef &def, Vec3<float> position);
 };
 
 }; // namespace OpenApoc

@@ -270,6 +270,7 @@
     <ClCompile Include="game\base\facility.cpp" />
     <ClCompile Include="game\city\building.cpp" />
     <ClCompile Include="game\city\buildingscreen.cpp" />
+    <ClCompile Include="game\city\doodad.cpp" />
     <ClCompile Include="game\city\projectile.cpp" />
     <ClCompile Include="game\city\scenery.cpp" />
     <ClCompile Include="game\city\vehicle.cpp" />
@@ -284,6 +285,7 @@
     <ClCompile Include="game\apocresources\apocfont.cpp" />
     <ClCompile Include="game\boot.cpp" />
     <ClCompile Include="game\rules\citydef_rules.cpp" />
+    <ClCompile Include="game\rules\doodad_rules.cpp" />
     <ClCompile Include="game\rules\facilitydef_rules.cpp" />
     <ClCompile Include="game\rules\organisationdef_rules.cpp" />
     <ClCompile Include="game\rules\rules.cpp" />
@@ -292,6 +294,7 @@
     <ClCompile Include="game\rules\weapondef_rules.cpp" />
     <ClCompile Include="game\tileview\tile.cpp" />
     <ClCompile Include="game\tileview\tileobject.cpp" />
+    <ClCompile Include="game\tileview\tileobject_doodad.cpp" />
     <ClCompile Include="game\tileview\tileobject_projectile.cpp" />
     <ClCompile Include="game\tileview\tileobject_scenery.cpp" />
     <ClCompile Include="game\tileview\tileobject_vehicle.cpp" />
@@ -358,6 +361,7 @@
     <ClInclude Include="game\base\facility.h" />
     <ClInclude Include="game\city\building.h" />
     <ClInclude Include="game\city\buildingscreen.h" />
+    <ClInclude Include="game\city\doodad.h" />
     <ClInclude Include="game\city\projectile.h" />
     <ClInclude Include="game\city\scenery.h" />
     <ClInclude Include="game\city\vehicle.h" />
@@ -370,6 +374,7 @@
     <ClInclude Include="game\organisation.h" />
     <ClInclude Include="game\resources\gamecore.h" />
     <ClInclude Include="game\rules\buildingdef.h" />
+    <ClInclude Include="game\rules\doodaddef.h" />
     <ClInclude Include="game\rules\scenerytiledef.h" />
     <ClInclude Include="game\rules\facilitydef.h" />
     <ClInclude Include="game\rules\rules.h" />
@@ -379,6 +384,7 @@
     <ClInclude Include="game\rules\weapondef.h" />
     <ClInclude Include="game\tileview\tile.h" />
     <ClInclude Include="game\tileview\tileobject.h" />
+    <ClInclude Include="game\tileview\tileobject_doodad.h" />
     <ClInclude Include="game\tileview\tileobject_projectile.h" />
     <ClInclude Include="game\tileview\tileobject_scenery.h" />
     <ClInclude Include="game\tileview\tileobject_vehicle.h" />

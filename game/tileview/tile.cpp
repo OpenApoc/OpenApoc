@@ -7,6 +7,8 @@
 #include "game/city/vehicle.h"
 #include "game/tileview/tileobject_scenery.h"
 #include "game/city/scenery.h"
+#include "game/tileview/tileobject_doodad.h"
+#include "game/city/doodad.h"
 
 namespace OpenApoc
 {
@@ -255,6 +257,21 @@ sp<TileObjectScenery> TileMap::addObjectToMap(sp<Scenery> scenery)
 	sp<TileObjectScenery> obj(new TileObjectScenery(*this, scenery));
 	obj->setPosition(scenery->getPosition());
 	scenery->tileObject = obj;
+
+	return obj;
+}
+
+sp<TileObjectDoodad> TileMap::addObjectToMap(sp<Doodad> doodad)
+{
+	if (doodad->tileObject)
+	{
+		LogError("Doodad already has tile object");
+	}
+	// FIXME: std::make_shared<> doesn't work for private (but accessible due to friend)
+	// constructors?
+	sp<TileObjectDoodad> obj(new TileObjectDoodad(*this, doodad));
+	obj->setPosition(doodad->getPosition());
+	doodad->tileObject = obj;
 
 	return obj;
 }

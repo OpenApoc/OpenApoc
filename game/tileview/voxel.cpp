@@ -38,7 +38,9 @@ bool VoxelMap::getBit(Vec3<int> pos) const
 {
 	if (pos.x < 0 || pos.x >= this->size.x || pos.y < 0 || pos.y >= this->size.y || pos.z < 0 ||
 	    pos.z >= this->size.z)
+	{
 		return false;
+	}
 
 	if (slices.size() <= static_cast<unsigned>(pos.z))
 		return false;
@@ -203,9 +205,6 @@ LineSegmentIterator<T, conservative> LineSegment<T, conservative>::end()
 
 Collision Tile::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd)
 {
-	lineSegmentStart -= position;
-	lineSegmentEnd -= position;
-
 	Collision c;
 	c.obj = nullptr;
 

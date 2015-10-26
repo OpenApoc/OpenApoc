@@ -14,6 +14,10 @@ class TileObjectScenery : public TileObject
 
 	std::weak_ptr<Scenery> scenery;
 
+	sp<Scenery> getOwner();
+
+	virtual sp<VoxelMap> getVoxelMap() override;
+
   private:
 	friend class TileMap;
 	TileObjectScenery(TileMap &map, sp<Scenery> scenery);

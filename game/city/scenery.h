@@ -9,6 +9,7 @@ namespace OpenApoc
 class TileObjectScenery;
 class SceneryTileDef;
 class Building;
+class Collision;
 
 class Scenery
 {
@@ -27,6 +28,8 @@ class Scenery
 	// May be NULL for no building
 	sp<Building> building;
 	sp<TileObjectScenery> tileObject;
+
+	void handleCollision(Collision &c);
 
 	Scenery(SceneryTileDef &tileDef, Vec3<int> pos, sp<Building> bld);
 	~Scenery() = default;

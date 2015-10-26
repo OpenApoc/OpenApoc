@@ -43,4 +43,16 @@ TileObjectScenery::TileObjectScenery(TileMap &map, sp<Scenery> scenery)
 {
 }
 
+sp<Scenery> TileObjectScenery::getOwner()
+{
+	auto s = this->scenery.lock();
+	if (!s)
+	{
+		LogError("Owning scenery object disappeared");
+	}
+	return s;
+}
+
+sp<VoxelMap> TileObjectScenery::getVoxelMap() { return this->getOwner()->tileDef.getVoxelMap(); }
+
 } // namespace OpenApoc
