@@ -227,6 +227,7 @@ endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CLANG_TIDY clang-tidy CACHE STRING "clang-tidy executable name in PATH")
+set(CLANG_TIDY_FIX OFF tidy CACHE BOOL "Pass -fix to clang-tidy (DANGEROUS)")
 
 find_package(Git)
 execute_process(COMMAND ${GIT_EXECUTABLE} -C ${CMAKE_SOURCE_DIR} describe --tags --all --long
@@ -240,5 +241,10 @@ string(MAKE_C_IDENTIFIER "${OPENAPOC_VERSION_STRING_RAW}" OPENAPOC_VERSION_STRIN
 
 configure_file(version.h.in version.h)
 
+if (CLANG_TIDY_FIX)
+		set(CLANG_TIDY_OPTIONS "-fix")
+endif()
+
 add_custom_target(tidy ${CLANG_TIDY} ${FORMAT_SOURCES} -p ${CMAKE_BINARY_DIR}
+		${CLANG_TIDY_OPTIONS}
 		DEPENDS ${FORMAT_SOURCES} ${CMAKE_BINARY_DIR}/compile_commands.json)
