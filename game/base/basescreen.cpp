@@ -52,7 +52,7 @@ void BaseScreen::Begin()
 
 	TextEdit *name = basescreenform->FindControlTyped<TextEdit>("TEXT_BASE_NAME");
 	name->SetText(base.name);
-	
+
 	baseView = basescreenform->FindControlTyped<Graphic>("GRAPHIC_BASE_VIEW");
 	selText = basescreenform->FindControlTyped<Label>("TEXT_SELECTED_FACILITY");
 	selGraphic = basescreenform->FindControlTyped<Graphic>("GRAPHIC_SELECTED_FACILITY");
@@ -86,7 +86,8 @@ void BaseScreen::EventOccurred(Event *e)
 		{
 			selection /= TILE_SIZE;
 		}
-		if (selection.x >= 0 && selection.y >= 0 && selection.x < Base::SIZE && selection.y < Base::SIZE)
+		if (selection.x >= 0 && selection.y >= 0 && selection.x < Base::SIZE &&
+		    selection.y < Base::SIZE)
 		{
 			selFacility = base.getFacility(selection);
 			if (selFacility != nullptr)
@@ -108,7 +109,8 @@ void BaseScreen::EventOccurred(Event *e)
 				else
 				{
 					selText->SetText("Earth");
-					selGraphic->SetImage(fw.data->load_image("PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:UI/menuopt.pal"));
+					selGraphic->SetImage(fw.data->load_image(
+					    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:UI/menuopt.pal"));
 				}
 			}
 		}
@@ -128,7 +130,8 @@ void BaseScreen::EventOccurred(Event *e)
 		}
 	}
 
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::TextEditFinish)
+	if (e->Type == EVENT_FORM_INTERACTION &&
+	    e->Data.Forms.EventFlag == FormEventType::TextEditFinish)
 	{
 		if (e->Data.Forms.RaisedBy->Name == "TEXT_BASE_NAME")
 		{
@@ -163,7 +166,7 @@ void BaseScreen::RenderBase()
 
 	// Draw grid
 	sp<Image> grid =
-		fw.data->load_image("PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:UI/menuopt.pal");
+	    fw.data->load_image("PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:UI/menuopt.pal");
 	Vec2<int> i;
 	for (i.x = 0; i.x < Base::SIZE; ++i.x)
 	{
@@ -200,7 +203,8 @@ void BaseScreen::RenderBase()
 	}
 
 	// Draw selection
-	if (selection.x >= 0 && selection.y >= 0 && selection.x < Base::SIZE && selection.y < Base::SIZE)
+	if (selection.x >= 0 && selection.y >= 0 && selection.x < Base::SIZE &&
+	    selection.y < Base::SIZE)
 	{
 		Vec2<int> pos = selection;
 		Vec2<int> size = {TILE_SIZE, TILE_SIZE};

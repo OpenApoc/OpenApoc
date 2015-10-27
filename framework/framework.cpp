@@ -672,8 +672,8 @@ void Framework::Display_SetIcon()
 	HWND hwnd = al_get_win_window_handle(p->screen);
 	SetClassLongPtr(hwnd, GCLP_HICON, (LONG_PTR)icon);
 #else
-	// TODO: Figure out how this works
-	// al_set_display_icon(p->screen, ...);
+// TODO: Figure out how this works
+// al_set_display_icon(p->screen, ...);
 #endif
 }
 

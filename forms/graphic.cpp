@@ -7,8 +7,8 @@ namespace OpenApoc
 {
 
 Graphic::Graphic(Framework &fw, Control *Owner, UString Image)
-	: Control(fw, Owner), ImageHAlign(HorizontalAlignment::Left), ImageVAlign(VerticalAlignment::Top),
-	ImagePosition(FillMethod::Stretch), AutoSize(false)
+    : Control(fw, Owner), ImageHAlign(HorizontalAlignment::Left),
+      ImageVAlign(VerticalAlignment::Top), ImagePosition(FillMethod::Stretch), AutoSize(false)
 {
 	image_name = Image;
 	image = fw.gamecore->GetImage(image_name);
@@ -43,55 +43,55 @@ void Graphic::OnRender()
 	{
 		switch (ImagePosition)
 		{
-		case FillMethod::Stretch:
-			fw.renderer->drawScaled(image, pos, Size);
-			break;
+			case FillMethod::Stretch:
+				fw.renderer->drawScaled(image, pos, Size);
+				break;
 
-		case FillMethod::Fit:
-			switch (ImageVAlign)
-			{
-			case VerticalAlignment::Top:
-				pos.y = 0;
-				break;
-			case VerticalAlignment::Centre:
-				pos.y = (Size.y - image->size.y) / 2;
-				break;
-			case VerticalAlignment::Bottom:
-				pos.y = Size.y - image->size.y;
-				break;
-			default:
-				LogError("Unknown ImageVAlign");
-				return;
-			}
-
-			switch (ImageHAlign)
-			{
-			case HorizontalAlignment::Left:
-				pos.x = 0;
-				break;
-			case HorizontalAlignment::Centre:
-				pos.x = (Size.x - image->size.x) / 2;
-				break;
-			case HorizontalAlignment::Right:
-				pos.x = Size.x - image->size.x;
-				break;
-			default:
-				LogError("Unknown ImageHAlign");
-				return;
-			}
-
-			fw.renderer->draw(image, pos);
-			break;
-
-		case FillMethod::Tile:
-			for (pos.x = 0; pos.x < Size.x; pos.x += image->size.x)
-			{
-				for (pos.y = 0; pos.y < Size.y; pos.y += image->size.y)
+			case FillMethod::Fit:
+				switch (ImageVAlign)
 				{
-					fw.renderer->draw(image, pos);
+					case VerticalAlignment::Top:
+						pos.y = 0;
+						break;
+					case VerticalAlignment::Centre:
+						pos.y = (Size.y - image->size.y) / 2;
+						break;
+					case VerticalAlignment::Bottom:
+						pos.y = Size.y - image->size.y;
+						break;
+					default:
+						LogError("Unknown ImageVAlign");
+						return;
 				}
-			}
-			break;
+
+				switch (ImageHAlign)
+				{
+					case HorizontalAlignment::Left:
+						pos.x = 0;
+						break;
+					case HorizontalAlignment::Centre:
+						pos.x = (Size.x - image->size.x) / 2;
+						break;
+					case HorizontalAlignment::Right:
+						pos.x = Size.x - image->size.x;
+						break;
+					default:
+						LogError("Unknown ImageHAlign");
+						return;
+				}
+
+				fw.renderer->draw(image, pos);
+				break;
+
+			case FillMethod::Tile:
+				for (pos.x = 0; pos.x < Size.x; pos.x += image->size.x)
+				{
+					for (pos.y = 0; pos.y < Size.y; pos.y += image->size.y)
+					{
+						fw.renderer->draw(image, pos);
+					}
+				}
+				break;
 		}
 	}
 }

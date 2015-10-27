@@ -28,7 +28,7 @@ class BaseScreen : public Stage
 	Base &base;
 	Vec2<int> selection;
 	sp<const Facility> selFacility;
-	
+
 	Graphic *baseView;
 	Label *selText;
 	Graphic *selGraphic;
