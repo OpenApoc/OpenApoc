@@ -43,16 +43,7 @@ Tile *TileMap::getTile(Vec3<int> pos) { return getTile(pos.x, pos.y, pos.z); }
 
 Tile *TileMap::getTile(Vec3<float> pos) { return getTile(pos.x, pos.y, pos.z); }
 
-TileMap::~TileMap()
-{
-	for (auto &t : tiles)
-	{
-		for (auto &obj : t.ownedObjectsNew)
-		{
-			obj->removeFromMap();
-		}
-	}
-}
+TileMap::~TileMap() {}
 
 Tile::Tile(TileMap &map, Vec3<int> position) : map(map), position(position) {}
 
