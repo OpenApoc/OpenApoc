@@ -47,7 +47,7 @@ Collision Projectile::checkProjectileCollision(TileMap &map)
 {
 	if (!this->tileObject)
 	{
-		//It's possible the projectile reached the end of it's lifetime this frame
+		// It's possible the projectile reached the end of it's lifetime this frame
 		// so ignore stuff without a tile
 		return {};
 	}

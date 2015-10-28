@@ -116,24 +116,31 @@ void City::update(GameState &state, unsigned int ticks)
 	 * Every now and then give a landed vehicle a new 'goto random building' mission, so there's
 	 * some activity in the city*/
 	std::uniform_int_distribution<int> bld_distribution(0, this->buildings.size() - 1);
-	for (auto b : this->buildings)
+
+	// Need to use a 'safe' iterator method (IE keep the next it before calling ->update)
+	// as update() calls can erase it's object from the lists
+
+	for (auto it = this->buildings.begin(); it != this->buildings.end();)
 	{
+		auto b = *it++;
 		for (auto &v : b->landed_vehicles)
 		{
 			if (v->missions.empty())
 			{
-				auto &b = this->buildings[bld_distribution(state.rng)];
-				v->missions.emplace_back(VehicleMission::gotoBuilding(*v, this->map, b));
+				auto &dest = this->buildings[bld_distribution(state.rng)];
+				v->missions.emplace_back(VehicleMission::gotoBuilding(*v, this->map, dest));
 				v->missions.front()->start();
 			}
 		}
 	}
-	for (auto v : this->vehicles)
+	for (auto it = this->vehicles.begin(); it != this->vehicles.end();)
 	{
+		auto v = *it++;
 		v->update(state, ticks);
 	}
-	for (auto p : this->projectiles)
+	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
 	{
+		auto p = *it++;
 		p->update(state, ticks);
 		Collision c = p->checkProjectileCollision(map);
 		if (c)
@@ -167,8 +174,9 @@ void City::update(GameState &state, unsigned int ticks)
 			}
 		}
 	}
-	for (auto d : this->doodads)
+	for (auto it = this->doodads.begin(); it != this->doodads.end();)
 	{
+		auto d = *it++;
 		d->update(state, ticks);
 	}
 }
