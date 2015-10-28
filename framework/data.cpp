@@ -374,6 +374,13 @@ sp<Image> Data::load_image(const UString &path)
 
 sp<Palette> Data::load_palette(const UString &path)
 {
+	auto pal = loadPCXPalette(*this, path);
+	if (pal)
+	{
+		LogInfo("Read \"%s\" as PCX palette", path.c_str());
+		return pal;
+	}
+
 	sp<RGBImage> img = std::dynamic_pointer_cast<RGBImage>(this->load_image(path));
 	if (img)
 	{
@@ -389,18 +396,18 @@ sp<Palette> Data::load_palette(const UString &path)
 				idx++;
 			}
 		}
+		LogInfo("Read \"%s\" as Image palette", path.c_str());
 		return p;
 	}
-	else
+
+	pal = loadApocPalette(*this, path);
+	if (pal)
 	{
-		sp<Palette> pal(loadApocPalette(*this, path));
-		if (!pal)
-		{
-			LogError("Failed to open palette \"%s\"", path.c_str());
-			return nullptr;
-		}
+		LogInfo("Read \"%s\" as RAW palette", path.c_str());
 		return pal;
 	}
+	LogError("Failed to open palette \"%s\"", path.c_str());
+	return nullptr;
 }
 
 }; // namespace OpenApoc
