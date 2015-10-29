@@ -10,6 +10,8 @@
 #include "game/tileview/tileobject_doodad.h"
 #include "game/city/doodad.h"
 
+#include <unordered_map>
+
 namespace OpenApoc
 {
 
@@ -47,164 +49,182 @@ TileMap::~TileMap() {}
 
 Tile::Tile(TileMap &map, Vec3<int> position) : map(map), position(position) {}
 
-class PathComparer
+namespace
+{
+class PathNode
 {
   public:
-	Vec3<float> dest;
-	Vec3<float> origin;
-	PathComparer(Vec3<int> d) : dest{d.x, d.y, d.z} {}
-	bool operator()(Tile *t1, Tile *t2)
+	PathNode(float costToGetHere, Tile *parentTile, Tile *thisTile, const Vec3<float> &goal)
+	    : costToGetHere(costToGetHere), parentTile(parentTile), thisTile(thisTile)
 	{
-		Vec3<float> t1Pos{t1->position.x, t1->position.y, t1->position.z};
-		Vec3<float> t2Pos{t2->position.x, t2->position.y, t2->position.z};
+		Vec3<float> thisPosition{(float)thisTile->position.x, (float)thisTile->position.y,
+		                         (float)thisTile->position.z};
+		Vec3<float> vectorToGoal = (goal - thisPosition);
+		this->distanceToGoal = glm::length(vectorToGoal);
+	}
+	float costToGetHere;
+	Tile *parentTile;
+	Tile *thisTile;
 
-		Vec3<float> t1tod = dest - t1Pos;
-		Vec3<float> t2tod = dest - t2Pos;
+	float distanceToGoal;
+};
 
-		float t1cost = glm::length(t1tod);
-		float t2cost = glm::length(t2tod);
-
-		t1cost += glm::length(t1Pos - origin);
-		t2cost += glm::length(t2Pos - origin);
-
-		return (t1cost < t2cost);
+class PathNodeComparer
+{
+  public:
+	bool operator()(const PathNode &p1, const PathNode &p2)
+	{
+		return (p1.costToGetHere + p1.distanceToGoal) < (p2.costToGetHere + p2.distanceToGoal);
 	}
 };
 
-static bool
-findNextNodeOnPath(PathComparer &comparer, TileMap &map, std::list<Tile *> &currentPath,
-                   Vec3<int> destination, unsigned int *iterationsLeft, const Vehicle &v,
-                   std::function<bool(const Tile &tile, const Vehicle &v)> canEnterTileFn)
-{
-	if (currentPath.back()->position == destination)
-		return true;
-	if (*iterationsLeft == 0)
-		return true;
-	*iterationsLeft = (*iterationsLeft) - 1;
-	std::vector<Tile *> fringe;
-	for (int x = -1; x <= 1; x++)
-	{
-		for (int y = -1; y <= 1; y++)
-		{
-			for (int z = -1; z <= 1; z++)
-			{
-				Vec3<int> currentPosition = currentPath.back()->position;
-				if (z == 0 && y == 0 && x == 0)
-					continue;
-				Vec3<int> nextPosition = currentPosition;
-				nextPosition.x += x;
-				nextPosition.y += y;
-				nextPosition.z += z;
-				if (nextPosition.z < 0 || nextPosition.z >= map.size.z || nextPosition.y < 0 ||
-				    nextPosition.y >= map.size.y || nextPosition.x < 0 ||
-				    nextPosition.x >= map.size.x)
-					continue;
-				Tile *tile = map.getTile(nextPosition);
-				// FIXME: Make 'blocked' tiles cleverer (e.g. don't plan around objects that will
-				// move anyway?)
-				if (!canEnterTileFn(*tile, v))
-					continue;
-				// Check for diagonal routes that the 'corner' tiles we touch are empty
-				Vec3<int> cornerPosition = currentPosition;
-				cornerPosition += Vec3<int>{0, y, z};
-				if (cornerPosition != currentPosition && !canEnterTileFn(*tile, v))
-					continue;
-				cornerPosition = currentPosition;
-				cornerPosition += Vec3<int>{x, 0, z};
-				if (cornerPosition != currentPosition && !canEnterTileFn(*tile, v))
-					continue;
-				cornerPosition = currentPosition;
-				cornerPosition += Vec3<int>{x, y, 0};
-				if (cornerPosition != currentPosition && !canEnterTileFn(*tile, v))
-					continue;
-				// Already visited this tile
-				if (std::find(currentPath.begin(), currentPath.end(), tile) != currentPath.end())
-					continue;
-				fringe.push_back(tile);
-			}
-		}
-	}
-	std::sort(fringe.begin(), fringe.end(), comparer);
-	for (auto tile : fringe)
-	{
-		currentPath.push_back(tile);
-		comparer.origin = {tile->position.x, tile->position.y, tile->position.z};
-		if (findNextNodeOnPath(comparer, map, currentPath, destination, iterationsLeft, v,
-		                       canEnterTileFn))
-			return true;
-		currentPath.pop_back();
-	}
-	return false;
-}
+} // anonymous namespace
 
-std::list<Tile *>
-TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination, unsigned int iterationLimit,
-                          const Vehicle &v,
-                          std::function<bool(const Tile &tile, const Vehicle &v)> canEnterTileFn)
+static std::list<Tile *> getPathToNode(std::unordered_map<Tile *, PathNode> nodes, PathNode &end)
 {
 	std::list<Tile *> path;
-	PathComparer pc(destination);
-	unsigned int iterationsLeft = iterationLimit;
+	path.push_back(end.thisTile);
+	Tile *t = end.parentTile;
+	while (t)
+	{
+		path.push_front(t);
+		auto nextNodeIt = nodes.find(t);
+		if (nextNodeIt == nodes.end())
+		{
+			LogError("Trying to expand unvisited node?");
+			return {};
+		}
+		auto &nextNode = nextNodeIt->second;
+		if (nextNode.thisTile != t)
+		{
+			LogError("Unexpected parentTile pointer");
+			return {};
+		}
+		t = nextNode.parentTile;
+	}
+
+	return path;
+}
+
+std::list<Tile *> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination,
+                                            unsigned int iterationLimit,
+                                            const CanEnterTileHelper &canEnterTile)
+{
+	PathNodeComparer c;
+	std::unordered_map<Tile *, PathNode> visitedTiles;
+	std::set<PathNode, PathNodeComparer> fringe(c);
+	Vec3<float> goalPosition;
+	unsigned int iterationCount = 0;
+
+	LogInfo("Trying to route from {%d,%d,%d} to {%d,%d,%d}", origin.x, origin.y, origin.z,
+	        destination.x, destination.y, destination.z);
+
 	if (origin.x < 0 || origin.x >= this->size.x || origin.y < 0 || origin.y >= this->size.y ||
 	    origin.z < 0 || origin.z >= this->size.z)
 	{
 		LogError("Bad origin {%d,%d,%d}", origin.x, origin.y, origin.z);
-		return path;
+		return {};
 	}
 	if (destination.x < 0 || destination.x >= this->size.x || destination.y < 0 ||
 	    destination.y >= this->size.y || destination.z < 0 || destination.z >= this->size.z)
 	{
 		LogError("Bad destination {%d,%d,%d}", destination.x, destination.y, destination.z);
-		return path;
-	}
-	path.push_back(this->getTile(origin));
-	if (!findNextNodeOnPath(pc, *this, path, destination, &iterationsLeft, v, canEnterTileFn))
-	{
-		LogWarning("No route found from origin {%d,%d,%d} to desination {%d,%d,%d}", origin.x,
-		           origin.y, origin.z, destination.x, destination.y, destination.z);
 		return {};
 	}
-	auto &currentHeadPos = path.back()->position;
-	if (currentHeadPos != destination)
+
+	if (origin == destination)
 	{
-		/* Step back up the path until we find the node 'closest' to the target
-		 * as if we're blocked by something that will move that's probably a
-		 * better starting point for the next loop instead of after possibly
-		 * starting to move further from the obstacle trying to path round it*/
-		Vec3<float> dest_float{destination.x, destination.y, destination.z};
-		float closestCost = std::numeric_limits<float>::max();
-		Tile *closestTile = path.front();
-
-		for (auto *t : path)
-		{
-			if (t->position == origin)
-			{
-				/* We want to move at least /somewhere/ */
-				continue;
-			}
-			float cost =
-			    glm::length(Vec3<float>{t->position.x, t->position.y, t->position.z} - dest_float);
-			if (cost < closestCost)
-			{
-				closestCost = cost;
-				closestTile = t;
-			}
-		}
-
-		while (!path.empty() && path.back() != closestTile)
-		{
-			path.pop_back();
-		}
-
-		auto closestPos = closestTile->position;
-
-		LogWarning(
-		    "No route found from origin {%d,%d,%d} to desination {%d,%d,%d} in %u iterations, "
-		    "closest node {%d,%d,%d} (%d steps)",
-		    origin.x, origin.y, origin.z, destination.x, destination.y, destination.z,
-		    iterationLimit, closestPos.x, closestPos.y, closestPos.z, path.size());
+		LogError("Destination == origin {%d,%d,%d}", destination.x, destination.y, destination.z);
+		return {};
 	}
-	return path;
+
+	goalPosition = {destination.x, destination.y, destination.z};
+
+	Tile *goalTile = this->getTile(destination);
+	if (!goalTile)
+	{
+		LogError("Failed to get destination tile at {%d,%d,%d}", destination.x, destination.y,
+		         destination.z);
+		return {};
+	}
+	Tile *startTile = this->getTile(origin);
+	if (!startTile)
+	{
+		LogError("Failed to get origin tile at {%d,%d,%d}", origin.x, origin.y, origin.z);
+		return {};
+	}
+
+	PathNode startNode(0.0f, nullptr, startTile, goalPosition);
+	fringe.emplace(startNode);
+	visitedTiles.emplace(startTile, startNode);
+
+	auto closestNodeSoFar = *fringe.begin();
+
+	while (iterationCount++ < iterationLimit)
+	{
+		auto first = fringe.begin();
+		if (first == fringe.end())
+		{
+			LogInfo("No more tiles to expand after %d iterations", iterationCount);
+			return {};
+		}
+		auto nodeToExpand = *first;
+		fringe.erase(first);
+
+		Vec3<int> currentPosition = nodeToExpand.thisTile->position;
+		if (currentPosition == destination)
+			return getPathToNode(visitedTiles, nodeToExpand);
+
+		if (nodeToExpand.distanceToGoal < closestNodeSoFar.distanceToGoal)
+		{
+			closestNodeSoFar = nodeToExpand;
+		}
+		for (int z = -1; z <= 1; z++)
+		{
+			for (int y = -1; y <= 1; y++)
+			{
+				for (int x = -1; x <= 1; x++)
+				{
+					if (x == 0 && y == 0 && z == 0)
+					{
+						continue;
+					}
+					auto nextPosition = currentPosition;
+					nextPosition.x += x;
+					nextPosition.y += y;
+					nextPosition.z += z;
+					if (nextPosition.z < 0 || nextPosition.z >= this->size.z ||
+					    nextPosition.y < 0 || nextPosition.y >= this->size.y ||
+					    nextPosition.x < 0 || nextPosition.x >= this->size.x)
+						continue;
+					Tile *tile = this->getTile(nextPosition);
+					// If Skip if we've already expanded this, as in a 3d-grid we know the first
+					// expansion will be the shortest route
+					if (visitedTiles.find(tile) != visitedTiles.end())
+						continue;
+					// FIXME: Make 'blocked' tiles cleverer (e.g. don't plan around objects that
+					// will
+					// move anyway?)
+					if (!canEnterTile.canEnterTile(nodeToExpand.thisTile, tile))
+						continue;
+					// FIXME: The old code *tried* to disallow diagonal paths that would clip past
+					// scenery but it didn't seem to work, no we should re-add that here
+					float newNodeCost = nodeToExpand.costToGetHere;
+
+					newNodeCost +=
+					    glm::length(Vec3<float>{nextPosition} - Vec3<float>{currentPosition});
+
+					PathNode newNode(newNodeCost, nodeToExpand.thisTile, tile, goalPosition);
+					visitedTiles.emplace(tile, newNode);
+					fringe.emplace(newNode);
+				}
+			}
+		}
+	}
+	LogInfo("No route found after %d iterations, returning closest path {%d,%d,%d}", iterationCount,
+	        closestNodeSoFar.thisTile->position.x, closestNodeSoFar.thisTile->position.y,
+	        closestNodeSoFar.thisTile->position.z);
+	return getPathToNode(visitedTiles, closestNodeSoFar);
 }
 
 sp<TileObjectProjectile> TileMap::addObjectToMap(sp<Projectile> projectile)

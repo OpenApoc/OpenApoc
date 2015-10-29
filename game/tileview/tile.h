@@ -40,6 +40,13 @@ class Tile
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd);
 };
 
+class CanEnterTileHelper
+{
+  public:
+	// Returns true if this object can move from 'from' to 'to'. The two tiles must be adjacent!
+	virtual bool canEnterTile(Tile *from, Tile *to) const = 0;
+};
+
 class TileMap
 {
   private:
@@ -56,10 +63,9 @@ class TileMap
 	TileMap(Framework &fw, Vec3<int> size);
 	~TileMap();
 
-	std::list<Tile *>
-	findShortestPath(Vec3<int> origin, Vec3<int> destination, unsigned int iterationLimit,
-	                 const Vehicle &v,
-	                 std::function<bool(const Tile &tile, const Vehicle &v)> canEnterTileFn);
+	std::list<Tile *> findShortestPath(Vec3<int> origin, Vec3<int> destination,
+	                                   unsigned int iterationLimit,
+	                                   const CanEnterTileHelper &canEnterTile);
 
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd);
 

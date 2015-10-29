@@ -58,6 +58,57 @@ static bool vehicleCanEnterTileAllowLandingPads(const Tile &t, const Vehicle &v)
 	return true;
 }
 
+class FlyingVehicleCanEnterTileHelper : public CanEnterTileHelper
+{
+  private:
+	TileMap &map;
+	Vehicle &v;
+
+  public:
+	FlyingVehicleCanEnterTileHelper(TileMap &map, Vehicle &v) : map(map), v(v){};
+	bool canEnterTile(Tile *from, Tile *to) const override
+	{
+		Vec3<int> fromPos = from->position;
+		Vec3<int> toPos = to->position;
+		assert(from != to);
+		assert(fromPos != toPos);
+		for (auto obj : to->ownedObjectsNew)
+		{
+			if (obj->getType() == TileObject::Type::Vehicle)
+				return false;
+			if (obj->getType() == TileObject::Type::Scenery)
+			{
+				auto sceneryTile = std::static_pointer_cast<TileObjectScenery>(obj);
+				if (sceneryTile->scenery.lock()->tileDef.getIsLandingPad())
+				{
+					continue;
+				}
+				return false;
+			}
+		}
+		// TODO: Try to block diagonal paths clipping past scenery:
+		//
+		// IE in a 2x2 'flat' case:
+		// 'f' = origin tile, 's' = scenery', 't' = target
+		//-------
+		// +-+
+		// |s| t
+		// +-+-+
+		// f |s|
+		//   +-+
+		//-------
+		// we clearly should disallow moving from v->t despite them being 'adjacent' and empty
+		// themselves
+		// TODO: Is this then OK for vehicles? as 'most' don't fill the tile?
+		// TODO: Can fix the above be fixed by restricting the 'bounds' to the actual voxel map,
+		// instead of a while tile? Then comparing against 'intersectingTiles' vehicle objects?
+
+		// FIXME: Handle 'large' vehicles interacting more than with just the 'owned' objects of a
+		// single tile?
+		return true;
+	}
+};
+
 class VehicleRandomDestination : public VehicleMission
 {
   public:
@@ -310,7 +361,7 @@ class VehicleGotoLocationMission : public VehicleMission
 		else
 		{
 			path = map.findShortestPath(vehicleTile->getOwningTile()->position, target, 500,
-			                            vehicle, vehicleCanEnterTile);
+			                            FlyingVehicleCanEnterTileHelper{map, vehicle});
 		}
 	}
 	virtual bool isFinished() override { return (path.empty()); }
@@ -402,8 +453,9 @@ class VehicleGotoBuildingMission : public VehicleMission
 		for (auto dest : b->landingPadLocations)
 		{
 			dest.z += 1; // we want to route to the tile above the pad
-			auto currentPath =
-			    map.findShortestPath(position, dest, 500, vehicle, vehicleCanEnterTile);
+			auto currentPath = map.findShortestPath(position, dest, 500,
+			                                        FlyingVehicleCanEnterTileHelper{map, vehicle});
+
 			Vec3<int> pathEnd = currentPath.back()->position;
 			if (pathEnd == dest)
 			{
