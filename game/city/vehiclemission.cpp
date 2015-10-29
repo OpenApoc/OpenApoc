@@ -21,43 +21,6 @@ std::default_random_engine rng;
 namespace OpenApoc
 {
 
-static bool vehicleCanEnterTile(const Tile &t, const Vehicle &v)
-{
-	for (auto obj : t.intersectingObjectsNew)
-	{
-		if (obj == v.tileObject)
-			continue;
-		if (obj->getType() == TileObject::Type::Vehicle)
-			return false;
-		if (obj->getType() == TileObject::Type::Scenery)
-			return false;
-	}
-
-	return true;
-}
-
-static bool vehicleCanEnterTileAllowLandingPads(const Tile &t, const Vehicle &v)
-{
-	for (auto obj : t.intersectingObjectsNew)
-	{
-		if (obj == v.tileObject)
-			continue;
-		if (obj->getType() == TileObject::Type::Vehicle)
-			return false;
-		if (obj->getType() == TileObject::Type::Scenery)
-		{
-			auto sceneryTile = std::static_pointer_cast<TileObjectScenery>(obj);
-			if (sceneryTile->scenery.lock()->tileDef.getIsLandingPad())
-			{
-				continue;
-			}
-			return false;
-		}
-	}
-
-	return true;
-}
-
 class FlyingVehicleCanEnterTileHelper : public CanEnterTileHelper
 {
   private:
@@ -218,9 +181,8 @@ class VehicleTakeOffMission : public VehicleMission
 				         padLocation.y, padLocation.z);
 				continue;
 			}
-			if (!vehicleCanEnterTileAllowLandingPads(*padTile, vehicle))
-				continue;
-			if (!vehicleCanEnterTileAllowLandingPads(*tileAbovePad, vehicle))
+			FlyingVehicleCanEnterTileHelper canEnterTileHelper(map, vehicle);
+			if (!canEnterTileHelper.canEnterTile(padTile, tileAbovePad))
 				continue;
 			LogInfo("Launching vehicle from building \"%s\" at pad {%d,%d,%d}",
 			        b->def.getName().c_str(), padLocation.x, padLocation.y, padLocation.z);
