@@ -132,15 +132,9 @@ std::list<Tile *> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destinat
 		return {};
 	}
 
-	if (origin == destination)
-	{
-		LogError("Destination == origin {%d,%d,%d}", destination.x, destination.y, destination.z);
-		return {};
-	}
-
 	goalPosition = {destination.x, destination.y, destination.z};
-
 	Tile *goalTile = this->getTile(destination);
+
 	if (!goalTile)
 	{
 		LogError("Failed to get destination tile at {%d,%d,%d}", destination.x, destination.y,
@@ -152,6 +146,12 @@ std::list<Tile *> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destinat
 	{
 		LogError("Failed to get origin tile at {%d,%d,%d}", origin.x, origin.y, origin.z);
 		return {};
+	}
+
+	if (origin == destination)
+	{
+		LogInfo("Destination == origin {%d,%d,%d}", destination.x, destination.y, destination.z);
+		return {goalTile};
 	}
 
 	PathNode startNode(0.0f, nullptr, startTile, goalPosition);
@@ -170,6 +170,10 @@ std::list<Tile *> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destinat
 		}
 		auto nodeToExpand = *first;
 		fringe.erase(first);
+
+		// Make it so we always try to move at least one tile
+		if (closestNodeSoFar.parentTile == nullptr)
+			closestNodeSoFar = nodeToExpand;
 
 		Vec3<int> currentPosition = nodeToExpand.thisTile->position;
 		if (currentPosition == destination)
