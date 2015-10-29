@@ -29,12 +29,26 @@ class FlyingVehicleCanEnterTileHelper : public CanEnterTileHelper
 
   public:
 	FlyingVehicleCanEnterTileHelper(TileMap &map, Vehicle &v) : map(map), v(v){};
+	// Support 'from' being nullptr for if a vehicle is being spawned in the map
 	bool canEnterTile(Tile *from, Tile *to) const override
 	{
-		Vec3<int> fromPos = from->position;
+
+		Vec3<int> fromPos = {0, 0, 0};
+		if (from)
+		{
+			fromPos = from->position;
+		}
+		if (!to)
+		{
+			LogError("To 'to' position supplied");
+			return false;
+		}
 		Vec3<int> toPos = to->position;
-		assert(from != to);
-		assert(fromPos != toPos);
+		if (fromPos == toPos)
+		{
+			LogError("FromPos == ToPos {%d,%d,%d}", toPos.x, toPos.y, toPos.z);
+			return false;
+		}
 		for (auto obj : to->ownedObjects)
 		{
 			if (obj->getType() == TileObject::Type::Vehicle)
@@ -182,7 +196,8 @@ class VehicleTakeOffMission : public VehicleMission
 				continue;
 			}
 			FlyingVehicleCanEnterTileHelper canEnterTileHelper(map, vehicle);
-			if (!canEnterTileHelper.canEnterTile(padTile, tileAbovePad))
+			if (!canEnterTileHelper.canEnterTile(nullptr, padTile) ||
+			    !canEnterTileHelper.canEnterTile(padTile, tileAbovePad))
 				continue;
 			LogInfo("Launching vehicle from building \"%s\" at pad {%d,%d,%d}",
 			        b->def.getName().c_str(), padLocation.x, padLocation.y, padLocation.z);
