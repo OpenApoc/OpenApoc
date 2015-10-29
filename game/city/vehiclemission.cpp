@@ -35,7 +35,7 @@ class FlyingVehicleCanEnterTileHelper : public CanEnterTileHelper
 		Vec3<int> toPos = to->position;
 		assert(from != to);
 		assert(fromPos != toPos);
-		for (auto obj : to->ownedObjectsNew)
+		for (auto obj : to->ownedObjects)
 		{
 			if (obj->getType() == TileObject::Type::Vehicle)
 				return false;
@@ -96,7 +96,7 @@ class VehicleRandomDestination : public VehicleMission
 	virtual void start() override
 	{
 		Vec3<int> newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
-		while (!map.getTile(newTarget)->ownedObjectsNew.empty())
+		while (!map.getTile(newTarget)->ownedObjects.empty())
 		{
 			newTarget = {xydistribution(rng), xydistribution(rng), zdistribution(rng)};
 		}

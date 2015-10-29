@@ -32,8 +32,8 @@ class Tile
 	TileMap &map;
 	Vec3<int> position;
 
-	std::set<sp<TileObject>> ownedObjectsNew;
-	std::set<sp<TileObject>> intersectingObjectsNew;
+	std::set<sp<TileObject>> ownedObjects;
+	std::set<sp<TileObject>> intersectingObjects;
 
 	Tile(TileMap &map, Vec3<int> position);
 

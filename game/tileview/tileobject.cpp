@@ -22,12 +22,12 @@ void TileObject::removeFromMap()
 	/* owner may be NULL as this can be used to set the initial position after creation */
 	if (this->owningTile)
 	{
-		this->owningTile->ownedObjectsNew.erase(thisPtr);
+		this->owningTile->ownedObjects.erase(thisPtr);
 	}
 	this->owningTile = nullptr;
 	for (auto *tile : this->intersectingTiles)
 	{
-		tile->intersectingObjectsNew.erase(thisPtr);
+		tile->intersectingObjects.erase(thisPtr);
 	}
 	this->intersectingTiles.clear();
 }
@@ -51,7 +51,7 @@ void TileObject::setPosition(Vec3<float> newPosition)
 		         newPosition.z);
 	}
 
-	this->owningTile->ownedObjectsNew.insert(thisPtr);
+	this->owningTile->ownedObjects.insert(thisPtr);
 
 	Vec3<int> minBounds = {floorf(newPosition.x - this->bounds.x / 2.0f),
 	                       floorf(newPosition.y - this->bounds.y / 2.0f),
@@ -78,7 +78,7 @@ void TileObject::setPosition(Vec3<float> newPosition)
 					continue;
 				}
 				this->intersectingTiles.push_back(intersectingTile);
-				intersectingTile->intersectingObjectsNew.insert(thisPtr);
+				intersectingTile->intersectingObjects.insert(thisPtr);
 			}
 		}
 	}
@@ -86,7 +86,7 @@ void TileObject::setPosition(Vec3<float> newPosition)
 	// Quick sanity check
 	for (auto *t : this->intersectingTiles)
 	{
-		if (t->intersectingObjectsNew.find(shared_from_this()) == t->intersectingObjectsNew.end())
+		if (t->intersectingObjects.find(shared_from_this()) == t->intersectingObjects.end())
 		{
 			LogError("Intersecting objects inconsistent");
 		}

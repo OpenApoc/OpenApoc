@@ -221,7 +221,7 @@ Collision Tile::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegm
 	LineSegment<int, true> line{voxelLineStart, voxelLineEnd};
 	for (auto &point : line)
 	{
-		for (auto &obj : intersectingObjectsNew)
+		for (auto &obj : intersectingObjects)
 		{
 			auto voxelMap = obj->getVoxelMap();
 			if (!voxelMap)
