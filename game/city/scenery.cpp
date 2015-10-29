@@ -22,6 +22,11 @@ void Scenery::handleCollision(Collision &c)
 		this->damaged = true;
 		return;
 	}
+	// Don't destroy bottom tiles, else everything will leak out
+	if (this->pos.z == 0)
+	{
+		return;
+	}
 	this->tileObject->removeFromMap();
 	this->tileObject.reset();
 }
