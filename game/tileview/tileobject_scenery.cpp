@@ -15,16 +15,17 @@ void TileObjectScenery::draw(Renderer &r, TileView &view, Vec2<float> screenPosi
 		LogError("Called with no owning scenery object");
 		return;
 	}
+	auto &tileDef = scenery->damaged ? *scenery->tileDef.getDamagedTile() : scenery->tileDef;
 	sp<Image> sprite;
 	Vec2<float> transformedScreenPos = screenPosition;
 	switch (mode)
 	{
 		case TileViewMode::Isometric:
-			sprite = scenery->tileDef.getSprite();
-			transformedScreenPos -= scenery->tileDef.getImageOffset();
+			sprite = tileDef.getSprite();
+			transformedScreenPos -= tileDef.getImageOffset();
 			break;
 		case TileViewMode::Strategy:
-			sprite = scenery->tileDef.getStrategySprite();
+			sprite = tileDef.getStrategySprite();
 			// All strategy sprites so far are 8x8 so offset by 4 to draw from the center
 			// FIXME: Not true for large sprites (2x2 UFOs?)
 			transformedScreenPos -= Vec2<float>{4, 4};

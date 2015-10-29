@@ -42,6 +42,23 @@ Rules::Rules(Framework &fw, const UString &rootFileName)
 		LogError("Error loading ruleset \"%s\" from \"%s\"", rulesetName.c_str(),
 		         systemPath.c_str());
 	}
+
+	/* Post-processing/checks go here */
+	for (auto &p : this->buildingTiles)
+	{
+		auto &sceneryTile = p.second;
+		if (sceneryTile.damagedTileID != "")
+		{
+			auto damagedTileIt = this->buildingTiles.find(sceneryTile.damagedTileID);
+			if (damagedTileIt == this->buildingTiles.end())
+			{
+				LogError("Tile \"%s\" has damaged tile ID \"%s\" which does not exist",
+				         p.first.c_str(), sceneryTile.damagedTileID.c_str());
+				continue;
+			}
+			sceneryTile.damagedTile = &damagedTileIt->second;
+		}
+	}
 }
 
 bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *root)

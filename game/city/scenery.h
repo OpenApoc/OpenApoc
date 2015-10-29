@@ -31,6 +31,8 @@ class Scenery
 
 	void handleCollision(Collision &c);
 
+	bool damaged;
+
 	Scenery(SceneryTileDef &tileDef, Vec3<int> pos, sp<Building> bld);
 	~Scenery() = default;
 };

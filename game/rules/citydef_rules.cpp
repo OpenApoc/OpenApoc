@@ -1,5 +1,6 @@
 #include "library/sp.h"
 #include "game/rules/rules_private.h"
+#include "game/rules/rules_helper.h"
 #include "framework/logger.h"
 #include "framework/framework.h"
 #include "game/tileview/voxel.h"
@@ -92,7 +93,7 @@ bool LoadCityMap(Framework &fw, Vec3<int> size, tinyxml2::XMLElement *root,
 
 bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID, sp<Image> &sprite,
                   sp<Image> &stratmapSprite, sp<VoxelMap> &voxelMap, bool &isLandingPad,
-                  std::vector<UString> &landingPadList)
+                  std::vector<UString> &landingPadList, UString &damagedTileID)
 {
 	sp<Image> readSprite = nullptr;
 	sp<Image> readStratmapSprite = nullptr;
@@ -132,6 +133,9 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID, sp
 			return false;
 		}
 	}
+
+	// Optional damaged tile ID
+	ReadAttribute(root, "damaged_id", damagedTileID, UString(""));
 
 	UString landingPad = root->Attribute("landingpad");
 	if (landingPad != "")
@@ -448,7 +452,8 @@ bool RulesLoader::ParseCityDefinition(Framework &fw, Rules &rules, tinyxml2::XML
 					def.imageOffset = {32, 32};
 
 					if (!LoadCityTile(fw, tile, tileID, def.sprite, def.strategySprite,
-					                  def.voxelMap, def.isLandingPad, rules.landingPadTiles))
+					                  def.voxelMap, def.isLandingPad, rules.landingPadTiles,
+					                  def.damagedTileID))
 					{
 						LogError("Error loading tile %d", numRead);
 						return false;
