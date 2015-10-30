@@ -33,7 +33,8 @@ void TileObjectScenery::draw(Renderer &r, TileView &view, Vec2<float> screenPosi
 		default:
 			LogError("Unsupported view mode");
 	}
-	r.draw(sprite, transformedScreenPos);
+	if (sprite)
+		r.draw(sprite, transformedScreenPos);
 }
 
 TileObjectScenery::~TileObjectScenery() {}
