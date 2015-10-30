@@ -5,6 +5,7 @@
 #include "framework/logger.h"
 
 #include <cmath>
+#include <algorithm>
 
 namespace OpenApoc
 {
@@ -22,9 +23,17 @@ void TileObject::removeFromMap()
 	/* owner may be NULL as this can be used to set the initial position after creation */
 	if (this->owningTile)
 	{
-		this->owningTile->ownedObjects.erase(thisPtr);
+		auto erased = this->owningTile->ownedObjects.erase(thisPtr);
+		if (erased != 1)
+		{
+			LogError("Nothing erased?");
+		}
+		this->owningTile->drawnObjects.erase(std::remove(this->owningTile->drawnObjects.begin(),
+		                                                 this->owningTile->drawnObjects.end(),
+		                                                 thisPtr),
+		                                     this->owningTile->drawnObjects.end());
+		this->owningTile = nullptr;
 	}
-	this->owningTile = nullptr;
 	for (auto *tile : this->intersectingTiles)
 	{
 		tile->intersectingObjects.erase(thisPtr);
@@ -32,9 +41,29 @@ void TileObject::removeFromMap()
 	this->intersectingTiles.clear();
 }
 
+namespace
+{
+class TileObjectZComparer
+{
+  public:
+	bool operator()(const sp<TileObject> &lhs, const sp<TileObject> &rhs) const
+	{
+		float lhsZ = lhs->getPosition().x * 32.0f + lhs->getPosition().y * 32.0f +
+		             lhs->getPosition().z * 16.0f;
+		float rhsZ = rhs->getPosition().x * 32.0f + rhs->getPosition().y * 32.0f +
+		             rhs->getPosition().z * 16.0f;
+		return (lhsZ < rhsZ);
+	}
+};
+} // anonymous namespace
+
 void TileObject::setPosition(Vec3<float> newPosition)
 {
 	auto thisPtr = shared_from_this();
+	if (!thisPtr)
+	{
+		LogError("This == null");
+	}
 	if (newPosition.x < 0 || newPosition.y < 0 || newPosition.z < 0 ||
 	    newPosition.x > map.size.x + 1 || newPosition.y > map.size.y + 1 ||
 	    newPosition.z > map.size.z + 1)
@@ -51,7 +80,15 @@ void TileObject::setPosition(Vec3<float> newPosition)
 		         newPosition.z);
 	}
 
-	this->owningTile->ownedObjects.insert(thisPtr);
+	auto inserted = this->owningTile->ownedObjects.insert(thisPtr);
+	if (!inserted.second)
+	{
+		LogError("Object already in owned object list?");
+	}
+
+	this->owningTile->drawnObjects.push_back(thisPtr);
+	std::sort(this->owningTile->drawnObjects.begin(), this->owningTile->drawnObjects.end(),
+	          TileObjectZComparer{});
 
 	Vec3<int> minBounds = {floorf(newPosition.x - this->bounds.x / 2.0f),
 	                       floorf(newPosition.y - this->bounds.y / 2.0f),

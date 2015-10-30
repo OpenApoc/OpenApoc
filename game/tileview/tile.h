@@ -2,8 +2,10 @@
 #include "library/sp.h"
 
 #include "framework/includes.h"
+#include "game/tileview/tileobject.h"
 #include <set>
 #include <functional>
+#include <vector>
 
 namespace OpenApoc
 {
@@ -16,7 +18,6 @@ class Collision;
 class VoxelMap;
 class Renderer;
 class TileView;
-class TileObject;
 class Projectile;
 class TileObjectProjectile;
 class Vehicle;
@@ -34,6 +35,9 @@ class Tile
 
 	std::set<sp<TileObject>> ownedObjects;
 	std::set<sp<TileObject>> intersectingObjects;
+
+	// FIXME: This is effectively a z-sorted list of ownedObjects - can this be merged somehow?
+	std::vector<sp<TileObject>> drawnObjects;
 
 	Tile(TileMap &map, Vec3<int> position);
 

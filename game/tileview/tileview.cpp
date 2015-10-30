@@ -181,7 +181,7 @@ void TileView::Render()
 				if (showSelected)
 					r.draw(selectedTileImageBack, screenPos);
 
-				for (auto obj : tile->ownedObjects)
+				for (auto obj : tile->drawnObjects)
 				{
 					Vec2<float> pos = tileToScreenCoords(obj->getPosition());
 					pos.x += offsetX;
