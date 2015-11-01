@@ -2,6 +2,7 @@
 
 #include "library/sp.h"
 #include "library/vec.h"
+#include <set>
 
 namespace OpenApoc
 {
@@ -10,8 +11,10 @@ class TileObjectScenery;
 class SceneryTileDef;
 class Building;
 class Collision;
+class GameState;
+class Framework;
 
-class Scenery
+class Scenery : public std::enable_shared_from_this<Scenery>
 {
 
   public:
@@ -29,9 +32,15 @@ class Scenery
 	sp<Building> building;
 	sp<TileObjectScenery> tileObject;
 
-	void handleCollision(Collision &c);
+	std::set<sp<Scenery>> supports;
+
+	void handleCollision(GameState &state, Collision &c);
 
 	bool damaged;
+	bool falling;
+
+	void update(Framework &fw, GameState &state, unsigned int ticks);
+	void collapse(GameState &state);
 
 	Scenery(SceneryTileDef &tileDef, Vec3<int> pos, sp<Building> bld);
 	~Scenery() = default;

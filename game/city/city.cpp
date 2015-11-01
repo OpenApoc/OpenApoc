@@ -61,9 +61,31 @@ City::City(Framework &fw, GameState &state) : fw(fw), map(fw, fw.rules->getCityS
 				auto scenery = std::make_shared<Scenery>(cityTileDef, Vec3<int>{x, y, z}, bld);
 				auto tile = map.addObjectToMap(scenery);
 				this->scenery.insert(scenery);
+				// As we iterate over Z first, we know any 'lower' tiles are already constructed. If
+				// we do support from the side, we might need to move this to a second pass?
+				if (z > 0)
+				{
+					auto *t = map.getTile(x, y, z - 1);
+					for (auto &obj : t->ownedObjects)
+					{
+						switch (obj->getType())
+						{
+							case TileObject::Type::Scenery:
+							{
+								auto supportingSceneryTile =
+								    std::static_pointer_cast<TileObjectScenery>(obj);
+								auto supportingSceneryObject = supportingSceneryTile->getOwner();
+								supportingSceneryObject->supports.insert(scenery);
+							}
+							default:
+								break;
+						}
+					}
+				}
 			}
 		}
 	}
+
 	/* Sanity check - all buildings should at have least one landing pad */
 	for (auto b : this->buildings)
 	{
@@ -166,13 +188,18 @@ void City::update(GameState &state, unsigned int ticks)
 
 					auto doodad = this->placeDoodad(fw.rules->getDoodadDef("DOODAD_EXPLOSION_2"),
 					                                sceneryTile->getPosition());
-					sceneryTile->getOwner()->handleCollision(c);
+					sceneryTile->getOwner()->handleCollision(state, c);
 					break;
 				}
 				default:
 					LogError("Collision with non-collidable object");
 			}
 		}
+	}
+	for (auto it = this->fallingScenery.begin(); it != this->fallingScenery.end();)
+	{
+		auto s = *it++;
+		s->update(fw, state, ticks);
 	}
 	for (auto it = this->doodads.begin(); it != this->doodads.end();)
 	{

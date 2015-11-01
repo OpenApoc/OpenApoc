@@ -31,4 +31,19 @@
     <frame time="5">PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:26</frame>
     <frame time="5">PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:27</frame>
   </doodad>
+  <doodad id="DOODAD_EXPLOSION_3" imageOffsetX="31" imageOffsetY="25" lifetime="65">
+    <frame time="5">PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:29</frame>
+    <frame time="5">PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:30</frame>
+    <frame time="5">PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:31</frame>
+    <frame time="5">PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:32</frame>
+    <frame time="5">PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:33</frame>
+    <frame time="5">PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:34</frame>
+    <frame time="5">PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:35</frame>
+    <frame time="5">PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:36</frame>
+    <frame time="5">PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:37</frame>
+    <frame time="5">PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:38</frame>
+    <frame time="5">PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:39</frame>
+    <frame time="5">PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:40</frame>
+    <frame time="5">PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:41</frame>
+  </doodad>
 </openapoc_rules>

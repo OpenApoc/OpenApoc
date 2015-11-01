@@ -36,6 +36,7 @@ class City
 	std::vector<sp<Building>> buildings;
 	std::vector<sp<Building>> baseBuildings;
 	std::set<sp<Scenery>> scenery;
+	std::set<sp<Scenery>> fallingScenery;
 	std::set<sp<Doodad>> doodads;
 
 	TileMap map;
