@@ -86,6 +86,75 @@ City::City(Framework &fw, GameState &state) : fw(fw), map(fw, fw.rules->getCityS
 		}
 	}
 
+	for (auto &s : this->scenery)
+	{
+		if (s->pos.z == 0)
+		{
+			continue;
+		}
+		auto pos = s->pos;
+		pos.z -= 1;
+
+		bool supported = false;
+
+		auto *t = map.getTile(pos);
+		for (auto &obj : t->ownedObjects)
+		{
+			switch (obj->getType())
+			{
+				case TileObject::Type::Scenery:
+				{
+					auto supportingSceneryTile = std::static_pointer_cast<TileObjectScenery>(obj);
+					auto supportingSceneryObject = supportingSceneryTile->getOwner();
+					supportingSceneryObject->supports.insert(s);
+					supported = true;
+				}
+				default:
+					break;
+			}
+		}
+
+		if (!supported)
+		{
+
+			std::vector<Vec3<int>> dirs = {
+			    {1, 0, 0}, {-1, 0, 0}, {0, 1, 0}, {0, -1, 0},
+			};
+			for (auto &d : dirs)
+			{
+				pos = s->pos;
+				pos += d;
+
+				if (pos.x < 0 || pos.x >= map.size.x || pos.y < 0 || pos.y >= map.size.y)
+				{
+					continue;
+				}
+
+				auto *t = map.getTile(pos);
+				for (auto &obj : t->ownedObjects)
+				{
+					switch (obj->getType())
+					{
+						case TileObject::Type::Scenery:
+						{
+							auto supportingSceneryTile =
+							    std::static_pointer_cast<TileObjectScenery>(obj);
+							auto supportingSceneryObject = supportingSceneryTile->getOwner();
+							supportingSceneryObject->supports.insert(s);
+							supported = true;
+						}
+						default:
+							break;
+					}
+				}
+			}
+		}
+		if (!supported)
+		{
+			LogWarning("Scenery tile at {%d,%d,%d} has no support", s->pos.x, s->pos.y, s->pos.z);
+		}
+	}
+
 	/* Sanity check - all buildings should at have least one landing pad */
 	for (auto b : this->buildings)
 	{
@@ -127,6 +196,10 @@ City::~City()
 		if (s->tileObject)
 			s->tileObject->removeFromMap();
 	}
+	// FIXME: Due to tiles possibly being cross-supported we need to clear that sp<> to avoid leaks
+	// Should this be pushed into a weak_ptr<> or some other ref?
+	for (auto s : this->scenery)
+		s->supports.clear();
 	this->scenery.clear();
 	this->buildings.clear();
 	this->baseBuildings.clear();

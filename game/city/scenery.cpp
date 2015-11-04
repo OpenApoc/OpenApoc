@@ -60,6 +60,12 @@ void Scenery::update(Framework &fw, GameState &state, unsigned int ticks)
 {
 	if (!this->falling)
 		LogError("Not falling?");
+	if (!this->tileObject)
+	{
+		LogWarning("Falling scenery with no object?");
+		state.city->fallingScenery.erase(shared_from_this());
+		return;
+	}
 
 	auto currentPos = this->tileObject->getPosition();
 	// FIXME: gravity acceleration?
@@ -84,6 +90,8 @@ void Scenery::update(Framework &fw, GameState &state, unsigned int ticks)
 				this->tileObject->removeFromMap();
 				this->tileObject.reset();
 				state.city->fallingScenery.erase(shared_from_this());
+				// return as we can't be destroyed more than once
+				return;
 			}
 			case TileObject::Type::Vehicle:
 				// FIXME: Cause damage to vehicles we hit?
