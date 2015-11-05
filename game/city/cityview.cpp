@@ -59,10 +59,10 @@ void CityView::Render()
 				Vec3<float> pos = tile->position;
 				Vec2<float> screenPosA = this->tileToScreenCoords(prevPos);
 				screenPosA.x += this->offsetX;
-				screenPosA.y += this->offsetX;
+				screenPosA.y += this->offsetY;
 				Vec2<float> screenPosB = this->tileToScreenCoords(pos);
 				screenPosB.x += this->offsetX;
-				screenPosB.y += this->offsetX;
+				screenPosB.y += this->offsetY;
 
 				fw.renderer->drawLine(screenPosA, screenPosB, Colour{255, 0, 0, 128});
 
