@@ -152,6 +152,8 @@ class VehicleIdleMission : public VehicleMission
 	virtual const UString &getName() override { return name; }
 };
 
+std::list<Tile *> VehicleIdleMission::noPath;
+
 class VehicleTakeOffMission : public VehicleMission
 {
   public:
@@ -433,6 +435,11 @@ class VehicleGotoBuildingMission : public VehicleMission
 			auto currentPath = map.findShortestPath(position, dest, 500,
 			                                        FlyingVehicleCanEnterTileHelper{map, vehicle});
 
+			if (currentPath.size() == 0)
+			{
+				// If the routing failed to find even a single tile skip it
+				continue;
+			}
 			Vec3<int> pathEnd = currentPath.back()->position;
 			if (pathEnd == dest)
 			{
@@ -466,7 +473,7 @@ class VehicleGotoBuildingMission : public VehicleMission
 			vehicle.missions.emplace_front(gotoMission);
 			gotoMission->start();
 		}
-		else
+		else if (closestIncompletePathCost != std::numeric_limits<float>::max())
 		{
 			LogInfo("Vehicle mission %s: Found no direct path - closest {%d,%d,%d}", name.c_str(),
 			        closestIncompletePathPad.x, closestIncompletePathPad.y,
@@ -475,6 +482,15 @@ class VehicleGotoBuildingMission : public VehicleMission
 			    VehicleMission::gotoLocation(vehicle, map, closestIncompletePathPad);
 			vehicle.missions.emplace_front(gotoMission);
 			gotoMission->start();
+		}
+		else
+		{
+			unsigned int snoozeTime = 10;
+			LogWarning("Vehicle mission %s: No partial paths found, snoozing for %u", name.c_str(),
+			           snoozeTime);
+			auto *snoozeMission = VehicleMission::snooze(vehicle, map, snoozeTime);
+			vehicle.missions.emplace_front(snoozeMission);
+			snoozeMission->start();
 		}
 	}
 	virtual bool isFinished() override
@@ -551,6 +567,11 @@ VehicleMission *VehicleMission::gotoBuilding(Vehicle &v, TileMap &map, sp<Buildi
 	//  }
 	//  queue(Land)
 	return new VehicleGotoBuildingMission(v, map, target);
+}
+
+VehicleMission *VehicleMission::snooze(Vehicle &v, TileMap &map, unsigned int snoozeTicks)
+{
+	return new VehicleIdleMission(v, snoozeTicks);
 }
 
 VehicleMission *VehicleMission::takeOff(Vehicle &v, TileMap &map)

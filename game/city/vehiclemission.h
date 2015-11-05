@@ -29,6 +29,7 @@ class VehicleMission
 	static VehicleMission *randomDestination(Vehicle &v, TileMap &map);
 	static VehicleMission *gotoLocation(Vehicle &v, TileMap &map, Vec3<int> target);
 	static VehicleMission *gotoBuilding(Vehicle &v, TileMap &map, sp<Building> target);
+	static VehicleMission *snooze(Vehicle &v, TileMap &map, unsigned int ticks);
 
 	// INTERNAL: Not to be used directly (Only works when in building)
 	static VehicleMission *takeOff(Vehicle &v, TileMap &map);
