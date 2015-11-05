@@ -103,4 +103,50 @@ void Scenery::update(Framework &fw, GameState &state, unsigned int ticks)
 	}
 }
 
+bool Scenery::canRepair() const
+{
+	// Don't fix it if it ain't broken
+
+	if (this->isAlive())
+		return false;
+	// FIXME: Check how apoc repairs stuff, for now allow repair if at least one support is
+	// available
+	//(IE it's attached to /something/)
+	if (this->supportedBy.size() == 0)
+	{
+		/* Tiles at z == 0 can get damaged (But not destroyed!) but have no support */
+		if (this->damaged)
+			return true;
+		LogWarning("Scenery not supported but destroyed?");
+		return true;
+	}
+	for (auto &s : this->supportedBy)
+	{
+		if (s->isAlive())
+			return true;
+	}
+	return false;
+}
+
+void Scenery::repair(TileMap &map)
+{
+	if (this->isAlive())
+		LogError("Trying to fix something that isn't broken");
+	this->damaged = false;
+	this->falling = false;
+	if (this->tileObject)
+	{
+		this->tileObject->removeFromMap();
+		this->tileObject = nullptr;
+	}
+	map.addObjectToMap(shared_from_this());
+}
+
+bool Scenery::isAlive() const
+{
+	if (this->damaged || this->falling || this->tileObject == nullptr)
+		return false;
+	return true;
+}
+
 } // namespace OpenApoc

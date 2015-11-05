@@ -11,6 +11,7 @@
 #include "game/city/vehicle.h"
 #include "game/base/basescreen.h"
 #include "game/tileview/tileobject_vehicle.h"
+#include "game/city/scenery.h"
 
 namespace OpenApoc
 {
@@ -218,6 +219,26 @@ void CityView::EventOccurred(Event *e)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
+		}
+		else if (e->Type == EVENT_KEY_DOWN && e->Data.Keyboard.KeyCode == ALLEGRO_KEY_R)
+		{
+			LogInfo("Repairing...");
+			std::set<sp<Scenery>> stuffToRepair;
+			for (auto &s : fw.state->city->scenery)
+			{
+				if (s->canRepair())
+				{
+					stuffToRepair.insert(s);
+				}
+			}
+			LogInfo("Repairing %d tiles out of %d", (int)stuffToRepair.size(),
+			        (int)fw.state->city->scenery.size());
+
+			for (auto &s : stuffToRepair)
+			{
+				s->repair(fw.state->city->map);
+				fw.state->city->fallingScenery.erase(s);
+			}
 		}
 		else
 		{

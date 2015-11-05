@@ -13,6 +13,7 @@ class Building;
 class Collision;
 class GameState;
 class Framework;
+class TileMap;
 
 class Scenery : public std::enable_shared_from_this<Scenery>
 {
@@ -33,6 +34,7 @@ class Scenery : public std::enable_shared_from_this<Scenery>
 	sp<TileObjectScenery> tileObject;
 
 	std::set<sp<Scenery>> supports;
+	std::set<sp<Scenery>> supportedBy;
 
 	void handleCollision(GameState &state, Collision &c);
 
@@ -41,6 +43,11 @@ class Scenery : public std::enable_shared_from_this<Scenery>
 
 	void update(Framework &fw, GameState &state, unsigned int ticks);
 	void collapse(GameState &state);
+
+	bool canRepair() const;
+	void repair(TileMap &map);
+
+	bool isAlive() const;
 
 	Scenery(SceneryTileDef &tileDef, Vec3<int> pos, sp<Building> bld);
 	~Scenery() = default;
