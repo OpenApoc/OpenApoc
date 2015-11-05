@@ -36,10 +36,10 @@ void Scenery::handleCollision(GameState &state, Collision &c)
 	{
 		return;
 	}
-	for (auto &s : this->supports)
-		s->collapse(state);
 	this->tileObject->removeFromMap();
 	this->tileObject.reset();
+	for (auto &s : this->supports)
+		s->collapse(state);
 }
 
 void Scenery::collapse(GameState &state)
@@ -50,7 +50,11 @@ void Scenery::collapse(GameState &state)
 
 	this->falling = true;
 
-	state.city->fallingScenery.insert(shared_from_this());
+	auto ret = state.city->fallingScenery.insert(shared_from_this());
+	if (ret.second == false)
+	{
+		LogError("Scenery object already in fallingSenery list?");
+	}
 
 	for (auto &s : this->supports)
 		s->collapse(state);
@@ -62,9 +66,7 @@ void Scenery::update(Framework &fw, GameState &state, unsigned int ticks)
 		LogError("Not falling?");
 	if (!this->tileObject)
 	{
-		LogWarning("Falling scenery with no object?");
-		state.city->fallingScenery.erase(shared_from_this());
-		return;
+		LogError("Falling scenery with no object?");
 	}
 
 	auto currentPos = this->tileObject->getPosition();
@@ -89,7 +91,11 @@ void Scenery::update(Framework &fw, GameState &state, unsigned int ticks)
 				                                      currentPos);
 				this->tileObject->removeFromMap();
 				this->tileObject.reset();
-				state.city->fallingScenery.erase(shared_from_this());
+				auto count = state.city->fallingScenery.erase(shared_from_this());
+				if (count != 1)
+				{
+					LogError("Removed %u objects from fallingScenery list?", (unsigned int)count);
+				}
 				// return as we can't be destroyed more than once
 				return;
 			}
