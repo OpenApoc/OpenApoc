@@ -34,6 +34,9 @@ class Weapon
 	const WeaponDef &getWeaponDef() const { return def; }
 	bool canFire() const { return state == State::Ready; }
 	void update(int ticks);
+	// Reload uses up to 'ammoAvailable' to reload the weapon. It returns the amount
+	// actually used.
+	int reload(int ammoAvailable);
 	sp<Projectile> fire(Vec3<float> target);
 };
 

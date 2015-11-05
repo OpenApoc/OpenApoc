@@ -77,9 +77,21 @@ void Weapon::update(int ticks)
 			if (this->reloadTime == 0)
 				this->state = State::Ready;
 			return;
+		case State::OutOfAmmo:
+			if (this->ammo > 0)
+				this->state = State::Ready;
+			return;
 		default:
 			return;
 	}
+}
+
+int Weapon::reload(int ammoAvailable)
+{
+	int ammoRequired = this->def.ammoCapacity - this->ammo;
+	int reloadAmount = std::min(ammoRequired, ammoAvailable);
+	this->ammo += reloadAmount;
+	return reloadAmount;
 }
 
 }; // namespace OpenApoc

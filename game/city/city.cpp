@@ -5,6 +5,7 @@
 #include "game/city/doodad.h"
 #include "game/city/vehicle.h"
 #include "game/city/vehiclemission.h"
+#include "game/city/weapon.h"
 #include "framework/framework.h"
 #include "game/resources/gamecore.h"
 #include "game/city/projectile.h"
@@ -12,6 +13,8 @@
 #include "game/tileview/tileobject_scenery.h"
 #include "game/tileview/tileobject_projectile.h"
 #include "game/tileview/voxel.h"
+
+#include <limits>
 
 namespace OpenApoc
 {
@@ -204,6 +207,10 @@ void City::update(GameState &state, unsigned int ticks)
 		auto b = *it++;
 		for (auto &v : b->landed_vehicles)
 		{
+			for (auto &w : v->weapons)
+			{
+				w->reload(std::numeric_limits<int>::max());
+			}
 			if (v->missions.empty())
 			{
 				auto &dest = this->buildings[bld_distribution(state.rng)];
