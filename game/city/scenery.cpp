@@ -26,18 +26,24 @@ void Scenery::handleCollision(GameState &state, Collision &c)
 		// Already falling, just continue
 		return;
 	}
+	// Landing pads are immortal (else this completely destroys pathing)
+	if (this->tileDef.getIsLandingPad())
+	{
+		return;
+	}
 	if (!this->damaged && tileDef.getDamagedTile())
 	{
 		this->damaged = true;
-		return;
 	}
-	// Don't destroy bottom tiles, else everything will leak out
-	if (this->pos.z == 0)
+	else
 	{
-		return;
+		// Don't destroy bottom tiles, else everything will leak out
+		if (this->pos.z != 0)
+		{
+			this->tileObject->removeFromMap();
+			this->tileObject.reset();
+		}
 	}
-	this->tileObject->removeFromMap();
-	this->tileObject.reset();
 	for (auto &s : this->supports)
 		s->collapse(state);
 }
@@ -47,7 +53,10 @@ void Scenery::collapse(GameState &state)
 	// IF it's already falling or destroyed do nothing
 	if (this->falling || !this->tileObject)
 		return;
-
+	// Landing pads can't collapse, and may magically float, otherwise it screws up pathing (same
+	// reason why they can't be destroyed when hit)
+	if (this->tileDef.getIsLandingPad())
+		return;
 	this->falling = true;
 
 	auto ret = state.city->fallingScenery.insert(shared_from_this());
