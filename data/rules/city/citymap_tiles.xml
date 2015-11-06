@@ -182,7 +182,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
         </lof>
       </tile>
-      <tile id="9" damaged_id="172" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:9" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:501">
+      <tile id="9" damaged_id="172" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:9" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:501" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:0">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -262,7 +262,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
         </lof>
       </tile>
-      <tile id="13" damaged_id="213" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:13" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:506" landingpad="true">
+      <tile id="13" damaged_id="213" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:13" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:506" landingpad="true" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:12">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:50</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:50</loflayer>
@@ -362,7 +362,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:0</loflayer>
         </lof>
       </tile>
-      <tile id="18" damaged_id="178" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:18" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:472">
+      <tile id="18" damaged_id="178" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:18" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:472" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:0">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -382,7 +382,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:92</loflayer>
         </lof>
       </tile>
-      <tile id="19" damaged_id="181" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:19" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:473">
+      <tile id="19" damaged_id="181" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:19" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:473" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:1">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -742,7 +742,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:0</loflayer>
         </lof>
       </tile>
-      <tile id="37" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:37" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:497">
+      <tile id="37" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:37" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:497" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:0">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -762,7 +762,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:92</loflayer>
         </lof>
       </tile>
-      <tile id="38" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:38" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:498">
+      <tile id="38" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:38" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:498" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:1">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -3542,7 +3542,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
         </lof>
       </tile>
-      <tile id="177" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:177" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:506" landingpad="true">
+      <tile id="177" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:177" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:506" landingpad="true" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:11">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:50</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:50</loflayer>
@@ -3682,7 +3682,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:0</loflayer>
         </lof>
       </tile>
-      <tile id="184" damaged_id="178" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:184" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:472">
+      <tile id="184" damaged_id="178" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:184" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:472" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:2">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -3702,7 +3702,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:0</loflayer>
         </lof>
       </tile>
-      <tile id="185" damaged_id="181" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:185" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:473">
+      <tile id="185" damaged_id="181" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:185" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:473" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:3">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -4602,7 +4602,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:0</loflayer>
         </lof>
       </tile>
-      <tile id="230" damaged_id="218" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:230" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:151">
+      <tile id="230" damaged_id="218" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:230" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:151" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:14">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -5262,7 +5262,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
         </lof>
       </tile>
-      <tile id="263" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:263" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:202">
+      <tile id="263" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:263" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:202" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:23">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -6682,7 +6682,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:75</loflayer>
         </lof>
       </tile>
-      <tile id="334" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:334" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:227">
+      <tile id="334" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:334" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:227" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:21">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -6702,7 +6702,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:53</loflayer>
         </lof>
       </tile>
-      <tile id="335" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:335" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:225">
+      <tile id="335" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:335" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:225" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:22">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -6762,7 +6762,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:61</loflayer>
         </lof>
       </tile>
-      <tile id="338" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:338" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:228">
+      <tile id="338" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:338" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:228" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:24">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -7022,7 +7022,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:103</loflayer>
         </lof>
       </tile>
-      <tile id="351" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:351" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:352">
+      <tile id="351" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:351" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:352" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:15">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -7042,7 +7042,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:0</loflayer>
         </lof>
       </tile>
-      <tile id="352" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:352" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:351">
+      <tile id="352" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:352" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:351" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:16">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -7082,7 +7082,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:102</loflayer>
         </lof>
       </tile>
-      <tile id="354" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:354" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:354">
+      <tile id="354" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:354" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:354" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:17">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -7102,7 +7102,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:0</loflayer>
         </lof>
       </tile>
-      <tile id="355" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:355" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:353">
+      <tile id="355" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:355" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:353" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:18">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -9602,7 +9602,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
         </lof>
       </tile>
-      <tile id="480" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:480" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:472">
+      <tile id="480" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:480" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:472" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:4">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -15522,7 +15522,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
         </lof>
       </tile>
-      <tile id="776" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:776" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:308">
+      <tile id="776" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:776" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:308" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:25">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -15542,7 +15542,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:6</loflayer>
         </lof>
       </tile>
-      <tile id="777" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:777" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:307">
+      <tile id="777" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:777" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:307" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:26">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -16422,7 +16422,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:58</loflayer>
         </lof>
       </tile>
-      <tile id="821" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:821" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:207">
+      <tile id="821" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:821" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:207" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:19">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -16442,7 +16442,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:3</loflayer>
         </lof>
       </tile>
-      <tile id="822" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:822" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:207">
+      <tile id="822" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:822" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:207" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:20">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -18662,7 +18662,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
         </lof>
       </tile>
-      <tile id="933" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:933" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:472">
+      <tile id="933" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:933" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:472" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:5">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -18682,7 +18682,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
         </lof>
       </tile>
-      <tile id="934" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:934" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:473">
+      <tile id="934" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:934" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:473" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:6">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -18702,7 +18702,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
         </lof>
       </tile>
-      <tile id="935" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:935" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:472">
+      <tile id="935" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:935" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:472" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:13">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
@@ -18722,7 +18722,7 @@
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
         </lof>
       </tile>
-      <tile id="936" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:936" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:473">
+      <tile id="936" sprite="PCK:xcom3/UFODATA/CITY.PCK:xcom3/UFODATA/CITY.TAB:936" stratmap="PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:473" overlay="PCK:xcom3/UFODATA/CITYOVR.PCK:xcom3/UFODATA/CITYOVR.TAB:13">
         <lof sizeX="32" sizeY="32" sizeZ="16">
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>
           <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:1</loflayer>

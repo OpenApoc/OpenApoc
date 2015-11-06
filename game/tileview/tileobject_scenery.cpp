@@ -17,11 +17,13 @@ void TileObjectScenery::draw(Renderer &r, TileView &view, Vec2<float> screenPosi
 	}
 	auto &tileDef = scenery->damaged ? *scenery->tileDef.getDamagedTile() : scenery->tileDef;
 	sp<Image> sprite;
+	sp<Image> overlaySprite;
 	Vec2<float> transformedScreenPos = screenPosition;
 	switch (mode)
 	{
 		case TileViewMode::Isometric:
 			sprite = tileDef.getSprite();
+			overlaySprite = tileDef.getOverlaySprite();
 			transformedScreenPos -= tileDef.getImageOffset();
 			break;
 		case TileViewMode::Strategy:
@@ -35,6 +37,9 @@ void TileObjectScenery::draw(Renderer &r, TileView &view, Vec2<float> screenPosi
 	}
 	if (sprite)
 		r.draw(sprite, transformedScreenPos);
+	// FIXME: Should be drawn at 'later' Z than scenery (IE on top of any vehicles on tile?)
+	if (overlaySprite)
+		r.draw(overlaySprite, transformedScreenPos);
 }
 
 TileObjectScenery::~TileObjectScenery() {}

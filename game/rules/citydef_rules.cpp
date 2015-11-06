@@ -93,7 +93,8 @@ bool LoadCityMap(Framework &fw, Vec3<int> size, tinyxml2::XMLElement *root,
 
 bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID, sp<Image> &sprite,
                   sp<Image> &stratmapSprite, sp<VoxelMap> &voxelMap, bool &isLandingPad,
-                  std::vector<UString> &landingPadList, UString &damagedTileID)
+                  std::vector<UString> &landingPadList, UString &damagedTileID,
+                  sp<Image> &overlaySprite)
 {
 	sp<Image> readSprite = nullptr;
 	sp<Image> readStratmapSprite = nullptr;
@@ -150,6 +151,19 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID, sp
 	{
 		LogError("Failed to load sprite image \"%s\"", spriteString.c_str());
 		return false;
+	}
+
+	UString overlayPath;
+	// Optional overlay sprite
+	if (ReadAttribute(root, "overlay", overlayPath))
+	{
+		sp<Image> overlay = fw.data->load_image(overlayPath);
+		if (!overlay)
+		{
+			LogError("Failed to load overlay image \"%s\"", overlayPath.c_str());
+			return false;
+		}
+		overlaySprite = overlay;
 	}
 
 	for (tinyxml2::XMLElement *e = root->FirstChildElement(); e != nullptr;
@@ -453,7 +467,7 @@ bool RulesLoader::ParseCityDefinition(Framework &fw, Rules &rules, tinyxml2::XML
 
 					if (!LoadCityTile(fw, tile, tileID, def.sprite, def.strategySprite,
 					                  def.voxelMap, def.isLandingPad, rules.landingPadTiles,
-					                  def.damagedTileID))
+					                  def.damagedTileID, def.overlaySprite))
 					{
 						LogError("Error loading tile %d", numRead);
 						return false;

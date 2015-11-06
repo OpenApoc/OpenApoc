@@ -12,6 +12,7 @@ class SceneryTileDef
 	SceneryTileDef() : isLandingPad(false), damagedTile(nullptr) {}
 	sp<Image> sprite;
 	sp<Image> strategySprite;
+	sp<Image> overlaySprite;
 	sp<VoxelMap> voxelMap;
 	UString damagedTileID;
 	Vec2<float> imageOffset;
@@ -25,6 +26,7 @@ class SceneryTileDef
   public:
 	sp<Image> getSprite() { return this->sprite; }
 	sp<Image> getStrategySprite() { return this->strategySprite; }
+	sp<Image> getOverlaySprite() { return this->overlaySprite; }
 	sp<VoxelMap> getVoxelMap() { return this->voxelMap; }
 	Vec2<float> getImageOffset() { return this->imageOffset; }
 	bool getIsLandingPad() const { return this->isLandingPad; }
