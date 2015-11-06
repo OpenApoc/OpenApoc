@@ -236,7 +236,7 @@ void CityView::EventOccurred(Event *e)
 
 			for (auto &s : stuffToRepair)
 			{
-				s->repair(fw.state->city->map);
+				s->repair(*fw.state);
 				fw.state->city->fallingScenery.erase(s);
 			}
 		}

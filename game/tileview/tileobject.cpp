@@ -52,6 +52,15 @@ class TileObjectZComparer
 		             lhs->getPosition().z * 16.0f;
 		float rhsZ = rhs->getPosition().x * 32.0f + rhs->getPosition().y * 32.0f +
 		             rhs->getPosition().z * 16.0f;
+		// FIXME: Hack to force 'overlay' objects to be half-a-tile up in Z
+		if (lhs->getType() == TileObject::Type::Doodad)
+		{
+			lhsZ += (32.0f + 32.0f + 16.0f) / 2.0f;
+		}
+		if (rhs->getType() == TileObject::Type::Doodad)
+		{
+			rhsZ += (32.0f + 32.0f + 16.0f) / 2.0f;
+		}
 		return (lhsZ < rhsZ);
 	}
 };

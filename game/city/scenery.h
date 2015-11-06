@@ -14,6 +14,7 @@ class Collision;
 class GameState;
 class Framework;
 class TileMap;
+class StaticDoodad;
 
 class Scenery : public std::enable_shared_from_this<Scenery>
 {
@@ -45,9 +46,11 @@ class Scenery : public std::enable_shared_from_this<Scenery>
 	void collapse(GameState &state);
 
 	bool canRepair() const;
-	void repair(TileMap &map);
+	void repair(GameState &state);
 
 	bool isAlive() const;
+
+	sp<StaticDoodad> overlayDoodad;
 
 	Scenery(SceneryTileDef &tileDef, Vec3<int> pos, sp<Building> bld);
 	~Scenery() = default;

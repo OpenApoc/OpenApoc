@@ -63,6 +63,15 @@ City::City(Framework &fw, GameState &state) : fw(fw), map(fw, fw.rules->getCityS
 				auto &cityTileDef = fw.rules->getSceneryTileDef(tileID);
 				auto scenery = std::make_shared<Scenery>(cityTileDef, Vec3<int>{x, y, z}, bld);
 				auto tile = map.addObjectToMap(scenery);
+				if (cityTileDef.getOverlaySprite())
+				{
+					// FIXME: Bit of a hack to make the overlay always be at the 'top' of the tile -
+					// as getPosition() returns the /center/ add half a tile
+					scenery->overlayDoodad = std::make_shared<StaticDoodad>(
+					    cityTileDef.getOverlaySprite(), scenery->getPosition(),
+					    cityTileDef.getImageOffset());
+					auto doodadTileObject = map.addObjectToMap(scenery->overlayDoodad);
+				}
 				this->scenery.insert(scenery);
 			}
 		}
@@ -274,7 +283,7 @@ void City::update(GameState &state, unsigned int ticks)
 
 sp<Doodad> City::placeDoodad(DoodadDef &def, Vec3<float> position)
 {
-	auto doodad = std::make_shared<Doodad>(def, position);
+	auto doodad = std::make_shared<AnimatedDoodad>(def, position);
 	auto doodadTileObject = map.addObjectToMap(doodad);
 	this->doodads.insert(doodad);
 	return doodad;

@@ -7,6 +7,7 @@
 #include "game/tileview/tile.h"
 #include "game/city/city.h"
 #include "framework/framework.h"
+#include "game/city/doodad.h"
 
 namespace OpenApoc
 {
@@ -82,6 +83,8 @@ void Scenery::update(Framework &fw, GameState &state, unsigned int ticks)
 	// FIXME: gravity acceleration?
 	currentPos.z -= (float)ticks / 16.0f;
 	this->tileObject->setPosition(currentPos);
+	if (this->overlayDoodad)
+		this->overlayDoodad->setPosition(this->tileObject->getPosition());
 
 	for (auto &obj : this->tileObject->getOwningTile()->ownedObjects)
 	{
@@ -100,6 +103,9 @@ void Scenery::update(Framework &fw, GameState &state, unsigned int ticks)
 				                                      currentPos);
 				this->tileObject->removeFromMap();
 				this->tileObject.reset();
+				if (this->overlayDoodad)
+					this->overlayDoodad->remove(state);
+				this->overlayDoodad = nullptr;
 				auto count = state.city->fallingScenery.erase(shared_from_this());
 				if (count != 1)
 				{
@@ -143,8 +149,9 @@ bool Scenery::canRepair() const
 	return false;
 }
 
-void Scenery::repair(TileMap &map)
+void Scenery::repair(GameState &state)
 {
+	auto &map = state.city->map;
 	if (this->isAlive())
 		LogError("Trying to fix something that isn't broken");
 	this->damaged = false;
@@ -153,8 +160,17 @@ void Scenery::repair(TileMap &map)
 	{
 		this->tileObject->removeFromMap();
 		this->tileObject = nullptr;
+		if (this->overlayDoodad)
+			this->overlayDoodad->remove(state);
+		this->overlayDoodad = nullptr;
 	}
 	map.addObjectToMap(shared_from_this());
+	if (tileDef.getOverlaySprite())
+	{
+		this->overlayDoodad = std::make_shared<StaticDoodad>(
+		    tileDef.getOverlaySprite(), this->getPosition(), tileDef.getImageOffset());
+		auto doodadTileObject = map.addObjectToMap(this->overlayDoodad);
+	}
 }
 
 bool Scenery::isAlive() const

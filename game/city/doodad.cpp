@@ -8,22 +8,38 @@
 namespace OpenApoc
 {
 
-Doodad::Doodad(DoodadDef &def, Vec3<float> position) : def(def), position(position), age(0) {}
+Doodad::Doodad(Vec3<float> position, Vec2<int> imageOffset, bool temporary, int lifetime)
+    : position(position), imageOffset(imageOffset), temporary(temporary), age(0), lifetime(lifetime)
+{
+}
 
 void Doodad::update(GameState &state, int ticks)
 {
+	if (!temporary)
+		return;
 	age += ticks;
-	if (age >= def.lifetime)
+	if (age >= lifetime)
 	{
-		auto thisPtr = shared_from_this();
-		this->tileObject->removeFromMap();
-		this->tileObject = nullptr;
-		state.city->doodads.erase(thisPtr);
+		this->remove(state);
 		return;
 	}
 }
 
-sp<Image> Doodad::getSprite()
+void Doodad::remove(GameState &state)
+{
+	auto thisPtr = shared_from_this();
+	this->tileObject->removeFromMap();
+	this->tileObject = nullptr;
+	state.city->doodads.erase(thisPtr);
+}
+
+void Doodad::setPosition(Vec3<float> position)
+{
+	this->position = position;
+	this->tileObject->setPosition(position);
+}
+
+sp<Image> AnimatedDoodad::getSprite()
 {
 	int animTime = 0;
 	sp<Image> sprite;
@@ -38,6 +54,16 @@ sp<Image> Doodad::getSprite()
 	return sprite;
 }
 
-const Vec2<int> &Doodad::getImageOffset() const { return this->def.imageOffset; }
+sp<Image> StaticDoodad::getSprite() { return this->sprite; }
 
+AnimatedDoodad::AnimatedDoodad(DoodadDef &def, Vec3<float> position)
+    : Doodad(position, def.imageOffset, true, def.lifetime), def(def)
+{
+}
+
+StaticDoodad::StaticDoodad(sp<Image> sprite, Vec3<float> position, Vec2<int> imageOffset,
+                           bool temporary, int lifetime)
+    : Doodad(position, imageOffset, temporary, lifetime), sprite(sprite)
+{
+}
 } // namespace OpenApoc

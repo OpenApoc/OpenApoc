@@ -17,18 +17,48 @@ class GameState;
 class Doodad : public std::enable_shared_from_this<Doodad>
 {
   public:
-	Doodad(DoodadDef &def, Vec3<float> position);
-	sp<Image> getSprite();
-	const Vec2<int> &getImageOffset() const;
-	void update(GameState &state, int ticks);
+	virtual sp<Image> getSprite() = 0;
+	const Vec2<int> &getImageOffset() const { return this->imageOffset; };
+	virtual void update(GameState &state, int ticks);
 	const Vec3<float> &getPosition() const { return this->position; }
-	~Doodad() = default;
+	virtual ~Doodad() = default;
+
+	void setPosition(Vec3<float> position);
+
+	void remove(GameState &state);
 
 	sp<TileObjectDoodad> tileObject;
 
+  protected:
+	Doodad(Vec3<float> position, Vec2<int> imageOffset, bool temporary, int lifetime);
+	Vec3<float> position;
+	Vec2<int> imageOffset;
+	bool temporary;
+	int age;
+	int lifetime;
+};
+
+class AnimatedDoodad : public Doodad
+{
+  public:
+	AnimatedDoodad(DoodadDef &def, Vec3<float> position);
+	virtual ~AnimatedDoodad() = default;
+	virtual sp<Image> getSprite() override;
+
   private:
 	DoodadDef &def;
-	Vec3<float> position;
-	int age;
 };
+
+class StaticDoodad : public Doodad
+{
+  public:
+	StaticDoodad(sp<Image> sprite, Vec3<float> position, Vec2<int> imageOffset,
+	             bool temporary = false, int lifetime = 0);
+	virtual ~StaticDoodad() = default;
+	virtual sp<Image> getSprite() override;
+
+  private:
+	sp<Image> sprite;
+};
+
 } // namespace OpenApoc
