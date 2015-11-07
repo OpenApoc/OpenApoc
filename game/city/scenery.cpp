@@ -45,6 +45,9 @@ void Scenery::handleCollision(GameState &state, Collision &c)
 			this->tileObject.reset();
 		}
 	}
+	if (this->overlayDoodad)
+		this->overlayDoodad->remove(state);
+	this->overlayDoodad = nullptr;
 	for (auto &s : this->supports)
 		s->collapse(state);
 }
@@ -157,13 +160,12 @@ void Scenery::repair(GameState &state)
 	this->damaged = false;
 	this->falling = false;
 	if (this->tileObject)
-	{
 		this->tileObject->removeFromMap();
-		this->tileObject = nullptr;
-		if (this->overlayDoodad)
-			this->overlayDoodad->remove(state);
-		this->overlayDoodad = nullptr;
-	}
+	this->tileObject = nullptr;
+
+	if (this->overlayDoodad)
+		this->overlayDoodad->remove(state);
+	this->overlayDoodad = nullptr;
 	map.addObjectToMap(shared_from_this());
 	if (tileDef.getOverlaySprite())
 	{
