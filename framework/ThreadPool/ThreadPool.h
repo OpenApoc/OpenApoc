@@ -11,6 +11,8 @@
 #include <functional>
 #include <stdexcept>
 
+#include "framework/trace.h"
+
 class ThreadPool {
 public:
     ThreadPool(size_t);
@@ -34,10 +36,13 @@ private:
 inline ThreadPool::ThreadPool(size_t threads)
     :   stop(false)
 {
+	//Having a zero-sized threadpool really doesn't make sense
+	assert(threads > 0);
     for(size_t i = 0;i<threads;++i)
         workers.emplace_back(
-            [this]
+            [this, i]
             {
+				OpenApoc::Trace::setThreadName("ThreadPool " + OpenApoc::Strings::FromInteger((int)i));
                 for(;;)
                 {
                     std::function<void()> task;

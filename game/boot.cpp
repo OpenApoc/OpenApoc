@@ -12,7 +12,6 @@ namespace OpenApoc
 
 static void CreateGameCore(Framework *fw, std::atomic<bool> *isComplete)
 {
-	Trace::setThreadName("CreateGameCore");
 	TRACE_FN;
 	// FIXME: The allegro file interface is a TLS, so we need to reset it if there's a new thread.
 	al_set_physfs_file_interface();
@@ -34,7 +33,7 @@ void BootUp::Begin()
 
 	this->gamecoreLoadComplete = false;
 	this->asyncGamecoreLoad =
-	    std::async(std::launch::async, CreateGameCore, &fw, &this->gamecoreLoadComplete);
+	    fw.threadPool->enqueue(CreateGameCore, &fw, &this->gamecoreLoadComplete);
 }
 
 void BootUp::Pause() {}

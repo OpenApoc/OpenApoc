@@ -11,6 +11,8 @@
 #include "sound.h"
 #include "font.h"
 
+#include "framework/ThreadPool/ThreadPool.h"
+
 #include "library/configfile.h"
 #include "library/strings.h"
 
@@ -54,6 +56,8 @@ class Framework
 	std::unique_ptr<Renderer> renderer;
 	std::unique_ptr<SoundBackend> soundBackend;
 	std::unique_ptr<JukeBox> jukebox;
+
+	std::unique_ptr<ThreadPool> threadPool;
 
 	Framework(const UString programName, const std::vector<UString> cmdline);
 	~Framework();

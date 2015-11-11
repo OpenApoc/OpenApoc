@@ -60,6 +60,7 @@ static std::map<UString, UString> defaultConfig = {
     {"Audio.GlobalGain", "20"},
     {"Audio.SampleGain", "20"},
     {"Audio.MusicGain", "20"},
+    {"Framework.ThreadPoolSize", "0"},
 };
 
 std::map<UString, std::unique_ptr<OpenApoc::RendererFactory>> *registeredRenderers = nullptr;
@@ -243,6 +244,24 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 			Settings->set(splitString[0], splitString[1]);
 		}
 	}
+
+	int threadPoolSize = Settings->getInt("Framework.ThreadPoolSize");
+	if (threadPoolSize > 0)
+	{
+		LogInfo("Set thread pool size to %d", threadPoolSize);
+	}
+	else if (std::thread::hardware_concurrency() != 0)
+	{
+		threadPoolSize = std::thread::hardware_concurrency();
+		LogInfo("Set thread pool size to reported HW concurrency of %d", threadPoolSize);
+	}
+	else
+	{
+		threadPoolSize = 2;
+		LogInfo("Failed to get HW concurrency, falling back to pool size %d", threadPoolSize);
+	}
+
+	this->threadPool.reset(new ThreadPool(threadPoolSize));
 
 	std::vector<UString> resourcePaths;
 	resourcePaths.push_back(Settings->getString("Resource.SystemCDPath"));
