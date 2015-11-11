@@ -319,14 +319,7 @@ void Framework::Run()
 	{
 		frame++;
 		TraceObj obj{"Frame", {{"frame", Strings::FromInteger(frame)}}};
-		{
-			TraceObj objBind{"RendererSurfaceBinding"};
-			RendererSurfaceBinding b(*this->renderer, p->defaultSurface);
-		}
-		{
-			TraceObj objClear{"clear"};
-			this->renderer->clear();
-		}
+
 		ProcessEvents();
 
 		StageCmd cmd;
@@ -356,6 +349,14 @@ void Framework::Run()
 				p->quitProgram = true;
 				p->ProgramStages.Clear();
 				break;
+		}
+		{
+			TraceObj objBind{"RendererSurfaceBinding"};
+			RendererSurfaceBinding b(*this->renderer, p->defaultSurface);
+		}
+		{
+			TraceObj objClear{"clear"};
+			this->renderer->clear();
 		}
 		if (!p->ProgramStages.IsEmpty())
 		{
