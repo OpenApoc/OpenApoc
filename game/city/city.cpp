@@ -16,6 +16,8 @@
 #include "game/tileview/voxel.h"
 
 #include <limits>
+#include <functional>
+#include <future>
 
 namespace OpenApoc
 {
@@ -249,15 +251,31 @@ void City::update(GameState &state, unsigned int ticks)
 	}
 	Trace::end("City::update::vehices->update");
 	Trace::start("City::update::projectiles->update");
+	std::list<std::future<Collision>> collisions;
 	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
 	{
 		auto p = *it++;
 		p->update(state, ticks);
-		Collision c = p->checkProjectileCollision(map);
+	}
+	for (auto &p : this->projectiles)
+	{
+		auto func = std::bind(&Projectile::checkProjectileCollision, p, std::placeholders::_1);
+		collisions.emplace_back(fw.threadPool->enqueue(func, std::ref(map)));
+	}
+	for (auto &future : collisions)
+	{
+		// Make sure every user of the TileMap is finished before processing (as the tileobject/map
+		// lists are not locked, so probably OK for read-only...)
+		future.wait();
+	}
+	for (auto &future : collisions)
+	{
+
+		auto c = future.get();
 		if (c)
 		{
 			// FIXME: Handle collision
-			this->projectiles.erase(p);
+			this->projectiles.erase(c.projectile);
 			// FIXME: Get doodad from weapon definition?
 			auto doodad =
 			    this->placeDoodad(fw.rules->getDoodadDef("DOODAD_EXPLOSION_0"), c.position);

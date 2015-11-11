@@ -22,6 +22,13 @@ void Scenery::handleCollision(GameState &state, Collision &c)
 	//
 	// If this tile has a damaged tile, replace it with that. If it's already damaged, destroy as
 	// normal
+	if (!this->tileObject)
+	{
+		// It's possible multiple projectiles hit the same tile in the same
+		// tick, so if the object has already been destroyed just NOP this.
+		// The projectile will still 'hit' this tile though.
+		return;
+	}
 	if (this->falling)
 	{
 		// Already falling, just continue

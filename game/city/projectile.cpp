@@ -51,7 +51,9 @@ Collision Projectile::checkProjectileCollision(TileMap &map)
 		// so ignore stuff without a tile
 		return {};
 	}
-	return map.findCollision(this->previousPosition, this->position);
+	Collision c = map.findCollision(this->previousPosition, this->position);
+	c.projectile = shared_from_this();
+	return c;
 }
 
 Projectile::~Projectile()
