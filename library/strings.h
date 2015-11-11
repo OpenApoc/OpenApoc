@@ -4,6 +4,7 @@
 #include "framework/includes.h"
 #include <iterator>
 #include <limits>
+#include <string>
 
 namespace OpenApoc
 {

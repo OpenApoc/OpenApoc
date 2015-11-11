@@ -94,6 +94,7 @@ static bool ParseVehicleWeaponDefinition(WeaponDef &def, tinyxml2::XMLElement *r
 
 bool RulesLoader::ParseWeaponDefinition(Framework &fw, Rules &rules, tinyxml2::XMLElement *root)
 {
+	TRACE_FN;
 	std::ignore = fw;
 	if (UString(root->Name()) != "weapon")
 	{

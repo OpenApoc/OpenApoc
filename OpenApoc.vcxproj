@@ -379,6 +379,7 @@
     <ClCompile Include="framework\sound.cpp" />
     <ClCompile Include="framework\sound\allegro_backend.cpp" />
     <ClCompile Include="framework\sound\null_backend.cpp" />
+    <ClCompile Include="framework\trace.cpp" />
     <ClCompile Include="game\apocresources\apocpalette.cpp" />
     <ClCompile Include="game\base\base.cpp" />
     <ClCompile Include="game\base\facility.cpp" />
@@ -469,6 +470,7 @@
     <ClInclude Include="framework\sampleloader_interface.h" />
     <ClInclude Include="framework\sound.h" />
     <ClInclude Include="framework\sound_interface.h" />
+    <ClInclude Include="framework\trace.h" />
     <ClInclude Include="game\apocresources\apocpalette.h" />
     <ClInclude Include="game\apocresources\apocresource.h" />
     <ClInclude Include="game\base\base.h" />

@@ -267,6 +267,7 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID, sp
 }; // anonymous namespace
 bool RulesLoader::ParseCityDefinition(Framework &fw, Rules &rules, tinyxml2::XMLElement *root)
 {
+	TRACE_FN;
 	if (UString(root->Name()) != "city")
 	{
 		LogError("Called on unexpected node \"%s\"", root->Name());

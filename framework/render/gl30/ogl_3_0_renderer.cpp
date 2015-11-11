@@ -3,6 +3,7 @@
 #include "framework/logger.h"
 #include "framework/image.h"
 #include "framework/palette.h"
+#include "framework/trace.h"
 #include <memory>
 #include <array>
 
@@ -644,6 +645,7 @@ class FBOData : public RendererImageData
 
 	FBOData(Vec2<int> size) : size(size.x, size.y)
 	{
+		TRACE_FN;
 		gl::GenTextures(1, &this->tex);
 		BindTexture b(this->tex);
 		gl::TexImage2D(gl::TEXTURE_2D, 0, gl::RGBA8, size.x, size.y, 0, gl::RGBA, gl::UNSIGNED_BYTE,
@@ -683,6 +685,7 @@ class GLRGBImage : public RendererImageData
 	std::weak_ptr<RGBImage> parent;
 	GLRGBImage(sp<RGBImage> parent) : size(parent->size), parent(parent)
 	{
+		TRACE_FN;
 		RGBImageLock l(parent, ImageLockUse::Read);
 		gl::GenTextures(1, &this->texID);
 		BindTexture b(this->texID);
@@ -702,6 +705,7 @@ class GLPalette : public RendererImageData
 	std::weak_ptr<Palette> parent;
 	GLPalette(sp<Palette> parent) : size(Vec2<float>(parent->colours.size(), 1)), parent(parent)
 	{
+		TRACE_FN;
 		gl::GenTextures(1, &this->texID);
 		BindTexture b(this->texID);
 		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::NEAREST);
@@ -720,6 +724,7 @@ class GLPaletteImage : public RendererImageData
 	std::weak_ptr<PaletteImage> parent;
 	GLPaletteImage(sp<PaletteImage> parent) : size(parent->size), parent(parent)
 	{
+		TRACE_FN;
 		PaletteImageLock l(parent, ImageLockUse::Read);
 		gl::GenTextures(1, &this->texID);
 		BindTexture b(this->texID);
@@ -742,6 +747,7 @@ class GLPaletteSpritesheet : public RendererImageData
 	GLPaletteSpritesheet(sp<ImageSet> parent)
 	    : parent(parent), maxSize(parent->maxSize), numSprites(parent->images.size())
 	{
+		TRACE_FN;
 		gl::GenTextures(1, &this->texID);
 		BindTexture b(this->texID, 0, gl::TEXTURE_2D_ARRAY);
 		UnpackAlignment align(1);

@@ -8,6 +8,7 @@
 #include "framework/renderer_interface.h"
 #include "framework/sound_interface.h"
 #include "framework/sound.h"
+#include "framework/trace.h"
 
 #include <allegro5/allegro5.h>
 #include <iostream>
@@ -155,6 +156,7 @@ class FrameworkPrivate
 Framework::Framework(const UString programName, const std::vector<UString> cmdline)
     : dumpEvents(false), replayEvents(false), p(new FrameworkPrivate), programName(programName)
 {
+	TRACE_FN;
 	LogInfo("Starting framework");
 	PHYSFS_init(programName.c_str());
 
@@ -279,6 +281,7 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 
 Framework::~Framework()
 {
+	TRACE_FN;
 	LogInfo("Destroying framework");
 	// Kill gamecore and program stages first, so any resources are cleaned before
 	// allegro is de-inited
@@ -304,6 +307,8 @@ Framework::~Framework()
 
 void Framework::Run()
 {
+	int frame = 0;
+	TRACE_FN;
 	LogInfo("Program loop started");
 
 	p->ProgramStages.Push(std::make_shared<BootUp>(*this));
@@ -312,8 +317,16 @@ void Framework::Run()
 
 	while (!p->quitProgram)
 	{
-		RendererSurfaceBinding b(*this->renderer, p->defaultSurface);
-		this->renderer->clear();
+		frame++;
+		TraceObj obj{"Frame", {{"frame", Strings::FromInteger(frame)}}};
+		{
+			TraceObj objBind{"RendererSurfaceBinding"};
+			RendererSurfaceBinding b(*this->renderer, p->defaultSurface);
+		}
+		{
+			TraceObj objClear{"clear"};
+			this->renderer->clear();
+		}
 		ProcessEvents();
 
 		StageCmd cmd;
@@ -321,7 +334,10 @@ void Framework::Run()
 		{
 			break;
 		}
-		p->ProgramStages.Current()->Update(&cmd);
+		{
+			TraceObj updateObj("Update");
+			p->ProgramStages.Current()->Update(&cmd);
+		}
 		switch (cmd.cmd)
 		{
 			case StageCmd::Command::CONTINUE:
@@ -343,8 +359,12 @@ void Framework::Run()
 		}
 		if (!p->ProgramStages.IsEmpty())
 		{
+			TraceObj updateObj("Render");
 			p->ProgramStages.Current()->Render();
-			al_flip_display();
+			{
+				TraceObj flipObj("Flip");
+				al_flip_display();
+			}
 		}
 		if (this->dumpEvents)
 		{
@@ -378,6 +398,7 @@ void Framework::ReadRecordedEvents()
 
 void Framework::ProcessEvents()
 {
+	TRACE_FN;
 	if (p->ProgramStages.IsEmpty())
 	{
 		p->quitProgram = true;
@@ -577,6 +598,7 @@ void Framework::SaveSettings()
 
 void Framework::Display_Initialise()
 {
+	TRACE_FN;
 	LogInfo("Init display");
 	int display_flags = ALLEGRO_OPENGL;
 #ifdef ALLEGRO_OPENGL_CORE
@@ -641,6 +663,7 @@ void Framework::Display_Initialise()
 
 void Framework::Display_Shutdown()
 {
+	TRACE_FN;
 	LogInfo("Shutdown Display");
 	p->defaultSurface.reset();
 	renderer.reset();
@@ -679,6 +702,7 @@ void Framework::Display_SetIcon()
 
 void Framework::Audio_Initialise()
 {
+	TRACE_FN;
 	LogInfo("Initialise Audio");
 
 	for (auto &soundBackendName : Settings->getString("Audio.Backends").split(':'))
@@ -719,6 +743,7 @@ void Framework::Audio_Initialise()
 
 void Framework::Audio_Shutdown()
 {
+	TRACE_FN;
 	LogInfo("Shutdown Audio");
 	this->jukebox.reset();
 	this->soundBackend.reset();

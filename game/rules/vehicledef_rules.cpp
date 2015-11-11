@@ -81,7 +81,7 @@ parseDirectionalSprites(Framework &fw, tinyxml2::XMLElement *root)
 
 bool RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::XMLElement *root)
 {
-
+	TRACE_FN;
 	VehicleDefinition def;
 
 	if (UString(root->Name()) != "vehicledef")

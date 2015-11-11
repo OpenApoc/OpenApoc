@@ -2,6 +2,7 @@
 
 #include "game/resources/gamecore.h"
 #include "framework/framework.h"
+#include "framework/trace.h"
 
 #include "game/ufopaedia/ufopaedia.h"
 
@@ -35,6 +36,7 @@ GameCore::~GameCore()
 
 void GameCore::ParseXMLDoc(UString XMLFilename)
 {
+	TRACE_FN_ARGS1("XMLFilename", XMLFilename);
 	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLElement *node;
 	UString systemPath;

@@ -7,6 +7,7 @@
 #include "game/city/vehiclemission.h"
 #include "game/city/weapon.h"
 #include "framework/framework.h"
+#include "framework/trace.h"
 #include "game/resources/gamecore.h"
 #include "game/city/projectile.h"
 #include "game/tileview/tileobject_vehicle.h"
@@ -21,12 +22,15 @@ namespace OpenApoc
 
 City::City(Framework &fw, GameState &state) : fw(fw), map(fw, fw.rules->getCitySize())
 {
+	Trace::start("City::buildings");
 	for (auto &def : fw.rules->getBuildingDefs())
 	{
 		this->buildings.emplace_back(
 		    std::make_shared<Building>(def, state.getOrganisation(def.getOwnerName())));
 	}
+	Trace::end("City::buildings");
 
+	Trace::start("City::scenery");
 	for (int z = 0; z < this->map.size.z; z++)
 	{
 		for (int y = 0; y < this->map.size.y; y++)
@@ -76,7 +80,9 @@ City::City(Framework &fw, GameState &state) : fw(fw), map(fw, fw.rules->getCityS
 			}
 		}
 	}
+	Trace::end("City::scenery");
 
+	Trace::start("City::scenery::support");
 	for (auto &s : this->scenery)
 	{
 		if (s->pos.z == 0)
@@ -147,6 +153,7 @@ City::City(Framework &fw, GameState &state) : fw(fw), map(fw, fw.rules->getCityS
 			LogWarning("Scenery tile at {%d,%d,%d} has no support", s->pos.x, s->pos.y, s->pos.z);
 		}
 	}
+	Trace::end("City::scenery::support");
 
 	/* Sanity check - all buildings should at have least one landing pad */
 	for (auto b : this->buildings)
@@ -158,6 +165,7 @@ City::City(Framework &fw, GameState &state) : fw(fw), map(fw, fw.rules->getCityS
 	}
 	/* Keep a cache of base locations (using pointers since you can't have a vector of references)
 	 */
+	Trace::start("City::baseBuildings");
 	for (auto b : this->buildings)
 	{
 		if (!b->def.getBaseCorridors().empty())
@@ -166,10 +174,12 @@ City::City(Framework &fw, GameState &state) : fw(fw), map(fw, fw.rules->getCityS
 			this->baseBuildings.emplace_back(b);
 		}
 	}
+	Trace::end("City::baseBuildings");
 }
 
 City::~City()
 {
+	TRACE_FN;
 	// Note due to backrefs to Tile*s etc. we need to destroy all tile objects
 	// before the TileMap
 	for (auto &v : this->vehicles)
@@ -203,6 +213,7 @@ City::~City()
 
 void City::update(GameState &state, unsigned int ticks)
 {
+	TRACE_FN_ARGS1("ticks", Strings::FromInteger((int)ticks));
 	/* FIXME: Temporary 'get something working' HACK
 	 * Every now and then give a landed vehicle a new 'goto random building' mission, so there's
 	 * some activity in the city*/
@@ -211,6 +222,7 @@ void City::update(GameState &state, unsigned int ticks)
 	// Need to use a 'safe' iterator method (IE keep the next it before calling ->update)
 	// as update() calls can erase it's object from the lists
 
+	Trace::start("City::update::buildings->landed_vehicles");
 	for (auto it = this->buildings.begin(); it != this->buildings.end();)
 	{
 		auto b = *it++;
@@ -228,11 +240,15 @@ void City::update(GameState &state, unsigned int ticks)
 			}
 		}
 	}
+	Trace::end("City::update::buildings->landed_vehicles");
+	Trace::start("City::update::vehices->update");
 	for (auto it = this->vehicles.begin(); it != this->vehicles.end();)
 	{
 		auto v = *it++;
 		v->update(state, ticks);
 	}
+	Trace::end("City::update::vehices->update");
+	Trace::start("City::update::projectiles->update");
 	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)
 	{
 		auto p = *it++;
@@ -269,16 +285,21 @@ void City::update(GameState &state, unsigned int ticks)
 			}
 		}
 	}
+	Trace::end("City::update::projectiles->update");
+	Trace::start("City::update::fallingScenery->update");
 	for (auto it = this->fallingScenery.begin(); it != this->fallingScenery.end();)
 	{
 		auto s = *it++;
 		s->update(fw, state, ticks);
 	}
+	Trace::end("City::update::fallingScenery->update");
+	Trace::start("City::update::doodads->update");
 	for (auto it = this->doodads.begin(); it != this->doodads.end();)
 	{
 		auto d = *it++;
 		d->update(state, ticks);
 	}
+	Trace::end("City::update::doodads->update");
 }
 
 sp<Doodad> City::placeDoodad(DoodadDef &def, Vec3<float> position)

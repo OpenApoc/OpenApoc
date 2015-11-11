@@ -8,6 +8,7 @@ namespace OpenApoc
 bool RulesLoader::ParseOrganisationDefinition(Framework &fw, Rules &rules,
                                               tinyxml2::XMLElement *root)
 {
+	TRACE_FN;
 	std::ignore = fw;
 	if (UString(root->Name()) != "organisation")
 	{

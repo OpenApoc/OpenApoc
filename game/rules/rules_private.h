@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game/rules/rules.h"
+#include "framework/trace.h"
 #include <tinyxml2.h>
 
 namespace OpenApoc

@@ -6,6 +6,7 @@
 #include "game/apocresources/apocpalette.h"
 #include "game/apocresources/loftemps.h"
 #include "framework/palette.h"
+#include "framework/trace.h"
 #include "library/strings.h"
 
 #include "framework/imageloader_interface.h"
@@ -123,6 +124,7 @@ sp<VoxelSlice> Data::load_voxel_slice(const UString &path)
 		sp<LOFTemps> lofTemps = this->LOFVoxelCache[cacheKey].lock();
 		if (!lofTemps)
 		{
+			TRACE_FN_ARGS1("path", path);
 			auto datFile = this->fs.open(splitString[1]);
 			if (!datFile)
 			{
@@ -164,6 +166,7 @@ sp<ImageSet> Data::load_image_set(const UString &path)
 	{
 		return imgSet;
 	}
+	TRACE_FN_ARGS1("path", path);
 	// PCK resources come in the format:
 	//"PCK:PCKFILE:TABFILE[:optional/ignored]"
 	if (path.substr(0, 4) == "PCK:")
@@ -196,6 +199,7 @@ sp<Sample> Data::load_sample(const UString &path)
 	if (sample)
 		return sample;
 
+	TRACE_FN_ARGS1("path", path);
 	for (auto &loader : this->sampleLoaders)
 	{
 		sample = loader->loadSample(path);
@@ -213,6 +217,7 @@ sp<Sample> Data::load_sample(const UString &path)
 
 sp<MusicTrack> Data::load_music(const UString &path)
 {
+	TRACE_FN_ARGS1("path", path);
 	// No cache for music tracks, just stream of disk
 	for (auto &loader : this->musicLoaders)
 	{
@@ -234,6 +239,8 @@ sp<Image> Data::load_image(const UString &path)
 		return img;
 	}
 
+	// Only trace stuff that misses the cache
+	TRACE_FN_ARGS1("path", path);
 	if (path.substr(0, 4) == "RAW:")
 	{
 		auto splitString = path.split(':');

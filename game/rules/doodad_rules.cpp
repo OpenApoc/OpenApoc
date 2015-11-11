@@ -31,6 +31,7 @@ static bool parseFrame(Framework &fw, tinyxml2::XMLElement *root, DoodadFrame &f
 
 bool RulesLoader::ParseDoodadDefinition(Framework &fw, Rules &rules, tinyxml2::XMLElement *root)
 {
+	TRACE_FN;
 	DoodadDef d;
 	if (UString(root->Name()) != "doodad")
 	{

@@ -1,6 +1,7 @@
 #include "game/rules/rules.h"
 #include "game/rules/rules_private.h"
 #include "framework/framework.h"
+#include "framework/trace.h"
 #include <tinyxml2.h>
 #include "game/ufopaedia/ufopaedia.h"
 
@@ -9,6 +10,7 @@ namespace OpenApoc
 
 Rules::Rules(Framework &fw, const UString &rootFileName)
 {
+	TRACE_FN_ARGS1("rootFileName", rootFileName);
 	UString systemPath;
 	auto file = fw.data->fs.open(rootFileName);
 	if (!file)
@@ -63,6 +65,7 @@ Rules::Rules(Framework &fw, const UString &rootFileName)
 
 bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *root)
 {
+	TRACE_FN;
 	UString nodeName = root->Name();
 	if (nodeName != "openapoc_rules")
 	{
@@ -126,6 +129,7 @@ bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *
 				return false;
 			}
 			systemPath = file.systemPath();
+			TRACE_FN_ARGS1("include", systemPath);
 			LogInfo("Loading included ruleset from \"%s\"", systemPath.c_str());
 			tinyxml2::XMLDocument doc;
 			doc.LoadFile(systemPath.c_str());
