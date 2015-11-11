@@ -1,6 +1,7 @@
 
 #include "game/boot.h"
 #include "framework/framework.h"
+#include "framework/trace.h"
 #include "game/general/mainmenu.h"
 #include "game/resources/gamecore.h"
 #include <tuple>
@@ -11,6 +12,8 @@ namespace OpenApoc
 
 static void CreateGameCore(Framework *fw, std::atomic<bool> *isComplete)
 {
+	Trace::setThreadName("CreateGameCore");
+	TRACE_FN;
 	// FIXME: The allegro file interface is a TLS, so we need to reset it if there's a new thread.
 	al_set_physfs_file_interface();
 	UString ruleset = fw->Settings->getString("GameRules");

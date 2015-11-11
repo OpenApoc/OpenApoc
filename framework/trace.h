@@ -20,6 +20,8 @@ class Trace
 	static void end(const UString &end);
 
 	static bool enabled;
+
+	static void setThreadName(const UString &name);
 };
 
 class TraceObj

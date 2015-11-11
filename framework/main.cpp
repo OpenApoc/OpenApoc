@@ -32,6 +32,8 @@ int main(int argc, char *argv[])
 		LogInfo("Tracing enabled");
 	}
 
+	Trace::setThreadName("main");
+
 	TraceObj obj("main");
 
 	Framework *fw = new Framework(UString(argv[0]), cmdline);

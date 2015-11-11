@@ -3,6 +3,7 @@
 #include <thread>
 #include <mutex>
 #include <fstream>
+#include <sstream>
 
 namespace
 {
@@ -32,7 +33,7 @@ class TraceEvent
 class EventList
 {
   public:
-	std::thread::id tid;
+	UString tid;
 	std::vector<TraceEvent> events;
 };
 
@@ -45,9 +46,11 @@ class TraceManager
 	std::mutex listMutex;
 	EventList *createThreadEventList()
 	{
+		std::stringstream ss;
 		listMutex.lock();
 		EventList *list = new EventList;
-		list->tid = std::this_thread::get_id();
+		ss << std::this_thread::get_id();
+		list->tid == ss.str();
 		lists.emplace_back(list);
 		listMutex.unlock();
 		return list;
@@ -91,7 +94,7 @@ TraceManager::~TraceManager()
 
 			outFile << "{"
 			        << "\"pid\":1,"
-			        << "\"tid\":" << eventList->tid << ","
+			        << "\"tid\":\"" << eventList->tid.str() << "\","
 			        // Time is in microseconds, not nanoseconds
 			        << "\"ts\":" << event.timeNS / 1000 << ","
 			        << "\"name\":\"" << event.name.str() << "\",";
@@ -137,6 +140,16 @@ void Trace::enable()
 	trace_manager.reset(new TraceManager);
 	Trace::enabled = true;
 	traceStartTime = std::chrono::high_resolution_clock::now();
+}
+
+void Trace::setThreadName(const UString &name)
+{
+	if (!Trace::enabled)
+		return;
+	if (!events)
+		events = trace_manager->createThreadEventList();
+
+	events->tid = name;
 }
 
 void Trace::start(const UString &name, const std::vector<std::pair<UString, UString>> &args)
