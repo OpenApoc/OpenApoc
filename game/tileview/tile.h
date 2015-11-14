@@ -73,9 +73,9 @@ class TileMap
 
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd);
 
-	sp<TileObjectProjectile> addObjectToMap(sp<Projectile>);
-	sp<TileObjectVehicle> addObjectToMap(sp<Vehicle>);
-	sp<TileObjectScenery> addObjectToMap(sp<Scenery>);
-	sp<TileObjectDoodad> addObjectToMap(sp<Doodad>);
+	void addObjectToMap(sp<Projectile>);
+	void addObjectToMap(sp<Vehicle>);
+	void addObjectToMap(sp<Scenery>);
+	void addObjectToMap(sp<Doodad>);
 };
 }; // namespace OpenApoc

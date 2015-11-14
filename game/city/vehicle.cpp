@@ -136,8 +136,7 @@ void Vehicle::launch(TileMap &map, Vec3<float> initialPosition)
 	bld->landed_vehicles.erase(shared_from_this());
 	this->building.reset();
 	this->mover.reset(new FlyingVehicleMover(*this, initialPosition));
-	auto vehicleTile = map.addObjectToMap(shared_from_this());
-	this->tileObject = vehicleTile;
+	map.addObjectToMap(shared_from_this());
 }
 
 void Vehicle::land(TileMap &map, sp<Building> b)

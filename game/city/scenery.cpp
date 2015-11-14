@@ -178,7 +178,7 @@ void Scenery::repair(GameState &state)
 	{
 		this->overlayDoodad = std::make_shared<StaticDoodad>(
 		    tileDef.getOverlaySprite(), this->getPosition(), tileDef.getImageOffset());
-		auto doodadTileObject = map.addObjectToMap(this->overlayDoodad);
+		map.addObjectToMap(this->overlayDoodad);
 	}
 }
 

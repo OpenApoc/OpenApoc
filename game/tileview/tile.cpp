@@ -233,7 +233,7 @@ std::list<Tile *> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destinat
 	return getPathToNode(visitedTiles, closestNodeSoFar);
 }
 
-sp<TileObjectProjectile> TileMap::addObjectToMap(sp<Projectile> projectile)
+void TileMap::addObjectToMap(sp<Projectile> projectile)
 {
 	if (projectile->tileObject)
 	{
@@ -244,11 +244,9 @@ sp<TileObjectProjectile> TileMap::addObjectToMap(sp<Projectile> projectile)
 	sp<TileObjectProjectile> obj(new TileObjectProjectile(*this, projectile));
 	obj->setPosition(projectile->getPosition());
 	projectile->tileObject = obj;
-
-	return obj;
 }
 
-sp<TileObjectVehicle> TileMap::addObjectToMap(sp<Vehicle> vehicle)
+void TileMap::addObjectToMap(sp<Vehicle> vehicle)
 {
 	if (vehicle->tileObject)
 	{
@@ -259,11 +257,9 @@ sp<TileObjectVehicle> TileMap::addObjectToMap(sp<Vehicle> vehicle)
 	sp<TileObjectVehicle> obj(new TileObjectVehicle(*this, vehicle));
 	obj->setPosition(vehicle->getPosition());
 	vehicle->tileObject = obj;
-
-	return obj;
 }
 
-sp<TileObjectScenery> TileMap::addObjectToMap(sp<Scenery> scenery)
+void TileMap::addObjectToMap(sp<Scenery> scenery)
 {
 	if (scenery->tileObject)
 	{
@@ -274,11 +270,9 @@ sp<TileObjectScenery> TileMap::addObjectToMap(sp<Scenery> scenery)
 	sp<TileObjectScenery> obj(new TileObjectScenery(*this, scenery));
 	obj->setPosition(scenery->getPosition());
 	scenery->tileObject = obj;
-
-	return obj;
 }
 
-sp<TileObjectDoodad> TileMap::addObjectToMap(sp<Doodad> doodad)
+void TileMap::addObjectToMap(sp<Doodad> doodad)
 {
 	if (doodad->tileObject)
 	{
@@ -289,7 +283,5 @@ sp<TileObjectDoodad> TileMap::addObjectToMap(sp<Doodad> doodad)
 	sp<TileObjectDoodad> obj(new TileObjectDoodad(*this, doodad));
 	obj->setPosition(doodad->getPosition());
 	doodad->tileObject = obj;
-
-	return obj;
 }
 }; // namespace OpenApoc
