@@ -71,6 +71,10 @@ GameState::GameState(Framework &fw, Rules &rules)
 		testVehicle->building = b;
 	}
 
+	if (this->city->baseBuildings.empty())
+	{
+		LogError("No valid base buildings");
+	}
 	std::uniform_int_distribution<int> base_distribution(0, this->city->baseBuildings.size() - 1);
 	auto base = this->city->baseBuildings[base_distribution(rng)]->base;
 	this->playerBases.emplace_back(base);
