@@ -179,6 +179,11 @@ sp<ImageSet> Data::load_image_set(const UString &path)
 		auto splitString = path.split(':');
 		imgSet = PCKLoader::load_strat(*this, splitString[1], splitString[2]);
 	}
+	else if (path.substr(0, 10) == "PCKSHADOW:")
+	{
+		auto splitString = path.split(':');
+		imgSet = PCKLoader::load_shadow(*this, splitString[1], splitString[2]);
+	}
 	else
 	{
 		LogError("Unknown image set format \"%s\"", path.c_str());

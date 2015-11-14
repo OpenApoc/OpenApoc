@@ -4,6 +4,7 @@
 #include "framework/data.h"
 #include "framework/image.h"
 #include "framework/renderer.h"
+#include "framework/trace.h"
 
 namespace OpenApoc
 {
@@ -372,7 +373,7 @@ struct strat_header
 
 static_assert(sizeof(struct strat_header) == 4, "Invalid strat_header size");
 
-sp<PaletteImage> loadStrategy(IFile &file)
+static sp<PaletteImage> loadStrategy(IFile &file)
 {
 	auto img = std::make_shared<PaletteImage>(Vec2<int>{8, 8}); // All strategy map tiles are 8x8
 	unsigned int offset = 0;
@@ -457,4 +458,132 @@ sp<ImageSet> PCKLoader::load_strat(Data &data, UString PckFilename, UString TabF
 
 	return imageSet;
 }
+
+struct shadow_header
+{
+	uint8_t h1;
+	uint8_t h2;
+	uint16_t unknown1;
+	uint16_t width;
+	uint16_t height;
+};
+
+static_assert(sizeof(struct shadow_header) == 8, "Invalid shadow_header size");
+
+static const std::vector<std::vector<int>> ditherLut = {
+    {0, 0, 0, 0}, {1, 0, 1, 0}, {0, 1, 0, 1}, {1, 0, 0, 0},
+    {0, 1, 0, 0}, {0, 0, 1, 0}, {0, 0, 0, 1},
+};
+
+static sp<PaletteImage> loadShadow(IFile &file, uint8_t shadedIdx)
+{
+	struct shadow_header header;
+	file.read((char *)&header, sizeof(header));
+	if (!file)
+	{
+		LogError("Unexpected EOF reading shadow PCK header\n");
+		return nullptr;
+	}
+	auto img = std::make_shared<PaletteImage>(Vec2<int>{header.width, header.height});
+	PaletteImageLock region(img);
+
+	uint8_t b = 0;
+	file.read((char *)&b, 1);
+	int pos = 0;
+	while (b != 0xff)
+	{
+		uint8_t count = b;
+		file.read((char *)&b, 1);
+		if (!file)
+		{
+			LogError("Unexpected EOF reading shadow data\n");
+			return nullptr;
+		}
+		uint8_t idx = b;
+
+		if (idx == 0)
+			pos += count * 4;
+		else
+		{
+			assert(idx < 7);
+
+			while (count--)
+			{
+				for (int i = 0; i < 4; i++)
+				{
+					const int STRIDE = 640;
+					int x = pos % STRIDE;
+					int y = pos / STRIDE;
+					if (x < header.width && y < header.height)
+					{
+						if (ditherLut[idx][i])
+							region.set({x, y}, shadedIdx);
+						else
+							region.set({x, y}, 0);
+					}
+					pos++;
+				}
+			}
+		}
+		file.read((char *)&b, 1);
+		if (!file)
+		{
+			LogError("Unexpected EOF reading shadow data\n");
+			return nullptr;
+		}
+	}
+	return img;
+}
+
+sp<ImageSet> PCKLoader::load_shadow(Data &data, UString PckFilename, UString TabFilename,
+                                    uint8_t shadedIdx)
+{
+	TRACE_FN;
+	auto imageSet = std::make_shared<ImageSet>();
+	auto tabFile = data.fs.open(TabFilename);
+	if (!tabFile)
+	{
+		LogWarning("Failed to open tab \"%s\"", TabFilename.c_str());
+		return nullptr;
+	}
+	auto pckFile = data.fs.open(PckFilename);
+	if (!pckFile)
+	{
+		LogWarning("Failed to open tab \"%s\"", TabFilename.c_str());
+		return nullptr;
+	}
+	imageSet->maxSize = {0, 0};
+
+	uint32_t offset = 0;
+	unsigned idx = 0;
+	while (tabFile.read((char *)&offset, sizeof(offset)))
+	{
+		// shadow TAB files store the offset/4
+		pckFile.seekg(offset * 4, std::ios::beg);
+		if (!pckFile)
+		{
+			LogError("Failed to seek to offset %u", offset);
+			return nullptr;
+		}
+		auto img = loadShadow(pckFile, shadedIdx);
+		if (!img)
+		{
+			LogError("Failed to load image");
+			return nullptr;
+		}
+		imageSet->images.push_back(img);
+		img->owningSet = imageSet;
+		img->CalculateBounds();
+		img->indexInSet = idx++;
+		if (img->size.x > imageSet->maxSize.x)
+			imageSet->maxSize.x = img->size.x;
+		if (img->size.y > imageSet->maxSize.y)
+			imageSet->maxSize.y = img->size.y;
+	}
+
+	LogInfo("Loaded %d images", (int)imageSet->images.size());
+
+	return imageSet;
+}
+
 }; // namespace OpenApoc
