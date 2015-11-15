@@ -170,7 +170,12 @@ bool RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::
 		else if (tag == "stratmap")
 		{
 			def.strategySprites = parseDirectionalSprites(fw, node);
-			LogWarning("Read %d sprites", def.strategySprites.size());
+			LogWarning("Read %d strategy sprites", def.strategySprites.size());
+		}
+		else if (tag == "shadow")
+		{
+			def.shadowSprites = parseDirectionalSprites(fw, node);
+			LogWarning("Read %d shadow sprites", def.strategySprites.size());
 		}
 		else
 		{
@@ -206,6 +211,13 @@ bool RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::
 		Vec3<float> v = directionsToVec[s.first];
 		v = glm::normalize(v);
 		def.directionalStrategySprites.emplace_back(v, s.second);
+	}
+
+	for (auto &s : def.shadowSprites)
+	{
+		Vec3<float> v = directionsToVec[s.first];
+		v = glm::normalize(v);
+		def.directionalShadowSprites.emplace_back(v, s.second);
 	}
 
 	if (!def.voxelMap)

@@ -63,6 +63,7 @@ class Vehicle : public std::enable_shared_from_this<Vehicle>
 	Vec3<float> position;
 
 	const Vec3<float> &getPosition() const { return this->position; }
+	const Vec3<float> &getDirection() const;
 
 	virtual void update(GameState &state, unsigned int ticks);
 };

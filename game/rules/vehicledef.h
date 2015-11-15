@@ -60,9 +60,11 @@ class VehicleDefinition
 	Type type;
 	std::map<Banking, std::map<Direction, sp<Image>>> sprites;
 	std::map<Direction, sp<Image>> strategySprites;
+	std::map<Direction, sp<Image>> shadowSprites;
 	// The same sprites but using vectors for directions
 	std::vector<std::pair<Vec3<float>, sp<Image>>> directionalSprites;
 	std::vector<std::pair<Vec3<float>, sp<Image>>> directionalStrategySprites;
+	std::vector<std::pair<Vec3<float>, sp<Image>>> directionalShadowSprites;
 	Vec3<float> size;
 	Vec2<float> imageOffset;
 	sp<VoxelMap> voxelMap;

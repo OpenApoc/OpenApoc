@@ -234,4 +234,15 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	}
 }
 
+const Vec3<float> &Vehicle::getDirection() const
+{
+	static const Vec3<float> noDirection = {1, 0, 0};
+	if (!this->tileObject)
+	{
+		LogError("getDirection() called on vehicle with no tile object");
+		return noDirection;
+	}
+	return this->tileObject->getDirection();
+}
+
 }; // namespace OpenApoc
