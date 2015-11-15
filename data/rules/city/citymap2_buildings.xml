@@ -19,7 +19,7 @@
           <corridor x0="2" x1="5" y0="5" y1="5"/>
           <corridor x0="3" x1="4" y0="6" y1="6"/>
         </base>
-      </building>        
+      </building>
       <building x0="70" x1="76" y0="7" y1="11" owner="ORG_MARSEC" name="Arms One"/>
       <building x0="84" x1="91" y0="13" y1="20" owner="ORG_NUTRIVEND" name="Hypermart Zone"/>
       <building x0="78" x1="83" y0="14" y1="18" owner="ORG_TECHNOCRATS" name="Nietzsche Institute"/>
