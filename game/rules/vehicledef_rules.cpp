@@ -73,7 +73,7 @@ parseDirectionalSprites(Framework &fw, tinyxml2::XMLElement *root)
 		auto sprite = fw.gamecore->GetImage(spriteName);
 
 		if (!sprite)
-			LogError("Failed to load directional sprite");
+			LogError("Failed to load directional sprite \"%s\"", spriteName.c_str());
 		sprites[dir] = sprite;
 	}
 	return sprites;

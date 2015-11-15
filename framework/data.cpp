@@ -359,6 +359,46 @@ sp<Image> Data::load_image(const UString &path)
 				return nullptr;
 		}
 	}
+	else if (path.substr(0, 10) == "PCKSHADOW:")
+	{
+		auto splitString = path.split(':');
+		if (splitString.size() != 3 && splitString.size() != 4 && splitString.size() != 5)
+		{
+			LogError("Invalid PCKSHADOW resource string: \"%s\"", path.c_str());
+			return nullptr;
+		}
+		auto imageSet =
+		    this->load_image_set(splitString[0] + ":" + splitString[1] + ":" + splitString[2]);
+		if (!imageSet)
+		{
+			return nullptr;
+		}
+		// PCK resources come in the format:
+		//"PCK:PCKFILE:TABFILE:INDEX"
+		// or
+		//"PCK:PCKFILE:TABFILE:INDEX:PALETTE" if we want them already in rgb space
+		switch (splitString.size())
+		{
+			case 4:
+			{
+				img = imageSet->images[Strings::ToInteger(splitString[3])];
+				break;
+			}
+			case 5:
+			{
+				sp<PaletteImage> pImg = std::dynamic_pointer_cast<PaletteImage>(this->load_image(
+				    "PCKSHADOW:" + splitString[1] + ":" + splitString[2] + ":" + splitString[3]));
+				assert(pImg);
+				auto pal = this->load_palette(splitString[4]);
+				assert(pal);
+				img = pImg->toRGBImage(pal);
+				break;
+			}
+			default:
+				LogError("Invalid PCKSHADOW resource string \"%s\"", path.c_str());
+				return nullptr;
+		}
+	}
 	else
 	{
 		for (auto &loader : imageLoaders)

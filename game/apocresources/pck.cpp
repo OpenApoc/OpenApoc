@@ -558,8 +558,8 @@ sp<ImageSet> PCKLoader::load_shadow(Data &data, UString PckFilename, UString Tab
 	unsigned idx = 0;
 	while (tabFile.read((char *)&offset, sizeof(offset)))
 	{
-		// shadow TAB files store the offset/4
-		pckFile.seekg(offset * 4, std::ios::beg);
+		// shadow TAB files store the offset directly
+		pckFile.seekg(offset, std::ios::beg);
 		if (!pckFile)
 		{
 			LogError("Failed to seek to offset %u", offset);
