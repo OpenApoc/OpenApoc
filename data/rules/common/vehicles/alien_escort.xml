@@ -17,5 +17,6 @@
       <frame>PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:90</frame>
     </animation>
     <crashed>PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:91</crashed>
+    <shadow>PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:95</shadow>
   </vehicledef>
 </openapoc_rules>
