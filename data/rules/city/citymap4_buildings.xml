@@ -7,7 +7,7 @@
       <building x0="1" x1="5" y0="12" y1="14" owner="ORG_OSIRON" name="Dickens Estate"/>
       <building x0="0" x1="9" y0="16" y1="18" owner="ORG_DIABLO" name="Oliver Twist Block"/>
       <building x0="7" x1="11" y0="20" y1="24" owner="ORG_GOVERNMENT" name="Campesino Apartments">
-        <base x="3" y="7">
+        <base x="7" y="3">
           <corridor x0="0" x1="7" y0="1" y1="2"/>
           <corridor x0="0" x1="7" y0="5" y1="6"/>
           <corridor x0="0" x1="1" y0="3" y1="4"/>
