@@ -12,7 +12,14 @@
       <building x0="32" x1="38" y0="21" y1="25" owner="ORG_EXTROPIANS" name="The Karpov Building"/>
       <building x0="42" x1="47" y0="16" y1="19" owner="ORG_SANCTUARY_CLINIC" name="Acropolis Apartments"/>
       <building x0="48" x1="52" y0="11" y1="16" owner="ORG_LIFETREE" name="Utopia Mansions"/>
-      <building x0="65" x1="69" y0="7" y1="13" owner="ORG_GOVERNMENT" name="Warehouse One"/>
+      <building x0="65" x1="69" y0="7" y1="13" owner="ORG_GOVERNMENT" name="Warehouse One">
+        <base x="4" y="6">
+          <corridor x0="1" x1="2" y0="1" y1="4"/>
+          <corridor x0="5" x1="6" y0="1" y1="4"/>
+          <corridor x0="2" x1="5" y0="5" y1="5"/>
+          <corridor x0="3" x1="4" y0="6" y1="6"/>
+        </base>
+      </building>        
       <building x0="70" x1="76" y0="7" y1="11" owner="ORG_MARSEC" name="Arms One"/>
       <building x0="84" x1="91" y0="13" y1="20" owner="ORG_NUTRIVEND" name="Hypermart Zone"/>
       <building x0="78" x1="83" y0="14" y1="18" owner="ORG_TECHNOCRATS" name="Nietzsche Institute"/>
@@ -39,11 +46,25 @@
       <building x0="49" x1="52" y0="52" y1="59" owner="ORG_MEGAPOL" name="Law Control Station"/>
       <building x0="54" x1="57" y0="52" y1="59" owner="ORG_MEGAPOL" name="Rescue One"/>
       <building x0="75" x1="80" y0="28" y1="50" owner="ORG_EVONET" name="Recyclotorium One"/>
-      <building x0="86" x1="88" y0="28" y1="32" owner="ORG_GOVERNMENT" name="Warehouse Two"/>
+      <building x0="86" x1="88" y0="28" y1="32" owner="ORG_GOVERNMENT" name="Warehouse Two">
+        <base x="1" y="1">
+          <corridor x0="1" x1="6" y0="1" y1="2"/>
+          <corridor x0="1" x1="6" y0="5" y1="6"/>
+          <corridor x0="1" x1="2" y0="3" y1="4"/>
+          <corridor x0="5" x1="6" y0="3" y1="4"/>
+        </base>
+      </building>
       <building x0="84" x1="85" y0="28" y1="32" owner="ORG_OSIRON" name="Warehouse Three"/>
       <building x0="86" x1="88" y0="34" y1="38" owner="ORG_SOLMINE" name="Warehouse Four"/>
       <building x0="84" x1="85" y0="34" y1="38" owner="ORG_MARSEC" name="Warehouse Five"/>
-      <building x0="86" x1="88" y0="40" y1="44" owner="ORG_GOVERNMENT" name="Warehouse Six"/>
+      <building x0="86" x1="88" y0="40" y1="44" owner="ORG_GOVERNMENT" name="Warehouse Six">
+        <base x="6" y="1">
+          <corridor x0="3" x1="4" y0="1" y1="6"/>
+          <corridor x0="1" x1="6" y0="3" y1="4"/>
+          <corridor x0="1" x1="1" y0="5" y1="6"/>
+          <corridor x0="6" x1="6" y0="1" y1="2"/>
+        </base>
+      </building>
       <building x0="84" x1="85" y0="40" y1="44" owner="ORG_SUPERDYNAMICS" name="Warehouse Seven"/>
       <building x0="82" x1="88" y0="46" y1="55" owner="ORG_EVONET" name="Cityclean Two"/>
       <building x0="73" x1="78" y0="52" y1="57" owner="ORG_NANOTECH" name="Appliances One"/>
@@ -65,7 +86,13 @@
       <building x0="39" x1="45" y0="91" y1="99" owner="ORG_DIABLO" name="Grey Visitor Towers"/>
       <building x0="47" x1="54" y0="71" y1="74" owner="ORG_DIABLO" name="Scrooge Mansions"/>
       <building x0="45" x1="50" y0="60" y1="66" owner="ORG_OSIRON" name="Borstal Block"/>
-      <building x0="56" x1="61" y0="60" y1="66" owner="ORG_GOVERNMENT" name="Heavenly Towers"/>
+      <building x0="56" x1="61" y0="60" y1="66" owner="ORG_GOVERNMENT" name="Heavenly Towers">
+        <base x="1" y="3">
+          <corridor x0="1" x1="6" y0="1" y1="2"/>
+          <corridor x0="1" x1="2" y0="3" y1="4"/>
+          <corridor x0="1" x1="6" y0="5" y1="6"/>
+        </base>
+      </building>
       <building x0="37" x1="41" y0="45" y1="50" owner="ORG_PSYKE" name="Civic Project"/>
       <building x0="37" x1="41" y0="52" y1="64" owner="ORG_S_E_L_F_" name="Chronos Block"/>
       <building x0="48" x1="61" y0="45" y1="50" owner="ORG_PSYKE" name="Necronomicon Mansions"/>
@@ -74,12 +101,24 @@
       <building x0="79" x1="88" y0="57" y1="60" owner="ORG_MARSEC" name="Megaflyer One"/>
       <building x0="79" x1="88" y0="61" y1="64" owner="ORG_SUPERDYNAMICS" name="Megaflyer Two"/>
       <building x0="29" x1="33" y0="17" y1="19" owner="ORG_SOLMINE" name="Warehouse Eight"/>
-      <building x0="34" x1="38" y0="17" y1="19" owner="ORG_GOVERNMENT" name="Warehouse Nine"/>
+      <building x0="34" x1="38" y0="17" y1="19" owner="ORG_GOVERNMENT" name="Warehouse Nine">
+        <base x="4" y="3">
+          <corridor x0="2" x1="4" y0="2" y1="4"/>
+          <corridor x0="3" x1="4" y0="1" y1="6"/>
+          <corridor x0="1" x1="6" y0="3" y1="4"/>
+        </base>
+      </building>
       <building x0="54" x1="64" y0="17" y1="23" owner="ORG_GENERAL_METRO" name="Car One"/>
       <building x0="65" x1="75" y0="17" y1="23" owner="ORG_GENERAL_METRO" name="Car Two"/>
       <building x0="65" x1="74" y0="29" y1="50" owner="ORG_MUTANT_ALLIANCE" name="Lovecraft Block"/>
       <building x0="54" x1="63" y0="27" y1="32" owner="ORG_MEGAPOL" name="Flyer Two"/>
-      <building x0="44" x1="52" y0="37" y1="41" owner="ORG_GOVERNMENT" name="Bakunin Block"/>
+      <building x0="44" x1="52" y0="37" y1="41" owner="ORG_GOVERNMENT" name="Bakunin Block">
+        <base x="3" y="2">
+          <corridor x0="1" x1="6" y0="1" y1="2"/>
+          <corridor x0="2" x1="5" y0="3" y1="4"/>
+          <corridor x0="3" x1="4" y0="5" y1="6"/>
+        </base>
+      </building>
     </buildings>
   </city>
 </openapoc_rules>
