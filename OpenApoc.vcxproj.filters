@@ -270,6 +270,9 @@
     <ClCompile Include="framework\trace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\tileview\tileobject_shadow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -561,6 +564,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework\trace.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\tileview\tileobject_shadow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

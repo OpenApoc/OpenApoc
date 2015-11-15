@@ -412,6 +412,7 @@
     <ClCompile Include="game\tileview\tileobject_doodad.cpp" />
     <ClCompile Include="game\tileview\tileobject_projectile.cpp" />
     <ClCompile Include="game\tileview\tileobject_scenery.cpp" />
+    <ClCompile Include="game\tileview\tileobject_shadow.cpp" />
     <ClCompile Include="game\tileview\tileobject_vehicle.cpp" />
     <ClCompile Include="game\tileview\tileview.cpp" />
     <ClCompile Include="game\ufopaedia\ufopaedia.cpp" />
@@ -503,6 +504,7 @@
     <ClInclude Include="game\tileview\tileobject_doodad.h" />
     <ClInclude Include="game\tileview\tileobject_projectile.h" />
     <ClInclude Include="game\tileview\tileobject_scenery.h" />
+    <ClInclude Include="game\tileview\tileobject_shadow.h" />
     <ClInclude Include="game\tileview\tileobject_vehicle.h" />
     <ClInclude Include="game\tileview\tileview.h" />
     <ClInclude Include="game\tileview\voxel.h" />
