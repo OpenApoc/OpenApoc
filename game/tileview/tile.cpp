@@ -5,6 +5,7 @@
 #include "game/tileview/tileobject_projectile.h"
 #include "game/city/projectile.h"
 #include "game/tileview/tileobject_vehicle.h"
+#include "game/tileview/tileobject_shadow.h"
 #include "game/city/vehicle.h"
 #include "game/tileview/tileobject_scenery.h"
 #include "game/city/scenery.h"
@@ -252,11 +253,19 @@ void TileMap::addObjectToMap(sp<Vehicle> vehicle)
 	{
 		LogError("Vehicle already has tile object");
 	}
+	if (vehicle->shadowObject)
+	{
+		LogError("Vehicle already has shadow object");
+	}
 	// FIXME: std::make_shared<> doesn't work for private (but accessible due to friend)
 	// constructors?
 	sp<TileObjectVehicle> obj(new TileObjectVehicle(*this, vehicle));
 	obj->setPosition(vehicle->getPosition());
 	vehicle->tileObject = obj;
+
+	sp<TileObjectShadow> shadow(new TileObjectShadow(*this, vehicle));
+	shadow->setPosition(vehicle->getPosition());
+	vehicle->shadowObject = shadow;
 }
 
 void TileMap::addObjectToMap(sp<Scenery> scenery)

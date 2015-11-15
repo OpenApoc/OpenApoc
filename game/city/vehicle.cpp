@@ -10,6 +10,7 @@
 #include "game/city/vehiclemission.h"
 #include "game/gamestate.h"
 #include "game/tileview/tileobject_vehicle.h"
+#include "game/tileview/tileobject_shadow.h"
 
 #include <cfloat>
 #include <random>
@@ -54,7 +55,7 @@ class FlyingVehicleMover : public VehicleMover
 				if (distanceToGoal <= distanceLeft)
 				{
 					distanceLeft -= distanceToGoal;
-					vehicleTile->setPosition(goalPosition);
+					vehicle.setPosition(goalPosition);
 					auto dir = glm::normalize(vectorToGoal);
 					if (dir.z >= 0.9f || dir.z <= -0.9f)
 					{
@@ -101,8 +102,8 @@ class FlyingVehicleMover : public VehicleMover
 						dir = glm::normalize(vectorToGoal);
 					}
 					vehicleTile->setDirection(dir);
-					vehicleTile->setPosition(vehicleTile->getPosition() +
-					                         distanceLeft * glm::normalize(vectorToGoal));
+					vehicle.setPosition(vehicleTile->getPosition() +
+					                    distanceLeft * glm::normalize(vectorToGoal));
 					distanceLeft = 0;
 					break;
 				}
@@ -157,6 +158,8 @@ void Vehicle::land(TileMap &map, sp<Building> b)
 	b->landed_vehicles.insert(shared_from_this());
 	this->tileObject->removeFromMap();
 	this->tileObject.reset();
+	this->shadowObject->removeFromMap();
+	this->shadowObject = nullptr;
 	this->position = {0, 0, 0};
 }
 
@@ -243,6 +246,27 @@ const Vec3<float> &Vehicle::getDirection() const
 		return noDirection;
 	}
 	return this->tileObject->getDirection();
+}
+
+void Vehicle::setPosition(const Vec3<float> &pos)
+{
+	if (!this->tileObject)
+	{
+		LogError("setPosition called on vehicle with no tile object");
+	}
+	else
+	{
+		this->tileObject->setPosition(pos);
+	}
+
+	if (!this->shadowObject)
+	{
+		LogError("setPosition called on vehicle with no shadow object");
+	}
+	else
+	{
+		this->shadowObject->setPosition(pos);
+	}
 }
 
 }; // namespace OpenApoc

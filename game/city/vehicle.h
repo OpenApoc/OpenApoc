@@ -21,6 +21,7 @@ class Image;
 class VehicleFactory;
 class VehicleDefinition;
 class TileObjectVehicle;
+class TileObjectShadow;
 class Vehicle;
 class Organisation;
 class Weapon;
@@ -47,6 +48,7 @@ class Vehicle : public std::enable_shared_from_this<Vehicle>
 	sp<Organisation> owner;
 
 	sp<TileObjectVehicle> tileObject;
+	sp<TileObjectShadow> shadowObject;
 
 	std::deque<std::unique_ptr<VehicleMission>> missions;
 	std::unique_ptr<VehicleMover> mover;
@@ -64,6 +66,8 @@ class Vehicle : public std::enable_shared_from_this<Vehicle>
 
 	const Vec3<float> &getPosition() const { return this->position; }
 	const Vec3<float> &getDirection() const;
+
+	void setPosition(const Vec3<float> &pos);
 
 	virtual void update(GameState &state, unsigned int ticks);
 };
