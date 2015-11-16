@@ -50,7 +50,7 @@ class TraceManager
 		listMutex.lock();
 		EventList *list = new EventList;
 		ss << std::this_thread::get_id();
-		list->tid == ss.str();
+		list->tid = ss.str();
 		lists.emplace_back(list);
 		listMutex.unlock();
 		return list;
