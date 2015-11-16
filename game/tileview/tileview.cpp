@@ -165,32 +165,36 @@ void TileView::Render()
 
 	for (int z = 0; z < maxZDraw; z++)
 	{
-		for (int y = minY; y < maxY; y++)
+		for (int layer = 0; layer < map.getLayerCount(); layer++)
 		{
-			for (int x = minX; x < maxX; x++)
+			for (int y = minY; y < maxY; y++)
 			{
-				bool showOrigin = fw.state->showTileOrigin;
-				bool showSelected = (fw.gamecore->DebugModeEnabled && z == selectedTilePosition.z &&
-				                     y == selectedTilePosition.y && x == selectedTilePosition.x);
-				auto tile = map.getTile(x, y, z);
-				auto screenPos = tileToScreenCoords(Vec3<float>{
-				    static_cast<float>(x), static_cast<float>(y), static_cast<float>(z)});
-				screenPos.x += offsetX;
-				screenPos.y += offsetY;
-
-				if (showSelected)
-					r.draw(selectedTileImageBack, screenPos);
-
-				for (auto obj : tile->drawnObjects)
+				for (int x = minX; x < maxX; x++)
 				{
-					Vec2<float> pos = tileToScreenCoords(obj->getPosition());
-					pos.x += offsetX;
-					pos.y += offsetY;
-					obj->draw(r, *this, pos, this->viewMode);
-				}
+					bool showOrigin = fw.state->showTileOrigin;
+					bool showSelected =
+					    (fw.gamecore->DebugModeEnabled && z == selectedTilePosition.z &&
+					     y == selectedTilePosition.y && x == selectedTilePosition.x);
+					auto tile = map.getTile(x, y, z);
+					auto screenPos = tileToScreenCoords(Vec3<float>{
+					    static_cast<float>(x), static_cast<float>(y), static_cast<float>(z)});
+					screenPos.x += offsetX;
+					screenPos.y += offsetY;
 
-				if (showSelected)
-					r.draw(selectedTileImageFront, screenPos);
+					if (showSelected)
+						r.draw(selectedTileImageBack, screenPos);
+
+					for (auto obj : tile->drawnObjects[layer])
+					{
+						Vec2<float> pos = tileToScreenCoords(obj->getPosition());
+						pos.x += offsetX;
+						pos.y += offsetY;
+						obj->draw(r, *this, pos, this->viewMode);
+					}
+
+					if (showSelected)
+						r.draw(selectedTileImageFront, screenPos);
+				}
 			}
 		}
 	}

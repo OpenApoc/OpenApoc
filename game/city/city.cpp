@@ -22,7 +22,16 @@
 namespace OpenApoc
 {
 
-City::City(Framework &fw, GameState &state) : fw(fw), map(fw, fw.rules->getCitySize())
+// An ordered list of the types drawn in each layer
+// Within the same layer these are ordered by a calculated z based on the 'center' position
+static std::vector<std::set<TileObject::Type>> layerMap = {
+    // Draw all scenery first, then put stuff on top of that
+    {TileObject::Type::Scenery},
+    {TileObject::Type::Projectile, TileObject::Type::Vehicle, TileObject::Type::Doodad,
+     TileObject::Type::Shadow},
+};
+
+City::City(Framework &fw, GameState &state) : fw(fw), map(fw, fw.rules->getCitySize(), layerMap)
 {
 	Trace::start("City::buildings");
 	for (auto &def : fw.rules->getBuildingDefs())

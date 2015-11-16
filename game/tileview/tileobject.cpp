@@ -28,10 +28,11 @@ void TileObject::removeFromMap()
 		{
 			LogError("Nothing erased?");
 		}
-		this->owningTile->drawnObjects.erase(std::remove(this->owningTile->drawnObjects.begin(),
-		                                                 this->owningTile->drawnObjects.end(),
-		                                                 thisPtr),
-		                                     this->owningTile->drawnObjects.end());
+		int layer = map.getLayer(this->type);
+		this->owningTile->drawnObjects[layer].erase(
+		    std::remove(this->owningTile->drawnObjects[layer].begin(),
+		                this->owningTile->drawnObjects[layer].end(), thisPtr),
+		    this->owningTile->drawnObjects[layer].end());
 		this->owningTile = nullptr;
 	}
 	for (auto *tile : this->intersectingTiles)
@@ -95,9 +96,11 @@ void TileObject::setPosition(Vec3<float> newPosition)
 		LogError("Object already in owned object list?");
 	}
 
-	this->owningTile->drawnObjects.push_back(thisPtr);
-	std::sort(this->owningTile->drawnObjects.begin(), this->owningTile->drawnObjects.end(),
-	          TileObjectZComparer{});
+	int layer = map.getLayer(this->type);
+
+	this->owningTile->drawnObjects[layer].push_back(thisPtr);
+	std::sort(this->owningTile->drawnObjects[layer].begin(),
+	          this->owningTile->drawnObjects[layer].end(), TileObjectZComparer{});
 
 	Vec3<int> minBounds = {floorf(newPosition.x - this->bounds.x / 2.0f),
 	                       floorf(newPosition.y - this->bounds.y / 2.0f),

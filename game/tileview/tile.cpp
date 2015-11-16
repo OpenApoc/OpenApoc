@@ -17,7 +17,8 @@
 namespace OpenApoc
 {
 
-TileMap::TileMap(Framework &fw, Vec3<int> size) : fw(fw), size(size)
+TileMap::TileMap(Framework &fw, Vec3<int> size, std::vector<std::set<TileObject::Type>> layerMap)
+    : layerMap(layerMap), fw(fw), size(size)
 {
 	tiles.reserve(size.z * size.y * size.z);
 	for (int z = 0; z < size.z; z++)
@@ -26,8 +27,22 @@ TileMap::TileMap(Framework &fw, Vec3<int> size) : fw(fw), size(size)
 		{
 			for (int x = 0; x < size.x; x++)
 			{
-				tiles.emplace_back(*this, Vec3<int>{x, y, z});
+				tiles.emplace_back(*this, Vec3<int>{x, y, z}, this->getLayerCount());
 			}
+		}
+	}
+
+	// Quick sanity check of the layer map:
+	std::set<TileObject::Type> seenTypes;
+	for (auto &typesInLayer : layerMap)
+	{
+		for (auto &type : typesInLayer)
+		{
+			if (seenTypes.find(type) != seenTypes.end())
+			{
+				LogError("Type %d appears in multiple layers", (int)type);
+			}
+			seenTypes.insert(type);
 		}
 	}
 }
@@ -49,7 +64,10 @@ Tile *TileMap::getTile(Vec3<float> pos) { return getTile(pos.x, pos.y, pos.z); }
 
 TileMap::~TileMap() {}
 
-Tile::Tile(TileMap &map, Vec3<int> position) : map(map), position(position) {}
+Tile::Tile(TileMap &map, Vec3<int> position, int layerCount)
+    : map(map), position(position), drawnObjects(layerCount)
+{
+}
 
 namespace
 {
@@ -293,4 +311,20 @@ void TileMap::addObjectToMap(sp<Doodad> doodad)
 	obj->setPosition(doodad->getPosition());
 	doodad->tileObject = obj;
 }
+
+int TileMap::getLayer(TileObject::Type type) const
+{
+	for (int i = 0; i < this->layerMap.size(); i++)
+	{
+		if (this->layerMap[i].find(type) != this->layerMap[i].end())
+		{
+			return i;
+		}
+	}
+	LogError("No layer matching object type %d", (int)type);
+	return 0;
+}
+
+int TileMap::getLayerCount() const { return this->layerMap.size(); }
+
 }; // namespace OpenApoc

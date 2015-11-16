@@ -37,9 +37,9 @@ class Tile
 	std::set<sp<TileObject>> intersectingObjects;
 
 	// FIXME: This is effectively a z-sorted list of ownedObjects - can this be merged somehow?
-	std::vector<sp<TileObject>> drawnObjects;
+	std::vector<std::vector<sp<TileObject>>> drawnObjects;
 
-	Tile(TileMap &map, Vec3<int> position);
+	Tile(TileMap &map, Vec3<int> position, int layerCount);
 
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd);
 };
@@ -55,6 +55,7 @@ class TileMap
 {
   private:
 	std::vector<Tile> tiles;
+	std::vector<std::set<TileObject::Type>> layerMap;
 
   public:
 	Framework &fw;
@@ -64,7 +65,7 @@ class TileMap
 	Tile *getTile(Vec3<float> pos);
 	Vec3<int> size;
 
-	TileMap(Framework &fw, Vec3<int> size);
+	TileMap(Framework &fw, Vec3<int> size, std::vector<std::set<TileObject::Type>> layerMap);
 	~TileMap();
 
 	std::list<Tile *> findShortestPath(Vec3<int> origin, Vec3<int> destination,
@@ -77,5 +78,8 @@ class TileMap
 	void addObjectToMap(sp<Vehicle>);
 	void addObjectToMap(sp<Scenery>);
 	void addObjectToMap(sp<Doodad>);
+
+	int getLayer(TileObject::Type type) const;
+	int getLayerCount() const;
 };
 }; // namespace OpenApoc
