@@ -65,8 +65,10 @@ void TileObjectShadow::setPosition(Vec3<float> newPosition)
 			if (obj->getType() == TileObject::Type::Scenery)
 			{
 				newPosition.z = obj->getPosition().z;
-				// FIXME: Slight tweak to ensure the shadow is drawn on top of the scenery
-				newPosition.z += (1.0f / 16.0f);
+				// FIXME: I /think/ this is due to the sprite offset in the pck not being handled,
+				// but here's a workaround to make it look kinda-right
+				newPosition.x += 0.5;
+				newPosition.y += 0.5;
 				found = true;
 				break;
 			}
