@@ -633,6 +633,13 @@ void Framework::Display_Initialise()
 	int scrH = Settings->getInt("Visual.ScreenHeight");
 	bool scrFS = Settings->getBool("Visual.FullScreen");
 
+	if (scrW < 640 || scrH < 480)
+	{
+		LogError(
+		    "Requested display size of {%d,%d} is lower than {640,480} and probably won't work",
+		    scrW, scrH);
+	}
+
 	if (scrFS)
 	{
 		display_flags |= ALLEGRO_FULLSCREEN;
