@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
-  <vehicledef id="VEHICLE_ALIEN_BATTLESHIP" name="STR_ALIEN_BATTLESHIP_NAME" manufacturer="ORG_ALIEN" sizeX="2" sizeY="2" sizeZ="2" imageOffsetX="64" imageOffsetY="64" type="ufo">
+  <vehicledef id="VEHICLE_ALIEN_BATTLESHIP" name="STR_ALIEN_BATTLESHIP_NAME" manufacturer="ORG_ALIEN" sizeX="2" sizeY="2" sizeZ="2" imageOffsetX="64" imageOffsetY="64" shadowOffsetX="64" shadowOffsetY="0" type="ufo">
     <stratmap offsetX="0" offsetY="0">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:573</stratmap>
     <stratmap offsetX="0" offsetY="1">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:575</stratmap>
     <stratmap offsetX="1" offsetY="0">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:574</stratmap>

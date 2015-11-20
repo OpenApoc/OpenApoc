@@ -67,6 +67,7 @@ class VehicleDefinition
 	std::vector<std::pair<Vec3<float>, sp<Image>>> directionalShadowSprites;
 	Vec3<float> size;
 	Vec2<float> imageOffset;
+	Vec2<float> shadowOffset;
 	sp<VoxelMap> voxelMap;
 };
 

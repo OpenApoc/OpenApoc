@@ -143,6 +143,17 @@ bool RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::
 		return false;
 	}
 
+	if (!ReadAttribute(root, "shadowOffsetX", def.shadowOffset.x))
+	{
+		LogError("No \"shadowOffsetX\" in vehicle ID \"%s\"", def.ID.c_str());
+		return false;
+	}
+	if (!ReadAttribute(root, "shadowOffsetY", def.shadowOffset.y))
+	{
+		LogError("No \"shadowOffsetY\" in vehicle ID \"%s\"", def.ID.c_str());
+		return false;
+	}
+
 	for (tinyxml2::XMLElement *node = root->FirstChildElement(); node != nullptr;
 	     node = node->NextSiblingElement())
 	{

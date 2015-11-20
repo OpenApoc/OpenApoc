@@ -35,7 +35,7 @@ void TileObjectShadow::draw(Renderer &r, TileView &view, Vec2<float> screenPosit
 				LogError("No image found for vehicle");
 				return;
 			}
-			r.draw(closestImage, screenPosition - vehicle->def.imageOffset);
+			r.draw(closestImage, screenPosition - vehicle->def.shadowOffset);
 			break;
 		}
 		case TileViewMode::Strategy:
@@ -67,8 +67,6 @@ void TileObjectShadow::setPosition(Vec3<float> newPosition)
 				newPosition.z = obj->getPosition().z;
 				// FIXME: I /think/ this is due to the sprite offset in the pck not being handled,
 				// but here's a workaround to make it look kinda-right
-				newPosition.x += 0.5;
-				newPosition.y += 0.5;
 				found = true;
 				break;
 			}

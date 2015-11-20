@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
-  <vehicledef id="VEHICLE_PHOENIX_HOVERCAR" name="STR_PHOENIX_HOVERCAR_NAME" manufacturer="ORG_MARSEC" sizeX="1" sizeY="1" sizeZ="1" imageOffsetX="32" imageOffsetY="32" type="flying">
+  <vehicledef id="VEHICLE_PHOENIX_HOVERCAR" name="STR_PHOENIX_HOVERCAR_NAME" manufacturer="ORG_MARSEC" sizeX="1" sizeY="1" sizeZ="1" imageOffsetX="32" imageOffsetY="32" shadowOffsetX="32" shadowOffsetY="0" type="flying">
     <stratmap>
       <N>PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:577</N>
       <NE>PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:578</NE>

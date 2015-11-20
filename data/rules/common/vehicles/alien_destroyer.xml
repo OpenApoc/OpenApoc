@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
-  <vehicledef id="VEHICLE_ALIEN_DESTROYER" name="STR_ALIEN_DESTROYER_NAME" manufacturer="ORG_ALIEN" sizeX="1" sizeY="1" sizeZ="1" imageOffsetX="32" imageOffsetY="32" type="ufo">
+  <vehicledef id="VEHICLE_ALIEN_DESTROYER" name="STR_ALIEN_DESTROYER_NAME" manufacturer="ORG_ALIEN" sizeX="1" sizeY="1" sizeZ="1" imageOffsetX="32" imageOffsetY="32" shadowOffsetX="32" shadowOffsetY="0" type="ufo">
     <stratmap>PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:572</stratmap>
     <animation>
       <frame>PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:40</frame>
