@@ -17,7 +17,6 @@ class Collision
 	sp<TileObject> obj;
 	sp<Projectile> projectile;
 	Vec3<float> position;
-	bool operator!() { return !!obj; }
 	explicit operator bool() const { return obj != nullptr; }
 };
 
