@@ -25,7 +25,7 @@ sp<Palette> loadApocPalette(Data &data, const UString fileName)
 			c = {0, 0, 0, 0};
 		else
 		{
-			/* Scale from 0-64 to 0-255 */
+			/* Scale from 0-63 to 0-255 */
 			uint8_t r = colour[0] << 2 | (colour[0] >> 4 & 0x3);
 			uint8_t g = colour[1] << 2 | (colour[1] >> 4 & 0x3);
 			uint8_t b = colour[2] << 2 | (colour[2] >> 4 & 0x3);
