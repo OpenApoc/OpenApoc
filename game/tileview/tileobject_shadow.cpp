@@ -1,4 +1,5 @@
 #include "game/tileview/tileobject_shadow.h"
+#include "game/tileview/voxel.h"
 #include "game/city/vehicle.h"
 
 namespace OpenApoc
@@ -50,37 +51,23 @@ void TileObjectShadow::draw(Renderer &r, TileView &view, Vec2<float> screenPosit
 
 void TileObjectShadow::setPosition(Vec3<float> newPosition)
 {
-	// This finds the next scenery tile on or below newPosition and sets the
-	// real position to that
+	// This projects a line downwards and draws places the shadow at the z of the first thing hit
 
-	// Truncate down to int
-	Vec3<int> pos = {newPosition.x, newPosition.y, newPosition.z};
-	bool found = false;
-	// and keep going down until we find a tile with scenery
-	while (!found && pos.z >= 0)
+	auto shadowPosition = newPosition;
+	auto c = map.findCollision(newPosition, Vec3<float>{newPosition.x, newPosition.y, 0});
+	if (c)
 	{
-		auto *t = map.getTile(pos);
-		for (auto &obj : t->ownedObjects)
-		{
-			if (obj->getType() == TileObject::Type::Scenery)
-			{
-				newPosition.z = obj->getPosition().z;
-				// FIXME: I /think/ this is due to the sprite offset in the pck not being handled,
-				// but here's a workaround to make it look kinda-right
-				found = true;
-				break;
-			}
-		}
-		pos.z--;
+		shadowPosition.z = c.position.z;
 	}
-	if (!found)
+	else
 	{
-		LogWarning("No scenery found below {%f,%f,%f}", newPosition.x, newPosition.y,
-		           newPosition.z);
-		newPosition.z = 0;
+		// May be a normal occurance (e.g. landing pads have a 'hole'
+		LogInfo("Nothing beneath {%f,%f,%f} to receive shadow", newPosition.x, newPosition.y,
+		        newPosition.z);
+		shadowPosition.z = 0;
 	}
 
-	TileObject::setPosition(newPosition);
+	TileObject::setPosition(shadowPosition);
 }
 
 TileObjectShadow::~TileObjectShadow() {}
