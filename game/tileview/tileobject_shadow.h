@@ -18,6 +18,7 @@ class TileObjectShadow : public TileObject
 	friend class TileMap;
 	std::weak_ptr<Vehicle> owner;
 	TileObjectShadow(TileMap &map, sp<Vehicle> owner);
+	bool fellOffTheBottomOfTheMap;
 };
 
 } // namespace OpenApoc

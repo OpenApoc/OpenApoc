@@ -15,6 +15,10 @@ void TileObjectShadow::draw(Renderer &r, TileView &view, Vec2<float> screenPosit
 		LogError("Called with no owning vehicle object");
 		return;
 	}
+	if (this->fellOffTheBottomOfTheMap)
+	{
+		return;
+	}
 	switch (mode)
 	{
 		case TileViewMode::Isometric:
@@ -58,6 +62,7 @@ void TileObjectShadow::setPosition(Vec3<float> newPosition)
 	if (c)
 	{
 		shadowPosition.z = c.position.z;
+		this->fellOffTheBottomOfTheMap = false;
 	}
 	else
 	{
@@ -65,6 +70,8 @@ void TileObjectShadow::setPosition(Vec3<float> newPosition)
 		LogInfo("Nothing beneath {%f,%f,%f} to receive shadow", newPosition.x, newPosition.y,
 		        newPosition.z);
 		shadowPosition.z = 0;
+		// Mark it as not to be drawn
+		this->fellOffTheBottomOfTheMap = true;
 	}
 
 	TileObject::setPosition(shadowPosition);
@@ -74,7 +81,7 @@ TileObjectShadow::~TileObjectShadow() {}
 
 TileObjectShadow::TileObjectShadow(TileMap &map, sp<Vehicle> vehicle)
     : TileObject(map, TileObject::Type::Vehicle, vehicle->getPosition(), Vec3<float>{0, 0, 0}),
-      owner(vehicle)
+      owner(vehicle), fellOffTheBottomOfTheMap(false)
 {
 }
 
