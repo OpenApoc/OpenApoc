@@ -23,9 +23,9 @@ class Scenery : public std::enable_shared_from_this<Scenery>
 	SceneryTileDef &tileDef;
 
 	const Vec3<float> getPosition() const
-	{ // The "position" is the center, so offset by {0.5,0.5}
+	{ // The "position" is the center, so offset by {0.5,0.5,0.5}
 		Vec3<float> offsetPos = pos;
-		offsetPos += Vec3<float>{0.5, 0.5, 0.0};
+		offsetPos += Vec3<float>{0.5, 0.5, 0.5};
 		return offsetPos;
 	}
 

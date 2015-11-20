@@ -38,6 +38,7 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	Tile *getOwningTile() const { return this->owningTile; }
 
 	virtual sp<VoxelMap> getVoxelMap() { return nullptr; }
+	virtual Vec3<float> getVoxelOffset() { return bounds / 2.0f; }
 
 	virtual ~TileObject();
 

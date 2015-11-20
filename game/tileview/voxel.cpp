@@ -228,7 +228,8 @@ Collision Tile::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegm
 			{
 				continue;
 			}
-			auto &objPos = obj->getPosition();
+			auto objPos = obj->getPosition();
+			objPos -= obj->getVoxelOffset();
 			Vec3<int> objOffset = point - Vec3<int>{objPos.x * tileSize.x, objPos.y * tileSize.y,
 			                                        objPos.z * tileSize.z};
 			if (voxelMap->getBit(objOffset))
