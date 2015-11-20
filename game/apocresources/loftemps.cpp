@@ -72,7 +72,7 @@ LOFTemps::LOFTemps(IFile &datFile, IFile &tabFile)
 						b = true;
 					else
 						b = false;
-					bitmask >>= 1;
+					bitmask <<= 1;
 					slice->setBit(Vec2<int>{x + bit, y}, b);
 				}
 			}
