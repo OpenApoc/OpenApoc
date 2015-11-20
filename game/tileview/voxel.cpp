@@ -209,6 +209,8 @@ Collision Tile::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegm
 	c.obj = nullptr;
 
 	Vec3<int> tileSize = {32, 32, 16};
+	Vec3<int> tileStart = this->position * tileSize;
+	Vec3<int> tileEnd = tileStart + tileSize;
 
 	// FIXME: This aligns the beginning/end to
 	Vec3<int> voxelLineStart =
@@ -221,6 +223,9 @@ Collision Tile::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegm
 	LineSegment<int, true> line{voxelLineStart, voxelLineEnd};
 	for (auto &point : line)
 	{
+		if (point.x < tileStart.x || point.y < tileStart.y || point.z < tileStart.z ||
+		    point.x > tileEnd.x || point.y > tileEnd.y || point.z > tileEnd.z)
+			continue;
 		for (auto &obj : intersectingObjects)
 		{
 			auto voxelMap = obj->getVoxelMap();
