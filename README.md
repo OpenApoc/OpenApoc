@@ -44,10 +44,10 @@ git submodule update
 -- When running from the Visual Studio UI, the working directory is set to the root of the project, so the data folder should already be in the right place. If you want to run outside of Visual Studio, you need to copy the whole 'data' folder (including the cd.iso file) into the folder openapoc.exe resides in
 
 Building on Linux
-(tested on ubuntu 14.04 - other distributions will probably need different packages to install - see the dependency list above)
+(tested on ubuntu 14.04.3 - other distributions will probably need different packages to install - see the dependency list above)
 - Install the following packages: liballegro5-dev glm libicu-dev libtinyxml2-dev cmake build-essential git
 ```
-sudo apt-get install liballegro5-dev libicu-dev libtinyxml2-dev cmake build-essential git libunwind-dev
+sudo apt-get install liballegro5-dev libicu-dev libtinyxml2-dev cmake build-essential git libunwind8-dev
 ```
 - Checkout OpenApoc from github
 - Fetch the dependencies from git with the following terminal command (run from the just-created OpenApoc folder)
