@@ -15,8 +15,10 @@ namespace OpenApoc
 TileView::TileView(Framework &fw, TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
                    TileViewMode initialMode)
     : Stage(fw), map(map), isoTileSize(isoTileSize), stratTileSize(stratTileSize),
-      viewMode(initialMode), maxZDraw(10), offsetX(0), offsetY(0), cameraScrollX(0),
-      cameraScrollY(0), selectedTilePosition(0, 0, 0),
+      viewMode(initialMode), scrollUp(false), scrollDown(false), scrollLeft(false),
+      scrollRight(false), dpySize(fw.Display_GetWidth(), fw.Display_GetHeight()), maxZDraw(10),
+      centerPos(0, 0), isoScrollSpeed(0.5, 0.5), stratScrollSpeed(2.0f, 2.0f),
+      selectedTilePosition(0, 0, 0),
       selectedTileImageBack(fw.data->load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
       selectedTileImageFront(fw.data->load_image("CITY/SELECTED-CITYTILE-FRONT.PNG")),
       pal(fw.data->load_palette("xcom3/ufodata/PAL_01.DAT"))
@@ -42,20 +44,16 @@ void TileView::EventOccurred(Event *e)
 		switch (e->Data.Keyboard.KeyCode)
 		{
 			case ALLEGRO_KEY_UP:
-				// offsetY += tileSize.y;
-				cameraScrollY = isoTileSize.y / 8;
+				scrollUp = true;
 				break;
 			case ALLEGRO_KEY_DOWN:
-				// offsetY -= tileSize.y;
-				cameraScrollY = -isoTileSize.y / 8;
+				scrollDown = true;
 				break;
 			case ALLEGRO_KEY_LEFT:
-				// offsetX += tileSize.x;
-				cameraScrollX = isoTileSize.x / 8;
+				scrollLeft = true;
 				break;
 			case ALLEGRO_KEY_RIGHT:
-				// offsetX -= tileSize.x;
-				cameraScrollX = -isoTileSize.x / 8;
+				scrollRight = true;
 				break;
 
 			case ALLEGRO_KEY_PGDN:
@@ -120,12 +118,16 @@ void TileView::EventOccurred(Event *e)
 		switch (e->Data.Keyboard.KeyCode)
 		{
 			case ALLEGRO_KEY_UP:
+				scrollUp = false;
+				break;
 			case ALLEGRO_KEY_DOWN:
-				cameraScrollY = 0;
+				scrollDown = false;
 				break;
 			case ALLEGRO_KEY_LEFT:
+				scrollLeft = false;
+				break;
 			case ALLEGRO_KEY_RIGHT:
-				cameraScrollX = 0;
+				scrollRight = false;
 				break;
 		}
 	}
@@ -138,24 +140,64 @@ void TileView::EventOccurred(Event *e)
 
 void TileView::Render()
 {
-	int dpyWidth = fw.Display_GetWidth();
-	int dpyHeight = fw.Display_GetHeight();
 	Renderer &r = *fw.renderer;
 	r.clear();
 	r.setPalette(this->pal);
 
-	offsetX += cameraScrollX;
-	offsetY += cameraScrollY;
+	Vec2<float> newPos = this->centerPos;
+	if (this->viewMode == TileViewMode::Isometric)
+	{
+		if (scrollLeft)
+		{
+			newPos.x -= isoScrollSpeed.x;
+			newPos.y += isoScrollSpeed.y;
+		}
+		if (scrollRight)
+		{
+			newPos.x += isoScrollSpeed.x;
+			newPos.y -= isoScrollSpeed.y;
+		}
+		if (scrollUp)
+		{
+			newPos.y -= isoScrollSpeed.y;
+			newPos.x -= isoScrollSpeed.x;
+		}
+		if (scrollDown)
+		{
+			newPos.y += isoScrollSpeed.y;
+			newPos.x += isoScrollSpeed.x;
+		}
+	}
+	else if (this->viewMode == TileViewMode::Strategy)
+	{
+		if (scrollLeft)
+			newPos.x -= stratScrollSpeed.x;
+		if (scrollRight)
+			newPos.x += stratScrollSpeed.x;
+		if (scrollUp)
+			newPos.y -= stratScrollSpeed.y;
+		if (scrollDown)
+			newPos.y += stratScrollSpeed.y;
+	}
+	else
+	{
+		LogError("Unknown view mode");
+	}
 
-	// offsetX/offsetY is the 'amount added to the tile coords' - so we want
+	this->setScreenCenterTile(newPos);
+
+	auto screenOffset = this->getScreenOffset();
+
+	// screenOffset.x/screenOffset.y is the 'amount added to the tile coords' - so we want
 	// the inverse to tell which tiles are at the screen bounds
-	auto topLeft =
-	    screenToTileCoords(Vec2<int>{-offsetX - isoTileSize.x, -offsetY - isoTileSize.y}, 0);
-	auto topRight = screenToTileCoords(Vec2<int>{-offsetX + dpyWidth, -offsetY - isoTileSize.y}, 0);
-	auto bottomLeft =
-	    screenToTileCoords(Vec2<int>{-offsetX - isoTileSize.x, -offsetY + dpyHeight}, map.size.z);
-	auto bottomRight =
-	    screenToTileCoords(Vec2<int>{-offsetX + dpyWidth, -offsetY + dpyHeight}, map.size.z);
+	auto topLeft = screenToTileCoords(
+	    Vec2<int>{-screenOffset.x - isoTileSize.x, -screenOffset.y - isoTileSize.y}, 0);
+	auto topRight = screenToTileCoords(
+	    Vec2<int>{-screenOffset.x + dpySize.x, -screenOffset.y - isoTileSize.y}, 0);
+	auto bottomLeft = screenToTileCoords(
+	    Vec2<int>{-screenOffset.x - isoTileSize.x, -screenOffset.y + dpySize.y}, map.size.z);
+	auto bottomRight = screenToTileCoords(
+	    Vec2<int>{-screenOffset.x + dpySize.x, -screenOffset.y + dpySize.y}, map.size.z);
 
 	int minX = std::max(0, topLeft.x);
 	int maxX = std::min(map.size.x, bottomRight.x);
@@ -178,8 +220,8 @@ void TileView::Render()
 					auto tile = map.getTile(x, y, z);
 					auto screenPos = tileToScreenCoords(Vec3<float>{
 					    static_cast<float>(x), static_cast<float>(y), static_cast<float>(z)});
-					screenPos.x += offsetX;
-					screenPos.y += offsetY;
+					screenPos.x += screenOffset.x;
+					screenPos.y += screenOffset.y;
 
 					if (showSelected)
 						r.draw(selectedTileImageBack, screenPos);
@@ -187,8 +229,8 @@ void TileView::Render()
 					for (auto obj : tile->drawnObjects[layer])
 					{
 						Vec2<float> pos = tileToScreenCoords(obj->getPosition());
-						pos.x += offsetX;
-						pos.y += offsetY;
+						pos.x += screenOffset.x;
+						pos.y += screenOffset.y;
 						obj->draw(r, *this, pos, this->viewMode);
 					}
 
@@ -205,5 +247,32 @@ bool TileView::IsTransition() { return false; }
 void TileView::setViewMode(TileViewMode newMode) { this->viewMode = newMode; }
 
 TileViewMode TileView::getViewMode() const { return this->viewMode; }
+
+Vec2<int> TileView::getScreenOffset() const
+{
+	Vec2<float> screenOffset =
+	    this->tileToScreenCoords(Vec3<float>{this->centerPos.x, this->centerPos.y, 0.0f});
+
+	return Vec2<int>{dpySize.x / 2 - screenOffset.x, dpySize.y / 2 - screenOffset.y};
+}
+
+void TileView::setScreenCenterTile(Vec2<float> center)
+{
+	Vec2<float> clampedCenter;
+	if (center.x < 0.0f)
+		clampedCenter.x = 0.0f;
+	else if (center.x > map.size.x)
+		clampedCenter.x = map.size.x;
+	else
+		clampedCenter.x = center.x;
+	if (center.y < 0.0f)
+		clampedCenter.y = 0.0f;
+	else if (center.y > map.size.y)
+		clampedCenter.y = map.size.y;
+	else
+		clampedCenter.y = center.y;
+
+	this->centerPos = clampedCenter;
+}
 
 }; // namespace OpenApoc

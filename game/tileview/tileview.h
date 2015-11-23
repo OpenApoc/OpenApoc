@@ -28,10 +28,18 @@ class TileView : public Stage
 	Vec2<int> stratTileSize;
 	TileViewMode viewMode;
 
+	bool scrollUp;
+	bool scrollDown;
+	bool scrollLeft;
+	bool scrollRight;
+
+	Vec2<int> dpySize;
+
   public:
 	int maxZDraw;
-	int offsetX, offsetY;
-	int cameraScrollX, cameraScrollY;
+	Vec2<float> centerPos;
+	Vec2<float> isoScrollSpeed;
+	Vec2<float> stratScrollSpeed;
 
 	Vec3<int> selectedTilePosition;
 	sp<Image> selectedTileImageBack, selectedTileImageFront;
@@ -43,7 +51,10 @@ class TileView : public Stage
 	         TileViewMode initialMode);
 	~TileView();
 
-	template <typename T> Vec2<T> tileToScreenCoords(Vec3<T> c)
+	Vec2<int> getScreenOffset() const;
+	void setScreenCenterTile(Vec2<float> center);
+
+	template <typename T> Vec2<T> tileToScreenCoords(Vec3<T> c) const
 	{
 		switch (viewMode)
 		{
@@ -61,7 +72,7 @@ class TileView : public Stage
 		LogError("Invalid view mode");
 		return {0, 0};
 	}
-	template <typename T> Vec3<T> screenToTileCoords(Vec2<T> screenPos, T z)
+	template <typename T> Vec3<T> screenToTileCoords(Vec2<T> screenPos, T z) const
 	{
 		switch (viewMode)
 		{
