@@ -54,9 +54,9 @@ class TileView : public Stage
 	Vec2<int> getScreenOffset() const;
 	void setScreenCenterTile(Vec2<float> center);
 
-	template <typename T> Vec2<T> tileToScreenCoords(Vec3<T> c) const
+	template <typename T> Vec2<T> tileToScreenCoords(Vec3<T> c, TileViewMode v) const
 	{
-		switch (viewMode)
+		switch (v)
 		{
 			case TileViewMode::Isometric:
 			{
@@ -72,9 +72,13 @@ class TileView : public Stage
 		LogError("Invalid view mode");
 		return {0, 0};
 	}
-	template <typename T> Vec3<T> screenToTileCoords(Vec2<T> screenPos, T z) const
+	template <typename T> Vec2<T> tileToScreenCoords(Vec3<T> c) const
 	{
-		switch (viewMode)
+		return this->tileToScreenCoords(c, this->viewMode);
+	}
+	template <typename T> Vec3<T> screenToTileCoords(Vec2<T> screenPos, T z, TileViewMode v) const
+	{
+		switch (v)
 		{
 			case TileViewMode::Isometric:
 			{
@@ -92,6 +96,10 @@ class TileView : public Stage
 		}
 		LogError("Invalid view mode");
 		return {0, 0, z};
+	}
+	template <typename T> Vec3<T> screenToTileCoords(Vec2<T> screenPos, T z) const
+	{
+		return this->screenToTileCoords(screenPos, z, this->viewMode);
 	}
 	// Stage control
 	virtual void Begin() override;
