@@ -35,6 +35,9 @@ class TileView : public Stage
 
 	Vec2<int> dpySize;
 
+	Colour strategyViewBoxColour;
+	float strategyViewBoxThickness;
+
   public:
 	int maxZDraw;
 	Vec2<float> centerPos;
