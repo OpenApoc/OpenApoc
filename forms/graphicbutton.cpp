@@ -16,7 +16,8 @@ GraphicButton::GraphicButton(Framework &fw, Control *Owner, UString Image, UStri
 	image_name = Image;
 	imagedepressed_name = ImageDepressed;
 	imagehover_name = "";
-	this->buttonclick = fw.data->load_sample("xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW");
+	this->buttonclick =
+	    fw.data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050");
 }
 
 GraphicButton::GraphicButton(Framework &fw, Control *Owner, UString Image, UString ImageDepressed,
@@ -29,7 +30,8 @@ GraphicButton::GraphicButton(Framework &fw, Control *Owner, UString Image, UStri
 	image_name = Image;
 	imagedepressed_name = ImageDepressed;
 	imagehover_name = ImageHover;
-	this->buttonclick = fw.data->load_sample("xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW");
+	this->buttonclick =
+	    fw.data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050");
 }
 
 GraphicButton::~GraphicButton() {}

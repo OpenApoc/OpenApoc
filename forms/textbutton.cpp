@@ -12,7 +12,8 @@ TextButton::TextButton(Framework &fw, Control *Owner, UString Text, sp<BitmapFon
       TextHAlign(HorizontalAlignment::Centre), TextVAlign(VerticalAlignment::Centre),
       RenderStyle(TextButtonRenderStyles::MenuButtonStyle)
 {
-	this->buttonclick = fw.data->load_sample("xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW");
+	this->buttonclick =
+	    fw.data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050");
 	cached = nullptr;
 	if (font)
 	{
