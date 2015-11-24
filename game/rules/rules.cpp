@@ -8,9 +8,10 @@
 namespace OpenApoc
 {
 
-Rules::Rules(Framework &fw, const UString &rootFileName)
+Rules::Rules(Framework &fw, const UString &rootFileName) : aliases(new ResourceAliases())
 {
 	TRACE_FN_ARGS1("rootFileName", rootFileName);
+
 	UString systemPath;
 	auto file = fw.data->fs.open(rootFileName);
 	if (!file)
@@ -38,6 +39,9 @@ Rules::Rules(Framework &fw, const UString &rootFileName)
 
 	UString rulesetName = root->Attribute("name");
 	LogInfo("Loading ruleset \"%s\" from \"%s\"", rulesetName.c_str(), systemPath.c_str());
+
+	/* Wire up the resource aliases */
+	fw.data->aliases = this->aliases;
 
 	if (!RulesLoader::ParseRules(fw, *this, root))
 	{
@@ -148,6 +152,11 @@ bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *
 		else if (name == "doodad")
 		{
 			if (!ParseDoodadDefinition(fw, rules, e))
+				return false;
+		}
+		else if (name == "aliases")
+		{
+			if (!ParseAliases(fw, rules, e))
 				return false;
 		}
 		else

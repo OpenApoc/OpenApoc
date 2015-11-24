@@ -20,6 +20,8 @@ class MusicLoader;
 class Framework;
 class VoxelSlice;
 class LOFTemps;
+class ResourceAliases;
+
 class Data
 {
 
@@ -41,13 +43,14 @@ class Data
 	std::list<std::unique_ptr<MusicLoader>> musicLoaders;
 
   public:
+	std::weak_ptr<ResourceAliases> aliases;
 	FileSystem fs;
 
 	Data(std::vector<UString> paths, int imageCacheSize = 100, int imageSetCacheSize = 10,
 	     int voxelCacheSize = 1);
 	~Data();
 
-	sp<Sample> load_sample(const UString &path);
+	sp<Sample> load_sample(UString path);
 	sp<MusicTrack> load_music(const UString &path);
 	sp<Image> load_image(const UString &path);
 	sp<ImageSet> load_image_set(const UString &path);

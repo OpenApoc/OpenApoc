@@ -6,6 +6,7 @@
 #include "game/rules/weapondef.h"
 #include "game/rules/facilitydef.h"
 #include "game/rules/doodaddef.h"
+#include "game/rules/resource_aliases.h"
 
 #include "game/organisation.h"
 
@@ -34,6 +35,7 @@ class Rules
 	std::vector<UString> landingPadTiles;
 	Vec3<int> citySize;
 	std::vector<UString> tileIDs;
+	std::shared_ptr<ResourceAliases> aliases;
 	friend class RulesLoader;
 
   public:

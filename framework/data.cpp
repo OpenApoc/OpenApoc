@@ -5,6 +5,7 @@
 #include "game/apocresources/rawimage.h"
 #include "game/apocresources/apocpalette.h"
 #include "game/apocresources/loftemps.h"
+#include "game/rules/resource_aliases.h"
 #include "framework/palette.h"
 #include "framework/trace.h"
 #include "library/strings.h"
@@ -197,8 +198,18 @@ sp<ImageSet> Data::load_image_set(const UString &path)
 	return imgSet;
 }
 
-sp<Sample> Data::load_sample(const UString &path)
+sp<Sample> Data::load_sample(UString path)
 {
+	auto aliasMap = this->aliases.lock();
+	if (aliasMap)
+	{
+		auto aliasIt = aliasMap->sample.find(path);
+		if (aliasIt != aliasMap->sample.end())
+		{
+			LogInfo("Aliasing sample \"%s\" to \"%s\"", path.c_str(), aliasIt->second.c_str());
+			path = aliasIt->second;
+		}
+	}
 	UString cacheKey = path.toUpper();
 	sp<Sample> sample = this->sampleCache[cacheKey].lock();
 	if (sample)

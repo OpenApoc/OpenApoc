@@ -399,6 +399,7 @@
     <ClCompile Include="game\resources\gamecore.cpp" />
     <ClCompile Include="game\apocresources\apocfont.cpp" />
     <ClCompile Include="game\boot.cpp" />
+    <ClCompile Include="game\rules\alises.cpp" />
     <ClCompile Include="game\rules\citydef_rules.cpp" />
     <ClCompile Include="game\rules\doodad_rules.cpp" />
     <ClCompile Include="game\rules\facilitydef_rules.cpp" />
@@ -492,6 +493,7 @@
     <ClInclude Include="game\resources\gamecore.h" />
     <ClInclude Include="game\rules\buildingdef.h" />
     <ClInclude Include="game\rules\doodaddef.h" />
+    <ClInclude Include="game\rules\resource_aliases.h" />
     <ClInclude Include="game\rules\scenerytiledef.h" />
     <ClInclude Include="game\rules\facilitydef.h" />
     <ClInclude Include="game\rules\rules.h" />
