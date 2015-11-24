@@ -239,6 +239,14 @@ void CityView::EventOccurred(Event *e)
 				fw.state->city->fallingScenery.erase(s);
 			}
 		}
+		else if (this->getViewMode() == TileViewMode::Strategy && e->Type == EVENT_MOUSE_DOWN &&
+		         e->Data.Mouse.Button == 2)
+		{
+			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
+			auto clickTile = this->screenToTileCoords(
+			    Vec2<float>{e->Data.Mouse.X, e->Data.Mouse.Y} - screenOffset, 0.0f);
+			this->setScreenCenterTile({clickTile.x, clickTile.y});
+		}
 		else
 		{
 			TileView::EventOccurred(e);
