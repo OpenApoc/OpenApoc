@@ -39,29 +39,35 @@ void GameCore::ParseXMLDoc(UString XMLFilename)
 	TRACE_FN_ARGS1("XMLFilename", XMLFilename);
 	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLElement *node;
-	UString systemPath;
+	auto file = fw.data->fs.open(XMLFilename);
+	if (!file)
 	{
-		auto file = fw.data->fs.open(XMLFilename);
-		if (!file)
-		{
-			LogError("Failed to open XML file \"%s\"", XMLFilename.c_str());
-		}
-		systemPath = file.systemPath();
+		LogError("Failed to open XML file \"%s\"", XMLFilename.c_str());
 	}
 
-	if (systemPath == "")
+	LogInfo("Loading XML file \"%s\" - found at \"%s\"", XMLFilename.c_str(),
+	        file.systemPath().c_str());
+
+	auto xmlText = file.readAll();
+	if (!xmlText)
 	{
-		LogError("Failed to read XML file \"%s\"", XMLFilename.c_str());
+		LogError("Failed to read in XML file \"%s\"", XMLFilename.c_str());
+	}
+
+	auto err = doc.Parse(xmlText.get(), file.size());
+
+	if (err != tinyxml2::XML_SUCCESS)
+	{
+		LogError("Failed to parse XML file \"%s\" - \"%s\" \"%s\"", XMLFilename.c_str(),
+		         doc.GetErrorStr1(), doc.GetErrorStr2());
 		return;
 	}
-	LogInfo("Loading XML file \"%s\" - found at \"%s\"", XMLFilename.c_str(), systemPath.c_str());
 
-	doc.LoadFile(systemPath.c_str());
 	node = doc.RootElement();
 
 	if (!node)
 	{
-		LogError("Failed to parse XML file \"%s\"", systemPath.c_str());
+		LogError("Failed to parse XML file \"%s\" - no root element", XMLFilename.c_str());
 		return;
 	}
 

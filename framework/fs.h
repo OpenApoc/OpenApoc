@@ -4,6 +4,7 @@
 #include <fstream>
 
 #include "library/strings.h"
+#include "library/sp.h"
 
 #define PROGRAM_NAME "OpenApoc"
 #define PROGRAM_ORGANISATION "OpenApoc"
@@ -27,6 +28,7 @@ class IFile : public std::istream
   public:
 	~IFile();
 	size_t size() const;
+	std::unique_ptr<char[]> readAll();
 	bool readule16(uint16_t &val);
 	bool readule32(uint32_t &val);
 	const UString &fileName() const;

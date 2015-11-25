@@ -190,6 +190,28 @@ const UString &IFile::systemPath() const
 	return emptyString;
 }
 
+std::unique_ptr<char[]> IFile::readAll()
+{
+	auto memsize = this->size();
+	std::unique_ptr<char[]> mem(new char[memsize]);
+	if (!mem)
+	{
+		LogError("Failed to allocate memory for %llu bytes", (long long unsigned)memsize);
+		return nullptr;
+	}
+
+	// We don't want this to change the state (such as the offset) of the file
+	// stream so store off the current pos and restore it after the read
+	auto currentPos = this->tellg();
+	this->seekg(0, this->beg);
+
+	this->read(mem.get(), memsize);
+
+	this->seekg(currentPos);
+
+	return mem;
+}
+
 IFile::~IFile() {}
 
 FileSystem::FileSystem(std::vector<UString> paths)
@@ -236,4 +258,5 @@ IFile FileSystem::open(const UString &path)
 	LogInfo("Loading \"%s\" from \"%s\"", path.c_str(), f.systemPath().c_str());
 	return f;
 }
+
 } // namespace OpenApoc

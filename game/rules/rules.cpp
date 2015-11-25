@@ -19,10 +19,11 @@ Rules::Rules(Framework &fw, const UString &rootFileName) : aliases(new ResourceA
 		LogError("Failed to find rule file \"%s\"", rootFileName.c_str());
 		return;
 	}
-	systemPath = file.systemPath();
+
+	auto xmlData = file.readAll();
 
 	tinyxml2::XMLDocument doc;
-	doc.LoadFile(systemPath.c_str());
+	doc.Parse(xmlData.get(), file.size());
 	tinyxml2::XMLElement *root = doc.RootElement();
 	if (!root)
 	{
@@ -132,11 +133,11 @@ bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *
 				LogError("Failed to find included rule file \"%s\"", rootFileName.c_str());
 				return false;
 			}
-			systemPath = file.systemPath();
+			auto xmlData = file.readAll();
 			TRACE_FN_ARGS1("include", systemPath);
 			LogInfo("Loading included ruleset from \"%s\"", systemPath.c_str());
 			tinyxml2::XMLDocument doc;
-			doc.LoadFile(systemPath.c_str());
+			doc.Parse(xmlData.get(), file.size());
 			tinyxml2::XMLElement *incRoot = doc.RootElement();
 			if (!incRoot)
 			{
