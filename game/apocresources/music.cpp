@@ -17,7 +17,7 @@ static const std::vector<unsigned int> starts = {
     142090200, 154085400, 165904200, 176664600, 187248600, 196686000, 207270000,
     218559600, 231436800, 234082800, 237169800, 239815800, 242461800, 245107800,
     247842000, 250488000, 263365200, 275801400, 287796600, 298821600, 304819200};
-static const std::vector<unsigned int> lengths = {
+static const std::vector<unsigned int> ends = {
     8202600,   19404000,  35897400,  40131000,  46569600,  57859200,  72147600,
     84054600,  92610000,  103987800, 107780400, 118452600, 130536000, 142090200,
     153997200, 165816000, 176488200, 187072200, 196686000, 207093600, 218383200,
@@ -134,14 +134,14 @@ class RawMusicLoader : public MusicLoader
 		}
 
 		unsigned int track = Strings::ToInteger(strings[1]);
-		if (track > lengths.size())
+		if (track > ends.size())
 		{
 			LogInfo("Raw music track %d out of bounds", track);
 			return nullptr;
 		}
 		return std::make_shared<RawMusicTrack>(data, path, strings[0], starts[track],
-		                                       lengths[track] / MusicChannels /
-		                                           MusicBytesPerSample);
+		                                       (ends[track] - starts[track]) / (MusicChannels *
+		                                           MusicBytesPerSample));
 	}
 };
 
