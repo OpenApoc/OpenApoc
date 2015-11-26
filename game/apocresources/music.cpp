@@ -34,13 +34,14 @@ class RawMusicTrack : public MusicTrack
 {
 	IFile file;
 	unsigned int samplePosition;
+	unsigned int startingPosition;
 	bool valid;
 	UString name;
 
   public:
 	RawMusicTrack(Data &data, const UString &name, const UString &fileName, unsigned int fileOffset,
 	              unsigned int numSamples)
-	    : file(data.fs.open(fileName)), samplePosition(0), valid(false), name(name)
+	    : file(data.fs.open(fileName)), samplePosition(0), valid(false), name(name), startingPosition(fileOffset)
 	{
 		if (!file)
 		{
@@ -95,7 +96,12 @@ class RawMusicTrack : public MusicTrack
 		}
 		*returnedSamples = samples;
 		if (samples < maxSamples)
+		{
+			// Prepare this track to be reused
+			if (!file.seekg(startingPosition)) { LogWarning("Could not rewind track %s", name.c_str()); }
+			samplePosition = 0;
 			return MusicTrack::MusicCallbackReturn::End;
+		}
 		return MusicTrack::MusicCallbackReturn::Continue;
 	}
 
