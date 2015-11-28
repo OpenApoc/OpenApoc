@@ -41,7 +41,8 @@ class RawMusicTrack : public MusicTrack
   public:
 	RawMusicTrack(Data &data, const UString &name, const UString &fileName, unsigned int fileOffset,
 	              unsigned int numSamples)
-	    : file(data.fs.open(fileName)), samplePosition(0), valid(false), name(name), startingPosition(fileOffset)
+	    : file(data.fs.open(fileName)), samplePosition(0), valid(false), name(name),
+	      startingPosition(fileOffset)
 	{
 		if (!file)
 		{
@@ -98,7 +99,10 @@ class RawMusicTrack : public MusicTrack
 		if (samples < maxSamples)
 		{
 			// Prepare this track to be reused
-			if (!file.seekg(startingPosition)) { LogWarning("Could not rewind track %s", name.c_str()); }
+			if (!file.seekg(startingPosition))
+			{
+				LogWarning("Could not rewind track %s", name.c_str());
+			}
 			samplePosition = 0;
 			return MusicTrack::MusicCallbackReturn::End;
 		}
@@ -146,8 +150,8 @@ class RawMusicLoader : public MusicLoader
 			return nullptr;
 		}
 		return std::make_shared<RawMusicTrack>(data, path, strings[0], starts[track],
-		                                       (ends[track] - starts[track]) / (MusicChannels *
-		                                           MusicBytesPerSample));
+		                                       (ends[track] - starts[track]) /
+		                                           (MusicChannels * MusicBytesPerSample));
 	}
 };
 
