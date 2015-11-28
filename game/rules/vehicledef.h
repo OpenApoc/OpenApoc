@@ -25,6 +25,7 @@ class VehicleDefinition
 	{
 		Flying,
 		Ground,
+		UFO,
 	};
 	enum class Direction
 	{

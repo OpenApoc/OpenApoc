@@ -111,7 +111,8 @@ bool RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::
 	if (!ReadAttribute(
 	        root, "type",
 	        std::map<UString, VehicleDefinition::Type>{{"flying", VehicleDefinition::Type::Flying},
-	                                                   {"ground", VehicleDefinition::Type::Ground}},
+	                                                   {"ground", VehicleDefinition::Type::Ground},
+	                                                   {"ufo", VehicleDefinition::Type::UFO}},
 	        def.type))
 	{
 		LogWarning("Failed to read vehicle 'type' attribute");
@@ -187,6 +188,22 @@ bool RulesLoader::ParseVehicleDefinition(Framework &fw, Rules &rules, tinyxml2::
 		{
 			def.shadowSprites = parseDirectionalSprites(fw, node);
 			LogWarning("Read %d shadow sprites", def.strategySprites.size());
+		}
+		else if (tag == "crashed")
+		{
+			if (def.type != VehicleDefinition::Type::UFO)
+			{
+				LogError("'crashed' tag in non-UFO vehicle");
+			}
+			LogWarning("TODO: Read 'crashed' UFO sprite", def.strategySprites.size());
+		}
+		else if (tag == "animation")
+		{
+			if (def.type != VehicleDefinition::Type::UFO)
+			{
+				LogError("'animation' tag in non-UFO vehicle");
+			}
+			LogWarning("TODO: Read 'animation' UFO sprite", def.strategySprites.size());
 		}
 		else
 		{
