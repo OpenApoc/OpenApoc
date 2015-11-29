@@ -13,6 +13,12 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, 
 bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, int &output);
 bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, UString &output);
 
+bool ReadText(tinyxml2::XMLElement *element, bool &output);
+bool ReadText(tinyxml2::XMLElement *element, float &output);
+bool ReadText(tinyxml2::XMLElement *element, Colour &output);
+bool ReadText(tinyxml2::XMLElement *element, int &output);
+bool ReadText(tinyxml2::XMLElement *element, UString &output);
+
 template <typename T>
 bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName,
                    const std::map<UString, T> &valueMap, T &output)
@@ -54,4 +60,11 @@ bool ReadText(tinyxml2::XMLElement *element, const std::map<UString, T> &valueMa
 	return true;
 }
 
+template <typename T> bool ReadText(tinyxml2::XMLElement *element, T &output, const T &defaultValue)
+{
+	if (ReadText(element, output))
+		return true;
+	output = defaultValue;
+	return false;
+}
 }; // namespace OpenApoc
