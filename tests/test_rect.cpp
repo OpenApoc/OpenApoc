@@ -3,6 +3,147 @@
 
 using namespace OpenApoc;
 
+// This is a rather limited test, as we don't want to encode /how/ the set is collapsed in a test
+// so we just check the initial size is as expected (IE set.insert() didn't screw up), at least one
+// rect is expected to be collapsed, we never collapse down to 0, and we never run the collapse loop
+// more tiles than the total number of rects (As we can never collapse more rects than exist)
+template <typename T>
+static bool test_one_rect_compaction(std::set<Rect<T>> rect_set, unsigned expected_start_count,
+                                     bool expected_to_collapse, unsigned expected_end_size = 0)
+{
+	if (rect_set.size() != expected_start_count)
+	{
+		LogError("Rect set has size %u at start, expected %u", (unsigned)rect_set.size(),
+		         expected_start_count);
+		return false;
+	}
+	unsigned loops = 0;
+	unsigned total_collapsed = 0;
+
+	int num_collapsed = Rect<T>::compactRectSet(rect_set);
+
+	while (num_collapsed)
+	{
+		if (rect_set.size() == 0)
+		{
+			LogError("Collapsed down to zero size set");
+			return false;
+		}
+		loops++;
+		if (loops > expected_start_count)
+		{
+			LogError("Somehow managed to collapse %u times in a set containing %u rects", loops,
+			         expected_start_count);
+			return false;
+		}
+		total_collapsed += num_collapsed;
+		if (total_collapsed > expected_start_count)
+		{
+			LogError("Somehow managed to collapse %u rects in a set containing %u rects",
+			         total_collapsed, expected_start_count);
+			return false;
+		}
+		num_collapsed = Rect<T>::compactRectSet(rect_set);
+	}
+
+	if (expected_to_collapse && total_collapsed == 0)
+	{
+		LogError("No rects collapsed but some were expected");
+		return false;
+	}
+
+	if (expected_end_size && rect_set.size() != expected_end_size)
+	{
+		LogError("Expected to collapse to %u rects but got %u", (unsigned)rect_set.size(),
+		         expected_end_size);
+		return false;
+	}
+
+	return true;
+}
+
+static bool test_rect_compaction()
+{
+	std::set<Rect<int>> rect_set;
+
+	if (!test_one_rect_compaction(rect_set, 0, false))
+	{
+		LogError("zero-sized set failed");
+		return false;
+	}
+	rect_set.clear();
+	rect_set.insert(Rect<int>{{0, 0}, {1, 1}});
+	if (!test_one_rect_compaction(rect_set, 1, false))
+	{
+		LogError("one-sized set failed");
+		return false;
+	}
+
+	rect_set.clear();
+	rect_set.insert(Rect<int>{{0, 0}, {1, 1}});
+	rect_set.insert(Rect<int>{{1, 0}, {2, 1}});
+
+	if (!test_one_rect_compaction(rect_set, 2, true))
+	{
+		LogError("trivial x compact set failed");
+		return false;
+	}
+
+	rect_set.clear();
+	rect_set.insert(Rect<int>{{0, 0}, {1, 1}});
+	rect_set.insert(Rect<int>{{0, 1}, {1, 2}});
+
+	if (!test_one_rect_compaction(rect_set, 2, true))
+	{
+		LogError("trivial y compact set failed");
+		return false;
+	}
+
+	rect_set.clear();
+	rect_set.insert(Rect<int>{{0, 0}, {1, 1}});
+	rect_set.insert(Rect<int>{{1, 1}, {2, 2}});
+
+	if (!test_one_rect_compaction(rect_set, 2, false))
+	{
+		LogError("trivial non-compactable set failed");
+		return false;
+	}
+
+	rect_set.clear();
+	rect_set.insert(Rect<int>{{0, 0}, {1, 1}});
+	rect_set.insert(Rect<int>{{1, 1}, {2, 2}});
+
+	if (!test_one_rect_compaction(rect_set, 2, false))
+	{
+		LogError("trivial non-compactable set failed");
+		return false;
+	}
+
+	rect_set.clear();
+	rect_set.insert(Rect<int>{{0, 0}, {1, 1}});
+	rect_set.insert(Rect<int>{{1, 0}, {2, 1}});
+	rect_set.insert(Rect<int>{{3, 3}, {4, 4}});
+
+	if (!test_one_rect_compaction(rect_set, 3, true, 2))
+	{
+		LogError("3->2 x compaction set failed");
+		return false;
+	}
+
+	rect_set.clear();
+	rect_set.insert(Rect<int>{{0, 0}, {1, 1}});
+	rect_set.insert(Rect<int>{{0, 1}, {1, 2}});
+	rect_set.insert(Rect<int>{{3, 3}, {4, 4}});
+
+	if (!test_one_rect_compaction(rect_set, 3, true, 2))
+	{
+		LogError("3->2 y compaction set failed");
+		return false;
+	}
+
+	return true;
+}
+
 void test_point_within(Rect<int> r, Vec2<int> p, bool expected)
 {
 	if (r.within(p) != expected)
@@ -67,6 +208,9 @@ int main(int argc, char **argv)
 	test_rect_intersects({0, 0, 1, 1}, {1, 0, 2, 1}, false);
 	test_rect_intersects({0, 0, 1, 1}, {-1, 0, 0, 1}, false);
 	test_rect_intersects({0, 0, 1, 1}, {0, -1, 1, 0}, false);
-
+	if (!test_rect_compaction())
+	{
+		return EXIT_FAILURE;
+	}
 	return EXIT_SUCCESS;
 }
