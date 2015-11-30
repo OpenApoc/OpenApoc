@@ -17,36 +17,26 @@ static bool test_one_rect_compaction(std::set<Rect<T>> rect_set, unsigned expect
 		         expected_start_count);
 		return false;
 	}
-	unsigned loops = 0;
-	unsigned total_collapsed = 0;
-
 	int num_collapsed = Rect<T>::compactRectSet(rect_set);
 
-	while (num_collapsed)
+	if (expected_start_count != 0 && rect_set.size() == 0)
 	{
-		if (rect_set.size() == 0)
-		{
-			LogError("Collapsed down to zero size set");
-			return false;
-		}
-		loops++;
-		if (loops > expected_start_count)
-		{
-			LogError("Somehow managed to collapse %u times in a set containing %u rects", loops,
-			         expected_start_count);
-			return false;
-		}
-		total_collapsed += num_collapsed;
-		if (total_collapsed > expected_start_count)
-		{
-			LogError("Somehow managed to collapse %u rects in a set containing %u rects",
-			         total_collapsed, expected_start_count);
-			return false;
-		}
-		num_collapsed = Rect<T>::compactRectSet(rect_set);
+		LogError("Collapsed down to zero size set");
+		return false;
+	}
+	if (num_collapsed && num_collapsed >= expected_start_count)
+	{
+		LogError("Somehow managed to collapse %u rects in a set containing %u rects", num_collapsed,
+		         expected_start_count);
+		return false;
+	}
+	if (Rect<T>::compactRectSet(rect_set) != 0)
+	{
+		LogError("A second collapse actually collapsed something?");
+		return false;
 	}
 
-	if (expected_to_collapse && total_collapsed == 0)
+	if (expected_to_collapse && num_collapsed == 0)
 	{
 		LogError("No rects collapsed but some were expected");
 		return false;

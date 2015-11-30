@@ -54,8 +54,7 @@ template <typename T> class Rect
 	}
 
 	// Attempts to merge rects adjacent rects in a set, returns the number merged.
-	// This only does one pass, so keep calling until it returns 0 if you want
-	// the most compact layout we can manage with this (rather simple) algo
+	// This keeps looping until
 	static int compactRectSet(std::set<Rect<T>> &rectSet)
 	{
 		int merged = 0;
