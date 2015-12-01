@@ -14,6 +14,9 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
+# VIM tmp files
+*.swp
+
 # =========================
 # Operating System Files
 # =========================
