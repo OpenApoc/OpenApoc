@@ -106,15 +106,11 @@ class Event
 	EventTypes Type;
 	EventData Data;
 
-	UString toString();
-
 	/*
 	    Constructor: Event
 	    Defaults the <Type> to Undefined
 	*/
 	Event();
-	// Constructs an Event from event->toString() output
-	Event(const UString &str);
 
 	/*
 	    Destructor: ~Event

@@ -155,7 +155,7 @@ class FrameworkPrivate
 };
 
 Framework::Framework(const UString programName, const std::vector<UString> cmdline)
-    : dumpEvents(false), replayEvents(false), p(new FrameworkPrivate), programName(programName)
+    : p(new FrameworkPrivate), programName(programName)
 {
 	TRACE_FN;
 	LogInfo("Starting framework");
@@ -188,54 +188,6 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 		{
 			LogError("Failed to parse command line option \"%s\" - ignoring", option.c_str());
 			continue;
-		}
-		else if (splitString[0] == "--dumpevents")
-		{
-			if (this->replayEvents || this->dumpEvents)
-			{
-				LogError(
-				    "Only one --dumpevents or --replayevents should be supplied, ignoring \"%s\"",
-				    option.c_str());
-			}
-			else
-			{
-				this->eventStream.open(splitString[1].str(), std::ios::out);
-				if (!this->eventStream)
-				{
-					LogError("Failed to open event file \"%s\" for writing - ignoring --dumpevents "
-					         "option",
-					         splitString[1].c_str());
-				}
-				else
-				{
-					this->dumpEvents = true;
-					LogInfo("Dumping events to file \"%s\"", splitString[1].c_str());
-				}
-			}
-		}
-		else if (splitString[0] == "--replayevents")
-		{
-			if (this->replayEvents || this->dumpEvents)
-			{
-				LogError(
-				    "Only one --dumpevents or --replayevents should be supplied, ignoring \"%s\"",
-				    option.c_str());
-			}
-			else
-			{
-				this->eventStream.open(splitString[1].str(), std::ios::in);
-				if (!this->eventStream)
-				{
-					LogError("Failed to open event file \"%s\" for reading - ignoring "
-					         "--replayevents option",
-					         splitString[1].c_str());
-				}
-				else
-				{
-					this->replayEvents = true;
-					LogInfo("Replaying events from file \"%s\"", splitString[1].c_str());
-				}
-			}
 		}
 		else
 		{
@@ -386,33 +338,6 @@ void Framework::Run()
 				al_flip_display();
 			}
 		}
-		if (this->dumpEvents)
-		{
-			// insert END_OF_FRAME to mark the end of each frame
-			auto e = new Event();
-			e->Type = EVENT_END_OF_FRAME;
-			DumpEvent(e);
-			delete e;
-		}
-	}
-}
-
-void Framework::ReadRecordedEvents()
-{
-	std::string line;
-	while (std::getline(this->eventStream, line))
-	{
-		Event *e = new Event(UString(line));
-		PushEvent(e);
-		if (e->Type == EVENT_END_OF_FRAME)
-			break;
-	}
-	if (!this->eventStream)
-	{
-		LogInfo("Reached end of reply, appending CLOSE");
-		auto e = new Event();
-		e->Type = EVENT_WINDOW_CLOSED;
-		PushEvent(e);
 	}
 }
 
@@ -427,10 +352,7 @@ void Framework::ProcessEvents()
 
 	// Convert Allegro events before we process
 	// TODO: Consider threading the translation
-	if (this->replayEvents)
-		ReadRecordedEvents();
-	else
-		TranslateAllegroEvents();
+	TranslateAllegroEvents();
 
 	al_lock_mutex(p->eventMutex);
 
@@ -444,8 +366,6 @@ void Framework::ProcessEvents()
 			LogError("Invalid event on queue");
 			continue;
 		}
-		if (this->dumpEvents)
-			DumpEvent(e);
 		switch (e->Type)
 		{
 			case EVENT_WINDOW_CLOSED:
@@ -469,14 +389,6 @@ void Framework::PushEvent(Event *e)
 	al_lock_mutex(p->eventMutex);
 	p->eventQueue.push_back(e);
 	al_unlock_mutex(p->eventMutex);
-}
-
-void Framework::DumpEvent(Event *e)
-{
-	assert(e);
-	assert(this->eventStream);
-	this->eventStream << std::dec;
-	this->eventStream << e->toString().str() << "\n";
 }
 
 void Framework::TranslateAllegroEvents()

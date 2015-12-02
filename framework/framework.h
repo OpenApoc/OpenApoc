@@ -23,7 +23,6 @@
 // FIXME: Remove core-allegro
 // Required for input types
 #include <allegro5/allegro.h>
-#include <fstream>
 
 namespace OpenApoc
 {
@@ -38,9 +37,6 @@ class FrameworkPrivate;
 class Framework
 {
   private:
-	bool dumpEvents;
-	bool replayEvents;
-	std::fstream eventStream;
 	std::unique_ptr<FrameworkPrivate> p;
 	UString programName;
 	void Audio_Initialise();
@@ -65,9 +61,7 @@ class Framework
 	void Run();
 	void ProcessEvents();
 	void PushEvent(Event *e);
-	void DumpEvent(Event *e);
 	void TranslateAllegroEvents();
-	void ReadRecordedEvents();
 	void ShutdownFramework();
 	bool IsShuttingDown();
 
