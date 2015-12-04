@@ -6,14 +6,6 @@
 
 #include <deque>
 
-/* MSVC warns about inherited virtual functions that are implemented
- * in different superclasses though multiple inheritance, even
- * if one is a subclass of the other. So disable that as we rely
- * on inherited subclasses of TileObjectOld overriding various functions */
-#ifdef _MSC_VER
-#pragma warning(disable : 4250)
-#endif // _MSC_VER
-
 namespace OpenApoc
 {
 
