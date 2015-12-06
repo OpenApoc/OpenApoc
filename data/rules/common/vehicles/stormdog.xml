@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<openapoc_rules>
-  <vehicledef id="VEHICLE_STORMDOG" name="STR_STORMDOG_NAME" manufacturer="ORG_MARSEC" sizeX="1" sizeY="1" sizeZ="1" imageOffsetX="16" imageOffsetY="16" shadowOffsetX="32" shadowOffsetY="0" type="ground"/>
-</openapoc_rules>

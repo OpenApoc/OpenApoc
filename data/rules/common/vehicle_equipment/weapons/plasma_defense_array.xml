@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <vehicle_equipment type="weapon" id="VEQUIP_PLASMA_DEFENSE_ARRAY">
+    <usable_by>air</usable_by>
+    <weight>45</weight>
+    <max_ammo>250</max_ammo>
+    <sprite>PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:17:xcom3/ufodata/vhawk.pcx</sprite>
+    <size>
+      <x>2</x>
+      <y>2</y>
+    </size>
+    <manufacturer>ORG_MARSEC</manufacturer>
+    <store_space>40</store_space>
+    <speed>38</speed>
+    <projectile_image>6</projectile_image>
+    <damage>12</damage>
+    <accuracy>8</accuracy>
+    <fire_delay>4</fire_delay>
+    <tail_size>12</tail_size>
+    <guided>false</guided>
+    <turn_rate>0</turn_rate>
+    <range>168</range>
+    <firing_arc_1>360</firing_arc_1>
+    <firing_arc_2>8</firing_arc_2>
+    <point_defence>true</point_defence>
+    <name>STR_PLASMA_DEFENSE_ARRAY</name>
+    <fire_sfx>RAWSOUND:82</fire_sfx>
+    <idem>82</idem>
+    <explosion_graphic>PTANG:9</explosion_graphic>
+    <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:17</icon>
+  </vehicle_equipment>
+</openapoc_rules>

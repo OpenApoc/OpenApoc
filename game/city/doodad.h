@@ -41,12 +41,12 @@ class Doodad : public std::enable_shared_from_this<Doodad>
 class AnimatedDoodad : public Doodad
 {
   public:
-	AnimatedDoodad(DoodadDef &def, Vec3<float> position);
+	AnimatedDoodad(const DoodadDef &def, Vec3<float> position);
 	virtual ~AnimatedDoodad() = default;
 	virtual sp<Image> getSprite() override;
 
   private:
-	DoodadDef &def;
+	const DoodadDef &def;
 };
 
 class StaticDoodad : public Doodad

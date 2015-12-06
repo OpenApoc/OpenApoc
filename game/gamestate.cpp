@@ -1,10 +1,11 @@
 #include "game/gamestate.h"
 #include "game/city/city.h"
-#include "game/city/weapon.h"
+#include "game/city/vequipment.h"
 #include "game/city/building.h"
 #include "game/city/vehicle.h"
 #include "game/organisation.h"
 #include "game/base/base.h"
+#include "game/rules/vequipment.h"
 
 #include "framework/includes.h"
 #include "framework/framework.h"
@@ -43,32 +44,28 @@ GameState::GameState(Framework &fw, Rules &rules)
 	std::uniform_int_distribution<int> bld_distribution(0, this->city->buildings.size() - 1);
 
 	// Loop through all vehicle types and weapons to get a decent spread for testing
-	auto weaponIt = rules.getWeaponDefs().begin();
-	auto vehicleDefIt = rules.getVehicleDefs().begin();
+	auto vehicleTypeIt = rules.getVehicleTypes().begin();
 
 	for (int i = 0; i < 100; i++)
 	{
+		while (vehicleTypeIt->second->type != VehicleType::Type::Flying)
+		{
+			vehicleTypeIt++;
+			if (vehicleTypeIt == rules.getVehicleTypes().end())
+				vehicleTypeIt = rules.getVehicleTypes().begin();
+		}
 
 		auto testVehicle = std::make_shared<Vehicle>(
-		    vehicleDefIt->second, this->getOrganisation((vehicleDefIt->second.manufacturer)));
+		    *vehicleTypeIt->second, this->getOrganisation((vehicleTypeIt->second->manufacturer)));
 
-		auto &weaponDef = weaponIt->second;
-		LogInfo("Equipping with weapon \"%s\"", weaponDef.name.c_str());
-
-		weaponIt++;
-		if (weaponIt == rules.getWeaponDefs().end())
-			weaponIt = rules.getWeaponDefs().begin();
-		vehicleDefIt++;
-		if (vehicleDefIt == rules.getVehicleDefs().end())
-			vehicleDefIt = rules.getVehicleDefs().begin();
-
-		auto *testWeapon = new Weapon(weaponDef, testVehicle, weaponDef.ammoCapacity);
-		testVehicle->weapons.emplace_back(testWeapon);
+		testVehicle->equipDefaultEquipment(rules);
 
 		this->city->vehicles.push_back(testVehicle);
 		auto b = this->city->buildings[bld_distribution(rng)];
 		b->landed_vehicles.insert(testVehicle);
 		testVehicle->building = b;
+
+		vehicleTypeIt++;
 	}
 
 	if (this->city->baseBuildings.empty())

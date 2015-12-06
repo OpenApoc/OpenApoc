@@ -22,7 +22,8 @@ void Projectile::update(GameState &state, unsigned int ticks)
 {
 	this->age += ticks;
 	this->previousPosition = this->position;
-	auto newPosition = this->position + (static_cast<float>(ticks) * this->velocity);
+	auto newPosition = this->position +
+	                   ((static_cast<float>(ticks) / TICK_SCALE) * this->velocity) / VELOCITY_SCALE;
 
 	auto mapSize = this->tileObject->map.size;
 

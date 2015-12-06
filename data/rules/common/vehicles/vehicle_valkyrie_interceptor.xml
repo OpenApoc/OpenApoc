@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <vehicle id="VEHICLE_VALKYRIE_INTERCEPTOR" type="flying">
+    <name>STR_VALKYRIE_INTERCEPTOR</name>
+    <manufacturer>ORG_MARSEC</manufacturer>
+    <size>
+      <x>1</x>
+      <y>1</y>
+      <z>1</z>
+    </size>
+    <image_offset>
+      <x>32</x>
+      <y>32</y>
+    </image_offset>
+    <shadow_offset>
+      <x>32</x>
+      <y>0</y>
+    </shadow_offset>
+    <stratmap>
+      <sprite direction="n">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:577</sprite>
+      <sprite direction="ne">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:578</sprite>
+      <sprite direction="e">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:579</sprite>
+      <sprite direction="se">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:580</sprite>
+      <sprite direction="s">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:581</sprite>
+      <sprite direction="sw">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:582</sprite>
+      <sprite direction="w">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:583</sprite>
+      <sprite direction="nw">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:584</sprite>
+    </stratmap>
+    <directional_sprites>
+      <sprite direction="n" banking="flat">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:503</sprite>
+      <sprite direction="ne" banking="flat">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:504</sprite>
+      <sprite direction="e" banking="flat">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:505</sprite>
+      <sprite direction="se" banking="flat">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:506</sprite>
+      <sprite direction="s" banking="flat">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:507</sprite>
+      <sprite direction="sw" banking="flat">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:508</sprite>
+      <sprite direction="w" banking="flat">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:509</sprite>
+      <sprite direction="nw" banking="flat">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:510</sprite>
+      <sprite direction="n" banking="descending">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:511</sprite>
+      <sprite direction="ne" banking="descending">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:512</sprite>
+      <sprite direction="e" banking="descending">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:513</sprite>
+      <sprite direction="se" banking="descending">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:514</sprite>
+      <sprite direction="s" banking="descending">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:515</sprite>
+      <sprite direction="sw" banking="descending">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:516</sprite>
+      <sprite direction="w" banking="descending">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:517</sprite>
+      <sprite direction="nw" banking="descending">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:518</sprite>
+      <sprite direction="n" banking="ascending">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:519</sprite>
+      <sprite direction="ne" banking="ascending">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:520</sprite>
+      <sprite direction="e" banking="ascending">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:521</sprite>
+      <sprite direction="se" banking="ascending">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:522</sprite>
+      <sprite direction="s" banking="ascending">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:523</sprite>
+      <sprite direction="sw" banking="ascending">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:524</sprite>
+      <sprite direction="w" banking="ascending">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:525</sprite>
+      <sprite direction="nw" banking="ascending">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:526</sprite>
+      <sprite direction="n" banking="left">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:527</sprite>
+      <sprite direction="ne" banking="left">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:528</sprite>
+      <sprite direction="e" banking="left">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:529</sprite>
+      <sprite direction="se" banking="left">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:530</sprite>
+      <sprite direction="s" banking="left">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:531</sprite>
+      <sprite direction="sw" banking="left">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:532</sprite>
+      <sprite direction="w" banking="left">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:533</sprite>
+      <sprite direction="nw" banking="left">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:534</sprite>
+      <sprite direction="n" banking="right">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:535</sprite>
+      <sprite direction="ne" banking="right">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:536</sprite>
+      <sprite direction="e" banking="right">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:537</sprite>
+      <sprite direction="se" banking="right">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:538</sprite>
+      <sprite direction="s" banking="right">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:539</sprite>
+      <sprite direction="sw" banking="right">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:540</sprite>
+      <sprite direction="w" banking="right">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:541</sprite>
+      <sprite direction="nw" banking="right">PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:542</sprite>
+    </directional_sprites>
+    <shadows>
+      <sprite direction="n">PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:80</sprite>
+      <sprite direction="ne">PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:81</sprite>
+      <sprite direction="e">PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:82</sprite>
+      <sprite direction="se">PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:83</sprite>
+      <sprite direction="s">PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:84</sprite>
+      <sprite direction="sw">PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:85</sprite>
+      <sprite direction="w">PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:86</sprite>
+      <sprite direction="nw">PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:87</sprite>
+    </shadows>
+    <acceleration>0</acceleration>
+    <top_speed>0</top_speed>
+    <health>280</health>
+    <crash_health>0</crash_health>
+    <weight>3000</weight>
+    <armour direction="rear">8</armour>
+    <armour direction="top">4</armour>
+    <armour direction="left">6</armour>
+    <armour direction="right">6</armour>
+    <armour direction="bottom">6</armour>
+    <armour direction="front">6</armour>
+    <passengers>8</passengers>
+    <aggressiveness>350</aggressiveness>
+    <score>150</score>
+    <equipment_screen>xcom3/ufodata/VSTRFIRE.pcx</equipment_screen>
+    <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:22:xcom3/ufodata/pal_01.dat</icon>
+    <equipment_layout>
+      <slot type="engine" align_x="centre" align_y="centre">
+        <p0>
+          <x>6</x>
+          <y>12</y>
+        </p0>
+        <p1>
+          <x>10</x>
+          <y>16</y>
+        </p1>
+      </slot>
+      <slot type="general" align_x="left" align_y="top">
+        <p0>
+          <x>7</x>
+          <y>5</y>
+        </p0>
+        <p1>
+          <x>9</x>
+          <y>11</y>
+        </p1>
+      </slot>
+      <slot type="weapon" align_x="centre" align_y="top">
+        <p0>
+          <x>4</x>
+          <y>10</y>
+        </p0>
+        <p1>
+          <x>5</x>
+          <y>14</y>
+        </p1>
+      </slot>
+      <slot type="weapon" align_x="centre" align_y="top">
+        <p0>
+          <x>11</x>
+          <y>10</y>
+        </p0>
+        <p1>
+          <x>12</x>
+          <y>14</y>
+        </p1>
+      </slot>
+    </equipment_layout>
+    <initial_equipment>
+      <equipment>
+        <type>VEQUIP_LANCER_7000_LASER_GUN</type>
+        <position>
+          <x>4</x>
+          <y>10</y>
+        </position>
+      </equipment>
+      <equipment>
+        <type>VEQUIP_JANITOR_MISSILE_ARRAY</type>
+        <position>
+          <x>11</x>
+          <y>10</y>
+        </position>
+      </equipment>
+      <equipment>
+        <type>VEQUIP_SD_TURBO</type>
+        <position>
+          <x>6</x>
+          <y>12</y>
+        </position>
+      </equipment>
+    </initial_equipment>
+  </vehicle>
+</openapoc_rules>

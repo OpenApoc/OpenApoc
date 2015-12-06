@@ -183,9 +183,6 @@
     <ClCompile Include="game\rules\rules.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\rules\vehicledef_rules.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="game\rules\citydef_rules.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -204,13 +201,7 @@
     <ClCompile Include="framework\render\gl30\ogl_3_0_renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\rules\weapondef_rules.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="game\rules\rules_helper.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="game\city\weapon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game\city\vehiclemission.cpp">
@@ -274,6 +265,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game\rules\alises.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\rules\vequipment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\rules\vehicle_type_rules.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\city\vequipment.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\city\vweapon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -476,9 +479,6 @@
     <ClInclude Include="game\rules\rules_private.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="game\rules\vehicledef.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game\rules\buildingdef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -495,12 +495,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework\render\gl30\gl_3_0.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game\rules\weapondef.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="game\city\weapon.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\rules\rules_helper.h">
@@ -573,6 +567,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\rules\resource_aliases.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\rules\vequipment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\rules\vehicle_type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\city\vequipment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

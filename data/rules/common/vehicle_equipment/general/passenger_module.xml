@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <vehicle_equipment type="general" id="VEQUIP_PASSENGER_MODULE">
+    <name>STR_PASSENGER_MODULE</name>
+    <usable_by>ground</usable_by>
+    <usable_by>air</usable_by>
+    <weight>55</weight>
+    <max_ammo>0</max_ammo>
+    <sprite>PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:40:xcom3/ufodata/vhawk.pcx</sprite>
+    <size>
+      <x>2</x>
+      <y>2</y>
+    </size>
+    <manufacturer>ORG_GENERAL_METRO</manufacturer>
+    <store_space>40</store_space>
+    <passengers>4</passengers>
+  </vehicle_equipment>
+</openapoc_rules>

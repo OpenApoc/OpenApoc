@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<openapoc_rules>
-  <weapon name="Bolter 4000" type="vehicle" projectile="beam" arc="45" accuracy="45" range="400" firingDelay="12" projectileDamage="12" projectileTailLength="22" projectileSpeed="38" beamWidth="1.0" beamColour="255,255,0,128" ammoCapacity="100"/>
-</openapoc_rules>

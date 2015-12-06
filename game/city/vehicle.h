@@ -2,16 +2,15 @@
 
 #include "framework/includes.h"
 #include "game/tileview/tile.h"
-#include "game/rules/vehicledef.h"
+#include "game/rules/vehicle_type.h"
 
 #include <deque>
+#include <list>
 
 namespace OpenApoc
 {
 
 class Image;
-class VehicleFactory;
-class VehicleDefinition;
 class TileObjectVehicle;
 class TileObjectShadow;
 class Vehicle;
@@ -20,6 +19,7 @@ class Weapon;
 class VehicleMission;
 class Building;
 class GameState;
+class VEquipment;
 
 class VehicleMover
 {
@@ -34,9 +34,11 @@ class Vehicle : public std::enable_shared_from_this<Vehicle>
 {
   public:
 	virtual ~Vehicle();
-	Vehicle(const VehicleDefinition &def, sp<Organisation> owner);
+	Vehicle(const VehicleType &type, sp<Organisation> owner);
 
-	const VehicleDefinition &def;
+	void equipDefaultEquipment(Rules &rules);
+
+	const VehicleType &type;
 	sp<Organisation> owner;
 
 	sp<TileObjectVehicle> tileObject;
@@ -53,15 +55,16 @@ class Vehicle : public std::enable_shared_from_this<Vehicle>
 	/* 'land' the vehicle in a building*/
 	void land(TileMap &map, sp<Building> b);
 
-	std::vector<std::unique_ptr<Weapon>> weapons;
+	std::list<sp<VEquipment>> equipment;
 	Vec3<float> position;
 
 	const Vec3<float> &getPosition() const { return this->position; }
 	const Vec3<float> &getDirection() const;
+	float getSpeed() const;
 
 	void setPosition(const Vec3<float> &pos);
 
-	virtual void update(GameState &state, unsigned int ticks);
+	virtual void update(Framework &fw, GameState &state, unsigned int ticks);
 };
 
 }; // namespace OpenApoc

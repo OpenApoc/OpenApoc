@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <vehicle_equipment type="engine" id="VEQUIP_SD_SPORTS">
+    <name>STR_SD_SPORTS</name>
+    <usable_by>air</usable_by>
+    <weight>140</weight>
+    <max_ammo>12</max_ammo>
+    <ammo_type>0</ammo_type>
+    <sprite>PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:20:xcom3/ufodata/vhawk.pcx</sprite>
+    <size>
+      <x>2</x>
+      <y>2</y>
+    </size>
+    <manufacturer>ORG_SUPERDYNAMICS</manufacturer>
+    <store_space>40</store_space>
+    <power>4000</power>
+    <top_speed>12</top_speed>
+  </vehicle_equipment>
+</openapoc_rules>

@@ -3,21 +3,61 @@
 #include <map>
 #include "library/strings.h"
 #include "library/colour.h"
+#include "library/vec.h"
 #include "framework/logger.h"
 
 namespace OpenApoc
 {
-bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, bool &output);
-bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, float &output);
-bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, Colour &output);
-bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, int &output);
-bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, UString &output);
 
-bool ReadText(tinyxml2::XMLElement *element, bool &output);
-bool ReadText(tinyxml2::XMLElement *element, float &output);
-bool ReadText(tinyxml2::XMLElement *element, Colour &output);
-bool ReadText(tinyxml2::XMLElement *element, int &output);
-bool ReadText(tinyxml2::XMLElement *element, UString &output);
+bool FromString(const UString &str, UString &output);
+bool FromString(const UString &str, int &output);
+bool FromString(const UString &str, float &output);
+bool FromString(const UString &str, bool &output);
+bool FromString(const UString &str, Colour &output);
+
+template <typename T>
+bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, T &output)
+{
+	if (!element)
+	{
+		LogError("Invalid element pointer");
+		return false;
+	}
+	if (!element->Attribute(attributeName.c_str()))
+	{
+		return false;
+	}
+
+	UString str = element->Attribute(attributeName.c_str());
+
+	return FromString(str, output);
+}
+
+template <typename T> bool ReadElement(tinyxml2::XMLElement *element, T &output);
+
+template <> bool ReadElement(tinyxml2::XMLElement *element, Vec2<int> &output);
+template <> bool ReadElement(tinyxml2::XMLElement *element, Vec3<int> &output);
+template <> bool ReadElement(tinyxml2::XMLElement *element, Vec2<float> &output);
+template <> bool ReadElement(tinyxml2::XMLElement *element, Vec3<float> &output);
+template <> bool ReadElement(tinyxml2::XMLElement *element, Rect<int> &output);
+template <> bool ReadElement(tinyxml2::XMLElement *element, Rect<float> &output);
+
+template <typename T> bool ReadElement(tinyxml2::XMLElement *element, T &output)
+{
+	if (!element)
+	{
+		LogError("Invalid element pointer");
+		return false;
+	}
+	if (!element->GetText())
+	{
+		return false;
+	}
+
+	UString str = element->GetText();
+
+	return FromString(str, output);
+}
 
 template <typename T>
 bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName,
@@ -47,7 +87,7 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, 
 }
 
 template <typename T>
-bool ReadText(tinyxml2::XMLElement *element, const std::map<UString, T> &valueMap, T &output)
+bool ReadElement(tinyxml2::XMLElement *element, const std::map<UString, T> &valueMap, T &output)
 {
 	UString str = element->GetText();
 	auto it = valueMap.find(str);
@@ -60,9 +100,10 @@ bool ReadText(tinyxml2::XMLElement *element, const std::map<UString, T> &valueMa
 	return true;
 }
 
-template <typename T> bool ReadText(tinyxml2::XMLElement *element, T &output, const T &defaultValue)
+template <typename T>
+bool ReadElement(tinyxml2::XMLElement *element, T &output, const T &defaultValue)
 {
-	if (ReadText(element, output))
+	if (ReadElement(element, output))
 		return true;
 	output = defaultValue;
 	return false;

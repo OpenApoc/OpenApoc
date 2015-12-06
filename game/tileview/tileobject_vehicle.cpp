@@ -19,7 +19,7 @@ void TileObjectVehicle::draw(Renderer &r, TileView &view, Vec2<float> screenPosi
 		{
 			float closestAngle = FLT_MAX;
 			sp<Image> closestImage;
-			for (auto &p : vehicle->def.directionalSprites)
+			for (auto &p : vehicle->type.directional_sprites)
 			{
 				float angle =
 				    glm::angle(glm::normalize(p.first), glm::normalize(this->getDirection()));
@@ -34,14 +34,14 @@ void TileObjectVehicle::draw(Renderer &r, TileView &view, Vec2<float> screenPosi
 				LogError("No image found for vehicle");
 				return;
 			}
-			r.draw(closestImage, screenPosition - vehicle->def.imageOffset);
+			r.draw(closestImage, screenPosition - vehicle->type.image_offset);
 			break;
 		}
 		case TileViewMode::Strategy:
 		{
 			float closestAngle = FLT_MAX;
 			sp<Image> closestImage;
-			for (auto &p : vehicle->def.directionalStrategySprites)
+			for (auto &p : vehicle->type.directional_strategy_sprites)
 			{
 				float angle =
 				    glm::angle(glm::normalize(p.first), glm::normalize(this->getDirection()));

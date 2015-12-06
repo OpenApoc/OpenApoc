@@ -11,7 +11,7 @@
 
 namespace OpenApoc
 {
-Scenery::Scenery(SceneryTileDef &tileDef, Vec3<int> pos, sp<Building> bld)
+Scenery::Scenery(const SceneryTileDef &tileDef, Vec3<int> pos, sp<Building> bld)
     : tileDef(tileDef), pos(pos), building(bld), damaged(false), falling(false)
 {
 }

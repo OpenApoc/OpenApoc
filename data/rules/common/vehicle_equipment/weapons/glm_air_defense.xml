@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <vehicle_equipment type="weapon" id="VEQUIP_GLM_AIR_DEFENSE">
+    <usable_by>ground</usable_by>
+    <weight>140</weight>
+    <max_ammo>16</max_ammo>
+    <ammo_type>14</ammo_type>
+    <sprite>PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:28:xcom3/ufodata/vhawk.pcx</sprite>
+    <size>
+      <x>4</x>
+      <y>4</y>
+    </size>
+    <manufacturer>ORG_MARSEC</manufacturer>
+    <store_space>160</store_space>
+    <speed>18</speed>
+    <projectile_image>1</projectile_image>
+    <damage>28</damage>
+    <accuracy>25</accuracy>
+    <fire_delay>34</fire_delay>
+    <tail_size>35</tail_size>
+    <guided>true</guided>
+    <turn_rate>14</turn_rate>
+    <range>650</range>
+    <firing_arc_1>2000</firing_arc_1>
+    <firing_arc_2>8</firing_arc_2>
+    <point_defence>false</point_defence>
+    <name>STR_GLM_AIR_DEFENSE</name>
+    <fire_sfx>RAWSOUND:84</fire_sfx>
+    <idem>84</idem>
+    <explosion_graphic>PTANG:7</explosion_graphic>
+    <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:22</icon>
+  </vehicle_equipment>
+</openapoc_rules>

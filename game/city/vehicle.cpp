@@ -1,13 +1,16 @@
 #include "library/sp.h"
 #include "framework/logger.h"
 #include "game/city/vehicle.h"
-#include "game/city/weapon.h"
+#include "game/city/vequipment.h"
+#include "game/rules/rules.h"
 #include "game/city/projectile.h"
 #include "game/organisation.h"
 #include "framework/image.h"
 #include "game/city/city.h"
 #include "game/city/building.h"
 #include "game/city/vehiclemission.h"
+#include "game/city/vequipment.h"
+#include "game/rules/vequipment.h"
 #include "game/gamestate.h"
 #include "game/tileview/tileobject_vehicle.h"
 #include "game/tileview/tileobject_shadow.h"
@@ -16,11 +19,6 @@
 #include <random>
 #include <limits>
 
-namespace
-{
-std::default_random_engine speed_rng;
-} // anonymous namespace
-
 namespace OpenApoc
 {
 
@@ -28,17 +26,13 @@ class FlyingVehicleMover : public VehicleMover
 {
   public:
 	Vec3<float> goalPosition;
-	float speed;
 	FlyingVehicleMover(Vehicle &v, Vec3<float> initialGoal)
 	    : VehicleMover(v), goalPosition(initialGoal)
 	{
-		std::uniform_real_distribution<float> distribution(-0.02, 0.02);
-		// Tweak the speed slightly, makes everything a little less synchronised
-		speed = 0.05 + distribution(speed_rng);
 	}
 	virtual void update(unsigned int ticks) override
 	{
-
+		float speed = vehicle.getSpeed();
 		if (!vehicle.missions.empty())
 		{
 			vehicle.missions.front()->update(ticks);
@@ -48,10 +42,11 @@ class FlyingVehicleMover : public VehicleMover
 				return;
 			}
 			float distanceLeft = speed * ticks;
+			distanceLeft /= TICK_SCALE;
 			while (distanceLeft > 0)
 			{
 				Vec3<float> vectorToGoal = goalPosition - vehicleTile->getPosition();
-				float distanceToGoal = glm::length(vectorToGoal);
+				float distanceToGoal = glm::length(vectorToGoal * VELOCITY_SCALE);
 				if (distanceToGoal <= distanceLeft)
 				{
 					distanceLeft -= distanceToGoal;
@@ -102,8 +97,10 @@ class FlyingVehicleMover : public VehicleMover
 						dir = glm::normalize(vectorToGoal);
 					}
 					vehicleTile->setDirection(dir);
-					vehicle.setPosition(vehicleTile->getPosition() +
-					                    distanceLeft * glm::normalize(vectorToGoal));
+					Vec3<float> newPosition = distanceLeft * dir;
+					newPosition /= VELOCITY_SCALE;
+					newPosition += vehicleTile->getPosition();
+					vehicle.setPosition(newPosition);
 					distanceLeft = 0;
 					break;
 				}
@@ -116,7 +113,7 @@ VehicleMover::VehicleMover(Vehicle &v) : vehicle(v) {}
 
 VehicleMover::~VehicleMover() {}
 
-Vehicle::Vehicle(const VehicleDefinition &def, sp<Organisation> owner) : def(def), owner(owner) {}
+Vehicle::Vehicle(const VehicleType &type, sp<Organisation> owner) : type(type), owner(owner) {}
 
 Vehicle::~Vehicle() {}
 
@@ -163,7 +160,7 @@ void Vehicle::land(TileMap &map, sp<Building> b)
 	this->position = {0, 0, 0};
 }
 
-void Vehicle::update(GameState &state, unsigned int ticks)
+void Vehicle::update(Framework &fw, GameState &state, unsigned int ticks)
 
 {
 	if (!this->missions.empty())
@@ -173,14 +170,17 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	auto vehicleTile = this->tileObject;
 	if (vehicleTile)
 	{
-		for (auto &weapon : this->weapons)
+		for (auto &equipment : this->equipment)
 		{
+			if (equipment->type.type != VEquipmentType::Type::Weapon)
+				continue;
+			auto weapon = std::dynamic_pointer_cast<VWeapon>(equipment);
 			weapon->update(ticks);
 			if (weapon->canFire())
 			{
 				// Find something to shoot at!
 				// FIXME: Only run on 'aggressive'? And not already a manually-selected target?
-				float range = weapon->getWeaponDef().range;
+				float range = weapon->getRange();
 				// Find the closest enemy within the firing arc
 				float closestEnemyRange = std::numeric_limits<float>::max();
 				sp<TileObjectVehicle> closestEnemy;
@@ -221,7 +221,7 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 					// and fire at the center of the tile
 					auto target = closestEnemy->getPosition();
 					target += Vec3<float>{0.5, 0.5, 0.5};
-					auto projectile = weapon->fire(target);
+					auto projectile = weapon->fire(fw, target);
 					if (projectile)
 					{
 						vehicleTile->map.addObjectToMap(projectile);
@@ -266,6 +266,69 @@ void Vehicle::setPosition(const Vec3<float> &pos)
 	else
 	{
 		this->shadowObject->setPosition(pos);
+	}
+}
+
+float Vehicle::getSpeed() const
+{
+	// FIXME: This is somehow modulated by weight?
+	float speed = this->type.top_speed;
+
+	for (auto &e : this->equipment)
+	{
+		if (e->type.type != VEquipmentType::Type::Engine)
+			continue;
+		auto engine = std::dynamic_pointer_cast<VEngine>(e);
+		auto &engineType = static_cast<const VEngineType &>(engine->type);
+		speed += engineType.top_speed;
+	}
+
+	if (speed == 0)
+	{
+		LogError("Vehicle with no engine");
+	}
+	return speed;
+}
+
+void Vehicle::equipDefaultEquipment(Rules &rules)
+{
+	LogInfo("Equipping \"%s\" with default equipment", this->type.name.c_str());
+	for (auto &pair : this->type.initial_equipment_list)
+	{
+		auto &pos = pair.first;
+		auto &ename = pair.second;
+
+		auto &etype = rules.getVEquipmentType(ename);
+		switch (etype.type)
+		{
+			case VEquipmentType::Type::Engine:
+			{
+				auto engine = std::make_shared<VEngine>(static_cast<const VEngineType &>(etype));
+				this->equipment.emplace_back(engine);
+				LogInfo("Equipped \"%s\" with engine \"%s\"", this->type.name.c_str(),
+				        ename.c_str());
+				break;
+			}
+			case VEquipmentType::Type::Weapon:
+			{
+				auto &wtype = static_cast<const VWeaponType &>(etype);
+				auto weapon = std::make_shared<VWeapon>(wtype, shared_from_this(), wtype.max_ammo);
+				this->equipment.emplace_back(weapon);
+				LogInfo("Equipped \"%s\" with weapon \"%s\"", this->type.name.c_str(),
+				        ename.c_str());
+				break;
+			}
+			case VEquipmentType::Type::General:
+			{
+				// FIXME: Implement 'general' equipment
+				LogInfo("Equipped \"%s\" with general equipment \"%s\"", this->type.name.c_str(),
+				        ename.c_str());
+				break;
+			}
+			default:
+				LogError("Default equipment for \"%s\" at pos (%d,%d} has invalid type",
+				         this->type.name.c_str(), pos.x, pos.y);
+		}
 	}
 }
 

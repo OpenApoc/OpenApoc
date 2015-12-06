@@ -68,7 +68,7 @@ class SoundBackend
 {
   public:
 	virtual ~SoundBackend() {}
-	virtual void playSample(sp<Sample> sample) = 0;
+	virtual void playSample(sp<Sample> sample, float gain = 1.0f) = 0;
 	virtual void playMusic(std::function<void(void *)> finishedCallback,
 	                       void *callbackData = nullptr) = 0;
 	virtual void stopMusic() = 0;

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <vehicle_equipment type="weapon" id="VEQUIP_40MM_AUTO_CANNON_TURRET">
+    <usable_by>ground</usable_by>
+    <weight>20</weight>
+    <max_ammo>500</max_ammo>
+    <ammo_type>11</ammo_type>
+    <sprite>PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:24:xcom3/ufodata/vhawk.pcx</sprite>
+    <size>
+      <x>2</x>
+      <y>2</y>
+    </size>
+    <manufacturer>ORG_MEGAPOL</manufacturer>
+    <store_space>40</store_space>
+    <speed>20</speed>
+    <projectile_image>2</projectile_image>
+    <damage>14</damage>
+    <accuracy>30</accuracy>
+    <fire_delay>6</fire_delay>
+    <tail_size>7</tail_size>
+    <guided>false</guided>
+    <turn_rate>0</turn_rate>
+    <range>300</range>
+    <firing_arc_1>800</firing_arc_1>
+    <firing_arc_2>8</firing_arc_2>
+    <point_defence>false</point_defence>
+    <name>STR_40MM_AUTO_CANNON_TURRET</name>
+    <fire_sfx>RAWSOUND:90</fire_sfx>
+    <idem>90</idem>
+    <explosion_graphic>PTANG:1</explosion_graphic>
+    <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:18</icon>
+  </vehicle_equipment>
+</openapoc_rules>

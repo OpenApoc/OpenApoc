@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <vehicle id="VEHICLE_POLICE_CAR" type="ground">
+    <name>STR_POLICE_CAR</name>
+    <manufacturer>ORG_MEGAPOL</manufacturer>
+    <size>
+      <x>1</x>
+      <y>1</y>
+      <z>1</z>
+    </size>
+    <image_offset>
+      <x>16</x>
+      <y>16</y>
+    </image_offset>
+    <directional_sprites>
+      <sprite direction="n" banking="flat">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:32</sprite>
+      <sprite direction="ne" banking="flat">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:33</sprite>
+      <sprite direction="e" banking="flat">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:34</sprite>
+      <sprite direction="se" banking="flat">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:35</sprite>
+      <sprite direction="s" banking="flat">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:36</sprite>
+      <sprite direction="sw" banking="flat">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:37</sprite>
+      <sprite direction="w" banking="flat">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:38</sprite>
+      <sprite direction="nw" banking="flat">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:39</sprite>
+      <sprite direction="n" banking="ascending">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:40</sprite>
+      <sprite direction="e" banking="ascending">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:41</sprite>
+      <sprite direction="s" banking="ascending">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:42</sprite>
+      <sprite direction="w" banking="ascending">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:43</sprite>
+      <sprite direction="n" banking="descending">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:44</sprite>
+      <sprite direction="e" banking="descending">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:45</sprite>
+      <sprite direction="s" banking="descending">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:46</sprite>
+      <sprite direction="w" banking="descending">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:47</sprite>
+    </directional_sprites>
+    <stratmap>
+      <sprite direction="n">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:572</sprite>
+    </stratmap>
+    <acceleration>0</acceleration>
+    <top_speed>0</top_speed>
+    <health>50</health>
+    <crash_health>0</crash_health>
+    <weight>430</weight>
+    <armour direction="rear">2</armour>
+    <armour direction="top">2</armour>
+    <armour direction="left">2</armour>
+    <armour direction="right">2</armour>
+    <armour direction="bottom">4</armour>
+    <armour direction="front">2</armour>
+    <passengers>4</passengers>
+    <aggressiveness>0</aggressiveness>
+    <score>10</score>
+    <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:31:xcom3/ufodata/pal_01.dat</icon>
+    <equipment_layout>
+      <slot type="engine" align_x="centre" align_y="centre">
+        <p0>
+          <x>7</x>
+          <y>3</y>
+        </p0>
+        <p1>
+          <x>9</x>
+          <y>5</y>
+        </p1>
+      </slot>
+      <slot type="weapon" align_x="centre" align_y="centre">
+        <p0>
+          <x>7</x>
+          <y>8</y>
+        </p0>
+        <p1>
+          <x>9</x>
+          <y>10</y>
+        </p1>
+      </slot>
+    </equipment_layout>
+    <initial_equipment>
+      <equipment>
+        <type>VEQUIP_40MM_AUTO_CANNON_TURRET</type>
+        <position>
+          <x>7</x>
+          <y>8</y>
+        </position>
+      </equipment>
+      <equipment>
+        <type>VEQUIP_METRO_ROADGRAV</type>
+        <position>
+          <x>7</x>
+          <y>3</y>
+        </position>
+      </equipment>
+    </initial_equipment>
+  </vehicle>
+</openapoc_rules>

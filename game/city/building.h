@@ -19,8 +19,8 @@ class Base;
 class Building
 {
   public:
-	Building(BuildingDef &def, sp<Organisation> owner);
-	BuildingDef &def;
+	Building(const BuildingDef &def, sp<Organisation> owner);
+	const BuildingDef &def;
 	sp<Organisation> owner;
 	std::vector<Vec3<int>> landingPadLocations;
 	std::set<sp<Vehicle>> landed_vehicles;

@@ -7,6 +7,13 @@
 #include <functional>
 #include <vector>
 
+// DANGER WILL ROBINSON - MADE UP VALUES AHEAD
+// I suspect quantities of distance/velocity are stored in units of {32,32,16} (same as the voxel
+// size)?
+// And progressing them by 1/15th of that every tick looks about right?
+#define TICK_SCALE (15)
+#define VELOCITY_SCALE (Vec3<float>{32, 32, 16})
+
 namespace OpenApoc
 {
 

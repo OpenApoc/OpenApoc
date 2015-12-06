@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <include>rules/common/vehicle_equipment/weapons.xml</include>
+  <include>rules/common/vehicle_equipment/engines.xml</include>
+  <include>rules/common/vehicle_equipment/general.xml</include>
+</openapoc_rules>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <vehicle_equipment type="engine" id="VEQUIP_METRO_TURBOGRAV">
+    <name>STR_METRO_TURBOGRAV</name>
+    <usable_by>ground</usable_by>
+    <weight>65</weight>
+    <max_ammo>4</max_ammo>
+    <ammo_type>0</ammo_type>
+    <sprite>PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:32:xcom3/ufodata/vhawk.pcx</sprite>
+    <size>
+      <x>2</x>
+      <y>3</y>
+    </size>
+    <manufacturer>ORG_GENERAL_METRO</manufacturer>
+    <store_space>60</store_space>
+    <power>450</power>
+    <top_speed>5</top_speed>
+  </vehicle_equipment>
+</openapoc_rules>

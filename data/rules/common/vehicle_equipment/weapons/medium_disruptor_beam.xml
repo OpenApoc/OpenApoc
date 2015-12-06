@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <vehicle_equipment type="weapon" id="VEQUIP_MEDIUM_DISRUPTOR_BEAM">
+    <usable_by>air</usable_by>
+    <weight>90</weight>
+    <max_ammo>350</max_ammo>
+    <sprite>PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:6:xcom3/ufodata/vhawk.pcx</sprite>
+    <size>
+      <x>2</x>
+      <y>3</y>
+    </size>
+    <manufacturer>ORG_X-COM</manufacturer>
+    <store_space>110</store_space>
+    <speed>30</speed>
+    <projectile_image>10</projectile_image>
+    <damage>40</damage>
+    <accuracy>40</accuracy>
+    <fire_delay>17</fire_delay>
+    <tail_size>25</tail_size>
+    <guided>false</guided>
+    <turn_rate>0</turn_rate>
+    <range>600</range>
+    <firing_arc_1>2200</firing_arc_1>
+    <firing_arc_2>4</firing_arc_2>
+    <point_defence>false</point_defence>
+    <name>STR_MEDIUM_DISRUPTOR_BEAM</name>
+    <fire_sfx>RAWSOUND:75</fire_sfx>
+    <idem>75</idem>
+    <explosion_graphic>PTANG:10</explosion_graphic>
+    <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:6</icon>
+  </vehicle_equipment>
+</openapoc_rules>

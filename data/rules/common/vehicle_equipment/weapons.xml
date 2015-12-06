@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <include>rules/common/vehicle_equipment/weapons/40mm_auto_cannon.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/40mm_auto_cannon_turret.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/airguard_anti-air_cannon.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/bolter_4000_laser_gun.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/disruptor_bomb_launcher.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/disruptor_multi-bomb_launcher.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/glm_air_defense.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/glm_array.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/heavy_disruptor_beam.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/janitor_missile_array.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/justice_missile_launcher.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/lancer_7000_laser_gun.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/laser_defense_array.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/light_disruptor_beam.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/lineage_plasma_cannon.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/medium_disruptor_beam.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/plasma_defense_array.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/plasma_multi-system.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/plasma_turret_cannon.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/prophet_missile_array.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/rendor_plasma_gun.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/retribution_missile_launcher.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/rumble_cannon.xml</include>
+  <include>rules/common/vehicle_equipment/weapons/stasis_bomb_launcher.xml</include>
+</openapoc_rules>

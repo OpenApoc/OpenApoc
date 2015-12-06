@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <vehicle_equipment type="engine" id="VEQUIP_METRO_MULTIPOWER_PLUS">
+    <name>STR_METRO_MULTIPOWER_PLUS</name>
+    <usable_by>ground</usable_by>
+    <weight>110</weight>
+    <max_ammo>6</max_ammo>
+    <ammo_type>0</ammo_type>
+    <sprite>PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:34:xcom3/ufodata/vhawk.pcx</sprite>
+    <size>
+      <x>4</x>
+      <y>4</y>
+    </size>
+    <manufacturer>ORG_MARSEC</manufacturer>
+    <store_space>120</store_space>
+    <power>1000</power>
+    <top_speed>7</top_speed>
+  </vehicle_equipment>
+</openapoc_rules>

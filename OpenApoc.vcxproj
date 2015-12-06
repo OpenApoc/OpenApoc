@@ -390,7 +390,8 @@
     <ClCompile Include="game\city\scenery.cpp" />
     <ClCompile Include="game\city\vehicle.cpp" />
     <ClCompile Include="game\city\vehiclemission.cpp" />
-    <ClCompile Include="game\city\weapon.cpp" />
+    <ClCompile Include="game\city\vequipment.cpp" />
+    <ClCompile Include="game\city\vweapon.cpp" />
     <ClCompile Include="game\debugtools\debugmenu.cpp" />
     <ClCompile Include="game\debugtools\formpreview.cpp" />
     <ClCompile Include="game\gamestate.cpp" />
@@ -406,8 +407,8 @@
     <ClCompile Include="game\rules\organisationdef_rules.cpp" />
     <ClCompile Include="game\rules\rules.cpp" />
     <ClCompile Include="game\rules\rules_helper.cpp" />
-    <ClCompile Include="game\rules\vehicledef_rules.cpp" />
-    <ClCompile Include="game\rules\weapondef_rules.cpp" />
+    <ClCompile Include="game\rules\vehicle_type_rules.cpp" />
+    <ClCompile Include="game\rules\vequipment.cpp" />
     <ClCompile Include="game\tileview\tile.cpp" />
     <ClCompile Include="game\tileview\tileobject.cpp" />
     <ClCompile Include="game\tileview\tileobject_doodad.cpp" />
@@ -484,7 +485,7 @@
     <ClInclude Include="game\city\scenery.h" />
     <ClInclude Include="game\city\vehicle.h" />
     <ClInclude Include="game\city\vehiclemission.h" />
-    <ClInclude Include="game\city\weapon.h" />
+    <ClInclude Include="game\city\vequipment.h" />
     <ClInclude Include="game\debugtools\debugmenu.h" />
     <ClInclude Include="game\debugtools\formpreview.h" />
     <ClInclude Include="game\gamestate.h" />
@@ -499,8 +500,8 @@
     <ClInclude Include="game\rules\rules.h" />
     <ClInclude Include="game\rules\rules_helper.h" />
     <ClInclude Include="game\rules\rules_private.h" />
-    <ClInclude Include="game\rules\vehicledef.h" />
-    <ClInclude Include="game\rules\weapondef.h" />
+    <ClInclude Include="game\rules\vehicle_type.h" />
+    <ClInclude Include="game\rules\vequipment.h" />
     <ClInclude Include="game\tileview\tile.h" />
     <ClInclude Include="game\tileview\tileobject.h" />
     <ClInclude Include="game\tileview\tileobject_doodad.h" />

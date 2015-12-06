@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <vehicle_equipment type="general" id="VEQUIP_CLOAKING_FIELD">
+    <name>STR_CLOAKING_FIELD</name>
+    <usable_by>ground</usable_by>
+    <usable_by>air</usable_by>
+    <weight>80</weight>
+    <max_ammo>0</max_ammo>
+    <sprite>PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:45:xcom3/ufodata/vhawk.pcx</sprite>
+    <size>
+      <x>3</x>
+      <y>4</y>
+    </size>
+    <manufacturer>ORG_X-COM</manufacturer>
+    <store_space>90</store_space>
+    <missile_jamming>20</missile_jamming>
+    <cloaking>true</cloaking>
+  </vehicle_equipment>
+</openapoc_rules>

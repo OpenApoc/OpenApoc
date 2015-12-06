@@ -18,9 +18,10 @@ class NullSoundBackend : public SoundBackend
 		preferredFormat.format = AudioFormat::SampleFormat::PCM_SINT16;
 		preferredFormat.frequency = 22050;
 	}
-	virtual void playSample(sp<Sample> sample) override
+	virtual void playSample(sp<Sample> sample, float gain) override
 	{
 		std::ignore = sample;
+		std::ignore = gain;
 		LogWarning("Called on NULL backend");
 	}
 

@@ -43,7 +43,7 @@ class City
 
 	void update(GameState &state, unsigned int ticks);
 
-	sp<Doodad> placeDoodad(DoodadDef &def, Vec3<float> position);
+	sp<Doodad> placeDoodad(const DoodadDef &def, Vec3<float> position);
 };
 
 }; // namespace OpenApoc

@@ -25,7 +25,7 @@ void TileObjectShadow::draw(Renderer &r, TileView &view, Vec2<float> screenPosit
 		{
 			float closestAngle = FLT_MAX;
 			sp<Image> closestImage;
-			for (auto &p : vehicle->def.directionalShadowSprites)
+			for (auto &p : vehicle->type.directional_shadow_sprites)
 			{
 				float angle =
 				    glm::angle(glm::normalize(p.first), glm::normalize(vehicle->getDirection()));
@@ -40,7 +40,7 @@ void TileObjectShadow::draw(Renderer &r, TileView &view, Vec2<float> screenPosit
 				LogError("No image found for vehicle");
 				return;
 			}
-			r.draw(closestImage, screenPosition - vehicle->def.shadowOffset);
+			r.draw(closestImage, screenPosition - vehicle->type.shadow_offset);
 			break;
 		}
 		case TileViewMode::Strategy:

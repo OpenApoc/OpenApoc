@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <include>rules/common/vehicle_equipment/general/advanced_control_system.xml</include>
+  <include>rules/common/vehicle_equipment/general/bio-transport_module.xml</include>
+  <include>rules/common/vehicle_equipment/general/cargo_module.xml</include>
+  <include>rules/common/vehicle_equipment/general/cloaking_field.xml</include>
+  <include>rules/common/vehicle_equipment/general/heavy_weapons_control.xml</include>
+  <include>rules/common/vehicle_equipment/general/large_disruption_shield.xml</include>
+  <include>rules/common/vehicle_equipment/general/light_weapons_control.xml</include>
+  <include>rules/common/vehicle_equipment/general/medium_weapons_control.xml</include>
+  <include>rules/common/vehicle_equipment/general/missile_evasion_matrix.xml</include>
+  <include>rules/common/vehicle_equipment/general/passenger_module.xml</include>
+  <include>rules/common/vehicle_equipment/general/small_disruption_shield.xml</include>
+  <include>rules/common/vehicle_equipment/general/teleporter.xml</include>
+</openapoc_rules>

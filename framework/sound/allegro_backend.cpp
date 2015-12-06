@@ -9,7 +9,7 @@
 namespace
 {
 
-static const int max_samples = 10;
+static const int max_samples = 1000;
 
 using namespace OpenApoc;
 
@@ -114,7 +114,7 @@ class AllegroSoundBackend : public SoundBackend
 		}
 	}
 
-	virtual void playSample(sp<Sample> sample) override
+	virtual void playSample(sp<Sample> sample, float gain) override
 	{
 		if (!sample->backendData)
 			sample->backendData.reset(new AllegroSampleData(sample));
@@ -123,12 +123,13 @@ class AllegroSoundBackend : public SoundBackend
 			liveSamples.pop_front();
 		AllegroSampleData *sampleData = static_cast<AllegroSampleData *>(sample->backendData.get());
 
-		LogInfo("Playing sample with gain %f (%f * %f)", this->globalGain * this->sampleGain,
-		        this->globalGain, this->sampleGain);
-		if (!al_play_sample(sampleData->s, this->globalGain * this->sampleGain, 0.0f, 1.0f,
+		LogInfo("Playing sample with gain %f (%f * %f * %f)",
+		        this->globalGain * this->sampleGain * gain, this->globalGain, this->sampleGain,
+		        gain);
+		if (!al_play_sample(sampleData->s, this->globalGain * this->sampleGain * gain, 0.0f, 1.0f,
 		                    ALLEGRO_PLAYMODE_ONCE, nullptr))
 		{
-			LogError("Failed to play sample");
+			LogWarning("Failed to play sample");
 		}
 	}
 

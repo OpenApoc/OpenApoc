@@ -1,4 +1,5 @@
 #include "game/tileview/tileobject_projectile.h"
+#include "game/tileview/tile.h"
 
 namespace OpenApoc
 {
@@ -21,6 +22,7 @@ void TileObjectProjectile::draw(Renderer &r, TileView &view, Vec2<float> screenP
 			Vec2<float> headScreenCoords = screenPosition;
 			Vec3<float> tailPosition =
 			    (projectile->beamLength * (glm::normalize(projectile->velocity)));
+			tailPosition /= VELOCITY_SCALE;
 			Vec2<float> tailScreenCoords = view.tileToScreenCoords(tailPosition);
 			tailScreenCoords += screenPosition;
 			r.drawLine(headScreenCoords, tailScreenCoords, projectile->colour,

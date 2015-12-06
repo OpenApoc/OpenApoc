@@ -8,6 +8,57 @@
 namespace OpenApoc
 {
 
+bool RulesLoader::isValidEquipmentID(const UString &str)
+{
+	static UString id_prefix = "VEQUIP_";
+	// This also catches empty string etc.?
+	if (str.substr(0, id_prefix.length()) != id_prefix)
+	{
+		return false;
+	}
+	return true;
+}
+bool RulesLoader::isValidStringID(const UString &str)
+{
+	static UString id_prefix = "STR_";
+	// This also catches empty string etc.?
+	if (str.substr(0, id_prefix.length()) != id_prefix)
+	{
+		return false;
+	}
+	return true;
+}
+bool RulesLoader::isValidOrganisationID(const UString &str)
+{
+	static UString id_prefix = "ORG_";
+	// This also catches empty string etc.?
+	if (str.substr(0, id_prefix.length()) != id_prefix)
+	{
+		return false;
+	}
+	return true;
+}
+bool RulesLoader::isValidVehicleTypeID(const UString &str)
+{
+	static UString id_prefix = "VEHICLE_";
+	// This also catches empty string etc.?
+	if (str.substr(0, id_prefix.length()) != id_prefix)
+	{
+		return false;
+	}
+	return true;
+}
+bool RulesLoader::isValidOrganisation(const Rules &rules, const UString &str)
+{
+	auto &orgs = rules.getOrganisations();
+	for (auto &org : orgs)
+	{
+		if (org.ID == str)
+			return true;
+	}
+	return false;
+}
+
 Rules::Rules(Framework &fw, const UString &rootFileName) : aliases(new ResourceAliases())
 {
 	TRACE_FN_ARGS1("rootFileName", rootFileName);
@@ -66,6 +117,29 @@ Rules::Rules(Framework &fw, const UString &rootFileName) : aliases(new ResourceA
 			sceneryTile.damagedTile = &damagedTileIt->second;
 		}
 	}
+
+	for (auto &vequipment : this->vehicle_equipment)
+	{
+		if (!vequipment.second)
+		{
+			LogError("vequipment[%s] points to null?", vequipment.first.c_str());
+		}
+		if (!vequipment.second->isValid(fw, *this))
+		{
+			LogError("Invalid equipment ID \"%s\"", vequipment.second->id.c_str());
+		}
+	}
+	for (auto &vehicle : this->vehicle_types)
+	{
+		if (!vehicle.second)
+		{
+			LogError("vehicle[%s] points to null?", vehicle.first.c_str());
+		}
+		if (!vehicle.second->isValid(fw, *this))
+		{
+			LogError("Invalid vehicle ID \"%s\"", vehicle.second->id.c_str());
+		}
+	}
 }
 
 bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *root)
@@ -83,9 +157,9 @@ bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *
 	     e = e->NextSiblingElement())
 	{
 		UString name = e->Name();
-		if (name == "vehicledef")
+		if (name == "vehicle")
 		{
-			if (!ParseVehicleDefinition(fw, rules, e))
+			if (!ParseVehicleType(fw, rules, e))
 				return false;
 		}
 		else if (name == "organisation")
@@ -98,9 +172,9 @@ bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *
 			if (!ParseCityDefinition(fw, rules, e))
 				return false;
 		}
-		else if (name == "weapon")
+		else if (name == "vehicle_equipment")
 		{
-			if (!ParseWeaponDefinition(fw, rules, e))
+			if (!ParseVehicleEquipment(fw, rules, e))
 				return false;
 		}
 		else if (name == "facilitydef")

@@ -24,12 +24,12 @@ class SceneryTileDef
 	friend class Rules;
 
   public:
-	sp<Image> getSprite() { return this->sprite; }
-	sp<Image> getStrategySprite() { return this->strategySprite; }
-	sp<Image> getOverlaySprite() { return this->overlaySprite; }
-	sp<VoxelMap> getVoxelMap() { return this->voxelMap; }
-	Vec2<float> getImageOffset() { return this->imageOffset; }
+	sp<Image> getSprite() const { return this->sprite; }
+	sp<Image> getStrategySprite() const { return this->strategySprite; }
+	sp<Image> getOverlaySprite() const { return this->overlaySprite; }
+	sp<VoxelMap> getVoxelMap() const { return this->voxelMap; }
+	Vec2<float> getImageOffset() const { return this->imageOffset; }
 	bool getIsLandingPad() const { return this->isLandingPad; }
-	SceneryTileDef *getDamagedTile() { return this->damagedTile; }
+	SceneryTileDef *getDamagedTile() const { return this->damagedTile; }
 };
 }; // namespace OpenApoc

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <vehicle id="VEHICLE_GRIFFON_AFV" type="ground">
+    <name>STR_GRIFFON_AFV</name>
+    <manufacturer>ORG_MARSEC</manufacturer>
+    <size>
+      <x>1</x>
+      <y>1</y>
+      <z>1</z>
+    </size>
+    <image_offset>
+      <x>16</x>
+      <y>16</y>
+    </image_offset>
+    <directional_sprites>
+      <sprite direction="n" banking="flat">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:112</sprite>
+      <sprite direction="ne" banking="flat">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:113</sprite>
+      <sprite direction="e" banking="flat">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:114</sprite>
+      <sprite direction="se" banking="flat">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:115</sprite>
+      <sprite direction="s" banking="flat">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:116</sprite>
+      <sprite direction="sw" banking="flat">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:117</sprite>
+      <sprite direction="w" banking="flat">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:118</sprite>
+      <sprite direction="nw" banking="flat">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:119</sprite>
+      <sprite direction="n" banking="ascending">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:120</sprite>
+      <sprite direction="e" banking="ascending">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:121</sprite>
+      <sprite direction="s" banking="ascending">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:122</sprite>
+      <sprite direction="w" banking="ascending">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:123</sprite>
+      <sprite direction="n" banking="descending">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:124</sprite>
+      <sprite direction="e" banking="descending">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:125</sprite>
+      <sprite direction="s" banking="descending">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:126</sprite>
+      <sprite direction="w" banking="descending">PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:127</sprite>
+    </directional_sprites>
+    <stratmap>
+      <sprite direction="n">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:572</sprite>
+    </stratmap>
+    <acceleration>0</acceleration>
+    <top_speed>0</top_speed>
+    <health>700</health>
+    <crash_health>0</crash_health>
+    <weight>1800</weight>
+    <armour direction="rear">32</armour>
+    <armour direction="top">32</armour>
+    <armour direction="left">32</armour>
+    <armour direction="right">32</armour>
+    <armour direction="bottom">32</armour>
+    <armour direction="front">32</armour>
+    <passengers>4</passengers>
+    <aggressiveness>100</aggressiveness>
+    <score>50</score>
+    <equipment_screen>xcom3/ufodata/VTANK.pcx</equipment_screen>
+    <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:36:xcom3/ufodata/pal_01.dat</icon>
+    <equipment_layout>
+      <slot type="engine" align_x="centre" align_y="centre">
+        <p0>
+          <x>6</x>
+          <y>11</y>
+        </p0>
+        <p1>
+          <x>10</x>
+          <y>15</y>
+        </p1>
+      </slot>
+      <slot type="general" align_x="left" align_y="top">
+        <p0>
+          <x>7</x>
+          <y>4</y>
+        </p0>
+        <p1>
+          <x>9</x>
+          <y>5</y>
+        </p1>
+      </slot>
+      <slot type="weapon" align_x="centre" align_y="centre">
+        <p0>
+          <x>6</x>
+          <y>6</y>
+        </p0>
+        <p1>
+          <x>10</x>
+          <y>10</y>
+        </p1>
+      </slot>
+    </equipment_layout>
+    <initial_equipment>
+      <equipment>
+        <type>VEQUIP_RUMBLE_CANNON</type>
+        <position>
+          <x>6</x>
+          <y>6</y>
+        </position>
+      </equipment>
+      <equipment>
+        <type>VEQUIP_METRO_MULTIPOWER_PLUS</type>
+        <position>
+          <x>6</x>
+          <y>11</y>
+        </position>
+      </equipment>
+    </initial_equipment>
+  </vehicle>
+</openapoc_rules>

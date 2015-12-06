@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <vehicle_equipment type="general" id="VEQUIP_BIO-TRANSPORT_MODULE">
+    <name>STR_BIO-TRANSPORT_MODULE</name>
+    <usable_by>ground</usable_by>
+    <usable_by>air</usable_by>
+    <weight>65</weight>
+    <max_ammo>0</max_ammo>
+    <sprite>PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:41:xcom3/ufodata/vhawk.pcx</sprite>
+    <size>
+      <x>2</x>
+      <y>2</y>
+    </size>
+    <manufacturer>ORG_X-COM</manufacturer>
+    <store_space>40</store_space>
+    <alien_space>20</alien_space>
+  </vehicle_equipment>
+</openapoc_rules>

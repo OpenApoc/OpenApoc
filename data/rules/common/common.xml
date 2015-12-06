@@ -4,7 +4,7 @@
   <include>rules/common/organisations.xml</include>
   <include>rules/common/ufopaedia.xml</include>
   <include>rules/common/vehicles.xml</include>
-  <include>rules/common/vehicle_weapons.xml</include>
+  <include>rules/common/vehicle_equipment.xml</include>
   <include>rules/common/doodads.xml</include>
   <include>rules/common/rawsounds.xml</include>
 </openapoc_rules>

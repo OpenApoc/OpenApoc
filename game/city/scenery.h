@@ -20,7 +20,7 @@ class Scenery : public std::enable_shared_from_this<Scenery>
 {
 
   public:
-	SceneryTileDef &tileDef;
+	const SceneryTileDef &tileDef;
 
 	const Vec3<float> getPosition() const
 	{ // The "position" is the center, so offset by {0.5,0.5,0.5}
@@ -52,7 +52,7 @@ class Scenery : public std::enable_shared_from_this<Scenery>
 
 	sp<StaticDoodad> overlayDoodad;
 
-	Scenery(SceneryTileDef &tileDef, Vec3<int> pos, sp<Building> bld);
+	Scenery(const SceneryTileDef &tileDef, Vec3<int> pos, sp<Building> bld);
 	~Scenery() = default;
 };
 } // namespace OpenApoc

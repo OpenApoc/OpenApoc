@@ -5,7 +5,8 @@
 #include "game/city/doodad.h"
 #include "game/city/vehicle.h"
 #include "game/city/vehiclemission.h"
-#include "game/city/weapon.h"
+#include "game/city/vequipment.h"
+#include "game/rules/vequipment.h"
 #include "framework/framework.h"
 #include "framework/trace.h"
 #include "game/resources/gamecore.h"
@@ -238,8 +239,11 @@ void City::update(GameState &state, unsigned int ticks)
 		auto b = *it++;
 		for (auto &v : b->landed_vehicles)
 		{
-			for (auto &w : v->weapons)
+			for (auto &e : v->equipment)
 			{
+				if (e->type.type != VEquipmentType::Type::Weapon)
+					continue;
+				auto w = std::dynamic_pointer_cast<VWeapon>(e);
 				w->reload(std::numeric_limits<int>::max());
 			}
 			if (v->missions.empty())
@@ -255,7 +259,7 @@ void City::update(GameState &state, unsigned int ticks)
 	for (auto it = this->vehicles.begin(); it != this->vehicles.end();)
 	{
 		auto v = *it++;
-		v->update(state, ticks);
+		v->update(fw, state, ticks);
 	}
 	Trace::end("City::update::vehices->update");
 	Trace::start("City::update::projectiles->update");
@@ -328,7 +332,7 @@ void City::update(GameState &state, unsigned int ticks)
 	Trace::end("City::update::doodads->update");
 }
 
-sp<Doodad> City::placeDoodad(DoodadDef &def, Vec3<float> position)
+sp<Doodad> City::placeDoodad(const DoodadDef &def, Vec3<float> position)
 {
 	auto doodad = std::make_shared<AnimatedDoodad>(def, position);
 	map.addObjectToMap(doodad);

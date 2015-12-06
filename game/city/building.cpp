@@ -6,6 +6,6 @@
 namespace OpenApoc
 {
 
-Building::Building(BuildingDef &def, sp<Organisation> owner) : def(def), owner(owner) {}
+Building::Building(const BuildingDef &def, sp<Organisation> owner) : def(def), owner(owner) {}
 
 }; // namespace OpenApoc

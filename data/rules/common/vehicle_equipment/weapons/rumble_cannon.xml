@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <vehicle_equipment type="weapon" id="VEQUIP_RUMBLE_CANNON">
+    <usable_by>ground</usable_by>
+    <weight>140</weight>
+    <max_ammo>0</max_ammo>
+    <sprite>PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:29:xcom3/ufodata/vhawk.pcx</sprite>
+    <size>
+      <x>4</x>
+      <y>4</y>
+    </size>
+    <manufacturer>ORG_MEGAPOL</manufacturer>
+    <store_space>160</store_space>
+    <speed>20</speed>
+    <projectile_image>2</projectile_image>
+    <damage>34</damage>
+    <accuracy>25</accuracy>
+    <fire_delay>7</fire_delay>
+    <tail_size>7</tail_size>
+    <guided>false</guided>
+    <turn_rate>0</turn_rate>
+    <range>500</range>
+    <firing_arc_1>1300</firing_arc_1>
+    <firing_arc_2>2</firing_arc_2>
+    <point_defence>false</point_defence>
+    <name>STR_RUMBLE_CANNON</name>
+    <fire_sfx>RAWSOUND:94</fire_sfx>
+    <idem>94</idem>
+    <explosion_graphic>PTANG:2</explosion_graphic>
+    <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:23</icon>
+  </vehicle_equipment>
+</openapoc_rules>

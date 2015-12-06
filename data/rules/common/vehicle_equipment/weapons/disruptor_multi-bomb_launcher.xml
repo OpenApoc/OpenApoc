@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <vehicle_equipment type="weapon" id="VEQUIP_DISRUPTOR_MULTI-BOMB_LAUNCHER">
+    <usable_by>air</usable_by>
+    <weight>180</weight>
+    <max_ammo>12</max_ammo>
+    <ammo_type>10</ammo_type>
+    <sprite>PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:15:xcom3/ufodata/vhawk.pcx</sprite>
+    <size>
+      <x>2</x>
+      <y>4</y>
+    </size>
+    <manufacturer>ORG_X-COM</manufacturer>
+    <store_space>80</store_space>
+    <speed>12</speed>
+    <projectile_image>14</projectile_image>
+    <damage>98</damage>
+    <accuracy>16</accuracy>
+    <fire_delay>120</fire_delay>
+    <tail_size>35</tail_size>
+    <guided>true</guided>
+    <turn_rate>24</turn_rate>
+    <range>500</range>
+    <firing_arc_1>1600</firing_arc_1>
+    <firing_arc_2>6</firing_arc_2>
+    <point_defence>false</point_defence>
+    <name>STR_DISRUPTOR_MULTI-BOMB_LAUNCHER</name>
+    <fire_sfx>RAWSOUND:92</fire_sfx>
+    <idem>92</idem>
+    <explosion_graphic>PTANG:0</explosion_graphic>
+    <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:15</icon>
+  </vehicle_equipment>
+</openapoc_rules>

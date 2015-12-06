@@ -56,7 +56,7 @@ sp<Image> AnimatedDoodad::getSprite()
 
 sp<Image> StaticDoodad::getSprite() { return this->sprite; }
 
-AnimatedDoodad::AnimatedDoodad(DoodadDef &def, Vec3<float> position)
+AnimatedDoodad::AnimatedDoodad(const DoodadDef &def, Vec3<float> position)
     : Doodad(position, def.imageOffset, true, def.lifetime), def(def)
 {
 }

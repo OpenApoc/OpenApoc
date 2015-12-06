@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <include>rules/common/vehicle_equipment/engines/metro_multipower_plus.xml</include>
+  <include>rules/common/vehicle_equipment/engines/metro_powergrav.xml</include>
+  <include>rules/common/vehicle_equipment/engines/metro_roadgrav.xml</include>
+  <include>rules/common/vehicle_equipment/engines/metro_roadhog.xml</include>
+  <include>rules/common/vehicle_equipment/engines/metro_turbograv.xml</include>
+  <include>rules/common/vehicle_equipment/engines/sd_deluxe.xml</include>
+  <include>rules/common/vehicle_equipment/engines/sd_elite.xml</include>
+  <include>rules/common/vehicle_equipment/engines/sd_special.xml</include>
+  <include>rules/common/vehicle_equipment/engines/sd_sports.xml</include>
+  <include>rules/common/vehicle_equipment/engines/sd_standard.xml</include>
+  <include>rules/common/vehicle_equipment/engines/sd_turbo.xml</include>
+</openapoc_rules>

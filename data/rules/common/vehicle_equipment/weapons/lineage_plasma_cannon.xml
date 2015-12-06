@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <vehicle_equipment type="weapon" id="VEQUIP_LINEAGE_PLASMA_CANNON">
+    <usable_by>air</usable_by>
+    <weight>95</weight>
+    <max_ammo>110</max_ammo>
+    <ammo_type>1</ammo_type>
+    <sprite>PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:3:xcom3/ufodata/vhawk.pcx</sprite>
+    <size>
+      <x>1</x>
+      <y>3</y>
+    </size>
+    <manufacturer>ORG_MARSEC</manufacturer>
+    <store_space>60</store_space>
+    <speed>38</speed>
+    <projectile_image>8</projectile_image>
+    <damage>25</damage>
+    <accuracy>34</accuracy>
+    <fire_delay>12</fire_delay>
+    <tail_size>35</tail_size>
+    <guided>false</guided>
+    <turn_rate>0</turn_rate>
+    <range>800</range>
+    <firing_arc_1>2400</firing_arc_1>
+    <firing_arc_2>2</firing_arc_2>
+    <point_defence>false</point_defence>
+    <name>STR_LINEAGE_PLASMA_CANNON</name>
+    <fire_sfx>RAWSOUND:88</fire_sfx>
+    <idem>88</idem>
+    <explosion_graphic>PTANG:9</explosion_graphic>
+    <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:3</icon>
+  </vehicle_equipment>
+</openapoc_rules>

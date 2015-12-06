@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_rules>
+  <vehicle_equipment type="weapon" id="VEQUIP_JANITOR_MISSILE_ARRAY">
+    <usable_by>air</usable_by>
+    <weight>70</weight>
+    <max_ammo>24</max_ammo>
+    <ammo_type>4</ammo_type>
+    <sprite>PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:9:xcom3/ufodata/vhawk.pcx</sprite>
+    <size>
+      <x>1</x>
+      <y>3</y>
+    </size>
+    <manufacturer>ORG_MEGAPOL</manufacturer>
+    <store_space>50</store_space>
+    <speed>16</speed>
+    <projectile_image>0</projectile_image>
+    <damage>22</damage>
+    <accuracy>24</accuracy>
+    <fire_delay>36</fire_delay>
+    <tail_size>19</tail_size>
+    <guided>true</guided>
+    <turn_rate>24</turn_rate>
+    <range>500</range>
+    <firing_arc_1>1600</firing_arc_1>
+    <firing_arc_2>3</firing_arc_2>
+    <point_defence>false</point_defence>
+    <name>STR_JANITOR_MISSILE_ARRAY</name>
+    <fire_sfx>RAWSOUND:79</fire_sfx>
+    <idem>79</idem>
+    <explosion_graphic>PTANG:7</explosion_graphic>
+    <icon>PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:9</icon>
+  </vehicle_equipment>
+</openapoc_rules>
