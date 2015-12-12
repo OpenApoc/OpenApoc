@@ -26,7 +26,18 @@ class Program
 	static GLuint CreateShader(GLenum type, const UString source)
 	{
 		GLuint shader = gl::CreateShader(type);
-		auto sourceString = source.str();
+		// This is an ugly hack to make Tegra 3 chip produce "correct" (translation: not horribly wrong)
+		// paletted image. So far it's Tegra-specific and did not manifest anywhere else.
+		// FIXME: Check the shader code and inputs for sanity; maybe it's a corner case?
+		// FIXME: Find a less ugly way to patch shaders.
+		UString procSource = source;
+		std::string renderer = (const char*) gl::GetString(gl::RENDERER);
+		if (renderer.find("Tegra") != std::string::npos)
+		{
+			//FIXME: Could as well be not 13, maybe use some method to find where the first line ends?
+			procSource.insert(13, "#define TEGRA_PALETTE_HACK\n");
+		}
+		auto sourceString = procSource.str();
 		const GLchar *string = sourceString.c_str();
 		GLint stringLength = sourceString.length();
 		gl::ShaderSource(shader, 1, &string, &stringLength);
@@ -220,8 +231,11 @@ const char *PaletteProgram_fragmentSource = {"#version 100\n"
                                              "uniform sampler2D tex;\n"
                                              "uniform sampler2D pal;\n"
                                              "void main() {\n"
-                                             " float idx = texture2D(tex, texcoord,0.0).r;\n"
-                                             " gl_FragColor = texture2D(pal, vec2(idx,0.0),0.0);\n"
+                                             " float idx = texture2D(tex, texcoord).r;\n"
+											 "#ifdef TEGRA_PALETTE_HACK\n"
+			                                 " if (idx > 0.5) { idx = idx - 1.0/256.0; }\n"
+											 "#endif\n"
+                                             " gl_FragColor = texture2D(pal, vec2(idx,0.5));\n"
                                              "}\n"};
 class PaletteProgram : public SpriteProgram
 {
