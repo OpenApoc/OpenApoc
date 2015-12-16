@@ -421,6 +421,7 @@ static bool ParseVehicleEquipmentNode(tinyxml2::XMLElement *node, VEquipmentType
 
 bool RulesLoader::ParseVehicleEquipment(Framework &fw, Rules &rules, tinyxml2::XMLElement *rootNode)
 {
+	std::ignore = fw;
 	if (UString(rootNode->Name()) != UString("vehicle_equipment"))
 	{
 		LogError("Called on unexpected node \"%s\"", rootNode->Name());

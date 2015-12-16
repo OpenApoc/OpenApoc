@@ -61,31 +61,31 @@ sp<Projectile> VWeapon::fire(Framework &fw, Vec3<float> target)
 	// For now just change the colour so you can at least see they're different
 	switch (weaponType.projectile_image)
 	{
-		case 0: // Missile ("GLM array" "janitor" "prophet")
-		case 1: // Bigger missile ("GLM air defence" "justice" "retribution"
+		case 0:                   // Missile ("GLM array" "janitor" "prophet")
+		case 1:                   // Bigger missile ("GLM air defence" "justice" "retribution"
 			c = {255, 0, 0, 255}; // Red missile
 			break;
-		case 2: // Bullet ("40mm auto cannon/turret" "airguard" "rumble cannon")
+		case 2:                     // Bullet ("40mm auto cannon/turret" "airguard" "rumble cannon")
 			c = {139, 69, 19, 255}; // Brown
 			break;
-		case 3: // Small laser ("laser defence array")
-		case 4: // Medium Laser ("bolter")
-		case 5: // Big laser ("lancer")
+		case 3:                     // Small laser ("laser defence array")
+		case 4:                     // Medium Laser ("bolter")
+		case 5:                     // Big laser ("lancer")
 			c = {255, 255, 0, 255}; // Yellow
 			break;
-		case 6: // Small plasma ("plasma defence array")
-		case 7: // Medium plasma ("rendor" "plasma multi-system")
-		case 8: // Big plasma ("lineage" "plasma turret cannon")
+		case 6:                       // Small plasma ("plasma defence array")
+		case 7:                       // Medium plasma ("rendor" "plasma multi-system")
+		case 8:                       // Big plasma ("lineage" "plasma turret cannon")
 			c = {255, 255, 255, 255}; // White
 			break;
-		case 9: // Small disruptor ("light disruptor beam")
-		case 10: // Medium disruptor ("medium disruptor beam")
-		case 11: // Big disruptor ("heavy disruptor beam")
+		case 9:                     // Small disruptor ("light disruptor beam")
+		case 10:                    // Medium disruptor ("medium disruptor beam")
+		case 11:                    // Big disruptor ("heavy disruptor beam")
 			c = {255, 0, 255, 255}; // Magenta
 			break;
-		case 12: // disruptor bomb
-		case 13: // stasis bomb
-		case 14: // multi-bomb
+		case 12:                      // disruptor bomb
+		case 13:                      // stasis bomb
+		case 14:                      // multi-bomb
 			c = {255, 128, 255, 255}; // Pink
 			break;
 		default:

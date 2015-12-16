@@ -19,7 +19,7 @@ We also have an IRC channel on http://freenode.net - #openapoc
 ## Building
 OpenApocalypse is built leveraging a number of libraries - to provide needed functionality (and save us the time of implementing it ourselves badly)
  
-- [Allegro](http://alleg.sourceforge.net/) (5.0)
+- [SDL2](http://www.libsdl.org)
 - [TinyXML2](http://www.grinninglizard.com/tinyxml2/) (Version 2)
 - [Physfs] (http://icculus.org/physfs/) - though we have patched it to fix some ISO loading bugs on [Github] (https://github.com/JonnyH/physfs-hg-import)- so use that version if you want to use the .iso file as a data source directly
 - [ICU4C] (http://site.icu-project.org/)
@@ -32,7 +32,7 @@ Requirements:
 Building on Windows:
 (Tested with Visual Studio 2013 community edition)
 - Checkout OpenApoc from github
-All the required dependencies (allegro, tinyxml2, physfs, ICU) are packaged as submodules. These submodules are fetched automatically if using the github for windows app, so if you are please skip the next step
+All the required dependencies (SDL2, tinyxml2, physfs, ICU) are packaged as submodules. These submodules are fetched automatically if using the github for windows app, so if you are please skip the next step
 - From a Git command line, run the following to fetch the dependency packages
 ```
 git submodule init
@@ -45,9 +45,9 @@ git submodule update
 
 Building on Linux
 (tested on ubuntu 14.04 - other distributions will probably need different packages to install - see the dependency list above)
-- Install the following packages: liballegro5-dev glm libicu-dev libtinyxml2-dev cmake build-essential git
+- Install the following packages: libsdl2-dev glm libicu-dev libtinyxml2-dev cmake build-essential git
 ```
-sudo apt-get install liballegro5-dev libicu-dev libtinyxml2-dev cmake build-essential git libunwind-dev
+sudo apt-get install libsdl2-dev libicu-dev libtinyxml2-dev cmake build-essential git libunwind-dev
 ```
 - Checkout OpenApoc from github
 - Fetch the dependencies from git with the following terminal command (run from the just-created OpenApoc folder)

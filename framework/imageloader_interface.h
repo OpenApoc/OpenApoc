@@ -2,6 +2,7 @@
 #include "library/sp.h"
 #include "image.h"
 #include "library/strings.h"
+#include "framework/fs.h"
 
 namespace OpenApoc
 {
@@ -10,7 +11,7 @@ class ImageLoader
 {
   public:
 	virtual ~ImageLoader() {}
-	virtual sp<Image> loadImage(UString path) = 0;
+	virtual sp<Image> loadImage(IFile &file) = 0;
 	virtual UString getName() = 0;
 };
 

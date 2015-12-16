@@ -9,13 +9,12 @@ compiler:
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo add-apt-repository "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.7 main" -y
-  - sudo add-apt-repository ppa:allegro/5.0 -y
   - sudo apt-get update
   - if [ "$CXX" = "g++" ]; then sudo apt-get install g++-5 -y; fi
   - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
   - if [ "$CXX" = "clang++" ]; then sudo apt-get install clang-3.7 --force-yes -y; fi
   - if [ "$CXX" = "clang++" ]; then export CXX="clang++-3.7" CC="clang-3.7"; fi
-  - sudo apt-get install libunwind8-dev libicu-dev liballegro5-dev -y
+  - sudo apt-get install libunwind8-dev libicu-dev libsdl2-dev -y
   - ${CXX} --version
   - ${CC} --version
   - mkdir ~/dependency-prefix

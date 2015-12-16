@@ -314,7 +314,7 @@ void TileMap::addObjectToMap(sp<Doodad> doodad)
 
 int TileMap::getLayer(TileObject::Type type) const
 {
-	for (int i = 0; i < this->layerMap.size(); i++)
+	for (unsigned i = 0; i < this->layerMap.size(); i++)
 	{
 		if (this->layerMap[i].find(type) != this->layerMap[i].end())
 		{

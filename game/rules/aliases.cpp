@@ -9,6 +9,7 @@ namespace OpenApoc
 bool RulesLoader::ParseAliases(Framework &fw, Rules &rules, tinyxml2::XMLElement *root)
 {
 	TRACE_FN;
+	std::ignore = fw;
 	if (UString(root->Name()) != "aliases")
 	{
 		LogError("Called on unexpected node \"%s\"", root->Name());

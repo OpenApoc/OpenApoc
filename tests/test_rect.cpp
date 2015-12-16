@@ -17,7 +17,7 @@ static bool test_one_rect_compaction(std::set<Rect<T>> rect_set, unsigned expect
 		         expected_start_count);
 		return false;
 	}
-	int num_collapsed = Rect<T>::compactRectSet(rect_set);
+	unsigned num_collapsed = Rect<T>::compactRectSet(rect_set);
 
 	if (expected_start_count != 0 && rect_set.size() == 0)
 	{
@@ -165,6 +165,9 @@ void test_rect_intersects(Rect<int> r1, Rect<int> r2, bool expected)
 }
 int main(int argc, char **argv)
 {
+	std::ignore = argc;
+	std::ignore = argv;
+
 	test_point_within({0, 0, 1, 1}, {0, 0}, true);
 
 	test_point_within({0, 0, 3, 3}, {1, 0}, true);

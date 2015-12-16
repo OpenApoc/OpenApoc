@@ -1,10 +1,6 @@
 [submodule "dependencies/tinyxml2"]
 	path = dependencies/tinyxml2
 	url = https://github.com/leethomason/tinyxml2.git
-[submodule "dependencies/allegro"]
-	path = dependencies/allegro
-	url = https://github.com/JonnyH/allegro.git
-	branch = 5.0
 [submodule "dependencies/glm"]
 	path = dependencies/glm
 	url = https://github.com/JonnyH/glm.git
@@ -15,3 +11,6 @@
 [submodule "dependencies/icu55"]
 	path = dependencies/icu55
 	url = https://github.com/JonnyH/icu55.git
+[submodule "dependencies/SDL2"]
+	path = dependencies/SDL2
+	url = https://github.com/sfalexrog/SDL2_OA

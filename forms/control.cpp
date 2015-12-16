@@ -198,6 +198,129 @@ void Control::EventOccured(Event *e)
 		mouseInside = newInside;
 	}
 
+	if (e->Type == EVENT_FINGER_DOWN || e->Type == EVENT_FINGER_UP || e->Type == EVENT_FINGER_MOVE)
+	{
+		// This right now is a carbon copy of mouse event-handling. Maybe we should do something
+		// else?
+		// FIXME: Use something other than mouseInside? fingerInside maybe?
+		bool newInside = (e->Data.Finger.X >= resolvedLocation.x &&
+		                  e->Data.Finger.X < resolvedLocation.x + Size.x &&
+		                  e->Data.Finger.Y >= resolvedLocation.y &&
+		                  e->Data.Finger.Y < resolvedLocation.y + Size.y);
+
+		// FIXME: Right now we'll just copy touch data to the mouse location. That's... not exactly
+		// right.
+		// FIXME: We're only doing event processing for the "primary" finger.
+		if (e->Data.Finger.IsPrimary || 1)
+		{
+			FRAMEWORK_MOUSE_EVENT FakeMouseData;
+			FakeMouseData.X = e->Data.Finger.X;
+			FakeMouseData.Y = e->Data.Finger.Y;
+			FakeMouseData.DeltaX = e->Data.Finger.DeltaX;
+			FakeMouseData.DeltaY = e->Data.Finger.DeltaY;
+			FakeMouseData.WheelHorizontal = 0;
+			FakeMouseData.WheelVertical = 0;
+			FakeMouseData.Button = 1; // Always left mouse button?
+
+			if (e->Type == EVENT_FINGER_MOVE)
+			{
+				if (newInside)
+				{
+					if (!mouseInside)
+					{
+						newevent = new Event();
+						newevent->Type = EVENT_FORM_INTERACTION;
+						newevent->Data.Forms.RaisedBy = this;
+						newevent->Data.Forms.EventFlag = FormEventType::MouseEnter;
+						// newevent->Data.Forms.MouseInfo = e->Data.Mouse;
+						newevent->Data.Forms.MouseInfo = FakeMouseData;
+						newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
+						newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
+						fw.PushEvent(newevent);
+					}
+
+					newevent = new Event();
+					newevent->Type = EVENT_FORM_INTERACTION;
+					newevent->Data.Forms.RaisedBy = this;
+					newevent->Data.Forms.EventFlag = FormEventType::MouseMove;
+					// newevent->Data.Forms.MouseInfo = e->Data.Mouse;
+					newevent->Data.Forms.MouseInfo = FakeMouseData;
+					newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
+					newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
+					fw.PushEvent(newevent);
+
+					e->Handled = true;
+				}
+				else
+				{
+					if (mouseInside)
+					{
+						newevent = new Event();
+						newevent->Type = EVENT_FORM_INTERACTION;
+						newevent->Data.Forms.RaisedBy = this;
+						newevent->Data.Forms.EventFlag = FormEventType::MouseLeave;
+						// newevent->Data.Forms.MouseInfo = e->Data.Mouse;
+						newevent->Data.Forms.MouseInfo = FakeMouseData;
+						newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
+						newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
+						fw.PushEvent(newevent);
+					}
+				}
+			}
+
+			if (e->Type == EVENT_FINGER_DOWN)
+			{
+				if (newInside)
+				{
+					newevent = new Event();
+					newevent->Type = EVENT_FORM_INTERACTION;
+					newevent->Data.Forms.RaisedBy = this;
+					newevent->Data.Forms.EventFlag = FormEventType::MouseDown;
+					// newevent->Data.Forms.MouseInfo = e->Data.Mouse;
+					newevent->Data.Forms.MouseInfo = FakeMouseData;
+					newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
+					newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
+					fw.PushEvent(newevent);
+					mouseDepressed = true;
+
+					e->Handled = true;
+				}
+			}
+
+			if (e->Type == EVENT_FINGER_UP)
+			{
+				if (newInside)
+				{
+					newevent = new Event();
+					newevent->Type = EVENT_FORM_INTERACTION;
+					newevent->Data.Forms.RaisedBy = this;
+					newevent->Data.Forms.EventFlag = FormEventType::MouseUp;
+					// newevent->Data.Forms.MouseInfo = e->Data.Mouse;
+					newevent->Data.Forms.MouseInfo = FakeMouseData;
+					newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
+					newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
+					fw.PushEvent(newevent);
+
+					if (mouseDepressed)
+					{
+						newevent = new Event();
+						newevent->Type = EVENT_FORM_INTERACTION;
+						newevent->Data.Forms.RaisedBy = this;
+						newevent->Data.Forms.EventFlag = FormEventType::MouseClick;
+						// newevent->Data.Forms.MouseInfo = e->Data.Mouse;
+						newevent->Data.Forms.MouseInfo = FakeMouseData;
+						newevent->Data.Forms.MouseInfo.X -= resolvedLocation.x;
+						newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
+						fw.PushEvent(newevent);
+					}
+				}
+				// FIXME: This will result in collisions with real mouse events.
+				mouseDepressed = false;
+			}
+		}
+		mouseInside = newInside;
+	}
+
 	if (e->Type == EVENT_KEY_DOWN || e->Type == EVENT_KEY_UP)
 	{
 		if (IsFocused())

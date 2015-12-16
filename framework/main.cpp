@@ -1,6 +1,8 @@
+#include <physfs.h>
 #include "framework/framework.h"
 #include "framework/trace.h"
 #include "version.h"
+#include <SDL_main.h>
 
 using namespace OpenApoc;
 
@@ -9,6 +11,7 @@ int main(int argc, char *argv[])
 	bool enable_trace = false;
 	LogInfo("Starting OpenApoc \"%s\"", OPENAPOC_VERSION);
 	std::vector<UString> cmdline;
+
 	for (int i = 1; i < argc; i++)
 	{
 		// Special handling of tracing as we want it to be started before the framework

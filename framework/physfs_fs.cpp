@@ -5,6 +5,14 @@
 #include <physfs.h>
 
 #ifndef _WIN32
+#ifdef ANDROID
+#define be16toh(x) htobe16(x)
+#define be32toh(x) htobe32(x)
+#define be64toh(x) htobe64(x)
+#define le16toh(x) htole16(x)
+#define le32toh(x) htole32(x)
+#define le64toh(x) htole64(x)
+#endif
 #include <endian.h>
 #else
 /* Windows is always little endian? */

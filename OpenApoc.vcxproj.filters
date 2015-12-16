@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="Source Files\EGLContext">
+      <UniqueIdentifier>{6e7c9232-b09a-4a01-b4c3-0b07ffc09341}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="game\apocresources\apocfont.cpp">
@@ -126,9 +129,6 @@
     <ClCompile Include="framework\renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="framework\imageloader\allegro_image.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="framework\ignorecase.c">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -142,9 +142,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="framework\sound.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="framework\sound\allegro_backend.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="framework\sound\null_backend.cpp">
@@ -264,7 +261,16 @@
     <ClCompile Include="game\tileview\tileobject_shadow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\rules\alises.cpp">
+    <ClCompile Include="game\rules\aliases.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\imageloader\lodepng_image.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\imageloader\lodepng.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\sound\sdlraw_backend.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game\rules\vequipment.cpp">
@@ -277,6 +283,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game\city\vweapon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\imageloader\pcx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -569,6 +578,12 @@
     <ClInclude Include="game\rules\resource_aliases.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="framework\render\gles20\gles_2_0.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\render\gles20\egl.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="game\rules\vequipment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -576,6 +591,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\city\vequipment.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\imageloader\lodepng.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -597,5 +615,20 @@
       <Filter>Header Files</Filter>
     </None>
     <None Include="library\strings.natvis" />
+    <None Include="framework\render\gles20\gles_2_0.inl">
+      <Filter>Header Files</Filter>
+    </None>
+    <None Include="framework\render\gles20\egl.inl">
+      <Filter>Source Files\EGLContext</Filter>
+    </None>
+    <None Include="framework\render\gles20\ogles_2_0_renderer.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="framework\render\gles20\EGLContext.cpp">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="framework\render\gles20\EGLContext.h">
+      <Filter>Header Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

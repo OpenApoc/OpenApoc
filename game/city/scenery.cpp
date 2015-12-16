@@ -19,7 +19,7 @@ Scenery::Scenery(const SceneryTileDef &tileDef, Vec3<int> pos, sp<Building> bld)
 void Scenery::handleCollision(GameState &state, Collision &c)
 {
 	// FIXME: Proper damage
-	//
+	std::ignore = c;
 	// If this tile has a damaged tile, replace it with that. If it's already damaged, destroy as
 	// normal
 	if (!this->tileObject)

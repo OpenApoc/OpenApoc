@@ -30,6 +30,7 @@ void Log(LogLevel level, UString prefix, UString format, ...);
 // All logger output will be UTF8
 }; // namespace OpenApoc
 
+//#ifndef __ANDROID__
 #if defined(__GNUC__)
 // GCC has an extension if __VA_ARGS__ are not supplied to 'remove' the precending comma
 #define LogInfo(f, ...)                                                                            \
@@ -44,3 +45,10 @@ void Log(LogLevel level, UString prefix, UString format, ...);
 #define LogWarning(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Warning, LOGGER_PREFIX, f, __VA_ARGS__)
 #define LogError(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Error, LOGGER_PREFIX, f, __VA_ARGS__)
 #endif
+//#else
+#if 0
+#define LogInfo(f, ...)
+#define LogWarning(f, ...)
+#define LogError(f, ...)
+#endif
+//#endif

@@ -1,4 +1,5 @@
 #include "library/sp.h"
+#include "library/sp.h"
 
 #include "framework/framework.h"
 #include "game/boot.h"
@@ -10,16 +11,19 @@
 #include "framework/sound.h"
 #include "framework/trace.h"
 
-#include <allegro5/allegro5.h>
+#include <SDL.h>
 #include <iostream>
 #include <string>
 
 // Use physfs to get prefs dir
 #include <physfs.h>
+#include <SDL_syswm.h>
 
-#ifdef _WIN32
-#include <allegro5/allegro_windows.h>
-#endif
+#ifdef OPENAPOC_GLES
+
+#include "framework/render/gles20/EGLContext.h"
+
+#endif /*OPENAPOC_GLES*/
 
 using namespace OpenApoc;
 
@@ -56,7 +60,7 @@ static std::map<UString, UString> defaultConfig = {
     {"Resource.LocalCDPath", "./data/cd.iso"},
     {"Resource.SystemCDPath", DATA_DIRECTORY "/cd.iso"},
     {"Visual.Renderers", RENDERERS},
-    {"Audio.Backends", "allegro:null"},
+    {"Audio.Backends", "SDLRaw:null"},
     {"Audio.GlobalGain", "20"},
     {"Audio.SampleGain", "20"},
     {"Audio.MusicGain", "20"},
@@ -143,12 +147,12 @@ class FrameworkPrivate
 	friend class Framework;
 	bool quitProgram;
 
-	ALLEGRO_DISPLAY_MODE screenMode;
-	ALLEGRO_DISPLAY *screen;
+	SDL_DisplayMode screenMode;
+	SDL_Window *window;
+	SDL_GLContext context;
 
-	ALLEGRO_EVENT_QUEUE *eventAllegro;
+	// FIXME: Wrap eventQueue in mutex if handing events with multiple threads
 	std::list<Event *> eventQueue;
-	ALLEGRO_MUTEX *eventMutex;
 
 	StageStack ProgramStages;
 	sp<Surface> defaultSurface;
@@ -160,21 +164,17 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 	TRACE_FN;
 	LogInfo("Starting framework");
 	PHYSFS_init(programName.c_str());
-
-	if (!al_init())
+#ifdef ANDROID
+	SDL_SetHint(SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH, "1");
+#endif
+	// Initialize subsystems separately?
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 	{
-		LogError("Cannot init Allegro");
+		LogError("Cannot init SDL2");
+		LogError("SDL error: %s", SDL_GetError());
 		p->quitProgram = true;
 		return;
 	}
-
-	if (!al_install_keyboard() || !al_install_mouse())
-	{
-		LogError(" Cannot init Allegro plugins");
-		p->quitProgram = true;
-		return;
-	}
-
 	LogInfo("Loading config\n");
 	p->quitProgram = false;
 	UString settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
@@ -236,18 +236,10 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 		LogError("Succeded in opening \"FileDoesntExist\" - either you have the weirdest filename "
 		         "preferences or something is wrong");
 	}
-
-	p->eventAllegro = al_create_event_queue();
-	p->eventMutex = al_create_mutex_recursive();
-
-	srand(static_cast<unsigned int>(al_get_time()));
+	srand(static_cast<unsigned int>(SDL_GetTicks()));
 
 	Display_Initialise();
 	Audio_Initialise();
-
-	al_register_event_source(p->eventAllegro, al_get_display_event_source(p->screen));
-	al_register_event_source(p->eventAllegro, al_get_keyboard_event_source());
-	al_register_event_source(p->eventAllegro, al_get_mouse_event_source());
 }
 
 Framework::~Framework()
@@ -255,7 +247,7 @@ Framework::~Framework()
 	TRACE_FN;
 	LogInfo("Destroying framework");
 	// Kill gamecore and program stages first, so any resources are cleaned before
-	// allegro is de-inited
+	// backends are de-inited
 	state.reset();
 	gamecore.reset();
 	rules.reset();
@@ -266,15 +258,16 @@ Framework::~Framework()
 	LogInfo("Shutdown");
 	Display_Shutdown();
 	Audio_Shutdown();
-	al_destroy_event_queue(p->eventAllegro);
-	al_destroy_mutex(p->eventMutex);
+	LogInfo("Destroying SDL_GL context");
+	if (p->context)
+	{
+		SDL_GL_DeleteContext(p->context);
+		p->context = 0;
+	}
 
-	LogInfo("Allegro shutdown");
-	al_uninstall_mouse();
-	al_uninstall_keyboard();
-
-	al_uninstall_system();
+	LogInfo("SDL shutdown");
 	PHYSFS_deinit();
+	SDL_Quit();
 }
 
 void Framework::Run()
@@ -336,7 +329,15 @@ void Framework::Run()
 			p->ProgramStages.Current()->Render();
 			{
 				TraceObj flipObj("Flip");
-				al_flip_display();
+#ifndef OPENAPOC_GLES
+				SDL_GL_SwapWindow(p->window);
+#else
+#ifdef _MSC_VER
+				GLContext::GetInstance()->Swap();
+#else
+				SDL_GL_SwapWindow(p->window);
+#endif
+#endif
 			}
 		}
 	}
@@ -351,11 +352,8 @@ void Framework::ProcessEvents()
 		return;
 	}
 
-	// Convert Allegro events before we process
 	// TODO: Consider threading the translation
-	TranslateAllegroEvents();
-
-	al_lock_mutex(p->eventMutex);
+	TranslateSDLEvents();
 
 	while (p->eventQueue.size() > 0 && !p->ProgramStages.IsEmpty())
 	{
@@ -371,7 +369,6 @@ void Framework::ProcessEvents()
 		{
 			case EVENT_WINDOW_CLOSED:
 				delete e;
-				al_unlock_mutex(p->eventMutex);
 				ShutdownFramework();
 				return;
 				break;
@@ -381,129 +378,199 @@ void Framework::ProcessEvents()
 		}
 		delete e;
 	}
-
-	al_unlock_mutex(p->eventMutex);
 }
 
-void Framework::PushEvent(Event *e)
-{
-	al_lock_mutex(p->eventMutex);
-	p->eventQueue.push_back(e);
-	al_unlock_mutex(p->eventMutex);
-}
+void Framework::PushEvent(Event *e) { p->eventQueue.push_back(e); }
 
-void Framework::TranslateAllegroEvents()
+void Framework::TranslateSDLEvents()
 {
-	ALLEGRO_EVENT e;
+	SDL_Event e;
 	Event *fwE;
 
-	while (al_get_next_event(p->eventAllegro, &e))
+	// FIXME: That's not the right way to figure out the primary finger!
+	int primaryFingerID = -1;
+	if (SDL_GetNumTouchDevices())
+	{
+		SDL_Finger *primaryFinger = SDL_GetTouchFinger(SDL_GetTouchDevice(0), 0);
+		if (primaryFinger)
+		{
+			primaryFingerID = primaryFinger->id;
+		}
+	}
+
+	while (SDL_PollEvent(&e))
 	{
 		switch (e.type)
 		{
-			case ALLEGRO_EVENT_DISPLAY_CLOSE:
+			case SDL_QUIT:
 				fwE = new Event();
 				fwE->Type = EVENT_WINDOW_CLOSED;
 				PushEvent(fwE);
 				break;
-			case ALLEGRO_EVENT_JOYSTICK_CONFIGURATION:
-				al_reconfigure_joysticks();
+			case SDL_JOYDEVICEADDED:
+			case SDL_JOYDEVICEREMOVED:
+				// FIXME: Do nothing?
 				break;
-			case ALLEGRO_EVENT_TIMER:
-				fwE = new Event();
-				fwE->Type = EVENT_TIMER_TICK;
-				fwE->Data.Timer.TimerObject = e.timer.source;
-				PushEvent(fwE);
-				break;
-			case ALLEGRO_EVENT_KEY_DOWN:
+			case SDL_KEYDOWN:
 				fwE = new Event();
 				fwE->Type = EVENT_KEY_DOWN;
-				fwE->Data.Keyboard.KeyCode = e.keyboard.keycode;
-				fwE->Data.Keyboard.UniChar = e.keyboard.unichar;
-				fwE->Data.Keyboard.Modifiers = e.keyboard.modifiers;
+				fwE->Data.Keyboard.KeyCode = e.key.keysym.sym;
+				fwE->Data.Keyboard.UniChar = e.key.keysym.sym;
+				fwE->Data.Keyboard.Modifiers = e.key.keysym.mod;
 				PushEvent(fwE);
 				break;
-			case ALLEGRO_EVENT_KEY_UP:
+			case SDL_KEYUP:
 				fwE = new Event();
 				fwE->Type = EVENT_KEY_UP;
-				fwE->Data.Keyboard.KeyCode = e.keyboard.keycode;
-				fwE->Data.Keyboard.UniChar = e.keyboard.unichar;
-				fwE->Data.Keyboard.Modifiers = e.keyboard.modifiers;
+				fwE->Data.Keyboard.KeyCode = e.key.keysym.sym;
+				fwE->Data.Keyboard.UniChar = e.key.keysym.sym;
+				fwE->Data.Keyboard.Modifiers = e.key.keysym.mod;
 				PushEvent(fwE);
 				break;
-			case ALLEGRO_EVENT_KEY_CHAR:
-				fwE = new Event();
-				fwE->Type = EVENT_KEY_PRESS;
-				fwE->Data.Keyboard.KeyCode = e.keyboard.keycode;
-				fwE->Data.Keyboard.UniChar = e.keyboard.unichar;
-				fwE->Data.Keyboard.Modifiers = e.keyboard.modifiers;
-				PushEvent(fwE);
-				break;
-			case ALLEGRO_EVENT_MOUSE_AXES:
+			// FIXME: handle SDL_TEXTINPUT?
+			case SDL_MOUSEMOTION:
 				fwE = new Event();
 				fwE->Type = EVENT_MOUSE_MOVE;
-				fwE->Data.Mouse.X = e.mouse.x;
-				fwE->Data.Mouse.Y = e.mouse.y;
-				fwE->Data.Mouse.DeltaX = e.mouse.dx;
-				fwE->Data.Mouse.DeltaY = e.mouse.dy;
-				fwE->Data.Mouse.WheelVertical = e.mouse.dz;
-				fwE->Data.Mouse.WheelHorizontal = e.mouse.dw;
-				fwE->Data.Mouse.Button = e.mouse.button;
+				fwE->Data.Mouse.X = e.motion.x;
+				fwE->Data.Mouse.Y = e.motion.y;
+				fwE->Data.Mouse.DeltaX = e.motion.xrel;
+				fwE->Data.Mouse.DeltaY = e.motion.yrel;
+				fwE->Data.Mouse.WheelVertical = 0;   // These should be handled
+				fwE->Data.Mouse.WheelHorizontal = 0; // in a separate event
+				fwE->Data.Mouse.Button = e.motion.state;
 				PushEvent(fwE);
 				break;
-			case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
+			case SDL_MOUSEWHEEL:
+				// FIXME: Check these values for sanity
+				fwE = new Event();
+				fwE->Type = EVENT_MOUSE_MOVE;
+				// Since I'm using some variables that are not used anywhere else,
+				// this code should be in its own small block.
+				{
+					int mx, my;
+					fwE->Data.Mouse.Button = SDL_GetMouseState(&mx, &my);
+					fwE->Data.Mouse.X = mx;
+					fwE->Data.Mouse.Y = my;
+					fwE->Data.Mouse.DeltaX = 0; // FIXME: This might cause problems?
+					fwE->Data.Mouse.DeltaY = 0;
+					fwE->Data.Mouse.WheelVertical = e.wheel.y;
+					fwE->Data.Mouse.WheelHorizontal = e.wheel.x;
+				}
+				PushEvent(fwE);
+				break;
+			case SDL_MOUSEBUTTONDOWN:
 				fwE = new Event();
 				fwE->Type = EVENT_MOUSE_DOWN;
-				fwE->Data.Mouse.X = e.mouse.x;
-				fwE->Data.Mouse.Y = e.mouse.y;
-				fwE->Data.Mouse.DeltaX = e.mouse.dx;
-				fwE->Data.Mouse.DeltaY = e.mouse.dy;
-				fwE->Data.Mouse.WheelVertical = e.mouse.dz;
-				fwE->Data.Mouse.WheelHorizontal = e.mouse.dw;
-				fwE->Data.Mouse.Button = e.mouse.button;
+				fwE->Data.Mouse.X = e.button.x;
+				fwE->Data.Mouse.Y = e.button.y;
+				fwE->Data.Mouse.DeltaX = 0; // FIXME: This might cause problems?
+				fwE->Data.Mouse.DeltaY = 0;
+				fwE->Data.Mouse.WheelVertical = 0;
+				fwE->Data.Mouse.WheelHorizontal = 0;
+				fwE->Data.Mouse.Button = SDL_BUTTON(e.button.button);
 				PushEvent(fwE);
 				break;
-			case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
+			case SDL_MOUSEBUTTONUP:
 				fwE = new Event();
 				fwE->Type = EVENT_MOUSE_UP;
-				fwE->Data.Mouse.X = e.mouse.x;
-				fwE->Data.Mouse.Y = e.mouse.y;
-				fwE->Data.Mouse.DeltaX = e.mouse.dx;
-				fwE->Data.Mouse.DeltaY = e.mouse.dy;
-				fwE->Data.Mouse.WheelVertical = e.mouse.dz;
-				fwE->Data.Mouse.WheelHorizontal = e.mouse.dw;
-				fwE->Data.Mouse.Button = e.mouse.button;
+				fwE->Data.Mouse.X = e.button.x;
+				fwE->Data.Mouse.Y = e.button.y;
+				fwE->Data.Mouse.DeltaX = 0; // FIXME: This might cause problems?
+				fwE->Data.Mouse.DeltaY = 0;
+				fwE->Data.Mouse.WheelVertical = 0;
+				fwE->Data.Mouse.WheelHorizontal = 0;
+				fwE->Data.Mouse.Button = SDL_BUTTON(e.button.button);
 				PushEvent(fwE);
 				break;
-			case ALLEGRO_EVENT_DISPLAY_RESIZE:
+			case SDL_FINGERDOWN:
 				fwE = new Event();
-				fwE->Type = EVENT_WINDOW_RESIZE;
-				fwE->Data.Display.X = 0;
-				fwE->Data.Display.Y = 0;
-				fwE->Data.Display.Width = al_get_display_width(p->screen);
-				fwE->Data.Display.Height = al_get_display_height(p->screen);
-				fwE->Data.Display.Active = true;
+				fwE->Type = EVENT_FINGER_DOWN;
+				fwE->Data.Finger.X = e.tfinger.x * Display_GetWidth();
+				fwE->Data.Finger.Y = e.tfinger.y * Display_GetHeight();
+				fwE->Data.Finger.DeltaX = e.tfinger.dx * Display_GetWidth();
+				fwE->Data.Finger.DeltaY = e.tfinger.dy * Display_GetHeight();
+				fwE->Data.Finger.Id = e.tfinger.fingerId;
+				fwE->Data.Finger.IsPrimary =
+				    e.tfinger.fingerId ==
+				    primaryFingerID; // FIXME: Try to remember the ID of the first touching finger!
 				PushEvent(fwE);
 				break;
-			case ALLEGRO_EVENT_DISPLAY_SWITCH_IN:
+			case SDL_FINGERUP:
 				fwE = new Event();
-				fwE->Type = EVENT_WINDOW_ACTIVATE;
-				fwE->Data.Display.X = 0;
-				fwE->Data.Display.Y = 0;
-				fwE->Data.Display.Width = al_get_display_width(p->screen);
-				fwE->Data.Display.Height = al_get_display_height(p->screen);
-				fwE->Data.Display.Active = true;
+				fwE->Type = EVENT_FINGER_UP;
+				fwE->Data.Finger.X = e.tfinger.x * Display_GetWidth();
+				fwE->Data.Finger.Y = e.tfinger.y * Display_GetHeight();
+				fwE->Data.Finger.DeltaX = e.tfinger.dx * Display_GetWidth();
+				fwE->Data.Finger.DeltaY = e.tfinger.dy * Display_GetHeight();
+				fwE->Data.Finger.Id = e.tfinger.fingerId;
+				fwE->Data.Finger.IsPrimary =
+				    e.tfinger.fingerId ==
+				    primaryFingerID; // FIXME: Try to remember the ID of the first touching finger!
 				PushEvent(fwE);
 				break;
-			case ALLEGRO_EVENT_DISPLAY_SWITCH_OUT:
+			case SDL_FINGERMOTION:
 				fwE = new Event();
-				fwE->Type = EVENT_WINDOW_DEACTIVATE;
-				fwE->Data.Display.X = 0;
-				fwE->Data.Display.Y = 0;
-				fwE->Data.Display.Width = al_get_display_width(p->screen);
-				fwE->Data.Display.Height = al_get_display_height(p->screen);
-				fwE->Data.Display.Active = false;
+				fwE->Type = EVENT_FINGER_MOVE;
+				fwE->Data.Finger.X = e.tfinger.x * Display_GetWidth();
+				fwE->Data.Finger.Y = e.tfinger.y * Display_GetHeight();
+				fwE->Data.Finger.DeltaX = e.tfinger.dx * Display_GetWidth();
+				fwE->Data.Finger.DeltaY = e.tfinger.dy * Display_GetHeight();
+				fwE->Data.Finger.Id = e.tfinger.fingerId;
+				fwE->Data.Finger.IsPrimary =
+				    e.tfinger.fingerId ==
+				    primaryFingerID; // FIXME: Try to remember the ID of the first touching finger!
 				PushEvent(fwE);
+				break;
+			case SDL_WINDOWEVENT:
+				// Window events get special treatment
+				switch (e.window.event)
+				{
+					case SDL_WINDOWEVENT_RESIZED:
+						// FIXME: Do we care about SDL_WINDOWEVENT_SIZE_CHANGED?
+						fwE = new Event();
+						fwE->Type = EVENT_WINDOW_RESIZE;
+						fwE->Data.Display.X = 0;
+						fwE->Data.Display.Y = 0;
+						fwE->Data.Display.Width = e.window.data1;
+						fwE->Data.Display.Height = e.window.data2;
+						fwE->Data.Display.Active = true;
+						break;
+					case SDL_WINDOWEVENT_HIDDEN:
+					case SDL_WINDOWEVENT_MINIMIZED:
+					case SDL_WINDOWEVENT_LEAVE:
+						// FIXME: Check if we should react this way for each of those events
+						// FIXME: Check if we're missing some of the events
+						fwE = new Event();
+						fwE->Type = EVENT_WINDOW_DEACTIVATE;
+						fwE->Data.Display.X = 0;
+						fwE->Data.Display.Y = 0;
+						// FIXME: Is this even necessary?
+						SDL_GetWindowSize(p->window, &(fwE->Data.Display.Width),
+						                  &(fwE->Data.Display.Height));
+						fwE->Data.Display.Active = false;
+						PushEvent(fwE);
+						break;
+					case SDL_WINDOWEVENT_SHOWN:
+					case SDL_WINDOWEVENT_EXPOSED:
+					case SDL_WINDOWEVENT_RESTORED:
+					case SDL_WINDOWEVENT_ENTER:
+						// FIXME: Should we handle all these events as "aaand we're back" events?
+						fwE = new Event();
+						fwE->Type = EVENT_WINDOW_ACTIVATE;
+						fwE->Data.Display.X = 0;
+						fwE->Data.Display.Y = 0;
+						// FIXME: Is this even necessary?
+						SDL_GetWindowSize(p->window, &(fwE->Data.Display.Width),
+						                  &(fwE->Data.Display.Height));
+						fwE->Data.Display.Active = false;
+						PushEvent(fwE);
+						break;
+					case SDL_WINDOWEVENT_CLOSE:
+						// Closing a window will be a "quit" event.
+						e.type = SDL_QUIT;
+						SDL_PushEvent(&e);
+						break;
+				}
 				break;
 			default:
 				fwE = new Event();
@@ -533,14 +600,24 @@ void Framework::Display_Initialise()
 {
 	TRACE_FN;
 	LogInfo("Init display");
-	int display_flags = ALLEGRO_OPENGL;
-#ifdef ALLEGRO_OPENGL_CORE
-	display_flags |= ALLEGRO_OPENGL_CORE;
+	int display_flags = SDL_WINDOW_OPENGL;
+#ifdef OPENAPOC_GLES
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_ES);
+#else
+#ifdef SDL_OPENGL_CORE
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
 #endif
 
-#if ALLEGRO_VERSION > 5 || (ALLEGRO_VERSION == 5 && ALLEGRO_SUB_VERSION >= 1)
-	display_flags |= ALLEGRO_OPENGL_3_0 | ALLEGRO_PROGRAMMABLE_PIPELINE;
 #endif
+	// Request context version 3.0
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+	// Request RGBA5551 - change if needed
+	SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 5);
+	SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 5);
+	SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 5);
+	SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 1);
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
 	int scrW = Settings->getInt("Visual.ScreenWidth");
 	int scrH = Settings->getInt("Visual.ScreenHeight");
@@ -555,25 +632,67 @@ void Framework::Display_Initialise()
 
 	if (scrFS)
 	{
-		display_flags |= ALLEGRO_FULLSCREEN;
+		display_flags |= SDL_WINDOW_FULLSCREEN;
 	}
 
-	al_set_new_display_flags(display_flags);
+	p->window = SDL_CreateWindow("OpenApoc", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, scrW,
+	                             scrH, display_flags);
 
-	al_set_new_display_option(ALLEGRO_VSYNC, 1, ALLEGRO_SUGGEST);
-
-	p->screen = al_create_display(scrW, scrH);
-
-	if (!p->screen)
+	if (!p->window)
 	{
-		LogError("Failed to create screen");
+		LogError("Failed to create window");
 		;
 		exit(1);
 	}
 
-	al_set_blender(ALLEGRO_ADD, ALLEGRO_ALPHA, ALLEGRO_INVERSE_ALPHA);
-
-	al_hide_mouse_cursor(p->screen);
+	p->context = SDL_GL_CreateContext(p->window);
+	if (!p->context)
+	{
+		LogWarning("Could not create GL context! [SDLError: %s]", SDL_GetError());
+		LogWarning("Attempting to create context by lowering the requested version");
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 2);
+		SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);
+		p->context = SDL_GL_CreateContext(p->window);
+		if (!p->context)
+		{
+			LogError("Failed to create GL context! [SDLerror: %s]", SDL_GetError());
+			SDL_DestroyWindow(p->window);
+			exit(1);
+		}
+	}
+	// Output the context parameters
+	LogInfo("Created OpenGL context, parameters:");
+	int value;
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, &value);
+	std::string profileType;
+	switch (value)
+	{
+		case SDL_GL_CONTEXT_PROFILE_ES:
+			profileType = "ES";
+			break;
+		case SDL_GL_CONTEXT_PROFILE_CORE:
+			profileType = "Core";
+			break;
+		case SDL_GL_CONTEXT_PROFILE_COMPATIBILITY:
+			profileType = "Compatibility";
+			break;
+		default:
+			profileType = "Unknown";
+	}
+	LogInfo("  Context profile: %s", profileType.c_str());
+	int ctxMajor, ctxMinor;
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &ctxMajor);
+	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &ctxMinor);
+	LogInfo("  Context version: %d.%d", ctxMajor, ctxMinor);
+	int bitsRed, bitsGreen, bitsBlue, bitsAlpha;
+	SDL_GL_GetAttribute(SDL_GL_RED_SIZE, &bitsRed);
+	SDL_GL_GetAttribute(SDL_GL_GREEN_SIZE, &bitsGreen);
+	SDL_GL_GetAttribute(SDL_GL_BLUE_SIZE, &bitsBlue);
+	SDL_GL_GetAttribute(SDL_GL_ALPHA_SIZE, &bitsAlpha);
+	LogInfo("  RGBA bits: %d-%d-%d-%d", bitsRed, bitsGreen, bitsBlue, bitsAlpha);
+	SDL_GL_SetSwapInterval(1);
+	SDL_GL_MakeCurrent(p->window, p->context); // for good measure?
+	SDL_ShowCursor(SDL_DISABLE);
 
 	for (auto &rendererName : Settings->getString("Visual.Renderers").split(':'))
 	{
@@ -608,13 +727,22 @@ void Framework::Display_Shutdown()
 	p->defaultSurface.reset();
 	renderer.reset();
 
-	al_unregister_event_source(p->eventAllegro, al_get_display_event_source(p->screen));
-	al_destroy_display(p->screen);
+	SDL_DestroyWindow(p->window);
 }
 
-int Framework::Display_GetWidth() { return al_get_display_width(p->screen); }
+int Framework::Display_GetWidth()
+{
+	int width;
+	SDL_GetWindowSize(p->window, &width, 0);
+	return width;
+}
 
-int Framework::Display_GetHeight() { return al_get_display_height(p->screen); }
+int Framework::Display_GetHeight()
+{
+	int height;
+	SDL_GetWindowSize(p->window, 0, &height);
+	return height;
+}
 
 Vec2<int> Framework::Display_GetSize()
 {
@@ -623,20 +751,23 @@ Vec2<int> Framework::Display_GetSize()
 
 void Framework::Display_SetTitle(UString NewTitle)
 {
-	al_set_app_name(NewTitle.c_str());
-	al_set_window_title(p->screen, NewTitle.c_str());
+	SDL_SetWindowTitle(p->window, NewTitle.c_str());
 }
 
 void Framework::Display_SetIcon()
 {
 #ifdef _WIN32
+	SDL_SysWMinfo info;
+	SDL_VERSION(&info.version);
+	SDL_GetWindowWMInfo(p->window, &info);
 	HINSTANCE handle = GetModuleHandle(NULL);
 	HICON icon = LoadIcon(handle, L"ALLEGRO_ICON");
-	HWND hwnd = al_get_win_window_handle(p->screen);
+	HWND hwnd = info.info.win.window;
 	SetClassLongPtr(hwnd, GCLP_HICON, (LONG_PTR)icon);
 #else
 // TODO: Figure out how this works
-// al_set_display_icon(p->screen, ...);
+// NOTE: this should be a call to SDL_SetWindowIcon(p->window, icon);
+// where icon should be a SDL_Surface* with our desired icon.
 #endif
 }
 

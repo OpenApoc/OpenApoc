@@ -571,6 +571,7 @@ VehicleMission *VehicleMission::gotoBuilding(Vehicle &v, TileMap &map, sp<Buildi
 
 VehicleMission *VehicleMission::snooze(Vehicle &v, TileMap &map, unsigned int snoozeTicks)
 {
+	std::ignore = map;
 	return new VehicleIdleMission(v, snoozeTicks);
 }
 

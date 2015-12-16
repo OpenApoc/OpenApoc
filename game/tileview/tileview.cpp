@@ -44,68 +44,68 @@ void TileView::EventOccurred(Event *e)
 	{
 		switch (e->Data.Keyboard.KeyCode)
 		{
-			case ALLEGRO_KEY_UP:
+			case SDLK_UP:
 				scrollUp = true;
 				break;
-			case ALLEGRO_KEY_DOWN:
+			case SDLK_DOWN:
 				scrollDown = true;
 				break;
-			case ALLEGRO_KEY_LEFT:
+			case SDLK_LEFT:
 				scrollLeft = true;
 				break;
-			case ALLEGRO_KEY_RIGHT:
+			case SDLK_RIGHT:
 				scrollRight = true;
 				break;
 
-			case ALLEGRO_KEY_PGDN:
+			case SDLK_PAGEDOWN:
 				if (fw.gamecore->DebugModeEnabled && maxZDraw > 1)
 				{
 					maxZDraw--;
 				}
 				break;
-			case ALLEGRO_KEY_PGUP:
+			case SDLK_PAGEUP:
 				if (fw.gamecore->DebugModeEnabled && maxZDraw < map.size.z)
 				{
 					maxZDraw++;
 				}
 				break;
-			case ALLEGRO_KEY_S:
+			case SDLK_s:
 				selectionChanged = true;
 				if (selectedTilePosition.y < (map.size.y - 1))
 					selectedTilePosition.y++;
 				break;
-			case ALLEGRO_KEY_W:
+			case SDLK_w:
 				selectionChanged = true;
 				if (selectedTilePosition.y > 0)
 					selectedTilePosition.y--;
 				break;
-			case ALLEGRO_KEY_A:
+			case SDLK_a:
 				selectionChanged = true;
 				if (selectedTilePosition.x > 0)
 					selectedTilePosition.x--;
 				break;
-			case ALLEGRO_KEY_D:
+			case SDLK_d:
 				selectionChanged = true;
 				if (selectedTilePosition.x < (map.size.x - 1))
 					selectedTilePosition.x++;
 				break;
-			case ALLEGRO_KEY_R:
+			case SDLK_r:
 				selectionChanged = true;
 				if (selectedTilePosition.z < (map.size.z - 1))
 					selectedTilePosition.z++;
 				break;
-			case ALLEGRO_KEY_F:
+			case SDLK_f:
 				selectionChanged = true;
 				if (selectedTilePosition.z > 0)
 					selectedTilePosition.z--;
 				break;
-			case ALLEGRO_KEY_1:
+			case SDLK_1:
 				pal = fw.data->load_palette("xcom3/ufodata/PAL_01.DAT");
 				break;
-			case ALLEGRO_KEY_2:
+			case SDLK_2:
 				pal = fw.data->load_palette("xcom3/ufodata/PAL_02.DAT");
 				break;
-			case ALLEGRO_KEY_3:
+			case SDLK_3:
 				pal = fw.data->load_palette("xcom3/ufodata/PAL_03.DAT");
 				break;
 		}
@@ -118,18 +118,40 @@ void TileView::EventOccurred(Event *e)
 	{
 		switch (e->Data.Keyboard.KeyCode)
 		{
-			case ALLEGRO_KEY_UP:
+			case SDLK_UP:
 				scrollUp = false;
 				break;
-			case ALLEGRO_KEY_DOWN:
+			case SDLK_DOWN:
 				scrollDown = false;
 				break;
-			case ALLEGRO_KEY_LEFT:
+			case SDLK_LEFT:
 				scrollLeft = false;
 				break;
-			case ALLEGRO_KEY_RIGHT:
+			case SDLK_RIGHT:
 				scrollRight = false;
 				break;
+		}
+	}
+	else if (e->Type == EVENT_FINGER_MOVE)
+	{
+		// FIXME: Review this code for sanity
+		if (e->Data.Finger.IsPrimary)
+		{
+			Vec2<float> deltaPos(e->Data.Finger.DeltaX, e->Data.Finger.DeltaY);
+			if (this->viewMode == TileViewMode::Isometric)
+			{
+				deltaPos.x /= isoTileSize.x;
+				deltaPos.y /= isoTileSize.y;
+				Vec2<float> isoDelta(deltaPos.x + deltaPos.y, deltaPos.y - deltaPos.x);
+				deltaPos = isoDelta;
+			}
+			else
+			{
+				deltaPos.x /= stratTileSize.x;
+				deltaPos.y /= stratTileSize.y;
+			}
+			Vec2<float> newPos = this->centerPos - deltaPos;
+			this->setScreenCenterTile(newPos);
 		}
 	}
 	if (fw.gamecore->DebugModeEnabled && selectionChanged)
@@ -214,7 +236,6 @@ void TileView::Render()
 			{
 				for (int x = minX; x < maxX; x++)
 				{
-					bool showOrigin = fw.state->showTileOrigin;
 					bool showSelected =
 					    (fw.gamecore->DebugModeEnabled && z == selectedTilePosition.z &&
 					     y == selectedTilePosition.y && x == selectedTilePosition.x);

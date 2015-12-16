@@ -64,7 +64,15 @@ static std::unique_ptr<TraceManager> trace_manager;
 #if defined(_MSC_VER) && _MSC_VER < 1900
 static __declspec(thread) EventList *events = nullptr;
 #else
+#if defined(BROKEN_THREAD_LOCAL)
+#warning Using pthread path
+#include <pthread.h>
+
+static pthread_key_t eventListKey;
+
+#else
 static thread_local EventList *events = nullptr;
+#endif
 #endif
 static std::chrono::time_point<std::chrono::high_resolution_clock> traceStartTime;
 
@@ -74,7 +82,7 @@ TraceManager::~TraceManager()
 {
 	assert(OpenApoc::Trace::enabled);
 
-	std::ofstream outFile("openapoc_trace.json");
+	std::ofstream outFile("/sdcard/openapoc/data/openapoc_trace.json");
 
 	// FIXME: Use proper json parser instead of magically constructing from strings?
 
@@ -138,6 +146,9 @@ void Trace::enable()
 {
 	assert(!trace_manager);
 	trace_manager.reset(new TraceManager);
+#if defined(BROKEN_THREAD_LOCAL)
+	pthread_key_create(&eventListKey, NULL);
+#endif
 	Trace::enabled = true;
 	traceStartTime = std::chrono::high_resolution_clock::now();
 }
@@ -146,8 +157,18 @@ void Trace::setThreadName(const UString &name)
 {
 	if (!Trace::enabled)
 		return;
+
+#if defined(BROKEN_THREAD_LOCAL)
+	EventList *events = (EventList *)pthread_getspecific(eventListKey);
+	if (!events)
+	{
+		events = trace_manager->createThreadEventList();
+		pthread_setspecific(eventListKey, events);
+	}
+#else
 	if (!events)
 		events = trace_manager->createThreadEventList();
+#endif
 
 	events->tid = name;
 }
@@ -156,8 +177,17 @@ void Trace::start(const UString &name, const std::vector<std::pair<UString, UStr
 {
 	if (!Trace::enabled)
 		return;
+#if defined(BROKEN_THREAD_LOCAL)
+	EventList *events = (EventList *)pthread_getspecific(eventListKey);
+	if (!events)
+	{
+		events = trace_manager->createThreadEventList();
+		pthread_setspecific(eventListKey, events);
+	}
+#else
 	if (!events)
 		events = trace_manager->createThreadEventList();
+#endif
 
 	auto timeNow = std::chrono::high_resolution_clock::now();
 	uint64_t timeNS = std::chrono::duration<uint64_t, std::nano>(timeNow - traceStartTime).count();
@@ -167,6 +197,17 @@ void Trace::end(const UString &name)
 {
 	if (!Trace::enabled)
 		return;
+#if defined(BROKEN_THREAD_LOCAL)
+	EventList *events = (EventList *)pthread_getspecific(eventListKey);
+	if (!events)
+	{
+		events = trace_manager->createThreadEventList();
+		pthread_setspecific(eventListKey, events);
+	}
+#else
+	if (!events)
+		events = trace_manager->createThreadEventList();
+#endif
 	auto timeNow = std::chrono::high_resolution_clock::now();
 	uint64_t timeNS = std::chrono::duration<uint64_t, std::nano>(timeNow - traceStartTime).count();
 	events->events.emplace_back(EventType::End, name, std::vector<std::pair<UString, UString>>{},

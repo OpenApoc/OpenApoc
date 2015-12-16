@@ -214,12 +214,14 @@ void CityView::EventOccurred(Event *e)
 				}
 			}
 		}
-		else if (e->Type == EVENT_KEY_DOWN && e->Data.Keyboard.KeyCode == ALLEGRO_KEY_ESCAPE)
+		else if (e->Type == EVENT_KEY_DOWN && e->Data.Keyboard.KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
-		else if (e->Type == EVENT_KEY_DOWN && e->Data.Keyboard.KeyCode == ALLEGRO_KEY_R)
+		// FIXME: Check if scancode is better/worse
+		else if (e->Type == EVENT_KEY_DOWN &&
+		         SDL_GetScancodeFromKey(e->Data.Keyboard.KeyCode) == SDL_SCANCODE_R)
 		{
 			LogInfo("Repairing...");
 			std::set<sp<Scenery>> stuffToRepair;

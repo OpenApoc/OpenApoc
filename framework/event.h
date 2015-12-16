@@ -23,6 +23,9 @@ enum EventTypes
 	EVENT_MOUSE_DOWN,
 	EVENT_MOUSE_UP,
 	EVENT_MOUSE_MOVE,
+	EVENT_FINGER_DOWN,
+	EVENT_FINGER_UP,
+	EVENT_FINGER_MOVE,
 	EVENT_JOYSTICK_AXIS,
 	EVENT_JOYSTICK_HAT,
 	EVENT_JOYSTICK_BALL,
@@ -65,6 +68,19 @@ typedef struct FRAMEWORK_MOUSE_EVENT
 	int Button;
 } FRAMEWORK_MOUSE_EVENT;
 
+typedef struct FRAMEWORK_FINGER_EVENT
+{
+	// Touch coordinates and deltas
+	int X;
+	int Y;
+	int DeltaX;
+	int DeltaY;
+	// Touch ID (system-specified)
+	int Id;
+	// Should this be considered a "primary" touch? (first finger?)
+	bool IsPrimary;
+} FRAMEWORK_FINGER_EVENT;
+
 typedef struct FRAMEWORK_KEYBOARD_EVENT
 {
 	int KeyCode;
@@ -91,6 +107,7 @@ typedef union EventData
 	FRAMEWORK_JOYSTICK_EVENT Joystick;
 	FRAMEWORK_KEYBOARD_EVENT Keyboard;
 	FRAMEWORK_MOUSE_EVENT Mouse;
+	FRAMEWORK_FINGER_EVENT Finger;
 	FRAMEWORK_TIMER_EVENT Timer;
 	FRAMEWORK_FORMS_EVENT Forms;
 } EventData;

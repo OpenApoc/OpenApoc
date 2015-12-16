@@ -55,9 +55,9 @@ template <typename T> class Rect
 
 	// Attempts to merge rects adjacent rects in a set, returns the number merged.
 	// This keeps looping until
-	static int compactRectSet(std::set<Rect<T>> &rectSet)
+	static unsigned compactRectSet(std::set<Rect<T>> &rectSet)
 	{
-		int merged = 0;
+		unsigned merged = 0;
 	restart:
 		for (auto it1 = rectSet.begin(); it1 != rectSet.end();)
 		{

@@ -414,7 +414,10 @@ sp<Image> Data::load_image(const UString &path)
 	{
 		for (auto &loader : imageLoaders)
 		{
-			img = loader->loadImage(fs.getCorrectCaseFilename(path));
+			auto file = fs.open(path);
+			if (!file)
+				break;
+			img = loader->loadImage(file);
 			if (img)
 			{
 				break;

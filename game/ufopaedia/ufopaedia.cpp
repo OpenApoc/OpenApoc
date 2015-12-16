@@ -30,7 +30,7 @@ void Ufopaedia::EventOccurred(Event *e)
 
 	if (e->Type == EVENT_KEY_DOWN)
 	{
-		if (e->Data.Keyboard.KeyCode == ALLEGRO_KEY_ESCAPE)
+		if (e->Data.Keyboard.KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;

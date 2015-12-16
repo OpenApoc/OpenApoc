@@ -28,9 +28,29 @@
 #else
 
 #if defined(ERROR_DIALOG)
-#include <allegro5/allegro_native_dialog.h>
+#include <SDL_video.h>
+#include <SDL_messagebox.h>
 #endif
 
+#endif
+
+#ifdef ANDROID
+#include <android/log.h>
+#define LOGD(...) __android_log_print(ANDROID_LOG_DEBUG, "OpenApoc", __VA_ARGS__)
+#define LOGDV(fmt, ap) __android_log_vprint(ANDROID_LOG_DEBUG, "OpenApoc", fmt, ap)
+#define LOGW(...) __android_log_print(ANDROID_LOG_WARN, "OpenApoc", __VA_ARGS__)
+#define LOGWV(fmt, ap) __android_log_vprint(ANDROID_LOG_WARN, "OpenApoc", fmt, ap)
+#define LOGE(...) __android_log_print(ANDROID_LOG_ERROR, "OpenApoc", __VA_ARGS__)
+#define LOGEV(fmt, ap) __android_log_vprint(ANDROID_LOG_ERROR, "OpenApoc", fmt, ap)
+#define LOG_PATH "/storage/emulated/0/openapoc/data/"
+#else
+#define LOGD(...)
+#define LOGDV(fmt, ap)
+#define LOGW(...)
+#define LOGWV(fmt, ap)
+#define LOGE(...)
+#define LOGEV(fmt, ap)
+#define LOG_PATH
 #endif
 
 #define MAX_SYMBOL_LENGTH 1000
@@ -149,11 +169,12 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 #ifdef UNIT_TEST
 		outFile = stderr;
 #else
-		outFile = fopen(LOGFILE, "w");
+		outFile = fopen(LOG_PATH LOGFILE, "w");
 		if (!outFile)
 		{
 			// No log file, have to hope stderr goes somewhere useful
 			fprintf(stderr, "Failed to open logfile \"%s\"\n", LOGFILE);
+			LOGE("Failed to open logfile \"%s\"\n", LOGFILE);
 			return;
 		}
 #endif
@@ -176,6 +197,10 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 	va_start(arglist, format);
 	fprintf(outFile, "%s %llu %s: ", level_prefix, clockns, prefix.c_str());
 	vfprintf(outFile, format.c_str(), arglist);
+#ifdef ANDROID
+	LOGD("%s %llu %s: ", level_prefix, clockns, prefix.c_str());
+	LOGDV(format.c_str(), arglist);
+#endif
 	// On error print a backtrace to the log file
 	if (level == LogLevel::Error)
 		print_backtrace(outFile);
@@ -209,9 +234,25 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 		vsnprintf(string.get(), strSize, format.c_str(), arglist);
 		va_end(arglist);
 
-		int but = al_show_native_message_box(NULL, "OpenApoc ERROR", "A fatal error has occurred",
-		                                     string.get(), "Exit|Continue (UNSUPPORTED)",
-		                                     ALLEGRO_MESSAGEBOX_ERROR);
+		SDL_MessageBoxData mBoxData;
+		mBoxData.flags = SDL_MESSAGEBOX_ERROR;
+		mBoxData.window = NULL; // Might happen before we get our window?
+		mBoxData.title = "OpenApoc ERROR";
+		mBoxData.message = string.get();
+		mBoxData.numbuttons = 2;
+		SDL_MessageBoxButtonData buttons[2];
+		buttons[0].flags = SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT;
+		buttons[0].buttonid = 1;
+		buttons[0].text = "Exit";
+		buttons[1].flags = SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT;
+		buttons[1].buttonid = 2;
+		buttons[1].text = "try to limp along";
+		mBoxData.buttons = buttons;
+		mBoxData.colorScheme = NULL; // Use system settings
+
+		int but;
+		SDL_ShowMessageBox(&mBoxData, &but);
+
 		/* button 1 = "exit", button 2 = "try to limp along" */
 		if (but == 1)
 		{

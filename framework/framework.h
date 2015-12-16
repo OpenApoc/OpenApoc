@@ -20,9 +20,11 @@
 #include "game/resources/gamecore.h"
 #include "game/rules/rules.h"
 
-// FIXME: Remove core-allegro
-// Required for input types
-#include <allegro5/allegro.h>
+// FIXME: Remove SDL headers - we currently use SDL types directly in input events
+#include <SDL_keyboard.h>
+#include <SDL_keycode.h>
+#include <SDL_scancode.h>
+#include <SDL_mouse.h>
 
 namespace OpenApoc
 {
@@ -61,7 +63,7 @@ class Framework
 	void Run();
 	void ProcessEvents();
 	void PushEvent(Event *e);
-	void TranslateAllegroEvents();
+	void TranslateSDLEvents();
 	void ShutdownFramework();
 	bool IsShuttingDown();
 

@@ -93,42 +93,42 @@
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\native_dialog;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\</IncludePath>
+    <LibraryPath>$(LIB);$(SolutionDir)bin\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\;$(ProjectDir)\dependencies\SDL2\include;</IncludePath>
     <CustomBuildBeforeTargets>ClCompile</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\native_dialog;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\</IncludePath>
+    <LibraryPath>$(LIB);$(SolutionDir)bin\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\;$(ProjectDir)\dependencies\SDL2\include;</IncludePath>
     <CustomBuildBeforeTargets>ClCompile</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\native_dialog;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\</IncludePath>
+    <LibraryPath>$(LIB);$(ProjectDir)\dependencies\angle\lib\$(Platform);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\;$(ProjectDir)\dependencies\SDL2\include;</IncludePath>
     <CustomBuildBeforeTargets>ClCompile</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\native_dialog;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\</IncludePath>
+    <LibraryPath>$(LIB);$(ProjectDir)\dependencies\angle\lib\$(Platform);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\;$(ProjectDir)\dependencies\SDL2\include;</IncludePath>
     <CustomBuildBeforeTargets>ClCompile</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
     <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\native_dialog;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\</IncludePath>
+    <LibraryPath>$(LIB);$(SolutionDir)bin\$(Configuration)\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\;$(ProjectDir)\dependencies\SDL2\include;</IncludePath>
     <CustomBuildBeforeTargets>ClCompile</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <LibraryPath>$(LIB);$(LibraryPath)</LibraryPath>
-    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\allegro\addons\physfs;$(ProjectDir)\dependencies\allegro\addons\native_dialog;$(ProjectDir)\dependencies\allegro\addons\primitives;$(ProjectDir)\dependencies\allegro\addons\ttf;$(ProjectDir)\dependencies\allegro\addons\image;$(ProjectDir)\dependencies\allegro\addons\font;$(ProjectDir)\dependencies\allegro\addons\color;$(ProjectDir)\dependencies\allegro\addons\acodec;$(ProjectDir)\dependencies\allegro\addons\audio;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\allegro\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\</IncludePath>
+    <LibraryPath>$(LIB);$(ProjectDir)\dependencies\angle\lib\$(Platform);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\;$(ProjectDir)\dependencies\SDL2\include;</IncludePath>
     <CustomBuildBeforeTargets>ClCompile</CustomBuildBeforeTargets>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -369,16 +369,20 @@
     <ClCompile Include="framework\font.cpp" />
     <ClCompile Include="framework\ignorecase.c" />
     <ClCompile Include="framework\image.cpp" />
-    <ClCompile Include="framework\imageloader\allegro_image.cpp" />
+    <ClCompile Include="framework\imageloader\lodepng.cpp" />
+    <ClCompile Include="framework\imageloader\lodepng_image.cpp" />
+    <ClCompile Include="framework\imageloader\pcx.cpp" />
     <ClCompile Include="framework\logger.cpp" />
     <ClCompile Include="framework\palette.cpp" />
     <ClCompile Include="framework\physfs_fs.cpp" />
     <ClCompile Include="framework\renderer.cpp" />
     <ClCompile Include="framework\render\gl20\ogl_2_0_renderer.cpp" />
     <ClCompile Include="framework\render\gl30\ogl_3_0_renderer.cpp" />
+    <None Include="framework\render\gles20\EGLContext.cpp" />
+    <None Include="framework\render\gles20\ogles_2_0_renderer.cpp" />
     <ClCompile Include="framework\sound.cpp" />
-    <ClCompile Include="framework\sound\allegro_backend.cpp" />
     <ClCompile Include="framework\sound\null_backend.cpp" />
+    <ClCompile Include="framework\sound\sdlraw_backend.cpp" />
     <ClCompile Include="framework\trace.cpp" />
     <ClCompile Include="game\apocresources\apocpalette.cpp" />
     <ClCompile Include="game\base\base.cpp" />
@@ -400,7 +404,7 @@
     <ClCompile Include="game\resources\gamecore.cpp" />
     <ClCompile Include="game\apocresources\apocfont.cpp" />
     <ClCompile Include="game\boot.cpp" />
-    <ClCompile Include="game\rules\alises.cpp" />
+    <ClCompile Include="game\rules\aliases.cpp" />
     <ClCompile Include="game\rules\citydef_rules.cpp" />
     <ClCompile Include="game\rules\doodad_rules.cpp" />
     <ClCompile Include="game\rules\facilitydef_rules.cpp" />
@@ -462,6 +466,7 @@
     <ClInclude Include="framework\fs.h" />
     <ClInclude Include="framework\ignorecase.h" />
     <ClInclude Include="framework\image.h" />
+    <ClInclude Include="framework\imageloader\lodepng.h" />
     <ClInclude Include="framework\imageloader_interface.h" />
     <ClInclude Include="framework\logger.h" />
     <ClInclude Include="framework\musicloader_interface.h" />
@@ -470,6 +475,9 @@
     <ClInclude Include="framework\renderer_interface.h" />
     <ClInclude Include="framework\render\gl20\gl_2_0.hpp" />
     <ClInclude Include="framework\render\gl30\gl_3_0.hpp" />
+    <ClInclude Include="framework\render\gles20\egl.hpp" />
+    <None Include="framework\render\gles20\EGLContext.h" />
+    <ClInclude Include="framework\render\gles20\gles_2_0.hpp" />
     <ClInclude Include="framework\sampleloader_interface.h" />
     <ClInclude Include="framework\sound.h" />
     <ClInclude Include="framework\sound_interface.h" />
@@ -546,14 +554,17 @@
     <ClInclude Include="game\apocresources\loftemps.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="dependencies\allegro5.vcxproj">
-      <Project>{e68f7d90-9965-42a5-97e5-df0f12f7dbc4}</Project>
-    </ProjectReference>
     <ProjectReference Include="dependencies\icu55\source\common\common.vcxproj">
       <Project>{73c0a65b-d1f2-4de1-b3a6-15dad2c23f3d}</Project>
     </ProjectReference>
     <ProjectReference Include="dependencies\physfs.vcxproj">
       <Project>{5a1d2ec4-525e-49b6-9398-be359e71cb35}</Project>
+    </ProjectReference>
+    <ProjectReference Include="dependencies\SDL2\VisualC\SDLmain\SDLmain.vcxproj">
+      <Project>{da956fd3-e142-46f2-9dd5-c78bebb56b7a}</Project>
+    </ProjectReference>
+    <ProjectReference Include="dependencies\SDL2\VisualC\SDL\SDL.vcxproj">
+      <Project>{81ce8daf-ebb2-4761-8e45-b71abcca8c68}</Project>
     </ProjectReference>
     <ProjectReference Include="dependencies\tinyxml2.vcxproj">
       <Project>{d1c528b6-aa02-4d29-9d61-dc08e317a70d}</Project>
@@ -568,6 +579,8 @@
   <ItemGroup>
     <None Include="framework\render\gl20\gl_2_0.inl" />
     <None Include="framework\render\gl30\gl_3_0.inl" />
+    <None Include="framework\render\gles20\egl.inl" />
+    <None Include="framework\render\gles20\gles_2_0.inl" />
     <None Include="library\strings.natvis" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -516,6 +516,7 @@ static bool ParseVehicleTypeNode(tinyxml2::XMLElement *node, VehicleType &vehicl
 bool RulesLoader::ParseVehicleType(Framework &fw, Rules &rules, tinyxml2::XMLElement *rootNode)
 {
 	TRACE_FN;
+	std::ignore = fw;
 
 	if (UString(rootNode->Name()) != "vehicle")
 	{

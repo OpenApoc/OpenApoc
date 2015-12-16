@@ -1,7 +1,9 @@
 cmake_minimum_required(VERSION 2.8)
 
-option(BACKTRACE_ON_ERROR "Print backtrace on logging an error (Requires libunwind on linux)" ON)
-option(DIALOG_ON_ERROR "Pop up a dialog box showing errors (Requires allegro_dialog)" ON)
+option(BACKTRACE_ON_ERROR "Print backtrace on logging an error (Requires libunwind on linux, no extra dependencies on windows)" ON)
+option(DIALOG_ON_ERROR "Pop up a dialog box showing errors" ON)
+
+set(FRAMEWORK_BACKEND "SDL2" CACHE STRING "Framework backend to use - only \"SDL2\" is supported at the moment")
 
 INCLUDE(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
@@ -20,10 +22,28 @@ endif()
 unset(FRAMEWORK_SOURCES)
 unset(FRAMEWORK_INCLUDE_DIRS)
 unset(FRAMEWORK_LIBRARIES)
-unset(FRAMEWORK_ALLEGRO_LIBRARIES)
 
-# Window modularity is still TODO
-list(APPEND FRAMEWORK_ALLEGRO_LIBRARIES allegro)
+find_package(PkgConfig)
+
+if(FRAMEWORK_BACKEND STREQUAL "SDL2")
+		message("Using SDL2 backend")
+		pkg_check_modules(PC_SDL2 REQUIRED sdl2>=2.0)
+		if (NOT PC_SDL2_FOUND)
+				message(FATAL_ERROR "sdl2 not found")
+		endif()
+		foreach (SDL2_LIB ${PC_SDL2_LIBRARIES})
+				message("Searching for ${SDL2_LIB} in ${PC_SDL2_LIBRARY_DIRS}")
+				find_library(SDL2_LIBRARY_PATH-${SDL2_LIB} ${SDL2_LIB} HINTS ${PC_SDL2_LIBRARY_DIRS})
+				if (NOT SDL2_LIBRARY_PATH-${SDL2_LIB})
+						message(FATAL_ERROR "sdl2 library ${SDL2_LIB} not found in ${PC_SDL2_LIBRARY_DIRS}")
+				endif()
+				message("Found ${SDL2_LIB} at ${SDL2_LIBRARY_PATH-${SDL2_LIB}}")
+				list(APPEND FRAMEWORK_LIBRARIES ${SDL2_LIB})
+				list(APPEND FRAMEWORK_INCLUDE_DIRS ${PC_SDL2_INCLUDE_DIRS})
+		endforeach()
+else()
+		message(FATAL_ERROR "Unknown FRAMEWORK_BACKEND ${FRAMEWORK_BACKEND} - only \"SDL2\" is supported at the moment")
+endif()
 
 aux_source_directory(framework FRAMEWORK_SOURCES)
 
@@ -42,10 +62,8 @@ list(APPEND FRAMEWORK_SOURCES ${SOUNDBACKEND_SOURCES})
 list(APPEND FRAMEWORK_INCLUDE_DIRS ${SOUNDBACKEND_INCLUDE_DIRS})
 list(APPEND FRAMEWORK_LIBRARIES ${SOUNDBACKEND_LIBRARIES})
 
-find_package(PkgConfig)
 
 if(DIALOG_ON_ERROR)
-		list(APPEND FRAMEWORK_ALLEGRO_LIBRARIES allegro_dialog)
 		add_definitions(-DERROR_DIALOG)
 endif()
 
@@ -107,26 +125,3 @@ else()
 	list(APPEND FRAMEWORK_LIBRARIES ${PC_ICU_LIBRARIES} ${PC_ICU_IO_LIBRARIES})
 	list(APPEND FRAMEWORK_LIBRARIES ${ICU_LIBRARIES})
 endif()
-set(ALLEGRO_VERSIONS 5.1 5 5.0)
-
-foreach (ALLEGRO_MODULE ${FRAMEWORK_ALLEGRO_LIBRARIES})
-	message("Searching for allegro module ${ALLEGRO_MODULE}")
-	unset(ALLEGRO_MODULE_NAMES)
-	foreach (ALLEGRO_VERSION ${ALLEGRO_VERSIONS})
-			list(APPEND ALLEGRO_MODULE_NAMES
-					${ALLEGRO_MODULE}-${ALLEGRO_VERSION})
-	endforeach(ALLEGRO_VERSION)
-	pkg_search_module(PC_ALLEGRO_MODULE-${ALLEGRO_MODULE} REQUIRED ${ALLEGRO_MODULE_NAMES})
-
-	foreach (ALLEGRO_LIBRARY_NAME ${PC_ALLEGRO_MODULE-${ALLEGRO_MODULE}_LIBRARIES})
-			find_library(ALLEGRO_LIBRARY-${ALLEGRO_MODULE} ${ALLEGRO_LIBRARY_NAME} HINTS
-					${PC_ALLEGRO_MODULE-${ALLEGRO_MODULE}_LIBRARY_DIRS})
-			if (NOT ALLEGRO_LIBRARY-${ALLEGRO_MODULE})
-					message(FATAL_ERROR "Failed to find allegro library ${ALLEGRO_LIBRARY_NAME} in ${PC_ALLEGRO_MODULE-${ALLEGRO_MODULE}_LIBRARY_DIRS}")
-			endif()
-			list(APPEND ALLEGRO_LIBRARIES
-					${ALLEGRO_LIBRARY-${ALLEGRO_MODULE}})
-	endforeach(ALLEGRO_LIBRARY_NAME)
-endforeach(ALLEGRO_MODULE)
-
-list(APPEND FRAMEWORK_LIBRARIES ${ALLEGRO_LIBRARIES})

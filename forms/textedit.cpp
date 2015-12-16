@@ -3,9 +3,6 @@
 #include "forms/textedit.h"
 #include "framework/framework.h"
 
-#include <allegro5/keycodes.h>
-#include <allegro5/allegro.h>
-
 namespace OpenApoc
 {
 
@@ -54,9 +51,9 @@ void TextEdit::EventOccured(Event *e)
 
 		if (e->Data.Forms.EventFlag == FormEventType::KeyPress && editting)
 		{
-			switch (e->Data.Forms.KeyInfo.KeyCode)
+			switch (e->Data.Forms.KeyInfo.KeyCode) // TODO: Check scancodes instead of keycodes?
 			{
-				case ALLEGRO_KEY_BACKSPACE:
+				case SDLK_BACKSPACE:
 					if (SelectionStart > 0)
 					{
 						text.remove(SelectionStart - 1, 1);
@@ -65,7 +62,7 @@ void TextEdit::EventOccured(Event *e)
 					}
 					e->Handled = true;
 					break;
-				case ALLEGRO_KEY_DELETE:
+				case SDLK_DELETE:
 					if (SelectionStart < text.length())
 					{
 						text.remove(SelectionStart, 1);
@@ -73,48 +70,50 @@ void TextEdit::EventOccured(Event *e)
 					}
 					e->Handled = true;
 					break;
-				case ALLEGRO_KEY_LEFT:
+				case SDLK_LEFT:
 					if (SelectionStart > 0)
 					{
 						SelectionStart--;
 					}
 					e->Handled = true;
 					break;
-				case ALLEGRO_KEY_RIGHT:
+				case SDLK_RIGHT:
 					if (SelectionStart < text.length())
 					{
 						SelectionStart++;
 					}
 					e->Handled = true;
 					break;
-				case ALLEGRO_KEY_LSHIFT:
-				case ALLEGRO_KEY_RSHIFT:
+				case SDLK_LSHIFT:
+				case SDLK_RSHIFT:
 					editShift = true;
 					break;
-				case ALLEGRO_KEY_ALTGR:
+				case SDLK_RALT:
 					editAltGr = true;
 					break;
 
-				case ALLEGRO_KEY_HOME:
+				case SDLK_HOME:
 					SelectionStart = 0;
 					e->Handled = true;
 					break;
-				case ALLEGRO_KEY_END:
+				case SDLK_END:
 					SelectionStart = text.length();
 					e->Handled = true;
 					break;
 
-				case ALLEGRO_KEY_ENTER:
+				case SDLK_RETURN:
 					editting = false;
 					RaiseEvent(FormEventType::TextEditFinish);
 					break;
 
 				default:
-					ALLEGRO_USTR *convert = al_ustr_new("");
-					al_ustr_append_chr(convert, e->Data.Forms.KeyInfo.UniChar);
-					if (convert->slen == 1 && al_cstr(convert)[0] != 0)
+					// FIXME: This should use SDL Text Input API!
+					UString convert(SDL_GetKeyName(
+					    e->Data.Keyboard
+					        .KeyCode)); // SDLK* are based on Unicode, if I read the docs right
+					if (convert.length() == 1 && convert.c_str()[0] != 0)
 					{
-						text.insert(SelectionStart, al_cstr(convert));
+						text.insert(SelectionStart, convert.c_str());
 						SelectionStart++;
 						RaiseEvent(FormEventType::TextChanged);
 					}
@@ -126,12 +125,12 @@ void TextEdit::EventOccured(Event *e)
 
 			switch (e->Data.Forms.KeyInfo.KeyCode)
 			{
-				case ALLEGRO_KEY_LSHIFT:
-				case ALLEGRO_KEY_RSHIFT:
+				case SDLK_LSHIFT:
+				case SDLK_RSHIFT:
 					editShift = false;
 					e->Handled = true;
 					break;
-				case ALLEGRO_KEY_ALTGR:
+				case SDLK_RALT:
 					editAltGr = false;
 					e->Handled = true;
 					break;
