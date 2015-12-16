@@ -332,6 +332,7 @@ Vec2<int> TileView::getScreenOffset() const
 
 void TileView::setScreenCenterTile(Vec2<float> center)
 {
+	fw.soundBackend->setListenerPosition({center.x, center.y, map.size.z / 2});
 	Vec2<float> clampedCenter;
 	if (center.x < 0.0f)
 		clampedCenter.x = 0.0f;

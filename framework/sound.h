@@ -95,6 +95,11 @@ class SoundBackend
 	virtual float getGain(Gain g) = 0;
 	/* Any values outside the range 0..1 will be clamped */
 	virtual void setGain(Gain g, float v) = 0;
+
+	Vec3<float> listenerPosition;
+	/* A quick attempt at 'positional' audio */
+	virtual void playSample(sp<Sample> sample, Vec3<float> position);
+	virtual void setListenerPosition(Vec3<float> position);
 };
 
 class JukeBox

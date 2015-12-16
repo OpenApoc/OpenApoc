@@ -44,7 +44,7 @@ sp<Projectile> VWeapon::fire(Framework &fw, Vec3<float> target)
 
 	if (weaponType.fire_sfx)
 	{
-		fw.soundBackend->playSample(weaponType.fire_sfx);
+		fw.soundBackend->playSample(weaponType.fire_sfx, vehicleTile->getPosition());
 	}
 
 	if (this->ammo == 0 && this->type.max_ammo != 0)
