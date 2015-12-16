@@ -9,12 +9,12 @@ namespace OpenApoc
 class TileObjectDoodad : public TileObject
 {
   public:
-	virtual void draw(Renderer &r, TileView &view, Vec2<float> screenPosition, TileViewMode mode);
+	void draw(Renderer &r, TileView &view, Vec2<float> screenPosition, TileViewMode mode) override;
 	virtual ~TileObjectDoodad();
 
 	std::weak_ptr<Doodad> doodad;
 
-	virtual sp<VoxelMap> getVoxelMap() override { return nullptr; };
+	sp<VoxelMap> getVoxelMap() override { return nullptr; };
 
   private:
 	friend class TileMap;

@@ -9,14 +9,14 @@ namespace OpenApoc
 class TileObjectScenery : public TileObject
 {
   public:
-	virtual void draw(Renderer &r, TileView &view, Vec2<float> screenPosition, TileViewMode mode);
+	void draw(Renderer &r, TileView &view, Vec2<float> screenPosition, TileViewMode mode) override;
 	virtual ~TileObjectScenery();
 
 	std::weak_ptr<Scenery> scenery;
 
 	sp<Scenery> getOwner();
 
-	virtual sp<VoxelMap> getVoxelMap() override;
+	sp<VoxelMap> getVoxelMap() override;
 
   private:
 	friend class TileMap;

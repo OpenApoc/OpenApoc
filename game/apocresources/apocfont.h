@@ -27,10 +27,10 @@ class ApocalypseFont : public BitmapFont
   public:
 	static sp<ApocalypseFont> loadFont(Framework &fw, tinyxml2::XMLElement *fontElement);
 	virtual ~ApocalypseFont();
-	virtual sp<PaletteImage> getGlyph(UniChar codepoint) override;
-	virtual int GetFontHeight() override;
-	virtual UString getName() override;
-	virtual int GetEstimateCharacters(int FitInWidth) override;
-	virtual sp<Palette> getPalette();
+	sp<PaletteImage> getGlyph(UniChar codepoint) override;
+	int GetFontHeight() override;
+	UString getName() override;
+	int GetEstimateCharacters(int FitInWidth) override;
+	sp<Palette> getPalette() override;
 };
 }; // namespace OpenApoc

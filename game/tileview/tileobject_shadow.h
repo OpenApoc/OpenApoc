@@ -10,9 +10,9 @@ class Vehicle;
 class TileObjectShadow : public TileObject
 {
   public:
-	virtual void draw(Renderer &r, TileView &view, Vec2<float> screenPosition, TileViewMode mode);
+	void draw(Renderer &r, TileView &view, Vec2<float> screenPosition, TileViewMode mode) override;
 	virtual ~TileObjectShadow();
-	virtual void setPosition(Vec3<float> newPosition) override;
+	void setPosition(Vec3<float> newPosition) override;
 
   private:
 	friend class TileMap;

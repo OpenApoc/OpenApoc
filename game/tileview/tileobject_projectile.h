@@ -9,7 +9,7 @@ namespace OpenApoc
 class TileObjectProjectile : public TileObject
 {
   public:
-	virtual void draw(Renderer &r, TileView &view, Vec2<float> screenPosition, TileViewMode mode);
+	void draw(Renderer &r, TileView &view, Vec2<float> screenPosition, TileViewMode mode) override;
 	virtual ~TileObjectProjectile();
 
   private:
