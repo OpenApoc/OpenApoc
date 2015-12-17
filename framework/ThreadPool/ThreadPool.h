@@ -39,30 +39,30 @@ inline ThreadPool::ThreadPool(size_t threads) : stop(false)
 	// Having a zero-sized threadpool really doesn't make sense
 	assert(threads > 0);
 	for (size_t i = 0; i < threads; ++i)
-		workers.emplace_back([this, i]
-		                     {
-			                     OpenApoc::Trace::setThreadName(
-			                         "ThreadPool " + OpenApoc::Strings::FromInteger((int)i));
-			                     for (;;)
-			                     {
-				                     std::function<void()> task;
+		workers.emplace_back(
+		    [this, i]
+		    {
+			    OpenApoc::Trace::setThreadName("ThreadPool " +
+			                                   OpenApoc::Strings::FromInteger(static_cast<int>(i)));
+			    for (;;)
+			    {
+				    std::function<void()> task;
 
-				                     {
-					                     std::unique_lock<std::mutex> lock(this->queue_mutex);
-					                     this->condition.wait(lock, [this]
-					                                          {
-						                                          return this->stop ||
-						                                                 !this->tasks.empty();
-						                                      });
-					                     if (this->stop && this->tasks.empty())
-						                     return;
-					                     task = std::move(this->tasks.front());
-					                     this->tasks.pop();
-				                     }
+				    {
+					    std::unique_lock<std::mutex> lock(this->queue_mutex);
+					    this->condition.wait(lock, [this]
+					                         {
+						                         return this->stop || !this->tasks.empty();
+						                     });
+					    if (this->stop && this->tasks.empty())
+						    return;
+					    task = std::move(this->tasks.front());
+					    this->tasks.pop();
+				    }
 
-				                     task();
-			                     }
-			                 });
+				    task();
+			    }
+			});
 }
 
 // add new work item to the pool

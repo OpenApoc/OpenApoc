@@ -160,8 +160,8 @@ Control *GraphicButton::CopyTo(Control *CopyParent)
 {
 	GraphicButton *copy = new GraphicButton(fw, CopyParent, this->image_name,
 	                                        this->imagedepressed_name, this->imagehover_name);
-	CopyControlData((Control *)copy);
-	return (Control *)copy;
+	CopyControlData(copy);
+	return copy;
 }
 
 }; // namespace OpenApoc

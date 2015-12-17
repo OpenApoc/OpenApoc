@@ -89,8 +89,8 @@ Control *Label::CopyTo(Control *CopyParent)
 	copy->TextHAlign = this->TextHAlign;
 	copy->TextVAlign = this->TextVAlign;
 	copy->WordWrap = this->WordWrap;
-	CopyControlData((Control *)copy);
-	return (Control *)copy;
+	CopyControlData(copy);
+	return copy;
 }
 
 }; // namespace OpenApoc

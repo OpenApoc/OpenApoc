@@ -30,8 +30,8 @@ class LodepngImageLoader : public OpenApoc::ImageLoader
 		auto data = file.readAll();
 		std::vector<unsigned char> image;
 		unsigned int width, height;
-		unsigned int error =
-		    lodepng::decode(image, width, height, (unsigned char *)data.get(), file.size());
+		unsigned int error = lodepng::decode(
+		    image, width, height, reinterpret_cast<unsigned char *>(data.get()), file.size());
 		if (error)
 		{
 			LogInfo("LodePNG error code: %d: %s", error, lodepng_error_text(error));

@@ -28,7 +28,7 @@ class FlyingVehicleCanEnterTileHelper : public CanEnterTileHelper
 	Vehicle &v;
 
   public:
-	FlyingVehicleCanEnterTileHelper(TileMap &map, Vehicle &v) : map(map), v(v){};
+	FlyingVehicleCanEnterTileHelper(TileMap &map, Vehicle &v) : map(map), v(v) {}
 	// Support 'from' being nullptr for if a vehicle is being spawned in the map
 	bool canEnterTile(Tile *from, Tile *to) const override
 	{
@@ -63,6 +63,8 @@ class FlyingVehicleCanEnterTileHelper : public CanEnterTileHelper
 				return false;
 			}
 		}
+		std::ignore = v;
+		std::ignore = map;
 		// TODO: Try to block diagonal paths clipping past scenery:
 		//
 		// IE in a 2x2 'flat' case:

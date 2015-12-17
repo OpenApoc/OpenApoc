@@ -117,6 +117,7 @@ City::City(Framework &fw, GameState &state) : fw(fw), map(fw, fw.rules->getCityS
 					supportingSceneryObject->supports.insert(s);
 					s->supportedBy.insert(supportingSceneryObject);
 					supported = true;
+					break;
 				}
 				default:
 					break;
@@ -152,6 +153,7 @@ City::City(Framework &fw, GameState &state) : fw(fw), map(fw, fw.rules->getCityS
 							supportingSceneryObject->supports.insert(s);
 							s->supportedBy.insert(supportingSceneryObject);
 							supported = true;
+							break;
 						}
 						default:
 							break;
@@ -224,7 +226,7 @@ City::~City()
 
 void City::update(GameState &state, unsigned int ticks)
 {
-	TRACE_FN_ARGS1("ticks", Strings::FromInteger((int)ticks));
+	TRACE_FN_ARGS1("ticks", Strings::FromInteger(static_cast<int>(ticks)));
 	/* FIXME: Temporary 'get something working' HACK
 	 * Every now and then give a landed vehicle a new 'goto random building' mission, so there's
 	 * some activity in the city*/

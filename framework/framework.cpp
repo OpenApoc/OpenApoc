@@ -371,7 +371,6 @@ void Framework::ProcessEvents()
 				delete e;
 				ShutdownFramework();
 				return;
-				break;
 			default:
 				p->ProgramStages.Current()->EventOccurred(e);
 				break;
@@ -485,10 +484,10 @@ void Framework::TranslateSDLEvents()
 			case SDL_FINGERDOWN:
 				fwE = new Event();
 				fwE->Type = EVENT_FINGER_DOWN;
-				fwE->Data.Finger.X = e.tfinger.x * Display_GetWidth();
-				fwE->Data.Finger.Y = e.tfinger.y * Display_GetHeight();
-				fwE->Data.Finger.DeltaX = e.tfinger.dx * Display_GetWidth();
-				fwE->Data.Finger.DeltaY = e.tfinger.dy * Display_GetHeight();
+				fwE->Data.Finger.X = static_cast<int>(e.tfinger.x * Display_GetWidth());
+				fwE->Data.Finger.Y = static_cast<int>(e.tfinger.y * Display_GetHeight());
+				fwE->Data.Finger.DeltaX = static_cast<int>(e.tfinger.dx * Display_GetWidth());
+				fwE->Data.Finger.DeltaY = static_cast<int>(e.tfinger.dy * Display_GetHeight());
 				fwE->Data.Finger.Id = e.tfinger.fingerId;
 				fwE->Data.Finger.IsPrimary =
 				    e.tfinger.fingerId ==
@@ -498,10 +497,10 @@ void Framework::TranslateSDLEvents()
 			case SDL_FINGERUP:
 				fwE = new Event();
 				fwE->Type = EVENT_FINGER_UP;
-				fwE->Data.Finger.X = e.tfinger.x * Display_GetWidth();
-				fwE->Data.Finger.Y = e.tfinger.y * Display_GetHeight();
-				fwE->Data.Finger.DeltaX = e.tfinger.dx * Display_GetWidth();
-				fwE->Data.Finger.DeltaY = e.tfinger.dy * Display_GetHeight();
+				fwE->Data.Finger.X = static_cast<int>(e.tfinger.x * Display_GetWidth());
+				fwE->Data.Finger.Y = static_cast<int>(e.tfinger.y * Display_GetHeight());
+				fwE->Data.Finger.DeltaX = static_cast<int>(e.tfinger.dx * Display_GetWidth());
+				fwE->Data.Finger.DeltaY = static_cast<int>(e.tfinger.dy * Display_GetHeight());
 				fwE->Data.Finger.Id = e.tfinger.fingerId;
 				fwE->Data.Finger.IsPrimary =
 				    e.tfinger.fingerId ==
@@ -511,10 +510,10 @@ void Framework::TranslateSDLEvents()
 			case SDL_FINGERMOTION:
 				fwE = new Event();
 				fwE->Type = EVENT_FINGER_MOVE;
-				fwE->Data.Finger.X = e.tfinger.x * Display_GetWidth();
-				fwE->Data.Finger.Y = e.tfinger.y * Display_GetHeight();
-				fwE->Data.Finger.DeltaX = e.tfinger.dx * Display_GetWidth();
-				fwE->Data.Finger.DeltaY = e.tfinger.dy * Display_GetHeight();
+				fwE->Data.Finger.X = static_cast<int>(e.tfinger.x * Display_GetWidth());
+				fwE->Data.Finger.Y = static_cast<int>(e.tfinger.y * Display_GetHeight());
+				fwE->Data.Finger.DeltaX = static_cast<int>(e.tfinger.dx * Display_GetWidth());
+				fwE->Data.Finger.DeltaY = static_cast<int>(e.tfinger.dy * Display_GetHeight());
 				fwE->Data.Finger.Id = e.tfinger.fingerId;
 				fwE->Data.Finger.IsPrimary =
 				    e.tfinger.fingerId ==

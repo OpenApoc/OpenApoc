@@ -283,7 +283,7 @@ float Vehicle::getSpeed() const
 		speed += engineType.top_speed;
 	}
 
-	if (speed == 0)
+	if (speed == 0.0f)
 	{
 		LogError("Vehicle with no engine");
 	}

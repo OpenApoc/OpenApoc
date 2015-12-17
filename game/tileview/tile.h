@@ -56,6 +56,7 @@ class CanEnterTileHelper
   public:
 	// Returns true if this object can move from 'from' to 'to'. The two tiles must be adjacent!
 	virtual bool canEnterTile(Tile *from, Tile *to) const = 0;
+	virtual ~CanEnterTileHelper() = default;
 };
 
 class TileMap

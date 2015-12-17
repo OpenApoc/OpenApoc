@@ -8,7 +8,7 @@
 namespace OpenApoc
 {
 
-std::vector<UString> tracks{"music:0", "music:1", "music:2"};
+static std::vector<UString> tracks{"music:0", "music:1", "music:2"};
 
 MainMenu::MainMenu(Framework &fw) : Stage(fw), mainmenuform(fw.gamecore->GetForm("FORM_MAINMENU"))
 {

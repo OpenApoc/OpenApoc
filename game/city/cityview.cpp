@@ -87,12 +87,16 @@ void CityView::Update(StageCmd *const cmd)
 		case UpdateSpeed::Speed2:
 			ticks = 2;
 			break;
-		default:
-			LogWarning("FIXME: Sort out higher speed to not just hammer update (GOD-SLOW) - "
-			           "demoting to speed3");
-			this->updateSpeed = UpdateSpeed::Speed3;
 		case UpdateSpeed::Speed3:
 			ticks = 5;
+			break;
+		case UpdateSpeed::Speed4:
+			ticks = 10;
+			break;
+		case UpdateSpeed::Speed5:
+			LogWarning("FIXME: Sort out higher speed to not just hammer update (GOD-SLOW) - "
+			           "demoting to speed4");
+			ticks = 10;
 			break;
 	}
 	*cmd = stageCmd;
@@ -232,8 +236,8 @@ void CityView::EventOccurred(Event *e)
 					stuffToRepair.insert(s);
 				}
 			}
-			LogInfo("Repairing %d tiles out of %d", (int)stuffToRepair.size(),
-			        (int)fw.state->city->scenery.size());
+			LogInfo("Repairing %u tiles out of %u", static_cast<unsigned>(stuffToRepair.size()),
+			        static_cast<unsigned>(fw.state->city->scenery.size()));
 
 			for (auto &s : stuffToRepair)
 			{

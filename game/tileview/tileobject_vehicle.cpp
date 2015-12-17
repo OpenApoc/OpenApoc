@@ -60,7 +60,6 @@ void TileObjectVehicle::draw(Renderer &r, TileView &view, Vec2<float> screenPosi
 			// FIXME: Not true for large sprites (2x2 UFOs?)
 			r.draw(closestImage, screenPosition - Vec2<float>{4, 4});
 			break;
-			break;
 		}
 		default:
 			LogError("Unsupported view mode");

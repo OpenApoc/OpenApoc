@@ -379,7 +379,7 @@ static sp<PaletteImage> loadStrategy(IFile &file)
 	unsigned int offset = 0;
 
 	struct strat_header header;
-	file.read((char *)&header, sizeof(header));
+	file.read(reinterpret_cast<char *>(&header), sizeof(header));
 	PaletteImageLock region(img);
 	while (file && header.pixel_skip != 0xffff)
 	{
@@ -399,12 +399,12 @@ static sp<PaletteImage> loadStrategy(IFile &file)
 				return img;
 			}
 
-			file.read((char *)&idx, 1);
+			file.read(reinterpret_cast<char *>(&idx), 1);
 			region.set(Vec2<int>{x, y}, idx);
 
 			offset++;
 		}
-		file.read((char *)&header, sizeof(header));
+		file.read(reinterpret_cast<char *>(&header), sizeof(header));
 	}
 	return img;
 }
@@ -427,7 +427,7 @@ sp<ImageSet> PCKLoader::load_strat(Data &data, UString PckFilename, UString TabF
 
 	uint32_t offset = 0;
 	unsigned idx = 0;
-	while (tabFile.read((char *)&offset, sizeof(offset)))
+	while (tabFile.read(reinterpret_cast<char *>(&offset), sizeof(offset)))
 	{
 		pckFile.seekg(offset, std::ios::beg);
 		if (!pckFile)
@@ -454,7 +454,7 @@ sp<ImageSet> PCKLoader::load_strat(Data &data, UString PckFilename, UString TabF
 
 	imageSet->maxSize = {8, 8};
 
-	LogInfo("Loaded %d images", (int)imageSet->images.size());
+	LogInfo("Loaded %u images", static_cast<unsigned>(imageSet->images.size()));
 
 	return imageSet;
 }
@@ -478,7 +478,7 @@ static const std::vector<std::vector<int>> ditherLut = {
 static sp<PaletteImage> loadShadow(IFile &file, uint8_t shadedIdx)
 {
 	struct shadow_header header;
-	file.read((char *)&header, sizeof(header));
+	file.read(reinterpret_cast<char *>(&header), sizeof(header));
 	if (!file)
 	{
 		LogError("Unexpected EOF reading shadow PCK header\n");
@@ -488,12 +488,12 @@ static sp<PaletteImage> loadShadow(IFile &file, uint8_t shadedIdx)
 	PaletteImageLock region(img);
 
 	uint8_t b = 0;
-	file.read((char *)&b, 1);
+	file.read(reinterpret_cast<char *>(&b), 1);
 	int pos = 0;
 	while (b != 0xff)
 	{
 		uint8_t count = b;
-		file.read((char *)&b, 1);
+		file.read(reinterpret_cast<char *>(&b), 1);
 		if (!file)
 		{
 			LogError("Unexpected EOF reading shadow data\n");
@@ -525,7 +525,7 @@ static sp<PaletteImage> loadShadow(IFile &file, uint8_t shadedIdx)
 				}
 			}
 		}
-		file.read((char *)&b, 1);
+		file.read(reinterpret_cast<char *>(&b), 1);
 		if (!file)
 		{
 			LogError("Unexpected EOF reading shadow data\n");
@@ -556,7 +556,7 @@ sp<ImageSet> PCKLoader::load_shadow(Data &data, UString PckFilename, UString Tab
 
 	uint32_t offset = 0;
 	unsigned idx = 0;
-	while (tabFile.read((char *)&offset, sizeof(offset)))
+	while (tabFile.read(reinterpret_cast<char *>(&offset), sizeof(offset)))
 	{
 		// shadow TAB files store the offset directly
 		pckFile.seekg(offset, std::ios::beg);
@@ -581,7 +581,7 @@ sp<ImageSet> PCKLoader::load_shadow(Data &data, UString PckFilename, UString Tab
 			imageSet->maxSize.y = img->size.y;
 	}
 
-	LogInfo("Loaded %d images", (int)imageSet->images.size());
+	LogInfo("Loaded %u images", static_cast<unsigned>(imageSet->images.size()));
 
 	return imageSet;
 }

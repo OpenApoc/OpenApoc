@@ -190,7 +190,7 @@ UString GameCore::GetString(UString ID)
 	return s;
 }
 
-Form *GameCore::GetForm(UString ID) { return (Form *)forms[ID]->CopyTo(nullptr); }
+Form *GameCore::GetForm(UString ID) { return static_cast<Form *>(forms[ID]->CopyTo(nullptr)); }
 
 sp<Image> GameCore::GetImage(UString ImageData) { return fw.data->load_image(ImageData); }
 

@@ -19,7 +19,7 @@ class DoodadFrame
 class DoodadDef
 {
   private:
-	DoodadDef(){};
+	DoodadDef() {}
 	friend class RulesLoader;
 
   public:

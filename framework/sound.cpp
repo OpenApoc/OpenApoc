@@ -15,11 +15,11 @@ static float mix(float a, float b, float factor) { return a * (1.0f - factor) + 
 
 namespace OpenApoc
 {
-static const std::array<std::pair<float, float>, 3> positionalAudioLUT = {
-    std::make_pair(20.0f, 1.0f), // Anything within 20.0f units is at full volume
+static const std::array<std::pair<float, float>, 3> positionalAudioLUT = {{
+    std::make_pair(20.0f, 1.0f),   // Anything within 20.0f units is at full volume
     std::make_pair(100.0f, 0.25f), // That then scales linearly down to 25% over the next 100 units
     std::make_pair(std::numeric_limits<float>::max(), 0.25f) // Which does not decrease any further
-};
+}};
 
 // Position is assumed to be in 'map' units
 void SoundBackend::playSample(sp<Sample> sample, Vec3<float> position)

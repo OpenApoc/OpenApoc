@@ -204,7 +204,8 @@ std::unique_ptr<char[]> IFile::readAll()
 	std::unique_ptr<char[]> mem(new char[memsize]);
 	if (!mem)
 	{
-		LogError("Failed to allocate memory for %llu bytes", (long long unsigned)memsize);
+		LogError("Failed to allocate memory for %llu bytes",
+		         static_cast<long long unsigned>(memsize));
 		return nullptr;
 	}
 

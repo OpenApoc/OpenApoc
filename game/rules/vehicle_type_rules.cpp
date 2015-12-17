@@ -145,7 +145,7 @@ static bool ParseVehicleAnimationSprites(tinyxml2::XMLElement *parentNode, Vehic
 			if (!ReadElement(node, frame_path))
 			{
 				LogError("Animation frame %u  for vehicle_type ID \"%s\" missing sprite path",
-				         (unsigned)sprites.size(), vehicle.id.c_str());
+				         static_cast<unsigned>(sprites.size()), vehicle.id.c_str());
 				return false;
 			}
 			sprites.push_back(frame_path);

@@ -91,7 +91,7 @@ void Scenery::update(Framework &fw, GameState &state, unsigned int ticks)
 
 	auto currentPos = this->tileObject->getPosition();
 	// FIXME: gravity acceleration?
-	currentPos.z -= (float)ticks / 16.0f;
+	currentPos.z -= static_cast<float>(ticks) / 16.0f;
 	this->tileObject->setPosition(currentPos);
 	if (this->overlayDoodad)
 		this->overlayDoodad->setPosition(this->tileObject->getPosition());
@@ -119,7 +119,8 @@ void Scenery::update(Framework &fw, GameState &state, unsigned int ticks)
 				auto count = state.city->fallingScenery.erase(shared_from_this());
 				if (count != 1)
 				{
-					LogError("Removed %u objects from fallingScenery list?", (unsigned int)count);
+					LogError("Removed %u objects from fallingScenery list?",
+					         static_cast<unsigned>(count));
 				}
 				// return as we can't be destroyed more than once
 				return;

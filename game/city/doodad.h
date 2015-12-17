@@ -18,7 +18,7 @@ class Doodad : public std::enable_shared_from_this<Doodad>
 {
   public:
 	virtual sp<Image> getSprite() = 0;
-	const Vec2<int> &getImageOffset() const { return this->imageOffset; };
+	const Vec2<int> &getImageOffset() const { return this->imageOffset; }
 	virtual void update(GameState &state, int ticks);
 	const Vec3<float> &getPosition() const { return this->position; }
 	virtual ~Doodad() = default;

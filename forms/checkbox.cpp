@@ -95,8 +95,8 @@ Control *CheckBox::CopyTo(Control *CopyParent)
 {
 	CheckBox *copy = new CheckBox(fw, CopyParent);
 	copy->Checked = this->Checked;
-	CopyControlData((Control *)copy);
-	return (Control *)copy;
+	CopyControlData(copy);
+	return copy;
 }
 
 }; // namespace OpenApoc

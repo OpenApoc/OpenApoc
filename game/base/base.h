@@ -36,8 +36,8 @@ class Base
 	Base(sp<Building> building, const Framework &fw);
 
 	sp<const Facility> getFacility(Vec2<int> pos) const;
-	const std::vector<std::vector<bool>> &getCorridors() const { return corridors; };
-	const std::vector<sp<Facility>> &getFacilities() const { return facilities; };
+	const std::vector<std::vector<bool>> &getCorridors() const { return corridors; }
+	const std::vector<sp<Facility>> &getFacilities() const { return facilities; }
 
 	void startingBase(const Framework &fw, std::default_random_engine &rng);
 	BuildError canBuildFacility(const FacilityDef &def, Vec2<int> pos, bool free = false) const;

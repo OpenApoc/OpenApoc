@@ -49,36 +49,36 @@ class PCXImageLoader : public OpenApoc::ImageLoader
 		if (size < sizeof(struct PcxHeader) + 256 * 3)
 		{
 			LogInfo("File \"%s\" size %u too small for PCX header + palette\n", path.c_str(),
-			        (unsigned)size);
+			        static_cast<unsigned>(size));
 			return nullptr;
 		}
-		struct PcxHeader *header = (struct PcxHeader *)&data[0];
+		struct PcxHeader *header = reinterpret_cast<struct PcxHeader *>(&data[0]);
 
 		if (header->Identifier != PcxIdentifier)
 		{
 			LogInfo("File \"%s\" had invalid PCX identifier 0x%02x", path.c_str(),
-			        (unsigned)header->Identifier);
+			        static_cast<unsigned>(header->Identifier));
 			return nullptr;
 		}
 
 		if (header->Encoding != 1)
 		{
 			LogWarning("File \"%s\" had invalid PCX Encoding 0x%02x", path.c_str(),
-			           (unsigned)header->Encoding);
+			           static_cast<unsigned>(header->Encoding));
 			return nullptr;
 		}
 
 		if (header->BitsPerPixel != 8)
 		{
 			LogWarning("File \"%s\" had invalid PCX BitsPerPixel 0x%02x", path.c_str(),
-			           (unsigned)header->BitsPerPixel);
+			           static_cast<unsigned>(header->BitsPerPixel));
 			return nullptr;
 		}
 
 		if (header->NumBitPlanes != 1)
 		{
 			LogWarning("File \"%s\" had invalid PCX NumBitPlanes 0x%02x", path.c_str(),
-			           (unsigned)header->NumBitPlanes);
+			           static_cast<unsigned>(header->NumBitPlanes));
 			return nullptr;
 		}
 
@@ -86,13 +86,13 @@ class PCXImageLoader : public OpenApoc::ImageLoader
 		if (b != 0x0C)
 		{
 			LogWarning("File \"%s\" had invalid PCX palette identifier byte 0x%02x", path.c_str(),
-			           (unsigned)b);
+			           static_cast<unsigned>(b));
 			return nullptr;
 		}
 
 		auto p = std::make_shared<Palette>(256);
 
-		const uint8_t *palette_data = (uint8_t *)&data[size - (256 * 3)];
+		const uint8_t *palette_data = reinterpret_cast<uint8_t *>(&data[size - (256 * 3)]);
 		for (unsigned i = 0; i < 256; i++)
 		{
 			uint8_t r = *palette_data++;
@@ -110,7 +110,7 @@ class PCXImageLoader : public OpenApoc::ImageLoader
 		{
 			PaletteImageLock lock(pimg);
 
-			const uint8_t *img_data = (uint8_t *)&data[sizeof(struct PcxHeader)];
+			const uint8_t *img_data = reinterpret_cast<uint8_t *>(&data[sizeof(struct PcxHeader)]);
 
 			for (unsigned y = header->YStart; y <= header->YEnd; y++)
 			{
@@ -120,7 +120,7 @@ class PCXImageLoader : public OpenApoc::ImageLoader
 					uint8_t b;
 					int run_length;
 					uint8_t idx;
-					if (img_data >= (uint8_t *)&data[size])
+					if (img_data >= reinterpret_cast<uint8_t *>(&data[size]))
 					{
 						LogWarning("Unexpected EOF reading PCX file \"%s\" ", path.c_str());
 						return nullptr;
@@ -130,7 +130,7 @@ class PCXImageLoader : public OpenApoc::ImageLoader
 					if ((b & 0xC0) == 0xC0)
 					{
 						run_length = b & 0x3F;
-						if (img_data >= (uint8_t *)&data[size])
+						if (img_data >= reinterpret_cast<uint8_t *>(&data[size]))
 						{
 							LogWarning("Unexpected EOF reading PCX file \"%s\" ", path.c_str());
 							return nullptr;

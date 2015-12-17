@@ -115,8 +115,8 @@ Control *Graphic::CopyTo(Control *CopyParent)
 	copy->ImageVAlign = this->ImageVAlign;
 	copy->ImagePosition = this->ImagePosition;
 	copy->AutoSize = this->AutoSize;
-	CopyControlData((Control *)copy);
-	return (Control *)copy;
+	CopyControlData(copy);
+	return copy;
 }
 
 }; // namespace OpenApoc

@@ -97,8 +97,6 @@ sp<Projectile> VWeapon::fire(Framework &fw, Vec3<float> target)
 	    owner, vehicleTile->getPosition(), velocity,
 	    static_cast<int>(this->getRange() / weaponType.speed * TICK_SCALE), c, weaponType.tail_size,
 	    2.0f);
-
-	return nullptr;
 }
 
 void VWeapon::update(int ticks)

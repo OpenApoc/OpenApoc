@@ -14,7 +14,7 @@ class TileObjectDoodad : public TileObject
 
 	std::weak_ptr<Doodad> doodad;
 
-	sp<VoxelMap> getVoxelMap() override { return nullptr; };
+	sp<VoxelMap> getVoxelMap() override { return nullptr; }
 
   private:
 	friend class TileMap;

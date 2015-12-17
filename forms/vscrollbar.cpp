@@ -104,7 +104,7 @@ void VScrollBar::OnRender()
 		segmentsize = (Size.y - grippersize) / static_cast<float>(segments - 1);
 	}
 
-	int ypos = segmentsize * (Value - Minimum);
+	int ypos = static_cast<int>(segmentsize * (Value - Minimum));
 	fw.renderer->drawFilledRect(Vec2<float>{0, ypos}, Vec2<float>{Size.x, grippersize},
 	                            GripperColour);
 }
@@ -132,8 +132,8 @@ Control *VScrollBar::CopyTo(Control *CopyParent)
 	copy->Minimum = this->Minimum;
 	copy->GripperColour = this->GripperColour;
 	copy->LargeChange = this->LargeChange;
-	CopyControlData((Control *)copy);
-	return (Control *)copy;
+	CopyControlData(copy);
+	return copy;
 }
 
 }; // namespace OpenApoc

@@ -40,7 +40,7 @@ TileMap::TileMap(Framework &fw, Vec3<int> size, std::vector<std::set<TileObject:
 		{
 			if (seenTypes.find(type) != seenTypes.end())
 			{
-				LogError("Type %d appears in multiple layers", (int)type);
+				LogError("Type %d appears in multiple layers", static_cast<int>(type));
 			}
 			seenTypes.insert(type);
 		}
@@ -58,9 +58,15 @@ Tile *TileMap::getTile(int x, int y, int z)
 	return &this->tiles[z * size.x * size.y + y * size.x + x];
 }
 
-Tile *TileMap::getTile(Vec3<int> pos) { return getTile(pos.x, pos.y, pos.z); }
+Tile *TileMap::getTile(Vec3<int> pos)
+{
+	return getTile(static_cast<int>(pos.x), static_cast<int>(pos.y), static_cast<int>(pos.z));
+}
 
-Tile *TileMap::getTile(Vec3<float> pos) { return getTile(pos.x, pos.y, pos.z); }
+Tile *TileMap::getTile(Vec3<float> pos)
+{
+	return getTile(static_cast<int>(pos.x), static_cast<int>(pos.y), static_cast<int>(pos.z));
+}
 
 TileMap::~TileMap() {}
 
@@ -77,8 +83,9 @@ class PathNode
 	PathNode(float costToGetHere, Tile *parentTile, Tile *thisTile, const Vec3<float> &goal)
 	    : costToGetHere(costToGetHere), parentTile(parentTile), thisTile(thisTile)
 	{
-		Vec3<float> thisPosition{(float)thisTile->position.x, (float)thisTile->position.y,
-		                         (float)thisTile->position.z};
+		Vec3<float> thisPosition{static_cast<float>(thisTile->position.x),
+		                         static_cast<float>(thisTile->position.y),
+		                         static_cast<float>(thisTile->position.z)};
 		Vec3<float> vectorToGoal = (goal - thisPosition);
 		this->distanceToGoal = glm::length(vectorToGoal);
 	}
@@ -321,7 +328,7 @@ int TileMap::getLayer(TileObject::Type type) const
 			return i;
 		}
 	}
-	LogError("No layer matching object type %d", (int)type);
+	LogError("No layer matching object type %d", static_cast<int>(type));
 	return 0;
 }
 

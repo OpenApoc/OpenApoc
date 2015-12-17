@@ -82,7 +82,7 @@ void HScrollBar::EventOccured(Event *e)
 	{
 		int segments = (Maximum - Minimum) + 1;
 		float segmentsize = Size.x / static_cast<float>(segments);
-		this->SetValue(e->Data.Forms.MouseInfo.X / segmentsize);
+		this->SetValue(static_cast<int>(e->Data.Forms.MouseInfo.X / segmentsize));
 	}
 
 	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this &&
@@ -104,7 +104,7 @@ void HScrollBar::OnRender()
 		segmentsize = (Size.x - grippersize) / static_cast<float>(segments - 1);
 	}
 
-	int xpos = segmentsize * (Value - Minimum);
+	int xpos = static_cast<int>(segmentsize * (Value - Minimum));
 	fw.renderer->drawFilledRect(Vec2<float>{xpos, 0}, Vec2<float>{grippersize, Size.y},
 	                            GripperColour);
 }
@@ -132,8 +132,8 @@ Control *HScrollBar::CopyTo(Control *CopyParent)
 	copy->Minimum = this->Minimum;
 	copy->GripperColour = this->GripperColour;
 	copy->LargeChange = this->LargeChange;
-	CopyControlData((Control *)copy);
-	return (Control *)copy;
+	CopyControlData(copy);
+	return copy;
 }
 
 }; // namespace OpenApoc

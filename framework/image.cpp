@@ -11,6 +11,16 @@
 namespace OpenApoc
 {
 
+static bool ReadUse(ImageLockUse use)
+{
+	return (use == ImageLockUse::Read || use == ImageLockUse::ReadWrite);
+}
+
+static bool WriteUse(ImageLockUse use)
+{
+	return (use == ImageLockUse::Write || use == ImageLockUse::ReadWrite);
+}
+
 Image::~Image() {}
 
 Image::Image(Vec2<unsigned int> size) : size(size), dirty(true), bounds(0, 0, size.x, size.y) {}
@@ -128,7 +138,11 @@ RGBImageLock::~RGBImageLock() {}
 
 Colour RGBImageLock::get(Vec2<unsigned int> pos)
 {
-	// FIXME: Check read use
+	if (!ReadUse(this->use))
+	{
+		LogError("Trying to get() on image lock without specifying 'read' use");
+		return 0;
+	}
 	unsigned offset = pos.y * this->img->size.x + pos.x;
 	if (pos.x >= this->img->size.x || pos.y >= this->img->size.y)
 	{
@@ -141,6 +155,11 @@ Colour RGBImageLock::get(Vec2<unsigned int> pos)
 
 void RGBImageLock::set(Vec2<unsigned int> pos, Colour &c)
 {
+	if (!WriteUse(this->use))
+	{
+		LogError("Trying to set() on image lock without specifying 'write' use");
+		return;
+	}
 	unsigned offset = pos.y * this->img->size.x + pos.x;
 	if (pos.x >= this->img->size.x || pos.y >= this->img->size.y)
 	{
@@ -163,7 +182,11 @@ PaletteImageLock::~PaletteImageLock() {}
 
 uint8_t PaletteImageLock::get(Vec2<unsigned int> pos)
 {
-	// FIXME: Check read use
+	if (!ReadUse(this->use))
+	{
+		LogError("Trying to get() on image lock without specifying 'read' use");
+		return 0;
+	}
 	unsigned offset = pos.y * this->img->size.x + pos.x;
 	if (pos.x >= this->img->size.x || pos.y >= this->img->size.y)
 	{
@@ -176,7 +199,11 @@ uint8_t PaletteImageLock::get(Vec2<unsigned int> pos)
 
 void PaletteImageLock::set(Vec2<unsigned int> pos, uint8_t idx)
 {
-	// FIXME: Check write use
+	if (!WriteUse(this->use))
+	{
+		LogError("Trying to set() on image lock without specifying 'write' use");
+		return;
+	}
 	unsigned offset = pos.y * this->img->size.x + pos.x;
 	if (pos.x >= this->img->size.x || pos.y >= this->img->size.y)
 	{

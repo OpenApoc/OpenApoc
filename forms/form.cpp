@@ -53,8 +53,8 @@ Control *Form::CopyTo(Control *CopyParent)
 {
 	std::ignore = CopyParent;
 	Form *copy = new Form(fw, nullptr);
-	CopyControlData((Control *)copy);
-	return (Control *)copy;
+	CopyControlData(copy);
+	return copy;
 }
 
 }; // namespace OpenApoc

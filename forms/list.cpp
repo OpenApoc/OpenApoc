@@ -61,7 +61,8 @@ void ListBox::OnRender()
 		}
 	}
 	scroller->Maximum = (yoffset - this->Size.y);
-	scroller->LargeChange = std::max((scroller->Maximum - scroller->Minimum + 2) / 10.0f, 4.0f);
+	scroller->LargeChange =
+	    static_cast<int>(std::max((scroller->Maximum - scroller->Minimum + 2) / 10.0f, 4.0f));
 }
 
 void ListBox::EventOccured(Event *e) { Control::EventOccured(e); }
@@ -131,11 +132,11 @@ Control *ListBox::CopyTo(Control *CopyParent)
 	}
 	else
 	{
-		copy = new ListBox(fw, CopyParent, (VScrollBar *)scroller->lastCopiedTo);
+		copy = new ListBox(fw, CopyParent, static_cast<VScrollBar *>(scroller->lastCopiedTo));
 	}
 	copy->ItemHeight = this->ItemHeight;
-	CopyControlData((Control *)copy);
-	return (Control *)copy;
+	CopyControlData(copy);
+	return copy;
 }
 
 }; // namespace OpenApoc
