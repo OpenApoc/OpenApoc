@@ -258,13 +258,6 @@ Framework::~Framework()
 	LogInfo("Shutdown");
 	Display_Shutdown();
 	Audio_Shutdown();
-	LogInfo("Destroying SDL_GL context");
-	if (p->context)
-	{
-		SDL_GL_DeleteContext(p->context);
-		p->context = 0;
-	}
-
 	LogInfo("SDL shutdown");
 	PHYSFS_deinit();
 	SDL_Quit();
@@ -726,6 +719,7 @@ void Framework::Display_Shutdown()
 	p->defaultSurface.reset();
 	renderer.reset();
 
+	SDL_GL_DeleteContext(p->context);
 	SDL_DestroyWindow(p->window);
 }
 
