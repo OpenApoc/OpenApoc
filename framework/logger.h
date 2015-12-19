@@ -30,17 +30,25 @@ void Log(LogLevel level, UString prefix, UString format, ...);
 // All logger output will be UTF8
 }; // namespace OpenApoc
 
-template <typename... Args> static inline void LogInfo(OpenApoc::UString format, Args &&... args)
-{
-	OpenApoc::Log(OpenApoc::LogLevel::Info, LOGGER_PREFIX, format, std::forward<Args>(args)...);
-}
-
-template <typename... Args> static inline void LogWarning(OpenApoc::UString format, Args &&... args)
-{
-	OpenApoc::Log(OpenApoc::LogLevel::Warning, LOGGER_PREFIX, format, std::forward<Args>(args)...);
-}
-
-template <typename... Args> static inline void LogError(OpenApoc::UString format, Args &&... args)
-{
-	OpenApoc::Log(OpenApoc::LogLevel::Error, LOGGER_PREFIX, format, std::forward<Args>(args)...);
-}
+//#ifndef __ANDROID__
+#if defined(__GNUC__)
+// GCC has an extension if __VA_ARGS__ are not supplied to 'remove' the precending comma
+#define LogInfo(f, ...)                                                                            \
+	OpenApoc::Log(OpenApoc::LogLevel::Info, OpenApoc::UString(LOGGER_PREFIX), f, ##__VA_ARGS__)
+#define LogWarning(f, ...)                                                                         \
+	OpenApoc::Log(OpenApoc::LogLevel::Warning, OpenApoc::UString(LOGGER_PREFIX), f, ##__VA_ARGS__)
+#define LogError(f, ...)                                                                           \
+	OpenApoc::Log(OpenApoc::LogLevel::Error, OpenApoc::UString(LOGGER_PREFIX), f, ##__VA_ARGS__)
+#else
+// At least msvc automatically removes the comma
+#define LogInfo(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Info, LOGGER_PREFIX, f, __VA_ARGS__)
+#define LogWarning(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Warning, LOGGER_PREFIX, f, __VA_ARGS__)
+#define LogError(f, ...) OpenApoc::Log(OpenApoc::LogLevel::Error, LOGGER_PREFIX, f, __VA_ARGS__)
+#endif
+//#else
+#if 0
+#define LogInfo(f, ...)
+#define LogWarning(f, ...)
+#define LogError(f, ...)
+#endif
+//#endif
