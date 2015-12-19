@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_VEQUIPSCREEN">
+    <style minwidth="640" minheight="480">
+      <position x="centre" y="centre"/>
+      <size width="640" height="480"/>
+      <graphic id="BACKGROUND">
+        <image>xcom3/UFODATA/VROADWAR.PCX</image>
+        <position x="0" y="0"/>
+        <size width="640" height="480"/>
+      </graphic>
+      <graphicbutton id="BUTTON_OK">
+        <position x="602" y="443"/>
+        <size width="35" height="34"/>
+        <backcolour r="0" g="0" b="0" a="0"/>
+        <image/>
+        <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
+      </graphicbutton>
+    </style>
+  </form>
+</openapoc>

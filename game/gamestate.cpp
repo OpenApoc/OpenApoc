@@ -54,13 +54,14 @@ GameState::GameState(Framework &fw, Rules &rules)
 			if (vehicleTypeIt == rules.getVehicleTypes().end())
 				vehicleTypeIt = rules.getVehicleTypes().begin();
 		}
+		auto owner = this->getOrganisation(vehicleTypeIt->second->manufacturer);
 
-		auto testVehicle = std::make_shared<Vehicle>(
-		    *vehicleTypeIt->second, this->getOrganisation((vehicleTypeIt->second->manufacturer)));
+		auto testVehicle = std::make_shared<Vehicle>(*vehicleTypeIt->second, owner);
 
 		testVehicle->equipDefaultEquipment(rules);
 
 		this->city->vehicles.push_back(testVehicle);
+		owner->vehicles.push_back(testVehicle);
 		auto b = this->city->buildings[bld_distribution(rng)];
 		b->landed_vehicles.insert(testVehicle);
 		testVehicle->building = b;

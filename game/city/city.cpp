@@ -332,6 +332,18 @@ void City::update(GameState &state, unsigned int ticks)
 		d->update(state, ticks);
 	}
 	Trace::end("City::update::doodads->update");
+
+	// Cleanup any now-dead vehicle references:
+	for (auto org : state.organisations)
+	{
+		auto &vList = org.second->vehicles;
+		vList.erase(std::remove_if(vList.begin(), vList.end(),
+		                           [](wp<Vehicle> ptr)
+		                           {
+			                           return !ptr.lock();
+			                       }),
+		            vList.end());
+	}
 }
 
 sp<Doodad> City::placeDoodad(const DoodadDef &def, Vec3<float> position)

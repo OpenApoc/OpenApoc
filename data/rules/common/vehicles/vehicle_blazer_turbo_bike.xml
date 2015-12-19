@@ -49,6 +49,8 @@
     <score>10</score>
     <equipment_screen>xcom3/ufodata/VBIKGRND.pcx</equipment_screen>
     <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:35:xcom3/ufodata/pal_01.dat</icon>
+    <equip_icon_big>PCK:xcom3/ufodata/bigveh.pck:xcom3/ufodata/bigveh.tab:2</equip_icon_big>
+    <equip_icon_small>PCK:xcom3/ufodata/smalveh.pck:xcom3/ufodata/smalveh.tab:2</equip_icon_small>
     <equipment_layout>
       <slot type="engine" align_x="centre" align_y="centre">
         <p0>

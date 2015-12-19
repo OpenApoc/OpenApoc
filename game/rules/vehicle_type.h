@@ -84,10 +84,19 @@ class VehicleType
 	int passengers;
 	float aggressiveness;
 	int score;
-	UString equipment_screen_path;
-	sp<Image> equipment_screen;
 	UString icon_path;
 	sp<Image> icon;
+
+	// The following (equip screen, equip icon big and small) are only required
+	// for vehicles able to be used by the player
+	UString equipment_screen_path;
+	sp<Image> equipment_screen;
+
+	UString equip_icon_big_path;
+	sp<Image> equip_icon_big;
+
+	UString equip_icon_small_path;
+	sp<Image> equip_icon_small;
 
 	// All vehicles (flying,ground,ufo) have strategy sprites
 	std::map<Direction, UString> strategy_sprite_paths;

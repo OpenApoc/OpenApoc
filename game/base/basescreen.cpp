@@ -3,6 +3,7 @@
 #include "game/base/basescreen.h"
 #include "game/base/base.h"
 #include "game/base/facility.h"
+#include "game/base/vequipscreen.h"
 #include "framework/framework.h"
 #include "framework/image.h"
 
@@ -126,6 +127,13 @@ void BaseScreen::EventOccurred(Event *e)
 		if (e->Data.Forms.RaisedBy->Name == "BUTTON_OK")
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
+			return;
+		}
+		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_BASE_EQUIPVEHICLE")
+		{
+			// FIXME: If you don't have any vehicles this button should do nothing
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = std::make_shared<VEquipScreen>(fw);
 			return;
 		}
 	}

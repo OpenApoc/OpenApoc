@@ -8,6 +8,7 @@ namespace OpenApoc
 {
 
 template <class T> using sp = std::shared_ptr<T>;
+template <class T> using wp = std::weak_ptr<T>;
 template <class T> using up = std::unique_ptr<T>;
 
 } // namespace OpenApoc

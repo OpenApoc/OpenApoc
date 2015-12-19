@@ -488,8 +488,29 @@ static bool ParseVehicleTypeNode(tinyxml2::XMLElement *node, VehicleType &vehicl
 		}
 		return true;
 	}
+	else if (node_name == "equip_icon_big")
+	{
+		if (!ReadElement(node, vehicle.equip_icon_big_path))
+		{
+			LogError("Failed to read big equip icon text \"%s\" on vehicle_type ID \"%s\"",
+			         node->GetText(), vehicle.id.c_str());
+			return false;
+		}
+		return true;
+	}
+	else if (node_name == "equip_icon_small")
+	{
+		if (!ReadElement(node, vehicle.equip_icon_small_path))
+		{
+			LogError("Failed to read small equip icon text \"%s\" on vehicle_type ID \"%s\"",
+			         node->GetText(), vehicle.id.c_str());
+			return false;
+		}
+		return true;
+	}
 	else if (node_name == "equipment_layout")
 	{
+		LogWarning("TODO: Vehicle equipment_layout");
 		return true;
 	}
 	else if (node_name == "initial_equipment")
@@ -660,6 +681,28 @@ bool VehicleType::isValid(Framework &fw, Rules &rules)
 		LogError("vehicle_type \"%s\" failed to load icon \"%s\"", id.c_str(),
 		         this->icon_path.c_str());
 		return false;
+	}
+
+	if (this->equip_icon_big_path != "")
+	{
+		this->equip_icon_big = fw.data->load_image(this->equip_icon_big_path);
+		if (!this->icon)
+		{
+			LogError("vehicle_type \"%s\" failed to load big equip icon \"%s\"", id.c_str(),
+			         this->equip_icon_big_path.c_str());
+			return false;
+		}
+	}
+
+	if (this->equip_icon_small_path != "")
+	{
+		this->equip_icon_small = fw.data->load_image(this->equip_icon_small_path);
+		if (!this->icon)
+		{
+			LogError("vehicle_type \"%s\" failed to load small equip icon \"%s\"", id.c_str(),
+			         this->equip_icon_small_path.c_str());
+			return false;
+		}
 	}
 
 	if (this->crashed_sprite_path != "")

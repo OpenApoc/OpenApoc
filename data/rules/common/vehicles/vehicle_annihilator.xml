@@ -94,6 +94,8 @@
     <score>550</score>
     <equipment_screen>xcom3/ufodata/VANNIHIL.pcx</equipment_screen>
     <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:28:xcom3/ufodata/pal_01.dat</icon>
+    <equip_icon_big>PCK:xcom3/ufodata/bigveh.pck:xcom3/ufodata/bigveh.tab:0</equip_icon_big>
+    <equip_icon_small>PCK:xcom3/ufodata/smalveh.pck:xcom3/ufodata/smalveh.tab:0</equip_icon_small>
     <equipment_layout>
       <slot type="general" align_x="left" align_y="top">
         <p0>
