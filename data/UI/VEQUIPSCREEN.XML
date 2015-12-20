@@ -5,7 +5,7 @@
       <position x="centre" y="centre"/>
       <size width="640" height="480"/>
       <graphic id="BACKGROUND">
-        <image>xcom3/UFODATA/VROADWAR.PCX</image>
+        <image>PLACEHOLDER.PNG</image>
         <position x="0" y="0"/>
         <size width="640" height="480"/>
       </graphic>
@@ -160,7 +160,7 @@
         <position x="20" y="70"/>
         <size width="64" height="64"/>
         <backcolour r="0" g="0" b="0" a="0"/>
-        <image>PCK:xcom3/UFODATA/SMALVEH.PCK:xcom3/UFODATA/SMALVEH.TAB:0</image>
+        <image>PLACEHOLDER.PNG</image>
         <imageposition>fit</imageposition>
       </graphic>
     </style>
