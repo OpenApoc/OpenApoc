@@ -71,6 +71,61 @@ void VEquipScreen::Render()
 {
 	fw.Stage_GetPrevious(this->shared_from_this())->Render();
 	fw.renderer->drawFilledRect({0, 0}, fw.Display_GetSize(), Colour{0, 0, 0, 128});
+	// FIXME: Move this to EventOccurred and only on change?
+	// if (mouseIsOverEquipment){do stuff} else
+	{
+		auto *nameLabel = form->FindControlTyped<Label>("NAME");
+		nameLabel->SetText(selected->name);
+
+		// FIXME: These stats would be great to have a generic (string?) referenced list
+		auto *label = form->FindControlTyped<Label>("LABEL_1");
+		label->SetText("Constitution");
+		label = form->FindControlTyped<Label>("VALUE_1");
+		label->SetText(UString::format("%d", (int)selected->getConstitution()));
+
+		label = form->FindControlTyped<Label>("LABEL_2");
+		label->SetText("Armor");
+		label = form->FindControlTyped<Label>("VALUE_2");
+		label->SetText(UString::format("%d", (int)selected->getArmor()));
+
+		// FIXME: This value doesn't seem to be the same as the %age shown in the ui?
+		label = form->FindControlTyped<Label>("LABEL_3");
+		label->SetText("Accuracy");
+		label = form->FindControlTyped<Label>("VALUE_3");
+		label->SetText(UString::format("%d", (int)selected->getAccuracy()));
+
+		label = form->FindControlTyped<Label>("LABEL_4");
+		label->SetText("Top Speed");
+		label = form->FindControlTyped<Label>("VALUE_4");
+		label->SetText(UString::format("%d", (int)selected->getTopSpeed()));
+
+		label = form->FindControlTyped<Label>("LABEL_5");
+		label->SetText("Acceleration");
+		label = form->FindControlTyped<Label>("VALUE_5");
+		label->SetText(UString::format("%d", (int)selected->getAcceleration()));
+
+		label = form->FindControlTyped<Label>("LABEL_6");
+		label->SetText("Weight");
+		label = form->FindControlTyped<Label>("VALUE_6");
+		label->SetText(UString::format("%d", (int)selected->getWeight()));
+
+		label = form->FindControlTyped<Label>("LABEL_7");
+		label->SetText("Fuel");
+		label = form->FindControlTyped<Label>("VALUE_7");
+		label->SetText(UString::format("%d", (int)selected->getFuel()));
+
+		label = form->FindControlTyped<Label>("LABEL_8");
+		label->SetText("Passengers");
+		label = form->FindControlTyped<Label>("VALUE_8");
+		label->SetText(UString::format("%d/%d", (int)selected->getPassengers(),
+		                               (int)selected->getMaxPassengers()));
+
+		label = form->FindControlTyped<Label>("LABEL_9");
+		label->SetText("Cargo");
+		label = form->FindControlTyped<Label>("VALUE_9");
+		label->SetText(
+		    UString::format("%d/%d", (int)selected->getCargo(), (int)selected->getMaxCargo()));
+	}
 	form->Render();
 	fw.gamecore->MouseCursor->Render();
 }
@@ -84,6 +139,7 @@ void VEquipScreen::setSelectedVehicle(sp<Vehicle> vehicle)
 		LogError("Trying to set invalid selected vehicle");
 		return;
 	}
+	this->selected = vehicle;
 	auto backgroundImage = vehicle->type.equipment_screen;
 	if (!backgroundImage)
 	{

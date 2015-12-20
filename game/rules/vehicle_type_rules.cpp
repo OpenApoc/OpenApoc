@@ -614,7 +614,7 @@ bool RulesLoader::ParseVehicleType(Framework &fw, Rules &rules, tinyxml2::XMLEle
 	return true;
 }
 
-VehicleType::VehicleType(Type type, const UString &id) : type(type), id(id) {}
+VehicleType::VehicleType(Type type, const UString &id) : numCreated(0), type(type), id(id) {}
 
 static std::map<VehicleType::Direction, Vec3<float>> direction_vectors = {
     {VehicleType::Direction::N, {0, -1, 0}}, {VehicleType::Direction::NE, {1, -1, 0}},

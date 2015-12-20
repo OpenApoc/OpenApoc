@@ -113,7 +113,17 @@ VehicleMover::VehicleMover(Vehicle &v) : vehicle(v) {}
 
 VehicleMover::~VehicleMover() {}
 
-Vehicle::Vehicle(const VehicleType &type, sp<Organisation> owner) : type(type), owner(owner) {}
+Vehicle::Vehicle(const VehicleType &type, sp<Organisation> owner, UString name)
+    : type(type), owner(owner), name(name)
+{
+	if (this->name == "")
+	{
+		this->name = type.name;
+		this->name += " ";
+		this->name += Strings::FromInteger(type.numCreated++);
+	}
+	LogInfo("Created vehicle \"%s\"", this->name.c_str());
+}
 
 Vehicle::~Vehicle() {}
 
@@ -288,6 +298,133 @@ float Vehicle::getSpeed() const
 		LogError("Vehicle with no engine");
 	}
 	return speed;
+}
+
+int Vehicle::getConstitution() const
+{
+	// FIXME: Does shield get added here?
+	return this->type.health;
+}
+
+int Vehicle::getArmor() const
+{
+	int armor = 0;
+	// FIXME: Check this the sum of all directions
+	for (auto &armorDirection : this->type.armour)
+	{
+		armor += armorDirection.second;
+	}
+	return armor;
+}
+
+int Vehicle::getAccuracy() const
+{
+	int accuracy = 0;
+
+	for (auto &e : this->equipment)
+	{
+		if (e->type.type != VEquipmentType::Type::General)
+			continue;
+		auto equipment = std::dynamic_pointer_cast<VEquipment>(e);
+		auto &equipmentType = static_cast<const VGeneralEquipmentType &>(equipment->type);
+		accuracy += equipmentType.accuracy_modifier;
+	}
+	return accuracy;
+}
+
+// FIXME: Check int/float speed conversions
+int Vehicle::getTopSpeed() const { return this->getSpeed(); }
+
+int Vehicle::getAcceleration() const
+{
+	// FIXME: This is somehow related to enginer 'power' and weight
+	int weight = this->getWeight();
+	int acceleration = this->type.acceleration;
+	int power = 0;
+	for (auto &e : this->equipment)
+	{
+		if (e->type.type != VEquipmentType::Type::Engine)
+			continue;
+		auto engine = std::dynamic_pointer_cast<VEngine>(e);
+		auto &engineType = static_cast<const VEngineType &>(engine->type);
+		power += engineType.power;
+	}
+	acceleration += power / weight;
+
+	if (acceleration == 0)
+	{
+		LogError("Vehicle with no engine");
+	}
+	return acceleration;
+}
+
+int Vehicle::getWeight() const
+{
+	int weight = this->type.weight;
+	for (auto &e : this->equipment)
+	{
+		weight += e->type.weight;
+	}
+	if (weight == 0)
+	{
+		LogError("Vehicle with no weight");
+	}
+	return weight;
+}
+
+int Vehicle::getFuel() const
+{
+	// Zero fuel is normal on some vehicles (IE ufos/'dimension-capable' xcom)
+	int fuel = 0;
+
+	for (auto &e : this->equipment)
+	{
+		if (e->type.type != VEquipmentType::Type::Engine)
+			continue;
+		fuel += e->type.max_ammo;
+	}
+
+	return fuel;
+}
+
+int Vehicle::getMaxPassengers() const
+{
+	int passengers = this->type.passengers;
+
+	for (auto &e : this->equipment)
+	{
+		if (e->type.type != VEquipmentType::Type::General)
+			continue;
+		auto equipment = std::dynamic_pointer_cast<VEquipment>(e);
+		auto &equipmentType = static_cast<const VGeneralEquipmentType &>(equipment->type);
+		passengers += equipmentType.passengers;
+	}
+	return passengers;
+}
+
+int Vehicle::getPassengers() const
+{ // FIXME: Track passengers
+	return 0;
+}
+
+int Vehicle::getMaxCargo() const
+{
+	int cargo = 0;
+
+	for (auto &e : this->equipment)
+	{
+		if (e->type.type != VEquipmentType::Type::General)
+			continue;
+		auto equipment = std::dynamic_pointer_cast<VEquipment>(e);
+		auto &equipmentType = static_cast<const VGeneralEquipmentType &>(equipment->type);
+		cargo += equipmentType.cargo_space;
+	}
+	return cargo;
+}
+
+int Vehicle::getCargo() const
+{ // FIXME: Track cargo
+	return 0;
 }
 
 void Vehicle::equipDefaultEquipment(Rules &rules)

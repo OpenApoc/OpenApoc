@@ -37,6 +37,8 @@ class UString
 	UString(const UString &other);
 	UString &operator=(const UString &other);
 
+	static UString format(const UString &format, ...);
+
 	std::string str() const;
 	std::wstring wstr() const;
 

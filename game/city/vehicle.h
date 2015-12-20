@@ -34,12 +34,15 @@ class Vehicle : public std::enable_shared_from_this<Vehicle>
 {
   public:
 	virtual ~Vehicle();
-	Vehicle(const VehicleType &type, sp<Organisation> owner);
+	// An empty name will generate a name from type.name and type.numCreated
+	Vehicle(const VehicleType &type, sp<Organisation> owner, UString name = "");
 
 	void equipDefaultEquipment(Rules &rules);
 
 	const VehicleType &type;
 	sp<Organisation> owner;
+
+	UString name;
 
 	sp<TileObjectVehicle> tileObject;
 	sp<TileObjectShadow> shadowObject;
@@ -60,6 +63,18 @@ class Vehicle : public std::enable_shared_from_this<Vehicle>
 
 	const Vec3<float> &getPosition() const { return this->position; }
 	const Vec3<float> &getDirection() const;
+
+	int getConstitution() const;
+	int getArmor() const;
+	int getAccuracy() const;
+	int getTopSpeed() const;
+	int getAcceleration() const;
+	int getWeight() const;
+	int getFuel() const;
+	int getMaxPassengers() const;
+	int getPassengers() const;
+	int getMaxCargo() const;
+	int getCargo() const;
 	float getSpeed() const;
 
 	void setPosition(const Vec3<float> &pos);

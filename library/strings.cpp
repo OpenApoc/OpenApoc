@@ -1,4 +1,6 @@
 #include "library/strings.h"
+#include "framework/logger.h"
+#include "library/sp.h"
 
 #include <unicode/unistr.h>
 #include <unicode/umachine.h>
@@ -47,6 +49,27 @@ UString::UString(UString &&other) { this->pimpl = std::move(other.pimpl); }
 UString::UString(UniChar uc) : pimpl(new UString_impl(""))
 {
 	pimpl->setTo(static_cast<UChar32>(uc));
+}
+
+UString UString::format(const UString &fmt, ...)
+{
+	// FIXME: This will break on systems where the c_str() and vsnprintf const char* formats are
+	// different
+	const char *u8Fmt = fmt.c_str();
+	va_list arglist;
+	va_start(arglist, fmt);
+
+	// vsnprintf returns the number it would have written /excluding/ the '\0'
+	int size = vsnprintf(nullptr, 0, u8Fmt, arglist) + 1;
+	va_end(arglist);
+
+	up<char[]> str(new char[size + 1]);
+
+	va_start(arglist, fmt);
+	vsnprintf(str.get(), size, u8Fmt, arglist);
+	va_end(arglist);
+
+	return UString(str.get());
 }
 
 std::string UString::str() const
