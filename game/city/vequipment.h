@@ -6,6 +6,7 @@ namespace OpenApoc
 {
 
 class VEquipmentType;
+class VGeneralEquipmentType;
 class VWeaponType;
 class VEngineType;
 class Vehicle;
@@ -18,8 +19,17 @@ class VEquipment
 	const VEquipmentType &type;
 	virtual ~VEquipment() = default;
 
+	Vec2<int> equippedPosition;
+
   protected:
 	VEquipment(const VEquipmentType &type);
+};
+
+class VGeneralEquipment : public VEquipment
+{
+  public:
+	VGeneralEquipment(const VGeneralEquipmentType &type);
+	~VGeneralEquipment() override = default;
 };
 
 class VEngine : public VEquipment

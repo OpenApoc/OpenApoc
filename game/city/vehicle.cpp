@@ -442,6 +442,7 @@ void Vehicle::equipDefaultEquipment(Rules &rules)
 			{
 				auto engine = std::make_shared<VEngine>(static_cast<const VEngineType &>(etype));
 				this->equipment.emplace_back(engine);
+				engine->equippedPosition = pos;
 				LogInfo("Equipped \"%s\" with engine \"%s\"", this->type.name.c_str(),
 				        ename.c_str());
 				break;
@@ -451,15 +452,19 @@ void Vehicle::equipDefaultEquipment(Rules &rules)
 				auto &wtype = static_cast<const VWeaponType &>(etype);
 				auto weapon = std::make_shared<VWeapon>(wtype, shared_from_this(), wtype.max_ammo);
 				this->equipment.emplace_back(weapon);
+				weapon->equippedPosition = pos;
 				LogInfo("Equipped \"%s\" with weapon \"%s\"", this->type.name.c_str(),
 				        ename.c_str());
 				break;
 			}
 			case VEquipmentType::Type::General:
 			{
-				// FIXME: Implement 'general' equipment
+				auto &gtype = static_cast<const VGeneralEquipmentType &>(etype);
+				auto equipment = std::make_shared<VGeneralEquipment>(gtype);
 				LogInfo("Equipped \"%s\" with general equipment \"%s\"", this->type.name.c_str(),
 				        ename.c_str());
+				equipment->equippedPosition = pos;
+				this->equipment.emplace_back(equipment);
 				break;
 			}
 			default:

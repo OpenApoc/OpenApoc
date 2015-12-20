@@ -1,4 +1,5 @@
 #include "game/base/vequipscreen.h"
+#include "game/city/vequipment.h"
 #include "framework/framework.h"
 #include "game/city/city.h"
 #include "game/city/vehicle.h"
@@ -49,6 +50,47 @@ void VEquipScreen::EventOccurred(Event *e)
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
+		else if (e->Data.Keyboard.KeyCode == SDLK_RIGHT)
+		{
+			auto &vehicleList = fw.state->getPlayer()->vehicles;
+			// FIXME: Debug hack to cycle through vehicles
+			auto currentPos = vehicleList.begin();
+			while (currentPos != vehicleList.end())
+			{
+				auto currentPtr = currentPos->lock();
+				if (currentPtr == this->selected)
+					break;
+				currentPos++;
+			}
+			if (currentPos == vehicleList.end())
+			{
+				LogError("Failed to find current vehicle in list");
+			}
+
+			currentPos++;
+
+			while (currentPos != vehicleList.end())
+			{
+				auto newPtr = currentPos->lock();
+				if (newPtr)
+				{
+					this->setSelectedVehicle(newPtr);
+					return;
+				}
+			}
+			// Looping back around
+			currentPos = vehicleList.begin();
+			while (currentPos != vehicleList.end())
+			{
+				auto newPtr = currentPos->lock();
+				if (newPtr)
+				{
+					this->setSelectedVehicle(newPtr);
+					return;
+				}
+			}
+			LogError("No vehicle found in list to progress to");
+		}
 	}
 	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick)
 	{
@@ -69,6 +111,7 @@ void VEquipScreen::Update(StageCmd *const cmd)
 
 void VEquipScreen::Render()
 {
+	static const Vec2<int> EQUIP_GRID_SIZE{16, 16};
 	fw.Stage_GetPrevious(this->shared_from_this())->Render();
 	fw.renderer->drawFilledRect({0, 0}, fw.Display_GetSize(), Colour{0, 0, 0, 128});
 	// FIXME: Move this to EventOccurred and only on change?
@@ -126,7 +169,21 @@ void VEquipScreen::Render()
 		label->SetText(
 		    UString::format("%d/%d", (int)selected->getCargo(), (int)selected->getMaxCargo()));
 	}
+	// Now draw the form, the actual equipment is then drawn on top
 	form->Render();
+
+	auto *paperDollControl = form->FindControlTyped<Graphic>("PAPER_DOLL");
+	Vec2<int> equipOffset = paperDollControl->Location + form->Location;
+	// Draw the equipment grid
+	{
+	}
+	// Draw the equipped stuff
+	for (auto &e : selected->equipment)
+	{
+		auto pos = e->equippedPosition * EQUIP_GRID_SIZE;
+		pos += equipOffset;
+		fw.renderer->draw(e->type.equipscreen_sprite, pos);
+	}
 	fw.gamecore->MouseCursor->Render();
 }
 
@@ -139,6 +196,7 @@ void VEquipScreen::setSelectedVehicle(sp<Vehicle> vehicle)
 		LogError("Trying to set invalid selected vehicle");
 		return;
 	}
+	LogInfo("Selecting vehicle \"%s\"", vehicle->name.c_str());
 	this->selected = vehicle;
 	auto backgroundImage = vehicle->type.equipment_screen;
 	if (!backgroundImage)

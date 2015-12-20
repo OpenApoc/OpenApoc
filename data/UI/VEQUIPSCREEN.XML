@@ -16,6 +16,13 @@
         <image/>
         <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
       </graphicbutton>
+      <graphic id="PAPER_DOLL">
+        <position x="192" y="52"/>
+        <size width="256" height="256"/>
+        <backcolour r="0" g="0" b="0" a="0"/>
+        <imageposition>tile</imageposition>
+        <image/>
+      </graphic>
       <label id="NAME" text="VEHICLE NAME GOES HERE">
         <backcolour r="0" g="0" b="0" a="0"/>
         <position x="10" y="148"/>

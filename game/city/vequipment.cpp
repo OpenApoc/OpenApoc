@@ -8,4 +8,6 @@ VEquipment::VEquipment(const VEquipmentType &type) : type(type) {}
 
 VEngine::VEngine(const VEngineType &type) : VEquipment(type) {}
 
+VGeneralEquipment::VGeneralEquipment(const VGeneralEquipmentType &type) : VEquipment(type) {}
+
 } // namespace OpenApoc
