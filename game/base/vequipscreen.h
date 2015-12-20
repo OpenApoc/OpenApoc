@@ -9,6 +9,7 @@ namespace OpenApoc
 
 class Vehicle;
 class Form;
+class Palette;
 
 class VEquipScreen : public Stage
 {
@@ -17,6 +18,7 @@ class VEquipScreen : public Stage
 	up<Form> form;
 	sp<Vehicle> selected;
 	VEquipmentType::Type selectionType;
+	sp<Palette> pal;
 
   public:
 	VEquipScreen(Framework &fw);

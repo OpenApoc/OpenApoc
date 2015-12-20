@@ -156,6 +156,13 @@
         <alignment horizontal="right" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
+      <graphic id="SELECTED_ICON">
+        <position x="20" y="70"/>
+        <size width="64" height="64"/>
+        <backcolour r="0" g="0" b="0" a="0"/>
+        <image>PCK:xcom3/UFODATA/SMALVEH.PCK:xcom3/UFODATA/SMALVEH.TAB:0</image>
+        <imageposition>fit</imageposition>
+      </graphic>
     </style>
   </form>
 </openapoc>

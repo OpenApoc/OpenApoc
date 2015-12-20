@@ -9,7 +9,8 @@ namespace OpenApoc
 
 VEquipScreen::VEquipScreen(Framework &fw)
     : Stage(fw), form(fw.gamecore->GetForm("FORM_VEQUIPSCREEN")), selected(nullptr),
-      selectionType(VEquipmentType::Type::Weapon)
+      selectionType(VEquipmentType::Type::Weapon), pal(fw.data->load_palette("xcom3/UFODATA/VROADWAR.PCX"))
+
 {
 	sp<Vehicle> vehicle;
 	for (auto &vehiclePtr : fw.state->getPlayer()->vehicles)
@@ -112,7 +113,11 @@ void VEquipScreen::Update(StageCmd *const cmd)
 void VEquipScreen::Render()
 {
 	static const Vec2<int> EQUIP_GRID_SIZE{16, 16};
+
 	fw.Stage_GetPrevious(this->shared_from_this())->Render();
+
+	fw.renderer->setPalette(this->pal);
+
 	fw.renderer->drawFilledRect({0, 0}, fw.Display_GetSize(), Colour{0, 0, 0, 128});
 	// FIXME: Move this to EventOccurred and only on change?
 	// if (mouseIsOverEquipment){do stuff} else
@@ -168,6 +173,9 @@ void VEquipScreen::Render()
 		label = form->FindControlTyped<Label>("VALUE_9");
 		label->SetText(
 		    UString::format("%d/%d", (int)selected->getCargo(), (int)selected->getMaxCargo()));
+
+		auto *iconGraphic = form->FindControlTyped<Graphic>("SELECTED_ICON");
+		iconGraphic->SetImage(selected->type.equip_icon_small);
 	}
 	// Now draw the form, the actual equipment is then drawn on top
 	form->Render();
