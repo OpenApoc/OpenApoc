@@ -6,10 +6,13 @@
 
 namespace OpenApoc
 {
+const Vec2<int> VEquipScreen::EQUIP_GRID_SLOT_SIZE{16, 16};
+const Vec2<int> VEquipScreen::EQUIP_GRID_SLOTS{16, 16};
 
 VEquipScreen::VEquipScreen(Framework &fw)
     : Stage(fw), form(fw.gamecore->GetForm("FORM_VEQUIPSCREEN")), selected(nullptr),
-      selectionType(VEquipmentType::Type::Weapon), pal(fw.data->load_palette("xcom3/UFODATA/VROADWAR.PCX"))
+      selectionType(VEquipmentType::Type::Weapon),
+      pal(fw.data->load_palette("xcom3/UFODATA/VROADWAR.PCX"))
 
 {
 	sp<Vehicle> vehicle;
@@ -101,6 +104,39 @@ void VEquipScreen::EventOccurred(Event *e)
 			return;
 		}
 	}
+
+	// Check if we've moused over equipment/vehicle so we can show the stats.
+	if (e->Type == EVENT_MOUSE_MOVE && !this->draggedEquipment)
+	{
+		auto *paperDollControl = form->FindControlTyped<Graphic>("PAPER_DOLL");
+
+		auto equipOffset = paperDollControl->Location + form->Location;
+		auto equipEndPoint = equipOffset + (EQUIP_GRID_SLOT_SIZE * EQUIP_GRID_SLOTS);
+		// Wipe any previously-highlighted stuff
+		this->highlightedVehicle = nullptr;
+		this->highlightedEquipment = nullptr;
+		Vec2<int> mousePos{e->Data.Mouse.X, e->Data.Mouse.Y};
+		if (mousePos.x >= equipOffset.x && mousePos.x < equipEndPoint.x &&
+		    mousePos.y >= equipOffset.y && mousePos.y < equipEndPoint.y)
+		{
+			// We're inside the equipment grid, so check if we intersect with any equipment
+			Vec2<int> slotPosition = (mousePos - equipOffset) / EQUIP_GRID_SLOT_SIZE;
+
+			for (auto &e : this->selected->equipment)
+			{
+				Rect<int> r{e->equippedPosition, e->equippedPosition + e->type.equipscreen_size};
+				if (r.within(slotPosition))
+				{
+					this->highlightedEquipment = e;
+				}
+			}
+		}
+		// Check if we're over any equipment in the paper doll
+
+		// Check if we're over any equipment in the list at the bottom
+
+		// Check if we're over any vehicles in the side bar
+	}
 }
 
 void VEquipScreen::Update(StageCmd *const cmd)
@@ -112,70 +148,194 @@ void VEquipScreen::Update(StageCmd *const cmd)
 
 void VEquipScreen::Render()
 {
-	static const Vec2<int> EQUIP_GRID_SIZE{16, 16};
 
 	fw.Stage_GetPrevious(this->shared_from_this())->Render();
 
 	fw.renderer->setPalette(this->pal);
 
 	fw.renderer->drawFilledRect({0, 0}, fw.Display_GetSize(), Colour{0, 0, 0, 128});
-	// FIXME: Move this to EventOccurred and only on change?
-	// if (mouseIsOverEquipment){do stuff} else
+
+	// The labels/values in the stats column are used for lots of different things, so keep them
+	// around clear them and keep them around in a vector so we don't have 5 copies of the same
+	// "reset unused entries" code around
+	std::vector<Label *> statsLabels;
+	std::vector<Label *> statsValues;
+	for (int i = 0; i < 9; i++)
 	{
-		auto *nameLabel = form->FindControlTyped<Label>("NAME");
-		nameLabel->SetText(selected->name);
+		auto labelName = UString::format("LABEL_%d", i + 1);
+		auto *label = form->FindControlTyped<Label>(labelName);
+		if (!label)
+		{
+			LogError("Failed to find UI control matching \"%s\"", labelName.c_str());
+		}
+		label->SetText("");
+		statsLabels.push_back(label);
+
+		auto valueName = UString::format("VALUE_%d", i + 1);
+		auto *value = form->FindControlTyped<Label>(valueName);
+		if (!value)
+		{
+			LogError("Failed to find UI control matching \"%s\"", valueName.c_str());
+		}
+		value->SetText("");
+		statsValues.push_back(value);
+	}
+	auto *nameLabel = form->FindControlTyped<Label>("NAME");
+	auto *iconGraphic = form->FindControlTyped<Graphic>("SELECTED_ICON");
+	// If no vehicle/equipment is highlighted (mouse-over), or if we're dragging equipment around
+	// show the currently selected vehicle stats.
+	//
+	// Otherwise we show the stats of the vehicle/equipment highlighted.
+
+	if (highlightedEquipment)
+	{
+		iconGraphic->SetImage(highlightedEquipment->type.equipscreen_sprite);
+		nameLabel->SetText(highlightedEquipment->type.name);
+		int statsCount = 0;
+
+		// All equipment has a weight
+		statsLabels[statsCount]->SetText("Weight");
+		statsValues[statsCount]->SetText(
+		    UString::format("%d", (int)highlightedEquipment->type.weight));
+		statsCount++;
+
+		// Draw equipment stats
+		switch (highlightedEquipment->type.type)
+		{
+			case VEquipmentType::Type::Engine:
+			{
+				auto &engineType = static_cast<const VEngineType &>(highlightedEquipment->type);
+				statsLabels[statsCount]->SetText("Top Speed");
+				statsValues[statsCount]->SetText(UString::format("%d", (int)engineType.top_speed));
+				statsCount++;
+				statsLabels[statsCount]->SetText("Power");
+				statsValues[statsCount]->SetText(UString::format("%d", (int)engineType.power));
+				break;
+			}
+			case VEquipmentType::Type::Weapon:
+			{
+				auto &weaponType = static_cast<const VWeaponType &>(highlightedEquipment->type);
+				statsLabels[statsCount]->SetText("Damage");
+				statsValues[statsCount]->SetText(UString::format("%d", (int)weaponType.damage));
+				statsCount++;
+				statsLabels[statsCount]->SetText("Range");
+				statsValues[statsCount]->SetText(UString::format("%d", (int)weaponType.range));
+				statsCount++;
+				statsLabels[statsCount]->SetText("Accuracy");
+				statsValues[statsCount]->SetText(UString::format("%d", (int)weaponType.accuracy));
+				statsCount++;
+
+				// Only show rounds if non-zero (IE not infinite ammo)
+				if (highlightedEquipment->type.max_ammo)
+				{
+					statsLabels[statsCount]->SetText("Rounds");
+					statsValues[statsCount]->SetText(
+					    UString::format("%d", (int)highlightedEquipment->type.max_ammo));
+					statsCount++;
+				}
+				break;
+			}
+			case VEquipmentType::Type::General:
+			{
+				auto &generalType =
+				    static_cast<const VGeneralEquipmentType &>(highlightedEquipment->type);
+				if (generalType.accuracy_modifier)
+				{
+					statsLabels[statsCount]->SetText("Accuracy");
+					statsValues[statsCount]->SetText(
+					    UString::format("%d", (int)generalType.accuracy_modifier));
+					statsCount++;
+				}
+				if (generalType.cargo_space)
+				{
+					statsLabels[statsCount]->SetText("Cargo");
+					statsValues[statsCount]->SetText(
+					    UString::format("%d", (int)generalType.cargo_space));
+					statsCount++;
+				}
+				if (generalType.passengers)
+				{
+					statsLabels[statsCount]->SetText("Passengers");
+					statsValues[statsCount]->SetText(
+					    UString::format("%d", (int)generalType.passengers));
+					statsCount++;
+				}
+				if (generalType.alien_space)
+				{
+					statsLabels[statsCount]->SetText("Aliens Held");
+					statsValues[statsCount]->SetText(
+					    UString::format("%d", (int)generalType.alien_space));
+					statsCount++;
+				}
+				if (generalType.missile_jamming)
+				{
+					statsLabels[statsCount]->SetText("Jamming");
+					statsValues[statsCount]->SetText(
+					    UString::format("%d", (int)generalType.missile_jamming));
+					statsCount++;
+				}
+				if (generalType.shielding)
+				{
+					statsLabels[statsCount]->SetText("Shielding");
+					statsValues[statsCount]->SetText(
+					    UString::format("%d", (int)generalType.shielding));
+					statsCount++;
+				}
+				if (generalType.cloaking)
+				{
+					statsLabels[statsCount]->SetText("Cloaks Craft");
+					statsCount++;
+				}
+				if (generalType.teleporting)
+				{
+					statsLabels[statsCount]->SetText("Teleports");
+					statsCount++;
+				}
+
+				break;
+			}
+		}
+	}
+	else
+	{
+		auto vehicle = this->highlightedVehicle;
+		if (!vehicle)
+			vehicle = this->selected;
+
+		nameLabel->SetText(vehicle->name);
 
 		// FIXME: These stats would be great to have a generic (string?) referenced list
-		auto *label = form->FindControlTyped<Label>("LABEL_1");
-		label->SetText("Constitution");
-		label = form->FindControlTyped<Label>("VALUE_1");
-		label->SetText(UString::format("%d", (int)selected->getConstitution()));
+		statsLabels[0]->SetText("Constitution");
+		statsValues[0]->SetText(UString::format("%d", (int)vehicle->getConstitution()));
 
-		label = form->FindControlTyped<Label>("LABEL_2");
-		label->SetText("Armor");
-		label = form->FindControlTyped<Label>("VALUE_2");
-		label->SetText(UString::format("%d", (int)selected->getArmor()));
+		statsLabels[1]->SetText("Armor");
+		statsValues[1]->SetText(UString::format("%d", (int)vehicle->getArmor()));
 
 		// FIXME: This value doesn't seem to be the same as the %age shown in the ui?
-		label = form->FindControlTyped<Label>("LABEL_3");
-		label->SetText("Accuracy");
-		label = form->FindControlTyped<Label>("VALUE_3");
-		label->SetText(UString::format("%d", (int)selected->getAccuracy()));
+		statsLabels[2]->SetText("Accuracy");
+		statsValues[2]->SetText(UString::format("%d", (int)vehicle->getAccuracy()));
 
-		label = form->FindControlTyped<Label>("LABEL_4");
-		label->SetText("Top Speed");
-		label = form->FindControlTyped<Label>("VALUE_4");
-		label->SetText(UString::format("%d", (int)selected->getTopSpeed()));
+		statsLabels[3]->SetText("Top Speed");
+		statsValues[3]->SetText(UString::format("%d", (int)vehicle->getTopSpeed()));
 
-		label = form->FindControlTyped<Label>("LABEL_5");
-		label->SetText("Acceleration");
-		label = form->FindControlTyped<Label>("VALUE_5");
-		label->SetText(UString::format("%d", (int)selected->getAcceleration()));
+		statsLabels[4]->SetText("Acceleration");
+		statsValues[4]->SetText(UString::format("%d", (int)vehicle->getAcceleration()));
 
-		label = form->FindControlTyped<Label>("LABEL_6");
-		label->SetText("Weight");
-		label = form->FindControlTyped<Label>("VALUE_6");
-		label->SetText(UString::format("%d", (int)selected->getWeight()));
+		statsLabels[5]->SetText("Weight");
+		statsValues[5]->SetText(UString::format("%d", (int)vehicle->getWeight()));
 
-		label = form->FindControlTyped<Label>("LABEL_7");
-		label->SetText("Fuel");
-		label = form->FindControlTyped<Label>("VALUE_7");
-		label->SetText(UString::format("%d", (int)selected->getFuel()));
+		statsLabels[6]->SetText("Fuel");
+		statsValues[6]->SetText(UString::format("%d", (int)vehicle->getFuel()));
 
-		label = form->FindControlTyped<Label>("LABEL_8");
-		label->SetText("Passengers");
-		label = form->FindControlTyped<Label>("VALUE_8");
-		label->SetText(UString::format("%d/%d", (int)selected->getPassengers(),
-		                               (int)selected->getMaxPassengers()));
+		statsLabels[7]->SetText("Passengers");
+		statsValues[7]->SetText(UString::format("%d/%d", (int)vehicle->getPassengers(),
+		                                        (int)vehicle->getMaxPassengers()));
 
-		label = form->FindControlTyped<Label>("LABEL_9");
-		label->SetText("Cargo");
-		label = form->FindControlTyped<Label>("VALUE_9");
-		label->SetText(
-		    UString::format("%d/%d", (int)selected->getCargo(), (int)selected->getMaxCargo()));
+		statsLabels[8]->SetText("Cargo");
+		statsValues[8]->SetText(
+		    UString::format("%d/%d", (int)vehicle->getCargo(), (int)vehicle->getMaxCargo()));
 
-		auto *iconGraphic = form->FindControlTyped<Graphic>("SELECTED_ICON");
-		iconGraphic->SetImage(selected->type.equip_icon_small);
+		iconGraphic->SetImage(vehicle->type.equip_icon_small);
 	}
 	// Now draw the form, the actual equipment is then drawn on top
 	form->Render();
@@ -188,9 +348,18 @@ void VEquipScreen::Render()
 	// Draw the equipped stuff
 	for (auto &e : selected->equipment)
 	{
-		auto pos = e->equippedPosition * EQUIP_GRID_SIZE;
+		auto pos = e->equippedPosition;
+		if (pos.x >= EQUIP_GRID_SLOTS.x || pos.y >= EQUIP_GRID_SLOTS.y)
+		{
+			LogError("Equipment at {%d,%d} outside grid", pos.x, pos.y);
+		}
+		pos *= EQUIP_GRID_SLOT_SIZE;
 		pos += equipOffset;
 		fw.renderer->draw(e->type.equipscreen_sprite, pos);
+	}
+	if (this->draggedEquipment)
+	{
+		// Draw equipment we're currently dragging (snapping to the grid if possible)
 	}
 	fw.gamecore->MouseCursor->Render();
 }

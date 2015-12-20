@@ -10,6 +10,7 @@ namespace OpenApoc
 class Vehicle;
 class Form;
 class Palette;
+class VEquipment;
 
 class VEquipScreen : public Stage
 {
@@ -19,6 +20,14 @@ class VEquipScreen : public Stage
 	sp<Vehicle> selected;
 	VEquipmentType::Type selectionType;
 	sp<Palette> pal;
+
+	sp<Vehicle> highlightedVehicle;
+	sp<VEquipment> highlightedEquipment;
+
+	sp<VEquipment> draggedEquipment;
+
+	static const Vec2<int> EQUIP_GRID_SLOT_SIZE;
+	static const Vec2<int> EQUIP_GRID_SLOTS;
 
   public:
 	VEquipScreen(Framework &fw);
