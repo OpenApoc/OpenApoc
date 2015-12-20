@@ -9,6 +9,7 @@
 #include "game/general/ingameoptions.h"
 #include "game/city/vehiclemission.h"
 #include "game/city/vehicle.h"
+#include "game/city/building.h"
 #include "game/base/basescreen.h"
 #include "game/tileview/tileobject_vehicle.h"
 #include "game/city/scenery.h"
@@ -38,6 +39,20 @@ CityView::CityView(Framework &fw)
 		this->uiTabs.push_back(f);
 	}
 	this->activeTab = this->uiTabs[0];
+
+	for (auto &base : fw.state->playerBases)
+	{
+		auto bld = base->bld.lock();
+		if (!bld)
+		{
+			LogError("Base with invalid bld");
+		}
+		auto bldBounds = bld->def.getBounds();
+
+		Vec2<int> buildingCenter = (bldBounds.p0 + bldBounds.p1) / 2;
+		this->setScreenCenterTile(buildingCenter);
+		break;
+	}
 }
 
 CityView::~CityView() {}
