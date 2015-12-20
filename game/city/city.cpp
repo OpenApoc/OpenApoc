@@ -248,6 +248,8 @@ void City::update(GameState &state, unsigned int ticks)
 				auto w = std::dynamic_pointer_cast<VWeapon>(e);
 				w->reload(std::numeric_limits<int>::max());
 			}
+			if (v->owner == state.getPlayer())
+				continue;
 			if (v->missions.empty())
 			{
 				auto &dest = this->buildings[bld_distribution(state.rng)];

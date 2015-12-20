@@ -349,9 +349,9 @@ int Vehicle::getAcceleration() const
 		auto &engineType = static_cast<const VEngineType &>(engine->type);
 		power += engineType.power;
 	}
-	acceleration += power / weight;
+	acceleration += std::max(1, power / weight);
 
-	if (acceleration == 0)
+	if (power == 0 && acceleration == 0)
 	{
 		LogError("Vehicle with no engine");
 	}

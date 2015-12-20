@@ -55,6 +55,11 @@ GameState::GameState(Framework &fw, Rules &rules)
 				vehicleTypeIt = rules.getVehicleTypes().begin();
 		}
 		auto owner = this->getOrganisation(vehicleTypeIt->second->manufacturer);
+		// We add player vehicles a bit later
+		if (owner == this->getPlayer())
+		{
+			continue;
+		}
 
 		auto testVehicle = std::make_shared<Vehicle>(*vehicleTypeIt->second, owner);
 
@@ -79,6 +84,25 @@ GameState::GameState(Framework &fw, Rules &rules)
 	base->name = "Test Base";
 	base->bld.lock()->owner = this->getPlayer();
 	base->startingBase(fw, rng);
+
+	// Give the player some extra vehicles to test the equipment stuff (as the x-com built vehicles
+	// don't come with much)
+
+	for (auto &it : rules.getVehicleTypes())
+	{
+		auto &vType = *it.second;
+		// Only give stuff that can be equipped
+		if (!vType.equipment_screen)
+			continue;
+		auto owner = this->getPlayer();
+		auto testVehicle = std::make_shared<Vehicle>(vType, owner);
+		testVehicle->equipDefaultEquipment(rules);
+		this->city->vehicles.push_back(testVehicle);
+		owner->vehicles.push_back(testVehicle);
+		auto b = base->bld.lock();
+		b->landed_vehicles.insert(testVehicle);
+		testVehicle->building = b;
+	}
 }
 
 // Just a handy shortcut since it's shown on every single screen
