@@ -288,6 +288,9 @@
     <ClCompile Include="framework\imageloader\pcx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\base\vequipscreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -594,6 +597,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="framework\imageloader\lodepng.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\base\vequipscreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

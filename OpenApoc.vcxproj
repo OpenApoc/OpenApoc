@@ -387,6 +387,7 @@
     <ClCompile Include="game\apocresources\apocpalette.cpp" />
     <ClCompile Include="game\base\base.cpp" />
     <ClCompile Include="game\base\facility.cpp" />
+    <ClCompile Include="game\base\vequipscreen.cpp" />
     <ClCompile Include="game\city\building.cpp" />
     <ClCompile Include="game\city\buildingscreen.cpp" />
     <ClCompile Include="game\city\doodad.cpp" />
@@ -486,6 +487,7 @@
     <ClInclude Include="game\apocresources\apocresource.h" />
     <ClInclude Include="game\base\base.h" />
     <ClInclude Include="game\base\facility.h" />
+    <ClInclude Include="game\base\vequipscreen.h" />
     <ClInclude Include="game\city\building.h" />
     <ClInclude Include="game\city\buildingscreen.h" />
     <ClInclude Include="game\city\doodad.h" />
