@@ -24,4 +24,6 @@ void Palette::SetColour(unsigned int idx, Colour &c)
 	colours[idx] = c;
 }
 
+Palette::Palette(const Palette &source) { this->colours = source.colours; }
+
 }; // namespace OpenApoc

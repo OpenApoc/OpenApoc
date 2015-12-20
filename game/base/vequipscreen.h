@@ -11,6 +11,7 @@ class Vehicle;
 class Form;
 class Palette;
 class VEquipment;
+class BitmapFont;
 
 class VEquipScreen : public Stage
 {
@@ -20,6 +21,7 @@ class VEquipScreen : public Stage
 	sp<Vehicle> selected;
 	VEquipmentType::Type selectionType;
 	sp<Palette> pal;
+	sp<BitmapFont> labelFont;
 
 	sp<Vehicle> highlightedVehicle;
 	sp<VEquipment> highlightedEquipment;

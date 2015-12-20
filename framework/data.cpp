@@ -247,6 +247,10 @@ sp<MusicTrack> Data::load_music(const UString &path)
 
 sp<Image> Data::load_image(const UString &path)
 {
+	if (path == "")
+	{
+		return nullptr;
+	}
 	// Use an uppercase version of the path for the cache key
 	UString cacheKey = path.toUpper();
 	sp<Image> img = this->imageCache[cacheKey].lock();

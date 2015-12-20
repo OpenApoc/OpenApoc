@@ -163,6 +163,13 @@
         <image>PLACEHOLDER.PNG</image>
         <imageposition>fit</imageposition>
       </graphic>
+      <graphic id="INVENTORY">
+        <position x="26" y="368"/>
+        <size width="64" height="550"/>
+        <backcolour r="0" g="0" b="0" a="0"/>
+        <image/>
+        <imageposition>fit</imageposition>
+      </graphic>
     </style>
   </form>
 </openapoc>

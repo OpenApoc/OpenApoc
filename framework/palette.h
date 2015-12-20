@@ -19,6 +19,9 @@ class Palette
 
 	Colour &GetColour(unsigned int Index);
 	void SetColour(unsigned int Index, Colour &Col);
+
+	// Copy constructor copies everything /except/ the renderer private data
+	Palette(const Palette &);
 };
 
 }; // namespace OpenApoc

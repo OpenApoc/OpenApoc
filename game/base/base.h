@@ -44,6 +44,8 @@ class Base
 	void buildFacility(const FacilityDef &def, Vec2<int> pos, bool free = false);
 	BuildError canDestroyFacility(Vec2<int> pos) const;
 	void destroyFacility(Vec2<int> pos);
+
+	std::map<UString, unsigned> inventory;
 };
 
 }; // namespace OpenApoc

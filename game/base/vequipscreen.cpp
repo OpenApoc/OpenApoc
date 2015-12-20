@@ -3,6 +3,7 @@
 #include "framework/framework.h"
 #include "game/city/city.h"
 #include "game/city/vehicle.h"
+#include "game/city/building.h"
 
 namespace OpenApoc
 {
@@ -12,7 +13,8 @@ const Vec2<int> VEquipScreen::EQUIP_GRID_SLOTS{16, 16};
 VEquipScreen::VEquipScreen(Framework &fw)
     : Stage(fw), form(fw.gamecore->GetForm("FORM_VEQUIPSCREEN")), selected(nullptr),
       selectionType(VEquipmentType::Type::Weapon),
-      pal(fw.data->load_palette("xcom3/UFODATA/VROADWAR.PCX"))
+      pal(fw.data->load_palette("xcom3/UFODATA/VROADWAR.PCX")),
+      labelFont(fw.gamecore->GetFont("SMALFONT"))
 
 {
 	sp<Vehicle> vehicle;
@@ -356,6 +358,50 @@ void VEquipScreen::Render()
 		pos *= EQUIP_GRID_SLOT_SIZE;
 		pos += equipOffset;
 		fw.renderer->draw(e->type.equipscreen_sprite, pos);
+	}
+	// Draw the inventory if the selected is in a building, and that is a base
+	auto bld = this->selected->building.lock();
+	sp<Base> base;
+	if (bld)
+	{
+		base = bld->base;
+	}
+	if (base)
+	{
+		auto *inventoryControl = form->FindControlTyped<Graphic>("INVENTORY");
+		Vec2<int> inventoryPosition = inventoryControl->Location + form->Location;
+		for (auto &invPair : base->inventory)
+		{
+			// The gap between the bottom of the inventory image and the count label
+			static const int INVENTORY_COUNT_Y_GAP = 4;
+			// The gap between the end of one inventory image and the start of the next
+			static const int INVENTORY_IMAGE_X_GAP = 4;
+			auto equipIt = fw.rules->getVehicleEquipmentTypes().find(invPair.first);
+			if (equipIt == fw.rules->getVehicleEquipmentTypes().end())
+			{
+				// It's not vehicle equipment, skip
+				continue;
+			}
+			auto &equipmentType = *equipIt->second;
+			if (equipmentType.type != this->selectionType)
+			{
+				// Skip equipment of different types
+				// TODO: Hide flying/ground - only types based on selected vehicle
+				continue;
+			}
+			int count = invPair.second;
+			auto countImage = labelFont->getString(UString::format("%d", count));
+			auto &equipmentImage = equipmentType.equipscreen_sprite;
+			fw.renderer->draw(equipmentImage, inventoryPosition);
+
+			Vec2<int> countLabelPosition = inventoryPosition;
+			countLabelPosition.y += INVENTORY_COUNT_Y_GAP + equipmentImage->size.y;
+			// FIXME: Center in X?
+			fw.renderer->draw(countImage, countLabelPosition);
+
+			// Progress inventory offset by width of image + gap
+			inventoryPosition.x += INVENTORY_IMAGE_X_GAP + equipmentImage->size.x;
+		}
 	}
 	if (this->draggedEquipment)
 	{

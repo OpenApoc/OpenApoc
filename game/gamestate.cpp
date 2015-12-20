@@ -103,6 +103,13 @@ GameState::GameState(Framework &fw, Rules &rules)
 		b->landed_vehicles.insert(testVehicle);
 		testVehicle->building = b;
 	}
+
+	// Give that base some inventory
+	for (auto &pair : rules.getVehicleEquipmentTypes())
+	{
+		auto &equipmentID = pair.first;
+		base->inventory[equipmentID] = 10;
+	}
 }
 
 // Just a handy shortcut since it's shown on every single screen
