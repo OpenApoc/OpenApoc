@@ -312,6 +312,12 @@ class SDLRawBackendFactory : public SoundBackendFactory
 	virtual SoundBackend *create() override
 	{
 		LogWarning("Creating SDLRaw sound backend (Might have issues!)");
+		int ret = SDL_InitSubSystem(SDL_INIT_AUDIO);
+		if (ret < 0)
+		{
+			LogWarning("Failed to init SDL_AUDIO (%d) - %s", ret, SDL_GetError());
+			return nullptr;
+		}
 		return new SDLRawBackend();
 	}
 
