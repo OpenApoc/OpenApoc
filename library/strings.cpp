@@ -51,7 +51,7 @@ UString::UString(UniChar uc) : pimpl(new UString_impl(""))
 	pimpl->setTo(static_cast<UChar32>(uc));
 }
 
-UString UString::format(const UString &fmt, ...)
+UString UString::format(const UString fmt, ...)
 {
 	// FIXME: This will break on systems where the c_str() and vsnprintf const char* formats are
 	// different
