@@ -48,6 +48,12 @@ static std::map<UString, VehicleType::AlignmentY> align_y_map = {
     {"bottom", VehicleType::AlignmentY::Bottom},
 };
 
+static std::map<UString, VEquipmentType::Type> equipment_slot_type_map = {
+    {"engine", VEquipmentType::Type::Engine},
+    {"weapon", VEquipmentType::Type::Weapon},
+    {"general", VEquipmentType::Type::General},
+};
+
 static bool ParseVehicleStratmapSprites(tinyxml2::XMLElement *parentNode, VehicleType &vehicle)
 {
 	std::map<VehicleType::Direction, UString> sprites;
@@ -293,6 +299,117 @@ static bool ParseVehicleInitialEquipment(tinyxml2::XMLElement *parentNode, Vehic
 	return true;
 }
 
+static bool ParseVehicleEquipmentLayout(tinyxml2::XMLElement *parentNode, VehicleType &vehicle)
+{
+	for (tinyxml2::XMLElement *node = parentNode->FirstChildElement(); node != nullptr;
+	     node = node->NextSiblingElement())
+	{
+		UString node_name(node->Name());
+		if (node_name == "slot")
+		{
+			VEquipmentType::Type type;
+			if (!ReadAttribute(node, "type", equipment_slot_type_map, type))
+			{
+				LogError(
+				    "Failed to read equipment slot type attribute \"%s\" on vehicle_type ID \"%s\"",
+				    node->Attribute("type"), vehicle.id.c_str());
+				return false;
+			}
+			VehicleType::AlignmentX alignX;
+			if (!ReadAttribute(node, "align_x", align_x_map, alignX))
+			{
+				LogError("Failed to read equipment slot align_x attribute \"%s\" on vehicle_type "
+				         "ID \"%s\"",
+				         node->Attribute("align_x"), vehicle.id.c_str());
+				return false;
+			}
+			VehicleType::AlignmentY alignY;
+			if (!ReadAttribute(node, "align_y", align_y_map, alignY))
+			{
+				LogError("Failed to read equipment slot align_y attribute \"%s\" on vehicle_type "
+				         "ID \"%s\"",
+				         node->Attribute("align_y"), vehicle.id.c_str());
+				return false;
+			}
+			bool p0_found = false;
+			Vec2<int> p0{0, 0};
+			bool p1_found = false;
+			Vec2<int> p1{0, 0};
+			for (tinyxml2::XMLElement *subNode = node->FirstChildElement(); subNode != nullptr;
+			     subNode = subNode->NextSiblingElement())
+			{
+				UString subNodeName(subNode->Name());
+				if (subNodeName == "p0")
+				{
+					if (p0_found)
+					{
+						LogError(
+						    "Multiple \"p0\" nodes in equipment slot on vehicle_type ID \"%s\"",
+						    vehicle.id.c_str());
+						return false;
+					}
+					p0_found = true;
+					if (!ReadElement(subNode, p0))
+					{
+						LogError("Failed to read \"p0\" nodes in equipment slot on vehicle_type ID "
+						         "\"%s\"",
+						         vehicle.id.c_str());
+						return false;
+					}
+				}
+				else if (subNodeName == "p1")
+				{
+					if (p1_found)
+					{
+						LogError(
+						    "Multiple \"p1\" nodes in equipment slot on vehicle_type ID \"%s\"",
+						    vehicle.id.c_str());
+						return false;
+					}
+					p1_found = true;
+					if (!ReadElement(subNode, p1))
+					{
+						LogError("Failed to read \"p1\" nodes in equipment slot on vehicle_type ID "
+						         "\"%s\"",
+						         vehicle.id.c_str());
+						return false;
+					}
+				}
+				else
+				{
+					LogError("Unexpected sub-node \"%s\" in equipment_layout section for "
+					         "vehicle_type ID \"%s\"",
+					         node_name.c_str(), vehicle.id.c_str());
+					return false;
+				}
+			}
+			if (!p0_found)
+			{
+				LogError("Missing \"p0\" subnode on vehicle_type "
+				         "ID \"%s\"",
+				         vehicle.id.c_str());
+				return false;
+			}
+			if (!p1_found)
+			{
+				LogError("Missing \"p1\" subnode on vehicle_type "
+				         "ID \"%s\"",
+				         vehicle.id.c_str());
+				return false;
+			}
+			vehicle.equipment_layout_slots.emplace_back(type, alignX, alignY, Rect<int>{p0, p1});
+		}
+		else
+		{
+			LogError(
+			    "Unexpected node \"%s\" in equipment_layout section for vehicle_type ID \"%s\"",
+			    node_name.c_str(), vehicle.id.c_str());
+			return false;
+		}
+	}
+	return true;
+}
+
 static bool ParseVehicleTypeNode(tinyxml2::XMLElement *node, VehicleType &vehicle)
 {
 	UString node_name(node->Name());
@@ -510,8 +627,7 @@ static bool ParseVehicleTypeNode(tinyxml2::XMLElement *node, VehicleType &vehicl
 	}
 	else if (node_name == "equipment_layout")
 	{
-		LogWarning("TODO: Vehicle equipment_layout");
-		return true;
+		return ParseVehicleEquipmentLayout(node, vehicle);
 	}
 	else if (node_name == "initial_equipment")
 	{

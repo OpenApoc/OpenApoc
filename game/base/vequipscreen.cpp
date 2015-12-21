@@ -10,6 +10,10 @@ namespace OpenApoc
 const Vec2<int> VEquipScreen::EQUIP_GRID_SLOT_SIZE{16, 16};
 const Vec2<int> VEquipScreen::EQUIP_GRID_SLOTS{16, 16};
 
+static const Colour EQUIP_GRID_COLOUR{40, 40, 40, 255};
+// FIXME: this should animate
+static const Colour EQUIP_GRID_COLOUR_SELECTED{255, 40, 40, 255};
+
 VEquipScreen::VEquipScreen(Framework &fw)
     : Stage(fw), form(fw.gamecore->GetForm("FORM_VEQUIPSCREEN")), selected(nullptr),
       selectionType(VEquipmentType::Type::Weapon),
@@ -346,6 +350,27 @@ void VEquipScreen::Render()
 	Vec2<int> equipOffset = paperDollControl->Location + form->Location;
 	// Draw the equipment grid
 	{
+		for (auto &slot : selected->type.equipment_layout_slots)
+		{
+			Vec2<int> p00 = (slot.bounds.p0 * EQUIP_GRID_SLOT_SIZE) + equipOffset;
+			Vec2<int> p11 = (slot.bounds.p1 * EQUIP_GRID_SLOT_SIZE) + equipOffset;
+			Vec2<int> p01 = {p00.x, p11.y};
+			Vec2<int> p10 = {p11.x, p00.y};
+			if (slot.type == selectionType)
+			{
+				fw.renderer->drawLine(p00, p01, EQUIP_GRID_COLOUR_SELECTED, 2);
+				fw.renderer->drawLine(p01, p11, EQUIP_GRID_COLOUR_SELECTED, 2);
+				fw.renderer->drawLine(p11, p10, EQUIP_GRID_COLOUR_SELECTED, 2);
+				fw.renderer->drawLine(p10, p00, EQUIP_GRID_COLOUR_SELECTED, 2);
+			}
+			else
+			{
+				fw.renderer->drawLine(p00, p01, EQUIP_GRID_COLOUR, 2);
+				fw.renderer->drawLine(p01, p11, EQUIP_GRID_COLOUR, 2);
+				fw.renderer->drawLine(p11, p10, EQUIP_GRID_COLOUR, 2);
+				fw.renderer->drawLine(p10, p00, EQUIP_GRID_COLOUR, 2);
+			}
+		}
 	}
 	// Draw the equipped stuff
 	for (auto &e : selected->equipment)
