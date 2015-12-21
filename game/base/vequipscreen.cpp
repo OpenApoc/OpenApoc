@@ -384,6 +384,23 @@ void VEquipScreen::Render()
 		pos += equipOffset;
 		fw.renderer->draw(e->type.equipscreen_sprite, pos);
 	}
+
+	// Only draw inventory that can be used by this type of craft
+	VEquipmentType::User allowedEquipmentUser;
+	switch (this->selected->type.type)
+	{
+		case VehicleType::Type::Flying:
+			allowedEquipmentUser = VEquipmentType::User::Air;
+			break;
+		case VehicleType::Type::Ground:
+			allowedEquipmentUser = VEquipmentType::User::Ground;
+			break;
+		default:
+			LogError(
+			    "Trying to draw equipment screen of unsupported vehicle type for vehicle \"%s\"",
+			    this->selected->name.c_str());
+			allowedEquipmentUser = VEquipmentType::User::Air;
+	}
 	// Draw the inventory if the selected is in a building, and that is a base
 	auto bld = this->selected->building.lock();
 	sp<Base> base;
@@ -411,7 +428,11 @@ void VEquipScreen::Render()
 			if (equipmentType.type != this->selectionType)
 			{
 				// Skip equipment of different types
-				// TODO: Hide flying/ground - only types based on selected vehicle
+				continue;
+			}
+			if (!equipmentType.users.count(allowedEquipmentUser))
+			{
+				// The selected vehicle is not a valid user of the equipment, don't draw
 				continue;
 			}
 			int count = invPair.second;
