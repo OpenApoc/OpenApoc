@@ -12,7 +12,7 @@ before_install:
   - sudo apt-get update
   - if [ "$CXX" = "g++" ]; then sudo apt-get install g++-5 -y; fi
   - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
-  - if [ "$CXX" = "clang++" ]; then sudo apt-get install clang-3.7 --force-yes -y; fi
+  - if [ "$CXX" = "clang++" ]; then sudo apt-get install clang-3.7 clang-tidy-3.7 --force-yes -y; fi
   - if [ "$CXX" = "clang++" ]; then export CXX="clang++-3.7" CC="clang-3.7"; fi
   - sudo apt-get install libunwind8-dev libicu-dev libsdl2-dev -y
   - ${CXX} --version
@@ -30,9 +30,12 @@ install:
   - pushd ./dependencies/physfs && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make -j2 && make install && popd;
 
 before_script:
-  - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DLTO=${LTO} -DEXTRA_SUGGESTIONS=${SUGGESTIONS}
+  - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DLTO=${LTO} -DEXTRA_SUGGESTIONS=${SUGGESTIONS} -DCLANG_TIDY=clang-tidy-3.7
 
 script: make -j2 && make test ARGS="-V"
+
+after_script:
+  - if [ "${CXX}" == "clang++-3.7" ]; then make tidy; fi
 
 os:
   - linux
