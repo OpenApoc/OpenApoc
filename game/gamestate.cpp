@@ -58,6 +58,7 @@ GameState::GameState(Framework &fw, Rules &rules)
 		// We add player vehicles a bit later
 		if (owner == this->getPlayer())
 		{
+			vehicleTypeIt++;
 			continue;
 		}
 
