@@ -78,14 +78,19 @@ option(LTO "Build using link-time-optimisations" OFF)
 
 CHECK_CXX_COMPILER_FLAG("-flto"
 	COMPILER_SUPPORTS_LTO)
+CHECK_CXX_COMPILER_FLAG("-flto=4"
+	COMPILER_SUPPORTS_LTO4)
 
 if (LTO)
-		if (NOT COMPILER_SUPPORTS_LTO)
-				message(WARNING "LTO not supported by this compiler")
-		else()
+		if (COMPILER_SUPPORTS_LTO4)
+			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -flto=4")
+			set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -flto=4")
+		elseif(COMPILER_SUPPORTS_LTO)
 			set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -flto")
 			set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -flto")
-		endif(NOT COMPILER_SUPPORTS_LTO)
+		else()
+		message(WARNING "LTO not supported by this compiler")
+		endif()
 endif(LTO)
 
 
