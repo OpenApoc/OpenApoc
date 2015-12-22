@@ -37,10 +37,12 @@ install:
 
 before_script:
   - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DLTO=${LTO} -DEXTRA_SUGGESTIONS=${SUGGESTIONS} -DCLANG_TIDY=clang-tidy-3.7 -DCLANG_FORMAT=clang-format-3.7
+# Do the format before the script so the output is cleaner - just showing the diff (if any) and the tidy results
+  - if [ "${TIDY}" = "true" ]; then make format -j2; fi
 
 script:
   - if [ "${TIDY}" != "true" ]; then make -j2 && make test ARGS="-V"; fi
-  - if [ "${TIDY}" = "true" ]; then make format && git --no-pager diff --ignore-submodules && make tidy; fi
+  - if [ "${TIDY}" = "true" ]; then git --no-pager diff --ignore-submodules && make tidy; fi
 
 os:
   - linux
