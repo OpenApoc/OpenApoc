@@ -6,14 +6,20 @@ compiler:
   - gcc
   - clang
 
+matrix:
+  exclude:
+    - compiler: gcc
+      env: TIDY="true"
+
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo add-apt-repository "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.7 main" -y
   - sudo apt-get update
   - if [ "$CXX" = "g++" ]; then sudo apt-get install g++-5 -y; fi
   - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
-  - if [ "$CXX" = "clang++" ]; then sudo apt-get install clang-3.7 clang-tidy-3.7 --force-yes -y; fi
+  - if [ "$CXX" = "clang++" ]; then sudo apt-get install clang-3.7 --force-yes -y; fi
   - if [ "$CXX" = "clang++" ]; then export CXX="clang++-3.7" CC="clang-3.7"; fi
+  - if [ "${TIDY}" = "true" ]; then sudo apt-get install clang-tidy-3.7 clang-format-3.7 --force-yes -y; fi
   - sudo apt-get install libunwind8-dev libicu-dev libsdl2-dev -y
   - ${CXX} --version
   - ${CC} --version
@@ -21,8 +27,8 @@ before_install:
   - export PKG_CONFIG_PATH=~/dependency-prefix/lib/pkgconfig
 
 env:
-  - BUILD_TYPE="Release" LTO=on SUGGESTIONS=off
-  - BUILD_TYPE="Release" LTO=on SUGGESTIONS=on
+  - BUILD_TYPE="Release" LTO=on
+  - TIDY="true"
 
 install:
   - pushd ./dependencies/tinyxml2 && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make -j2 && make install && popd;
@@ -30,12 +36,11 @@ install:
   - pushd ./dependencies/physfs && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make -j2 && make install && popd;
 
 before_script:
-  - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DLTO=${LTO} -DEXTRA_SUGGESTIONS=${SUGGESTIONS} -DCLANG_TIDY=clang-tidy-3.7
+  - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DLTO=${LTO} -DEXTRA_SUGGESTIONS=${SUGGESTIONS} -DCLANG_TIDY=clang-tidy-3.7 -DCLANG_FORMAT=clang-format-3.7
 
-script: make -j2 && make test ARGS="-V"
-
-after_script:
-  - if [ "${CXX}" == "clang++-3.7" ]; then make tidy; fi
+script:
+  - if [ "${TIDY}" != "true" ]; then make -j2 && make test ARGS="-V"; fi
+  - if [ "${TIDY}" = "true" ]; then make format && git --no-pager diff --ignore-submodules && make tidy; fi
 
 os:
   - linux

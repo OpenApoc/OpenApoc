@@ -162,24 +162,15 @@ ADD_CUSTOM_COMMAND( TARGET OpenApoc
 enable_testing()
 add_subdirectory(tests)
 
-set(CLANG_FORMAT_COMMANDS clang-format clang-format-3.8 clang-format-3.7
-		clang-format-3.6)
-
-foreach(POSSIBLE_CLANG_FORMAT_COMMAND ${CLANG_FORMAT_COMMANDS})
-		unset(COMMAND_OUTPUT)
-		execute_process(COMMAND which ${POSSIBLE_CLANG_FORMAT_COMMAND}
-				OUTPUT_VARIABLE COMMAND_OUTPUT ERROR_QUIET
-				OUTPUT_STRIP_TRAILING_WHITESPACE)
-		if (COMMAND_OUTPUT)
-				message("Found clang-format ${COMMAND_OUTPUT}")
-				SET(CLANG_FORMAT_COMMAND ${COMMAND_OUTPUT} CACHE PATH
-						"clang-format executable")
-				break()
-		endif()
-endforeach()
-
 file(GLOB_RECURSE FORMAT_SOURCES ${CMAKE_SOURCE_DIR}/*.cpp
 		${CMAKE_SOURCE_DIR}/*.c ${CMAKE_SOURCE_DIR}/*.h)
+
+file(GLOB_RECURSE DEPENDENCY_SOURCES ${CMAKE_SOURCE_DIR}/dependencies/*.cpp
+		${CMAKE_SOURCE_DIR}/dependencies/*.c ${CMAKE_SOURCE_DIR}/dependencies/*.h)
+
+if (DEPENDENCY_SOURCES)
+	list(REMOVE_ITEM FORMAT_SOURCES ${DEPENDENCY_SOURCES})
+endif()
 
 add_custom_target(format)
 add_custom_target(format-sources)
@@ -188,16 +179,14 @@ add_custom_target(format-xml)
 add_dependencies(format format-sources)
 add_dependencies(format format-xml)
 
-if (CLANG_FORMAT_COMMAND)
-	foreach(FORMAT_SOURCE ${FORMAT_SOURCES})
-		string(MAKE_C_IDENTIFIER ${FORMAT_SOURCE} FORMAT_SOURCE_STRIPPED)
-		add_custom_target(format-source-${FORMAT_SOURCE_STRIPPED} ${CLANG_FORMAT_COMMAND} -i ${FORMAT_SOURCE} DEPENDS ${FORMAT_SOURCE} .clang-format)
-		add_dependencies(format-sources
-				format-source-${FORMAT_SOURCE_STRIPPED})
-	endforeach()
-else()
-	message("No clang-format found, disabling format-source target")
-endif()
+set(CLANG_FORMAT clang-format CACHE STRING "clang-format executable name in PATH")
+
+foreach(FORMAT_SOURCE ${FORMAT_SOURCES})
+	string(MAKE_C_IDENTIFIER ${FORMAT_SOURCE} FORMAT_SOURCE_STRIPPED)
+	add_custom_target(format-source-${FORMAT_SOURCE_STRIPPED} ${CLANG_FORMAT} -i ${FORMAT_SOURCE} DEPENDS ${FORMAT_SOURCE} .clang-format)
+	add_dependencies(format-sources
+			format-source-${FORMAT_SOURCE_STRIPPED})
+endforeach()
 
 file(GLOB_RECURSE XML_FILES ${CMAKE_SOURCE_DIR}/data/*.xml
 		${CMAKE_SOURCE_DIR}/data/*.XML)
