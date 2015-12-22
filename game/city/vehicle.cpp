@@ -293,10 +293,6 @@ float Vehicle::getSpeed() const
 		speed += engineType.top_speed;
 	}
 
-	if (speed == 0.0f)
-	{
-		LogError("Vehicle with no engine");
-	}
 	return speed;
 }
 
@@ -353,7 +349,8 @@ int Vehicle::getAcceleration() const
 
 	if (power == 0 && acceleration == 0)
 	{
-		LogError("Vehicle with no engine");
+		// No engine shows a '0' acceleration in the stats ui
+		return 0;
 	}
 	return acceleration;
 }
