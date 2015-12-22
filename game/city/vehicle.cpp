@@ -427,6 +427,97 @@ int Vehicle::getCargo() const
 	return 0;
 }
 
+bool Vehicle::canAddEquipment(Vec2<int> pos, const VEquipmentType &type) const
+{
+	// Check that the equipment doesn't overlap with any other and doesn't
+	// go outside a slot of the correct type
+	Rect<int> bounds{pos, pos + type.equipscreen_size};
+	for (auto &otherEquipment : this->equipment)
+	{
+		Rect<int> otherBounds{otherEquipment->equippedPosition,
+		                      otherEquipment->equippedPosition +
+		                          otherEquipment->type.equipscreen_size};
+		if (otherBounds.intersects(bounds))
+		{
+			LogInfo("Equipping \"%s\" on \"%s\" at {%d,%d} failed: Intersects with other equipment",
+			        type.name.c_str(), this->name.c_str(), pos.x, pos.y);
+			return false;
+		}
+	}
+
+	// Check that this doesn't go outside a slot of the correct type
+	for (int y = 0; y < type.equipscreen_size.y; y++)
+	{
+		for (int x = 0; x < type.equipscreen_size.x; x++)
+		{
+			Vec2<int> slotPos = {x, y};
+			slotPos += pos;
+			bool validSlot = false;
+			for (auto &slot : this->type.equipment_layout_slots)
+			{
+				if (slot.bounds.within(slotPos) && slot.type == type.type)
+				{
+					validSlot = true;
+					break;
+				}
+			}
+			if (!validSlot)
+			{
+				LogInfo("Equipping \"%s\" on \"%s\" at {%d,%d} failed: No valid slot",
+				        type.name.c_str(), this->name.c_str(), pos.x, pos.y);
+				return false;
+			}
+		}
+	}
+	return true;
+}
+
+void Vehicle::addEquipment(Vec2<int> pos, const VEquipmentType &type)
+{
+	// We can't check this here, as some of the non-buyable vehicles have insane initial equipment
+	// layouts
+	// if (!this->canAddEquipment(pos, type))
+	//{
+	//	LogError("Trying to add \"%s\" at {%d,%d} on vehicle \"%s\" failed", type.id.c_str(), pos.x,
+	//	         pos.y, this->name.c_str());
+	//}
+
+	switch (type.type)
+	{
+
+		case VEquipmentType::Type::Engine:
+		{
+			auto engine = std::make_shared<VEngine>(static_cast<const VEngineType &>(type));
+			this->equipment.emplace_back(engine);
+			engine->equippedPosition = pos;
+			LogInfo("Equipped \"%s\" with engine \"%s\"", this->name.c_str(), type.name.c_str());
+			break;
+		}
+		case VEquipmentType::Type::Weapon:
+		{
+			auto &wtype = static_cast<const VWeaponType &>(type);
+			auto weapon = std::make_shared<VWeapon>(wtype, shared_from_this(), wtype.max_ammo);
+			this->equipment.emplace_back(weapon);
+			weapon->equippedPosition = pos;
+			LogInfo("Equipped \"%s\" with weapon \"%s\"", this->name.c_str(), type.name.c_str());
+			break;
+		}
+		case VEquipmentType::Type::General:
+		{
+			auto &gtype = static_cast<const VGeneralEquipmentType &>(type);
+			auto equipment = std::make_shared<VGeneralEquipment>(gtype);
+			LogInfo("Equipped \"%s\" with general equipment \"%s\"", this->name.c_str(),
+			        type.name.c_str());
+			equipment->equippedPosition = pos;
+			this->equipment.emplace_back(equipment);
+			break;
+		}
+		default:
+			LogError("Equipment \"%s\" for \"%s\" at pos (%d,%d} has invalid type",
+			         type.name.c_str(), this->name.c_str(), pos.x, pos.y);
+	}
+}
+
 void Vehicle::equipDefaultEquipment(Rules &rules)
 {
 	LogInfo("Equipping \"%s\" with default equipment", this->type.name.c_str());
@@ -436,41 +527,7 @@ void Vehicle::equipDefaultEquipment(Rules &rules)
 		auto &ename = pair.second;
 
 		auto &etype = rules.getVEquipmentType(ename);
-		switch (etype.type)
-		{
-			case VEquipmentType::Type::Engine:
-			{
-				auto engine = std::make_shared<VEngine>(static_cast<const VEngineType &>(etype));
-				this->equipment.emplace_back(engine);
-				engine->equippedPosition = pos;
-				LogInfo("Equipped \"%s\" with engine \"%s\"", this->type.name.c_str(),
-				        ename.c_str());
-				break;
-			}
-			case VEquipmentType::Type::Weapon:
-			{
-				auto &wtype = static_cast<const VWeaponType &>(etype);
-				auto weapon = std::make_shared<VWeapon>(wtype, shared_from_this(), wtype.max_ammo);
-				this->equipment.emplace_back(weapon);
-				weapon->equippedPosition = pos;
-				LogInfo("Equipped \"%s\" with weapon \"%s\"", this->type.name.c_str(),
-				        ename.c_str());
-				break;
-			}
-			case VEquipmentType::Type::General:
-			{
-				auto &gtype = static_cast<const VGeneralEquipmentType &>(etype);
-				auto equipment = std::make_shared<VGeneralEquipment>(gtype);
-				LogInfo("Equipped \"%s\" with general equipment \"%s\"", this->type.name.c_str(),
-				        ename.c_str());
-				equipment->equippedPosition = pos;
-				this->equipment.emplace_back(equipment);
-				break;
-			}
-			default:
-				LogError("Default equipment for \"%s\" at pos (%d,%d} has invalid type",
-				         this->type.name.c_str(), pos.x, pos.y);
-		}
+		this->addEquipment(pos, etype);
 	}
 }
 

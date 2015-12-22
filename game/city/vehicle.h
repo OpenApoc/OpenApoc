@@ -20,6 +20,7 @@ class VehicleMission;
 class Building;
 class GameState;
 class VEquipment;
+class VEquipmentType;
 
 class VehicleMover
 {
@@ -60,6 +61,9 @@ class Vehicle : public std::enable_shared_from_this<Vehicle>
 
 	std::list<sp<VEquipment>> equipment;
 	Vec3<float> position;
+
+	bool canAddEquipment(Vec2<int> pos, const VEquipmentType &type) const;
+	void addEquipment(Vec2<int> pos, const VEquipmentType &type);
 
 	const Vec3<float> &getPosition() const { return this->position; }
 	const Vec3<float> &getDirection() const;

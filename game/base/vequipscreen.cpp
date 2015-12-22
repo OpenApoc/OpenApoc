@@ -167,7 +167,14 @@ void VEquipScreen::EventOccurred(Event *e)
 
 		// Check if we're over any vehicles in the side bar
 	}
-	if (e->Type == EVENT_MOUSE_DOWN)
+	auto bld = this->selected->building.lock();
+	sp<Base> base;
+	if (bld)
+	{
+		base = bld->base;
+	}
+	// Only allow removing equipment if we're in a base, otherwise it'll disappear
+	if (e->Type == EVENT_MOUSE_DOWN && base)
 	{
 		Vec2<int> mousePos{e->Data.Mouse.X, e->Data.Mouse.Y};
 
@@ -176,10 +183,15 @@ void VEquipScreen::EventOccurred(Event *e)
 		{
 			if (pair.first.within(mousePos))
 			{
-				// Return the equipment to the inventory
 				// FIXME: base->addBackToInventory(item); vehicle->unequip(item);
 				this->draggedEquipment = &pair.second->type;
 				this->draggedEquipmentOffset = pair.first.p0 - mousePos;
+
+				// Return the equipment to the inventory
+				this->selected->equipment.remove(pair.second);
+				base->inventory[pair.second->type.id]++;
+				// FIXME: Return ammo to inventory
+				// FIXME: what happens if we don't have the stores to return?
 				return;
 			}
 		}
@@ -201,7 +213,25 @@ void VEquipScreen::EventOccurred(Event *e)
 		if (this->draggedEquipment)
 		{
 			// Are we over the grid? If so try to place it on the vehicle.
-			// FIXME: vehicle->tryToEquip(item) && base->removeFromInvetory(item);
+			auto *paperDollControl = form->FindControlTyped<Graphic>("PAPER_DOLL");
+			Vec2<int> equipOffset = paperDollControl->Location + form->Location;
+
+			Vec2<int> equipmentPos =
+			    fw.gamecore->MouseCursor->getPosition() + this->draggedEquipmentOffset;
+			// If this is within the grid try to snap it
+			Vec2<int> equipmentGridPos = equipmentPos - equipOffset;
+			equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
+			if (this->selected->canAddEquipment(equipmentGridPos, *this->draggedEquipment))
+			{
+				if (base->inventory[draggedEquipment->id] <= 0)
+				{
+					LogError("Trying to equip item \"%s\" with zero inventory",
+					         this->draggedEquipment->id.c_str());
+				}
+				base->inventory[draggedEquipment->id]--;
+				this->selected->addEquipment(equipmentGridPos, *this->draggedEquipment);
+				// FIXME: Add ammo to equipment
+			}
 			this->draggedEquipment = nullptr;
 		}
 	}
