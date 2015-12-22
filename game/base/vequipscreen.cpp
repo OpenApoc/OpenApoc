@@ -18,7 +18,8 @@ VEquipScreen::VEquipScreen(Framework &fw)
     : Stage(fw), form(fw.gamecore->GetForm("FORM_VEQUIPSCREEN")), selected(nullptr),
       selectionType(VEquipmentType::Type::Weapon),
       pal(fw.data->load_palette("xcom3/UFODATA/VROADWAR.PCX")),
-      labelFont(fw.gamecore->GetFont("SMALFONT"))
+      labelFont(fw.gamecore->GetFont("SMALFONT")), highlightedVehicle(nullptr),
+      highlightedEquipment(nullptr), drawHighlightBox(false), draggedEquipment(nullptr)
 
 {
 	sp<Vehicle> vehicle;
@@ -126,37 +127,83 @@ void VEquipScreen::EventOccurred(Event *e)
 		}
 	}
 
+	// Reset the highlight box even if we're dragging
+	if (e->Type == EVENT_MOUSE_MOVE)
+	{
+		this->drawHighlightBox = false;
+	}
+
 	// Check if we've moused over equipment/vehicle so we can show the stats.
 	if (e->Type == EVENT_MOUSE_MOVE && !this->draggedEquipment)
 	{
-		auto *paperDollControl = form->FindControlTyped<Graphic>("PAPER_DOLL");
-
-		auto equipOffset = paperDollControl->Location + form->Location;
-		auto equipEndPoint = equipOffset + (EQUIP_GRID_SLOT_SIZE * EQUIP_GRID_SLOTS);
 		// Wipe any previously-highlighted stuff
 		this->highlightedVehicle = nullptr;
 		this->highlightedEquipment = nullptr;
-		Vec2<int> mousePos{e->Data.Mouse.X, e->Data.Mouse.Y};
-		if (mousePos.x >= equipOffset.x && mousePos.x < equipEndPoint.x &&
-		    mousePos.y >= equipOffset.y && mousePos.y < equipEndPoint.y)
-		{
-			// We're inside the equipment grid, so check if we intersect with any equipment
-			Vec2<int> slotPosition = (mousePos - equipOffset) / EQUIP_GRID_SLOT_SIZE;
 
-			for (auto &e : this->selected->equipment)
+		Vec2<int> mousePos{e->Data.Mouse.X, e->Data.Mouse.Y};
+
+		// Check if we're over any equipment in the paper doll
+		for (auto &pair : this->equippedItems)
+		{
+			if (pair.first.within(mousePos))
 			{
-				Rect<int> r{e->equippedPosition, e->equippedPosition + e->type.equipscreen_size};
-				if (r.within(slotPosition))
-				{
-					this->highlightedEquipment = e;
-				}
+				this->highlightedEquipment = &pair.second->type;
+				return;
 			}
 		}
-		// Check if we're over any equipment in the paper doll
 
 		// Check if we're over any equipment in the list at the bottom
+		for (auto &pair : this->inventoryItems)
+		{
+			if (pair.first.within(mousePos))
+			{
+				this->highlightedEquipment = &pair.second;
+				this->drawHighlightBox = true;
+				this->highlightBoxColour = {255, 255, 255, 255};
+				this->highlightBox = pair.first;
+				return;
+			}
+		}
 
 		// Check if we're over any vehicles in the side bar
+	}
+	if (e->Type == EVENT_MOUSE_DOWN)
+	{
+		Vec2<int> mousePos{e->Data.Mouse.X, e->Data.Mouse.Y};
+
+		// Check if we're over any equipment in the paper doll
+		for (auto &pair : this->equippedItems)
+		{
+			if (pair.first.within(mousePos))
+			{
+				// Return the equipment to the inventory
+				// FIXME: base->addBackToInventory(item); vehicle->unequip(item);
+				this->draggedEquipment = &pair.second->type;
+				this->draggedEquipmentOffset = pair.first.p0 - mousePos;
+				return;
+			}
+		}
+
+		// Check if we're over any equipment in the list at the bottom
+		for (auto &pair : this->inventoryItems)
+		{
+			if (pair.first.within(mousePos))
+			{
+				// Dragging an object doesn't (Yet) remove it from the inventory
+				this->draggedEquipment = &pair.second;
+				this->draggedEquipmentOffset = pair.first.p0 - mousePos;
+				return;
+			}
+		}
+	}
+	if (e->Type == EVENT_MOUSE_UP)
+	{
+		if (this->draggedEquipment)
+		{
+			// Are we over the grid? If so try to place it on the vehicle.
+			// FIXME: vehicle->tryToEquip(item) && base->removeFromInvetory(item);
+			this->draggedEquipment = nullptr;
+		}
 	}
 }
 
@@ -169,6 +216,8 @@ void VEquipScreen::Update(StageCmd *const cmd)
 
 void VEquipScreen::Render()
 {
+	this->equippedItems.clear();
+	this->inventoryItems.clear();
 
 	fw.Stage_GetPrevious(this->shared_from_this())->Render();
 
@@ -210,22 +259,21 @@ void VEquipScreen::Render()
 
 	if (highlightedEquipment)
 	{
-		iconGraphic->SetImage(highlightedEquipment->type.equipscreen_sprite);
-		nameLabel->SetText(highlightedEquipment->type.name);
+		iconGraphic->SetImage(highlightedEquipment->equipscreen_sprite);
+		nameLabel->SetText(highlightedEquipment->name);
 		int statsCount = 0;
 
 		// All equipment has a weight
 		statsLabels[statsCount]->SetText("Weight");
-		statsValues[statsCount]->SetText(
-		    UString::format("%d", (int)highlightedEquipment->type.weight));
+		statsValues[statsCount]->SetText(UString::format("%d", (int)highlightedEquipment->weight));
 		statsCount++;
 
 		// Draw equipment stats
-		switch (highlightedEquipment->type.type)
+		switch (highlightedEquipment->type)
 		{
 			case VEquipmentType::Type::Engine:
 			{
-				auto &engineType = static_cast<const VEngineType &>(highlightedEquipment->type);
+				auto &engineType = static_cast<const VEngineType &>(*highlightedEquipment);
 				statsLabels[statsCount]->SetText("Top Speed");
 				statsValues[statsCount]->SetText(UString::format("%d", (int)engineType.top_speed));
 				statsCount++;
@@ -235,7 +283,7 @@ void VEquipScreen::Render()
 			}
 			case VEquipmentType::Type::Weapon:
 			{
-				auto &weaponType = static_cast<const VWeaponType &>(highlightedEquipment->type);
+				auto &weaponType = static_cast<const VWeaponType &>(*highlightedEquipment);
 				statsLabels[statsCount]->SetText("Damage");
 				statsValues[statsCount]->SetText(UString::format("%d", (int)weaponType.damage));
 				statsCount++;
@@ -247,11 +295,11 @@ void VEquipScreen::Render()
 				statsCount++;
 
 				// Only show rounds if non-zero (IE not infinite ammo)
-				if (highlightedEquipment->type.max_ammo)
+				if (highlightedEquipment->max_ammo)
 				{
 					statsLabels[statsCount]->SetText("Rounds");
 					statsValues[statsCount]->SetText(
-					    UString::format("%d", (int)highlightedEquipment->type.max_ammo));
+					    UString::format("%d", (int)highlightedEquipment->max_ammo));
 					statsCount++;
 				}
 				break;
@@ -259,7 +307,7 @@ void VEquipScreen::Render()
 			case VEquipmentType::Type::General:
 			{
 				auto &generalType =
-				    static_cast<const VGeneralEquipmentType &>(highlightedEquipment->type);
+				    static_cast<const VGeneralEquipmentType &>(*highlightedEquipment);
 				if (generalType.accuracy_modifier)
 				{
 					statsLabels[statsCount]->SetText("Accuracy");
@@ -398,6 +446,10 @@ void VEquipScreen::Render()
 		pos *= EQUIP_GRID_SLOT_SIZE;
 		pos += equipOffset;
 		fw.renderer->draw(e->type.equipscreen_sprite, pos);
+		Vec2<int> endPos = pos;
+		endPos.x += e->type.equipscreen_sprite->size.x;
+		endPos.y += e->type.equipscreen_sprite->size.y;
+		this->equippedItems.emplace_back(std::make_pair(Rect<int>{pos, endPos}, e));
 	}
 
 	// Only draw inventory that can be used by this type of craft
@@ -460,13 +512,48 @@ void VEquipScreen::Render()
 			// FIXME: Center in X?
 			fw.renderer->draw(countImage, countLabelPosition);
 
+			Vec2<int> inventoryEndPosition = inventoryPosition;
+			inventoryEndPosition.x += equipmentImage->size.x;
+			inventoryEndPosition.y += equipmentImage->size.y;
+
+			this->inventoryItems.emplace_back(Rect<int>{inventoryPosition, inventoryEndPosition},
+			                                  equipmentType);
+
 			// Progress inventory offset by width of image + gap
 			inventoryPosition.x += INVENTORY_IMAGE_X_GAP + equipmentImage->size.x;
 		}
 	}
+	if (this->drawHighlightBox)
+	{
+		Vec2<int> p00 = highlightBox.p0;
+		Vec2<int> p11 = highlightBox.p1;
+		Vec2<int> p01 = {p00.x, p11.y};
+		Vec2<int> p10 = {p11.x, p00.y};
+		fw.renderer->drawLine(p00, p01, highlightBoxColour, 1);
+		fw.renderer->drawLine(p01, p11, highlightBoxColour, 1);
+		fw.renderer->drawLine(p11, p10, highlightBoxColour, 1);
+		fw.renderer->drawLine(p10, p00, highlightBoxColour, 1);
+	}
 	if (this->draggedEquipment)
 	{
 		// Draw equipment we're currently dragging (snapping to the grid if possible)
+		Vec2<int> equipmentPos =
+		    fw.gamecore->MouseCursor->getPosition() + this->draggedEquipmentOffset;
+		// If this is within the grid try to snap it
+		Vec2<int> equipmentGridPos = equipmentPos - equipOffset;
+		equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
+		if (equipmentGridPos.x < 0 || equipmentGridPos.x >= EQUIP_GRID_SLOTS.x ||
+		    equipmentGridPos.y < 0 || equipmentGridPos.y >= EQUIP_GRID_SLOTS.y)
+		{
+			// This is outside thge grid
+		}
+		else
+		{
+			// Inside the grid, snap
+			equipmentPos = equipmentGridPos * EQUIP_GRID_SLOT_SIZE;
+			equipmentPos += equipOffset;
+		}
+		fw.renderer->draw(this->draggedEquipment->equipscreen_sprite, equipmentPos);
 	}
 	fw.gamecore->MouseCursor->Render();
 }

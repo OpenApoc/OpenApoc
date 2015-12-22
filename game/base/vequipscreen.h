@@ -24,12 +24,22 @@ class VEquipScreen : public Stage
 	sp<BitmapFont> labelFont;
 
 	sp<Vehicle> highlightedVehicle;
-	sp<VEquipment> highlightedEquipment;
+	const VEquipmentType *highlightedEquipment;
 
-	sp<VEquipment> draggedEquipment;
+	bool drawHighlightBox;
+	Colour highlightBoxColour;
+	Rect<int> highlightBox;
+
+	Vec2<int> draggedEquipmentOffset;
+	const VEquipmentType *draggedEquipment;
 
 	static const Vec2<int> EQUIP_GRID_SLOT_SIZE;
 	static const Vec2<int> EQUIP_GRID_SLOTS;
+
+	// List of screen-space rects for all equipped items
+	std::list<std::pair<Rect<int>, sp<VEquipment>>> equippedItems;
+	// List of screen-space rects for all inventory items
+	std::list<std::pair<Rect<int>, VEquipmentType &>> inventoryItems;
 
   public:
 	VEquipScreen(Framework &fw);
