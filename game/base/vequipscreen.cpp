@@ -109,6 +109,21 @@ void VEquipScreen::EventOccurred(Event *e)
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
+		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_SHOW_WEAPONS")
+		{
+			this->selectionType = VEquipmentType::Type::Weapon;
+			return;
+		}
+		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_SHOW_ENGINES")
+		{
+			this->selectionType = VEquipmentType::Type::Engine;
+			return;
+		}
+		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_SHOW_GENERAL")
+		{
+			this->selectionType = VEquipmentType::Type::General;
+			return;
+		}
 	}
 
 	// Check if we've moused over equipment/vehicle so we can show the stats.

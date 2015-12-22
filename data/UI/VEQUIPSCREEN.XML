@@ -170,6 +170,27 @@
         <image/>
         <imageposition>fit</imageposition>
       </graphic>
+      <graphicbutton id="BUTTON_SHOW_WEAPONS">
+        <position x="602" y="40"/>
+        <size width="35" height="34"/>
+        <backcolour r="0" g="0" b="0" a="0"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:8:xcom3/UFODATA/BASE.PCX</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_SHOW_ENGINES">
+        <position x="602" y="80"/>
+        <size width="35" height="34"/>
+        <backcolour r="0" g="0" b="0" a="0"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:9:xcom3/UFODATA/BASE.PCX</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_SHOW_GENERAL">
+        <position x="602" y="120"/>
+        <size width="35" height="34"/>
+        <backcolour r="0" g="0" b="0" a="0"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:10:xcom3/UFODATA/BASE.PCX</imagedepressed>
+      </graphicbutton>
     </style>
   </form>
 </openapoc>
