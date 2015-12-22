@@ -62,13 +62,27 @@ class Vehicle : public std::enable_shared_from_this<Vehicle>
 	std::list<sp<VEquipment>> equipment;
 	Vec3<float> position;
 
+	int health;
+	int shield;
+
 	bool canAddEquipment(Vec2<int> pos, const VEquipmentType &type) const;
 	void addEquipment(Vec2<int> pos, const VEquipmentType &type);
+	void removeEquipment(sp<VEquipment> object);
 
 	const Vec3<float> &getPosition() const { return this->position; }
 	const Vec3<float> &getDirection() const;
 
+	//'Constitution' is the sum of health and shield
+	int getMaxConstitution() const;
 	int getConstitution() const;
+
+	int getMaxHealth() const;
+	int getHealth() const;
+
+	int getMaxShield() const;
+	int getShield() const;
+
+	// This is the 'sum' of all armors?
 	int getArmor() const;
 	int getAccuracy() const;
 	int getTopSpeed() const;

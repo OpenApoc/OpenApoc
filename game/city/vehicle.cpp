@@ -114,7 +114,7 @@ VehicleMover::VehicleMover(Vehicle &v) : vehicle(v) {}
 VehicleMover::~VehicleMover() {}
 
 Vehicle::Vehicle(const VehicleType &type, sp<Organisation> owner, UString name)
-    : type(type), owner(owner), name(name)
+    : type(type), owner(owner), name(name), health(type.health), shield(0)
 {
 	if (this->name == "")
 	{
@@ -245,6 +245,12 @@ void Vehicle::update(Framework &fw, GameState &state, unsigned int ticks)
 			}
 		}
 	}
+	// FIXME: Make shield recharge rate variable?
+	this->shield += ticks;
+	if (this->shield > this->getMaxShield())
+	{
+		this->shield = this->getMaxShield();
+	}
 }
 
 const Vec3<float> &Vehicle::getDirection() const
@@ -296,11 +302,31 @@ float Vehicle::getSpeed() const
 	return speed;
 }
 
-int Vehicle::getConstitution() const
+int Vehicle::getMaxConstitution() const { return this->getMaxHealth() + this->getMaxShield(); }
+
+int Vehicle::getConstitution() const { return this->getHealth() + this->getShield(); }
+
+int Vehicle::getMaxHealth() const { return this->type.health; }
+
+int Vehicle::getHealth() const { return this->health; }
+
+int Vehicle::getMaxShield() const
 {
-	// FIXME: Does shield get added here?
-	return this->type.health;
+	int maxShield = 0;
+
+	for (auto &e : this->equipment)
+	{
+		if (e->type.type != VEquipmentType::Type::General)
+			continue;
+		auto equipment = std::dynamic_pointer_cast<VEquipment>(e);
+		auto &equipmentType = static_cast<const VGeneralEquipmentType &>(equipment->type);
+		maxShield += equipmentType.shielding;
+	}
+
+	return maxShield;
 }
+
+int Vehicle::getShield() const { return this->shield; }
 
 int Vehicle::getArmor() const
 {
@@ -512,6 +538,17 @@ void Vehicle::addEquipment(Vec2<int> pos, const VEquipmentType &type)
 		default:
 			LogError("Equipment \"%s\" for \"%s\" at pos (%d,%d} has invalid type",
 			         type.name.c_str(), this->name.c_str(), pos.x, pos.y);
+	}
+}
+
+void Vehicle::removeEquipment(sp<VEquipment> object)
+{
+	this->equipment.remove(object);
+	// TODO: Any other variable values here?
+	// Clamp shield
+	if (this->shield > this->getMaxShield())
+	{
+		this->shield = this->getMaxShield();
 	}
 }
 

@@ -188,7 +188,7 @@ void VEquipScreen::EventOccurred(Event *e)
 				this->draggedEquipmentOffset = pair.first.p0 - mousePos;
 
 				// Return the equipment to the inventory
-				this->selected->equipment.remove(pair.second);
+				this->selected->removeEquipment(pair.second);
 				base->inventory[pair.second->type.id]++;
 				// FIXME: Return ammo to inventory
 				// FIXME: what happens if we don't have the stores to return?
@@ -405,34 +405,42 @@ void VEquipScreen::Render()
 
 		// FIXME: These stats would be great to have a generic (string?) referenced list
 		statsLabels[0]->SetText("Constitution");
-		statsValues[0]->SetText(UString::format("%d", (int)vehicle->getConstitution()));
+		if (vehicle->getConstitution() == vehicle->getMaxConstitution())
+		{
+			statsValues[0]->SetText(UString::format("%d", vehicle->getConstitution()));
+		}
+		else
+		{
+			statsValues[0]->SetText(UString::format("%d/%d", vehicle->getConstitution(),
+			                                        vehicle->getMaxConstitution()));
+		}
 
 		statsLabels[1]->SetText("Armor");
-		statsValues[1]->SetText(UString::format("%d", (int)vehicle->getArmor()));
+		statsValues[1]->SetText(UString::format("%d", vehicle->getArmor()));
 
 		// FIXME: This value doesn't seem to be the same as the %age shown in the ui?
 		statsLabels[2]->SetText("Accuracy");
-		statsValues[2]->SetText(UString::format("%d", (int)vehicle->getAccuracy()));
+		statsValues[2]->SetText(UString::format("%d", vehicle->getAccuracy()));
 
 		statsLabels[3]->SetText("Top Speed");
-		statsValues[3]->SetText(UString::format("%d", (int)vehicle->getTopSpeed()));
+		statsValues[3]->SetText(UString::format("%d", vehicle->getTopSpeed()));
 
 		statsLabels[4]->SetText("Acceleration");
-		statsValues[4]->SetText(UString::format("%d", (int)vehicle->getAcceleration()));
+		statsValues[4]->SetText(UString::format("%d", vehicle->getAcceleration()));
 
 		statsLabels[5]->SetText("Weight");
-		statsValues[5]->SetText(UString::format("%d", (int)vehicle->getWeight()));
+		statsValues[5]->SetText(UString::format("%d", vehicle->getWeight()));
 
 		statsLabels[6]->SetText("Fuel");
-		statsValues[6]->SetText(UString::format("%d", (int)vehicle->getFuel()));
+		statsValues[6]->SetText(UString::format("%d", vehicle->getFuel()));
 
 		statsLabels[7]->SetText("Passengers");
-		statsValues[7]->SetText(UString::format("%d/%d", (int)vehicle->getPassengers(),
-		                                        (int)vehicle->getMaxPassengers()));
+		statsValues[7]->SetText(
+		    UString::format("%d/%d", vehicle->getPassengers(), vehicle->getMaxPassengers()));
 
 		statsLabels[8]->SetText("Cargo");
 		statsValues[8]->SetText(
-		    UString::format("%d/%d", (int)vehicle->getCargo(), (int)vehicle->getMaxCargo()));
+		    UString::format("%d/%d", vehicle->getCargo(), vehicle->getMaxCargo()));
 
 		iconGraphic->SetImage(vehicle->type.equip_icon_small);
 	}
