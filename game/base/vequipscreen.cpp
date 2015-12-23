@@ -477,12 +477,66 @@ void VEquipScreen::Render()
 	for (auto &e : selected->equipment)
 	{
 		auto pos = e->equippedPosition;
+
+		VehicleType::AlignmentX alignX = VehicleType::AlignmentX::Left;
+		VehicleType::AlignmentY alignY = VehicleType::AlignmentY::Top;
+		Rect<int> slotBounds;
+		bool slotFound = false;
+
+		for (auto &slot : this->selected->type.equipment_layout_slots)
+		{
+			if (slot.bounds.p0 == pos)
+			{
+				alignX = slot.align_x;
+				alignY = slot.align_y;
+				slotBounds = slot.bounds;
+				slotFound = true;
+				break;
+			}
+		}
+
+		if (!slotFound)
+		{
+			LogError("No matching slot for equipment at {%d,%d}", pos.x, pos.y);
+		}
+
 		if (pos.x >= EQUIP_GRID_SLOTS.x || pos.y >= EQUIP_GRID_SLOTS.y)
 		{
 			LogError("Equipment at {%d,%d} outside grid", pos.x, pos.y);
 		}
 		pos *= EQUIP_GRID_SLOT_SIZE;
 		pos += equipOffset;
+
+		int diffX = slotBounds.getWidth() - e->type.equipscreen_size.x;
+		int diffY = slotBounds.getHeight() - e->type.equipscreen_size.y;
+
+		switch (alignX)
+		{
+			case VehicleType::AlignmentX::Left:
+				pos.x += 0;
+				break;
+			case VehicleType::AlignmentX::Right:
+				pos.x += diffX * EQUIP_GRID_SLOT_SIZE.x;
+				break;
+			case VehicleType::AlignmentX::Centre:
+				pos.x += (diffX * EQUIP_GRID_SLOT_SIZE.x) / 2;
+				break;
+		}
+
+		switch (alignY)
+		{
+			case VehicleType::AlignmentY::Top:
+				pos.y += 0;
+				break;
+			case VehicleType::AlignmentY::Bottom:
+				pos.y += diffY * EQUIP_GRID_SLOT_SIZE.y;
+
+				break;
+			case VehicleType::AlignmentY::Centre:
+				pos.y += (diffY * EQUIP_GRID_SLOT_SIZE.y) / 2;
+				break;
+		}
+
 		fw.renderer->draw(e->type.equipscreen_sprite, pos);
 		Vec2<int> endPos = pos;
 		endPos.x += e->type.equipscreen_sprite->size.x;
