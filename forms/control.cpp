@@ -657,15 +657,15 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 				if (subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "")
 				{
 					sb->GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
-					                            Strings::ToU8(subnode->Attribute("g")),
-					                            Strings::ToU8(subnode->Attribute("b")),
-					                            Strings::ToU8(subnode->Attribute("a")));
+					                           Strings::ToU8(subnode->Attribute("g")),
+					                           Strings::ToU8(subnode->Attribute("b")),
+					                           Strings::ToU8(subnode->Attribute("a")));
 				}
 				else
 				{
 					sb->GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
-					                            Strings::ToU8(subnode->Attribute("g")),
-					                            Strings::ToU8(subnode->Attribute("b")));
+					                           Strings::ToU8(subnode->Attribute("g")),
+					                           Strings::ToU8(subnode->Attribute("b")));
 				}
 			}
 			subnode = node->FirstChildElement("range");

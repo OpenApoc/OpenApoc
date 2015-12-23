@@ -187,7 +187,8 @@ void InGameOptions::EventOccurred(Event *e)
 				LogError("Failed to cast \"GLOBAL_GAIN_SLIDER\" control to ScrollBar");
 				return;
 			}
-			float gain = static_cast<float>(slider->GetValue()) / static_cast<float>(slider->Maximum);
+			float gain =
+			    static_cast<float>(slider->GetValue()) / static_cast<float>(slider->Maximum);
 			fw.soundBackend->setGain(SoundBackend::Gain::Global, gain);
 		}
 		else if (e->Data.Forms.RaisedBy->Name == "MUSIC_GAIN_SLIDER")
@@ -198,7 +199,8 @@ void InGameOptions::EventOccurred(Event *e)
 				LogError("Failed to cast \"MUSIC_GAIN_SLIDER\" control to ScrollBar");
 				return;
 			}
-			float gain = static_cast<float>(slider->GetValue()) / static_cast<float>(slider->Maximum);
+			float gain =
+			    static_cast<float>(slider->GetValue()) / static_cast<float>(slider->Maximum);
 			fw.soundBackend->setGain(SoundBackend::Gain::Music, gain);
 		}
 		else if (e->Data.Forms.RaisedBy->Name == "SAMPLE_GAIN_SLIDER")
@@ -209,7 +211,8 @@ void InGameOptions::EventOccurred(Event *e)
 				LogError("Failed to cast \"SAMPLE_GAIN_SLIDER\" control to ScrollBar");
 				return;
 			}
-			float gain = static_cast<float>(slider->GetValue()) / static_cast<float>(slider->Maximum);
+			float gain =
+			    static_cast<float>(slider->GetValue()) / static_cast<float>(slider->Maximum);
 			fw.soundBackend->setGain(SoundBackend::Gain::Sample, gain);
 		}
 	}
