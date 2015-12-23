@@ -110,6 +110,56 @@
           <y>11</y>
         </p0>
         <p1>
+          <x>8</x>
+          <y>12</y>
+        </p1>
+      </slot>
+      <slot type="general" align_x="left" align_y="top">
+        <p0>
+          <x>7</x>
+          <y>12</y>
+        </p0>
+        <p1>
+          <x>8</x>
+          <y>13</y>
+        </p1>
+      </slot>
+      <slot type="general" align_x="left" align_y="top">
+        <p0>
+          <x>7</x>
+          <y>13</y>
+        </p0>
+        <p1>
+          <x>8</x>
+          <y>14</y>
+        </p1>
+      </slot>
+      <slot type="general" align_x="left" align_y="top">
+        <p0>
+          <x>8</x>
+          <y>11</y>
+        </p0>
+        <p1>
+          <x>9</x>
+          <y>12</y>
+        </p1>
+      </slot>
+      <slot type="general" align_x="left" align_y="top">
+        <p0>
+          <x>8</x>
+          <y>12</y>
+        </p0>
+        <p1>
+          <x>9</x>
+          <y>13</y>
+        </p1>
+      </slot>
+      <slot type="general" align_x="left" align_y="top">
+        <p0>
+          <x>8</x>
+          <y>13</y>
+        </p0>
+        <p1>
           <x>9</x>
           <y>14</y>
         </p1>

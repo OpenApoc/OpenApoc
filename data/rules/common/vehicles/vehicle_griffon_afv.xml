@@ -68,6 +68,16 @@
           <y>4</y>
         </p0>
         <p1>
+          <x>8</x>
+          <y>5</y>
+        </p1>
+      </slot>
+      <slot type="general" align_x="left" align_y="top">
+        <p0>
+          <x>8</x>
+          <y>4</y>
+        </p0>
+        <p1>
           <x>9</x>
           <y>5</y>
         </p1>

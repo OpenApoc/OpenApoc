@@ -103,6 +103,116 @@
           <y>8</y>
         </p0>
         <p1>
+          <x>7</x>
+          <y>9</y>
+        </p1>
+      </slot>
+      <slot type="general" align_x="left" align_y="top">
+        <p0>
+          <x>6</x>
+          <y>9</y>
+        </p0>
+        <p1>
+          <x>7</x>
+          <y>10</y>
+        </p1>
+      </slot>
+      <slot type="general" align_x="left" align_y="top">
+        <p0>
+          <x>6</x>
+          <y>10</y>
+        </p0>
+        <p1>
+          <x>7</x>
+          <y>11</y>
+        </p1>
+      </slot>
+      <slot type="general" align_x="left" align_y="top">
+        <p0>
+          <x>7</x>
+          <y>8</y>
+        </p0>
+        <p1>
+          <x>8</x>
+          <y>9</y>
+        </p1>
+      </slot>
+      <slot type="general" align_x="left" align_y="top">
+        <p0>
+          <x>7</x>
+          <y>9</y>
+        </p0>
+        <p1>
+          <x>8</x>
+          <y>10</y>
+        </p1>
+      </slot>
+      <slot type="general" align_x="left" align_y="top">
+        <p0>
+          <x>7</x>
+          <y>10</y>
+        </p0>
+        <p1>
+          <x>8</x>
+          <y>11</y>
+        </p1>
+      </slot>
+      <slot type="general" align_x="left" align_y="top">
+        <p0>
+          <x>8</x>
+          <y>8</y>
+        </p0>
+        <p1>
+          <x>9</x>
+          <y>9</y>
+        </p1>
+      </slot>
+      <slot type="general" align_x="left" align_y="top">
+        <p0>
+          <x>8</x>
+          <y>9</y>
+        </p0>
+        <p1>
+          <x>9</x>
+          <y>10</y>
+        </p1>
+      </slot>
+      <slot type="general" align_x="left" align_y="top">
+        <p0>
+          <x>8</x>
+          <y>10</y>
+        </p0>
+        <p1>
+          <x>9</x>
+          <y>11</y>
+        </p1>
+      </slot>
+      <slot type="general" align_x="left" align_y="top">
+        <p0>
+          <x>9</x>
+          <y>8</y>
+        </p0>
+        <p1>
+          <x>10</x>
+          <y>9</y>
+        </p1>
+      </slot>
+      <slot type="general" align_x="left" align_y="top">
+        <p0>
+          <x>9</x>
+          <y>9</y>
+        </p0>
+        <p1>
+          <x>10</x>
+          <y>10</y>
+        </p1>
+      </slot>
+      <slot type="general" align_x="left" align_y="top">
+        <p0>
+          <x>9</x>
+          <y>10</y>
+        </p0>
+        <p1>
           <x>10</x>
           <y>11</y>
         </p1>

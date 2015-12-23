@@ -452,11 +452,33 @@ int Vehicle::getCargo() const
 
 bool Vehicle::canAddEquipment(Vec2<int> pos, const VEquipmentType &type) const
 {
+	Vec2<int> slotOrigin;
+	bool slotFound = false;
+	// Check the slot this occupies hasn't already got something there
+	for (auto &slot : this->type.equipment_layout_slots)
+	{
+		if (slot.bounds.within(pos))
+		{
+			slotOrigin = slot.bounds.p0;
+			slotFound = true;
+			break;
+		}
+	}
+	// If this was not within a slot fail
+	if (!slotFound)
+	{
+		return false;
+	}
 	// Check that the equipment doesn't overlap with any other and doesn't
 	// go outside a slot of the correct type
 	Rect<int> bounds{pos, pos + type.equipscreen_size};
 	for (auto &otherEquipment : this->equipment)
 	{
+		// Something is already in that slot, fail
+		if (otherEquipment->equippedPosition == slotOrigin)
+		{
+			return false;
+		}
 		Rect<int> otherBounds{otherEquipment->equippedPosition,
 		                      otherEquipment->equippedPosition +
 		                          otherEquipment->type.equipscreen_size};
@@ -504,15 +526,33 @@ void Vehicle::addEquipment(Vec2<int> pos, const VEquipmentType &type)
 	//	LogError("Trying to add \"%s\" at {%d,%d} on vehicle \"%s\" failed", type.id.c_str(), pos.x,
 	//	         pos.y, this->name.c_str());
 	//}
+	Vec2<int> slotOrigin;
+	bool slotFound = false;
+	// Check the slot this occupies hasn't already got something there
+	for (auto &slot : this->type.equipment_layout_slots)
+	{
+		if (slot.bounds.within(pos))
+		{
+			slotOrigin = slot.bounds.p0;
+			slotFound = true;
+			break;
+		}
+	}
+	// If this was not within a slow fail
+	if (!slotFound)
+	{
+		LogError("Equipping \"%s\" on \"%s\" at {%d,%d} failed: No valid slot", type.name.c_str(),
+		         this->name.c_str(), pos.x, pos.y);
+		return;
+	}
 
 	switch (type.type)
 	{
-
 		case VEquipmentType::Type::Engine:
 		{
 			auto engine = std::make_shared<VEngine>(static_cast<const VEngineType &>(type));
 			this->equipment.emplace_back(engine);
-			engine->equippedPosition = pos;
+			engine->equippedPosition = slotOrigin;
 			LogInfo("Equipped \"%s\" with engine \"%s\"", this->name.c_str(), type.name.c_str());
 			break;
 		}
@@ -521,7 +561,7 @@ void Vehicle::addEquipment(Vec2<int> pos, const VEquipmentType &type)
 			auto &wtype = static_cast<const VWeaponType &>(type);
 			auto weapon = std::make_shared<VWeapon>(wtype, shared_from_this(), wtype.max_ammo);
 			this->equipment.emplace_back(weapon);
-			weapon->equippedPosition = pos;
+			weapon->equippedPosition = slotOrigin;
 			LogInfo("Equipped \"%s\" with weapon \"%s\"", this->name.c_str(), type.name.c_str());
 			break;
 		}
@@ -531,7 +571,7 @@ void Vehicle::addEquipment(Vec2<int> pos, const VEquipmentType &type)
 			auto equipment = std::make_shared<VGeneralEquipment>(gtype);
 			LogInfo("Equipped \"%s\" with general equipment \"%s\"", this->name.c_str(),
 			        type.name.c_str());
-			equipment->equippedPosition = pos;
+			equipment->equippedPosition = slotOrigin;
 			this->equipment.emplace_back(equipment);
 			break;
 		}
@@ -564,5 +604,4 @@ void Vehicle::equipDefaultEquipment(Rules &rules)
 		this->addEquipment(pos, etype);
 	}
 }
-
 }; // namespace OpenApoc
