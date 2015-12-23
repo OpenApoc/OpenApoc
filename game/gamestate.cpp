@@ -72,6 +72,28 @@ GameState::GameState(Framework &fw, Rules &rules)
 		b->landed_vehicles.insert(testVehicle);
 		testVehicle->building = b;
 
+		// Initialise these vehicles with a random weapon cooldown to stop them all firing at
+		// exactly the same time when starting the game
+		for (auto e : testVehicle->equipment)
+		{
+
+			if (e->type.type != VEquipmentType::Type::Weapon)
+			{
+				continue;
+			}
+			auto weapon = std::dynamic_pointer_cast<VWeapon>(e);
+
+			auto &weaponType = static_cast<const VWeaponType &>(weapon->type);
+
+			std::uniform_int_distribution<int> reload_distribution(0, weaponType.fire_delay *
+			                                                              TICK_SCALE);
+			int initialDelay = reload_distribution(rng);
+			if (initialDelay != 0)
+			{
+				weapon->setReloadTime(initialDelay);
+			}
+		}
+
 		vehicleTypeIt++;
 	}
 

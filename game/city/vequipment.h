@@ -64,6 +64,7 @@ class VWeapon : public VEquipment
 	float getRange() const;
 	bool canFire() const { return state == State::Ready; }
 	void update(int ticks);
+	void setReloadTime(int ticks);
 	// Reload uses up to 'ammoAvailable' to reload the weapon. It returns the amount
 	// actually used.
 	int reload(int ammoAvailable);

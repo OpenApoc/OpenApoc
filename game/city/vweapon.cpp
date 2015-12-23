@@ -137,4 +137,17 @@ float VWeapon::getRange() const
 	return weaponType.range;
 }
 
+void VWeapon::setReloadTime(int ticks)
+{
+	if (ticks <= 0)
+	{
+		this->reloadTime = 0;
+	}
+	else
+	{
+		this->state = State::Reloading;
+		this->reloadTime = ticks;
+	}
+}
+
 }; // namespace OpenApoc
