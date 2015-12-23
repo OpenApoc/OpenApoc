@@ -51,4 +51,10 @@ enum class FillMethod
 	Tile
 };
 
+enum class Orientation
+{
+	Vertical,
+	Horizontal
+};
+
 }; // namespace OpenApoc

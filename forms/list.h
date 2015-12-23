@@ -7,13 +7,13 @@ namespace OpenApoc
 {
 
 class Framework;
-class VScrollBar;
+class ScrollBar;
 
 class ListBox : public Control
 {
   private:
 	// std::vector<Control*> items;
-	VScrollBar *scroller;
+	ScrollBar *scroller;
 	bool scroller_is_internal;
 
 	void ConfigureInternalScrollBar();
@@ -25,7 +25,7 @@ class ListBox : public Control
 	int ItemHeight;
 
 	ListBox(Framework &fw, Control *Owner);
-	ListBox(Framework &fw, Control *Owner, VScrollBar *ExternalScrollBar);
+	ListBox(Framework &fw, Control *Owner, ScrollBar *ExternalScrollBar);
 	virtual ~ListBox();
 
 	virtual void EventOccured(Event *e) override;

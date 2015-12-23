@@ -9,7 +9,6 @@
 #include "textbutton.h"
 #include "graphicbutton.h"
 #include "checkbox.h"
-#include "vscrollbar.h"
-#include "hscrollbar.h"
+#include "scrollbar.h"
 #include "list.h"
 #include "textedit.h"

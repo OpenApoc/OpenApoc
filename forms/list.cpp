@@ -1,6 +1,6 @@
 
 #include "forms/list.h"
-#include "forms/vscrollbar.h"
+#include "forms/scrollbar.h"
 
 namespace OpenApoc
 {
@@ -10,7 +10,7 @@ ListBox::ListBox(Framework &fw, Control *Owner) : Control(fw, Owner), ItemHeight
 	ConfigureInternalScrollBar();
 }
 
-ListBox::ListBox(Framework &fw, Control *Owner, VScrollBar *ExternalScrollBar)
+ListBox::ListBox(Framework &fw, Control *Owner, ScrollBar *ExternalScrollBar)
     : Control(fw, Owner), ItemHeight(64)
 {
 	if (ExternalScrollBar == nullptr)
@@ -29,7 +29,7 @@ ListBox::~ListBox() { Clear(); }
 
 void ListBox::ConfigureInternalScrollBar()
 {
-	scroller = new VScrollBar(fw, this);
+	scroller = new ScrollBar(fw, this);
 	scroller->Size.x = 16;
 	scroller->Size.y = 16;
 	scroller->Location.x = this->Size.x - 16;
@@ -54,7 +54,7 @@ void ListBox::OnRender()
 		if (ctrl != scroller)
 		{
 			ctrl->Location.x = 0;
-			ctrl->Location.y = yoffset - scroller->Value;
+			ctrl->Location.y = yoffset - scroller->GetValue();
 			ctrl->Size.x = (scroller_is_internal ? scroller->Location.x : this->Size.x);
 			ctrl->Size.y = ItemHeight;
 			yoffset += ctrl->Size.y + 1;
@@ -132,7 +132,7 @@ Control *ListBox::CopyTo(Control *CopyParent)
 	}
 	else
 	{
-		copy = new ListBox(fw, CopyParent, static_cast<VScrollBar *>(scroller->lastCopiedTo));
+		copy = new ListBox(fw, CopyParent, static_cast<ScrollBar *>(scroller->lastCopiedTo));
 	}
 	copy->ItemHeight = this->ItemHeight;
 	CopyControlData(copy);

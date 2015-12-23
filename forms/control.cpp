@@ -646,24 +646,24 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 			auto cb = new CheckBox(fw, this);
 			cb->ConfigureFromXML(node);
 		}
-		if (nodename == "vscroll")
+		if (nodename == "scroll")
 		{
-			auto vsb = new VScrollBar(fw, this);
-			vsb->ConfigureFromXML(node);
+			auto sb = new ScrollBar(fw, this);
+			sb->ConfigureFromXML(node);
 
 			subnode = node->FirstChildElement("grippercolour");
 			if (subnode != nullptr)
 			{
 				if (subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "")
 				{
-					vsb->GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
+					sb->GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
 					                            Strings::ToU8(subnode->Attribute("g")),
 					                            Strings::ToU8(subnode->Attribute("b")),
 					                            Strings::ToU8(subnode->Attribute("a")));
 				}
 				else
 				{
-					vsb->GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
+					sb->GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
 					                            Strings::ToU8(subnode->Attribute("g")),
 					                            Strings::ToU8(subnode->Attribute("b")));
 				}
@@ -674,65 +674,27 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 				if (subnode->Attribute("min") != nullptr &&
 				    UString(subnode->Attribute("min")) != "")
 				{
-					vsb->Minimum = Strings::ToInteger(subnode->Attribute("min"));
+					sb->Minimum = Strings::ToInteger(subnode->Attribute("min"));
 				}
 				if (subnode->Attribute("max") != nullptr &&
 				    UString(subnode->Attribute("max")) != "")
 				{
-					vsb->Maximum = Strings::ToInteger(subnode->Attribute("max"));
-				}
-			}
-		}
-
-		if (nodename == "hscroll")
-		{
-			auto hsb = new HScrollBar(fw, this);
-			hsb->ConfigureFromXML(node);
-
-			subnode = node->FirstChildElement("grippercolour");
-			if (subnode != nullptr)
-			{
-				if (subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "")
-				{
-					hsb->GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
-					                            Strings::ToU8(subnode->Attribute("g")),
-					                            Strings::ToU8(subnode->Attribute("b")),
-					                            Strings::ToU8(subnode->Attribute("a")));
-				}
-				else
-				{
-					hsb->GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
-					                            Strings::ToU8(subnode->Attribute("g")),
-					                            Strings::ToU8(subnode->Attribute("b")));
-				}
-			}
-			subnode = node->FirstChildElement("range");
-			if (subnode != nullptr)
-			{
-				if (subnode->Attribute("min") != nullptr &&
-				    UString(subnode->Attribute("min")) != "")
-				{
-					hsb->Minimum = Strings::ToInteger(subnode->Attribute("min"));
-				}
-				if (subnode->Attribute("max") != nullptr &&
-				    UString(subnode->Attribute("max")) != "")
-				{
-					hsb->Maximum = Strings::ToInteger(subnode->Attribute("max"));
+					sb->Maximum = Strings::ToInteger(subnode->Attribute("max"));
 				}
 			}
 		}
 
 		if (nodename == "listbox")
 		{
-			VScrollBar *vsb = nullptr;
+			ScrollBar *sb = nullptr;
 
 			if (node->Attribute("scrollbarid") != nullptr &&
 			    UString(node->Attribute("scrollbarid")) != "")
 			{
 				attribvalue = node->Attribute("scrollbarid");
-				vsb = this->FindControlTyped<VScrollBar>(attribvalue);
+				sb = this->FindControlTyped<ScrollBar>(attribvalue);
 			}
-			auto lb = new ListBox(fw, this, vsb);
+			auto lb = new ListBox(fw, this, sb);
 			lb->ConfigureFromXML(node);
 		}
 

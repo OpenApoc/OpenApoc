@@ -360,12 +360,11 @@
     <ClCompile Include="forms\form.cpp" />
     <ClCompile Include="forms\graphic.cpp" />
     <ClCompile Include="forms\graphicbutton.cpp" />
-    <ClCompile Include="forms\hscrollbar.cpp" />
+    <ClCompile Include="forms\scrollbar.cpp" />
     <ClCompile Include="forms\label.cpp" />
     <ClCompile Include="forms\list.cpp" />
     <ClCompile Include="forms\textbutton.cpp" />
     <ClCompile Include="forms\textedit.cpp" />
-    <ClCompile Include="forms\vscrollbar.cpp" />
     <ClCompile Include="framework\font.cpp" />
     <ClCompile Include="framework\ignorecase.c" />
     <ClCompile Include="framework\image.cpp" />
@@ -457,12 +456,11 @@
     <ClInclude Include="forms\forms_enums.h" />
     <ClInclude Include="forms\graphic.h" />
     <ClInclude Include="forms\graphicbutton.h" />
-    <ClInclude Include="forms\hscrollbar.h" />
+    <ClInclude Include="forms\scrollbar.h" />
     <ClInclude Include="forms\label.h" />
     <ClInclude Include="forms\list.h" />
     <ClInclude Include="forms\textbutton.h" />
     <ClInclude Include="forms\textedit.h" />
-    <ClInclude Include="forms\vscrollbar.h" />
     <ClInclude Include="framework\font.h" />
     <ClInclude Include="framework\fs.h" />
     <ClInclude Include="framework\ignorecase.h" />

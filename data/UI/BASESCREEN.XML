@@ -8,12 +8,12 @@
         <image>xcom3/UFODATA/BASE.PCX</image>
         <position x="0" y="0"/>
         <size width="640" height="480"/>
-        <hscroll id="SCROLL_LISTPOSITION">
+        <scroll id="SCROLL_LISTPOSITION">
           <backcolour r="80" g="80" b="80" a="0"/>
           <grippercolour r="192" g="192" b="192"/>
           <position x="32" y="453"/>
           <size width="180" height="13"/>
-        </hscroll>
+        </scroll>
       </graphic>
       <label text="BASES">
         <backcolour r="0" g="0" b="0" a="0"/>

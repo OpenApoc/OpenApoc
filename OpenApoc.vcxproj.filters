@@ -87,12 +87,6 @@
     <ClCompile Include="game\general\optionsmenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="forms\vscrollbar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="forms\hscrollbar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="forms\list.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -291,6 +285,9 @@
     <ClCompile Include="game\base\vequipscreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="forms\scrollbar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -378,12 +375,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\general\optionsmenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="forms\vscrollbar.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="forms\hscrollbar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="forms\list.h">
@@ -600,6 +591,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\base\vequipscreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="forms\scrollbar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -39,13 +39,13 @@
           <image/>
           <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
         </graphicbutton>
-        <hscroll id="GLOBAL_GAIN_SLIDER">
+        <scroll id="GLOBAL_GAIN_SLIDER">
           <position x="76" y="264"/>
           <size width="145" height="14"/>
           <backcolour r="0" g="0" b="0" a="0"/>
           <grippercolour r="255" g="255" b="255" a="255"/>
           <range min="0" max="20"/>
-        </hscroll>
+        </scroll>
         <graphicbutton id="MUSIC_GAIN_DOWN">
           <position x="61" y="290"/>
           <size width="16" height="20"/>
@@ -60,13 +60,13 @@
           <image/>
           <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
         </graphicbutton>
-        <hscroll id="MUSIC_GAIN_SLIDER">
+        <scroll id="MUSIC_GAIN_SLIDER">
           <position x="76" y="292"/>
           <size width="145" height="14"/>
           <backcolour r="0" g="0" b="0" a="0"/>
           <grippercolour r="255" g="255" b="255" a="255"/>
           <range min="0" max="20"/>
-        </hscroll>
+        </scroll>
         <graphicbutton id="SAMPLE_GAIN_DOWN">
           <position x="61" y="318"/>
           <size width="16" height="20"/>
@@ -81,13 +81,13 @@
           <image/>
           <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
         </graphicbutton>
-        <hscroll id="SAMPLE_GAIN_SLIDER">
+        <scroll id="SAMPLE_GAIN_SLIDER">
           <position x="76" y="319"/>
           <size width="145" height="14"/>
           <backcolour r="0" g="0" b="0" a="0"/>
           <grippercolour r="255" g="255" b="255" a="255"/>
           <range min="0" max="20"/>
-        </hscroll>
+        </scroll>
         <checkbox id="SHOW_TILE_ORIGIN">
           <position x="310" y="80"/>
         </checkbox>
