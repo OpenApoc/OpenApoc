@@ -595,6 +595,11 @@ void VEquipScreen::Render()
 				continue;
 			}
 			int count = invPair.second;
+			if (count == 0)
+			{
+				// Not in stock
+				continue;
+			}
 			auto countImage = labelFont->getString(UString::format("%d", count));
 			auto &equipmentImage = equipmentType.equipscreen_sprite;
 			fw.renderer->draw(equipmentImage, inventoryPosition);
