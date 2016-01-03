@@ -7,14 +7,13 @@ namespace OpenApoc
 {
 
 TextButton::TextButton(Framework &fw, Control *Owner, UString Text, sp<BitmapFont> font)
-    : Control(fw, Owner), text(Text), font(font),
+    : Control(fw, Owner), text(Text), font(font), cached(nullptr),
+      buttonclick(
+          fw.data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
       buttonbackground(fw.data->load_image("UI/TEXTBUTTONBACK.PNG")),
       TextHAlign(HorizontalAlignment::Centre), TextVAlign(VerticalAlignment::Centre),
       RenderStyle(TextButtonRenderStyles::MenuButtonStyle)
 {
-	this->buttonclick =
-	    fw.data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050");
-	cached = nullptr;
 	if (font)
 	{
 		palette = font->getPalette();

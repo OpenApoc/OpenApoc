@@ -7,11 +7,12 @@
 namespace OpenApoc
 {
 
-CheckBox::CheckBox(Framework &fw, Control *Owner) : Control(fw, Owner), Checked(false)
+CheckBox::CheckBox(Framework &fw, Control *Owner)
+    : Control(fw, Owner), buttonclick(fw.data->load_sample(
+                              "RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
+      Checked(false)
 {
 	LoadResources();
-	this->buttonclick =
-	    fw.data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050");
 }
 
 CheckBox::~CheckBox() {}

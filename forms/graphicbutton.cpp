@@ -8,30 +8,17 @@ namespace OpenApoc
 {
 
 GraphicButton::GraphicButton(Framework &fw, Control *Owner, UString Image, UString ImageDepressed)
-    : Control(fw, Owner)
+    : GraphicButton(fw, Owner, Image, ImageDepressed, "")
 {
-	image = nullptr;
-	imagedepressed = nullptr;
-	imagehover = nullptr;
-	image_name = Image;
-	imagedepressed_name = ImageDepressed;
-	imagehover_name = "";
-	this->buttonclick =
-	    fw.data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050");
 }
 
 GraphicButton::GraphicButton(Framework &fw, Control *Owner, UString Image, UString ImageDepressed,
                              UString ImageHover)
-    : Control(fw, Owner)
+    : Control(fw, Owner), image_name(Image), imagedepressed_name(ImageDepressed),
+      imagehover_name(ImageHover), image(nullptr), imagedepressed(nullptr), imagehover(nullptr),
+      buttonclick(
+          fw.data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050"))
 {
-	image = nullptr;
-	imagedepressed = nullptr;
-	imagehover = nullptr;
-	image_name = Image;
-	imagedepressed_name = ImageDepressed;
-	imagehover_name = ImageHover;
-	this->buttonclick =
-	    fw.data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050");
 }
 
 GraphicButton::~GraphicButton() {}

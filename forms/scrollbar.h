@@ -3,11 +3,13 @@
 
 #include "control.h"
 #include "forms_enums.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {
 
 class Framework;
+class Image;
 
 class ScrollBar : public Control
 {
@@ -15,6 +17,7 @@ class ScrollBar : public Control
 	bool capture;
 	float grippersize;
 	float segmentsize;
+	sp<Image> gripperbutton;
 
 	int Value;
 	Orientation BarOrientation;

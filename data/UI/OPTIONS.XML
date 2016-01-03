@@ -15,8 +15,8 @@
         <scroll id="SCROLL_LISTPOSITION">
           <backcolour r="80" g="80" b="80" a="0"/>
           <grippercolour r="192" g="192" b="192"/>
-          <position x="559" y="85"/>
-          <size width="13" height="350"/>
+          <position x="558" y="85"/>
+          <size width="16" height="350"/>
         </scroll>
         <listbox id="LISTBOX_OPTIONS" scrollbarid="SCROLL_LISTPOSITION">
           <backcolour r="80" g="80" b="80" a="120"/>

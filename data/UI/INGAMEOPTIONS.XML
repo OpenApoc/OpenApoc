@@ -41,7 +41,7 @@
         </graphicbutton>
         <scroll id="GLOBAL_GAIN_SLIDER">
           <position x="76" y="264"/>
-          <size width="145" height="14"/>
+          <size width="145" height="15"/>
           <backcolour r="0" g="0" b="0" a="0"/>
           <grippercolour r="255" g="255" b="255" a="255"/>
           <range min="0" max="20"/>
@@ -62,7 +62,7 @@
         </graphicbutton>
         <scroll id="MUSIC_GAIN_SLIDER">
           <position x="76" y="292"/>
-          <size width="145" height="14"/>
+          <size width="145" height="15"/>
           <backcolour r="0" g="0" b="0" a="0"/>
           <grippercolour r="255" g="255" b="255" a="255"/>
           <range min="0" max="20"/>
@@ -83,7 +83,7 @@
         </graphicbutton>
         <scroll id="SAMPLE_GAIN_SLIDER">
           <position x="76" y="319"/>
-          <size width="145" height="14"/>
+          <size width="145" height="15"/>
           <backcolour r="0" g="0" b="0" a="0"/>
           <grippercolour r="255" g="255" b="255" a="255"/>
           <range min="0" max="20"/>

@@ -7,11 +7,10 @@ namespace OpenApoc
 {
 
 Graphic::Graphic(Framework &fw, Control *Owner, UString Image)
-    : Control(fw, Owner), ImageHAlign(HorizontalAlignment::Left),
-      ImageVAlign(VerticalAlignment::Top), ImagePosition(FillMethod::Stretch), AutoSize(false)
+    : Control(fw, Owner), image_name(Image), image(fw.gamecore->GetImage(Image)),
+      ImageHAlign(HorizontalAlignment::Left), ImageVAlign(VerticalAlignment::Top),
+      ImagePosition(FillMethod::Stretch), AutoSize(false)
 {
-	image_name = Image;
-	image = fw.gamecore->GetImage(image_name);
 }
 
 Graphic::~Graphic() {}

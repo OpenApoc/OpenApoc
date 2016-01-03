@@ -7,23 +7,20 @@
 namespace OpenApoc
 {
 
-ScrollBar::ScrollBar(Framework &fw, Control *Owner)
-    : Control(fw, Owner), capture(false), grippersize(1), segmentsize(1), Value(0),
-      BarOrientation(Orientation::Vertical), RenderStyle(ScrollBarRenderStyles::SolidButtonStyle),
-      GripperColour(220, 192, 192), Minimum(0), Maximum(10), LargeChange(2),
-      AssociatedControl(nullptr)
+ScrollBar::ScrollBar(Framework &fw, Control *Owner) : ScrollBar(fw, Owner, nullptr)
 {
 	// LoadResources();
 }
 
 ScrollBar::ScrollBar(Framework &fw, Control *Owner, Control *AssociateWith)
     : Control(fw, Owner), capture(false), grippersize(1), segmentsize(1),
-      GripperColour(220, 192, 192), Minimum(0), Maximum(10), Value(0),
-      BarOrientation(Orientation::Vertical), LargeChange(2),
-      RenderStyle(ScrollBarRenderStyles::SolidButtonStyle)
+      gripperbutton(fw.data->load_image(
+          "PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:4:UI/menuopt.pal")),
+      Value(0), BarOrientation(Orientation::Vertical),
+      RenderStyle(ScrollBarRenderStyles::MenuButtonStyle), GripperColour(220, 192, 192), Minimum(0),
+      Maximum(10), LargeChange(2), AssociatedControl(AssociateWith)
 {
 	// LoadResources();
-	AssociatedControl = AssociateWith;
 }
 
 ScrollBar::~ScrollBar() {}
@@ -116,6 +113,7 @@ void ScrollBar::OnRender()
 			fw.renderer->drawFilledRect(newpos, newsize, GripperColour);
 			break;
 		case ScrollBarRenderStyles::MenuButtonStyle:
+			fw.renderer->draw(gripperbutton, newpos);
 			break;
 	}
 }
@@ -142,6 +140,11 @@ void ScrollBar::Update()
 	if (grippersize < 16.0f)
 	{
 		grippersize = 16.0f;
+		segmentsize = (size - grippersize) / static_cast<float>(segments - 1);
+	}
+	if (RenderStyle == ScrollBarRenderStyles::MenuButtonStyle)
+	{
+		grippersize = gripperbutton->size.x;
 		segmentsize = (size - grippersize) / static_cast<float>(segments - 1);
 	}
 }
