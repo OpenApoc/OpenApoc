@@ -56,7 +56,7 @@ void UfopaediaCategory::Begin()
 	Label *infolabel = menuform->FindControlTyped<Label>("TEXT_INFO");
 	ListBox *entrylist = menuform->FindControlTyped<ListBox>("LISTBOX_SHORTCUTS");
 	entrylist->Clear();
-	entrylist->ItemHeight = infolabel->GetFont()->GetFontHeight() + 2;
+	entrylist->ItemSize = infolabel->GetFont()->GetFontHeight() + 2;
 	int idx = 1;
 	for (auto entry = Entries.begin(); entry != Entries.end(); entry++)
 	{

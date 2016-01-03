@@ -72,7 +72,7 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 	lb->Size.x = c->Size.x;
 	lb->Size.y = interactWithDisplay->Location.y - lb->Location.y;
 	lb->Name = "FORM_LIST";
-	lb->ItemHeight = lb->Location.y;
+	lb->ItemSize = lb->Location.y;
 	lb->BackgroundColour.r = 24;
 	lb->BackgroundColour.g = 24;
 	lb->BackgroundColour.b = 24;

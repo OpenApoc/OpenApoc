@@ -57,6 +57,17 @@ void BaseScreen::Begin()
 	baseView = basescreenform->FindControlTyped<Graphic>("GRAPHIC_BASE_VIEW");
 	selText = basescreenform->FindControlTyped<Label>("TEXT_SELECTED_FACILITY");
 	selGraphic = basescreenform->FindControlTyped<Graphic>("GRAPHIC_SELECTED_FACILITY");
+
+	ListBox *facilities = basescreenform->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
+	for (auto &i : fw.rules->getFacilityDefs())
+	{
+		auto &facility = i.second;
+		if (facility.fixed)
+			continue;
+
+		Graphic *graphic = new Graphic(fw, nullptr, facility.sprite);
+		facilities->AddItem(graphic);
+	}
 }
 
 void BaseScreen::Pause() {}

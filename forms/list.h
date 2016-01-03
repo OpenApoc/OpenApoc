@@ -2,6 +2,7 @@
 #pragma once
 
 #include "control.h"
+#include "forms_enums.h"
 
 namespace OpenApoc
 {
@@ -22,7 +23,8 @@ class ListBox : public Control
 	virtual void OnRender() override;
 
   public:
-	int ItemHeight;
+	int ItemSize;
+	Orientation ListOrientation;
 
 	ListBox(Framework &fw, Control *Owner);
 	ListBox(Framework &fw, Control *Owner, ScrollBar *ExternalScrollBar);

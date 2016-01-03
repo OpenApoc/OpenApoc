@@ -696,6 +696,24 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 			}
 			auto lb = new ListBox(fw, this, sb);
 			lb->ConfigureFromXML(node);
+			subnode = node->FirstChildElement("itemsize");
+			if (subnode != nullptr && UString(subnode->GetText()) != "")
+			{
+				lb->ItemSize = Strings::ToInteger(subnode->GetText());
+			}
+			subnode = node->FirstChildElement("orientation");
+			if (subnode != nullptr && UString(subnode->GetText()) != "")
+			{
+				UString value = subnode->GetText();
+				if (value == "horizontal")
+				{
+					lb->ListOrientation = Orientation::Horizontal;
+				}
+				if (value == "vertical")
+				{
+					lb->ListOrientation = Orientation::Vertical;
+				}
+			}
 		}
 
 		if (nodename == "textedit")

@@ -8,12 +8,6 @@
         <image>xcom3/UFODATA/BASE.PCX</image>
         <position x="0" y="0"/>
         <size width="640" height="480"/>
-        <scroll id="SCROLL_LISTPOSITION">
-          <backcolour r="80" g="80" b="80" a="0"/>
-          <grippercolour r="192" g="192" b="192"/>
-          <position x="32" y="452"/>
-          <size width="592" height="15"/>
-        </scroll>
       </graphic>
       <label text="BASES">
         <backcolour r="0" g="0" b="0" a="0"/>
@@ -58,6 +52,32 @@
         <alignment horizontal="centre" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
+      <scroll id="LISTBOX_SCROLL">
+        <backcolour r="80" g="80" b="80" a="0"/>
+        <grippercolour r="192" g="192" b="192"/>
+        <position x="30" y="452"/>
+        <size width="536" height="15"/>
+      </scroll>
+      <listbox id="LISTBOX_FACILITIES" scrollbarid="LISTBOX_SCROLL">
+        <backcolour r="0" g="0" b="0" a="0"/>
+        <position x="17" y="380"/>
+        <size width="564" height="62"/>
+        <orientation>horizontal</orientation>
+      </listbox>
+      <graphicbutton id="LISTBOX_SCROLL_LEFT">
+        <position x="6" y="449"/>
+        <size width="25" height="21"/>
+        <backcolour a="0"/>
+        <image/>
+        <imagedepressed>BUTTON_SCROLL_LEFT_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="LISTBOX_SCROLL_RIGHT">
+        <position x="566" y="449"/>
+        <size width="25" height="21"/>
+        <backcolour a="0"/>
+        <image/>
+        <imagedepressed>BUTTON_SCROLL_RIGHT_DEPRESSED</imagedepressed>
+      </graphicbutton>
       <graphicbutton id="BUTTON_BASE_HIREFIRESTAFF">
         <position x="602" y="40"/>
         <size width="35" height="34"/>
