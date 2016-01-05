@@ -41,7 +41,26 @@ VEquipScreen::VEquipScreen(Framework &fw)
 
 VEquipScreen::~VEquipScreen() {}
 
-void VEquipScreen::Begin() {}
+void VEquipScreen::Begin()
+{
+
+	auto *list = form->FindControlTyped<ListBox>("VEHICLE_SELECT_BOX");
+	for (auto &vehiclePtr : fw.state->getPlayer()->vehicles)
+	{
+		auto vehicle = vehiclePtr.lock();
+		if (!vehicle)
+		{
+			LogError(
+			    "Invalid vehicle found in list - this should never happen as they're cleaned up "
+			    "at the end of each city update?");
+		}
+		auto graphic = new Graphic(fw, nullptr, vehicle->type.equip_icon_big_path);
+		graphic->AutoSize = true;
+		graphic->ImagePosition = FillMethod::Fit;
+		graphic->BackgroundColour = {0, 0, 0, 0};
+		list->AddItem(graphic);
+	}
+}
 
 void VEquipScreen::Pause() {}
 
