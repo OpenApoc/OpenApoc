@@ -44,6 +44,8 @@ class Framework
 	void Audio_Initialise();
 	void Audio_Shutdown();
 
+	static Framework *instance;
+
   public:
 	std::unique_ptr<Data> data;
 	std::unique_ptr<GameState> state;
@@ -59,6 +61,8 @@ class Framework
 
 	Framework(const UString programName, const std::vector<UString> cmdline);
 	~Framework();
+
+	static Framework &getInstance();
 
 	void Run();
 	void ProcessEvents();
@@ -83,5 +87,7 @@ class Framework
 	sp<Stage> Stage_GetPrevious();
 	sp<Stage> Stage_GetPrevious(sp<Stage> From);
 };
+
+static inline Framework &fw() { return Framework::getInstance(); }
 
 }; // namespace OpenApoc

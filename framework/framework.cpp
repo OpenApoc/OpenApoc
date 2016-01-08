@@ -75,6 +75,8 @@ std::map<UString, std::unique_ptr<OpenApoc::SoundBackendFactory>> *registeredSou
 namespace OpenApoc
 {
 
+Framework *Framework::instance = nullptr;
+
 void registerRenderer(RendererFactory *factory, UString name)
 {
 	if (!registeredRenderers)
@@ -163,6 +165,12 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 {
 	TRACE_FN;
 	LogInfo("Starting framework");
+
+	if (this->instance)
+	{
+		LogError("Multiple Framework instances created");
+	}
+
 	PHYSFS_init(programName.c_str());
 #ifdef ANDROID
 	SDL_SetHint(SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH, "1");
@@ -240,6 +248,8 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 
 	Display_Initialise();
 	Audio_Initialise();
+
+	Framework::instance = this;
 }
 
 Framework::~Framework()
@@ -261,6 +271,16 @@ Framework::~Framework()
 	LogInfo("SDL shutdown");
 	PHYSFS_deinit();
 	SDL_Quit();
+	Framework::instance = nullptr;
+}
+
+Framework &Framework::getInstance()
+{
+	if (!Framework::instance)
+	{
+		LogError("Framework::getInstance() called with no live Framework");
+	}
+	return *Framework::instance;
 }
 
 void Framework::Run()
