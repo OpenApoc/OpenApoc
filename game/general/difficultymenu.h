@@ -18,7 +18,7 @@ class DifficultyMenu : public Stage
 	StageCmd stageCmd;
 
   public:
-	DifficultyMenu(Framework &fw);
+	DifficultyMenu();
 	~DifficultyMenu();
 	// Stage control
 	virtual void Begin() override;

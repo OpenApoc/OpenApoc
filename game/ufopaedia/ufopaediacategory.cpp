@@ -7,8 +7,8 @@
 namespace OpenApoc
 {
 
-UfopaediaCategory::UfopaediaCategory(Framework &fw, tinyxml2::XMLElement *Element)
-    : Stage(fw), menuform(fw.gamecore->GetForm("FORM_UFOPAEDIA_BASE"))
+UfopaediaCategory::UfopaediaCategory(tinyxml2::XMLElement *Element)
+    : Stage(), menuform(fw().gamecore->GetForm("FORM_UFOPAEDIA_BASE"))
 {
 	UString nodename;
 
@@ -62,7 +62,7 @@ void UfopaediaCategory::Begin()
 	{
 		sp<UfopaediaEntry> e = *entry;
 		TextButton *tb =
-		    new TextButton(nullptr, fw.gamecore->GetString(e->Title), infolabel->GetFont());
+		    new TextButton(nullptr, fw().gamecore->GetString(e->Title), infolabel->GetFont());
 		tb->Name = "Index" + Strings::FromInteger(idx);
 		tb->RenderStyle = TextButton::TextButtonRenderStyles::SolidButtonStyle;
 		tb->TextHAlign = HorizontalAlignment::Left;
@@ -89,7 +89,7 @@ void UfopaediaCategory::Finish()
 void UfopaediaCategory::EventOccurred(Event *e)
 {
 	menuform->EventOccured(e);
-	fw.gamecore->MouseCursor->EventOccured(e);
+	fw().gamecore->MouseCursor->EventOccured(e);
 
 	if (e->Type == EVENT_KEY_DOWN)
 	{
@@ -177,10 +177,10 @@ void UfopaediaCategory::Update(StageCmd *const cmd)
 
 void UfopaediaCategory::Render()
 {
-	fw.Stage_GetPrevious(this->shared_from_this())->Render();
-	// fw.renderer->drawFilledRect({0, 0}, fw.Display_GetSize(), Colour{0, 0, 0, 128});
+	fw().Stage_GetPrevious(this->shared_from_this())->Render();
+	// fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
 	menuform->Render();
-	fw.gamecore->MouseCursor->Render();
+	fw().gamecore->MouseCursor->Render();
 }
 
 bool UfopaediaCategory::IsTransition() { return false; }
@@ -196,21 +196,21 @@ void UfopaediaCategory::SetupForm()
 	if (ViewingEntry == 0)
 	{
 		menuform->FindControlTyped<Graphic>("BACKGROUND_PICTURE")
-		    ->SetImage(fw.data->load_image(BackgroundImageFilename));
+		    ->SetImage(fw().data->load_image(BackgroundImageFilename));
 		Label *infolabel = menuform->FindControlTyped<Label>("TEXT_INFO");
-		infolabel->SetText(fw.gamecore->GetString(BodyInformation));
+		infolabel->SetText(fw().gamecore->GetString(BodyInformation));
 		infolabel = menuform->FindControlTyped<Label>("TEXT_TITLE_DATA");
-		infolabel->SetText(fw.gamecore->GetString(Title).toUpper());
+		infolabel->SetText(fw().gamecore->GetString(Title).toUpper());
 	}
 	else
 	{
 		sp<UfopaediaEntry> e = Entries.at(ViewingEntry - 1);
 		menuform->FindControlTyped<Graphic>("BACKGROUND_PICTURE")
-		    ->SetImage(fw.data->load_image(e->BackgroundImageFilename));
+		    ->SetImage(fw().data->load_image(e->BackgroundImageFilename));
 		Label *infolabel = menuform->FindControlTyped<Label>("TEXT_INFO");
-		infolabel->SetText(fw.gamecore->GetString(e->BodyInformation));
+		infolabel->SetText(fw().gamecore->GetString(e->BodyInformation));
 		infolabel = menuform->FindControlTyped<Label>("TEXT_TITLE_DATA");
-		infolabel->SetText(fw.gamecore->GetString(e->Title).toUpper());
+		infolabel->SetText(fw().gamecore->GetString(e->Title).toUpper());
 	}
 }
 

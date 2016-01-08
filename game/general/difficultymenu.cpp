@@ -7,8 +7,8 @@
 namespace OpenApoc
 {
 
-DifficultyMenu::DifficultyMenu(Framework &fw)
-    : Stage(fw), difficultymenuform(fw.gamecore->GetForm("FORM_DIFFICULTYMENU"))
+DifficultyMenu::DifficultyMenu()
+    : Stage(), difficultymenuform(fw().gamecore->GetForm("FORM_DIFFICULTYMENU"))
 {
 	assert(difficultymenuform);
 }
@@ -26,7 +26,7 @@ void DifficultyMenu::Finish() {}
 void DifficultyMenu::EventOccurred(Event *e)
 {
 	difficultymenuform->EventOccured(e);
-	fw.gamecore->MouseCursor->EventOccured(e);
+	fw().gamecore->MouseCursor->EventOccured(e);
 
 	if (e->Type == EVENT_KEY_DOWN)
 	{
@@ -67,11 +67,11 @@ void DifficultyMenu::EventOccurred(Event *e)
 			return;
 		}
 
-		fw.rules.reset(new Rules(fw, ruleName));
-		fw.state.reset(new GameState(fw, *fw.rules));
+		fw().rules.reset(new Rules(ruleName));
+		fw().state.reset(new GameState(*fw().rules));
 
 		stageCmd.cmd = StageCmd::Command::REPLACE;
-		stageCmd.nextStage = std::make_shared<CityView>(fw);
+		stageCmd.nextStage = std::make_shared<CityView>();
 		return;
 	}
 }
@@ -86,7 +86,7 @@ void DifficultyMenu::Update(StageCmd *const cmd)
 void DifficultyMenu::Render()
 {
 	difficultymenuform->Render();
-	fw.gamecore->MouseCursor->Render();
+	fw().gamecore->MouseCursor->Render();
 }
 
 bool DifficultyMenu::IsTransition() { return false; }

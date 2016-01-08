@@ -37,7 +37,7 @@ class BaseScreen : public Stage
 	int getCorridorSprite(Vec2<int> pos) const;
 
   public:
-	BaseScreen(Framework &fw);
+	BaseScreen();
 	~BaseScreen();
 	// Stage control
 	virtual void Begin() override;

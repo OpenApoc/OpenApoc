@@ -17,8 +17,8 @@
 namespace OpenApoc
 {
 
-CityView::CityView(Framework &fw)
-    : TileView(fw, fw.state->city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
+CityView::CityView()
+    : TileView(fw().state->city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
                Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Isometric),
       updateSpeed(UpdateSpeed::Speed1)
 {
@@ -29,7 +29,7 @@ CityView::CityView(Framework &fw)
 
 	for (auto &formName : tabFormNames)
 	{
-		sp<Form> f(fw.gamecore->GetForm(formName));
+		sp<Form> f(fw().gamecore->GetForm(formName));
 		if (!f)
 		{
 			LogError("Failed to load form \"%s\"", formName.c_str());
@@ -40,7 +40,7 @@ CityView::CityView(Framework &fw)
 	}
 	this->activeTab = this->uiTabs[0];
 
-	for (auto &base : fw.state->playerBases)
+	for (auto &base : fw().state->playerBases)
 	{
 		auto bld = base->bld.lock();
 		if (!bld)
@@ -60,9 +60,9 @@ CityView::~CityView() {}
 void CityView::Render()
 {
 	TileView::Render();
-	if (fw.state->showVehiclePath)
+	if (fw().state->showVehiclePath)
 	{
-		for (auto v : fw.state->city->vehicles)
+		for (auto v : fw().state->city->vehicles)
 		{
 			auto vTile = v->tileObject;
 			if (!vTile)
@@ -78,14 +78,14 @@ void CityView::Render()
 				Vec2<float> screenPosB = this->tileToScreenCoords(pos);
 				screenPosB += screenOffset;
 
-				fw.renderer->drawLine(screenPosA, screenPosB, Colour{255, 0, 0, 128});
+				fw().renderer->drawLine(screenPosA, screenPosB, Colour{255, 0, 0, 128});
 
 				prevPos = pos;
 			}
 		}
 	}
 	activeTab->Render();
-	fw.gamecore->MouseCursor->Render();
+	fw().gamecore->MouseCursor->Render();
 }
 
 void CityView::Update(StageCmd *const cmd)
@@ -117,14 +117,14 @@ void CityView::Update(StageCmd *const cmd)
 	*cmd = stageCmd;
 	stageCmd = StageCmd();
 
-	fw.state->city->update(*fw.state, ticks);
+	fw().state->city->update(*fw().state, ticks);
 
 	activeTab->Update();
 }
 
 void CityView::EventOccurred(Event *e)
 {
-	fw.gamecore->MouseCursor->EventOccured(e);
+	fw().gamecore->MouseCursor->EventOccured(e);
 	activeTab->EventOccured(e);
 	if (!e->Handled)
 	{
@@ -170,25 +170,25 @@ void CityView::EventOccurred(Event *e)
 				else if (cname == "BUTTON_SHOW_ALIEN_INFILTRATION")
 				{
 					stageCmd.cmd = StageCmd::Command::PUSH;
-					stageCmd.nextStage = std::make_shared<InfiltrationScreen>(fw);
+					stageCmd.nextStage = std::make_shared<InfiltrationScreen>();
 					return;
 				}
 				else if (cname == "BUTTON_SHOW_SCORE")
 				{
 					stageCmd.cmd = StageCmd::Command::PUSH;
-					stageCmd.nextStage = std::make_shared<ScoreScreen>(fw);
+					stageCmd.nextStage = std::make_shared<ScoreScreen>();
 					return;
 				}
 				else if (cname == "BUTTON_SHOW_UFOPAEDIA")
 				{
 					stageCmd.cmd = StageCmd::Command::PUSH;
-					stageCmd.nextStage = std::make_shared<Ufopaedia>(fw);
+					stageCmd.nextStage = std::make_shared<Ufopaedia>();
 					return;
 				}
 				else if (cname == "BUTTON_SHOW_OPTIONS")
 				{
 					stageCmd.cmd = StageCmd::Command::PUSH;
-					stageCmd.nextStage = std::make_shared<InGameOptions>(fw);
+					stageCmd.nextStage = std::make_shared<InGameOptions>();
 					return;
 				}
 				else if (cname == "BUTTON_SHOW_LOG")
@@ -228,7 +228,7 @@ void CityView::EventOccurred(Event *e)
 				else if (cname == "BUTTON_SHOW_BASE")
 				{
 					stageCmd.cmd = StageCmd::Command::PUSH;
-					stageCmd.nextStage = std::make_shared<BaseScreen>(fw);
+					stageCmd.nextStage = std::make_shared<BaseScreen>();
 					return;
 				}
 			}
@@ -244,7 +244,7 @@ void CityView::EventOccurred(Event *e)
 		{
 			LogInfo("Repairing...");
 			std::set<sp<Scenery>> stuffToRepair;
-			for (auto &s : fw.state->city->scenery)
+			for (auto &s : fw().state->city->scenery)
 			{
 				if (s->canRepair())
 				{
@@ -252,12 +252,12 @@ void CityView::EventOccurred(Event *e)
 				}
 			}
 			LogInfo("Repairing %u tiles out of %u", static_cast<unsigned>(stuffToRepair.size()),
-			        static_cast<unsigned>(fw.state->city->scenery.size()));
+			        static_cast<unsigned>(fw().state->city->scenery.size()));
 
 			for (auto &s : stuffToRepair)
 			{
-				s->repair(*fw.state);
-				fw.state->city->fallingScenery.erase(s);
+				s->repair(*fw().state);
+				fw().state->city->fallingScenery.erase(s);
 			}
 		}
 		else if (this->getViewMode() == TileViewMode::Strategy && e->Type == EVENT_MOUSE_DOWN &&

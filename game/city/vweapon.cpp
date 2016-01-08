@@ -14,7 +14,7 @@ VWeapon::VWeapon(const VWeaponType &type, sp<Vehicle> owner, int initialAmmo, St
     : VEquipment(type), state(initialState), owner(owner), ammo(initialAmmo), reloadTime(0)
 {
 }
-sp<Projectile> VWeapon::fire(Framework &fw, Vec3<float> target)
+sp<Projectile> VWeapon::fire(Vec3<float> target)
 {
 	auto &weaponType = static_cast<const VWeaponType &>(this->type);
 	auto owner = this->owner.lock();
@@ -44,7 +44,7 @@ sp<Projectile> VWeapon::fire(Framework &fw, Vec3<float> target)
 
 	if (weaponType.fire_sfx)
 	{
-		fw.soundBackend->playSample(weaponType.fire_sfx, vehicleTile->getPosition());
+		fw().soundBackend->playSample(weaponType.fire_sfx, vehicleTile->getPosition());
 	}
 
 	if (this->ammo == 0 && this->type.max_ammo != 0)

@@ -25,7 +25,7 @@ class BootUp : public Stage
 	std::atomic<bool> gamecoreLoadComplete;
 
   public:
-	BootUp(Framework &fw) : Stage(fw) {}
+	BootUp() : Stage() {}
 	// Stage control
 	virtual void Begin() override;
 	virtual void Pause() override;

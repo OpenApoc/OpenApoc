@@ -419,7 +419,7 @@ static bool ParseVehicleEquipmentNode(tinyxml2::XMLElement *node, VEquipmentType
 	return false;
 }
 
-bool RulesLoader::ParseVehicleEquipment(Framework &fw, Rules &rules, tinyxml2::XMLElement *rootNode)
+bool RulesLoader::ParseVehicleEquipment(Rules &rules, tinyxml2::XMLElement *rootNode)
 {
 	std::ignore = fw;
 	if (UString(rootNode->Name()) != UString("vehicle_equipment"))
@@ -512,7 +512,7 @@ VEquipmentType::VEquipmentType(Type type, const UString &id)
 {
 }
 
-bool VEquipmentType::isValid(Framework &fw, Rules &rules)
+bool VEquipmentType::isValid(Rules &rules)
 {
 	if (!RulesLoader::isValidEquipmentID(id))
 	{
@@ -538,7 +538,7 @@ bool VEquipmentType::isValid(Framework &fw, Rules &rules)
 	}
 	if (!equipscreen_sprite)
 	{
-		equipscreen_sprite = fw.data->load_image(equipscreen_sprite_name);
+		equipscreen_sprite = fw().data->load_image(equipscreen_sprite_name);
 	}
 	if (!equipscreen_sprite)
 	{
@@ -556,9 +556,9 @@ VWeaponType::VWeaponType(const UString &id)
 {
 }
 
-bool VWeaponType::isValid(Framework &fw, Rules &rules)
+bool VWeaponType::isValid(Rules &rules)
 {
-	if (!VEquipmentType::isValid(fw, rules))
+	if (!VEquipmentType::isValid(rules))
 		return false;
 	if (speed == 0)
 	{
@@ -600,7 +600,7 @@ bool VWeaponType::isValid(Framework &fw, Rules &rules)
 		LogError("Vehicle weapon \"%s\" has no icon", id.c_str());
 		return false;
 	}
-	this->icon = fw.data->load_image(this->icon_path);
+	this->icon = fw().data->load_image(this->icon_path);
 	if (!this->icon)
 	{
 		LogError("Vehicle weapon \"%s\" failed to load icon image \"%s\"", id.c_str(),
@@ -610,7 +610,7 @@ bool VWeaponType::isValid(Framework &fw, Rules &rules)
 
 	if (this->fire_sfx_path != "")
 	{
-		this->fire_sfx = fw.data->load_sample(this->fire_sfx_path);
+		this->fire_sfx = fw().data->load_sample(this->fire_sfx_path);
 		if (!this->fire_sfx)
 		{
 			LogError("Vehicle weapon \"%s\" failed to load fire sfx \"%s\"", id.c_str(),
@@ -629,9 +629,9 @@ VGeneralEquipmentType::VGeneralEquipmentType(const UString &id)
 {
 }
 
-bool VGeneralEquipmentType::isValid(Framework &fw, Rules &rules)
+bool VGeneralEquipmentType::isValid(Rules &rules)
 {
-	if (!VEquipmentType::isValid(fw, rules))
+	if (!VEquipmentType::isValid(rules))
 		return false;
 	if (this->accuracy_modifier == 0 && this->cargo_space == 0 && this->passengers == 0 &&
 	    this->alien_space == 0 && this->missile_jamming == 0 && this->shielding == 0 &&
@@ -648,9 +648,9 @@ VEngineType::VEngineType(const UString &id)
 {
 }
 
-bool VEngineType::isValid(Framework &fw, Rules &rules)
+bool VEngineType::isValid(Rules &rules)
 {
-	if (!VEquipmentType::isValid(fw, rules))
+	if (!VEquipmentType::isValid(rules))
 		return false;
 	if (this->power == 0)
 	{

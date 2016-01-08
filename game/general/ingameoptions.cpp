@@ -6,37 +6,37 @@
 namespace OpenApoc
 {
 
-InGameOptions::InGameOptions(Framework &fw)
-    : Stage(fw), menuform(fw.gamecore->GetForm("FORM_INGAMEOPTIONS"))
+InGameOptions::InGameOptions() : Stage(), menuform(fw().gamecore->GetForm("FORM_INGAMEOPTIONS"))
 {
 
 	/* Initialse all initial values */
 
 	menuform->FindControlTyped<ScrollBar>("GLOBAL_GAIN_SLIDER")
-	    ->SetValue(fw.Settings->getInt("Audio.GlobalGain"));
+	    ->SetValue(fw().Settings->getInt("Audio.GlobalGain"));
 
 	menuform->FindControlTyped<ScrollBar>("MUSIC_GAIN_SLIDER")
-	    ->SetValue(fw.Settings->getInt("Audio.MusicGain"));
+	    ->SetValue(fw().Settings->getInt("Audio.MusicGain"));
 
 	menuform->FindControlTyped<ScrollBar>("SAMPLE_GAIN_SLIDER")
-	    ->SetValue(fw.Settings->getInt("Audio.SampleGain"));
+	    ->SetValue(fw().Settings->getInt("Audio.SampleGain"));
 
-	menuform->FindControlTyped<CheckBox>("SHOW_VEHICLE_PATH")->Checked = fw.state->showVehiclePath;
-	menuform->FindControlTyped<CheckBox>("SHOW_TILE_ORIGIN")->Checked = fw.state->showTileOrigin;
+	menuform->FindControlTyped<CheckBox>("SHOW_VEHICLE_PATH")->Checked =
+	    fw().state->showVehiclePath;
+	menuform->FindControlTyped<CheckBox>("SHOW_TILE_ORIGIN")->Checked = fw().state->showTileOrigin;
 	menuform->FindControlTyped<CheckBox>("SHOW_SELECTABLE_BOUNDS")->Checked =
-	    fw.state->showSelectableBounds;
+	    fw().state->showSelectableBounds;
 }
 
 InGameOptions::~InGameOptions()
 {
 	/* Store persistent options */
 
-	fw.Settings->set("Audio.GlobalGain",
-	                 menuform->FindControlTyped<ScrollBar>("GLOBAL_GAIN_SLIDER")->GetValue());
-	fw.Settings->set("Audio.MusicGain",
-	                 menuform->FindControlTyped<ScrollBar>("MUSIC_GAIN_SLIDER")->GetValue());
-	fw.Settings->set("Audio.SampleGain",
-	                 menuform->FindControlTyped<ScrollBar>("SAMPLE_GAIN_SLIDER")->GetValue());
+	fw().Settings->set("Audio.GlobalGain",
+	                   menuform->FindControlTyped<ScrollBar>("GLOBAL_GAIN_SLIDER")->GetValue());
+	fw().Settings->set("Audio.MusicGain",
+	                   menuform->FindControlTyped<ScrollBar>("MUSIC_GAIN_SLIDER")->GetValue());
+	fw().Settings->set("Audio.SampleGain",
+	                   menuform->FindControlTyped<ScrollBar>("SAMPLE_GAIN_SLIDER")->GetValue());
 }
 
 void InGameOptions::Begin() {}
@@ -50,7 +50,7 @@ void InGameOptions::Finish() {}
 void InGameOptions::EventOccurred(Event *e)
 {
 	menuform->EventOccured(e);
-	fw.gamecore->MouseCursor->EventOccured(e);
+	fw().gamecore->MouseCursor->EventOccured(e);
 
 	if (e->Type == EVENT_KEY_DOWN)
 	{
@@ -71,7 +71,7 @@ void InGameOptions::EventOccurred(Event *e)
 		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_ABANDONGAME")
 		{
 			stageCmd.cmd = StageCmd::Command::REPLACE;
-			stageCmd.nextStage = std::make_shared<MainMenu>(fw);
+			stageCmd.nextStage = std::make_shared<MainMenu>();
 			return;
 		}
 		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT")
@@ -93,7 +93,7 @@ void InGameOptions::EventOccurred(Event *e)
 			}
 			float gain =
 			    static_cast<float>(slider->GetValue()) / static_cast<float>(slider->Maximum);
-			fw.soundBackend->setGain(SoundBackend::Gain::Global, gain);
+			fw().soundBackend->setGain(SoundBackend::Gain::Global, gain);
 		}
 		else if (e->Data.Forms.RaisedBy->Name == "MUSIC_GAIN_SLIDER")
 		{
@@ -105,7 +105,7 @@ void InGameOptions::EventOccurred(Event *e)
 			}
 			float gain =
 			    static_cast<float>(slider->GetValue()) / static_cast<float>(slider->Maximum);
-			fw.soundBackend->setGain(SoundBackend::Gain::Music, gain);
+			fw().soundBackend->setGain(SoundBackend::Gain::Music, gain);
 		}
 		else if (e->Data.Forms.RaisedBy->Name == "SAMPLE_GAIN_SLIDER")
 		{
@@ -117,7 +117,7 @@ void InGameOptions::EventOccurred(Event *e)
 			}
 			float gain =
 			    static_cast<float>(slider->GetValue()) / static_cast<float>(slider->Maximum);
-			fw.soundBackend->setGain(SoundBackend::Gain::Sample, gain);
+			fw().soundBackend->setGain(SoundBackend::Gain::Sample, gain);
 		}
 	}
 	if (e->Type == EVENT_FORM_INTERACTION &&
@@ -126,19 +126,19 @@ void InGameOptions::EventOccurred(Event *e)
 		if (e->Data.Forms.RaisedBy->Name == "SHOW_VEHICLE_PATH")
 		{
 			CheckBox *box = dynamic_cast<CheckBox *>(e->Data.Forms.RaisedBy);
-			fw.state->showVehiclePath = box->Checked;
+			fw().state->showVehiclePath = box->Checked;
 			LogWarning("Set SHOW_VEHICLE_PATH to %d", box->Checked);
 		}
 		if (e->Data.Forms.RaisedBy->Name == "SHOW_TILE_ORIGIN")
 		{
 			CheckBox *box = dynamic_cast<CheckBox *>(e->Data.Forms.RaisedBy);
-			fw.state->showTileOrigin = box->Checked;
+			fw().state->showTileOrigin = box->Checked;
 			LogWarning("Set SHOW_TILE_ORIGIN to %d", box->Checked);
 		}
 		if (e->Data.Forms.RaisedBy->Name == "SHOW_SELECTABLE_BOUNDS")
 		{
 			CheckBox *box = dynamic_cast<CheckBox *>(e->Data.Forms.RaisedBy);
-			fw.state->showSelectableBounds = box->Checked;
+			fw().state->showSelectableBounds = box->Checked;
 			LogWarning("Set SHOW_SELECTABLE_BOUNDS to %d", box->Checked);
 		}
 	}
@@ -154,10 +154,10 @@ void InGameOptions::Update(StageCmd *const cmd)
 
 void InGameOptions::Render()
 {
-	fw.Stage_GetPrevious(this->shared_from_this())->Render();
-	fw.renderer->drawFilledRect({0, 0}, fw.Display_GetSize(), Colour{0, 0, 0, 128});
+	fw().Stage_GetPrevious(this->shared_from_this())->Render();
+	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
 	menuform->Render();
-	fw.gamecore->MouseCursor->Render();
+	fw().gamecore->MouseCursor->Render();
 }
 
 bool InGameOptions::IsTransition() { return false; }

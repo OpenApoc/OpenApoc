@@ -18,7 +18,7 @@ class MainMenu : public Stage
 	StageCmd stageCmd;
 
   public:
-	MainMenu(Framework &fw);
+	MainMenu();
 	~MainMenu();
 	// Stage control
 	virtual void Begin() override;

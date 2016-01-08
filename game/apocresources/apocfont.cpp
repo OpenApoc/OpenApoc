@@ -8,7 +8,7 @@
 namespace OpenApoc
 {
 
-sp<ApocalypseFont> ApocalypseFont::loadFont(Framework &fw, tinyxml2::XMLElement *fontElement)
+sp<ApocalypseFont> ApocalypseFont::loadFont(tinyxml2::XMLElement *fontElement)
 {
 	int spacewidth = 0;
 	int height = 0;
@@ -50,7 +50,7 @@ sp<ApocalypseFont> ApocalypseFont::loadFont(Framework &fw, tinyxml2::XMLElement 
 		return nullptr;
 	}
 
-	auto file = fw.data->fs.open(fileName);
+	auto file = fw().data->fs.open(fileName);
 	if (!file)
 	{
 		LogError("apocfont \"%s\" - Failed to open font path \"%s\"", fontName.c_str(),
@@ -73,7 +73,7 @@ sp<ApocalypseFont> ApocalypseFont::loadFont(Framework &fw, tinyxml2::XMLElement 
 	font->spacewidth = spacewidth;
 	font->fontheight = height;
 	font->averagecharacterwidth = 0;
-	font->palette = fw.data->load_palette(fontElement->Attribute("palette"));
+	font->palette = fw().data->load_palette(fontElement->Attribute("palette"));
 
 	for (auto *glyphNode = fontElement->FirstChildElement(); glyphNode;
 	     glyphNode = glyphNode->NextSiblingElement())

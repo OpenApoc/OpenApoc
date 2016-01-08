@@ -5,11 +5,9 @@
 namespace OpenApoc
 {
 
-bool RulesLoader::ParseOrganisationDefinition(Framework &fw, Rules &rules,
-                                              tinyxml2::XMLElement *root)
+bool RulesLoader::ParseOrganisationDefinition(Rules &rules, tinyxml2::XMLElement *root)
 {
 	TRACE_FN;
-	std::ignore = fw;
 	if (UString(root->Name()) != "organisation")
 	{
 		LogError("Called on unexpected node \"%s\"", root->Name());

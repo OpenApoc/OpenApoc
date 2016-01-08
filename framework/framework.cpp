@@ -289,7 +289,7 @@ void Framework::Run()
 	TRACE_FN;
 	LogInfo("Program loop started");
 
-	p->ProgramStages.Push(std::make_shared<BootUp>(*this));
+	p->ProgramStages.Push(std::make_shared<BootUp>());
 
 	this->renderer->setPalette(this->data->load_palette("xcom3/ufodata/PAL_06.DAT"));
 

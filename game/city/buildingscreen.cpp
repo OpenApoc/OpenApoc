@@ -5,8 +5,7 @@
 namespace OpenApoc
 {
 
-BuildingScreen::BuildingScreen(Framework &fw)
-    : Stage(fw), menuform(fw.gamecore->GetForm("FORM_BUILDING_SCREEN"))
+BuildingScreen::BuildingScreen() : Stage(), menuform(fw().gamecore->GetForm("FORM_BUILDING_SCREEN"))
 {
 }
 
@@ -23,7 +22,7 @@ void BuildingScreen::Finish() {}
 void BuildingScreen::EventOccurred(Event *e)
 {
 	menuform->EventOccured(e);
-	fw.gamecore->MouseCursor->EventOccured(e);
+	fw().gamecore->MouseCursor->EventOccured(e);
 
 	if (e->Type == EVENT_KEY_DOWN)
 	{
@@ -54,10 +53,10 @@ void BuildingScreen::Update(StageCmd *const cmd)
 
 void BuildingScreen::Render()
 {
-	fw.Stage_GetPrevious(this->shared_from_this())->Render();
-	fw.renderer->drawFilledRect({0, 0}, fw.Display_GetSize(), Colour{0, 0, 0, 128});
+	fw().Stage_GetPrevious(this->shared_from_this())->Render();
+	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
 	menuform->Render();
-	fw.gamecore->MouseCursor->Render();
+	fw().gamecore->MouseCursor->Render();
 }
 
 bool BuildingScreen::IsTransition() { return false; }

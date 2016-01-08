@@ -10,7 +10,7 @@ namespace OpenApoc
 
 static std::vector<UString> tracks{"music:0", "music:1", "music:2"};
 
-MainMenu::MainMenu(Framework &fw) : Stage(fw), mainmenuform(fw.gamecore->GetForm("FORM_MAINMENU"))
+MainMenu::MainMenu() : Stage(), mainmenuform(fw().gamecore->GetForm("FORM_MAINMENU"))
 {
 	auto versionLabel = mainmenuform->FindControlTyped<Label>("VERSION_LABEL");
 	versionLabel->SetText(OPENAPOC_VERSION);
@@ -18,7 +18,7 @@ MainMenu::MainMenu(Framework &fw) : Stage(fw), mainmenuform(fw.gamecore->GetForm
 
 MainMenu::~MainMenu() {}
 
-void MainMenu::Begin() { fw.jukebox->play(tracks); }
+void MainMenu::Begin() { fw().jukebox->play(tracks); }
 
 void MainMenu::Pause() {}
 
@@ -29,7 +29,7 @@ void MainMenu::Finish() {}
 void MainMenu::EventOccurred(Event *e)
 {
 	mainmenuform->EventOccured(e);
-	fw.gamecore->MouseCursor->EventOccured(e);
+	fw().gamecore->MouseCursor->EventOccured(e);
 
 	if (e->Type == EVENT_KEY_DOWN)
 	{
@@ -45,7 +45,7 @@ void MainMenu::EventOccurred(Event *e)
 		if (e->Data.Forms.RaisedBy->Name == "BUTTON_OPTIONS")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<OptionsMenu>(fw);
+			stageCmd.nextStage = std::make_shared<OptionsMenu>();
 			return;
 		}
 		if (e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT")
@@ -56,13 +56,13 @@ void MainMenu::EventOccurred(Event *e)
 		if (e->Data.Forms.RaisedBy->Name == "BUTTON_NEWGAME")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<DifficultyMenu>(fw);
+			stageCmd.nextStage = std::make_shared<DifficultyMenu>();
 			return;
 		}
 		if (e->Data.Forms.RaisedBy->Name == "BUTTON_DEBUG")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<DebugMenu>(fw);
+			stageCmd.nextStage = std::make_shared<DebugMenu>();
 			return;
 		}
 	}
@@ -72,10 +72,10 @@ void MainMenu::EventOccurred(Event *e)
 	{
 		if (e->Data.Forms.RaisedBy->Name == "CHECK_DEBUGMODE")
 		{
-			fw.gamecore->DebugModeEnabled =
+			fw().gamecore->DebugModeEnabled =
 			    static_cast<CheckBox *>(e->Data.Forms.RaisedBy)->Checked;
 			e->Data.Forms.RaisedBy->GetForm()->FindControl("BUTTON_DEBUG")->Visible =
-			    fw.gamecore->DebugModeEnabled;
+			    fw().gamecore->DebugModeEnabled;
 		}
 	}
 }
@@ -90,7 +90,7 @@ void MainMenu::Update(StageCmd *const cmd)
 void MainMenu::Render()
 {
 	mainmenuform->Render();
-	fw.gamecore->MouseCursor->Render();
+	fw().gamecore->MouseCursor->Render();
 }
 
 bool MainMenu::IsTransition() { return false; }

@@ -17,7 +17,6 @@
 namespace OpenApoc
 {
 
-class Framework;
 class Image;
 class TileMap;
 class Tile;
@@ -66,14 +65,13 @@ class TileMap
 	std::vector<std::set<TileObject::Type>> layerMap;
 
   public:
-	Framework &fw;
 	Tile *getTile(int x, int y, int z);
 	Tile *getTile(Vec3<int> pos);
 	// Returns the tile this point is 'within'
 	Tile *getTile(Vec3<float> pos);
 	Vec3<int> size;
 
-	TileMap(Framework &fw, Vec3<int> size, std::vector<std::set<TileObject::Type>> layerMap);
+	TileMap(Vec3<int> size, std::vector<std::set<TileObject::Type>> layerMap);
 	~TileMap();
 
 	std::list<Tile *> findShortestPath(Vec3<int> origin, Vec3<int> destination,

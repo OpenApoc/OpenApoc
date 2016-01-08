@@ -18,7 +18,7 @@ class BuildingScreen : public Stage
 	StageCmd stageCmd;
 
   public:
-	BuildingScreen(Framework &fw);
+	BuildingScreen();
 	~BuildingScreen();
 	// Stage control
 	virtual void Begin() override;

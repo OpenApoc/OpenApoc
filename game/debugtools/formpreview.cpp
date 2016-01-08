@@ -5,7 +5,7 @@
 namespace OpenApoc
 {
 
-FormPreview::FormPreview(Framework &fw) : Stage(fw)
+FormPreview::FormPreview() : Stage()
 {
 	displayform = nullptr;
 	currentSelected = nullptr;
@@ -39,16 +39,16 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 	c->BackgroundColour.g = 80;
 	c->BackgroundColour.b = 80;
 
-	Label *l = new Label(c, "Pick Form:", fw.gamecore->GetFont("SMALFONT"));
+	Label *l = new Label(c, "Pick Form:", fw().gamecore->GetFont("SMALFONT"));
 	l->Location.x = 0;
 	l->Location.y = 0;
 	l->Size.x = c->Size.x;
-	l->Size.y = fw.gamecore->GetFont("SMALFONT")->GetFontHeight();
+	l->Size.y = fw().gamecore->GetFont("SMALFONT")->GetFontHeight();
 	l->BackgroundColour.b = l->BackgroundColour.r;
 	l->BackgroundColour.g = l->BackgroundColour.r;
 
 	interactWithDisplay = new CheckBox(c);
-	interactWithDisplay->Size.y = fw.gamecore->GetFont("SMALFONT")->GetFontHeight();
+	interactWithDisplay->Size.y = fw().gamecore->GetFont("SMALFONT")->GetFontHeight();
 	interactWithDisplay->Size.x = interactWithDisplay->Size.y;
 	interactWithDisplay->Location.x = 0;
 	interactWithDisplay->Location.y = c->Size.y - interactWithDisplay->Size.y;
@@ -57,7 +57,7 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 	interactWithDisplay->BackgroundColour.b = 80;
 	interactWithDisplay->Checked = true;
 
-	l = new Label(c, "Interact?", fw.gamecore->GetFont("SMALFONT"));
+	l = new Label(c, "Interact?", fw().gamecore->GetFont("SMALFONT"));
 	l->Location.x = interactWithDisplay->Size.x + 2;
 	l->Location.y = interactWithDisplay->Location.y;
 	l->Size.x = c->Size.x - l->Location.x;
@@ -68,7 +68,7 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 
 	ListBox *lb = new ListBox(c);
 	lb->Location.x = 0;
-	lb->Location.y = fw.gamecore->GetFont("SMALFONT")->GetFontHeight();
+	lb->Location.y = fw().gamecore->GetFont("SMALFONT")->GetFontHeight();
 	lb->Size.x = c->Size.x;
 	lb->Size.y = interactWithDisplay->Location.y - lb->Location.y;
 	lb->Name = "FORM_LIST";
@@ -77,10 +77,10 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 	lb->BackgroundColour.g = 24;
 	lb->BackgroundColour.b = 24;
 
-	std::vector<UString> idlist = fw.gamecore->GetFormIDs();
+	std::vector<UString> idlist = fw().gamecore->GetFormIDs();
 	for (auto idx = idlist.begin(); idx != idlist.end(); idx++)
 	{
-		l = new Label(lb, (UString)*idx, fw.gamecore->GetFont("SMALFONT"));
+		l = new Label(lb, (UString)*idx, fw().gamecore->GetFont("SMALFONT"));
 		l->Name = l->GetText();
 		l->BackgroundColour.r = 192;
 		l->BackgroundColour.g = 80;
@@ -93,7 +93,7 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 	propertyeditor->Location.x = 2;
 	propertyeditor->Location.y = 304;
 	propertyeditor->Size.x = 200;
-	propertyeditor->Size.y = fw.Display_GetHeight() - propertyeditor->Location.y - 2;
+	propertyeditor->Size.y = fw().Display_GetHeight() - propertyeditor->Location.y - 2;
 	propertyeditor->BackgroundColour.r = 192;
 	propertyeditor->BackgroundColour.g = 192;
 	propertyeditor->BackgroundColour.b = 192;
@@ -120,7 +120,7 @@ void FormPreview::EventOccurred(Event *e)
 	{
 		displayform->EventOccured(e);
 	}
-	fw.gamecore->MouseCursor->EventOccured(e);
+	fw().gamecore->MouseCursor->EventOccured(e);
 
 	if (e->Type == EVENT_KEY_DOWN)
 	{
@@ -156,7 +156,7 @@ void FormPreview::EventOccurred(Event *e)
 
 			currentSelected = (Label *)e->Data.Forms.RaisedBy;
 			currentSelected->BackgroundColour.a = 255;
-			displayform.reset(fw.gamecore->GetForm(currentSelected->Name));
+			displayform.reset(fw().gamecore->GetForm(currentSelected->Name));
 
 			return;
 		}
@@ -198,18 +198,18 @@ void FormPreview::Render()
 		Vec2<int> border = currentSelectedControl->GetLocationOnScreen();
 		if (glowindex < 256)
 		{
-			fw.renderer->drawRect(border, currentSelectedControl->Size,
-			                      OpenApoc::Colour(glowindex, glowindex, glowindex), 3.0f);
+			fw().renderer->drawRect(border, currentSelectedControl->Size,
+			                        OpenApoc::Colour(glowindex, glowindex, glowindex), 3.0f);
 		}
 		else
 		{
 			int revglow = 255 - (glowindex - 256);
-			fw.renderer->drawRect(border, currentSelectedControl->Size,
-			                      OpenApoc::Colour(revglow, revglow, revglow), 3.0f);
+			fw().renderer->drawRect(border, currentSelectedControl->Size,
+			                        OpenApoc::Colour(revglow, revglow, revglow), 3.0f);
 		}
 	}
 
-	fw.gamecore->MouseCursor->Render();
+	fw().gamecore->MouseCursor->Render();
 }
 
 bool FormPreview::IsTransition() { return false; }

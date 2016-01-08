@@ -15,7 +15,7 @@
 namespace OpenApoc
 {
 
-GameState::GameState(Framework &fw, Rules &rules)
+GameState::GameState(Rules &rules)
     : player(nullptr), showTileOrigin(false), showVehiclePath(false), showSelectableBounds(false),
       rng(std::random_device{}())
 {
@@ -38,7 +38,7 @@ GameState::GameState(Framework &fw, Rules &rules)
 		LogError("No player organisation defined");
 	}
 
-	this->city.reset(new City(fw, *this));
+	this->city.reset(new City(*this));
 
 	// Place some random testing vehicles
 	std::uniform_int_distribution<int> bld_distribution(0, this->city->buildings.size() - 1);
@@ -106,7 +106,7 @@ GameState::GameState(Framework &fw, Rules &rules)
 	this->playerBases.emplace_back(base);
 	base->name = "Test Base";
 	base->bld.lock()->owner = this->getPlayer();
-	base->startingBase(fw, rng);
+	base->startingBase(rng);
 
 	// Give the player some extra vehicles to test the equipment stuff (as the x-com built vehicles
 	// don't come with much)

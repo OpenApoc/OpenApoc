@@ -59,12 +59,12 @@ bool RulesLoader::isValidOrganisation(const Rules &rules, const UString &str)
 	return false;
 }
 
-Rules::Rules(Framework &fw, const UString &rootFileName) : aliases(new ResourceAliases())
+Rules::Rules(const UString &rootFileName) : aliases(new ResourceAliases())
 {
 	TRACE_FN_ARGS1("rootFileName", rootFileName);
 
 	UString systemPath;
-	auto file = fw.data->fs.open(rootFileName);
+	auto file = fw().data->fs.open(rootFileName);
 	if (!file)
 	{
 		LogError("Failed to find rule file \"%s\"", rootFileName.c_str());
@@ -93,9 +93,9 @@ Rules::Rules(Framework &fw, const UString &rootFileName) : aliases(new ResourceA
 	LogInfo("Loading ruleset \"%s\" from \"%s\"", rulesetName.c_str(), systemPath.c_str());
 
 	/* Wire up the resource aliases */
-	fw.data->aliases = this->aliases;
+	fw().data->aliases = this->aliases;
 
-	if (!RulesLoader::ParseRules(fw, *this, root))
+	if (!RulesLoader::ParseRules(*this, root))
 	{
 		LogError("Error loading ruleset \"%s\" from \"%s\"", rulesetName.c_str(),
 		         systemPath.c_str());
@@ -124,7 +124,7 @@ Rules::Rules(Framework &fw, const UString &rootFileName) : aliases(new ResourceA
 		{
 			LogError("vequipment[%s] points to null?", vequipment.first.c_str());
 		}
-		if (!vequipment.second->isValid(fw, *this))
+		if (!vequipment.second->isValid(*this))
 		{
 			LogError("Invalid equipment ID \"%s\"", vequipment.second->id.c_str());
 		}
@@ -135,14 +135,14 @@ Rules::Rules(Framework &fw, const UString &rootFileName) : aliases(new ResourceA
 		{
 			LogError("vehicle[%s] points to null?", vehicle.first.c_str());
 		}
-		if (!vehicle.second->isValid(fw, *this))
+		if (!vehicle.second->isValid(*this))
 		{
 			LogError("Invalid vehicle ID \"%s\"", vehicle.second->id.c_str());
 		}
 	}
 }
 
-bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *root)
+bool RulesLoader::ParseRules(Rules &rules, tinyxml2::XMLElement *root)
 {
 	TRACE_FN;
 	UString nodeName = root->Name();
@@ -159,27 +159,27 @@ bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *
 		UString name = e->Name();
 		if (name == "vehicle")
 		{
-			if (!ParseVehicleType(fw, rules, e))
+			if (!ParseVehicleType(rules, e))
 				return false;
 		}
 		else if (name == "organisation")
 		{
-			if (!ParseOrganisationDefinition(fw, rules, e))
+			if (!ParseOrganisationDefinition(rules, e))
 				return false;
 		}
 		else if (name == "city")
 		{
-			if (!ParseCityDefinition(fw, rules, e))
+			if (!ParseCityDefinition(rules, e))
 				return false;
 		}
 		else if (name == "vehicle_equipment")
 		{
-			if (!ParseVehicleEquipment(fw, rules, e))
+			if (!ParseVehicleEquipment(rules, e))
 				return false;
 		}
 		else if (name == "facilitydef")
 		{
-			if (!ParseFacilityDefinition(fw, rules, e))
+			if (!ParseFacilityDefinition(rules, e))
 				return false;
 		}
 		else if (name == "ufopaedia")
@@ -192,8 +192,7 @@ bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *
 				nodename = nodeufo->Name();
 				if (nodename == "category")
 				{
-					Ufopaedia::UfopaediaDB.push_back(
-					    std::make_shared<UfopaediaCategory>(fw, nodeufo));
+					Ufopaedia::UfopaediaDB.push_back(std::make_shared<UfopaediaCategory>(nodeufo));
 				}
 			}
 		}
@@ -201,7 +200,7 @@ bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *
 		{
 			UString rootFileName = e->GetText();
 			UString systemPath;
-			auto file = fw.data->fs.open(rootFileName);
+			auto file = fw().data->fs.open(rootFileName);
 			if (!file)
 			{
 				LogError("Failed to find included rule file \"%s\"", rootFileName.c_str());
@@ -218,7 +217,7 @@ bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *
 				LogError("Failed to parse included rule file \"%s\"", systemPath.c_str());
 				return false;
 			}
-			if (!ParseRules(fw, rules, incRoot))
+			if (!ParseRules(rules, incRoot))
 			{
 				LogError("Error loading included ruleset \"%s\"", systemPath.c_str());
 				return false;
@@ -226,12 +225,12 @@ bool RulesLoader::ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *
 		}
 		else if (name == "doodad")
 		{
-			if (!ParseDoodadDefinition(fw, rules, e))
+			if (!ParseDoodadDefinition(rules, e))
 				return false;
 		}
 		else if (name == "aliases")
 		{
-			if (!ParseAliases(fw, rules, e))
+			if (!ParseAliases(rules, e))
 				return false;
 		}
 		else

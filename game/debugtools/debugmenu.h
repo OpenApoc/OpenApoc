@@ -20,7 +20,7 @@ class DebugMenu : public Stage
 	void BulkExportPCKs();
 
   public:
-	DebugMenu(Framework &fw);
+	DebugMenu();
 	~DebugMenu();
 	// Stage control
 	virtual void Begin() override;

@@ -25,7 +25,7 @@ class UfopaediaCategory : public Stage // , public std::enable_shared_from_this<
 
 	unsigned int ViewingEntry;
 
-	UfopaediaCategory(Framework &fw, tinyxml2::XMLElement *Element);
+	UfopaediaCategory(tinyxml2::XMLElement *Element);
 	~UfopaediaCategory();
 
 	// Stage control

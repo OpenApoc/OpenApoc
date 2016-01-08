@@ -10,16 +10,15 @@ namespace OpenApoc
 class RulesLoader
 {
   public:
-	static bool ParseRules(Framework &fw, Rules &rules, tinyxml2::XMLElement *root);
+	static bool ParseRules(Rules &rules, tinyxml2::XMLElement *root);
 
-	static bool ParseVehicleType(Framework &fw, Rules &rules, tinyxml2::XMLElement *root);
-	static bool ParseOrganisationDefinition(Framework &fw, Rules &rules,
-	                                        tinyxml2::XMLElement *root);
-	static bool ParseCityDefinition(Framework &fw, Rules &rules, tinyxml2::XMLElement *root);
-	static bool ParseVehicleEquipment(Framework &fw, Rules &rules, tinyxml2::XMLElement *root);
-	static bool ParseFacilityDefinition(Framework &fw, Rules &rules, tinyxml2::XMLElement *root);
-	static bool ParseDoodadDefinition(Framework &fw, Rules &rules, tinyxml2::XMLElement *root);
-	static bool ParseAliases(Framework &fw, Rules &rules, tinyxml2::XMLElement *root);
+	static bool ParseVehicleType(Rules &rules, tinyxml2::XMLElement *root);
+	static bool ParseOrganisationDefinition(Rules &rules, tinyxml2::XMLElement *root);
+	static bool ParseCityDefinition(Rules &rules, tinyxml2::XMLElement *root);
+	static bool ParseVehicleEquipment(Rules &rules, tinyxml2::XMLElement *root);
+	static bool ParseFacilityDefinition(Rules &rules, tinyxml2::XMLElement *root);
+	static bool ParseDoodadDefinition(Rules &rules, tinyxml2::XMLElement *root);
+	static bool ParseAliases(Rules &rules, tinyxml2::XMLElement *root);
 
 	// These check the validity of the ID string (Useful when creating new objects)
 	static bool isValidEquipmentID(const UString &str);

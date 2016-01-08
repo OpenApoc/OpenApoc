@@ -9,8 +9,6 @@
 namespace OpenApoc
 {
 
-class Framework;
-
 class GameCore
 {
   private:
@@ -35,14 +33,12 @@ class GameCore
 	// void ParseUFOpaediaXML( tinyxml2::XMLElement* Source );
 	// void ParseVehicleXML( tinyxml2::XMLElement* Source );
 
-	Framework &fw;
-
   public:
 	bool Loaded;
 	bool DebugModeEnabled;
 	ApocCursor *MouseCursor;
 
-	GameCore(Framework &fw);
+	GameCore();
 	void Load(UString CoreXMLFilename, UString Language);
 	~GameCore();
 

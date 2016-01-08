@@ -650,7 +650,7 @@ static bool ParseVehicleTypeNode(tinyxml2::XMLElement *node, VehicleType &vehicl
 	return false;
 }
 
-bool RulesLoader::ParseVehicleType(Framework &fw, Rules &rules, tinyxml2::XMLElement *rootNode)
+bool RulesLoader::ParseVehicleType(Rules &rules, tinyxml2::XMLElement *rootNode)
 {
 	TRACE_FN;
 	std::ignore = fw;
@@ -753,7 +753,7 @@ static Vec3<float> getDirectionVector(VehicleType::Direction dir,
 	return glm::normalize(v);
 }
 
-bool VehicleType::isValid(Framework &fw, Rules &rules)
+bool VehicleType::isValid(Rules &rules)
 {
 	TRACE_FN_ARGS1("ID", id);
 	if (!RulesLoader::isValidVehicleTypeID(id))
@@ -777,7 +777,7 @@ bool VehicleType::isValid(Framework &fw, Rules &rules)
 
 	if (this->equipment_screen_path != "")
 	{
-		this->equipment_screen = fw.data->load_image(this->equipment_screen_path);
+		this->equipment_screen = fw().data->load_image(this->equipment_screen_path);
 		if (!this->equipment_screen)
 		{
 			LogError("vehicle_type \"%s\" failed to load equipment_screen \"%s\"", id.c_str(),
@@ -791,7 +791,7 @@ bool VehicleType::isValid(Framework &fw, Rules &rules)
 		LogError("vehicle_type \"%s\" has no icon", id.c_str());
 		return false;
 	}
-	this->icon = fw.data->load_image(this->icon_path);
+	this->icon = fw().data->load_image(this->icon_path);
 	if (!this->icon)
 	{
 		LogError("vehicle_type \"%s\" failed to load icon \"%s\"", id.c_str(),
@@ -801,7 +801,7 @@ bool VehicleType::isValid(Framework &fw, Rules &rules)
 
 	if (this->equip_icon_big_path != "")
 	{
-		this->equip_icon_big = fw.data->load_image(this->equip_icon_big_path);
+		this->equip_icon_big = fw().data->load_image(this->equip_icon_big_path);
 		if (!this->icon)
 		{
 			LogError("vehicle_type \"%s\" failed to load big equip icon \"%s\"", id.c_str(),
@@ -812,7 +812,7 @@ bool VehicleType::isValid(Framework &fw, Rules &rules)
 
 	if (this->equip_icon_small_path != "")
 	{
-		this->equip_icon_small = fw.data->load_image(this->equip_icon_small_path);
+		this->equip_icon_small = fw().data->load_image(this->equip_icon_small_path);
 		if (!this->icon)
 		{
 			LogError("vehicle_type \"%s\" failed to load small equip icon \"%s\"", id.c_str(),
@@ -823,7 +823,7 @@ bool VehicleType::isValid(Framework &fw, Rules &rules)
 
 	if (this->crashed_sprite_path != "")
 	{
-		this->crashed_sprite = fw.data->load_image(this->crashed_sprite_path);
+		this->crashed_sprite = fw().data->load_image(this->crashed_sprite_path);
 		if (!this->icon)
 		{
 			LogError("vehicle_type \"%s\" failed to load crashed_sprite \"%s\"", id.c_str(),
@@ -852,7 +852,7 @@ bool VehicleType::isValid(Framework &fw, Rules &rules)
 		auto direction = pair.first;
 		auto sprite_path = pair.second;
 		auto vec = getDirectionVector(direction);
-		auto sprite = fw.data->load_image(sprite_path);
+		auto sprite = fw().data->load_image(sprite_path);
 		if (!sprite)
 		{
 			LogError("vehicle_type \"%s\" failed to load stratmap sprite \"%s\"", id.c_str(),
@@ -873,7 +873,7 @@ bool VehicleType::isValid(Framework &fw, Rules &rules)
 		auto direction = pair.first;
 		auto sprite_path = pair.second;
 		auto vec = getDirectionVector(direction);
-		auto sprite = fw.data->load_image(sprite_path);
+		auto sprite = fw().data->load_image(sprite_path);
 		if (!sprite)
 		{
 			LogError("vehicle_type \"%s\" failed to load shadow sprite \"%s\"", id.c_str(),
@@ -895,7 +895,7 @@ bool VehicleType::isValid(Framework &fw, Rules &rules)
 			auto direction = dpair.first;
 			auto sprite_path = dpair.second;
 			auto vec = getDirectionVector(direction, bank);
-			auto sprite = fw.data->load_image(sprite_path);
+			auto sprite = fw().data->load_image(sprite_path);
 			if (!sprite)
 			{
 				LogError("vehicle_type \"%s\" failed to load sprite \"%s\"", id.c_str(),
@@ -908,7 +908,7 @@ bool VehicleType::isValid(Framework &fw, Rules &rules)
 
 	for (auto &sprite_path : this->animation_sprite_paths)
 	{
-		auto sprite = fw.data->load_image(sprite_path);
+		auto sprite = fw().data->load_image(sprite_path);
 		if (!sprite)
 		{
 			LogError("vehicle_type \"%s\" failed to load animation sprite \"%s\"", id.c_str(),

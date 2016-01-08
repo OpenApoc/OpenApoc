@@ -28,7 +28,7 @@ class FormPreview : public Stage
 	void ConfigureSelectedControlForm();
 
   public:
-	FormPreview(Framework &fw);
+	FormPreview();
 	~FormPreview();
 	// Stage control
 	virtual void Begin() override;

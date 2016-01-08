@@ -14,16 +14,16 @@ static const Colour EQUIP_GRID_COLOUR{40, 40, 40, 255};
 // FIXME: this should animate
 static const Colour EQUIP_GRID_COLOUR_SELECTED{255, 40, 40, 255};
 
-VEquipScreen::VEquipScreen(Framework &fw)
-    : Stage(fw), form(fw.gamecore->GetForm("FORM_VEQUIPSCREEN")), selected(nullptr),
+VEquipScreen::VEquipScreen()
+    : Stage(), form(fw().gamecore->GetForm("FORM_VEQUIPSCREEN")), selected(nullptr),
       selectionType(VEquipmentType::Type::Weapon),
-      pal(fw.data->load_palette("xcom3/UFODATA/VROADWAR.PCX")),
-      labelFont(fw.gamecore->GetFont("SMALFONT")), highlightedVehicle(nullptr),
+      pal(fw().data->load_palette("xcom3/UFODATA/VROADWAR.PCX")),
+      labelFont(fw().gamecore->GetFont("SMALFONT")), highlightedVehicle(nullptr),
       highlightedEquipment(nullptr), drawHighlightBox(false), draggedEquipment(nullptr)
 
 {
 	sp<Vehicle> vehicle;
-	for (auto &vehiclePtr : fw.state->getPlayer()->vehicles)
+	for (auto &vehiclePtr : fw().state->getPlayer()->vehicles)
 	{
 		vehicle = vehiclePtr.lock();
 		if (vehicle)
@@ -45,7 +45,7 @@ void VEquipScreen::Begin()
 {
 
 	auto *list = form->FindControlTyped<ListBox>("VEHICLE_SELECT_BOX");
-	for (auto &vehiclePtr : fw.state->getPlayer()->vehicles)
+	for (auto &vehiclePtr : fw().state->getPlayer()->vehicles)
 	{
 		auto vehicle = vehiclePtr.lock();
 		if (!vehicle)
@@ -71,7 +71,7 @@ void VEquipScreen::Finish() {}
 void VEquipScreen::EventOccurred(Event *e)
 {
 	form->EventOccured(e);
-	fw.gamecore->MouseCursor->EventOccured(e);
+	fw().gamecore->MouseCursor->EventOccured(e);
 
 	if (e->Type == EVENT_KEY_DOWN)
 	{
@@ -82,7 +82,7 @@ void VEquipScreen::EventOccurred(Event *e)
 		}
 		else if (e->Data.Keyboard.KeyCode == SDLK_RIGHT)
 		{
-			auto &vehicleList = fw.state->getPlayer()->vehicles;
+			auto &vehicleList = fw().state->getPlayer()->vehicles;
 			// FIXME: Debug hack to cycle through vehicles
 			auto currentPos = vehicleList.begin();
 			while (currentPos != vehicleList.end())
@@ -236,7 +236,7 @@ void VEquipScreen::EventOccurred(Event *e)
 			Vec2<int> equipOffset = paperDollControl->Location + form->Location;
 
 			Vec2<int> equipmentPos =
-			    fw.gamecore->MouseCursor->getPosition() + this->draggedEquipmentOffset;
+			    fw().gamecore->MouseCursor->getPosition() + this->draggedEquipmentOffset;
 			// If this is within the grid try to snap it
 			Vec2<int> equipmentGridPos = equipmentPos - equipOffset;
 			equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
@@ -268,11 +268,11 @@ void VEquipScreen::Render()
 	this->equippedItems.clear();
 	this->inventoryItems.clear();
 
-	fw.Stage_GetPrevious(this->shared_from_this())->Render();
+	fw().Stage_GetPrevious(this->shared_from_this())->Render();
 
-	fw.renderer->setPalette(this->pal);
+	fw().renderer->setPalette(this->pal);
 
-	fw.renderer->drawFilledRect({0, 0}, fw.Display_GetSize(), Colour{0, 0, 0, 128});
+	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
 
 	// The labels/values in the stats column are used for lots of different things, so keep them
 	// around clear them and keep them around in a vector so we don't have 5 copies of the same
@@ -478,17 +478,17 @@ void VEquipScreen::Render()
 			Vec2<int> p10 = {p11.x, p00.y};
 			if (slot.type == selectionType)
 			{
-				fw.renderer->drawLine(p00, p01, EQUIP_GRID_COLOUR_SELECTED, 2);
-				fw.renderer->drawLine(p01, p11, EQUIP_GRID_COLOUR_SELECTED, 2);
-				fw.renderer->drawLine(p11, p10, EQUIP_GRID_COLOUR_SELECTED, 2);
-				fw.renderer->drawLine(p10, p00, EQUIP_GRID_COLOUR_SELECTED, 2);
+				fw().renderer->drawLine(p00, p01, EQUIP_GRID_COLOUR_SELECTED, 2);
+				fw().renderer->drawLine(p01, p11, EQUIP_GRID_COLOUR_SELECTED, 2);
+				fw().renderer->drawLine(p11, p10, EQUIP_GRID_COLOUR_SELECTED, 2);
+				fw().renderer->drawLine(p10, p00, EQUIP_GRID_COLOUR_SELECTED, 2);
 			}
 			else
 			{
-				fw.renderer->drawLine(p00, p01, EQUIP_GRID_COLOUR, 2);
-				fw.renderer->drawLine(p01, p11, EQUIP_GRID_COLOUR, 2);
-				fw.renderer->drawLine(p11, p10, EQUIP_GRID_COLOUR, 2);
-				fw.renderer->drawLine(p10, p00, EQUIP_GRID_COLOUR, 2);
+				fw().renderer->drawLine(p00, p01, EQUIP_GRID_COLOUR, 2);
+				fw().renderer->drawLine(p01, p11, EQUIP_GRID_COLOUR, 2);
+				fw().renderer->drawLine(p11, p10, EQUIP_GRID_COLOUR, 2);
+				fw().renderer->drawLine(p10, p00, EQUIP_GRID_COLOUR, 2);
 			}
 		}
 	}
@@ -556,7 +556,7 @@ void VEquipScreen::Render()
 				break;
 		}
 
-		fw.renderer->draw(e->type.equipscreen_sprite, pos);
+		fw().renderer->draw(e->type.equipscreen_sprite, pos);
 		Vec2<int> endPos = pos;
 		endPos.x += e->type.equipscreen_sprite->size.x;
 		endPos.y += e->type.equipscreen_sprite->size.y;
@@ -596,8 +596,8 @@ void VEquipScreen::Render()
 			static const int INVENTORY_COUNT_Y_GAP = 4;
 			// The gap between the end of one inventory image and the start of the next
 			static const int INVENTORY_IMAGE_X_GAP = 4;
-			auto equipIt = fw.rules->getVehicleEquipmentTypes().find(invPair.first);
-			if (equipIt == fw.rules->getVehicleEquipmentTypes().end())
+			auto equipIt = fw().rules->getVehicleEquipmentTypes().find(invPair.first);
+			if (equipIt == fw().rules->getVehicleEquipmentTypes().end())
 			{
 				// It's not vehicle equipment, skip
 				continue;
@@ -621,12 +621,12 @@ void VEquipScreen::Render()
 			}
 			auto countImage = labelFont->getString(UString::format("%d", count));
 			auto &equipmentImage = equipmentType.equipscreen_sprite;
-			fw.renderer->draw(equipmentImage, inventoryPosition);
+			fw().renderer->draw(equipmentImage, inventoryPosition);
 
 			Vec2<int> countLabelPosition = inventoryPosition;
 			countLabelPosition.y += INVENTORY_COUNT_Y_GAP + equipmentImage->size.y;
 			// FIXME: Center in X?
-			fw.renderer->draw(countImage, countLabelPosition);
+			fw().renderer->draw(countImage, countLabelPosition);
 
 			Vec2<int> inventoryEndPosition = inventoryPosition;
 			inventoryEndPosition.x += equipmentImage->size.x;
@@ -645,16 +645,16 @@ void VEquipScreen::Render()
 		Vec2<int> p11 = highlightBox.p1;
 		Vec2<int> p01 = {p00.x, p11.y};
 		Vec2<int> p10 = {p11.x, p00.y};
-		fw.renderer->drawLine(p00, p01, highlightBoxColour, 1);
-		fw.renderer->drawLine(p01, p11, highlightBoxColour, 1);
-		fw.renderer->drawLine(p11, p10, highlightBoxColour, 1);
-		fw.renderer->drawLine(p10, p00, highlightBoxColour, 1);
+		fw().renderer->drawLine(p00, p01, highlightBoxColour, 1);
+		fw().renderer->drawLine(p01, p11, highlightBoxColour, 1);
+		fw().renderer->drawLine(p11, p10, highlightBoxColour, 1);
+		fw().renderer->drawLine(p10, p00, highlightBoxColour, 1);
 	}
 	if (this->draggedEquipment)
 	{
 		// Draw equipment we're currently dragging (snapping to the grid if possible)
 		Vec2<int> equipmentPos =
-		    fw.gamecore->MouseCursor->getPosition() + this->draggedEquipmentOffset;
+		    fw().gamecore->MouseCursor->getPosition() + this->draggedEquipmentOffset;
 		// If this is within the grid try to snap it
 		Vec2<int> equipmentGridPos = equipmentPos - equipOffset;
 		equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
@@ -669,9 +669,9 @@ void VEquipScreen::Render()
 			equipmentPos = equipmentGridPos * EQUIP_GRID_SLOT_SIZE;
 			equipmentPos += equipOffset;
 		}
-		fw.renderer->draw(this->draggedEquipment->equipscreen_sprite, equipmentPos);
+		fw().renderer->draw(this->draggedEquipment->equipscreen_sprite, equipmentPos);
 	}
-	fw.gamecore->MouseCursor->Render();
+	fw().gamecore->MouseCursor->Render();
 }
 
 bool VEquipScreen::IsTransition() { return false; }

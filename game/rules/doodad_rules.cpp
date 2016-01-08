@@ -7,7 +7,7 @@
 namespace OpenApoc
 {
 
-static bool parseFrame(Framework &fw, tinyxml2::XMLElement *root, DoodadFrame &f)
+static bool parseFrame(tinyxml2::XMLElement *root, DoodadFrame &f)
 {
 	if (UString(root->Name()) != "frame")
 	{
@@ -20,7 +20,7 @@ static bool parseFrame(Framework &fw, tinyxml2::XMLElement *root, DoodadFrame &f
 		return false;
 	}
 	UString spritePath = root->GetText();
-	f.image = fw.gamecore->GetImage(spritePath);
+	f.image = fw().gamecore->GetImage(spritePath);
 	if (!f.image)
 	{
 		LogError("Failed to load sprite \"%s\" for doodad frame", spritePath.c_str());
@@ -29,7 +29,7 @@ static bool parseFrame(Framework &fw, tinyxml2::XMLElement *root, DoodadFrame &f
 	return true;
 }
 
-bool RulesLoader::ParseDoodadDefinition(Framework &fw, Rules &rules, tinyxml2::XMLElement *root)
+bool RulesLoader::ParseDoodadDefinition(Rules &rules, tinyxml2::XMLElement *root)
 {
 	TRACE_FN;
 	DoodadDef d;
@@ -65,7 +65,7 @@ bool RulesLoader::ParseDoodadDefinition(Framework &fw, Rules &rules, tinyxml2::X
 		if (UString(node->Name()) == "frame")
 		{
 			DoodadFrame f;
-			if (!parseFrame(fw, node, f))
+			if (!parseFrame(node, f))
 			{
 				LogError("Error parsing frame for doodad \"%s\"", d.ID.c_str());
 				return false;

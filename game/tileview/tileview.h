@@ -47,7 +47,7 @@ class TileView : public Stage
 	sp<Image> selectedTileImageBack, selectedTileImageFront;
 	sp<Palette> pal;
 
-	TileView(Framework &fw, TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
+	TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
 	         TileViewMode initialMode);
 	~TileView();
 

@@ -18,7 +18,7 @@ class ScoreScreen : public Stage
 	StageCmd stageCmd;
 
   public:
-	ScoreScreen(Framework &fw);
+	ScoreScreen();
 	~ScoreScreen();
 	// Stage control
 	virtual void Begin() override;

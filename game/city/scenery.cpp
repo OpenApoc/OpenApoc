@@ -80,7 +80,7 @@ void Scenery::collapse(GameState &state)
 		s->collapse(state);
 }
 
-void Scenery::update(Framework &fw, GameState &state, unsigned int ticks)
+void Scenery::update(GameState &state, unsigned int ticks)
 {
 	if (!this->falling)
 		LogError("Not falling?");
@@ -109,8 +109,8 @@ void Scenery::update(Framework &fw, GameState &state, unsigned int ticks)
 				// Any other scenery
 				// FIXME: Cause damage to scenery we hit?
 				this->falling = false;
-				auto doodad = state.city->placeDoodad(fw.rules->getDoodadDef("DOODAD_EXPLOSION_3"),
-				                                      currentPos);
+				auto doodad = state.city->placeDoodad(
+				    fw().rules->getDoodadDef("DOODAD_EXPLOSION_3"), currentPos);
 				this->tileObject->removeFromMap();
 				this->tileObject.reset();
 				if (this->overlayDoodad)

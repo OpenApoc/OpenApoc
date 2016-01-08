@@ -9,10 +9,7 @@
 namespace OpenApoc
 {
 
-GameCore::GameCore(Framework &fw) : supportedlanguages(), languagetext(), fonts(), forms(), fw(fw)
-{
-	Loaded = false;
-}
+GameCore::GameCore() : supportedlanguages(), languagetext(), fonts(), forms() { Loaded = false; }
 
 void GameCore::Load(UString CoreXMLFilename, UString Language)
 {
@@ -21,7 +18,7 @@ void GameCore::Load(UString CoreXMLFilename, UString Language)
 	ParseXMLDoc(CoreXMLFilename);
 	DebugModeEnabled = false;
 
-	MouseCursor = new ApocCursor(fw, fw.gamecore->GetPalette("xcom3/tacdata/TACTICAL.PAL"));
+	MouseCursor = new ApocCursor(fw().gamecore->GetPalette("xcom3/tacdata/TACTICAL.PAL"));
 
 	Loaded = true;
 }
@@ -39,7 +36,7 @@ void GameCore::ParseXMLDoc(UString XMLFilename)
 	TRACE_FN_ARGS1("XMLFilename", XMLFilename);
 	tinyxml2::XMLDocument doc;
 	tinyxml2::XMLElement *node;
-	auto file = fw.data->fs.open(XMLFilename);
+	auto file = fw().data->fs.open(XMLFilename);
 	if (!file)
 	{
 		LogError("Failed to open XML file \"%s\"", XMLFilename.c_str());
@@ -99,7 +96,7 @@ void GameCore::ParseXMLDoc(UString XMLFilename)
 					LogError("apocfont element with no name");
 					continue;
 				}
-				auto font = ApocalypseFont::loadFont(fw, node);
+				auto font = ApocalypseFont::loadFont(node);
 				if (!font)
 				{
 					LogError("apocfont element \"%s\" failed to load", fontName.c_str());
@@ -131,7 +128,7 @@ void GameCore::ParseXMLDoc(UString XMLFilename)
 					if (nodename == "category")
 					{
 						Ufopaedia::UfopaediaDB.push_back(
-						    std::make_shared<UfopaediaCategory>(fw, nodeufo));
+						    std::make_shared<UfopaediaCategory>(nodeufo));
 					}
 				}
 			}
@@ -153,7 +150,7 @@ void GameCore::ParseGameXML(tinyxml2::XMLElement *Source)
 		nodename = node->Name();
 		if (nodename == "title")
 		{
-			fw.Display_SetTitle(node->GetText());
+			fw().Display_SetTitle(node->GetText());
 		}
 		if (nodename == "include")
 		{
@@ -192,7 +189,7 @@ UString GameCore::GetString(UString ID)
 
 Form *GameCore::GetForm(UString ID) { return static_cast<Form *>(forms[ID]->CopyTo(nullptr)); }
 
-sp<Image> GameCore::GetImage(UString ImageData) { return fw.data->load_image(ImageData); }
+sp<Image> GameCore::GetImage(UString ImageData) { return fw().data->load_image(ImageData); }
 
 sp<BitmapFont> GameCore::GetFont(UString FontData)
 {
@@ -204,7 +201,7 @@ sp<BitmapFont> GameCore::GetFont(UString FontData)
 	return fonts[FontData];
 }
 
-sp<Palette> GameCore::GetPalette(UString Path) { return fw.data->load_palette(Path); }
+sp<Palette> GameCore::GetPalette(UString Path) { return fw().data->load_palette(Path); }
 
 void GameCore::ApplyAliases(tinyxml2::XMLElement *Source)
 {

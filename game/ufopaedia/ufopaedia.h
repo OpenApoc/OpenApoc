@@ -23,7 +23,7 @@ class Ufopaedia : public Stage
   public:
 	static std::vector<sp<UfopaediaCategory>> UfopaediaDB;
 
-	Ufopaedia(Framework &fw);
+	Ufopaedia();
 	~Ufopaedia();
 	// Stage control
 	virtual void Begin() override;

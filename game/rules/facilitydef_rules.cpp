@@ -5,10 +5,9 @@
 namespace OpenApoc
 {
 
-bool RulesLoader::ParseFacilityDefinition(Framework &fw, Rules &rules, tinyxml2::XMLElement *root)
+bool RulesLoader::ParseFacilityDefinition(Rules &rules, tinyxml2::XMLElement *root)
 {
 	TRACE_FN;
-	std::ignore = fw;
 	FacilityDef def;
 
 	if (UString(root->Name()) != "facilitydef")

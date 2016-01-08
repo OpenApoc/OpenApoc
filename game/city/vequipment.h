@@ -11,7 +11,6 @@ class VWeaponType;
 class VEngineType;
 class Vehicle;
 class Projectile;
-class Framework;
 
 class VEquipment
 {
@@ -68,6 +67,6 @@ class VWeapon : public VEquipment
 	// Reload uses up to 'ammoAvailable' to reload the weapon. It returns the amount
 	// actually used.
 	int reload(int ammoAvailable);
-	sp<Projectile> fire(Framework &fw, Vec3<float> target);
+	sp<Projectile> fire(Vec3<float> target);
 };
 } // namespace OpenApoc

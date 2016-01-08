@@ -20,7 +20,6 @@
 namespace OpenApoc
 {
 
-class Framework;
 class UString;
 
 class Rules
@@ -40,7 +39,7 @@ class Rules
 	friend class RulesLoader;
 
   public:
-	Rules(Framework &fw, const UString &rootFileName);
+	Rules(const UString &rootFileName);
 
 	const std::map<UString, up<VehicleType>> &getVehicleTypes() const { return vehicle_types; }
 

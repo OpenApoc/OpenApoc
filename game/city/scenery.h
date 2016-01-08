@@ -12,7 +12,6 @@ class SceneryTileDef;
 class Building;
 class Collision;
 class GameState;
-class Framework;
 class TileMap;
 class StaticDoodad;
 
@@ -42,7 +41,7 @@ class Scenery : public std::enable_shared_from_this<Scenery>
 	bool damaged;
 	bool falling;
 
-	void update(Framework &fw, GameState &state, unsigned int ticks);
+	void update(GameState &state, unsigned int ticks);
 	void collapse(GameState &state);
 
 	bool canRepair() const;

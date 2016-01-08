@@ -7,7 +7,6 @@
 namespace OpenApoc
 {
 
-class Framework;
 class Stage;
 class Surface;
 
@@ -37,11 +36,8 @@ class StageCmd
 
 class Stage : public std::enable_shared_from_this<Stage>
 {
-  protected:
-	Framework &fw;
-
   public:
-	Stage(Framework &fw) : fw(fw) {}
+	Stage() {}
 	/*
 	    Function: Begin
 	    This function is called just before the stage becomes the *active* stage.

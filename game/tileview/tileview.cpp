@@ -12,17 +12,17 @@
 namespace OpenApoc
 {
 
-TileView::TileView(Framework &fw, TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
+TileView::TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
                    TileViewMode initialMode)
-    : Stage(fw), map(map), isoTileSize(isoTileSize), stratTileSize(stratTileSize),
+    : Stage(), map(map), isoTileSize(isoTileSize), stratTileSize(stratTileSize),
       viewMode(initialMode), scrollUp(false), scrollDown(false), scrollLeft(false),
-      scrollRight(false), dpySize(fw.Display_GetWidth(), fw.Display_GetHeight()),
+      scrollRight(false), dpySize(fw().Display_GetWidth(), fw().Display_GetHeight()),
       strategyViewBoxColour(128, 128, 128, 255), strategyViewBoxThickness(2.0f), maxZDraw(10),
       centerPos(0, 0), isoScrollSpeed(0.5, 0.5), stratScrollSpeed(2.0f, 2.0f),
       selectedTilePosition(0, 0, 0),
-      selectedTileImageBack(fw.data->load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
-      selectedTileImageFront(fw.data->load_image("CITY/SELECTED-CITYTILE-FRONT.PNG")),
-      pal(fw.data->load_palette("xcom3/ufodata/PAL_01.DAT"))
+      selectedTileImageBack(fw().data->load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
+      selectedTileImageFront(fw().data->load_image("CITY/SELECTED-CITYTILE-FRONT.PNG")),
+      pal(fw().data->load_palette("xcom3/ufodata/PAL_01.DAT"))
 {
 }
 
@@ -58,13 +58,13 @@ void TileView::EventOccurred(Event *e)
 				break;
 
 			case SDLK_PAGEDOWN:
-				if (fw.gamecore->DebugModeEnabled && maxZDraw > 1)
+				if (fw().gamecore->DebugModeEnabled && maxZDraw > 1)
 				{
 					maxZDraw--;
 				}
 				break;
 			case SDLK_PAGEUP:
-				if (fw.gamecore->DebugModeEnabled && maxZDraw < map.size.z)
+				if (fw().gamecore->DebugModeEnabled && maxZDraw < map.size.z)
 				{
 					maxZDraw++;
 				}
@@ -100,13 +100,13 @@ void TileView::EventOccurred(Event *e)
 					selectedTilePosition.z--;
 				break;
 			case SDLK_1:
-				pal = fw.data->load_palette("xcom3/ufodata/PAL_01.DAT");
+				pal = fw().data->load_palette("xcom3/ufodata/PAL_01.DAT");
 				break;
 			case SDLK_2:
-				pal = fw.data->load_palette("xcom3/ufodata/PAL_02.DAT");
+				pal = fw().data->load_palette("xcom3/ufodata/PAL_02.DAT");
 				break;
 			case SDLK_3:
-				pal = fw.data->load_palette("xcom3/ufodata/PAL_03.DAT");
+				pal = fw().data->load_palette("xcom3/ufodata/PAL_03.DAT");
 				break;
 		}
 	}
@@ -154,7 +154,7 @@ void TileView::EventOccurred(Event *e)
 			this->setScreenCenterTile(newPos);
 		}
 	}
-	if (fw.gamecore->DebugModeEnabled && selectionChanged)
+	if (fw().gamecore->DebugModeEnabled && selectionChanged)
 	{
 		LogInfo("Selected tile {%d,%d,%d}", selectedTilePosition.x, selectedTilePosition.y,
 		        selectedTilePosition.z);
@@ -163,7 +163,7 @@ void TileView::EventOccurred(Event *e)
 
 void TileView::Render()
 {
-	Renderer &r = *fw.renderer;
+	Renderer &r = *fw().renderer;
 	r.clear();
 	r.setPalette(this->pal);
 
@@ -237,7 +237,7 @@ void TileView::Render()
 				for (int x = minX; x < maxX; x++)
 				{
 					bool showSelected =
-					    (fw.gamecore->DebugModeEnabled && z == selectedTilePosition.z &&
+					    (fw().gamecore->DebugModeEnabled && z == selectedTilePosition.z &&
 					     y == selectedTilePosition.y && x == selectedTilePosition.x);
 					auto tile = map.getTile(x, y, z);
 					auto screenPos = tileToScreenCoords(Vec3<float>{
@@ -332,7 +332,7 @@ Vec2<int> TileView::getScreenOffset() const
 
 void TileView::setScreenCenterTile(Vec2<float> center)
 {
-	fw.soundBackend->setListenerPosition({center.x, center.y, map.size.z / 2});
+	fw().soundBackend->setListenerPosition({center.x, center.y, map.size.z / 2});
 	Vec2<float> clampedCenter;
 	if (center.x < 0.0f)
 		clampedCenter.x = 0.0f;

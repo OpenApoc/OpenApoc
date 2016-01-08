@@ -7,9 +7,7 @@
 namespace OpenApoc
 {
 
-DebugMenu::DebugMenu(Framework &fw) : Stage(fw), menuform(fw.gamecore->GetForm("FORM_DEBUG_MENU"))
-{
-}
+DebugMenu::DebugMenu() : Stage(), menuform(fw().gamecore->GetForm("FORM_DEBUG_MENU")) {}
 
 DebugMenu::~DebugMenu() {}
 
@@ -24,7 +22,7 @@ void DebugMenu::Finish() {}
 void DebugMenu::EventOccurred(Event *e)
 {
 	menuform->EventOccured(e);
-	fw.gamecore->MouseCursor->EventOccured(e);
+	fw().gamecore->MouseCursor->EventOccured(e);
 
 	if (e->Type == EVENT_KEY_DOWN)
 	{
@@ -50,7 +48,7 @@ void DebugMenu::EventOccurred(Event *e)
 		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_FORMPREVIEW")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<FormPreview>(fw);
+			stageCmd.nextStage = std::make_shared<FormPreview>();
 		}
 	}
 }
@@ -65,12 +63,12 @@ void DebugMenu::Update(StageCmd *const cmd)
 
 void DebugMenu::Render()
 {
-	fw.Stage_GetPrevious(this->shared_from_this())->Render();
-	fw.renderer->drawFilledRect(Vec2<float>(0, 0),
-	                            Vec2<float>(fw.Display_GetWidth(), fw.Display_GetHeight()),
-	                            Colour(0, 0, 0, 128));
+	fw().Stage_GetPrevious(this->shared_from_this())->Render();
+	fw().renderer->drawFilledRect(Vec2<float>(0, 0),
+	                              Vec2<float>(fw().Display_GetWidth(), fw().Display_GetHeight()),
+	                              Colour(0, 0, 0, 128));
 	menuform->Render();
-	fw.gamecore->MouseCursor->Render();
+	fw().gamecore->MouseCursor->Render();
 }
 
 bool DebugMenu::IsTransition() { return false; }
@@ -97,7 +95,7 @@ void DebugMenu::BulkExportPCKs()
 	for (auto i = PaletteNames.begin(); i != PaletteNames.end(); i++)
 	{
 		UString palname = (*i);
-		PaletteList.push_back(fw.data->load_palette(palname));
+		PaletteList.push_back(fw().data->load_palette(palname));
 	}
 
 	// All the PCKs
@@ -140,7 +138,7 @@ void DebugMenu::BulkExportPCKs()
 
 		LogInfo(UString("Processing ") + pckloadstr);
 
-		sp<ImageSet> pckset = fw.data->load_image_set(pckloadstr);
+		sp<ImageSet> pckset = fw().data->load_image_set(pckloadstr);
 
 		if (pckset != nullptr)
 		{

@@ -8,7 +8,6 @@ namespace OpenApoc
 
 class Rules;
 class Image;
-class Framework;
 class Sample;
 class VEquipmentType
 {
@@ -27,7 +26,7 @@ class VEquipmentType
 	};
 
 	virtual ~VEquipmentType() = default;
-	virtual bool isValid(Framework &fw, Rules &rules);
+	virtual bool isValid(Rules &rules);
 
 	Type type;
 	UString id;
@@ -54,7 +53,7 @@ class VWeaponType : public VEquipmentType
 
   public:
 	virtual ~VWeaponType() = default;
-	bool isValid(Framework &fw, Rules &rules) override;
+	bool isValid(Rules &rules) override;
 
 	int speed;
 	int projectile_image; // FIXME: What is this?
@@ -83,7 +82,7 @@ class VEngineType : public VEquipmentType
 
   public:
 	virtual ~VEngineType() = default;
-	bool isValid(Framework &fw, Rules &rules) override;
+	bool isValid(Rules &rules) override;
 
 	int power;
 	int top_speed;
@@ -97,7 +96,7 @@ class VGeneralEquipmentType : public VEquipmentType
 
   public:
 	virtual ~VGeneralEquipmentType() = default;
-	bool isValid(Framework &fw, Rules &rules) override;
+	bool isValid(Rules &rules) override;
 
 	int accuracy_modifier;
 	int cargo_space;

@@ -25,11 +25,8 @@ class DoodadDef;
 
 class City
 {
-  private:
-	Framework &fw;
-
   public:
-	City(Framework &fw, GameState &state);
+	City(GameState &state);
 	~City();
 	std::vector<sp<Vehicle>> vehicles;
 	std::set<sp<Projectile>> projectiles;

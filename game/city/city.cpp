@@ -31,10 +31,10 @@ static std::vector<std::set<TileObject::Type>> layerMap = {
     {TileObject::Type::Projectile, TileObject::Type::Vehicle, TileObject::Type::Shadow},
 };
 
-City::City(Framework &fw, GameState &state) : fw(fw), map(fw, fw.rules->getCitySize(), layerMap)
+City::City(GameState &state) : map(fw().rules->getCitySize(), layerMap)
 {
 	Trace::start("City::buildings");
-	for (auto &def : fw.rules->getBuildingDefs())
+	for (auto &def : fw().rules->getBuildingDefs())
 	{
 		this->buildings.emplace_back(
 		    std::make_shared<Building>(def, state.getOrganisation(def.getOwnerName())));
@@ -48,7 +48,7 @@ City::City(Framework &fw, GameState &state) : fw(fw), map(fw, fw.rules->getCityS
 		{
 			for (int x = 0; x < this->map.size.x; x++)
 			{
-				auto tileID = fw.rules->getSceneryTileAt(Vec3<int>{x, y, z});
+				auto tileID = fw().rules->getSceneryTileAt(Vec3<int>{x, y, z});
 				if (tileID == "")
 					continue;
 				sp<Building> bld = nullptr;
@@ -62,7 +62,7 @@ City::City(Framework &fw, GameState &state) : fw(fw), map(fw, fw.rules->getCityS
 							LogError("Multiple buildings on tile at %d,%d,%d", x, y, z);
 						}
 						bld = b;
-						for (auto &padID : fw.rules->getLandingPadTiles())
+						for (auto &padID : fw().rules->getLandingPadTiles())
 						{
 							if (padID == tileID)
 							{
@@ -75,7 +75,7 @@ City::City(Framework &fw, GameState &state) : fw(fw), map(fw, fw.rules->getCityS
 					}
 				}
 
-				auto &cityTileDef = fw.rules->getSceneryTileDef(tileID);
+				auto &cityTileDef = fw().rules->getSceneryTileDef(tileID);
 				auto scenery = std::make_shared<Scenery>(cityTileDef, Vec3<int>{x, y, z}, bld);
 				map.addObjectToMap(scenery);
 				if (cityTileDef.getOverlaySprite())
@@ -183,7 +183,7 @@ City::City(Framework &fw, GameState &state) : fw(fw), map(fw, fw.rules->getCityS
 	{
 		if (!b->def.getBaseCorridors().empty())
 		{
-			b->base = std::make_shared<Base>(b, fw);
+			b->base = std::make_shared<Base>(b);
 			this->baseBuildings.emplace_back(b);
 		}
 	}
@@ -263,7 +263,7 @@ void City::update(GameState &state, unsigned int ticks)
 	for (auto it = this->vehicles.begin(); it != this->vehicles.end();)
 	{
 		auto v = *it++;
-		v->update(fw, state, ticks);
+		v->update(state, ticks);
 	}
 	Trace::end("City::update::vehices->update");
 	Trace::start("City::update::projectiles->update");
@@ -276,7 +276,7 @@ void City::update(GameState &state, unsigned int ticks)
 	for (auto &p : this->projectiles)
 	{
 		auto func = std::bind(&Projectile::checkProjectileCollision, p, std::placeholders::_1);
-		collisions.emplace_back(fw.threadPool->enqueue(func, std::ref(map)));
+		collisions.emplace_back(fw().threadPool->enqueue(func, std::ref(map)));
 	}
 	for (auto &future : collisions)
 	{
@@ -294,7 +294,7 @@ void City::update(GameState &state, unsigned int ticks)
 			this->projectiles.erase(c.projectile);
 			// FIXME: Get doodad from weapon definition?
 			auto doodad =
-			    this->placeDoodad(fw.rules->getDoodadDef("DOODAD_EXPLOSION_0"), c.position);
+			    this->placeDoodad(fw().rules->getDoodadDef("DOODAD_EXPLOSION_0"), c.position);
 
 			switch (c.obj->getType())
 			{
@@ -309,7 +309,7 @@ void City::update(GameState &state, unsigned int ticks)
 					// FIXME: Don't just explode scenery, but damaged tiles/falling stuff? Different
 					// explosion doodads? Not all weapons instantly destory buildings too
 
-					auto doodad = this->placeDoodad(fw.rules->getDoodadDef("DOODAD_EXPLOSION_2"),
+					auto doodad = this->placeDoodad(fw().rules->getDoodadDef("DOODAD_EXPLOSION_2"),
 					                                sceneryTile->getPosition());
 					sceneryTile->getOwner()->handleCollision(state, c);
 					break;
@@ -324,7 +324,7 @@ void City::update(GameState &state, unsigned int ticks)
 	for (auto it = this->fallingScenery.begin(); it != this->fallingScenery.end();)
 	{
 		auto s = *it++;
-		s->update(fw, state, ticks);
+		s->update(state, ticks);
 	}
 	Trace::end("City::update::fallingScenery->update");
 	Trace::start("City::update::doodads->update");

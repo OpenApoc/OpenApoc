@@ -18,7 +18,7 @@ class InfiltrationScreen : public Stage
 	StageCmd stageCmd;
 
   public:
-	InfiltrationScreen(Framework &fw);
+	InfiltrationScreen();
 	~InfiltrationScreen();
 	// Stage control
 	virtual void Begin() override;

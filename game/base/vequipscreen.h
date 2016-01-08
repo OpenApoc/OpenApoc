@@ -42,7 +42,7 @@ class VEquipScreen : public Stage
 	std::list<std::pair<Rect<int>, VEquipmentType &>> inventoryItems;
 
   public:
-	VEquipScreen(Framework &fw);
+	VEquipScreen();
 	virtual ~VEquipScreen();
 
 	void Begin() override;

@@ -170,7 +170,7 @@ void Vehicle::land(TileMap &map, sp<Building> b)
 	this->position = {0, 0, 0};
 }
 
-void Vehicle::update(Framework &fw, GameState &state, unsigned int ticks)
+void Vehicle::update(GameState &state, unsigned int ticks)
 
 {
 	if (!this->missions.empty())
@@ -231,7 +231,7 @@ void Vehicle::update(Framework &fw, GameState &state, unsigned int ticks)
 					// and fire at the center of the tile
 					auto target = closestEnemy->getPosition();
 					target += Vec3<float>{0.5, 0.5, 0.5};
-					auto projectile = weapon->fire(fw, target);
+					auto projectile = weapon->fire(target);
 					if (projectile)
 					{
 						vehicleTile->map.addObjectToMap(projectile);

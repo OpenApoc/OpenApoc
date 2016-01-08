@@ -38,9 +38,9 @@ int BaseScreen::getCorridorSprite(Vec2<int> pos) const
 	return TILE_CORRIDORS.at({north, south, west, east});
 }
 
-BaseScreen::BaseScreen(Framework &fw)
-    : Stage(fw), basescreenform(fw.gamecore->GetForm("FORM_BASESCREEN")),
-      base(*fw.state->playerBases.front()), selection(-1, -1)
+BaseScreen::BaseScreen()
+    : Stage(), basescreenform(fw().gamecore->GetForm("FORM_BASESCREEN")),
+      base(*fw().state->playerBases.front()), selection(-1, -1)
 {
 }
 
@@ -49,7 +49,7 @@ BaseScreen::~BaseScreen() {}
 void BaseScreen::Begin()
 {
 	Label *funds = basescreenform->FindControlTyped<Label>("TEXT_FUNDS");
-	funds->SetText(fw.state->getPlayerBalance());
+	funds->SetText(fw().state->getPlayerBalance());
 
 	TextEdit *name = basescreenform->FindControlTyped<TextEdit>("TEXT_BASE_NAME");
 	name->SetText(base.name);
@@ -59,7 +59,7 @@ void BaseScreen::Begin()
 	selGraphic = basescreenform->FindControlTyped<Graphic>("GRAPHIC_SELECTED_FACILITY");
 
 	ListBox *facilities = basescreenform->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
-	for (auto &i : fw.rules->getFacilityDefs())
+	for (auto &i : fw().rules->getFacilityDefs())
 	{
 		auto &facility = i.second;
 		if (facility.fixed)
@@ -80,7 +80,7 @@ void BaseScreen::Finish() {}
 void BaseScreen::EventOccurred(Event *e)
 {
 	basescreenform->EventOccured(e);
-	fw.gamecore->MouseCursor->EventOccured(e);
+	fw().gamecore->MouseCursor->EventOccured(e);
 
 	if (e->Type == EVENT_KEY_DOWN)
 	{
@@ -105,8 +105,8 @@ void BaseScreen::EventOccurred(Event *e)
 			selFacility = base.getFacility(selection);
 			if (selFacility != nullptr)
 			{
-				selText->SetText(fw.gamecore->GetString(selFacility->def.name));
-				selGraphic->SetImage(fw.data->load_image(selFacility->def.sprite));
+				selText->SetText(fw().gamecore->GetString(selFacility->def.name));
+				selGraphic->SetImage(fw().data->load_image(selFacility->def.sprite));
 			}
 			else
 			{
@@ -117,12 +117,12 @@ void BaseScreen::EventOccurred(Event *e)
 					ss << "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:" << sprite
 					   << ":UI/menuopt.pal";
 					selText->SetText("Corridor");
-					selGraphic->SetImage(fw.data->load_image(ss.str()));
+					selGraphic->SetImage(fw().data->load_image(ss.str()));
 				}
 				else
 				{
 					selText->SetText("Earth");
-					selGraphic->SetImage(fw.data->load_image(
+					selGraphic->SetImage(fw().data->load_image(
 					    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:UI/menuopt.pal"));
 				}
 			}
@@ -145,7 +145,7 @@ void BaseScreen::EventOccurred(Event *e)
 		{
 			// FIXME: If you don't have any vehicles this button should do nothing
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<VEquipScreen>(fw);
+			stageCmd.nextStage = std::make_shared<VEquipScreen>();
 			return;
 		}
 	}
@@ -171,11 +171,11 @@ void BaseScreen::Update(StageCmd *const cmd)
 
 void BaseScreen::Render()
 {
-	fw.Stage_GetPrevious(this->shared_from_this())->Render();
-	fw.renderer->drawFilledRect({0, 0}, fw.Display_GetSize(), Colour{0, 0, 0, 128});
+	fw().Stage_GetPrevious(this->shared_from_this())->Render();
+	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
 	basescreenform->Render();
 	RenderBase();
-	fw.gamecore->MouseCursor->Render();
+	fw().gamecore->MouseCursor->Render();
 }
 
 bool BaseScreen::IsTransition() { return false; }
@@ -186,14 +186,14 @@ void BaseScreen::RenderBase()
 
 	// Draw grid
 	sp<Image> grid =
-	    fw.data->load_image("PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:UI/menuopt.pal");
+	    fw().data->load_image("PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:UI/menuopt.pal");
 	Vec2<int> i;
 	for (i.x = 0; i.x < Base::SIZE; ++i.x)
 	{
 		for (i.y = 0; i.y < Base::SIZE; ++i.y)
 		{
 			Vec2<int> pos = BASE_POS + i * TILE_SIZE;
-			fw.renderer->draw(grid, pos);
+			fw().renderer->draw(grid, pos);
 		}
 	}
 
@@ -209,7 +209,7 @@ void BaseScreen::RenderBase()
 				std::ostringstream ss;
 				ss << "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:" << sprite
 				   << ":UI/menuopt.pal";
-				fw.renderer->draw(fw.data->load_image(ss.str()), pos);
+				fw().renderer->draw(fw().data->load_image(ss.str()), pos);
 			}
 		}
 	}
@@ -217,9 +217,9 @@ void BaseScreen::RenderBase()
 	// Draw facilities
 	for (auto &facility : base.getFacilities())
 	{
-		sp<Image> sprite = fw.data->load_image(facility->def.sprite);
+		sp<Image> sprite = fw().data->load_image(facility->def.sprite);
 		Vec2<int> pos = BASE_POS + facility->pos * TILE_SIZE;
-		fw.renderer->draw(sprite, pos);
+		fw().renderer->draw(sprite, pos);
 	}
 
 	// Draw selection
@@ -234,7 +234,7 @@ void BaseScreen::RenderBase()
 			size *= selFacility->def.size;
 		}
 		pos = BASE_POS + pos * TILE_SIZE;
-		fw.renderer->drawRect(pos, size, Colour{255, 255, 255});
+		fw().renderer->drawRect(pos, size, Colour{255, 255, 255});
 	}
 }
 }; // namespace OpenApoc

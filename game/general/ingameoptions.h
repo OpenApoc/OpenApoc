@@ -18,7 +18,7 @@ class InGameOptions : public Stage
 	StageCmd stageCmd;
 
   public:
-	InGameOptions(Framework &fw);
+	InGameOptions();
 	~InGameOptions();
 	// Stage control
 	virtual void Begin() override;

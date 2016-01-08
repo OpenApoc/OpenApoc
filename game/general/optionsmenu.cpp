@@ -7,10 +7,7 @@
 namespace OpenApoc
 {
 
-OptionsMenu::OptionsMenu(Framework &fw)
-    : Stage(fw), menuform(fw.gamecore->GetForm("FORM_OPTIONSMENU"))
-{
-}
+OptionsMenu::OptionsMenu() : Stage(), menuform(fw().gamecore->GetForm("FORM_OPTIONSMENU")) {}
 
 OptionsMenu::~OptionsMenu() {}
 
@@ -25,7 +22,7 @@ void OptionsMenu::Finish() {}
 void OptionsMenu::EventOccurred(Event *e)
 {
 	menuform->EventOccured(e);
-	fw.gamecore->MouseCursor->EventOccured(e);
+	fw().gamecore->MouseCursor->EventOccured(e);
 
 	if (e->Type == EVENT_KEY_DOWN)
 	{
@@ -45,13 +42,13 @@ void OptionsMenu::EventOccurred(Event *e)
 		if (e->Data.Forms.RaisedBy->Name == "BUTTON_TEST_UFOPAEDIA")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<Ufopaedia>(fw);
+			stageCmd.nextStage = std::make_shared<Ufopaedia>();
 			return;
 		}
 		if (e->Data.Forms.RaisedBy->Name == "BUTTON_DEBUGGING")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<DebugMenu>(fw);
+			stageCmd.nextStage = std::make_shared<DebugMenu>();
 			return;
 		}
 		if (e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT")
@@ -72,10 +69,10 @@ void OptionsMenu::Update(StageCmd *const cmd)
 
 void OptionsMenu::Render()
 {
-	fw.Stage_GetPrevious(this->shared_from_this())->Render();
-	fw.renderer->drawFilledRect({0, 0}, fw.Display_GetSize(), Colour{0, 0, 0, 128});
+	fw().Stage_GetPrevious(this->shared_from_this())->Render();
+	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
 	menuform->Render();
-	fw.gamecore->MouseCursor->Render();
+	fw().gamecore->MouseCursor->Render();
 }
 
 bool OptionsMenu::IsTransition() { return false; }

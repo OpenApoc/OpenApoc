@@ -26,7 +26,7 @@ class CityView : public TileView
 	UpdateSpeed updateSpeed;
 
   public:
-	CityView(Framework &fw);
+	CityView();
 	virtual ~CityView();
 	virtual void Update(StageCmd *const cmd) override;
 	virtual void Render() override;

@@ -12,7 +12,6 @@ namespace OpenApoc
 
 class BuildingDef;
 class Organisation;
-class Framework;
 class Vehicle;
 class Base;
 

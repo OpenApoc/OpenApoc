@@ -8,7 +8,6 @@
 namespace OpenApoc
 {
 
-class Framework;
 class Image;
 class Renderer;
 
@@ -25,7 +24,7 @@ class ApocalypseFont : public BitmapFont
 	sp<Palette> palette;
 
   public:
-	static sp<ApocalypseFont> loadFont(Framework &fw, tinyxml2::XMLElement *fontElement);
+	static sp<ApocalypseFont> loadFont(tinyxml2::XMLElement *fontElement);
 	virtual ~ApocalypseFont();
 	sp<PaletteImage> getGlyph(UniChar codepoint) override;
 	int GetFontHeight() override;

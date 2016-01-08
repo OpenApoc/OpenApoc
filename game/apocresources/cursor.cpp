@@ -7,9 +7,9 @@
 namespace OpenApoc
 {
 
-ApocCursor::ApocCursor(Framework &fw, sp<Palette> pal) : fw(fw), cursorPos{0, 0}
+ApocCursor::ApocCursor(sp<Palette> pal) : cursorPos{0, 0}
 {
-	auto f = fw.data->fs.open("xcom3/TACDATA/MOUSE.DAT");
+	auto f = fw().data->fs.open("xcom3/TACDATA/MOUSE.DAT");
 	if (!f)
 	{
 		LogError("Failed to open xcom3/TACDATA/MOUSE.DAT");
@@ -50,7 +50,7 @@ void ApocCursor::EventOccured(Event *e)
 
 void ApocCursor::Render()
 {
-	fw.renderer->draw(images.at(static_cast<int>(CurrentType)),
-	                  Vec2<float>{cursorPos.x, cursorPos.y});
+	fw().renderer->draw(images.at(static_cast<int>(CurrentType)),
+	                    Vec2<float>{cursorPos.x, cursorPos.y});
 }
 }; // namespace OpenApoc

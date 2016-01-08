@@ -17,8 +17,8 @@
 namespace OpenApoc
 {
 
-TileMap::TileMap(Framework &fw, Vec3<int> size, std::vector<std::set<TileObject::Type>> layerMap)
-    : layerMap(layerMap), fw(fw), size(size)
+TileMap::TileMap(Vec3<int> size, std::vector<std::set<TileObject::Type>> layerMap)
+    : layerMap(layerMap), size(size)
 {
 	tiles.reserve(size.z * size.y * size.z);
 	for (int z = 0; z < size.z; z++)

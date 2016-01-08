@@ -8,7 +8,6 @@ namespace OpenApoc
 class TileObjectDoodad;
 class TileMap;
 class DoodadDef;
-class Framework;
 class Image;
 class GameState;
 

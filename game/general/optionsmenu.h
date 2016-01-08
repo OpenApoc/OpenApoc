@@ -18,7 +18,7 @@ class OptionsMenu : public Stage
 	StageCmd stageCmd;
 
   public:
-	OptionsMenu(Framework &fw);
+	OptionsMenu();
 	~OptionsMenu();
 	// Stage control
 	virtual void Begin() override;

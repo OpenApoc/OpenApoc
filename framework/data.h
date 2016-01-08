@@ -17,7 +17,6 @@ namespace OpenApoc
 class ImageLoader;
 class SampleLoader;
 class MusicLoader;
-class Framework;
 class VoxelSlice;
 class LOFTemps;
 class ResourceAliases;

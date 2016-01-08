@@ -10,7 +10,7 @@
 namespace OpenApoc
 {
 
-Base::Base(sp<Building> building, const Framework &fw) : bld(building)
+Base::Base(sp<Building> building) : bld(building)
 {
 	corridors = std::vector<std::vector<bool>>(SIZE, std::vector<bool>(SIZE, false));
 	for (auto &rect : building->def.getBaseCorridors())
@@ -23,7 +23,7 @@ Base::Base(sp<Building> building, const Framework &fw) : bld(building)
 			}
 		}
 	}
-	auto &def = fw.rules->getFacilityDefs().at("ACCESS_LIFT");
+	auto &def = fw().rules->getFacilityDefs().at("ACCESS_LIFT");
 	if (canBuildFacility(def, building->def.getBaseLift(), true) != BuildError::None)
 	{
 		LogError("Building %s has invalid lift location", building->def.getName().c_str());
@@ -47,7 +47,7 @@ sp<const Facility> Base::getFacility(Vec2<int> pos) const
 	return nullptr;
 }
 
-void Base::startingBase(const Framework &fw, std::default_random_engine &rng)
+void Base::startingBase(std::default_random_engine &rng)
 {
 	// Figure out positions available for placement
 	std::vector<Vec2<int>> positions;
@@ -63,7 +63,7 @@ void Base::startingBase(const Framework &fw, std::default_random_engine &rng)
 	}
 
 	// Randomly fill them with facilities
-	for (auto &i : fw.rules->getFacilityDefs())
+	for (auto &i : fw().rules->getFacilityDefs())
 	{
 		if (i.second.fixed)
 			continue;

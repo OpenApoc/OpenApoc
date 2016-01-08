@@ -140,7 +140,7 @@ class VehicleType
 	std::list<std::pair<Vec2<int>, UString>> initial_equipment_list;
 
 	virtual ~VehicleType() = default;
-	virtual bool isValid(Framework &fw, Rules &rules);
+	virtual bool isValid(Rules &rules);
 
   private:
 	VehicleType(Type type, const UString &id);

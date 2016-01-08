@@ -5,10 +5,7 @@
 namespace OpenApoc
 {
 
-ScoreScreen::ScoreScreen(Framework &fw)
-    : Stage(fw), menuform(fw.gamecore->GetForm("FORM_SCORE_SCREEN"))
-{
-}
+ScoreScreen::ScoreScreen() : Stage(), menuform(fw().gamecore->GetForm("FORM_SCORE_SCREEN")) {}
 
 ScoreScreen::~ScoreScreen() {}
 
@@ -23,7 +20,7 @@ void ScoreScreen::Finish() {}
 void ScoreScreen::EventOccurred(Event *e)
 {
 	menuform->EventOccured(e);
-	fw.gamecore->MouseCursor->EventOccured(e);
+	fw().gamecore->MouseCursor->EventOccured(e);
 
 	if (e->Type == EVENT_KEY_DOWN)
 	{
@@ -54,10 +51,10 @@ void ScoreScreen::Update(StageCmd *const cmd)
 
 void ScoreScreen::Render()
 {
-	fw.Stage_GetPrevious(this->shared_from_this())->Render();
-	fw.renderer->drawFilledRect({0, 0}, fw.Display_GetSize(), Colour{0, 0, 0, 128});
+	fw().Stage_GetPrevious(this->shared_from_this())->Render();
+	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
 	menuform->Render();
-	fw.gamecore->MouseCursor->Render();
+	fw().gamecore->MouseCursor->Render();
 }
 
 bool ScoreScreen::IsTransition() { return false; }

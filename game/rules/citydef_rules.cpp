@@ -17,10 +17,8 @@ namespace OpenApoc
 {
 namespace
 {
-bool LoadCityMap(Framework &fw, Vec3<int> size, tinyxml2::XMLElement *root,
-                 std::vector<UString> &tileIDs)
+bool LoadCityMap(Vec3<int> size, tinyxml2::XMLElement *root, std::vector<UString> &tileIDs)
 {
-	std::ignore = fw;
 	size_t tileCount = size.x * size.y * size.z;
 
 	tileIDs.resize(tileCount);
@@ -91,7 +89,7 @@ bool LoadCityMap(Framework &fw, Vec3<int> size, tinyxml2::XMLElement *root,
 	return true;
 }
 
-bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID, sp<Image> &sprite,
+bool LoadCityTile(tinyxml2::XMLElement *root, UString &tileID, sp<Image> &sprite,
                   sp<Image> &stratmapSprite, sp<VoxelMap> &voxelMap, bool &isLandingPad,
                   std::vector<UString> &landingPadList, UString &damagedTileID,
                   sp<Image> &overlaySprite)
@@ -127,7 +125,7 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID, sp
 
 	if (stratmapString != "")
 	{
-		readStratmapSprite = fw.data->load_image(stratmapString);
+		readStratmapSprite = fw().data->load_image(stratmapString);
 		if (!readStratmapSprite)
 		{
 			LogInfo("Failed to load stratmap image \"%s\"", stratmapString.c_str());
@@ -146,7 +144,7 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID, sp
 		isLandingPad = true;
 	}
 
-	readSprite = fw.data->load_image(spriteString);
+	readSprite = fw().data->load_image(spriteString);
 	if (!readSprite)
 	{
 		LogError("Failed to load sprite image \"%s\"", spriteString.c_str());
@@ -157,7 +155,7 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID, sp
 	// Optional overlay sprite
 	if (ReadAttribute(root, "overlay", overlayPath))
 	{
-		sp<Image> overlay = fw.data->load_image(overlayPath);
+		sp<Image> overlay = fw().data->load_image(overlayPath);
 		if (!overlay)
 		{
 			LogError("Failed to load overlay image \"%s\"", overlayPath.c_str());
@@ -223,7 +221,7 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID, sp
 					LogError("No loflayer specified");
 					return false;
 				}
-				auto lofSlice = fw.data->load_voxel_slice(voxelSliceString);
+				auto lofSlice = fw().data->load_voxel_slice(voxelSliceString);
 				if (!lofSlice)
 				{
 					LogError("Failed to load loflayer \"%s\"", voxelSliceString.c_str());
@@ -265,7 +263,7 @@ bool LoadCityTile(Framework &fw, tinyxml2::XMLElement *root, UString &tileID, sp
 }
 
 }; // anonymous namespace
-bool RulesLoader::ParseCityDefinition(Framework &fw, Rules &rules, tinyxml2::XMLElement *root)
+bool RulesLoader::ParseCityDefinition(Rules &rules, tinyxml2::XMLElement *root)
 {
 	TRACE_FN;
 	if (UString(root->Name()) != "city")
@@ -307,7 +305,7 @@ bool RulesLoader::ParseCityDefinition(Framework &fw, Rules &rules, tinyxml2::XML
 				LogError("Invalid map size {%d,%d,%d}", size.x, size.y, size.z);
 				return false;
 			}
-			if (!LoadCityMap(fw, size, e, rules.tileIDs))
+			if (!LoadCityMap(size, e, rules.tileIDs))
 			{
 				LogError("Error parsing map \"%s\"", e->GetText());
 				return false;
@@ -466,9 +464,9 @@ bool RulesLoader::ParseCityDefinition(Framework &fw, Rules &rules, tinyxml2::XML
 					// (0.5,0.5,0) point
 					def.imageOffset = {32, 32};
 
-					if (!LoadCityTile(fw, tile, tileID, def.sprite, def.strategySprite,
-					                  def.voxelMap, def.isLandingPad, rules.landingPadTiles,
-					                  def.damagedTileID, def.overlaySprite))
+					if (!LoadCityTile(tile, tileID, def.sprite, def.strategySprite, def.voxelMap,
+					                  def.isLandingPad, rules.landingPadTiles, def.damagedTileID,
+					                  def.overlaySprite))
 					{
 						LogError("Error loading tile %d", numRead);
 						return false;
