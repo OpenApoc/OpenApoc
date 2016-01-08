@@ -23,7 +23,7 @@ class ListBox : public Control
 	virtual void OnRender() override;
 
   public:
-	int ItemSize;
+	int ItemSize, ItemSpacing;
 	Orientation ListOrientation;
 
 	ListBox(Framework &fw, Control *Owner);

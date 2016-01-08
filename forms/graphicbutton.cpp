@@ -17,7 +17,8 @@ GraphicButton::GraphicButton(Framework &fw, Control *Owner, UString Image, UStri
     : Control(fw, Owner), image_name(Image), imagedepressed_name(ImageDepressed),
       imagehover_name(ImageHover), image(nullptr), imagedepressed(nullptr), imagehover(nullptr),
       buttonclick(
-          fw.data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050"))
+          fw.data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
+      ScrollBarPrev(nullptr), ScrollBarNext(nullptr)
 {
 }
 
@@ -41,6 +42,16 @@ void GraphicButton::EventOccured(Event *e)
 		ce->Data.Forms = e->Data.Forms;
 		ce->Data.Forms.EventFlag = FormEventType::ButtonClick;
 		fw.PushEvent(ce);
+
+		if (ScrollBarPrev != nullptr)
+		{
+			ScrollBarPrev->ScrollPrev();
+		}
+
+		if (ScrollBarNext != nullptr)
+		{
+			ScrollBarNext->ScrollNext();
+		}
 	}
 }
 
@@ -119,7 +130,7 @@ void GraphicButton::UnloadResources()
 	Control::UnloadResources();
 }
 
-sp<Image> GraphicButton::GetImage() { return image; }
+sp<Image> GraphicButton::GetImage() const { return image; }
 
 void GraphicButton::SetImage(sp<Image> Image)
 {
@@ -127,7 +138,7 @@ void GraphicButton::SetImage(sp<Image> Image)
 	image = Image;
 }
 
-sp<Image> GraphicButton::GetDepressedImage() { return imagedepressed; }
+sp<Image> GraphicButton::GetDepressedImage() const { return imagedepressed; }
 
 void GraphicButton::SetDepressedImage(sp<Image> Image)
 {
@@ -135,7 +146,7 @@ void GraphicButton::SetDepressedImage(sp<Image> Image)
 	imagedepressed = Image;
 }
 
-sp<Image> GraphicButton::GetHoverImage() { return imagehover; }
+sp<Image> GraphicButton::GetHoverImage() const { return imagehover; }
 
 void GraphicButton::SetHoverImage(sp<Image> Image)
 {
@@ -147,6 +158,14 @@ Control *GraphicButton::CopyTo(Control *CopyParent)
 {
 	GraphicButton *copy = new GraphicButton(fw, CopyParent, this->image_name,
 	                                        this->imagedepressed_name, this->imagehover_name);
+	if (this->ScrollBarPrev != nullptr)
+	{
+		copy->ScrollBarPrev = static_cast<ScrollBar *>(ScrollBarPrev->lastCopiedTo);
+	}
+	if (this->ScrollBarNext != nullptr)
+	{
+		copy->ScrollBarNext = static_cast<ScrollBar *>(ScrollBarNext->lastCopiedTo);
+	}
 	CopyControlData(copy);
 	return copy;
 }

@@ -7,18 +7,13 @@
 namespace OpenApoc
 {
 
-ScrollBar::ScrollBar(Framework &fw, Control *Owner) : ScrollBar(fw, Owner, nullptr)
-{
-	// LoadResources();
-}
-
-ScrollBar::ScrollBar(Framework &fw, Control *Owner, Control *AssociateWith)
+ScrollBar::ScrollBar(Framework &fw, Control *Owner)
     : Control(fw, Owner), capture(false), grippersize(1), segmentsize(1),
       gripperbutton(fw.data->load_image(
           "PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:4:UI/menuopt.pal")),
       Value(0), BarOrientation(Orientation::Vertical),
       RenderStyle(ScrollBarRenderStyles::MenuButtonStyle), GripperColour(220, 192, 192), Minimum(0),
-      Maximum(10), LargeChange(2), AssociatedControl(AssociateWith)
+      Maximum(10), LargeChange(2)
 {
 	// LoadResources();
 }
@@ -51,11 +46,11 @@ void ScrollBar::EventOccured(Event *e)
 	{
 		if (e->Data.Forms.MouseInfo.X >= (segmentsize * (Value - Minimum)) + grippersize)
 		{
-			this->SetValue(Value + LargeChange);
+			ScrollNext();
 		}
 		else if (e->Data.Forms.MouseInfo.X <= segmentsize * (Value - Minimum))
 		{
-			this->SetValue(Value - LargeChange);
+			ScrollPrev();
 		}
 		else
 		{
@@ -81,11 +76,6 @@ void ScrollBar::EventOccured(Event *e)
 				this->SetValue(static_cast<int>(e->Data.Forms.MouseInfo.X / segmentsize));
 				break;
 		}
-	}
-
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this &&
-	    e->Data.Forms.EventFlag == FormEventType::MouseClick)
-	{
 	}
 }
 

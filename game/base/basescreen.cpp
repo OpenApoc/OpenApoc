@@ -66,6 +66,7 @@ void BaseScreen::Begin()
 			continue;
 
 		Graphic *graphic = new Graphic(fw, nullptr, facility.sprite);
+		graphic->AutoSize = true;
 		facilities->AddItem(graphic);
 	}
 }

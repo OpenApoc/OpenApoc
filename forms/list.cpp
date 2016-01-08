@@ -8,12 +8,11 @@ namespace OpenApoc
 ListBox::ListBox(Framework &fw, Control *Owner) : ListBox(fw, Owner, nullptr) {}
 
 ListBox::ListBox(Framework &fw, Control *Owner, ScrollBar *ExternalScrollBar)
-    : Control(fw, Owner), scroller(ExternalScrollBar), ItemSize(64),
+    : Control(fw, Owner), scroller(ExternalScrollBar), ItemSize(64), ItemSpacing(1),
       ListOrientation(Orientation::Vertical)
 {
 	if (scroller != nullptr)
 	{
-		scroller->AssociatedControl = this;
 		scroller_is_internal = false;
 	}
 }
@@ -28,12 +27,14 @@ void ListBox::ConfigureInternalScrollBar()
 	switch (ListOrientation)
 	{
 		case Orientation::Vertical:
-			scroller->Location.x = this->Size.x - 16;
+			scroller->Location.x = this->Size.x - scroller->Size.x;
 			scroller->Location.y = 0;
+			scroller->Size.y = this->Size.y;
 			break;
 		case Orientation::Horizontal:
 			scroller->Location.x = 0;
-			scroller->Location.y = this->Size.y - 16;
+			scroller->Location.y = this->Size.y - scroller->Size.y;
+			scroller->Size.x = this->Size.x;
 			break;
 	}
 	scroller->canCopy = false;
@@ -42,21 +43,6 @@ void ListBox::ConfigureInternalScrollBar()
 
 void ListBox::OnRender()
 {
-	if (scroller_is_internal)
-	{
-		switch (ListOrientation)
-		{
-			case Orientation::Vertical:
-				scroller->Location.x = this->Size.x - scroller->Size.x;
-				scroller->Size.y = this->Size.y;
-				break;
-			case Orientation::Horizontal:
-				scroller->Location.y = this->Size.y - scroller->Size.y;
-				scroller->Size.x = this->Size.x;
-				break;
-		}
-	}
-
 	int offset = 0;
 
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
@@ -69,16 +55,22 @@ void ListBox::OnRender()
 				case Orientation::Vertical:
 					ctrl->Location.x = 0;
 					ctrl->Location.y = offset - scroller->GetValue();
-					ctrl->Size.x = (scroller_is_internal ? scroller->Location.x : this->Size.x);
-					ctrl->Size.y = ItemSize;
-					offset += ctrl->Size.y + 1;
+					if (ItemSize != 0)
+					{
+						ctrl->Size.x = (scroller_is_internal ? scroller->Location.x : this->Size.x);
+						ctrl->Size.y = ItemSize;
+					}
+					offset += ctrl->Size.y + ItemSpacing;
 					break;
 				case Orientation::Horizontal:
 					ctrl->Location.x = offset - scroller->GetValue();
 					ctrl->Location.y = 0;
-					ctrl->Size.x = ItemSize;
-					ctrl->Size.y = (scroller_is_internal ? scroller->Location.y : this->Size.y);
-					offset += ctrl->Size.x + 1;
+					if (ItemSize != 0)
+					{
+						ctrl->Size.x = ItemSize;
+						ctrl->Size.y = (scroller_is_internal ? scroller->Location.y : this->Size.y);
+					}
+					offset += ctrl->Size.x + ItemSpacing;
 					break;
 			}
 		}
@@ -170,6 +162,7 @@ Control *ListBox::CopyTo(Control *CopyParent)
 		copy = new ListBox(fw, CopyParent, static_cast<ScrollBar *>(scroller->lastCopiedTo));
 	}
 	copy->ItemSize = this->ItemSize;
+	copy->ItemSpacing = this->ItemSpacing;
 	copy->ListOrientation = this->ListOrientation;
 	CopyControlData(copy);
 	return copy;

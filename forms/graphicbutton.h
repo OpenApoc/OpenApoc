@@ -9,6 +9,7 @@ namespace OpenApoc
 
 class Sample;
 class Image;
+class ScrollBar;
 
 class GraphicButton : public Control
 {
@@ -27,6 +28,8 @@ class GraphicButton : public Control
 	virtual void OnRender() override;
 
   public:
+	ScrollBar *ScrollBarPrev, *ScrollBarNext;
+
 	GraphicButton(Framework &fw, Control *Owner, UString Image, UString ImageDepressed);
 	GraphicButton(Framework &fw, Control *Owner, UString Image, UString ImageDepressed,
 	              UString ImageHover);
@@ -36,11 +39,11 @@ class GraphicButton : public Control
 	virtual void Update() override;
 	virtual void UnloadResources() override;
 
-	sp<Image> GetImage();
+	sp<Image> GetImage() const;
 	void SetImage(sp<Image> Image);
-	sp<Image> GetDepressedImage();
+	sp<Image> GetDepressedImage() const;
 	void SetDepressedImage(sp<Image> Image);
-	sp<Image> GetHoverImage();
+	sp<Image> GetHoverImage() const;
 	void SetHoverImage(sp<Image> Image);
 
 	virtual Control *CopyTo(Control *CopyParent) override;

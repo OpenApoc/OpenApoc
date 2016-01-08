@@ -25,20 +25,6 @@
           <size width="260" height="28"/>
           <font>SMALFONT</font>
         </textbutton>
-        <graphicbutton id="GLOBAL_GAIN_DOWN">
-          <position x="61" y="262"/>
-          <size width="16" height="20"/>
-          <backcolour a="0"/>
-          <image/>
-          <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
-        </graphicbutton>
-        <graphicbutton id="GLOBAL_GAIN_UP">
-          <position x="222" y="262"/>
-          <size width="17" height="20"/>
-          <backcolour a="0"/>
-          <image/>
-          <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
-        </graphicbutton>
         <scroll id="GLOBAL_GAIN_SLIDER">
           <position x="76" y="264"/>
           <size width="145" height="15"/>
@@ -46,15 +32,15 @@
           <grippercolour r="255" g="255" b="255" a="255"/>
           <range min="0" max="20"/>
         </scroll>
-        <graphicbutton id="MUSIC_GAIN_DOWN">
-          <position x="61" y="290"/>
+        <graphicbutton id="GLOBAL_GAIN_DOWN" scrollprev="GLOBAL_GAIN_SLIDER">
+          <position x="61" y="262"/>
           <size width="16" height="20"/>
           <backcolour a="0"/>
           <image/>
           <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
         </graphicbutton>
-        <graphicbutton id="MUSIC_GAIN_UP">
-          <position x="222" y="290"/>
+        <graphicbutton id="GLOBAL_GAIN_UP" scrollnext="GLOBAL_GAIN_SLIDER">
+          <position x="222" y="262"/>
           <size width="17" height="20"/>
           <backcolour a="0"/>
           <image/>
@@ -67,15 +53,15 @@
           <grippercolour r="255" g="255" b="255" a="255"/>
           <range min="0" max="20"/>
         </scroll>
-        <graphicbutton id="SAMPLE_GAIN_DOWN">
-          <position x="61" y="318"/>
+        <graphicbutton id="MUSIC_GAIN_DOWN" scrollprev="MUSIC_GAIN_SLIDER">
+          <position x="61" y="290"/>
           <size width="16" height="20"/>
           <backcolour a="0"/>
           <image/>
           <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
         </graphicbutton>
-        <graphicbutton id="SAMPLE_GAIN_UP">
-          <position x="222" y="318"/>
+        <graphicbutton id="MUSIC_GAIN_UP" scrollnext="MUSIC_GAIN_SLIDER">
+          <position x="222" y="290"/>
           <size width="17" height="20"/>
           <backcolour a="0"/>
           <image/>
@@ -88,6 +74,20 @@
           <grippercolour r="255" g="255" b="255" a="255"/>
           <range min="0" max="20"/>
         </scroll>
+        <graphicbutton id="SAMPLE_GAIN_DOWN" scrollprev="SAMPLE_GAIN_SLIDER">
+          <position x="61" y="318"/>
+          <size width="16" height="20"/>
+          <backcolour a="0"/>
+          <image/>
+          <imagedepressed>BUTTON_SLIDER_LEFT_DEPRESSED</imagedepressed>
+        </graphicbutton>
+        <graphicbutton id="SAMPLE_GAIN_UP" scrollnext="SAMPLE_GAIN_SLIDER">
+          <position x="222" y="318"/>
+          <size width="17" height="20"/>
+          <backcolour a="0"/>
+          <image/>
+          <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
+        </graphicbutton>
         <checkbox id="SHOW_TILE_ORIGIN">
           <position x="310" y="80"/>
         </checkbox>

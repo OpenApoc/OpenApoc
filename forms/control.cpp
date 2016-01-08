@@ -640,6 +640,18 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 				                       node->FirstChildElement("imagehover")->GetText());
 			}
 			gb->ConfigureFromXML(node);
+			if (node->Attribute("scrollprev") != nullptr &&
+			    UString(node->Attribute("scrollprev")) != "")
+			{
+				attribvalue = node->Attribute("scrollprev");
+				gb->ScrollBarPrev = this->FindControlTyped<ScrollBar>(attribvalue);
+			}
+			if (node->Attribute("scrollnext") != nullptr &&
+			    UString(node->Attribute("scrollnext")) != "")
+			{
+				attribvalue = node->Attribute("scrollnext");
+				gb->ScrollBarNext = this->FindControlTyped<ScrollBar>(attribvalue);
+			}
 		}
 		if (nodename == "checkbox")
 		{
@@ -696,10 +708,19 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 			}
 			auto lb = new ListBox(fw, this, sb);
 			lb->ConfigureFromXML(node);
-			subnode = node->FirstChildElement("itemsize");
-			if (subnode != nullptr && UString(subnode->GetText()) != "")
+			subnode = node->FirstChildElement("item");
+			if (subnode != nullptr)
 			{
-				lb->ItemSize = Strings::ToInteger(subnode->GetText());
+				if (subnode->Attribute("size") != nullptr &&
+				    UString(subnode->Attribute("size")) != "")
+				{
+					lb->ItemSize = Strings::ToInteger(subnode->Attribute("size"));
+				}
+				if (subnode->Attribute("spacing") != nullptr &&
+				    UString(subnode->Attribute("spacing")) != "")
+				{
+					lb->ItemSpacing = Strings::ToInteger(subnode->Attribute("spacing"));
+				}
 			}
 			subnode = node->FirstChildElement("orientation");
 			if (subnode != nullptr && UString(subnode->GetText()) != "")

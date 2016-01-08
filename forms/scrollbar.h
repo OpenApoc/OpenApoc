@@ -38,10 +38,8 @@ class ScrollBar : public Control
 	int Minimum;
 	int Maximum;
 	int LargeChange;
-	Control *AssociatedControl;
 
 	ScrollBar(Framework &fw, Control *Owner);
-	ScrollBar(Framework &fw, Control *Owner, Control *AssociateWith);
 	virtual ~ScrollBar();
 
 	virtual void EventOccured(Event *e) override;
@@ -49,6 +47,8 @@ class ScrollBar : public Control
 	virtual void UnloadResources() override;
 	virtual int GetValue() const { return Value; }
 	virtual void SetValue(int newValue);
+	virtual void ScrollPrev() { SetValue(Value - LargeChange); }
+	virtual void ScrollNext() { SetValue(Value + LargeChange); }
 
 	virtual Control *CopyTo(Control *CopyParent) override;
 };

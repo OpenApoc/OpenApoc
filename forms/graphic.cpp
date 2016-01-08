@@ -21,16 +21,7 @@ void Graphic::OnRender()
 {
 	if (!image)
 	{
-		image = fw.gamecore->GetImage(image_name);
-		if (!image)
-		{
-			return;
-		}
-	}
-
-	if (AutoSize)
-	{
-		Size = image->size;
+		return;
 	}
 
 	Vec2<float> pos = {0, 0};
@@ -95,7 +86,19 @@ void Graphic::OnRender()
 	}
 }
 
-void Graphic::Update() { Control::Update(); }
+void Graphic::Update()
+{
+	Control::Update();
+
+	if (!image)
+	{
+		image = fw.gamecore->GetImage(image_name);
+	}
+	else if (AutoSize)
+	{
+		Size = image->size;
+	}
+}
 
 void Graphic::UnloadResources()
 {
