@@ -67,10 +67,10 @@ void DifficultyMenu::EventOccurred(Event *e)
 			return;
 		}
 
-		fw().state.reset(new GameState(ruleName));
+		auto state = std::make_shared<GameState>(ruleName);
 
 		stageCmd.cmd = StageCmd::Command::REPLACE;
-		stageCmd.nextStage = std::make_shared<CityView>();
+		stageCmd.nextStage = std::make_shared<CityView>(state);
 		return;
 	}
 }

@@ -6,7 +6,8 @@
 namespace OpenApoc
 {
 
-InGameOptions::InGameOptions() : Stage(), menuform(fw().gamecore->GetForm("FORM_INGAMEOPTIONS"))
+InGameOptions::InGameOptions(sp<GameState> state)
+    : Stage(), menuform(fw().gamecore->GetForm("FORM_INGAMEOPTIONS")), state(state)
 {
 
 	/* Initialse all initial values */
@@ -20,11 +21,10 @@ InGameOptions::InGameOptions() : Stage(), menuform(fw().gamecore->GetForm("FORM_
 	menuform->FindControlTyped<ScrollBar>("SAMPLE_GAIN_SLIDER")
 	    ->SetValue(fw().Settings->getInt("Audio.SampleGain"));
 
-	menuform->FindControlTyped<CheckBox>("SHOW_VEHICLE_PATH")->Checked =
-	    fw().state->showVehiclePath;
-	menuform->FindControlTyped<CheckBox>("SHOW_TILE_ORIGIN")->Checked = fw().state->showTileOrigin;
+	menuform->FindControlTyped<CheckBox>("SHOW_VEHICLE_PATH")->Checked = state->showVehiclePath;
+	menuform->FindControlTyped<CheckBox>("SHOW_TILE_ORIGIN")->Checked = state->showTileOrigin;
 	menuform->FindControlTyped<CheckBox>("SHOW_SELECTABLE_BOUNDS")->Checked =
-	    fw().state->showSelectableBounds;
+	    state->showSelectableBounds;
 }
 
 InGameOptions::~InGameOptions()
@@ -126,19 +126,19 @@ void InGameOptions::EventOccurred(Event *e)
 		if (e->Data.Forms.RaisedBy->Name == "SHOW_VEHICLE_PATH")
 		{
 			CheckBox *box = dynamic_cast<CheckBox *>(e->Data.Forms.RaisedBy);
-			fw().state->showVehiclePath = box->Checked;
+			state->showVehiclePath = box->Checked;
 			LogWarning("Set SHOW_VEHICLE_PATH to %d", box->Checked);
 		}
 		if (e->Data.Forms.RaisedBy->Name == "SHOW_TILE_ORIGIN")
 		{
 			CheckBox *box = dynamic_cast<CheckBox *>(e->Data.Forms.RaisedBy);
-			fw().state->showTileOrigin = box->Checked;
+			state->showTileOrigin = box->Checked;
 			LogWarning("Set SHOW_TILE_ORIGIN to %d", box->Checked);
 		}
 		if (e->Data.Forms.RaisedBy->Name == "SHOW_SELECTABLE_BOUNDS")
 		{
 			CheckBox *box = dynamic_cast<CheckBox *>(e->Data.Forms.RaisedBy);
-			fw().state->showSelectableBounds = box->Checked;
+			state->showSelectableBounds = box->Checked;
 			LogWarning("Set SHOW_SELECTABLE_BOUNDS to %d", box->Checked);
 		}
 	}

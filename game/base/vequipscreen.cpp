@@ -14,16 +14,17 @@ static const Colour EQUIP_GRID_COLOUR{40, 40, 40, 255};
 // FIXME: this should animate
 static const Colour EQUIP_GRID_COLOUR_SELECTED{255, 40, 40, 255};
 
-VEquipScreen::VEquipScreen()
+VEquipScreen::VEquipScreen(sp<GameState> state)
     : Stage(), form(fw().gamecore->GetForm("FORM_VEQUIPSCREEN")), selected(nullptr),
       selectionType(VEquipmentType::Type::Weapon),
       pal(fw().data->load_palette("xcom3/UFODATA/VROADWAR.PCX")),
       labelFont(fw().gamecore->GetFont("SMALFONT")), highlightedVehicle(nullptr),
-      highlightedEquipment(nullptr), drawHighlightBox(false), draggedEquipment(nullptr)
+      highlightedEquipment(nullptr), drawHighlightBox(false), draggedEquipment(nullptr),
+      state(state)
 
 {
 	sp<Vehicle> vehicle;
-	for (auto &vehiclePtr : fw().state->getPlayer()->vehicles)
+	for (auto &vehiclePtr : state->getPlayer()->vehicles)
 	{
 		vehicle = vehiclePtr.lock();
 		if (vehicle)
@@ -45,7 +46,7 @@ void VEquipScreen::Begin()
 {
 
 	auto *list = form->FindControlTyped<ListBox>("VEHICLE_SELECT_BOX");
-	for (auto &vehiclePtr : fw().state->getPlayer()->vehicles)
+	for (auto &vehiclePtr : state->getPlayer()->vehicles)
 	{
 		auto vehicle = vehiclePtr.lock();
 		if (!vehicle)
@@ -82,7 +83,7 @@ void VEquipScreen::EventOccurred(Event *e)
 		}
 		else if (e->Data.Keyboard.KeyCode == SDLK_RIGHT)
 		{
-			auto &vehicleList = fw().state->getPlayer()->vehicles;
+			auto &vehicleList = state->getPlayer()->vehicles;
 			// FIXME: Debug hack to cycle through vehicles
 			auto currentPos = vehicleList.begin();
 			while (currentPos != vehicleList.end())
@@ -596,8 +597,8 @@ void VEquipScreen::Render()
 			static const int INVENTORY_COUNT_Y_GAP = 4;
 			// The gap between the end of one inventory image and the start of the next
 			static const int INVENTORY_IMAGE_X_GAP = 4;
-			auto equipIt = fw().state->getRules().getVehicleEquipmentTypes().find(invPair.first);
-			if (equipIt == fw().state->getRules().getVehicleEquipmentTypes().end())
+			auto equipIt = state->getRules().getVehicleEquipmentTypes().find(invPair.first);
+			if (equipIt == state->getRules().getVehicleEquipmentTypes().end())
 			{
 				// It's not vehicle equipment, skip
 				continue;

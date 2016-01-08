@@ -12,6 +12,7 @@ class Form;
 class Palette;
 class VEquipment;
 class BitmapFont;
+class GameState;
 
 class VEquipScreen : public Stage
 {
@@ -41,8 +42,10 @@ class VEquipScreen : public Stage
 	// List of screen-space rects for all inventory items
 	std::list<std::pair<Rect<int>, VEquipmentType &>> inventoryItems;
 
+	sp<GameState> state;
+
   public:
-	VEquipScreen();
+	VEquipScreen(sp<GameState> state);
 	virtual ~VEquipScreen();
 
 	void Begin() override;

@@ -38,9 +38,9 @@ int BaseScreen::getCorridorSprite(Vec2<int> pos) const
 	return TILE_CORRIDORS.at({north, south, west, east});
 }
 
-BaseScreen::BaseScreen()
+BaseScreen::BaseScreen(sp<GameState> state)
     : Stage(), basescreenform(fw().gamecore->GetForm("FORM_BASESCREEN")),
-      base(*fw().state->playerBases.front()), selection(-1, -1)
+      base(*state->playerBases.front()), selection(-1, -1), state(state)
 {
 }
 
@@ -49,7 +49,7 @@ BaseScreen::~BaseScreen() {}
 void BaseScreen::Begin()
 {
 	Label *funds = basescreenform->FindControlTyped<Label>("TEXT_FUNDS");
-	funds->SetText(fw().state->getPlayerBalance());
+	funds->SetText(state->getPlayerBalance());
 
 	TextEdit *name = basescreenform->FindControlTyped<TextEdit>("TEXT_BASE_NAME");
 	name->SetText(base.name);
@@ -59,7 +59,7 @@ void BaseScreen::Begin()
 	selGraphic = basescreenform->FindControlTyped<Graphic>("GRAPHIC_SELECTED_FACILITY");
 
 	ListBox *facilities = basescreenform->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
-	for (auto &i : fw().state->getRules().getFacilityDefs())
+	for (auto &i : state->getRules().getFacilityDefs())
 	{
 		auto &facility = i.second;
 		if (facility.fixed)
@@ -145,7 +145,7 @@ void BaseScreen::EventOccurred(Event *e)
 		{
 			// FIXME: If you don't have any vehicles this button should do nothing
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<VEquipScreen>();
+			stageCmd.nextStage = std::make_shared<VEquipScreen>(state);
 			return;
 		}
 	}

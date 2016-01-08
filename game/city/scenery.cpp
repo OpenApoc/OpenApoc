@@ -110,7 +110,7 @@ void Scenery::update(GameState &state, unsigned int ticks)
 				// FIXME: Cause damage to scenery we hit?
 				this->falling = false;
 				auto doodad = state.city->placeDoodad(
-				    fw().state->getRules().getDoodadDef("DOODAD_EXPLOSION_3"), currentPos);
+				    state.getRules().getDoodadDef("DOODAD_EXPLOSION_3"), currentPos);
 				this->tileObject->removeFromMap();
 				this->tileObject.reset();
 				if (this->overlayDoodad)

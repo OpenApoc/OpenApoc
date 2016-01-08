@@ -258,7 +258,6 @@ Framework::~Framework()
 	LogInfo("Destroying framework");
 	// Kill gamecore and program stages first, so any resources are cleaned before
 	// backends are de-inited
-	state.reset();
 	gamecore.reset();
 	p->ProgramStages.Clear();
 	LogInfo("Saving config");

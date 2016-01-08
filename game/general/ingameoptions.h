@@ -11,14 +11,18 @@
 namespace OpenApoc
 {
 
+class GameState;
+
 class InGameOptions : public Stage
 {
   private:
 	std::unique_ptr<Form> menuform;
 	StageCmd stageCmd;
 
+	sp<GameState> state;
+
   public:
-	InGameOptions();
+	InGameOptions(sp<GameState> state);
 	~InGameOptions();
 	// Stage control
 	virtual void Begin() override;

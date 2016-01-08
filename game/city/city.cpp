@@ -293,8 +293,8 @@ void City::update(GameState &state, unsigned int ticks)
 			// FIXME: Handle collision
 			this->projectiles.erase(c.projectile);
 			// FIXME: Get doodad from weapon definition?
-			auto doodad = this->placeDoodad(
-			    fw().state->getRules().getDoodadDef("DOODAD_EXPLOSION_0"), c.position);
+			auto doodad =
+			    this->placeDoodad(state.getRules().getDoodadDef("DOODAD_EXPLOSION_0"), c.position);
 
 			switch (c.obj->getType())
 			{
@@ -310,7 +310,7 @@ void City::update(GameState &state, unsigned int ticks)
 					// explosion doodads? Not all weapons instantly destory buildings too
 
 					auto doodad =
-					    this->placeDoodad(fw().state->getRules().getDoodadDef("DOODAD_EXPLOSION_2"),
+					    this->placeDoodad(state.getRules().getDoodadDef("DOODAD_EXPLOSION_2"),
 					                      sceneryTile->getPosition());
 					sceneryTile->getOwner()->handleCollision(state, c);
 					break;

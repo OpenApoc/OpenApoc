@@ -17,10 +17,10 @@
 namespace OpenApoc
 {
 
-CityView::CityView()
-    : TileView(fw().state->city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
+CityView::CityView(sp<GameState> state)
+    : TileView(state->city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
                Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Isometric),
-      updateSpeed(UpdateSpeed::Speed1)
+      updateSpeed(UpdateSpeed::Speed1), state(state)
 {
 	static const std::vector<UString> tabFormNames = {
 	    "FORM_CITY_UI_1", "FORM_CITY_UI_2", "FORM_CITY_UI_3", "FORM_CITY_UI_4",
@@ -40,7 +40,7 @@ CityView::CityView()
 	}
 	this->activeTab = this->uiTabs[0];
 
-	for (auto &base : fw().state->playerBases)
+	for (auto &base : state->playerBases)
 	{
 		auto bld = base->bld.lock();
 		if (!bld)
@@ -60,9 +60,9 @@ CityView::~CityView() {}
 void CityView::Render()
 {
 	TileView::Render();
-	if (fw().state->showVehiclePath)
+	if (state->showVehiclePath)
 	{
-		for (auto v : fw().state->city->vehicles)
+		for (auto v : state->city->vehicles)
 		{
 			auto vTile = v->tileObject;
 			if (!vTile)
@@ -117,7 +117,7 @@ void CityView::Update(StageCmd *const cmd)
 	*cmd = stageCmd;
 	stageCmd = StageCmd();
 
-	fw().state->city->update(*fw().state, ticks);
+	state->city->update(*state, ticks);
 
 	activeTab->Update();
 }
@@ -188,7 +188,7 @@ void CityView::EventOccurred(Event *e)
 				else if (cname == "BUTTON_SHOW_OPTIONS")
 				{
 					stageCmd.cmd = StageCmd::Command::PUSH;
-					stageCmd.nextStage = std::make_shared<InGameOptions>();
+					stageCmd.nextStage = std::make_shared<InGameOptions>(state);
 					return;
 				}
 				else if (cname == "BUTTON_SHOW_LOG")
@@ -228,7 +228,7 @@ void CityView::EventOccurred(Event *e)
 				else if (cname == "BUTTON_SHOW_BASE")
 				{
 					stageCmd.cmd = StageCmd::Command::PUSH;
-					stageCmd.nextStage = std::make_shared<BaseScreen>();
+					stageCmd.nextStage = std::make_shared<BaseScreen>(state);
 					return;
 				}
 			}
@@ -244,7 +244,7 @@ void CityView::EventOccurred(Event *e)
 		{
 			LogInfo("Repairing...");
 			std::set<sp<Scenery>> stuffToRepair;
-			for (auto &s : fw().state->city->scenery)
+			for (auto &s : state->city->scenery)
 			{
 				if (s->canRepair())
 				{
@@ -252,12 +252,12 @@ void CityView::EventOccurred(Event *e)
 				}
 			}
 			LogInfo("Repairing %u tiles out of %u", static_cast<unsigned>(stuffToRepair.size()),
-			        static_cast<unsigned>(fw().state->city->scenery.size()));
+			        static_cast<unsigned>(state->city->scenery.size()));
 
 			for (auto &s : stuffToRepair)
 			{
-				s->repair(*fw().state);
-				fw().state->city->fallingScenery.erase(s);
+				s->repair(*state);
+				state->city->fallingScenery.erase(s);
 			}
 		}
 		else if (this->getViewMode() == TileViewMode::Strategy && e->Type == EVENT_MOUSE_DOWN &&

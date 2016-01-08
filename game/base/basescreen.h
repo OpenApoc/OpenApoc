@@ -16,6 +16,7 @@ namespace OpenApoc
 
 class Base;
 class Facility;
+class GameState;
 
 class BaseScreen : public Stage
 {
@@ -35,9 +36,10 @@ class BaseScreen : public Stage
 
 	void RenderBase();
 	int getCorridorSprite(Vec2<int> pos) const;
+	sp<GameState> state;
 
   public:
-	BaseScreen();
+	BaseScreen(sp<GameState> state);
 	~BaseScreen();
 	// Stage control
 	virtual void Begin() override;

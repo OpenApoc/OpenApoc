@@ -7,6 +7,7 @@ namespace OpenApoc
 {
 
 class Form;
+class GameState;
 
 enum class UpdateSpeed
 {
@@ -25,8 +26,10 @@ class CityView : public TileView
 	std::vector<sp<Form>> uiTabs;
 	UpdateSpeed updateSpeed;
 
+	sp<GameState> state;
+
   public:
-	CityView();
+	CityView(sp<GameState> state);
 	virtual ~CityView();
 	virtual void Update(StageCmd *const cmd) override;
 	virtual void Render() override;
