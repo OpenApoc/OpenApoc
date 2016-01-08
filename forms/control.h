@@ -12,7 +12,6 @@ namespace OpenApoc
 
 class Form;
 class Event;
-class Framework;
 class Surface;
 class Palette;
 
@@ -44,8 +43,6 @@ class Control
 
 	std::list<UString> WordWrapText(sp<OpenApoc::BitmapFont> UseFont, UString WrapText);
 
-	Framework &fw;
-
 	void CopyControlData(Control *CopyOf);
 
   public:
@@ -62,7 +59,7 @@ class Control
 
 	std::vector<Control *> Controls;
 
-	Control(Framework &fw, Control *Owner, bool takesFocus = true);
+	Control(Control *Owner, bool takesFocus = true);
 	virtual ~Control();
 
 	Control *GetActiveControl();

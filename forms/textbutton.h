@@ -10,7 +10,6 @@ namespace OpenApoc
 
 class BitmapFont;
 class Sample;
-class Framework;
 class Image;
 
 class TextButton : public Control
@@ -38,7 +37,7 @@ class TextButton : public Control
 	VerticalAlignment TextVAlign;
 	TextButtonRenderStyles RenderStyle;
 
-	TextButton(Framework &fw, Control *Owner, UString Text, sp<BitmapFont> font);
+	TextButton(Control *Owner, UString Text, sp<BitmapFont> font);
 	virtual ~TextButton();
 
 	virtual void EventOccured(Event *e) override;

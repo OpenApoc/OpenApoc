@@ -7,17 +7,17 @@
 namespace OpenApoc
 {
 
-GraphicButton::GraphicButton(Framework &fw, Control *Owner, UString Image, UString ImageDepressed)
-    : GraphicButton(fw, Owner, Image, ImageDepressed, "")
+GraphicButton::GraphicButton(Control *Owner, UString Image, UString ImageDepressed)
+    : GraphicButton(Owner, Image, ImageDepressed, "")
 {
 }
 
-GraphicButton::GraphicButton(Framework &fw, Control *Owner, UString Image, UString ImageDepressed,
+GraphicButton::GraphicButton(Control *Owner, UString Image, UString ImageDepressed,
                              UString ImageHover)
-    : Control(fw, Owner), image_name(Image), imagedepressed_name(ImageDepressed),
+    : Control(Owner), image_name(Image), imagedepressed_name(ImageDepressed),
       imagehover_name(ImageHover), image(nullptr), imagedepressed(nullptr), imagehover(nullptr),
       buttonclick(
-          fw.data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
+          fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
       ScrollBarPrev(nullptr), ScrollBarNext(nullptr)
 {
 }
@@ -31,7 +31,7 @@ void GraphicButton::EventOccured(Event *e)
 	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this &&
 	    e->Data.Forms.EventFlag == FormEventType::MouseDown)
 	{
-		fw.soundBackend->playSample(buttonclick);
+		fw().soundBackend->playSample(buttonclick);
 	}
 
 	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this &&
@@ -41,7 +41,7 @@ void GraphicButton::EventOccured(Event *e)
 		ce->Type = e->Type;
 		ce->Data.Forms = e->Data.Forms;
 		ce->Data.Forms.EventFlag = FormEventType::ButtonClick;
-		fw.PushEvent(ce);
+		fw().PushEvent(ce);
 
 		if (ScrollBarPrev != nullptr)
 		{
@@ -61,7 +61,7 @@ void GraphicButton::OnRender()
 
 	if (!image && image_name != "")
 	{
-		image = fw.gamecore->GetImage(image_name);
+		image = fw().gamecore->GetImage(image_name);
 		if (Size.x == 0)
 		{
 			Size.x = image->size.x;
@@ -73,7 +73,7 @@ void GraphicButton::OnRender()
 	}
 	if (imagedepressed == nullptr && imagedepressed_name != "")
 	{
-		imagedepressed = fw.gamecore->GetImage(imagedepressed_name);
+		imagedepressed = fw().gamecore->GetImage(imagedepressed_name);
 		if (Size.x == 0)
 		{
 			Size.x = imagedepressed->size.x;
@@ -85,7 +85,7 @@ void GraphicButton::OnRender()
 	}
 	if (imagehover == nullptr && imagehover_name != "")
 	{
-		imagehover = fw.gamecore->GetImage(imagehover_name);
+		imagehover = fw().gamecore->GetImage(imagehover_name);
 		if (Size.x == 0)
 		{
 			Size.x = imagehover->size.x;
@@ -110,12 +110,12 @@ void GraphicButton::OnRender()
 	{
 		if (Vec2<unsigned int>{Size.x, Size.y} != useimage->size)
 		{
-			fw.renderer->draw(useimage, Vec2<float>{0, 0});
+			fw().renderer->draw(useimage, Vec2<float>{0, 0});
 		}
 		else
 		{
-			fw.renderer->drawScaled(useimage, Vec2<float>{0, 0},
-			                        Vec2<float>{this->Size.x, this->Size.y});
+			fw().renderer->drawScaled(useimage, Vec2<float>{0, 0},
+			                          Vec2<float>{this->Size.x, this->Size.y});
 		}
 	}
 }
@@ -156,8 +156,8 @@ void GraphicButton::SetHoverImage(sp<Image> Image)
 
 Control *GraphicButton::CopyTo(Control *CopyParent)
 {
-	GraphicButton *copy = new GraphicButton(fw, CopyParent, this->image_name,
-	                                        this->imagedepressed_name, this->imagehover_name);
+	GraphicButton *copy = new GraphicButton(CopyParent, this->image_name, this->imagedepressed_name,
+	                                        this->imagehover_name);
 	if (this->ScrollBarPrev != nullptr)
 	{
 		copy->ScrollBarPrev = static_cast<ScrollBar *>(ScrollBarPrev->lastCopiedTo);

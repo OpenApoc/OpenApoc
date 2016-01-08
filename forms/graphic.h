@@ -25,7 +25,7 @@ class Graphic : public Control
 	FillMethod ImagePosition;
 	bool AutoSize;
 
-	Graphic(Framework &fw, Control *Owner, UString Image);
+	Graphic(Control *Owner, UString Image);
 	virtual ~Graphic();
 
 	virtual void EventOccured(Event *e) override;

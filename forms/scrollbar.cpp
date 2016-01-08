@@ -7,9 +7,9 @@
 namespace OpenApoc
 {
 
-ScrollBar::ScrollBar(Framework &fw, Control *Owner)
-    : Control(fw, Owner), capture(false), grippersize(1), segmentsize(1),
-      gripperbutton(fw.data->load_image(
+ScrollBar::ScrollBar(Control *Owner)
+    : Control(Owner), capture(false), grippersize(1), segmentsize(1),
+      gripperbutton(fw().data->load_image(
           "PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:4:UI/menuopt.pal")),
       Value(0), BarOrientation(Orientation::Vertical),
       RenderStyle(ScrollBarRenderStyles::MenuButtonStyle), GripperColour(220, 192, 192), Minimum(0),
@@ -33,7 +33,7 @@ void ScrollBar::SetValue(int newValue)
 	e->Type = EVENT_FORM_INTERACTION;
 	e->Data.Forms.RaisedBy = this;
 	e->Data.Forms.EventFlag = FormEventType::ScrollBarChange;
-	fw.PushEvent(e);
+	fw().PushEvent(e);
 	Value = newValue;
 }
 
@@ -100,10 +100,10 @@ void ScrollBar::OnRender()
 	switch (RenderStyle)
 	{
 		case ScrollBarRenderStyles::SolidButtonStyle:
-			fw.renderer->drawFilledRect(newpos, newsize, GripperColour);
+			fw().renderer->drawFilledRect(newpos, newsize, GripperColour);
 			break;
 		case ScrollBarRenderStyles::MenuButtonStyle:
-			fw.renderer->draw(gripperbutton, newpos);
+			fw().renderer->draw(gripperbutton, newpos);
 			break;
 	}
 }
@@ -143,7 +143,7 @@ void ScrollBar::UnloadResources() { Control::UnloadResources(); }
 
 Control *ScrollBar::CopyTo(Control *CopyParent)
 {
-	ScrollBar *copy = new ScrollBar(fw, CopyParent);
+	ScrollBar *copy = new ScrollBar(CopyParent);
 	copy->Value = this->Value;
 	copy->Maximum = this->Maximum;
 	copy->Minimum = this->Minimum;

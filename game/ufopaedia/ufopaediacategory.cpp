@@ -62,7 +62,7 @@ void UfopaediaCategory::Begin()
 	{
 		sp<UfopaediaEntry> e = *entry;
 		TextButton *tb =
-		    new TextButton(fw, nullptr, fw.gamecore->GetString(e->Title), infolabel->GetFont());
+		    new TextButton(nullptr, fw.gamecore->GetString(e->Title), infolabel->GetFont());
 		tb->Name = "Index" + Strings::FromInteger(idx);
 		tb->RenderStyle = TextButton::TextButtonRenderStyles::SolidButtonStyle;
 		tb->TextHAlign = HorizontalAlignment::Left;

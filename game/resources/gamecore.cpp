@@ -177,7 +177,7 @@ void GameCore::ParseStringXML(tinyxml2::XMLElement *Source)
 
 void GameCore::ParseFormXML(tinyxml2::XMLElement *Source)
 {
-	forms[Source->Attribute("id")] = new Form(fw, Source);
+	forms[Source->Attribute("id")] = new Form(Source);
 }
 
 UString GameCore::GetString(UString ID)

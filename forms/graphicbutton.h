@@ -30,9 +30,8 @@ class GraphicButton : public Control
   public:
 	ScrollBar *ScrollBarPrev, *ScrollBarNext;
 
-	GraphicButton(Framework &fw, Control *Owner, UString Image, UString ImageDepressed);
-	GraphicButton(Framework &fw, Control *Owner, UString Image, UString ImageDepressed,
-	              UString ImageHover);
+	GraphicButton(Control *Owner, UString Image, UString ImageDepressed);
+	GraphicButton(Control *Owner, UString Image, UString ImageDepressed, UString ImageHover);
 	virtual ~GraphicButton();
 
 	virtual void EventOccured(Event *e) override;

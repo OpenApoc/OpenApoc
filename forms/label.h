@@ -9,8 +9,6 @@
 namespace OpenApoc
 {
 
-class Framework;
-
 class Label : public Control
 {
 
@@ -26,7 +24,7 @@ class Label : public Control
 	VerticalAlignment TextVAlign;
 	bool WordWrap;
 
-	Label(Framework &fw, Control *Owner, UString Text, sp<BitmapFont> font);
+	Label(Control *Owner, UString Text, sp<BitmapFont> font);
 	virtual ~Label();
 
 	virtual void EventOccured(Event *e) override;

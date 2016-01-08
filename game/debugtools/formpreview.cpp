@@ -12,7 +12,7 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 	currentSelectedControl = nullptr;
 	glowindex = 0;
 
-	previewselector.reset(new Form(fw, nullptr));
+	previewselector.reset(new Form(nullptr));
 	previewselector->Size.x = 200;
 	previewselector->Size.y = 300;
 	previewselector->Location.x = 2;
@@ -21,7 +21,7 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 	previewselector->BackgroundColour.g = 192;
 	previewselector->BackgroundColour.b = 192;
 
-	Control *ch = new Control(fw, previewselector.get());
+	Control *ch = new Control(previewselector.get());
 	ch->Location.x = 2;
 	ch->Location.y = 2;
 	ch->Size.x = previewselector->Size.x - 4;
@@ -30,7 +30,7 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 	ch->BackgroundColour.g = 80;
 	ch->BackgroundColour.b = 80;
 
-	Control *c = new Control(fw, ch);
+	Control *c = new Control(ch);
 	c->Location.x = 2;
 	c->Location.y = 2;
 	c->Size.x = previewselector->Size.x - 4;
@@ -39,7 +39,7 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 	c->BackgroundColour.g = 80;
 	c->BackgroundColour.b = 80;
 
-	Label *l = new Label(fw, c, "Pick Form:", fw.gamecore->GetFont("SMALFONT"));
+	Label *l = new Label(c, "Pick Form:", fw.gamecore->GetFont("SMALFONT"));
 	l->Location.x = 0;
 	l->Location.y = 0;
 	l->Size.x = c->Size.x;
@@ -47,7 +47,7 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 	l->BackgroundColour.b = l->BackgroundColour.r;
 	l->BackgroundColour.g = l->BackgroundColour.r;
 
-	interactWithDisplay = new CheckBox(fw, c);
+	interactWithDisplay = new CheckBox(c);
 	interactWithDisplay->Size.y = fw.gamecore->GetFont("SMALFONT")->GetFontHeight();
 	interactWithDisplay->Size.x = interactWithDisplay->Size.y;
 	interactWithDisplay->Location.x = 0;
@@ -57,7 +57,7 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 	interactWithDisplay->BackgroundColour.b = 80;
 	interactWithDisplay->Checked = true;
 
-	l = new Label(fw, c, "Interact?", fw.gamecore->GetFont("SMALFONT"));
+	l = new Label(c, "Interact?", fw.gamecore->GetFont("SMALFONT"));
 	l->Location.x = interactWithDisplay->Size.x + 2;
 	l->Location.y = interactWithDisplay->Location.y;
 	l->Size.x = c->Size.x - l->Location.x;
@@ -66,7 +66,7 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 	l->BackgroundColour.g = 80;
 	l->BackgroundColour.b = 80;
 
-	ListBox *lb = new ListBox(fw, c);
+	ListBox *lb = new ListBox(c);
 	lb->Location.x = 0;
 	lb->Location.y = fw.gamecore->GetFont("SMALFONT")->GetFontHeight();
 	lb->Size.x = c->Size.x;
@@ -80,7 +80,7 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 	std::vector<UString> idlist = fw.gamecore->GetFormIDs();
 	for (auto idx = idlist.begin(); idx != idlist.end(); idx++)
 	{
-		l = new Label(fw, lb, (UString)*idx, fw.gamecore->GetFont("SMALFONT"));
+		l = new Label(lb, (UString)*idx, fw.gamecore->GetFont("SMALFONT"));
 		l->Name = l->GetText();
 		l->BackgroundColour.r = 192;
 		l->BackgroundColour.g = 80;
@@ -89,7 +89,7 @@ FormPreview::FormPreview(Framework &fw) : Stage(fw)
 		// lb->AddItem( l );
 	}
 
-	propertyeditor.reset(new Form(fw, nullptr));
+	propertyeditor.reset(new Form(nullptr));
 	propertyeditor->Location.x = 2;
 	propertyeditor->Location.y = 304;
 	propertyeditor->Size.x = 200;

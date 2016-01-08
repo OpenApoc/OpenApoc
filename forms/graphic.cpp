@@ -6,8 +6,8 @@
 namespace OpenApoc
 {
 
-Graphic::Graphic(Framework &fw, Control *Owner, UString Image)
-    : Control(fw, Owner), image_name(Image), image(fw.gamecore->GetImage(Image)),
+Graphic::Graphic(Control *Owner, UString Image)
+    : Control(Owner), image_name(Image), image(fw().gamecore->GetImage(Image)),
       ImageHAlign(HorizontalAlignment::Left), ImageVAlign(VerticalAlignment::Top),
       ImagePosition(FillMethod::Stretch), AutoSize(false)
 {
@@ -27,14 +27,14 @@ void Graphic::OnRender()
 	Vec2<float> pos = {0, 0};
 	if (Vec2<unsigned int>(Size) == image->size)
 	{
-		fw.renderer->draw(image, pos);
+		fw().renderer->draw(image, pos);
 	}
 	else
 	{
 		switch (ImagePosition)
 		{
 			case FillMethod::Stretch:
-				fw.renderer->drawScaled(image, pos, Size);
+				fw().renderer->drawScaled(image, pos, Size);
 				break;
 
 			case FillMethod::Fit:
@@ -70,7 +70,7 @@ void Graphic::OnRender()
 						return;
 				}
 
-				fw.renderer->draw(image, pos);
+				fw().renderer->draw(image, pos);
 				break;
 
 			case FillMethod::Tile:
@@ -78,7 +78,7 @@ void Graphic::OnRender()
 				{
 					for (pos.y = 0; pos.y < Size.y; pos.y += image->size.y)
 					{
-						fw.renderer->draw(image, pos);
+						fw().renderer->draw(image, pos);
 					}
 				}
 				break;
@@ -92,7 +92,7 @@ void Graphic::Update()
 
 	if (!image)
 	{
-		image = fw.gamecore->GetImage(image_name);
+		image = fw().gamecore->GetImage(image_name);
 	}
 	else if (AutoSize)
 	{
@@ -112,7 +112,7 @@ void Graphic::SetImage(sp<Image> Image) { image = Image; }
 
 Control *Graphic::CopyTo(Control *CopyParent)
 {
-	Graphic *copy = new Graphic(fw, CopyParent, image_name);
+	Graphic *copy = new Graphic(CopyParent, image_name);
 	copy->ImageHAlign = this->ImageHAlign;
 	copy->ImageVAlign = this->ImageVAlign;
 	copy->ImagePosition = this->ImagePosition;

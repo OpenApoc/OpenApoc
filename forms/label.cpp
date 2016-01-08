@@ -6,8 +6,8 @@
 namespace OpenApoc
 {
 
-Label::Label(Framework &fw, Control *Owner, UString Text, sp<BitmapFont> font)
-    : Control(fw, Owner), text(Text), font(font), TextHAlign(HorizontalAlignment::Left),
+Label::Label(Control *Owner, UString Text, sp<BitmapFont> font)
+    : Control(Owner), text(Text), font(font), TextHAlign(HorizontalAlignment::Left),
       TextVAlign(VerticalAlignment::Top), WordWrap(true)
 {
 	if (font)
@@ -61,7 +61,7 @@ void Label::OnRender()
 		}
 
 		auto textImage = font->getString(lines.front());
-		fw.renderer->draw(textImage, Vec2<float>{xpos, ypos});
+		fw().renderer->draw(textImage, Vec2<float>{xpos, ypos});
 
 		lines.pop_front();
 		ypos += font->GetFontHeight();
@@ -85,7 +85,7 @@ void Label::SetFont(sp<BitmapFont> NewFont) { font = NewFont; }
 
 Control *Label::CopyTo(Control *CopyParent)
 {
-	Label *copy = new Label(fw, CopyParent, this->text, this->font);
+	Label *copy = new Label(CopyParent, this->text, this->font);
 	copy->TextHAlign = this->TextHAlign;
 	copy->TextVAlign = this->TextVAlign;
 	copy->WordWrap = this->WordWrap;

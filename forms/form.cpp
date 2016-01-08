@@ -3,7 +3,7 @@
 namespace OpenApoc
 {
 
-Form::Form(Framework &fw, tinyxml2::XMLElement *FormConfiguration) : Control(fw, nullptr)
+Form::Form(tinyxml2::XMLElement *FormConfiguration) : Control(nullptr)
 {
 	if (FormConfiguration == nullptr)
 	{
@@ -52,7 +52,7 @@ void Form::UnloadResources() { Control::UnloadResources(); }
 Control *Form::CopyTo(Control *CopyParent)
 {
 	std::ignore = CopyParent;
-	Form *copy = new Form(fw, nullptr);
+	Form *copy = new Form(nullptr);
 	CopyControlData(copy);
 	return copy;
 }

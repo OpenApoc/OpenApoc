@@ -6,8 +6,8 @@
 namespace OpenApoc
 {
 
-TextEdit::TextEdit(Framework &fw, Control *Owner, UString Text, sp<BitmapFont> font)
-    : Control(fw, Owner), caretDraw(false), caretTimer(0), text(Text), font(font), editting(false),
+TextEdit::TextEdit(Control *Owner, UString Text, sp<BitmapFont> font)
+    : Control(Owner), caretDraw(false), caretTimer(0), text(Text), font(font), editting(false),
       editShift(false), editAltGr(false), SelectionStart(Text.length()),
       TextHAlign(HorizontalAlignment::Left), TextVAlign(VerticalAlignment::Centre)
 {
@@ -193,14 +193,14 @@ void TextEdit::OnRender()
 
 		if (caretDraw)
 		{
-			fw.renderer->drawLine(Vec2<float>{cxpos, ypos},
-			                      Vec2<float>{cxpos, ypos + font->GetFontHeight()},
-			                      Colour{255, 255, 255});
+			fw().renderer->drawLine(Vec2<float>{cxpos, ypos},
+			                        Vec2<float>{cxpos, ypos + font->GetFontHeight()},
+			                        Colour{255, 255, 255});
 		}
 	}
 
 	auto textImage = font->getString(text);
-	fw.renderer->draw(textImage, Vec2<float>{xpos, ypos});
+	fw().renderer->draw(textImage, Vec2<float>{xpos, ypos});
 }
 
 void TextEdit::Update()
@@ -233,7 +233,7 @@ void TextEdit::RaiseEvent(FormEventType Type)
 	ce->Type = EVENT_FORM_INTERACTION;
 	ce->Data.Forms.RaisedBy = this;
 	ce->Data.Forms.EventFlag = FormEventType::TextChanged;
-	fw.PushEvent(ce);
+	fw().PushEvent(ce);
 }
 
 sp<BitmapFont> TextEdit::GetFont() { return font; }
@@ -242,7 +242,7 @@ void TextEdit::SetFont(sp<BitmapFont> NewFont) { font = NewFont; }
 
 Control *TextEdit::CopyTo(Control *CopyParent)
 {
-	TextEdit *copy = new TextEdit(fw, CopyParent, this->text, this->font);
+	TextEdit *copy = new TextEdit(CopyParent, this->text, this->font);
 	copy->TextHAlign = this->TextHAlign;
 	copy->TextVAlign = this->TextVAlign;
 	CopyControlData(copy);

@@ -8,8 +8,6 @@
 namespace OpenApoc
 {
 
-class Framework;
-
 class Form : public Control
 {
 
@@ -17,7 +15,7 @@ class Form : public Control
 	virtual void OnRender() override;
 
   public:
-	Form(Framework &fw, tinyxml2::XMLElement *FormConfiguration);
+	Form(tinyxml2::XMLElement *FormConfiguration);
 	virtual ~Form();
 
 	virtual void EventOccured(Event *e) override;

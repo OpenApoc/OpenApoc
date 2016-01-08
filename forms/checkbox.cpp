@@ -7,9 +7,9 @@
 namespace OpenApoc
 {
 
-CheckBox::CheckBox(Framework &fw, Control *Owner)
-    : Control(fw, Owner), buttonclick(fw.data->load_sample(
-                              "RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
+CheckBox::CheckBox(Control *Owner)
+    : Control(Owner), buttonclick(fw().data->load_sample(
+                          "RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
       Checked(false)
 {
 	LoadResources();
@@ -21,7 +21,7 @@ void CheckBox::LoadResources()
 {
 	if (!imagechecked)
 	{
-		imagechecked = fw.gamecore->GetImage(
+		imagechecked = fw().gamecore->GetImage(
 		    "PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:65:UI/UI_PALETTE.PNG");
 		if (Size.x == 0)
 		{
@@ -34,7 +34,7 @@ void CheckBox::LoadResources()
 	}
 	if (!imageunchecked)
 	{
-		imageunchecked = fw.gamecore->GetImage(
+		imageunchecked = fw().gamecore->GetImage(
 		    "PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:64:UI/UI_PALETTE.PNG");
 	}
 }
@@ -46,7 +46,7 @@ void CheckBox::EventOccured(Event *e)
 	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this &&
 	    e->Data.Forms.EventFlag == FormEventType::MouseDown)
 	{
-		fw.soundBackend->playSample(buttonclick);
+		fw().soundBackend->playSample(buttonclick);
 	}
 
 	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this &&
@@ -57,7 +57,7 @@ void CheckBox::EventOccured(Event *e)
 		ce->Type = e->Type;
 		ce->Data.Forms = e->Data.Forms;
 		ce->Data.Forms.EventFlag = FormEventType::CheckBoxChange;
-		fw.PushEvent(ce);
+		fw().PushEvent(ce);
 	}
 }
 
@@ -73,12 +73,12 @@ void CheckBox::OnRender()
 	{
 		if (useimage->size == Vec2<unsigned int>{Size.x, Size.y})
 		{
-			fw.renderer->draw(useimage, Vec2<float>{0, 0});
+			fw().renderer->draw(useimage, Vec2<float>{0, 0});
 		}
 		else
 		{
-			fw.renderer->drawScaled(useimage, Vec2<float>{0, 0},
-			                        Vec2<float>{this->Size.x, this->Size.y});
+			fw().renderer->drawScaled(useimage, Vec2<float>{0, 0},
+			                          Vec2<float>{this->Size.x, this->Size.y});
 		}
 	}
 }
@@ -94,7 +94,7 @@ void CheckBox::UnloadResources()
 
 Control *CheckBox::CopyTo(Control *CopyParent)
 {
-	CheckBox *copy = new CheckBox(fw, CopyParent);
+	CheckBox *copy = new CheckBox(CopyParent);
 	copy->Checked = this->Checked;
 	CopyControlData(copy);
 	return copy;

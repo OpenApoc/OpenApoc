@@ -8,7 +8,6 @@
 namespace OpenApoc
 {
 
-class Framework;
 class Image;
 
 class ScrollBar : public Control
@@ -39,7 +38,7 @@ class ScrollBar : public Control
 	int Maximum;
 	int LargeChange;
 
-	ScrollBar(Framework &fw, Control *Owner);
+	ScrollBar(Control *Owner);
 	virtual ~ScrollBar();
 
 	virtual void EventOccured(Event *e) override;

@@ -7,7 +7,6 @@
 namespace OpenApoc
 {
 
-class Framework;
 class ScrollBar;
 
 class ListBox : public Control
@@ -26,8 +25,8 @@ class ListBox : public Control
 	int ItemSize, ItemSpacing;
 	Orientation ListOrientation;
 
-	ListBox(Framework &fw, Control *Owner);
-	ListBox(Framework &fw, Control *Owner, ScrollBar *ExternalScrollBar);
+	ListBox(Control *Owner);
+	ListBox(Control *Owner, ScrollBar *ExternalScrollBar);
 	virtual ~ListBox();
 
 	virtual void EventOccured(Event *e) override;

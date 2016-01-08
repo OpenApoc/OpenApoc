@@ -11,7 +11,6 @@ namespace OpenApoc
 {
 
 class BitmapFont;
-class Framework;
 
 class TextEdit : public Control
 {
@@ -35,7 +34,7 @@ class TextEdit : public Control
 	HorizontalAlignment TextHAlign;
 	VerticalAlignment TextVAlign;
 
-	TextEdit(Framework &fw, Control *Owner, UString Text, sp<BitmapFont> font);
+	TextEdit(Control *Owner, UString Text, sp<BitmapFont> font);
 	virtual ~TextEdit();
 
 	virtual void EventOccured(Event *e) override;

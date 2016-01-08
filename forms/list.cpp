@@ -5,10 +5,10 @@
 namespace OpenApoc
 {
 
-ListBox::ListBox(Framework &fw, Control *Owner) : ListBox(fw, Owner, nullptr) {}
+ListBox::ListBox(Control *Owner) : ListBox(Owner, nullptr) {}
 
-ListBox::ListBox(Framework &fw, Control *Owner, ScrollBar *ExternalScrollBar)
-    : Control(fw, Owner), scroller(ExternalScrollBar), ItemSize(64), ItemSpacing(1),
+ListBox::ListBox(Control *Owner, ScrollBar *ExternalScrollBar)
+    : Control(Owner), scroller(ExternalScrollBar), ItemSize(64), ItemSpacing(1),
       ListOrientation(Orientation::Vertical)
 {
 	if (scroller != nullptr)
@@ -21,7 +21,7 @@ ListBox::~ListBox() { Clear(); }
 
 void ListBox::ConfigureInternalScrollBar()
 {
-	scroller = new ScrollBar(fw, this);
+	scroller = new ScrollBar(this);
 	scroller->Size.x = 16;
 	scroller->Size.y = 16;
 	switch (ListOrientation)
@@ -155,11 +155,11 @@ Control *ListBox::CopyTo(Control *CopyParent)
 	ListBox *copy;
 	if (scroller_is_internal)
 	{
-		copy = new ListBox(fw, CopyParent);
+		copy = new ListBox(CopyParent);
 	}
 	else
 	{
-		copy = new ListBox(fw, CopyParent, static_cast<ScrollBar *>(scroller->lastCopiedTo));
+		copy = new ListBox(CopyParent, static_cast<ScrollBar *>(scroller->lastCopiedTo));
 	}
 	copy->ItemSize = this->ItemSize;
 	copy->ItemSpacing = this->ItemSpacing;

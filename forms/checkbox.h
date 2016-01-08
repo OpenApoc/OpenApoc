@@ -27,7 +27,7 @@ class CheckBox : public Control
   public:
 	bool Checked;
 
-	CheckBox(Framework &fw, Control *Owner);
+	CheckBox(Control *Owner);
 	virtual ~CheckBox();
 
 	virtual void EventOccured(Event *e) override;
