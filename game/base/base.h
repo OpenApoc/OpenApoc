@@ -12,6 +12,7 @@ namespace OpenApoc
 class Building;
 class FacilityDef;
 class Facility;
+class GameState;
 
 class Base
 {
@@ -32,13 +33,13 @@ class Base
 	std::weak_ptr<Building> bld;
 	UString name;
 
-	Base(sp<Building> building);
+	Base(GameState &state, sp<Building> building);
 
 	sp<const Facility> getFacility(Vec2<int> pos) const;
 	const std::vector<std::vector<bool>> &getCorridors() const { return corridors; }
 	const std::vector<sp<Facility>> &getFacilities() const { return facilities; }
 
-	void startingBase(std::default_random_engine &rng);
+	void startingBase(GameState &state, std::default_random_engine &rng);
 	BuildError canBuildFacility(const FacilityDef &def, Vec2<int> pos, bool free = false) const;
 	void buildFacility(const FacilityDef &def, Vec2<int> pos, bool free = false);
 	BuildError canDestroyFacility(Vec2<int> pos) const;

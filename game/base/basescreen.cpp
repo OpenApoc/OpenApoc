@@ -59,7 +59,7 @@ void BaseScreen::Begin()
 	selGraphic = basescreenform->FindControlTyped<Graphic>("GRAPHIC_SELECTED_FACILITY");
 
 	ListBox *facilities = basescreenform->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
-	for (auto &i : fw().rules->getFacilityDefs())
+	for (auto &i : fw().state->getRules().getFacilityDefs())
 	{
 		auto &facility = i.second;
 		if (facility.fixed)

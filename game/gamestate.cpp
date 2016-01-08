@@ -15,11 +15,11 @@
 namespace OpenApoc
 {
 
-GameState::GameState(Rules &rules)
-    : player(nullptr), showTileOrigin(false), showVehiclePath(false), showSelectableBounds(false),
-      rng(std::random_device{}())
+GameState::GameState(const UString &rulesFileName)
+    : player(nullptr), rules(rulesFileName), showTileOrigin(false), showVehiclePath(false),
+      showSelectableBounds(false), rng(std::random_device{}())
 {
-	for (auto &org : rules.getOrganisations())
+	for (auto &org : getRules().getOrganisations())
 	{
 		if (this->organisations.find(org.ID) != this->organisations.end())
 		{
@@ -44,15 +44,15 @@ GameState::GameState(Rules &rules)
 	std::uniform_int_distribution<int> bld_distribution(0, this->city->buildings.size() - 1);
 
 	// Loop through all vehicle types and weapons to get a decent spread for testing
-	auto vehicleTypeIt = rules.getVehicleTypes().begin();
+	auto vehicleTypeIt = getRules().getVehicleTypes().begin();
 
 	for (int i = 0; i < 100; i++)
 	{
 		while (vehicleTypeIt->second->type != VehicleType::Type::Flying)
 		{
 			vehicleTypeIt++;
-			if (vehicleTypeIt == rules.getVehicleTypes().end())
-				vehicleTypeIt = rules.getVehicleTypes().begin();
+			if (vehicleTypeIt == getRules().getVehicleTypes().end())
+				vehicleTypeIt = getRules().getVehicleTypes().begin();
 		}
 		auto owner = this->getOrganisation(vehicleTypeIt->second->manufacturer);
 		// We add player vehicles a bit later
@@ -64,7 +64,7 @@ GameState::GameState(Rules &rules)
 
 		auto testVehicle = std::make_shared<Vehicle>(*vehicleTypeIt->second, owner);
 
-		testVehicle->equipDefaultEquipment(rules);
+		testVehicle->equipDefaultEquipment(getRules());
 
 		this->city->vehicles.push_back(testVehicle);
 		owner->vehicles.push_back(testVehicle);
@@ -106,12 +106,12 @@ GameState::GameState(Rules &rules)
 	this->playerBases.emplace_back(base);
 	base->name = "Test Base";
 	base->bld.lock()->owner = this->getPlayer();
-	base->startingBase(rng);
+	base->startingBase(*this, rng);
 
 	// Give the player some extra vehicles to test the equipment stuff (as the x-com built vehicles
 	// don't come with much)
 
-	for (auto &it : rules.getVehicleTypes())
+	for (auto &it : getRules().getVehicleTypes())
 	{
 		auto &vType = *it.second;
 		// Only give stuff that can be equipped
@@ -119,7 +119,7 @@ GameState::GameState(Rules &rules)
 			continue;
 		auto owner = this->getPlayer();
 		auto testVehicle = std::make_shared<Vehicle>(vType, owner);
-		testVehicle->equipDefaultEquipment(rules);
+		testVehicle->equipDefaultEquipment(getRules());
 		this->city->vehicles.push_back(testVehicle);
 		owner->vehicles.push_back(testVehicle);
 		auto b = base->bld.lock();
@@ -128,7 +128,7 @@ GameState::GameState(Rules &rules)
 	}
 
 	// Give that base some inventory
-	for (auto &pair : rules.getVehicleEquipmentTypes())
+	for (auto &pair : getRules().getVehicleEquipmentTypes())
 	{
 		auto &equipmentID = pair.first;
 		base->inventory[equipmentID] = 10;

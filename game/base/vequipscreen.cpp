@@ -596,8 +596,8 @@ void VEquipScreen::Render()
 			static const int INVENTORY_COUNT_Y_GAP = 4;
 			// The gap between the end of one inventory image and the start of the next
 			static const int INVENTORY_IMAGE_X_GAP = 4;
-			auto equipIt = fw().rules->getVehicleEquipmentTypes().find(invPair.first);
-			if (equipIt == fw().rules->getVehicleEquipmentTypes().end())
+			auto equipIt = fw().state->getRules().getVehicleEquipmentTypes().find(invPair.first);
+			if (equipIt == fw().state->getRules().getVehicleEquipmentTypes().end())
 			{
 				// It's not vehicle equipment, skip
 				continue;

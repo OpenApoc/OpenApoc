@@ -67,8 +67,7 @@ void DifficultyMenu::EventOccurred(Event *e)
 			return;
 		}
 
-		fw().rules.reset(new Rules(ruleName));
-		fw().state.reset(new GameState(*fw().rules));
+		fw().state.reset(new GameState(ruleName));
 
 		stageCmd.cmd = StageCmd::Command::REPLACE;
 		stageCmd.nextStage = std::make_shared<CityView>();

@@ -49,7 +49,6 @@ class Framework
   public:
 	std::unique_ptr<Data> data;
 	std::unique_ptr<GameState> state;
-	std::unique_ptr<Rules> rules;
 	std::unique_ptr<GameCore> gamecore;
 
 	std::unique_ptr<ConfigFile> Settings;

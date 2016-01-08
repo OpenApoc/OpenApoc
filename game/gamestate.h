@@ -7,6 +7,7 @@
 #include "library/strings.h"
 #include "game/organisation.h"
 #include "game/base/base.h"
+#include "game/rules/rules.h"
 
 namespace OpenApoc
 {
@@ -18,9 +19,11 @@ class GameState
 {
   private:
 	sp<Organisation> player;
+	Rules rules;
 
   public:
-	GameState(Rules &rules);
+	GameState(const UString &rulesFileName);
+
 	std::unique_ptr<City> city;
 
 	std::map<UString, sp<Organisation>> organisations;
@@ -35,6 +38,8 @@ class GameState
 	UString getPlayerBalance() const;
 	sp<Organisation> getOrganisation(const UString &orgID);
 	sp<Organisation> getPlayer() const;
+
+	Rules &getRules() { return this->rules; };
 };
 
 }; // namespace OpenApoc
