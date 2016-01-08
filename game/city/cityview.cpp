@@ -96,6 +96,11 @@ void CityView::Update(StageCmd *const cmd)
 		case UpdateSpeed::Pause:
 			ticks = 0;
 			break;
+		/* POSSIBLE FIXME: 'vanilla' apoc appears to implement Speed1 as 1/2 speed - that is only
+		 * every other call calls the update loop, meaning that the later update tick counts are
+		 * halved as well.
+		 * This effectively means that all openapoc tick counts count for 1/2 the value of vanilla
+		 * apoc ticks */
 		case UpdateSpeed::Speed1:
 			ticks = 1;
 			break;
@@ -103,15 +108,17 @@ void CityView::Update(StageCmd *const cmd)
 			ticks = 2;
 			break;
 		case UpdateSpeed::Speed3:
-			ticks = 5;
+			ticks = 4;
 			break;
 		case UpdateSpeed::Speed4:
-			ticks = 10;
+			ticks = 6;
 			break;
 		case UpdateSpeed::Speed5:
 			LogWarning("FIXME: Sort out higher speed to not just hammer update (GOD-SLOW) - "
 			           "demoting to speed4");
-			ticks = 10;
+			/* FIXME: This should be '600' according to the scale above? */
+			ticks = 6;
+			this->updateSpeed = UpdateSpeed::Speed4;
 			break;
 	}
 	*cmd = stageCmd;
