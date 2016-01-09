@@ -200,13 +200,25 @@
           <position x="334" y="60"/>
           <size width="284" height="360"/>
           <scroll id="SCROLL_LISTPOSITION">
-            <position x="270" y="4"/>
-            <size width="16" height="354"/>
+            <position x="266" y="20"/>
+            <size width="16" height="322"/>
           </scroll>
           <listbox id="LISTBOX_SHORTCUTS" scrollbarid="SCROLL_LISTPOSITION">
             <position x="4" y="4"/>
-            <size width="266" height="354"/>
+            <size width="262" height="354"/>
           </listbox>
+          <graphicbutton id="LISTBOX_SHORTCUTS_UP" scrollprev="SCROLL_LISTPOSITION">
+            <position x="266" y="4"/>
+            <size width="17" height="16"/>
+            <image>PCK:xcom3/UFODATA/ICONS.PCK:xcom3/UFODATA/ICONS.TAB:13:UI/menuopt.pal</image>
+            <imagedepressed>PCK:xcom3/UFODATA/ICONS.PCK:xcom3/UFODATA/ICONS.TAB:14:UI/menuopt.pal</imagedepressed>
+          </graphicbutton>
+          <graphicbutton id="LISTBOX_SHORTCUTS_DOWN" scrollnext="SCROLL_LISTPOSITION">
+            <position x="266" y="342"/>
+            <size width="17" height="16"/>
+            <image>PCK:xcom3/UFODATA/ICONS.PCK:xcom3/UFODATA/ICONS.TAB:15:UI/menuopt.pal</image>
+            <imagedepressed>PCK:xcom3/UFODATA/ICONS.PCK:xcom3/UFODATA/ICONS.TAB:16:UI/menuopt.pal</imagedepressed>
+          </graphicbutton>
         </control>
       </graphic>
     </style>

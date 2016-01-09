@@ -11,10 +11,7 @@ ListBox::ListBox(Control *Owner, ScrollBar *ExternalScrollBar)
     : Control(Owner), scroller(ExternalScrollBar), ItemSize(64), ItemSpacing(1),
       ListOrientation(Orientation::Vertical)
 {
-	if (scroller != nullptr)
-	{
-		scroller_is_internal = false;
-	}
+	scroller_is_internal = (scroller == nullptr);
 }
 
 ListBox::~ListBox() { Clear(); }
