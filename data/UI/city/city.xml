@@ -299,8 +299,6 @@
       </graphicbutton>
       <!-- We currently create an scrollbar if none is specified, but we don't really want a scrollbar here, so we create one and mark it invisible -->
       <scroll id="OWNED_VEHICLE_LIST_SCROLL" visible="N">
-        <backcolour r="0" g="0" b="0" a="127"/>
-        <grippercolour r="192" g="192" b="192"/>
         <position x="105" y="67"/>
         <size width="431" height="16"/>
       </scroll>
