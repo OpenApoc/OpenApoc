@@ -9,7 +9,7 @@ namespace OpenApoc
 Graphic::Graphic(Control *Owner, UString Image)
     : Control(Owner), image_name(Image), image(fw().gamecore->GetImage(Image)),
       ImageHAlign(HorizontalAlignment::Left), ImageVAlign(VerticalAlignment::Top),
-      ImagePosition(FillMethod::Stretch), AutoSize(false)
+      ImagePosition(FillMethod::Fit), AutoSize(false)
 {
 }
 

@@ -17,7 +17,6 @@
           <font>BIGFONT</font>
         </label>
         <label text="STR_DEBUGMODE">
-          <backcolour r="255" g="255" b="255" a="0"/>
           <position x="410" y="bottom"/>
           <size width="200" height="16"/>
           <alignment horizontal="right" vertical="centre"/>
@@ -27,7 +26,6 @@
           <position x="right" y="bottom"/>
         </checkbox>
         <label text="STR_VERSION" id="VERSION_LABEL">
-          <backcolour r="255" g="255" b="255" a="0"/>
           <position x="0" y="0"/>
           <size width="640" height="16"/>
           <alignment horizontal="left" vertical="centre"/>

@@ -10,21 +10,18 @@
         <size width="640" height="480"/>
       </graphic>
       <label text="BASES">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="20" y="0"/>
         <size width="600" height="36"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>BIGFONT</font>
       </label>
       <label id="TEXT_FUNDS">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="572" y="11"/>
         <size width="60" height="10"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
       <textedit id="TEXT_BASE_NAME">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="249" y="57"/>
         <size width="157" height="15"/>
         <alignment horizontal="centre" vertical="centre"/>
@@ -33,47 +30,39 @@
       <graphic id="GRAPHIC_BASE_VIEW">
         <position x="200" y="82"/>
         <size width="256" height="256"/>
-        <backcolour r="0" g="0" b="0" a="0"/>
         <imageposition>tile</imageposition>
         <image/>
       </graphic>
       <graphic id="GRAPHIC_SELECTED_FACILITY">
         <position x="62" y="186"/>
         <size width="64" height="64"/>
-        <backcolour r="0" g="0" b="0" a="0"/>
         <alignment horizontal="centre" vertical="centre"/>
         <imageposition>fit</imageposition>
         <image/>
       </graphic>
       <label id="TEXT_SELECTED_FACILITY">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="15" y="257"/>
         <size width="158" height="35"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
       <scroll id="LISTBOX_SCROLL">
-        <backcolour r="80" g="80" b="80" a="0"/>
-        <grippercolour r="192" g="192" b="192"/>
         <position x="30" y="452"/>
         <size width="536" height="15"/>
       </scroll>
       <graphicbutton id="LISTBOX_SCROLL_LEFT" scrollprev="LISTBOX_SCROLL">
         <position x="6" y="449"/>
         <size width="25" height="21"/>
-        <backcolour a="0"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_LEFT_DEPRESSED</imagedepressed>
       </graphicbutton>
       <graphicbutton id="LISTBOX_SCROLL_RIGHT" scrollnext="LISTBOX_SCROLL">
         <position x="566" y="449"/>
         <size width="25" height="21"/>
-        <backcolour a="0"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_RIGHT_DEPRESSED</imagedepressed>
       </graphicbutton>
       <listbox id="LISTBOX_FACILITIES" scrollbarid="LISTBOX_SCROLL">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="17" y="380"/>
         <size width="564" height="64"/>
         <item size="0" spacing="6"/>
@@ -82,56 +71,48 @@
       <graphicbutton id="BUTTON_BASE_HIREFIRESTAFF">
         <position x="602" y="40"/>
         <size width="35" height="34"/>
-        <backcolour r="0" g="0" b="0" a="0"/>
         <image/>
         <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:26:xcom3/UFODATA/BASE.PCX</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_BUYSELL">
         <position x="602" y="80"/>
         <size width="35" height="34"/>
-        <backcolour r="0" g="0" b="0" a="0"/>
         <image/>
         <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:27:xcom3/UFODATA/BASE.PCX</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_TRANSFER">
         <position x="602" y="120"/>
         <size width="35" height="34"/>
-        <backcolour r="0" g="0" b="0" a="0"/>
         <image/>
         <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:28:xcom3/UFODATA/BASE.PCX</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_EQUIPAGENT">
         <position x="602" y="160"/>
         <size width="35" height="34"/>
-        <backcolour r="0" g="0" b="0" a="0"/>
         <image/>
         <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:29:xcom3/UFODATA/BASE.PCX</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_EQUIPVEHICLE">
         <position x="602" y="200"/>
         <size width="35" height="34"/>
-        <backcolour r="0" g="0" b="0" a="0"/>
         <image/>
         <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:30:xcom3/UFODATA/BASE.PCX</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_RES_AND_MANUF">
         <position x="602" y="240"/>
         <size width="35" height="34"/>
-        <backcolour r="0" g="0" b="0" a="0"/>
         <image/>
         <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:31:xcom3/UFODATA/BASE.PCX</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_ALIEN_CONTAINMENT">
         <position x="602" y="280"/>
         <size width="35" height="34"/>
-        <backcolour r="0" g="0" b="0" a="0"/>
         <image/>
         <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:32:xcom3/UFODATA/BASE.PCX</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_OK">
         <position x="602" y="443"/>
         <size width="35" height="34"/>
-        <backcolour r="0" g="0" b="0" a="0"/>
         <image/>
         <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
       </graphicbutton>

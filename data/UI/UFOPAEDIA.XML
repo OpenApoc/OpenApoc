@@ -11,133 +11,114 @@
         <size width="640" height="480"/>
       </graphic>
       <label text="STR_UFOPAEDIA">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="20" y="16"/>
         <size width="600" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>BIGFONT</font>
       </label>
       <label text="STR_ORGANISATIONS">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="344" y="62"/>
         <size width="270" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
       <graphicbutton id="BUTTON_ORGANISATIONS">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="62"/>
         <size width="636" height="40"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <label text="STR_VEHICLES">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="344" y="102"/>
         <size width="270" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
       <graphicbutton id="BUTTON_VEHICLES">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="102"/>
         <size width="636" height="40"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <label text="STR_VEHICLE_EQUIPMENT">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="344" y="142"/>
         <size width="270" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
       <graphicbutton id="BUTTON_VEHICLEEQUIPMENT">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="142"/>
         <size width="636" height="40"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <label text="STR_EQUIPMENT">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="344" y="182"/>
         <size width="270" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
       <graphicbutton id="BUTTON_EQUIPMENT">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="182"/>
         <size width="636" height="40"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <label text="STR_FACILITIES">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="344" y="222"/>
         <size width="270" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
       <graphicbutton id="BUTTON_FACILITIES">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="222"/>
         <size width="636" height="40"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <label text="STR_ALIEN_CRAFT">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="344" y="262"/>
         <size width="270" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
       <graphicbutton id="BUTTON_ALIENCRAFT">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="262"/>
         <size width="636" height="40"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <label text="STR_ALIENS">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="344" y="302"/>
         <size width="270" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
       <graphicbutton id="BUTTON_ALIENS">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="302"/>
         <size width="636" height="40"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <label text="STR_THE_ALIEN_DIMENSION">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="344" y="342"/>
         <size width="270" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
       <graphicbutton id="BUTTON_ALIENDIMENSION">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="342"/>
         <size width="636" height="40"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <label text="STR_BUILDINGS">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="344" y="382"/>
         <size width="270" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
       <graphicbutton id="BUTTON_BUILDINGS">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="382"/>
         <size width="636" height="40"/>
         <image/>
@@ -146,7 +127,6 @@
       <graphicbutton id="BUTTON_QUIT" text="STR_QUIT">
         <position x="604" y="444"/>
         <size width="35" height="34"/>
-        <backcolour a="0"/>
         <image/>
         <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
       </graphicbutton>
@@ -162,21 +142,18 @@
         <position x="2" y="2"/>
         <size width="640" height="480"/>
         <label id="TEXT_TITLE_DATA" text="">
-          <backcolour r="0" g="0" b="0" a="0"/>
           <position x="12" y="22"/>
           <size width="600" height="22"/>
           <alignment horizontal="left" vertical="centre"/>
           <font>BIGFONT</font>
         </label>
         <label id="TEXT_ORG_DATA" text="">
-          <backcolour r="0" g="0" b="0" a="0"/>
           <position x="20" y="280"/>
           <size width="270" height="180"/>
           <alignment horizontal="left" vertical="top"/>
           <font>SMALFONT</font>
         </label>
         <label id="TEXT_INFO" text="">
-          <backcolour r="0" g="0" b="0" a="0"/>
           <position x="344" y="62"/>
           <size width="270" height="400"/>
           <alignment horizontal="left" vertical="top"/>
@@ -185,42 +162,36 @@
         <graphicbutton id="BUTTON_QUIT">
           <position x="602" y="442"/>
           <size width="35" height="34"/>
-          <backcolour a="0"/>
           <image/>
           <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
         </graphicbutton>
         <graphicbutton id="BUTTON_NEXT_SECTION">
           <position x="568" y="447"/>
           <size width="26" height="24"/>
-          <backcolour a="0"/>
           <image/>
           <imagedepressed>BUTTON_PAEDIA_NEXTSECTION</imagedepressed>
         </graphicbutton>
         <graphicbutton id="BUTTON_NEXT_TOPIC">
           <position x="536" y="447"/>
           <size width="26" height="24"/>
-          <backcolour a="0"/>
           <image/>
           <imagedepressed>BUTTON_PAEDIA_NEXTTOPIC</imagedepressed>
         </graphicbutton>
         <graphicbutton id="BUTTON_PREVIOUS_TOPIC">
           <position x="505" y="447"/>
           <size width="26" height="24"/>
-          <backcolour a="0"/>
           <image/>
           <imagedepressed>BUTTON_PAEDIA_PREVTOPIC</imagedepressed>
         </graphicbutton>
         <graphicbutton id="BUTTON_PREVIOUS_SECTION">
           <position x="473" y="447"/>
           <size width="26" height="24"/>
-          <backcolour a="0"/>
           <image/>
           <imagedepressed>BUTTON_PAEDIA_PREVSECTION</imagedepressed>
         </graphicbutton>
         <graphicbutton id="BUTTON_INFORMATION">
           <position x="431" y="442"/>
           <size width="35" height="34"/>
-          <backcolour a="0"/>
           <image/>
           <imagedepressed>BUTTON_PAEDIA_INFO</imagedepressed>
         </graphicbutton>
@@ -229,15 +200,12 @@
           <position x="334" y="60"/>
           <size width="284" height="360"/>
           <scroll id="SCROLL_LISTPOSITION">
-            <backcolour r="77" g="85" b="97"/>
-            <grippercolour r="133" g="179" b="247"/>
             <position x="270" y="4"/>
-            <size width="16" height="356"/>
+            <size width="16" height="354"/>
           </scroll>
           <listbox id="LISTBOX_SHORTCUTS" scrollbarid="SCROLL_LISTPOSITION">
-            <backcolour r="77" g="85" b="97"/>
             <position x="4" y="4"/>
-            <size width="266" height="356"/>
+            <size width="266" height="354"/>
           </listbox>
         </control>
       </graphic>

@@ -13,13 +13,10 @@
         <position x="2" y="2"/>
         <size width="640" height="480"/>
         <scroll id="SCROLL_LISTPOSITION">
-          <backcolour r="80" g="80" b="80" a="0"/>
-          <grippercolour r="192" g="192" b="192"/>
           <position x="558" y="85"/>
           <size width="16" height="350"/>
         </scroll>
         <listbox id="LISTBOX_OPTIONS" scrollbarid="SCROLL_LISTPOSITION">
-          <backcolour r="80" g="80" b="80" a="120"/>
           <position x="23" y="68"/>
           <size width="526" height="381"/>
           <textbutton id="BUTTON_TEST_XCOMBASE" text="STR_TEST_XCOM_BASESCREEN">
@@ -92,7 +89,6 @@
       <graphicbutton id="BUTTON_QUIT">
         <position x="604" y="446"/>
         <size width="35" height="34"/>
-        <backcolour a="0"/>
         <image/>
         <!-- FIXME: PAL_01 doesn't seem correct for all newbut.tab images? -->
         <imagedepressed>PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:5:XCOM3/UFODATA/PAL_01.DAT</imagedepressed>
@@ -112,6 +108,7 @@
         <font>SMALLSET</font>
       </textedit>
       <label id="LABEL_TESTXX" text="STR_VEHICLES_INFO">
+	    <backcolour r="80" g="80" b="80" a="255"/>
         <position x="right" y="top"/>
         <size width="200" height="200"/>
         <alignment horizontal="right" vertical="bottom"/>

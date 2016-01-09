@@ -11,168 +11,144 @@
         <image>RAW:xcom3/ufodata/isobord1.dat:640:128:xcom3/ufodata/pal_01.dat</image>
       </graphic>
       <graphicbutton id="BUTTON_TAB_1">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="145" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_2">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="189" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_3">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="233" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_4">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="277" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_5">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="321" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_6">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="365" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_7">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="409" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_8">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="453" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_FOLLOW_VEHICLE">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="7"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:19:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_TOGGLE_STRATMAP">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="30"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:12:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_ALIEN_INFILTRATION">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:60:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_SCORE">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="40" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:61:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_UFOPAEDIA">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="76"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:50:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_OPTIONS">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="99"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:13:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_LOG">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="83" y="3"/>
         <size width="25" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:10:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_ZOOM_EVENT">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="532" y="3"/>
         <size width="25" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:11:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED0">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="7"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:28:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED1">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:29:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED2">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="600" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:30:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED3">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:31:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED4">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="600" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:32:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED5">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="100"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:33:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_BASE">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="408" y="75"/>
         <size width="27" height="46"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:40:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BUILD_BASE">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="443" y="75"/>
         <size width="27" height="46"/>
         <image/>
@@ -187,158 +163,135 @@
       <backcolour r="128" g="96" b="80"/>
       <graphic>
         <size width="640" height="128"/>
-        <backcolour r="0" g="0" b="0"/>
         <image>RAW:xcom3/ufodata/isobord2.dat:640:128:xcom3/ufodata/pal_01.dat</image>
       </graphic>
       <graphicbutton id="BUTTON_TAB_1">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="145" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_2">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="189" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_3">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="233" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_4">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="277" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_5">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="321" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_6">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="365" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_7">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="409" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_8">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="453" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_FOLLOW_VEHICLE">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="7"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:19:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_TOGGLE_STRATMAP">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="30"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:12:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_ALIEN_INFILTRATION">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:60:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_SCORE">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="40" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:61:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_UFOPAEDIA">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="76"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:50:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_OPTIONS">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="99"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:13:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_LOG">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="83" y="3"/>
         <size width="25" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:10:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_ZOOM_EVENT">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="532" y="3"/>
         <size width="25" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:11:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED0">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="7"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:28:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED1">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:29:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED2">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="600" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:30:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED3">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:31:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED4">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="600" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:32:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED5">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="100"/>
         <size width="71" height="21"/>
         <image/>
@@ -353,158 +306,135 @@
       <backcolour r="128" g="96" b="80"/>
       <graphic>
         <size width="640" height="128"/>
-        <backcolour r="0" g="0" b="0"/>
         <image>RAW:xcom3/ufodata/isobord3.dat:640:128:xcom3/ufodata/pal_01.dat</image>
       </graphic>
       <graphicbutton id="BUTTON_TAB_1">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="145" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_2">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="189" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_3">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="233" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_4">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="277" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_5">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="321" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_6">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="365" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_7">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="409" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_8">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="453" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_FOLLOW_VEHICLE">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="7"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:19:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_TOGGLE_STRATMAP">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="30"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:12:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_ALIEN_INFILTRATION">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:60:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_SCORE">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="40" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:61:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_UFOPAEDIA">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="76"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:50:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_OPTIONS">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="99"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:13:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_LOG">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="83" y="3"/>
         <size width="25" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:10:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_ZOOM_EVENT">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="532" y="3"/>
         <size width="25" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:11:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED0">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="7"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:28:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED1">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:29:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED2">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="600" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:30:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED3">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:31:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED4">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="600" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:32:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED5">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="100"/>
         <size width="71" height="21"/>
         <image/>
@@ -519,158 +449,135 @@
       <backcolour r="128" g="96" b="80"/>
       <graphic>
         <size width="640" height="128"/>
-        <backcolour r="0" g="0" b="0"/>
         <image>RAW:xcom3/ufodata/isobord4.dat:640:128:xcom3/ufodata/pal_01.dat</image>
       </graphic>
       <graphicbutton id="BUTTON_TAB_1">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="145" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_2">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="189" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_3">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="233" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_4">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="277" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_5">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="321" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_6">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="365" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_7">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="409" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_8">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="453" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_FOLLOW_VEHICLE">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="7"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:19:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_TOGGLE_STRATMAP">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="30"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:12:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_ALIEN_INFILTRATION">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:60:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_SCORE">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="40" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:61:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_UFOPAEDIA">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="76"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:50:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_OPTIONS">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="99"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:13:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_LOG">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="83" y="3"/>
         <size width="25" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:10:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_ZOOM_EVENT">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="532" y="3"/>
         <size width="25" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:11:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED0">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="7"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:28:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED1">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:29:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED2">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="600" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:30:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED3">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:31:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED4">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="600" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:32:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED5">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="100"/>
         <size width="71" height="21"/>
         <image/>
@@ -685,158 +592,135 @@
       <backcolour r="128" g="96" b="80"/>
       <graphic>
         <size width="640" height="128"/>
-        <backcolour r="0" g="0" b="0"/>
         <image>RAW:xcom3/ufodata/isobord5.dat:640:128:xcom3/ufodata/pal_01.dat</image>
       </graphic>
       <graphicbutton id="BUTTON_TAB_1">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="145" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_2">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="189" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_3">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="233" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_4">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="277" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_5">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="321" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_6">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="365" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_7">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="409" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_8">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="453" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_FOLLOW_VEHICLE">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="7"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:19:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_TOGGLE_STRATMAP">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="30"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:12:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_ALIEN_INFILTRATION">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:60:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_SCORE">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="40" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:61:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_UFOPAEDIA">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="76"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:50:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_OPTIONS">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="99"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:13:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_LOG">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="83" y="3"/>
         <size width="25" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:10:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_ZOOM_EVENT">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="532" y="3"/>
         <size width="25" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:11:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED0">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="7"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:28:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED1">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:29:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED2">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="600" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:30:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED3">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:31:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED4">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="600" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:32:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED5">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="100"/>
         <size width="71" height="21"/>
         <image/>
@@ -851,158 +735,135 @@
       <backcolour r="128" g="96" b="80"/>
       <graphic>
         <size width="640" height="128"/>
-        <backcolour r="0" g="0" b="0"/>
         <image>RAW:xcom3/ufodata/isobord6.dat:640:128:xcom3/ufodata/pal_01.dat</image>
       </graphic>
       <graphicbutton id="BUTTON_TAB_1">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="145" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_2">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="189" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_3">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="233" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_4">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="277" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_5">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="321" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_6">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="365" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_7">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="409" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_8">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="453" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_FOLLOW_VEHICLE">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="7"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:19:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_TOGGLE_STRATMAP">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="30"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:12:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_ALIEN_INFILTRATION">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:60:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_SCORE">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="40" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:61:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_UFOPAEDIA">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="76"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:50:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_OPTIONS">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="99"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:13:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_LOG">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="83" y="3"/>
         <size width="25" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:10:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_ZOOM_EVENT">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="532" y="3"/>
         <size width="25" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:11:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED0">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="7"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:28:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED1">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:29:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED2">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="600" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:30:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED3">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:31:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED4">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="600" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:32:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED5">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="100"/>
         <size width="71" height="21"/>
         <image/>
@@ -1017,158 +878,135 @@
       <backcolour r="128" g="96" b="80"/>
       <graphic>
         <size width="640" height="128"/>
-        <backcolour r="0" g="0" b="0"/>
         <image>RAW:xcom3/ufodata/isobord7.dat:640:128:xcom3/ufodata/pal_01.dat</image>
       </graphic>
       <graphicbutton id="BUTTON_TAB_1">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="145" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_2">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="189" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_3">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="233" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_4">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="277" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_5">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="321" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_6">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="365" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_7">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="409" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_8">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="453" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_FOLLOW_VEHICLE">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="7"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:19:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_TOGGLE_STRATMAP">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="30"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:12:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_ALIEN_INFILTRATION">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:60:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_SCORE">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="40" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:61:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_UFOPAEDIA">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="76"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:50:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_OPTIONS">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="99"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:13:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_LOG">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="83" y="3"/>
         <size width="25" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:10:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_ZOOM_EVENT">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="532" y="3"/>
         <size width="25" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:11:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED0">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="7"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:28:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED1">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:29:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED2">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="600" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:30:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED3">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:31:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED4">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="600" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:32:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED5">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="100"/>
         <size width="71" height="21"/>
         <image/>
@@ -1183,158 +1021,135 @@
       <backcolour r="128" g="96" b="80"/>
       <graphic>
         <size width="640" height="128"/>
-        <backcolour r="0" g="0" b="0"/>
         <image>RAW:xcom3/ufodata/isoborda.dat:640:128:xcom3/ufodata/pal_01.dat</image>
       </graphic>
       <graphicbutton id="BUTTON_TAB_1">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="145" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_2">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="189" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_3">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="233" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_4">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="277" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_5">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="321" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_6">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="365" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_7">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="409" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_TAB_8">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="453" y="22"/>
         <size width="41" height="21"/>
         <image/>
         <imagedepressed/>
       </graphicbutton>
       <graphicbutton id="BUTTON_FOLLOW_VEHICLE">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="7"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:19:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_TOGGLE_STRATMAP">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="30"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:12:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_ALIEN_INFILTRATION">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:60:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_SCORE">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="40" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:61:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_UFOPAEDIA">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="76"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:50:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_OPTIONS">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="4" y="99"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:13:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_LOG">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="83" y="3"/>
         <size width="25" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:10:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_ZOOM_EVENT">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="532" y="3"/>
         <size width="25" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:11:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED0">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="7"/>
         <size width="71" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:28:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED1">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:29:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED2">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="600" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:30:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED3">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:31:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED4">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="600" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:32:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_SPEED5">
-        <backcolour r="0" g="0" b="0" a="0"/>
         <position x="565" y="100"/>
         <size width="71" height="21"/>
         <image/>

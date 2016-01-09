@@ -11,7 +11,7 @@ namespace OpenApoc
 Control::Control(Control *Owner, bool takesFocus)
     : owningControl(Owner), focusedChild(nullptr), mouseInside(false), mouseDepressed(false),
       resolvedLocation(0, 0), Name("Control"), Location(0, 0), Size(0, 0),
-      BackgroundColour(128, 80, 80), takesFocus(takesFocus), showBounds(false), Visible(true),
+      BackgroundColour(0, 0, 0, 0), takesFocus(takesFocus), showBounds(false), Visible(true),
       canCopy(true), lastCopiedTo(nullptr)
 {
 	if (Owner != nullptr)
