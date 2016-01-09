@@ -201,7 +201,7 @@
         <backcolour r="0" g="0" b="0" a="0"/>
         <position x="458" y="60"/>
         <size width="108" height="280"/>
-        <orientation>vertical</orientation>
+        <item size="0" spacing="3" />
       </listbox>
     </style>
   </form>

@@ -41,14 +41,25 @@ void ScrollBar::EventOccured(Event *e)
 {
 	Control::EventOccured(e);
 
+	int mousePosition = 0;
+	switch (BarOrientation)
+	{
+	case Orientation::Vertical:
+		mousePosition = e->Data.Forms.MouseInfo.Y;
+		break;
+	case Orientation::Horizontal:
+		mousePosition = e->Data.Forms.MouseInfo.X;
+		break;
+	}
+
 	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this &&
 	    e->Data.Forms.EventFlag == FormEventType::MouseDown)
 	{
-		if (e->Data.Forms.MouseInfo.X >= (segmentsize * (Value - Minimum)) + grippersize)
+		if (mousePosition >= (segmentsize * (Value - Minimum)) + grippersize)
 		{
 			ScrollNext();
 		}
-		else if (e->Data.Forms.MouseInfo.X <= segmentsize * (Value - Minimum))
+		else if (mousePosition <= segmentsize * (Value - Minimum))
 		{
 			ScrollPrev();
 		}
@@ -67,15 +78,7 @@ void ScrollBar::EventOccured(Event *e)
 	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this &&
 	    e->Data.Forms.EventFlag == FormEventType::MouseMove && capture)
 	{
-		switch (BarOrientation)
-		{
-			case Orientation::Vertical:
-				this->SetValue(static_cast<int>(e->Data.Forms.MouseInfo.Y / segmentsize));
-				break;
-			case Orientation::Horizontal:
-				this->SetValue(static_cast<int>(e->Data.Forms.MouseInfo.X / segmentsize));
-				break;
-		}
+		this->SetValue(static_cast<int>(mousePosition / segmentsize));
 	}
 }
 
