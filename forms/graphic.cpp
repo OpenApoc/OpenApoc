@@ -13,6 +13,12 @@ Graphic::Graphic(Control *Owner, UString Image)
 {
 }
 
+Graphic::Graphic(Control *Owner, sp<Image> Image)
+    : Control(Owner), image_name(""), image(Image), ImageHAlign(HorizontalAlignment::Left),
+      ImageVAlign(VerticalAlignment::Top), ImagePosition(FillMethod::Fit), AutoSize(false)
+{
+}
+
 Graphic::~Graphic() {}
 
 void Graphic::EventOccured(Event *e) { Control::EventOccured(e); }

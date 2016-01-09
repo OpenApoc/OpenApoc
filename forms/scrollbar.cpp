@@ -44,12 +44,12 @@ void ScrollBar::EventOccured(Event *e)
 	int mousePosition = 0;
 	switch (BarOrientation)
 	{
-	case Orientation::Vertical:
-		mousePosition = e->Data.Forms.MouseInfo.Y;
-		break;
-	case Orientation::Horizontal:
-		mousePosition = e->Data.Forms.MouseInfo.X;
-		break;
+		case Orientation::Vertical:
+			mousePosition = e->Data.Forms.MouseInfo.Y;
+			break;
+		case Orientation::Horizontal:
+			mousePosition = e->Data.Forms.MouseInfo.X;
+			break;
 	}
 
 	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this &&
