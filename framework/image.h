@@ -104,7 +104,7 @@ class RGBImageLock
 	RGBImageLock(sp<RGBImage> img, ImageLockUse use = ImageLockUse::Write);
 	~RGBImageLock();
 	Colour get(Vec2<unsigned int> pos);
-	void set(Vec2<unsigned int> pos, Colour &c);
+	void set(Vec2<unsigned int> pos, Colour c);
 
 	// FIXME: Magic backdoor to the RGBA data
 	void *getData();

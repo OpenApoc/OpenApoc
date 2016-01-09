@@ -153,7 +153,7 @@ Colour RGBImageLock::get(Vec2<unsigned int> pos)
 	return this->img->pixels[offset];
 }
 
-void RGBImageLock::set(Vec2<unsigned int> pos, Colour &c)
+void RGBImageLock::set(Vec2<unsigned int> pos, Colour c)
 {
 	if (!WriteUse(this->use))
 	{
