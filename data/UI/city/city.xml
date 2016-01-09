@@ -299,12 +299,12 @@
       </graphicbutton>
       <!-- We currently create an scrollbar if none is specified, but we don't really want a scrollbar here, so we create one and mark it invisible -->
       <scroll id="OWNED_VEHICLE_LIST_SCROLL" visible="N">
-        <position x="105" y="67"/>
+        <position x="105" y="66"/>
         <size width="431" height="16"/>
       </scroll>
       <listbox id="OWNED_VEHICLE_LIST" scrollbarid="OWNED_VEHICLE_LIST_SCROLL">
-        <position x="105" y="45"/>
-        <size height="22" width="431"/>
+        <position x="105" y="44"/>
+        <size height="24" width="431"/>
         <orientation>horizontal</orientation>
         <item size="0"/>
       </listbox>

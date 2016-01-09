@@ -173,6 +173,9 @@ void CityView::Update(StageCmd *const cmd)
 	// Clear the list
 	this->playerVehicleListControls.clear();
 	ownedVehicleList->Clear();
+	ownedVehicleList->ItemSpacing = 0;
+
+	auto selected = this->selectedVehicle.lock();
 
 	for (auto &v : state->getPlayer()->vehicles)
 	{
@@ -182,12 +185,24 @@ void CityView::Update(StageCmd *const cmd)
 			continue;
 		}
 		// FIXME: Add selection
-		auto baseControl = new Graphic(ownedVehicleList, this->icons[CityIcon::UnselectedFrame]);
-		baseControl->AutoSize = true;
+		sp<Image> frame;
+		if (vehicle == selected)
+		{
+			frame = this->icons[CityIcon::SelectedFrame];
+		}
+		else
+		{
+			frame = this->icons[CityIcon::UnselectedFrame];
+		}
+		auto baseControl = new GraphicButton(nullptr, frame, frame);
+		baseControl->Size = frame->size;
+		baseControl->Name = "OWNED_VEHICLE_FRAME_" + vehicle->name;
 		auto vehicleIcon = new Graphic(baseControl, vehicle->type.icon);
 		vehicleIcon->AutoSize = true;
 		vehicleIcon->Location = {1, 1};
+		vehicleIcon->Name = "OWNED_VEHICLE_ICON_" + vehicle->name;
 		this->playerVehicleListControls[baseControl] = vehicle;
+		ownedVehicleList->AddItem(baseControl);
 	}
 
 	activeTab->Update();
@@ -197,13 +212,30 @@ void CityView::EventOccurred(Event *e)
 {
 	fw().gamecore->MouseCursor->EventOccured(e);
 	activeTab->EventOccured(e);
+
 	if (!e->Handled)
 	{
 		if (e->Type == EVENT_FORM_INTERACTION)
 		{
+
 			if (e->Data.Forms.EventFlag == FormEventType::ButtonClick)
 			{
 				auto &cname = e->Data.Forms.RaisedBy->Name;
+				LogWarning("Testing \"%s\" - %p", cname.c_str(), e->Data.Forms.RaisedBy);
+
+				auto it = this->playerVehicleListControls.find(e->Data.Forms.RaisedBy);
+
+				if (it != this->playerVehicleListControls.end())
+				{
+					LogWarning("Found click on graphic %p", it->first);
+					auto vehicle = it->second.lock();
+					if (vehicle)
+					{
+						this->selectedVehicle = vehicle;
+					}
+					return;
+				}
+
 				if (cname == "BUTTON_TAB_1")
 					this->activeTab = uiTabs[0];
 				else if (cname == "BUTTON_TAB_2")

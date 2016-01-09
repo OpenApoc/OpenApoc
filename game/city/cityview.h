@@ -43,6 +43,8 @@ class CityView : public TileView
 
 	std::map<Control *, wp<Vehicle>> playerVehicleListControls;
 
+	wp<Vehicle> selectedVehicle;
+
   public:
 	CityView(sp<GameState> state);
 	virtual ~CityView();
