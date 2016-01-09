@@ -26,6 +26,7 @@ class Graphic : public Control
 	bool AutoSize;
 
 	Graphic(Control *Owner, UString Image);
+	Graphic(Control *Owner, sp<Image> Image);
 	virtual ~Graphic();
 
 	virtual void EventOccured(Event *e) override;
