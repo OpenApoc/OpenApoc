@@ -19,6 +19,18 @@ enum class UpdateSpeed
 	Speed5,
 };
 
+enum class CityIcon
+{
+	UnselectedFrame,
+	SelectedFrame,
+	SelectedSecondaryFrame,
+
+	InBase,
+	InVehicle,
+	InBuilding,
+	InMotion,
+};
+
 class CityView : public TileView
 {
   private:
@@ -27,6 +39,9 @@ class CityView : public TileView
 	UpdateSpeed updateSpeed;
 
 	sp<GameState> state;
+	std::map<CityIcon, sp<Image>> icons;
+
+	std::map<Control *, wp<Vehicle>> playerVehicleListControls;
 
   public:
 	CityView(sp<GameState> state);

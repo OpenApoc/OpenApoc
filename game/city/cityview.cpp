@@ -16,18 +16,40 @@
 
 namespace OpenApoc
 {
+namespace
+{
+
+static const std::map<CityIcon, UString> CITY_ICON_RESOURCES = {
+    // FIXME: Put this in the rules somewhere?
+    {CityIcon::UnselectedFrame,
+     "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:37:xcom3/UFODATA/PAL_01.DAT"},
+    {CityIcon::SelectedFrame,
+     "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:38:xcom3/UFODATA/PAL_01.DAT"},
+    {CityIcon::SelectedSecondaryFrame,
+     "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:39:xcom3/UFODATA/PAL_01.DAT"},
+
+    {CityIcon::InBase,
+     "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:47:xcom3/UFODATA/PAL_01.DAT"},
+    {CityIcon::InVehicle,
+     "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:48:xcom3/UFODATA/PAL_01.DAT"},
+    {CityIcon::InBuilding,
+     "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:49:xcom3/UFODATA/PAL_01.DAT"},
+    {CityIcon::InMotion,
+     "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:50:xcom3/UFODATA/PAL_01.DAT"},
+};
+static const std::vector<UString> TAB_FORM_NAMES = {
+    "FORM_CITY_UI_1", "FORM_CITY_UI_2", "FORM_CITY_UI_3", "FORM_CITY_UI_4",
+    "FORM_CITY_UI_5", "FORM_CITY_UI_6", "FORM_CITY_UI_7", "FORM_CITY_UI_8",
+};
+} // anonymous namespace
 
 CityView::CityView(sp<GameState> state)
     : TileView(state->city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
                Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Isometric),
       updateSpeed(UpdateSpeed::Speed1), state(state)
 {
-	static const std::vector<UString> tabFormNames = {
-	    "FORM_CITY_UI_1", "FORM_CITY_UI_2", "FORM_CITY_UI_3", "FORM_CITY_UI_4",
-	    "FORM_CITY_UI_5", "FORM_CITY_UI_6", "FORM_CITY_UI_7", "FORM_CITY_UI_8",
-	};
 
-	for (auto &formName : tabFormNames)
+	for (auto &formName : TAB_FORM_NAMES)
 	{
 		sp<Form> f(fw().gamecore->GetForm(formName));
 		if (!f)
@@ -52,6 +74,18 @@ CityView::CityView(sp<GameState> state)
 		Vec2<int> buildingCenter = (bldBounds.p0 + bldBounds.p1) / 2;
 		this->setScreenCenterTile(buildingCenter);
 		break;
+	}
+
+	for (auto &iconResource : CITY_ICON_RESOURCES)
+	{
+		auto &type = iconResource.first;
+		auto &path = iconResource.second;
+		auto image = fw().data->load_image(path);
+		if (!image)
+		{
+			LogError("Failed to open city icon resource \%s\"", path.c_str());
+		}
+		this->icons[type] = image;
 	}
 }
 
@@ -125,6 +159,36 @@ void CityView::Update(StageCmd *const cmd)
 	stageCmd = StageCmd();
 
 	state->city->update(*state, ticks);
+
+	// FIXME: Possibly more efficient ways than re-generating all controls every frame?
+
+	// Setup owned vehicle list controls
+	auto *ownedVehicleList = uiTabs[1]->FindControlTyped<ListBox>("OWNED_VEHICLE_LIST");
+	if (!ownedVehicleList)
+	{
+		LogError("Failed to find \"OWNED_VEHICLE_LIST\" control on city tab \"%s\"",
+		         TAB_FORM_NAMES[1].c_str());
+	}
+
+	// Clear the list
+	this->playerVehicleListControls.clear();
+	ownedVehicleList->Clear();
+
+	for (auto &v : state->getPlayer()->vehicles)
+	{
+		auto vehicle = v.lock();
+		if (!vehicle)
+		{
+			continue;
+		}
+		// FIXME: Add selection
+		auto baseControl = new Graphic(ownedVehicleList, this->icons[CityIcon::UnselectedFrame]);
+		baseControl->AutoSize = true;
+		auto vehicleIcon = new Graphic(baseControl, vehicle->type.icon);
+		vehicleIcon->AutoSize = true;
+		vehicleIcon->Location = {1, 1};
+		this->playerVehicleListControls[baseControl] = vehicle;
+	}
 
 	activeTab->Update();
 }
