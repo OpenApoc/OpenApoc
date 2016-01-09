@@ -87,6 +87,21 @@ CityView::CityView(sp<GameState> state)
 		}
 		this->icons[type] = image;
 	}
+
+	auto img = std::make_shared<RGBImage>(Vec2<int>{1, 2});
+	{
+		RGBImageLock l(img);
+		l.set({0, 0}, Colour{255, 255, 219});
+		l.set({0, 1}, Colour{215, 0, 0});
+	}
+	this->healthImage = img;
+	img = std::make_shared<RGBImage>(Vec2<int>{1, 2});
+	{
+		RGBImageLock l(img);
+		l.set({0, 0}, Colour{160, 236, 252});
+		l.set({0, 1}, Colour{4, 100, 252});
+	}
+	this->shieldImage = img;
 }
 
 CityView::~CityView() {}
@@ -197,7 +212,7 @@ void CityView::Update(StageCmd *const cmd)
 		auto baseControl = new GraphicButton(nullptr, frame, frame);
 		baseControl->Size = frame->size;
 		// FIXME: There's an extra 1 pixel here that's annoying
-		baseControl->Size -= 1;
+		baseControl->Size.x -= 1;
 		baseControl->Name = "OWNED_VEHICLE_FRAME_" + vehicle->name;
 		auto vehicleIcon = new Graphic(baseControl, vehicle->type.icon);
 		vehicleIcon->AutoSize = true;
@@ -205,6 +220,40 @@ void CityView::Update(StageCmd *const cmd)
 		vehicleIcon->Name = "OWNED_VEHICLE_ICON_" + vehicle->name;
 		this->playerVehicleListControls[baseControl] = vehicle;
 		ownedVehicleList->AddItem(baseControl);
+
+		int currentHealth;
+		int maxHealth;
+		sp<Image> img;
+
+		if (vehicle->getShield() != 0)
+		{
+			img = this->shieldImage;
+			currentHealth = vehicle->getShield();
+			maxHealth = vehicle->getMaxShield();
+		}
+		else
+		{
+			img = this->healthImage;
+			currentHealth = vehicle->getHealth();
+			maxHealth = vehicle->getMaxHealth();
+		}
+
+		auto healthGraphic = new Graphic(baseControl, img);
+
+		// FIXME: Put these somewhere slightly less magic?
+		Vec2<int> healthBarOffset = {27, 2};
+		Vec2<int> healthBarSize = {3, 20};
+
+		float healthProportion = (float)currentHealth / (float)maxHealth;
+
+		// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
+		// top-left, so fix that up a bit
+		int healthBarHeight = (float)healthBarSize.y * healthProportion;
+		healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
+		healthBarSize.y = healthBarHeight;
+		healthGraphic->Location = healthBarOffset;
+		healthGraphic->Size = healthBarSize;
+		healthGraphic->ImagePosition = FillMethod::Stretch;
 	}
 
 	activeTab->Update();
@@ -379,5 +428,4 @@ void CityView::EventOccurred(Event *e)
 		}
 	}
 }
-
 }; // namespace OpenApoc

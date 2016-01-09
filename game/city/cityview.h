@@ -45,6 +45,10 @@ class CityView : public TileView
 
 	wp<Vehicle> selectedVehicle;
 
+	// We use a scaled image to implement the health bar
+	sp<Image> healthImage;
+	sp<Image> shieldImage;
+
   public:
 	CityView(sp<GameState> state);
 	virtual ~CityView();
