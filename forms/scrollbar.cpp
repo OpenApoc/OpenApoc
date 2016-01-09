@@ -11,6 +11,7 @@ ScrollBar::ScrollBar(Control *Owner)
     : Control(Owner), capture(false), grippersize(1), segmentsize(1),
       gripperbutton(fw().data->load_image(
           "PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:4:UI/menuopt.pal")),
+      buttonerror(fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/EXTRA/TEXTBEEP.RAW:22050")),
       Value(0), BarOrientation(Orientation::Vertical),
       RenderStyle(ScrollBarRenderStyles::MenuButtonStyle), GripperColour(220, 192, 192), Minimum(0),
       Maximum(10), LargeChange(2)
@@ -22,12 +23,12 @@ ScrollBar::~ScrollBar() {}
 
 void ScrollBar::LoadResources() {}
 
-void ScrollBar::SetValue(int newValue)
+bool ScrollBar::SetValue(int newValue)
 {
 	newValue = std::max(newValue, Minimum);
 	newValue = std::min(newValue, Maximum);
 	if (newValue == Value)
-		return;
+		return false;
 
 	auto e = new Event();
 	e->Type = EVENT_FORM_INTERACTION;
@@ -35,6 +36,23 @@ void ScrollBar::SetValue(int newValue)
 	e->Data.Forms.EventFlag = FormEventType::ScrollBarChange;
 	fw().PushEvent(e);
 	Value = newValue;
+	return true;
+}
+
+void ScrollBar::ScrollPrev()
+{
+	if (!SetValue(Value - LargeChange))
+	{
+		fw().soundBackend->playSample(buttonerror);
+	}
+}
+
+void ScrollBar::ScrollNext()
+{
+	if (!SetValue(Value + LargeChange))
+	{
+		fw().soundBackend->playSample(buttonerror);
+	}
 }
 
 void ScrollBar::EventOccured(Event *e)
@@ -85,6 +103,8 @@ void ScrollBar::EventOccured(Event *e)
 void ScrollBar::OnRender()
 {
 	// LoadResources();
+	if (Minimum == Maximum)
+		return;
 
 	int pos = static_cast<int>(segmentsize * (Value - Minimum));
 	Vec2<float> newpos, newsize;
@@ -157,42 +177,39 @@ Control *ScrollBar::CopyTo(Control *CopyParent)
 	return copy;
 }
 
-	void ScrollBar::ConfigureFromXML(tinyxml2::XMLElement* Element)
-	{
-		Control::ConfigureFromXML(Element);
-		tinyxml2::XMLElement *subnode;
-		UString attribvalue;
+void ScrollBar::ConfigureFromXML(tinyxml2::XMLElement *Element)
+{
+	Control::ConfigureFromXML(Element);
+	tinyxml2::XMLElement *subnode;
+	UString attribvalue;
 
-		subnode = Element->FirstChildElement("grippercolour");
-		if (subnode != nullptr)
+	subnode = Element->FirstChildElement("grippercolour");
+	if (subnode != nullptr)
+	{
+		if (subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "")
 		{
-			if (subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "")
-			{
-				GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
-					Strings::ToU8(subnode->Attribute("g")),
-					Strings::ToU8(subnode->Attribute("b")),
-					Strings::ToU8(subnode->Attribute("a")));
-			}
-			else
-			{
-				GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
-					Strings::ToU8(subnode->Attribute("g")),
-					Strings::ToU8(subnode->Attribute("b")));
-			}
+			GripperColour = Colour(
+			    Strings::ToU8(subnode->Attribute("r")), Strings::ToU8(subnode->Attribute("g")),
+			    Strings::ToU8(subnode->Attribute("b")), Strings::ToU8(subnode->Attribute("a")));
 		}
-		subnode = Element->FirstChildElement("range");
-		if (subnode != nullptr)
+		else
 		{
-			if (subnode->Attribute("min") != nullptr &&
-				UString(subnode->Attribute("min")) != "")
-			{
-				Minimum = Strings::ToInteger(subnode->Attribute("min"));
-			}
-			if (subnode->Attribute("max") != nullptr &&
-				UString(subnode->Attribute("max")) != "")
-			{
-				Maximum = Strings::ToInteger(subnode->Attribute("max"));
-			}
+			GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
+			                       Strings::ToU8(subnode->Attribute("g")),
+			                       Strings::ToU8(subnode->Attribute("b")));
 		}
 	}
+	subnode = Element->FirstChildElement("range");
+	if (subnode != nullptr)
+	{
+		if (subnode->Attribute("min") != nullptr && UString(subnode->Attribute("min")) != "")
+		{
+			Minimum = Strings::ToInteger(subnode->Attribute("min"));
+		}
+		if (subnode->Attribute("max") != nullptr && UString(subnode->Attribute("max")) != "")
+		{
+			Maximum = Strings::ToInteger(subnode->Attribute("max"));
+		}
+	}
+}
 }; // namespace OpenApoc

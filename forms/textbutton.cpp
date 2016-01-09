@@ -144,11 +144,11 @@ void TextButton::Update()
 
 void TextButton::UnloadResources() {}
 
-UString TextButton::GetText() const{ return text; }
+UString TextButton::GetText() const { return text; }
 
 void TextButton::SetText(UString Text) { text = Text; }
 
-sp<BitmapFont> TextButton::GetFont() const{ return font; }
+sp<BitmapFont> TextButton::GetFont() const { return font; }
 
 void TextButton::SetFont(sp<BitmapFont> NewFont) { font = NewFont; }
 
@@ -162,8 +162,8 @@ Control *TextButton::CopyTo(Control *CopyParent)
 	return copy;
 }
 
-	void TextButton::ConfigureFromXML(tinyxml2::XMLElement* Element)
-	{
-		Control::ConfigureFromXML(Element);
-	}
+void TextButton::ConfigureFromXML(tinyxml2::XMLElement *Element)
+{
+	Control::ConfigureFromXML(Element);
+}
 }; // namespace OpenApoc

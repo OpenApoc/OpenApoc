@@ -76,10 +76,10 @@ void ListBox::OnRender()
 	switch (ListOrientation)
 	{
 		case Orientation::Vertical:
-			scroller->Maximum = (offset - this->Size.y);
+			scroller->Maximum = std::max(offset - this->Size.y, scroller->Minimum);
 			break;
 		case Orientation::Horizontal:
-			scroller->Maximum = (offset - this->Size.x);
+			scroller->Maximum = std::max(offset - this->Size.x, scroller->Minimum);
 			break;
 	}
 	scroller->LargeChange =
@@ -166,38 +166,37 @@ Control *ListBox::CopyTo(Control *CopyParent)
 	return copy;
 }
 
-	void ListBox::ConfigureFromXML(tinyxml2::XMLElement* Element)
-	{
-		Control::ConfigureFromXML(Element);
-		tinyxml2::XMLElement *subnode;
-		UString attribvalue;
+void ListBox::ConfigureFromXML(tinyxml2::XMLElement *Element)
+{
+	Control::ConfigureFromXML(Element);
+	tinyxml2::XMLElement *subnode;
+	UString attribvalue;
 
-		subnode = Element->FirstChildElement("item");
-		if (subnode != nullptr)
+	subnode = Element->FirstChildElement("item");
+	if (subnode != nullptr)
+	{
+		if (subnode->Attribute("size") != nullptr && UString(subnode->Attribute("size")) != "")
 		{
-			if (subnode->Attribute("size") != nullptr &&
-				UString(subnode->Attribute("size")) != "")
-			{
-				ItemSize = Strings::ToInteger(subnode->Attribute("size"));
-			}
-			if (subnode->Attribute("spacing") != nullptr &&
-				UString(subnode->Attribute("spacing")) != "")
-			{
-				ItemSpacing = Strings::ToInteger(subnode->Attribute("spacing"));
-			}
+			ItemSize = Strings::ToInteger(subnode->Attribute("size"));
 		}
-		subnode = Element->FirstChildElement("orientation");
-		if (subnode != nullptr && UString(subnode->GetText()) != "")
+		if (subnode->Attribute("spacing") != nullptr &&
+		    UString(subnode->Attribute("spacing")) != "")
 		{
-			UString value = subnode->GetText();
-			if (value == "horizontal")
-			{
-				ListOrientation = Orientation::Horizontal;
-			}
-			else if (value == "vertical")
-			{
-				ListOrientation = Orientation::Vertical;
-			}
+			ItemSpacing = Strings::ToInteger(subnode->Attribute("spacing"));
 		}
 	}
+	subnode = Element->FirstChildElement("orientation");
+	if (subnode != nullptr && UString(subnode->GetText()) != "")
+	{
+		UString value = subnode->GetText();
+		if (value == "horizontal")
+		{
+			ListOrientation = Orientation::Horizontal;
+		}
+		else if (value == "vertical")
+		{
+			ListOrientation = Orientation::Vertical;
+		}
+	}
+}
 }; // namespace OpenApoc

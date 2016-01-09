@@ -75,11 +75,11 @@ void Label::Update()
 
 void Label::UnloadResources() {}
 
-UString Label::GetText() const{ return text; }
+UString Label::GetText() const { return text; }
 
 void Label::SetText(UString Text) { text = Text; }
 
-sp<BitmapFont> Label::GetFont() const{ return font; }
+sp<BitmapFont> Label::GetFont() const { return font; }
 
 void Label::SetFont(sp<BitmapFont> NewFont) { font = NewFont; }
 
@@ -93,47 +93,47 @@ Control *Label::CopyTo(Control *CopyParent)
 	return copy;
 }
 
-	void Label::ConfigureFromXML(tinyxml2::XMLElement* Element)
-	{
-		Control::ConfigureFromXML(Element);
-		tinyxml2::XMLElement *subnode;
-		UString attribvalue;
+void Label::ConfigureFromXML(tinyxml2::XMLElement *Element)
+{
+	Control::ConfigureFromXML(Element);
+	tinyxml2::XMLElement *subnode;
+	UString attribvalue;
 
-		subnode = Element->FirstChildElement("alignment");
-		if (subnode != nullptr)
+	subnode = Element->FirstChildElement("alignment");
+	if (subnode != nullptr)
+	{
+		if (subnode->Attribute("horizontal") != nullptr)
 		{
-			if (subnode->Attribute("horizontal") != nullptr)
+			attribvalue = subnode->Attribute("horizontal");
+			if (attribvalue == "left")
 			{
-				attribvalue = subnode->Attribute("horizontal");
-				if (attribvalue == "left")
-				{
-					TextHAlign = HorizontalAlignment::Left;
-				}
-				else if (attribvalue == "centre")
-				{
-					TextHAlign = HorizontalAlignment::Centre;
-				}
-				else if (attribvalue == "right")
-				{
-					TextHAlign = HorizontalAlignment::Right;
-				}
+				TextHAlign = HorizontalAlignment::Left;
 			}
-			if (subnode->Attribute("vertical") != nullptr)
+			else if (attribvalue == "centre")
 			{
-				attribvalue = subnode->Attribute("vertical");
-				if (attribvalue == "top")
-				{
-					TextVAlign = VerticalAlignment::Top;
-				}
-				else if (attribvalue == "centre")
-				{
-					TextVAlign = VerticalAlignment::Centre;
-				}
-				else if (attribvalue == "bottom")
-				{
-					TextVAlign = VerticalAlignment::Bottom;
-				}
+				TextHAlign = HorizontalAlignment::Centre;
+			}
+			else if (attribvalue == "right")
+			{
+				TextHAlign = HorizontalAlignment::Right;
+			}
+		}
+		if (subnode->Attribute("vertical") != nullptr)
+		{
+			attribvalue = subnode->Attribute("vertical");
+			if (attribvalue == "top")
+			{
+				TextVAlign = VerticalAlignment::Top;
+			}
+			else if (attribvalue == "centre")
+			{
+				TextVAlign = VerticalAlignment::Centre;
+			}
+			else if (attribvalue == "bottom")
+			{
+				TextVAlign = VerticalAlignment::Bottom;
 			}
 		}
 	}
+}
 }; // namespace OpenApoc

@@ -541,13 +541,13 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 			}
 			gb->ConfigureFromXML(node);
 			if (node->Attribute("scrollprev") != nullptr &&
-				UString(node->Attribute("scrollprev")) != "")
+			    UString(node->Attribute("scrollprev")) != "")
 			{
 				attribvalue = node->Attribute("scrollprev");
 				gb->ScrollBarPrev = this->FindControlTyped<ScrollBar>(attribvalue);
 			}
 			if (node->Attribute("scrollnext") != nullptr &&
-				UString(node->Attribute("scrollnext")) != "")
+			    UString(node->Attribute("scrollnext")) != "")
 			{
 				attribvalue = node->Attribute("scrollnext");
 				gb->ScrollBarNext = this->FindControlTyped<ScrollBar>(attribvalue);

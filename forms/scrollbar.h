@@ -9,6 +9,7 @@ namespace OpenApoc
 {
 
 class Image;
+class Sample;
 
 class ScrollBar : public Control
 {
@@ -17,6 +18,7 @@ class ScrollBar : public Control
 	float grippersize;
 	float segmentsize;
 	sp<Image> gripperbutton;
+	sp<Sample> buttonerror;
 
 	int Value;
 	Orientation BarOrientation;
@@ -45,9 +47,9 @@ class ScrollBar : public Control
 	virtual void Update() override;
 	virtual void UnloadResources() override;
 	virtual int GetValue() const { return Value; }
-	virtual void SetValue(int newValue);
-	virtual void ScrollPrev() { SetValue(Value - LargeChange); }
-	virtual void ScrollNext() { SetValue(Value + LargeChange); }
+	virtual bool SetValue(int newValue);
+	virtual void ScrollPrev();
+	virtual void ScrollNext();
 
 	virtual Control *CopyTo(Control *CopyParent) override;
 	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;

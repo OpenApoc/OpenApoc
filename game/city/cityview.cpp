@@ -83,7 +83,7 @@ CityView::CityView(sp<GameState> state)
 		auto image = fw().data->load_image(path);
 		if (!image)
 		{
-			LogError("Failed to open city icon resource \%s\"", path.c_str());
+			LogError("Failed to open city icon resource \"%s\"", path.c_str());
 		}
 		this->icons[type] = image;
 	}

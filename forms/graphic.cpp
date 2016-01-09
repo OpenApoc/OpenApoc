@@ -112,7 +112,7 @@ void Graphic::UnloadResources()
 	Control::UnloadResources();
 }
 
-sp<Image> Graphic::GetImage() const{ return image; }
+sp<Image> Graphic::GetImage() const { return image; }
 
 void Graphic::SetImage(sp<Image> Image) { image = Image; }
 
@@ -127,75 +127,75 @@ Control *Graphic::CopyTo(Control *CopyParent)
 	return copy;
 }
 
-	void Graphic::ConfigureFromXML(tinyxml2::XMLElement* Element)
-	{
-		Control::ConfigureFromXML(Element);
-		tinyxml2::XMLElement *subnode;
-		UString attribvalue;
+void Graphic::ConfigureFromXML(tinyxml2::XMLElement *Element)
+{
+	Control::ConfigureFromXML(Element);
+	tinyxml2::XMLElement *subnode;
+	UString attribvalue;
 
-		subnode = Element->FirstChildElement("alignment");
-		if (subnode != nullptr)
+	subnode = Element->FirstChildElement("alignment");
+	if (subnode != nullptr)
+	{
+		if (subnode->Attribute("horizontal") != nullptr)
 		{
-			if (subnode->Attribute("horizontal") != nullptr)
+			attribvalue = subnode->Attribute("horizontal");
+			if (attribvalue == "left")
 			{
-				attribvalue = subnode->Attribute("horizontal");
-				if (attribvalue == "left")
-				{
-					ImageHAlign = HorizontalAlignment::Left;
-				}
-				else if (attribvalue == "centre")
-				{
-					ImageHAlign = HorizontalAlignment::Centre;
-				}
-				else if (attribvalue == "right")
-				{
-					ImageHAlign = HorizontalAlignment::Right;
-				}
+				ImageHAlign = HorizontalAlignment::Left;
 			}
-			if (subnode->Attribute("vertical") != nullptr)
+			else if (attribvalue == "centre")
 			{
-				attribvalue = subnode->Attribute("vertical");
-				if (attribvalue == "top")
-				{
-					ImageVAlign = VerticalAlignment::Top;
-				}
-				else if (attribvalue == "centre")
-				{
-					ImageVAlign = VerticalAlignment::Centre;
-				}
-				else if (attribvalue == "bottom")
-				{
-					ImageVAlign = VerticalAlignment::Bottom;
-				}
+				ImageHAlign = HorizontalAlignment::Centre;
+			}
+			else if (attribvalue == "right")
+			{
+				ImageHAlign = HorizontalAlignment::Right;
 			}
 		}
-		subnode = Element->FirstChildElement("imageposition");
-		if (subnode != nullptr)
+		if (subnode->Attribute("vertical") != nullptr)
 		{
-			if (subnode->GetText() != nullptr)
+			attribvalue = subnode->Attribute("vertical");
+			if (attribvalue == "top")
 			{
-				attribvalue = subnode->GetText();
-				if (attribvalue == "stretch")
-				{
-					ImagePosition = FillMethod::Stretch;
-				}
-				else if (attribvalue == "fit")
-				{
-					ImagePosition = FillMethod::Fit;
-				}
-				else if (attribvalue == "tile")
-				{
-					ImagePosition = FillMethod::Tile;
-				}
+				ImageVAlign = VerticalAlignment::Top;
 			}
-		}
-		subnode = Element->FirstChildElement("autosize");
-		if (subnode != nullptr)
-		{
-			if (subnode->QueryBoolText(&AutoSize) != tinyxml2::XML_SUCCESS)
+			else if (attribvalue == "centre")
 			{
-				LogError("Unknown AutoSize attribute");
+				ImageVAlign = VerticalAlignment::Centre;
+			}
+			else if (attribvalue == "bottom")
+			{
+				ImageVAlign = VerticalAlignment::Bottom;
 			}
 		}
 	}
+	subnode = Element->FirstChildElement("imageposition");
+	if (subnode != nullptr)
+	{
+		if (subnode->GetText() != nullptr)
+		{
+			attribvalue = subnode->GetText();
+			if (attribvalue == "stretch")
+			{
+				ImagePosition = FillMethod::Stretch;
+			}
+			else if (attribvalue == "fit")
+			{
+				ImagePosition = FillMethod::Fit;
+			}
+			else if (attribvalue == "tile")
+			{
+				ImagePosition = FillMethod::Tile;
+			}
+		}
+	}
+	subnode = Element->FirstChildElement("autosize");
+	if (subnode != nullptr)
+	{
+		if (subnode->QueryBoolText(&AutoSize) != tinyxml2::XML_SUCCESS)
+		{
+			LogError("Unknown AutoSize attribute");
+		}
+	}
+}
 }; // namespace OpenApoc
