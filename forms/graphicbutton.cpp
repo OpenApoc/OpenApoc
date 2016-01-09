@@ -22,6 +22,16 @@ GraphicButton::GraphicButton(Control *Owner, UString Image, UString ImageDepress
 {
 }
 
+GraphicButton::GraphicButton(Control *Owner, sp<Image> image, sp<Image> imageDepressed,
+                             sp<Image> imageHover)
+    : Control(Owner), image_name(""), imagedepressed_name(""), imagehover_name(""), image(image),
+      imagedepressed(imageDepressed), imagehover(imageHover),
+      buttonclick(
+          fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
+      ScrollBarPrev(nullptr), ScrollBarNext(nullptr)
+{
+}
+
 GraphicButton::~GraphicButton() {}
 
 void GraphicButton::EventOccured(Event *e)
@@ -170,8 +180,8 @@ Control *GraphicButton::CopyTo(Control *CopyParent)
 	return copy;
 }
 
-	void GraphicButton::ConfigureFromXML(tinyxml2::XMLElement* Element)
-	{
-		Control::ConfigureFromXML(Element);
-	}
+void GraphicButton::ConfigureFromXML(tinyxml2::XMLElement *Element)
+{
+	Control::ConfigureFromXML(Element);
+}
 }; // namespace OpenApoc

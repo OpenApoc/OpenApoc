@@ -32,6 +32,8 @@ class GraphicButton : public Control
 
 	GraphicButton(Control *Owner, UString Image, UString ImageDepressed);
 	GraphicButton(Control *Owner, UString Image, UString ImageDepressed, UString ImageHover);
+	GraphicButton(Control *Owner, sp<Image> image, sp<Image> imageDepressed,
+	              sp<Image> imageHover = nullptr);
 	virtual ~GraphicButton();
 
 	virtual void EventOccured(Event *e) override;
