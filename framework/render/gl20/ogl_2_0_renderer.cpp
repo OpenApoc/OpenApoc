@@ -808,6 +808,8 @@ class OGL20Renderer : public Renderer
 		BindTexture t(img.texID);
 		TexParam<gl::TEXTURE_MAG_FILTER> mag(img.texID, filter);
 		TexParam<gl::TEXTURE_MIN_FILTER> min(img.texID, filter);
+		TexParam<gl::TEXTURE_WRAP_S> wrapS(img.texID, gl::CLAMP_TO_EDGE);
+		TexParam<gl::TEXTURE_WRAP_T> wrapT(img.texID, gl::CLAMP_TO_EDGE);
 		Quad q(pos, Rect<float>{{0, 0}, {1, 1}}, rotationCenter, rotationAngleRadians);
 		q.draw(rgbProgram->posLoc, rgbProgram->texcoordLoc);
 	}
@@ -852,6 +854,8 @@ class OGL20Renderer : public Renderer
 		BindTexture t(fbo.tex);
 		TexParam<gl::TEXTURE_MAG_FILTER> mag(fbo.tex, filter);
 		TexParam<gl::TEXTURE_MIN_FILTER> min(fbo.tex, filter);
+		TexParam<gl::TEXTURE_WRAP_S> wrapS(fbo.tex, gl::CLAMP_TO_EDGE);
+		TexParam<gl::TEXTURE_WRAP_T> wrapT(fbo.tex, gl::CLAMP_TO_EDGE);
 		Quad q(pos, Rect<float>{{0, 0}, {1, 1}});
 		q.draw(rgbProgram->posLoc, rgbProgram->texcoordLoc);
 	}
