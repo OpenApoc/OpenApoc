@@ -24,9 +24,9 @@ static const std::map<CityIcon, UString> CITY_ICON_RESOURCES = {
     {CityIcon::UnselectedFrame,
      "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:37:xcom3/UFODATA/PAL_01.DAT"},
     {CityIcon::SelectedFrame,
-     "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:38:xcom3/UFODATA/PAL_01.DAT"},
-    {CityIcon::SelectedSecondaryFrame,
      "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:39:xcom3/UFODATA/PAL_01.DAT"},
+    {CityIcon::SelectedSecondaryFrame,
+     "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:38:xcom3/UFODATA/PAL_01.DAT"},
 
     {CityIcon::InBase,
      "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:47:xcom3/UFODATA/PAL_01.DAT"},
@@ -196,6 +196,8 @@ void CityView::Update(StageCmd *const cmd)
 		}
 		auto baseControl = new GraphicButton(nullptr, frame, frame);
 		baseControl->Size = frame->size;
+		// FIXME: There's an extra 1 pixel here that's annoying
+		baseControl->Size -= 1;
 		baseControl->Name = "OWNED_VEHICLE_FRAME_" + vehicle->name;
 		auto vehicleIcon = new Graphic(baseControl, vehicle->type.icon);
 		vehicleIcon->AutoSize = true;
