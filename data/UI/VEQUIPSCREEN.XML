@@ -172,7 +172,7 @@
       <listbox id="VEHICLE_SELECT_BOX" scrollbarid="VEHICLE_SELECT_SCROLL">
         <position x="463" y="65"/>
         <size width="98" height="270"/>
-        <item size="0" spacing="5" />
+        <item size="0" spacing="5"/>
       </listbox>
     </style>
   </form>
