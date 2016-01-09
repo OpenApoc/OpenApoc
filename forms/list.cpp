@@ -35,6 +35,7 @@ void ListBox::ConfigureInternalScrollBar()
 			break;
 	}
 	scroller->canCopy = false;
+	scroller->Visible = false;
 	scroller_is_internal = true;
 }
 
@@ -165,4 +166,38 @@ Control *ListBox::CopyTo(Control *CopyParent)
 	return copy;
 }
 
+	void ListBox::ConfigureFromXML(tinyxml2::XMLElement* Element)
+	{
+		Control::ConfigureFromXML(Element);
+		tinyxml2::XMLElement *subnode;
+		UString attribvalue;
+
+		subnode = Element->FirstChildElement("item");
+		if (subnode != nullptr)
+		{
+			if (subnode->Attribute("size") != nullptr &&
+				UString(subnode->Attribute("size")) != "")
+			{
+				ItemSize = Strings::ToInteger(subnode->Attribute("size"));
+			}
+			if (subnode->Attribute("spacing") != nullptr &&
+				UString(subnode->Attribute("spacing")) != "")
+			{
+				ItemSpacing = Strings::ToInteger(subnode->Attribute("spacing"));
+			}
+		}
+		subnode = Element->FirstChildElement("orientation");
+		if (subnode != nullptr && UString(subnode->GetText()) != "")
+		{
+			UString value = subnode->GetText();
+			if (value == "horizontal")
+			{
+				ListOrientation = Orientation::Horizontal;
+			}
+			else if (value == "vertical")
+			{
+				ListOrientation = Orientation::Vertical;
+			}
+		}
+	}
 }; // namespace OpenApoc

@@ -32,10 +32,11 @@ class Graphic : public Control
 	virtual void Update() override;
 	virtual void UnloadResources() override;
 
-	sp<Image> GetImage();
+	sp<Image> GetImage() const;
 	void SetImage(sp<Image> Image);
 
 	virtual Control *CopyTo(Control *CopyParent) override;
+	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 };
 
 }; // namespace OpenApoc

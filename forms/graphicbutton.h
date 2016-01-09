@@ -46,6 +46,7 @@ class GraphicButton : public Control
 	void SetHoverImage(sp<Image> Image);
 
 	virtual Control *CopyTo(Control *CopyParent) override;
+	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 };
 
 }; // namespace OpenApoc

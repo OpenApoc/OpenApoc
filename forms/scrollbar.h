@@ -50,6 +50,7 @@ class ScrollBar : public Control
 	virtual void ScrollNext() { SetValue(Value + LargeChange); }
 
 	virtual Control *CopyTo(Control *CopyParent) override;
+	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 };
 
 }; // namespace OpenApoc

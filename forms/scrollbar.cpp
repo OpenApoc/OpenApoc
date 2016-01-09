@@ -157,4 +157,42 @@ Control *ScrollBar::CopyTo(Control *CopyParent)
 	return copy;
 }
 
+	void ScrollBar::ConfigureFromXML(tinyxml2::XMLElement* Element)
+	{
+		Control::ConfigureFromXML(Element);
+		tinyxml2::XMLElement *subnode;
+		UString attribvalue;
+
+		subnode = Element->FirstChildElement("grippercolour");
+		if (subnode != nullptr)
+		{
+			if (subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "")
+			{
+				GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
+					Strings::ToU8(subnode->Attribute("g")),
+					Strings::ToU8(subnode->Attribute("b")),
+					Strings::ToU8(subnode->Attribute("a")));
+			}
+			else
+			{
+				GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
+					Strings::ToU8(subnode->Attribute("g")),
+					Strings::ToU8(subnode->Attribute("b")));
+			}
+		}
+		subnode = Element->FirstChildElement("range");
+		if (subnode != nullptr)
+		{
+			if (subnode->Attribute("min") != nullptr &&
+				UString(subnode->Attribute("min")) != "")
+			{
+				Minimum = Strings::ToInteger(subnode->Attribute("min"));
+			}
+			if (subnode->Attribute("max") != nullptr &&
+				UString(subnode->Attribute("max")) != "")
+			{
+				Maximum = Strings::ToInteger(subnode->Attribute("max"));
+			}
+		}
+	}
 }; // namespace OpenApoc

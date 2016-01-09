@@ -35,6 +35,7 @@ class CheckBox : public Control
 	virtual void UnloadResources() override;
 
 	virtual Control *CopyTo(Control *CopyParent) override;
+	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 };
 
 }; // namespace OpenApoc

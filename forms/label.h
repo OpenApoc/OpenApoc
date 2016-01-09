@@ -31,13 +31,14 @@ class Label : public Control
 	virtual void Update() override;
 	virtual void UnloadResources() override;
 
-	UString GetText();
+	UString GetText() const;
 	void SetText(UString Text);
 
-	sp<BitmapFont> GetFont();
+	sp<BitmapFont> GetFont() const;
 	void SetFont(sp<BitmapFont> NewFont);
 
 	virtual Control *CopyTo(Control *CopyParent) override;
+	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 };
 
 }; // namespace OpenApoc

@@ -100,4 +100,8 @@ Control *CheckBox::CopyTo(Control *CopyParent)
 	return copy;
 }
 
+	void CheckBox::ConfigureFromXML(tinyxml2::XMLElement* Element)
+	{
+		Control::ConfigureFromXML(Element);
+	}
 }; // namespace OpenApoc

@@ -217,7 +217,7 @@ void TextEdit::Update()
 
 void TextEdit::UnloadResources() {}
 
-UString TextEdit::GetText() { return text; }
+UString TextEdit::GetText() const{ return text; }
 
 void TextEdit::SetText(UString Text)
 {
@@ -236,7 +236,7 @@ void TextEdit::RaiseEvent(FormEventType Type)
 	fw().PushEvent(ce);
 }
 
-sp<BitmapFont> TextEdit::GetFont() { return font; }
+sp<BitmapFont> TextEdit::GetFont() const{ return font; }
 
 void TextEdit::SetFont(sp<BitmapFont> NewFont) { font = NewFont; }
 
@@ -249,4 +249,47 @@ Control *TextEdit::CopyTo(Control *CopyParent)
 	return copy;
 }
 
+	void TextEdit::ConfigureFromXML(tinyxml2::XMLElement* Element)
+	{
+		Control::ConfigureFromXML(Element);
+		tinyxml2::XMLElement *subnode;
+		UString attribvalue;
+
+		subnode = Element->FirstChildElement("alignment");
+		if (subnode != nullptr)
+		{
+			if (subnode->Attribute("horizontal") != nullptr)
+			{
+				attribvalue = subnode->Attribute("horizontal");
+				if (attribvalue == "left")
+				{
+					TextHAlign = HorizontalAlignment::Left;
+				}
+				else if (attribvalue == "centre")
+				{
+					TextHAlign = HorizontalAlignment::Centre;
+				}
+				else if (attribvalue == "right")
+				{
+					TextHAlign = HorizontalAlignment::Right;
+				}
+			}
+			if (subnode->Attribute("vertical") != nullptr)
+			{
+				attribvalue = subnode->Attribute("vertical");
+				if (attribvalue == "top")
+				{
+					TextVAlign = VerticalAlignment::Top;
+				}
+				else if (attribvalue == "centre")
+				{
+					TextVAlign = VerticalAlignment::Centre;
+				}
+				else if (attribvalue == "bottom")
+				{
+					TextVAlign = VerticalAlignment::Bottom;
+				}
+			}
+		}
+	}
 }; // namespace OpenApoc

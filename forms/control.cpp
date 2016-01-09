@@ -34,7 +34,7 @@ Control::~Control()
 
 void Control::SetFocus(Control *Child) { focusedChild = Child; }
 
-Control *Control::GetActiveControl() { return focusedChild; }
+Control *Control::GetActiveControl() const { return focusedChild; }
 
 void Control::Focus()
 {
@@ -44,7 +44,7 @@ void Control::Focus()
 	}
 }
 
-bool Control::IsFocused()
+bool Control::IsFocused() const
 {
 	if (!this->takesFocus)
 		return false;
@@ -421,7 +421,6 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 	UString nodename;
 	UString specialpositionx = "";
 	UString specialpositiony = "";
-	tinyxml2::XMLElement *subnode;
 	UString attribvalue;
 
 	if (Element->Attribute("id") != nullptr && UString(Element->Attribute("id")) != "")
@@ -453,7 +452,7 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 			this->palette = pal;
 		}
 
-		if (nodename == "backcolour")
+		else if (nodename == "backcolour")
 		{
 			if (node->Attribute("a") != nullptr && UString(node->Attribute("a")) != "")
 			{
@@ -468,7 +467,7 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 				           Strings::ToU8(node->Attribute("b"))};
 			}
 		}
-		if (nodename == "position")
+		else if (nodename == "position")
 		{
 			if (Strings::IsInteger(node->Attribute("x")))
 			{
@@ -487,138 +486,38 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 				specialpositiony = node->Attribute("y");
 			}
 		}
-		if (nodename == "size")
+		else if (nodename == "size")
 		{
 			Size.x = Strings::ToInteger(node->Attribute("width"));
 			Size.y = Strings::ToInteger(node->Attribute("height"));
 		}
 
 		// Child controls
-		if (nodename == "control")
+		else if (nodename == "control")
 		{
 			auto c = new Control(this);
 			c->ConfigureFromXML(node);
 		}
-		if (nodename == "label")
+		else if (nodename == "label")
 		{
 			Label *l =
 			    new Label(this, fw().gamecore->GetString(node->Attribute("text")),
 			              fw().gamecore->GetFont(node->FirstChildElement("font")->GetText()));
 			l->ConfigureFromXML(node);
-			subnode = node->FirstChildElement("alignment");
-			if (subnode != nullptr)
-			{
-				if (subnode->Attribute("horizontal") != nullptr)
-				{
-					attribvalue = subnode->Attribute("horizontal");
-					if (attribvalue == "left")
-					{
-						l->TextHAlign = HorizontalAlignment::Left;
-					}
-					if (attribvalue == "centre")
-					{
-						l->TextHAlign = HorizontalAlignment::Centre;
-					}
-					if (attribvalue == "right")
-					{
-						l->TextHAlign = HorizontalAlignment::Right;
-					}
-				}
-				if (subnode->Attribute("vertical") != nullptr)
-				{
-					attribvalue = subnode->Attribute("vertical");
-					if (attribvalue == "top")
-					{
-						l->TextVAlign = VerticalAlignment::Top;
-					}
-					if (attribvalue == "centre")
-					{
-						l->TextVAlign = VerticalAlignment::Centre;
-					}
-					if (attribvalue == "bottom")
-					{
-						l->TextVAlign = VerticalAlignment::Bottom;
-					}
-				}
-			}
 		}
-		if (nodename == "graphic")
+		else if (nodename == "graphic")
 		{
 			Graphic *g = new Graphic(this, node->FirstChildElement("image")->GetText());
 			g->ConfigureFromXML(node);
-			subnode = node->FirstChildElement("alignment");
-			if (subnode != nullptr)
-			{
-				if (subnode->Attribute("horizontal") != nullptr)
-				{
-					attribvalue = subnode->Attribute("horizontal");
-					if (attribvalue == "left")
-					{
-						g->ImageHAlign = HorizontalAlignment::Left;
-					}
-					if (attribvalue == "centre")
-					{
-						g->ImageHAlign = HorizontalAlignment::Centre;
-					}
-					if (attribvalue == "right")
-					{
-						g->ImageHAlign = HorizontalAlignment::Right;
-					}
-				}
-				if (subnode->Attribute("vertical") != nullptr)
-				{
-					attribvalue = subnode->Attribute("vertical");
-					if (attribvalue == "top")
-					{
-						g->ImageVAlign = VerticalAlignment::Top;
-					}
-					if (attribvalue == "centre")
-					{
-						g->ImageVAlign = VerticalAlignment::Centre;
-					}
-					if (attribvalue == "bottom")
-					{
-						g->ImageVAlign = VerticalAlignment::Bottom;
-					}
-				}
-			}
-			subnode = node->FirstChildElement("imageposition");
-			if (subnode != nullptr)
-			{
-				if (subnode->GetText() != nullptr)
-				{
-					attribvalue = subnode->GetText();
-					if (attribvalue == "stretch")
-					{
-						g->ImagePosition = FillMethod::Stretch;
-					}
-					if (attribvalue == "fit")
-					{
-						g->ImagePosition = FillMethod::Fit;
-					}
-					if (attribvalue == "tile")
-					{
-						g->ImagePosition = FillMethod::Tile;
-					}
-				}
-			}
-			subnode = node->FirstChildElement("autosize");
-			if (subnode != nullptr)
-			{
-				if (subnode->QueryBoolText(&g->AutoSize) != tinyxml2::XML_SUCCESS)
-				{
-					LogError("Unknown AutoSize attribute");
-				}
-			}
 		}
-		if (nodename == "textbutton")
+		else if (nodename == "textbutton")
 		{
 			TextButton *tb =
 			    new TextButton(this, fw().gamecore->GetString(node->Attribute("text")),
 			                   fw().gamecore->GetFont(node->FirstChildElement("font")->GetText()));
 			tb->ConfigureFromXML(node);
 		}
-		if (nodename == "graphicbutton")
+		else if (nodename == "graphicbutton")
 		{
 			GraphicButton *gb;
 			UString gb_image = "";
@@ -642,62 +541,30 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 			}
 			gb->ConfigureFromXML(node);
 			if (node->Attribute("scrollprev") != nullptr &&
-			    UString(node->Attribute("scrollprev")) != "")
+				UString(node->Attribute("scrollprev")) != "")
 			{
 				attribvalue = node->Attribute("scrollprev");
 				gb->ScrollBarPrev = this->FindControlTyped<ScrollBar>(attribvalue);
 			}
 			if (node->Attribute("scrollnext") != nullptr &&
-			    UString(node->Attribute("scrollnext")) != "")
+				UString(node->Attribute("scrollnext")) != "")
 			{
 				attribvalue = node->Attribute("scrollnext");
 				gb->ScrollBarNext = this->FindControlTyped<ScrollBar>(attribvalue);
 			}
 		}
-		if (nodename == "checkbox")
+		else if (nodename == "checkbox")
 		{
 			auto cb = new CheckBox(this);
 			cb->ConfigureFromXML(node);
 		}
-		if (nodename == "scroll")
+		else if (nodename == "scroll")
 		{
 			auto sb = new ScrollBar(this);
 			sb->ConfigureFromXML(node);
-
-			subnode = node->FirstChildElement("grippercolour");
-			if (subnode != nullptr)
-			{
-				if (subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "")
-				{
-					sb->GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
-					                           Strings::ToU8(subnode->Attribute("g")),
-					                           Strings::ToU8(subnode->Attribute("b")),
-					                           Strings::ToU8(subnode->Attribute("a")));
-				}
-				else
-				{
-					sb->GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
-					                           Strings::ToU8(subnode->Attribute("g")),
-					                           Strings::ToU8(subnode->Attribute("b")));
-				}
-			}
-			subnode = node->FirstChildElement("range");
-			if (subnode != nullptr)
-			{
-				if (subnode->Attribute("min") != nullptr &&
-				    UString(subnode->Attribute("min")) != "")
-				{
-					sb->Minimum = Strings::ToInteger(subnode->Attribute("min"));
-				}
-				if (subnode->Attribute("max") != nullptr &&
-				    UString(subnode->Attribute("max")) != "")
-				{
-					sb->Maximum = Strings::ToInteger(subnode->Attribute("max"));
-				}
-			}
 		}
 
-		if (nodename == "listbox")
+		else if (nodename == "listbox")
 		{
 			ScrollBar *sb = nullptr;
 
@@ -709,76 +576,13 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 			}
 			auto lb = new ListBox(this, sb);
 			lb->ConfigureFromXML(node);
-			subnode = node->FirstChildElement("item");
-			if (subnode != nullptr)
-			{
-				if (subnode->Attribute("size") != nullptr &&
-				    UString(subnode->Attribute("size")) != "")
-				{
-					lb->ItemSize = Strings::ToInteger(subnode->Attribute("size"));
-				}
-				if (subnode->Attribute("spacing") != nullptr &&
-				    UString(subnode->Attribute("spacing")) != "")
-				{
-					lb->ItemSpacing = Strings::ToInteger(subnode->Attribute("spacing"));
-				}
-			}
-			subnode = node->FirstChildElement("orientation");
-			if (subnode != nullptr && UString(subnode->GetText()) != "")
-			{
-				UString value = subnode->GetText();
-				if (value == "horizontal")
-				{
-					lb->ListOrientation = Orientation::Horizontal;
-				}
-				if (value == "vertical")
-				{
-					lb->ListOrientation = Orientation::Vertical;
-				}
-			}
 		}
 
-		if (nodename == "textedit")
+		else if (nodename == "textedit")
 		{
 			TextEdit *te = new TextEdit(
 			    this, "", fw().gamecore->GetFont(node->FirstChildElement("font")->GetText()));
 			te->ConfigureFromXML(node);
-			subnode = node->FirstChildElement("alignment");
-			if (subnode != nullptr)
-			{
-				if (subnode->Attribute("horizontal") != nullptr)
-				{
-					attribvalue = subnode->Attribute("horizontal");
-					if (attribvalue == "left")
-					{
-						te->TextHAlign = HorizontalAlignment::Left;
-					}
-					if (attribvalue == "centre")
-					{
-						te->TextHAlign = HorizontalAlignment::Centre;
-					}
-					if (attribvalue == "right")
-					{
-						te->TextHAlign = HorizontalAlignment::Right;
-					}
-				}
-				if (subnode->Attribute("vertical") != nullptr)
-				{
-					attribvalue = subnode->Attribute("vertical");
-					if (attribvalue == "top")
-					{
-						te->TextVAlign = VerticalAlignment::Top;
-					}
-					if (attribvalue == "centre")
-					{
-						te->TextVAlign = VerticalAlignment::Centre;
-					}
-					if (attribvalue == "bottom")
-					{
-						te->TextVAlign = VerticalAlignment::Bottom;
-					}
-				}
-			}
 		}
 	}
 
@@ -788,7 +592,7 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 		{
 			Location.x = 0;
 		}
-		if (specialpositionx == "centre")
+		else if (specialpositionx == "centre")
 		{
 			if (owningControl == nullptr)
 			{
@@ -799,7 +603,7 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 				Location.x = (owningControl->Size.x / 2) - (Size.x / 2);
 			}
 		}
-		if (specialpositionx == "right")
+		else if (specialpositionx == "right")
 		{
 			if (owningControl == nullptr)
 			{
@@ -818,7 +622,7 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 		{
 			Location.y = 0;
 		}
-		if (specialpositiony == "centre")
+		else if (specialpositiony == "centre")
 		{
 			if (owningControl == nullptr)
 			{
@@ -829,7 +633,7 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 				Location.y = (owningControl->Size.y / 2) - (Size.y / 2);
 			}
 		}
-		if (specialpositiony == "bottom")
+		else if (specialpositiony == "bottom")
 		{
 			if (owningControl == nullptr)
 			{
@@ -847,9 +651,9 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 
 void Control::UnloadResources() {}
 
-Control *Control::operator[](int Index) { return Controls.at(Index); }
+Control *Control::operator[](int Index) const { return Controls.at(Index); }
 
-Control *Control::FindControl(UString ID)
+Control *Control::FindControl(UString ID) const
 {
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
@@ -865,7 +669,7 @@ Control *Control::FindControl(UString ID)
 	return nullptr;
 }
 
-Control *Control::GetParent() { return owningControl; }
+Control *Control::GetParent() const { return owningControl; }
 
 Control *Control::GetRootControl()
 {
@@ -885,7 +689,7 @@ Form *Control::GetForm()
 	return dynamic_cast<Form *>(c);
 }
 
-std::list<UString> Control::WordWrapText(sp<OpenApoc::BitmapFont> Font, UString WrapText)
+std::list<UString> Control::WordWrapText(sp<OpenApoc::BitmapFont> Font, UString WrapText) const
 {
 	int txtwidth;
 	std::list<UString> lines;
@@ -937,7 +741,7 @@ std::list<UString> Control::WordWrapText(sp<OpenApoc::BitmapFont> Font, UString 
 
 void Control::SetParent(Control *Parent) { owningControl = Parent; }
 
-Vec2<int> Control::GetLocationOnScreen()
+Vec2<int> Control::GetLocationOnScreen() const
 {
 	Vec2<int> r(resolvedLocation.x, resolvedLocation.y);
 	return r;

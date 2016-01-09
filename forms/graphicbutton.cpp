@@ -170,4 +170,8 @@ Control *GraphicButton::CopyTo(Control *CopyParent)
 	return copy;
 }
 
+	void GraphicButton::ConfigureFromXML(tinyxml2::XMLElement* Element)
+	{
+		Control::ConfigureFromXML(Element);
+	}
 }; // namespace OpenApoc

@@ -12,8 +12,6 @@ class ScrollBar;
 class ListBox : public Control
 {
   private:
-	// std::vector<Control*> items;
-	ScrollBar *scroller;
 	bool scroller_is_internal;
 
 	void ConfigureInternalScrollBar();
@@ -22,6 +20,7 @@ class ListBox : public Control
 	virtual void OnRender() override;
 
   public:
+	ScrollBar *scroller;
 	int ItemSize, ItemSpacing;
 	Orientation ListOrientation;
 
@@ -40,6 +39,7 @@ class ListBox : public Control
 	Control *operator[](int Index);
 
 	virtual Control *CopyTo(Control *CopyParent) override;
+	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 };
 
 }; // namespace OpenApoc

@@ -34,14 +34,14 @@ class Control
 	virtual void OnRender();
 
 	void SetFocus(Control *Child);
-	bool IsFocused();
+	bool IsFocused() const;
 
 	void ResolveLocation();
-	void ConfigureFromXML(tinyxml2::XMLElement *Element);
+	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element);
 
 	Control *GetRootControl();
 
-	std::list<UString> WordWrapText(sp<OpenApoc::BitmapFont> UseFont, UString WrapText);
+	std::list<UString> WordWrapText(sp<OpenApoc::BitmapFont> UseFont, UString WrapText) const;
 
 	void CopyControlData(Control *CopyOf);
 
@@ -62,7 +62,7 @@ class Control
 	Control(Control *Owner, bool takesFocus = true);
 	virtual ~Control();
 
-	Control *GetActiveControl();
+	Control *GetActiveControl() const;
 	void Focus();
 
 	virtual void EventOccured(Event *e);
@@ -70,10 +70,10 @@ class Control
 	virtual void Update();
 	virtual void UnloadResources();
 
-	Control *operator[](int Index);
-	Control *FindControl(UString ID);
+	Control *operator[](int Index) const;
+	Control *FindControl(UString ID) const;
 
-	template <typename T> T *FindControlTyped(const UString &name)
+	template <typename T> T *FindControlTyped(const UString &name) const
 	{
 		Control *c = this->FindControl(name);
 		if (!c)
@@ -92,11 +92,11 @@ class Control
 		return typedControl;
 	}
 
-	Control *GetParent();
+	Control *GetParent() const;
 	Form *GetForm();
 	void SetParent(Control *Parent);
 
-	Vec2<int> GetLocationOnScreen();
+	Vec2<int> GetLocationOnScreen() const;
 
 	virtual Control *CopyTo(Control *CopyParent);
 };
