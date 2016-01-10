@@ -7,8 +7,6 @@
 #include "framework/framework.h"
 #include "framework/image.h"
 
-#include <sstream>
-
 namespace OpenApoc
 {
 
@@ -27,7 +25,8 @@ const std::unordered_map<std::vector<bool>, int> BaseScreen::TILE_CORRIDORS = {
 
 int BaseScreen::getCorridorSprite(Vec2<int> pos) const
 {
-	if (!base.getCorridors()[pos.x][pos.y])
+	if (pos.x < 0 || pos.y < 0 || pos.x >= Base::SIZE || pos.y >= Base::SIZE ||
+	    !base.getCorridors()[pos.x][pos.y])
 	{
 		return 0;
 	}
@@ -39,8 +38,8 @@ int BaseScreen::getCorridorSprite(Vec2<int> pos) const
 }
 
 BaseScreen::BaseScreen(sp<GameState> state)
-    : Stage(), basescreenform(fw().gamecore->GetForm("FORM_BASESCREEN")),
-      base(*state->playerBases.front()), selection(-1, -1), state(state)
+    : Stage(), form(fw().gamecore->GetForm("FORM_BASESCREEN")), base(*state->playerBases.front()),
+      selection(-1, -1), baseView(nullptr), selText(nullptr), selGraphic(nullptr), state(state)
 {
 }
 
@@ -48,17 +47,37 @@ BaseScreen::~BaseScreen() {}
 
 void BaseScreen::Begin()
 {
-	Label *funds = basescreenform->FindControlTyped<Label>("TEXT_FUNDS");
+	Label *funds = form->FindControlTyped<Label>("TEXT_FUNDS");
 	funds->SetText(state->getPlayerBalance());
 
-	TextEdit *name = basescreenform->FindControlTyped<TextEdit>("TEXT_BASE_NAME");
+	TextEdit *name = form->FindControlTyped<TextEdit>("TEXT_BASE_NAME");
 	name->SetText(base.name);
 
-	baseView = basescreenform->FindControlTyped<Graphic>("GRAPHIC_BASE_VIEW");
-	selText = basescreenform->FindControlTyped<Label>("TEXT_SELECTED_FACILITY");
-	selGraphic = basescreenform->FindControlTyped<Graphic>("GRAPHIC_SELECTED_FACILITY");
+	baseView = form->FindControlTyped<Graphic>("GRAPHIC_BASE_VIEW");
+	selText = form->FindControlTyped<Label>("TEXT_SELECTED_FACILITY");
+	selGraphic = form->FindControlTyped<Graphic>("GRAPHIC_SELECTED_FACILITY");
+	for (int i = 0; i < 3; i++)
+	{
+		auto labelName = UString::format("LABEL_%d", i + 1);
+		auto *label = form->FindControlTyped<Label>(labelName);
+		if (!label)
+		{
+			LogError("Failed to find UI control matching \"%s\"", labelName.c_str());
+		}
+		label->SetText("");
+		statsLabels.push_back(label);
 
-	ListBox *facilities = basescreenform->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
+		auto valueName = UString::format("VALUE_%d", i + 1);
+		auto *value = form->FindControlTyped<Label>(valueName);
+		if (!value)
+		{
+			LogError("Failed to find UI control matching \"%s\"", valueName.c_str());
+		}
+		value->SetText("");
+		statsValues.push_back(value);
+	}
+
+	ListBox *facilities = form->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
 	for (auto &i : state->getRules().getFacilityDefs())
 	{
 		auto &facility = i.second;
@@ -67,6 +86,7 @@ void BaseScreen::Begin()
 
 		Graphic *graphic = new Graphic(nullptr, facility.sprite);
 		graphic->AutoSize = true;
+		graphic->Data = const_cast<void *>(static_cast<const void *>(&facility));
 		facilities->AddItem(graphic);
 	}
 }
@@ -79,7 +99,7 @@ void BaseScreen::Finish() {}
 
 void BaseScreen::EventOccurred(Event *e)
 {
-	basescreenform->EventOccured(e);
+	form->EventOccured(e);
 	fw().gamecore->MouseCursor->EventOccured(e);
 
 	if (e->Type == EVENT_KEY_DOWN)
@@ -91,46 +111,65 @@ void BaseScreen::EventOccurred(Event *e)
 		}
 	}
 
-	if (e->Type == EVENT_MOUSE_MOVE)
+	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == baseView)
 	{
-		selection = {e->Data.Mouse.X, e->Data.Mouse.Y};
-		selection -= (basescreenform->Location + baseView->Location);
-		if (selection.x >= 0 && selection.y >= 0)
+		if (e->Data.Forms.EventFlag == FormEventType::MouseMove)
 		{
+			selection = {e->Data.Forms.MouseInfo.X, e->Data.Forms.MouseInfo.Y};
 			selection /= TILE_SIZE;
-		}
-		if (selection.x >= 0 && selection.y >= 0 && selection.x < Base::SIZE &&
-		    selection.y < Base::SIZE)
-		{
 			selFacility = base.getFacility(selection);
+			for (auto label : statsLabels)
+			{
+				label->SetText("");
+			}
+			for (auto value : statsValues)
+			{
+				value->SetText("");
+			}
 			if (selFacility != nullptr)
 			{
 				selText->SetText(fw().gamecore->GetString(selFacility->def.name));
 				selGraphic->SetImage(fw().data->load_image(selFacility->def.sprite));
+				if (selFacility->def.capacityAmount > 0)
+				{
+					statsLabels[0]->SetText("Capacity");
+					statsValues[0]->SetText(Strings::FromInteger(selFacility->def.capacityAmount));
+					statsLabels[1]->SetText("Usage");
+					statsValues[1]->SetText("0%");
+				}
 			}
 			else
 			{
 				int sprite = getCorridorSprite(selection);
+				auto image = UString::format(
+				    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:%d:xcom3/UFODATA/BASE.PCX",
+				    sprite);
 				if (sprite != 0)
 				{
-					std::ostringstream ss;
-					ss << "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:" << sprite
-					   << ":UI/menuopt.pal";
 					selText->SetText("Corridor");
-					selGraphic->SetImage(fw().data->load_image(ss.str()));
 				}
 				else
 				{
 					selText->SetText("Earth");
-					selGraphic->SetImage(fw().data->load_image(
-					    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:UI/menuopt.pal"));
 				}
+				selGraphic->SetImage(fw().data->load_image(image));
 			}
+			return;
 		}
-		else
+		else if (e->Data.Forms.EventFlag == FormEventType::MouseLeave)
 		{
+			selection = {-1, -1};
 			selText->SetText("");
 			selGraphic->SetImage(nullptr);
+			for (auto label : statsLabels)
+			{
+				label->SetText("");
+			}
+			for (auto value : statsValues)
+			{
+				value->SetText("");
+			}
+			return;
 		}
 	}
 
@@ -155,8 +194,43 @@ void BaseScreen::EventOccurred(Event *e)
 	{
 		if (e->Data.Forms.RaisedBy->Name == "TEXT_BASE_NAME")
 		{
-			TextEdit *name = basescreenform->FindControlTyped<TextEdit>("TEXT_BASE_NAME");
+			TextEdit *name = form->FindControlTyped<TextEdit>("TEXT_BASE_NAME");
 			base.name = name->GetText();
+			return;
+		}
+	}
+
+	if (e->Type == EVENT_FORM_INTERACTION &&
+	    e->Data.Forms.EventFlag == FormEventType::ListBoxChangeHover)
+	{
+		if (e->Data.Forms.RaisedBy->Name == "LISTBOX_FACILITIES")
+		{
+			ListBox *list = form->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
+			if (list->getHoveredData() == nullptr)
+			{
+				selText->SetText("");
+				selGraphic->SetImage(nullptr);
+				for (auto label : statsLabels)
+				{
+					label->SetText("");
+				}
+				for (auto value : statsValues)
+				{
+					value->SetText("");
+				}
+			}
+			else
+			{
+				auto facility = static_cast<FacilityDef *>(list->getHoveredData());
+				selText->SetText(fw().gamecore->GetString(facility->name));
+				selGraphic->SetImage(fw().data->load_image(facility->sprite));
+				statsLabels[0]->SetText("Cost to build");
+				statsValues[0]->SetText("$" + Strings::FromInteger(facility->buildCost));
+				statsLabels[1]->SetText("Days to build");
+				statsValues[1]->SetText(Strings::FromInteger(facility->buildTime));
+				statsLabels[2]->SetText("Maintenance cost");
+				statsValues[2]->SetText("$" + Strings::FromInteger(facility->weeklyCost));
+			}
 			return;
 		}
 	}
@@ -164,7 +238,7 @@ void BaseScreen::EventOccurred(Event *e)
 
 void BaseScreen::Update(StageCmd *const cmd)
 {
-	basescreenform->Update();
+	form->Update();
 	*cmd = stageCmd;
 	stageCmd = StageCmd();
 }
@@ -173,7 +247,7 @@ void BaseScreen::Render()
 {
 	fw().Stage_GetPrevious(this->shared_from_this())->Render();
 	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
-	basescreenform->Render();
+	form->Render();
 	RenderBase();
 	fw().gamecore->MouseCursor->Render();
 }
@@ -182,11 +256,11 @@ bool BaseScreen::IsTransition() { return false; }
 
 void BaseScreen::RenderBase()
 {
-	const Vec2<int> BASE_POS = basescreenform->Location + baseView->Location;
+	const Vec2<int> BASE_POS = form->Location + baseView->Location;
 
 	// Draw grid
-	sp<Image> grid =
-	    fw().data->load_image("PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:UI/menuopt.pal");
+	sp<Image> grid = fw().data->load_image(
+	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:xcom3/UFODATA/BASE.PCX");
 	Vec2<int> i;
 	for (i.x = 0; i.x < Base::SIZE; ++i.x)
 	{
@@ -206,10 +280,10 @@ void BaseScreen::RenderBase()
 			if (sprite != 0)
 			{
 				Vec2<int> pos = BASE_POS + i * TILE_SIZE;
-				std::ostringstream ss;
-				ss << "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:" << sprite
-				   << ":UI/menuopt.pal";
-				fw().renderer->draw(fw().data->load_image(ss.str()), pos);
+				auto image = UString::format(
+				    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:%d:xcom3/UFODATA/BASE.PCX",
+				    sprite);
+				fw().renderer->draw(fw().data->load_image(image), pos);
 			}
 		}
 	}
@@ -220,6 +294,33 @@ void BaseScreen::RenderBase()
 		sp<Image> sprite = fw().data->load_image(facility->def.sprite);
 		Vec2<int> pos = BASE_POS + facility->pos * TILE_SIZE;
 		fw().renderer->draw(sprite, pos);
+	}
+
+	// Draw doors
+	sp<Image> ldoor = fw().data->load_image(
+	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:2:xcom3/UFODATA/BASE.PCX");
+	sp<Image> bdoor = fw().data->load_image(
+	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:3:xcom3/UFODATA/BASE.PCX");
+	for (auto &facility : base.getFacilities())
+	{
+		for (int y = 0; y < facility->def.size; ++y)
+		{
+			Vec2<int> tile = facility->pos + Vec2<int>{-1, y};
+			if (getCorridorSprite(tile) != 0)
+			{
+				Vec2<int> pos = BASE_POS + tile * TILE_SIZE;
+				fw().renderer->draw(ldoor, pos + Vec2<int>{TILE_SIZE / 2, 0});
+			}
+		}
+		for (int x = 0; x < facility->def.size; ++x)
+		{
+			Vec2<int> tile = facility->pos + Vec2<int>{x, facility->def.size};
+			if (getCorridorSprite(tile) != 0)
+			{
+				Vec2<int> pos = BASE_POS + tile * TILE_SIZE;
+				fw().renderer->draw(bdoor, pos - Vec2<int>{0, TILE_SIZE / 2});
+			}
+		}
 	}
 
 	// Draw selection

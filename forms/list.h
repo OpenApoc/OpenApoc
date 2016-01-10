@@ -34,6 +34,8 @@ class ListBox : public Control
 	virtual void EventOccured(Event *e) override;
 	virtual void Update() override;
 	virtual void UnloadResources() override;
+	void *getHoveredData() const;
+	void *getSelectedData() const;
 
 	void Clear();
 	void AddItem(Control *Item);

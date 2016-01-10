@@ -55,8 +55,9 @@ class Control
 
 	bool canCopy;
 	Control *lastCopiedTo;
-
 	std::vector<Control *> Controls;
+
+	void *Data;
 
 	Control(Control *Owner, bool takesFocus = true);
 	virtual ~Control();

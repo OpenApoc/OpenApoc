@@ -46,6 +46,42 @@
         <alignment horizontal="centre" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
+      <label id="LABEL_1" text="LABEL_1">
+        <position x="20" y="296"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <label id="LABEL_2" text="LABEL_2">
+        <position x="20" y="312"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <label id="LABEL_3" text="LABEL_3">
+        <position x="20" y="328"/>
+        <size width="100" height="15"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <label id="VALUE_1" text="VALUE_1">
+        <position x="112" y="296"/>
+        <size width="54" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <label id="VALUE_2" text="VALUE_2">
+        <position x="112" y="312"/>
+        <size width="54" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <label id="VALUE_3" text="VALUE_3">
+        <position x="112" y="328"/>
+        <size width="54" height="15"/>
+        <alignment horizontal="right" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
       <scroll id="LISTBOX_SCROLL">
         <position x="30" y="452"/>
         <size width="536" height="15"/>
@@ -56,7 +92,6 @@
         <item size="0" spacing="6"/>
         <orientation>horizontal</orientation>
         <hovercolour r="255" g="255" b="255" a="255"/>
-        <selcolour r="0" g="255" b="0" a="255"/>
       </listbox>
       <graphicbutton id="LISTBOX_SCROLL_LEFT" scrollprev="LISTBOX_SCROLL">
         <position x="6" y="449"/>

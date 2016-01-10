@@ -96,13 +96,13 @@ void ListBox::PostRender()
 		Control *ctrl = *c;
 		if (ctrl != scroller)
 		{
+			if (ctrl == hovered)
+			{
+				fw().renderer->drawRect(ctrl->Location, ctrl->Size, HoverColour);
+			}
 			if (ctrl == selected)
 			{
 				fw().renderer->drawRect(ctrl->Location, ctrl->Size, SelectedColour);
-			}
-			else if (ctrl == hovered)
-			{
-				fw().renderer->drawRect(ctrl->Location, ctrl->Size, HoverColour);
 			}
 		}
 	}
@@ -178,6 +178,24 @@ void ListBox::Update()
 
 void ListBox::UnloadResources() {}
 
+void *ListBox::getHoveredData() const
+{
+	if (hovered != nullptr)
+	{
+		return hovered->Data;
+	}
+	return nullptr;
+}
+
+void *ListBox::getSelectedData() const
+{
+	if (selected != nullptr)
+	{
+		return selected->Data;
+	}
+	return nullptr;
+}
+
 void ListBox::Clear()
 {
 	while (Controls.size() > 0)
@@ -197,6 +215,10 @@ void ListBox::AddItem(Control *Item)
 	Controls.push_back(Item);
 	Item->SetParent(this);
 	ResolveLocation();
+	if (selected == nullptr)
+	{
+		selected = Item;
+	}
 }
 
 Control *ListBox::RemoveItem(Control *Item)

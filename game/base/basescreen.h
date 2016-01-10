@@ -24,7 +24,7 @@ class BaseScreen : public Stage
 	static const std::unordered_map<std::vector<bool>, int> TILE_CORRIDORS;
 	static const int TILE_SIZE;
 
-	std::unique_ptr<Form> basescreenform;
+	std::unique_ptr<Form> form;
 	StageCmd stageCmd;
 	Base &base;
 	Vec2<int> selection;
@@ -33,6 +33,8 @@ class BaseScreen : public Stage
 	Graphic *baseView;
 	Label *selText;
 	Graphic *selGraphic;
+	std::vector<Label *> statsLabels;
+	std::vector<Label *> statsValues;
 
 	void RenderBase();
 	int getCorridorSprite(Vec2<int> pos) const;
