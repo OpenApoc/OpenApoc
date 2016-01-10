@@ -80,47 +80,6 @@ void VEquipScreen::EventOccurred(Event *e)
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
-		else if (e->Data.Keyboard.KeyCode == SDLK_RIGHT)
-		{
-			auto &vehicleList = state->getPlayer()->vehicles;
-			// FIXME: Debug hack to cycle through vehicles
-			auto currentPos = vehicleList.begin();
-			while (currentPos != vehicleList.end())
-			{
-				auto currentPtr = currentPos->lock();
-				if (currentPtr == this->selected)
-					break;
-				currentPos++;
-			}
-			if (currentPos == vehicleList.end())
-			{
-				LogError("Failed to find current vehicle in list");
-			}
-
-			currentPos++;
-
-			while (currentPos != vehicleList.end())
-			{
-				auto newPtr = currentPos->lock();
-				if (newPtr)
-				{
-					this->setSelectedVehicle(newPtr);
-					return;
-				}
-			}
-			// Looping back around
-			currentPos = vehicleList.begin();
-			while (currentPos != vehicleList.end())
-			{
-				auto newPtr = currentPos->lock();
-				if (newPtr)
-				{
-					this->setSelectedVehicle(newPtr);
-					return;
-				}
-			}
-			LogError("No vehicle found in list to progress to");
-		}
 	}
 	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::MouseDown)
 	{

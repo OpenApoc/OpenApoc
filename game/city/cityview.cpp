@@ -11,6 +11,7 @@
 #include "game/city/vehicle.h"
 #include "game/city/building.h"
 #include "game/base/basescreen.h"
+#include "game/base/vequipscreen.h"
 #include "game/tileview/tileobject_vehicle.h"
 #include "game/city/scenery.h"
 
@@ -218,7 +219,6 @@ void CityView::Update(StageCmd *const cmd)
 		vehicleIcon->AutoSize = true;
 		vehicleIcon->Location = {1, 1};
 		vehicleIcon->Name = "OWNED_VEHICLE_ICON_" + vehicle->name;
-		this->playerVehicleListControls[baseControl] = vehicle;
 		ownedVehicleList->AddItem(baseControl);
 
 		int currentHealth;
@@ -254,6 +254,13 @@ void CityView::Update(StageCmd *const cmd)
 		healthGraphic->Location = healthBarOffset;
 		healthGraphic->Size = healthBarSize;
 		healthGraphic->ImagePosition = FillMethod::Stretch;
+
+		// FIXME: Currently we might get events from 'any' of the controls here, maybe this could be
+		// simplified by having a top-level 'full-size' transparent button or something equally
+		// evil? (But hopefully less evil than this?)
+		this->playerVehicleListControls[baseControl] = vehicle;
+		this->playerVehicleListControls[vehicleIcon] = vehicle;
+		this->playerVehicleListControls[healthGraphic] = vehicle;
 	}
 
 	activeTab->Update();
@@ -268,17 +275,12 @@ void CityView::EventOccurred(Event *e)
 	{
 		if (e->Type == EVENT_FORM_INTERACTION)
 		{
-
-			if (e->Data.Forms.EventFlag == FormEventType::ButtonClick)
+			if (e->Data.Forms.EventFlag == FormEventType::MouseDown)
 			{
-				auto &cname = e->Data.Forms.RaisedBy->Name;
-				LogWarning("Testing \"%s\" - %p", cname.c_str(), e->Data.Forms.RaisedBy);
-
 				auto it = this->playerVehicleListControls.find(e->Data.Forms.RaisedBy);
 
 				if (it != this->playerVehicleListControls.end())
 				{
-					LogWarning("Found click on graphic %p", it->first);
 					auto vehicle = it->second.lock();
 					if (vehicle)
 					{
@@ -286,23 +288,44 @@ void CityView::EventOccurred(Event *e)
 					}
 					return;
 				}
+			}
+
+			else if (e->Data.Forms.EventFlag == FormEventType::ButtonClick)
+			{
+				auto &cname = e->Data.Forms.RaisedBy->Name;
 
 				if (cname == "BUTTON_TAB_1")
+				{
 					this->activeTab = uiTabs[0];
+				}
 				else if (cname == "BUTTON_TAB_2")
+				{
 					this->activeTab = uiTabs[1];
+				}
 				else if (cname == "BUTTON_TAB_3")
+				{
 					this->activeTab = uiTabs[2];
+				}
 				else if (cname == "BUTTON_TAB_4")
+				{
 					this->activeTab = uiTabs[3];
+				}
 				else if (cname == "BUTTON_TAB_5")
+				{
 					this->activeTab = uiTabs[4];
+				}
 				else if (cname == "BUTTON_TAB_6")
+				{
 					this->activeTab = uiTabs[5];
+				}
 				else if (cname == "BUTTON_TAB_7")
+				{
 					this->activeTab = uiTabs[6];
+				}
 				else if (cname == "BUTTON_TAB_8")
+				{
 					this->activeTab = uiTabs[7];
+				}
 				else if (cname == "BUTTON_TOGGLE_STRATMAP")
 				{
 					auto previousMode = this->getViewMode();
@@ -346,9 +369,13 @@ void CityView::EventOccurred(Event *e)
 					return;
 				}
 				else if (cname == "BUTTON_SHOW_LOG")
+				{
 					LogWarning("Show log");
+				}
 				else if (cname == "BUTTON_ZOOM_EVENT")
+				{
 					LogWarning("Zoom to event");
+				}
 				else if (cname == "BUTTON_SPEED0")
 				{
 					LogWarning("Set speed 0");
@@ -383,6 +410,20 @@ void CityView::EventOccurred(Event *e)
 				{
 					stageCmd.cmd = StageCmd::Command::PUSH;
 					stageCmd.nextStage = std::make_shared<BaseScreen>(state);
+					return;
+				}
+				else if (cname == "BUTTON_EQUIP_VEHICLE")
+				{
+					stageCmd.cmd = StageCmd::Command::PUSH;
+					auto equipScreen = std::make_shared<VEquipScreen>(state);
+					// FIXME: Restrict this to player owned vehicles?
+					auto selectedVehicle = this->selectedVehicle.lock();
+					if (selectedVehicle)
+					{
+						equipScreen->setSelectedVehicle(selectedVehicle);
+					}
+					stageCmd.nextStage = equipScreen;
+
 					return;
 				}
 			}

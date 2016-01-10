@@ -308,6 +308,12 @@
         <orientation>horizontal</orientation>
         <item size="0"/>
       </listbox>
+      <graphicbutton id="BUTTON_EQUIP_VEHICLE">
+        <size width="27" height="46"/>
+        <position x="408" y="75"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:18:xcom3/ufodata/pal_01.dat</imagedepressed>
+      </graphicbutton>
     </style>
   </form>
   <form id="FORM_CITY_UI_3">
