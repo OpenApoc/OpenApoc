@@ -37,7 +37,6 @@ void ListBox::ConfigureInternalScrollBar()
 			break;
 	}
 	scroller->canCopy = false;
-	scroller->Visible = false;
 	scroller_is_internal = true;
 }
 
@@ -97,13 +96,13 @@ void ListBox::PostRender()
 		Control *ctrl = *c;
 		if (ctrl != scroller)
 		{
-			if (ctrl == hovered)
-			{
-				fw().renderer->drawRect(ctrl->Location, ctrl->Size, HoverColour);
-			}
-			else if (ctrl == selected)
+			if (ctrl == selected)
 			{
 				fw().renderer->drawRect(ctrl->Location, ctrl->Size, SelectedColour);
+			}
+			else if (ctrl == hovered)
+			{
+				fw().renderer->drawRect(ctrl->Location, ctrl->Size, HoverColour);
 			}
 		}
 	}
@@ -114,48 +113,51 @@ void ListBox::EventOccured(Event *e)
 	Control::EventOccured(e);
 	if (e->Type == EVENT_FORM_INTERACTION)
 	{
-		if (e->Data.Forms.RaisedBy == this || e->Data.Forms.RaisedBy == scroller)
+		Control *ctrl = e->Data.Forms.RaisedBy;
+		if (e->Data.Forms.EventFlag == FormEventType::MouseMove)
 		{
-			// FIXME: Make scrolling amount match wheel amount
-			// Should wheel orientation match scroll orientation?
-			if (e->Data.Forms.EventFlag == FormEventType::MouseMove &&
-			    (e->Data.Mouse.WheelVertical < 0 || e->Data.Mouse.WheelHorizontal < 0))
+			// FIXME: Scrolling amount should match wheel amount
+			// Should wheel orientation match as well? Who has horizontal scrolls??
+			if (ctrl == this || ctrl->GetParent() == this)
 			{
-				// scroller->ScrollPrev();
+				int wheelDelta =
+				    e->Data.Forms.MouseInfo.WheelVertical + e->Data.Forms.MouseInfo.WheelHorizontal;
+				if (wheelDelta > 0)
+				{
+					scroller->ScrollPrev();
+				}
+				else if (wheelDelta < 0)
+				{
+					scroller->ScrollNext();
+				}
 			}
-			else if (e->Data.Forms.EventFlag == FormEventType::MouseMove &&
-			         (e->Data.Mouse.WheelVertical > 0 || e->Data.Mouse.WheelHorizontal > 0))
+
+			if (ctrl == this || ctrl == scroller)
 			{
-				// scroller->ScrollNext();
+				ctrl = nullptr;
+			}
+			if (hovered != ctrl)
+			{
+				hovered = ctrl;
+				auto le = new Event();
+				le->Type = e->Type;
+				le->Data.Forms = e->Data.Forms;
+				le->Data.Forms.RaisedBy = this;
+				le->Data.Forms.EventFlag = FormEventType::ListBoxChangeHover;
+				fw().PushEvent(le);
 			}
 		}
-		else
+		else if (e->Data.Forms.EventFlag == FormEventType::MouseDown)
 		{
-			if (e->Data.Forms.EventFlag == FormEventType::MouseEnter ||
-			    e->Data.Forms.EventFlag == FormEventType::MouseLeave ||
-			    e->Data.Forms.EventFlag == FormEventType::MouseClick)
+			if (selected != ctrl && ctrl->GetParent() == this && ctrl != scroller)
 			{
-				for (auto c = Controls.begin(); c != Controls.end(); c++)
-				{
-					Control *ctrl = *c;
-					if (e->Data.Forms.RaisedBy == ctrl)
-					{
-						switch (e->Data.Forms.EventFlag)
-						{
-							case FormEventType::MouseEnter:
-								hovered = ctrl;
-								break;
-							case FormEventType::MouseLeave:
-								hovered = nullptr;
-								break;
-							case FormEventType::MouseClick:
-								selected = ctrl;
-								break;
-							default:
-								break;
-						}
-					}
-				}
+				selected = ctrl;
+				auto le = new Event();
+				le->Type = e->Type;
+				le->Data.Forms = e->Data.Forms;
+				le->Data.Forms.RaisedBy = this;
+				le->Data.Forms.EventFlag = FormEventType::ListBoxChangeSelected;
+				fw().PushEvent(le);
 			}
 		}
 	}
