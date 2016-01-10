@@ -46,6 +46,8 @@ class VEquipScreen : public Stage
 
 	sp<GameState> state;
 
+	float glowCounter;
+
   public:
 	VEquipScreen(sp<GameState> state);
 	virtual ~VEquipScreen();

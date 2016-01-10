@@ -11,8 +11,8 @@ const Vec2<int> VEquipScreen::EQUIP_GRID_SLOT_SIZE{16, 16};
 const Vec2<int> VEquipScreen::EQUIP_GRID_SLOTS{16, 16};
 
 static const Colour EQUIP_GRID_COLOUR{40, 40, 40, 255};
-// FIXME: this should animate
 static const Colour EQUIP_GRID_COLOUR_SELECTED{255, 40, 40, 255};
+static const float GLOW_COUNTER_INCREMENT = M_PI / 15.0f;
 
 VEquipScreen::VEquipScreen(sp<GameState> state)
     : Stage(), form(fw().gamecore->GetForm("FORM_VEQUIPSCREEN")), selected(nullptr),
@@ -20,7 +20,7 @@ VEquipScreen::VEquipScreen(sp<GameState> state)
       pal(fw().data->load_palette("xcom3/UFODATA/VROADWAR.PCX")),
       labelFont(fw().gamecore->GetFont("SMALFONT")), highlightedVehicle(nullptr),
       highlightedEquipment(nullptr), drawHighlightBox(false), draggedEquipment(nullptr),
-      state(state)
+      state(state), glowCounter(0)
 
 {
 	sp<Vehicle> vehicle;
@@ -228,6 +228,13 @@ void VEquipScreen::EventOccurred(Event *e)
 
 void VEquipScreen::Update(StageCmd *const cmd)
 {
+	this->glowCounter += GLOW_COUNTER_INCREMENT;
+	// Loop the increment over the period, otherwise we could start getting lower precision etc. if
+	// people leave the screen going for a few centuries
+	while (this->glowCounter > 2.0f * M_PI)
+	{
+		this->glowCounter -= 2.0f * M_PI;
+	}
 	form->Update();
 	*cmd = stageCmd;
 	stageCmd = StageCmd();
@@ -448,10 +455,20 @@ void VEquipScreen::Render()
 			Vec2<int> p10 = {p11.x, p00.y};
 			if (slot.type == selectionType)
 			{
-				fw().renderer->drawLine(p00, p01, EQUIP_GRID_COLOUR_SELECTED, 2);
-				fw().renderer->drawLine(p01, p11, EQUIP_GRID_COLOUR_SELECTED, 2);
-				fw().renderer->drawLine(p11, p10, EQUIP_GRID_COLOUR_SELECTED, 2);
-				fw().renderer->drawLine(p10, p00, EQUIP_GRID_COLOUR_SELECTED, 2);
+				// Scale the sin curve from (-1, 1) to (0, 1)
+				float glowFactor = (sin(this->glowCounter) + 1.0f) / 2.0f;
+				Colour selectedColour;
+				selectedColour.r =
+				    mix(EQUIP_GRID_COLOUR_SELECTED.r, EQUIP_GRID_COLOUR.r, glowFactor);
+				selectedColour.g =
+				    mix(EQUIP_GRID_COLOUR_SELECTED.g, EQUIP_GRID_COLOUR.g, glowFactor);
+				selectedColour.b =
+				    mix(EQUIP_GRID_COLOUR_SELECTED.b, EQUIP_GRID_COLOUR.b, glowFactor);
+				selectedColour.a = 255;
+				fw().renderer->drawLine(p00, p01, selectedColour, 2);
+				fw().renderer->drawLine(p01, p11, selectedColour, 2);
+				fw().renderer->drawLine(p11, p10, selectedColour, 2);
+				fw().renderer->drawLine(p10, p00, selectedColour, 2);
 			}
 			else
 			{

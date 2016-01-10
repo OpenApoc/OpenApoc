@@ -8,11 +8,6 @@
 #include <limits>
 #include <array>
 
-namespace
-{
-static float mix(float a, float b, float factor) { return a * (1.0f - factor) + b * factor; }
-}; // anonymous namespace
-
 namespace OpenApoc
 {
 static const std::array<std::pair<float, float>, 3> positionalAudioLUT = {{

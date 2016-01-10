@@ -16,4 +16,6 @@ template <typename T> using Vec3 = glm::tvec3<T, glm::highp>;
 
 template <typename T> using Vec2 = glm::tvec2<T, glm::highp>;
 #endif
+
+static inline float mix(float a, float b, float factor) { return a * (1.0f - factor) + b * factor; }
 }
