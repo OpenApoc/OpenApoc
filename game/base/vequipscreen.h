@@ -42,6 +42,8 @@ class VEquipScreen : public Stage
 	// List of screen-space rects for all inventory items
 	std::list<std::pair<Rect<int>, VEquipmentType &>> inventoryItems;
 
+	std::map<Control *, sp<Vehicle>> vehicleSelectionControls;
+
 	sp<GameState> state;
 
   public:

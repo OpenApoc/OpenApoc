@@ -58,6 +58,7 @@ void VEquipScreen::Begin()
 		auto graphic = new Graphic(nullptr, vehicle->type.equip_icon_big_path);
 		graphic->AutoSize = true;
 		list->AddItem(graphic);
+		this->vehicleSelectionControls[graphic] = vehicle;
 	}
 }
 
@@ -121,8 +122,19 @@ void VEquipScreen::EventOccurred(Event *e)
 			LogError("No vehicle found in list to progress to");
 		}
 	}
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick)
+	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::MouseDown)
 	{
+		auto it = this->vehicleSelectionControls.find(e->Data.Forms.RaisedBy);
+		if (it != this->vehicleSelectionControls.end())
+		{
+			this->setSelectedVehicle(it->second);
+			return;
+		}
+	}
+	else if (e->Type == EVENT_FORM_INTERACTION &&
+	         e->Data.Forms.EventFlag == FormEventType::ButtonClick)
+	{
+
 		if (e->Data.Forms.RaisedBy->Name == "BUTTON_OK")
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
