@@ -43,6 +43,10 @@ void ListBox::ConfigureInternalScrollBar()
 void ListBox::OnRender()
 {
 	int offset = 0;
+	if (scroller == nullptr)
+	{
+		ConfigureInternalScrollBar();
+	}
 
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
