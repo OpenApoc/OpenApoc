@@ -20,9 +20,6 @@ class Control
   private:
 	sp<Surface> controlArea;
 
-	void PreRender();
-	void PostRender();
-
   protected:
 	sp<Palette> palette;
 	Control *owningControl;
@@ -31,6 +28,8 @@ class Control
 	bool mouseDepressed;
 	Vec2<int> resolvedLocation;
 
+	virtual void PreRender();
+	virtual void PostRender();
 	virtual void OnRender();
 
 	void SetFocus(Control *Child);

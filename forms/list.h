@@ -13,16 +13,19 @@ class ListBox : public Control
 {
   private:
 	bool scroller_is_internal;
+	Control *hovered, *selected;
 
 	void ConfigureInternalScrollBar();
 
   protected:
 	virtual void OnRender() override;
+	virtual void PostRender() override;
 
   public:
 	ScrollBar *scroller;
 	int ItemSize, ItemSpacing;
 	Orientation ListOrientation;
+	Colour HoverColour, SelectedColour;
 
 	ListBox(Control *Owner);
 	ListBox(Control *Owner, ScrollBar *ExternalScrollBar);

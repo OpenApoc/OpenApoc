@@ -166,14 +166,28 @@
         <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:10:xcom3/UFODATA/BASE.PCX</imagedepressed>
       </graphicbutton>
       <scroll id="VEHICLE_SELECT_SCROLL">
-        <position x="572" y="81"/>
+        <position x="571" y="81"/>
         <size width="16" height="242"/>
       </scroll>
       <listbox id="VEHICLE_SELECT_BOX" scrollbarid="VEHICLE_SELECT_SCROLL">
         <position x="463" y="65"/>
         <size width="98" height="270"/>
         <item size="0" spacing="5"/>
+        <hovercolour r="255" g="255" b="255" a="255"/>
+        <selcolour r="0" g="255" b="0" a="255"/>
       </listbox>
+      <graphicbutton id="VEHICLE_SCROLL_UP" scrollprev="VEHICLE_SELECT_SCROLL">
+        <position x="568" y="56"/>
+        <size width="22" height="21"/>
+        <image/>
+        <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="VEHICLE_SCROLL_DOWN" scrollnext="VEHICLE_SELECT_SCROLL">
+        <position x="568" y="326"/>
+        <size width="22" height="21"/>
+        <image/>
+        <imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>
+      </graphicbutton>
     </style>
   </form>
 </openapoc>

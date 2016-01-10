@@ -1,6 +1,8 @@
 
 #include "forms/list.h"
 #include "forms/scrollbar.h"
+#include "framework/event.h"
+#include "framework/framework.h"
 
 namespace OpenApoc
 {
@@ -8,10 +10,10 @@ namespace OpenApoc
 ListBox::ListBox(Control *Owner) : ListBox(Owner, nullptr) {}
 
 ListBox::ListBox(Control *Owner, ScrollBar *ExternalScrollBar)
-    : Control(Owner), scroller(ExternalScrollBar), ItemSize(64), ItemSpacing(1),
-      ListOrientation(Orientation::Vertical)
+    : Control(Owner), scroller_is_internal(ExternalScrollBar == nullptr), hovered(nullptr),
+      selected(nullptr), scroller(ExternalScrollBar), ItemSize(64), ItemSpacing(1),
+      ListOrientation(Orientation::Vertical), HoverColour(0, 0, 0, 0), SelectedColour(0, 0, 0, 0)
 {
-	scroller_is_internal = (scroller == nullptr);
 }
 
 ListBox::~ListBox() { Clear(); }
@@ -73,6 +75,7 @@ void ListBox::OnRender()
 			}
 		}
 	}
+	ResolveLocation();
 	switch (ListOrientation)
 	{
 		case Orientation::Vertical:
@@ -86,7 +89,77 @@ void ListBox::OnRender()
 	    static_cast<int>(std::max((scroller->Maximum - scroller->Minimum + 2) / 10.0f, 4.0f));
 }
 
-void ListBox::EventOccured(Event *e) { Control::EventOccured(e); }
+void ListBox::PostRender()
+{
+	Control::PostRender();
+	for (auto c = Controls.begin(); c != Controls.end(); c++)
+	{
+		Control *ctrl = *c;
+		if (ctrl != scroller)
+		{
+			if (ctrl == hovered)
+			{
+				fw().renderer->drawRect(ctrl->Location, ctrl->Size, HoverColour);
+			}
+			else if (ctrl == selected)
+			{
+				fw().renderer->drawRect(ctrl->Location, ctrl->Size, SelectedColour);
+			}
+		}
+	}
+}
+
+void ListBox::EventOccured(Event *e)
+{
+	Control::EventOccured(e);
+	if (e->Type == EVENT_FORM_INTERACTION)
+	{
+		if (e->Data.Forms.RaisedBy == this || e->Data.Forms.RaisedBy == scroller)
+		{
+			// FIXME: Make scrolling amount match wheel amount
+			// Should wheel orientation match scroll orientation?
+			if (e->Data.Forms.EventFlag == FormEventType::MouseMove &&
+			    (e->Data.Mouse.WheelVertical < 0 || e->Data.Mouse.WheelHorizontal < 0))
+			{
+				// scroller->ScrollPrev();
+			}
+			else if (e->Data.Forms.EventFlag == FormEventType::MouseMove &&
+			         (e->Data.Mouse.WheelVertical > 0 || e->Data.Mouse.WheelHorizontal > 0))
+			{
+				// scroller->ScrollNext();
+			}
+		}
+		else
+		{
+			if (e->Data.Forms.EventFlag == FormEventType::MouseEnter ||
+			    e->Data.Forms.EventFlag == FormEventType::MouseLeave ||
+			    e->Data.Forms.EventFlag == FormEventType::MouseClick)
+			{
+				for (auto c = Controls.begin(); c != Controls.end(); c++)
+				{
+					Control *ctrl = *c;
+					if (e->Data.Forms.RaisedBy == ctrl)
+					{
+						switch (e->Data.Forms.EventFlag)
+						{
+							case FormEventType::MouseEnter:
+								hovered = ctrl;
+								break;
+							case FormEventType::MouseLeave:
+								hovered = nullptr;
+								break;
+							case FormEventType::MouseClick:
+								selected = ctrl;
+								break;
+							default:
+								break;
+						}
+					}
+				}
+			}
+		}
+	}
+}
 
 void ListBox::Update()
 {
@@ -162,6 +235,8 @@ Control *ListBox::CopyTo(Control *CopyParent)
 	copy->ItemSize = this->ItemSize;
 	copy->ItemSpacing = this->ItemSpacing;
 	copy->ListOrientation = this->ListOrientation;
+	copy->HoverColour = this->HoverColour;
+	copy->SelectedColour = this->SelectedColour;
 	CopyControlData(copy);
 	return copy;
 }
@@ -196,6 +271,38 @@ void ListBox::ConfigureFromXML(tinyxml2::XMLElement *Element)
 		else if (value == "vertical")
 		{
 			ListOrientation = Orientation::Vertical;
+		}
+	}
+	subnode = Element->FirstChildElement("hovercolour");
+	if (subnode != nullptr)
+	{
+		if (subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "")
+		{
+			HoverColour = Colour{
+			    Strings::ToU8(subnode->Attribute("r")), Strings::ToU8(subnode->Attribute("g")),
+			    Strings::ToU8(subnode->Attribute("b")), Strings::ToU8(subnode->Attribute("a"))};
+		}
+		else
+		{
+			HoverColour = Colour{Strings::ToU8(subnode->Attribute("r")),
+			                     Strings::ToU8(subnode->Attribute("g")),
+			                     Strings::ToU8(subnode->Attribute("b"))};
+		}
+	}
+	subnode = Element->FirstChildElement("selcolour");
+	if (subnode != nullptr)
+	{
+		if (subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "")
+		{
+			SelectedColour = Colour{
+			    Strings::ToU8(subnode->Attribute("r")), Strings::ToU8(subnode->Attribute("g")),
+			    Strings::ToU8(subnode->Attribute("b")), Strings::ToU8(subnode->Attribute("a"))};
+		}
+		else
+		{
+			SelectedColour = Colour{Strings::ToU8(subnode->Attribute("r")),
+			                        Strings::ToU8(subnode->Attribute("g")),
+			                        Strings::ToU8(subnode->Attribute("b"))};
 		}
 	}
 }

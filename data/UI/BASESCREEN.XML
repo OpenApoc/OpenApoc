@@ -50,6 +50,14 @@
         <position x="30" y="452"/>
         <size width="536" height="15"/>
       </scroll>
+      <listbox id="LISTBOX_FACILITIES" scrollbarid="LISTBOX_SCROLL">
+        <position x="17" y="380"/>
+        <size width="564" height="64"/>
+        <item size="0" spacing="6"/>
+        <orientation>horizontal</orientation>
+        <hovercolour r="255" g="255" b="255" a="255"/>
+        <selcolour r="0" g="255" b="0" a="255"/>
+      </listbox>
       <graphicbutton id="LISTBOX_SCROLL_LEFT" scrollprev="LISTBOX_SCROLL">
         <position x="6" y="449"/>
         <size width="25" height="21"/>
@@ -62,12 +70,6 @@
         <image/>
         <imagedepressed>BUTTON_SCROLL_RIGHT_DEPRESSED</imagedepressed>
       </graphicbutton>
-      <listbox id="LISTBOX_FACILITIES" scrollbarid="LISTBOX_SCROLL">
-        <position x="17" y="380"/>
-        <size width="564" height="64"/>
-        <item size="0" spacing="6"/>
-        <orientation>horizontal</orientation>
-      </listbox>
       <graphicbutton id="BUTTON_BASE_HIREFIRESTAFF">
         <position x="602" y="40"/>
         <size width="35" height="34"/>
