@@ -128,6 +128,7 @@ class SpriteProgram : public Program
 	GLint screenSizeLoc;
 	GLint texLoc;
 	GLint flipYLoc;
+	GLint tintLoc;
 };
 const char *RGBProgram_vertexSource = {
     "#version 130\n"
@@ -147,9 +148,10 @@ const char *RGBProgram_vertexSource = {
 const char *RGBProgram_fragmentSource = {"#version 130\n"
                                          "in vec2 texcoord;\n"
                                          "uniform sampler2D tex;\n"
+                                         "uniform vec4 tint;\n"
                                          "out vec4 out_colour;\n"
                                          "void main() {\n"
-                                         " out_colour = texture(tex, texcoord);\n"
+                                         " out_colour = tint * texture(tex, texcoord);\n"
                                          "}\n"};
 class RGBProgram : public SpriteProgram
 {
@@ -157,11 +159,12 @@ class RGBProgram : public SpriteProgram
 	Vec2<int> currentScreenSize;
 	bool currentFlipY;
 	GLint currentTexUnit;
+	Colour currentTint;
 
   public:
 	RGBProgram()
 	    : SpriteProgram(RGBProgram_vertexSource, RGBProgram_fragmentSource),
-	      currentScreenSize(0, 0), currentFlipY(0), currentTexUnit(0)
+	      currentScreenSize(0, 0), currentFlipY(0), currentTexUnit(0), currentTint(0, 0, 0, 0)
 	{
 		this->posLoc = gl::GetAttribLocation(this->prog, "position");
 		if (this->posLoc < 0)
@@ -178,8 +181,12 @@ class RGBProgram : public SpriteProgram
 		this->flipYLoc = gl::GetUniformLocation(this->prog, "flipY");
 		if (this->flipYLoc < 0)
 			LogError("\"flipY\" uniform not found in shader");
+		this->tintLoc = gl::GetUniformLocation(this->prog, "tint");
+		if (this->tintLoc < 0)
+			LogError("\"tint\" uniform not found in shader");
 	}
-	void setUniforms(Vec2<int> screenSize, bool flipY, GLint texUnit = 0)
+	void setUniforms(Vec2<int> screenSize, bool flipY, GLint texUnit = 0,
+	                 Colour tint = {255, 255, 255, 255})
 	{
 		if (screenSize != currentScreenSize)
 		{
@@ -195,6 +202,11 @@ class RGBProgram : public SpriteProgram
 		{
 			currentFlipY = flipY;
 			this->Uniform(this->flipYLoc, flipY);
+		}
+		if (tint != currentTint)
+		{
+			currentTint = tint;
+			this->Uniform(this->tintLoc, tint);
 		}
 	}
 };
@@ -219,11 +231,12 @@ const char *PaletteProgram_fragmentSource = {
     "in vec2 texcoord;\n"
     "uniform isampler2D tex;\n"
     "uniform sampler2D pal;\n"
+    "uniform vec4 tint;\n"
     "out vec4 out_colour;\n"
     "void main() {\n"
     " int idx = texelFetch(tex, ivec2(texcoord.x, texcoord.y),0).r;\n"
     " if (idx == 0) discard;\n"
-    " out_colour = texelFetch(pal, ivec2(idx,0),0);\n"
+    " out_colour = tint * texelFetch(pal, ivec2(idx,0),0);\n"
     "}\n"};
 class PaletteProgram : public SpriteProgram
 {
@@ -232,12 +245,14 @@ class PaletteProgram : public SpriteProgram
 	bool currentFlipY;
 	GLint currentTexUnit;
 	GLint currentPalUnit;
+	Colour currentTint;
 
   public:
 	GLint palLoc;
 	PaletteProgram()
 	    : SpriteProgram(PaletteProgram_vertexSource, PaletteProgram_fragmentSource),
-	      currentScreenSize(0, 0), currentFlipY(false), currentTexUnit(0), currentPalUnit(0)
+	      currentScreenSize(0, 0), currentFlipY(false), currentTexUnit(0), currentPalUnit(0),
+	      currentTint(0, 0, 0, 0)
 	{
 		this->posLoc = gl::GetAttribLocation(this->prog, "position");
 		this->texcoordLoc = gl::GetAttribLocation(this->prog, "texcoord_in");
@@ -245,8 +260,12 @@ class PaletteProgram : public SpriteProgram
 		this->texLoc = gl::GetUniformLocation(this->prog, "tex");
 		this->palLoc = gl::GetUniformLocation(this->prog, "pal");
 		this->flipYLoc = gl::GetUniformLocation(this->prog, "flipY");
+		this->tintLoc = gl::GetUniformLocation(this->prog, "tint");
+		if (this->tintLoc < 0)
+			LogError("\"tint\" uniform not found in shader");
 	}
-	void setUniforms(Vec2<int> screenSize, bool flipY, GLint texUnit = 0, GLint palUnit = 1)
+	void setUniforms(Vec2<int> screenSize, bool flipY, GLint texUnit = 0, GLint palUnit = 1,
+	                 Colour tint = {255, 255, 255, 255})
 	{
 		if (screenSize != currentScreenSize)
 		{
@@ -267,6 +286,11 @@ class PaletteProgram : public SpriteProgram
 		{
 			currentFlipY = flipY;
 			this->Uniform(this->flipYLoc, flipY);
+		}
+		if (tint != currentTint)
+		{
+			currentTint = tint;
+			this->Uniform(this->tintLoc, tint);
 		}
 	}
 };
@@ -295,11 +319,12 @@ const char *PaletteSetProgram_fragmentSource = {
     "flat in int sprite;\n"
     "uniform isampler2DArray tex;\n"
     "uniform sampler2D pal;\n"
+    "uniform vec4 tint;\n"
     "out vec4 out_colour;\n"
     "void main() {\n"
     " int idx = texelFetch(tex, ivec3(texcoord.x, texcoord.y, sprite), 0).r;\n"
     " if (idx == 0) discard;\n"
-    " out_colour = texelFetch(pal, ivec2(idx,0), 0);\n"
+    " out_colour = tint * texelFetch(pal, ivec2(idx,0), 0);\n"
     "}\n"};
 class PaletteSetProgram : public Program
 {
@@ -308,6 +333,7 @@ class PaletteSetProgram : public Program
 	bool currentFlipY;
 	GLint currentTexUnit;
 	GLint currentPalUnit;
+	Colour currentTint;
 
   public:
 	GLuint posLoc;
@@ -317,9 +343,11 @@ class PaletteSetProgram : public Program
 	GLuint texLoc;
 	GLuint palLoc;
 	GLuint flipYLoc;
+	GLuint tintLoc;
 	PaletteSetProgram()
 	    : Program(PaletteSetProgram_vertexSource, PaletteSetProgram_fragmentSource),
-	      currentScreenSize(0, 0), currentFlipY(false), currentTexUnit(0), currentPalUnit(0)
+	      currentScreenSize(0, 0), currentFlipY(false), currentTexUnit(0), currentPalUnit(0),
+	      currentTint(0, 0, 0, 0)
 	{
 		this->posLoc = gl::GetAttribLocation(this->prog, "position");
 		this->texcoordLoc = gl::GetAttribLocation(this->prog, "texcoord_in");
@@ -329,8 +357,12 @@ class PaletteSetProgram : public Program
 		this->texLoc = gl::GetUniformLocation(this->prog, "tex");
 		this->palLoc = gl::GetUniformLocation(this->prog, "pal");
 		this->flipYLoc = gl::GetUniformLocation(this->prog, "flipY");
+		this->tintLoc = gl::GetUniformLocation(this->prog, "tint");
+		if (this->tintLoc < 0)
+			LogError("\"tint\" uniform not found in shader");
 	}
-	void setUniforms(Vec2<int> screenSize, bool flipY, GLint texUnit = 0, GLint palUnit = 1)
+	void setUniforms(Vec2<int> screenSize, bool flipY, GLint texUnit = 0, GLint palUnit = 1,
+	                 Colour tint = {255, 255, 255, 255})
 	{
 		if (screenSize != currentScreenSize)
 		{
@@ -351,6 +383,11 @@ class PaletteSetProgram : public Program
 		{
 			currentFlipY = flipY;
 			this->Uniform(this->flipYLoc, flipY);
+		}
+		if (tint != currentTint)
+		{
+			currentTint = tint;
+			this->Uniform(this->tintLoc, tint);
 		}
 	}
 	class VertexDef
@@ -910,10 +947,57 @@ class OGL30Renderer : public Renderer
 	}
 	virtual void drawTinted(sp<Image> i, Vec2<float> position, Colour tint) override
 	{
-		LogError("Unimplemented function");
-		std::ignore = i;
-		std::ignore = position;
-		std::ignore = tint;
+		auto scaler = Scaler::Linear;
+		auto size = i->size;
+		// Tint is program state (uniform) so can't be batched
+		if (this->state != RendererState::Idle)
+			this->flush();
+		sp<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(i);
+		if (rgbImage)
+		{
+			GLRGBImage *img = dynamic_cast<GLRGBImage *>(rgbImage->rendererPrivateData.get());
+			if (!img)
+			{
+				img = new GLRGBImage(rgbImage);
+				i->rendererPrivateData.reset(img);
+			}
+			DrawRGB(*img, position, size, scaler, {0, 0}, 0, tint);
+			return;
+		}
+
+		sp<PaletteImage> paletteImage = std::dynamic_pointer_cast<PaletteImage>(i);
+		if (paletteImage)
+		{
+			GLPaletteImage *img =
+			    dynamic_cast<GLPaletteImage *>(paletteImage->rendererPrivateData.get());
+			if (!img)
+			{
+				img = new GLPaletteImage(paletteImage);
+				i->rendererPrivateData.reset(img);
+			}
+			if (scaler != Scaler::Nearest)
+			{
+				// blending indices doesn't make sense. You'll have to render
+				// it to an RGB surface then scale that
+				LogError("Only nearest scaler is supported on paletted images");
+			}
+			DrawPalette(*img, position, size, tint);
+			return;
+		}
+
+		sp<Surface> surface = std::dynamic_pointer_cast<Surface>(i);
+		if (surface)
+		{
+			FBOData *fbo = dynamic_cast<FBOData *>(surface->rendererPrivateData.get());
+			if (!fbo)
+			{
+				fbo = new FBOData(i->size);
+				i->rendererPrivateData.reset(fbo);
+			}
+			DrawSurface(*fbo, position, size, scaler, tint);
+			return;
+		}
+		LogError("Unsupported image type");
 	}
 	virtual void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c) override;
 	virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c,
@@ -945,7 +1029,8 @@ class OGL30Renderer : public Renderer
 	}
 
 	void DrawRGB(GLRGBImage &img, Vec2<float> offset, Vec2<float> size, Scaler scaler,
-	             Vec2<float> rotationCenter = {0, 0}, float rotationAngleRadians = 0)
+	             Vec2<float> rotationCenter = {0, 0}, float rotationAngleRadians = 0,
+	             Colour tint = {255, 255, 255, 255})
 	{
 		GLenum filter;
 		Rect<float> pos(offset, offset + size);
@@ -966,7 +1051,7 @@ class OGL30Renderer : public Renderer
 		bool flipY = false;
 		if (currentBoundFBO == 0)
 			flipY = true;
-		rgbProgram->setUniforms(this->currentSurface->size, flipY);
+		rgbProgram->setUniforms(this->currentSurface->size, flipY, 0, tint);
 		BindTexture t(img.texID);
 		TexParam<gl::TEXTURE_MAG_FILTER> mag(img.texID, filter);
 		TexParam<gl::TEXTURE_MIN_FILTER> min(img.texID, filter);
@@ -976,14 +1061,15 @@ class OGL30Renderer : public Renderer
 		q.draw(rgbProgram->posLoc, rgbProgram->texcoordLoc);
 	}
 
-	void DrawPalette(GLPaletteImage &img, Vec2<float> offset, Vec2<float> size)
+	void DrawPalette(GLPaletteImage &img, Vec2<float> offset, Vec2<float> size,
+	                 Colour tint = {255, 255, 255, 255})
 	{
 		BindProgram(paletteProgram);
 		Rect<float> pos(offset, offset + size);
 		bool flipY = false;
 		if (currentBoundFBO == 0)
 			flipY = true;
-		paletteProgram->setUniforms(this->currentSurface->size, flipY);
+		paletteProgram->setUniforms(this->currentSurface->size, flipY, 0, 1, tint);
 		BindTexture t(img.texID, 0);
 
 		BindTexture p(
@@ -992,7 +1078,8 @@ class OGL30Renderer : public Renderer
 		q.draw(paletteProgram->posLoc, paletteProgram->texcoordLoc);
 	}
 
-	void DrawSurface(FBOData &fbo, Vec2<float> offset, Vec2<float> size, Scaler scaler)
+	void DrawSurface(FBOData &fbo, Vec2<float> offset, Vec2<float> size, Scaler scaler,
+	                 Colour tint = {255, 255, 255, 255})
 	{
 		GLenum filter;
 		Rect<float> pos(offset, offset + size);
@@ -1013,7 +1100,7 @@ class OGL30Renderer : public Renderer
 		bool flipY = false;
 		if (currentBoundFBO == 0)
 			flipY = true;
-		rgbProgram->setUniforms(this->currentSurface->size, flipY);
+		rgbProgram->setUniforms(this->currentSurface->size, flipY, 0, tint);
 		BindTexture t(fbo.tex);
 		TexParam<gl::TEXTURE_MAG_FILTER> mag(fbo.tex, filter);
 		TexParam<gl::TEXTURE_MIN_FILTER> min(fbo.tex, filter);
