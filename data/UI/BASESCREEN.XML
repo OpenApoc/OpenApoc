@@ -37,7 +37,12 @@
         <position x="62" y="186"/>
         <size width="64" height="64"/>
         <alignment horizontal="centre" vertical="centre"/>
-        <imageposition>fit</imageposition>
+        <image/>
+      </graphic>
+      <graphic id="GRAPHIC_DRAGGED_FACILITY" visible="N">
+        <position x="0" y="0"/>
+        <size width="64" height="64"/>
+        <alignment horizontal="centre" vertical="centre"/>
         <image/>
       </graphic>
       <label id="TEXT_SELECTED_FACILITY">
@@ -46,40 +51,46 @@
         <alignment horizontal="centre" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <label id="LABEL_1" text="LABEL_1">
+      <label id="LABEL_1">
         <position x="20" y="296"/>
         <size width="100" height="15"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <label id="LABEL_2" text="LABEL_2">
+      <label id="LABEL_2">
         <position x="20" y="312"/>
         <size width="100" height="15"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <label id="LABEL_3" text="LABEL_3">
+      <label id="LABEL_3">
         <position x="20" y="328"/>
         <size width="100" height="15"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <label id="VALUE_1" text="VALUE_1">
+      <label id="VALUE_1">
         <position x="112" y="296"/>
         <size width="54" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <label id="VALUE_2" text="VALUE_2">
+      <label id="VALUE_2">
         <position x="112" y="312"/>
         <size width="54" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <label id="VALUE_3" text="VALUE_3">
+      <label id="VALUE_3">
         <position x="112" y="328"/>
         <size width="54" height="15"/>
         <alignment horizontal="right" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <label id="TEXT_BUILD_TIME" visible="N">
+        <position x="0" y="0"/>
+        <size width="64" height="64"/>
+        <alignment horizontal="centre" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
       <scroll id="LISTBOX_SCROLL">

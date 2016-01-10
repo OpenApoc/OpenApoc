@@ -16,6 +16,7 @@ namespace OpenApoc
 
 class Base;
 class Facility;
+class FacilityDef;
 class GameState;
 
 class BaseScreen : public Stage
@@ -29,10 +30,10 @@ class BaseScreen : public Stage
 	Base &base;
 	Vec2<int> selection;
 	sp<const Facility> selFacility;
+	sp<const FacilityDef> dragFacility;
 
-	Graphic *baseView;
-	Label *selText;
-	Graphic *selGraphic;
+	Graphic *baseView, *selGraphic, *dragGraphic;
+	Label *selText, *buildTime;
 	std::vector<Label *> statsLabels;
 	std::vector<Label *> statsValues;
 

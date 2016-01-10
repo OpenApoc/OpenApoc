@@ -39,7 +39,8 @@ int BaseScreen::getCorridorSprite(Vec2<int> pos) const
 
 BaseScreen::BaseScreen(sp<GameState> state)
     : Stage(), form(fw().gamecore->GetForm("FORM_BASESCREEN")), base(*state->playerBases.front()),
-      selection(-1, -1), baseView(nullptr), selText(nullptr), selGraphic(nullptr), state(state)
+      selection(-1, -1), baseView(nullptr), selGraphic(nullptr), dragGraphic(nullptr),
+      selText(nullptr), buildTime(nullptr), state(state)
 {
 }
 
@@ -53,6 +54,8 @@ void BaseScreen::Begin()
 	TextEdit *name = form->FindControlTyped<TextEdit>("TEXT_BASE_NAME");
 	name->SetText(base.name);
 
+	buildTime = form->FindControlTyped<Label>("TEXT_BUILD_TIME");
+
 	baseView = form->FindControlTyped<Graphic>("GRAPHIC_BASE_VIEW");
 	selText = form->FindControlTyped<Label>("TEXT_SELECTED_FACILITY");
 	selGraphic = form->FindControlTyped<Graphic>("GRAPHIC_SELECTED_FACILITY");
@@ -64,7 +67,6 @@ void BaseScreen::Begin()
 		{
 			LogError("Failed to find UI control matching \"%s\"", labelName.c_str());
 		}
-		label->SetText("");
 		statsLabels.push_back(label);
 
 		auto valueName = UString::format("VALUE_%d", i + 1);
@@ -73,7 +75,6 @@ void BaseScreen::Begin()
 		{
 			LogError("Failed to find UI control matching \"%s\"", valueName.c_str());
 		}
-		value->SetText("");
 		statsValues.push_back(value);
 	}
 
@@ -289,17 +290,46 @@ void BaseScreen::RenderBase()
 	}
 
 	// Draw facilities
+	sp<Image> circleS = fw().data->load_image(
+	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:25:xcom3/UFODATA/BASE.PCX");
+	sp<Image> circleL = fw().data->load_image(
+	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:26:xcom3/UFODATA/BASE.PCX");
+	buildTime->Visible = true;
 	for (auto &facility : base.getFacilities())
 	{
 		sp<Image> sprite = fw().data->load_image(facility->def.sprite);
 		Vec2<int> pos = BASE_POS + facility->pos * TILE_SIZE;
-		fw().renderer->draw(sprite, pos);
+		if (facility->buildTime == 0)
+		{
+			fw().renderer->draw(sprite, pos);
+		}
+		else
+		{
+			// Fade out facility
+			fw().renderer->drawTinted(sprite, pos, Colour(255, 255, 255, 128));
+			// Draw construction overlay
+			if (facility->def.size == 1)
+			{
+				fw().renderer->draw(circleS, pos);
+			}
+			else
+			{
+				fw().renderer->draw(circleL, pos);
+			}
+			// Draw time remaining
+			buildTime->Size = {TILE_SIZE, TILE_SIZE};
+			buildTime->Size *= facility->def.size;
+			buildTime->Location = pos;
+			buildTime->SetText(Strings::FromInteger(facility->buildTime));
+			buildTime->Render();
+		}
 	}
+	buildTime->Visible = false;
 
 	// Draw doors
-	sp<Image> ldoor = fw().data->load_image(
+	sp<Image> doorLeft = fw().data->load_image(
 	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:2:xcom3/UFODATA/BASE.PCX");
-	sp<Image> bdoor = fw().data->load_image(
+	sp<Image> doorBottom = fw().data->load_image(
 	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:3:xcom3/UFODATA/BASE.PCX");
 	for (auto &facility : base.getFacilities())
 	{
@@ -309,7 +339,7 @@ void BaseScreen::RenderBase()
 			if (getCorridorSprite(tile) != 0)
 			{
 				Vec2<int> pos = BASE_POS + tile * TILE_SIZE;
-				fw().renderer->draw(ldoor, pos + Vec2<int>{TILE_SIZE / 2, 0});
+				fw().renderer->draw(doorLeft, pos + Vec2<int>{TILE_SIZE / 2, 0});
 			}
 		}
 		for (int x = 0; x < facility->def.size; ++x)
@@ -318,7 +348,7 @@ void BaseScreen::RenderBase()
 			if (getCorridorSprite(tile) != 0)
 			{
 				Vec2<int> pos = BASE_POS + tile * TILE_SIZE;
-				fw().renderer->draw(bdoor, pos - Vec2<int>{0, TILE_SIZE / 2});
+				fw().renderer->draw(doorBottom, pos - Vec2<int>{0, TILE_SIZE / 2});
 			}
 		}
 	}
