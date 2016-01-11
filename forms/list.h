@@ -37,6 +37,8 @@ class ListBox : public Control
 	void *getHoveredData() const;
 	void *getSelectedData() const;
 
+	void setSelected(Control *c);
+
 	void Clear();
 	void AddItem(Control *Item);
 	Control *RemoveItem(Control *Item);

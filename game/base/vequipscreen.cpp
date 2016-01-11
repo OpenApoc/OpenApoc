@@ -59,6 +59,11 @@ void VEquipScreen::Begin()
 		graphic->AutoSize = true;
 		list->AddItem(graphic);
 		this->vehicleSelectionControls[graphic] = vehicle;
+
+		if (vehicle == this->selected)
+		{
+			list->setSelected(graphic);
+		}
 	}
 }
 

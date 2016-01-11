@@ -334,4 +334,24 @@ void ListBox::ConfigureFromXML(tinyxml2::XMLElement *Element)
 		}
 	}
 }
+
+void ListBox::setSelected(Control *c)
+{
+	// A sanity check to make sure the selected control actually belongs to this list
+	bool found = false;
+	for (auto *child : this->Controls)
+	{
+		if (child == c)
+		{
+			found = true;
+			break;
+		}
+	}
+	if (!found)
+	{
+		LogError(
+		    "Trying set ListBox selected control to something that isn't a member of the list");
+	}
+	this->selected = c;
+}
 }; // namespace OpenApoc
