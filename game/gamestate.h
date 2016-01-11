@@ -15,6 +15,8 @@ namespace OpenApoc
 class City;
 class Rules;
 
+static const unsigned TICKS_PER_SECOND = 60;
+
 class GameState
 {
   private:
@@ -38,6 +40,9 @@ class GameState
 	UString getPlayerBalance() const;
 	sp<Organisation> getOrganisation(const UString &orgID);
 	sp<Organisation> getPlayer() const;
+
+	// The time from game start in ticks
+	uint64_t time;
 
 	Rules &getRules() { return this->rules; };
 };

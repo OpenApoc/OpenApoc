@@ -154,6 +154,12 @@
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:41:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
+      <label id="CLOCK" text="TICK TOCK">
+        <position x="568" y="34"/>
+        <size width="68" height="12"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
     </style>
   </form>
   <form id="FORM_CITY_UI_2">
@@ -314,6 +320,12 @@
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:18:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
+      <label id="CLOCK" text="TICK TOCK">
+        <position x="568" y="34"/>
+        <size width="68" height="12"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
     </style>
   </form>
   <form id="FORM_CITY_UI_3">
@@ -457,6 +469,12 @@
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:33:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
+      <label id="CLOCK" text="TICK TOCK">
+        <position x="568" y="34"/>
+        <size width="68" height="12"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
     </style>
   </form>
   <form id="FORM_CITY_UI_4">
@@ -600,6 +618,12 @@
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:33:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
+      <label id="CLOCK" text="TICK TOCK">
+        <position x="568" y="34"/>
+        <size width="68" height="12"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
     </style>
   </form>
   <form id="FORM_CITY_UI_5">
@@ -743,6 +767,12 @@
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:33:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
+      <label id="CLOCK" text="TICK TOCK">
+        <position x="568" y="34"/>
+        <size width="68" height="12"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
     </style>
   </form>
   <form id="FORM_CITY_UI_6">
@@ -886,6 +916,12 @@
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:33:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
+      <label id="CLOCK" text="TICK TOCK">
+        <position x="568" y="34"/>
+        <size width="68" height="12"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
     </style>
   </form>
   <form id="FORM_CITY_UI_7">
@@ -1029,6 +1065,12 @@
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:33:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
+      <label id="CLOCK" text="TICK TOCK">
+        <position x="568" y="34"/>
+        <size width="68" height="12"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
     </style>
   </form>
   <form id="FORM_CITY_UI_8">
@@ -1172,6 +1214,12 @@
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:33:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
+      <label id="CLOCK" text="TICK TOCK">
+        <position x="568" y="34"/>
+        <size width="68" height="12"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
     </style>
   </form>
 </openapoc>

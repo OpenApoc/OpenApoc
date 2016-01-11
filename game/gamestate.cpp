@@ -17,7 +17,10 @@ namespace OpenApoc
 
 GameState::GameState(const UString &rulesFileName)
     : player(nullptr), rules(rulesFileName), showTileOrigin(false), showVehiclePath(false),
-      showSelectableBounds(false), rng(std::random_device{}())
+      showSelectableBounds(false), rng(std::random_device{}()),
+      // Initial time is 12:00:00 (midday) - at 60 seconds / minute * 60 minutes / hour * 12 hours
+      // FIXME: Make this set-able? Use a 'proper' timespec instead of a tick count?
+      time(TICKS_PER_SECOND * 60 * 60 * 12)
 {
 	for (auto &org : getRules().getOrganisations())
 	{
