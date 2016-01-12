@@ -11,6 +11,7 @@ namespace OpenApoc
 {
 
 const int BaseScreen::TILE_SIZE = 32;
+const Vec2<int> BaseScreen::NO_SELECTION = {-1, -1};
 
 // key is North South West East (true = occupied, false = vacant)
 const std::unordered_map<std::vector<bool>, int> BaseScreen::TILE_CORRIDORS = {
@@ -39,7 +40,7 @@ int BaseScreen::getCorridorSprite(Vec2<int> pos) const
 
 BaseScreen::BaseScreen(sp<GameState> state)
     : Stage(), form(fw().gamecore->GetForm("FORM_BASESCREEN")), base(*state->playerBases.front()),
-      selection(-1, -1), baseView(nullptr), selGraphic(nullptr), dragGraphic(nullptr),
+      selection(-1, -1), dragFacility(nullptr), drag(false), baseView(nullptr), selGraphic(nullptr),
       selText(nullptr), buildTime(nullptr), state(state)
 {
 }
@@ -48,14 +49,10 @@ BaseScreen::~BaseScreen() {}
 
 void BaseScreen::Begin()
 {
-	Label *funds = form->FindControlTyped<Label>("TEXT_FUNDS");
-	funds->SetText(state->getPlayerBalance());
-
-	TextEdit *name = form->FindControlTyped<TextEdit>("TEXT_BASE_NAME");
-	name->SetText(base.name);
+	form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
+	form->FindControlTyped<TextEdit>("TEXT_BASE_NAME")->SetText(base.name);
 
 	buildTime = form->FindControlTyped<Label>("TEXT_BUILD_TIME");
-
 	baseView = form->FindControlTyped<Graphic>("GRAPHIC_BASE_VIEW");
 	selText = form->FindControlTyped<Label>("TEXT_SELECTED_FACILITY");
 	selGraphic = form->FindControlTyped<Graphic>("GRAPHIC_SELECTED_FACILITY");
@@ -112,128 +109,141 @@ void BaseScreen::EventOccurred(Event *e)
 		}
 	}
 
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == baseView)
+	if (e->Type == EVENT_MOUSE_MOVE)
 	{
-		if (e->Data.Forms.EventFlag == FormEventType::MouseMove)
+		mousePos = {e->Data.Mouse.X, e->Data.Mouse.Y};
+	}
+
+	if (e->Type == EVENT_FORM_INTERACTION)
+	{
+		if (e->Data.Forms.EventFlag == FormEventType::ButtonClick)
 		{
-			selection = {e->Data.Forms.MouseInfo.X, e->Data.Forms.MouseInfo.Y};
-			selection /= TILE_SIZE;
-			selFacility = base.getFacility(selection);
-			for (auto label : statsLabels)
+			if (e->Data.Forms.RaisedBy->Name == "BUTTON_OK")
 			{
-				label->SetText("");
+				stageCmd.cmd = StageCmd::Command::POP;
+				return;
 			}
-			for (auto value : statsValues)
+			else if (e->Data.Forms.RaisedBy->Name == "BUTTON_BASE_EQUIPVEHICLE")
 			{
-				value->SetText("");
+				// FIXME: If you don't have any vehicles this button should do nothing
+				stageCmd.cmd = StageCmd::Command::PUSH;
+				stageCmd.nextStage = std::make_shared<VEquipScreen>(state);
+				return;
 			}
-			if (selFacility != nullptr)
+		}
+
+		if (e->Data.Forms.EventFlag == FormEventType::TextEditFinish)
+		{
+			if (e->Data.Forms.RaisedBy->Name == "TEXT_BASE_NAME")
 			{
-				selText->SetText(fw().gamecore->GetString(selFacility->def.name));
-				selGraphic->SetImage(fw().data->load_image(selFacility->def.sprite));
-				if (selFacility->def.capacityAmount > 0)
+				TextEdit *name = form->FindControlTyped<TextEdit>("TEXT_BASE_NAME");
+				base.name = name->GetText();
+				return;
+			}
+		}
+
+		if (e->Data.Forms.RaisedBy == baseView)
+		{
+			if (e->Data.Forms.EventFlag == FormEventType::MouseMove)
+			{
+				selection = {e->Data.Forms.MouseInfo.X, e->Data.Forms.MouseInfo.Y};
+				selection /= TILE_SIZE;
+				selFacility = base.getFacility(selection);
+				return;
+			}
+			else if (e->Data.Forms.EventFlag == FormEventType::MouseLeave)
+			{
+				selection = NO_SELECTION;
+				selFacility = nullptr;
+				return;
+			}
+		}
+
+		if (e->Data.Forms.EventFlag == FormEventType::ListBoxChangeHover)
+		{
+			if (e->Data.Forms.RaisedBy->Name == "LISTBOX_FACILITIES" && !drag)
+			{
+				ListBox *list = form->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
+				if (list->getHoveredData() == nullptr)
 				{
-					statsLabels[0]->SetText("Capacity");
-					statsValues[0]->SetText(Strings::FromInteger(selFacility->def.capacityAmount));
-					statsLabels[1]->SetText("Usage");
-					statsValues[1]->SetText("0%");
-				}
-			}
-			else
-			{
-				int sprite = getCorridorSprite(selection);
-				auto image = UString::format(
-				    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:%d:xcom3/UFODATA/BASE.PCX",
-				    sprite);
-				if (sprite != 0)
-				{
-					selText->SetText("Corridor");
+					dragFacility = nullptr;
 				}
 				else
 				{
-					selText->SetText("Earth");
+					dragFacility = static_cast<FacilityDef *>(list->getHoveredData());
 				}
-				selGraphic->SetImage(fw().data->load_image(image));
+				return;
 			}
-			return;
 		}
-		else if (e->Data.Forms.EventFlag == FormEventType::MouseLeave)
+
+		if (e->Data.Forms.EventFlag == FormEventType::MouseDown)
 		{
-			selection = {-1, -1};
-			selText->SetText("");
-			selGraphic->SetImage(nullptr);
-			for (auto label : statsLabels)
+			if (!drag && dragFacility != nullptr)
 			{
-				label->SetText("");
+				drag = true;
 			}
-			for (auto value : statsValues)
+		}
+
+		if (e->Data.Forms.EventFlag == FormEventType::MouseUp)
+		{
+			if (drag && dragFacility != nullptr)
 			{
-				value->SetText("");
+				base.buildFacility(*dragFacility, selection);
+				form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
+				// FIXME: Report build errors
+				drag = false;
+				dragFacility = nullptr;
 			}
-			return;
 		}
 	}
 
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick)
+	selText->SetText("");
+	selGraphic->SetImage(nullptr);
+	for (auto label : statsLabels)
 	{
-		if (e->Data.Forms.RaisedBy->Name == "BUTTON_OK")
+		label->SetText("");
+	}
+	for (auto value : statsValues)
+	{
+		value->SetText("");
+	}
+	if (dragFacility != nullptr)
+	{
+		selText->SetText(fw().gamecore->GetString(dragFacility->name));
+		selGraphic->SetImage(fw().data->load_image(dragFacility->sprite));
+		statsLabels[0]->SetText("Cost to build");
+		statsValues[0]->SetText("$" + Strings::FromInteger(dragFacility->buildCost));
+		statsLabels[1]->SetText("Days to build");
+		statsValues[1]->SetText(Strings::FromInteger(dragFacility->buildTime));
+		statsLabels[2]->SetText("Maintenance cost");
+		statsValues[2]->SetText("$" + Strings::FromInteger(dragFacility->weeklyCost));
+	}
+	else if (selFacility != nullptr)
+	{
+		selText->SetText(fw().gamecore->GetString(selFacility->def.name));
+		selGraphic->SetImage(fw().data->load_image(selFacility->def.sprite));
+		if (selFacility->def.capacityAmount > 0)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
-			return;
-		}
-		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_BASE_EQUIPVEHICLE")
-		{
-			// FIXME: If you don't have any vehicles this button should do nothing
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<VEquipScreen>(state);
-			return;
+			statsLabels[0]->SetText("Capacity");
+			statsValues[0]->SetText(Strings::FromInteger(selFacility->def.capacityAmount));
+			statsLabels[1]->SetText("Usage");
+			statsValues[1]->SetText("0%");
 		}
 	}
-
-	if (e->Type == EVENT_FORM_INTERACTION &&
-	    e->Data.Forms.EventFlag == FormEventType::TextEditFinish)
+	else if (selection != NO_SELECTION)
 	{
-		if (e->Data.Forms.RaisedBy->Name == "TEXT_BASE_NAME")
+		int sprite = getCorridorSprite(selection);
+		auto image = UString::format(
+		    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:%d:xcom3/UFODATA/BASE.PCX", sprite);
+		if (sprite != 0)
 		{
-			TextEdit *name = form->FindControlTyped<TextEdit>("TEXT_BASE_NAME");
-			base.name = name->GetText();
-			return;
+			selText->SetText("Corridor");
 		}
-	}
-
-	if (e->Type == EVENT_FORM_INTERACTION &&
-	    e->Data.Forms.EventFlag == FormEventType::ListBoxChangeHover)
-	{
-		if (e->Data.Forms.RaisedBy->Name == "LISTBOX_FACILITIES")
+		else
 		{
-			ListBox *list = form->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
-			if (list->getHoveredData() == nullptr)
-			{
-				selText->SetText("");
-				selGraphic->SetImage(nullptr);
-				for (auto label : statsLabels)
-				{
-					label->SetText("");
-				}
-				for (auto value : statsValues)
-				{
-					value->SetText("");
-				}
-			}
-			else
-			{
-				auto facility = static_cast<FacilityDef *>(list->getHoveredData());
-				selText->SetText(fw().gamecore->GetString(facility->name));
-				selGraphic->SetImage(fw().data->load_image(facility->sprite));
-				statsLabels[0]->SetText("Cost to build");
-				statsValues[0]->SetText("$" + Strings::FromInteger(facility->buildCost));
-				statsLabels[1]->SetText("Days to build");
-				statsValues[1]->SetText(Strings::FromInteger(facility->buildTime));
-				statsLabels[2]->SetText("Maintenance cost");
-				statsValues[2]->SetText("$" + Strings::FromInteger(facility->weeklyCost));
-			}
-			return;
+			selText->SetText("Earth");
 		}
+		selGraphic->SetImage(fw().data->load_image(image));
 	}
 }
 
@@ -354,18 +364,37 @@ void BaseScreen::RenderBase()
 	}
 
 	// Draw selection
-	if (selection.x >= 0 && selection.y >= 0 && selection.x < Base::SIZE &&
-	    selection.y < Base::SIZE)
+	if (selection != NO_SELECTION)
 	{
 		Vec2<int> pos = selection;
 		Vec2<int> size = {TILE_SIZE, TILE_SIZE};
-		if (selFacility != nullptr)
+		if (drag && dragFacility != nullptr)
+		{
+			size *= dragFacility->size;
+		}
+		else if (selFacility != nullptr)
 		{
 			pos = selFacility->pos;
 			size *= selFacility->def.size;
 		}
 		pos = BASE_POS + pos * TILE_SIZE;
 		fw().renderer->drawRect(pos, size, Colour{255, 255, 255});
+	}
+
+	// Draw dragged facility
+	if (drag && dragFacility != nullptr)
+	{
+		sp<Image> facility = fw().data->load_image(dragFacility->sprite);
+		Vec2<int> pos;
+		if (selection == NO_SELECTION)
+		{
+			pos = mousePos - Vec2<int>{TILE_SIZE / 2, TILE_SIZE / 2} * dragFacility->size;
+		}
+		else
+		{
+			pos = BASE_POS + selection * TILE_SIZE;
+		}
+		fw().renderer->draw(facility, pos);
 	}
 }
 }; // namespace OpenApoc

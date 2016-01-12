@@ -39,12 +39,6 @@
         <alignment horizontal="centre" vertical="centre"/>
         <image/>
       </graphic>
-      <graphic id="GRAPHIC_DRAGGED_FACILITY" visible="N">
-        <position x="0" y="0"/>
-        <size width="64" height="64"/>
-        <alignment horizontal="centre" vertical="centre"/>
-        <image/>
-      </graphic>
       <label id="TEXT_SELECTED_FACILITY">
         <position x="15" y="257"/>
         <size width="158" height="35"/>

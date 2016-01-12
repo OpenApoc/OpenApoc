@@ -22,17 +22,19 @@ class GameState;
 class BaseScreen : public Stage
 {
   private:
-	static const std::unordered_map<std::vector<bool>, int> TILE_CORRIDORS;
 	static const int TILE_SIZE;
+	static const Vec2<int> NO_SELECTION;
+	static const std::unordered_map<std::vector<bool>, int> TILE_CORRIDORS;
 
 	std::unique_ptr<Form> form;
 	StageCmd stageCmd;
 	Base &base;
-	Vec2<int> selection;
+	Vec2<int> selection, mousePos;
 	sp<const Facility> selFacility;
-	sp<const FacilityDef> dragFacility;
+	FacilityDef *dragFacility;
+	bool drag;
 
-	Graphic *baseView, *selGraphic, *dragGraphic;
+	Graphic *baseView, *selGraphic;
 	Label *selText, *buildTime;
 	std::vector<Label *> statsLabels;
 	std::vector<Label *> statsValues;
