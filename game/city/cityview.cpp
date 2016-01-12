@@ -13,7 +13,10 @@
 #include "game/base/basescreen.h"
 #include "game/base/vequipscreen.h"
 #include "game/tileview/tileobject_vehicle.h"
+#include "game/tileview/tileobject_scenery.h"
+#include "game/tileview/voxel.h"
 #include "game/city/scenery.h"
+#include "game/city/buildingscreen.h"
 
 namespace OpenApoc
 {
@@ -480,6 +483,41 @@ void CityView::EventOccurred(Event *e)
 			auto clickTile = this->screenToTileCoords(
 			    Vec2<float>{e->Data.Mouse.X, e->Data.Mouse.Y} - screenOffset, 0.0f);
 			this->setScreenCenterTile({clickTile.x, clickTile.y});
+		}
+		else if (e->Type == EVENT_MOUSE_DOWN && e->Data.Mouse.Button == 1)
+		{
+			// If a click has not been handled by a form it's in the map. See if we intersect with
+			// anything
+			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
+			auto clickTop = this->screenToTileCoords(
+			    Vec2<float>{e->Data.Mouse.X, e->Data.Mouse.Y} - screenOffset, 9.99f);
+			auto clickBottom = this->screenToTileCoords(
+			    Vec2<float>{e->Data.Mouse.X, e->Data.Mouse.Y} - screenOffset, 0.0f);
+			auto collision = state->city->map.findCollision(clickTop, clickBottom);
+			if (collision)
+			{
+				if (collision.obj->getType() == TileObject::Type::Scenery)
+				{
+					auto scenery =
+					    std::dynamic_pointer_cast<TileObjectScenery>(collision.obj)->getOwner();
+					LogInfo("Clicked on scenery at {%d,%d,%d}", scenery->pos.x, scenery->pos.y,
+					        scenery->pos.z);
+					auto building = scenery->building;
+					if (building)
+					{
+						LogInfo("Scenery owned by building \"%s\"",
+						        building->def.getName().c_str());
+						stageCmd.cmd = StageCmd::Command::PUSH;
+						stageCmd.nextStage = std::make_shared<BuildingScreen>(building);
+
+						return;
+					}
+				}
+				else if (collision.obj->getType() == TileObject::Type::Vehicle)
+				{
+					// TODO: Click on vehicle
+				}
+			}
 		}
 		else
 		{

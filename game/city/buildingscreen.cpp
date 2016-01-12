@@ -1,12 +1,17 @@
 
 #include "game/city/buildingscreen.h"
 #include "framework/framework.h"
+#include "game/city/building.h"
 
 namespace OpenApoc
 {
 
-BuildingScreen::BuildingScreen() : Stage(), menuform(fw().gamecore->GetForm("FORM_BUILDING_SCREEN"))
+BuildingScreen::BuildingScreen(sp<Building> building)
+    : Stage(), menuform(fw().gamecore->GetForm("FORM_BUILDING_SCREEN")), building(building)
 {
+	auto *nameLabel = menuform->FindControlTyped<Label>("LABEL_BUILDING_NAME");
+	auto uppercaseName = building->def.getName().toUpper();
+	nameLabel->SetText(uppercaseName);
 }
 
 BuildingScreen::~BuildingScreen() {}

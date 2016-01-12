@@ -110,10 +110,6 @@ void TileView::EventOccurred(Event *e)
 				break;
 		}
 	}
-	else if (e->Type == EVENT_MOUSE_DOWN)
-	{
-		// FIXME: Object selection
-	}
 	else if (e->Type == EVENT_KEY_UP)
 	{
 		switch (e->Data.Keyboard.KeyCode)

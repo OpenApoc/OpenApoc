@@ -11,14 +11,17 @@
 namespace OpenApoc
 {
 
+class Building;
+
 class BuildingScreen : public Stage
 {
   private:
 	std::unique_ptr<Form> menuform;
 	StageCmd stageCmd;
+	sp<Building> building;
 
   public:
-	BuildingScreen();
+	BuildingScreen(sp<Building> building);
 	~BuildingScreen();
 	// Stage control
 	virtual void Begin() override;
