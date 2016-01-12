@@ -2,7 +2,7 @@
 PROJECT(OpenApoc CXX C)
 
 # check cmake version
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/framework/cmake/")
 
@@ -11,68 +11,11 @@ include(framework)
 # check compiler
 INCLUDE(CheckCXXCompilerFlag)
 INCLUDE(CheckCCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-if(COMPILER_SUPPORTS_CXX11)
-	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-else()
-	CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-	if (COMPILER_SUPPORTS_CXX0X)
-		SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-	else()
-		message(FATAL_ERROR "Your C++ compiler does not support C++11.")
-	endif()
-endif()
-
-option (EXTRA_WARNINGS "Enable extra warning flags (-W -Wall -Wextra)" ON)
-option (EXTRA_SUGGESTIONS "Enable extra 'suggestion' warning flags" OFF)
-
-function(ADD_OPTIONAL_COMPILER_FLAG FLAG)
-		CHECK_CXX_COMPILER_FLAG("${FLAG}" CXX_COMPILER_SUPPORTS_${FLAG})
-		CHECK_C_COMPILER_FLAG("${FLAG}" C_COMPILER_SUPPORTS_${FLAG})
-		if (CXX_COMPILER_SUPPORTS_${FLAG})
-				set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FLAG}" PARENT_SCOPE)
-		endif(CXX_COMPILER_SUPPORTS_${FLAG})
-		if (C_COMPILER_SUPPORTS_${FLAG})
-				set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${FLAG}" PARENT_SCOPE)
-		endif(C_COMPILER_SUPPORTS_${FLAG})
-endfunction(ADD_OPTIONAL_COMPILER_FLAG)
-
-if (EXTRA_SUGGESTIONS)
-		# Cmake has buggy check_cxx_compiler_flag() before 3.1 (interprets the arg 
-		# as a regex) which breaks at least Wno-c++98-compat
-		CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
-		ADD_OPTIONAL_COMPILER_FLAG("-Wsuggest-attribute=pure")
-		ADD_OPTIONAL_COMPILER_FLAG("-Wsuggest-attribute=const")
-		ADD_OPTIONAL_COMPILER_FLAG("-Wsuggest-attribute=noreturn")
-		ADD_OPTIONAL_COMPILER_FLAG("-Wsuggest-attribute=format")
-		ADD_OPTIONAL_COMPILER_FLAG("-Wsuggest-final-types")
-		ADD_OPTIONAL_COMPILER_FLAG("-Wsuggest-final-methods")
-		ADD_OPTIONAL_COMPILER_FLAG("-Wsuggest-override")
-		#Clang has a -Weverything
-		ADD_OPTIONAL_COMPILER_FLAG("-Weverything")
-		#But that's pretty annoying, so disable some stuff we don't carea bout
-		ADD_OPTIONAL_COMPILER_FLAG("-Wno-c++98-compat")
-		ADD_OPTIONAL_COMPILER_FLAG("-Wno-c++98-compat-pedantic")
-		ADD_OPTIONAL_COMPILER_FLAG("-Wno-gnu-zero-variadic-macro-arguments")
-		ADD_OPTIONAL_COMPILER_FLAG("-Wno-shadow")
-		ADD_OPTIONAL_COMPILER_FLAG("-Wno-weak-vtables")
-		ADD_OPTIONAL_COMPILER_FLAG("-Wno-padded")
-		ADD_OPTIONAL_COMPILER_FLAG("-Wno-exit-time-destructors")
-		ADD_OPTIONAL_COMPILER_FLAG("-Wno-global-constructors")
-endif(EXTRA_SUGGESTIONS)
-
-if(EXTRA_WARNINGS)
-	ADD_OPTIONAL_COMPILER_FLAG("-W")
-	ADD_OPTIONAL_COMPILER_FLAG("-Wall")
-	ADD_OPTIONAL_COMPILER_FLAG("-Wextra")
-endif(EXTRA_WARNINGS)
 
 CHECK_CXX_COMPILER_FLAG("-pthread" COMPILER_SUPPORTS_pthread)
-if(COMPILER_SUPPORTS_CXX11)
+if(COMPILER_SUPPORTS_pthread)
 	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 endif()
-
-ADD_OPTIONAL_COMPILER_FLAG("-fvisibility=hidden")
 
 option(LTO "Build using link-time-optimisations" OFF)
 
@@ -115,6 +58,9 @@ SET(REQUIRED_TINYXML_LIBRARIES tinyxml2)
 
 ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} framework/main.cpp ${sources}
 		${FRAMEWORK_SOURCES})
+
+set_property(TARGET OpenApoc PROPERTY CXX_STANDARD 11)
+set_property(TARGET OpenApoc PROPERTY CXX_STANDARD_REQUIRED ON)
 
 # check dependencies and include libraries
 FIND_PACKAGE(PkgConfig)
