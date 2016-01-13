@@ -2,30 +2,13 @@
 
 #include "forms/graphicbutton.h"
 #include "framework/framework.h"
-#include "game/resources/gamecore.h"
 
 namespace OpenApoc
 {
 
-GraphicButton::GraphicButton(Control *Owner, UString Image, UString ImageDepressed)
-    : GraphicButton(Owner, Image, ImageDepressed, "")
-{
-}
-
-GraphicButton::GraphicButton(Control *Owner, UString Image, UString ImageDepressed,
-                             UString ImageHover)
-    : Control(Owner), image_name(Image), imagedepressed_name(ImageDepressed),
-      imagehover_name(ImageHover), image(nullptr), imagedepressed(nullptr), imagehover(nullptr),
-      buttonclick(
-          fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
-      ScrollBarPrev(nullptr), ScrollBarNext(nullptr)
-{
-}
-
 GraphicButton::GraphicButton(Control *Owner, sp<Image> image, sp<Image> imageDepressed,
                              sp<Image> imageHover)
-    : Control(Owner), image_name(""), imagedepressed_name(""), imagehover_name(""), image(image),
-      imagedepressed(imageDepressed), imagehover(imageHover),
+    : Control(Owner), image(image), imagedepressed(imageDepressed), imagehover(imageHover),
       buttonclick(
           fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
       ScrollBarPrev(nullptr), ScrollBarNext(nullptr)
@@ -69,9 +52,8 @@ void GraphicButton::OnRender()
 {
 	sp<Image> useimage;
 
-	if (!image && image_name != "")
+	if (image)
 	{
-		image = fw().gamecore->GetImage(image_name);
 		if (Size.x == 0)
 		{
 			Size.x = image->size.x;
@@ -79,30 +61,6 @@ void GraphicButton::OnRender()
 		if (Size.y == 0)
 		{
 			Size.y = image->size.y;
-		}
-	}
-	if (imagedepressed == nullptr && imagedepressed_name != "")
-	{
-		imagedepressed = fw().gamecore->GetImage(imagedepressed_name);
-		if (Size.x == 0)
-		{
-			Size.x = imagedepressed->size.x;
-		}
-		if (Size.y == 0)
-		{
-			Size.y = imagedepressed->size.y;
-		}
-	}
-	if (imagehover == nullptr && imagehover_name != "")
-	{
-		imagehover = fw().gamecore->GetImage(imagehover_name);
-		if (Size.x == 0)
-		{
-			Size.x = imagehover->size.x;
-		}
-		if (Size.y == 0)
-		{
-			Size.y = imagehover->size.y;
 		}
 	}
 
@@ -142,32 +100,20 @@ void GraphicButton::UnloadResources()
 
 sp<Image> GraphicButton::GetImage() const { return image; }
 
-void GraphicButton::SetImage(sp<Image> Image)
-{
-	image_name = "";
-	image = Image;
-}
+void GraphicButton::SetImage(sp<Image> Image) { image = Image; }
 
 sp<Image> GraphicButton::GetDepressedImage() const { return imagedepressed; }
 
-void GraphicButton::SetDepressedImage(sp<Image> Image)
-{
-	imagedepressed_name = "";
-	imagedepressed = Image;
-}
+void GraphicButton::SetDepressedImage(sp<Image> Image) { imagedepressed = Image; }
 
 sp<Image> GraphicButton::GetHoverImage() const { return imagehover; }
 
-void GraphicButton::SetHoverImage(sp<Image> Image)
-{
-	imagehover_name = "";
-	imagehover = Image;
-}
+void GraphicButton::SetHoverImage(sp<Image> Image) { imagehover = Image; }
 
 Control *GraphicButton::CopyTo(Control *CopyParent)
 {
-	GraphicButton *copy = new GraphicButton(CopyParent, this->image_name, this->imagedepressed_name,
-	                                        this->imagehover_name);
+	GraphicButton *copy =
+	    new GraphicButton(CopyParent, this->image, this->imagedepressed, this->imagehover);
 	if (this->ScrollBarPrev != nullptr)
 	{
 		copy->ScrollBarPrev = static_cast<ScrollBar *>(ScrollBarPrev->lastCopiedTo);
@@ -183,5 +129,18 @@ Control *GraphicButton::CopyTo(Control *CopyParent)
 void GraphicButton::ConfigureFromXML(tinyxml2::XMLElement *Element)
 {
 	Control::ConfigureFromXML(Element);
+	if (Element->FirstChildElement("image") != nullptr)
+	{
+		image = fw().data->load_image(Element->FirstChildElement("image")->GetText());
+	}
+	if (Element->FirstChildElement("imagedepressed") != nullptr)
+	{
+		imagedepressed =
+		    fw().data->load_image(Element->FirstChildElement("imagedepressed")->GetText());
+	}
+	if (Element->FirstChildElement("imagehover") != nullptr)
+	{
+		imagehover = fw().data->load_image(Element->FirstChildElement("imagehover")->GetText());
+	}
 }
 }; // namespace OpenApoc

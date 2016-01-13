@@ -360,6 +360,7 @@
     <ClCompile Include="forms\form.cpp" />
     <ClCompile Include="forms\graphic.cpp" />
     <ClCompile Include="forms\graphicbutton.cpp" />
+    <ClCompile Include="forms\radiobutton.cpp" />
     <ClCompile Include="forms\scrollbar.cpp" />
     <ClCompile Include="forms\label.cpp" />
     <ClCompile Include="forms\list.cpp" />
@@ -456,6 +457,7 @@
     <ClInclude Include="forms\forms_enums.h" />
     <ClInclude Include="forms\graphic.h" />
     <ClInclude Include="forms\graphicbutton.h" />
+    <ClInclude Include="forms\radiobutton.h" />
     <ClInclude Include="forms\scrollbar.h" />
     <ClInclude Include="forms\label.h" />
     <ClInclude Include="forms\list.h" />

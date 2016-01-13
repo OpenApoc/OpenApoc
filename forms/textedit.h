@@ -34,7 +34,7 @@ class TextEdit : public Control
 	HorizontalAlignment TextHAlign;
 	VerticalAlignment TextVAlign;
 
-	TextEdit(Control *Owner, UString Text, sp<BitmapFont> font);
+	TextEdit(Control *Owner, UString Text = "", sp<BitmapFont> font = nullptr);
 	virtual ~TextEdit();
 
 	virtual void EventOccured(Event *e) override;

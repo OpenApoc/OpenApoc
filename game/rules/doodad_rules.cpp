@@ -20,7 +20,7 @@ static bool parseFrame(tinyxml2::XMLElement *root, DoodadFrame &f)
 		return false;
 	}
 	UString spritePath = root->GetText();
-	f.image = fw().gamecore->GetImage(spritePath);
+	f.image = fw().data->load_image(spritePath);
 	if (!f.image)
 	{
 		LogError("Failed to load sprite \"%s\" for doodad frame", spritePath.c_str());

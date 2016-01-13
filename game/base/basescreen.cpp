@@ -82,7 +82,7 @@ void BaseScreen::Begin()
 		if (facility.fixed)
 			continue;
 
-		Graphic *graphic = new Graphic(nullptr, facility.sprite);
+		Graphic *graphic = new Graphic(nullptr, fw().data->load_image(facility.sprite));
 		graphic->AutoSize = true;
 		graphic->Data = const_cast<void *>(static_cast<const void *>(&facility));
 		facilities->AddItem(graphic);

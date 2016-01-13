@@ -24,7 +24,7 @@ class Label : public Control
 	VerticalAlignment TextVAlign;
 	bool WordWrap;
 
-	Label(Control *Owner, UString Text, sp<BitmapFont> font);
+	Label(Control *Owner, UString Text = "", sp<BitmapFont> font = nullptr);
 	virtual ~Label();
 
 	virtual void EventOccured(Event *e) override;

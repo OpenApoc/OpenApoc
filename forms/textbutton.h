@@ -37,7 +37,7 @@ class TextButton : public Control
 	VerticalAlignment TextVAlign;
 	TextButtonRenderStyles RenderStyle;
 
-	TextButton(Control *Owner, UString Text, sp<BitmapFont> font);
+	TextButton(Control *Owner, UString Text = "", sp<BitmapFont> font = nullptr);
 	virtual ~TextButton();
 
 	virtual void EventOccured(Event *e) override;

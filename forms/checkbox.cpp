@@ -2,14 +2,14 @@
 
 #include "forms/checkbox.h"
 #include "framework/framework.h"
-#include "game/resources/gamecore.h"
 
 namespace OpenApoc
 {
 
-CheckBox::CheckBox(Control *Owner)
-    : Control(Owner), buttonclick(fw().data->load_sample(
-                          "RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
+CheckBox::CheckBox(Control *Owner, sp<Image> ImageChecked, sp<Image> ImageUnchecked)
+    : Control(Owner), imagechecked(ImageChecked), imageunchecked(ImageUnchecked),
+      buttonclick(
+          fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
       Checked(false)
 {
 	LoadResources();
@@ -21,8 +21,16 @@ void CheckBox::LoadResources()
 {
 	if (!imagechecked)
 	{
-		imagechecked = fw().gamecore->GetImage(
-		    "PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:65:UI/UI_PALETTE.PNG");
+		imagechecked = fw().data->load_image(
+		    "PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:65:UI/menuopt.pal");
+	}
+	if (!imageunchecked)
+	{
+		imageunchecked = fw().data->load_image(
+		    "PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:64:UI/menuopt.pal");
+	}
+	if (imagechecked)
+	{
 		if (Size.x == 0)
 		{
 			Size.x = imagechecked->size.x;
@@ -31,11 +39,6 @@ void CheckBox::LoadResources()
 		{
 			Size.y = imagechecked->size.y;
 		}
-	}
-	if (!imageunchecked)
-	{
-		imageunchecked = fw().gamecore->GetImage(
-		    "PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:64:UI/UI_PALETTE.PNG");
 	}
 }
 
@@ -52,12 +55,7 @@ void CheckBox::EventOccured(Event *e)
 	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this &&
 	    e->Data.Forms.EventFlag == FormEventType::MouseClick)
 	{
-		Checked = !Checked;
-		auto ce = new Event();
-		ce->Type = e->Type;
-		ce->Data.Forms = e->Data.Forms;
-		ce->Data.Forms.EventFlag = FormEventType::CheckBoxChange;
-		fw().PushEvent(ce);
+		SetChecked(!IsChecked());
 	}
 }
 
@@ -92,9 +90,21 @@ void CheckBox::UnloadResources()
 	Control::UnloadResources();
 }
 
+void CheckBox::SetChecked(bool checked)
+{
+	if (Checked == checked)
+		return;
+	auto e = new Event();
+	e->Type = EVENT_FORM_INTERACTION;
+	e->Data.Forms.RaisedBy = this;
+	e->Data.Forms.EventFlag = FormEventType::CheckBoxChange;
+	fw().PushEvent(e);
+	Checked = checked;
+}
+
 Control *CheckBox::CopyTo(Control *CopyParent)
 {
-	CheckBox *copy = new CheckBox(CopyParent);
+	CheckBox *copy = new CheckBox(CopyParent, imagechecked, imageunchecked);
 	copy->Checked = this->Checked;
 	CopyControlData(copy);
 	return copy;
@@ -103,5 +113,13 @@ Control *CheckBox::CopyTo(Control *CopyParent)
 void CheckBox::ConfigureFromXML(tinyxml2::XMLElement *Element)
 {
 	Control::ConfigureFromXML(Element);
+	if (Element->FirstChildElement("image") != nullptr)
+	{
+		imageunchecked = fw().data->load_image(Element->FirstChildElement("image")->GetText());
+	}
+	if (Element->FirstChildElement("imagechecked") != nullptr)
+	{
+		imagechecked = fw().data->load_image(Element->FirstChildElement("imagechecked")->GetText());
+	}
 }
 }; // namespace OpenApoc

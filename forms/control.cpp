@@ -3,7 +3,6 @@
 #include "forms/control.h"
 #include "framework/framework.h"
 #include "forms/forms.h"
-#include "game/resources/gamecore.h"
 
 namespace OpenApoc
 {
@@ -422,6 +421,7 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 	UString specialpositionx = "";
 	UString specialpositiony = "";
 	UString attribvalue;
+	std::map<UString, RadioButton **> radiogroups;
 
 	if (Element->Attribute("id") != nullptr && UString(Element->Attribute("id")) != "")
 	{
@@ -500,45 +500,22 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 		}
 		else if (nodename == "label")
 		{
-			Label *l =
-			    new Label(this, fw().gamecore->GetString(node->Attribute("text")),
-			              fw().gamecore->GetFont(node->FirstChildElement("font")->GetText()));
+			Label *l = new Label(this);
 			l->ConfigureFromXML(node);
 		}
 		else if (nodename == "graphic")
 		{
-			Graphic *g = new Graphic(this, node->FirstChildElement("image")->GetText());
+			Graphic *g = new Graphic(this);
 			g->ConfigureFromXML(node);
 		}
 		else if (nodename == "textbutton")
 		{
-			TextButton *tb =
-			    new TextButton(this, fw().gamecore->GetString(node->Attribute("text")),
-			                   fw().gamecore->GetFont(node->FirstChildElement("font")->GetText()));
+			TextButton *tb = new TextButton(this);
 			tb->ConfigureFromXML(node);
 		}
 		else if (nodename == "graphicbutton")
 		{
-			GraphicButton *gb;
-			UString gb_image = "";
-			if (node->FirstChildElement("image")->GetText() != nullptr)
-			{
-				gb_image = node->FirstChildElement("image")->GetText();
-			}
-			UString gb_dep = node->FirstChildElement("imagedepressed")->GetText();
-			if (node->FirstChildElement("imagedepressed")->GetText() != nullptr)
-			{
-				gb_dep = node->FirstChildElement("imagedepressed")->GetText();
-			}
-			if (node->FirstChildElement("imagehover") == nullptr)
-			{
-				gb = new GraphicButton(this, gb_image, gb_dep);
-			}
-			else
-			{
-				gb = new GraphicButton(this, gb_image, gb_dep,
-				                       node->FirstChildElement("imagehover")->GetText());
-			}
+			GraphicButton *gb = gb = new GraphicButton(this);
 			gb->ConfigureFromXML(node);
 			if (node->Attribute("scrollprev") != nullptr &&
 			    UString(node->Attribute("scrollprev")) != "")
@@ -557,6 +534,25 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 		{
 			auto cb = new CheckBox(this);
 			cb->ConfigureFromXML(node);
+		}
+		else if (nodename == "radiobutton")
+		{
+			RadioButton **group = nullptr;
+			if (node->Attribute("groupid") != nullptr && UString(node->Attribute("groupid")) != "")
+			{
+				attribvalue = node->Attribute("groupid");
+				if (radiogroups.find(attribvalue) == radiogroups.end())
+				{
+					radiogroups[attribvalue] = new RadioButton *;
+				}
+				group = radiogroups[attribvalue];
+			}
+			else
+			{
+				LogError("Radiobutton \"%s\" has no group", node->Attribute("id"));
+			}
+			auto rb = new RadioButton(this, group);
+			rb->ConfigureFromXML(node);
 		}
 		else if (nodename == "scroll")
 		{
@@ -580,8 +576,7 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 
 		else if (nodename == "textedit")
 		{
-			TextEdit *te = new TextEdit(
-			    this, "", fw().gamecore->GetFont(node->FirstChildElement("font")->GetText()));
+			TextEdit *te = new TextEdit(this);
 			te->ConfigureFromXML(node);
 		}
 	}

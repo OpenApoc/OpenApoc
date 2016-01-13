@@ -9,6 +9,7 @@
 #include "textbutton.h"
 #include "graphicbutton.h"
 #include "checkbox.h"
+#include "radiobutton.h"
 #include "scrollbar.h"
 #include "list.h"
 #include "textedit.h"

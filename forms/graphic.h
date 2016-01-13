@@ -13,7 +13,6 @@ class Graphic : public Control
 {
 
   private:
-	UString image_name;
 	sp<Image> image;
 
   protected:
@@ -25,8 +24,7 @@ class Graphic : public Control
 	FillMethod ImagePosition;
 	bool AutoSize;
 
-	Graphic(Control *Owner, UString Image);
-	Graphic(Control *Owner, sp<Image> Image);
+	Graphic(Control *Owner, sp<Image> Image = nullptr);
 	virtual ~Graphic();
 
 	virtual void EventOccured(Event *e) override;

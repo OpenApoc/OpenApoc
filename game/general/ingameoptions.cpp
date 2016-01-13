@@ -21,10 +21,10 @@ InGameOptions::InGameOptions(sp<GameState> state)
 	menuform->FindControlTyped<ScrollBar>("SAMPLE_GAIN_SLIDER")
 	    ->SetValue(fw().Settings->getInt("Audio.SampleGain"));
 
-	menuform->FindControlTyped<CheckBox>("SHOW_VEHICLE_PATH")->Checked = state->showVehiclePath;
-	menuform->FindControlTyped<CheckBox>("SHOW_TILE_ORIGIN")->Checked = state->showTileOrigin;
-	menuform->FindControlTyped<CheckBox>("SHOW_SELECTABLE_BOUNDS")->Checked =
-	    state->showSelectableBounds;
+	menuform->FindControlTyped<CheckBox>("SHOW_VEHICLE_PATH")->SetChecked(state->showVehiclePath);
+	menuform->FindControlTyped<CheckBox>("SHOW_TILE_ORIGIN")->SetChecked(state->showTileOrigin);
+	menuform->FindControlTyped<CheckBox>("SHOW_SELECTABLE_BOUNDS")
+	    ->SetChecked(state->showSelectableBounds);
 }
 
 InGameOptions::~InGameOptions()
@@ -126,20 +126,20 @@ void InGameOptions::EventOccurred(Event *e)
 		if (e->Data.Forms.RaisedBy->Name == "SHOW_VEHICLE_PATH")
 		{
 			CheckBox *box = dynamic_cast<CheckBox *>(e->Data.Forms.RaisedBy);
-			state->showVehiclePath = box->Checked;
-			LogWarning("Set SHOW_VEHICLE_PATH to %d", box->Checked);
+			state->showVehiclePath = box->IsChecked();
+			LogWarning("Set SHOW_VEHICLE_PATH to %d", box->IsChecked());
 		}
 		if (e->Data.Forms.RaisedBy->Name == "SHOW_TILE_ORIGIN")
 		{
 			CheckBox *box = dynamic_cast<CheckBox *>(e->Data.Forms.RaisedBy);
-			state->showTileOrigin = box->Checked;
-			LogWarning("Set SHOW_TILE_ORIGIN to %d", box->Checked);
+			state->showTileOrigin = box->IsChecked();
+			LogWarning("Set SHOW_TILE_ORIGIN to %d", box->IsChecked());
 		}
 		if (e->Data.Forms.RaisedBy->Name == "SHOW_SELECTABLE_BOUNDS")
 		{
 			CheckBox *box = dynamic_cast<CheckBox *>(e->Data.Forms.RaisedBy);
-			state->showSelectableBounds = box->Checked;
-			LogWarning("Set SHOW_SELECTABLE_BOUNDS to %d", box->Checked);
+			state->showSelectableBounds = box->IsChecked();
+			LogWarning("Set SHOW_SELECTABLE_BOUNDS to %d", box->IsChecked());
 		}
 	}
 }

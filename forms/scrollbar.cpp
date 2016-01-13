@@ -1,7 +1,6 @@
 
 #include "forms/scrollbar.h"
 #include "framework/framework.h"
-#include "game/resources/gamecore.h"
 #include "framework/includes.h"
 
 namespace OpenApoc

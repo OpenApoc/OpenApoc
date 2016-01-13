@@ -165,5 +165,14 @@ Control *TextButton::CopyTo(Control *CopyParent)
 void TextButton::ConfigureFromXML(tinyxml2::XMLElement *Element)
 {
 	Control::ConfigureFromXML(Element);
+
+	if (Element->Attribute("text") != nullptr)
+	{
+		text = fw().gamecore->GetString(Element->Attribute("text"));
+	}
+	if (Element->FirstChildElement("font") != nullptr)
+	{
+		font = fw().gamecore->GetFont(Element->FirstChildElement("font")->GetText());
+	}
 }
 }; // namespace OpenApoc

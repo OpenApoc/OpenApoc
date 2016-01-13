@@ -73,7 +73,7 @@ void MainMenu::EventOccurred(Event *e)
 		if (e->Data.Forms.RaisedBy->Name == "CHECK_DEBUGMODE")
 		{
 			fw().gamecore->DebugModeEnabled =
-			    static_cast<CheckBox *>(e->Data.Forms.RaisedBy)->Checked;
+			    static_cast<CheckBox *>(e->Data.Forms.RaisedBy)->IsChecked();
 			e->Data.Forms.RaisedBy->GetForm()->FindControl("BUTTON_DEBUG")->Visible =
 			    fw().gamecore->DebugModeEnabled;
 		}

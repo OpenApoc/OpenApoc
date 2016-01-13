@@ -1,20 +1,12 @@
 #include "library/sp.h"
 #include "forms/graphic.h"
-#include "game/resources/gamecore.h"
 #include "framework/framework.h"
 
 namespace OpenApoc
 {
 
-Graphic::Graphic(Control *Owner, UString Image)
-    : Control(Owner), image_name(Image), image(fw().gamecore->GetImage(Image)),
-      ImageHAlign(HorizontalAlignment::Left), ImageVAlign(VerticalAlignment::Top),
-      ImagePosition(FillMethod::Fit), AutoSize(false)
-{
-}
-
 Graphic::Graphic(Control *Owner, sp<Image> Image)
-    : Control(Owner), image_name(""), image(Image), ImageHAlign(HorizontalAlignment::Left),
+    : Control(Owner), image(Image), ImageHAlign(HorizontalAlignment::Left),
       ImageVAlign(VerticalAlignment::Top), ImagePosition(FillMethod::Fit), AutoSize(false)
 {
 }
@@ -96,11 +88,7 @@ void Graphic::Update()
 {
 	Control::Update();
 
-	if (!image)
-	{
-		image = fw().gamecore->GetImage(image_name);
-	}
-	else if (AutoSize)
+	if (image && AutoSize)
 	{
 		Size = image->size;
 	}
@@ -118,7 +106,7 @@ void Graphic::SetImage(sp<Image> Image) { image = Image; }
 
 Control *Graphic::CopyTo(Control *CopyParent)
 {
-	Graphic *copy = new Graphic(CopyParent, image_name);
+	Graphic *copy = new Graphic(CopyParent, this->image);
 	copy->ImageHAlign = this->ImageHAlign;
 	copy->ImageVAlign = this->ImageVAlign;
 	copy->ImagePosition = this->ImagePosition;
@@ -133,6 +121,10 @@ void Graphic::ConfigureFromXML(tinyxml2::XMLElement *Element)
 	tinyxml2::XMLElement *subnode;
 	UString attribvalue;
 
+	if (Element->FirstChildElement("image") != nullptr)
+	{
+		image = fw().data->load_image(Element->FirstChildElement("image")->GetText());
+	}
 	subnode = Element->FirstChildElement("alignment");
 	if (subnode != nullptr)
 	{

@@ -99,6 +99,14 @@ void Label::ConfigureFromXML(tinyxml2::XMLElement *Element)
 	tinyxml2::XMLElement *subnode;
 	UString attribvalue;
 
+	if (Element->Attribute("text") != nullptr)
+	{
+		text = fw().gamecore->GetString(Element->Attribute("text"));
+	}
+	if (Element->FirstChildElement("font") != nullptr)
+	{
+		font = fw().gamecore->GetFont(Element->FirstChildElement("font")->GetText());
+	}
 	subnode = Element->FirstChildElement("alignment");
 	if (subnode != nullptr)
 	{

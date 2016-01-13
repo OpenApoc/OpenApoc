@@ -15,9 +15,6 @@ class GraphicButton : public Control
 {
 
   private:
-	UString image_name;
-	UString imagedepressed_name;
-	UString imagehover_name;
 	sp<Image> image;
 	sp<Image> imagedepressed;
 	sp<Image> imagehover;
@@ -30,9 +27,7 @@ class GraphicButton : public Control
   public:
 	ScrollBar *ScrollBarPrev, *ScrollBarNext;
 
-	GraphicButton(Control *Owner, UString Image, UString ImageDepressed);
-	GraphicButton(Control *Owner, UString Image, UString ImageDepressed, UString ImageHover);
-	GraphicButton(Control *Owner, sp<Image> image, sp<Image> imageDepressed,
+	GraphicButton(Control *Owner, sp<Image> image = nullptr, sp<Image> imageDepressed = nullptr,
 	              sp<Image> imageHover = nullptr);
 	virtual ~GraphicButton();
 
