@@ -24,6 +24,9 @@
         </label>
         <checkbox id="CHECK_DEBUGMODE">
           <position x="right" y="bottom"/>
+          <size width="19" height="16"/>
+		      <image>BUTTON_CHECKBOX_FALSE</image>
+		      <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
         </checkbox>
         <label text="STR_VERSION" id="VERSION_LABEL">
           <position x="0" y="0"/>

@@ -34,7 +34,7 @@ enum class CityIcon
 class CityView : public TileView
 {
   private:
-	sp<Form> activeTab;
+	sp<Form> activeTab, baseForm;
 	std::vector<sp<Form>> uiTabs;
 	UpdateSpeed updateSpeed;
 

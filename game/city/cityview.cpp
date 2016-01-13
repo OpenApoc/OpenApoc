@@ -50,7 +50,8 @@ static const std::vector<UString> TAB_FORM_NAMES = {
 CityView::CityView(sp<GameState> state)
     : TileView(state->city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
                Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Isometric),
-      updateSpeed(UpdateSpeed::Speed1), state(state)
+      baseForm(fw().gamecore->GetForm("FORM_CITY_UI")), updateSpeed(UpdateSpeed::Speed1),
+      state(state)
 {
 
 	for (auto &formName : TAB_FORM_NAMES)
@@ -138,6 +139,7 @@ void CityView::Render()
 		}
 	}
 	activeTab->Render();
+	baseForm->Render();
 	fw().gamecore->MouseCursor->Render();
 }
 
@@ -178,7 +180,7 @@ void CityView::Update(StageCmd *const cmd)
 	// As the city view is the only screen that actually progresses time, incremnt that here
 	state->time += ticks;
 
-	auto clockControl = activeTab->FindControlTyped<Label>("CLOCK");
+	auto clockControl = baseForm->FindControlTyped<Label>("CLOCK");
 
 	auto seconds = state->time / TICKS_PER_SECOND;
 	auto minutes = seconds / 60;
@@ -285,11 +287,13 @@ void CityView::Update(StageCmd *const cmd)
 	}
 
 	activeTab->Update();
+	baseForm->Update();
 }
 
 void CityView::EventOccurred(Event *e)
 {
 	fw().gamecore->MouseCursor->EventOccured(e);
+	baseForm->EventOccured(e);
 	activeTab->EventOccured(e);
 
 	if (!e->Handled)
@@ -347,24 +351,6 @@ void CityView::EventOccurred(Event *e)
 				{
 					this->activeTab = uiTabs[7];
 				}
-				else if (cname == "BUTTON_TOGGLE_STRATMAP")
-				{
-					auto previousMode = this->getViewMode();
-
-					switch (previousMode)
-					{
-						case TileViewMode::Isometric:
-							this->setViewMode(TileViewMode::Strategy);
-							LogWarning("Changing view to strategy mode");
-							break;
-						case TileViewMode::Strategy:
-							this->setViewMode(TileViewMode::Isometric);
-							LogWarning("Changing view to isometric mode");
-							break;
-						default:
-							LogError("Invalid view mode");
-					}
-				}
 				else if (cname == "BUTTON_SHOW_ALIEN_INFILTRATION")
 				{
 					stageCmd.cmd = StageCmd::Command::PUSH;
@@ -397,36 +383,6 @@ void CityView::EventOccurred(Event *e)
 				{
 					LogWarning("Zoom to event");
 				}
-				else if (cname == "BUTTON_SPEED0")
-				{
-					LogWarning("Set speed 0");
-					this->updateSpeed = UpdateSpeed::Pause;
-				}
-				else if (cname == "BUTTON_SPEED1")
-				{
-					LogWarning("Set speed 1");
-					this->updateSpeed = UpdateSpeed::Speed1;
-				}
-				else if (cname == "BUTTON_SPEED2")
-				{
-					LogWarning("Set speed 2");
-					this->updateSpeed = UpdateSpeed::Speed2;
-				}
-				else if (cname == "BUTTON_SPEED3")
-				{
-					LogWarning("Set speed 3");
-					this->updateSpeed = UpdateSpeed::Speed3;
-				}
-				else if (cname == "BUTTON_SPEED4")
-				{
-					LogWarning("Set speed 4");
-					this->updateSpeed = UpdateSpeed::Speed4;
-				}
-				else if (cname == "BUTTON_SPEED5")
-				{
-					LogWarning("Set speed 5");
-					this->updateSpeed = UpdateSpeed::Speed5;
-				}
 				else if (cname == "BUTTON_SHOW_BASE")
 				{
 					stageCmd.cmd = StageCmd::Command::PUSH;
@@ -446,6 +402,47 @@ void CityView::EventOccurred(Event *e)
 					stageCmd.nextStage = equipScreen;
 
 					return;
+				}
+			}
+			else if (e->Data.Forms.EventFlag == FormEventType::CheckBoxChange)
+			{
+				auto &cname = e->Data.Forms.RaisedBy->Name;
+				if (cname == "BUTTON_FOLLOW_VEHICLE")
+				{
+					LogWarning("Follow vehicle");
+				}
+				else if (cname == "BUTTON_TOGGLE_STRATMAP")
+				{
+					bool strategy =
+					    baseForm->FindControlTyped<CheckBox>("BUTTON_TOGGLE_STRATMAP")->IsChecked();
+					this->setViewMode(strategy ? TileViewMode::Strategy : TileViewMode::Isometric);
+				}
+				else
+				{
+					if (baseForm->FindControlTyped<CheckBox>("BUTTON_SPEED0")->IsChecked())
+					{
+						this->updateSpeed = UpdateSpeed::Pause;
+					}
+					else if (baseForm->FindControlTyped<CheckBox>("BUTTON_SPEED1")->IsChecked())
+					{
+						this->updateSpeed = UpdateSpeed::Speed1;
+					}
+					else if (baseForm->FindControlTyped<CheckBox>("BUTTON_SPEED2")->IsChecked())
+					{
+						this->updateSpeed = UpdateSpeed::Speed2;
+					}
+					else if (baseForm->FindControlTyped<CheckBox>("BUTTON_SPEED3")->IsChecked())
+					{
+						this->updateSpeed = UpdateSpeed::Speed3;
+					}
+					else if (baseForm->FindControlTyped<CheckBox>("BUTTON_SPEED4")->IsChecked())
+					{
+						this->updateSpeed = UpdateSpeed::Speed4;
+					}
+					else if (baseForm->FindControlTyped<CheckBox>("BUTTON_SPEED5")->IsChecked())
+					{
+						this->updateSpeed = UpdateSpeed::Speed5;
+					}
 				}
 			}
 		}

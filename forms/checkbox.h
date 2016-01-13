@@ -21,7 +21,6 @@ class CheckBox : public Control
 
 	bool Checked;
 
-	void LoadResources();
 	virtual void OnRender() override;
 
   public:

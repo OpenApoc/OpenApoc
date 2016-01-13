@@ -77,6 +77,9 @@
         </graphicbutton>
         <checkbox id="SHOW_TILE_ORIGIN">
           <position x="310" y="80"/>
+          <size width="19" height="16"/>
+          <image>BUTTON_CHECKBOX_FALSE</image>
+          <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
         </checkbox>
         <label text="STR_SHOW_TILE_ORIGIN">
           <position x="330" y="80"/>
@@ -85,6 +88,9 @@
         </label>
         <checkbox id="SHOW_VEHICLE_PATH">
           <position x="310" y="100"/>
+          <size width="19" height="16"/>
+          <image>BUTTON_CHECKBOX_FALSE</image>
+          <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
         </checkbox>
         <label text="STR_SHOW_VEHICLE_PATH">
           <position x="330" y="100"/>
@@ -93,6 +99,9 @@
         </label>
         <checkbox id="SHOW_SELECTABLE_BOUNDS">
           <position x="310" y="120"/>
+          <size width="19" height="16"/>
+          <image>BUTTON_CHECKBOX_FALSE</image>
+          <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
         </checkbox>
         <label text="STR_SHOW_SELECTABLE_BOUNDS">
           <position x="330" y="120"/>

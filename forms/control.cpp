@@ -543,7 +543,7 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 				attribvalue = node->Attribute("groupid");
 				if (radiogroups.find(attribvalue) == radiogroups.end())
 				{
-					radiogroups[attribvalue] = new RadioButton *;
+					radiogroups[attribvalue] = new RadioButton *(nullptr);
 				}
 				group = radiogroups[attribvalue];
 			}

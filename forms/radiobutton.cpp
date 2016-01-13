@@ -29,12 +29,12 @@ Control *RadioButton::CopyTo(Control *CopyParent)
 
 void RadioButton::SetChecked(bool checked)
 {
-	(*group)->SetChecked(false);
-	CheckBox::SetChecked(checked);
 	if (checked)
 	{
+		(*group)->SetChecked(false);
 		*group = this;
 	}
+	CheckBox::SetChecked(checked);
 }
 
 }; // namespace OpenApoc

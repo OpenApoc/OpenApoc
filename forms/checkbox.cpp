@@ -12,35 +12,9 @@ CheckBox::CheckBox(Control *Owner, sp<Image> ImageChecked, sp<Image> ImageUnchec
           fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
       Checked(false)
 {
-	LoadResources();
 }
 
 CheckBox::~CheckBox() {}
-
-void CheckBox::LoadResources()
-{
-	if (!imagechecked)
-	{
-		imagechecked = fw().data->load_image(
-		    "PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:65:UI/menuopt.pal");
-	}
-	if (!imageunchecked)
-	{
-		imageunchecked = fw().data->load_image(
-		    "PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:64:UI/menuopt.pal");
-	}
-	if (imagechecked)
-	{
-		if (Size.x == 0)
-		{
-			Size.x = imagechecked->size.x;
-		}
-		if (Size.y == 0)
-		{
-			Size.y = imagechecked->size.y;
-		}
-	}
-}
 
 void CheckBox::EventOccured(Event *e)
 {
@@ -62,8 +36,6 @@ void CheckBox::EventOccured(Event *e)
 void CheckBox::OnRender()
 {
 	sp<Image> useimage;
-
-	LoadResources();
 
 	useimage = (Checked ? imagechecked : imageunchecked);
 

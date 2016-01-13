@@ -33,9 +33,12 @@ FormPreview::FormPreview() : Stage()
 	l->Size.y = fw().gamecore->GetFont("SMALFONT")->GetFontHeight();
 	l->BackgroundColour = {80, 80, 80, 255};
 
-	interactWithDisplay = new CheckBox(c);
-	interactWithDisplay->Size.y = fw().gamecore->GetFont("SMALFONT")->GetFontHeight();
-	interactWithDisplay->Size.x = interactWithDisplay->Size.y;
+	interactWithDisplay = new CheckBox(
+	    c, fw().data->load_image(
+	           "PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:65:UI/menuopt.pal"),
+	    fw().data->load_image(
+	        "PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:64:UI/menuopt.pal"));
+	interactWithDisplay->Size = {19, 16};
 	interactWithDisplay->Location.x = 0;
 	interactWithDisplay->Location.y = c->Size.y - interactWithDisplay->Size.y;
 	interactWithDisplay->BackgroundColour = {80, 80, 80, 255};
