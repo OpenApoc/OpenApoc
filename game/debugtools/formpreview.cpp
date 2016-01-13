@@ -13,58 +13,40 @@ FormPreview::FormPreview() : Stage()
 	glowindex = 0;
 
 	previewselector.reset(new Form(nullptr));
-	previewselector->Size.x = 200;
-	previewselector->Size.y = 300;
-	previewselector->Location.x = 2;
-	previewselector->Location.y = 2;
-	previewselector->BackgroundColour.r = 192;
-	previewselector->BackgroundColour.g = 192;
-	previewselector->BackgroundColour.b = 192;
+	previewselector->Size = {200, 300};
+	previewselector->Location = {2, 2};
+	previewselector->BackgroundColour = {192, 192, 192, 255};
 
 	Control *ch = new Control(previewselector.get());
-	ch->Location.x = 2;
-	ch->Location.y = 2;
-	ch->Size.x = previewselector->Size.x - 4;
-	ch->Size.y = previewselector->Size.y - 4;
-	ch->BackgroundColour.r = 80;
-	ch->BackgroundColour.g = 80;
-	ch->BackgroundColour.b = 80;
+	ch->Location = {2, 2};
+	ch->Size = previewselector->Size - 4;
+	ch->BackgroundColour = {80, 80, 80, 255};
 
 	Control *c = new Control(ch);
-	c->Location.x = 2;
-	c->Location.y = 2;
-	c->Size.x = previewselector->Size.x - 4;
-	c->Size.y = previewselector->Size.y - 4;
-	c->BackgroundColour.r = 80;
-	c->BackgroundColour.g = 80;
-	c->BackgroundColour.b = 80;
+	c->Location = {2, 2};
+	c->Size = previewselector->Size - 4;
+	c->BackgroundColour = {80, 80, 80, 255};
 
 	Label *l = new Label(c, "Pick Form:", fw().gamecore->GetFont("SMALFONT"));
-	l->Location.x = 0;
-	l->Location.y = 0;
+	l->Location = {0, 0};
 	l->Size.x = c->Size.x;
 	l->Size.y = fw().gamecore->GetFont("SMALFONT")->GetFontHeight();
-	l->BackgroundColour.b = l->BackgroundColour.r;
-	l->BackgroundColour.g = l->BackgroundColour.r;
+	l->BackgroundColour = {80, 80, 80, 255};
 
 	interactWithDisplay = new CheckBox(c);
 	interactWithDisplay->Size.y = fw().gamecore->GetFont("SMALFONT")->GetFontHeight();
 	interactWithDisplay->Size.x = interactWithDisplay->Size.y;
 	interactWithDisplay->Location.x = 0;
 	interactWithDisplay->Location.y = c->Size.y - interactWithDisplay->Size.y;
-	interactWithDisplay->BackgroundColour.r = 80;
-	interactWithDisplay->BackgroundColour.g = 80;
-	interactWithDisplay->BackgroundColour.b = 80;
-	interactWithDisplay->Checked = true;
+	interactWithDisplay->BackgroundColour = {80, 80, 80, 255};
+	interactWithDisplay->SetChecked(true);
 
 	l = new Label(c, "Interact?", fw().gamecore->GetFont("SMALFONT"));
 	l->Location.x = interactWithDisplay->Size.x + 2;
 	l->Location.y = interactWithDisplay->Location.y;
 	l->Size.x = c->Size.x - l->Location.x;
 	l->Size.y = interactWithDisplay->Size.y;
-	l->BackgroundColour.r = 80;
-	l->BackgroundColour.g = 80;
-	l->BackgroundColour.b = 80;
+	l->BackgroundColour = {80, 80, 80, 255};
 
 	ListBox *lb = new ListBox(c);
 	lb->Location.x = 0;
@@ -73,30 +55,22 @@ FormPreview::FormPreview() : Stage()
 	lb->Size.y = interactWithDisplay->Location.y - lb->Location.y;
 	lb->Name = "FORM_LIST";
 	lb->ItemSize = lb->Location.y;
-	lb->BackgroundColour.r = 24;
-	lb->BackgroundColour.g = 24;
-	lb->BackgroundColour.b = 24;
+	lb->BackgroundColour = {24, 24, 24, 255};
 
 	std::vector<UString> idlist = fw().gamecore->GetFormIDs();
 	for (auto idx = idlist.begin(); idx != idlist.end(); idx++)
 	{
 		l = new Label(lb, (UString)*idx, fw().gamecore->GetFont("SMALFONT"));
 		l->Name = l->GetText();
-		l->BackgroundColour.r = 192;
-		l->BackgroundColour.g = 80;
-		l->BackgroundColour.b = 80;
-		l->BackgroundColour.a = 0;
+		l->BackgroundColour = {192, 80, 80, 0};
 		// lb->AddItem( l );
 	}
 
 	propertyeditor.reset(new Form(nullptr));
-	propertyeditor->Location.x = 2;
-	propertyeditor->Location.y = 304;
+	propertyeditor->Location = {2, 304};
 	propertyeditor->Size.x = 200;
 	propertyeditor->Size.y = fw().Display_GetHeight() - propertyeditor->Location.y - 2;
-	propertyeditor->BackgroundColour.r = 192;
-	propertyeditor->BackgroundColour.g = 192;
-	propertyeditor->BackgroundColour.b = 192;
+	propertyeditor->BackgroundColour = {192, 192, 192, 255};
 }
 
 FormPreview::~FormPreview() {}
@@ -116,7 +90,7 @@ void FormPreview::EventOccurred(Event *e)
 	{
 		propertyeditor->EventOccured(e);
 	}
-	if (displayform != nullptr && interactWithDisplay->Checked)
+	if (displayform != nullptr && interactWithDisplay->IsChecked())
 	{
 		displayform->EventOccured(e);
 	}
