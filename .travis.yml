@@ -20,7 +20,7 @@ before_install:
   - if [ "$CXX" = "clang++" ]; then sudo apt-get install clang-3.7 --force-yes -y; fi
   - if [ "$CXX" = "clang++" ]; then export CXX="clang++-3.7" CC="clang-3.7"; fi
   - if [ "${TIDY}" = "true" ]; then sudo apt-get install clang-tidy-3.7 clang-format-3.7 --force-yes -y; fi
-  - sudo apt-get install libunwind8-dev libicu-dev libsdl2-dev -y
+  - sudo apt-get install libunwind8-dev libicu-dev libsdl2-dev libboost-locale-dev -y
   - ${CXX} --version
   - ${CC} --version
   - mkdir ~/dependency-prefix

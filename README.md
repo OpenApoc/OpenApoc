@@ -25,6 +25,7 @@ OpenApocalypse is built leveraging a number of libraries - to provide needed fun
 - [ICU4C] (http://site.icu-project.org/)
 - [GLM] (http://glm.g-truc.net/)
 - [Libunwind] (http://www.nongnu.org/libunwind/download.html) - debug backtracing on linux
+- [Boost] (http://boost.org) - specifially the 'locale' library, used for localisation
 
 Requirements:
 - This assumes that you have the file 'cd.iso' - a copy of the original X-Com Apocalypse CD (This can be got from steam for a pittance http://store.steampowered.com/app/7660/ - this is _required_ to run)
@@ -45,7 +46,7 @@ git submodule update
 
 Building on Linux
 (tested on ubuntu 14.04 - other distributions will probably need different packages to install - see the dependency list above)
-- Install the following packages: libsdl2-dev glm libicu-dev libtinyxml2-dev cmake build-essential git
+- Install the following packages: libsdl2-dev glm libicu-dev libtinyxml2-dev cmake build-essential git libboost-locale-dev
 ```
 sudo apt-get install libsdl2-dev libicu-dev libtinyxml2-dev cmake build-essential git libunwind-dev
 ```

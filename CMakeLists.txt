@@ -36,6 +36,8 @@ if (LTO)
 		endif()
 endif(LTO)
 
+find_package(Boost REQUIRED COMPONENTS locale)
+
 
 # find openapoc sources
 AUX_SOURCE_DIRECTORY(game sources)
@@ -58,6 +60,9 @@ SET(REQUIRED_TINYXML_LIBRARIES tinyxml2)
 
 ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} framework/main.cpp ${sources}
 		${FRAMEWORK_SOURCES})
+
+target_link_libraries(${CMAKE_PROJECT_NAME} ${Boost_LIBRARIES})
+target_include_directories(${CMAKE_PROJECT_NAME} SYSTEM PUBLIC ${Boost_INCLUDE_DIRS})
 
 set_property(TARGET OpenApoc PROPERTY CXX_STANDARD 11)
 set_property(TARGET OpenApoc PROPERTY CXX_STANDARD_REQUIRED ON)
