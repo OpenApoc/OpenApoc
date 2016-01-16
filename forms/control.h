@@ -101,6 +101,8 @@ class Control
 
 	template <typename T> T *GetData() const { return static_cast<T *>(data); }
 	void SetData(void *Data) { data = Data; }
+
+	bool eventIsWithin(const Event *e) const;
 };
 
 }; // namespace OpenApoc

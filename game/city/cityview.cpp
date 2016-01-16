@@ -296,184 +296,185 @@ void CityView::EventOccurred(Event *e)
 	baseForm->EventOccured(e);
 	activeTab->EventOccured(e);
 
-	if (!e->Handled)
+	if (e->Type == EVENT_FORM_INTERACTION)
 	{
-		if (e->Type == EVENT_FORM_INTERACTION)
+		if (e->Data.Forms.EventFlag == FormEventType::MouseDown)
 		{
-			if (e->Data.Forms.EventFlag == FormEventType::MouseDown)
-			{
-				auto it = this->playerVehicleListControls.find(e->Data.Forms.RaisedBy);
+			auto it = this->playerVehicleListControls.find(e->Data.Forms.RaisedBy);
 
-				if (it != this->playerVehicleListControls.end())
+			if (it != this->playerVehicleListControls.end())
+			{
+				auto vehicle = it->second.lock();
+				if (vehicle)
 				{
-					auto vehicle = it->second.lock();
-					if (vehicle)
-					{
-						this->selectedVehicle = vehicle;
-					}
-					return;
+					this->selectedVehicle = vehicle;
 				}
+				return;
 			}
+		}
+		else if (e->Data.Forms.EventFlag == FormEventType::ButtonClick)
+		{
+			auto &cname = e->Data.Forms.RaisedBy->Name;
 
-			else if (e->Data.Forms.EventFlag == FormEventType::ButtonClick)
+			if (cname == "BUTTON_TAB_1")
 			{
-				auto &cname = e->Data.Forms.RaisedBy->Name;
-
-				if (cname == "BUTTON_TAB_1")
-				{
-					this->activeTab = uiTabs[0];
-				}
-				else if (cname == "BUTTON_TAB_2")
-				{
-					this->activeTab = uiTabs[1];
-				}
-				else if (cname == "BUTTON_TAB_3")
-				{
-					this->activeTab = uiTabs[2];
-				}
-				else if (cname == "BUTTON_TAB_4")
-				{
-					this->activeTab = uiTabs[3];
-				}
-				else if (cname == "BUTTON_TAB_5")
-				{
-					this->activeTab = uiTabs[4];
-				}
-				else if (cname == "BUTTON_TAB_6")
-				{
-					this->activeTab = uiTabs[5];
-				}
-				else if (cname == "BUTTON_TAB_7")
-				{
-					this->activeTab = uiTabs[6];
-				}
-				else if (cname == "BUTTON_TAB_8")
-				{
-					this->activeTab = uiTabs[7];
-				}
-				else if (cname == "BUTTON_SHOW_ALIEN_INFILTRATION")
-				{
-					stageCmd.cmd = StageCmd::Command::PUSH;
-					stageCmd.nextStage = std::make_shared<InfiltrationScreen>();
-					return;
-				}
-				else if (cname == "BUTTON_SHOW_SCORE")
-				{
-					stageCmd.cmd = StageCmd::Command::PUSH;
-					stageCmd.nextStage = std::make_shared<ScoreScreen>();
-					return;
-				}
-				else if (cname == "BUTTON_SHOW_UFOPAEDIA")
-				{
-					stageCmd.cmd = StageCmd::Command::PUSH;
-					stageCmd.nextStage = std::make_shared<Ufopaedia>();
-					return;
-				}
-				else if (cname == "BUTTON_SHOW_OPTIONS")
-				{
-					stageCmd.cmd = StageCmd::Command::PUSH;
-					stageCmd.nextStage = std::make_shared<InGameOptions>(state);
-					return;
-				}
-				else if (cname == "BUTTON_SHOW_LOG")
-				{
-					LogWarning("Show log");
-				}
-				else if (cname == "BUTTON_ZOOM_EVENT")
-				{
-					LogWarning("Zoom to event");
-				}
-				else if (cname == "BUTTON_SHOW_BASE")
-				{
-					stageCmd.cmd = StageCmd::Command::PUSH;
-					stageCmd.nextStage = std::make_shared<BaseScreen>(state);
-					return;
-				}
-				else if (cname == "BUTTON_EQUIP_VEHICLE")
-				{
-					stageCmd.cmd = StageCmd::Command::PUSH;
-					auto equipScreen = std::make_shared<VEquipScreen>(state);
-					// FIXME: Restrict this to player owned vehicles?
-					auto selectedVehicle = this->selectedVehicle.lock();
-					if (selectedVehicle)
-					{
-						equipScreen->setSelectedVehicle(selectedVehicle);
-					}
-					stageCmd.nextStage = equipScreen;
-
-					return;
-				}
+				this->activeTab = uiTabs[0];
 			}
-			else if (e->Data.Forms.EventFlag == FormEventType::CheckBoxChange)
+			else if (cname == "BUTTON_TAB_2")
 			{
-				auto &cname = e->Data.Forms.RaisedBy->Name;
-				if (cname == "BUTTON_FOLLOW_VEHICLE")
+				this->activeTab = uiTabs[1];
+			}
+			else if (cname == "BUTTON_TAB_3")
+			{
+				this->activeTab = uiTabs[2];
+			}
+			else if (cname == "BUTTON_TAB_4")
+			{
+				this->activeTab = uiTabs[3];
+			}
+			else if (cname == "BUTTON_TAB_5")
+			{
+				this->activeTab = uiTabs[4];
+			}
+			else if (cname == "BUTTON_TAB_6")
+			{
+				this->activeTab = uiTabs[5];
+			}
+			else if (cname == "BUTTON_TAB_7")
+			{
+				this->activeTab = uiTabs[6];
+			}
+			else if (cname == "BUTTON_TAB_8")
+			{
+				this->activeTab = uiTabs[7];
+			}
+			else if (cname == "BUTTON_SHOW_ALIEN_INFILTRATION")
+			{
+				stageCmd.cmd = StageCmd::Command::PUSH;
+				stageCmd.nextStage = std::make_shared<InfiltrationScreen>();
+				return;
+			}
+			else if (cname == "BUTTON_SHOW_SCORE")
+			{
+				stageCmd.cmd = StageCmd::Command::PUSH;
+				stageCmd.nextStage = std::make_shared<ScoreScreen>();
+				return;
+			}
+			else if (cname == "BUTTON_SHOW_UFOPAEDIA")
+			{
+				stageCmd.cmd = StageCmd::Command::PUSH;
+				stageCmd.nextStage = std::make_shared<Ufopaedia>();
+				return;
+			}
+			else if (cname == "BUTTON_SHOW_OPTIONS")
+			{
+				stageCmd.cmd = StageCmd::Command::PUSH;
+				stageCmd.nextStage = std::make_shared<InGameOptions>(state);
+				return;
+			}
+			else if (cname == "BUTTON_SHOW_LOG")
+			{
+				LogWarning("Show log");
+			}
+			else if (cname == "BUTTON_ZOOM_EVENT")
+			{
+				LogWarning("Zoom to event");
+			}
+			else if (cname == "BUTTON_SHOW_BASE")
+			{
+				stageCmd.cmd = StageCmd::Command::PUSH;
+				stageCmd.nextStage = std::make_shared<BaseScreen>(state);
+				return;
+			}
+			else if (cname == "BUTTON_EQUIP_VEHICLE")
+			{
+				stageCmd.cmd = StageCmd::Command::PUSH;
+				auto equipScreen = std::make_shared<VEquipScreen>(state);
+				// FIXME: Restrict this to player owned vehicles?
+				auto selectedVehicle = this->selectedVehicle.lock();
+				if (selectedVehicle)
 				{
-					LogWarning("Follow vehicle");
+					equipScreen->setSelectedVehicle(selectedVehicle);
 				}
-				else if (cname == "BUTTON_TOGGLE_STRATMAP")
+				stageCmd.nextStage = equipScreen;
+
+				return;
+			}
+		}
+		else if (e->Data.Forms.EventFlag == FormEventType::CheckBoxChange)
+		{
+			auto &cname = e->Data.Forms.RaisedBy->Name;
+			if (cname == "BUTTON_FOLLOW_VEHICLE")
+			{
+				LogWarning("Follow vehicle");
+			}
+			else if (cname == "BUTTON_TOGGLE_STRATMAP")
+			{
+				bool strategy = dynamic_cast<CheckBox *>(e->Data.Forms.RaisedBy)->IsChecked();
+				this->setViewMode(strategy ? TileViewMode::Strategy : TileViewMode::Isometric);
+			}
+			else
+			{
+				if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED0")->IsChecked())
 				{
-					bool strategy = dynamic_cast<CheckBox *>(e->Data.Forms.RaisedBy)->IsChecked();
-					this->setViewMode(strategy ? TileViewMode::Strategy : TileViewMode::Isometric);
+					this->updateSpeed = UpdateSpeed::Pause;
 				}
-				else
+				else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED1")->IsChecked())
 				{
-					if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED0")->IsChecked())
-					{
-						this->updateSpeed = UpdateSpeed::Pause;
-					}
-					else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED1")->IsChecked())
-					{
-						this->updateSpeed = UpdateSpeed::Speed1;
-					}
-					else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED2")->IsChecked())
-					{
-						this->updateSpeed = UpdateSpeed::Speed2;
-					}
-					else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED3")->IsChecked())
-					{
-						this->updateSpeed = UpdateSpeed::Speed3;
-					}
-					else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED4")->IsChecked())
-					{
-						this->updateSpeed = UpdateSpeed::Speed4;
-					}
-					else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED5")->IsChecked())
-					{
-						this->updateSpeed = UpdateSpeed::Speed5;
-					}
+					this->updateSpeed = UpdateSpeed::Speed1;
+				}
+				else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED2")->IsChecked())
+				{
+					this->updateSpeed = UpdateSpeed::Speed2;
+				}
+				else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED3")->IsChecked())
+				{
+					this->updateSpeed = UpdateSpeed::Speed3;
+				}
+				else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED4")->IsChecked())
+				{
+					this->updateSpeed = UpdateSpeed::Speed4;
+				}
+				else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED5")->IsChecked())
+				{
+					this->updateSpeed = UpdateSpeed::Speed5;
 				}
 			}
 		}
-		else if (e->Type == EVENT_KEY_DOWN && e->Data.Keyboard.KeyCode == SDLK_ESCAPE)
+	}
+	else if (e->Type == EVENT_KEY_DOWN && e->Data.Keyboard.KeyCode == SDLK_ESCAPE)
+	{
+		stageCmd.cmd = StageCmd::Command::POP;
+		return;
+	}
+	// FIXME: Check if scancode is better/worse
+	else if (e->Type == EVENT_KEY_DOWN &&
+	         SDL_GetScancodeFromKey(e->Data.Keyboard.KeyCode) == SDL_SCANCODE_R)
+	{
+		LogInfo("Repairing...");
+		std::set<sp<Scenery>> stuffToRepair;
+		for (auto &s : state->city->scenery)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
-			return;
-		}
-		// FIXME: Check if scancode is better/worse
-		else if (e->Type == EVENT_KEY_DOWN &&
-		         SDL_GetScancodeFromKey(e->Data.Keyboard.KeyCode) == SDL_SCANCODE_R)
-		{
-			LogInfo("Repairing...");
-			std::set<sp<Scenery>> stuffToRepair;
-			for (auto &s : state->city->scenery)
+			if (s->canRepair())
 			{
-				if (s->canRepair())
-				{
-					stuffToRepair.insert(s);
-				}
+				stuffToRepair.insert(s);
 			}
-			LogInfo("Repairing %u tiles out of %u", static_cast<unsigned>(stuffToRepair.size()),
-			        static_cast<unsigned>(state->city->scenery.size()));
+		}
+		LogInfo("Repairing %u tiles out of %u", static_cast<unsigned>(stuffToRepair.size()),
+		        static_cast<unsigned>(state->city->scenery.size()));
 
-			for (auto &s : stuffToRepair)
-			{
-				s->repair(*state);
-				state->city->fallingScenery.erase(s);
-			}
+		for (auto &s : stuffToRepair)
+		{
+			s->repair(*state);
+			state->city->fallingScenery.erase(s);
 		}
-		else if (this->getViewMode() == TileViewMode::Strategy && e->Type == EVENT_MOUSE_DOWN &&
-		         e->Data.Mouse.Button == 2)
+	}
+	// Exclude mouse down events that are over the form
+	else if (!activeTab->eventIsWithin(e) && !baseForm->eventIsWithin(e))
+	{
+
+		if (this->getViewMode() == TileViewMode::Strategy && e->Type == EVENT_MOUSE_DOWN &&
+		    e->Data.Mouse.Button == 2)
 		{
 			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
 			auto clickTile = this->screenToTileCoords(
@@ -482,6 +483,7 @@ void CityView::EventOccurred(Event *e)
 		}
 		else if (e->Type == EVENT_MOUSE_DOWN && e->Data.Mouse.Button == 1)
 		{
+
 			// If a click has not been handled by a form it's in the map. See if we intersect with
 			// anything
 			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
@@ -515,10 +517,10 @@ void CityView::EventOccurred(Event *e)
 				}
 			}
 		}
-		else
-		{
-			TileView::EventOccurred(e);
-		}
+	}
+	else
+	{
+		TileView::EventOccurred(e);
 	}
 }
 }; // namespace OpenApoc

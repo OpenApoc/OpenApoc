@@ -769,4 +769,24 @@ void Control::CopyControlData(Control *CopyOf)
 	}
 }
 
+bool Control::eventIsWithin(const Event *e) const
+{
+	if (e->Type == EVENT_MOUSE_MOVE || e->Type == EVENT_MOUSE_DOWN || e->Type == EVENT_MOUSE_UP)
+	{
+		return (e->Data.Mouse.X >= resolvedLocation.x &&
+		        e->Data.Mouse.X < resolvedLocation.x + Size.x &&
+		        e->Data.Mouse.Y >= resolvedLocation.y &&
+		        e->Data.Mouse.Y < resolvedLocation.y + Size.y);
+	}
+	else if (e->Type == EVENT_FINGER_DOWN || e->Type == EVENT_FINGER_UP ||
+	         e->Type == EVENT_FINGER_MOVE)
+	{
+		return (e->Data.Finger.X >= resolvedLocation.x &&
+		        e->Data.Finger.X < resolvedLocation.x + Size.x &&
+		        e->Data.Finger.Y >= resolvedLocation.y &&
+		        e->Data.Finger.Y < resolvedLocation.y + Size.y);
+	}
+	// Only mouse & finger events have a location to be within
+	return false;
+}
 }; // namespace OpenApoc
