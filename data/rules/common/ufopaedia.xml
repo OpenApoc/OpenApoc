@@ -268,7 +268,7 @@
     <category id="VEHICLEEQUIPMENT">
       <backgroundimage>xcom3/UFOPAEDI/VW-TTL.PCX</backgroundimage>
       <title>Vehicle Equipment</title>
-      <text_info>All military vehicles can be equipped with a variety of weapons, engines and special equipment. The engines and weapons are divided into road 	and airborne categories. Careful attention to improving vehicle equipment is an essential part of military strategy.</text_info>
+      <text_info>All military vehicles can be equipped with a variety of weapons, engines and special equipment. The engines and weapons are divided into road and airborne categories. Careful attention to improving vehicle equipment is an essential part of military strategy.</text_info>
       <entries>
         <entry id="BOLTER_4000" name="Bolter 4000 Laser Gun">
           <backgroundimage>xcom3/UFOPAEDI/V02.PCX</backgroundimage>
@@ -312,7 +312,7 @@
         </entry>
         <entry id="40MM_AUTO_CANNON" name="40mm Auto Cannon">
           <backgroundimage>xcom3/UFOPAEDI/V13.PCX</backgroundimage>
-          <text_info>	The standard cannon for police and military vehicles; it fires a high velocity armor piercing shell.</text_info>
+          <text_info>The standard cannon for police and military vehicles; it fires a high velocity armor piercing shell.</text_info>
           <dynamic_data>VEHICLEEQUIP</dynamic_data>
         </entry>
         <entry id="JANITOR_MISSILE_ARRAY" name="Janitor Missile Array">

@@ -6,8 +6,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: en\n""Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgid "	The standard cannon for police and military vehicles; it fires a high velocity armor piercing shell."
-msgstr "	The standard cannon for police and military vehicles; it fires a high velocity armor piercing shell."
+msgid "The standard cannon for police and military vehicles; it fires a high velocity armor piercing shell."
+msgstr "The standard cannon for police and military vehicles; it fires a high velocity armor piercing shell."
 
 msgid "40mm Auto Cannon"
 msgstr "40mm Auto Cannon"
@@ -237,8 +237,8 @@ msgstr "All equipment and raw materials must be safely stored. Spare storage cap
 msgid "All kinds of small flying vehicles are produced here, such as Hovercars, Hoverbikes and transports. There are many Elerium supplies stored here which could be the target of hostile raiders."
 msgstr "All kinds of small flying vehicles are produced here, such as Hovercars, Hoverbikes and transports. There are many Elerium supplies stored here which could be the target of hostile raiders."
 
-msgid "All military vehicles can be equipped with a variety of weapons, engines and special equipment. The engines and weapons are divided into road 	and airborne categories. Careful attention to improving vehicle equipment is an essential part of military strategy."
-msgstr "All military vehicles can be equipped with a variety of weapons, engines and special equipment. The engines and weapons are divided into road 	and airborne categories. Careful attention to improving vehicle equipment is an essential part of military strategy."
+msgid "All military vehicles can be equipped with a variety of weapons, engines and special equipment. The engines and weapons are divided into road and airborne categories. Careful attention to improving vehicle equipment is an essential part of military strategy."
+msgstr "All military vehicles can be equipped with a variety of weapons, engines and special equipment. The engines and weapons are divided into road and airborne categories. Careful attention to improving vehicle equipment is an essential part of military strategy."
 
 msgid "All research into the origins of the Aliens and their home world is collected in this section."
 msgstr "All research into the origins of the Aliens and their home world is collected in this section."
