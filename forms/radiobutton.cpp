@@ -10,11 +10,6 @@ RadioButton::RadioButton(Control *Owner, RadioButton **Group, sp<Image> ImageChe
                          sp<Image> ImageUnchecked)
     : CheckBox(Owner, ImageChecked, ImageUnchecked), group(Group)
 {
-	if (*group == nullptr)
-	{
-		*group = this;
-		Checked = true;
-	}
 }
 
 RadioButton::~RadioButton() {}
@@ -29,12 +24,15 @@ Control *RadioButton::CopyTo(Control *CopyParent)
 
 void RadioButton::SetChecked(bool checked)
 {
-	if (checked)
+	if (checked && !Checked)
 	{
-		(*group)->SetChecked(false);
+		if (*group != nullptr)
+		{
+			(*group)->Checked = false;
+		}
 		*group = this;
+		CheckBox::SetChecked(checked);
 	}
-	CheckBox::SetChecked(checked);
 }
 
 }; // namespace OpenApoc

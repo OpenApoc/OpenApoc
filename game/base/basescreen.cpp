@@ -84,7 +84,7 @@ void BaseScreen::Begin()
 
 		Graphic *graphic = new Graphic(nullptr, fw().data->load_image(facility.sprite));
 		graphic->AutoSize = true;
-		graphic->Data = const_cast<void *>(static_cast<const void *>(&facility));
+		graphic->SetData(const_cast<FacilityDef *>(&facility));
 		facilities->AddItem(graphic);
 	}
 }
@@ -164,14 +164,7 @@ void BaseScreen::EventOccurred(Event *e)
 			if (e->Data.Forms.RaisedBy->Name == "LISTBOX_FACILITIES" && !drag)
 			{
 				ListBox *list = form->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
-				if (list->getHoveredData() == nullptr)
-				{
-					dragFacility = nullptr;
-				}
-				else
-				{
-					dragFacility = static_cast<FacilityDef *>(list->getHoveredData());
-				}
+				dragFacility = list->GetHoveredData<FacilityDef>();
 				return;
 			}
 		}

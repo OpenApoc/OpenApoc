@@ -53,7 +53,7 @@ CityView::CityView(sp<GameState> state)
       baseForm(fw().gamecore->GetForm("FORM_CITY_UI")), updateSpeed(UpdateSpeed::Speed1),
       state(state)
 {
-
+	baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED1")->SetChecked(true);
 	for (auto &formName : TAB_FORM_NAMES)
 	{
 		sp<Form> f(fw().gamecore->GetForm(formName));
@@ -413,33 +413,32 @@ void CityView::EventOccurred(Event *e)
 				}
 				else if (cname == "BUTTON_TOGGLE_STRATMAP")
 				{
-					bool strategy =
-					    baseForm->FindControlTyped<CheckBox>("BUTTON_TOGGLE_STRATMAP")->IsChecked();
+					bool strategy = dynamic_cast<CheckBox *>(e->Data.Forms.RaisedBy)->IsChecked();
 					this->setViewMode(strategy ? TileViewMode::Strategy : TileViewMode::Isometric);
 				}
 				else
 				{
-					if (baseForm->FindControlTyped<CheckBox>("BUTTON_SPEED0")->IsChecked())
+					if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED0")->IsChecked())
 					{
 						this->updateSpeed = UpdateSpeed::Pause;
 					}
-					else if (baseForm->FindControlTyped<CheckBox>("BUTTON_SPEED1")->IsChecked())
+					else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED1")->IsChecked())
 					{
 						this->updateSpeed = UpdateSpeed::Speed1;
 					}
-					else if (baseForm->FindControlTyped<CheckBox>("BUTTON_SPEED2")->IsChecked())
+					else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED2")->IsChecked())
 					{
 						this->updateSpeed = UpdateSpeed::Speed2;
 					}
-					else if (baseForm->FindControlTyped<CheckBox>("BUTTON_SPEED3")->IsChecked())
+					else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED3")->IsChecked())
 					{
 						this->updateSpeed = UpdateSpeed::Speed3;
 					}
-					else if (baseForm->FindControlTyped<CheckBox>("BUTTON_SPEED4")->IsChecked())
+					else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED4")->IsChecked())
 					{
 						this->updateSpeed = UpdateSpeed::Speed4;
 					}
-					else if (baseForm->FindControlTyped<CheckBox>("BUTTON_SPEED5")->IsChecked())
+					else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED5")->IsChecked())
 					{
 						this->updateSpeed = UpdateSpeed::Speed5;
 					}

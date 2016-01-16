@@ -182,24 +182,6 @@ void ListBox::Update()
 
 void ListBox::UnloadResources() {}
 
-void *ListBox::getHoveredData() const
-{
-	if (hovered != nullptr)
-	{
-		return hovered->Data;
-	}
-	return nullptr;
-}
-
-void *ListBox::getSelectedData() const
-{
-	if (selected != nullptr)
-	{
-		return selected->Data;
-	}
-	return nullptr;
-}
-
 void ListBox::Clear()
 {
 	while (Controls.size() > 0)

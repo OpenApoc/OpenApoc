@@ -19,6 +19,7 @@ class Control
 {
   private:
 	sp<Surface> controlArea;
+	void *data;
 
   protected:
 	sp<Palette> palette;
@@ -57,8 +58,6 @@ class Control
 	Control *lastCopiedTo;
 	std::vector<Control *> Controls;
 
-	void *Data;
-
 	Control(Control *Owner, bool takesFocus = true);
 	virtual ~Control();
 
@@ -85,8 +84,8 @@ class Control
 		T *typedControl = dynamic_cast<T *>(c);
 		if (!c)
 		{
-			LogError("Failed cast  control \"%s\" within form \"%s\" to type \"%s\"", name.c_str(),
-			         this->Name.c_str(), typeid(T).name());
+			LogError("Failed to cast control \"%s\" within form \"%s\" to type \"%s\"",
+			         name.c_str(), this->Name.c_str(), typeid(T).name());
 			return nullptr;
 		}
 		return typedControl;
@@ -99,6 +98,9 @@ class Control
 	Vec2<int> GetLocationOnScreen() const;
 
 	virtual Control *CopyTo(Control *CopyParent);
+
+	template <typename T> T *GetData() const { return static_cast<T *>(data); }
+	void SetData(void *Data) { data = Data; }
 };
 
 }; // namespace OpenApoc

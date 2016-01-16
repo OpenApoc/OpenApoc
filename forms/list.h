@@ -34,8 +34,6 @@ class ListBox : public Control
 	virtual void EventOccured(Event *e) override;
 	virtual void Update() override;
 	virtual void UnloadResources() override;
-	void *getHoveredData() const;
-	void *getSelectedData() const;
 
 	void setSelected(Control *c);
 
@@ -47,6 +45,24 @@ class ListBox : public Control
 
 	virtual Control *CopyTo(Control *CopyParent) override;
 	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
+
+	template <typename T> T *GetHoveredData() const
+	{
+		if (hovered != nullptr)
+		{
+			return hovered->GetData<T>();
+		}
+		return nullptr;
+	}
+
+	template <typename T> T *GetSelectedData() const
+	{
+		if (selected != nullptr)
+		{
+			return selected->GetData<T>();
+		}
+		return nullptr;
+	}
 };
 
 }; // namespace OpenApoc

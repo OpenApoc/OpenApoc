@@ -101,37 +101,37 @@
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:11:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
-      <radiobutton id="BUTTON_SPEED0" groupid="GROUP_SPEED">
+      <radiobutton id="BUTTON_SPEED0" groupid="SPEED">
         <position x="565" y="7"/>
         <size width="71" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:28:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
-      <radiobutton id="BUTTON_SPEED1" groupid="GROUP_SPEED">
+      <radiobutton id="BUTTON_SPEED1" groupid="SPEED">
         <position x="565" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:29:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
-      <radiobutton id="BUTTON_SPEED2" groupid="GROUP_SPEED">
+      <radiobutton id="BUTTON_SPEED2" groupid="SPEED">
         <position x="600" y="53"/>
         <size width="35" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:30:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
-      <radiobutton id="BUTTON_SPEED3" groupid="GROUP_SPEED">
+      <radiobutton id="BUTTON_SPEED3" groupid="SPEED">
         <position x="565" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:31:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
-      <radiobutton id="BUTTON_SPEED4" groupid="GROUP_SPEED">
+      <radiobutton id="BUTTON_SPEED4" groupid="SPEED">
         <position x="600" y="76"/>
         <size width="35" height="21"/>
         <image/>
         <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:32:xcom3/ufodata/pal_01.dat</imagechecked>
       </radiobutton>
-      <radiobutton id="BUTTON_SPEED5" groupid="GROUP_SPEED">
+      <radiobutton id="BUTTON_SPEED5" groupid="SPEED">
         <position x="565" y="100"/>
         <size width="71" height="21"/>
         <image/>

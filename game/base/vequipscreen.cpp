@@ -23,6 +23,7 @@ VEquipScreen::VEquipScreen(sp<GameState> state)
       state(state), glowCounter(0)
 
 {
+	form->FindControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->SetChecked(true);
 	sp<Vehicle> vehicle;
 	for (auto &vehiclePtr : state->getPlayer()->vehicles)
 	{
@@ -105,17 +106,21 @@ void VEquipScreen::EventOccurred(Event *e)
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
-		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_SHOW_WEAPONS")
+	}
+	else if (e->Type == EVENT_FORM_INTERACTION &&
+	         e->Data.Forms.EventFlag == FormEventType::CheckBoxChange)
+	{
+		if (form->FindControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->IsChecked())
 		{
 			this->selectionType = VEquipmentType::Type::Weapon;
 			return;
 		}
-		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_SHOW_ENGINES")
+		else if (form->FindControlTyped<RadioButton>("BUTTON_SHOW_ENGINES")->IsChecked())
 		{
 			this->selectionType = VEquipmentType::Type::Engine;
 			return;
 		}
-		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_SHOW_GENERAL")
+		else if (form->FindControlTyped<RadioButton>("BUTTON_SHOW_GENERAL")->IsChecked())
 		{
 			this->selectionType = VEquipmentType::Type::General;
 			return;
