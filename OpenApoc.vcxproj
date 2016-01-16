@@ -88,7 +88,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>12.0.21005.1</_ProjectFileVersion>
-    <NuGetPackageImportStamp>ac33e56b</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>92f41cfa</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -366,7 +366,7 @@
     <ClCompile Include="game\rules\rules.cpp" />
     <ClCompile Include="game\rules\rules_helper.cpp" />
     <ClCompile Include="game\rules\vehicle_type_rules.cpp" />
-    <ClCompile Include="game\rules\vequipment.cpp" />
+    <ClCompile Include="game\rules\vequipment_rules.cpp" />
     <ClCompile Include="game\tileview\tile.cpp" />
     <ClCompile Include="game\tileview\tileobject.cpp" />
     <ClCompile Include="game\tileview\tileobject_doodad.cpp" />
@@ -536,6 +536,10 @@
     <Import Project="packages\sdl2.2.0.3\build\native\sdl2.targets" Condition="Exists('packages\sdl2.2.0.3\build\native\sdl2.targets')" />
     <Import Project="packages\boost.1.60.0.0\build\native\boost.targets" Condition="Exists('packages\boost.1.60.0.0\build\native\boost.targets')" />
     <Import Project="packages\boost_locale.1.60.0.0\build\native\boost_locale.targets" Condition="Exists('packages\boost_locale.1.60.0.0\build\native\boost_locale.targets')" />
+    <Import Project="packages\boost_thread.1.60.0.0\build\native\boost_thread.targets" Condition="Exists('packages\boost_thread.1.60.0.0\build\native\boost_thread.targets')" />
+    <Import Project="packages\boost_system.1.60.0.0\build\native\boost_system.targets" Condition="Exists('packages\boost_system.1.60.0.0\build\native\boost_system.targets')" />
+    <Import Project="packages\boost_date_time.1.60.0.0\build\native\boost_date_time.targets" Condition="Exists('packages\boost_date_time.1.60.0.0\build\native\boost_date_time.targets')" />
+    <Import Project="packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets" Condition="Exists('packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -545,5 +549,9 @@
     <Error Condition="!Exists('packages\sdl2.2.0.3\build\native\sdl2.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\sdl2.2.0.3\build\native\sdl2.targets'))" />
     <Error Condition="!Exists('packages\boost.1.60.0.0\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost.1.60.0.0\build\native\boost.targets'))" />
     <Error Condition="!Exists('packages\boost_locale.1.60.0.0\build\native\boost_locale.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost_locale.1.60.0.0\build\native\boost_locale.targets'))" />
+    <Error Condition="!Exists('packages\boost_thread.1.60.0.0\build\native\boost_thread.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost_thread.1.60.0.0\build\native\boost_thread.targets'))" />
+    <Error Condition="!Exists('packages\boost_system.1.60.0.0\build\native\boost_system.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost_system.1.60.0.0\build\native\boost_system.targets'))" />
+    <Error Condition="!Exists('packages\boost_date_time.1.60.0.0\build\native\boost_date_time.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost_date_time.1.60.0.0\build\native\boost_date_time.targets'))" />
+    <Error Condition="!Exists('packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets'))" />
   </Target>
 </Project>

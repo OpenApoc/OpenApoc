@@ -267,9 +267,6 @@
     <ClCompile Include="framework\sound\sdlraw_backend.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="game\rules\vequipment.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="game\rules\vehicle_type_rules.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -289,6 +286,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="forms\radiobutton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\rules\vequipment_rules.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
