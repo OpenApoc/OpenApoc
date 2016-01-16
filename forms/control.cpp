@@ -162,8 +162,6 @@ void Control::EventOccured(Event *e)
 				newevent->Data.Forms.MouseInfo.Y -= resolvedLocation.y;
 				fw().PushEvent(newevent);
 				mouseDepressed = true;
-
-				e->Handled = true;
 			}
 		}
 
