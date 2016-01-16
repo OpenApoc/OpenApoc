@@ -6,8 +6,14 @@
 #include <limits>
 #include <string>
 
+#include <boost/locale/format.hpp>
+#include <boost/locale/message.hpp>
+
 namespace OpenApoc
 {
+
+using boost::locale::translate;
+using boost::locale::format;
 
 typedef char32_t UniChar;
 

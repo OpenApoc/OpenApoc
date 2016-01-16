@@ -215,6 +215,27 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 	LogInfo("Setting up locale \"%s\"", desiredLanguageName.c_str());
 
 	boost::locale::generator gen;
+
+	std::vector<UString> resourcePaths;
+	resourcePaths.push_back(Settings->getString("Resource.SystemCDPath"));
+	resourcePaths.push_back(Settings->getString("Resource.LocalCDPath"));
+	resourcePaths.push_back(Settings->getString("Resource.SystemDataDir"));
+	resourcePaths.push_back(Settings->getString("Resource.LocalDataDir"));
+
+	for (auto &path : resourcePaths)
+	{
+		auto langPath = path + "/language";
+		LogInfo("Adding \"%s\" to language path", langPath.c_str());
+		gen.add_messages_path(langPath.str());
+	}
+
+	std::vector<UString> translationDomains = {"Paedia_string", "ufo_string"};
+	for (auto &domain : translationDomains)
+	{
+		LogInfo("Adding \"%s\" to translation domains", domain.c_str());
+		gen.add_messages_domain(domain.str());
+	}
+
 	std::locale loc = gen(desiredLanguageName.str());
 	std::locale::global(loc);
 
@@ -250,12 +271,6 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 	}
 
 	this->threadPool.reset(new ThreadPool(threadPoolSize));
-
-	std::vector<UString> resourcePaths;
-	resourcePaths.push_back(Settings->getString("Resource.SystemCDPath"));
-	resourcePaths.push_back(Settings->getString("Resource.LocalCDPath"));
-	resourcePaths.push_back(Settings->getString("Resource.SystemDataDir"));
-	resourcePaths.push_back(Settings->getString("Resource.LocalDataDir"));
 
 	this->data.reset(new Data(resourcePaths));
 
