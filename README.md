@@ -22,7 +22,6 @@ OpenApocalypse is built leveraging a number of libraries - to provide needed fun
 - [SDL2](http://www.libsdl.org)
 - [TinyXML2](http://www.grinninglizard.com/tinyxml2/) (Version 2)
 - [Physfs] (http://icculus.org/physfs/) - though we have patched it to fix some ISO loading bugs on [Github] (https://github.com/JonnyH/physfs-hg-import)- so use that version if you want to use the .iso file as a data source directly
-- [ICU4C] (http://site.icu-project.org/)
 - [GLM] (http://glm.g-truc.net/)
 - [Libunwind] (http://www.nongnu.org/libunwind/download.html) - debug backtracing on linux
 - [Boost] (http://boost.org) - specifially the 'locale' library, used for localisation
@@ -46,9 +45,9 @@ git submodule update
 
 Building on Linux
 (tested on ubuntu 14.04 - other distributions will probably need different packages to install - see the dependency list above)
-- Install the following packages: libsdl2-dev glm libicu-dev libtinyxml2-dev cmake build-essential git libboost-locale-dev
+- Install the following packages: libsdl2-dev glm libtinyxml2-dev cmake build-essential git libboost-locale-dev
 ```
-sudo apt-get install libsdl2-dev libicu-dev libtinyxml2-dev cmake build-essential git libunwind-dev
+sudo apt-get install libsdl2-dev libtinyxml2-dev cmake build-essential git libunwind-dev
 ```
 - Checkout OpenApoc from github
 - Fetch the dependencies from git with the following terminal command (run from the just-created OpenApoc folder)
