@@ -23,12 +23,12 @@
         </entry>
         <entry id="MEGAPOL" name="Megapol">
           <backgroundimage>xcom3/UFOPAEDI/13MEGAPO.PCX</backgroundimage>
-          <text_info>&gt;Megapol not only runs the city police force and prison service, it also manufactures vehicles, weapons and munitions. It directly competes with the Marsec corporation for lucrative markets in the mining colonies and Mega-Primus. The major problems for Megapol are the criminal gangs that distribute Psiclone and the UFO incursions which are regarded as a threat to city security. Police vehicles bravely intercept UFOs as they materialize from the Dimension Gates, but they are woefully under equipped to deal with them.</text_info>
+          <text_info>Megapol not only runs the city police force and prison service, it also manufactures vehicles, weapons and munitions. It directly competes with the Marsec corporation for lucrative markets in the mining colonies and Mega-Primus. The major problems for Megapol are the criminal gangs that distribute Psiclone and the UFO incursions which are regarded as a threat to city security. Police vehicles bravely intercept UFOs as they materialize from the Dimension Gates, but they are woefully under equipped to deal with them.</text_info>
           <dynamic_data>ORGANISATIONS</dynamic_data>
         </entry>
         <entry id="CULTOFSIRIUS" name="Cult Of Sirius">
           <backgroundimage>xcom3/UFOPAEDI/03CHURCH.PCX</backgroundimage>
-          <text_info>&gt;This bizarre cult has whipped up a religious frenzy following the appearance of the Dimension Gates. The cult has long believed in redemption of the human race by a superior Alien race. They believe the UFOs and Aliens to be harmless and are rapidly gaining credibility and recruits from the general population. This represents a considerable threat to X-COM because the cultists will do anything to assist the Aliens in their purpose, whatever that might be.</text_info>
+          <text_info>This bizarre cult has whipped up a religious frenzy following the appearance of the Dimension Gates. The cult has long believed in redemption of the human race by a superior Alien race. They believe the UFOs and Aliens to be harmless and are rapidly gaining credibility and recruits from the general population. This represents a considerable threat to X-COM because the cultists will do anything to assist the Aliens in their purpose, whatever that might be.</text_info>
           <dynamic_data>ORGANISATIONS</dynamic_data>
         </entry>
         <entry id="MARSEC" name="MarSec">

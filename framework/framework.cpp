@@ -229,7 +229,7 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 		gen.add_messages_path(langPath.str());
 	}
 
-	std::vector<UString> translationDomains = {"Paedia_string", "ufo_string"};
+	std::vector<UString> translationDomains = {"Paedia_string", "ufo_string", "openapoc"};
 	for (auto &domain : translationDomains)
 	{
 		LogInfo("Adding \"%s\" to translation domains", domain.c_str());
