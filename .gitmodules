@@ -8,9 +8,3 @@
 [submodule "dependencies/physfs"]
 	path = dependencies/physfs
 	url = https://github.com/JonnyH/physfs-hg-import.git
-[submodule "dependencies/icu55"]
-	path = dependencies/icu55
-	url = https://github.com/JonnyH/icu55.git
-[submodule "dependencies/SDL2"]
-	path = dependencies/SDL2
-	url = https://github.com/sfalexrog/SDL2_OA

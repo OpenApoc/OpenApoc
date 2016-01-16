@@ -88,18 +88,15 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>12.0.21005.1</_ProjectFileVersion>
+    <NuGetPackageImportStamp>ac33e56b</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
-    <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
     <LibraryPath>$(LIB);$(SolutionDir)bin\$(Configuration)\;$(LibraryPath)</LibraryPath>
     <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\;$(ProjectDir)\dependencies\SDL2\include;</IncludePath>
     <CustomBuildBeforeTargets>ClCompile</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
-    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
-    <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(LIB);$(SolutionDir)bin\$(Configuration)\;$(LibraryPath)</LibraryPath>
     <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\;$(ProjectDir)\dependencies\SDL2\include;</IncludePath>
@@ -118,8 +115,6 @@
     <CustomBuildBeforeTargets>ClCompile</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <OutDir>$(SolutionDir)bin\$(Configuration)\</OutDir>
-    <IntDir>obj\$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
     <LibraryPath>$(LIB);$(SolutionDir)bin\$(Configuration)\;$(LibraryPath)</LibraryPath>
     <IncludePath>$(ProjectDir)\dependencies\physfs\src;$(ProjectDir)\dependencies\tinyxml2;$(ProjectDir)\dependencies\include;$(ProjectDir)\dependencies\icu55\source\io;$(ProjectDir)\dependencies\icu55\source\i18n;$(ProjectDir)\dependencies\icu55\source\common;$(ProjectDir)\dependencies\glm;$(IncludePath);$(ProjectDir)\;$(ProjectDir)\dependencies\SDL2\include;</IncludePath>
@@ -141,7 +136,6 @@
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
-      <ObjectFileName>$(IntDir)\%(RelativeDir)\</ObjectFileName>
       <BrowseInformation>true</BrowseInformation>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -181,7 +175,6 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <ObjectFileName>$(IntDir)\%(RelativeDir)\</ObjectFileName>
       <BrowseInformation>true</BrowseInformation>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -222,7 +215,6 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <ObjectFileName>$(IntDir)\%(RelativeDir)\</ObjectFileName>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -256,7 +248,6 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <ObjectFileName>$(IntDir)\%(RelativeDir)\</ObjectFileName>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -290,7 +281,6 @@
       <PrecompiledHeader />
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <ObjectFileName>$(IntDir)\%(RelativeDir)\</ObjectFileName>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -328,7 +318,6 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <ObjectFileName>$(IntDir)\%(RelativeDir)\</ObjectFileName>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -448,6 +437,7 @@
     <ClCompile Include="game\general\ingameoptions.cpp" />
     <ClCompile Include="game\tileview\voxel.cpp" />
     <ClCompile Include="game\apocresources\loftemps.cpp" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="forms\checkbox.h" />
@@ -556,17 +546,8 @@
     <ClInclude Include="game\apocresources\loftemps.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="dependencies\icu55\source\common\common.vcxproj">
-      <Project>{73c0a65b-d1f2-4de1-b3a6-15dad2c23f3d}</Project>
-    </ProjectReference>
     <ProjectReference Include="dependencies\physfs.vcxproj">
       <Project>{5a1d2ec4-525e-49b6-9398-be359e71cb35}</Project>
-    </ProjectReference>
-    <ProjectReference Include="dependencies\SDL2\VisualC\SDLmain\SDLmain.vcxproj">
-      <Project>{da956fd3-e142-46f2-9dd5-c78bebb56b7a}</Project>
-    </ProjectReference>
-    <ProjectReference Include="dependencies\SDL2\VisualC\SDL\SDL.vcxproj">
-      <Project>{81ce8daf-ebb2-4761-8e45-b71abcca8c68}</Project>
     </ProjectReference>
     <ProjectReference Include="dependencies\tinyxml2.vcxproj">
       <Project>{d1c528b6-aa02-4d29-9d61-dc08e317a70d}</Project>
@@ -587,5 +568,18 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\sdl2.redist.2.0.3\build\native\sdl2.redist.targets" Condition="Exists('packages\sdl2.redist.2.0.3\build\native\sdl2.redist.targets')" />
+    <Import Project="packages\sdl2.2.0.3\build\native\sdl2.targets" Condition="Exists('packages\sdl2.2.0.3\build\native\sdl2.targets')" />
+    <Import Project="packages\boost.1.60.0.0\build\native\boost.targets" Condition="Exists('packages\boost.1.60.0.0\build\native\boost.targets')" />
+    <Import Project="packages\boost_locale.1.60.0.0\build\native\boost_locale.targets" Condition="Exists('packages\boost_locale.1.60.0.0\build\native\boost_locale.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\sdl2.redist.2.0.3\build\native\sdl2.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\sdl2.redist.2.0.3\build\native\sdl2.redist.targets'))" />
+    <Error Condition="!Exists('packages\sdl2.2.0.3\build\native\sdl2.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\sdl2.2.0.3\build\native\sdl2.targets'))" />
+    <Error Condition="!Exists('packages\boost.1.60.0.0\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost.1.60.0.0\build\native\boost.targets'))" />
+    <Error Condition="!Exists('packages\boost_locale.1.60.0.0\build\native\boost_locale.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost_locale.1.60.0.0\build\native\boost_locale.targets'))" />
+  </Target>
 </Project>

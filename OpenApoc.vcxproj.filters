@@ -636,5 +636,6 @@
     <None Include="framework\render\gles20\EGLContext.h">
       <Filter>Header Files</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
