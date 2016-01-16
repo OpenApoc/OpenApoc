@@ -224,7 +224,7 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 
 	for (auto &path : resourcePaths)
 	{
-		auto langPath = path + "/language";
+		auto langPath = path + "/languages";
 		LogInfo("Adding \"%s\" to language path", langPath.c_str());
 		gen.add_messages_path(langPath.str());
 	}

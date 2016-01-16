@@ -14,12 +14,12 @@
           <image/>
           <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
         </graphicbutton>
-        <textbutton id="BUTTON_ABANDONGAME" text="STR_ABANDON_GAME">
+        <textbutton id="BUTTON_ABANDONGAME" text="Abandon and Restart Game">
           <position x="18" y="167"/>
           <size width="260" height="28"/>
           <font>SMALFONT</font>
         </textbutton>
-        <textbutton id="BUTTON_QUIT" text="STR_QUIT">
+        <textbutton id="BUTTON_QUIT" text="Quit X-Com Apocalypse">
           <position x="18" y="195"/>
           <size width="260" height="28"/>
           <font>SMALFONT</font>
@@ -81,7 +81,7 @@
           <image>BUTTON_CHECKBOX_FALSE</image>
           <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
         </checkbox>
-        <label text="STR_SHOW_TILE_ORIGIN">
+        <label text="Show Tile Origin">
           <position x="330" y="80"/>
           <font>SMALLSET</font>
           <size width="300" height="16"/>
@@ -92,7 +92,7 @@
           <image>BUTTON_CHECKBOX_FALSE</image>
           <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
         </checkbox>
-        <label text="STR_SHOW_VEHICLE_PATH">
+        <label text="Show Vehicle Path">
           <position x="330" y="100"/>
           <font>SMALLSET</font>
           <size width="300" height="16"/>
@@ -103,7 +103,7 @@
           <image>BUTTON_CHECKBOX_FALSE</image>
           <imagechecked>BUTTON_CHECKBOX_TRUE</imagechecked>
         </checkbox>
-        <label text="STR_SHOW_SELECTABLE_BOUNDS">
+        <label text="Show Selectable Bounds">
           <position x="330" y="120"/>
           <font>SMALLSET</font>
           <size width="300" height="16"/>

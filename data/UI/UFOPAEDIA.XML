@@ -10,13 +10,13 @@
         <position x="2" y="2"/>
         <size width="640" height="480"/>
       </graphic>
-      <label text="STR_UFOPAEDIA">
+      <label text="Ufopaedia">
         <position x="20" y="16"/>
         <size width="600" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>BIGFONT</font>
       </label>
-      <label text="STR_ORGANISATIONS">
+      <label text="Organizations">
         <position x="344" y="62"/>
         <size width="270" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
@@ -28,7 +28,7 @@
         <image/>
         <imagedepressed/>
       </graphicbutton>
-      <label text="STR_VEHICLES">
+      <label text="Vehicles">
         <position x="344" y="102"/>
         <size width="270" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
@@ -40,7 +40,7 @@
         <image/>
         <imagedepressed/>
       </graphicbutton>
-      <label text="STR_VEHICLE_EQUIPMENT">
+      <label text="Vehicle Equipment">
         <position x="344" y="142"/>
         <size width="270" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
@@ -52,7 +52,7 @@
         <image/>
         <imagedepressed/>
       </graphicbutton>
-      <label text="STR_EQUIPMENT">
+      <label text="Equipment">
         <position x="344" y="182"/>
         <size width="270" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
@@ -64,7 +64,7 @@
         <image/>
         <imagedepressed/>
       </graphicbutton>
-      <label text="STR_FACILITIES">
+      <label text="Base Facilities">
         <position x="344" y="222"/>
         <size width="270" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
@@ -76,7 +76,7 @@
         <image/>
         <imagedepressed/>
       </graphicbutton>
-      <label text="STR_ALIEN_CRAFT">
+      <label text="Alien Craft">
         <position x="344" y="262"/>
         <size width="270" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
@@ -88,7 +88,7 @@
         <image/>
         <imagedepressed/>
       </graphicbutton>
-      <label text="STR_ALIENS">
+      <label text="Aliens">
         <position x="344" y="302"/>
         <size width="270" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
@@ -100,7 +100,7 @@
         <image/>
         <imagedepressed/>
       </graphicbutton>
-      <label text="STR_THE_ALIEN_DIMENSION">
+      <label text="The Alien Dimension">
         <position x="344" y="342"/>
         <size width="270" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
@@ -112,7 +112,7 @@
         <image/>
         <imagedepressed/>
       </graphicbutton>
-      <label text="STR_BUILDINGS">
+      <label text="Buildings">
         <position x="344" y="382"/>
         <size width="270" height="40"/>
         <alignment horizontal="left" vertical="centre"/>
@@ -124,7 +124,7 @@
         <image/>
         <imagedepressed/>
       </graphicbutton>
-      <graphicbutton id="BUTTON_QUIT" text="STR_QUIT">
+      <graphicbutton id="BUTTON_QUIT">
         <position x="604" y="444"/>
         <size width="35" height="34"/>
         <image/>

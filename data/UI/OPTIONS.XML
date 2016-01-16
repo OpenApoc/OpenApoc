@@ -19,17 +19,17 @@
         <listbox id="LISTBOX_OPTIONS" scrollbarid="SCROLL_LISTPOSITION">
           <position x="23" y="68"/>
           <size width="526" height="381"/>
-          <textbutton id="BUTTON_TEST_XCOMBASE" text="STR_TEST_XCOM_BASESCREEN">
+          <textbutton id="BUTTON_TEST_XCOMBASE" text="Tets XCom Base Screen">
             <position x="right" y="bottom"/>
             <size width="44" height="32"/>
             <font>SMALFONT</font>
           </textbutton>
-          <textbutton id="BUTTON_TEST_UFOPAEDIA" text="STR_TEST_UFOPAEDIA">
+          <textbutton id="BUTTON_TEST_UFOPAEDIA" text="Test UFOPaedia">
             <position x="right" y="bottom"/>
             <size width="44" height="32"/>
             <font>SMALFONT</font>
           </textbutton>
-          <textbutton id="BUTTON_DEBUGGING" text="STR_DEBUG_MENU">
+          <textbutton id="BUTTON_DEBUGGING" text="Debug Menu">
             <position x="right" y="bottom"/>
             <size width="44" height="32"/>
             <font>SMALFONT</font>
@@ -39,47 +39,47 @@
             <size width="44" height="32"/>
             <font>SMALFONT</font>
           </textbutton>
-          <textbutton id="BUTTON_TEMP" text="STR_QUIT">
+          <textbutton id="BUTTON_TEMP" text="Quit">
             <position x="right" y="bottom"/>
             <size width="44" height="32"/>
             <font>SMALFONT</font>
           </textbutton>
-          <textbutton id="BUTTON_TEMP" text="STR_VEHICLES_INFO">
+          <textbutton id="BUTTON_TEMP" text="Vehicle Info">
             <position x="right" y="bottom"/>
             <size width="44" height="32"/>
             <font>SMALFONT</font>
           </textbutton>
-          <textbutton id="BUTTON_TEMP" text="STR_QUIT">
+          <textbutton id="BUTTON_TEMP" text="Quit">
             <position x="right" y="bottom"/>
             <size width="44" height="32"/>
             <font>SMALFONT</font>
           </textbutton>
-          <textbutton id="BUTTON_TEMP" text="STR_QUIT">
+          <textbutton id="BUTTON_TEMP" text="Quit">
             <position x="right" y="bottom"/>
             <size width="44" height="32"/>
             <font>SMALFONT</font>
           </textbutton>
-          <textbutton id="BUTTON_TEMP" text="STR_QUIT">
+          <textbutton id="BUTTON_TEMP" text="Quit">
             <position x="right" y="bottom"/>
             <size width="44" height="32"/>
             <font>SMALFONT</font>
           </textbutton>
-          <textbutton id="BUTTON_TEMP" text="STR_QUIT">
+          <textbutton id="BUTTON_TEMP" text="Quit">
             <position x="right" y="bottom"/>
             <size width="44" height="32"/>
             <font>SMALFONT</font>
           </textbutton>
-          <textbutton id="BUTTON_TEMP" text="STR_QUIT">
+          <textbutton id="BUTTON_TEMP" text="Quit">
             <position x="right" y="bottom"/>
             <size width="44" height="32"/>
             <font>SMALFONT</font>
           </textbutton>
-          <textbutton id="BUTTON_TEMP" text="STR_QUIT">
+          <textbutton id="BUTTON_TEMP" text="Quit">
             <position x="right" y="bottom"/>
             <size width="44" height="32"/>
             <font>SMALFONT</font>
           </textbutton>
-          <textbutton id="BUTTON_TEMP" text="STR_QUIT">
+          <textbutton id="BUTTON_TEMP" text="Quit">
             <position x="right" y="bottom"/>
             <size width="44" height="32"/>
             <font>SMALFONT</font>
@@ -107,7 +107,7 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALLSET</font>
       </textedit>
-      <label id="LABEL_TESTXX" text="STR_VEHICLES_INFO">
+      <label id="LABEL_TESTXX" text="Vehicle Info">
         <backcolour r="80" g="80" b="80" a="255"/>
         <position x="right" y="top"/>
         <size width="200" height="200"/>

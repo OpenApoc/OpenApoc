@@ -9,15 +9,11 @@
 namespace OpenApoc
 {
 
-GameCore::GameCore() : supportedlanguages(), languagetext(), fonts(), forms() { Loaded = false; }
+GameCore::GameCore() : fonts(), forms() { Loaded = false; }
 
-void GameCore::Load(UString CoreXMLFilename, UString Language)
+void GameCore::Load(UString CoreXMLFilename)
 {
 	assert(Loaded == false);
-	// FIXME: Hacks to convert from standard en_GB.utf8 style language names to en_gb
-	auto splitLang = Language.split(".");
-	language = splitLang[0].toLower();
-	LogWarning("Munged language name \"%s\" to \"%s\"", Language.c_str(), language.c_str());
 	ParseXMLDoc(CoreXMLFilename);
 	DebugModeEnabled = false;
 
@@ -83,10 +79,6 @@ void GameCore::ParseXMLDoc(UString XMLFilename)
 			{
 				ParseGameXML(node);
 			}
-			else if (nodename == "string")
-			{
-				ParseStringXML(node);
-			}
 			else if (nodename == "form")
 			{
 				ParseFormXML(node);
@@ -112,10 +104,6 @@ void GameCore::ParseXMLDoc(UString XMLFilename)
 					continue;
 				}
 				this->fonts[fontName] = font;
-			}
-			else if (nodename == "language")
-			{
-				supportedlanguages[node->Attribute("id")] = node->GetText();
 			}
 			else if (nodename == "alias")
 			{
@@ -162,32 +150,9 @@ void GameCore::ParseGameXML(tinyxml2::XMLElement *Source)
 	}
 }
 
-void GameCore::ParseStringXML(tinyxml2::XMLElement *Source)
-{
-	UString nodename = Source->Name();
-	if (nodename == "string")
-	{
-		if (Source->FirstChildElement(language.c_str()) != nullptr)
-		{
-			languagetext[Source->Attribute("id")] =
-			    Source->FirstChildElement(language.c_str())->GetText();
-		}
-	}
-}
-
 void GameCore::ParseFormXML(tinyxml2::XMLElement *Source)
 {
 	forms[Source->Attribute("id")] = new Form(Source);
-}
-
-UString GameCore::GetString(UString ID)
-{
-	UString s = languagetext[ID];
-	if (s == "")
-	{
-		s = ID;
-	}
-	return s;
 }
 
 Form *GameCore::GetForm(UString ID) { return static_cast<Form *>(forms[ID]->CopyTo(nullptr)); }

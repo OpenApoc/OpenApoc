@@ -40,6 +40,32 @@
     <glyph string="X" offset="55"/>
     <glyph string="Y" offset="56"/>
     <glyph string="Z" offset="57"/>
+    <glyph string="a" offset="32"/>
+    <glyph string="b" offset="33"/>
+    <glyph string="c" offset="34"/>
+    <glyph string="d" offset="35"/>
+    <glyph string="e" offset="36"/>
+    <glyph string="f" offset="37"/>
+    <glyph string="g" offset="38"/>
+    <glyph string="h" offset="39"/>
+    <glyph string="i" offset="40"/>
+    <glyph string="j" offset="41"/>
+    <glyph string="k" offset="42"/>
+    <glyph string="l" offset="43"/>
+    <glyph string="m" offset="44"/>
+    <glyph string="n" offset="45"/>
+    <glyph string="o" offset="46"/>
+    <glyph string="p" offset="47"/>
+    <glyph string="q" offset="48"/>
+    <glyph string="r" offset="49"/>
+    <glyph string="s" offset="50"/>
+    <glyph string="t" offset="51"/>
+    <glyph string="u" offset="52"/>
+    <glyph string="v" offset="53"/>
+    <glyph string="w" offset="54"/>
+    <glyph string="x" offset="55"/>
+    <glyph string="y" offset="56"/>
+    <glyph string="z" offset="57"/>
     <glyph string="Ü" offset="96"/>
     <glyph string="É" offset="97"/>
     <glyph string="Â" offset="98"/>

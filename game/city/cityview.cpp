@@ -293,8 +293,8 @@ void CityView::Update(StageCmd *const cmd)
 void CityView::EventOccurred(Event *e)
 {
 	fw().gamecore->MouseCursor->EventOccured(e);
-	baseForm->EventOccured(e);
 	activeTab->EventOccured(e);
+	baseForm->EventOccured(e);
 
 	if (e->Type == EVENT_FORM_INTERACTION)
 	{

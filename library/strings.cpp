@@ -8,8 +8,54 @@
 #define snprintf _snprintf
 #endif
 
+#ifdef DUMP_TRANSLATION_STRINGS
+#include <map>
+#include <set>
+#include <iostream>
+#include <fstream>
+#endif
 namespace OpenApoc
 {
+
+#ifdef DUMP_TRANSLATION_STRINGS
+
+static std::map<UString, std::set<UString>> trStrings;
+
+void dumpStrings()
+{
+	for (auto &p : trStrings)
+	{
+		UString outFileName = p.first + ".po";
+		std::ofstream outFile(outFileName.str());
+		outFile << "msgid \"\"\n"
+		        << "msgstr \"\"\n"
+		        << "\"Project-Id-Version: Apocalypse\\n\"\n"
+		        << "\"MIME-Version: 1.0\\n\"\n"
+		        << "\"Content-Type: text/plain; charset=UTF-8\\n\"\n"
+		        << "\"Content-Transfer-Encoding: 8bit\\n\"\n"
+		        << "\"Language: en\\n\""
+		        << "\"Plural-Forms: nplurals=2; plural=(n != 1);\\n\"\n\n";
+		for (auto &str : p.second)
+		{
+			auto escapedStr = str;
+			outFile << "msgid \"" << str.str() << "\"\n";
+			outFile << "msgstr \"" << str.str() << "\"\n\n";
+		}
+	}
+}
+
+#endif
+
+UString tr(const UString &str, const UString domain)
+{
+#ifdef DUMP_TRANSLATION_STRINGS
+	if (str != "")
+	{
+		trStrings[domain].insert(str);
+	}
+#endif
+	return UString(boost::locale::translate(str.str()).str(domain.str()));
+}
 
 UString::~UString() {}
 

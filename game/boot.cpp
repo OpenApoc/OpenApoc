@@ -15,11 +15,10 @@ static void CreateGameCore(std::atomic<bool> *isComplete)
 	TRACE_FN;
 
 	UString ruleset = fw().Settings->getString("GameRules");
-	UString language = fw().Settings->getString("Language");
 
 	fw().gamecore.reset(new GameCore());
 
-	fw().gamecore->Load(ruleset, language);
+	fw().gamecore->Load(ruleset);
 	*isComplete = true;
 }
 

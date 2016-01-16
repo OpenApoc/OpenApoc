@@ -101,7 +101,7 @@ void Label::ConfigureFromXML(tinyxml2::XMLElement *Element)
 
 	if (Element->Attribute("text") != nullptr)
 	{
-		text = fw().gamecore->GetString(Element->Attribute("text"));
+		text = tr(Element->Attribute("text"));
 	}
 	if (Element->FirstChildElement("font") != nullptr)
 	{

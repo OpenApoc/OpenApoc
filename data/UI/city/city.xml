@@ -154,7 +154,7 @@
       <graphic>
         <size width="640" height="128"/>
         <image>RAW:xcom3/ufodata/isobord1.dat:640:128:xcom3/ufodata/pal_01.dat</image>
-      </graphic>      
+      </graphic>
       <graphicbutton id="BUTTON_SHOW_BASE">
         <position x="408" y="75"/>
         <size width="27" height="46"/>

@@ -202,7 +202,7 @@ void BaseScreen::EventOccurred(Event *e)
 	}
 	if (dragFacility != nullptr)
 	{
-		selText->SetText(fw().gamecore->GetString(dragFacility->name));
+		selText->SetText(tr(dragFacility->name));
 		selGraphic->SetImage(fw().data->load_image(dragFacility->sprite));
 		statsLabels[0]->SetText("Cost to build");
 		statsValues[0]->SetText("$" + Strings::FromInteger(dragFacility->buildCost));
@@ -213,7 +213,7 @@ void BaseScreen::EventOccurred(Event *e)
 	}
 	else if (selFacility != nullptr)
 	{
-		selText->SetText(fw().gamecore->GetString(selFacility->def.name));
+		selText->SetText(tr(selFacility->def.name));
 		selGraphic->SetImage(fw().data->load_image(selFacility->def.sprite));
 		if (selFacility->def.capacityAmount > 0)
 		{

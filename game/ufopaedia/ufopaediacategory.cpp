@@ -61,8 +61,7 @@ void UfopaediaCategory::Begin()
 	for (auto entry = Entries.begin(); entry != Entries.end(); entry++)
 	{
 		sp<UfopaediaEntry> e = *entry;
-		TextButton *tb =
-		    new TextButton(nullptr, fw().gamecore->GetString(e->Title), infolabel->GetFont());
+		TextButton *tb = new TextButton(nullptr, tr(e->Title), infolabel->GetFont());
 		tb->Name = "Index" + Strings::FromInteger(idx);
 		tb->RenderStyle = TextButton::TextButtonRenderStyles::SolidButtonStyle;
 		tb->TextHAlign = HorizontalAlignment::Left;
@@ -197,9 +196,9 @@ void UfopaediaCategory::SetupForm()
 		menuform->FindControlTyped<Graphic>("BACKGROUND_PICTURE")
 		    ->SetImage(fw().data->load_image(BackgroundImageFilename));
 		Label *infolabel = menuform->FindControlTyped<Label>("TEXT_INFO");
-		infolabel->SetText(fw().gamecore->GetString(BodyInformation));
+		infolabel->SetText(tr(BodyInformation));
 		infolabel = menuform->FindControlTyped<Label>("TEXT_TITLE_DATA");
-		infolabel->SetText(fw().gamecore->GetString(Title).toUpper());
+		infolabel->SetText(tr(Title).toUpper());
 	}
 	else
 	{
@@ -207,9 +206,9 @@ void UfopaediaCategory::SetupForm()
 		menuform->FindControlTyped<Graphic>("BACKGROUND_PICTURE")
 		    ->SetImage(fw().data->load_image(e->BackgroundImageFilename));
 		Label *infolabel = menuform->FindControlTyped<Label>("TEXT_INFO");
-		infolabel->SetText(fw().gamecore->GetString(e->BodyInformation));
+		infolabel->SetText(tr(e->BodyInformation));
 		infolabel = menuform->FindControlTyped<Label>("TEXT_TITLE_DATA");
-		infolabel->SetText(fw().gamecore->GetString(e->Title).toUpper());
+		infolabel->SetText(tr(e->Title).toUpper());
 	}
 }
 

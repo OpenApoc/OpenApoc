@@ -12,10 +12,6 @@ namespace OpenApoc
 class GameCore
 {
   private:
-	UString language;
-
-	std::map<UString, UString> supportedlanguages;
-	std::map<UString, UString> languagetext;
 	std::map<UString, sp<BitmapFont>> fonts;
 	std::map<UString, Form *> forms;
 	std::map<UString, UString> aliases;
@@ -39,10 +35,9 @@ class GameCore
 	ApocCursor *MouseCursor;
 
 	GameCore();
-	void Load(UString CoreXMLFilename, UString Language);
+	void Load(UString CoreXMLFilename);
 	~GameCore();
 
-	UString GetString(UString ID);
 	Form *GetForm(UString ID);
 	sp<Image> GetImage(UString ImageData);
 	sp<BitmapFont> GetFont(UString FontData);

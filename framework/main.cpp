@@ -42,5 +42,10 @@ int main(int argc, char *argv[])
 	Framework *fw = new Framework(UString(argv[0]), cmdline);
 	fw->Run();
 	delete fw;
+
+#ifdef DUMP_TRANSLATION_STRINGS
+	dumpStrings();
+#endif
+
 	return 0;
 }

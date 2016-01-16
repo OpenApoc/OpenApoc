@@ -1,0 +1,173 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Apocalypse\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n""Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Abandon and Restart Game"
+msgstr "Abandon and Restart Game"
+
+msgid "Alien Craft"
+msgstr "Alien Craft"
+
+msgid "Aliens"
+msgstr "Aliens"
+
+msgid "BASES"
+msgstr "BASES"
+
+msgid "Base Facilities"
+msgstr "Base Facilities"
+
+msgid "Buildings"
+msgstr "Buildings"
+
+msgid "Debug Menu"
+msgstr "Debug Menu"
+
+msgid "Debug Mode"
+msgstr "Debug Mode"
+
+msgid "Dump PCKs"
+msgstr "Dump PCKs"
+
+msgid "Easy"
+msgstr "Easy"
+
+msgid "Equipment"
+msgstr "Equipment"
+
+msgid "Form Preview"
+msgstr "Form Preview"
+
+msgid "Hard"
+msgstr "Hard"
+
+msgid "LABEL_1"
+msgstr "LABEL_1"
+
+msgid "LABEL_2"
+msgstr "LABEL_2"
+
+msgid "LABEL_3"
+msgstr "LABEL_3"
+
+msgid "LABEL_4"
+msgstr "LABEL_4"
+
+msgid "LABEL_5"
+msgstr "LABEL_5"
+
+msgid "LABEL_6"
+msgstr "LABEL_6"
+
+msgid "LABEL_7"
+msgstr "LABEL_7"
+
+msgid "LABEL_8"
+msgstr "LABEL_8"
+
+msgid "LABEL_9"
+msgstr "LABEL_9"
+
+msgid "Load Saved Game"
+msgstr "Load Saved Game"
+
+msgid "Medium"
+msgstr "Medium"
+
+msgid "Novice"
+msgstr "Novice"
+
+msgid "OpenApocalypse"
+msgstr "OpenApocalypse"
+
+msgid "Options"
+msgstr "Options"
+
+msgid "Organizations"
+msgstr "Organizations"
+
+msgid "Quit"
+msgstr "Quit"
+
+msgid "Quit X-Com Apocalypse"
+msgstr "Quit X-Com Apocalypse"
+
+msgid "Show Selectable Bounds"
+msgstr "Show Selectable Bounds"
+
+msgid "Show Tile Origin"
+msgstr "Show Tile Origin"
+
+msgid "Show Vehicle Path"
+msgstr "Show Vehicle Path"
+
+msgid "Start Campaign Game"
+msgstr "Start Campaign Game"
+
+msgid "Superhuman"
+msgstr "Superhuman"
+
+msgid "TICK TOCK"
+msgstr "TICK TOCK"
+
+msgid "Test UFOPaedia"
+msgstr "Test UFOPaedia"
+
+msgid "Testing Alias Text"
+msgstr "Testing Alias Text"
+
+msgid "Tets XCom Base Screen"
+msgstr "Tets XCom Base Screen"
+
+msgid "The Alien Dimension"
+msgstr "The Alien Dimension"
+
+msgid "Ufopaedia"
+msgstr "Ufopaedia"
+
+msgid "VALUE_1"
+msgstr "VALUE_1"
+
+msgid "VALUE_2"
+msgstr "VALUE_2"
+
+msgid "VALUE_3"
+msgstr "VALUE_3"
+
+msgid "VALUE_4"
+msgstr "VALUE_4"
+
+msgid "VALUE_5"
+msgstr "VALUE_5"
+
+msgid "VALUE_6"
+msgstr "VALUE_6"
+
+msgid "VALUE_7"
+msgstr "VALUE_7"
+
+msgid "VALUE_8"
+msgstr "VALUE_8"
+
+msgid "VALUE_9"
+msgstr "VALUE_9"
+
+msgid "VEHICLE NAME GOES HERE"
+msgstr "VEHICLE NAME GOES HERE"
+
+msgid "Vehicle Equipment"
+msgstr "Vehicle Equipment"
+
+msgid "Vehicle Info"
+msgstr "Vehicle Info"
+
+msgid "Vehicles"
+msgstr "Vehicles"
+
+msgid "Version"
+msgstr "Version"
+

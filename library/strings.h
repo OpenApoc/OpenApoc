@@ -6,14 +6,8 @@
 #include <limits>
 #include <string>
 
-#include <boost/locale/format.hpp>
-#include <boost/locale/message.hpp>
-
 namespace OpenApoc
 {
-
-using boost::locale::translate;
-using boost::locale::format;
 
 typedef char32_t UniChar;
 
@@ -111,5 +105,11 @@ class Strings
 	static UString FromFloat(float f);
 	static bool IsWhiteSpace(UniChar c);
 };
-;
+
+UString tr(const UString &str, const UString domain = "openapoc");
+
+#ifdef DUMP_TRANSLATION_STRINGS
+void dumpStrings();
+#endif
+
 }; // namespace OpenApoc

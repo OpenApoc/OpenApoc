@@ -2,8 +2,6 @@
 <openapoc>
   <game>
     <title>Open Apocalypse</title>
-    <include>LANGUAGES/LANGUAGES.XML</include>
-    <include>LANGUAGES/STRINGS.XML</include>
     <include>LANGUAGES/FONTS.XML</include>
     <include>UI/GRAPHICALIAS.XML</include>
     <include>UI/MAINMENU.XML</include>
