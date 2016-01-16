@@ -9,13 +9,12 @@
 namespace OpenApoc
 {
 
-typedef uint32_t UniChar;
+typedef char32_t UniChar;
 
 class UString
 {
   private:
-	class UString_impl;
-	std::unique_ptr<UString_impl> pimpl;
+	std::string u8Str;
 
   public:
 	// ASSUMPTIONS:
@@ -50,8 +49,6 @@ class UString
 
 	size_t length() const;
 	UString substr(size_t offset, size_t length = npos) const;
-
-	UniChar operator[](size_t pos) const;
 
 	static const size_t npos = static_cast<size_t>(-1);
 

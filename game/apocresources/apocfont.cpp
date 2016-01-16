@@ -5,6 +5,8 @@
 #include "framework/image.h"
 #include "framework/palette.h"
 
+#include <boost/locale.hpp>
+
 namespace OpenApoc
 {
 
@@ -102,27 +104,30 @@ sp<ApocalypseFont> ApocalypseFont::loadFont(tinyxml2::XMLElement *fontElement)
 			continue;
 		}
 
-		UString glyphString(attr);
-		if (glyphString.length() != 1)
+		auto pointString = boost::locale::conv::utf_to_utf<UniChar>(attr);
+
+		if (pointString.length() != 1)
 		{
 			LogError("apocfont \"%s\" glyph w/offset %d has %d codepoints, expected one - skipping "
 			         "glyph",
-			         fontName.c_str(), offset, glyphString.length());
+			         fontName.c_str(), offset, pointString.length());
 			continue;
 		}
 		if (offset >= glyphCount)
 		{
 			LogError("apocfont \"%s\" glyph \"%s\" has invalid offset %d - file contains a max of "
 			         "%d - skipping glyph",
-			         fontName.c_str(), glyphString.c_str(), offset, glyphCount);
+			         fontName.c_str(), attr, offset, glyphCount);
 			continue;
 		}
-		UniChar c = glyphString[0];
+
+		UniChar c = pointString[0];
+
 		if (font->fontbitmaps.find(c) != font->fontbitmaps.end())
 		{
 			LogError(
 			    "apocfont \"%s\" glyph \"%s\" has multiple definitions - skipping re-definition",
-			    fontName.c_str(), glyphString.c_str());
+			    fontName.c_str(), attr);
 			continue;
 		}
 		file.seekg(glyphSize * offset, std::ios::beg);

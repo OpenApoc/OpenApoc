@@ -2,9 +2,7 @@
 #include "framework/logger.h"
 #include "library/sp.h"
 
-#include <unicode/unistr.h>
-#include <unicode/umachine.h>
-#include <unicode/uchar.h>
+#include <boost/locale.hpp>
 
 #ifdef _MSC_VER
 #define snprintf _snprintf
@@ -13,42 +11,30 @@
 namespace OpenApoc
 {
 
-class UString::UString_impl : public icu::UnicodeString
-{
-  public:
-	UString_impl(const std::string str)
-	    : icu::UnicodeString(str.c_str(), "UTF-8"), c_str_dirty(true)
-	{
-	}
-	UString_impl(const UChar *ucstr, int len) : icu::UnicodeString(), c_str_dirty(true)
-	{
-		this->setTo(ucstr, len);
-	}
-	UString_impl(const char *str) : icu::UnicodeString(str, "UTF-8"), c_str_dirty(true) {}
-	UString_impl(const UString_impl &other) : icu::UnicodeString(other), c_str_dirty(true) {}
-	/* A copy of the string in utf8 for c_str() calls, as the pointer needs to be valid for the
-	 * lifetime of the UString object */
-	std::string c_str_contents;
-	bool c_str_dirty;
-};
-
 UString::~UString() {}
 
-UString::UString() : pimpl(new UString_impl("")) {}
+UString::UString() : u8Str() {}
 
-UString::UString(std::string str) : pimpl(new UString_impl(str)) {}
+UString::UString(std::string str) : u8Str(str) {}
 
-UString::UString(char c) : pimpl(new UString_impl(std::string(1, c))) {}
+UString::UString(char c) : u8Str(1, c) {}
 
-UString::UString(const char *cstr) : pimpl(new UString_impl(cstr)) {}
-
-UString::UString(const UString &other) : pimpl(new UString_impl(*other.pimpl.get())) {}
-
-UString::UString(UString &&other) { this->pimpl = std::move(other.pimpl); }
-
-UString::UString(UniChar uc) : pimpl(new UString_impl(""))
+UString::UString(const char *cstr)
 {
-	pimpl->setTo(static_cast<UChar32>(uc));
+	// We have to handle this manually as some things thought UString(nullptr) was a good idea
+	if (cstr)
+	{
+		this->u8Str = cstr;
+	}
+}
+
+UString::UString(const UString &other) : u8Str(other.u8Str) {}
+
+UString::UString(UString &&other) { this->u8Str = std::move(other.u8Str); }
+
+UString::UString(UniChar uc) : u8Str()
+{
+	u8Str = boost::locale::conv::utf_to_utf<char>(&uc, &uc + 1);
 }
 
 UString UString::format(const UString fmt, ...)
@@ -72,72 +58,47 @@ UString UString::format(const UString fmt, ...)
 	return UString(str.get());
 }
 
-std::string UString::str() const
-{
-	std::string str;
-	this->pimpl->toUTF8String(str);
-	return str;
-};
+std::string UString::str() const { return this->u8Str; };
 
-const char *UString::c_str() const
-{
-	if (pimpl->c_str_dirty)
-	{
-		this->pimpl->c_str_contents = this->str();
-		pimpl->c_str_dirty = false;
-	}
-	return this->pimpl->c_str_contents.c_str();
-}
+const char *UString::c_str() const { return this->u8Str.c_str(); }
 
-bool UString::operator<(const UString &other) const { return (*this->pimpl) < (*other.pimpl); }
+bool UString::operator<(const UString &other) const { return (this->u8Str) < (other.u8Str); }
 
-bool UString::operator==(const UString &other) const { return (*this->pimpl) == (*other.pimpl); }
+bool UString::operator==(const UString &other) const { return (this->u8Str) == (other.u8Str); }
 
 UString UString::substr(size_t offset, size_t length) const
 {
-	UString other;
-	other.pimpl->setTo(*this->pimpl, offset, std::min(length, this->length()));
-	return other;
+	return this->u8Str.substr(offset, length);
 }
 
-UString UString::toUpper() const
-{
-	UString other;
-	other.pimpl->setTo(this->pimpl->toUpper());
-	return other;
-}
+UString UString::toUpper() const { return boost::locale::to_upper(this->u8Str); }
 
 UString &UString::operator=(const UString &other)
 {
-	this->pimpl->setTo(*other.pimpl);
-	this->pimpl->c_str_dirty = true;
+	this->u8Str = other.u8Str;
 	return *this;
 }
 
 UString &UString::operator+=(const UString &other)
 {
-	*this->pimpl += *other.pimpl;
-	this->pimpl->c_str_dirty = true;
+	this->u8Str += other.u8Str;
 	return *this;
 }
 
-UniChar UString::operator[](size_t pos) const { return this->pimpl->char32At(pos); }
-
-size_t UString::length() const { return this->pimpl->countChar32(); }
+size_t UString::length() const
+{
+	auto pointString = boost::locale::conv::utf_to_utf<UniChar>(this->u8Str);
+	return pointString.length();
+}
 
 void UString::insert(size_t offset, const UString &other)
 {
-	this->pimpl->insert(offset, *other.pimpl);
-	this->pimpl->c_str_dirty = true;
+	this->u8Str.insert(offset, other.u8Str);
 }
 
-void UString::remove(size_t offset, size_t count)
-{
-	this->pimpl->remove(offset, count);
-	this->pimpl->c_str_dirty = true;
-}
+void UString::remove(size_t offset, size_t count) { this->u8Str.erase(offset, count); }
 
-bool UString::operator!=(const UString &other) const { return *this->pimpl != *other.pimpl; }
+bool UString::operator!=(const UString &other) const { return this->u8Str != other.u8Str; }
 
 UString operator+(const UString &lhs, const UString &rhs)
 {
@@ -149,28 +110,29 @@ UString operator+(const UString &lhs, const UString &rhs)
 
 std::vector<UString> UString::split(const UString &delims) const
 {
+	// FIXME: Probably won't work if any of 'delims' is outside the ASCII range
+	// FIXME: Doesn't work for more than 1 character in delims
 	std::vector<UString> strings;
-	int start = 0;
-	int end = this->pimpl->indexOf(*delims.pimpl, start);
-	while (end != -1)
+	std::stringstream ss(this->u8Str);
+	std::string tok;
+	if (delims.length() != 1)
 	{
-		strings.push_back(this->substr(start, static_cast<unsigned>(end - start)));
-		start = end + 1;
-		end = this->pimpl->indexOf(*delims.pimpl, start);
+		LogError("Invalid delim length %zu", delims.length());
 	}
-	strings.push_back(this->substr(start, static_cast<unsigned>(end - start)));
-
+	while (std::getline(ss, tok, delims.u8Str[0]))
+	{
+		strings.push_back(tok);
+	}
 	return strings;
 }
 
 UniChar UString::u8Char(char c)
 {
-	// FIXME: Evil nasty hack
-	UString s(c);
-	return s[0];
+	// FIXME: I believe all the <256 codepoints just map?
+	return c;
 }
 
-int UString::compare(const UString &other) const { return this->pimpl->compare(*other.pimpl); }
+int UString::compare(const UString &other) const { return this->u8Str.compare(other.u8Str); }
 
 UString::const_iterator UString::begin() const { return UString::const_iterator(*this, 0); }
 
@@ -190,7 +152,11 @@ bool UString::const_iterator::operator!=(const UString::const_iterator &other) c
 	return (this->offset != other.offset || this->s != other.s);
 }
 
-UniChar UString::const_iterator::operator*() const { return this->s[this->offset]; }
+UniChar UString::const_iterator::operator*() const
+{
+	auto pointString = boost::locale::conv::utf_to_utf<int>(this->s.str());
+	return pointString[this->offset];
+}
 
 int Strings::ToInteger(const UString &s)
 {
@@ -236,6 +202,9 @@ UString Strings::FromFloat(float f)
 	return UString(buffer);
 }
 
-bool Strings::IsWhiteSpace(UniChar c) { return u_isWhitespace(c); }
+bool Strings::IsWhiteSpace(UniChar c)
+{ // FIXME: Only works on ASCII whitespace
+	return isspace(c);
+}
 
 }; // namespace OpenApoc

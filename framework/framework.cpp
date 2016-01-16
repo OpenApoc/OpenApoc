@@ -19,6 +19,9 @@
 #include <physfs.h>
 #include <SDL_syswm.h>
 
+// Boost locale for setting the system locale
+#include <boost/locale.hpp>
+
 #ifdef OPENAPOC_GLES
 
 #include "framework/render/gles20/EGLContext.h"
@@ -165,6 +168,16 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 {
 	TRACE_FN;
 	LogInfo("Starting framework");
+
+	LogInfo("Setting up locale");
+
+	boost::locale::generator gen;
+	std::locale loc = gen("");
+	std::locale::global(loc);
+
+	LogInfo("Set locale to \"%s\"", loc.name().c_str());
+
+	// FIXME: Hook up system locale to translation database?
 
 	if (this->instance)
 	{
