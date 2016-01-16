@@ -23,7 +23,7 @@
     <firing_arc_1>3000</firing_arc_1>
     <firing_arc_2>4</firing_arc_2>
     <point_defence>false</point_defence>
-    <name>STR_HEAVY_DISRUPTOR_BEAM</name>
+    <name>Heavy Disruptor Beam</name>
     <fire_sfx>RAWSOUND:76</fire_sfx>
     <idem>76</idem>
     <explosion_graphic>PTANG:10</explosion_graphic>

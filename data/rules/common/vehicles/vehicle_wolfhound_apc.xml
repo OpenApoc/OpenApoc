@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <vehicle id="VEHICLE_WOLFHOUND_APC" type="ground">
-    <name>STR_WOLFHOUND_APC</name>
+    <name>Wolfhound APC</name>
     <manufacturer>ORG_MARSEC</manufacturer>
     <size>
       <x>1</x>

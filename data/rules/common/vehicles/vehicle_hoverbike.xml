@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <vehicle id="VEHICLE_HOVERBIKE" type="flying">
-    <name>STR_HOVERBIKE</name>
+    <name>Hoverbike</name>
     <manufacturer>ORG_MARSEC</manufacturer>
     <size>
       <x>1</x>

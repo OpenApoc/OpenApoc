@@ -24,7 +24,7 @@
     <firing_arc_1>1600</firing_arc_1>
     <firing_arc_2>3</firing_arc_2>
     <point_defence>false</point_defence>
-    <name>STR_JANITOR_MISSILE_ARRAY</name>
+    <name>Janitor Missile Array</name>
     <fire_sfx>RAWSOUND:79</fire_sfx>
     <idem>79</idem>
     <explosion_graphic>PTANG:7</explosion_graphic>

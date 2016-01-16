@@ -24,7 +24,7 @@
     <firing_arc_1>1200</firing_arc_1>
     <firing_arc_2>4</firing_arc_2>
     <point_defence>false</point_defence>
-    <name>STR_PLASMA_MULTI-SYSTEM</name>
+    <name>Plasma Multi-System</name>
     <fire_sfx>RAWSOUND:89</fire_sfx>
     <idem>89</idem>
     <explosion_graphic>PTANG:9</explosion_graphic>

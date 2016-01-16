@@ -24,7 +24,7 @@
     <firing_arc_1>1100</firing_arc_1>
     <firing_arc_2>2</firing_arc_2>
     <point_defence>false</point_defence>
-    <name>STR_40MM_AUTO_CANNON</name>
+    <name>40mm Auto Cannon</name>
     <fire_sfx>RAWSOUND:85</fire_sfx>
     <idem>85</idem>
     <explosion_graphic>PTANG:1</explosion_graphic>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <vehicle id="VEHICLE_RETALIATOR" type="flying">
-    <name>STR_RETALIATOR</name>
+    <name>Retaliator</name>
     <manufacturer>ORG_X-COM</manufacturer>
     <size>
       <x>1</x>

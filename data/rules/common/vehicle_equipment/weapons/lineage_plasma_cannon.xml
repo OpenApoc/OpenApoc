@@ -24,7 +24,7 @@
     <firing_arc_1>2400</firing_arc_1>
     <firing_arc_2>2</firing_arc_2>
     <point_defence>false</point_defence>
-    <name>STR_LINEAGE_PLASMA_CANNON</name>
+    <name>Lineage Plasma Cannon</name>
     <fire_sfx>RAWSOUND:88</fire_sfx>
     <idem>88</idem>
     <explosion_graphic>PTANG:9</explosion_graphic>

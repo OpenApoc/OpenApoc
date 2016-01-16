@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <vehicle id="VEHICLE_ALIEN_DESTROYER" type="ufo">
-    <name>STR_ALIEN_DESTROYER</name>
+    <name>Alien Destroyer</name>
     <manufacturer>ORG_ALIEN</manufacturer>
     <size>
       <x>1</x>

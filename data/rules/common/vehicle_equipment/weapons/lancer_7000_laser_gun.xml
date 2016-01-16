@@ -23,7 +23,7 @@
     <firing_arc_1>2200</firing_arc_1>
     <firing_arc_2>2</firing_arc_2>
     <point_defence>false</point_defence>
-    <name>STR_LANCER_7000_LASER_GUN</name>
+    <name>Lancer 7000 Laser Gun</name>
     <fire_sfx>RAWSOUND:81</fire_sfx>
     <idem>81</idem>
     <explosion_graphic>PTANG:8</explosion_graphic>

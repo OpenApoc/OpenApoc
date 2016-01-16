@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <vehicle id="VEHICLE_AUTOTRANS" type="ground">
-    <name>STR_AUTOTRANS</name>
+    <name>Autotrans</name>
     <manufacturer>ORG_GENERAL_METRO</manufacturer>
     <size>
       <x>1</x>

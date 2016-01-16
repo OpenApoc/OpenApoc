@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <vehicle_equipment type="general" id="VEQUIP_LARGE_DISRUPTION_SHIELD">
-    <name>STR_LARGE_DISRUPTION_SHIELD</name>
+    <name>Large Disruption Shield</name>
     <usable_by>ground</usable_by>
     <usable_by>air</usable_by>
     <weight>120</weight>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <vehicle id="VEHICLE_HAWK_AIR_WARRIOR" type="flying">
-    <name>STR_HAWK_AIR_WARRIOR</name>
+    <name>Hawk Air Warrior</name>
     <manufacturer>ORG_MARSEC</manufacturer>
     <size>
       <x>1</x>

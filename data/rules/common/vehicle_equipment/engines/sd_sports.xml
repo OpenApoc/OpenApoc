@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <vehicle_equipment type="engine" id="VEQUIP_SD_SPORTS">
-    <name>STR_SD_SPORTS</name>
+    <name>SD Sports</name>
     <usable_by>air</usable_by>
     <weight>140</weight>
     <max_ammo>12</max_ammo>

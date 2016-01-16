@@ -24,7 +24,7 @@
     <firing_arc_1>4800</firing_arc_1>
     <firing_arc_2>3</firing_arc_2>
     <point_defence>false</point_defence>
-    <name>STR_JUSTICE_MISSILE_LAUNCHER</name>
+    <name>Justice Missile Launcher</name>
     <fire_sfx>RAWSOUND:80</fire_sfx>
     <idem>80</idem>
     <explosion_graphic>PTANG:0</explosion_graphic>

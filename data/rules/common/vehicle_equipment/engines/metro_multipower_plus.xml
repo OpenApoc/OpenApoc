@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <vehicle_equipment type="engine" id="VEQUIP_METRO_MULTIPOWER_PLUS">
-    <name>STR_METRO_MULTIPOWER_PLUS</name>
+    <name>Metro Multipower Plus</name>
     <usable_by>ground</usable_by>
     <weight>110</weight>
     <max_ammo>6</max_ammo>

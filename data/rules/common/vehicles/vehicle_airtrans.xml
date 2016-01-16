@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <vehicle id="VEHICLE_AIRTRANS" type="flying">
-    <name>STR_AIRTRANS</name>
+    <name>Airtrans</name>
     <manufacturer>ORG_TRANSTELLAR</manufacturer>
     <size>
       <x>1</x>

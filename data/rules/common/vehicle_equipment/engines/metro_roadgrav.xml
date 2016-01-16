@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <vehicle_equipment type="engine" id="VEQUIP_METRO_ROADGRAV">
-    <name>STR_METRO_ROADGRAV</name>
+    <name>Metro Roadgrav</name>
     <usable_by>ground</usable_by>
     <weight>50</weight>
     <max_ammo>3</max_ammo>

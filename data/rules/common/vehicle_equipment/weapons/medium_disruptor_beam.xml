@@ -23,7 +23,7 @@
     <firing_arc_1>2200</firing_arc_1>
     <firing_arc_2>4</firing_arc_2>
     <point_defence>false</point_defence>
-    <name>STR_MEDIUM_DISRUPTOR_BEAM</name>
+    <name>Medium Disruptor Beam</name>
     <fire_sfx>RAWSOUND:75</fire_sfx>
     <idem>75</idem>
     <explosion_graphic>PTANG:10</explosion_graphic>

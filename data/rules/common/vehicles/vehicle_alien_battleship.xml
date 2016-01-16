@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <vehicle id="VEHICLE_ALIEN_BATTLESHIP" type="ufo">
-    <name>STR_ALIEN_BATTLESHIP</name>
+    <name>Alien Battleship</name>
     <manufacturer>ORG_ALIEN</manufacturer>
     <size>
       <x>2</x>
@@ -17,13 +17,13 @@
       <y>0</y>
     </shadow_offset>
     <stratmap>
-      <sprite direction="n">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:573                <offset><x>0</x><y>0</y></offset>
+      <sprite direction="n">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:573                                <offset><x>0</x><y>0</y></offset>
             </sprite>
-      <sprite direction="n">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:575                <offset><x>0</x><y>1</y></offset>
+      <sprite direction="n">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:575                                <offset><x>0</x><y>1</y></offset>
             </sprite>
-      <sprite direction="n">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:574                <offset><x>1</x><y>0</y></offset>
+      <sprite direction="n">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:574                                <offset><x>1</x><y>0</y></offset>
             </sprite>
-      <sprite direction="n">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:576                <offset><x>1</x><y>1</y></offset>
+      <sprite direction="n">PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:576                                <offset><x>1</x><y>1</y></offset>
             </sprite>
     </stratmap>
     <animation>

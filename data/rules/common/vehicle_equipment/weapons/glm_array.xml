@@ -24,7 +24,7 @@
     <firing_arc_1>1100</firing_arc_1>
     <firing_arc_2>8</firing_arc_2>
     <point_defence>false</point_defence>
-    <name>STR_GLM_ARRAY</name>
+    <name>GLM Array</name>
     <fire_sfx>RAWSOUND:77</fire_sfx>
     <idem>77</idem>
     <explosion_graphic>PTANG:7</explosion_graphic>

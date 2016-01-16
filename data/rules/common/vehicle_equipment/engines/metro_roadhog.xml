@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <vehicle_equipment type="engine" id="VEQUIP_METRO_ROADHOG">
-    <name>STR_METRO_ROADHOG</name>
+    <name>Metro Roadhog</name>
     <usable_by>ground</usable_by>
     <weight>40</weight>
     <max_ammo>2</max_ammo>

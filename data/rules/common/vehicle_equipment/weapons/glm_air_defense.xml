@@ -24,7 +24,7 @@
     <firing_arc_1>2000</firing_arc_1>
     <firing_arc_2>8</firing_arc_2>
     <point_defence>false</point_defence>
-    <name>STR_GLM_AIR_DEFENSE</name>
+    <name>GLM Air Defense</name>
     <fire_sfx>RAWSOUND:84</fire_sfx>
     <idem>84</idem>
     <explosion_graphic>PTANG:7</explosion_graphic>

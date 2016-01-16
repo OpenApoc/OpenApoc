@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <vehicle_equipment type="general" id="VEQUIP_CARGO_MODULE">
-    <name>STR_CARGO_MODULE</name>
+    <name>Cargo Module</name>
     <usable_by>ground</usable_by>
     <usable_by>air</usable_by>
     <weight>55</weight>

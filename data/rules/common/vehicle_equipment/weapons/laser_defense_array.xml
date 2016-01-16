@@ -23,7 +23,7 @@
     <firing_arc_1>280</firing_arc_1>
     <firing_arc_2>8</firing_arc_2>
     <point_defence>true</point_defence>
-    <name>STR_LASER_DEFENSE_ARRAY</name>
+    <name>Laser Defense Array</name>
     <fire_sfx>RAWSOUND:86</fire_sfx>
     <idem>86</idem>
     <explosion_graphic>PTANG:8</explosion_graphic>

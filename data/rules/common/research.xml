@@ -3,7 +3,7 @@
   <research>
     <topic id="DIMENSION_GATES">
       <name>STR_DIMENSION_GATES_NAME</name>
-      <description>STR_DIMENSION_GATES_DESCRIPTION</description>
+      <description>The mysterious atmospheric phenomenon from which the UFOs are emerging requires urgent attention. We must find out where the Alien craft are coming from.</description>
       <skill_hours>5000</skill_hours>
       <score>50</score>
       <requirements>
@@ -15,7 +15,7 @@
     </topic>
     <topic id="THE_ALIEN_DIMENSION">
       <name>STR_THE_ALIEN_DIMENSION_NAME</name>
-      <description>STR_THE_ALIEN_DIMENSION_DESCRIPTION</description>
+      <description>We must analyze the data from our Alien Dimension probe.</description>
       <skill_hours>6000</skill_hours>
       <score>50</score>
       <requirements>
@@ -27,7 +27,7 @@
     </topic>
     <topic id="DIMENSION_PROBE">
       <name>STR_DIMENSION_PROBE_NAME</name>
-      <description>STR_DIMENSION_PROBE_DESCRIPTION</description>
+      <description>We need to build an automated device that can be sent through a Dimension gate. This will provide invaluable data which can prepare us for manned missions.</description>
       <skill_hours>12000</skill_hours>
       <score>80</score>
       <requirements>
@@ -38,8 +38,8 @@
       </requirements>
     </topic>
     <topic id="BIO_TRANSPORT">
-      <name>STR_BIO_TRANSPORT_NAME</name>
-      <description>STR_BIO_TRANSPORT_DESCRIPTION</description>
+      <name>Bio-Transport</name>
+      <description>The capture and study of live Alien specimens will help us understand the nature of the Alien threat. In order to do this we need an inter-dimensional transport vehicle that can contain and sustain Alien life forms.</description>
       <skill_hours>18000</skill_hours>
       <score>100</score>
       <requirements>
@@ -51,7 +51,7 @@
     </topic>
     <topic id="EXPLORER">
       <name>STR_EXPLORER_NAME</name>
-      <description>STR_EXPLORER_DESCRIPTION</description>
+      <description>A craft capable of carrying our agents into the Alien Dimensions is required. The vast Alien structures must be explored and studied. This will help us understand their function and their weaknesses.</description>
       <skill_hours>24000</skill_hours>
       <score>120</score>
       <requirements>
@@ -63,7 +63,7 @@
     </topic>
     <topic id="RETALIATOR">
       <name>STR_RETALIATOR_NAME</name>
-      <description>STR_RETALIATOR_DESCRIPTION</description>
+      <description>In order to combat the increasing aggression and power of Alien craft we must build an inter-dimensional weapons platform.</description>
       <skill_hours>30000</skill_hours>
       <score>200</score>
       <requirements>
@@ -75,7 +75,7 @@
     </topic>
     <topic id="ANNIHILATOR">
       <name>STR_ANNIHILATOR_NAME</name>
-      <description>STR_ANNIHILATOR_DESCRIPTION</description>
+      <description>The Alien threat can only be stopped by destroying their ability to create Dimension gates. A full assault on the Alien Dimensions requires a craft of immense power.</description>
       <skill_hours>36000</skill_hours>
       <score>300</score>
       <requirements>
@@ -86,8 +86,8 @@
       </requirements>
     </topic>
     <topic id="BRAINSUCKER_PODS">
-      <name>STR_BRAINSUCKER_PODS_NAME</name>
-      <description>STR_BRAINSUCKER_PODS_DESCRIPTION</description>
+      <name>Brainsucker Pods</name>
+      <description>These pods contain a dormant Alien creature.</description>
       <skill_hours>6000</skill_hours>
       <score>100</score>
       <requirements>
@@ -99,7 +99,7 @@
     </topic>
     <topic id="BRAINSUCKER_AUTOPSY">
       <name>STR_BRAINSUCKER_AUTOPSY_NAME</name>
-      <description>STR_BRAINSUCKER_AUTOPSY_DESCRIPTION</description>
+      <description>This small Alien creature has been seen to attack humans by jumping on the head and gripping with all its limbs.</description>
       <skill_hours>7000</skill_hours>
       <score>120</score>
       <requirements>
@@ -111,7 +111,7 @@
     </topic>
     <topic id="BRAINSUCKER">
       <name>STR_BRAINSUCKER_NAME</name>
-      <description>STR_BRAINSUCKER_DESCRIPTION</description>
+      <description>A live Brainsucker is a valuable specimen - we must research it as soon as possible.</description>
       <skill_hours>9000</skill_hours>
       <score>120</score>
       <requirements>
@@ -123,7 +123,7 @@
     </topic>
     <topic id="MULTIWORM_EGG_AUTOPSY">
       <name>STR_MULTIWORM_EGG_AUTOPSY_NAME</name>
-      <description>STR_MULTIWORM_EGG_AUTOPSY_DESCRIPTION</description>
+      <description>This stationary Alien life form appears to be some form of Alien egg.</description>
       <skill_hours>8000</skill_hours>
       <score>120</score>
       <requirements>
@@ -135,7 +135,7 @@
     </topic>
     <topic id="MULTIWORM_EGG">
       <name>STR_MULTIWORM_EGG_NAME</name>
-      <description>STR_MULTIWORM_EGG_DESCRIPTION</description>
+      <description>A live Multiworm egg gives us an excellent opportunity to observe the Alien life cycle in progress.</description>
       <skill_hours>12000</skill_hours>
       <score>120</score>
       <requirements>
@@ -147,7 +147,7 @@
     </topic>
     <topic id="MULTIWORM_AUTOPSY">
       <name>STR_MULTIWORM_AUTOPSY_NAME</name>
-      <description>STR_MULTIWORM_AUTOPSY_DESCRIPTION</description>
+      <description>The Multiworm corpse decays rapidly, consumed by its own defense mechanisms. If research is not undertaken soon then we will not be able to preserve the remains.</description>
       <skill_hours>9000</skill_hours>
       <score>150</score>
       <requirements>
@@ -159,7 +159,7 @@
     </topic>
     <topic id="MULTIWORM">
       <name>STR_MULTIWORM_NAME</name>
-      <description>STR_MULTIWORM_DESCRIPTION</description>
+      <description>A live Multiworm is a rare catch and must be studied immediately as it is a highly unstable life form.</description>
       <skill_hours>15000</skill_hours>
       <score>150</score>
       <requirements>
@@ -171,7 +171,7 @@
     </topic>
     <topic id="HYPERWORM_AUTOPSY">
       <name>STR_HYPERWORM_AUTOPSY_NAME</name>
-      <description>STR_HYPERWORM_AUTOPSY_DESCRIPTION</description>
+      <description>The Hyperworm corpse is extremely heavy for its size and appears to be a primitive creature.</description>
       <skill_hours>6000</skill_hours>
       <score>150</score>
       <requirements>
@@ -182,8 +182,8 @@
       </requirements>
     </topic>
     <topic id="HYPERWORM">
-      <name>STR_HYPERWORM_NAME</name>
-      <description>STR_HYPERWORM_DESCRIPTION</description>
+      <name>Hyperworm</name>
+      <description>The Hyperworm is a small, highly active carnivore.</description>
       <skill_hours>9000</skill_hours>
       <score>150</score>
       <requirements>
@@ -195,7 +195,7 @@
     </topic>
     <topic id="CHRYSALIS_AUTOPSY">
       <name>STR_CHRYSALIS_AUTOPSY_NAME</name>
-      <description>STR_CHRYSALIS_AUTOPSY_DESCRIPTION</description>
+      <description>The remains of an Alien Chrysalis produces pungent fumes as it decays rapidly.</description>
       <skill_hours>8000</skill_hours>
       <score>150</score>
       <requirements>
@@ -207,7 +207,7 @@
     </topic>
     <topic id="CHRYSALIS">
       <name>STR_CHRYSALIS_NAME</name>
-      <description>STR_CHRYSALIS_DESCRIPTION</description>
+      <description>The study of a live Alien Chrysalis could represent a significant advance in our knowledge of the Alien life cycle.</description>
       <skill_hours>12000</skill_hours>
       <score>150</score>
       <requirements>
@@ -219,7 +219,7 @@
     </topic>
     <topic id="ANTHROPOD_AUTOPSY">
       <name>STR_ANTHROPOD_AUTOPSY_NAME</name>
-      <description>STR_ANTHROPOD_AUTOPSY_DESCRIPTION</description>
+      <description>The Anthropod is the Alien creature that most resembles the human form.</description>
       <skill_hours>8000</skill_hours>
       <score>200</score>
       <requirements>
@@ -231,7 +231,7 @@
     </topic>
     <topic id="ANTHROPOD">
       <name>STR_ANTHROPOD_NAME</name>
-      <description>STR_ANTHROPOD_DESCRIPTION</description>
+      <description>The Anthropod is a robust humanoid Alien soldier.</description>
       <skill_hours>12000</skill_hours>
       <score>200</score>
       <requirements>
@@ -243,7 +243,7 @@
     </topic>
     <topic id="PSIMORPH_AUTOPSY">
       <name>STR_PSIMORPH_AUTOPSY_NAME</name>
-      <description>STR_PSIMORPH_AUTOPSY_DESCRIPTION</description>
+      <description>The Psimorph creature is a large mass of tentacles.</description>
       <skill_hours>12000</skill_hours>
       <score>250</score>
       <requirements>
@@ -255,7 +255,7 @@
     </topic>
     <topic id="PSIMORPH">
       <name>STR_PSIMORPH_NAME</name>
-      <description>STR_PSIMORPH_DESCRIPTION</description>
+      <description>A living Psimorph is an extremely dangerous entity which must be kept unconscious, otherwise its Psionic ability would result in subversion of our personnel.</description>
       <skill_hours>20000</skill_hours>
       <score>250</score>
       <requirements>
@@ -267,7 +267,7 @@
     </topic>
     <topic id="SPITTER_AUTOPSY">
       <name>STR_SPITTER_AUTOPSY_NAME</name>
-      <description>STR_SPITTER_AUTOPSY_DESCRIPTION</description>
+      <description>This ungainly creature has a huge funnel for propelling a deadly liquid.</description>
       <skill_hours>6000</skill_hours>
       <score>150</score>
       <requirements>
@@ -279,7 +279,7 @@
     </topic>
     <topic id="SPITTER">
       <name>STR_SPITTER_NAME</name>
-      <description>STR_SPITTER_DESCRIPTION</description>
+      <description>The Spitter is humanoid in form but has a funnel shaped head.</description>
       <skill_hours>9000</skill_hours>
       <score>150</score>
       <requirements>
@@ -291,7 +291,7 @@
     </topic>
     <topic id="MEGASPAWN_AUTOPSY">
       <name>STR_MEGASPAWN_AUTOPSY_NAME</name>
-      <description>STR_MEGASPAWN_AUTOPSY_DESCRIPTION</description>
+      <description>An extremely large warrior creature.</description>
       <skill_hours>12000</skill_hours>
       <score>200</score>
       <requirements>
@@ -303,7 +303,7 @@
     </topic>
     <topic id="MEGASPAWN">
       <name>STR_MEGASPAWN_NAME</name>
-      <description>STR_MEGASPAWN_DESCRIPTION</description>
+      <description>Due to the size of the Megaspawn we need a lot of free space in the Alien Containment facility to hold it and an advanced Bio-lab to study it.</description>
       <skill_hours>20000</skill_hours>
       <score>200</score>
       <requirements>
@@ -315,7 +315,7 @@
     </topic>
     <topic id="POPPER_AUTOPSY">
       <name>STR_POPPER_AUTOPSY_NAME</name>
-      <description>STR_POPPER_AUTOPSY_DESCRIPTION</description>
+      <description>A small bipedal Alien creature.</description>
       <skill_hours>6000</skill_hours>
       <score>150</score>
       <requirements>
@@ -327,7 +327,7 @@
     </topic>
     <topic id="POPPER">
       <name>STR_POPPER_NAME</name>
-      <description>STR_POPPER_DESCRIPTION</description>
+      <description>An extremely dangerous Alien that must be kept sedated.</description>
       <skill_hours>9000</skill_hours>
       <score>150</score>
       <requirements>
@@ -339,7 +339,7 @@
     </topic>
     <topic id="SKELETOID_AUTOPSY">
       <name>STR_SKELETOID_AUTOPSY_NAME</name>
-      <description>STR_SKELETOID_AUTOPSY_DESCRIPTION</description>
+      <description>A humanoid Alien with an exo-skeleton structure.</description>
       <skill_hours>10000</skill_hours>
       <score>200</score>
       <requirements>
@@ -351,7 +351,7 @@
     </topic>
     <topic id="SKELETOID">
       <name>STR_SKELETOID_NAME</name>
-      <description>STR_SKELETOID_DESCRIPTION</description>
+      <description>An intelligent, airborne humanoid Alien warrior.</description>
       <skill_hours>15000</skill_hours>
       <score>200</score>
       <requirements>
@@ -362,8 +362,8 @@
       </requirements>
     </topic>
     <topic id="MICRONOID_AUTOPSY">
-      <name>STR_MICRONOID_AUTOPSY_NAME</name>
-      <description>STR_MICRONOID_AUTOPSY_DESCRIPTION</description>
+      <name>Micronoid Autopsy</name>
+      <description>An unusual jelly like Alien life form.</description>
       <skill_hours>20000</skill_hours>
       <score>300</score>
       <requirements>
@@ -374,8 +374,8 @@
       </requirements>
     </topic>
     <topic id="MICRONOID">
-      <name>STR_MICRONOID_NAME</name>
-      <description>STR_MICRONOID_DESCRIPTION</description>
+      <name>Micronoid</name>
+      <description>A swarming amoebae-like Alien life form.</description>
       <skill_hours>26000</skill_hours>
       <score>300</score>
       <requirements>
@@ -387,7 +387,7 @@
     </topic>
     <topic id="QUEENSPAWN_AUTOPSY">
       <name>STR_QUEENSPAWN_AUTOPSY_NAME</name>
-      <description>STR_QUEENSPAWN_AUTOPSY_DESCRIPTION</description>
+      <description>This is a huge egg laying Alien creature.</description>
       <skill_hours>15000</skill_hours>
       <score>450</score>
       <requirements>
@@ -399,7 +399,7 @@
     </topic>
     <topic id="QUEENSPAWN">
       <name>STR_QUEENSPAWN_NAME</name>
-      <description>STR_QUEENSPAWN_DESCRIPTION</description>
+      <description>The enormous hulk of the Queenspawn requires great effort to transport and contain.</description>
       <skill_hours>25000</skill_hours>
       <score>450</score>
       <requirements>
@@ -411,7 +411,7 @@
     </topic>
     <topic id="OVERSPAWN_AUTOPSY">
       <name>STR_OVERSPAWN_AUTOPSY_NAME</name>
-      <description>STR_OVERSPAWN_AUTOPSY_DESCRIPTION</description>
+      <description>The Overspawn is an extremely dangerous Alien terror weapon.</description>
       <skill_hours>20000</skill_hours>
       <score>450</score>
       <requirements>
@@ -422,8 +422,8 @@
       </requirements>
     </topic>
     <topic id="OVERSPAWN_AUTOPSY_1">
-      <name>STR_OVERSPAWN_AUTOPSY_1_NAME</name>
-      <description>STR_OVERSPAWN_AUTOPSY_1_DESCRIPTION</description>
+      <name>Overspawn Autopsy 1</name>
+      <description>A gigantic monster that has ravaged the city.</description>
       <skill_hours>25000</skill_hours>
       <score>450</score>
       <requirements>
@@ -434,8 +434,8 @@
       </requirements>
     </topic>
     <topic id="THE_ALIEN_GENETIC_STRUCTURE">
-      <name>STR_THE_ALIEN_GENETIC_STRUCTURE_NAME</name>
-      <description>STR_THE_ALIEN_GENETIC_STRUCTURE_DESCRIPTION</description>
+      <name>The Alien Genetic Structure</name>
+      <description>Investigate the genetic relationships between Alien life forms.</description>
       <skill_hours>25000</skill_hours>
       <score>300</score>
       <requirements>
@@ -446,8 +446,8 @@
       </requirements>
     </topic>
     <topic id="THE_ALIEN_LIFE_CYCLE">
-      <name>STR_THE_ALIEN_LIFE_CYCLE_NAME</name>
-      <description>STR_THE_ALIEN_LIFE_CYCLE_DESCRIPTION</description>
+      <name>The Alien Life Cycle</name>
+      <description>Research the primary stages of the Alien life cycle.</description>
       <skill_hours>30000</skill_hours>
       <score>400</score>
       <requirements>
@@ -459,7 +459,7 @@
     </topic>
     <topic id="THE_REAL_ALIEN_THREAT">
       <name>STR_THE_REAL_ALIEN_THREAT_NAME</name>
-      <description>STR_THE_REAL_ALIEN_THREAT_DESCRIPTION</description>
+      <description>Investigate the source of the Alien intelligence and their secret purpose.</description>
       <skill_hours>35000</skill_hours>
       <score>500</score>
       <requirements>
@@ -470,8 +470,8 @@
       </requirements>
     </topic>
     <topic id="BIOLOGICAL_WARFARE">
-      <name>STR_BIOLOGICAL_WARFARE_NAME</name>
-      <description>STR_BIOLOGICAL_WARFARE_DESCRIPTION</description>
+      <name>Biological Warfare</name>
+      <description>The aim is to develop a toxin that specifically targets the early stages of the Alien life cycle.</description>
       <skill_hours>26000</skill_hours>
       <score>200</score>
       <requirements>
@@ -482,8 +482,8 @@
       </requirements>
     </topic>
     <topic id="TOXIN_TYPE_B">
-      <name>STR_TOXIN_TYPE_B_NAME</name>
-      <description>STR_TOXIN_TYPE_B_DESCRIPTION</description>
+      <name>Toxin Type B</name>
+      <description>A toxin needs to be developed to combat the higher Alien life forms.</description>
       <skill_hours>15000</skill_hours>
       <score>100</score>
       <requirements>
@@ -494,8 +494,8 @@
       </requirements>
     </topic>
     <topic id="TOXIN_TYPE_C">
-      <name>STR_TOXIN_TYPE_C_NAME</name>
-      <description>STR_TOXIN_TYPE_C_DESCRIPTION</description>
+      <name>Toxin Type C</name>
+      <description>A powerful Biological warfare weapon designed to target the Micronoid parasites.</description>
       <skill_hours>15000</skill_hours>
       <score>100</score>
       <requirements>
@@ -506,8 +506,8 @@
       </requirements>
     </topic>
     <topic id="ALIEN_GAS">
-      <name>STR_ALIEN_GAS_NAME</name>
-      <description>STR_ALIEN_GAS_DESCRIPTION</description>
+      <name>Alien Gas</name>
+      <description>There is a possibility that a multi-toxin can be suspended in gaseous form, which would increase the efficiency of our Biological weaponry.</description>
       <skill_hours>28000</skill_hours>
       <score>100</score>
       <requirements>
@@ -519,7 +519,7 @@
     </topic>
     <topic id="ADVANCED_SECURITY_STATION">
       <name>STR_ADVANCED_SECURITY_STATION_NAME</name>
-      <description>STR_ADVANCED_SECURITY_STATION_DESCRIPTION</description>
+      <description>A security station using Alien disrupter technology.</description>
       <skill_hours>18000</skill_hours>
       <score>80</score>
       <requirements>
@@ -531,7 +531,7 @@
     </topic>
     <topic id="ADVANCED_BIOCHEMISTRY_LAB">
       <name>STR_ADVANCED_BIOCHEMISTRY_LAB_NAME</name>
-      <description>STR_ADVANCED_BIOCHEMISTRY_LAB_DESCRIPTION</description>
+      <description> For researching advanced Alien organic technology.</description>
       <skill_hours>16000</skill_hours>
       <score>80</score>
       <requirements>
@@ -543,7 +543,7 @@
     </topic>
     <topic id="ADVANCED_QUANTUM_PHYSICS_LAB">
       <name>STR_ADVANCED_QUANTUM_PHYSICS_LAB_NAME</name>
-      <description>STR_ADVANCED_QUANTUM_PHYSICS_LAB_DESCRIPTION</description>
+      <description>For researching advanced Alien technology.</description>
       <skill_hours>16000</skill_hours>
       <score>80</score>
       <requirements>
@@ -555,7 +555,7 @@
     </topic>
     <topic id="ADVANCED_ALIEN_CONTAINMENT">
       <name>STR_ADVANCED_ALIEN_CONTAINMENT_NAME</name>
-      <description>STR_ADVANCED_ALIEN_CONTAINMENT_DESCRIPTION</description>
+      <description>To secure and research large or dangerous Alien life forms.</description>
       <skill_hours>22000</skill_hours>
       <score>80</score>
       <requirements>
@@ -567,7 +567,7 @@
     </topic>
     <topic id="ADVANCED_WORKSHOP">
       <name>STR_ADVANCED_WORKSHOP_NAME</name>
-      <description>STR_ADVANCED_WORKSHOP_DESCRIPTION</description>
+      <description>Needed for building new vehicle types.</description>
       <skill_hours>24000</skill_hours>
       <score>80</score>
       <requirements>
@@ -579,7 +579,7 @@
     </topic>
     <topic id="DISRUPTOR_GUN">
       <name>STR_DISRUPTOR_GUN_NAME</name>
-      <description>STR_DISRUPTOR_GUN_DESCRIPTION</description>
+      <description>An Alien beam weapon.</description>
       <skill_hours>40000</skill_hours>
       <score>100</score>
       <requirements>
@@ -603,7 +603,7 @@
     </topic>
     <topic id="BOOMEROID">
       <name>STR_BOOMEROID_NAME</name>
-      <description>STR_BOOMEROID_DESCRIPTION</description>
+      <description>An intelligent Alien proximity mine</description>
       <skill_hours>40000</skill_hours>
       <score>150</score>
       <requirements>
@@ -615,7 +615,7 @@
     </topic>
     <topic id="BRAINSUCKER_LAUNCHER">
       <name>STR_BRAINSUCKER_LAUNCHER_NAME</name>
-      <description>STR_BRAINSUCKER_LAUNCHER_DESCRIPTION</description>
+      <description>Fires Brainsucker pods.</description>
       <skill_hours>9000</skill_hours>
       <score>100</score>
       <requirements>
@@ -627,7 +627,7 @@
     </topic>
     <topic id="ENTROPY_LAUNCHER">
       <name>STR_ENTROPY_LAUNCHER_NAME</name>
-      <description>STR_ENTROPY_LAUNCHER_DESCRIPTION</description>
+      <description>An Alien organic weapon.</description>
       <skill_hours>9000</skill_hours>
       <score>100</score>
       <requirements>
@@ -639,7 +639,7 @@
     </topic>
     <topic id="ENTROPY_POD">
       <name>STR_ENTROPY_POD_NAME</name>
-      <description>STR_ENTROPY_POD_DESCRIPTION</description>
+      <description>Ammunition for an Alien weapon.</description>
       <skill_hours>7000</skill_hours>
       <score>100</score>
       <requirements>
@@ -651,7 +651,7 @@
     </topic>
     <topic id="DIMENSION_MISSILE_LAUNCHER">
       <name>STR_DIMENSION_MISSILE_LAUNCHER_NAME</name>
-      <description>STR_DIMENSION_MISSILE_LAUNCHER_DESCRIPTION</description>
+      <description>An Alien guided missile weapon.</description>
       <skill_hours>42000</skill_hours>
       <score>150</score>
       <requirements>
@@ -663,7 +663,7 @@
     </topic>
     <topic id="DIMENSION_MISSILE">
       <name>STR_DIMENSION_MISSILE_NAME</name>
-      <description>STR_DIMENSION_MISSILE_DESCRIPTION</description>
+      <description>An Alien guided missile.</description>
       <skill_hours>12000</skill_hours>
       <score>150</score>
       <requirements>
@@ -675,7 +675,7 @@
     </topic>
     <topic id="VORTEX_MINE">
       <name>STR_VORTEX_MINE_NAME</name>
-      <description>STR_VORTEX_MINE_DESCRIPTION</description>
+      <description>A powerful Alien grenade.</description>
       <skill_hours>46000</skill_hours>
       <score>150</score>
       <requirements>
@@ -687,7 +687,7 @@
     </topic>
     <topic id="PERSONAL_DISRUPTOR_SHIELD">
       <name>STR_PERSONAL_DISRUPTOR_SHIELD_NAME</name>
-      <description>STR_PERSONAL_DISRUPTOR_SHIELD_DESCRIPTION</description>
+      <description>An Alien energy shield.</description>
       <skill_hours>60000</skill_hours>
       <score>200</score>
       <requirements>
@@ -699,7 +699,7 @@
     </topic>
     <topic id="PERSONAL_TELEPORTER">
       <name>STR_PERSONAL_TELEPORTER_NAME</name>
-      <description>STR_PERSONAL_TELEPORTER_DESCRIPTION</description>
+      <description>An Alien teleportation device.</description>
       <skill_hours>130000</skill_hours>
       <score>200</score>
       <requirements>
@@ -711,7 +711,7 @@
     </topic>
     <topic id="PERSONAL_CLOAKING_FIELD">
       <name>STR_PERSONAL_CLOAKING_FIELD_NAME</name>
-      <description>STR_PERSONAL_CLOAKING_FIELD_DESCRIPTION</description>
+      <description>An Alien device which limits detection.</description>
       <skill_hours>100000</skill_hours>
       <score>150</score>
       <requirements>
@@ -723,7 +723,7 @@
     </topic>
     <topic id="DIMENSION_DESTABILISER">
       <name>STR_DIMENSION_DESTABILISER_NAME</name>
-      <description>STR_DIMENSION_DESTABILISER_DESCRIPTION</description>
+      <description>A device based on disruption field research which could be used to disable Alien disruption shields.</description>
       <skill_hours>85000</skill_hours>
       <score>100</score>
       <requirements>
@@ -734,8 +734,8 @@
       </requirements>
     </topic>
     <topic id="DISRUPTOR_ARMOR">
-      <name>STR_DISRUPTOR_ARMOR_NAME</name>
-      <description>STR_DISRUPTOR_ARMOR_DESCRIPTION</description>
+      <name>Disruptor Armor</name>
+      <description>Personal armor can be developed based on disrupter research</description>
       <skill_hours>85000</skill_hours>
       <score>150</score>
       <requirements>
@@ -747,7 +747,7 @@
     </topic>
     <topic id="LIGHT_DISRUPTOR_BEAM">
       <name>STR_LIGHT_DISRUPTOR_BEAM_NAME</name>
-      <description>STR_LIGHT_DISRUPTOR_BEAM_DESCRIPTION</description>
+      <description>A beam weapon deployed on Alien craft.</description>
       <skill_hours>36000</skill_hours>
       <score>200</score>
       <requirements>
@@ -782,8 +782,8 @@
       </requirements>
     </topic>
     <topic id="DISRUPTOR_INVERSION_BOMB">
-      <name>STR_DISRUPTOR_INVERSION_BOMB_NAME</name>
-      <description>STR_DISRUPTOR_INVERSION_BOMB_DESCRIPTION</description>
+      <name>Disruptor Inversion Bomb</name>
+      <description>An Alien guided missile launched from Alien craft.</description>
       <skill_hours>60000</skill_hours>
       <score>300</score>
       <requirements>
@@ -794,8 +794,8 @@
       </requirements>
     </topic>
     <topic id="STASIS_FIELD_BOMB">
-      <name>STR_STASIS_FIELD_BOMB_NAME</name>
-      <description>STR_STASIS_FIELD_BOMB_DESCRIPTION</description>
+      <name>Stasis Field Bomb</name>
+      <description>An Alien missile with an immobilizing effect.</description>
       <skill_hours>50000</skill_hours>
       <score>300</score>
       <requirements>
@@ -806,8 +806,8 @@
       </requirements>
     </topic>
     <topic id="DISRUPTOR_MULTI_BOMB">
-      <name>STR_DISRUPTOR_MULTI_BOMB_NAME</name>
-      <description>STR_DISRUPTOR_MULTI_BOMB_DESCRIPTION</description>
+      <name>Disruptor Multi-Bomb</name>
+      <description>A multiple warhead missile.</description>
       <skill_hours>80000</skill_hours>
       <score>400</score>
       <requirements>
@@ -818,8 +818,8 @@
       </requirements>
     </topic>
     <topic id="X_COM_ADVANCED_CONTROL_SYSTEM">
-      <name>STR_X_COM_ADVANCED_CONTROL_SYSTEM_NAME</name>
-      <description>STR_X_COM_ADVANCED_CONTROL_SYSTEM_DESCRIPTION</description>
+      <name>X-COM Advanced Control System</name>
+      <description>A superior weapons control system.</description>
       <skill_hours>35000</skill_hours>
       <score>200</score>
       <requirements>
@@ -831,7 +831,7 @@
     </topic>
     <topic id="BIO_TRANSPORT_MODULE">
       <name>STR_BIO_TRANSPORT_MODULE_NAME</name>
-      <description>STR_BIO_TRANSPORT_MODULE_DESCRIPTION</description>
+      <description>For transporting Alien life forms.</description>
       <skill_hours>9000</skill_hours>
       <score>80</score>
       <requirements>
@@ -867,7 +867,7 @@
     </topic>
     <topic id="CLOAKING_FIELD">
       <name>STR_CLOAKING_FIELD_NAME</name>
-      <description>STR_CLOAKING_FIELD_DESCRIPTION</description>
+      <description>Reduced detection of vehicles.</description>
       <skill_hours>80000</skill_hours>
       <score>200</score>
       <requirements>
@@ -879,7 +879,7 @@
     </topic>
     <topic id="TELEPORTER">
       <name>STR_TELEPORTER_NAME</name>
-      <description>STR_TELEPORTER_DESCRIPTION</description>
+      <description>Instantly transports a vehicle over short ranges.</description>
       <skill_hours>150000</skill_hours>
       <score>400</score>
       <requirements>
@@ -891,7 +891,7 @@
     </topic>
     <topic id="DIMENSION_SHIFTER">
       <name>STR_DIMENSION_SHIFTER_NAME</name>
-      <description>STR_DIMENSION_SHIFTER_DESCRIPTION</description>
+      <description>Transports a vehicle between Dimensions.</description>
       <skill_hours>190000</skill_hours>
       <score>400</score>
       <requirements>
@@ -902,8 +902,8 @@
       </requirements>
     </topic>
     <topic id="ALIEN_PROPULSION_SYSTEM">
-      <name>STR_ALIEN_PROPULSION_SYSTEM_NAME</name>
-      <description>STR_ALIEN_PROPULSION_SYSTEM_DESCRIPTION</description>
+      <name>Alien Propulsion System</name>
+      <description>Alien craft propulsion.</description>
       <skill_hours>25000</skill_hours>
       <score>150</score>
       <requirements>
@@ -914,8 +914,8 @@
       </requirements>
     </topic>
     <topic id="ALIEN_CONTROL_SYSTEM">
-      <name>STR_ALIEN_CONTROL_SYSTEM_NAME</name>
-      <description>STR_ALIEN_CONTROL_SYSTEM_DESCRIPTION</description>
+      <name>Alien Control System</name>
+      <description>Alien craft guidance System.</description>
       <skill_hours>30000</skill_hours>
       <score>150</score>
       <requirements>
@@ -926,8 +926,8 @@
       </requirements>
     </topic>
     <topic id="ALIEN_ENERGY_SOURCE">
-      <name>STR_ALIEN_ENERGY_SOURCE_NAME</name>
-      <description>STR_ALIEN_ENERGY_SOURCE_DESCRIPTION</description>
+      <name>Alien Energy Source</name>
+      <description>Alien craft energy generator.</description>
       <skill_hours>25000</skill_hours>
       <score>150</score>
       <requirements>
@@ -938,8 +938,8 @@
       </requirements>
     </topic>
     <topic id="UFO_TYPE_1">
-      <name>STR_UFO_TYPE_1_NAME</name>
-      <description>STR_UFO_TYPE_1_DESCRIPTION</description>
+      <name>UFO type 1</name>
+      <description>Alien inter-dimensional craft</description>
       <skill_hours>8000</skill_hours>
       <score>80</score>
       <requirements>
@@ -950,7 +950,7 @@
       </requirements>
     </topic>
     <topic id="UFO_TYPE_2">
-      <name>STR_UFO_TYPE_2_NAME</name>
+      <name>UFO type 2</name>
       <description>STR_UFO_TYPE_2_DESCRIPTION</description>
       <skill_hours>10000</skill_hours>
       <score>80</score>
@@ -962,7 +962,7 @@
       </requirements>
     </topic>
     <topic id="UFO_TYPE_3">
-      <name>STR_UFO_TYPE_3_NAME</name>
+      <name>UFO type 3</name>
       <description>STR_UFO_TYPE_3_DESCRIPTION</description>
       <skill_hours>12000</skill_hours>
       <score>100</score>
@@ -974,7 +974,7 @@
       </requirements>
     </topic>
     <topic id="UFO_TYPE_4">
-      <name>STR_UFO_TYPE_4_NAME</name>
+      <name>UFO type 4</name>
       <description>STR_UFO_TYPE_4_DESCRIPTION</description>
       <skill_hours>12000</skill_hours>
       <score>100</score>
@@ -986,7 +986,7 @@
       </requirements>
     </topic>
     <topic id="UFO_TYPE_5">
-      <name>STR_UFO_TYPE_5_NAME</name>
+      <name>UFO type 5</name>
       <description>STR_UFO_TYPE_5_DESCRIPTION</description>
       <skill_hours>14000</skill_hours>
       <score>120</score>
@@ -998,7 +998,7 @@
       </requirements>
     </topic>
     <topic id="UFO_TYPE_6">
-      <name>STR_UFO_TYPE_6_NAME</name>
+      <name>UFO type 6</name>
       <description>STR_UFO_TYPE_6_DESCRIPTION</description>
       <skill_hours>14000</skill_hours>
       <score>120</score>
@@ -1010,7 +1010,7 @@
       </requirements>
     </topic>
     <topic id="UFO_TYPE_7">
-      <name>STR_UFO_TYPE_7_NAME</name>
+      <name>UFO type 7</name>
       <description>STR_UFO_TYPE_7_DESCRIPTION</description>
       <skill_hours>16000</skill_hours>
       <score>150</score>
@@ -1022,7 +1022,7 @@
       </requirements>
     </topic>
     <topic id="UFO_TYPE_8">
-      <name>STR_UFO_TYPE_8_NAME</name>
+      <name>UFO type 8</name>
       <description>STR_UFO_TYPE_8_DESCRIPTION</description>
       <skill_hours>16000</skill_hours>
       <score>150</score>
@@ -1034,7 +1034,7 @@
       </requirements>
     </topic>
     <topic id="UFO_TYPE_9">
-      <name>STR_UFO_TYPE_9_NAME</name>
+      <name>UFO type 9</name>
       <description>STR_UFO_TYPE_9_DESCRIPTION</description>
       <skill_hours>20000</skill_hours>
       <score>200</score>
@@ -1046,7 +1046,7 @@
       </requirements>
     </topic>
     <topic id="UFO_TYPE_10">
-      <name>STR_UFO_TYPE_10_NAME</name>
+      <name>UFO type 10</name>
       <description>STR_UFO_TYPE_10_DESCRIPTION</description>
       <skill_hours>20000</skill_hours>
       <score>200</score>
@@ -1058,8 +1058,8 @@
       </requirements>
     </topic>
     <topic id="ALIEN_BUILDING">
-      <name>STR_ALIEN_BUILDING_NAME</name>
-      <description>STR_ALIEN_BUILDING_DESCRIPTION</description>
+      <name>Alien building</name>
+      <description>This research could reveal a weakness in the Alien defenses.</description>
       <skill_hours>38000</skill_hours>
       <score>380</score>
       <requirements>
@@ -1070,7 +1070,7 @@
       </requirements>
     </topic>
     <topic id="ALIEN_BUILDING_1">
-      <name>STR_ALIEN_BUILDING_1_NAME</name>
+      <name>Alien building 1</name>
       <description>STR_ALIEN_BUILDING_1_DESCRIPTION</description>
       <skill_hours>42000</skill_hours>
       <score>420</score>
@@ -1082,7 +1082,7 @@
       </requirements>
     </topic>
     <topic id="ALIEN_BUILDING_2">
-      <name>STR_ALIEN_BUILDING_2_NAME</name>
+      <name>Alien building 2</name>
       <description>STR_ALIEN_BUILDING_2_DESCRIPTION</description>
       <skill_hours>32000</skill_hours>
       <score>320</score>
@@ -1094,7 +1094,7 @@
       </requirements>
     </topic>
     <topic id="ALIEN_BUILDING_3">
-      <name>STR_ALIEN_BUILDING_3_NAME</name>
+      <name>Alien building 3</name>
       <description>STR_ALIEN_BUILDING_3_DESCRIPTION</description>
       <skill_hours>46000</skill_hours>
       <score>460</score>
@@ -1106,7 +1106,7 @@
       </requirements>
     </topic>
     <topic id="ALIEN_BUILDING_4">
-      <name>STR_ALIEN_BUILDING_4_NAME</name>
+      <name>Alien building 4</name>
       <description>STR_ALIEN_BUILDING_4_DESCRIPTION</description>
       <skill_hours>30000</skill_hours>
       <score>300</score>
@@ -1118,7 +1118,7 @@
       </requirements>
     </topic>
     <topic id="ALIEN_BUILDING_5">
-      <name>STR_ALIEN_BUILDING_5_NAME</name>
+      <name>Alien building 5</name>
       <description>STR_ALIEN_BUILDING_5_DESCRIPTION</description>
       <skill_hours>44000</skill_hours>
       <score>440</score>
@@ -1130,7 +1130,7 @@
       </requirements>
     </topic>
     <topic id="ALIEN_BUILDING_6">
-      <name>STR_ALIEN_BUILDING_6_NAME</name>
+      <name>Alien building 6</name>
       <description>STR_ALIEN_BUILDING_6_DESCRIPTION</description>
       <skill_hours>34000</skill_hours>
       <score>340</score>
@@ -1142,7 +1142,7 @@
       </requirements>
     </topic>
     <topic id="ALIEN_BUILDING_7">
-      <name>STR_ALIEN_BUILDING_7_NAME</name>
+      <name>Alien building 7</name>
       <description>STR_ALIEN_BUILDING_7_DESCRIPTION</description>
       <skill_hours>40000</skill_hours>
       <score>400</score>
@@ -1154,7 +1154,7 @@
       </requirements>
     </topic>
     <topic id="ALIEN_BUILDING_8">
-      <name>STR_ALIEN_BUILDING_8_NAME</name>
+      <name>Alien building 8</name>
       <description>STR_ALIEN_BUILDING_8_DESCRIPTION</description>
       <skill_hours>36000</skill_hours>
       <score>360</score>
@@ -1166,7 +1166,7 @@
       </requirements>
     </topic>
     <topic id="ALIEN_BUILDING_9">
-      <name>STR_ALIEN_BUILDING_9_NAME</name>
+      <name>Alien building 9</name>
       <description>STR_ALIEN_BUILDING_9_DESCRIPTION</description>
       <skill_hours>48000</skill_hours>
       <score>480</score>
@@ -1178,8 +1178,8 @@
       </requirements>
     </topic>
     <topic id="ONE_WAY_TO_WIN">
-      <name>STR_ONE_WAY_TO_WIN_NAME</name>
-      <description>STR_ONE_WAY_TO_WIN_DESCRIPTION</description>
+      <name>One way to win</name>
+      <description>We must discover a way to beat the Aliens once and for all</description>
       <skill_hours>35000</skill_hours>
       <score>500</score>
       <requirements>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <vehicle id="VEHICLE_ALIEN_FAST_ATTACK_SHIP" type="ufo">
-    <name>STR_ALIEN_FAST_ATTACK_SHIP</name>
+    <name>Alien Fast Attack Ship</name>
     <manufacturer>ORG_ALIEN</manufacturer>
     <size>
       <x>1</x>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <vehicle_equipment type="engine" id="VEQUIP_SD_TURBO">
-    <name>STR_SD_TURBO</name>
+    <name>SD Turbo</name>
     <usable_by>air</usable_by>
     <weight>190</weight>
     <max_ammo>14</max_ammo>

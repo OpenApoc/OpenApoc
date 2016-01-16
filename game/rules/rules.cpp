@@ -20,12 +20,7 @@ bool RulesLoader::isValidEquipmentID(const UString &str)
 }
 bool RulesLoader::isValidStringID(const UString &str)
 {
-	static UString id_prefix = "STR_";
-	// This also catches empty string etc.?
-	if (str.substr(0, id_prefix.length()) != id_prefix)
-	{
-		return false;
-	}
+	// With gettext everything is a valid string
 	return true;
 }
 bool RulesLoader::isValidOrganisationID(const UString &str)

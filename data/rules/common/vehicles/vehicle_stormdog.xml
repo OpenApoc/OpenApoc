@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <vehicle id="VEHICLE_STORMDOG" type="ground">
-    <name>STR_STORMDOG</name>
+    <name>Stormdog</name>
     <manufacturer>ORG_MARSEC</manufacturer>
     <size>
       <x>1</x>

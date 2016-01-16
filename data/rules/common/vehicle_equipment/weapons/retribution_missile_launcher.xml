@@ -24,7 +24,7 @@
     <firing_arc_1>5200</firing_arc_1>
     <firing_arc_2>3</firing_arc_2>
     <point_defence>false</point_defence>
-    <name>STR_RETRIBUTION_MISSILE_LAUNCHER</name>
+    <name>Retribution Missile Launcher</name>
     <fire_sfx>RAWSOUND:91</fire_sfx>
     <idem>91</idem>
     <explosion_graphic>PTANG:0</explosion_graphic>

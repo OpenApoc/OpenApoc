@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <vehicle id="VEHICLE_GRIFFON_AFV" type="ground">
-    <name>STR_GRIFFON_AFV</name>
+    <name>Griffon AFV</name>
     <manufacturer>ORG_MARSEC</manufacturer>
     <size>
       <x>1</x>

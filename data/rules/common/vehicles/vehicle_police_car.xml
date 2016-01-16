@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
   <vehicle id="VEHICLE_POLICE_CAR" type="ground">
-    <name>STR_POLICE_CAR</name>
+    <name>Police Car</name>
     <manufacturer>ORG_MEGAPOL</manufacturer>
     <size>
       <x>1</x>

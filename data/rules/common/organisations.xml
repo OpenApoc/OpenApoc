@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_rules>
-  <organisation ID="ORG_X-COM" balance="5000000" income="0" name="STR_X-COM"/>
-  <organisation ID="ORG_ALIEN" balance="0" income="0" name="STR_ALIEN"/>
-  <organisation ID="ORG_GOVERNMENT" balance="0" income="0" name="STR_GOVERNMENT"/>
-  <organisation ID="ORG_MEGAPOL" balance="0" income="0" name="STR_MEGAPOL"/>
-  <organisation ID="ORG_CULT_OF_SIRIUS" balance="0" income="0" name="STR_CULT_OF_SIRIUS"/>
-  <organisation ID="ORG_MARSEC" balance="0" income="0" name="STR_MARSEC"/>
-  <organisation ID="ORG_SUPERDYNAMICS" balance="0" income="0" name="STR_SUPERDYNAMICS"/>
-  <organisation ID="ORG_GENERAL_METRO" balance="0" income="0" name="STR_GENERAL_METRO"/>
-  <organisation ID="ORG_CYBERWEB" balance="0" income="0" name="STR_CYBERWEB"/>
-  <organisation ID="ORG_TRANSTELLAR" balance="0" income="0" name="STR_TRANSTELLAR"/>
-  <organisation ID="ORG_SOLMINE" balance="0" income="0" name="STR_SOLMINE"/>
-  <organisation ID="ORG_SENSOVISION" balance="0" income="0" name="STR_SENSOVISION"/>
-  <organisation ID="ORG_LIFETREE" balance="0" income="0" name="STR_LIFETREE"/>
-  <organisation ID="ORG_NUTRIVEND" balance="0" income="0" name="STR_NUTRIVEND"/>
-  <organisation ID="ORG_EVONET" balance="0" income="0" name="STR_EVONET"/>
-  <organisation ID="ORG_SANCTUARY_CLINIC" balance="0" income="0" name="STR_SANCTUARY_CLINIT"/>
-  <organisation ID="ORG_NANOTECH" balance="0" income="0" name="STR_NANOTECH"/>
-  <organisation ID="ORG_ENERGEN" balance="0" income="0" name="STR_ENERGEN"/>
-  <organisation ID="ORG_SYNTHEMESH" balance="0" income="0" name="STR_SYNTHEMESH"/>
-  <organisation ID="ORG_GRAVBALL_LEAGUE" balance="0" income="0" name="STR_GRAVBALL_LEAGUE"/>
-  <organisation ID="ORG_PSYKE" balance="0" income="0" name="STR_PSYKE"/>
-  <organisation ID="ORG_DIABLO" balance="0" income="0" name="STR_DIABLO"/>
-  <organisation ID="ORG_OSIRON" balance="0" income="0" name="STR_OSIRON"/>
-  <organisation ID="ORG_S_E_L_F_" balance="0" income="0" name="STR_S_E_L_F_"/>
-  <organisation ID="ORG_MUTANT_ALLIANCE" balance="0" income="0" name="STR_MUTANT_ALLIANCE"/>
-  <organisation ID="ORG_EXTROPIANS" balance="0" income="0" name="STR_EXTROPIANS"/>
-  <organisation ID="ORG_TECHNOCRATS" balance="0" income="0" name="STR_TECHNOCRATS"/>
-  <organisation ID="ORG_CIVILIAN" balance="0" income="0" name="STR_CIVILIAN"/>
+  <organisation ID="ORG_X-COM" balance="5000000" income="0" name="X-Com"/>
+  <organisation ID="ORG_ALIEN" balance="0" income="0" name="Alien"/>
+  <organisation ID="ORG_GOVERNMENT" balance="0" income="0" name="Government"/>
+  <organisation ID="ORG_MEGAPOL" balance="0" income="0" name="Megapol"/>
+  <organisation ID="ORG_CULT_OF_SIRIUS" balance="0" income="0" name="Cult of Sirius"/>
+  <organisation ID="ORG_MARSEC" balance="0" income="0" name="MarSec"/>
+  <organisation ID="ORG_SUPERDYNAMICS" balance="0" income="0" name="Superdynamics"/>
+  <organisation ID="ORG_GENERAL_METRO" balance="0" income="0" name="General Metro"/>
+  <organisation ID="ORG_CYBERWEB" balance="0" income="0" name="Cyberweb"/>
+  <organisation ID="ORG_TRANSTELLAR" balance="0" income="0" name="Transtellar"/>
+  <organisation ID="ORG_SOLMINE" balance="0" income="0" name="Solmine"/>
+  <organisation ID="ORG_SENSOVISION" balance="0" income="0" name="Sensovision"/>
+  <organisation ID="ORG_LIFETREE" balance="0" income="0" name="Lifetree"/>
+  <organisation ID="ORG_NUTRIVEND" balance="0" income="0" name="Nutrivend"/>
+  <organisation ID="ORG_EVONET" balance="0" income="0" name="Evonet"/>
+  <organisation ID="ORG_SANCTUARY_CLINIC" balance="0" income="0" name="Santuary Clinic"/>
+  <organisation ID="ORG_NANOTECH" balance="0" income="0" name="Nanotech"/>
+  <organisation ID="ORG_ENERGEN" balance="0" income="0" name="Energen"/>
+  <organisation ID="ORG_SYNTHEMESH" balance="0" income="0" name="Synthemesh"/>
+  <organisation ID="ORG_GRAVBALL_LEAGUE" balance="0" income="0" name="GravBall League"/>
+  <organisation ID="ORG_PSYKE" balance="0" income="0" name="Psyke"/>
+  <organisation ID="ORG_DIABLO" balance="0" income="0" name="Diablo"/>
+  <organisation ID="ORG_OSIRON" balance="0" income="0" name="Osiron"/>
+  <organisation ID="ORG_S_E_L_F_" balance="0" income="0" name="S.E.L.F"/>
+  <organisation ID="ORG_MUTANT_ALLIANCE" balance="0" income="0" name="Mutant Alliance"/>
+  <organisation ID="ORG_EXTROPIANS" balance="0" income="0" name="Extropians"/>
+  <organisation ID="ORG_TECHNOCRATS" balance="0" income="0" name="Technocrats"/>
+  <organisation ID="ORG_CIVILIAN" balance="0" income="0" name="Civilian"/>
 </openapoc_rules>

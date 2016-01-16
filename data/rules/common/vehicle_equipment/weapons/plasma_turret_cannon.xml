@@ -24,7 +24,7 @@
     <firing_arc_1>2000</firing_arc_1>
     <firing_arc_2>8</firing_arc_2>
     <point_defence>false</point_defence>
-    <name>STR_PLASMA_TURRET_CANNON</name>
+    <name>Plasma Turret Cannon</name>
     <fire_sfx>RAWSOUND:83</fire_sfx>
     <idem>83</idem>
     <explosion_graphic>PTANG:9</explosion_graphic>
