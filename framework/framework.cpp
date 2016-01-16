@@ -56,7 +56,7 @@ static std::map<UString, UString> defaultConfig = {
     {"Visual.ScreenHeight", "900"},
     {"Visual.FullScreen", "false"},
 #endif
-    {"Language", "en_gb"},
+    {"Language", ""},
     {"GameRules", "XCOMAPOC.XML"},
     {"Resource.LocalDataDir", "./data"},
     {"Resource.SystemDataDir", DATA_DIRECTORY},
@@ -169,26 +169,6 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 	TRACE_FN;
 	LogInfo("Starting framework");
 
-	LogInfo("Setting up locale");
-
-	boost::locale::generator gen;
-	std::locale loc = gen("");
-	std::locale::global(loc);
-
-	auto localeName = std::use_facet<boost::locale::info>(loc).name();
-	auto localeLang = std::use_facet<boost::locale::info>(loc).language();
-	auto localeCountry = std::use_facet<boost::locale::info>(loc).country();
-	auto localeVariant = std::use_facet<boost::locale::info>(loc).variant();
-	auto localeEncoding = std::use_facet<boost::locale::info>(loc).encoding();
-	auto isUTF8 = std::use_facet<boost::locale::info>(loc).utf8();
-
-	LogInfo("Locale info: Name \"%s\" language \"%s\" country \"%s\" variant \"%s\" encoding "
-	        "\"%s\" utf8:%s",
-	        localeName.c_str(), localeLang.c_str(), localeCountry.c_str(), localeVariant.c_str(),
-	        localeEncoding.c_str(), isUTF8 ? "true" : "false");
-
-	// FIXME: Hook up system locale to translation database?
-
 	if (this->instance)
 	{
 		LogError("Multiple Framework instances created");
@@ -227,6 +207,31 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 			Settings->set(splitString[0], splitString[1]);
 		}
 	}
+
+	// This is always set, the default being an empty string (which correctly chooses 'system
+	// langauge')
+	auto desiredLanguageName = Settings->getString("Language");
+
+	LogInfo("Setting up locale \"%s\"", desiredLanguageName.c_str());
+
+	boost::locale::generator gen;
+	std::locale loc = gen(desiredLanguageName.str());
+	std::locale::global(loc);
+
+	auto localeName = std::use_facet<boost::locale::info>(loc).name();
+	auto localeLang = std::use_facet<boost::locale::info>(loc).language();
+	auto localeCountry = std::use_facet<boost::locale::info>(loc).country();
+	auto localeVariant = std::use_facet<boost::locale::info>(loc).variant();
+	auto localeEncoding = std::use_facet<boost::locale::info>(loc).encoding();
+	auto isUTF8 = std::use_facet<boost::locale::info>(loc).utf8();
+
+	LogInfo("Locale info: Name \"%s\" language \"%s\" country \"%s\" variant \"%s\" encoding "
+	        "\"%s\" utf8:%s",
+	        localeName.c_str(), localeLang.c_str(), localeCountry.c_str(), localeVariant.c_str(),
+	        localeEncoding.c_str(), isUTF8 ? "true" : "false");
+
+	// Set the language in the config file
+	Settings->set("Language", localeName);
 
 	int threadPoolSize = Settings->getInt("Framework.ThreadPoolSize");
 	if (threadPoolSize > 0)

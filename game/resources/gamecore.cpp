@@ -14,7 +14,10 @@ GameCore::GameCore() : supportedlanguages(), languagetext(), fonts(), forms() { 
 void GameCore::Load(UString CoreXMLFilename, UString Language)
 {
 	assert(Loaded == false);
-	language = Language;
+	// FIXME: Hacks to convert from standard en_GB.utf8 style language names to en_gb
+	auto splitLang = Language.split(".");
+	language = splitLang[0].toLower();
+	LogWarning("Munged language name \"%s\" to \"%s\"", Language.c_str(), language.c_str());
 	ParseXMLDoc(CoreXMLFilename);
 	DebugModeEnabled = false;
 

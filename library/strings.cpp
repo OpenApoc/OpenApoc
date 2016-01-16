@@ -73,6 +73,8 @@ UString UString::substr(size_t offset, size_t length) const
 
 UString UString::toUpper() const { return boost::locale::to_upper(this->u8Str); }
 
+UString UString::toLower() const { return boost::locale::to_lower(this->u8Str); }
+
 UString &UString::operator=(const UString &other)
 {
 	this->u8Str = other.u8Str;
