@@ -8,10 +8,10 @@ namespace OpenApoc
 {
 
 Control::Control(Control *Owner, bool takesFocus)
-    : owningControl(Owner), focusedChild(nullptr), mouseInside(false), mouseDepressed(false),
-      resolvedLocation(0, 0), Name("Control"), Location(0, 0), Size(0, 0),
-      BackgroundColour(0, 0, 0, 0), takesFocus(takesFocus), showBounds(false), Visible(true),
-      canCopy(true), lastCopiedTo(nullptr), data(nullptr)
+    : owningControl(Owner), mouseInside(false), mouseDepressed(false), resolvedLocation(0, 0),
+      Name("Control"), Location(0, 0), Size(0, 0), BackgroundColour(0, 0, 0, 0),
+      takesFocus(takesFocus), showBounds(false), Visible(true), canCopy(true),
+      lastCopiedTo(nullptr), data(nullptr)
 {
 	if (Owner != nullptr)
 	{
@@ -31,27 +31,11 @@ Control::~Control()
 	}
 }
 
-void Control::SetFocus(Control *Child) { focusedChild = Child; }
-
-Control *Control::GetActiveControl() const { return focusedChild; }
-
-void Control::Focus()
-{
-	if (owningControl != nullptr)
-	{
-		owningControl->SetFocus(this);
-	}
-}
-
 bool Control::IsFocused() const
 {
-	if (!this->takesFocus)
-		return false;
-	if (owningControl != nullptr)
-	{
-		return (owningControl->GetActiveControl() == this);
-	}
-	return true;
+	// FIXME: Need to think of a method of 'sharing' focus across multiple forms/non-form active
+	// areas
+	return false;
 }
 
 void Control::ResolveLocation()

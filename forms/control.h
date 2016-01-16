@@ -24,7 +24,6 @@ class Control
   protected:
 	sp<Palette> palette;
 	Control *owningControl;
-	Control *focusedChild;
 	bool mouseInside;
 	bool mouseDepressed;
 	Vec2<int> resolvedLocation;
@@ -33,7 +32,6 @@ class Control
 	virtual void PostRender();
 	virtual void OnRender();
 
-	void SetFocus(Control *Child);
 	bool IsFocused() const;
 
 	void ResolveLocation();
@@ -62,7 +60,6 @@ class Control
 	virtual ~Control();
 
 	Control *GetActiveControl() const;
-	void Focus();
 
 	virtual void EventOccured(Event *e);
 	void Render();
