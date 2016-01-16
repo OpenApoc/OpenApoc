@@ -175,7 +175,17 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 	std::locale loc = gen("");
 	std::locale::global(loc);
 
-	LogInfo("Set locale to \"%s\"", loc.name().c_str());
+	auto localeName = std::use_facet<boost::locale::info>(loc).name();
+	auto localeLang = std::use_facet<boost::locale::info>(loc).language();
+	auto localeCountry = std::use_facet<boost::locale::info>(loc).country();
+	auto localeVariant = std::use_facet<boost::locale::info>(loc).variant();
+	auto localeEncoding = std::use_facet<boost::locale::info>(loc).encoding();
+	auto isUTF8 = std::use_facet<boost::locale::info>(loc).utf8();
+
+	LogInfo("Locale info: Name \"%s\" language \"%s\" country \"%s\" variant \"%s\" encoding "
+	        "\"%s\" utf8:%s",
+	        localeName.c_str(), localeLang.c_str(), localeCountry.c_str(), localeVariant.c_str(),
+	        localeEncoding.c_str(), isUTF8 ? "true" : "false");
 
 	// FIXME: Hook up system locale to translation database?
 
