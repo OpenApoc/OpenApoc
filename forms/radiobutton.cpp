@@ -17,7 +17,7 @@ RadioButton::~RadioButton() {}
 Control *RadioButton::CopyTo(Control *CopyParent)
 {
 	RadioButton *copy = new RadioButton(CopyParent, group, imagechecked, imageunchecked);
-	copy->Checked = this->Checked;
+	*group = nullptr;
 	CopyControlData(copy);
 	return copy;
 }

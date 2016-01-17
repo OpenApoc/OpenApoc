@@ -123,6 +123,7 @@ void FormPreview::EventOccurred(Event *e)
 		}
 
 		if (e->Data.Forms.RaisedBy->GetForm() == previewselector.get() &&
+			e->Data.Forms.RaisedBy->GetParent() != nullptr &&
 		    e->Data.Forms.RaisedBy->GetParent()->Name == "FORM_LIST")
 		{
 
