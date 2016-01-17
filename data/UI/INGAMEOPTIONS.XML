@@ -19,7 +19,7 @@
           <size width="260" height="28"/>
           <font>SMALFONT</font>
         </textbutton>
-        <textbutton id="BUTTON_QUIT" text="Quit X-Com Apocalypse">
+        <textbutton id="BUTTON_QUIT" text="Quit X-COM Apocalypse">
           <position x="18" y="195"/>
           <size width="260" height="28"/>
           <font>SMALFONT</font>
