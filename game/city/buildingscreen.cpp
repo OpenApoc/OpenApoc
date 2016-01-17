@@ -10,8 +10,7 @@ BuildingScreen::BuildingScreen(sp<Building> building)
     : Stage(), menuform(fw().gamecore->GetForm("FORM_BUILDING_SCREEN")), building(building)
 {
 	auto *nameLabel = menuform->FindControlTyped<Label>("LABEL_BUILDING_NAME");
-	auto uppercaseName = building->def.getName().toUpper();
-	nameLabel->SetText(uppercaseName);
+	nameLabel->SetText(tr(building->def.getName()));
 }
 
 BuildingScreen::~BuildingScreen() {}
