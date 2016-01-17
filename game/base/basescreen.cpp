@@ -204,11 +204,11 @@ void BaseScreen::EventOccurred(Event *e)
 	{
 		selText->SetText(tr(dragFacility->name));
 		selGraphic->SetImage(fw().data->load_image(dragFacility->sprite));
-		statsLabels[0]->SetText("Cost to build");
+		statsLabels[0]->SetText(tr("Cost to build"));
 		statsValues[0]->SetText("$" + Strings::FromInteger(dragFacility->buildCost));
-		statsLabels[1]->SetText("Days to build");
+		statsLabels[1]->SetText(tr("Days to build"));
 		statsValues[1]->SetText(Strings::FromInteger(dragFacility->buildTime));
-		statsLabels[2]->SetText("Maintenance cost");
+		statsLabels[2]->SetText(tr("Maintenance cost"));
 		statsValues[2]->SetText("$" + Strings::FromInteger(dragFacility->weeklyCost));
 	}
 	else if (selFacility != nullptr)
@@ -217,9 +217,9 @@ void BaseScreen::EventOccurred(Event *e)
 		selGraphic->SetImage(fw().data->load_image(selFacility->def.sprite));
 		if (selFacility->def.capacityAmount > 0)
 		{
-			statsLabels[0]->SetText("Capacity");
+			statsLabels[0]->SetText(tr("Capacity"));
 			statsValues[0]->SetText(Strings::FromInteger(selFacility->def.capacityAmount));
-			statsLabels[1]->SetText("Usage");
+			statsLabels[1]->SetText(tr("Usage"));
 			statsValues[1]->SetText("0%");
 		}
 	}
@@ -230,11 +230,11 @@ void BaseScreen::EventOccurred(Event *e)
 		    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:%d:xcom3/UFODATA/BASE.PCX", sprite);
 		if (sprite != 0)
 		{
-			selText->SetText("Corridor");
+			selText->SetText(tr("Corridor"));
 		}
 		else
 		{
-			selText->SetText("Earth");
+			selText->SetText(tr("Earth"));
 		}
 		selGraphic->SetImage(fw().data->load_image(image));
 	}
