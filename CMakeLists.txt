@@ -191,3 +191,29 @@ endif()
 add_custom_target(tidy ${CLANG_TIDY} ${FORMAT_SOURCES} -p ${CMAKE_BINARY_DIR}
 		${CLANG_TIDY_OPTIONS}
 		DEPENDS ${FORMAT_SOURCES} ${CMAKE_BINARY_DIR}/compile_commands.json)
+
+
+# Localisation
+
+set(LANGUAGES en_GB fr_FR de_DE cs es it pl ru_RU)
+
+find_package(Gettext)
+if (GETTEXT_FOUND)
+		foreach(LANG ${LANGUAGES})
+				GETTEXT_PROCESS_PO_FILES(${LANG} PO_FILES
+						${CMAKE_SOURCE_DIR}/data/languages/ufo_string_${LANG}.po)
+				GETTEXT_PROCESS_PO_FILES(${LANG} PO_FILES
+						${CMAKE_SOURCE_DIR}/data/languages/paedia_string_${LANG}.po)
+		endforeach()
+		add_custom_target(update-translations DEPENDS pofiles)
+		foreach (LANG ${LANGUAGES})
+				add_custom_command(TARGET update-translations DEPENDS pofiles
+						COMMAND ${CMAKE_COMMAND} -E copy
+						${CMAKE_BINARY_DIR}/paedia_string_${LANG}.gmo
+						${CMAKE_SOURCE_DIR}/data/languages/${LANG}/LC_MESSAGES/paedia_string.mo)
+				add_custom_command(TARGET update-translations DEPENDS pofiles
+						COMMAND ${CMAKE_COMMAND} -E copy
+						${CMAKE_BINARY_DIR}/ufo_string_${LANG}.gmo
+						${CMAKE_SOURCE_DIR}/data/languages/${LANG}/LC_MESSAGES/ufo_string.mo)
+		endforeach()
+endif(GETTEXT_FOUND)
