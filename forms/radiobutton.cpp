@@ -6,19 +6,41 @@
 namespace OpenApoc
 {
 
-RadioButton::RadioButton(Control *Owner, RadioButton **Group, sp<Image> ImageChecked,
+RadioButton::RadioButton(sp<RadioButtonGroup> Group, sp<Image> ImageChecked,
                          sp<Image> ImageUnchecked)
-    : CheckBox(Owner, ImageChecked, ImageUnchecked), group(Group)
+    : CheckBox(ImageChecked, ImageUnchecked), group(Group)
 {
 }
 
 RadioButton::~RadioButton() {}
 
-Control *RadioButton::CopyTo(Control *CopyParent)
+sp<Control> RadioButton::CopyTo(sp<Control> CopyParent)
 {
-	RadioButton *copy = new RadioButton(CopyParent, group, imagechecked, imageunchecked);
-	*group = nullptr;
+	sp<RadioButton> copy;
+	sp<RadioButtonGroup> newGroup;
+	if (CopyParent)
+	{
+		if (this->group)
+		{
+			auto groupIt = CopyParent->radiogroups.find(this->group->ID);
+			if (groupIt == CopyParent->radiogroups.end())
+			{
+				CopyParent->radiogroups[this->group->ID] =
+				    std::make_shared<RadioButtonGroup>(this->group->ID);
+			}
+			newGroup = CopyParent->radiogroups[this->group->ID];
+		}
+		copy = CopyParent->createChild<RadioButton>(newGroup, imagechecked, imageunchecked);
+	}
+	else
+	{
+		copy = std::make_shared<RadioButton>(newGroup, imagechecked, imageunchecked);
+	}
 	CopyControlData(copy);
+	if (newGroup)
+	{
+		newGroup->radioButtons.push_back(copy);
+	}
 	return copy;
 }
 
@@ -26,13 +48,21 @@ void RadioButton::SetChecked(bool checked)
 {
 	if (checked && !Checked)
 	{
-		if (*group != nullptr)
+		if (group)
 		{
-			(*group)->Checked = false;
+			for (auto &c : group->radioButtons)
+			{
+				auto button = c.lock();
+				if (button)
+				{
+					button->Checked = false;
+				}
+			}
 		}
-		*group = this;
 		CheckBox::SetChecked(checked);
 	}
 }
+
+RadioButtonGroup::RadioButtonGroup(UString ID) : ID(ID) {}
 
 }; // namespace OpenApoc

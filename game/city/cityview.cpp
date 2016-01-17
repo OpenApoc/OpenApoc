@@ -202,7 +202,7 @@ void CityView::Update(StageCmd *const cmd)
 	// FIXME: Possibly more efficient ways than re-generating all controls every frame?
 
 	// Setup owned vehicle list controls
-	auto *ownedVehicleList = uiTabs[1]->FindControlTyped<ListBox>("OWNED_VEHICLE_LIST");
+	auto ownedVehicleList = uiTabs[1]->FindControlTyped<ListBox>("OWNED_VEHICLE_LIST");
 	if (!ownedVehicleList)
 	{
 		LogError("Failed to find \"OWNED_VEHICLE_LIST\" control on city tab \"%s\"",
@@ -233,12 +233,12 @@ void CityView::Update(StageCmd *const cmd)
 		{
 			frame = this->icons[CityIcon::UnselectedFrame];
 		}
-		auto baseControl = new GraphicButton(nullptr, frame, frame);
+		auto baseControl = std::make_shared<GraphicButton>(frame, frame);
 		baseControl->Size = frame->size;
 		// FIXME: There's an extra 1 pixel here that's annoying
 		baseControl->Size.x -= 1;
 		baseControl->Name = "OWNED_VEHICLE_FRAME_" + vehicle->name;
-		auto vehicleIcon = new Graphic(baseControl, vehicle->type.icon);
+		auto vehicleIcon = baseControl->createChild<Graphic>(vehicle->type.icon);
 		vehicleIcon->AutoSize = true;
 		vehicleIcon->Location = {1, 1};
 		vehicleIcon->Name = "OWNED_VEHICLE_ICON_" + vehicle->name;
@@ -261,7 +261,7 @@ void CityView::Update(StageCmd *const cmd)
 			maxHealth = vehicle->getMaxHealth();
 		}
 
-		auto healthGraphic = new Graphic(baseControl, img);
+		auto healthGraphic = baseControl->createChild<Graphic>(img);
 
 		// FIXME: Put these somewhere slightly less magic?
 		Vec2<int> healthBarOffset = {27, 2};
@@ -410,7 +410,8 @@ void CityView::EventOccurred(Event *e)
 			}
 			else if (cname == "BUTTON_TOGGLE_STRATMAP")
 			{
-				bool strategy = dynamic_cast<CheckBox *>(e->Forms().RaisedBy)->IsChecked();
+				bool strategy =
+				    std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy)->IsChecked();
 				this->setViewMode(strategy ? TileViewMode::Strategy : TileViewMode::Isometric);
 			}
 			else

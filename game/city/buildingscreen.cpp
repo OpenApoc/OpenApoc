@@ -1,7 +1,7 @@
-
 #include "game/city/buildingscreen.h"
 #include "framework/framework.h"
 #include "game/city/building.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc
 {
@@ -9,7 +9,7 @@ namespace OpenApoc
 BuildingScreen::BuildingScreen(sp<Building> building)
     : Stage(), menuform(fw().gamecore->GetForm("FORM_BUILDING_SCREEN")), building(building)
 {
-	auto *nameLabel = menuform->FindControlTyped<Label>("LABEL_BUILDING_NAME");
+	auto nameLabel = menuform->FindControlTyped<Label>("LABEL_BUILDING_NAME");
 	nameLabel->SetText(tr(building->def.getName()));
 }
 

@@ -2,6 +2,7 @@
 #include "game/general/ingameoptions.h"
 #include "framework/framework.h"
 #include "game/general/mainmenu.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc
 {
@@ -85,7 +86,7 @@ void InGameOptions::EventOccurred(Event *e)
 	{
 		if (e->Forms().RaisedBy->Name == "GLOBAL_GAIN_SLIDER")
 		{
-			ScrollBar *slider = dynamic_cast<ScrollBar *>(e->Forms().RaisedBy);
+			auto slider = std::dynamic_pointer_cast<ScrollBar>(e->Forms().RaisedBy);
 			if (!slider)
 			{
 				LogError("Failed to cast \"GLOBAL_GAIN_SLIDER\" control to ScrollBar");
@@ -97,7 +98,7 @@ void InGameOptions::EventOccurred(Event *e)
 		}
 		else if (e->Forms().RaisedBy->Name == "MUSIC_GAIN_SLIDER")
 		{
-			ScrollBar *slider = dynamic_cast<ScrollBar *>(e->Forms().RaisedBy);
+			auto slider = std::dynamic_pointer_cast<ScrollBar>(e->Forms().RaisedBy);
 			if (!slider)
 			{
 				LogError("Failed to cast \"MUSIC_GAIN_SLIDER\" control to ScrollBar");
@@ -109,7 +110,7 @@ void InGameOptions::EventOccurred(Event *e)
 		}
 		else if (e->Forms().RaisedBy->Name == "SAMPLE_GAIN_SLIDER")
 		{
-			ScrollBar *slider = dynamic_cast<ScrollBar *>(e->Forms().RaisedBy);
+			auto slider = std::dynamic_pointer_cast<ScrollBar>(e->Forms().RaisedBy);
 			if (!slider)
 			{
 				LogError("Failed to cast \"SAMPLE_GAIN_SLIDER\" control to ScrollBar");
@@ -125,19 +126,19 @@ void InGameOptions::EventOccurred(Event *e)
 	{
 		if (e->Forms().RaisedBy->Name == "SHOW_VEHICLE_PATH")
 		{
-			CheckBox *box = dynamic_cast<CheckBox *>(e->Forms().RaisedBy);
+			auto box = std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy);
 			state->showVehiclePath = box->IsChecked();
 			LogWarning("Set SHOW_VEHICLE_PATH to %d", box->IsChecked());
 		}
 		if (e->Forms().RaisedBy->Name == "SHOW_TILE_ORIGIN")
 		{
-			CheckBox *box = dynamic_cast<CheckBox *>(e->Forms().RaisedBy);
+			auto box = std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy);
 			state->showTileOrigin = box->IsChecked();
 			LogWarning("Set SHOW_TILE_ORIGIN to %d", box->IsChecked());
 		}
 		if (e->Forms().RaisedBy->Name == "SHOW_SELECTABLE_BOUNDS")
 		{
-			CheckBox *box = dynamic_cast<CheckBox *>(e->Forms().RaisedBy);
+			auto box = std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy);
 			state->showSelectableBounds = box->IsChecked();
 			LogWarning("Set SHOW_SELECTABLE_BOUNDS to %d", box->IsChecked());
 		}

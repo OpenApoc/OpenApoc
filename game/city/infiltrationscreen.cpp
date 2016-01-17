@@ -1,6 +1,6 @@
-
 #include "game/city/infiltrationscreen.h"
 #include "framework/framework.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc
 {

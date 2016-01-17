@@ -7,32 +7,14 @@
 namespace OpenApoc
 {
 
-Control::Control(Control *Owner, bool takesFocus)
-    : owningControl(Owner), mouseInside(false), mouseDepressed(false), resolvedLocation(0, 0),
-      Name("Control"), Location(0, 0), Size(0, 0), BackgroundColour(0, 0, 0, 0),
-      takesFocus(takesFocus), showBounds(false), Visible(true), canCopy(true),
-      lastCopiedTo(nullptr), data(nullptr)
+Control::Control(bool takesFocus)
+    : mouseInside(false), mouseDepressed(false), resolvedLocation(0, 0), Name("Control"),
+      Location(0, 0), Size(0, 0), BackgroundColour(0, 0, 0, 0), takesFocus(takesFocus),
+      showBounds(false), Visible(true), canCopy(true), data(nullptr)
 {
-	if (Owner != nullptr)
-	{
-		Owner->Controls.push_back(this);
-	}
 }
 
-Control::~Control()
-{
-	UnloadResources();
-	// Delete controls
-	for (auto &c : Controls)
-	{
-		delete c;
-	}
-	// Delete radiogroups
-	for (auto &c : radiogroups)
-	{
-		delete c.second;
-	}
-}
+Control::~Control() { UnloadResources(); }
 
 bool Control::IsFocused() const
 {
@@ -43,28 +25,29 @@ bool Control::IsFocused() const
 
 void Control::ResolveLocation()
 {
-	if (owningControl == nullptr)
+	auto parentControl = this->GetParent();
+	if (parentControl == nullptr)
 	{
 		resolvedLocation.x = Location.x;
 		resolvedLocation.y = Location.y;
 	}
 	else
 	{
-		if (Location.x > owningControl->Size.x || Location.y > owningControl->Size.y)
+		if (Location.x > parentControl->Size.x || Location.y > parentControl->Size.y)
 		{
 			resolvedLocation.x = -99999;
 			resolvedLocation.y = -99999;
 		}
 		else
 		{
-			resolvedLocation.x = owningControl->resolvedLocation.x + Location.x;
-			resolvedLocation.y = owningControl->resolvedLocation.y + Location.y;
+			resolvedLocation.x = parentControl->resolvedLocation.x + Location.x;
+			resolvedLocation.y = parentControl->resolvedLocation.y + Location.y;
 		}
 	}
 
 	for (auto ctrlidx = Controls.rbegin(); ctrlidx != Controls.rend(); ctrlidx++)
 	{
-		Control *c = *ctrlidx;
+		auto c = *ctrlidx;
 		c->ResolveLocation();
 	}
 }
@@ -73,7 +56,7 @@ void Control::EventOccured(Event *e)
 {
 	for (auto ctrlidx = Controls.rbegin(); ctrlidx != Controls.rend(); ctrlidx++)
 	{
-		Control *c = *ctrlidx;
+		auto c = *ctrlidx;
 		if (c->Visible)
 		{
 			c->EventOccured(e);
@@ -100,7 +83,7 @@ void Control::EventOccured(Event *e)
 				if (!mouseInside)
 				{
 					newevent = new FormsEvent();
-					newevent->Forms().RaisedBy = this;
+					newevent->Forms().RaisedBy = shared_from_this();
 					newevent->Forms().EventFlag = FormEventType::MouseEnter;
 					newevent->Forms().MouseInfo = e->Mouse();
 					newevent->Forms().MouseInfo.X -= resolvedLocation.x;
@@ -109,7 +92,7 @@ void Control::EventOccured(Event *e)
 				}
 
 				newevent = new FormsEvent();
-				newevent->Forms().RaisedBy = this;
+				newevent->Forms().RaisedBy = shared_from_this();
 				newevent->Forms().EventFlag = FormEventType::MouseMove;
 				newevent->Forms().MouseInfo = e->Mouse();
 				newevent->Forms().MouseInfo.X -= resolvedLocation.x;
@@ -123,7 +106,7 @@ void Control::EventOccured(Event *e)
 				if (mouseInside)
 				{
 					newevent = new FormsEvent();
-					newevent->Forms().RaisedBy = this;
+					newevent->Forms().RaisedBy = shared_from_this();
 					newevent->Forms().EventFlag = FormEventType::MouseLeave;
 					newevent->Forms().MouseInfo = e->Mouse();
 					newevent->Forms().MouseInfo.X -= resolvedLocation.x;
@@ -138,7 +121,7 @@ void Control::EventOccured(Event *e)
 			if (newInside)
 			{
 				newevent = new FormsEvent();
-				newevent->Forms().RaisedBy = this;
+				newevent->Forms().RaisedBy = shared_from_this();
 				newevent->Forms().EventFlag = FormEventType::MouseDown;
 				newevent->Forms().MouseInfo = e->Mouse();
 				newevent->Forms().MouseInfo.X -= resolvedLocation.x;
@@ -153,7 +136,7 @@ void Control::EventOccured(Event *e)
 			if (newInside)
 			{
 				newevent = new FormsEvent();
-				newevent->Forms().RaisedBy = this;
+				newevent->Forms().RaisedBy = shared_from_this();
 				newevent->Forms().EventFlag = FormEventType::MouseUp;
 				newevent->Forms().MouseInfo = e->Mouse();
 				newevent->Forms().MouseInfo.X -= resolvedLocation.x;
@@ -163,7 +146,7 @@ void Control::EventOccured(Event *e)
 				if (mouseDepressed)
 				{
 					newevent = new FormsEvent();
-					newevent->Forms().RaisedBy = this;
+					newevent->Forms().RaisedBy = shared_from_this();
 					newevent->Forms().EventFlag = FormEventType::MouseClick;
 					newevent->Forms().MouseInfo = e->Mouse();
 					newevent->Forms().MouseInfo.X -= resolvedLocation.x;
@@ -207,7 +190,7 @@ void Control::EventOccured(Event *e)
 					if (!mouseInside)
 					{
 						newevent = new FormsEvent();
-						newevent->Forms().RaisedBy = this;
+						newevent->Forms().RaisedBy = shared_from_this();
 						newevent->Forms().EventFlag = FormEventType::MouseEnter;
 						// newevent->Forms().MouseInfo = e->Mouse();
 						newevent->Forms().MouseInfo = FakeMouseData;
@@ -217,7 +200,7 @@ void Control::EventOccured(Event *e)
 					}
 
 					newevent = new FormsEvent();
-					newevent->Forms().RaisedBy = this;
+					newevent->Forms().RaisedBy = shared_from_this();
 					newevent->Forms().EventFlag = FormEventType::MouseMove;
 					// newevent->Forms().MouseInfo = e->Mouse();
 					newevent->Forms().MouseInfo = FakeMouseData;
@@ -232,7 +215,7 @@ void Control::EventOccured(Event *e)
 					if (mouseInside)
 					{
 						newevent = new FormsEvent();
-						newevent->Forms().RaisedBy = this;
+						newevent->Forms().RaisedBy = shared_from_this();
 						newevent->Forms().EventFlag = FormEventType::MouseLeave;
 						// newevent->Forms().MouseInfo = e->Mouse();
 						newevent->Forms().MouseInfo = FakeMouseData;
@@ -248,7 +231,7 @@ void Control::EventOccured(Event *e)
 				if (newInside)
 				{
 					newevent = new FormsEvent();
-					newevent->Forms().RaisedBy = this;
+					newevent->Forms().RaisedBy = shared_from_this();
 					newevent->Forms().EventFlag = FormEventType::MouseDown;
 					// newevent->Forms().MouseInfo = e->Mouse();
 					newevent->Forms().MouseInfo = FakeMouseData;
@@ -266,7 +249,7 @@ void Control::EventOccured(Event *e)
 				if (newInside)
 				{
 					newevent = new FormsEvent();
-					newevent->Forms().RaisedBy = this;
+					newevent->Forms().RaisedBy = shared_from_this();
 					newevent->Forms().EventFlag = FormEventType::MouseUp;
 					// newevent->Forms().MouseInfo = e->Mouse();
 					newevent->Forms().MouseInfo = FakeMouseData;
@@ -277,7 +260,7 @@ void Control::EventOccured(Event *e)
 					if (mouseDepressed)
 					{
 						newevent = new FormsEvent();
-						newevent->Forms().RaisedBy = this;
+						newevent->Forms().RaisedBy = shared_from_this();
 						newevent->Forms().EventFlag = FormEventType::MouseClick;
 						// newevent->Forms().MouseInfo = e->Mouse();
 						newevent->Forms().MouseInfo = FakeMouseData;
@@ -298,7 +281,7 @@ void Control::EventOccured(Event *e)
 		if (IsFocused())
 		{
 			newevent = new FormsEvent();
-			newevent->Forms().RaisedBy = this;
+			newevent->Forms().RaisedBy = shared_from_this();
 			newevent->Forms().EventFlag =
 			    (e->Type() == EVENT_KEY_DOWN ? FormEventType::KeyDown : FormEventType::KeyUp);
 			newevent->Forms().KeyInfo = e->Keyboard();
@@ -312,7 +295,7 @@ void Control::EventOccured(Event *e)
 		if (IsFocused())
 		{
 			newevent = new FormsEvent();
-			newevent->Forms().RaisedBy = this;
+			newevent->Forms().RaisedBy = shared_from_this();
 			newevent->Forms().EventFlag = FormEventType::KeyPress;
 			newevent->Forms().KeyInfo = e->Keyboard();
 			fw().PushEvent(newevent);
@@ -365,7 +348,7 @@ void Control::PostRender()
 {
 	for (auto ctrlidx = Controls.begin(); ctrlidx != Controls.end(); ctrlidx++)
 	{
-		Control *c = *ctrlidx;
+		auto c = *ctrlidx;
 		if (c->Visible)
 		{
 			c->Render();
@@ -381,7 +364,7 @@ void Control::Update()
 {
 	for (auto ctrlidx = Controls.begin(); ctrlidx != Controls.end(); ctrlidx++)
 	{
-		Control *c = *ctrlidx;
+		auto c = *ctrlidx;
 		c->Update();
 	}
 }
@@ -465,27 +448,27 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 		// Child controls
 		else if (nodename == "control")
 		{
-			auto c = new Control(this);
+			auto c = this->createChild<Control>();
 			c->ConfigureFromXML(node);
 		}
 		else if (nodename == "label")
 		{
-			Label *l = new Label(this);
+			auto l = this->createChild<Label>();
 			l->ConfigureFromXML(node);
 		}
 		else if (nodename == "graphic")
 		{
-			Graphic *g = new Graphic(this);
+			auto g = this->createChild<Graphic>();
 			g->ConfigureFromXML(node);
 		}
 		else if (nodename == "textbutton")
 		{
-			TextButton *tb = new TextButton(this);
+			auto tb = this->createChild<TextButton>();
 			tb->ConfigureFromXML(node);
 		}
 		else if (nodename == "graphicbutton")
 		{
-			GraphicButton *gb = gb = new GraphicButton(this);
+			auto gb = this->createChild<GraphicButton>();
 			gb->ConfigureFromXML(node);
 			if (node->Attribute("scrollprev") != nullptr &&
 			    UString(node->Attribute("scrollprev")) != "")
@@ -502,18 +485,18 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 		}
 		else if (nodename == "checkbox")
 		{
-			auto cb = new CheckBox(this);
+			auto cb = this->createChild<CheckBox>();
 			cb->ConfigureFromXML(node);
 		}
 		else if (nodename == "radiobutton")
 		{
-			RadioButton **group = nullptr;
+			sp<RadioButtonGroup> group = nullptr;
 			if (node->Attribute("groupid") != nullptr && UString(node->Attribute("groupid")) != "")
 			{
 				attribvalue = node->Attribute("groupid");
 				if (radiogroups.find(attribvalue) == radiogroups.end())
 				{
-					radiogroups[attribvalue] = new RadioButton *(nullptr);
+					radiogroups[attribvalue] = std::make_shared<RadioButtonGroup>(attribvalue);
 				}
 				group = radiogroups[attribvalue];
 			}
@@ -521,18 +504,22 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 			{
 				LogError("Radiobutton \"%s\" has no group", node->Attribute("id"));
 			}
-			auto rb = new RadioButton(this, group);
+			auto rb = this->createChild<RadioButton>(group);
 			rb->ConfigureFromXML(node);
+			if (group)
+			{
+				group->radioButtons.push_back(rb);
+			}
 		}
 		else if (nodename == "scroll")
 		{
-			auto sb = new ScrollBar(this);
+			auto sb = this->createChild<ScrollBar>();
 			sb->ConfigureFromXML(node);
 		}
 
 		else if (nodename == "listbox")
 		{
-			ScrollBar *sb = nullptr;
+			sp<ScrollBar> sb = nullptr;
 
 			if (node->Attribute("scrollbarid") != nullptr &&
 			    UString(node->Attribute("scrollbarid")) != "")
@@ -540,16 +527,18 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 				attribvalue = node->Attribute("scrollbarid");
 				sb = this->FindControlTyped<ScrollBar>(attribvalue);
 			}
-			auto lb = new ListBox(this, sb);
+			auto lb = this->createChild<ListBox>(sb);
 			lb->ConfigureFromXML(node);
 		}
 
 		else if (nodename == "textedit")
 		{
-			TextEdit *te = new TextEdit(this);
+			auto te = this->createChild<TextEdit>();
 			te->ConfigureFromXML(node);
 		}
 	}
+
+	auto parentControl = this->GetParent();
 
 	if (specialpositionx != "")
 	{
@@ -559,24 +548,24 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 		}
 		else if (specialpositionx == "centre")
 		{
-			if (owningControl == nullptr)
+			if (parentControl == nullptr)
 			{
 				Location.x = (fw().Display_GetWidth() / 2) - (Size.x / 2);
 			}
 			else
 			{
-				Location.x = (owningControl->Size.x / 2) - (Size.x / 2);
+				Location.x = (parentControl->Size.x / 2) - (Size.x / 2);
 			}
 		}
 		else if (specialpositionx == "right")
 		{
-			if (owningControl == nullptr)
+			if (parentControl == nullptr)
 			{
 				Location.x = fw().Display_GetWidth() - Size.x;
 			}
 			else
 			{
-				Location.x = owningControl->Size.x - Size.x;
+				Location.x = parentControl->Size.x - Size.x;
 			}
 		}
 	}
@@ -589,24 +578,24 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 		}
 		else if (specialpositiony == "centre")
 		{
-			if (owningControl == nullptr)
+			if (parentControl == nullptr)
 			{
 				Location.y = (fw().Display_GetHeight() / 2) - (Size.y / 2);
 			}
 			else
 			{
-				Location.y = (owningControl->Size.y / 2) - (Size.y / 2);
+				Location.y = (parentControl->Size.y / 2) - (Size.y / 2);
 			}
 		}
 		else if (specialpositiony == "bottom")
 		{
-			if (owningControl == nullptr)
+			if (parentControl == nullptr)
 			{
 				Location.y = fw().Display_GetHeight() - Size.y;
 			}
 			else
 			{
-				Location.y = owningControl->Size.y - Size.y;
+				Location.y = parentControl->Size.y - Size.y;
 			}
 		}
 	}
@@ -616,42 +605,43 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 
 void Control::UnloadResources() {}
 
-Control *Control::operator[](int Index) const { return Controls.at(Index); }
+sp<Control> Control::operator[](int Index) const { return Controls.at(Index); }
 
-Control *Control::FindControl(UString ID) const
+sp<Control> Control::FindControl(UString ID) const
 {
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
-		Control *ctrl = *c;
+		auto ctrl = *c;
 		if (ctrl->Name == ID)
 		{
 			return ctrl;
 		}
-		Control *childControl = ctrl->FindControl(ID);
+		auto childControl = ctrl->FindControl(ID);
 		if (childControl)
 			return childControl;
 	}
 	return nullptr;
 }
 
-Control *Control::GetParent() const { return owningControl; }
+sp<Control> Control::GetParent() const { return owningControl.lock(); }
 
-Control *Control::GetRootControl()
+sp<Control> Control::GetRootControl()
 {
-	if (owningControl == nullptr)
+	auto parent = owningControl.lock();
+	if (parent == nullptr)
 	{
-		return this;
+		return shared_from_this();
 	}
 	else
 	{
-		return owningControl->GetRootControl();
+		return parent->GetRootControl();
 	}
 }
 
-Form *Control::GetForm()
+sp<Form> Control::GetForm()
 {
-	Control *c = GetRootControl();
-	return dynamic_cast<Form *>(c);
+	auto c = GetRootControl();
+	return std::dynamic_pointer_cast<Form>(c);
 }
 
 std::list<UString> Control::WordWrapText(sp<OpenApoc::BitmapFont> Font, UString WrapText) const
@@ -704,7 +694,16 @@ std::list<UString> Control::WordWrapText(sp<OpenApoc::BitmapFont> Font, UString 
 	return lines;
 }
 
-void Control::SetParent(Control *Parent) { owningControl = Parent; }
+void Control::SetParent(sp<Control> Parent)
+{
+	auto previousParent = this->owningControl.lock();
+	if (previousParent)
+	{
+		LogWarning("Reparenting control");
+	}
+	owningControl = Parent;
+	Parent->Controls.push_back(shared_from_this());
+}
 
 Vec2<int> Control::GetLocationOnScreen() const
 {
@@ -712,14 +711,22 @@ Vec2<int> Control::GetLocationOnScreen() const
 	return r;
 }
 
-Control *Control::CopyTo(Control *CopyParent)
+sp<Control> Control::CopyTo(sp<Control> CopyParent)
 {
-	Control *copy = new Control(CopyParent, takesFocus);
+	sp<Control> copy;
+	if (CopyParent)
+	{
+		copy = CopyParent->createChild<Control>(takesFocus);
+	}
+	else
+	{
+		copy = std::make_shared<Control>(takesFocus);
+	}
 	CopyControlData(copy);
 	return copy;
 }
 
-void Control::CopyControlData(Control *CopyOf)
+void Control::CopyControlData(sp<Control> CopyOf)
 {
 	lastCopiedTo = CopyOf;
 
@@ -733,7 +740,7 @@ void Control::CopyControlData(Control *CopyOf)
 
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
-		Control *ctrl = *c;
+		auto ctrl = *c;
 		if (ctrl->canCopy)
 		{
 			ctrl->CopyTo(CopyOf);

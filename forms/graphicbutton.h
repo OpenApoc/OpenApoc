@@ -25,9 +25,9 @@ class GraphicButton : public Control
 	virtual void OnRender() override;
 
   public:
-	ScrollBar *ScrollBarPrev, *ScrollBarNext;
+	sp<ScrollBar> ScrollBarPrev, ScrollBarNext;
 
-	GraphicButton(Control *Owner, sp<Image> image = nullptr, sp<Image> imageDepressed = nullptr,
+	GraphicButton(sp<Image> image = nullptr, sp<Image> imageDepressed = nullptr,
 	              sp<Image> imageHover = nullptr);
 	virtual ~GraphicButton();
 
@@ -42,7 +42,7 @@ class GraphicButton : public Control
 	sp<Image> GetHoverImage() const;
 	void SetHoverImage(sp<Image> Image);
 
-	virtual Control *CopyTo(Control *CopyParent) override;
+	virtual sp<Control> CopyTo(sp<Control> CopyParent) override;
 	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 };
 

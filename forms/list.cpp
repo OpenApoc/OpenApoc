@@ -7,20 +7,20 @@
 namespace OpenApoc
 {
 
-ListBox::ListBox(Control *Owner) : ListBox(Owner, nullptr) {}
+ListBox::ListBox() : ListBox(nullptr) {}
 
-ListBox::ListBox(Control *Owner, ScrollBar *ExternalScrollBar)
-    : Control(Owner), scroller_is_internal(ExternalScrollBar == nullptr), hovered(nullptr),
+ListBox::ListBox(sp<ScrollBar> ExternalScrollBar)
+    : Control(), scroller_is_internal(ExternalScrollBar == nullptr), hovered(nullptr),
       selected(nullptr), scroller(ExternalScrollBar), ItemSize(64), ItemSpacing(1),
       ListOrientation(Orientation::Vertical), HoverColour(0, 0, 0, 0), SelectedColour(0, 0, 0, 0)
 {
 }
 
-ListBox::~ListBox() { Clear(); }
+ListBox::~ListBox() {}
 
 void ListBox::ConfigureInternalScrollBar()
 {
-	scroller = new ScrollBar(this);
+	scroller = this->createChild<ScrollBar>();
 	scroller->Size.x = 16;
 	scroller->Size.y = 16;
 	switch (ListOrientation)
@@ -50,7 +50,7 @@ void ListBox::OnRender()
 
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
-		Control *ctrl = *c;
+		auto ctrl = *c;
 		if (ctrl != scroller)
 		{
 			switch (ListOrientation)
@@ -97,7 +97,7 @@ void ListBox::PostRender()
 	Control::PostRender();
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
-		Control *ctrl = *c;
+		auto ctrl = *c;
 		if (ctrl != scroller)
 		{
 			if (ctrl == hovered)
@@ -117,12 +117,12 @@ void ListBox::EventOccured(Event *e)
 	Control::EventOccured(e);
 	if (e->Type() == EVENT_FORM_INTERACTION)
 	{
-		Control *ctrl = e->Forms().RaisedBy;
+		sp<Control> ctrl = e->Forms().RaisedBy;
 		if (e->Forms().EventFlag == FormEventType::MouseMove)
 		{
 			// FIXME: Scrolling amount should match wheel amount
 			// Should wheel orientation match as well? Who has horizontal scrolls??
-			if (ctrl == this || ctrl->GetParent() == this)
+			if (ctrl == shared_from_this() || ctrl->GetParent() == shared_from_this())
 			{
 				int wheelDelta =
 				    e->Forms().MouseInfo.WheelVertical + e->Forms().MouseInfo.WheelHorizontal;
@@ -136,7 +136,7 @@ void ListBox::EventOccured(Event *e)
 				}
 			}
 
-			if (ctrl == this || ctrl == scroller)
+			if (ctrl == shared_from_this() || ctrl == scroller)
 			{
 				ctrl = nullptr;
 			}
@@ -145,19 +145,19 @@ void ListBox::EventOccured(Event *e)
 				hovered = ctrl;
 				auto le = new FormsEvent();
 				le->Forms() = e->Forms();
-				le->Forms().RaisedBy = this;
+				le->Forms().RaisedBy = shared_from_this();
 				le->Forms().EventFlag = FormEventType::ListBoxChangeHover;
 				fw().PushEvent(le);
 			}
 		}
 		else if (e->Forms().EventFlag == FormEventType::MouseDown)
 		{
-			if (selected != ctrl && ctrl->GetParent() == this && ctrl != scroller)
+			if (selected != ctrl && ctrl->GetParent() == shared_from_this() && ctrl != scroller)
 			{
 				selected = ctrl;
 				auto le = new FormsEvent();
 				le->Forms() = e->Forms();
-				le->Forms().RaisedBy = this;
+				le->Forms().RaisedBy = shared_from_this();
 				le->Forms().EventFlag = FormEventType::ListBoxChangeSelected;
 				fw().PushEvent(le);
 			}
@@ -182,11 +182,9 @@ void ListBox::UnloadResources() {}
 
 void ListBox::Clear()
 {
-	while (Controls.size() > 0)
-	{
-		delete Controls.back();
-		Controls.pop_back();
-	}
+	Controls.clear();
+	this->selected = nullptr;
+	this->hovered = nullptr;
 	if (scroller_is_internal)
 	{
 		ConfigureInternalScrollBar();
@@ -194,10 +192,9 @@ void ListBox::Clear()
 	ResolveLocation();
 }
 
-void ListBox::AddItem(Control *Item)
+void ListBox::AddItem(sp<Control> Item)
 {
-	Controls.push_back(Item);
-	Item->SetParent(this);
+	Item->SetParent(shared_from_this());
 	ResolveLocation();
 	if (selected == nullptr)
 	{
@@ -205,7 +202,7 @@ void ListBox::AddItem(Control *Item)
 	}
 }
 
-Control *ListBox::RemoveItem(Control *Item)
+sp<Control> ListBox::RemoveItem(sp<Control> Item)
 {
 	for (auto i = Controls.begin(); i != Controls.end(); i++)
 	{
@@ -216,30 +213,53 @@ Control *ListBox::RemoveItem(Control *Item)
 			return Item;
 		}
 	}
+	if (Item == this->selected)
+	{
+		this->selected = nullptr;
+	}
+	if (Item == this->hovered)
+	{
+		this->selected = nullptr;
+	}
 	return nullptr;
 }
 
-Control *ListBox::RemoveItem(int Index)
+sp<Control> ListBox::RemoveItem(int Index)
 {
-	Control *c = Controls.at(Index);
+	auto c = Controls.at(Index);
 	Controls.erase(Controls.begin() + Index);
 	ResolveLocation();
+	if (c == this->selected)
+	{
+		this->selected = nullptr;
+	}
+	if (c == this->hovered)
+	{
+		this->selected = nullptr;
+	}
 	return c;
 }
 
-Control *ListBox::operator[](int Index) { return Controls.at(Index); }
+sp<Control> ListBox::operator[](int Index) { return Controls.at(Index); }
 
-Control *ListBox::CopyTo(Control *CopyParent)
+sp<Control> ListBox::CopyTo(sp<Control> CopyParent)
 {
-	ListBox *copy;
-	if (scroller_is_internal)
+	sp<ListBox> copy;
+	sp<ScrollBar> scrollCopy;
+	if (!scroller_is_internal)
 	{
-		copy = new ListBox(CopyParent);
+		scrollCopy = std::dynamic_pointer_cast<ScrollBar>(scroller->lastCopiedTo.lock());
+	}
+
+	if (CopyParent)
+	{
+		copy = CopyParent->createChild<ListBox>(scrollCopy);
 	}
 	else
 	{
-		copy = new ListBox(CopyParent, static_cast<ScrollBar *>(scroller->lastCopiedTo));
+		copy = std::make_shared<ListBox>(scrollCopy);
 	}
+
 	copy->ItemSize = this->ItemSize;
 	copy->ItemSpacing = this->ItemSpacing;
 	copy->ListOrientation = this->ListOrientation;
@@ -315,11 +335,11 @@ void ListBox::ConfigureFromXML(tinyxml2::XMLElement *Element)
 	}
 }
 
-void ListBox::setSelected(Control *c)
+void ListBox::setSelected(sp<Control> c)
 {
 	// A sanity check to make sure the selected control actually belongs to this list
 	bool found = false;
-	for (auto *child : this->Controls)
+	for (auto child : this->Controls)
 	{
 		if (child == c)
 		{

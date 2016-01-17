@@ -2,12 +2,13 @@
 
 #include "forms/label.h"
 #include "framework/framework.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc
 {
 
-Label::Label(Control *Owner, UString Text, sp<BitmapFont> font)
-    : Control(Owner), text(Text), font(font), TextHAlign(HorizontalAlignment::Left),
+Label::Label(UString Text, sp<BitmapFont> font)
+    : Control(), text(Text), font(font), TextHAlign(HorizontalAlignment::Left),
       TextVAlign(VerticalAlignment::Top), WordWrap(true)
 {
 	if (font)
@@ -83,9 +84,17 @@ sp<BitmapFont> Label::GetFont() const { return font; }
 
 void Label::SetFont(sp<BitmapFont> NewFont) { font = NewFont; }
 
-Control *Label::CopyTo(Control *CopyParent)
+sp<Control> Label::CopyTo(sp<Control> CopyParent)
 {
-	Label *copy = new Label(CopyParent, this->text, this->font);
+	sp<Label> copy;
+	if (CopyParent)
+	{
+		copy = CopyParent->createChild<Label>(this->text, this->font);
+	}
+	else
+	{
+		copy = std::make_shared<Label>(this->text, this->font);
+	}
 	copy->TextHAlign = this->TextHAlign;
 	copy->TextVAlign = this->TextVAlign;
 	copy->WordWrap = this->WordWrap;

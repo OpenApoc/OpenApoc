@@ -15,7 +15,6 @@
 #include "library/strings.h"
 
 #include "game/gamestate.h"
-#include "game/resources/gamecore.h"
 #include "game/rules/rules.h"
 
 // FIXME: Remove SDL headers - we currently use SDL types directly in input events

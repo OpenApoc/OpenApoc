@@ -3,6 +3,8 @@
 #include "framework/framework.h"
 #include "game/city/vehicle.h"
 #include "game/city/building.h"
+#include "game/resources/gamecore.h"
+#include "forms/forms.h"
 
 namespace OpenApoc
 {
@@ -45,7 +47,7 @@ VEquipScreen::~VEquipScreen() {}
 void VEquipScreen::Begin()
 {
 
-	auto *list = form->FindControlTyped<ListBox>("VEHICLE_SELECT_BOX");
+	auto list = form->FindControlTyped<ListBox>("VEHICLE_SELECT_BOX");
 	for (auto &vehiclePtr : state->getPlayer()->vehicles)
 	{
 		auto vehicle = vehiclePtr.lock();
@@ -56,7 +58,7 @@ void VEquipScreen::Begin()
 			    "at the end of each city update?");
 		}
 		auto graphic =
-		    new Graphic(nullptr, fw().data->load_image(vehicle->type.equip_icon_big_path));
+		    std::make_shared<Graphic>(fw().data->load_image(vehicle->type.equip_icon_big_path));
 		graphic->AutoSize = true;
 		list->AddItem(graphic);
 		this->vehicleSelectionControls[graphic] = vehicle;
@@ -212,7 +214,7 @@ void VEquipScreen::EventOccurred(Event *e)
 		if (this->draggedEquipment)
 		{
 			// Are we over the grid? If so try to place it on the vehicle.
-			auto *paperDollControl = form->FindControlTyped<Graphic>("PAPER_DOLL");
+			auto paperDollControl = form->FindControlTyped<Graphic>("PAPER_DOLL");
 			Vec2<int> equipOffset = paperDollControl->Location + form->Location;
 
 			Vec2<int> equipmentPos =
@@ -264,12 +266,12 @@ void VEquipScreen::Render()
 	// The labels/values in the stats column are used for lots of different things, so keep them
 	// around clear them and keep them around in a vector so we don't have 5 copies of the same
 	// "reset unused entries" code around
-	std::vector<Label *> statsLabels;
-	std::vector<Label *> statsValues;
+	std::vector<sp<Label>> statsLabels;
+	std::vector<sp<Label>> statsValues;
 	for (int i = 0; i < 9; i++)
 	{
 		auto labelName = UString::format("LABEL_%d", i + 1);
-		auto *label = form->FindControlTyped<Label>(labelName);
+		auto label = form->FindControlTyped<Label>(labelName);
 		if (!label)
 		{
 			LogError("Failed to find UI control matching \"%s\"", labelName.c_str());
@@ -278,7 +280,7 @@ void VEquipScreen::Render()
 		statsLabels.push_back(label);
 
 		auto valueName = UString::format("VALUE_%d", i + 1);
-		auto *value = form->FindControlTyped<Label>(valueName);
+		auto value = form->FindControlTyped<Label>(valueName);
 		if (!value)
 		{
 			LogError("Failed to find UI control matching \"%s\"", valueName.c_str());
@@ -286,8 +288,8 @@ void VEquipScreen::Render()
 		value->SetText("");
 		statsValues.push_back(value);
 	}
-	auto *nameLabel = form->FindControlTyped<Label>("NAME");
-	auto *iconGraphic = form->FindControlTyped<Graphic>("SELECTED_ICON");
+	auto nameLabel = form->FindControlTyped<Label>("NAME");
+	auto iconGraphic = form->FindControlTyped<Graphic>("SELECTED_ICON");
 	// If no vehicle/equipment is highlighted (mouse-over), or if we're dragging equipment around
 	// show the currently selected vehicle stats.
 	//
@@ -453,7 +455,7 @@ void VEquipScreen::Render()
 	// Now draw the form, the actual equipment is then drawn on top
 	form->Render();
 
-	auto *paperDollControl = form->FindControlTyped<Graphic>("PAPER_DOLL");
+	auto paperDollControl = form->FindControlTyped<Graphic>("PAPER_DOLL");
 	Vec2<int> equipOffset = paperDollControl->Location + form->Location;
 	// Draw the equipment grid
 	{
@@ -585,7 +587,7 @@ void VEquipScreen::Render()
 	}
 	if (base)
 	{
-		auto *inventoryControl = form->FindControlTyped<Graphic>("INVENTORY");
+		auto inventoryControl = form->FindControlTyped<Graphic>("INVENTORY");
 		Vec2<int> inventoryPosition = inventoryControl->Location + form->Location;
 		for (auto &invPair : base->inventory)
 		{
@@ -690,7 +692,7 @@ void VEquipScreen::setSelectedVehicle(sp<Vehicle> vehicle)
 		         vehicle->type.name.c_str());
 	}
 
-	auto *backgroundControl = form->FindControlTyped<Graphic>("BACKGROUND");
+	auto backgroundControl = form->FindControlTyped<Graphic>("BACKGROUND");
 	backgroundControl->SetImage(backgroundImage);
 }
 

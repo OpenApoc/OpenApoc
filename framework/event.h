@@ -1,5 +1,6 @@
-
 #pragma once
+
+#include "library/sp.h"
 
 #include "forms/forms_enums.h"
 
@@ -93,7 +94,7 @@ typedef struct FRAMEWORK_TIMER_EVENT
 
 typedef struct FRAMEWORK_FORMS_EVENT
 {
-	Control *RaisedBy;
+	sp<Control> RaisedBy;
 	FormEventType EventFlag;
 	FRAMEWORK_MOUSE_EVENT MouseInfo;
 	FRAMEWORK_KEYBOARD_EVENT KeyInfo;

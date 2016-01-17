@@ -16,16 +16,17 @@ class Surface;
 class Palette;
 class RadioButton;
 
-class Control
+class RadioButtonGroup;
+
+class Control : public std::enable_shared_from_this<Control>
 {
   private:
 	sp<Surface> controlArea;
 	void *data;
-	std::map<UString, RadioButton**> radiogroups;
 
   protected:
 	sp<Palette> palette;
-	Control *owningControl;
+	wp<Control> owningControl;
 	bool mouseInside;
 	bool mouseDepressed;
 	Vec2<int> resolvedLocation;
@@ -39,11 +40,11 @@ class Control
 	void ResolveLocation();
 	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element);
 
-	Control *GetRootControl();
+	sp<Control> GetRootControl();
 
 	std::list<UString> WordWrapText(sp<OpenApoc::BitmapFont> UseFont, UString WrapText) const;
 
-	void CopyControlData(Control *CopyOf);
+	void CopyControlData(sp<Control> CopyOf);
 
   public:
 	UString Name;
@@ -55,33 +56,35 @@ class Control
 	bool Visible;
 
 	bool canCopy;
-	Control *lastCopiedTo;
-	std::vector<Control *> Controls;
+	wp<Control> lastCopiedTo;
+	std::vector<sp<Control>> Controls;
 
-	Control(Control *Owner, bool takesFocus = true);
+	std::map<UString, sp<RadioButtonGroup>> radiogroups;
+
+	Control(bool takesFocus = true);
 	virtual ~Control();
 
-	Control *GetActiveControl() const;
+	sp<Control> GetActiveControl() const;
 
 	virtual void EventOccured(Event *e);
 	void Render();
 	virtual void Update();
 	virtual void UnloadResources();
 
-	Control *operator[](int Index) const;
-	Control *FindControl(UString ID) const;
+	sp<Control> operator[](int Index) const;
+	sp<Control> FindControl(UString ID) const;
 
-	template <typename T> T *FindControlTyped(const UString &name) const
+	template <typename T> sp<T> FindControlTyped(const UString &name) const
 	{
-		Control *c = this->FindControl(name);
+		auto c = this->FindControl(name);
 		if (!c)
 		{
 			LogError("Failed to find control \"%s\" within form \"%s\"", name.c_str(),
 			         this->Name.c_str());
 			return nullptr;
 		}
-		T *typedControl = dynamic_cast<T *>(c);
-		if (!c)
+		sp<T> typedControl = std::dynamic_pointer_cast<T>(c);
+		if (!typedControl)
 		{
 			LogError("Failed to cast control \"%s\" within form \"%s\" to type \"%s\"",
 			         name.c_str(), this->Name.c_str(), typeid(T).name());
@@ -90,18 +93,25 @@ class Control
 		return typedControl;
 	}
 
-	Control *GetParent() const;
-	Form *GetForm();
-	void SetParent(Control *Parent);
+	sp<Control> GetParent() const;
+	sp<Form> GetForm();
+	void SetParent(sp<Control> Parent);
 
 	Vec2<int> GetLocationOnScreen() const;
 
-	virtual Control *CopyTo(Control *CopyParent);
+	virtual sp<Control> CopyTo(sp<Control> CopyParent);
 
 	template <typename T> T *GetData() const { return static_cast<T *>(data); }
 	void SetData(void *Data) { data = Data; }
 
 	bool eventIsWithin(const Event *e) const;
+
+	template <typename T, typename... Args> sp<T> createChild(Args &&... args)
+	{
+		sp<T> newControl = std::make_shared<T>(std::forward<Args>(args)...);
+		newControl->SetParent(shared_from_this());
+		return newControl;
+	}
 };
 
 }; // namespace OpenApoc

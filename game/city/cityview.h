@@ -41,7 +41,7 @@ class CityView : public TileView
 	sp<GameState> state;
 	std::map<CityIcon, sp<Image>> icons;
 
-	std::map<Control *, wp<Vehicle>> playerVehicleListControls;
+	std::map<sp<Control>, wp<Vehicle>> playerVehicleListControls;
 
 	wp<Vehicle> selectedVehicle;
 

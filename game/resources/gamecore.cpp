@@ -24,8 +24,6 @@ void GameCore::Load(UString CoreXMLFilename)
 
 GameCore::~GameCore()
 {
-	for (auto &form : forms)
-		delete form.second;
 	delete MouseCursor;
 	Ufopaedia::UfopaediaDB.clear();
 }
@@ -152,10 +150,15 @@ void GameCore::ParseGameXML(tinyxml2::XMLElement *Source)
 
 void GameCore::ParseFormXML(tinyxml2::XMLElement *Source)
 {
-	forms[Source->Attribute("id")] = new Form(Source);
+	auto form = std::make_shared<Form>();
+	form->ReadFormStyle(Source);
+	forms[Source->Attribute("id")] = form;
 }
 
-Form *GameCore::GetForm(UString ID) { return static_cast<Form *>(forms[ID]->CopyTo(nullptr)); }
+sp<Form> GameCore::GetForm(UString ID)
+{
+	return std::dynamic_pointer_cast<Form>(forms[ID]->CopyTo(nullptr));
+}
 
 sp<Image> GameCore::GetImage(UString ImageData) { return fw().data->load_image(ImageData); }
 

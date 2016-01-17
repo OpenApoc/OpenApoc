@@ -40,7 +40,7 @@ class ScrollBar : public Control
 	int Maximum;
 	int LargeChange;
 
-	ScrollBar(Control *Owner);
+	ScrollBar();
 	virtual ~ScrollBar();
 
 	virtual void EventOccured(Event *e) override;
@@ -51,7 +51,7 @@ class ScrollBar : public Control
 	virtual void ScrollPrev();
 	virtual void ScrollNext();
 
-	virtual Control *CopyTo(Control *CopyParent) override;
+	virtual sp<Control> CopyTo(sp<Control> CopyParent) override;
 	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 };
 

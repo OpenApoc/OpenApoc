@@ -1,14 +1,14 @@
 #include "library/sp.h"
 
 #include "forms/graphicbutton.h"
+#include "forms/scrollbar.h"
 #include "framework/framework.h"
 
 namespace OpenApoc
 {
 
-GraphicButton::GraphicButton(Control *Owner, sp<Image> image, sp<Image> imageDepressed,
-                             sp<Image> imageHover)
-    : Control(Owner), image(image), imagedepressed(imageDepressed), imagehover(imageHover),
+GraphicButton::GraphicButton(sp<Image> image, sp<Image> imageDepressed, sp<Image> imageHover)
+    : Control(), image(image), imagedepressed(imageDepressed), imagehover(imageHover),
       buttonclick(
           fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
       ScrollBarPrev(nullptr), ScrollBarNext(nullptr)
@@ -21,13 +21,13 @@ void GraphicButton::EventOccured(Event *e)
 {
 	Control::EventOccured(e);
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == this &&
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
 	    e->Forms().EventFlag == FormEventType::MouseDown)
 	{
 		fw().soundBackend->playSample(buttonclick);
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == this &&
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
 	    e->Forms().EventFlag == FormEventType::MouseClick)
 	{
 		auto ce = new FormsEvent();
@@ -109,17 +109,27 @@ sp<Image> GraphicButton::GetHoverImage() const { return imagehover; }
 
 void GraphicButton::SetHoverImage(sp<Image> Image) { imagehover = Image; }
 
-Control *GraphicButton::CopyTo(Control *CopyParent)
+sp<Control> GraphicButton::CopyTo(sp<Control> CopyParent)
 {
-	GraphicButton *copy =
-	    new GraphicButton(CopyParent, this->image, this->imagedepressed, this->imagehover);
-	if (this->ScrollBarPrev != nullptr)
+	sp<GraphicButton> copy;
+	if (CopyParent)
 	{
-		copy->ScrollBarPrev = static_cast<ScrollBar *>(ScrollBarPrev->lastCopiedTo);
+		copy = CopyParent->createChild<GraphicButton>(this->image, this->imagedepressed,
+		                                              this->imagehover);
 	}
-	if (this->ScrollBarNext != nullptr)
+	else
 	{
-		copy->ScrollBarNext = static_cast<ScrollBar *>(ScrollBarNext->lastCopiedTo);
+		copy = std::make_shared<GraphicButton>(this->image, this->imagedepressed, this->imagehover);
+	}
+	if (this->ScrollBarPrev)
+	{
+		copy->ScrollBarPrev =
+		    std::dynamic_pointer_cast<ScrollBar>(ScrollBarPrev->lastCopiedTo.lock());
+	}
+	if (this->ScrollBarNext)
+	{
+		copy->ScrollBarNext =
+		    std::dynamic_pointer_cast<ScrollBar>(ScrollBarNext->lastCopiedTo.lock());
 	}
 	CopyControlData(copy);
 	return copy;

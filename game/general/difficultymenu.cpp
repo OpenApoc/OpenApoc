@@ -2,6 +2,7 @@
 #include "game/general/difficultymenu.h"
 #include "game/city/city.h"
 #include "game/city/cityview.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc
 {

@@ -11,7 +11,7 @@ namespace OpenApoc
 class DifficultyMenu : public Stage
 {
   private:
-	std::unique_ptr<Form> difficultymenuform;
+	sp<Form> difficultymenuform;
 	StageCmd stageCmd;
 
   public:

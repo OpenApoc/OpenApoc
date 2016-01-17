@@ -2,12 +2,13 @@
 
 #include "forms/textedit.h"
 #include "framework/framework.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc
 {
 
-TextEdit::TextEdit(Control *Owner, UString Text, sp<BitmapFont> font)
-    : Control(Owner), caretDraw(false), caretTimer(0), text(Text), font(font), editting(false),
+TextEdit::TextEdit(UString Text, sp<BitmapFont> font)
+    : Control(), caretDraw(false), caretTimer(0), text(Text), font(font), editting(false),
       editShift(false), editAltGr(false), SelectionStart(Text.length()),
       TextHAlign(HorizontalAlignment::Left), TextVAlign(VerticalAlignment::Centre)
 {
@@ -27,7 +28,7 @@ void TextEdit::EventOccured(Event *e)
 
 	if (e->Type() == EVENT_FORM_INTERACTION)
 	{
-		if (e->Forms().RaisedBy == this)
+		if (e->Forms().RaisedBy == shared_from_this())
 		{
 			if (e->Forms().EventFlag == FormEventType::GotFocus ||
 			    e->Forms().EventFlag == FormEventType::MouseClick ||
@@ -230,7 +231,7 @@ void TextEdit::RaiseEvent(FormEventType Type)
 {
 	std::ignore = Type;
 	auto ce = new FormsEvent();
-	ce->Forms().RaisedBy = this;
+	ce->Forms().RaisedBy = shared_from_this();
 	ce->Forms().EventFlag = FormEventType::TextChanged;
 	fw().PushEvent(ce);
 }
@@ -239,9 +240,17 @@ sp<BitmapFont> TextEdit::GetFont() const { return font; }
 
 void TextEdit::SetFont(sp<BitmapFont> NewFont) { font = NewFont; }
 
-Control *TextEdit::CopyTo(Control *CopyParent)
+sp<Control> TextEdit::CopyTo(sp<Control> CopyParent)
 {
-	TextEdit *copy = new TextEdit(CopyParent, this->text, this->font);
+	sp<TextEdit> copy;
+	if (CopyParent)
+	{
+		copy = CopyParent->createChild<TextEdit>(this->text, this->font);
+	}
+	else
+	{
+		copy = std::make_shared<TextEdit>(this->text, this->font);
+	}
 	copy->TextHAlign = this->TextHAlign;
 	copy->TextVAlign = this->TextVAlign;
 	CopyControlData(copy);

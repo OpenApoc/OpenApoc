@@ -24,7 +24,7 @@ class Graphic : public Control
 	FillMethod ImagePosition;
 	bool AutoSize;
 
-	Graphic(Control *Owner, sp<Image> Image = nullptr);
+	Graphic(sp<Image> Image = nullptr);
 	virtual ~Graphic();
 
 	virtual void EventOccured(Event *e) override;
@@ -34,7 +34,7 @@ class Graphic : public Control
 	sp<Image> GetImage() const;
 	void SetImage(sp<Image> Image);
 
-	virtual Control *CopyTo(Control *CopyParent) override;
+	virtual sp<Control> CopyTo(sp<Control> CopyParent) override;
 	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 };
 

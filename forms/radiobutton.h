@@ -1,23 +1,34 @@
-
 #pragma once
+
 #include "checkbox.h"
+#include <list>
 
 namespace OpenApoc
 {
+
+class RadioButton;
+
+class RadioButtonGroup
+{
+  public:
+	RadioButtonGroup(UString ID);
+	UString ID;
+	std::list<wp<RadioButton>> radioButtons;
+};
 
 class RadioButton : public CheckBox
 {
 
   private:
-	RadioButton **group;
+	sp<RadioButtonGroup> group;
 
   public:
-	RadioButton(Control *Owner, RadioButton **Group, sp<Image> ImageChecked = nullptr,
+	RadioButton(sp<RadioButtonGroup> radioButtonGroup = nullptr, sp<Image> ImageChecked = nullptr,
 	            sp<Image> ImageUnchecked = nullptr);
 	virtual ~RadioButton();
 	void SetChecked(bool checked) override;
 
-	virtual Control *CopyTo(Control *CopyParent) override;
+	virtual sp<Control> CopyTo(sp<Control> CopyParent) override;
 };
 
 }; // namespace OpenApoc

@@ -11,16 +11,16 @@ namespace OpenApoc
 class FormPreview : public Stage
 {
   private:
-	CheckBox *interactWithDisplay;
-	Label *currentSelected;
+	sp<CheckBox> interactWithDisplay;
+	sp<Label> currentSelected;
 	StageCmd stageCmd;
-	std::unique_ptr<Form> previewselector;
-	std::unique_ptr<Form> propertyeditor;
-	std::unique_ptr<Form> displayform;
+	sp<Form> previewselector;
+	sp<Form> propertyeditor;
+	sp<Form> displayform;
 
 	int glowindex;
 
-	Control *currentSelectedControl;
+	sp<Control> currentSelectedControl;
 
 	void ConfigureSelectedControlForm();
 

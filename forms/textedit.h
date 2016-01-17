@@ -34,7 +34,7 @@ class TextEdit : public Control
 	HorizontalAlignment TextHAlign;
 	VerticalAlignment TextVAlign;
 
-	TextEdit(Control *Owner, UString Text = "", sp<BitmapFont> font = nullptr);
+	TextEdit(UString Text = "", sp<BitmapFont> font = nullptr);
 	virtual ~TextEdit();
 
 	virtual void EventOccured(Event *e) override;
@@ -47,7 +47,7 @@ class TextEdit : public Control
 	sp<BitmapFont> GetFont() const;
 	void SetFont(sp<BitmapFont> NewFont);
 
-	virtual Control *CopyTo(Control *CopyParent) override;
+	virtual sp<Control> CopyTo(sp<Control> CopyParent) override;
 	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 };
 

@@ -5,8 +5,8 @@
 namespace OpenApoc
 {
 
-Graphic::Graphic(Control *Owner, sp<Image> Image)
-    : Control(Owner), image(Image), ImageHAlign(HorizontalAlignment::Left),
+Graphic::Graphic(sp<Image> Image)
+    : Control(), image(Image), ImageHAlign(HorizontalAlignment::Left),
       ImageVAlign(VerticalAlignment::Top), ImagePosition(FillMethod::Fit), AutoSize(false)
 {
 }
@@ -104,9 +104,17 @@ sp<Image> Graphic::GetImage() const { return image; }
 
 void Graphic::SetImage(sp<Image> Image) { image = Image; }
 
-Control *Graphic::CopyTo(Control *CopyParent)
+sp<Control> Graphic::CopyTo(sp<Control> CopyParent)
 {
-	Graphic *copy = new Graphic(CopyParent, this->image);
+	sp<Graphic> copy;
+	if (CopyParent)
+	{
+		copy = CopyParent->createChild<Graphic>(this->image);
+	}
+	else
+	{
+		copy = std::make_shared<Graphic>(this->image);
+	}
 	copy->ImageHAlign = this->ImageHAlign;
 	copy->ImageVAlign = this->ImageVAlign;
 	copy->ImagePosition = this->ImagePosition;

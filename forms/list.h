@@ -13,7 +13,7 @@ class ListBox : public Control
 {
   private:
 	bool scroller_is_internal;
-	Control *hovered, *selected;
+	sp<Control> hovered, selected;
 
 	void ConfigureInternalScrollBar();
 
@@ -22,28 +22,28 @@ class ListBox : public Control
 	virtual void PostRender() override;
 
   public:
-	ScrollBar *scroller;
+	sp<ScrollBar> scroller;
 	int ItemSize, ItemSpacing;
 	Orientation ListOrientation;
 	Colour HoverColour, SelectedColour;
 
-	ListBox(Control *Owner);
-	ListBox(Control *Owner, ScrollBar *ExternalScrollBar);
+	ListBox();
+	ListBox(sp<ScrollBar> ExternalScrollBar);
 	virtual ~ListBox();
 
 	virtual void EventOccured(Event *e) override;
 	virtual void Update() override;
 	virtual void UnloadResources() override;
 
-	void setSelected(Control *c);
+	void setSelected(sp<Control> c);
 
 	void Clear();
-	void AddItem(Control *Item);
-	Control *RemoveItem(Control *Item);
-	Control *RemoveItem(int Index);
-	Control *operator[](int Index);
+	void AddItem(sp<Control> Item);
+	sp<Control> RemoveItem(sp<Control> Item);
+	sp<Control> RemoveItem(int Index);
+	sp<Control> operator[](int Index);
 
-	virtual Control *CopyTo(Control *CopyParent) override;
+	virtual sp<Control> CopyTo(sp<Control> CopyParent) override;
 	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 
 	template <typename T> T *GetHoveredData() const

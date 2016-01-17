@@ -11,7 +11,7 @@ namespace OpenApoc
 class UfopaediaCategory : public Stage // , public std::enable_shared_from_this<UfopaediaCategory>
 {
   private:
-	std::unique_ptr<Form> menuform;
+	sp<Form> menuform;
 	StageCmd stageCmd;
 
 	void SetCatOffset(int Direction);

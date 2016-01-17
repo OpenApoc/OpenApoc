@@ -18,7 +18,7 @@ class VEquipScreen : public Stage
 {
   private:
 	StageCmd stageCmd;
-	up<Form> form;
+	sp<Form> form;
 	sp<Vehicle> selected;
 	VEquipmentType::Type selectionType;
 	sp<Palette> pal;
@@ -42,7 +42,7 @@ class VEquipScreen : public Stage
 	// List of screen-space rects for all inventory items
 	std::list<std::pair<Rect<int>, VEquipmentType &>> inventoryItems;
 
-	std::map<Control *, sp<Vehicle>> vehicleSelectionControls;
+	std::map<sp<Control>, sp<Vehicle>> vehicleSelectionControls;
 
 	sp<GameState> state;
 

@@ -6,8 +6,8 @@
 namespace OpenApoc
 {
 
-CheckBox::CheckBox(Control *Owner, sp<Image> ImageChecked, sp<Image> ImageUnchecked)
-    : Control(Owner), imagechecked(ImageChecked), imageunchecked(ImageUnchecked),
+CheckBox::CheckBox(sp<Image> ImageChecked, sp<Image> ImageUnchecked)
+    : Control(), imagechecked(ImageChecked), imageunchecked(ImageUnchecked),
       buttonclick(
           fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
       Checked(false)
@@ -20,13 +20,13 @@ void CheckBox::EventOccured(Event *e)
 {
 	Control::EventOccured(e);
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == this &&
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
 	    e->Forms().EventFlag == FormEventType::MouseDown)
 	{
 		fw().soundBackend->playSample(buttonclick);
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == this &&
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
 	    e->Forms().EventFlag == FormEventType::MouseClick)
 	{
 		SetChecked(!IsChecked());
@@ -67,15 +67,23 @@ void CheckBox::SetChecked(bool checked)
 	if (Checked == checked)
 		return;
 	auto e = new FormsEvent();
-	e->Forms().RaisedBy = this;
+	e->Forms().RaisedBy = shared_from_this();
 	e->Forms().EventFlag = FormEventType::CheckBoxChange;
 	fw().PushEvent(e);
 	Checked = checked;
 }
 
-Control *CheckBox::CopyTo(Control *CopyParent)
+sp<Control> CheckBox::CopyTo(sp<Control> CopyParent)
 {
-	CheckBox *copy = new CheckBox(CopyParent, imagechecked, imageunchecked);
+	sp<CheckBox> copy;
+	if (CopyParent)
+	{
+		copy = CopyParent->createChild<CheckBox>(imagechecked, imageunchecked);
+	}
+	else
+	{
+		copy = std::make_shared<CheckBox>(imagechecked, imageunchecked);
+	}
 	copy->Checked = this->Checked;
 	CopyControlData(copy);
 	return copy;

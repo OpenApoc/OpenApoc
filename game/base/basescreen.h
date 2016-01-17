@@ -23,7 +23,7 @@ class BaseScreen : public Stage
 	static const Vec2<int> NO_SELECTION;
 	static const std::unordered_map<std::vector<bool>, int> TILE_CORRIDORS;
 
-	std::unique_ptr<Form> form;
+	sp<Form> form;
 	StageCmd stageCmd;
 	Base &base;
 	Vec2<int> selection, mousePos;
@@ -31,10 +31,10 @@ class BaseScreen : public Stage
 	FacilityDef *dragFacility;
 	bool drag;
 
-	Graphic *baseView, *selGraphic;
-	Label *selText, *buildTime;
-	std::vector<Label *> statsLabels;
-	std::vector<Label *> statsValues;
+	sp<Graphic> baseView, selGraphic;
+	sp<Label> selText, buildTime;
+	std::vector<sp<Label>> statsLabels;
+	std::vector<sp<Label>> statsValues;
 
 	void RenderBase();
 	int getCorridorSprite(Vec2<int> pos) const;

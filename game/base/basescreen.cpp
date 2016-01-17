@@ -4,6 +4,7 @@
 #include "game/base/base.h"
 #include "game/base/facility.h"
 #include "game/base/vequipscreen.h"
+#include "game/resources/gamecore.h"
 #include "framework/framework.h"
 #include "framework/image.h"
 
@@ -59,7 +60,7 @@ void BaseScreen::Begin()
 	for (int i = 0; i < 3; i++)
 	{
 		auto labelName = UString::format("LABEL_%d", i + 1);
-		auto *label = form->FindControlTyped<Label>(labelName);
+		auto label = form->FindControlTyped<Label>(labelName);
 		if (!label)
 		{
 			LogError("Failed to find UI control matching \"%s\"", labelName.c_str());
@@ -67,7 +68,7 @@ void BaseScreen::Begin()
 		statsLabels.push_back(label);
 
 		auto valueName = UString::format("VALUE_%d", i + 1);
-		auto *value = form->FindControlTyped<Label>(valueName);
+		auto value = form->FindControlTyped<Label>(valueName);
 		if (!value)
 		{
 			LogError("Failed to find UI control matching \"%s\"", valueName.c_str());
@@ -75,14 +76,14 @@ void BaseScreen::Begin()
 		statsValues.push_back(value);
 	}
 
-	ListBox *facilities = form->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
+	auto facilities = form->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
 	for (auto &i : state->getRules().getFacilityDefs())
 	{
 		auto &facility = i.second;
 		if (facility.fixed)
 			continue;
 
-		Graphic *graphic = new Graphic(nullptr, fw().data->load_image(facility.sprite));
+		auto graphic = std::make_shared<Graphic>(fw().data->load_image(facility.sprite));
 		graphic->AutoSize = true;
 		graphic->SetData(const_cast<FacilityDef *>(&facility));
 		facilities->AddItem(graphic);
@@ -136,7 +137,7 @@ void BaseScreen::EventOccurred(Event *e)
 		{
 			if (e->Forms().RaisedBy->Name == "TEXT_BASE_NAME")
 			{
-				TextEdit *name = form->FindControlTyped<TextEdit>("TEXT_BASE_NAME");
+				auto name = form->FindControlTyped<TextEdit>("TEXT_BASE_NAME");
 				base.name = name->GetText();
 				return;
 			}
@@ -163,7 +164,7 @@ void BaseScreen::EventOccurred(Event *e)
 		{
 			if (e->Forms().RaisedBy->Name == "LISTBOX_FACILITIES" && !drag)
 			{
-				ListBox *list = form->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
+				auto list = form->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
 				dragFacility = list->GetHoveredData<FacilityDef>();
 				return;
 			}

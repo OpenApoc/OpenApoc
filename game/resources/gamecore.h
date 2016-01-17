@@ -1,19 +1,19 @@
-
 #pragma once
 #include "library/sp.h"
 
 #include "game/apocresources/apocresource.h"
 #include "framework/font.h"
-#include "forms/forms.h"
 
 namespace OpenApoc
 {
+
+class Form;
 
 class GameCore
 {
   private:
 	std::map<UString, sp<BitmapFont>> fonts;
-	std::map<UString, Form *> forms;
+	std::map<UString, sp<Form>> forms;
 	std::map<UString, UString> aliases;
 
 	void ApplyAliases(tinyxml2::XMLElement *Source);
@@ -38,7 +38,7 @@ class GameCore
 	void Load(UString CoreXMLFilename);
 	~GameCore();
 
-	Form *GetForm(UString ID);
+	sp<Form> GetForm(UString ID);
 	sp<Image> GetImage(UString ImageData);
 	sp<BitmapFont> GetFont(UString FontData);
 	sp<Palette> GetPalette(UString Path);

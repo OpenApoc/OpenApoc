@@ -22,8 +22,10 @@ static bool WriteUse(ImageLockUse use)
 
 Image::~Image() {}
 
-Image::Image(Vec2<unsigned int> size) : size(size), dirty(true), bounds(0, 0, size.x, size.y), indexInSet(0)
-{}
+Image::Image(Vec2<unsigned int> size)
+    : size(size), dirty(true), bounds(0, 0, size.x, size.y), indexInSet(0)
+{
+}
 
 Surface::Surface(Vec2<unsigned int> size) : Image(size) {}
 

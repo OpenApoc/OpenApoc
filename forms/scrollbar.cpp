@@ -6,8 +6,8 @@
 namespace OpenApoc
 {
 
-ScrollBar::ScrollBar(Control *Owner)
-    : Control(Owner), capture(false), grippersize(1), segmentsize(1),
+ScrollBar::ScrollBar()
+    : Control(), capture(false), grippersize(1), segmentsize(1),
       gripperbutton(fw().data->load_image(
           "PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:4:UI/menuopt.pal")),
       buttonerror(fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/EXTRA/TEXTBEEP.RAW:22050")),
@@ -30,7 +30,7 @@ bool ScrollBar::SetValue(int newValue)
 		return false;
 
 	auto e = new FormsEvent();
-	e->Forms().RaisedBy = this;
+	e->Forms().RaisedBy = shared_from_this();
 	e->Forms().EventFlag = FormEventType::ScrollBarChange;
 	fw().PushEvent(e);
 	Value = newValue;
@@ -58,17 +58,20 @@ void ScrollBar::EventOccured(Event *e)
 	Control::EventOccured(e);
 
 	int mousePosition = 0;
-	switch (BarOrientation)
+	if (e->Type() == EVENT_FORM_INTERACTION)
 	{
-		case Orientation::Vertical:
-			mousePosition = e->Forms().MouseInfo.Y;
-			break;
-		case Orientation::Horizontal:
-			mousePosition = e->Forms().MouseInfo.X;
-			break;
+		switch (BarOrientation)
+		{
+			case Orientation::Vertical:
+				mousePosition = e->Forms().MouseInfo.Y;
+				break;
+			case Orientation::Horizontal:
+				mousePosition = e->Forms().MouseInfo.X;
+				break;
+		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == this &&
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
 	    e->Forms().EventFlag == FormEventType::MouseDown)
 	{
 		if (mousePosition >= (segmentsize * (Value - Minimum)) + grippersize)
@@ -85,13 +88,14 @@ void ScrollBar::EventOccured(Event *e)
 		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && (capture || e->Forms().RaisedBy == this) &&
+	if (e->Type() == EVENT_FORM_INTERACTION &&
+	    (capture || e->Forms().RaisedBy == shared_from_this()) &&
 	    e->Forms().EventFlag == FormEventType::MouseUp)
 	{
 		capture = false;
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == this &&
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
 	    e->Forms().EventFlag == FormEventType::MouseMove && capture)
 	{
 		this->SetValue(static_cast<int>(mousePosition / segmentsize));
@@ -162,9 +166,17 @@ void ScrollBar::Update()
 
 void ScrollBar::UnloadResources() { Control::UnloadResources(); }
 
-Control *ScrollBar::CopyTo(Control *CopyParent)
+sp<Control> ScrollBar::CopyTo(sp<Control> CopyParent)
 {
-	ScrollBar *copy = new ScrollBar(CopyParent);
+	sp<ScrollBar> copy;
+	if (CopyParent)
+	{
+		copy = CopyParent->createChild<ScrollBar>();
+	}
+	else
+	{
+		copy = std::make_shared<ScrollBar>();
+	}
 	copy->Value = this->Value;
 	copy->Maximum = this->Maximum;
 	copy->Minimum = this->Minimum;

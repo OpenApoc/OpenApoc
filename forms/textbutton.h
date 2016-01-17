@@ -37,7 +37,7 @@ class TextButton : public Control
 	VerticalAlignment TextVAlign;
 	TextButtonRenderStyles RenderStyle;
 
-	TextButton(Control *Owner, UString Text = "", sp<BitmapFont> font = nullptr);
+	TextButton(UString Text = "", sp<BitmapFont> font = nullptr);
 	virtual ~TextButton();
 
 	virtual void EventOccured(Event *e) override;
@@ -50,7 +50,7 @@ class TextButton : public Control
 	sp<BitmapFont> GetFont() const;
 	void SetFont(sp<BitmapFont> NewFont);
 
-	virtual Control *CopyTo(Control *CopyParent) override;
+	virtual sp<Control> CopyTo(sp<Control> CopyParent) override;
 	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 };
 

@@ -13,7 +13,7 @@ class GameState;
 class InGameOptions : public Stage
 {
   private:
-	std::unique_ptr<Form> menuform;
+	sp<Form> menuform;
 	StageCmd stageCmd;
 
 	sp<GameState> state;

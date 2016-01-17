@@ -3,7 +3,11 @@
 namespace OpenApoc
 {
 
-Form::Form(tinyxml2::XMLElement *FormConfiguration) : Control(nullptr)
+Form::Form() : Control() {}
+
+Form::~Form() {}
+
+void Form::ReadFormStyle(tinyxml2::XMLElement *FormConfiguration)
 {
 	if (FormConfiguration == nullptr)
 	{
@@ -35,8 +39,6 @@ Form::Form(tinyxml2::XMLElement *FormConfiguration) : Control(nullptr)
 	}
 }
 
-Form::~Form() {}
-
 void Form::EventOccured(Event *e) { Control::EventOccured(e); }
 
 void Form::OnRender() {}
@@ -49,10 +51,10 @@ void Form::Update()
 
 void Form::UnloadResources() { Control::UnloadResources(); }
 
-Control *Form::CopyTo(Control *CopyParent)
+sp<Control> Form::CopyTo(sp<Control> CopyParent)
 {
 	std::ignore = CopyParent;
-	Form *copy = new Form(nullptr);
+	auto copy = std::make_shared<Form>();
 	CopyControlData(copy);
 	return copy;
 }

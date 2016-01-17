@@ -24,7 +24,7 @@ class Label : public Control
 	VerticalAlignment TextVAlign;
 	bool WordWrap;
 
-	Label(Control *Owner, UString Text = "", sp<BitmapFont> font = nullptr);
+	Label(UString Text = "", sp<BitmapFont> font = nullptr);
 	virtual ~Label();
 
 	virtual void EventOccured(Event *e) override;
@@ -37,7 +37,7 @@ class Label : public Control
 	sp<BitmapFont> GetFont() const;
 	void SetFont(sp<BitmapFont> NewFont);
 
-	virtual Control *CopyTo(Control *CopyParent) override;
+	virtual sp<Control> CopyTo(sp<Control> CopyParent) override;
 	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 };
 

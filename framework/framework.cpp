@@ -8,6 +8,8 @@
 #include "framework/sound.h"
 #include "framework/trace.h"
 
+#include "game/resources/gamecore.h"
+
 #include <SDL.h>
 #include <iostream>
 #include <string>

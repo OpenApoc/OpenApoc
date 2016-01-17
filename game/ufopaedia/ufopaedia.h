@@ -15,7 +15,7 @@ namespace OpenApoc
 class Ufopaedia : public Stage
 {
   private:
-	std::unique_ptr<Form> menuform;
+	sp<Form> menuform;
 	StageCmd stageCmd;
 
   public:

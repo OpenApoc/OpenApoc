@@ -4,14 +4,17 @@
 #include "framework/stage.h"
 
 #include "forms/forms.h"
+#include "game/apocresources/apocresource.h"
 
 namespace OpenApoc
 {
 
+class Form;
+
 class MainMenu : public Stage
 {
   private:
-	std::unique_ptr<Form> mainmenuform;
+	sp<Form> mainmenuform;
 	StageCmd stageCmd;
 
   public:

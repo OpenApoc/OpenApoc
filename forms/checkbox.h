@@ -24,7 +24,7 @@ class CheckBox : public Control
 	virtual void OnRender() override;
 
   public:
-	CheckBox(Control *Owner, sp<Image> ImageChecked = nullptr, sp<Image> ImageUnchecked = nullptr);
+	CheckBox(sp<Image> ImageChecked = nullptr, sp<Image> ImageUnchecked = nullptr);
 	virtual ~CheckBox();
 
 	virtual void EventOccured(Event *e) override;
@@ -33,7 +33,7 @@ class CheckBox : public Control
 	virtual bool IsChecked() const { return Checked; }
 	virtual void SetChecked(bool checked);
 
-	virtual Control *CopyTo(Control *CopyParent) override;
+	virtual sp<Control> CopyTo(sp<Control> CopyParent) override;
 	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 };
 

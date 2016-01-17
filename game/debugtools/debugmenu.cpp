@@ -3,6 +3,7 @@
 #include "game/debugtools/debugmenu.h"
 #include "framework/framework.h"
 #include "game/debugtools/formpreview.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc
 {

@@ -2,12 +2,13 @@
 
 #include "forms/textbutton.h"
 #include "framework/framework.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc
 {
 
-TextButton::TextButton(Control *Owner, UString Text, sp<BitmapFont> font)
-    : Control(Owner), text(Text), font(font), cached(nullptr),
+TextButton::TextButton(UString Text, sp<BitmapFont> font)
+    : Control(), text(Text), font(font), cached(nullptr),
       buttonclick(
           fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
       buttonbackground(fw().data->load_image("UI/TEXTBUTTONBACK.PNG")),
@@ -26,13 +27,13 @@ void TextButton::EventOccured(Event *e)
 {
 	Control::EventOccured(e);
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == this &&
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
 	    e->Forms().EventFlag == FormEventType::MouseDown)
 	{
 		fw().soundBackend->playSample(buttonclick);
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == this &&
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
 	    e->Forms().EventFlag == FormEventType::MouseClick)
 	{
 		auto ce = new FormsEvent();
@@ -151,9 +152,17 @@ sp<BitmapFont> TextButton::GetFont() const { return font; }
 
 void TextButton::SetFont(sp<BitmapFont> NewFont) { font = NewFont; }
 
-Control *TextButton::CopyTo(Control *CopyParent)
+sp<Control> TextButton::CopyTo(sp<Control> CopyParent)
 {
-	TextButton *copy = new TextButton(CopyParent, this->text, this->font);
+	sp<TextButton> copy;
+	if (CopyParent)
+	{
+		copy = CopyParent->createChild<TextButton>(this->text, this->font);
+	}
+	else
+	{
+		copy = std::make_shared<TextButton>(this->text, this->font);
+	}
 	copy->TextHAlign = this->TextHAlign;
 	copy->TextVAlign = this->TextVAlign;
 	copy->RenderStyle = this->RenderStyle;

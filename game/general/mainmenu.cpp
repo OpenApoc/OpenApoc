@@ -4,6 +4,7 @@
 #include "game/general/optionsmenu.h"
 #include "game/general/difficultymenu.h"
 #include "game/debugtools/debugmenu.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc
 {
@@ -73,7 +74,7 @@ void MainMenu::EventOccurred(Event *e)
 		if (e->Forms().RaisedBy->Name == "CHECK_DEBUGMODE")
 		{
 			fw().gamecore->DebugModeEnabled =
-			    static_cast<CheckBox *>(e->Forms().RaisedBy)->IsChecked();
+			    std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy)->IsChecked();
 			e->Forms().RaisedBy->GetForm()->FindControl("BUTTON_DEBUG")->Visible =
 			    fw().gamecore->DebugModeEnabled;
 		}

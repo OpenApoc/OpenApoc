@@ -1,6 +1,6 @@
-
 #include "game/city/scorescreen.h"
 #include "framework/framework.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc
 {
