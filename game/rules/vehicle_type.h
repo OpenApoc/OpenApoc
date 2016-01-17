@@ -122,6 +122,8 @@ class VehicleType
 	UString crashed_sprite_path;
 	sp<Image> crashed_sprite;
 
+	sp<VoxelMap> voxelMap;
+
 	class EquipmentLayoutSlot
 	{
 	  public:

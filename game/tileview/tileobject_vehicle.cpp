@@ -75,4 +75,8 @@ TileObjectVehicle::TileObjectVehicle(TileMap &map, sp<Vehicle> vehicle,
 {
 }
 
+sp<VoxelMap> TileObjectVehicle::getVoxelMap() { return this->getVehicle()->type.voxelMap; }
+
+sp<Vehicle> TileObjectVehicle::getVehicle() { return this->vehicle.lock(); }
+
 } // namespace OpenApoc

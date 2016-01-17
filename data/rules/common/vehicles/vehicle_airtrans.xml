@@ -396,5 +396,13 @@
         </position>
       </equipment>
     </initial_equipment>
+    <lof sizeX="32" sizeY="32" sizeZ="16">
+      <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:121</loflayer>
+      <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:121</loflayer>
+      <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:121</loflayer>
+      <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:121</loflayer>
+      <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:121</loflayer>
+      <loflayer>LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:121</loflayer>
+    </lof>
   </vehicle>
 </openapoc_rules>

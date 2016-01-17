@@ -514,7 +514,8 @@ void CityView::EventOccurred(Event *e)
 				}
 				else if (collision.obj->getType() == TileObject::Type::Vehicle)
 				{
-					// TODO: Click on vehicle
+					auto vehicle = std::dynamic_pointer_cast<TileObjectVehicle>(collision.obj)->getVehicle();
+					LogWarning("Clicked on vehicle \"%s\"", vehicle->name.c_str());
 				}
 			}
 		}

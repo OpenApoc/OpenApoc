@@ -3,6 +3,7 @@
 #include "library/strings.h"
 #include "framework/framework.h"
 #include "game/rules/rules_helper.h"
+#include "game/tileview/voxel.h"
 
 #include <glm/glm.hpp>
 #include <map>
@@ -643,6 +644,71 @@ static bool ParseVehicleTypeNode(tinyxml2::XMLElement *node, VehicleType &vehicl
 			LogError("Failed to read crashed text \"%s\" on vehicle_type ID \"%s\"",
 			         node->GetText(), vehicle.id.c_str());
 			return false;
+		}
+		return true;
+	}
+	else if (node_name == "lof")
+	{
+		if (vehicle.voxelMap)
+		{
+			LogError("Multiple LOF nodes on vehicle_type ID \"%s\"", vehicle.id.c_str());
+			return false;
+		}
+		int sizeX, sizeY, sizeZ;
+		if (!ReadAttribute(node, "sizeX", sizeX))
+		{
+			LogError("Failed to read \"sizeX\" attribute on LOF for vehicle_type ID \"%s\"",
+			         vehicle.id.c_str());
+			return false;
+		}
+		if (!ReadAttribute(node, "sizeY", sizeY))
+		{
+			LogError("Failed to read \"sizeY\" attribute on LOF for vehicle_type ID \"%s\"",
+			         vehicle.id.c_str());
+			return false;
+		}
+		if (!ReadAttribute(node, "sizeZ", sizeZ))
+		{
+			LogError("Failed to read \"sizeZ\" attribute on LOF for vehicle_type ID \"%s\"",
+			         vehicle.id.c_str());
+			return false;
+		}
+		vehicle.voxelMap = std::make_shared<VoxelMap>(Vec3<int>{sizeX, sizeY, sizeZ});
+
+		int layerCount = 0;
+
+		for (tinyxml2::XMLElement *lofNode = node->FirstChildElement(); lofNode != nullptr;
+		     lofNode = lofNode->NextSiblingElement())
+		{
+			UString lofNodeName(lofNode->Name());
+			if (lofNodeName == "loflayer")
+			{
+				if (layerCount >= sizeZ)
+				{
+					LogError(
+					    "LOF section for vehicle_type ID \"%s\" has more than sizeZ (%d) layers",
+					    vehicle.id.c_str(), sizeZ);
+					return false;
+				}
+				UString voxelSliceString(lofNode->GetText());
+				auto layer = fw().data->load_voxel_slice(voxelSliceString);
+				if (!layer)
+				{
+					LogError("LOF section for vehicle_type ID \"%s\": \"%s\" failed to be loaded",
+					         vehicle.id.c_str(), voxelSliceString.c_str());
+					return false;
+				}
+				LogInfo("Vehicle \"%s\" layer %d \"%s\"", vehicle.id.c_str(), layer,
+				        voxelSliceString.c_str());
+				vehicle.voxelMap->setSlice(layerCount, layer);
+				layerCount++;
+			}
+			else
+			{
+				LogError("Unknown node \"%s\" in LOF section for vehicle_type ID \"%s\"",
+				         lofNodeName.c_str(), vehicle.id.c_str());
+				return false;
+			}
 		}
 		return true;
 	}

@@ -16,6 +16,8 @@ class TileObjectVehicle : public TileObject
 	const Vec3<float> &getDirection() { return this->direction; }
 	void setDirection(const Vec3<float> &dir) { this->direction = dir; }
 
+	sp<VoxelMap> getVoxelMap() override;
+
   private:
 	friend class TileMap;
 	std::weak_ptr<Vehicle> vehicle;

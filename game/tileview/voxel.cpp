@@ -54,14 +54,15 @@ void VoxelMap::setSlice(int z, sp<VoxelSlice> slice)
 {
 	if (z < 0 || static_cast<unsigned>(z) >= this->slices.size())
 	{
-		LogError("Trying to set slice %d in a {%d,%d,%d} sized voxelMap", z, this->size.x,
-		         this->size.y, this->size.z);
+		LogWarning("Trying to set slice %d in a {%d,%d,%d} sized voxelMap", z, this->size.x,
+		           this->size.y, this->size.z);
 		return;
 	}
 	if (slice->getSize() != Vec2<int>{this->size.x, this->size.y})
 	{
-		LogError("Trying to set slice of size {%d,%d} in {%d,%d,%d} sized voxelMap",
-		         slice->getSize().x, slice->getSize().y, this->size.x, this->size.y, this->size.z);
+		LogWarning("Trying to set slice of size {%d,%d} in {%d,%d,%d} sized voxelMap",
+		           slice->getSize().x, slice->getSize().y, this->size.x, this->size.y,
+		           this->size.z);
 		return;
 	}
 	this->slices[z] = slice;
