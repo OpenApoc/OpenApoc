@@ -528,7 +528,6 @@
     <None Include="framework\render\gl30\gl_3_0.inl" />
     <None Include="framework\render\gles20\egl.inl" />
     <None Include="framework\render\gles20\gles_2_0.inl" />
-    <None Include="library\strings.natvis" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

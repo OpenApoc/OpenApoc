@@ -48,7 +48,9 @@ Icon
 [Rr]elease/
 *.sdf
 *.opensdf
-allegro.log
+*.opendb
+*.log
+[Pp]ackages/
 #Dependencies build information
 [Dd]ependencies/x64/
 
