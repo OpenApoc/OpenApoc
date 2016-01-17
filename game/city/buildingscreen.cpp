@@ -28,18 +28,18 @@ void BuildingScreen::EventOccurred(Event *e)
 	menuform->EventOccured(e);
 	fw().gamecore->MouseCursor->EventOccured(e);
 
-	if (e->Type == EVENT_KEY_DOWN)
+	if (e->Type() == EVENT_KEY_DOWN)
 	{
-		if (e->Data.Keyboard.KeyCode == SDLK_ESCAPE)
+		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
 
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick)
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
 	{
-		if (e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT")
+		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;

@@ -90,35 +90,35 @@ void UfopaediaCategory::EventOccurred(Event *e)
 	menuform->EventOccured(e);
 	fw().gamecore->MouseCursor->EventOccured(e);
 
-	if (e->Type == EVENT_KEY_DOWN)
+	if (e->Type() == EVENT_KEY_DOWN)
 	{
-		if (e->Data.Keyboard.KeyCode == SDLK_ESCAPE)
+		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
 
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick)
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
 	{
-		if (e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT")
+		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
 			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
-		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_INFORMATION")
+		else if (e->Forms().RaisedBy->Name == "BUTTON_INFORMATION")
 		{
 			menuform->FindControl("INFORMATION_PANEL")->Visible =
 			    !menuform->FindControl("INFORMATION_PANEL")->Visible;
 		}
-		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_NEXT_SECTION")
+		else if (e->Forms().RaisedBy->Name == "BUTTON_NEXT_SECTION")
 		{
 			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
 			SetNextCat();
 			return;
 		}
-		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_NEXT_TOPIC")
+		else if (e->Forms().RaisedBy->Name == "BUTTON_NEXT_TOPIC")
 		{
 			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
 			if (ViewingEntry < Entries.size())
@@ -131,7 +131,7 @@ void UfopaediaCategory::EventOccurred(Event *e)
 			}
 			return;
 		}
-		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_PREVIOUS_TOPIC")
+		else if (e->Forms().RaisedBy->Name == "BUTTON_PREVIOUS_TOPIC")
 		{
 			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
 			if (ViewingEntry > 0)
@@ -144,16 +144,16 @@ void UfopaediaCategory::EventOccurred(Event *e)
 			}
 			return;
 		}
-		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_PREVIOUS_SECTION")
+		else if (e->Forms().RaisedBy->Name == "BUTTON_PREVIOUS_SECTION")
 		{
 			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
 			SetPrevCat();
 			return;
 		}
-		else if (e->Data.Forms.RaisedBy->Name.substr(0, 5) == "Index")
+		else if (e->Forms().RaisedBy->Name.substr(0, 5) == "Index")
 		{
 			UString nameidx =
-			    e->Data.Forms.RaisedBy->Name.substr(5, e->Data.Forms.RaisedBy->Name.length() - 5);
+			    e->Forms().RaisedBy->Name.substr(5, e->Forms().RaisedBy->Name.length() - 5);
 			int idx = Strings::ToInteger(nameidx);
 			SetTopic(idx);
 			menuform->FindControl("INFORMATION_PANEL")->Visible = false;

@@ -25,33 +25,33 @@ void TextEdit::EventOccured(Event *e)
 
 	Control::EventOccured(e);
 
-	if (e->Type == EVENT_FORM_INTERACTION)
+	if (e->Type() == EVENT_FORM_INTERACTION)
 	{
-		if (e->Data.Forms.RaisedBy == this)
+		if (e->Forms().RaisedBy == this)
 		{
-			if (e->Data.Forms.EventFlag == FormEventType::GotFocus ||
-			    e->Data.Forms.EventFlag == FormEventType::MouseClick ||
-			    e->Data.Forms.EventFlag == FormEventType::KeyDown)
+			if (e->Forms().EventFlag == FormEventType::GotFocus ||
+			    e->Forms().EventFlag == FormEventType::MouseClick ||
+			    e->Forms().EventFlag == FormEventType::KeyDown)
 			{
 				editting = true;
 				// e->Handled = true;
 			}
-			if (e->Data.Forms.EventFlag == FormEventType::LostFocus)
+			if (e->Forms().EventFlag == FormEventType::LostFocus)
 			{
 				editting = false;
 				RaiseEvent(FormEventType::TextEditFinish);
 				// e->Handled = true;
 			}
 		}
-		else if (e->Data.Forms.EventFlag == FormEventType::MouseClick)
+		else if (e->Forms().EventFlag == FormEventType::MouseClick)
 		{
 			editting = false;
 			RaiseEvent(FormEventType::TextEditFinish);
 		}
 
-		if (e->Data.Forms.EventFlag == FormEventType::KeyPress && editting)
+		if (e->Forms().EventFlag == FormEventType::KeyPress && editting)
 		{
-			switch (e->Data.Forms.KeyInfo.KeyCode) // TODO: Check scancodes instead of keycodes?
+			switch (e->Forms().KeyInfo.KeyCode) // TODO: Check scancodes instead of keycodes?
 			{
 				case SDLK_BACKSPACE:
 					if (SelectionStart > 0)
@@ -109,7 +109,7 @@ void TextEdit::EventOccured(Event *e)
 				default:
 					// FIXME: This should use SDL Text Input API!
 					UString convert(SDL_GetKeyName(
-					    e->Data.Keyboard
+					    e->Keyboard()
 					        .KeyCode)); // SDLK* are based on Unicode, if I read the docs right
 					if (convert.length() == 1 && convert.c_str()[0] != 0)
 					{
@@ -120,10 +120,10 @@ void TextEdit::EventOccured(Event *e)
 			}
 		}
 
-		if (e->Data.Forms.EventFlag == FormEventType::KeyUp && editting)
+		if (e->Forms().EventFlag == FormEventType::KeyUp && editting)
 		{
 
-			switch (e->Data.Forms.KeyInfo.KeyCode)
+			switch (e->Forms().KeyInfo.KeyCode)
 			{
 				case SDLK_LSHIFT:
 				case SDLK_RSHIFT:
@@ -229,10 +229,9 @@ void TextEdit::SetText(UString Text)
 void TextEdit::RaiseEvent(FormEventType Type)
 {
 	std::ignore = Type;
-	auto ce = new Event();
-	ce->Type = EVENT_FORM_INTERACTION;
-	ce->Data.Forms.RaisedBy = this;
-	ce->Data.Forms.EventFlag = FormEventType::TextChanged;
+	auto ce = new FormsEvent();
+	ce->Forms().RaisedBy = this;
+	ce->Forms().EventFlag = FormEventType::TextChanged;
 	fw().PushEvent(ce);
 }
 

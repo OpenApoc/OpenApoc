@@ -31,35 +31,35 @@ void MainMenu::EventOccurred(Event *e)
 	mainmenuform->EventOccured(e);
 	fw().gamecore->MouseCursor->EventOccured(e);
 
-	if (e->Type == EVENT_KEY_DOWN)
+	if (e->Type() == EVENT_KEY_DOWN)
 	{
-		if (e->Data.Keyboard.KeyCode == SDLK_ESCAPE)
+		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::QUIT;
 			return;
 		}
 	}
 
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick)
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
 	{
-		if (e->Data.Forms.RaisedBy->Name == "BUTTON_OPTIONS")
+		if (e->Forms().RaisedBy->Name == "BUTTON_OPTIONS")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = std::make_shared<OptionsMenu>();
 			return;
 		}
-		if (e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT")
+		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
 			stageCmd.cmd = StageCmd::Command::QUIT;
 			return;
 		}
-		if (e->Data.Forms.RaisedBy->Name == "BUTTON_NEWGAME")
+		if (e->Forms().RaisedBy->Name == "BUTTON_NEWGAME")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = std::make_shared<DifficultyMenu>();
 			return;
 		}
-		if (e->Data.Forms.RaisedBy->Name == "BUTTON_DEBUG")
+		if (e->Forms().RaisedBy->Name == "BUTTON_DEBUG")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = std::make_shared<DebugMenu>();
@@ -67,14 +67,14 @@ void MainMenu::EventOccurred(Event *e)
 		}
 	}
 
-	if (e->Type == EVENT_FORM_INTERACTION &&
-	    e->Data.Forms.EventFlag == FormEventType::CheckBoxChange)
+	if (e->Type() == EVENT_FORM_INTERACTION &&
+	    e->Forms().EventFlag == FormEventType::CheckBoxChange)
 	{
-		if (e->Data.Forms.RaisedBy->Name == "CHECK_DEBUGMODE")
+		if (e->Forms().RaisedBy->Name == "CHECK_DEBUGMODE")
 		{
 			fw().gamecore->DebugModeEnabled =
-			    static_cast<CheckBox *>(e->Data.Forms.RaisedBy)->IsChecked();
-			e->Data.Forms.RaisedBy->GetForm()->FindControl("BUTTON_DEBUG")->Visible =
+			    static_cast<CheckBox *>(e->Forms().RaisedBy)->IsChecked();
+			e->Forms().RaisedBy->GetForm()->FindControl("BUTTON_DEBUG")->Visible =
 			    fw().gamecore->DebugModeEnabled;
 		}
 	}

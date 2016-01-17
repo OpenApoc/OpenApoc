@@ -296,11 +296,11 @@ void CityView::EventOccurred(Event *e)
 	activeTab->EventOccured(e);
 	baseForm->EventOccured(e);
 
-	if (e->Type == EVENT_FORM_INTERACTION)
+	if (e->Type() == EVENT_FORM_INTERACTION)
 	{
-		if (e->Data.Forms.EventFlag == FormEventType::MouseDown)
+		if (e->Forms().EventFlag == FormEventType::MouseDown)
 		{
-			auto it = this->playerVehicleListControls.find(e->Data.Forms.RaisedBy);
+			auto it = this->playerVehicleListControls.find(e->Forms().RaisedBy);
 
 			if (it != this->playerVehicleListControls.end())
 			{
@@ -312,9 +312,9 @@ void CityView::EventOccurred(Event *e)
 				return;
 			}
 		}
-		else if (e->Data.Forms.EventFlag == FormEventType::ButtonClick)
+		else if (e->Forms().EventFlag == FormEventType::ButtonClick)
 		{
-			auto &cname = e->Data.Forms.RaisedBy->Name;
+			auto &cname = e->Forms().RaisedBy->Name;
 
 			if (cname == "BUTTON_TAB_1")
 			{
@@ -401,16 +401,16 @@ void CityView::EventOccurred(Event *e)
 				return;
 			}
 		}
-		else if (e->Data.Forms.EventFlag == FormEventType::CheckBoxChange)
+		else if (e->Forms().EventFlag == FormEventType::CheckBoxChange)
 		{
-			auto &cname = e->Data.Forms.RaisedBy->Name;
+			auto &cname = e->Forms().RaisedBy->Name;
 			if (cname == "BUTTON_FOLLOW_VEHICLE")
 			{
 				LogWarning("Follow vehicle");
 			}
 			else if (cname == "BUTTON_TOGGLE_STRATMAP")
 			{
-				bool strategy = dynamic_cast<CheckBox *>(e->Data.Forms.RaisedBy)->IsChecked();
+				bool strategy = dynamic_cast<CheckBox *>(e->Forms().RaisedBy)->IsChecked();
 				this->setViewMode(strategy ? TileViewMode::Strategy : TileViewMode::Isometric);
 			}
 			else
@@ -442,14 +442,14 @@ void CityView::EventOccurred(Event *e)
 			}
 		}
 	}
-	else if (e->Type == EVENT_KEY_DOWN && e->Data.Keyboard.KeyCode == SDLK_ESCAPE)
+	else if (e->Type() == EVENT_KEY_DOWN && e->Keyboard().KeyCode == SDLK_ESCAPE)
 	{
 		stageCmd.cmd = StageCmd::Command::POP;
 		return;
 	}
 	// FIXME: Check if scancode is better/worse
-	else if (e->Type == EVENT_KEY_DOWN &&
-	         SDL_GetScancodeFromKey(e->Data.Keyboard.KeyCode) == SDL_SCANCODE_R)
+	else if (e->Type() == EVENT_KEY_DOWN &&
+	         SDL_GetScancodeFromKey(e->Keyboard().KeyCode) == SDL_SCANCODE_R)
 	{
 		LogInfo("Repairing...");
 		std::set<sp<Scenery>> stuffToRepair;
@@ -470,27 +470,27 @@ void CityView::EventOccurred(Event *e)
 		}
 	}
 	// Exclude mouse down events that are over the form
-	else if (e->Type == EVENT_MOUSE_DOWN &&
+	else if (e->Type() == EVENT_MOUSE_DOWN &&
 	         (!activeTab->eventIsWithin(e) && !baseForm->eventIsWithin(e)))
 	{
-		if (this->getViewMode() == TileViewMode::Strategy && e->Type == EVENT_MOUSE_DOWN &&
-		    e->Data.Mouse.Button == 2)
+		if (this->getViewMode() == TileViewMode::Strategy && e->Type() == EVENT_MOUSE_DOWN &&
+		    e->Mouse().Button == 2)
 		{
 			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
 			auto clickTile = this->screenToTileCoords(
-			    Vec2<float>{e->Data.Mouse.X, e->Data.Mouse.Y} - screenOffset, 0.0f);
+			    Vec2<float>{e->Mouse().X, e->Mouse().Y} - screenOffset, 0.0f);
 			this->setScreenCenterTile({clickTile.x, clickTile.y});
 		}
-		else if (e->Type == EVENT_MOUSE_DOWN && e->Data.Mouse.Button == 1)
+		else if (e->Type() == EVENT_MOUSE_DOWN && e->Mouse().Button == 1)
 		{
 
 			// If a click has not been handled by a form it's in the map. See if we intersect with
 			// anything
 			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
 			auto clickTop = this->screenToTileCoords(
-			    Vec2<float>{e->Data.Mouse.X, e->Data.Mouse.Y} - screenOffset, 9.99f);
+			    Vec2<float>{e->Mouse().X, e->Mouse().Y} - screenOffset, 9.99f);
 			auto clickBottom = this->screenToTileCoords(
-			    Vec2<float>{e->Data.Mouse.X, e->Data.Mouse.Y} - screenOffset, 0.0f);
+			    Vec2<float>{e->Mouse().X, e->Mouse().Y} - screenOffset, 0.0f);
 			auto collision = state->city->map.findCollision(clickTop, clickBottom);
 			if (collision)
 			{

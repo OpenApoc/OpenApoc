@@ -29,10 +29,9 @@ bool ScrollBar::SetValue(int newValue)
 	if (newValue == Value)
 		return false;
 
-	auto e = new Event();
-	e->Type = EVENT_FORM_INTERACTION;
-	e->Data.Forms.RaisedBy = this;
-	e->Data.Forms.EventFlag = FormEventType::ScrollBarChange;
+	auto e = new FormsEvent();
+	e->Forms().RaisedBy = this;
+	e->Forms().EventFlag = FormEventType::ScrollBarChange;
 	fw().PushEvent(e);
 	Value = newValue;
 	return true;
@@ -62,15 +61,15 @@ void ScrollBar::EventOccured(Event *e)
 	switch (BarOrientation)
 	{
 		case Orientation::Vertical:
-			mousePosition = e->Data.Forms.MouseInfo.Y;
+			mousePosition = e->Forms().MouseInfo.Y;
 			break;
 		case Orientation::Horizontal:
-			mousePosition = e->Data.Forms.MouseInfo.X;
+			mousePosition = e->Forms().MouseInfo.X;
 			break;
 	}
 
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this &&
-	    e->Data.Forms.EventFlag == FormEventType::MouseDown)
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == this &&
+	    e->Forms().EventFlag == FormEventType::MouseDown)
 	{
 		if (mousePosition >= (segmentsize * (Value - Minimum)) + grippersize)
 		{
@@ -86,14 +85,14 @@ void ScrollBar::EventOccured(Event *e)
 		}
 	}
 
-	if (e->Type == EVENT_FORM_INTERACTION && (capture || e->Data.Forms.RaisedBy == this) &&
-	    e->Data.Forms.EventFlag == FormEventType::MouseUp)
+	if (e->Type() == EVENT_FORM_INTERACTION && (capture || e->Forms().RaisedBy == this) &&
+	    e->Forms().EventFlag == FormEventType::MouseUp)
 	{
 		capture = false;
 	}
 
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this &&
-	    e->Data.Forms.EventFlag == FormEventType::MouseMove && capture)
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == this &&
+	    e->Forms().EventFlag == FormEventType::MouseMove && capture)
 	{
 		this->SetValue(static_cast<int>(mousePosition / segmentsize));
 	}

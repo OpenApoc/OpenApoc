@@ -20,14 +20,14 @@ void CheckBox::EventOccured(Event *e)
 {
 	Control::EventOccured(e);
 
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this &&
-	    e->Data.Forms.EventFlag == FormEventType::MouseDown)
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == this &&
+	    e->Forms().EventFlag == FormEventType::MouseDown)
 	{
 		fw().soundBackend->playSample(buttonclick);
 	}
 
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this &&
-	    e->Data.Forms.EventFlag == FormEventType::MouseClick)
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == this &&
+	    e->Forms().EventFlag == FormEventType::MouseClick)
 	{
 		SetChecked(!IsChecked());
 	}
@@ -66,10 +66,9 @@ void CheckBox::SetChecked(bool checked)
 {
 	if (Checked == checked)
 		return;
-	auto e = new Event();
-	e->Type = EVENT_FORM_INTERACTION;
-	e->Data.Forms.RaisedBy = this;
-	e->Data.Forms.EventFlag = FormEventType::CheckBoxChange;
+	auto e = new FormsEvent();
+	e->Forms().RaisedBy = this;
+	e->Forms().EventFlag = FormEventType::CheckBoxChange;
 	fw().PushEvent(e);
 	Checked = checked;
 }

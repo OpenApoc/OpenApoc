@@ -26,19 +26,18 @@ void TextButton::EventOccured(Event *e)
 {
 	Control::EventOccured(e);
 
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this &&
-	    e->Data.Forms.EventFlag == FormEventType::MouseDown)
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == this &&
+	    e->Forms().EventFlag == FormEventType::MouseDown)
 	{
 		fw().soundBackend->playSample(buttonclick);
 	}
 
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.RaisedBy == this &&
-	    e->Data.Forms.EventFlag == FormEventType::MouseClick)
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == this &&
+	    e->Forms().EventFlag == FormEventType::MouseClick)
 	{
-		auto ce = new Event();
-		ce->Type = e->Type;
-		ce->Data.Forms = e->Data.Forms;
-		ce->Data.Forms.EventFlag = FormEventType::ButtonClick;
+		auto ce = new FormsEvent();
+		ce->Forms() = e->Forms();
+		ce->Forms().EventFlag = FormEventType::ButtonClick;
 		fw().PushEvent(ce);
 	}
 }

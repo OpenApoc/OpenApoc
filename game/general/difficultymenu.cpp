@@ -28,41 +28,41 @@ void DifficultyMenu::EventOccurred(Event *e)
 	difficultymenuform->EventOccured(e);
 	fw().gamecore->MouseCursor->EventOccured(e);
 
-	if (e->Type == EVENT_KEY_DOWN)
+	if (e->Type() == EVENT_KEY_DOWN)
 	{
-		if (e->Data.Keyboard.KeyCode == SDLK_ESCAPE)
+		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
 
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick)
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
 	{
 		UString ruleName;
-		if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY1") == 0)
+		if (e->Forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY1") == 0)
 		{
 			ruleName = "rules/difficulty1.xml";
 		}
-		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY2") == 0)
+		else if (e->Forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY2") == 0)
 		{
 			ruleName = "rules/difficulty2.xml";
 		}
-		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY3") == 0)
+		else if (e->Forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY3") == 0)
 		{
 			ruleName = "rules/difficulty3.xml";
 		}
-		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY4") == 0)
+		else if (e->Forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY4") == 0)
 		{
 			ruleName = "rules/difficulty4.xml";
 		}
-		else if (e->Data.Forms.RaisedBy->Name.compare("BUTTON_DIFFICULTY5") == 0)
+		else if (e->Forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY5") == 0)
 		{
 			ruleName = "rules/difficulty5.xml";
 		}
 		else
 		{
-			LogWarning("Unknown button pressed: %s", e->Data.Forms.RaisedBy->Name.c_str());
+			LogWarning("Unknown button pressed: %s", e->Forms().RaisedBy->Name.c_str());
 			ruleName = "rules/difficulty1.xml";
 			return;
 		}

@@ -25,27 +25,27 @@ void Ufopaedia::EventOccurred(Event *e)
 	menuform->EventOccured(e);
 	fw().gamecore->MouseCursor->EventOccured(e);
 
-	if (e->Type == EVENT_KEY_DOWN)
+	if (e->Type() == EVENT_KEY_DOWN)
 	{
-		if (e->Data.Keyboard.KeyCode == SDLK_ESCAPE)
+		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
 
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick)
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
 	{
-		if (e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT")
+		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
-		else if (e->Data.Forms.RaisedBy->Name.substr(0, 7) == "BUTTON_")
+		else if (e->Forms().RaisedBy->Name.substr(0, 7) == "BUTTON_")
 		{
 			UString categoryname =
-			    e->Data.Forms.RaisedBy->Name.substr(7, e->Data.Forms.RaisedBy->Name.length() - 7);
-			std::string btnname = e->Data.Forms.RaisedBy->Name.str();
+			    e->Forms().RaisedBy->Name.substr(7, e->Forms().RaisedBy->Name.length() - 7);
+			std::string btnname = e->Forms().RaisedBy->Name.str();
 
 			for (auto dbcat = UfopaediaDB.begin(); dbcat != UfopaediaDB.end(); dbcat++)
 			{

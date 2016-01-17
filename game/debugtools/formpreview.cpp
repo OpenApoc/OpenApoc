@@ -99,21 +99,21 @@ void FormPreview::EventOccurred(Event *e)
 	}
 	fw().gamecore->MouseCursor->EventOccured(e);
 
-	if (e->Type == EVENT_KEY_DOWN)
+	if (e->Type() == EVENT_KEY_DOWN)
 	{
-		if (e->Data.Keyboard.KeyCode == SDLK_ESCAPE)
+		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
 
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::MouseClick)
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::MouseClick)
 	{
 
-		if (displayform != nullptr && e->Data.Forms.RaisedBy->GetForm() == displayform.get())
+		if (displayform != nullptr && e->Forms().RaisedBy->GetForm() == displayform.get())
 		{
-			currentSelectedControl = e->Data.Forms.RaisedBy;
+			currentSelectedControl = e->Forms().RaisedBy;
 			ConfigureSelectedControlForm();
 		}
 		else
@@ -122,9 +122,9 @@ void FormPreview::EventOccurred(Event *e)
 			ConfigureSelectedControlForm();
 		}
 
-		if (e->Data.Forms.RaisedBy->GetForm() == previewselector.get() &&
-			e->Data.Forms.RaisedBy->GetParent() != nullptr &&
-		    e->Data.Forms.RaisedBy->GetParent()->Name == "FORM_LIST")
+		if (e->Forms().RaisedBy->GetForm() == previewselector.get() &&
+		    e->Forms().RaisedBy->GetParent() != nullptr &&
+		    e->Forms().RaisedBy->GetParent()->Name == "FORM_LIST")
 		{
 
 			if (currentSelected != nullptr)
@@ -132,7 +132,7 @@ void FormPreview::EventOccurred(Event *e)
 				currentSelected->BackgroundColour.a = 0;
 			}
 
-			currentSelected = (Label *)e->Data.Forms.RaisedBy;
+			currentSelected = (Label *)e->Forms().RaisedBy;
 			currentSelected->BackgroundColour.a = 255;
 			displayform.reset(fw().gamecore->GetForm(currentSelected->Name));
 

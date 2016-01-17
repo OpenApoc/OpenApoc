@@ -41,10 +41,10 @@ ApocCursor::~ApocCursor() {}
 
 void ApocCursor::EventOccured(Event *e)
 {
-	if (e->Type == EVENT_MOUSE_MOVE)
+	if (e->Type() == EVENT_MOUSE_MOVE)
 	{
-		cursorPos.x = e->Data.Mouse.X;
-		cursorPos.y = e->Data.Mouse.Y;
+		cursorPos.x = e->Mouse().X;
+		cursorPos.y = e->Mouse().Y;
 	}
 }
 

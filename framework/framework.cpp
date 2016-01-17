@@ -419,7 +419,7 @@ void Framework::ProcessEvents()
 			LogError("Invalid event on queue");
 			continue;
 		}
-		switch (e->Type)
+		switch (e->Type())
 		{
 			case EVENT_WINDOW_CLOSED:
 				delete e;
@@ -456,8 +456,7 @@ void Framework::TranslateSDLEvents()
 		switch (e.type)
 		{
 			case SDL_QUIT:
-				fwE = new Event();
-				fwE->Type = EVENT_WINDOW_CLOSED;
+				fwE = new DisplayEvent(EVENT_WINDOW_CLOSED);
 				PushEvent(fwE);
 				break;
 			case SDL_JOYDEVICEADDED:
@@ -465,111 +464,102 @@ void Framework::TranslateSDLEvents()
 				// FIXME: Do nothing?
 				break;
 			case SDL_KEYDOWN:
-				fwE = new Event();
-				fwE->Type = EVENT_KEY_DOWN;
-				fwE->Data.Keyboard.KeyCode = e.key.keysym.sym;
-				fwE->Data.Keyboard.UniChar = e.key.keysym.sym;
-				fwE->Data.Keyboard.Modifiers = e.key.keysym.mod;
+				fwE = new KeyboardEvent(EVENT_KEY_DOWN);
+				fwE->Keyboard().KeyCode = e.key.keysym.sym;
+				fwE->Keyboard().UniChar = e.key.keysym.sym;
+				fwE->Keyboard().Modifiers = e.key.keysym.mod;
 				PushEvent(fwE);
 				break;
 			case SDL_KEYUP:
-				fwE = new Event();
-				fwE->Type = EVENT_KEY_UP;
-				fwE->Data.Keyboard.KeyCode = e.key.keysym.sym;
-				fwE->Data.Keyboard.UniChar = e.key.keysym.sym;
-				fwE->Data.Keyboard.Modifiers = e.key.keysym.mod;
+				fwE = new KeyboardEvent(EVENT_KEY_UP);
+				fwE->Keyboard().KeyCode = e.key.keysym.sym;
+				fwE->Keyboard().UniChar = e.key.keysym.sym;
+				fwE->Keyboard().Modifiers = e.key.keysym.mod;
 				PushEvent(fwE);
 				break;
 			// FIXME: handle SDL_TEXTINPUT?
 			case SDL_MOUSEMOTION:
-				fwE = new Event();
-				fwE->Type = EVENT_MOUSE_MOVE;
-				fwE->Data.Mouse.X = e.motion.x;
-				fwE->Data.Mouse.Y = e.motion.y;
-				fwE->Data.Mouse.DeltaX = e.motion.xrel;
-				fwE->Data.Mouse.DeltaY = e.motion.yrel;
-				fwE->Data.Mouse.WheelVertical = 0;   // These should be handled
-				fwE->Data.Mouse.WheelHorizontal = 0; // in a separate event
-				fwE->Data.Mouse.Button = e.motion.state;
+				fwE = new MouseEvent(EVENT_MOUSE_MOVE);
+				fwE->Mouse().X = e.motion.x;
+				fwE->Mouse().Y = e.motion.y;
+				fwE->Mouse().DeltaX = e.motion.xrel;
+				fwE->Mouse().DeltaY = e.motion.yrel;
+				fwE->Mouse().WheelVertical = 0;   // These should be handled
+				fwE->Mouse().WheelHorizontal = 0; // in a separate event
+				fwE->Mouse().Button = e.motion.state;
 				PushEvent(fwE);
 				break;
 			case SDL_MOUSEWHEEL:
 				// FIXME: Check these values for sanity
-				fwE = new Event();
-				fwE->Type = EVENT_MOUSE_MOVE;
+				fwE = new MouseEvent(EVENT_MOUSE_MOVE);
 				// Since I'm using some variables that are not used anywhere else,
 				// this code should be in its own small block.
 				{
 					int mx, my;
-					fwE->Data.Mouse.Button = SDL_GetMouseState(&mx, &my);
-					fwE->Data.Mouse.X = mx;
-					fwE->Data.Mouse.Y = my;
-					fwE->Data.Mouse.DeltaX = 0; // FIXME: This might cause problems?
-					fwE->Data.Mouse.DeltaY = 0;
-					fwE->Data.Mouse.WheelVertical = e.wheel.y;
-					fwE->Data.Mouse.WheelHorizontal = e.wheel.x;
+					fwE->Mouse().Button = SDL_GetMouseState(&mx, &my);
+					fwE->Mouse().X = mx;
+					fwE->Mouse().Y = my;
+					fwE->Mouse().DeltaX = 0; // FIXME: This might cause problems?
+					fwE->Mouse().DeltaY = 0;
+					fwE->Mouse().WheelVertical = e.wheel.y;
+					fwE->Mouse().WheelHorizontal = e.wheel.x;
 				}
 				PushEvent(fwE);
 				break;
 			case SDL_MOUSEBUTTONDOWN:
-				fwE = new Event();
-				fwE->Type = EVENT_MOUSE_DOWN;
-				fwE->Data.Mouse.X = e.button.x;
-				fwE->Data.Mouse.Y = e.button.y;
-				fwE->Data.Mouse.DeltaX = 0; // FIXME: This might cause problems?
-				fwE->Data.Mouse.DeltaY = 0;
-				fwE->Data.Mouse.WheelVertical = 0;
-				fwE->Data.Mouse.WheelHorizontal = 0;
-				fwE->Data.Mouse.Button = SDL_BUTTON(e.button.button);
+				fwE = new MouseEvent(EVENT_MOUSE_DOWN);
+				fwE->Mouse().X = e.button.x;
+				fwE->Mouse().Y = e.button.y;
+				fwE->Mouse().DeltaX = 0; // FIXME: This might cause problems?
+				fwE->Mouse().DeltaY = 0;
+				fwE->Mouse().WheelVertical = 0;
+				fwE->Mouse().WheelHorizontal = 0;
+				fwE->Mouse().Button = SDL_BUTTON(e.button.button);
 				PushEvent(fwE);
 				break;
 			case SDL_MOUSEBUTTONUP:
-				fwE = new Event();
-				fwE->Type = EVENT_MOUSE_UP;
-				fwE->Data.Mouse.X = e.button.x;
-				fwE->Data.Mouse.Y = e.button.y;
-				fwE->Data.Mouse.DeltaX = 0; // FIXME: This might cause problems?
-				fwE->Data.Mouse.DeltaY = 0;
-				fwE->Data.Mouse.WheelVertical = 0;
-				fwE->Data.Mouse.WheelHorizontal = 0;
-				fwE->Data.Mouse.Button = SDL_BUTTON(e.button.button);
+				fwE = new MouseEvent(EVENT_MOUSE_UP);
+				fwE->Mouse().X = e.button.x;
+				fwE->Mouse().Y = e.button.y;
+				fwE->Mouse().DeltaX = 0; // FIXME: This might cause problems?
+				fwE->Mouse().DeltaY = 0;
+				fwE->Mouse().WheelVertical = 0;
+				fwE->Mouse().WheelHorizontal = 0;
+				fwE->Mouse().Button = SDL_BUTTON(e.button.button);
 				PushEvent(fwE);
 				break;
 			case SDL_FINGERDOWN:
-				fwE = new Event();
-				fwE->Type = EVENT_FINGER_DOWN;
-				fwE->Data.Finger.X = static_cast<int>(e.tfinger.x * Display_GetWidth());
-				fwE->Data.Finger.Y = static_cast<int>(e.tfinger.y * Display_GetHeight());
-				fwE->Data.Finger.DeltaX = static_cast<int>(e.tfinger.dx * Display_GetWidth());
-				fwE->Data.Finger.DeltaY = static_cast<int>(e.tfinger.dy * Display_GetHeight());
-				fwE->Data.Finger.Id = e.tfinger.fingerId;
-				fwE->Data.Finger.IsPrimary =
+				fwE = new FingerEvent(EVENT_FINGER_DOWN);
+				fwE->Finger().X = static_cast<int>(e.tfinger.x * Display_GetWidth());
+				fwE->Finger().Y = static_cast<int>(e.tfinger.y * Display_GetHeight());
+				fwE->Finger().DeltaX = static_cast<int>(e.tfinger.dx * Display_GetWidth());
+				fwE->Finger().DeltaY = static_cast<int>(e.tfinger.dy * Display_GetHeight());
+				fwE->Finger().Id = e.tfinger.fingerId;
+				fwE->Finger().IsPrimary =
 				    e.tfinger.fingerId ==
 				    primaryFingerID; // FIXME: Try to remember the ID of the first touching finger!
 				PushEvent(fwE);
 				break;
 			case SDL_FINGERUP:
-				fwE = new Event();
-				fwE->Type = EVENT_FINGER_UP;
-				fwE->Data.Finger.X = static_cast<int>(e.tfinger.x * Display_GetWidth());
-				fwE->Data.Finger.Y = static_cast<int>(e.tfinger.y * Display_GetHeight());
-				fwE->Data.Finger.DeltaX = static_cast<int>(e.tfinger.dx * Display_GetWidth());
-				fwE->Data.Finger.DeltaY = static_cast<int>(e.tfinger.dy * Display_GetHeight());
-				fwE->Data.Finger.Id = e.tfinger.fingerId;
-				fwE->Data.Finger.IsPrimary =
+				fwE = new FingerEvent(EVENT_FINGER_UP);
+				fwE->Finger().X = static_cast<int>(e.tfinger.x * Display_GetWidth());
+				fwE->Finger().Y = static_cast<int>(e.tfinger.y * Display_GetHeight());
+				fwE->Finger().DeltaX = static_cast<int>(e.tfinger.dx * Display_GetWidth());
+				fwE->Finger().DeltaY = static_cast<int>(e.tfinger.dy * Display_GetHeight());
+				fwE->Finger().Id = e.tfinger.fingerId;
+				fwE->Finger().IsPrimary =
 				    e.tfinger.fingerId ==
 				    primaryFingerID; // FIXME: Try to remember the ID of the first touching finger!
 				PushEvent(fwE);
 				break;
 			case SDL_FINGERMOTION:
-				fwE = new Event();
-				fwE->Type = EVENT_FINGER_MOVE;
-				fwE->Data.Finger.X = static_cast<int>(e.tfinger.x * Display_GetWidth());
-				fwE->Data.Finger.Y = static_cast<int>(e.tfinger.y * Display_GetHeight());
-				fwE->Data.Finger.DeltaX = static_cast<int>(e.tfinger.dx * Display_GetWidth());
-				fwE->Data.Finger.DeltaY = static_cast<int>(e.tfinger.dy * Display_GetHeight());
-				fwE->Data.Finger.Id = e.tfinger.fingerId;
-				fwE->Data.Finger.IsPrimary =
+				fwE = new FingerEvent(EVENT_FINGER_MOVE);
+				fwE->Finger().X = static_cast<int>(e.tfinger.x * Display_GetWidth());
+				fwE->Finger().Y = static_cast<int>(e.tfinger.y * Display_GetHeight());
+				fwE->Finger().DeltaX = static_cast<int>(e.tfinger.dx * Display_GetWidth());
+				fwE->Finger().DeltaY = static_cast<int>(e.tfinger.dy * Display_GetHeight());
+				fwE->Finger().Id = e.tfinger.fingerId;
+				fwE->Finger().IsPrimary =
 				    e.tfinger.fingerId ==
 				    primaryFingerID; // FIXME: Try to remember the ID of the first touching finger!
 				PushEvent(fwE);
@@ -580,27 +570,25 @@ void Framework::TranslateSDLEvents()
 				{
 					case SDL_WINDOWEVENT_RESIZED:
 						// FIXME: Do we care about SDL_WINDOWEVENT_SIZE_CHANGED?
-						fwE = new Event();
-						fwE->Type = EVENT_WINDOW_RESIZE;
-						fwE->Data.Display.X = 0;
-						fwE->Data.Display.Y = 0;
-						fwE->Data.Display.Width = e.window.data1;
-						fwE->Data.Display.Height = e.window.data2;
-						fwE->Data.Display.Active = true;
+						fwE = new DisplayEvent(EVENT_WINDOW_RESIZE);
+						fwE->Display().X = 0;
+						fwE->Display().Y = 0;
+						fwE->Display().Width = e.window.data1;
+						fwE->Display().Height = e.window.data2;
+						fwE->Display().Active = true;
 						break;
 					case SDL_WINDOWEVENT_HIDDEN:
 					case SDL_WINDOWEVENT_MINIMIZED:
 					case SDL_WINDOWEVENT_LEAVE:
 						// FIXME: Check if we should react this way for each of those events
 						// FIXME: Check if we're missing some of the events
-						fwE = new Event();
-						fwE->Type = EVENT_WINDOW_DEACTIVATE;
-						fwE->Data.Display.X = 0;
-						fwE->Data.Display.Y = 0;
+						fwE = new DisplayEvent(EVENT_WINDOW_DEACTIVATE);
+						fwE->Display().X = 0;
+						fwE->Display().Y = 0;
 						// FIXME: Is this even necessary?
-						SDL_GetWindowSize(p->window, &(fwE->Data.Display.Width),
-						                  &(fwE->Data.Display.Height));
-						fwE->Data.Display.Active = false;
+						SDL_GetWindowSize(p->window, &(fwE->Display().Width),
+						                  &(fwE->Display().Height));
+						fwE->Display().Active = false;
 						PushEvent(fwE);
 						break;
 					case SDL_WINDOWEVENT_SHOWN:
@@ -608,14 +596,13 @@ void Framework::TranslateSDLEvents()
 					case SDL_WINDOWEVENT_RESTORED:
 					case SDL_WINDOWEVENT_ENTER:
 						// FIXME: Should we handle all these events as "aaand we're back" events?
-						fwE = new Event();
-						fwE->Type = EVENT_WINDOW_ACTIVATE;
-						fwE->Data.Display.X = 0;
-						fwE->Data.Display.Y = 0;
+						fwE = new DisplayEvent(EVENT_WINDOW_ACTIVATE);
+						fwE->Display().X = 0;
+						fwE->Display().Y = 0;
 						// FIXME: Is this even necessary?
-						SDL_GetWindowSize(p->window, &(fwE->Data.Display.Width),
-						                  &(fwE->Data.Display.Height));
-						fwE->Data.Display.Active = false;
+						SDL_GetWindowSize(p->window, &(fwE->Display().Width),
+						                  &(fwE->Display().Height));
+						fwE->Display().Active = false;
 						PushEvent(fwE);
 						break;
 					case SDL_WINDOWEVENT_CLOSE:
@@ -626,9 +613,6 @@ void Framework::TranslateSDLEvents()
 				}
 				break;
 			default:
-				fwE = new Event();
-				fwE->Type = EVENT_UNDEFINED;
-				PushEvent(fwE);
 				break;
 		}
 	}

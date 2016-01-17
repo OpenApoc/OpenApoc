@@ -101,40 +101,115 @@ typedef struct FRAMEWORK_FORMS_EVENT
 	FRAMEWORK_KEYBOARD_EVENT KeyInfo;
 } FRAMEWORK_FORMS_EVENT;
 
-typedef union EventData
-{
-	FRAMEWORK_DISPLAY_EVENT Display;
-	FRAMEWORK_JOYSTICK_EVENT Joystick;
-	FRAMEWORK_KEYBOARD_EVENT Keyboard;
-	FRAMEWORK_MOUSE_EVENT Mouse;
-	FRAMEWORK_FINGER_EVENT Finger;
-	FRAMEWORK_TIMER_EVENT Timer;
-	FRAMEWORK_FORMS_EVENT Forms;
-} EventData;
-
 /*
      Class: Event
      Provides data regarding events that occur within the system
 */
 class Event
 {
+  protected:
+	Event(EventTypes type);
+	EventTypes eventType;
+
   public:
 	bool Handled;
-	EventTypes Type;
-	EventData Data;
 
-	/*
-	    Constructor: Event
-	    Defaults the <Type> to Undefined
-	*/
-	Event();
+	EventTypes Type() const;
 
-	/*
-	    Destructor: ~Event
-	    For network packets, it calls enet's packet delete.
-	    For download packets, url and the data are deleted (assumption is that the program will have
-	   processed the data)
-	*/
-	~Event();
+	FRAMEWORK_DISPLAY_EVENT &Display();
+	FRAMEWORK_JOYSTICK_EVENT &Joystick();
+	FRAMEWORK_KEYBOARD_EVENT &Keyboard();
+	FRAMEWORK_MOUSE_EVENT &Mouse();
+	FRAMEWORK_FINGER_EVENT &Finger();
+	FRAMEWORK_TIMER_EVENT &Timer();
+	FRAMEWORK_FORMS_EVENT &Forms();
+
+	const FRAMEWORK_DISPLAY_EVENT &Display() const;
+	const FRAMEWORK_JOYSTICK_EVENT &Joystick() const;
+	const FRAMEWORK_KEYBOARD_EVENT &Keyboard() const;
+	const FRAMEWORK_MOUSE_EVENT &Mouse() const;
+	const FRAMEWORK_FINGER_EVENT &Finger() const;
+	const FRAMEWORK_TIMER_EVENT &Timer() const;
+	const FRAMEWORK_FORMS_EVENT &Forms() const;
+
+	virtual ~Event() = default;
 };
+
+class DisplayEvent : public Event
+{
+  private:
+	FRAMEWORK_DISPLAY_EVENT Data;
+	friend class Event;
+
+  public:
+	DisplayEvent(EventTypes type);
+	~DisplayEvent() override = default;
+};
+
+class JoystickEvent : public Event
+{
+  private:
+	FRAMEWORK_JOYSTICK_EVENT Data;
+	friend class Event;
+
+  public:
+	JoystickEvent(EventTypes type);
+	~JoystickEvent() override = default;
+};
+
+class KeyboardEvent : public Event
+{
+  private:
+	FRAMEWORK_KEYBOARD_EVENT Data;
+	friend class Event;
+
+  public:
+	KeyboardEvent(EventTypes type);
+	~KeyboardEvent() override = default;
+};
+
+class MouseEvent : public Event
+{
+  private:
+	FRAMEWORK_MOUSE_EVENT Data;
+	friend class Event;
+
+  public:
+	MouseEvent(EventTypes type);
+	~MouseEvent() override = default;
+};
+
+class FingerEvent : public Event
+{
+  private:
+	FRAMEWORK_FINGER_EVENT Data;
+	friend class Event;
+
+  public:
+	FingerEvent(EventTypes type);
+	~FingerEvent() override = default;
+};
+
+class TimerEvent : public Event
+{
+  private:
+	FRAMEWORK_TIMER_EVENT Data;
+	friend class Event;
+
+  public:
+	TimerEvent(EventTypes type);
+	~TimerEvent() override = default;
+};
+
+class FormsEvent : public Event
+{
+  private:
+	FRAMEWORK_FORMS_EVENT Data;
+	friend class Event;
+
+  public:
+	FormsEvent();
+	~FormsEvent() override = default;
+};
+
 }; // namespace OpenApoc

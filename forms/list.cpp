@@ -115,17 +115,17 @@ void ListBox::PostRender()
 void ListBox::EventOccured(Event *e)
 {
 	Control::EventOccured(e);
-	if (e->Type == EVENT_FORM_INTERACTION)
+	if (e->Type() == EVENT_FORM_INTERACTION)
 	{
-		Control *ctrl = e->Data.Forms.RaisedBy;
-		if (e->Data.Forms.EventFlag == FormEventType::MouseMove)
+		Control *ctrl = e->Forms().RaisedBy;
+		if (e->Forms().EventFlag == FormEventType::MouseMove)
 		{
 			// FIXME: Scrolling amount should match wheel amount
 			// Should wheel orientation match as well? Who has horizontal scrolls??
 			if (ctrl == this || ctrl->GetParent() == this)
 			{
 				int wheelDelta =
-				    e->Data.Forms.MouseInfo.WheelVertical + e->Data.Forms.MouseInfo.WheelHorizontal;
+				    e->Forms().MouseInfo.WheelVertical + e->Forms().MouseInfo.WheelHorizontal;
 				if (wheelDelta > 0)
 				{
 					scroller->ScrollPrev();
@@ -143,24 +143,22 @@ void ListBox::EventOccured(Event *e)
 			if (hovered != ctrl)
 			{
 				hovered = ctrl;
-				auto le = new Event();
-				le->Type = e->Type;
-				le->Data.Forms = e->Data.Forms;
-				le->Data.Forms.RaisedBy = this;
-				le->Data.Forms.EventFlag = FormEventType::ListBoxChangeHover;
+				auto le = new FormsEvent();
+				le->Forms() = e->Forms();
+				le->Forms().RaisedBy = this;
+				le->Forms().EventFlag = FormEventType::ListBoxChangeHover;
 				fw().PushEvent(le);
 			}
 		}
-		else if (e->Data.Forms.EventFlag == FormEventType::MouseDown)
+		else if (e->Forms().EventFlag == FormEventType::MouseDown)
 		{
 			if (selected != ctrl && ctrl->GetParent() == this && ctrl != scroller)
 			{
 				selected = ctrl;
-				auto le = new Event();
-				le->Type = e->Type;
-				le->Data.Forms = e->Data.Forms;
-				le->Data.Forms.RaisedBy = this;
-				le->Data.Forms.EventFlag = FormEventType::ListBoxChangeSelected;
+				auto le = new FormsEvent();
+				le->Forms() = e->Forms();
+				le->Forms().RaisedBy = this;
+				le->Forms().EventFlag = FormEventType::ListBoxChangeSelected;
 				fw().PushEvent(le);
 			}
 		}

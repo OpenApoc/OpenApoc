@@ -52,40 +52,40 @@ void InGameOptions::EventOccurred(Event *e)
 	menuform->EventOccured(e);
 	fw().gamecore->MouseCursor->EventOccured(e);
 
-	if (e->Type == EVENT_KEY_DOWN)
+	if (e->Type() == EVENT_KEY_DOWN)
 	{
-		if (e->Data.Keyboard.KeyCode == SDLK_ESCAPE)
+		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
 
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick)
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
 	{
-		if (e->Data.Forms.RaisedBy->Name == "BUTTON_OK")
+		if (e->Forms().RaisedBy->Name == "BUTTON_OK")
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
-		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_ABANDONGAME")
+		else if (e->Forms().RaisedBy->Name == "BUTTON_ABANDONGAME")
 		{
 			stageCmd.cmd = StageCmd::Command::REPLACE;
 			stageCmd.nextStage = std::make_shared<MainMenu>();
 			return;
 		}
-		else if (e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT")
+		else if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
 			stageCmd.cmd = StageCmd::Command::QUIT;
 			return;
 		}
 	}
-	if (e->Type == EVENT_FORM_INTERACTION &&
-	    e->Data.Forms.EventFlag == FormEventType::ScrollBarChange)
+	if (e->Type() == EVENT_FORM_INTERACTION &&
+	    e->Forms().EventFlag == FormEventType::ScrollBarChange)
 	{
-		if (e->Data.Forms.RaisedBy->Name == "GLOBAL_GAIN_SLIDER")
+		if (e->Forms().RaisedBy->Name == "GLOBAL_GAIN_SLIDER")
 		{
-			ScrollBar *slider = dynamic_cast<ScrollBar *>(e->Data.Forms.RaisedBy);
+			ScrollBar *slider = dynamic_cast<ScrollBar *>(e->Forms().RaisedBy);
 			if (!slider)
 			{
 				LogError("Failed to cast \"GLOBAL_GAIN_SLIDER\" control to ScrollBar");
@@ -95,9 +95,9 @@ void InGameOptions::EventOccurred(Event *e)
 			    static_cast<float>(slider->GetValue()) / static_cast<float>(slider->Maximum);
 			fw().soundBackend->setGain(SoundBackend::Gain::Global, gain);
 		}
-		else if (e->Data.Forms.RaisedBy->Name == "MUSIC_GAIN_SLIDER")
+		else if (e->Forms().RaisedBy->Name == "MUSIC_GAIN_SLIDER")
 		{
-			ScrollBar *slider = dynamic_cast<ScrollBar *>(e->Data.Forms.RaisedBy);
+			ScrollBar *slider = dynamic_cast<ScrollBar *>(e->Forms().RaisedBy);
 			if (!slider)
 			{
 				LogError("Failed to cast \"MUSIC_GAIN_SLIDER\" control to ScrollBar");
@@ -107,9 +107,9 @@ void InGameOptions::EventOccurred(Event *e)
 			    static_cast<float>(slider->GetValue()) / static_cast<float>(slider->Maximum);
 			fw().soundBackend->setGain(SoundBackend::Gain::Music, gain);
 		}
-		else if (e->Data.Forms.RaisedBy->Name == "SAMPLE_GAIN_SLIDER")
+		else if (e->Forms().RaisedBy->Name == "SAMPLE_GAIN_SLIDER")
 		{
-			ScrollBar *slider = dynamic_cast<ScrollBar *>(e->Data.Forms.RaisedBy);
+			ScrollBar *slider = dynamic_cast<ScrollBar *>(e->Forms().RaisedBy);
 			if (!slider)
 			{
 				LogError("Failed to cast \"SAMPLE_GAIN_SLIDER\" control to ScrollBar");
@@ -120,24 +120,24 @@ void InGameOptions::EventOccurred(Event *e)
 			fw().soundBackend->setGain(SoundBackend::Gain::Sample, gain);
 		}
 	}
-	if (e->Type == EVENT_FORM_INTERACTION &&
-	    e->Data.Forms.EventFlag == FormEventType::CheckBoxChange)
+	if (e->Type() == EVENT_FORM_INTERACTION &&
+	    e->Forms().EventFlag == FormEventType::CheckBoxChange)
 	{
-		if (e->Data.Forms.RaisedBy->Name == "SHOW_VEHICLE_PATH")
+		if (e->Forms().RaisedBy->Name == "SHOW_VEHICLE_PATH")
 		{
-			CheckBox *box = dynamic_cast<CheckBox *>(e->Data.Forms.RaisedBy);
+			CheckBox *box = dynamic_cast<CheckBox *>(e->Forms().RaisedBy);
 			state->showVehiclePath = box->IsChecked();
 			LogWarning("Set SHOW_VEHICLE_PATH to %d", box->IsChecked());
 		}
-		if (e->Data.Forms.RaisedBy->Name == "SHOW_TILE_ORIGIN")
+		if (e->Forms().RaisedBy->Name == "SHOW_TILE_ORIGIN")
 		{
-			CheckBox *box = dynamic_cast<CheckBox *>(e->Data.Forms.RaisedBy);
+			CheckBox *box = dynamic_cast<CheckBox *>(e->Forms().RaisedBy);
 			state->showTileOrigin = box->IsChecked();
 			LogWarning("Set SHOW_TILE_ORIGIN to %d", box->IsChecked());
 		}
-		if (e->Data.Forms.RaisedBy->Name == "SHOW_SELECTABLE_BOUNDS")
+		if (e->Forms().RaisedBy->Name == "SHOW_SELECTABLE_BOUNDS")
 		{
-			CheckBox *box = dynamic_cast<CheckBox *>(e->Data.Forms.RaisedBy);
+			CheckBox *box = dynamic_cast<CheckBox *>(e->Forms().RaisedBy);
 			state->showSelectableBounds = box->IsChecked();
 			LogWarning("Set SHOW_SELECTABLE_BOUNDS to %d", box->IsChecked());
 		}

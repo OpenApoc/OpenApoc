@@ -40,9 +40,9 @@ void TileView::EventOccurred(Event *e)
 {
 	bool selectionChanged = false;
 
-	if (e->Type == EVENT_KEY_DOWN)
+	if (e->Type() == EVENT_KEY_DOWN)
 	{
-		switch (e->Data.Keyboard.KeyCode)
+		switch (e->Keyboard().KeyCode)
 		{
 			case SDLK_UP:
 				scrollUp = true;
@@ -110,9 +110,9 @@ void TileView::EventOccurred(Event *e)
 				break;
 		}
 	}
-	else if (e->Type == EVENT_KEY_UP)
+	else if (e->Type() == EVENT_KEY_UP)
 	{
-		switch (e->Data.Keyboard.KeyCode)
+		switch (e->Keyboard().KeyCode)
 		{
 			case SDLK_UP:
 				scrollUp = false;
@@ -128,12 +128,12 @@ void TileView::EventOccurred(Event *e)
 				break;
 		}
 	}
-	else if (e->Type == EVENT_FINGER_MOVE)
+	else if (e->Type() == EVENT_FINGER_MOVE)
 	{
 		// FIXME: Review this code for sanity
-		if (e->Data.Finger.IsPrimary)
+		if (e->Finger().IsPrimary)
 		{
-			Vec2<float> deltaPos(e->Data.Finger.DeltaX, e->Data.Finger.DeltaY);
+			Vec2<float> deltaPos(e->Finger().DeltaX, e->Finger().DeltaY);
 			if (this->viewMode == TileViewMode::Isometric)
 			{
 				deltaPos.x /= isoTileSize.x;

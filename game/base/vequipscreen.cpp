@@ -80,35 +80,35 @@ void VEquipScreen::EventOccurred(Event *e)
 	form->EventOccured(e);
 	fw().gamecore->MouseCursor->EventOccured(e);
 
-	if (e->Type == EVENT_KEY_DOWN)
+	if (e->Type() == EVENT_KEY_DOWN)
 	{
-		if (e->Data.Keyboard.KeyCode == SDLK_ESCAPE)
+		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::MouseDown)
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::MouseDown)
 	{
-		auto it = this->vehicleSelectionControls.find(e->Data.Forms.RaisedBy);
+		auto it = this->vehicleSelectionControls.find(e->Forms().RaisedBy);
 		if (it != this->vehicleSelectionControls.end())
 		{
 			this->setSelectedVehicle(it->second);
 			return;
 		}
 	}
-	else if (e->Type == EVENT_FORM_INTERACTION &&
-	         e->Data.Forms.EventFlag == FormEventType::ButtonClick)
+	else if (e->Type() == EVENT_FORM_INTERACTION &&
+	         e->Forms().EventFlag == FormEventType::ButtonClick)
 	{
 
-		if (e->Data.Forms.RaisedBy->Name == "BUTTON_OK")
+		if (e->Forms().RaisedBy->Name == "BUTTON_OK")
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
-	else if (e->Type == EVENT_FORM_INTERACTION &&
-	         e->Data.Forms.EventFlag == FormEventType::CheckBoxChange)
+	else if (e->Type() == EVENT_FORM_INTERACTION &&
+	         e->Forms().EventFlag == FormEventType::CheckBoxChange)
 	{
 		if (form->FindControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->IsChecked())
 		{
@@ -128,19 +128,19 @@ void VEquipScreen::EventOccurred(Event *e)
 	}
 
 	// Reset the highlight box even if we're dragging
-	if (e->Type == EVENT_MOUSE_MOVE)
+	if (e->Type() == EVENT_MOUSE_MOVE)
 	{
 		this->drawHighlightBox = false;
 	}
 
 	// Check if we've moused over equipment/vehicle so we can show the stats.
-	if (e->Type == EVENT_MOUSE_MOVE && !this->draggedEquipment)
+	if (e->Type() == EVENT_MOUSE_MOVE && !this->draggedEquipment)
 	{
 		// Wipe any previously-highlighted stuff
 		this->highlightedVehicle = nullptr;
 		this->highlightedEquipment = nullptr;
 
-		Vec2<int> mousePos{e->Data.Mouse.X, e->Data.Mouse.Y};
+		Vec2<int> mousePos{e->Mouse().X, e->Mouse().Y};
 
 		// Check if we're over any equipment in the paper doll
 		for (auto &pair : this->equippedItems)
@@ -174,9 +174,9 @@ void VEquipScreen::EventOccurred(Event *e)
 		base = bld->base;
 	}
 	// Only allow removing equipment if we're in a base, otherwise it'll disappear
-	if (e->Type == EVENT_MOUSE_DOWN && base)
+	if (e->Type() == EVENT_MOUSE_DOWN && base)
 	{
-		Vec2<int> mousePos{e->Data.Mouse.X, e->Data.Mouse.Y};
+		Vec2<int> mousePos{e->Mouse().X, e->Mouse().Y};
 
 		// Check if we're over any equipment in the paper doll
 		for (auto &pair : this->equippedItems)
@@ -208,7 +208,7 @@ void VEquipScreen::EventOccurred(Event *e)
 			}
 		}
 	}
-	if (e->Type == EVENT_MOUSE_UP)
+	if (e->Type() == EVENT_MOUSE_UP)
 	{
 		if (this->draggedEquipment)
 		{

@@ -24,34 +24,34 @@ void OptionsMenu::EventOccurred(Event *e)
 	menuform->EventOccured(e);
 	fw().gamecore->MouseCursor->EventOccured(e);
 
-	if (e->Type == EVENT_KEY_DOWN)
+	if (e->Type() == EVENT_KEY_DOWN)
 	{
-		if (e->Data.Keyboard.KeyCode == SDLK_ESCAPE)
+		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
 
-	if (e->Type == EVENT_FORM_INTERACTION && e->Data.Forms.EventFlag == FormEventType::ButtonClick)
+	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
 	{
-		if (e->Data.Forms.RaisedBy->Name == "BUTTON_TEST_XCOMBASE")
+		if (e->Forms().RaisedBy->Name == "BUTTON_TEST_XCOMBASE")
 		{
 			return;
 		}
-		if (e->Data.Forms.RaisedBy->Name == "BUTTON_TEST_UFOPAEDIA")
+		if (e->Forms().RaisedBy->Name == "BUTTON_TEST_UFOPAEDIA")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = std::make_shared<Ufopaedia>();
 			return;
 		}
-		if (e->Data.Forms.RaisedBy->Name == "BUTTON_DEBUGGING")
+		if (e->Forms().RaisedBy->Name == "BUTTON_DEBUGGING")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = std::make_shared<DebugMenu>();
 			return;
 		}
-		if (e->Data.Forms.RaisedBy->Name == "BUTTON_QUIT")
+		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;

@@ -100,30 +100,30 @@ void BaseScreen::EventOccurred(Event *e)
 	form->EventOccured(e);
 	fw().gamecore->MouseCursor->EventOccured(e);
 
-	if (e->Type == EVENT_KEY_DOWN)
+	if (e->Type() == EVENT_KEY_DOWN)
 	{
-		if (e->Data.Keyboard.KeyCode == SDLK_ESCAPE)
+		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
 
-	if (e->Type == EVENT_MOUSE_MOVE)
+	if (e->Type() == EVENT_MOUSE_MOVE)
 	{
-		mousePos = {e->Data.Mouse.X, e->Data.Mouse.Y};
+		mousePos = {e->Mouse().X, e->Mouse().Y};
 	}
 
-	if (e->Type == EVENT_FORM_INTERACTION)
+	if (e->Type() == EVENT_FORM_INTERACTION)
 	{
-		if (e->Data.Forms.EventFlag == FormEventType::ButtonClick)
+		if (e->Forms().EventFlag == FormEventType::ButtonClick)
 		{
-			if (e->Data.Forms.RaisedBy->Name == "BUTTON_OK")
+			if (e->Forms().RaisedBy->Name == "BUTTON_OK")
 			{
 				stageCmd.cmd = StageCmd::Command::POP;
 				return;
 			}
-			else if (e->Data.Forms.RaisedBy->Name == "BUTTON_BASE_EQUIPVEHICLE")
+			else if (e->Forms().RaisedBy->Name == "BUTTON_BASE_EQUIPVEHICLE")
 			{
 				// FIXME: If you don't have any vehicles this button should do nothing
 				stageCmd.cmd = StageCmd::Command::PUSH;
@@ -132,9 +132,9 @@ void BaseScreen::EventOccurred(Event *e)
 			}
 		}
 
-		if (e->Data.Forms.EventFlag == FormEventType::TextEditFinish)
+		if (e->Forms().EventFlag == FormEventType::TextEditFinish)
 		{
-			if (e->Data.Forms.RaisedBy->Name == "TEXT_BASE_NAME")
+			if (e->Forms().RaisedBy->Name == "TEXT_BASE_NAME")
 			{
 				TextEdit *name = form->FindControlTyped<TextEdit>("TEXT_BASE_NAME");
 				base.name = name->GetText();
@@ -142,16 +142,16 @@ void BaseScreen::EventOccurred(Event *e)
 			}
 		}
 
-		if (e->Data.Forms.RaisedBy == baseView)
+		if (e->Forms().RaisedBy == baseView)
 		{
-			if (e->Data.Forms.EventFlag == FormEventType::MouseMove)
+			if (e->Forms().EventFlag == FormEventType::MouseMove)
 			{
-				selection = {e->Data.Forms.MouseInfo.X, e->Data.Forms.MouseInfo.Y};
+				selection = {e->Forms().MouseInfo.X, e->Forms().MouseInfo.Y};
 				selection /= TILE_SIZE;
 				selFacility = base.getFacility(selection);
 				return;
 			}
-			else if (e->Data.Forms.EventFlag == FormEventType::MouseLeave)
+			else if (e->Forms().EventFlag == FormEventType::MouseLeave)
 			{
 				selection = NO_SELECTION;
 				selFacility = nullptr;
@@ -159,9 +159,9 @@ void BaseScreen::EventOccurred(Event *e)
 			}
 		}
 
-		if (e->Data.Forms.EventFlag == FormEventType::ListBoxChangeHover)
+		if (e->Forms().EventFlag == FormEventType::ListBoxChangeHover)
 		{
-			if (e->Data.Forms.RaisedBy->Name == "LISTBOX_FACILITIES" && !drag)
+			if (e->Forms().RaisedBy->Name == "LISTBOX_FACILITIES" && !drag)
 			{
 				ListBox *list = form->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
 				dragFacility = list->GetHoveredData<FacilityDef>();
@@ -169,7 +169,7 @@ void BaseScreen::EventOccurred(Event *e)
 			}
 		}
 
-		if (e->Data.Forms.EventFlag == FormEventType::MouseDown)
+		if (e->Forms().EventFlag == FormEventType::MouseDown)
 		{
 			if (!drag && dragFacility != nullptr)
 			{
@@ -177,7 +177,7 @@ void BaseScreen::EventOccurred(Event *e)
 			}
 		}
 
-		if (e->Data.Forms.EventFlag == FormEventType::MouseUp)
+		if (e->Forms().EventFlag == FormEventType::MouseUp)
 		{
 			if (drag && dragFacility != nullptr)
 			{
