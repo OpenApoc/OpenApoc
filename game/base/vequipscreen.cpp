@@ -297,11 +297,11 @@ void VEquipScreen::Render()
 	if (highlightedEquipment)
 	{
 		iconGraphic->SetImage(highlightedEquipment->equipscreen_sprite);
-		nameLabel->SetText(highlightedEquipment->name);
+		nameLabel->SetText(tr(highlightedEquipment->name));
 		int statsCount = 0;
 
 		// All equipment has a weight
-		statsLabels[statsCount]->SetText("Weight");
+		statsLabels[statsCount]->SetText(tr("Weight"));
 		statsValues[statsCount]->SetText(UString::format("%d", (int)highlightedEquipment->weight));
 		statsCount++;
 
@@ -311,30 +311,30 @@ void VEquipScreen::Render()
 			case VEquipmentType::Type::Engine:
 			{
 				auto &engineType = static_cast<const VEngineType &>(*highlightedEquipment);
-				statsLabels[statsCount]->SetText("Top Speed");
+				statsLabels[statsCount]->SetText(tr("Top Speed"));
 				statsValues[statsCount]->SetText(UString::format("%d", (int)engineType.top_speed));
 				statsCount++;
-				statsLabels[statsCount]->SetText("Power");
+				statsLabels[statsCount]->SetText(tr("Power"));
 				statsValues[statsCount]->SetText(UString::format("%d", (int)engineType.power));
 				break;
 			}
 			case VEquipmentType::Type::Weapon:
 			{
 				auto &weaponType = static_cast<const VWeaponType &>(*highlightedEquipment);
-				statsLabels[statsCount]->SetText("Damage");
+				statsLabels[statsCount]->SetText(tr("Damage"));
 				statsValues[statsCount]->SetText(UString::format("%d", (int)weaponType.damage));
 				statsCount++;
-				statsLabels[statsCount]->SetText("Range");
+				statsLabels[statsCount]->SetText(tr("Range"));
 				statsValues[statsCount]->SetText(UString::format("%d", (int)weaponType.range));
 				statsCount++;
-				statsLabels[statsCount]->SetText("Accuracy");
+				statsLabels[statsCount]->SetText(tr("Accuracy"));
 				statsValues[statsCount]->SetText(UString::format("%d", (int)weaponType.accuracy));
 				statsCount++;
 
 				// Only show rounds if non-zero (IE not infinite ammo)
 				if (highlightedEquipment->max_ammo)
 				{
-					statsLabels[statsCount]->SetText("Rounds");
+					statsLabels[statsCount]->SetText(tr("Rounds"));
 					statsValues[statsCount]->SetText(
 					    UString::format("%d", (int)highlightedEquipment->max_ammo));
 					statsCount++;
@@ -347,54 +347,54 @@ void VEquipScreen::Render()
 				    static_cast<const VGeneralEquipmentType &>(*highlightedEquipment);
 				if (generalType.accuracy_modifier)
 				{
-					statsLabels[statsCount]->SetText("Accuracy");
+					statsLabels[statsCount]->SetText(tr("Accuracy"));
 					statsValues[statsCount]->SetText(
 					    UString::format("%d", (int)generalType.accuracy_modifier));
 					statsCount++;
 				}
 				if (generalType.cargo_space)
 				{
-					statsLabels[statsCount]->SetText("Cargo");
+					statsLabels[statsCount]->SetText(tr("Cargo"));
 					statsValues[statsCount]->SetText(
 					    UString::format("%d", (int)generalType.cargo_space));
 					statsCount++;
 				}
 				if (generalType.passengers)
 				{
-					statsLabels[statsCount]->SetText("Passengers");
+					statsLabels[statsCount]->SetText(tr("Passengers"));
 					statsValues[statsCount]->SetText(
 					    UString::format("%d", (int)generalType.passengers));
 					statsCount++;
 				}
 				if (generalType.alien_space)
 				{
-					statsLabels[statsCount]->SetText("Aliens Held");
+					statsLabels[statsCount]->SetText(tr("Aliens Held"));
 					statsValues[statsCount]->SetText(
 					    UString::format("%d", (int)generalType.alien_space));
 					statsCount++;
 				}
 				if (generalType.missile_jamming)
 				{
-					statsLabels[statsCount]->SetText("Jamming");
+					statsLabels[statsCount]->SetText(tr("Jamming"));
 					statsValues[statsCount]->SetText(
 					    UString::format("%d", (int)generalType.missile_jamming));
 					statsCount++;
 				}
 				if (generalType.shielding)
 				{
-					statsLabels[statsCount]->SetText("Shielding");
+					statsLabels[statsCount]->SetText(tr("Shielding"));
 					statsValues[statsCount]->SetText(
 					    UString::format("%d", (int)generalType.shielding));
 					statsCount++;
 				}
 				if (generalType.cloaking)
 				{
-					statsLabels[statsCount]->SetText("Cloaks Craft");
+					statsLabels[statsCount]->SetText(tr("Cloaks Craft"));
 					statsCount++;
 				}
 				if (generalType.teleporting)
 				{
-					statsLabels[statsCount]->SetText("Teleports");
+					statsLabels[statsCount]->SetText(tr("Teleports"));
 					statsCount++;
 				}
 
@@ -411,7 +411,7 @@ void VEquipScreen::Render()
 		nameLabel->SetText(vehicle->name);
 
 		// FIXME: These stats would be great to have a generic (string?) referenced list
-		statsLabels[0]->SetText("Constitution");
+		statsLabels[0]->SetText(tr("Constitution"));
 		if (vehicle->getConstitution() == vehicle->getMaxConstitution())
 		{
 			statsValues[0]->SetText(UString::format("%d", vehicle->getConstitution()));
@@ -422,30 +422,30 @@ void VEquipScreen::Render()
 			                                        vehicle->getMaxConstitution()));
 		}
 
-		statsLabels[1]->SetText("Armor");
+		statsLabels[1]->SetText(tr("Armor"));
 		statsValues[1]->SetText(UString::format("%d", vehicle->getArmor()));
 
 		// FIXME: This value doesn't seem to be the same as the %age shown in the ui?
-		statsLabels[2]->SetText("Accuracy");
+		statsLabels[2]->SetText(tr("Accuracy"));
 		statsValues[2]->SetText(UString::format("%d", vehicle->getAccuracy()));
 
-		statsLabels[3]->SetText("Top Speed");
+		statsLabels[3]->SetText(tr("Top Speed"));
 		statsValues[3]->SetText(UString::format("%d", vehicle->getTopSpeed()));
 
-		statsLabels[4]->SetText("Acceleration");
+		statsLabels[4]->SetText(tr("Acceleration"));
 		statsValues[4]->SetText(UString::format("%d", vehicle->getAcceleration()));
 
-		statsLabels[5]->SetText("Weight");
+		statsLabels[5]->SetText(tr("Weight"));
 		statsValues[5]->SetText(UString::format("%d", vehicle->getWeight()));
 
-		statsLabels[6]->SetText("Fuel");
+		statsLabels[6]->SetText(tr("Fuel"));
 		statsValues[6]->SetText(UString::format("%d", vehicle->getFuel()));
 
-		statsLabels[7]->SetText("Passengers");
+		statsLabels[7]->SetText(tr("Passengers"));
 		statsValues[7]->SetText(
 		    UString::format("%d/%d", vehicle->getPassengers(), vehicle->getMaxPassengers()));
 
-		statsLabels[8]->SetText("Cargo");
+		statsLabels[8]->SetText(tr("Cargo"));
 		statsValues[8]->SetText(
 		    UString::format("%d/%d", vehicle->getCargo(), vehicle->getMaxCargo()));
 
