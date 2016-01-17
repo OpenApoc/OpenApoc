@@ -14,12 +14,14 @@ class Form;
 class Event;
 class Surface;
 class Palette;
+class RadioButton;
 
 class Control
 {
   private:
 	sp<Surface> controlArea;
 	void *data;
+	std::map<UString, RadioButton**> radiogroups;
 
   protected:
 	sp<Palette> palette;

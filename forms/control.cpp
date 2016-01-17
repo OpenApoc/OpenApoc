@@ -23,11 +23,14 @@ Control::~Control()
 {
 	UnloadResources();
 	// Delete controls
-	while (Controls.size() > 0)
+	for (auto &c : Controls)
 	{
-		Control *c = Controls.back();
-		Controls.pop_back();
 		delete c;
+	}
+	// Delete radiogroups
+	for (auto &c : radiogroups)
+	{
+		delete c.second;
 	}
 }
 
@@ -403,7 +406,6 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 	UString specialpositionx = "";
 	UString specialpositiony = "";
 	UString attribvalue;
-	std::map<UString, RadioButton **> radiogroups;
 
 	if (Element->Attribute("id") != nullptr && UString(Element->Attribute("id")) != "")
 	{
