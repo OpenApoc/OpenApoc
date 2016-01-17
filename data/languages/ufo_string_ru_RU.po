@@ -1,0 +1,6896 @@
+# Translators:
+# Translators:
+# Translators:
+# insolor <insolor@gmail.com>, 2015
+# insolor <insolor@gmail.com>, 2015
+# Maxim Megalinski <kammerer001@yandex.ru>, 2015
+# Skin36, 2015
+# Skin36, 2015-2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Apocalypse\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2016-01-11 12:29+0000\n"
+"Last-Translator: Skin36\n"
+"Language-Team: Russian (Russia) (http://www.transifex.com/x-com-apocalypse/apocalypse/language/ru_RU/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru_RU\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Poedit 1.8.6\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Click left mouse button or press a key when done"
+msgstr "Нажмите левую кнопку мыши или нажать клавишу, когда закончите"
+
+msgid "Brown"
+msgstr "Браун"
+
+msgid "Bostock"
+msgstr "Босток"
+
+msgid "Robinson"
+msgstr "Робинсон"
+
+msgid "Watson"
+msgstr "Уотсон"
+
+msgid "Jonlan"
+msgstr "Джонлан"
+
+msgid "White"
+msgstr "Уайт"
+
+msgid "Taylor"
+msgstr "Тейлор"
+
+msgid "Frogley"
+msgstr "Фрогли"
+
+msgid "Smith"
+msgstr "Смит"
+
+msgid "Pearce"
+msgstr "Пирс"
+
+msgid "Evans"
+msgstr "Эванс"
+
+msgid "Reynolds"
+msgstr "Рейнольдс"
+
+msgid "Davies"
+msgstr "Дэвис"
+
+msgid "Bailey"
+msgstr "Бейли"
+
+msgid "Sharpe"
+msgstr "Шарп"
+
+msgid "Wright"
+msgstr "Райт"
+
+msgid "Stewart"
+msgstr "Стюарт"
+
+msgid "Hill"
+msgstr "Хилл"
+
+msgid "Baker"
+msgstr "Бейкер"
+
+msgid "Parker"
+msgstr "Паркер"
+
+msgid "Blake"
+msgstr "Блейк"
+
+msgid "Bradley"
+msgstr "Брэдли"
+
+msgid "Webb"
+msgstr "Уэбб"
+
+msgid "Kemp"
+msgstr "Кэмп"
+
+msgid "Carr"
+msgstr "Карр"
+
+msgid "Queen"
+msgstr "Квин"
+
+msgid "Gallagher"
+msgstr "Галлахер"
+
+msgid "Miller"
+msgstr "Миллер"
+
+msgid "Stoddard"
+msgstr "Стоддард"
+
+msgid "Thompson"
+msgstr "Томпсон"
+
+msgid "Nash"
+msgstr "Нэш"
+
+msgid "Johnson"
+msgstr "Джонсон"
+
+msgid "Mitchell"
+msgstr "Митчелл"
+
+msgid "Hudson"
+msgstr "Хадсон"
+
+msgid "McNeil"
+msgstr "Мак-Нил"
+
+msgid "Homburger"
+msgstr "Хомбургер"
+
+msgid "Crossett"
+msgstr "Кроссет"
+
+msgid "Dodge"
+msgstr "Додж"
+
+msgid "Bryant"
+msgstr "Брайант"
+
+msgid "Horton"
+msgstr "Хортон"
+
+msgctxt "female"
+msgid "Shalimov"
+msgstr "Шалимов"
+
+msgctxt "male"
+msgid "Shalimov"
+msgstr "Шалимова"
+
+msgctxt "female"
+msgid "Petrov"
+msgstr "Петрова"
+
+msgctxt "male"
+msgid "Petrov"
+msgstr "Петров"
+
+msgctxt "female"
+msgid "Shadrin"
+msgstr "Шадрина"
+
+msgctxt "male"
+msgid "Shadrin"
+msgstr "Шадрин"
+
+msgctxt "female"
+msgid "Ragulin"
+msgstr "Рагулина"
+
+msgctxt "male"
+msgid "Ragulin"
+msgstr "Рагулин"
+
+msgctxt "female"
+msgid "Mikhailov"
+msgstr "Михайлова"
+
+msgctxt "male"
+msgid "Mikhailov"
+msgstr "Михайлов"
+
+msgctxt "female"
+msgid "Belov"
+msgstr "Белова"
+
+msgctxt "male"
+msgid "Belov"
+msgstr "Белов"
+
+msgid "Korkia"
+msgstr "Коркия"
+
+msgid "Torban"
+msgstr "Торбан"
+
+msgctxt "female"
+msgid "Likhachev"
+msgstr "Лихачёва"
+
+msgctxt "male"
+msgid "Likhachev"
+msgstr "Лихачёв"
+
+msgctxt "female"
+msgid "Romanov"
+msgstr "Романова"
+
+msgctxt "male"
+msgid "Romanov"
+msgstr "Романов"
+
+msgctxt "female"
+msgid "Scharov"
+msgstr "Шарова"
+
+msgctxt "male"
+msgid "Scharov"
+msgstr "Шаров"
+
+msgctxt "female"
+msgid "Asimov"
+msgstr "Асимова"
+
+msgctxt "male"
+msgid "Asimov"
+msgstr "Асимов"
+
+msgid "Samusenko"
+msgstr "Самусенко"
+
+msgctxt "female"
+msgid "Gorokhova"
+msgstr "Горохова"
+
+msgctxt "male"
+msgid "Gorokhova"
+msgstr "Горохов"
+
+msgid "Yakubik"
+msgstr "Якубик"
+
+msgctxt "female"
+msgid "Kolotov"
+msgstr "Колотова"
+
+msgctxt "male"
+msgid "Kolotov"
+msgstr "Колотов"
+
+msgctxt "female"
+msgid "Chukarin"
+msgstr "Чукарина"
+
+msgctxt "male"
+msgid "Chukarin"
+msgstr "Чукарин"
+
+msgctxt "female"
+msgid "Andianov"
+msgstr "Андианова"
+
+msgctxt "male"
+msgid "Andianov"
+msgstr "Андианов"
+
+msgctxt "female"
+msgid "Voronin"
+msgstr "Воронина"
+
+msgctxt "male"
+msgid "Voronin"
+msgstr "Воронин"
+
+msgctxt "female"
+msgid "Maleev"
+msgstr "Малеева"
+
+msgctxt "male"
+msgid "Maleev"
+msgstr "Малеев"
+
+msgid "Iwasaki"
+msgstr "Ивасаки"
+
+msgid "Shoji"
+msgstr "Сёдзи"
+
+msgid "Okabe"
+msgstr "Окабэ"
+
+msgid "Yamashita"
+msgstr "Ямасита"
+
+msgid "Okamoto"
+msgstr "Окамото"
+
+msgid "Yamazaki"
+msgstr "Ямадзаки"
+
+msgid "Iwahara"
+msgstr "Ивахара"
+
+msgid "Kojima"
+msgstr "Кодзима"
+
+msgid "Tanida"
+msgstr "Танида"
+
+msgid "Akira"
+msgstr "Акира"
+
+msgid "Fujimoto"
+msgstr "Фудзимото"
+
+msgid "Matsumara"
+msgstr "Мацумара"
+
+msgid "Morita"
+msgstr "Морита"
+
+msgid "Sato"
+msgstr "Сато"
+
+msgid "Noguchi"
+msgstr "Ногути"
+
+msgid "Shimaoka"
+msgstr "Симаока"
+
+msgid "Koyama"
+msgstr "Кояма"
+
+msgid "Ishii"
+msgstr "Исии"
+
+msgid "Yamanaka"
+msgstr "Яманака"
+
+msgid "Tanikawa"
+msgstr "Таникава"
+
+msgid "Steinbach"
+msgstr "Штейнбах"
+
+msgid "Mederow"
+msgstr "Медеров"
+
+msgid "Meyer"
+msgstr "Майер"
+
+msgid "Ulbricht"
+msgstr "Ульбрихт"
+
+msgid "Berger"
+msgstr "Бергер"
+
+msgid "Faerber"
+msgstr "Фербер"
+
+msgid "Gunkel"
+msgstr "Гункель"
+
+msgid "Krause"
+msgstr "Краузе"
+
+msgid "Keller"
+msgstr "Келлер"
+
+msgid "Brehme"
+msgstr "Бреме"
+
+msgid "Vogel"
+msgstr "Фогель"
+
+msgid "Hafner"
+msgstr "Хафнер"
+
+msgid "Schultz"
+msgstr "Шульц"
+
+msgid "Richter"
+msgstr "Рихтер"
+
+msgid "Esser"
+msgstr "Эссер"
+
+msgid "Zander"
+msgstr "Цандер"
+
+msgid "Seidler"
+msgstr "Зайдлер"
+
+msgid "Unger"
+msgstr "Унгер"
+
+msgid "Geisler"
+msgstr "Гейслер"
+
+msgid "Heinsch"
+msgstr "Хайнш"
+
+msgid "Dujardin"
+msgstr "Дюжарден"
+
+msgid "Cuvelier"
+msgstr "Кювелье"
+
+msgid "Gressier"
+msgstr "Гресье"
+
+msgid "Lecointe"
+msgstr "Лекуэнт"
+
+msgid "Gautier"
+msgstr "Готье"
+
+msgid "Bouissou"
+msgstr "Буассу"
+
+msgid "Marcelle"
+msgstr "Марсель"
+
+msgid "Bouton"
+msgstr "Бутон"
+
+msgid "Lefevre"
+msgstr "Лефевр"
+
+msgid "Laroyenne"
+msgstr "Ларуэн"
+
+msgid "Dreyfus"
+msgstr "Дрейфюс"
+
+msgid "Dagallier"
+msgstr "Дагалье"
+
+msgid "Guerin"
+msgstr "Герен"
+
+msgid "Pecheux"
+msgstr "Пеше"
+
+msgid "Buchard"
+msgstr "Бюшар"
+
+msgid "Collignon"
+msgstr "Коллиньон"
+
+msgid "Revenu"
+msgstr "Ревеню"
+
+msgid "Cantona"
+msgstr "Кантона"
+
+msgid "Gaudin"
+msgstr "Годен"
+
+msgid "Luget"
+msgstr "Люже"
+
+msgid "Ian"
+msgstr "Йен"
+
+msgid "Thad"
+msgstr "Тад"
+
+msgid "David"
+msgstr "Дэвид"
+
+msgid "Scott"
+msgstr "Скотт"
+
+msgid "John"
+msgstr "Джон"
+
+msgid "Paul"
+msgstr "Пол"
+
+msgid "Arthur"
+msgstr "Артур"
+
+msgid "Robert"
+msgstr "Роберт"
+
+msgid "Patrick"
+msgstr "Патрик"
+
+msgid "James"
+msgstr "Джеймс"
+
+msgid "Damien"
+msgstr "Дэмиен"
+
+msgid "Frank"
+msgstr "Фрэнк"
+
+msgid "Neil"
+msgstr "Нил"
+
+msgid "Brett"
+msgstr "Бретт"
+
+msgid "Adam"
+msgstr "Адам"
+
+msgid "Maria"
+msgstr "Мария"
+
+msgid "Helen"
+msgstr "Хелен"
+
+msgid "Sarah"
+msgstr "Сара"
+
+msgid "Jane"
+msgstr "Джейн"
+
+msgid "Andrea"
+msgstr "Андреа"
+
+msgid "Clarence"
+msgstr "Кларенс"
+
+msgid "Austin"
+msgstr "Остин"
+
+msgid "Tom"
+msgstr "Том"
+
+msgid "Mark"
+msgstr "Марк"
+
+msgid "Kevin"
+msgstr "Кевин"
+
+msgid "Carl"
+msgstr "Карл"
+
+msgid "Samuel"
+msgstr "Сэмюэл"
+
+msgid "Donald"
+msgstr "Дональд"
+
+msgid "Dwight"
+msgstr "Дуайт"
+
+msgid "Ed"
+msgstr "Эд"
+
+msgid "Virgil"
+msgstr "Вирджил"
+
+msgid "Calvin"
+msgstr "Келвин"
+
+msgid "Spencer"
+msgstr "Спенсер"
+
+msgid "Lester"
+msgstr "Лестер"
+
+msgid "Oscar"
+msgstr "Оскар"
+
+msgid "Barbara"
+msgstr "Барбара"
+
+msgid "Sigourney"
+msgstr "Сигурни"
+
+msgid "Catherine"
+msgstr "Кэтрин"
+
+msgid "Evelyn"
+msgstr "Эвелин"
+
+msgid "Patricia"
+msgstr "Патрисия"
+
+msgid "Sergei"
+msgstr "Сергей"
+
+msgid "Boris"
+msgstr "Борис"
+
+msgid "Vladimir"
+msgstr "Владимир"
+
+msgid "Victor"
+msgstr "Виктор"
+
+msgid "Gennadi"
+msgstr "Геннадий"
+
+msgid "Mikhail"
+msgstr "Михаил"
+
+msgid "Anatoly"
+msgstr "Анатолий"
+
+msgid "Leonid"
+msgstr "Леонид"
+
+msgid "Igor"
+msgstr "Игорь"
+
+msgid "Yuri"
+msgstr "Юрий"
+
+msgid "Andrei"
+msgstr "Андрей"
+
+msgid "Nikolai"
+msgstr "Николай"
+
+msgid "Dmitriy"
+msgstr "Дмитрий"
+
+msgid "Grigoriy"
+msgstr "Григорий"
+
+msgid "Ivan"
+msgstr "Иван"
+
+msgid "Lyudmila"
+msgstr "Людмила"
+
+msgid "Olga"
+msgstr "Ольга"
+
+msgid "Tatyana"
+msgstr "Татьяна"
+
+msgid "Galina"
+msgstr "Галина"
+
+msgid "Astra"
+msgstr "Астра"
+
+msgid "Tatsuo"
+msgstr "Тацуо"
+
+msgid "Toshio"
+msgstr "Тосио"
+
+msgid "Jungo"
+msgstr "Дзюнго"
+
+msgid "Yuzo"
+msgstr "Юдзо"
+
+msgid "Kenji"
+msgstr "Кендзи"
+
+msgid "Naohiro"
+msgstr "Наохиро"
+
+msgid "Isao"
+msgstr "Исао"
+
+msgid "Yasuaki"
+msgstr "Ясуаки"
+
+msgid "Yataka"
+msgstr "Ятака"
+
+msgid "Masanori"
+msgstr "Масанори"
+
+msgid "Shigeo"
+msgstr "Сигэо"
+
+msgid "Masaharu"
+msgstr "Масахару"
+
+msgid "Shigeru"
+msgstr "Сигэру"
+
+msgid "Akinori"
+msgstr "Акинори"
+
+msgid "Shuji"
+msgstr "Сюдзи"
+
+msgid "Mariko"
+msgstr "Марико"
+
+msgid "Sumie"
+msgstr "Сумиэ"
+
+msgid "Sata"
+msgstr "Сата"
+
+msgid "Yoko"
+msgstr "Ёко"
+
+msgid "Michiko"
+msgstr "Митико"
+
+msgid "Hans"
+msgstr "Ганс"
+
+msgid "Otto"
+msgstr "Отто"
+
+msgid "Manfred"
+msgstr "Манфред"
+
+msgid "Klaus"
+msgstr "Клаус"
+
+msgid "Dieter"
+msgstr "Дитер"
+
+msgid "Wolfgang"
+msgstr "Вольфганг"
+
+msgid "Matthias"
+msgstr "Маттиас"
+
+msgid "Gunter"
+msgstr "Гюнтер"
+
+msgid "Werner"
+msgstr "Вернер"
+
+msgid "Gerhard"
+msgstr "Герхард"
+
+msgid "Siegfried"
+msgstr "Зигфрид"
+
+msgid "Rudi"
+msgstr "Руди"
+
+msgid "Jurgen"
+msgstr "Юрген"
+
+msgid "Stefan"
+msgstr "Штефан"
+
+msgid "Franz"
+msgstr "Франц"
+
+msgid "Uta"
+msgstr "Юта"
+
+msgid "Gudrun"
+msgstr "Гудрун"
+
+msgid "Christel"
+msgstr "Кристель"
+
+msgid "Karin"
+msgstr "Карин"
+
+msgid "Helga"
+msgstr "Хельга"
+
+msgid "Henri"
+msgstr "Анри"
+
+msgid "Jacques"
+msgstr "Жак"
+
+msgid "Eric"
+msgstr "Эрик"
+
+msgid "Jean"
+msgstr "Жан"
+
+msgid "Gaston"
+msgstr "Гастон"
+
+msgid "Gerard"
+msgstr "Жерар"
+
+msgid "Louis"
+msgstr "Луи"
+
+msgid "Marcel"
+msgstr "Марсель"
+
+msgid "Leon"
+msgstr "Леон"
+
+msgid "Pierre"
+msgstr "Пьер"
+
+msgid "Bernard"
+msgstr "Бернар"
+
+msgid "Marc"
+msgstr "Марк"
+
+msgid "Claude"
+msgstr "Клод"
+
+msgid "Armand"
+msgstr "Арман"
+
+msgid "Emile"
+msgstr "Эмиль"
+
+msgid "Micheline"
+msgstr "Мишлин"
+
+msgid "Sylvie"
+msgstr "Сильви"
+
+msgid "Marielle"
+msgstr "Мариэль"
+
+msgid "Danielle"
+msgstr "Даниэль"
+
+msgid "Jacqueline"
+msgstr "Жаклин"
+
+msgid "Click on building to set destination"
+msgstr "Нажмите на здание, чтобы выбрать пункт назначения"
+
+msgid "Click on vehicle to attack"
+msgstr "Нажмите на транспортное средство, чтобы атаковать его"
+
+msgid "Click on map position to set destination"
+msgstr "Выберите точку на карте, чтобы указать пункт назначения"
+
+msgid "Click on Dimension Gate to set destination"
+msgstr "Нажмите на врата между измерениями, чтобы выбрать пункт назначения"
+
+msgid "Click on building to destroy"
+msgstr "Нажмите на здание, чтобы разрушить его"
+
+msgid "Click on vehicle to select target"
+msgstr "Нажмите на транспортное средство, чтобы выбрать цель"
+
+msgid "Alien Probe"
+msgstr "Зонд пришельцев"
+
+msgid "Alien Scout"
+msgstr "Разведывательный корабль пришельцев"
+
+msgid "Alien Transporter"
+msgstr "Транспортный корабль пришельцев"
+
+msgid "Alien Fast Attack Ship"
+msgstr "Высокоскоростной боевой корабль пришельцев"
+
+msgid "Alien Destroyer"
+msgstr "Эсминец пришельцев"
+
+msgid "Alien Assault Ship"
+msgstr "Корабль штурмового эшелона десанта пришельцев"
+
+msgid "Alien Bomber"
+msgstr "Бомбардировщик пришельцев"
+
+msgid "Alien Escort"
+msgstr "Корабль сопровождения пришельцев"
+
+msgid "Alien Battleship"
+msgstr "Линкор пришельцев"
+
+msgid "Alien Mothership"
+msgstr "Корабль-база пришельцев"
+
+msgid "Police Hovercar"
+msgstr "Полицейский ховеркар"
+
+msgid "Airtaxi"
+msgstr "Аэротакси"
+
+msgid "Rescue Transport"
+msgstr "Транспорт службы спасения"
+
+msgid "Construction Vehicle"
+msgstr "Строительная машина"
+
+msgid "Airtrans"
+msgstr "Воздушный транспортер"
+
+msgid "Space Liner"
+msgstr "Космический грузовик"
+
+msgid "Phoenix Hovercar"
+msgstr "Ховеркар \"Феникс\""
+
+msgid "Hoverbike"
+msgstr "Ховербайк"
+
+msgid "Valkyrie Interceptor"
+msgstr "Перехватчик \"Валькирия\""
+
+msgid "Hawk Air Warrior"
+msgstr "Боевая платформа \"Ястреб\""
+
+msgid "Dimension Probe"
+msgstr "Межразмерный зонд"
+
+msgid "Biotrans"
+msgstr "Биотранспорт"
+
+msgid "Explorer"
+msgstr "Исследователь"
+
+msgid "Retaliator"
+msgstr "Каратель"
+
+msgid "Annihilator"
+msgstr "Аннигилятор"
+
+msgid "Autotaxi"
+msgstr "Автотакси"
+
+msgid "Autotrans"
+msgstr "Автотранспортер"
+
+msgid "Police Car"
+msgstr "Полицейский автомобиль"
+
+msgid "Civilian Car"
+msgstr "Гражданский автомобиль"
+
+msgid "Stormdog"
+msgstr "Бешеный пес"
+
+msgid "Wolfhound APC"
+msgstr "БТР \"Волкодав\""
+
+msgid "Blazer Turbo Bike"
+msgstr "Турбобайк \"Блейзер\""
+
+msgid "Griffon AFV"
+msgstr "ББМ \"Грифон\""
+
+msgid "Empty"
+msgstr "Пусто"
+
+msgid "Megapol AP Grenade"
+msgstr "Бронебойная граната Мегапола"
+
+msgid "Megapol Stun Grenade"
+msgstr "Парализующая граната Мегапола"
+
+msgid "Megapol Smoke Grenade"
+msgstr "Дымовая граната Мегапола"
+
+msgid "Marsec Proximity Mine"
+msgstr "Мина с датчиком движения корпорации \"Марсек\""
+
+msgid "Marsec High Explosive"
+msgstr "Фугасная взрывчатка корпорации \"Марсек\""
+
+msgid "Megapol Lawpistol"
+msgstr "Пистолет Мегапола"
+
+msgid "Megapol Lawpistol Clip"
+msgstr "Магазин для пистолета Мегапола"
+
+msgid "Marsec M4000 Machine Gun"
+msgstr "Пулемет \"Марсек M4000\""
+
+msgid "Marsec M4000 Gun Clip"
+msgstr "Барабан для пулемета \"Марсек M4000\""
+
+msgid "Megapol Laser Sniper Gun"
+msgstr "Лазерная снайперская винтовка Мегапола"
+
+msgid "Megapol Laser Pod"
+msgstr "Лазерная капсула Мегапола"
+
+msgid "Megapol Auto Cannon"
+msgstr "Автоматическая пушка Мегапола"
+
+msgid "Auto Cannon AP Clip"
+msgstr "Барабан с ББ-боеприпасами для автопушки"
+
+msgid "Auto Cannon HE Clip"
+msgstr "Барабан с ОФБ для автопушки"
+
+msgid "Auto Cannon IN Clip"
+msgstr "Барабан с ОФЗ-боеприпасами для автопушки"
+
+msgid "Megapol Plasma Gun"
+msgstr "Плазменный пистолет Мегапола"
+
+msgid "Megapol Plasma Pod"
+msgstr "Магазин к плазменному пистолету Мегапола"
+
+msgid "Marsec Heavy Launcher"
+msgstr "Тяжелая пусковая установка корпорации \"Марсек\""
+
+msgid "Heavy Launcher AG Missile"
+msgstr "Ракета с ХБЧ для тяжелой пусковой установки"
+
+msgid "Heavy Launcher HE Missile"
+msgstr "Ракета с ОФБЧ для тяжелой пусковой установки"
+
+msgid "Heavy Launcher IN Missile"
+msgstr "Зажигательная ракета для тяжелой пусковой установки"
+
+msgid "Marsec MiniLauncher"
+msgstr "Малая пусковая установка корпорации \"Марсек\""
+
+msgid "MiniLauncher AG Missile"
+msgstr "Ракета с ХБЧ для малой пусковой установки"
+
+msgid "MiniLauncher HE Missile"
+msgstr "Ракета с ОФБЧ для малой пусковой установки"
+
+msgid "MiniLauncher IN Missile"
+msgstr "Зажигательная ракета для малой пусковой установки"
+
+msgid "Megapol Stun Grapple"
+msgstr "Захват-парализатор Мегапола"
+
+msgid "Alien Gas Grenade"
+msgstr "Граната с газом для борьбы с инопланетными организмами"
+
+msgid "Tracker Gun Clip"
+msgstr "Магазин следящей пушки"
+
+msgid "Tracker Gun"
+msgstr "Следящая пушка"
+
+msgid "Multi-Tracker"
+msgstr "Следящая пушка с возможностью ведения нескольких целей"
+
+msgid "PSI-Grenade"
+msgstr "Пси-граната"
+
+msgid "ForceWeb"
+msgstr "Силовая сеть"
+
+msgid "Toxigun"
+msgstr "Токсиган"
+
+msgid "Toxigun A-Clip"
+msgstr "Капсула для токсигана с токсином типа A"
+
+msgid "Toxigun B-Clip"
+msgstr "Капсула для токсигана с токсином типа B"
+
+msgid "Toxigun C-Clip"
+msgstr "Капсула для токсигана с токсином типа С"
+
+msgid "Dimension Destabiliser"
+msgstr "Дестабилизатор измерений"
+
+msgid "Mind Shield"
+msgstr "Ментальный щит"
+
+msgid "Mind Bender"
+msgstr "Ментальный регулятор"
+
+msgid "Alien Detector"
+msgstr "Детектор пришельцев"
+
+msgid "Disruptor Gun"
+msgstr "Расщепляющая пушка"
+
+msgid "Devastator Cannon"
+msgstr "Опустошающая пушка"
+
+msgid "Boomeroid"
+msgstr "Бумероид"
+
+msgid "Power Sword"
+msgstr "Силовой меч"
+
+msgid "Brainsucker Launcher"
+msgstr "Пусковая установка мозгососа"
+
+msgid "Entropy Launcher"
+msgstr "Энтропийная пусковая установка"
+
+msgid "Dimension Missile Launcher"
+msgstr "Межразмерная пусковая установка"
+
+msgid "Dimension Missile"
+msgstr "Межразмерная ракета"
+
+msgid "Vortex Mine"
+msgstr "Вихревая мина"
+
+msgid "Personal Disruptor Shield"
+msgstr "Личный генератор расщепляющего щита"
+
+msgid "Personal Teleporter"
+msgstr "Личный телепортатор"
+
+msgid "Personal Cloaking Field"
+msgstr "Личный генератор маскирующего поля"
+
+msgid "Dimension Force Field"
+msgstr "Межразмерное силовое поле"
+
+msgid "Energy Pod"
+msgstr "Энергетическая капсула"
+
+msgid "Medi-kit"
+msgstr "Аптечка"
+
+msgid "Motion Scanner"
+msgstr "Сканер движения"
+
+msgid "Brainsucker Pod"
+msgstr "Кокон мозгососа"
+
+msgid "Overspawn"
+msgstr "Сверхплод"
+
+msgid "Entropy Pod"
+msgstr "Энтропийная капсула"
+
+msgid "Incendiary Grenade"
+msgstr "Зажигательная граната"
+
+msgid "Megapol Leg Armor"
+msgstr "Поножи бронекостюма Мегапола"
+
+msgid "Megapol Body Armor"
+msgstr "Нагрудник бронекостюма Мегапола"
+
+msgid "Megapol Right Arm Armor"
+msgstr "Наручи для правой руки бронекостюма Мегапола"
+
+msgid "Megapol Left Arm Armor"
+msgstr "Наручи для левой руки бронекостюма Мегапола"
+
+msgid "Megapol Helmet"
+msgstr "Шлем Мегапола"
+
+msgid "Marsec Leg Units"
+msgstr "Поножи бронекостюма корпорации \"Марсек\""
+
+msgid "Marsec Body Unit"
+msgstr "Нагрудник бронекостюма корпорации \"Марсек\""
+
+msgid "Marsec Right Arm Unit"
+msgstr "Наручи для правой руки бронекостюма корпорации \"Марсек\""
+
+msgid "Marsec Left Arm Unit"
+msgstr "Наручи для левой руки бронекостюма корпорации \"Марсек\""
+
+msgid "Marsec Head Unit"
+msgstr "Шлем корпорации \"Марсек\""
+
+msgid "X-COM Leg Shields"
+msgstr "Бронещитки для ног X-COM"
+
+msgid "X-COM Body Shield"
+msgstr "Защитный жилет X-COM"
+
+msgid "X-COM Right Arm Shield"
+msgstr "Бронещитки для правой руки X-COM"
+
+msgid "X-COM Left Arm Shield"
+msgstr "Бронещитки для левой руки X-COM"
+
+msgid "X-COM Head Shield"
+msgstr "Шлем X-COM"
+
+msgid "Psimorph's Mindbender"
+msgstr "Ментальный регулятор псиморфа"
+
+msgid "Megaspawn's Disruptor"
+msgstr "Расщепитель мегаплода"
+
+msgid "Megaspawn's Launcher"
+msgstr "Пусковая установка мегаплода"
+
+msgid "Spitter's Vomit Funnel"
+msgstr "Рвотная воронка спиттера"
+
+msgid "Multiworm's Spit"
+msgstr "Плевок мультичервя"
+
+msgid "Alien Egg's Vomit Tube"
+msgstr "Рвотная трубка яйца пришельцев"
+
+msgid "Hyperworm's Bite"
+msgstr "Укус гиперчервя"
+
+msgid "Queenspawn's Tentacles"
+msgstr "Щупальца королевы"
+
+msgid "Popper's Bomb"
+msgstr "Бомба поппера"
+
+msgid "Psiclone"
+msgstr "Псиклон"
+
+msgid "Elerium"
+msgstr "Элериум"
+
+msgid "Alien Artifact"
+msgstr "Артефакт пришельцев"
+
+msgid "per unit"
+msgstr "на единицу"
+
+msgid "per clip"
+msgstr "на магазин"
+
+msgid "per gramme"
+msgstr "на грамм"
+
+msgid "Building"
+msgstr "Здание"
+
+msgid "The Senate"
+msgstr "Сенат"
+
+msgid "Judgment Central"
+msgstr "Судебный центр"
+
+msgid "Enforcer Academy"
+msgstr "Академия патрульных"
+
+msgid "Law Control Station"
+msgstr "Станция контроля законности"
+
+msgid "Megastation One"
+msgstr "Мегаучасток Один"
+
+msgid "Megastation Two"
+msgstr "Мегаучасток Два"
+
+msgid "Phoenix Sanatorium"
+msgstr "Санаторий \"Феникс\""
+
+msgid "Nightingale Tower"
+msgstr "Башня Найтингейла"
+
+msgid "Iliad Institute"
+msgstr "Институт \"Илиады\""
+
+msgid "Bosch Institute"
+msgstr "Институт Бош"
+
+msgid "Marge Piercy Academy"
+msgstr "Академия Мардж Пирси"
+
+msgid "Rescue One"
+msgstr "Станция спасения Один"
+
+msgid "Rescue Two"
+msgstr "Станция спасения Два"
+
+msgid "Rescue Three"
+msgstr "Станция спасения Три"
+
+msgid "Quadrax Tower"
+msgstr "Башня Квадракс"
+
+msgid "Gygax Memorial Building"
+msgstr "Здание мемориала Гайгэкса"
+
+msgid "Parallax Tower"
+msgstr "Башня параллакса"
+
+msgid "Tsunami Building"
+msgstr "Здание цунами"
+
+msgid "Venus Spires"
+msgstr "Шпили Венеры"
+
+msgid "Raven Reaches"
+msgstr "Верховья ворона"
+
+msgid "Mahler Building"
+msgstr "Здание им. Малера"
+
+msgid "The Gugarin Institute"
+msgstr "Институт Гагарина"
+
+msgid "Lincoln Tower"
+msgstr "Башня Линкольна"
+
+msgid "The Armageddon Centre"
+msgstr "Армагеддон-центр"
+
+msgid "Cyborg Institute"
+msgstr "Институт киборгов"
+
+msgid "Uhuru Tower"
+msgstr "Башня Ухуру"
+
+msgid "The Karpov Building"
+msgstr "Здание им. Карпова"
+
+msgid "Nietzsche Institute"
+msgstr "Институт Ницше"
+
+msgid "Foucault Tower"
+msgstr "Башня Фуко"
+
+msgid "Edifice Tower"
+msgstr "Величественная башня"
+
+msgid "The Ozone Building"
+msgstr "Здание \"Озон\""
+
+msgid "The New Empire Tower"
+msgstr "Башня новой империи"
+
+msgid "Descartes Towers"
+msgstr "Башни Декарта"
+
+msgid "Transtellar Spacelines"
+msgstr "Космические линии Транстеллара"
+
+msgid "Galactic Central"
+msgstr "Центральное бюро Галактики"
+
+msgid "Megavision One"
+msgstr "Мегавидение Один"
+
+msgid "Megavision Two"
+msgstr "Мегавидение Два"
+
+msgid "Megavision Three"
+msgstr "Мегавидение Три"
+
+msgid "Megatribe Warriors"
+msgstr "Мегатрайб Уорриорс"
+
+msgid "Meteor Kings"
+msgstr "Метеор кингс"
+
+msgid "Dog Star Wanderers"
+msgstr "Дог Стар Уондерерс"
+
+msgid "Garden of Delights"
+msgstr "Сад наслаждений"
+
+msgid "The Lineage Foundation"
+msgstr "Фонд \"Лайнэйдж\""
+
+msgid "Aldous Huxley Emporium"
+msgstr "Торговый центр им. Олдоса Хаксли"
+
+msgid "Hypermart Zone"
+msgstr "Зона гипермаркета"
+
+msgid "Acropolis Apartments"
+msgstr "Апартаменты \"Акрополь\""
+
+msgid "Atlantis Apartments"
+msgstr "Апартаменты \"Атлантида\""
+
+msgid "Babylon Apartments"
+msgstr "Апартаменты \"Вавилон\""
+
+msgid "Ptolemy Apartments"
+msgstr "Апартаменты \"Птолемей\""
+
+msgid "Habizone Apartments"
+msgstr "Апартаменты в спальном районе"
+
+msgid "Ecozone Apartments"
+msgstr "Апартаменты \"Экозона\""
+
+msgid "Stellar Apartments"
+msgstr "Апаратаменты \"Звездные\""
+
+msgid "Lone Ranger Apartments"
+msgstr "Апартаменты \"Одинокий рейнджер\""
+
+msgid "Eden Mansions"
+msgstr "Дом \"Эдем\""
+
+msgid "Utopia Mansions"
+msgstr "Дом \"Утопия\""
+
+msgid "Nirvana Mansions"
+msgstr "Дом \"Нирвана\""
+
+msgid "Cyclops Mansions"
+msgstr "Дом \"Циклоп\""
+
+msgid "Cultivator One"
+msgstr "Культивационное сооружение Один"
+
+msgid "Cultivator Two"
+msgstr "Культивационное сооружение Два"
+
+msgid "Cultivator Three"
+msgstr "Культивационное сооружение Три"
+
+msgid "Cityclean One"
+msgstr "Городская станция очистки Один"
+
+msgid "Cityclean Two"
+msgstr "Городская станция очистки Два"
+
+msgid "Cityclean Three"
+msgstr "Городская станция очистки Три"
+
+msgid "Hydrozone One"
+msgstr "Гидрозона Один"
+
+msgid "Hydrozone Two"
+msgstr "Гидрозона Два"
+
+msgid "Hydrozone Three"
+msgstr "Гидрозона Три"
+
+msgid "Appliances One"
+msgstr "Фабрика бытовой техники Один"
+
+msgid "Appliances Two"
+msgstr "Фабрика бытовой техники Два"
+
+msgid "Appliances Three"
+msgstr "Фабрика бытовой техники Три"
+
+msgid "Arms One"
+msgstr "Оружейная фабрика Один"
+
+msgid "Arms Two"
+msgstr "Оружейная фабрика Два"
+
+msgid "Arms Three"
+msgstr "Оружейная фабрика Три"
+
+msgid "Robot One"
+msgstr "Завод робототехники Один"
+
+msgid "Robot Two"
+msgstr "Завод робототехники Два"
+
+msgid "Robot Three"
+msgstr "Завод робототехники Три"
+
+msgid "Car One"
+msgstr "Автозавод Один"
+
+msgid "Car Two"
+msgstr "Автозавод Два"
+
+msgid "Car Three"
+msgstr "Автозавод Три"
+
+msgid "Flyer One"
+msgstr "Завод легких космических кораблей Один"
+
+msgid "Flyer Two"
+msgstr "Завод легких космических кораблей Два"
+
+msgid "Flyer Three"
+msgstr "Завод легких космических кораблей Три"
+
+msgid "Megaflyer One"
+msgstr "Завод тяжелых кораблей Один"
+
+msgid "Megaflyer Two"
+msgstr "Завод тяжелых кораблей Два"
+
+msgid "Megaflyer Three"
+msgstr "Завод тяжелых кораблей Три"
+
+msgid "Construction One"
+msgstr "Завод домостроения Один"
+
+msgid "Construction Two"
+msgstr "Завод домостроения Два"
+
+msgid "Construction Three"
+msgstr "Завод домостроения Три"
+
+msgid "George Orwell Block"
+msgstr "Блок \"Джордж Оруэлл\""
+
+msgid "Thomas More Tower"
+msgstr "Башня Томаса Мора"
+
+msgid "Dickens Estate"
+msgstr "Поместье \"Диккенс\""
+
+msgid "Oliver Twist Block"
+msgstr "Блок \"Оливер Твист\""
+
+msgid "Campesino Apartments"
+msgstr "Апартаменты \"Кампесино\""
+
+msgid "Grey Visitor Towers"
+msgstr "Башни серых визитеров"
+
+msgid "Scrooge Mansions"
+msgstr "Дом \"Скрудж\""
+
+msgid "Borstal Block"
+msgstr "Блок \"Борстал\""
+
+msgid "Heavenly Towers"
+msgstr "Неземные башни"
+
+msgid "Civic Project"
+msgstr "Гражданский проект"
+
+msgid "Chronos Block"
+msgstr "Блок \"Хронос\""
+
+msgid "Necronomicon Mansions"
+msgstr "Дом \"Некрономикон\""
+
+msgid "Angel Heart Heights"
+msgstr "Высоты \"Сердце ангела\""
+
+msgid "Lovecraft Block"
+msgstr "Блок \"Лавкрафт\""
+
+msgid "Bakunin Block"
+msgstr "Блок Бакунина"
+
+msgid "Saturn Block"
+msgstr "Блок \"Сатурн\""
+
+msgid "Hades Block"
+msgstr "Блок \"Аид\""
+
+msgid "Neptune Towers"
+msgstr "Башни Нептуна"
+
+msgid "Maze Towers"
+msgstr "Башни Лабиринта"
+
+msgid "Grimoire Block"
+msgstr "Блок \"Гримуар\""
+
+msgid "Durruti Block"
+msgstr "Блок \"Дорроти\""
+
+msgid "Blue Doctor Project"
+msgstr "Проект \"Синий доктор\""
+
+msgid "Enlightenment Towers"
+msgstr "Башни Просвещения"
+
+msgid "Renaissance Block"
+msgstr "Блок \"Ренессанс\""
+
+msgid "Slum City"
+msgstr "Городские трущобы"
+
+msgid "Warehouse One"
+msgstr "Склад Один"
+
+msgid "Warehouse Two"
+msgstr "Склад Два"
+
+msgid "Warehouse Three"
+msgstr "Склад Три"
+
+msgid "Warehouse Four"
+msgstr "Склад Четыре"
+
+msgid "Warehouse Five"
+msgstr "Склад Пять"
+
+msgid "Warehouse Six"
+msgstr "Склад Шесть"
+
+msgid "Warehouse Seven"
+msgstr "Склад Семь"
+
+msgid "Warehouse Eight"
+msgstr "Склад Восемь"
+
+msgid "Warehouse Nine"
+msgstr "Склад Девять"
+
+msgid "Warehouse Ten"
+msgstr "Склад Десять"
+
+msgid "Warehouse Eleven"
+msgstr "Склад Одиннадцать"
+
+msgid "Warehouse Twelve"
+msgstr "Склад Двенадцать"
+
+msgid "Energen Building"
+msgstr "Здание корпорации \"Энерген\""
+
+msgid "Midas Building"
+msgstr "Здание \"Мидас\""
+
+msgid "Recyclotorium One"
+msgstr "Рециклоторий Один"
+
+msgid "Recyclotorium Two"
+msgstr "Рециклоторий Два"
+
+msgid "Recyclotorium Three"
+msgstr "Рециклоторий Три"
+
+msgid "Temple of the Apocalypse"
+msgstr "Храм Апокалипсиса"
+
+msgid "Temple of the Millenium"
+msgstr "Храм Тысячелетия"
+
+msgid "Temple of the Visitors"
+msgstr "Храм визитеров"
+
+msgid "Temple of Humility"
+msgstr "Храм смирения"
+
+msgid "Temple of Doom"
+msgstr "Храм рока"
+
+msgid "Temple of Sanity"
+msgstr "Храм благоразумия"
+
+msgid "Earth"
+msgstr "Земля"
+
+msgid "Corridor"
+msgstr "Коридор"
+
+msgid "Access Lift"
+msgstr "Входной лифт"
+
+msgid "Living Quarters"
+msgstr "Жилые помещения"
+
+msgid "Stores"
+msgstr "Склады"
+
+msgid "Cells"
+msgstr "Камеры"
+
+msgid "Medical Bay"
+msgstr "Медицинский блок"
+
+msgid "Training Area"
+msgstr "Тренировочный блок"
+
+msgid "Psi-gym"
+msgstr "Зал пси-тренировок"
+
+msgid "Security Station"
+msgstr "Пост безопасности"
+
+msgid "Advanced Security Station"
+msgstr "Улучшенный пост безопасности"
+
+msgid "Vehicle Repair Bay"
+msgstr "Станция ремонта техники"
+
+msgid "Biochemistry Lab"
+msgstr "Биолаборатория"
+
+msgid "Advanced Biochemistry Lab"
+msgstr "Улучшенная биолаборатория"
+
+msgid "Quantum Physics Lab"
+msgstr "Лаборатория квантовой физики"
+
+msgid "Advanced Quantum Physics Lab"
+msgstr "Улучшенная лаборатория квантовой физики"
+
+msgid "Alien Containment"
+msgstr "Камеры для пришельцев"
+
+msgid "Advanced Alien Containment"
+msgstr "Улучшенные камеры для пришельцев"
+
+msgid "Workshop"
+msgstr "Мастерские"
+
+msgid "Advanced Workshop"
+msgstr "Улучшенные мастерские"
+
+msgid "Empty section"
+msgstr "Пустой раздел"
+
+msgid "Bolter 4000 Laser Gun"
+msgstr "Лазерная пушка \"Болтер 4000\""
+
+msgid "Lancer 7000 Laser Gun"
+msgstr "Лазерная пушка \"Лансер 7000\""
+
+msgid "Rendor Plasma Gun"
+msgstr "Плазменная пушка \"Рендор\""
+
+msgid "Lineage Plasma Cannon"
+msgstr "Плазменная пушка \"Лайнэйдж\""
+
+msgid "Plasma Multi-System"
+msgstr "Плазменная оружейная система"
+
+msgid "Light Disruptor Beam"
+msgstr "Легкий расщепляющий лучемет"
+
+msgid "Medium Disruptor Beam"
+msgstr "Расщепляющий лучемет средней мощности"
+
+msgid "Heavy Disruptor Beam"
+msgstr "Тяжелый расщепляющий лучемет"
+
+msgid "40mm Auto Cannon"
+msgstr "40-мм автопушка"
+
+msgid "Janitor Missile Array"
+msgstr "Блок ракет \"Чистильщик\""
+
+msgid "Justice Missile Launcher"
+msgstr "Пусковая установка \"Правосудие\""
+
+msgid "Prophet Missile Array"
+msgstr "Блок ракет \"Пророк\""
+
+msgid "Retribution Missile Launcher"
+msgstr "Пусковая установка \"Возмездие\""
+
+msgid "Disruptor Bomb Launcher"
+msgstr "Пусковая установка расщепляющих бомб"
+
+msgid "Stasis Bomb Launcher"
+msgstr "Пусковая установка стазис-бомб"
+
+msgid "Disruptor Multi-Bomb Launcher"
+msgstr "Пусковая установка расщепляющих мультибомб"
+
+msgid "Laser Defense Array"
+msgstr "Массив лазерных пушек"
+
+msgid "Plasma Defense Array"
+msgstr "Массив плазменных пушек"
+
+msgid "SD Standard"
+msgstr "СД \"Стандартный\""
+
+msgid "SD Deluxe"
+msgstr "СД \"Улучшенный\""
+
+msgid "SD Sports"
+msgstr "СД \"Спортивный\""
+
+msgid "SD Turbo"
+msgstr "СД \"Турбо\""
+
+msgid "SD Elite"
+msgstr "СД \"Элитный\""
+
+msgid "SD Special"
+msgstr "СД \"Специальный\""
+
+msgid "40mm Auto Cannon Turret"
+msgstr "Турель, оснащенная 40-мм автопушкой"
+
+msgid "Airguard Anti-Air Cannon"
+msgstr "Пушка ПВО \"Страж воздуха\""
+
+msgid "GLM Array"
+msgstr "Пусковая установка класса \"земля-воздух\""
+
+msgid "Plasma Turret Cannon"
+msgstr "Турельная плазменная пушка"
+
+msgid "GLM Air defense"
+msgstr "Зенитные ракеты класса \"земля-воздух\""
+
+msgid "Rumble Cannon"
+msgstr "Пушка \"Рокот\""
+
+msgid "Metro Roadhog"
+msgstr "ДМ \"Лихач\""
+
+msgid "Metro Roadgrav"
+msgstr "ДМ \"Дорграв\""
+
+msgid "Metro Turbograv"
+msgstr "ДМ \"Турбограв\""
+
+msgid "Metro Powergrav"
+msgstr "ДМ \"Силограв\""
+
+msgid "Metro Multipower Plus"
+msgstr "ДМ \"Суперсилограв Плюс\""
+
+msgid "Light Weapons Control"
+msgstr "Малая система управления вооружением"
+
+msgid "Medium Weapons Control"
+msgstr "Средняя система управления вооружением"
+
+msgid "Heavy Weapons Control"
+msgstr "Тяжелая система управления вооружением"
+
+msgid "Advanced Control System"
+msgstr "Улучшенная система управления"
+
+msgid "Cargo Module"
+msgstr "Грузовой модуль"
+
+msgid "Passenger Module"
+msgstr "Пассажирский модуль"
+
+msgid "Bio-Transport Module"
+msgstr "Модуль перевозки биоматериала"
+
+msgid "Missile Evasion Matrix"
+msgstr "Система выведения из строя ГСН"
+
+msgid "Small Disruption Shield"
+msgstr "Малый генератор расщепляющего щита"
+
+msgid "Large Disruption Shield"
+msgstr "Большой генератор расщепляющего щита"
+
+msgid "Cloaking Field"
+msgstr "Маскирующее поле"
+
+msgid "Teleporter"
+msgstr "Телепортатор"
+
+msgid "Dimension Shifter"
+msgstr "Шифтер измерений"
+
+msgid "Senate"
+msgstr "Сенат"
+
+msgid "Police Station"
+msgstr "Полицейский участок"
+
+msgid "Hospital"
+msgstr "Больница"
+
+msgid "School"
+msgstr "Школа"
+
+msgid "Rescue Station"
+msgstr "Станция службы спасения"
+
+msgid "Offices"
+msgstr "Офисы"
+
+msgid "Corporate HQ"
+msgstr "Штаб-квартира корпорации"
+
+msgid "Space Port"
+msgstr "Космопорт"
+
+msgid "Sensodrome"
+msgstr "Сенсодром"
+
+msgid "Astrodome"
+msgstr "Астродоум"
+
+msgid "Procreation Park"
+msgstr "Парк деторождения"
+
+msgid "Shopping Mall"
+msgstr "Торговый центр"
+
+msgid "Car Park"
+msgstr "Автопарк"
+
+msgid "Apartments"
+msgstr "Апартаменты"
+
+msgid "Luxury Apartments"
+msgstr "Дорогие апартаменты"
+
+msgid "Hotel"
+msgstr "Гостиница"
+
+msgid "Atmosphere Processor"
+msgstr "Атмосферный процессор"
+
+msgid "Hydro-Farm"
+msgstr "Гидроферма"
+
+msgid "Sewage Works"
+msgstr "Установка для очистки сточных вод"
+
+msgid "Water Purifier"
+msgstr "Водоочиститель"
+
+msgid "Appliances Factory"
+msgstr "Фабрика бытовой техники"
+
+msgid "Arms Factory"
+msgstr "Оружейная фабрика"
+
+msgid "Robot Factory"
+msgstr "Фабрика роботов"
+
+msgid "Car Factory"
+msgstr "Автомобильный завод"
+
+msgid "Flyer Factory"
+msgstr "Завод для производства легких и средних кораблей"
+
+msgid "Large Flyer Factory"
+msgstr "Завод для производства тяжелых кораблей"
+
+msgid "Construction Factory"
+msgstr "Завод домостроения"
+
+msgid "Slums"
+msgstr "Трущобы"
+
+msgid "Ruins"
+msgstr "Руины"
+
+msgid "Warehouse"
+msgstr "Склад"
+
+msgid "Space Ship"
+msgstr "Космический корабль"
+
+msgid "Power Station"
+msgstr "Электростанция"
+
+msgid "Recyclotorium"
+msgstr "Рециклоторий"
+
+msgid "Outdoor Parks"
+msgstr "Открытые парки"
+
+msgid "People Tubes"
+msgstr "Общественное метро"
+
+msgid "Temple of Sirius"
+msgstr "Храм Сириуса"
+
+msgid "X-COM Base"
+msgstr "База X-COM"
+
+msgid "UFOs"
+msgstr "НЛО"
+
+msgid "Incubator Chamber"
+msgstr "Инкубатор"
+
+msgid "Spawning Chamber"
+msgstr "Залы размножения"
+
+msgid "Food Chamber"
+msgstr "Пищевые камеры"
+
+msgid "Megapod Chamber"
+msgstr "Зал гигантских стручков"
+
+msgid "Sleeping Chamber"
+msgstr "Залы сна"
+
+msgid "Organic Factory"
+msgstr "Органическая фабрика"
+
+msgid "Alien Farm"
+msgstr "Ферма пришельцев"
+
+msgid "Control Chamber"
+msgstr "Контрольный зал"
+
+msgid "Maintenance Factory"
+msgstr "Фабрика жизнеобеспечения"
+
+msgid "Dimension Gate Generator"
+msgstr "Генератор межпространственных врат"
+
+msgid "Transporter"
+msgstr "Транспортный корабль"
+
+msgid "Fast Attack ship"
+msgstr "Высокоскоростной боевой корабль"
+
+msgid "Destroyer"
+msgstr "Эсминец"
+
+msgid "Assault craft"
+msgstr "Корабль штурмового эшелона десанта"
+
+msgid "Bomber"
+msgstr "Бомбардировщик"
+
+msgid "Escort"
+msgstr "Корабль сопровождения"
+
+msgid "Battleship"
+msgstr "Линкор"
+
+msgid "Mothership"
+msgstr "Корабль-база"
+
+msgid "Property"
+msgstr "Собственность"
+
+msgid "Financial services"
+msgstr "Финансовые операции"
+
+msgid "Import/Export"
+msgstr "Импорт/Экспорт"
+
+msgid "Security services"
+msgstr "Охрана"
+
+msgid "Transport services"
+msgstr "Транспорт"
+
+msgid "Administration"
+msgstr "Управление"
+
+msgid "Genetics"
+msgstr "Генетика"
+
+msgid "Construction"
+msgstr "Строительство"
+
+msgid "Vehicle manufacture"
+msgstr "Машиностроение"
+
+msgid "Nanotechnology"
+msgstr "Нанотехнологии"
+
+msgid "Personal armaments"
+msgstr "Личное оружие"
+
+msgid "Security systems droids"
+msgstr "Дроиды системы безопасности"
+
+msgid "Power cells"
+msgstr "Энергетические ячейки"
+
+msgid "Furniture"
+msgstr "Мебель"
+
+msgid "X-COM"
+msgstr "X-COM"
+
+msgid "Alien"
+msgstr "Пришельцы"
+
+msgid "Government"
+msgstr "Правительство"
+
+msgid "Megapol"
+msgstr "Мегапол"
+
+msgid "Cult of Sirius"
+msgstr "Культ Сириуса"
+
+msgid "Marsec"
+msgstr "Марсек"
+
+msgid "Superdynamics"
+msgstr "Супердайнэмикс"
+
+msgid "General Metro"
+msgstr "Дженерал Метро"
+
+msgid "Cyberweb"
+msgstr "Сайбервеб"
+
+msgid "Transtellar"
+msgstr "Транстеллар"
+
+msgid "Solmine"
+msgstr "Солмайн"
+
+msgid "Sensovision"
+msgstr "Сенсовидение"
+
+msgid "Lifetree"
+msgstr "Древо жизни"
+
+msgid "Nutrivend"
+msgstr "Нутривенд"
+
+msgid "Evonet"
+msgstr "Эвонет"
+
+msgid "Sanctuary Clinic"
+msgstr "Священная клиника"
+
+msgid "Nanotech"
+msgstr "Нанотех"
+
+msgid "Energen"
+msgstr "Энерген"
+
+msgid "Synthemesh"
+msgstr "Синтемеш"
+
+msgid "Gravball League"
+msgstr "Лига гравбола"
+
+msgid "Psyke"
+msgstr "Псайк"
+
+msgid "Diablo"
+msgstr "Дьябло"
+
+msgid "Osiron"
+msgstr "Озирон"
+
+msgid "S.E.L.F."
+msgstr "ФОРМ"
+
+msgid "Mutant Alliance"
+msgstr "Альянс мутантов"
+
+msgid "Extropians"
+msgstr "Экстропиане"
+
+msgid "Technocrats"
+msgstr "Технократы"
+
+msgid "Civilian"
+msgstr "Гражданский"
+
+msgid "#X-COM"
+msgstr "#X-COM"
+
+msgid "#Alien"
+msgstr "#Пришельцы"
+
+msgid "#Government"
+msgstr "#Правительство"
+
+msgid "#Police"
+msgstr "#Полиция"
+
+msgid "#Corporation"
+msgstr "#Корпорация"
+
+msgid "#Psiclone gang"
+msgstr "#Шайка псиклонеров"
+
+msgid "#Cult"
+msgstr "#Культ"
+
+msgid "#Cyborg"
+msgstr "#Киборг"
+
+msgid "#Hybrid"
+msgstr "#Гибрид"
+
+msgid "#Sectoid"
+msgstr "#Сектоид"
+
+msgid "#Political"
+msgstr "#Политики"
+
+msgid "The following people have been reported dead:"
+msgstr "Следующие люди были объявлены погибшими:"
+
+msgid "has been reported dead."
+msgstr "объявлен погибшим."
+
+msgid "Dank"
+msgstr "Сырое"
+
+msgid "Dingy"
+msgstr "Обветшалое"
+
+msgid "Reasonable"
+msgstr "Разумное"
+
+msgid "OK"
+msgstr "Нормальное"
+
+msgid "Nice"
+msgstr "Славное"
+
+msgid "Good"
+msgstr "Хорошее"
+
+msgid "Pleasant"
+msgstr "Милое"
+
+msgid "Pleasing"
+msgstr "Привлекательное"
+
+msgid "Expensive"
+msgstr "Дорогое"
+
+msgid "Luxurious"
+msgstr "Роскошное"
+
+msgid "Exclusive"
+msgstr "Эксклюзивное"
+
+msgid "At"
+msgstr "В"
+
+msgid "Returning to base"
+msgstr "Возвращение на базу"
+
+msgid "Observation Duty"
+msgstr "Наблюдение"
+
+msgid "Searching for"
+msgstr "Поиск"
+
+msgid "Tailing"
+msgstr "Преследование"
+
+msgid "Spying"
+msgstr "Шпионаж"
+
+msgid "Reporting to base"
+msgstr "Рапорт на базу"
+
+msgid "Fusion Powerfuel"
+msgstr "Синтезное топливо"
+
+msgid "Elerium-115"
+msgstr "Элериум-115"
+
+msgid "Zorium"
+msgstr "Зориум"
+
+msgid "Multi-Cannon Round"
+msgstr "Боеприпас для многоствольной пушки"
+
+msgid "Janitor Missile"
+msgstr "Ракета \"Чистильщик\""
+
+msgid "Justice Missile"
+msgstr "Ракета \"Правосудие\""
+
+msgid "Prophet Missile"
+msgstr "Ракета \"Пророк\""
+
+msgid "Retribution Missile"
+msgstr "Ракета \"Возмездие\""
+
+msgid "Disruptor Bomb"
+msgstr "Расщепляющая бомба"
+
+msgid "Stasis Bomb"
+msgstr "Стазис-бомба"
+
+msgid "Disruptor Multi-Bomb"
+msgstr "Расщепляющая мультибомба"
+
+msgid "Repeater 40mm Cannon Round"
+msgstr "Боеприпас для магазинной 40-мм пушки"
+
+msgid "Airguard 52mm Cannon Round"
+msgstr "Боеприпас для 52-мм противовоздушной пушки"
+
+msgid "Ground Launched Missile"
+msgstr "Пусковая установка класса \"земля-воздух\""
+
+msgid "Air Defense Missile"
+msgstr "Противовоздушная ракета"
+
+msgid "#Megapol Lawpistol Clip"
+msgstr "#Магазин для пистолета Мегапола"
+
+msgid "#Marsec M4000 Gun Clip"
+msgstr "#Барабан для пулемета \"Марсек M4000\""
+
+msgid "#Megapol Laser Pod"
+msgstr "#Лазерная капсула Мегапола"
+
+msgid "#Auto Cannon AP Clip"
+msgstr "#Барабан с ББ-боеприпасами для автопушки"
+
+msgid "#Auto Cannon HE Clip"
+msgstr "#Барабан с ОФБ для автопушки"
+
+msgid "#Auto Cannon I Clip"
+msgstr "#Барабан с ОФЗ-боеприпасами для автопушки"
+
+msgid "#Megapol Plasma Pod"
+msgstr "#Магазин к плазменному пистолету Мегапола"
+
+msgid "#Heavy Launcher Alien Gas Missile"
+msgstr "#Ракета с ХБЧ для тяжелой пусковой установки"
+
+msgid "#Heavy Launcher Blaster MIssile"
+msgstr "#Ракета с бластерной боеголовкой для тяжелой пусковой установки"
+
+msgid "#Heavy Launcher Incendiary Missile"
+msgstr "#Зажигательная ракета для тяжелой пусковой установки"
+
+msgid "#MiniLauncher Alien Gas Missile"
+msgstr "#Ракета с ХБЧ для малой пусковой установки"
+
+msgid "#MiniLauncher HE Missile"
+msgstr "#Ракета с ОФБЧ для малой пусковой установки"
+
+msgid "#MiniLauncher I Missile"
+msgstr "#Зажигательная ракета для малой пусковой установки"
+
+msgid "#Toxigun A-Clip"
+msgstr "#Капсула для токсигана с токсином типа A"
+
+msgid "#Toxigun B-Clip"
+msgstr "#Капсула для токсигана с токсином типа B"
+
+msgid "#Toxigun C-Clip"
+msgstr "#Капсула для токсигана с токсином типа C"
+
+msgid "#Brainsucker Pod"
+msgstr "#Кокон мозгососа"
+
+msgid "#Entropy Pod"
+msgstr "#Энтропийная капсула"
+
+msgid "#Dimension Missile"
+msgstr "#Межразмерная ракета"
+
+msgid "#Tracker Gun Clip"
+msgstr "#Магазин следящей пушки"
+
+msgid ""
+"#The applicants were given a variety of agility and speed tests; the "
+"combined result is shown."
+msgstr "#Испытуемым был предложен набор тестов на ловкость и скорость; отображается совокупный результат."
+
+msgid "#Stamina was tested with an 'until you drop' style assault course."
+msgstr "#Выносливость проверялась штурмовой полосой на выбывание."
+
+msgid ""
+"#Reaction times were carefully tested, using both electronic and traditional"
+" methods."
+msgstr "#Время реакции тщательно проверялось, с использованием как электронных, так и традиционных методик."
+
+msgid ""
+"#A selection of exercises were monitored to obtain the strength rating of "
+"the applicants."
+msgstr "#Наблюдались результаты испытуемых в ряде упражнений, что позволило выяснить их показатель силы."
+
+msgid "#This is an initial estimate of the applicants' psychic abilities."
+msgstr "#Это предварительная оценка пси-способностей испытуемых."
+
+msgid ""
+"#The applicants were tested with a selection of traditional firearms to see "
+"how they would fare in a basic sniper situation."
+msgstr "#Испытуемым было предложено провести стрельбы из набора традиционных вооружений, чтобы выяснить их точность ведения огня."
+
+msgid ""
+"#The applicants were tested using advanced simulator technologies; a "
+"combined result is shown for on road/off road/flying vehicles."
+msgstr "#Испытуемые проверялись с использованием современных симуляторов; отображается совокупный результат как для дорожной и внедорожной техники, так и для ЛА."
+
+msgid ""
+"#Perception is the ability to spot small, but occasionally vital, details "
+"that others may miss; it was tested using an extensive observation test."
+msgstr "#Проницательность - это способность замечать небольшие, но подчас жизненно важные детали, которые остальные члены команды могут упустить; проверялась с помощью расширенного теста наблюдательности."
+
+msgid ""
+"#Biochemistry - the ability to perform research furthering understanding of "
+"the chemistry of living organisms. The values shown below were obtained from"
+" the governing body for Biochemistry."
+msgstr "#Биохимия - это способность проводить исследования, углубляющие понимание химии живых организмов. Приведенные ниже значения были предоставлены Административным советом по биохимии."
+
+msgid ""
+"#Quantum Physics - the ability to perform research leading to a greater "
+"understanding of the area of physics exploited by Alien technologies. The "
+"values shown below were obtained from the governing body for physics."
+msgstr "#Квантовая физика - это способность проводить исследования, углубляющие понимание физических законов, используемых в технологиях пришельцев. Приведенные ниже значения предоставлены Административным советом по физике."
+
+msgid ""
+"#Engineering skills - repairing cars/flying vehicles, as well as the "
+"production of weapons or devices."
+msgstr "#Инженерные навыки - это умение ремонтировать наземные транспортные средства и ЛА, а также производить вооружения и различное оборудование."
+
+msgid "#Weapons for vehicles"
+msgstr "#Вооружения для техники"
+
+msgid "#Engines for vehicles"
+msgstr "#Двигатели для техники"
+
+msgid "#Equipment for vehicles"
+msgstr "#Оборудование для техники"
+
+msgid "#Prefab vehicles"
+msgstr "#Сборная техника"
+
+msgid "#Armor for personnel"
+msgstr "#Бронекостюмы для персонала"
+
+msgid "#Equipment for personnel"
+msgstr "#Снаряжение для персонала"
+
+msgid "Help Window"
+msgstr "Окно помощи"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Agent"
+msgstr "Оперативник"
+
+msgid "Engineer"
+msgstr "Инженер"
+
+msgid "Biochemist"
+msgstr "Биохимик"
+
+msgid "Quantum Physicist"
+msgstr "Квантовый физик"
+
+msgid "Agility"
+msgstr "Ловкость"
+
+msgid "Stamina"
+msgstr "Выносливость"
+
+msgid "Reactions"
+msgstr "Реакция"
+
+msgid "Strength"
+msgstr "Сила"
+
+msgid "Psi"
+msgstr "Пси"
+
+msgid "Accuracy"
+msgstr "Точность"
+
+msgid "Piloting"
+msgstr "Управление ТС"
+
+msgid "Perception"
+msgstr "Проницательность"
+
+msgid "Biochemistry"
+msgstr "Биохимия"
+
+msgid "Quantum Physics"
+msgstr "Квантовая физика"
+
+msgid "Engineering"
+msgstr "Инженерия"
+
+msgid "UFOpaedia tool bar: '<<<<'"
+msgstr "Панель инструментов НЛОпедии: '<<<<'"
+
+msgid "UFOpaedia tool bar: '<<'"
+msgstr "Панель инструментов НЛОпедии: '<<'"
+
+msgid "UFOpaedia tool bar: '>>'"
+msgstr "Панель инструментов НЛОпедии: '>>'"
+
+msgid "UFOpaedia tool bar: '>>>>'"
+msgstr "Панель инструментов НЛОпедии: '>>>>'"
+
+msgid "UFOpaedia tool bar: 'OK'"
+msgstr "Панель инструментов НЛОпедии: 'OK'"
+
+msgid "#There is no help available for this item."
+msgstr "#Для этого предмета отсутствует описание."
+
+msgid "#Keeps the changes you have made and returns to the previous screen."
+msgstr "#Сохраняет внесенные изменения и возвращает на предыдущий экран."
+
+msgid ""
+"#Cancels (forgets) any changes you have made on this screen and returns to "
+"the previous screen."
+msgstr "#Отменяет (забывает) все внесенные изменения и возвращает на предыдущий экран."
+
+msgid ""
+"#This displays a list of agents available for recruitment, or currently "
+"employed at the selected base."
+msgstr "#Отображает список доступных для найма или уже имеющихся на выбранной базе оперативников."
+
+msgid ""
+"#This displays a list of engineers available for recruitment, or currently "
+"employed at the selected base."
+msgstr "#Отображает список доступных для найма или уже имеющихся на выбранной базе инженеров."
+
+msgid ""
+"#This displays a list of Bio-Scientists available for recruitment, or "
+"currently employed at the selected base."
+msgstr "#Отображает список доступных для найма или уже имеющихся на выбранной базе биологов."
+
+msgid ""
+"#This displays a list of Quantum-Scientists available for recruitment, or "
+"currently employed at the selected base."
+msgstr "#Отображает список доступных для найма или уже имеющихся на выбранной базе квантовых физиков."
+
+msgid ""
+"#When the agility button is set the bar graphs show the relative agility of "
+"the listed agents."
+msgstr "#При нажатии на кнопку \"Ловкость\" отобразится сравнительная диаграмма ловкости оперативников."
+
+msgid ""
+"#When the stamina button is set the bar graphs show the relative stamina of "
+"the listed agents."
+msgstr "#При нажатии на кнопку \"Выносливость\" отобразится сравнительная диаграмма выносливости оперативников."
+
+msgid ""
+"#When the reactions button is set the bar graphs show the relative reaction "
+"ratings of the listed agents."
+msgstr "#При нажатии на кнопку \"Реакция\" отобразится сравнительная диаграмма реакции оперативников."
+
+msgid ""
+"#When the strength button is set the bar graphs show the relative strengths "
+"of the listed agents."
+msgstr "#При нажатии на кнопку \"Сила\" отобразится сравнительная диаграмма силы оперативников."
+
+msgid ""
+"#When the Psi button is set the bar graphs show the relative Psionic ability"
+" of the listed agents."
+msgstr "#При нажатии на кнопку \"Пси-способности\" отобразится сравнительная диаграмма пси-способностей оперативников."
+
+msgid ""
+"#When the accuracy button is set the bar graphs show the relative ability to"
+" use ranged weapons for the listed agents."
+msgstr "#При нажатии на кнопку \"Точность\" отобразится сравнительная диаграмма навыков использования дальнобойного оружия оперативников."
+
+msgid ""
+"#When the piloting button is set the bar graphs show the relative "
+"driving/flying skills of the listed agents."
+msgstr "#При нажатии на кнопку \"Управление ТС\" отобразится сравнительная диаграмма навыков управления наземными ТС и ЛА оперативников."
+
+msgid ""
+"#When this button is set, the graph shows the relative perception levels of "
+"the listed scientists."
+msgstr "#При нажатии на эту кнопку отобразится сравнительная диаграмма уровня проницательности ваших ученых."
+
+msgid ""
+"#When this button is set, the graph shows the Biochemistry competency level "
+"of the listed scientists."
+msgstr "#При нажатии на эту кнопку отобразится уровень способностей к биохимии ваших ученых."
+
+msgid ""
+"#When this button is set, the graph shows the Quantum mechanics competency "
+"levels of the listed scientists."
+msgstr "#При нажатии на эту кнопку отобразится уровень способностей к квантовой механики ваших ученых."
+
+msgid ""
+"#When this button is set, the graph shows the engineering skill level of the"
+" listed scientists."
+msgstr "#При нажатии на эту кнопку отобразится сравнительная диаграмма инженерных навыков ваших ученых."
+
+msgid "This button skips to the previous UFOpaedia section."
+msgstr "Эта кнопка позволяет перейти к предыдущему разделу НЛОпедии."
+
+msgid "This button skips to the previous UFOpaedia page."
+msgstr "Эта кнопка позволяет перейти к предыдущей странице НЛОпедии."
+
+msgid "This button skips to the next UFOpaedia page."
+msgstr "Эта кнопка позволяет перейти к предыдущей странице НЛОпедии."
+
+msgid "This button skips to the next UFOpaedia section."
+msgstr "Эта кнопка позволяет перейти к следующему разделу НЛОпедии."
+
+msgid ""
+"This button exits the UFOpaedia and returns you to what you where doing "
+"before."
+msgstr "Эта кнопка позволяет выйти из НЛОпедии и возвращает вас туда, где вы находились до того, как открыли ее."
+
+msgid "Error"
+msgstr "Ошибка"
+
+msgid "No living space"
+msgstr "Недостаточно жилых мест"
+
+msgid "Not enough money"
+msgstr "Недостаточно денег"
+
+msgid "Base already selected"
+msgstr "База уже выбрана"
+
+msgid "No Transports available"
+msgstr "Нет свободных транспортов"
+
+msgid "No Transport space available"
+msgstr "Недостаточно место на транспорте"
+
+msgid "No room"
+msgstr "Нет помещений"
+
+msgid "Not enough parts"
+msgstr "Недостаточно запчастей"
+
+msgid "Not enough space"
+msgstr "Недостаточно места"
+
+msgid "No Agents Selected"
+msgstr "Не выбраны оперативники"
+
+msgid "Out of money"
+msgstr "Закончились деньги"
+
+msgid "File not found"
+msgstr "Файл не найден"
+
+msgid "Equipment in use"
+msgstr "Оборудование используется"
+
+msgid "Cannot create scenario"
+msgstr "Не удалось создать сценарий"
+
+msgid "Alien artifact"
+msgstr "Артефакт пришельцев"
+
+msgid "Map too small"
+msgstr "Карта слишком маленькая"
+
+msgid "An unlisted error has occured."
+msgstr "Произошла неизвестная ошибка."
+
+msgid ""
+"You will need to build more living space, or sack some agents before "
+"recruiting more staff."
+msgstr "Вы должны построить больше жилых помещений или уволить кого-то из персонала перед наймом новых сотрудников."
+
+msgid "You cannot afford to employ any more staff."
+msgstr "Вы не можете нанять дополнительный персонал."
+
+msgid ""
+"You must select two different bases to transfer to / from, you may not "
+"select the same base twice."
+msgstr "Вы должны выбрать две разных базы для перевода в / из; нельзя выбрать одну и ту же базу."
+
+msgid ""
+"There are no transport crafts available to deliver all of your new stock."
+msgstr "Отсутствуют доступные транспортные средства для перевозки всех ваших приобретенных товаров."
+
+msgid "There is not enough cargo space to deliver all of your new stock."
+msgstr "Недостаточно места в грузовом отсеке для перевозки всех товаров."
+
+msgid "You have no more room in this facility."
+msgstr "В этом модуле больше нет места."
+
+msgid "You do not have enough parts to make this item."
+msgstr "Недостаточно запчастей для производства этой позиции."
+
+msgid ""
+"You do not have enough room to make any more of this item. Manufacture "
+"stopped."
+msgstr "Недостаточно места для дальнейшего производства этой позиции. Производство приостановлено."
+
+msgid "#You need to select the agents you want to put on observation duty."
+msgstr "#Необходимо выбрать оперативников, которых вы хотите задействовать в наблюдении."
+
+msgid ""
+"You need to select the agents you want to become active within the building."
+msgstr "Необходимо выбрать оперативников, которые будут действовать в здании."
+
+msgid "You need to select the agents you want to investigate this building."
+msgstr "Необходимо выбрать оперативников, которых вы хотите задействовать в исследовании здания."
+
+msgid "You do not have available funds to make the requested purchases."
+msgstr "Недостаточно средств для совершения всех выбранных покупок."
+
+msgid "No scenario files could be found."
+msgstr "Файлы сценариев не найдены."
+
+msgid "You cannot afford to pay off this organization."
+msgstr "Недостаточно средств, чтобы заплатить этой организации."
+
+msgid "Passenger module cannot be removed as it is currently in use."
+msgstr "Невозможно снять пассажирский модуль, поскольку он используется в данный момент."
+
+msgid ""
+"The scenario must have at least two organizations containing units to play."
+msgstr "В сценарии должно быть не менее двух организаций, имеющих боевые единицы, чтобы начать игру."
+
+msgid "You must research Alien technology before you can use it."
+msgstr "Вы должны изучить технологию пришельцев, чтобы иметь возможность ее использования."
+
+msgid "This map may be to small to deploy all the units, continue anyway?"
+msgstr "Карта может быть слишком мала для размещения всех боевых единиц. Вы все равно хотите продолжить."
+
+msgid ""
+"#First you select the base that you wish to recruit some staff to, this base"
+" must have some spare living space. You select a base by clicking on the "
+"desired mini-base icon (shown)."
+msgstr "#Выберите базу, для которой вы хотите нанять персонал. На этой базе должны быть свободные жилые помещения. База выбирается кликом по мини-иконке нужной базы (показана)."
+
+msgid ""
+"#The second thing to do is click on the button for the type of person you "
+"wish to recruit, here we have agents selected."
+msgstr "#Затем кликните по кнопке типа персонала, который вы хотите нанять. На этом экране мы можем нанять оперативников."
+
+msgid ""
+"#Depending on which type of person you selected a bar of skill buttons is "
+"shown, from which a number of relative bar graphs is be displayed. (see "
+"point 4)"
+msgstr "#В зависимости от выбранного персонала отображается полоска кнопок навыков, которая позволяет вывести несколько сравнительных диаграмм (см. пункт 4)."
+
+msgid ""
+"#This is the list of people up for selection, there ability at the selected "
+"skill is shown as a bar, your current staff are shown as blue, and the "
+"applicants are shown in yellow. By clicking you can sack or hire "
+"respectively."
+msgstr "#Это список доступных для найма людей. На этом экране способности в выбранном навыке отображаются в виде полоски, имеющийся у вас персонал подсвечивается синим, а кандидаты - желтым. Кликом мыши вы можете увольнять и нанимать персонал соответственно."
+
+msgid "#Don't forget to take there wages into account!!!"
+msgstr "#Учитывайте при найме уровень зарплаты!!!"
+
+msgid ""
+"#Once you are happy with your selection, click OK, otherwise, click Cancel "
+"and everything will go back to normal."
+msgstr "#После того, как выбор вас удовлетворит, нажмите кнопку OK; если результат вас не устраивает, нажмите кнопку \"Отмена\", и действия будут сброшены."
+
+msgid "Buying and Selling"
+msgstr "Покупка и продажа"
+
+msgid "MONEY> $"
+msgstr "ДЕНЬГИ> $"
+
+msgid "Weapons"
+msgstr "Оружие"
+
+msgid "Engines"
+msgstr "Машины"
+
+msgid "Equipment"
+msgstr "Оборудование"
+
+msgid "Vehicles"
+msgstr "Транспортные средства"
+
+msgid "Vehicle maintenance"
+msgstr "Обслуживание транспортных средств"
+
+msgid "Armor"
+msgstr "Броня"
+
+msgid "Personnel"
+msgstr "Персонал"
+
+msgid "PRICE"
+msgstr "ЦЕНА"
+
+msgid "STOCK"
+msgstr "КАПИТАЛ"
+
+msgid "PRICE: $"
+msgstr "ЦЕНА: $"
+
+msgid "STOCK:"
+msgstr "КАПИТАЛ:"
+
+msgid "Buy:"
+msgstr "Купить:"
+
+msgid "Sell:"
+msgstr "Продать:"
+
+msgid "AT>"
+msgstr "В>"
+
+msgid "PERSONNEL RECRUITMENT"
+msgstr "НАЙМ ПЕРСОНАЛА"
+
+msgid "Living space:"
+msgstr "Жилое место:"
+
+msgid "Total>"
+msgstr "Всего>"
+
+msgid "Remaining>"
+msgstr "Осталось>"
+
+msgid "##Psi"
+msgstr "##Пси"
+
+msgid "Sack"
+msgstr "Уволить"
+
+msgid "Employ"
+msgstr "Нанять"
+
+msgid "NAME"
+msgstr "ИМЯ"
+
+msgid "TEST RESULT"
+msgstr "РЕЗУЛЬТАТЫ ТЕСТОВ"
+
+msgid "MONTHLY SALARY"
+msgstr "МЕСЯЧНАЯ ЗАРПЛАТА"
+
+msgid "EMPLOY"
+msgstr "НАЙМ"
+
+msgid "No avoidance"
+msgstr "Не избегать"
+
+msgid "Avoid"
+msgstr "Избегать"
+
+msgid "Do not attack"
+msgstr "Не атаковать"
+
+msgid "Attack"
+msgstr "Атаковать"
+
+msgid "No pursuit"
+msgstr "Не преследовать"
+
+msgid "Pursue"
+msgstr "Преследовать"
+
+msgid "No evasion"
+msgstr "Не уклоняться"
+
+msgid "Evade Fire"
+msgstr "Уклоняться от огня"
+
+msgid "Only respond to attacking units."
+msgstr "Отвечать только нападающим боевым единицам."
+
+msgid "Respond to all hostile units."
+msgstr "Отвечать всем враждебным боевым единицам."
+
+msgid "Ignore hostile units."
+msgstr "Игнорировать враждебные боевые единицы."
+
+msgid "UnLocked."
+msgstr "Разблокировано."
+
+msgid "Locked."
+msgstr "Заблокировано."
+
+msgid "BUY AND SELL"
+msgstr "ПОКУПКА И ПРОДАЖА"
+
+msgid "Personal Equipment"
+msgstr "Личное снаряжение"
+
+msgid "Personal Armor"
+msgstr "Личный бронекостюм"
+
+msgid "Vehicle Equipment"
+msgstr "Снаряжение транспортного средства"
+
+msgid "Airborne Vehicle Weapons"
+msgstr "Вооружения летательных аппаратов"
+
+msgid "Airborne Vehicle Engines / Fuel"
+msgstr "Двигатели / Топливо летательных аппаратов"
+
+msgid "Road Vehicle Weapons"
+msgstr "Вооружения наземных транспортных средств"
+
+msgid "Road Vehicle Engines / Fuel"
+msgstr "Двигатели / Топливо наземных транспортных средств"
+
+msgid "Funds exceeded"
+msgstr "Превышен объем доступных средств"
+
+msgid "Order limited by your available funds."
+msgstr "Объем заказа ограничен доступными денежными средствами."
+
+msgid "Storage space exceeded"
+msgstr "Превышен объем свободного места на складах"
+
+msgid "Order limited by the available storage space at this base."
+msgstr "Объем заказа ограничен имеющимся на базе свободным пространством на складах."
+
+msgid "Order canceled by the hostile manufacturer."
+msgstr "Заказ отменен враждебным производителем."
+
+msgid "Industrial Action"
+msgstr "Забастовка"
+
+msgid ""
+"Industrial action by the Air Transport and General Workers Union has "
+"prevented immediate delivery of some of the items you ordered. To prevent a "
+"backlog of orders building up, the organization(s) concerned have canceled "
+"your order(s) and refunded your money. They apologize for the inconvenience "
+"caused."
+msgstr "Забастовка работников воздушного транспорта и Союза неквалифицированных рабочих препятствовала возможности быстрой доставки некоторых из заказанных вами товаров. Для того, чтобы не образовывалась очередь невыполненных заказов, организация(и), у которой(ых) вы заказывали товары, отменила(и) заказ(ы) и вернула(и) вам деньги. Они приносят извинения за доставленные неудобства."
+
+msgid "Vehicle Licensing Problem"
+msgstr "Проблема с лицензированием транспортного средства"
+
+msgid ""
+"An unprecedented workload at the Vehicle Licensing Center has prevented "
+"immediate registration of at least one vehicle ordered by you. To prevent a "
+"backlog of orders building up, the organization(s) concerned have canceled "
+"your order(s) and refunded your money. They apologize for the inconvenience "
+"caused."
+msgstr "Невероятная загруженность Центра лицензирования транспорта не позволила быстро зарегистрировать по меньшей мере одно из заказанных вами транспортных средств. Для того, чтобы не образовывалась очередь невыполненных заказов, организация(и), у которой(ых) вы заказывали технику, отменила(и) заказ(ы) и вернула(и) вам деньги. Они приносят извинения за доставленные неудобства."
+
+msgid "Cancel Buy and Sell"
+msgstr "Отменить покупку и продать"
+
+msgid "Are you sure?"
+msgstr "Вы уверены?"
+
+msgid "Pay:"
+msgstr "Оплата:"
+
+msgid "ALIEN TAKEOVER"
+msgstr "ПРИШЕЛЬЦЫ ОСУЩЕСТВИЛИ ЗАХВАТ"
+
+msgid ""
+"Our intelligence sources have informed us that the Aliens have taken control"
+" of this organization. This means that they will actively assist the Aliens "
+"and oppose the work of X-COM. We will be forced to stop all trade relations "
+"with them and must be cautious when conducting operations within their "
+"buildings. Right and wrong no longer exists for these people, we must do all"
+" we can to protect the city from them. This must not be the end. We will "
+"fight on."
+msgstr "Наша разведка докладывает, что пришельцы захватили контроль над этой организацией. Это означает, что теперь они будут активно помогать пришельцам и противодействовать работе X-COM. Мы будем вынуждены приостановить все торговые отношения с ними. Нам также придется проявлять особую осторожность при проведении операций в их зданиях. Для этих людей больше не существует разделения на добро и зло, и нам необходимо сделать все возможное для защиты города от них. Это еще не конец. Мы будем продолжать борьбу."
+
+msgid "ALIEN INFILTRATION"
+msgstr "ПРОНИКНОВЕНИЕ ПРИШЕЛЬЦЕВ"
+
+msgid "HIRE AND FIRE"
+msgstr "НАЙМ И УВОЛЬНЕНИЕ"
+
+msgid "FIRE"
+msgstr "УВОЛИТЬ"
+
+msgid "X-COM Agents"
+msgstr "Оперативники X-COM"
+
+msgid "Biochemists"
+msgstr "Биохимики"
+
+msgid "Engineers"
+msgstr "Инженеры"
+
+msgid "Quantum Physicists"
+msgstr "Квантовые физики"
+
+msgid "Accommodation exceeded"
+msgstr "Превышено жилое пространство"
+
+msgid "Hiring not possible due to lack of available accommodation."
+msgstr "Невозможно нанять - недостаточно жилого пространства."
+
+msgid "Hiring not possible due to lack of funds."
+msgstr "Невозможно нанять - недостаточно средств."
+
+msgid "Weekly Salary"
+msgstr "Еженедельная зарплата"
+
+msgid "Health"
+msgstr "Здоровье"
+
+msgid "Speed"
+msgstr "Скорость"
+
+msgid "Bravery"
+msgstr "Храбрость"
+
+msgid "Psi-energy"
+msgstr "Пси-энергия"
+
+msgid "Psi-attack"
+msgstr "Пси-атака"
+
+msgid "Psi-defense"
+msgstr "Пси-защита"
+
+msgid "Biochemistry skill"
+msgstr "Навык в биохимии"
+
+msgid "Engineering skill"
+msgstr "Инженерный навык"
+
+msgid "Quantum physics skill"
+msgstr "Навык в квантовой физике"
+
+msgid "Cancel Hire and Fire"
+msgstr "Отменить найм и уволить"
+
+msgid "Loading"
+msgstr "Загрузка"
+
+msgid "Switching to Alien Dimension"
+msgstr "Переключение на измерение пришельцев"
+
+msgid "Returning to city"
+msgstr "Возвращение в город"
+
+msgid "Confirm Sales/Purchases"
+msgstr "Подтвердить покупку/продажу"
+
+msgid "Confirm Orders"
+msgstr "Подтвердить заказы"
+
+msgid "unit(s) hired"
+msgstr "оперативник(и) нанят(ы)"
+
+msgid "unit(s) fired."
+msgstr "оперативник(и) уволен(ы)."
+
+msgid "AGENT LOCATION"
+msgstr "МЕСТОПОЛОЖЕНИЕ ОПЕРАТИВНИКА"
+
+msgid "VEHICLE LOCATION"
+msgstr "МЕСТОПОЛОЖЕНИЕ ТРАНСПОРТНОГО СРЕДСТВА"
+
+msgid "Unassigned Agents"
+msgstr "Неназначенные оперативники"
+
+msgid "Vehicle Assignments"
+msgstr "Задачи для техники"
+
+msgid ""
+"X-COM is ALLIED with this organization. The relationship cannot be improved."
+msgstr "X-COM состоит в АЛЬЯНСЕ с этой организацией. Невозможно улучшить отношения."
+
+msgid ""
+"This organization is under Alien control. The Alien race will not enter "
+"negotiations with X-COM."
+msgstr "Организация находится под контролем пришельцев. Пришельцы не будут вести переговоров с X-COM."
+
+msgid ""
+"Whilst X-COM continue to oppose our Alien friends we will remain hostile. "
+"Negotiations are impossible."
+msgstr "Пока X-COM противостоит нашим инопланетным друзьям, мы будем относиться к ней враждебно. Переговоры невозможны."
+
+msgid "It will cost: $"
+msgstr "Это будет стоить: $"
+
+msgid "to improve relations to:"
+msgstr "чтобы улучшить отношения с:"
+
+msgid "ALLIED"
+msgstr "СОЮЗНИК"
+
+msgid "FRIENDLY"
+msgstr "ДРУЖЕСТВЕННАЯ"
+
+msgid "NEUTRAL"
+msgstr "НЕЙТРАЛЬНАЯ"
+
+msgid "UNFRIENDLY"
+msgstr "НЕДРУЖЕСТВЕННАЯ"
+
+msgid "Pay organization"
+msgstr "Заплатить организации"
+
+msgid "Show ten most infiltrated organizations not under Alien control."
+msgstr "Показать десять организаций с наибольшим проникновением пришельцев, не находящихся под их контролем."
+
+msgid "BASE ATTACK"
+msgstr "НАПАДЕНИЕ НА БАЗУ"
+
+msgid ""
+"Hostile forces have invaded your base. Equip your Agents before battle."
+msgstr "На вашу базу напали враждебные силы. Снарядите оперативников перед боем."
+
+msgid "Dimension Gates"
+msgstr "Врата между измерениями"
+
+msgid "The Alien Dimension"
+msgstr "Измерение пришельцев"
+
+msgid "One Way To Win"
+msgstr "Единственный путь к победе"
+
+msgid "UFO spotted."
+msgstr "Замечен НЛО."
+
+msgid "Alien corpse found."
+msgstr "Обнаружено тело пришельца."
+
+msgid "Live Alien spotted."
+msgstr "Замечен живой пришелец."
+
+msgid "Not enough money to buy this building."
+msgstr "Недостаточно средств для покупки этого здания."
+
+msgid "Planning permission refused for this building."
+msgstr "Разрешение на строительство для этого здания не подписано."
+
+msgid "The owner does not wish to sell this building."
+msgstr "Владелец не хочет продавать это здание."
+
+msgid "There has been an explosion."
+msgstr "Произошел взрыв."
+
+msgid "Building under attack:"
+msgstr "Здание атаковано:"
+
+msgid "Attacked by:"
+msgstr "Атаковано:"
+
+msgid "destroyed by"
+msgstr "уничтожено"
+
+msgid "Vehicle heavily damaged:"
+msgstr "Транспортное средство понесло тяжелые повреждения:"
+
+msgid "Vehicle moderately damaged:"
+msgstr "Транспортное средство понесло умеренные повреждения:"
+
+msgid "Vehicle lightly damaged:"
+msgstr "Транспортное средство понесло легкие повреждения:"
+
+msgid ": Weapon out of ammo:"
+msgstr ": в оружии закончились боеприпасы:"
+
+msgid "Organization attacked:"
+msgstr "Организация атакована:"
+
+msgid "Organization raided:"
+msgstr "На организацию совершен рейд:"
+
+msgid "Raided by:"
+msgstr "Рейд совершен:"
+
+msgid "Organization stormed:"
+msgstr "Организация атакована:"
+
+msgid "Stormed by:"
+msgstr "Атакована:"
+
+msgid "An illegal road vehicle has been detected."
+msgstr "Обнаружено нелегальное наземное транспортное средство."
+
+msgid "An illegal flyer has been detected."
+msgstr "Обнаружен нелегальный летательный аппарат."
+
+msgid "Treaty signed:"
+msgstr "Договор подписан:"
+
+msgid "Staff resign at:"
+msgstr "Персонал уволился в:"
+
+msgid "Resignations:"
+msgstr "Увольнения:"
+
+msgid "Welcome to X-COM Apocalypse"
+msgstr "Добро пожаловать в \"X-COM: Апокалипсис\""
+
+msgid "Alien attacks VIP."
+msgstr "Пришельцы напали на ВИП-персону."
+
+msgid "Crazed VIP attacks VIP."
+msgstr "Сумасшедшая ВИП-персона напала на другую ВИП-персону."
+
+msgid "Dimension gate spotted."
+msgstr "Замечены врата между измерениями."
+
+msgid "Vehicle low on fuel:"
+msgstr "У транспортного средства заканчивается топливо:"
+
+msgid "Vehicle out of fuel:"
+msgstr "У транспортного средства закончилось топливо:"
+
+msgid "Acquisition of:"
+msgstr "Приобретение:"
+
+msgid "Acquired by:"
+msgstr "Приобретено:"
+
+msgid "Vehicle Repaired:"
+msgstr "Транспортное средство отремонтировано:"
+
+msgid "Vehicle returning to base as damaged:"
+msgstr "Транспортное средство возвращается на базу поврежденным:"
+
+msgid "Vehicle has no engine:"
+msgstr "Транспортное средство не имеет двигателя:"
+
+msgid "X-COM Base destroyed due to collapsing building."
+msgstr "База X-COM разрушена в результате обрушение здания."
+
+msgid "Unable to buy base as building destroyed."
+msgstr "Невозможно купить базу, поскольку здание разрушено."
+
+msgid "collapsing building"
+msgstr "обрушение здания"
+
+msgid "Vehicle destroyed:"
+msgstr "Боевая единица уничтожена:"
+
+msgid "UFO crash landed:"
+msgstr "НЛО упал на землю:"
+
+msgid "Unmanned UFO recovered:"
+msgstr "Восстановлен беспилотный НЛО:"
+
+msgid "New recruit arrived:"
+msgstr "Прибыл новый рекрут:"
+
+msgid ""
+"Our Agents are unable to find an entrance to this building. Our Scientists "
+"back at HQ must complete their research."
+msgstr "Наши агенты не могут найти вход в здание. Наши ученые на базе должны сначала закончить исследования."
+
+msgid "X-COM base destroyed by hostile forces."
+msgstr "База X-COM разрушена силами врага."
+
+msgid ""
+": Unable to reach destination due to damaged people tube network and / or "
+"poor diplomatic relations with Transtellar."
+msgstr ": не может попасть в пункт назначения из-за повреждений общественного метро и / или плохих дипломатических отношений с \"Транстеллар\"."
+
+msgid "Agent(s) rearmed:"
+msgstr "Оперативник(и) перевооружен(ы):"
+
+msgid "Unit killed:"
+msgstr "Оперативник убит:"
+
+msgid "TRANSFER"
+msgstr "ПЕРЕМЕЩЕНИЕ"
+
+msgid "Aliens"
+msgstr "Пришельцы"
+
+msgid "(Alive)"
+msgstr "(Живой)"
+
+msgid "(Dead)"
+msgstr "(Мертвый)"
+
+msgid "Transfer limited by available storage space."
+msgstr "Объем перемещаемого ограничен доступным свободным пространством на складах."
+
+msgid "Transfer limited by available accommodation."
+msgstr "Количество перемещаемых людей ограничено свободным местом в жилых помещениях."
+
+msgid "Alien Containment space exceeded"
+msgstr "Превышен объем камер для пришельцев"
+
+msgid "Transfer limited by available Alien Containment space."
+msgstr "Количество перемещаемых образцов ограничено доступным объемом камер для пришельцев."
+
+msgid ""
+"Industrial action by the Air Transport and General Workers Union has "
+"prevented immediate execution of some of your transfer instructions. To "
+"prevent a backlog of work building up, Transtellar have canceled the "
+"affected transfers. They apologize for the inconvenience caused."
+msgstr "Забастовка работников воздушного транспорта и Союза неквалифицированных рабочих препятствовала возможности быстрого перемещения некоторых позиций каталога. Для того, чтобы не образовывалась очередь невыполненных заказов, \"Транстеллар\" отменила выполнение этих позиций. Они приносят извинения за доставленные неудобства."
+
+msgid "Cancel Transfer"
+msgstr "Отменить перемещение"
+
+msgid "Confirm Transfers"
+msgstr "Подтвердить перемещение"
+
+msgid "This hostile organization refuses to carry out the requested transfer."
+msgstr "Враждебная организация отказывается проводить заказанное перемещение."
+
+msgid "January,"
+msgstr "Январь"
+
+msgid "February,"
+msgstr "Февраль"
+
+msgid "March,"
+msgstr "Март"
+
+msgid "April,"
+msgstr "Апрель"
+
+msgid "May,"
+msgstr "Май"
+
+msgid "June,"
+msgstr "Июнь"
+
+msgid "July,"
+msgstr "Июль"
+
+msgid "August,"
+msgstr "Август"
+
+msgid "September,"
+msgstr "Сентябрь"
+
+msgid "October,"
+msgstr "Октябрь"
+
+msgid "November,"
+msgstr "Ноябрь"
+
+msgid "December,"
+msgstr "Декабрь"
+
+msgid "Bio-Transport"
+msgstr "Биотранспорт"
+
+msgid "Brainsucker Pods"
+msgstr "Коконы мозгососа"
+
+msgid "Brainsucker Autopsy"
+msgstr "Вскрытие мозгососа"
+
+msgid "Brainsucker"
+msgstr "Мозгосос"
+
+msgid "Multiworm Egg Autopsy"
+msgstr "Вскрытие яйца мультичервя"
+
+msgid "Multiworm Egg"
+msgstr "Яйцо мультичервя"
+
+msgid "Multiworm Autopsy"
+msgstr "Вскрытие мультичервя"
+
+msgid "Multiworm"
+msgstr "Мультичервь"
+
+msgid "Hyperworm Autopsy"
+msgstr "Вскрытие гиперчервя"
+
+msgid "Hyperworm"
+msgstr "Гиперчервь"
+
+msgid "Chrysalis Autopsy"
+msgstr "Вскрытие кокона"
+
+msgid "Chrysalis"
+msgstr "Кокон"
+
+msgid "Anthropod Autopsy"
+msgstr "Вскрытие антропода"
+
+msgid "Anthropod"
+msgstr "Антропод"
+
+msgid "Psimorph Autopsy"
+msgstr "Вскрытие псиморфа"
+
+msgid "Psimorph"
+msgstr "Псиморф"
+
+msgid "Spitter Autopsy"
+msgstr "Вскрытие спиттера"
+
+msgid "Spitter"
+msgstr "Спиттер"
+
+msgid "Megaspawn Autopsy"
+msgstr "Вскрытие мегаплода"
+
+msgid "Megaspawn"
+msgstr "Мегаплод"
+
+msgid "Popper Autopsy"
+msgstr "Вскрытие поппера"
+
+msgid "Popper"
+msgstr "Поппер"
+
+msgid "Skeletoid Autopsy"
+msgstr "Вскрытие скелетоида"
+
+msgid "Skeletoid"
+msgstr "Скелетоид"
+
+msgid "Micronoid Autopsy"
+msgstr "Исследование погибших микроноидов"
+
+msgid "Micronoid"
+msgstr "Микроноид"
+
+msgid "Queenspawn Autopsy"
+msgstr "Вскрытие королевы"
+
+msgid "Queenspawn"
+msgstr "Королева"
+
+msgid "Overspawn Autopsy"
+msgstr "Вскрытие сверхплода"
+
+msgid "The Alien Genetic Structure"
+msgstr "Генетическая структура пришельцев"
+
+msgid "The Alien Life Cycle"
+msgstr "Жизненный цикл пришельцев"
+
+msgid "The Real Alien Threat"
+msgstr "Истинная угроза пришельцев"
+
+msgid "Biological Warfare"
+msgstr "Биологическое оружие"
+
+msgid "Toxin Type B"
+msgstr "Токсин типа B"
+
+msgid "Toxin Type C"
+msgstr "Токсин типа C"
+
+msgid "Alien Gas"
+msgstr "Газ для борьбы с пришельцами"
+
+msgid "Disruptor Armor"
+msgstr "Расщепляющий бронекостюм"
+
+msgid "Disruptor Inversion Bomb"
+msgstr "Инверсионная расщепляющая бомба"
+
+msgid "Stasis Field Bomb"
+msgstr "Бомба, генерирующая стазис-поле"
+
+msgid "X-COM Advanced Control System"
+msgstr "Улучшенная система управления X-COM"
+
+msgid "Alien Propulsion System"
+msgstr "Энергетическая установка пришельцев"
+
+msgid "Alien Control System"
+msgstr "Система управления пришельцев"
+
+msgid "Alien Energy Source"
+msgstr "Источник энергии пришельцев"
+
+msgid "UFO type 1"
+msgstr "НЛО Тип 1"
+
+msgid "UFO type 2"
+msgstr "НЛО Тип 2"
+
+msgid "UFO type 3"
+msgstr "НЛО Тип 3"
+
+msgid "UFO type 4"
+msgstr "НЛО Тип 4"
+
+msgid "UFO type 5"
+msgstr "НЛО Тип 5"
+
+msgid "UFO type 6"
+msgstr "НЛО Тип 6"
+
+msgid "UFO type 7"
+msgstr "НЛО Тип 7"
+
+msgid "UFO type 8"
+msgstr "НЛО Тип 8"
+
+msgid "UFO type 9"
+msgstr "НЛО Тип 9"
+
+msgid "UFO type 10"
+msgstr "НЛО Тип 10"
+
+msgid "Alien building"
+msgstr "Здание пришельцев"
+
+msgid "One way to win"
+msgstr "Единственный путь к победе"
+
+msgid ""
+"The mysterious atmospheric phenomenon from which the UFOs are emerging "
+"requires urgent attention. We must find out where the Alien craft are coming"
+" from."
+msgstr "Таинственное атмосферное явление, из которого появляются НЛО, требует пристального внимания. Мы должны выяснить, откуда прилетают корабли пришельцев."
+
+msgid "We must analyze the data from our Alien Dimension probe."
+msgstr "Мы должны проанализировать данные, полученные межразмерным зондом."
+
+msgid ""
+"We need to build an automated device that can be sent through a Dimension "
+"gate. This will provide invaluable data which can prepare us for manned "
+"missions."
+msgstr "Мы должны создать автоматизированный аппарат, который сможем отправить через врата между измерениями. Он должен предоставить нам бесценные данные, которые позволят нам подготовиться к пилотируемому полету."
+
+msgid ""
+"The capture and study of live Alien specimens will help us understand the "
+"nature of the Alien threat. In order to do this we need an inter-dimensional"
+" transport vehicle that can contain and sustain Alien life forms."
+msgstr "Захват и изучение живых образцов пришельцев поможет нам понять природу инопланетной угрозы. Чтобы этого добиться, нам нужен межразмерный транспортный корабль, способный удерживать и обеспечивать существование инопланетных форм жизни."
+
+msgid ""
+"A craft capable of carrying our agents into the Alien Dimensions is "
+"required. The vast Alien structures must be explored and studied. This will "
+"help us understand their function and their weaknesses."
+msgstr "Необходим аппарат, способный перемещать наших оперативников в измерение пришельцев. Необходимо также изучить огромные инопланетные сооружения. Это позволит нам понять их назначение и слабые места."
+
+msgid ""
+"In order to combat the increasing aggression and power of Alien craft we "
+"must build an inter-dimensional weapons platform."
+msgstr "Чтобы вести борьбу с растущей мощью и агрессивностью кораблей пришельцев, нам необходимо построить межразмерную боевую платформу."
+
+msgid ""
+"The Alien threat can only be stopped by destroying their ability to create "
+"Dimension gates. A full assault on the Alien Dimensions requires a craft of "
+"immense power."
+msgstr "Инопланетную угрозу можно устранить, лишь полностью лишив пришельцев возможности создавать врата между измерениями. Полноценный штурм измерения пришельцев требует постройки корабля огромной боевой мощи."
+
+msgid "These pods contain a dormant Alien creature."
+msgstr "В этих капсулах содержится спящее инопланетное существо."
+
+msgid ""
+"This small Alien creature has been seen to attack humans by jumping on the "
+"head and gripping with all its limbs."
+msgstr "Люди замечали, что это небольшое инопланетное существо нападает на людей, прыгая им на голову и охватывая ее всеми конечностями."
+
+msgid ""
+"A live Brainsucker is a valuable specimen - we must research it as soon as "
+"possible."
+msgstr "Живой мозгосос - ценный экземпляр. Мы должны изучить его как можно скорее."
+
+msgid "This stationary Alien life form appears to be some form of Alien egg."
+msgstr "Эта неподвижная форма жизни пришельцев, похоже, представляет собой разновидность яйца."
+
+msgid ""
+"A live Multiworm egg gives us an excellent opportunity to observe the Alien "
+"life cycle in progress."
+msgstr "Живое яйцо мультичервя дает нам отличную возможность наблюдать в процессе жизненный цикл пришельцев."
+
+msgid ""
+"The Multiworm corpse decays rapidly, consumed by its own defense mechanisms."
+" If research is not undertaken soon then we will not be able to preserve the"
+" remains."
+msgstr "Тело мультичервя быстро распадается из-за действия его собственных защитных механизмов. Если мы в ближайшее время не начнем исследование, нам не удастся сохранить останки."
+
+msgid ""
+"A live Multiworm is a rare catch and must be studied immediately as it is a "
+"highly unstable life form."
+msgstr "Живой мультичервь - это редкий и удачный улов. Необходимо начать его исследования как можно скорее, поскольку это крайне нестабильная форма жизни."
+
+msgid ""
+"The Hyperworm corpse is extremely heavy for its size and appears to be a "
+"primitive creature."
+msgstr "Тело гиперчервя обладает крайне большим весом для его размеров. Похоже, что это примитивное создание."
+
+msgid "The Hyperworm is a small, highly active carnivore."
+msgstr "Гиперчервь - мелкое высокоактивное плотоядное существо."
+
+msgid ""
+"The remains of an Alien Chrysalis produces pungent fumes as it decays "
+"rapidly."
+msgstr "Останки кокона пришельцев производят едкие испарения. Сам он быстро распадается."
+
+msgid ""
+"The study of a live Alien Chrysalis could represent a significant advance in"
+" our knowledge of the Alien life cycle."
+msgstr "Изучение живого кокона может привести к серьезному углублению наших знаний о жизненном цикле пришельцев."
+
+msgid ""
+"The Anthropod is the Alien creature that most resembles the human form."
+msgstr "Антропод - инопланетное существо, наиболее похожее на человека."
+
+msgid "The Anthropod is a robust humanoid Alien soldier."
+msgstr "Антропод - это сильный гуманоидный солдат пришельцев."
+
+msgid "The Psimorph creature is a large mass of tentacles."
+msgstr "Псиморф - огромная масса щупалец."
+
+msgid ""
+"A living Psimorph is an extremely dangerous entity which must be kept "
+"unconscious, otherwise its Psionic ability would result in subversion of our"
+" personnel."
+msgstr "Живой псиморф - крайне опасное существо, которое необходимо держать в бессознательном состоянии, иначе его пси-способности могут подчинить ему весь наш персонал."
+
+msgid ""
+"This ungainly creature has a huge funnel for propelling a deadly liquid."
+msgstr "Это неуклюжее существо имеет огромную воронку, через который выбрасывает смертоносную жидкость."
+
+msgid "The Spitter is humanoid in form but has a funnel shaped head."
+msgstr "Спиттер имеет гуманоидную форму, но обладает воронкообразной головой."
+
+msgid "An extremely large warrior creature."
+msgstr "Чрезвычайно большое существо, предназначенное для ведения боевых действий."
+
+msgid ""
+"Due to the size of the Megaspawn we need a lot of free space in the Alien "
+"Containment facility to hold it and an advanced Bio-lab to study it."
+msgstr "Из-за размеров мегаплода нам необходимо много свободного места в камерах для пришельцев для его содержания, а также улучшенная биолаборатория для его изучения."
+
+msgid "A small bipedal Alien creature."
+msgstr "Маленькое двуногое инопланетное существо."
+
+msgid "An extremely dangerous Alien that must be kept sedated."
+msgstr "Чрезвычайно опасный пришелец, которого необходимо держать под действием снотворного."
+
+msgid "A humanoid Alien with an exo-skeleton structure."
+msgstr "Гуманоидный пришелец с экзоскелетом."
+
+msgid "An intelligent, airborne humanoid Alien warrior."
+msgstr "Разумный летающий гуманоидный инопланетный воин."
+
+msgid "An unusual jelly like Alien life form."
+msgstr "Необычная желеобразная форма жизни пришельцев."
+
+msgid "A swarming amoebae-like Alien life form."
+msgstr "Амебообразное скопление инопланетных форм жизни."
+
+msgid "This is a huge egg laying Alien creature."
+msgstr "В этом огромном яйце содержится пришелец."
+
+msgid ""
+"The enormous hulk of the Queenspawn requires great effort to transport and "
+"contain."
+msgstr "Массивные останки королевы требуют больших усилий для перевозки и хранения."
+
+msgid "The Overspawn is an extremely dangerous Alien terror weapon."
+msgstr "Сверхплод - чрезвычайно опасное орудие террора пришельцев."
+
+msgid "A gigantic monster that has ravaged the city."
+msgstr "Чудовище, опустошившее город."
+
+msgid "Investigate the genetic relationships between Alien life forms."
+msgstr "Исследуйте генетическую связь между формами жизни пришельцев."
+
+msgid "Research the primary stages of the Alien life cycle."
+msgstr "Исследуйте начальные стадии жизненного цикла пришельцев."
+
+msgid ""
+"Investigate the source of the Alien intelligence and their secret purpose."
+msgstr "Исследуйте источник разума пришельцев и их тайные замыслы."
+
+msgid ""
+"The aim is to develop a toxin that specifically targets the early stages of "
+"the Alien life cycle."
+msgstr "Цель проекта - разработать токсин, предназначенный для борьбы с низшими стадиями жизненного цикла пришельцев."
+
+msgid "A toxin needs to be developed to combat the higher Alien life forms."
+msgstr "Необходимо разработать токсин для борьбы с высшими формами жизни пришельцев."
+
+msgid ""
+"A powerful Biological warfare weapon designed to target the Micronoid "
+"parasites."
+msgstr "Мощное биологическое оружие, разработанное для борьбы с микроноидами-паразитами."
+
+msgid ""
+"There is a possibility that a multi-toxin can be suspended in gaseous form, "
+"which would increase the efficiency of our Biological weaponry."
+msgstr "Есть вероятность, что мультитоксин может быть распылен в газообразном виде, что увеличит эффективность нашего биологического оружия."
+
+msgid "A security station using Alien disrupter technology."
+msgstr "Пост безопасности, в котором используется расщепляющее оружие пришельцев."
+
+msgid "For researching advanced Alien organic technology."
+msgstr "Для исследования улучшенных органических технологий пришельцев."
+
+msgid "For researching advanced Alien technology."
+msgstr "Для исследования улучшенных технологий пришельцев."
+
+msgid "To secure and research large or dangerous Alien life forms."
+msgstr "Для захвата и исследования крупных или опасных форм жизни пришельцев."
+
+msgid "Needed for building new vehicle types."
+msgstr "Необходимо для постройки новых видов техники."
+
+msgid "An Alien beam weapon."
+msgstr "Лучевое оружие пришельцев."
+
+msgid "An intelligent Alien proximity mine"
+msgstr "Умная мина пришельцев с датчиком движения"
+
+msgid "Fires Brainsucker pods."
+msgstr "Выстреливает капсулы мозгососа."
+
+msgid "An Alien organic weapon."
+msgstr "Органическое оружие пришельцев."
+
+msgid "Ammunition for an Alien weapon."
+msgstr "Боеприпасы для оружия пришельцев."
+
+msgid "An Alien guided missile weapon."
+msgstr "Система управляемых ракет пришельцев."
+
+msgid "An Alien guided missile."
+msgstr "Управляемая ракета пришельцев."
+
+msgid "A powerful Alien grenade."
+msgstr "Мощная граната пришельцев."
+
+msgid "An Alien energy shield."
+msgstr "Энергетический щит пришельцев."
+
+msgid "An Alien teleportation device."
+msgstr "Телепортационное устройство пришельцев."
+
+msgid "An Alien device which limits detection."
+msgstr "Устройство пришельцев, снижающее заметность."
+
+msgid ""
+"A device based on disruption field research which could be used to disable "
+"Alien disruption shields."
+msgstr "Устройство, принцип действия которого основан на результатах исследований технологии расщепляющего щита, предназначенное для выведения из строя расщепляющих щитов пришельцев."
+
+msgid "Personal armor can be developed based on disrupter research"
+msgstr "Личный бронекостюм может быть разработан на основе исследований расщепляющих технологий"
+
+msgid "A beam weapon deployed on Alien craft."
+msgstr "Лучевое оружие, установленное на корабле пришельцев."
+
+msgid "An Alien guided missile launched from Alien craft."
+msgstr "Управляемая ракета пришельцев, запущенная с их корабля."
+
+msgid "An Alien missile with an immobilizing effect."
+msgstr "Ракета пришельцев, обладающая способностью обездвиживать цель."
+
+msgid "A multiple warhead missile."
+msgstr "Ракета с разделяющейся боеголовкой."
+
+msgid "A superior weapons control system."
+msgstr "Более совершенная система управления вооружениями."
+
+msgid "For transporting Alien life forms."
+msgstr "Для перевозки инопланетных форм жизни."
+
+msgid "Reduced detection of vehicles."
+msgstr "Снижает заметность транспортных средств."
+
+msgid "Instantly transports a vehicle over short ranges."
+msgstr "Мгновенно переносит транспортное средство на короткие расстояния."
+
+msgid "Transports a vehicle between Dimensions."
+msgstr "Переносит транспортное средство между измерениями."
+
+msgid "Alien craft propulsion."
+msgstr "Энергетическая установка пришельцев."
+
+msgid "Alien craft guidance System."
+msgstr "Система управления кораблей пришельцев."
+
+msgid "Alien craft energy generator."
+msgstr "Генератор энергии кораблей пришельцев."
+
+msgid "Alien inter-dimensional craft"
+msgstr "Межразмерный корабль пришельцев"
+
+msgid "This research could reveal a weakness in the Alien defenses."
+msgstr "Это исследование способно помочь определить слабые места в защите пришельцев."
+
+msgid "We must discover a way to beat the Aliens once and for all"
+msgstr "Мы обязаны найти способ одолеть пришельцев раз и навсегда"
+
+msgid "Disruptor Inversion Bomb launcher"
+msgstr "Пусковая установка расщепляющих инверсионных бомб"
+
+msgid "Stasis Field Bomb launcher"
+msgstr "Пусковая установка бомб, генерирующих стазис-поле."
+
+msgid "Disruptor Multi-Bomb launcher"
+msgstr "Пусковая установка расщепляющих мультибомб"
+
+msgid "Toxin Type A"
+msgstr "Токсин Типа A"
+
+msgid "Heavy Launcher Alien Gas Missile"
+msgstr "Ракета с ХБЧ для тяжелой пусковой установки"
+
+msgid "Mini Launcher Alien Gas Missile"
+msgstr "Ракета с ХБЧ для малой пусковой установки"
+
+msgid "Disruptor Armor (legs)"
+msgstr "Расщепляющая броня (бронещитки для ног)"
+
+msgid "Disruptor Armor (torso)"
+msgstr "Расщепляющая броня (нагрудник)"
+
+msgid "Disruptor Armor (right arm)"
+msgstr "Расщепляющая броня (бронещитки для правой руки)"
+
+msgid "Disruptor Armor (left arm)"
+msgstr "Расщепляющая броня (бронещитки для левой руки)"
+
+msgid "Disruptor Armor (head)"
+msgstr "Расщепляющая броня (шлем)"
+
+msgid "The Senate considers X-COM to be a worthy ally."
+msgstr "Сенат считает, что X-COM станет отличным союзником."
+
+msgid "The Senate is content with our mutually beneficial relationship."
+msgstr "Сенат доволен взаимовыгодным сотрудничеством."
+
+msgid ""
+"The Senate is less favorable to the X-COM organization and thereis a danger "
+"that the relationship could deteriorate."
+msgstr "Отношение Сената к X-COM стало более скептическим, и существует опасность, что оно будет ухудшаться."
+
+msgid ""
+"The Senate is now openly hostile to X-COM and no further fundingwill be "
+"available."
+msgstr "Теперь Сенат открыто враждебно относится к X-COM; дальнейшее финансирование прекращается."
+
+msgid "Alien Egg"
+msgstr "Яйцо пришельцев"
+
+msgid "Micronoid Aggregate"
+msgstr "Скопление микроноидов"
+
+msgid "Rookie"
+msgstr "Новобранец"
+
+msgid "Squaddie"
+msgstr "Рядовой"
+
+msgid "Squad leader"
+msgstr "Командир отделения"
+
+msgid "Sergeant"
+msgstr "Сержант"
+
+msgid "Captain"
+msgstr "Капитан"
+
+msgid "Colonel"
+msgstr "Полковник"
+
+msgid "Commander"
+msgstr "Командующий"
+
+msgid "Ammo Clip"
+msgstr "Магазин"
+
+msgid "Structure Probe"
+msgstr "Зонд для исследования структуры"
+
+msgid "Vortex Analyser"
+msgstr "Анализатор вихря"
+
+msgid "Multitracker"
+msgstr "Следящая пушка с возможностью ведения нескольких целей"
+
+msgid "Medi-Kit"
+msgstr "Аптечка"
+
+msgid "BLANK"
+msgstr "ПУСТОЕ"
+
+msgid "1st"
+msgstr "1-е"
+
+msgid "2nd"
+msgstr "2-е"
+
+msgid "3rd"
+msgstr "3-е"
+
+msgid "4th"
+msgstr "4-е"
+
+msgid "5th"
+msgstr "5-е"
+
+msgid "6th"
+msgstr "6-е"
+
+msgid "7th"
+msgstr "7-е"
+
+msgid "8th"
+msgstr "8-е"
+
+msgid "9th"
+msgstr "9-е"
+
+msgid "10th"
+msgstr "10-е"
+
+msgid "11th"
+msgstr "11-е"
+
+msgid "12th"
+msgstr "12-е"
+
+msgid "13th"
+msgstr "13-е"
+
+msgid "14th"
+msgstr "14-е"
+
+msgid "15th"
+msgstr "15-е"
+
+msgid "16th"
+msgstr "16-е"
+
+msgid "17th"
+msgstr "17-е"
+
+msgid "18th"
+msgstr "18-е"
+
+msgid "19th"
+msgstr "19-е"
+
+msgid "20th"
+msgstr "20-е"
+
+msgid "21st"
+msgstr "21-е"
+
+msgid "22nd"
+msgstr "22-е"
+
+msgid "23rd"
+msgstr "23-е"
+
+msgid "24th"
+msgstr "24-е"
+
+msgid "25th"
+msgstr "25-е"
+
+msgid "26th"
+msgstr "26-е"
+
+msgid "27th"
+msgstr "27-е"
+
+msgid "28th"
+msgstr "28-е"
+
+msgid "29th"
+msgstr "29-е"
+
+msgid "30th"
+msgstr "30-е"
+
+msgid "31st"
+msgstr "31-е"
+
+msgid "Monday"
+msgstr "Понедельник"
+
+msgid "Tuesday"
+msgstr "Вторник"
+
+msgid "Wednesday"
+msgstr "Среда"
+
+msgid "Thursday"
+msgstr "Четверг"
+
+msgid "Friday"
+msgstr "Пятница"
+
+msgid "Saturday"
+msgstr "Суббота"
+
+msgid "Sunday"
+msgstr "Воскресенье"
+
+msgid "Click on building to buy"
+msgstr "Нажмите на здание, чтобы купить его"
+
+msgid "Money = $"
+msgstr "Деньги = $"
+
+msgid "This Building will cost $%d"
+msgstr "Стоимость здания составит %d $"
+
+msgid "Enter Name>"
+msgstr "Введите название>"
+
+msgid "Cost to build"
+msgstr "Стоимость постройки"
+
+msgid "Days to build"
+msgstr "Продолжительность строительства, дней"
+
+msgid "Maintenance cost"
+msgstr "Расходы на содержание"
+
+msgid "Facility:"
+msgstr "Сооружение:"
+
+msgid "Number in base"
+msgstr "Количество на базе"
+
+msgid "Can't destroy: living quarters in use."
+msgstr "Нельзя снести: жилые помещения используются."
+
+msgid "= Accommodation in base"
+msgstr "= Жилое пространство на базе"
+
+msgid "Number living on base"
+msgstr "Число проживающих на базе"
+
+msgid "-> Fraction of accommodation in use"
+msgstr "-> Процент занятого жилого пространства"
+
+msgid "Can't destroy: storage in use."
+msgstr "Невозможно снести: склады используются."
+
+msgid "= Storage space in base"
+msgstr "= Свободное место на складах на базе"
+
+msgid "Storage space used"
+msgstr "Занятое свободное место на складах"
+
+msgid "-> Fraction of storage space used"
+msgstr "-> Процент занятого места на складах"
+
+msgid "= Number of beds"
+msgstr "= Число коек"
+
+msgid "Number of patients"
+msgstr "Число пациентов"
+
+msgid "-> Efficiency per patient"
+msgstr "-> Эффективность на пациента"
+
+msgid "= Number of places"
+msgstr "= Число мест"
+
+msgid "Number using the facilities"
+msgstr "Число использующих модуль"
+
+msgid "-> Efficiency per user"
+msgstr "-> Эффективность на пользователя"
+
+msgid "Bio-lab space in base"
+msgstr "Места в биолаборатории на базе"
+
+msgid "No project assigned"
+msgstr "Не назначено проектов"
+
+msgid "Not assigned to lab"
+msgstr "Не закреплен за лабораторией"
+
+msgid "Quantum lab space in base"
+msgstr "Места в квантовой лаборатории на базе"
+
+msgid "Not assigned to workshop"
+msgstr "Не закреплен за мастерскими"
+
+msgid "-> Fraction of Quantum lab space assigned"
+msgstr "-> Процент выделенного места в квантовой лаборатории"
+
+msgid "Can't destroy: containment space in use."
+msgstr "Невозможно снести: пространство камер используется."
+
+msgid "= Alien Containment space"
+msgstr "= Места в камерах для пришельцев"
+
+msgid "Containment space used"
+msgstr "Использовано места в камерах для пришельцев"
+
+msgid "-> Fraction of containment space used"
+msgstr "-> Процент использованного места в камерах"
+
+msgid "Can't destroy: advanced containment space in use."
+msgstr "Невозможно снести: пространство улучшенных камер используется."
+
+msgid "= Advanced Alien Containment space"
+msgstr "= Места в улучшенных камерах для пришельцев"
+
+msgid "Advanced containment space used"
+msgstr "Использовано места в улучшенных камерах для пришельцев"
+
+msgid "-> Fraction of advanced containment space used"
+msgstr "-> Процент использованного места в улучшенных камерах"
+
+msgid "Workshop space in base"
+msgstr " Свободное место в мастерских на базе"
+
+msgid "Workshop space assigned to projects"
+msgstr "Место в мастерских выделено проектам"
+
+msgid "-> Fraction of Workshop space assigned"
+msgstr "-> Процент выделенного места в мастерских"
+
+msgid "Destroy facility"
+msgstr "Снести сооружение"
+
+msgid "ALIEN CONTAINMENT"
+msgstr "Камеры для пришельцев"
+
+msgid "Space required"
+msgstr "Необходимое пространство"
+
+msgid "Space in base"
+msgstr "Пространства на базе"
+
+msgid "Advanced space required"
+msgstr "Необходимо пространство в улучшенных камерах"
+
+msgid "Advanced space in base"
+msgstr "Пространства в улучшенных камерах на базе"
+
+msgid "Type"
+msgstr "Тип"
+
+msgid "Size"
+msgstr "Размер"
+
+msgid "Quantity in Alien Containment"
+msgstr "Количество в камерах пришельцев"
+
+msgid "To be Destroyed"
+msgstr "Подлежит уничтожению"
+
+msgid "Quantity in Advanced Alien Containment"
+msgstr "Количество в улучшенных камерах пришельцев"
+
+msgid "Alive"
+msgstr "Живой"
+
+msgid "Dead"
+msgstr "Мертвый"
+
+msgid "Space Exceeded"
+msgstr "Превышен объем свободного пространства"
+
+msgid "Alien Containment space exceeded. Destroy more Aliens!"
+msgstr "Превышен объем камер пришельцев. Уничтожьте больше пришельцев!"
+
+msgid "ALIEN STRUCTURE"
+msgstr "СООРУЖЕНИЕ ПРИШЕЛЬЦЕВ"
+
+msgid "Adjust Wage"
+msgstr "Изменить зарплату"
+
+msgid "No advice at this time."
+msgstr "В данный момент рекомендации отсутствуют."
+
+msgid "You have to reduce wages to become profitable."
+msgstr "Вы должны снизить зарплаты, чтобы восстановить рентабельность."
+
+msgid "You should take on more staff if you wish to be productive."
+msgstr "Вам нужно нанять больше персонала, чтобы увеличить производительность."
+
+msgid "Increase wages to attract more staff."
+msgstr "Повысьте зарплаты для привлечения персонала."
+
+msgid "Cut wages to improve your profit margin."
+msgstr "Снизьте зарплаты, чтобы увеличить размер прибыли."
+
+msgid "Economic Information"
+msgstr "Экономические сводки"
+
+msgid "Current mean wage"
+msgstr "Текущая средняя зарплата"
+
+msgid "Mean income per head:"
+msgstr "Текущий доход на человека:"
+
+msgid "Fixed costs at building:"
+msgstr "Фиксированные издержки на здание:"
+
+msgid "Weekly revenue generated:"
+msgstr "Полученная за неделю выручка:"
+
+msgid "Current staff level:"
+msgstr "Текущий уровень персонала:"
+
+msgid "Aliens in building"
+msgstr "Пришельцы в здании"
+
+msgid "Dimension:"
+msgstr "Измерение:"
+
+msgid "Charted Gates:"
+msgstr "Отмеченные врата:"
+
+msgid "Uncharted Gates:"
+msgstr "Неотмеченные врата:"
+
+msgid "Total Gate count:"
+msgstr "Общее количество врат:"
+
+msgid "Buildings:"
+msgstr "Здания:"
+
+msgid "UFOs:"
+msgstr "НЛО:"
+
+msgid "Weight:"
+msgstr "Вес:"
+
+msgid "Protection rating:"
+msgstr "Рейтинг защиты:"
+
+msgid "Reload time:"
+msgstr "Время перезарядки"
+
+msgid "n/a"
+msgstr "отсутствует"
+
+msgid "Blast radius:"
+msgstr "Радиус взрыва:"
+
+msgid "Laser guided"
+msgstr "Управляемая по лазерному лучу"
+
+msgid "Accuracy:"
+msgstr "Точность:"
+
+msgid "Power:"
+msgstr "Мощность:"
+
+msgid "Recharge rate:"
+msgstr "Скорость перезарядки:"
+
+msgid "Location :"
+msgstr "Место:"
+
+msgid "Base :"
+msgstr "База:"
+
+msgid "Traveling by people tube"
+msgstr "Перемещение на общественном метро"
+
+msgid "Traveling by vehicle"
+msgstr "Перемещение транспортным средством"
+
+msgid "WARNING!"
+msgstr "ВНИМАНИЕ!"
+
+msgid "Illegal vehicle"
+msgstr "Незаконное транспортное средство"
+
+msgid "Enter defensive diplomatic negotiations with:"
+msgstr "Начать осторожные дипломатические переговоры с:"
+
+msgid "Diplomacy"
+msgstr "Дипломатия"
+
+msgid "Enter aggressive diplomatic negotiations with:"
+msgstr "Начать агрессивные дипломатические переговоры с:"
+
+msgid "Against:"
+msgstr "Против:"
+
+msgid ": allied with:"
+msgstr ": в альянсе с:"
+
+msgid ": formerly allied with:"
+msgstr ": ранее состояли в альянсе с:"
+
+msgid ": friendly with:"
+msgstr ": дружественны:"
+
+msgid ": formerly friemdly with:"
+msgstr ": ранее дружественны:"
+
+msgid ": neutral towards:"
+msgstr ": нейтральны к:"
+
+msgid ": formerly neutral towards:"
+msgstr ": ранее нейтральны к:"
+
+msgid ": unfriendly towards:"
+msgstr ": недружественны к:"
+
+msgid ": formerly unfriendly towards:"
+msgstr ": ранее недружественны к:"
+
+msgid ": hostile towards:"
+msgstr ": враждебны к:"
+
+msgid ": formerly hostile towards:"
+msgstr ": ранее враждебны к:"
+
+msgid ": Attitude unknown towards:"
+msgstr ": Неизвестно отношение к:"
+
+msgid "Available Funds $"
+msgstr "Доступные средства $"
+
+msgid ": is currently owned by:"
+msgstr ": сейчас принадлежит:"
+
+msgid "Function:"
+msgstr "Функция:"
+
+msgid "Current workforce:"
+msgstr "Текущая рабочая сила:"
+
+msgid "Current wage:"
+msgstr "Текущая зарплата:"
+
+msgid "Maximum workforce:"
+msgstr "Максимальная рабочая сила:"
+
+msgid "Fixed costs:"
+msgstr "Фиксированные издержки:"
+
+msgid "Current income:"
+msgstr "Текущий доход:"
+
+msgid "Potential income:"
+msgstr "Потенциальный доход:"
+
+msgid "Bidding"
+msgstr "Ставка"
+
+msgid "Would you like to take part in this auction?"
+msgstr "Желаете ли вы принять участие в аукционе?"
+
+msgid "Building up for auction:"
+msgstr "Здание выставляется на аукцион:"
+
+msgid "Auctioned by:"
+msgstr "Выставляется на аукцион:"
+
+msgid "Bidding begins at: $"
+msgstr "Начальная ставка: $"
+
+msgid "Going..."
+msgstr "Раз! Два! Три!"
+
+msgid "Last chance to bid..."
+msgstr "Последняя возможность сделать ставку..."
+
+msgid "Gone!!"
+msgstr "Продано!"
+
+msgid ": sold to:"
+msgstr ": продано:"
+
+msgid "for: $"
+msgstr "за: $"
+
+msgid "Sold!"
+msgstr "Продано!"
+
+msgid "No buyers"
+msgstr "Покупатели отсутствуют"
+
+msgid "No buyers found for this building."
+msgstr "Покупателей этого здания не найдено."
+
+msgid "General recruitment"
+msgstr "Общая вербовка"
+
+msgid "Income per capita:"
+msgstr "Доход на человека:"
+
+msgid "Mean wage in building:"
+msgstr "Средняя зарплата в здании:"
+
+msgid "Mean wage in city:"
+msgstr "Средняя зарплата в городе:"
+
+msgid "Number of applicants:"
+msgstr "Количество кандидатов:"
+
+msgid "Cost per applicant:"
+msgstr "Цена за кандидата:"
+
+msgid "Cost to recruit all applicants:"
+msgstr "Цена за всех кандидатов:"
+
+msgid "X-COM balance:"
+msgstr "Баланс X-COM:"
+
+msgid "DIPLOMATIC RIFT"
+msgstr "ДИПЛОМАТИЧЕСКИЕ ПРЕНИЯ"
+
+msgid "An alliance with X-COM has been requested by:"
+msgstr "Альянс с X-COM был предложен:"
+
+msgid "SCORE"
+msgstr "ОЧКОВ"
+
+msgid "CATEGORY"
+msgstr "КАТЕГОРИЯ"
+
+msgid "WEEK"
+msgstr "НЕДЕЛЯ"
+
+msgid "TOTAL"
+msgstr "ВСЕГО"
+
+msgid "Tactical Missions"
+msgstr "Тактические операции"
+
+msgid "Research Completed"
+msgstr "Исследование завершено"
+
+msgid "Alien Incidents in City"
+msgstr "Инцидентов с пришельцами в городе"
+
+msgid "UFOs Shot Down"
+msgstr "Сбито НЛО"
+
+msgid "X-COM Craft Shot Down"
+msgstr "Сбитых кораблей X-COM"
+
+msgid "UFO Incursions"
+msgstr "Вторжения НЛО"
+
+msgid "Damage to City"
+msgstr "Ущерб городу"
+
+msgid "Alien Buildings Destroyed"
+msgstr "Уничтожено зданий пришельцев"
+
+msgid "Total"
+msgstr "Всего"
+
+msgid ""
+"All selected units and craft have arrived at %s. Proceed with investigation?"
+" (%i units)"
+msgstr "Все выбранные оперативники и транспорт прибыли в %s. Начать исследование? (%i оперативников)"
+
+msgid "Commence Investigation"
+msgstr "Начать исследование"
+
+msgid "UFOPAEDIA"
+msgstr "НЛОПЕДИЯ"
+
+msgid "Constitution"
+msgstr "Прочность"
+
+msgid "Weight"
+msgstr "Вес"
+
+msgid "Passengers"
+msgstr "Пассажиры"
+
+msgid "Weapons space"
+msgstr "Место для вооружений"
+
+msgid "Weapons slots"
+msgstr "Оружейные подвески"
+
+msgid "Engine size"
+msgstr "Размер двигателя"
+
+msgid "Equipment space"
+msgstr "Место для оборудования"
+
+msgid "Construction cost"
+msgstr "Стоимость постройки"
+
+msgid "Weekly cost"
+msgstr "Стоимость недельного содержания"
+
+msgid "Capacity"
+msgstr "Грузоподъемность"
+
+msgid "Power"
+msgstr "Мощность"
+
+msgid "Top Speed"
+msgstr "Максимальная скорость"
+
+msgid "Damage"
+msgstr "Урон"
+
+msgid "Range"
+msgstr "Дальность"
+
+msgid "Fire Rate"
+msgstr "Скорострельность"
+
+msgid "r/s"
+msgstr "в/с"
+
+msgid "Velocity"
+msgstr "Скорость"
+
+msgid "Ammo capacity"
+msgstr "Боезапас"
+
+msgid "Cargo"
+msgstr "Груз"
+
+msgid "Aliens Held"
+msgstr "Пришельцев удерживается"
+
+msgid "Jamming"
+msgstr "Глушение"
+
+msgid "Shielding"
+msgstr "Включение щита"
+
+msgid "Cloaks Craft"
+msgstr "Маскировка полем"
+
+msgid "Teleports"
+msgstr "Телепортация"
+
+msgid "Dimension shifts"
+msgstr "Сдвиг измерения"
+
+msgid "Balance"
+msgstr "Баланс"
+
+msgid "Buildings"
+msgstr "Здания"
+
+msgid "Head:"
+msgstr "Глава:"
+
+msgid "Income"
+msgstr "Доход"
+
+msgid "Job:"
+msgstr "Работа:"
+
+msgid "Unclassified"
+msgstr "Без грифа \"Секретно\""
+
+msgid "Rank:"
+msgstr "Звание:"
+
+msgid "Base:"
+msgstr "База:"
+
+msgid "Missions"
+msgstr "Заданий"
+
+msgid "Kills"
+msgstr "Убийств"
+
+msgid "Wage"
+msgstr "Зарплата"
+
+msgid "Energy"
+msgstr "Энергия"
+
+msgid "Firing skill"
+msgstr "Навык стрельбы"
+
+msgid "Organization:"
+msgstr "Организация:"
+
+msgid "Apprentice"
+msgstr "Ученик"
+
+msgid "Worker"
+msgstr "Рабочий"
+
+msgid "Admin"
+msgstr "Администратор"
+
+msgid "Security"
+msgstr "Охранник"
+
+msgid "Management"
+msgstr "Менеджер"
+
+msgid "Director"
+msgstr "Директор"
+
+msgid "President"
+msgstr "Президент"
+
+msgid "Wage:"
+msgstr "Зарплата:"
+
+msgid "Residence:"
+msgstr "Местожительство:"
+
+msgid "Unknown"
+msgstr "Неизвестно"
+
+msgid "Hang out:"
+msgstr "Любимое место пребывания:"
+
+msgid "Work Place:"
+msgstr "Место работы:"
+
+msgid "Owned Buildings:"
+msgstr "Принадлежащие здания:"
+
+msgid "Select:"
+msgstr "Выберите:"
+
+msgid "Select Vehicle/Person:"
+msgstr "Выберите ТС/человека:"
+
+msgid "Car Number"
+msgstr "Номер автомобиля"
+
+msgid "Person Number"
+msgstr "Номер человека"
+
+msgid "Range:"
+msgstr "Дальность:"
+
+msgid "Rounds:"
+msgstr "Кол-во патронов:"
+
+msgid "Wounded"
+msgstr "Ранен"
+
+msgid "Not assigned to training"
+msgstr "Не отправлен на тренировку"
+
+msgid "Psionic training (efficiency="
+msgstr "Пси-тренировка (эффективность="
+
+msgid "Combat training (efficiency="
+msgstr "Тренировка боевых навыков (эффективность="
+
+msgid "Traveling to:"
+msgstr "Перемещение в:"
+
+msgid "map point"
+msgstr "точка на карте"
+
+msgid "VIP spotted:"
+msgstr "Замечена ВИП-персона"
+
+msgid "Spotted by Agent:"
+msgstr "Замечена оперативником:"
+
+msgid "Do you wish to tail this VIP?"
+msgstr "Вы хотите следить за этой ВИП-персоной?"
+
+msgid "VIP spotted"
+msgstr "Замечена ВИП-персона"
+
+msgid "Diplomatic relations for:"
+msgstr "Дипломатические отношения для:"
+
+msgid "Espionage by Agent:"
+msgstr "Шпионаж со стороны оперативника:"
+
+msgid "Do you wish to continue espionage?"
+msgstr "Вы хотите продолжить шпионаж?"
+
+msgid "Diplomatic relations determined"
+msgstr "Определены дипломатические отношения"
+
+msgid "You do not have enough:"
+msgstr "У вас недостаточно:"
+
+msgid "Money"
+msgstr "Денег"
+
+msgid "Storage Space"
+msgstr "Места на складах"
+
+msgid "No Project"
+msgstr "Не назначен проект"
+
+msgid "Total Skill:"
+msgstr "Общий навык:"
+
+msgid "Which screen?"
+msgstr "На какой экран?"
+
+msgid "Which screen would you like to go to?"
+msgstr "На какой экран вы бы хотели перейти?"
+
+msgid "Number to make"
+msgstr "Производимое количество"
+
+msgid "Number made:"
+msgstr "Произведенное количество:"
+
+msgid "Biochemistry research at:"
+msgstr "Биохимическое исследование на:"
+
+msgid "Quantum physics research at:"
+msgstr "Исследование по квантовой физике на:"
+
+msgid "Engineering at:"
+msgstr "Инженерный проект на:"
+
+msgid "Select project:"
+msgstr "Выберите проект:"
+
+msgid "Select product to make:"
+msgstr "Выберите производимый продукт:"
+
+msgid "Lots"
+msgstr "Партии"
+
+msgid "Item required:"
+msgstr "Необходим предмет:"
+
+msgid "Amount required"
+msgstr "Необходимое количество"
+
+msgid "Amount in stores"
+msgstr "Количество на складах"
+
+msgid "Cost"
+msgstr "Стоимость"
+
+msgid "Research project completed:"
+msgstr "Проект иссследования выполнен:"
+
+msgid "Do you wish to view the UFOpaedia report?"
+msgstr "Вы хотите просмотреть статью из НЛОпедии?"
+
+msgid "Manufacture Completed"
+msgstr "Производство завершено"
+
+msgid "Do you wish to reassign the Workshop?"
+msgstr "Вы действительно хотите переназначить проект в мастерских?"
+
+msgid "Response range (radius):"
+msgstr "Радиус ответных действий:"
+
+msgid "Preservation level:"
+msgstr "Уровень охраны:"
+
+msgid "Altitude:"
+msgstr "Высота:"
+
+msgid "Empty saved game slot"
+msgstr "Пустой слот сохранения"
+
+msgid "Base 1"
+msgstr "База 1"
+
+msgid ": Insufficient ammunition/fuel in stores:"
+msgstr "Недостаточно боеприпасов/топлива на складах:"
+
+msgid "Fuel"
+msgstr "Топливо"
+
+msgid "Reload time"
+msgstr "Время перезарядки"
+
+msgid "Ammo type"
+msgstr "Тип боеприпасов"
+
+msgid "Travelling"
+msgstr "Перемещение"
+
+msgid "Location:"
+msgstr "Место:"
+
+msgid "Acceleration"
+msgstr "Ускорение"
+
+msgid "Deceleration"
+msgstr "Замедление"
+
+msgid "Malfunctioning"
+msgstr "Неисправность"
+
+msgid "Out of Ammo"
+msgstr "Закончились боеприпасы"
+
+msgid "Reloading"
+msgstr "Перезарядка"
+
+msgid "Ready to Fire"
+msgstr "Готов открыть огонь"
+
+msgid "ALERT"
+msgstr "ТРЕВОГА"
+
+msgid "At:"
+msgstr "В:"
+
+msgid "Select units to investigate:"
+msgstr "Выберите оперативников для проведения исследования:"
+
+msgid "Building owner:"
+msgstr "Владелец здания:"
+
+msgid "Unit"
+msgstr "Оперативник"
+
+msgid "Rank"
+msgstr "Звание"
+
+msgid "Location"
+msgstr "Расположение"
+
+msgid "Destination"
+msgstr "Пункт назначения"
+
+msgid "Not parked"
+msgstr "Не припарковано"
+
+msgid "Map point:"
+msgstr "Точка на карте:"
+
+msgid "No Psi-gyms in base"
+msgstr "На базе нет пси-залов"
+
+msgid "No training facilities in base"
+msgstr "На базе нет тренировочных блоков"
+
+msgid "No Hostile Forces Discovered"
+msgstr "Не обнаружено враждебных сил"
+
+msgid "Cargo arrived:"
+msgstr "Прибыл груз:"
+
+msgid "Cancel Orders"
+msgstr "Отменить указания"
+
+msgid "Cancel Alien Containment management orders. Are you sure?"
+msgstr "Отменить указания по камерам пришельцев? Вы уверены?"
+
+msgid "No Sale"
+msgstr "Не продается"
+
+msgid "RESEARCH AND MANUFACTURE"
+msgstr "ИССЛЕДОВАНИЯ И ПРОИЗВОДСТВО"
+
+msgid "Select laboratory or workshop"
+msgstr "Выберите лабораторию или мастерские"
+
+msgid "SELECT BIOCHEMISTRY PROJECT"
+msgstr "ВЫБЕРИТЕ ПРОЕКТ В ОБЛАСТИ БИОХИМИИ"
+
+msgid "SELECT QUANTUM PHYSICS PROJECT"
+msgstr "ВЫБЕРИТЕ ПРОЕКТ В ОБЛАСТИ КВАНТОВОЙ ФИЗИКИ"
+
+msgid "SELECT MANUFACTURING PROJECT"
+msgstr "ВЫБЕРИТЕ ПРОЕКТ ДЛЯ ПРОИЗВОДСТВА"
+
+msgid "Project"
+msgstr "Проект"
+
+msgid "Progress"
+msgstr "Прогресс"
+
+msgid "Skill"
+msgstr "Навык"
+
+msgid "Unit Cost"
+msgstr "Стоимость единицы"
+
+msgid "Skill Hours"
+msgstr "Навыкочасы"
+
+msgid "Orders Required"
+msgstr "Необходимы распоряжения"
+
+msgid ""
+"Explicit Alien Containment orders are required, concerning the Aliens to be "
+"destroyed."
+msgstr "Необходимы прямые распоряжения для камер пришельцев со списком пришельцев, подлежащих уничтожению."
+
+msgid "Project complete"
+msgstr "Проект завершен"
+
+msgid "This project is already complete."
+msgstr "Проект уже завершен."
+
+msgid "Project in progress"
+msgstr "Проект выполняется"
+
+msgid "This project is already in progress elsewhere."
+msgstr "Проект уже где-то осуществляется."
+
+msgid "Project too large"
+msgstr "Проект слишком велик"
+
+msgid "This project requires an advanced lab or workshop."
+msgstr "Для осуществления проекта необходима улучшенная лаборатория или улучшенные мастерские."
+
+msgid "Supplier:"
+msgstr "Поставщик:"
+
+msgid "Transferred goods have arrived:"
+msgstr "Перемещаемые товары прибыли:"
+
+msgid "Items from tactical combat zone have arrived:"
+msgstr "Прибыли образцы из зоны тактической операции:"
+
+msgid "Building Regulations"
+msgstr "Строительные нормы и правила"
+
+msgid ""
+"Regulation 44(1)(e) of the health and safety at work (labs and workshops) "
+"act (2074) prohibits the construction of more than 6 small or more than 4 "
+"large labs or workshops in any one basement. Contractors therefore refuse to"
+" carry out the proposed illegal construction work."
+msgstr "Регламент 44(1)(e) закона о здоровье и безопасности при проведении работ (в лабораториях и мастерских) от 2074 г. запрещает строительство более шести малых или более четырех больших лабораторий или мастерских в одном здании. Поэтому подрядчики отказываются проводить требуемые незаконные строительные работы."
+
+msgid ""
+"The proposed construction work is not possible with your available funds."
+msgstr "Требуемые строительные работы невозможно начать при текущем объеме денежных средств на счете."
+
+msgid "Production costs exceed your available funds."
+msgstr "Стоимость производства превышает имеющуюся сумму средств."
+
+msgid "There is insufficient space to store production output of this item."
+msgstr "Недостаточно места на складах для хранения требуемого количества единиц производства этого продукта."
+
+msgid "Manufacturing halted"
+msgstr "Производство прекращено"
+
+msgid "Can't destroy: Biochemistry lab in use."
+msgstr "Невозможно снести: биолаборатория задействована в данный момент."
+
+msgid "Can't destroy: Quantum physics lab in use."
+msgstr "Невозможно снести: лаборатория квантовой физики задействована в данный момент."
+
+msgid "Can't destroy: workshop in use."
+msgstr "Невозможно снести: мастерские используются."
+
+msgid "Facility in use"
+msgstr "Сооружение используется"
+
+msgid "Cannot investigate as building destroyed"
+msgstr "Невозможно провести исследование, поскольку здание разрушено"
+
+msgid "Cannot raid as building destroyed"
+msgstr "Невозможно провести рейд, поскольку здание разрушено"
+
+msgid "Completion status:"
+msgstr "Статус строительства:"
+
+msgid "Facility completed"
+msgstr "Сооружение построено"
+
+msgid "Usage"
+msgstr "Использование"
+
+msgid "Lab size needed"
+msgstr "Размер необходимой лаборатории"
+
+msgid "Small"
+msgstr "Малый"
+
+msgid "Large"
+msgstr "Большой"
+
+msgid "MESSAGE HISTORY"
+msgstr "ИСТОРИЯ СООБЩЕНИЙ"
+
+msgid "BASES"
+msgstr "БАЗЫ"
+
+msgid "Confirm Alien Containment Orders"
+msgstr "Подтвердить распоряжения по камерам для пришельцев"
+
+msgid "Alien specimens from tactical combat zone have arrived:"
+msgstr "Прибыли образцы пришельцев из зоны тактической операции:"
+
+msgid "Transferred Alien specimens have arrived:"
+msgstr "Перемещаемые образцы пришельцев прибыли:"
+
+msgid "Alien specimens arrived:"
+msgstr "Прибыли образцы пришельцев:"
+
+msgid "No Alien Containment Facility"
+msgstr "Отсутствуют камеры для пришельцев"
+
+msgid "Quantity:"
+msgstr "Количество:"
+
+msgid "Planning Permission Denied"
+msgstr "Разрешение на строительство не дано"
+
+msgid ""
+"Planning permission is denied for this proposed extension to the base, on "
+"the grounds that the additional excavations required would seriously weaken "
+"the foundations of the building."
+msgstr "Разрешение на строительство по данному проекту расширения базы не дано, поскольку необходимая дополнительная выемка грунта серьезно ослабит фундамент здания."
+
+msgid "Area Occupied By Existing Facility"
+msgstr "Участок занят существующим сооружением"
+
+msgid ""
+"Existing facilities in this area of the base must be destroyed before "
+"construction work can begin."
+msgstr "Необходимо снести существующие на данном участке базы сооружения, чтобы начать строительство."
+
+msgid "Transfer"
+msgstr "Перевод"
+
+msgid "At least two bases are required before transfers become possible."
+msgstr "Необходимо как минимум две базы для перевода."
+
+msgid "Alien Containment is not in use at this base."
+msgstr "Камеры для пришельцев на этой базе не используются."
+
+msgid "Complete"
+msgstr "Выполнено"
+
+msgid "OFFER CASH SETTLEMENT"
+msgstr "ПРЕДЛОЖИТЬ НАЛИЧНЫЙ РАСЧЕТ"
+
+msgid "UFO"
+msgstr "НЛО"
+
+msgid "No Entrance"
+msgstr "Входа нет"
+
+msgid ""
+"You will lose any equipment left on the floor. Are you sure you wish to "
+"leave this agent?"
+msgstr "Вы потеряете все оставшееся на земле снаряжение. Вы уверены, что хотите покинуть зону этим агентом?"
+
+msgid "BUY NEW BASE"
+msgstr "КУПИТЬ НОВУЮ БАЗУ"
+
+msgid "Market Announcement"
+msgstr "Новости рынка"
+
+msgid ""
+"The following items have come on to the market and can now be purchased, "
+"subject to availability:"
+msgstr "Следующие товары выставлены на продажу, и их можно приобрести, если они есть в наличии:"
+
+msgid "(Android training not possible)"
+msgstr "(Тренировка андроидов невозможна)"
+
+msgid "Buy This Building"
+msgstr "Купить это здание"
+
+msgid "Equip vehicle"
+msgstr "Снарядить транспортное средство"
+
+msgid "Equip agent"
+msgstr "Снарядить оперативника"
+
+msgid "Hire & Fire"
+msgstr "Найм и увольнение"
+
+msgid "Return"
+msgstr "Вернуться"
+
+msgid "Buy stuff"
+msgstr "Купить"
+
+msgid "Research and manufacture"
+msgstr "Исследования и производство"
+
+msgid "Destroy facility here"
+msgstr "Снести здание здесь"
+
+msgid "Yes"
+msgstr "Да"
+
+msgid "No"
+msgstr "Нет"
+
+msgid "Exit"
+msgstr "Выход"
+
+msgid "UFOpaedia"
+msgstr "НЛОпедия"
+
+msgid "Base"
+msgstr "База"
+
+msgid "Equip"
+msgstr "Снарядить"
+
+msgid "Observe VIP's"
+msgstr "Посмотреть список ВИП-персон"
+
+msgid "Dimension Map"
+msgstr "Карта измерения"
+
+msgid "Save/Load game"
+msgstr "Сохранить/загрузить игру"
+
+msgid "Budget"
+msgstr "Бюджет"
+
+msgid "Investigate Building"
+msgstr "Исследовать здание"
+
+msgid "Raid Building"
+msgstr "Совершить рейд на здание"
+
+msgid "Spy on Organization"
+msgstr "Следить за организацией"
+
+msgid "Show available equipment"
+msgstr "Показать доступное снаряжение"
+
+msgid "Show available armor"
+msgstr "Показать доступные бронекостюмы"
+
+msgid "Bid"
+msgstr "Сделать ставку"
+
+msgid "No Bid"
+msgstr "Спасовать"
+
+msgid "Index"
+msgstr "Каталог"
+
+msgid "Base Facilities"
+msgstr "Модули базы"
+
+msgid "Organizations"
+msgstr "Организации"
+
+msgid "VIP's"
+msgstr "ВИП-персоны"
+
+msgid "Alien Craft"
+msgstr "Корабль пришельцев"
+
+msgid "Staff"
+msgstr "Персонал"
+
+msgid "Pause"
+msgstr "Пауза"
+
+msgid "Slow speed"
+msgstr "Низкая скорость"
+
+msgid "Normal speed"
+msgstr "Нормальная скорость"
+
+msgid "Double speed"
+msgstr "Удвоенная скорость"
+
+msgid "Quadruple speed"
+msgstr "Учетверенная скорость"
+
+msgid "Ultra fast"
+msgstr "Сверхвысокая скорость"
+
+msgid "Switch map view"
+msgstr "Переключить режим карты"
+
+msgid "Options"
+msgstr "Настройки"
+
+msgid "Dimension map"
+msgstr "Карта измерения"
+
+msgid "Bases tab"
+msgstr "Вкладка \"Базы\""
+
+msgid "X-COM Vehicles tab"
+msgstr "Вкладка \"Транспортные средства X-COM\""
+
+msgid "Agent tab"
+msgstr "Вкладка \"Оперативники\""
+
+msgid "Biochemistry tab"
+msgstr "Вкладка \"Биохимия\""
+
+msgid "Engineering tab"
+msgstr "Вкладка \"Производство\""
+
+msgid "Quantum physics tab"
+msgstr "Вкладка \"Квантовая физика\""
+
+msgid "Message history"
+msgstr "История сообщений"
+
+msgid "Center on message"
+msgstr "Центрировать на сообщении"
+
+msgid "Switch camera mode"
+msgstr "Переключить режим камеры"
+
+msgid "Bases"
+msgstr "Базы"
+
+msgid "Buy new base"
+msgstr "Купить новую базу"
+
+msgid "Buy/Sell"
+msgstr "Купля/продажа"
+
+msgid "Hire/Fire staff"
+msgstr "Найм/увольнение сотрудников"
+
+msgid "Go to building"
+msgstr "Отправиться в здание"
+
+msgid "Attack hostile unit"
+msgstr "Атаковать враждебное транспортное средство"
+
+msgid "Go to map point"
+msgstr "Отправиться в точку на карте"
+
+msgid "Go into Dimension Gate"
+msgstr "Отправиться во врата между измерениями"
+
+msgid "Attack building"
+msgstr "Напасть на здание"
+
+msgid "Return to base"
+msgstr "Вернуться на базу"
+
+msgid "Rules of engagement"
+msgstr "Правила применения оружия"
+
+msgid "Manual control"
+msgstr "Ручное управление"
+
+msgid "Psi-Training"
+msgstr "Пси-тренировка"
+
+msgid "Combat Training"
+msgstr "Тренировка боевых навыков"
+
+msgid "Assign project"
+msgstr "Назначить проект"
+
+msgid "Stop project"
+msgstr "Остановить проект"
+
+msgid "Set all vehicles"
+msgstr "Задействовать все транспортные средства"
+
+msgid "Set all of same make"
+msgstr "Задействовать все ТС одного класса"
+
+msgid "RETURN"
+msgstr "ВЕРНУТЬСЯ"
+
+msgid "Info"
+msgstr "Информация"
+
+msgid "Sell vehicle"
+msgstr "Продать транспорт"
+
+msgid "Comments"
+msgstr "Комментарии"
+
+msgid "Ufopaedia"
+msgstr "НЛОпедия"
+
+msgid "Scroll Up"
+msgstr "Прокрутка вверх"
+
+msgid "Scroll Down"
+msgstr "Прокрутка вниз"
+
+msgid "Low altitude"
+msgstr "Малая высота"
+
+msgid "Medium altitude"
+msgstr "Средняя высота"
+
+msgid "High altitude"
+msgstr "Большая высота"
+
+msgid "Highest altitude"
+msgstr "Максимальная высота"
+
+msgid "Evasive"
+msgstr "Уклончивый"
+
+msgid "Defensive"
+msgstr "Защитный"
+
+msgid "Standard"
+msgstr "Стандартный"
+
+msgid "Aggressive"
+msgstr "Агрессивный"
+
+msgid "Vehicle location / passengers"
+msgstr "Расположение выбранного ТС / пассажиры"
+
+msgid "Unit location"
+msgstr "Расположение оперативника"
+
+msgid "Investigate building for Alien activity"
+msgstr "Изучить здание на активность пришельцев"
+
+msgid "Raid building"
+msgstr "Совершить рейд на здание"
+
+msgid "Send selected units to investigate incident"
+msgstr "Отправить указанных оперативников на расследование инцидента"
+
+msgid "Ignore this incident"
+msgstr "Игнорировать инцидент"
+
+msgid "Continue"
+msgstr "Продолжить"
+
+msgid "Center and pause game"
+msgstr "Центрировать и поставить игру на паузу"
+
+msgid "Scroll Left"
+msgstr "Прокрутка влево"
+
+msgid "Scroll Right"
+msgstr "Прокрутка вправо"
+
+msgid "Alien infiltration graph"
+msgstr "График проникновения пришельцев"
+
+msgid "Performance log"
+msgstr "Журнал производительности"
+
+msgid "Save game"
+msgstr "Сохранить игру"
+
+msgid "Load game"
+msgstr "Загрузить игру"
+
+msgid "Delete game"
+msgstr "Удалить игру"
+
+msgid "Hostile vehicles tab"
+msgstr "Вкладка \"Враждебные транспортные средства\""
+
+msgid "Select organization"
+msgstr "Выберите организацию"
+
+msgid "Select units"
+msgstr "Выберите оперативников"
+
+msgid "Select equipment"
+msgstr "Выберите снаряжение"
+
+msgid "Agent equipment"
+msgstr "Снаряжение оперативника"
+
+msgid "Airborne vehicle equipment/fuel"
+msgstr "Снаряжение / топливо ЛА"
+
+msgid "Road vehicle equipment/fuel"
+msgstr "Снаряжение / топливо дорожного ТС"
+
+msgid "X-COM agents"
+msgstr "Оперативники X-COM"
+
+msgid "Quantum physicists"
+msgstr "Квантовые физики"
+
+msgid "Buy"
+msgstr "Купить"
+
+msgid "Sell"
+msgstr "Продать"
+
+msgid "Softer"
+msgstr "Тише"
+
+msgid "Louder"
+msgstr "Громче"
+
+msgid "Organizations tab"
+msgstr "Вкладка \"Организации\""
+
+msgid "View all organizations"
+msgstr "Просмотреть все организации"
+
+msgid "View allied organizations"
+msgstr "Просмотреть организации-союзники"
+
+msgid "View friendly organizations"
+msgstr "Просмотреть дружественные организации"
+
+msgid "View neutral organizations"
+msgstr "Просмотреть нейтральные организации"
+
+msgid "View unfriendly organizations"
+msgstr "Просмотреть недружественные организации"
+
+msgid "View hostile organizations"
+msgstr "Просмотреть враждебные организации"
+
+msgid "Offer settlement"
+msgstr "Предложить уплату"
+
+msgid "Contain"
+msgstr "Содержит"
+
+msgid "Destroy"
+msgstr "Уничтожить"
+
+msgid "Keep on board"
+msgstr "Оставить на борту"
+
+msgid "Click on destination building for selected vehicle"
+msgstr "Кликните на здание, чтобы указать пункт назначения для выбранного ТС"
+
+msgid "Click on target vehicle for selected vehicle"
+msgstr "Кликните на цели (ТС) для выбранной боевой единицы"
+
+msgid "Click on destination map point for selected vehicle"
+msgstr "Кликните на точку на карте, чтобы указать пункт назначения для выбранного ТС"
+
+msgid "Click on destination Dimension Gate for selected vehicle"
+msgstr "Кликните на врата между измерениями, чтобы указать пункт назначения для выбранного ТС"
+
+msgid "Click on building for selected vehicle to attack"
+msgstr "Кликните на здание, чтобы указать цель атаки для выбранной боевой единицы"
+
+msgid "-<Not implemented (selmode==7)>-"
+msgstr "-<Not implemented (selmode==7)>-"
+
+msgid "-<Not implemented (selmode==8)>-"
+msgstr "-<Not implemented (selmode==8)>-"
+
+msgid "Manual control of vehicle"
+msgstr "Ручное управление транспортом"
+
+msgid "Select target vehicle for selected vehicle to fire at"
+msgstr "Выберите транспорт, по которому указанной боевой единице необходимо открыть огонь"
+
+msgid "Click on destination building for selected vehicles"
+msgstr "Кликните на здание, чтобы указать пункт назначения для выбранных ТС"
+
+msgid "Click on target vehicle for selected vehicles"
+msgstr "Кликните на цели (ТС) для выбранных боевых единиц"
+
+msgid "Click on destination map point for selected vehicles"
+msgstr "Кликните на точку на карте, чтобы указать пункт назначения для выбранных ТС"
+
+msgid "Click on destination Dimension Gate for selected vehicles"
+msgstr "Кликните на врата между измерениями, чтобы указать пункт назначения для выбранных ТС"
+
+msgid "Click on building for selected vehicles to attack"
+msgstr "Кликните на здание, чтобы указать цель для выбранных боевых единиц"
+
+msgid "-<Not implemented (selmode==7)(plural)>-"
+msgstr "-<Not implemented (selmode==7)(plural)>-"
+
+msgid "-<Not implemented (selmode==8)(plural)>-"
+msgstr "-<Not implemented (selmode==8)(plural)>-"
+
+msgid "Manual control of vehicles"
+msgstr "Ручное управление техникой"
+
+msgid "Select target vehicle for vehicles to fire at"
+msgstr "Выберите транспорт, по которому указанным боевым единицам необходимо открыть огонь"
+
+msgid "Click on destination building for selected person"
+msgstr "Кликните на здание, чтобы указать пункт назначения для выбранного человека"
+
+msgid "Click on destination building for selected people"
+msgstr "Кликните на здание, чтобы указать пункт назначения для выбранных людей"
+
+msgid "WEEKLY FUNDING ASSESSMENT"
+msgstr "ОЦЕНКА ЕЖЕНЕДЕЛЬНОГО ФИНАНСИРОВАНИЯ"
+
+msgid "Current income>"
+msgstr "Текущий доход>"
+
+msgid "Funding adjustment>"
+msgstr "Изменения в сумме выплат>"
+
+msgid ""
+"The Senate has declared total hostility to X-COM and there will be no "
+"further funding. Furthermore, the Senate will take any steps necessary to "
+"destroy the X-COM organization if it refuses to cease operation."
+msgstr "Сенат объявил, что расценивает X-COM как абсолютно враждебную организацию и полностью прекращает ее финансирование. Более того, Сенат предпримет все необходимые шаги для уничтожения X-COM, если та откажется прекратить свою деятельность."
+
+msgid ""
+"The Senate has an unfavorable attitude to X-COM and has reduced funding "
+"accordingly."
+msgstr "Сенат отрицательно настроен по отношению к X-COM и соответственно снизил финансирование."
+
+msgid ""
+"The Senate has a favorable attitude to X-COM and has increased funding "
+"accordingly."
+msgstr "Сенат положительно настроен по отношению к X-COM и соответственно повысил финансирование."
+
+msgid ""
+"The Senate considers the performance of X-COM to be so abysmal that it will "
+"cease funding from now on."
+msgstr "Сенат считает эффективность X-COM столь низкой, что с этого момента прекращает финансирование."
+
+msgid ""
+"The Senate is not pleased with the performance of X-COM and has reduced "
+"funding accordingly."
+msgstr "Сенат недоволен эффективностью X-COM и соответственно снизил финансирование."
+
+msgid ""
+"The Senate is pleased with the performance of X-COM and has increased "
+"funding accordingly."
+msgstr "Сенат доволен эффективностью X-COM и соответственно повысил финансирование."
+
+msgid ""
+"Unfortunately the Senate has to limit X-COM funding due to the poor state of"
+" government finances."
+msgstr "К сожалению, Сенат вынужден ограничить финансирование X-COM из-за плохого состояния государственного бюджета."
+
+msgid "Income for next week>"
+msgstr "Доход на следующей неделе>"
+
+msgid "Week"
+msgstr "Неделя"
+
+msgid "X-COM III Setup screen"
+msgstr "Экран настройки игры X-COM III"
+
+msgid "Start Campaign Game"
+msgstr "Начать кампанию"
+
+msgid "Load Saved Game"
+msgstr "Загрузить сохранение"
+
+msgid "Scenario Generator"
+msgstr "Генератор сценариев"
+
+msgid "Quit"
+msgstr "Выход"
+
+msgid "Warning"
+msgstr "Внимание!"
+
+msgid "CONTINUE"
+msgstr "ПРОДОЛЖИТЬ"
+
+msgid "QUIT"
+msgstr "ВЫХОД"
+
+msgid "Scenario Loaded >"
+msgstr "Сценарий загружен >"
+
+msgid "New scenario"
+msgstr "Новый сценарий"
+
+msgid "Load Scenario Generator Set-up"
+msgstr "Загрузить настройки генератора сценариев"
+
+msgid "Save Scenario Generator Set-up"
+msgstr "Сохранить настройки генератора сценариев"
+
+msgid "Play scenario"
+msgstr "Играть сценарий"
+
+msgid "Return to main menu"
+msgstr "Возврат в главное меню"
+
+msgid "Select map type"
+msgstr "Выберите тип карты"
+
+msgid "Seed"
+msgstr "Застроить"
+
+msgid "Toggle map size"
+msgstr "Сменить размер карты"
+
+msgid "Medium"
+msgstr "Средний"
+
+msgid "Deployment"
+msgstr "Размещение"
+
+msgid "Raid"
+msgstr "Рейд"
+
+msgid "Defend"
+msgstr "Оборона"
+
+msgid "Units"
+msgstr "Оперативники"
+
+msgid "Select Units"
+msgstr "Выберите оперативников"
+
+msgid "Select Equipment"
+msgstr "Выберите снаряжение"
+
+msgid "Enter filename to save as:"
+msgstr "Введите имя файла сохранения:"
+
+msgid "Select file to load:"
+msgstr "Выберите загружаемый файл:"
+
+msgid "Enter description of scenario:"
+msgstr "Введите описание сценария:"
+
+msgid "Select tactical area:"
+msgstr "Выберите зону боевых действий:"
+
+msgid "X-COM Agent"
+msgstr "Оперативник X-COM"
+
+msgid "X-COM Biochemist"
+msgstr "Биохимик X-COM"
+
+msgid "X-COM Mechanic"
+msgstr "Механик X-COM"
+
+msgid "X-COM Quantum Physicist"
+msgstr "Квантовый физик X-COM"
+
+msgid "Gang leader"
+msgstr "Главарь банды"
+
+msgid "Corporate Boss"
+msgstr "Глава корпорации"
+
+msgid "Cult Leader"
+msgstr "Религиозный лидер"
+
+msgid "Politician"
+msgstr "Политик"
+
+msgid "Chief of Police"
+msgstr "Начальник полиции"
+
+msgid "Corporate hood"
+msgstr "Сотрудник корпорации"
+
+msgid "Police"
+msgstr "Полицейский"
+
+msgid "Gangster"
+msgstr "Гангстер"
+
+msgid "Cultist"
+msgstr "Адепт культа"
+
+msgid "Building security"
+msgstr "Охранник здания"
+
+msgid "Android"
+msgstr "Андроид"
+
+msgid "Alien Grey"
+msgstr "Грей"
+
+msgid "Upper Class Female"
+msgstr "Женщина из высшего общества"
+
+msgid "Upper Class Male"
+msgstr "Мужчина из высшего общества"
+
+msgid "Civilian Female"
+msgstr "Гражданка"
+
+msgid "Civilian Male"
+msgstr "Гражданин"
+
+msgid "Lower Class Male"
+msgstr "Мужчина из низшего класса"
+
+msgid "Lower Class Female"
+msgstr "Женщина из низшего класса"
+
+msgid "Multiworm egg"
+msgstr "Яйцо мультичервя"
+
+msgid "FINANCE"
+msgstr "ФИНАНСЫ"
+
+msgid "Initial funds>"
+msgstr "Начальные средства>"
+
+msgid "EMPLOYEE TYPE"
+msgstr "ТИП РАБОТНИКА"
+
+msgid "QUANTITY"
+msgstr "КОЛИЧЕСТВО"
+
+msgid "WAGES"
+msgstr "ЗАРАБОТНАЯ ПЛАТА"
+
+msgid "MAINTENANCE"
+msgstr "РАСХОДЫ НА СОДЕРЖАНИЕ"
+
+msgid "TOTAL OVERHEADS>"
+msgstr "СОВОКУПНЫЕ НАКЛАДНЫЕ РАСХОДЫ>"
+
+msgid "Remaining funds>"
+msgstr "Оставшиеся средства>"
+
+msgid "Agents"
+msgstr "Оперативники"
+
+msgid "Owner>"
+msgstr "Владелец>"
+
+msgid "Function>"
+msgstr "Назначение>"
+
+msgid "Building Name>"
+msgstr "Название здания>"
+
+msgid "X-COM IS DEFEATED"
+msgstr "X-COM ПОТЕРПЕЛА ПОРАЖЕНИЕ"
+
+msgid "THE ALIENS ARE DEFEATED"
+msgstr "ПРИШЕЛЬЦЫ ПОБЕЖДЕНЫ"
+
+msgid "Final Score>"
+msgstr "Окончательный счет>"
+
+msgid ""
+"Due to bad debts the X-COM organization has been closed down. All operations"
+" have ceased, bases dismantled and personnel discharged. With no other hope "
+"for humanity the Aliens will inevitably conquer Earth."
+msgstr "Из-за больших долгов X-COM была закрыта. Все операции прекращены, базы разрушены, персонал распущен. Поскольку у человечества больше не осталось защитников, пришельцы неизбежно захватят Землю."
+
+msgid ""
+"All X-COM bases have been destroyed. All research data is lost and all "
+"personnel have left. With no other hope for humanity the Aliens will "
+"inevitably conquer Earth."
+msgstr "Все базы X-COM были уничтожены. Все данные по исследованиям потеряны. Поскольку у человечества больше не осталось защитников, пришельцы неизбежно захватят Землю."
+
+msgid ""
+"The Aliens have been defeated. With all Dimension Gates closed and their "
+"homeworld destroyed the Aliens cannot get through to our Dimension. We are "
+"victorious."
+msgstr "Пришельцы были побеждены. Все врата между измерениями закрыты, их родной мир уничтожен, поэтому они больше не смогут проникнуть в наше измерение. Мы победили."
+
+msgid "Game Options"
+msgstr "Игровые настройки"
+
+msgid "Save or load game"
+msgstr "Сохранить или загрузить игру"
+
+msgid "Current Score"
+msgstr "Текущий счет"
+
+msgid "Finance"
+msgstr "Финансы"
+
+msgid "SELECT DIFFICULTY"
+msgstr "ВЫБЕРИТЕ УРОВЕНЬ СЛОЖНОСТИ"
+
+msgid "Novice"
+msgstr "Новичок"
+
+msgid "Easy"
+msgstr "Легкий"
+
+msgid "Hard"
+msgstr "Тяжелый"
+
+msgid "Superhuman"
+msgstr "Сверхчеловек"
+
+msgid "OPTIONS"
+msgstr "НАСТРОЙКИ"
+
+msgid "Message toggles"
+msgstr "Переключатели сообщений"
+
+msgid "Overheads"
+msgstr "Накладные расходы"
+
+msgid "Auto-scroll"
+msgstr "Автопрокрутка"
+
+msgid "Master Volume"
+msgstr "Общая громкость"
+
+msgid "Sound Effects"
+msgstr "Звуковые эффекты"
+
+msgid "Test Left"
+msgstr "Проверить левый канал"
+
+msgid "Test Right"
+msgstr "Проверить правый канал"
+
+msgid "Swap"
+msgstr "Поменять каналы местами"
+
+msgid "Save or Load Game"
+msgstr "Сохранить или загрузить игру"
+
+msgid "Delete Saved Game"
+msgstr "Удалить сохраненную игру"
+
+msgid "Saving game"
+msgstr "Сохранение игры"
+
+msgid "Loading game"
+msgstr "Загрузка игры"
+
+msgid "Deleting saved game"
+msgstr "Идет удаление сохраненной игры"
+
+msgid "Overwrite Saved Game"
+msgstr "Перезаписать сохраненную игру"
+
+msgid "Abandon and Restart Game"
+msgstr "Выйти и перезапустить игру"
+
+msgid "Restart Game"
+msgstr "Перезапустить игру"
+
+msgid "Save Game"
+msgstr "Сохранить игру"
+
+msgid "Load Game"
+msgstr "Загрузить игру"
+
+msgid "Delete Old Saved Game"
+msgstr "Удалить старую сохраненную игру"
+
+msgid "Quit X-COM Apocalypse"
+msgstr "Выйти из X-COM: Апокалипсис"
+
+msgid "Quit Game"
+msgstr "Покинуть игру"
+
+msgid "SAVE GAME"
+msgstr "СОХРАНИТЬ ИГРУ"
+
+msgid "LOAD GAME"
+msgstr "ЗАГРУЗИТЬ ИГРУ"
+
+msgid "DELETE OLD SAVED GAME"
+msgstr "УДАЛИТЬ СТАРУЮ СОХРАНЕННУЮ ИГРУ"
+
+msgid "Tool tips"
+msgstr "Всплывающие подсказки"
+
+msgid "Action music"
+msgstr "Игровая музыка"
+
+msgid "Message Toggles"
+msgstr "Переключатели сообщений"
+
+msgid "UFO spotted"
+msgstr "Замечен НЛО"
+
+msgid "Vehicle lightly damaged"
+msgstr "Транспортное средство понесло легкие повреждения"
+
+msgid "Vehicle moderately damage"
+msgstr "Транспортное средство понесло умеренные повреждения"
+
+msgid "Vehicle heavily damaged"
+msgstr "Транспортное средство понесло тяжелые повреждения"
+
+msgid "Vehicle destroyed"
+msgstr "Боевая единица уничтожена"
+
+msgid "Vehicle damaged and returning to base"
+msgstr "Транспортное средство повреждено и возвращается на базу"
+
+msgid "Weapon out of ammo"
+msgstr "В оружии закончились боеприпасы"
+
+msgid "Vehicle low on fuel"
+msgstr "У транспортного средства заканчивается топливо"
+
+msgid "Cargo has arrived at base"
+msgstr "Груз прибыл на базу"
+
+msgid "Vehicle repaired"
+msgstr "Транспортное средство отремонтировано"
+
+msgid "Vehicle rearmed"
+msgstr "Боезапас боевой единицы пополнен"
+
+msgid "Not enough ammo to rearm vehicle"
+msgstr "Недостаточно боеприпасов для пополнения боезапаса боевой единицы"
+
+msgid "Vehicle refuelled"
+msgstr "Транспортное средство заправлено"
+
+msgid "Not enough fuel to refuel vehicle"
+msgstr "Недостаточно топлива для дозаправки боевой единицы"
+
+msgid "Unauthorized vehicle detected"
+msgstr "Обнаружено несанкционированное транспортное средство"
+
+msgid "Always pause to display this message?"
+msgstr "Всегда включать паузу при отображении этого сообщения?"
+
+msgid "Alien Craft Propulsion"
+msgstr "Энергетическая установка кораблей пришельцев"
+
+msgid "Alien Craft Control Systems"
+msgstr "Системы управления кораблей пришельцев"
+
+msgid "Alien Craft Energy Source"
+msgstr "Источник энергии кораблей пришельцев"
+
+msgid "Brainsucker Pod autopsy"
+msgstr "Вскрытие кокона мозгососа"
+
+msgid "Multiworm Egg autopsy"
+msgstr "Вскрытие яйца мультичервя"
+
+msgid "Micronoid Aggregate Autopsy"
+msgstr "Исследование погибшего скопления микроноидов"
+
+msgid "Front armor"
+msgstr "Лицевая броня"
+
+msgid "Back armor"
+msgstr "Задняя броня"
+
+msgid "Left armor"
+msgstr "Броня слева"
+
+msgid "Right armor"
+msgstr "Броня справа"
+
+msgid "Top armor"
+msgstr "Броня сверху"
+
+msgid "Bottom armor"
+msgstr "Броня снизу"
+
+msgid "Turn Rate"
+msgstr "Частота вращения"
+
+msgid "Alien Infiltration"
+msgstr "Проникновение пришельцев"
+
+msgid "Alien infiltration potential:"
+msgstr "Вероятность проникновения пришельцев:"
+
+msgid "Very low"
+msgstr "Очень низкая"
+
+msgid "Low"
+msgstr "Низкая"
+
+msgid "Average"
+msgstr "Средняя"
+
+msgid "High"
+msgstr "Высокая"
+
+msgid "Very high"
+msgstr "Очень высокая"
+
+msgid "Depends on clip"
+msgstr "В зависимости от типа боеприпасов"
+
+msgid "Damage Type"
+msgstr "Тип урона"
+
+msgid "Protection"
+msgstr "Защита"
+
+msgid "Smoke"
+msgstr "Дымовой"
+
+msgid "Anti-Alien Gas"
+msgstr "Газ для борьбы с пришельцами"
+
+msgid "Incendiary"
+msgstr "Зажигательный"
+
+msgid "Stun Gas"
+msgstr "Парализующий газ"
+
+msgid "Explosive"
+msgstr "Взрывчатый"
+
+msgid "Stun"
+msgstr "Парализующий"
+
+msgid "Psionic Blast"
+msgstr "Пси-взрыв"
+
+msgid "Armor Piercing"
+msgstr "Бронебойный"
+
+msgid "Laser Beam"
+msgstr "Лазерный луч"
+
+msgid "Plasma"
+msgstr "Плазма"
+
+msgid "Toxin A"
+msgstr "Токсин A"
+
+msgid "Toxin B"
+msgstr "Токсин B"
+
+msgid "Toxin C"
+msgstr "Токсин C"
+
+msgid "Disruptor Beam"
+msgstr "Расщепляющий луч"
+
+msgid "Entropy Enzyme"
+msgstr "Энтропийный энзим"
+
+msgid "Falling Object"
+msgstr "Падающий объект"
+
+msgid "Morale"
+msgstr "Мораль"
+
+msgid "Ammo types:"
+msgstr "Тип боеприпасов"
+
+msgid "Rounds"
+msgstr "Кол-во патронов"
+
+msgid "(Recharges)"
+msgstr "(Перезаряжается)"
+
+msgid "Days service"
+msgstr "Дней службы"
+
+msgid "Improvement"
+msgstr "Улучшение"
+
+msgid "Toggle statistics/service record"
+msgstr "Переключить статистику/послужной список"
+
+msgid "Fire rate"
+msgstr "Скорострельность"
+
+msgid "Turn rate"
+msgstr "Угловая скорость вращения"
+
+msgid "Ammo Type:"
+msgstr "Тип патронов:"
+
+msgid "EQUIP AGENT"
+msgstr "ЭКИПИРОВАТЬ АГЕНТА"
+
+msgid "EQUIP VEHICLE"
+msgstr "СНАРЯДИТЬ ТЕХНИКУ"
+
+msgid ""
+"You have not found any Aliens in this building. As a consequence of your "
+"unwelcome intrusion the owner of the building is less favorably disposed "
+"towards X-Com."
+msgstr "Вам не удалось обнаружить пришельцев в этом здании. В результате вашего вторжения в частную собственность отношение владельца здания к X-COM ухудшилось."
+
+msgid ""
+"You have not found any Aliens in this building. As a consequence of your "
+"unwelcome intrusion the owner of the building has now become unfriendly "
+"towards X-Com."
+msgstr "Вам не удалось обнаружить пришельцев в этом здании. В результате вашего вторжения в частную собственность отношение владельца здания к X-COM стало недружественным."
+
+msgid ""
+"You have not found any Aliens in this building. As a consequence of your "
+"unwelcome intrusion the owner of the building has now become hostile towards"
+" X-Com."
+msgstr "Вам не удалось обнаружить пришельцев в этом здании. В результате вашего вторжения в частную собственность отношение владельца здания к X-COM стало враждебным."
+
+msgid ""
+"We are unhappy with the recent activity of your organization and request "
+"compensation to restore normal diplomatic relations. If you do not comply "
+"your craft and Agents may be subject to hostile actions."
+msgstr "Мы недовольны последними действиями вашей организации и требуем компенсации для восстановления нормальных дипломатических отношений. В случае отказа ваша техника и оперативники расцениваются как враги и могут быть атакованы без предупреждения."
+
+msgid "Mission completed in Alien building."
+msgstr "Задание в здании пришельцев выполнено."
+
+msgid "X-COM returning from mission at:"
+msgstr "X-COM возвращается с задания из:"
+
+msgid "Base mission completed at:"
+msgstr "Задание на базе выполнено в:"
+
+msgid "X-COM returning from UFO mission."
+msgstr "X-COM возвращается с задания по борьбе с пришельцами."
+
+msgid "X-COM returning from raid at:"
+msgstr "X-COM возвращается с рейда в:"
+
+msgid "Launcher AG Missile"
+msgstr "Ракета с ХБЧ для пусковой установки"
+
+msgid "Launcher HE Missile"
+msgstr "Ракета с ОФБЧ для пусковой установки"
+
+msgid "Launcher IN Missile"
+msgstr "Зажигательная ракета для пусковой установки"
+
+msgid "Psi-Grenade"
+msgstr "Пси-граната"
+
+msgid "Motion scanner"
+msgstr "Сканер движения"
+
+msgid "Psimorph's mindbender"
+msgstr "Ментальный регулятор псиморфа"
+
+msgid "Megaspawn's disruptor"
+msgstr "Расщепитель мегаплода"
+
+msgid "Megaspawn's launcher"
+msgstr "Пусковая установка мегаплода"
+
+msgid "Spitter's vomit funnel"
+msgstr "Рвотная воронка спиттера"
+
+msgid "Multiworm's spit"
+msgstr "Плевок мультичервя"
+
+msgid "Alien egg's vomit tube"
+msgstr "Рвотная трубка яйца пришельцев"
+
+msgid "Hyperworm's bite"
+msgstr "Укус гиперчервя"
+
+msgid "Queenspawn's tentacles"
+msgstr "Щупальца королевы"
+
+msgid "Popper's bomb"
+msgstr "Бомба поппера"
+
+msgid "Elerium Pod"
+msgstr "Капсула с элериумом"
+
+msgid "Elerium pod"
+msgstr "Капсула с элериумом"
+
+msgid "Plasma Beam"
+msgstr "Плазменный луч"
+
+msgid "Alien Toxin-A"
+msgstr "Токсин A"
+
+msgid "Alien Toxin-B"
+msgstr "Токсин B"
+
+msgid "Alien Toxin-C"
+msgstr "Токсин C"
+
+msgid "Hot Plasma"
+msgstr "Горячая плазма"
+
+msgid "Entropy"
+msgstr "Энтропия"
+
+msgid "Tracker Dart"
+msgstr "Дротик-жучок"
+
+msgid "Destabilisation"
+msgstr "Дестабилизация"
+
+msgid "Spit"
+msgstr "Плевок"
+
+msgid "Bite"
+msgstr "Укус"
+
+msgid "MarSec"
+msgstr "МарСек"
+
+msgid "SuperDynamics"
+msgstr "Супердайнэмикс"
+
+msgid "SolMine"
+msgstr "Солмайн"
+
+msgid "NanoTech"
+msgstr "Нанотех"
+
+msgid "All your units are unconscious or dead. You lose."
+msgstr "Все ваши оперативники без сознания или мертвы. Вы проиграли."
+
+msgid "All hostile units are dead or unconscious. You win."
+msgstr "Вся живая сила противника без сознания или мертва. Вы победили."
+
+msgid "Unit has died:"
+msgstr "Оперативник умер:"
+
+msgid "Hostile unit has died."
+msgstr "Боевая единица противника умерла."
+
+msgid "Unit has died."
+msgstr "Оперативник умер."
+
+msgid "Unit critically wounded:"
+msgstr "Оперативник получил критическое ранение:"
+
+msgid "Unit has lost consciousness:"
+msgstr "Оперативник потерял сознание:"
+
+msgid "Unit has left combat zone:"
+msgstr "Оперативник покинул зону боевых действий:"
+
+msgid "Current score:"
+msgstr "Текущий счет:"
+
+msgid "Unit has frozen:"
+msgstr "Оперативник парализован:"
+
+msgid "Unit has gone berserk:"
+msgstr "Оперативник впал в ярость:"
+
+msgid "Unit has panicked:"
+msgstr "Оперативник запаниковал:"
+
+msgid "Unit has stopped panicking:"
+msgstr "Оперативник перестал паниковать:"
+
+msgid "A player has left the game."
+msgstr "Игрок покинул игру."
+
+msgid "The host has left the game."
+msgstr "Хост покинул игру."
+
+msgid "Turn:"
+msgstr "Ход:"
+
+msgid "Side:"
+msgstr "Сторона:"
+
+msgid "Player:"
+msgstr "Игрок:"
+
+msgid "Computer"
+msgstr "Компьютер"
+
+msgid "No active units. End of turn."
+msgstr "Активных оперативников не осталось. Конец хода."
+
+msgid "Hostile unit spotted:"
+msgstr "Замечен противник:"
+
+msgid "Unit under attack:"
+msgstr "Оперативник атакован:"
+
+msgid "Psionic attack on unit:"
+msgstr "Пси-атака на оперативника:"
+
+msgid "Unit being Psi-drained:"
+msgstr "Оперативник подвергся пси-истощению:"
+
+msgid "Unit under Psionic control:"
+msgstr "Оперативник под пси-контролем:"
+
+msgid "Unit freed from Psionic control:"
+msgstr "Оперативник освободился от пси-контроля:"
+
+msgid "Unit injured:"
+msgstr "Оперативник ранен:"
+
+msgid "Unit badly injured:"
+msgstr "Оперативник тяжело ранен:"
+
+msgid "Unit under fire:"
+msgstr "Оперативник под огнем:"
+
+msgid "Building has been disabled"
+msgstr "Здание было выведено из строя"
+
+msgid "SQUAD ASSIGNMENT"
+msgstr "НАЗНАЧЕНИЕ ВЗВОДА"
+
+msgid "Unit Healing:"
+msgstr "Лечение оперативника:"
+
+msgid "All your units have fled the combat zone. You lose."
+msgstr "Все ваши оперативники покинули зону боевых действий. Вы проиграли."
+
+msgid "All hostile units have fled the combat zone. You win."
+msgstr "Вся живая сила противника покинула зону боевых действий. Вы победили."
+
+msgid "Unit Brainsucked:"
+msgstr "Оперативник под контролем мозгососа:"
+
+msgid "All your units have fled the combat zone. You win."
+msgstr "Все ваши оперативники покинули зону боевых действий. Вы победили."
+
+msgid "All hostile units have fled the combat zone. You lose."
+msgstr "Вся живая сила противника покинула зону боевых действий. Вы проиграли."
+
+msgid ": Out of ammo"
+msgstr ": Закончились боеприпасы"
+
+msgid "Psi-drain"
+msgstr "Пси-истощение"
+
+msgid "Mind Control"
+msgstr "Контроль разума"
+
+msgid "Panic"
+msgstr "Паника"
+
+msgid "Probe"
+msgstr "Зондирование"
+
+msgid "Psi-lend"
+msgstr "Пси-передача"
+
+msgid "Psi-unpanic"
+msgstr "Пси-антипаника"
+
+msgid "Psi-unstun"
+msgstr "Пси-антиоглушение"
+
+msgid "MIND PROBE"
+msgstr "МЕНТАЛЬНОЕ ЗОНДИРОВАНИЕ"
+
+msgid "Structure probe"
+msgstr "Зонд для исследования структуры"
+
+msgid "-recharges"
+msgstr "- перезаряжается"
+
+msgid "Mind shield"
+msgstr "Ментальный щит"
+
+msgid "Mind bender"
+msgstr "Ментальный регулятор"
+
+msgid "Alien detector"
+msgstr "Детектор пришельцев"
+
+msgid "Personal disruption shield"
+msgstr "Личный генератор расщепляющего щита"
+
+msgid "Personal teleporter"
+msgstr "Личный телепортатор"
+
+msgid "Personal Cloaking field"
+msgstr "Личный генератор маскирующего поля"
+
+msgid "Dimension force field"
+msgstr "Межразмерное силовое поле"
+
+msgid "None"
+msgstr "Нет"
+
+msgid "Delay = %i"
+msgstr "Задержка = %i"
+
+msgid "Range = %2.1fm."
+msgstr "Дистанция = %2.1fm."
+
+msgid "Initializing"
+msgstr "Инициализация"
+
+msgid "(debug) Validating Map"
+msgstr "(отладка) Проверка карты"
+
+msgid "Deploying Units"
+msgstr "Расстановка боевых единиц"
+
+msgid "Experience Processing"
+msgstr "Обработка опыта"
+
+msgid "Initializing LOS"
+msgstr "Инициализация угла обзора"
+
+msgid "Anonymous"
+msgstr "Безымянный"
+
+msgid "Enter Game Name"
+msgstr "Введите название игры"
+
+msgid "Enter Your Name"
+msgstr "Введите ваше имя"
+
+msgid "Pick Organization:"
+msgstr "Выберите организацию:"
+
+msgid "Master volume:"
+msgstr "Общая громкость:"
+
+msgid "Sound FX volume:"
+msgstr "Громкость звуковых эффектов:"
+
+msgid "Music volume:"
+msgstr "Громкость музыки:"
+
+msgid "Swap left/right :"
+msgstr "Поменять местами правый и левый канал:"
+
+msgid "Time Units"
+msgstr "Единицы времени"
+
+msgid "Too Far"
+msgstr "Слишком далеко"
+
+msgid "Blocked"
+msgstr "Заблокирован"
+
+msgid "Game Turn:"
+msgstr "Игровой ход:"
+
+msgid "Start Turn"
+msgstr "Начать ход"
+
+msgid "Enter password:"
+msgstr "Введите пароль:"
+
+msgid "Incorrect password!"
+msgstr "Неверный пароль!"
+
+msgid "Hot Seat Game"
+msgstr "Игра в режиме Hot Seat"
+
+msgid "Enter number of players:"
+msgstr "Введите число игроков:"
+
+msgid "Player"
+msgstr "Игрок"
+
+msgid "Enter your name:"
+msgstr "Введите свое имя:"
+
+msgid "Confirm password:"
+msgstr "Подтвердите пароль:"
+
+msgid "Examine and reassign units by clicking on players' names"
+msgstr "Просмотрите и переназначьте оперативников, кликая по именам игроков"
+
+msgid "Execute remaining movement orders for this unit?"
+msgstr "Выполнить оставшиеся приказы на перемещения для этого оперативника?"
+
+msgid "Hidden Movement"
+msgstr "Скрытое перемещение"
+
+msgid "Activates now."
+msgstr "Активируется сейчас."
+
+msgid "Activates at end of turn."
+msgstr "Активируется в конце хода."
+
+msgid "Turns before activation:"
+msgstr "Ходов до активации:"
+
+msgid ": TUs reserved for kneeling"
+msgstr ": ОД сохранены для приседания на колено"
+
+msgid ": TUs reserved for aimed shot"
+msgstr ": ОД сохранены для прицельного выстрела"
+
+msgid ": TUs reserved for snap shot"
+msgstr ": ОД сохранены для выстрела навскидку"
+
+msgid ": TUs reserved for auto fire"
+msgstr ": ОД сохранены для стрельбы очередью"
+
+msgid ": TUs reserved for kneeling and aimed shot"
+msgstr ": ОД сохранены для приседания на колено и прицельного выстрела"
+
+msgid ": TUs reserved for kneeling and snap shot"
+msgstr ": ОД сохранены для приседания на колено и выстрела навскидку"
+
+msgid ": TUs reserved for kneeling and auto fire"
+msgstr ": ОД сохранены для приседания на колено и стрельбы очередью"
+
+msgid "ABORT MISSION"
+msgstr "ПРЕРВАТЬ ЗАДАНИЕ"
+
+msgid "Units Lost :"
+msgstr "Потеряно оперативников:"
+
+msgid "Very Poor"
+msgstr "Очень плохо"
+
+msgid "Poor"
+msgstr "Плохо"
+
+msgid "Very Good"
+msgstr "Очень хорошо"
+
+msgid "Out of turn activity paused"
+msgstr "Закончились ОД - Действия остановлены"
+
+msgid "Out of turn activity restarted"
+msgstr "Закончились ОД - Действия выполняются с начала"
+
+msgid "Not Enough TU's"
+msgstr "Недостаточно очков хода"
+
+msgid "TU cost per item picked up:"
+msgstr "Количество ОД на подбор предмета:"
+
+msgid "Auto-execute remaining orders"
+msgstr "Автоматическое выполнение оставшихся приказов"
+
+msgid "Not enough TU's - TU cost per throw:"
+msgstr "Недостаточно ОД - количество ОД на бросок:"
+
+msgid "Too far to throw"
+msgstr "Слишком далеко для броска"
+
+msgid "No arc of throw"
+msgstr "Нет дуги для броска"
+
+msgid "No line of fire"
+msgstr "Нет линии огня"
+
+msgid "Out of range"
+msgstr "Вне зоны досягаемости"
+
+msgid "Not enough TU's - TU cost per wound:"
+msgstr "Недостаточно ОД - количество ОД на ранение:"
+
+msgid "Not enough TU's - TU cost to use:"
+msgstr "Недостаточно ОД - количество ОД на использование:"
+
+msgid "Not enough TU's - TU cost to activate:"
+msgstr "Недостаточно ОД - количество ОД на активацию:"
+
+msgid "Not enough TU's - TU cost per attempt:"
+msgstr "Недостаточно ОД - количество ОД на попытку:"
+
+msgid "Up"
+msgstr "Вверх"
+
+msgid "Down"
+msgstr "Вниз"
+
+msgid "Toggle map level display mode"
+msgstr "Переключить режим отображения уровней карты"
+
+msgid "Toggle camera mode"
+msgstr "Переключить режим камеры"
+
+msgid "Safe mode"
+msgstr "Безопасный режим"
+
+msgid "Cautious mode"
+msgstr "Осторожный режим"
+
+msgid "Aggressive mode"
+msgstr "Агрессивный режим"
+
+msgid "Crawl"
+msgstr "Ползти"
+
+msgid "Walk"
+msgstr "Идти"
+
+msgid "Run"
+msgstr "Бежать"
+
+msgid "No shot"
+msgstr "Не стрелять"
+
+msgid "Aimed shot"
+msgstr "Прицельный выстрел"
+
+msgid "Snap shot"
+msgstr "Выстрел навскидку"
+
+msgid "Auto shot"
+msgstr "Стрельба очередью"
+
+msgid "Stand up"
+msgstr "Встать"
+
+msgid "Kneel down"
+msgstr "Присесть на колено"
+
+msgid "Throw object"
+msgstr "Бросить предмет"
+
+msgid "Cannot throw"
+msgstr "Невозможно бросить"
+
+msgid "Drop object"
+msgstr "Выбросить предмет"
+
+msgid "Yes, prime grenade"
+msgstr "Да, взвести гранату"
+
+msgid "No, cancel operation"
+msgstr "Нет, отменить действие"
+
+msgid "Group formation"
+msgstr "Формация группы"
+
+msgid "Exit Psionics"
+msgstr "Выйти с экрана псионики"
+
+msgid "Psionically protect unit"
+msgstr "Псиончески защитить оперативника"
+
+msgid "Lend Psionic strength"
+msgstr "Поделиться пси-силой"
+
+msgid "Unstun unit"
+msgstr "Вывести оперативника из оглушения"
+
+msgid "Unpanic unit"
+msgstr "Вывести оперативника из паники"
+
+msgid "Probe unit"
+msgstr "Зондировать боевую единицу"
+
+msgid "Control body"
+msgstr "Контролировать тело"
+
+msgid "Stun unit"
+msgstr "Оглушить боевую единицу"
+
+msgid "Panic unit"
+msgstr "Ввести боевую единицу в состояние паники"
+
+msgid "Squad icons"
+msgstr "Иконки взводов"
+
+msgid "Level indicator"
+msgstr "Индикатор уровня"
+
+msgid "Create a hotseat game"
+msgstr "Создать игру в режиме Hot Seat"
+
+msgid "Create a network game"
+msgstr "Создать игру по сети"
+
+msgid "Join a network game"
+msgstr "Присоединиться к сетевой игре"
+
+msgid "Start game"
+msgstr "Начать игру"
+
+msgid "Quit game"
+msgstr "Выйти из игры"
+
+msgid "Return to game"
+msgstr "Вернуться в игру"
+
+msgid "Sound volumes"
+msgstr "Громкость звука"
+
+msgid "Return to options"
+msgstr "Вернуться в меню \"Настройки\""
+
+msgid "Plays a random sound effect"
+msgstr "Проигрывает случайный звуковой эффект"
+
+msgid "Single file"
+msgstr "Один файл"
+
+msgid "Start turn"
+msgstr "Начать ход"
+
+msgid "Return to start game screen"
+msgstr "Вернуться на начальный экран"
+
+msgid "TU cost per shot:"
+msgstr "Количество ОД на выстрел:"
+
+msgid "TU cost:"
+msgstr "Количество ОД:"
+
+msgid "Start real time game"
+msgstr "Начать игру в реальном времени"
+
+msgid "Start turn-based game"
+msgstr "Начать игру в пошаговом режиме"
+
+msgid "Multiplayer game"
+msgstr "Игра по сети"
+
+msgid "End turn"
+msgstr "Конец хода"
+
+msgid "Reserve TUs for auto shot"
+msgstr "Сохранить ОД для стрельбы очередью"
+
+msgid "Reserve TUs for snap shot"
+msgstr "Сохранить ОД для выстрела навскидку"
+
+msgid "Reserve TUs for aimed shot"
+msgstr "Сохранить ОД для прицельного выстрела"
+
+msgid "Reserve TUs for kneel"
+msgstr "Сохранить ОД, чтобы присесть на колено"
+
+msgid "TU cost to activate:"
+msgstr "Количество ОД на активацию:"
+
+msgid "TU cost to use:"
+msgstr "Количество ОД на использование:"
+
+msgid "TU cost per wound:"
+msgstr "Количество ОД на ранение:"
+
+msgid "Deployment Failed"
+msgstr "Не удалось разместить"
+
+msgid "Due to a lack of space some units were not placed on the map."
+msgstr "Из-за недостатка пространства несколько боевых единиц не было размещено на карте."
+
+msgid "Number of missing units:"
+msgstr "Количество отсутствующих боевых единиц:"
+
+msgid "No player controlled units"
+msgstr "Отсутствуют боевые единицы, управляемые игроком"
+
+msgid ""
+"No player controlled units were placed on the map; the game will run in "
+"observation mode."
+msgstr "На карте отсутствуют боевые единицы, управляемые игроком; игра запустится в режиме просмотра."
+
+msgid "TU cost per attempt:"
+msgstr "ОД на попытку:"
+
+msgid "Review briefing"
+msgstr "Прочитать брифинг"
+
+msgid "Assign units to squad"
+msgstr "Назначить оперативников во взвод"
+
+msgid "The following units will be lost if left in combat zone:"
+msgstr "Следующие оперативники будут потеряны, если останутся в зоне боевых действий:"
+
+msgid "Abort mission?"
+msgstr "Прервать задание?"
+
+msgid "Hostile unit spotted"
+msgstr "Замечен противник"
+
+msgid "Unit has died"
+msgstr "Оперативник умер"
+
+msgid "Hostile unit has died"
+msgstr "Боевая единица противника умерла"
+
+msgid "Unknown Unit has died"
+msgstr "Умерло неизвестное лицо"
+
+msgid "Unit critically wounded"
+msgstr "Оперативник получил критическое ранение"
+
+msgid "Unit badly injured"
+msgstr "Оперативник тяжело ранен"
+
+msgid "Unit injured"
+msgstr "Оперативник ранен"
+
+msgid "Unit under fire"
+msgstr "Оперативник под огнем"
+
+msgid "Unit has lost consciousness"
+msgstr "Оперативник потерял сознание"
+
+msgid "Unit has left combat zone"
+msgstr "Оперативник покинул зону боевых действий"
+
+msgid "Unit has frozen"
+msgstr "Оперативник парализован"
+
+msgid "Unit has gone beserk"
+msgstr "Оперативник впал в ярость"
+
+msgid "Unit has panicked"
+msgstr "Оперативник запаниковал"
+
+msgid "Unit has stopped panicking"
+msgstr "Оперативник перестал паниковать"
+
+msgid "Psionic attack on unit"
+msgstr "Пси-атака на оперативника"
+
+msgid "Unit under Psionic control"
+msgstr "Оперативник под пси-контролем"
+
+msgid "Unit freed from Psionic control"
+msgstr "Оперативник освободился от пси-контроля"
+
+msgid ""
+"Search the building for Alien life forms or other hostile forces. Engage the"
+" enemy, but where possible stun Aliens using a Stun Grapple, Stun Grenade, "
+"or Psionic power. Live Aliens are essential for our research. If all hostile"
+" units are eliminated or stunned then we can recover any equipment and Alien"
+" artifacts. A Bio-Transport module must be at the investigation site to "
+"enable the recovery of unconscious or dead Aliens. Be careful to avoid "
+"endangering any civilians and remember that the organization which owns the "
+"building will not be pleased if there is extensive damage to the structure."
+msgstr "Обыщите здание в поисках инопланетных живых существ и других враждебных сил. Атакуйте противника, но по возможности парализуйте пришельцев с помощью захвата-парализатора, парализующей гранаты или пси-сил. Живые пришельцы необходимы нам для проведения исследований. Если все боевые единицы врага уничтожены или парализованы, мы сможем захватить все оставшееся снаряжение и артефакты пришельцев. На месте исследования необходим транспорт с установленным модулем перевозки биоматериала для перевозки мертвых или парализованных пришельцев. Старайтесь не наносить увечий гражданским лицам и помните, что организация - владелец здания не будет довольна в случае нанесения серьезных повреждений сооружению."
+
+msgid ""
+"Eliminate the building security forces and recover any equipment or valuable"
+" items left in the combat area. Use explosive or incendiary munitions to "
+"damage the building and inflict economic penalties on the owning "
+"organization, but remember that this can destroy any potential bounty. A "
+"raid will create a state of hostility between the organization and X-COM and"
+" you should be aware of the consequences of such a serious course of action."
+msgstr "Уничтожьте силы безопасности здания и заберите все снаряжение и ценные вещи, оставленные в зоне боевых действий. Применяйте взрывчатку и зажигательные средства, чтобы повредить здание и нанести максимальный экономический урон его владельцу, но помните, что в этом случае вы можете уничтожить ценные вещи. Проведение рейда приведет к вражде между организацией-целью и X-COM, поэтому имейте в виду возможные последствия столь серьезных действий."
+
+msgid ""
+"The Aliens have located your base and have launched an attack. Defend the "
+"base from costly damage by eliminating all invading forces. You must also "
+"safeguard your Scientists and Engineers, either by defending them or exiting"
+" them from the combat zone. You can retreat from the base to cut your "
+"losses, but the base will be lost."
+msgstr "Пришельцы обнаружили вашу базу и напали на нее. Не дайте им причинить ей значительные повреждения и уничтожьте все вторгшиеся силы. Также необходимо спасти всех ученых и инженеров, для чего вам необходимо защищать их или вывести из зоны боевых действий. Вы можете отступить с базы, чтобы снизить потери, но в этом случае вы ее потеряете."
+
+msgid ""
+"The Aliens have located your base and have launched an attack. Defend the "
+"base from costly damage by eliminating all invading forces. If all hostile "
+"forces are eliminated X-COM will be saved. If you are defeated then X-COM "
+"will be wiped out, leaving the world open to Alien domination. The fate of "
+"humanity will be determined by this conflict. Good luck."
+msgstr "Пришельцы обнаружили вашу базу и напали на нее. Не дайте им причинить ей значительные повреждения. Если вам удастся уничтожить все вражеские силы, организация X-COM будет спасена. Если же вы потерпите поражение, X-COM будет уничтожена, что оставит мир беззащитным перед инопланетным вторжением. От исхода этого боя зависит судьба человечества. Удачи вам."
+
+msgid "NOT USED! - you should not see this message"
+msgstr "НЕ ИСПОЛЬЗУЕТСЯ! Вы не должны видеть это сообщение"
+
+msgid ""
+"The Incubator Chamber contains Alien Eggs. These Eggs are held at an exact "
+"temperature inside Incubators providing an environment for the Eggs to hatch"
+" at an optimum rate. Research reveals that a number of Incubators exist, "
+"they must all be destroyed."
+msgstr "Инкубаторные камеры содержат яйца пришельцев. Эти яйца хранятся при строго определенной температуре в инкубаторах, что обеспечивает среду, при которой они вылупляются с оптимальной частотой. Исследования показывают, что существует несколько инкубаторов. Необходимо уничтожить их все."
+
+msgid ""
+"The Spawning Chamber appears to be a very special structure. Very few Aliens"
+" enter this structure although vast numbers of Aliens regularly leave the "
+"building. Our research indicates that this building is the lair for some "
+"kind of Alien queen. We believe this Alien to be the sole producer of Alien "
+"Eggs from which all Aliens hatch. Whilst the primary objective is the "
+"destruction of the Queen and all Alien Eggs, the live capture of the Alien "
+"Queen would be a vicious insult to the Aliens."
+msgstr "Залы размножения, похоже, представляют собой особую структуру. Крайне малое число пришельцев входит в это здание, но из него регулярно выходит огромное количество инопланетных живых организмов. Наши исследования показывают, что это здание является логовом для существа, представляющего собой королеву пришельцев. Мы полагаем, что она является единственным производителем яиц, из которых вылупляются все прочие инопланетные существа. Хотя основной задачей является уничтожение королевы и всех яиц пришельцев, захват королевы живьем станет ужасным оскорблением для пришельцев."
+
+msgid ""
+"The Food Chamber contains the Aliens' food source in the form of plants. "
+"These plants require organic heat and light sources to prevent them from "
+"decaying. The Mutant alliance also informs us that a number of Sectoids are "
+"held captive within the Food Chamber. Our old enemy has apparently become an"
+" Alien delicacy. Whilst the rescue of any Sectoids will guarantee an "
+"Alliance with the Mutants, the primary objective is to destroy the Alien "
+"heat and light sources as indicated here."
+msgstr "Пищевые камеры содержат источники пищи пришельцев в форме растений. Растениям необходимо тепло, вырабатываемое разложением органики и жизнедеятельностью живых организмов, и источники света, чтобы они не загнили. Альянс мутантов также заявляет, что несколько сектоидов удерживается в пищевых камерах. Наш старый враг, похоже, стал деликатесом для пришельцев. Хотя спасение сектоидов гарантирует нам заключение альянса с мутантами, цель первостепенной важности - уничтожение источников тепла и света, указанных на фото."
+
+msgid ""
+"The Megapods are the means by which the Aliens create new structures. The "
+"small Egg-like objects are eventually replanted and grow into massive "
+"organic structures. Our discoveries are shocking; this building is "
+"practically overflowing with Pods. Our Scientists fear that the Aliens are "
+"planning a massive expansion and who knows how we could stop them then. All "
+"Megapods must be destroyed thus preventing the Aliens building any new "
+"structures."
+msgstr "Гигантские стручки - это метод, с помощью которого пришельцы выращивают новые сооружения. Небольшие яйцеобразные объекты со временем пересаживаются и вырастают в массивные органические структуры. Наше открытие повергает в шок: это здание буквально кишит стручками. Наши ученые опасаются, что пришельцы готовят массированное вторжение, и никто не знает, как мы сможем остановить их после этого. Все гигантские стручки необходимо уничтожить, чтобы не дать пришельцам строить новые сооружения."
+
+msgid ""
+"The Alien Dimension contains many structures linked by an irregular snaking "
+"chain. The Sleeping Chamber lies at the start of the chain and allows the "
+"Aliens to rejuvenate nocturnally. The Aliens regularly connect themselves to"
+" sleeping units, which appears to be a necessary operation in order for them"
+" to stay alive. Explore the area with caution and destroy all sleeping units"
+" as pictured here. After disabling the building, all Agents must exit the as"
+" soon as possible."
+msgstr "В измерении пришельцев находится множество структур, соединенных зигзагообразной цепью неправильной формы. Залы сна находятся в начале цепи и позволяют пришельцам проходить ночное омоложение. Пришельцы регулярно подключаются к блокам сна, что, по всей видимости, им необходимо, чтобы оставаться в живых. Проводите исследования этой зоны с большой осторожностью и уничтожьте все блоки сна, изображенные на фото. После уничтожения здания все оперативники должны покинуть его как можно скорее."
+
+msgid ""
+"The Organic Factory provides a construction center for Alien UFOs. In their "
+"initial stage of development the UFOs resemble small mushroom-like objects. "
+"These objects increase in size until they reach the colossal sizes of the "
+"UFOs we have encountered. When fully grown the UFOs detach themselves from "
+"their stem and become fully functional Alien attack vessels. All embryonic "
+"UFOs must be destroyed."
+msgstr "Органическая фабрика является строительной базой НЛО пришельцев. В начальной фазе строительства НЛО представляют собой небольшие грибообразные объекты. Эти объекты увеличиваются в размерах, пока не достигнут колоссальных масштабов тех НЛО, с которыми нам приходилось иметь дело. Достигнув окончательной величины, НЛО отрываются от стебля и становятся полностью функциональными боевыми единицами флота пришельцев. Все НЛО, находящиеся в зачаточном состоянии, должны быть уничтожены."
+
+msgid ""
+"The destruction of the Food Chambers leads us to the Alien Farm. This "
+"contains a number of strange white blocks. Our Scientists believe that these"
+" curious objects influence the atmospheric conditions of the Alien "
+"Dimension, although it has been impossible to prove this. Whatever the "
+"purpose of these blocks, their destruction can only hinder the Alien cause. "
+"Research indicates that the blocks are located in multiple locations, "
+"although only this site has been photographed. Destroy all of the blocks to "
+"disable the building."
+msgstr "Уничтожение пищевых камер позволило нам попасть на фермы пришельцев. На этих фермах обнаружено несколько странных белых блоков. Наши ученые полагают, что эти любопытные объекты влияют на атмосферу в измерении пришельцев, хотя оказалось невозможно это доказать. Какой бы функцией ни обладали эти блоки, их уничтожение затруднит деятельность пришельцев. Исследования показывают, что эти блоки расположены во множестве мест, хотя нам удалось сфотографировать только этот фрагмент. Уничтожьте все блоки, чтобы вывести здание из строя."
+
+msgid ""
+"The Control Chamber houses giant organic brains which control the operation "
+"of Alien entities within the Alien dimension. The destruction of these "
+"organic brains will make any remaining Aliens more desperate, as their "
+"ultimate defeat becomes an imminent reality."
+msgstr "В контрольном зале располагается гигантский органический мозг, контролирующий действия всех инопланетных живых существ в измерении пришельцев. Уничтожение этого органического мозга приведет оставшихся пришельцев в отчаяние, поскольку их окончательное поражение станет неизбежным."
+
+msgid ""
+"The Maintenance Factory appears to contain a number of sacred Alien "
+"structures. We believe that the Alien Dimension is fueled by the structures "
+"pictured here. These heart units must be destroyed in order to weaken the "
+"remaining structures. Our success here will indeed be a severe blow to the "
+"Aliens as exactly half of the Alien Dimension will lie in ruins."
+msgstr "Похоже, на фабрике жизнеобеспечения находится ряд жизненно важных структур пришельцев. Мы полагаем, что измерение пришельцев питается от сооружений, указанных здесь. Эти блоки необходимо уничтожить, чтобы ослабить оставшиеся структуры. Успех в этом здании нанесет серьезный удар по пришельцам, поскольку после этого половина измерения пришельцев будет лежать в руинах."
+
+msgid ""
+"The destruction of the Dimension Gates is our ultimate goal. From evidence "
+"collected at previous Alien buildings, we have managed to composite this "
+"picture of our objectives. The Alien Generators must be destroyed, "
+"simultaneously disabling the protective laser web. Destroy all of the "
+"generators to disable the building. Upon disabling the building it is "
+"imperative that all Agents evacuate as a matter of urgency. Our forces must "
+"return to the Earth dimension before the final Dimension Gate closes "
+"forever.Victory is in our sights - Good Luck!"
+msgstr "Разрушение врат между измерениями - наша главная цель. Благодаря сведениям, полученным в других зданиях пришельцев, нам удалось составить список целей для этого задания. Необходимо разрушить генераторы пришельцев, что позволит отключить защитную лазерную сеть. Уничтожение генераторов также позволит вывести здание из строя. После этого необходимо как можно скорее эвакуировать всех оперативников. Наши войска должны вернуться в наше измерение, прежде чем закроются последние врата между измерениями. Победа уже не за горами - удачи!"
+
+msgid ""
+"Raiding forces must eliminate all other forces, whether they are raiders or "
+"defenders. Raiders are deployed on the edge of the combat zone. All "
+"defending forces are allied with each other and must repel any raiders. "
+"Defenders are deployed in the center of the combat zone"
+msgstr "Диверсионная группа должна уничтожить все прочие силы, вне зависимости от того, рейдеры это или защитники. Рейдеры появляются на краю зоны боевых действий. Защитники объединяются и должны уничтожить всех рейдеров. Защитники появляются в центре зоны боевых действий."
+
+msgid ""
+"You must attempt to capture the crashed UFO by eliminating the defending "
+"Alien forces. There is only one chance to succeed in this mission because "
+"failure will mean that the surviving Aliens will attempt to destroy their "
+"craft. They would rather die than allow us to recover their advanced "
+"technology. Your priority is to eliminate the enemy with maximum force."
+msgstr "Необходимо попытаться захватить разбившийся НЛО, предварительно уничтожив все находящиеся на нем войска инопланетян. У нас есть только один шанс на успешное завершение этого задания, поскольку в случае провала операции оставшиеся пришельцы попытаются уничтожить корабль. Они готовы пожертвовать собой, только чтобы не допустить попадания новых технологий в наши руки. Ваша задача - уничтожить врага любыми средствами."
+
+msgid ""
+"Hostile troops have located your base and have launched an attack. Defend "
+"the base from costly damage by eliminating all invading forces. You must "
+"also safeguard your Scientists and Engineers, either by defending them or "
+"exiting them from the combat zone. You can retreat from the base to cut your"
+" losses, but the base will be lost."
+msgstr "Вражеские войска обнаружили вашу базу и напали на нее. Не дайте им причинить ей значительные повреждения и уничтожьте все вторгшиеся силы. Также необходимо спасти всех ученых и инженеров, для чего вам необходимо защищать их или вывести из зоны боевых действий. Вы можете отступить с базы, чтобы снизить потери, но в этом случае вы ее потеряете."
+
+msgid ""
+"Hostile troops have located your base and have launched an attack. Defend "
+"the base from costly damage. If all hostile forces are eliminated X-COM will"
+" be saved. If you are defeated then X-COM will be wiped out, leaving the "
+"world open to Alien domination. The fate of humanity will be determined by "
+"this conflict. Good luck."
+msgstr "Вражеские войска обнаружили вашу базу и напали на нее. Не дайте им причинить ей значительные повреждения. Если вам удастся уничтожить все вражеские силы, организация X-COM будет спасена. Если же вы потерпите поражение, X-COM будет уничтожена, что оставит мир беззащитным перед инопланетным вторжением. От исхода этого боя зависит судьба человечества. Удачи вам."
+
+msgid "MISSION BRIEFING"
+msgstr "БРИФИНГ ЗАДАНИЯ"
+
+msgid "TACTICAL SCENARIO"
+msgstr "ТАКТИЧЕСКИЙ СЦЕНАРИЙ"
+
+msgid "Multi-worm"
+msgstr "Мультичервь"
+
+msgid "Time units"
+msgstr "Очки действий"

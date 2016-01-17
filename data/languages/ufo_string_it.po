@@ -1,0 +1,6893 @@
+# Translators:
+# Translators:
+# Translators:
+# Maxim Megalinski <kammerer001@yandex.ru>, 2015
+# Skin36, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Apocalypse\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2016-01-11 12:25+0000\n"
+"Last-Translator: Skin36\n"
+"Language-Team: Italian (http://www.transifex.com/x-com-apocalypse/apocalypse/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.6\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+msgid "Click left mouse button or press a key when done"
+msgstr "Clicca col tasto sinistro del mouse o premi un tasto quando hai finito"
+
+msgid "Brown"
+msgstr "Brown"
+
+msgid "Bostock"
+msgstr "Bostock"
+
+msgid "Robinson"
+msgstr "Robinson"
+
+msgid "Watson"
+msgstr "Watson"
+
+msgid "Jonlan"
+msgstr "Jonlan"
+
+msgid "White"
+msgstr "White"
+
+msgid "Taylor"
+msgstr "Taylor"
+
+msgid "Frogley"
+msgstr "Frogley"
+
+msgid "Smith"
+msgstr "Smith"
+
+msgid "Pearce"
+msgstr "Pearce"
+
+msgid "Evans"
+msgstr "Evans"
+
+msgid "Reynolds"
+msgstr "Reynolds"
+
+msgid "Davies"
+msgstr "Davies"
+
+msgid "Bailey"
+msgstr "Bailey"
+
+msgid "Sharpe"
+msgstr "Sharpe"
+
+msgid "Wright"
+msgstr "Wright"
+
+msgid "Stewart"
+msgstr "Stewart"
+
+msgid "Hill"
+msgstr "Hill"
+
+msgid "Baker"
+msgstr "Baker"
+
+msgid "Parker"
+msgstr "Parker"
+
+msgid "Blake"
+msgstr "Blake"
+
+msgid "Bradley"
+msgstr "Bradley"
+
+msgid "Webb"
+msgstr "Webb"
+
+msgid "Kemp"
+msgstr "Kemp"
+
+msgid "Carr"
+msgstr "Carr"
+
+msgid "Queen"
+msgstr "Queen"
+
+msgid "Gallagher"
+msgstr "Gallagher"
+
+msgid "Miller"
+msgstr "Miller"
+
+msgid "Stoddard"
+msgstr "Stoddard"
+
+msgid "Thompson"
+msgstr "Thompson"
+
+msgid "Nash"
+msgstr "Nash"
+
+msgid "Johnson"
+msgstr "Johnson"
+
+msgid "Mitchell"
+msgstr "Mitchell"
+
+msgid "Hudson"
+msgstr "Hudson"
+
+msgid "McNeil"
+msgstr "McNeil"
+
+msgid "Homburger"
+msgstr "Homburger"
+
+msgid "Crossett"
+msgstr "Crossett"
+
+msgid "Dodge"
+msgstr "Dodge"
+
+msgid "Bryant"
+msgstr "Bryant"
+
+msgid "Horton"
+msgstr "Horton"
+
+msgctxt "female"
+msgid "Shalimov"
+msgstr "Shalimov"
+
+msgctxt "male"
+msgid "Shalimov"
+msgstr "Shalimov"
+
+msgctxt "female"
+msgid "Petrov"
+msgstr "Petrov"
+
+msgctxt "male"
+msgid "Petrov"
+msgstr "Petrov"
+
+msgctxt "female"
+msgid "Shadrin"
+msgstr "Shadrin"
+
+msgctxt "male"
+msgid "Shadrin"
+msgstr "Shadrin"
+
+msgctxt "female"
+msgid "Ragulin"
+msgstr "Ragulin"
+
+msgctxt "male"
+msgid "Ragulin"
+msgstr "Ragulin"
+
+msgctxt "female"
+msgid "Mikhailov"
+msgstr "Mikhailov"
+
+msgctxt "male"
+msgid "Mikhailov"
+msgstr "Mikhailov"
+
+msgctxt "female"
+msgid "Belov"
+msgstr "Belov"
+
+msgctxt "male"
+msgid "Belov"
+msgstr "Belov"
+
+msgid "Korkia"
+msgstr "Korkia"
+
+msgid "Torban"
+msgstr "Torban"
+
+msgctxt "female"
+msgid "Likhachev"
+msgstr "Likhachev"
+
+msgctxt "male"
+msgid "Likhachev"
+msgstr "Likhachev"
+
+msgctxt "female"
+msgid "Romanov"
+msgstr "Romanov"
+
+msgctxt "male"
+msgid "Romanov"
+msgstr "Romanov"
+
+msgctxt "female"
+msgid "Scharov"
+msgstr "Scharov"
+
+msgctxt "male"
+msgid "Scharov"
+msgstr "Scharov"
+
+msgctxt "female"
+msgid "Asimov"
+msgstr "Asimov"
+
+msgctxt "male"
+msgid "Asimov"
+msgstr "Asimov"
+
+msgid "Samusenko"
+msgstr "Samusenko"
+
+msgctxt "female"
+msgid "Gorokhova"
+msgstr "Gorokhova"
+
+msgctxt "male"
+msgid "Gorokhova"
+msgstr "Gorokhova"
+
+msgid "Yakubik"
+msgstr "Yakubik"
+
+msgctxt "female"
+msgid "Kolotov"
+msgstr "Kolotov"
+
+msgctxt "male"
+msgid "Kolotov"
+msgstr "Kolotov"
+
+msgctxt "female"
+msgid "Chukarin"
+msgstr "Chukarin"
+
+msgctxt "male"
+msgid "Chukarin"
+msgstr "Chukarin"
+
+msgctxt "female"
+msgid "Andianov"
+msgstr "Andianov"
+
+msgctxt "male"
+msgid "Andianov"
+msgstr "Andianov"
+
+msgctxt "female"
+msgid "Voronin"
+msgstr "Voronin"
+
+msgctxt "male"
+msgid "Voronin"
+msgstr "Voronin"
+
+msgctxt "female"
+msgid "Maleev"
+msgstr "Maleev"
+
+msgctxt "male"
+msgid "Maleev"
+msgstr "Maleev"
+
+msgid "Iwasaki"
+msgstr "Iwasaki"
+
+msgid "Shoji"
+msgstr "Shoji"
+
+msgid "Okabe"
+msgstr "Okabe"
+
+msgid "Yamashita"
+msgstr "Yamashita"
+
+msgid "Okamoto"
+msgstr "Okamoto"
+
+msgid "Yamazaki"
+msgstr "Yamazaki"
+
+msgid "Iwahara"
+msgstr "Iwahara"
+
+msgid "Kojima"
+msgstr "Kojima"
+
+msgid "Tanida"
+msgstr "Tanida"
+
+msgid "Akira"
+msgstr "Akira"
+
+msgid "Fujimoto"
+msgstr "Fujimoto"
+
+msgid "Matsumara"
+msgstr "Matsumara"
+
+msgid "Morita"
+msgstr "Morita"
+
+msgid "Sato"
+msgstr "Sato"
+
+msgid "Noguchi"
+msgstr "Noguchi"
+
+msgid "Shimaoka"
+msgstr "Shimaoka"
+
+msgid "Koyama"
+msgstr "Koyama"
+
+msgid "Ishii"
+msgstr "Ishii"
+
+msgid "Yamanaka"
+msgstr "Yamanaka"
+
+msgid "Tanikawa"
+msgstr "Tanikawa"
+
+msgid "Steinbach"
+msgstr "Steinbach"
+
+msgid "Mederow"
+msgstr "Mederow"
+
+msgid "Meyer"
+msgstr "Meyer"
+
+msgid "Ulbricht"
+msgstr "Ulbricht"
+
+msgid "Berger"
+msgstr "Berger"
+
+msgid "Faerber"
+msgstr "Faerber"
+
+msgid "Gunkel"
+msgstr "Gunkel"
+
+msgid "Krause"
+msgstr "Krause"
+
+msgid "Keller"
+msgstr "Keller"
+
+msgid "Brehme"
+msgstr "Brehme"
+
+msgid "Vogel"
+msgstr "Vogel"
+
+msgid "Hafner"
+msgstr "Hafner"
+
+msgid "Schultz"
+msgstr "Schultz"
+
+msgid "Richter"
+msgstr "Richter"
+
+msgid "Esser"
+msgstr "Esser"
+
+msgid "Zander"
+msgstr "Zander"
+
+msgid "Seidler"
+msgstr "Seidler"
+
+msgid "Unger"
+msgstr "Unger"
+
+msgid "Geisler"
+msgstr "Geisler"
+
+msgid "Heinsch"
+msgstr "Heinsch"
+
+msgid "Dujardin"
+msgstr "Dujardin"
+
+msgid "Cuvelier"
+msgstr "Cuvelier"
+
+msgid "Gressier"
+msgstr "Gressier"
+
+msgid "Lecointe"
+msgstr "Lecointe"
+
+msgid "Gautier"
+msgstr "Gautier"
+
+msgid "Bouissou"
+msgstr "Bouissou"
+
+msgid "Marcelle"
+msgstr "Marcelle"
+
+msgid "Bouton"
+msgstr "Bouton"
+
+msgid "Lefevre"
+msgstr "Lefèvre"
+
+msgid "Laroyenne"
+msgstr "Laroyenne"
+
+msgid "Dreyfus"
+msgstr "Dreyfus"
+
+msgid "Dagallier"
+msgstr "Dagallier"
+
+msgid "Guerin"
+msgstr "Guérin"
+
+msgid "Pecheux"
+msgstr "Pécheux"
+
+msgid "Buchard"
+msgstr "Buchard"
+
+msgid "Collignon"
+msgstr "Collignon"
+
+msgid "Revenu"
+msgstr "Revenu"
+
+msgid "Cantona"
+msgstr "Cantona"
+
+msgid "Gaudin"
+msgstr "Gaudin"
+
+msgid "Luget"
+msgstr "Luget"
+
+msgid "Ian"
+msgstr "Ian"
+
+msgid "Thad"
+msgstr "Thad"
+
+msgid "David"
+msgstr "David"
+
+msgid "Scott"
+msgstr "Scott"
+
+msgid "John"
+msgstr "John"
+
+msgid "Paul"
+msgstr "Paul"
+
+msgid "Arthur"
+msgstr "Arthur"
+
+msgid "Robert"
+msgstr "Robert"
+
+msgid "Patrick"
+msgstr "Patrick"
+
+msgid "James"
+msgstr "James"
+
+msgid "Damien"
+msgstr "Damien"
+
+msgid "Frank"
+msgstr "Frank"
+
+msgid "Neil"
+msgstr "Neil"
+
+msgid "Brett"
+msgstr "Brett"
+
+msgid "Adam"
+msgstr "Adam"
+
+msgid "Maria"
+msgstr "Maria"
+
+msgid "Helen"
+msgstr "Helen"
+
+msgid "Sarah"
+msgstr "Sarah"
+
+msgid "Jane"
+msgstr "Jane"
+
+msgid "Andrea"
+msgstr "Andrea"
+
+msgid "Clarence"
+msgstr "Clarence"
+
+msgid "Austin"
+msgstr "Austin"
+
+msgid "Tom"
+msgstr "Tom"
+
+msgid "Mark"
+msgstr "Mark"
+
+msgid "Kevin"
+msgstr "Kevin"
+
+msgid "Carl"
+msgstr "Carl"
+
+msgid "Samuel"
+msgstr "Samuel"
+
+msgid "Donald"
+msgstr "Donald"
+
+msgid "Dwight"
+msgstr "Dwight"
+
+msgid "Ed"
+msgstr "Ed"
+
+msgid "Virgil"
+msgstr "Virgil"
+
+msgid "Calvin"
+msgstr "Calvin"
+
+msgid "Spencer"
+msgstr "Spencer"
+
+msgid "Lester"
+msgstr "Lester"
+
+msgid "Oscar"
+msgstr "Oscar"
+
+msgid "Barbara"
+msgstr "Barbara"
+
+msgid "Sigourney"
+msgstr "Sigourney"
+
+msgid "Catherine"
+msgstr "Catherine"
+
+msgid "Evelyn"
+msgstr "Evelyn"
+
+msgid "Patricia"
+msgstr "Patricia"
+
+msgid "Sergei"
+msgstr "Sergei"
+
+msgid "Boris"
+msgstr "Boris"
+
+msgid "Vladimir"
+msgstr "Vladimir"
+
+msgid "Victor"
+msgstr "Victor"
+
+msgid "Gennadi"
+msgstr "Gennadi"
+
+msgid "Mikhail"
+msgstr "Mikhail"
+
+msgid "Anatoly"
+msgstr "Anatoly"
+
+msgid "Leonid"
+msgstr "Leonid"
+
+msgid "Igor"
+msgstr "Igor"
+
+msgid "Yuri"
+msgstr "Yuri"
+
+msgid "Andrei"
+msgstr "Andrei"
+
+msgid "Nikolai"
+msgstr "Nikolai"
+
+msgid "Dmitriy"
+msgstr "Dmitriy"
+
+msgid "Grigoriy"
+msgstr "Grigoriy"
+
+msgid "Ivan"
+msgstr "Ivan"
+
+msgid "Lyudmila"
+msgstr "Lyudmila"
+
+msgid "Olga"
+msgstr "Olga"
+
+msgid "Tatyana"
+msgstr "Tatyana"
+
+msgid "Galina"
+msgstr "Galina"
+
+msgid "Astra"
+msgstr "Astra"
+
+msgid "Tatsuo"
+msgstr "Tatsuo"
+
+msgid "Toshio"
+msgstr "Toshio"
+
+msgid "Jungo"
+msgstr "Jungo"
+
+msgid "Yuzo"
+msgstr "Yuzo"
+
+msgid "Kenji"
+msgstr "Kenji"
+
+msgid "Naohiro"
+msgstr "Naohiro"
+
+msgid "Isao"
+msgstr "Isao"
+
+msgid "Yasuaki"
+msgstr "Yasuaki"
+
+msgid "Yataka"
+msgstr "Yataka"
+
+msgid "Masanori"
+msgstr "Masanori"
+
+msgid "Shigeo"
+msgstr "Shigeo"
+
+msgid "Masaharu"
+msgstr "Masaharu"
+
+msgid "Shigeru"
+msgstr "Shigeru"
+
+msgid "Akinori"
+msgstr "Akinori"
+
+msgid "Shuji"
+msgstr "Shuji"
+
+msgid "Mariko"
+msgstr "Mariko"
+
+msgid "Sumie"
+msgstr "Sumie"
+
+msgid "Sata"
+msgstr "Sata"
+
+msgid "Yoko"
+msgstr "Yoko"
+
+msgid "Michiko"
+msgstr "Michiko"
+
+msgid "Hans"
+msgstr "Hans"
+
+msgid "Otto"
+msgstr "Otto"
+
+msgid "Manfred"
+msgstr "Manfred"
+
+msgid "Klaus"
+msgstr "Klaus"
+
+msgid "Dieter"
+msgstr "Dieter"
+
+msgid "Wolfgang"
+msgstr "Wolfgang"
+
+msgid "Matthias"
+msgstr "Matthias"
+
+msgid "Gunter"
+msgstr "Gunter"
+
+msgid "Werner"
+msgstr "Werner"
+
+msgid "Gerhard"
+msgstr "Gerhard"
+
+msgid "Siegfried"
+msgstr "Siegfried"
+
+msgid "Rudi"
+msgstr "Rudi"
+
+msgid "Jurgen"
+msgstr "Jurgen"
+
+msgid "Stefan"
+msgstr "Stefan"
+
+msgid "Franz"
+msgstr "Franz"
+
+msgid "Uta"
+msgstr "Uta"
+
+msgid "Gudrun"
+msgstr "Gudrun"
+
+msgid "Christel"
+msgstr "Christel"
+
+msgid "Karin"
+msgstr "Karin"
+
+msgid "Helga"
+msgstr "Helga"
+
+msgid "Henri"
+msgstr "Henri"
+
+msgid "Jacques"
+msgstr "Jacques"
+
+msgid "Eric"
+msgstr "Eric"
+
+msgid "Jean"
+msgstr "Jean"
+
+msgid "Gaston"
+msgstr "Gaston"
+
+msgid "Gerard"
+msgstr "Gérard"
+
+msgid "Louis"
+msgstr "Louis"
+
+msgid "Marcel"
+msgstr "Marcel"
+
+msgid "Leon"
+msgstr "Léon"
+
+msgid "Pierre"
+msgstr "Pierre"
+
+msgid "Bernard"
+msgstr "Bernard"
+
+msgid "Marc"
+msgstr "Marc"
+
+msgid "Claude"
+msgstr "Claude"
+
+msgid "Armand"
+msgstr "Armand"
+
+msgid "Emile"
+msgstr "Emile"
+
+msgid "Micheline"
+msgstr "Micheline"
+
+msgid "Sylvie"
+msgstr "Sylvie"
+
+msgid "Marielle"
+msgstr "Marielle"
+
+msgid "Danielle"
+msgstr "Danielle"
+
+msgid "Jacqueline"
+msgstr "Jacqueline"
+
+msgid "Click on building to set destination"
+msgstr "Clicca sull'edificio per impostare la destinazione"
+
+msgid "Click on vehicle to attack"
+msgstr "Clicca sul veicolo per attaccare"
+
+msgid "Click on map position to set destination"
+msgstr "Clicca sulla mappa per impostare la destinazione"
+
+msgid "Click on Dimension Gate to set destination"
+msgstr "Clicca sul Portale Dimensionale per impostare la destinazione"
+
+msgid "Click on building to destroy"
+msgstr "Clicca sull'edificio da distruggere"
+
+msgid "Click on vehicle to select target"
+msgstr "Clicca sul veicolo per indicare il bersaglio"
+
+msgid "Alien Probe"
+msgstr "Sonda Aliena"
+
+msgid "Alien Scout"
+msgstr "Nave Scout Aliena"
+
+msgid "Alien Transporter"
+msgstr "Trasporto Alieno"
+
+msgid "Alien Fast Attack Ship"
+msgstr "Nave d'Assalto Veloce Aliena"
+
+msgid "Alien Destroyer"
+msgstr "Incrociatore Alieno"
+
+msgid "Alien Assault Ship"
+msgstr "Nave d'Assalto Aliena"
+
+msgid "Alien Bomber"
+msgstr "Bombardiere Alieno"
+
+msgid "Alien Escort"
+msgstr "Nave Scorta Aliena"
+
+msgid "Alien Battleship"
+msgstr "Corazzata Aliena"
+
+msgid "Alien Mothership"
+msgstr "Nave Madre Aliena"
+
+msgid "Police Hovercar"
+msgstr "Hovercar della Polizia"
+
+msgid "Airtaxi"
+msgstr "Aerotaxi"
+
+msgid "Rescue Transport"
+msgstr "Veicolo d'Emergenza"
+
+msgid "Construction Vehicle"
+msgstr "Veicolo da Costruzione"
+
+msgid "Airtrans"
+msgstr "Airtrans"
+
+msgid "Space Liner"
+msgstr "Traghetto Spaziale"
+
+msgid "Phoenix Hovercar"
+msgstr "Hovercar Phoenix"
+
+msgid "Hoverbike"
+msgstr "Hovermoto"
+
+msgid "Valkyrie Interceptor"
+msgstr "Intercettore Valkyrie"
+
+msgid "Hawk Air Warrior"
+msgstr "Caccia Hawk"
+
+msgid "Dimension Probe"
+msgstr "Sonda Dimensionale"
+
+msgid "Biotrans"
+msgstr "Biotrans"
+
+msgid "Explorer"
+msgstr "Explorer"
+
+msgid "Retaliator"
+msgstr "Retaliator"
+
+msgid "Annihilator"
+msgstr "Annichilatore"
+
+msgid "Autotaxi"
+msgstr "Autotaxi"
+
+msgid "Autotrans"
+msgstr "Autotrans"
+
+msgid "Police Car"
+msgstr "Auto della Polizia"
+
+msgid "Civilian Car"
+msgstr "Auto Civile"
+
+msgid "Stormdog"
+msgstr "Tempesta"
+
+msgid "Wolfhound APC"
+msgstr "TTC Lupo"
+
+msgid "Blazer Turbo Bike"
+msgstr "Turbomoto Blazer"
+
+msgid "Griffon AFV"
+msgstr "Griffon AFV"
+
+msgid "Empty"
+msgstr "Vuoto"
+
+msgid "Megapol AP Grenade"
+msgstr "Granata AP"
+
+msgid "Megapol Stun Grenade"
+msgstr "Granata stordente"
+
+msgid "Megapol Smoke Grenade"
+msgstr "Granata fumogena"
+
+msgid "Marsec Proximity Mine"
+msgstr "Mina di prossimità"
+
+msgid "Marsec High Explosive"
+msgstr "Esplosivo ad alto potenziale"
+
+msgid "Megapol Lawpistol"
+msgstr "Pistola"
+
+msgid "Megapol Lawpistol Clip"
+msgstr "Munizioni per pistola"
+
+msgid "Marsec M4000 Machine Gun"
+msgstr "Mitragliatrice M4000"
+
+msgid "Marsec M4000 Gun Clip"
+msgstr "Munizioni per M4000"
+
+msgid "Megapol Laser Sniper Gun"
+msgstr "Fucile laser di precisione"
+
+msgid "Megapol Laser Pod"
+msgstr "Carica laser"
+
+msgid "Megapol Auto Cannon"
+msgstr "Cannone automatico"
+
+msgid "Auto Cannon AP Clip"
+msgstr "Cartucce AP - cann. autom."
+
+msgid "Auto Cannon HE Clip"
+msgstr "Cartucce HE - cann. autom."
+
+msgid "Auto Cannon IN Clip"
+msgstr "Cartucce IN - cann. autom."
+
+msgid "Megapol Plasma Gun"
+msgstr "Pistola al Plasma"
+
+msgid "Megapol Plasma Pod"
+msgstr "Carica Plasma"
+
+msgid "Marsec Heavy Launcher"
+msgstr "Lanciamissili"
+
+msgid "Heavy Launcher AG Missile"
+msgstr "Lanciamissili a gas anti-Alieni"
+
+msgid "Heavy Launcher HE Missile"
+msgstr "Missile esplosivo"
+
+msgid "Heavy Launcher IN Missile"
+msgstr "Missile incendiario"
+
+msgid "Marsec MiniLauncher"
+msgstr "Minimissile"
+
+msgid "MiniLauncher AG Missile"
+msgstr "Minimissile a gas anti-Alieni"
+
+msgid "MiniLauncher HE Missile"
+msgstr "Missile espl. per Minimissile"
+
+msgid "MiniLauncher IN Missile"
+msgstr "Missile incend. per Minimissile"
+
+msgid "Megapol Stun Grapple"
+msgstr "Rete stordente"
+
+msgid "Alien Gas Grenade"
+msgstr "Granata a gas anti-Alieni"
+
+msgid "Tracker Gun Clip"
+msgstr "Munizioni pistola tracciante"
+
+msgid "Tracker Gun"
+msgstr "Pistola tracciante"
+
+msgid "Multi-Tracker"
+msgstr "Multi-tracciante"
+
+msgid "PSI-Grenade"
+msgstr "Granata PSI"
+
+msgid "ForceWeb"
+msgstr "Rete energetica"
+
+msgid "Toxigun"
+msgstr "Toxigun"
+
+msgid "Toxigun A-Clip"
+msgstr "Carica di tossina A"
+
+msgid "Toxigun B-Clip"
+msgstr "Carica di tossina B"
+
+msgid "Toxigun C-Clip"
+msgstr "Carica di tossina C"
+
+msgid "Dimension Destabiliser"
+msgstr "Destabilizzatore dimensionale"
+
+msgid "Mind Shield"
+msgstr "Scudo Mentale"
+
+msgid "Mind Bender"
+msgstr "Incanalatore mentale"
+
+msgid "Alien Detector"
+msgstr "Rilevatore di Alieni"
+
+msgid "Disruptor Gun"
+msgstr "Pistola disgregatrice"
+
+msgid "Devastator Cannon"
+msgstr "Cannone Devastator"
+
+msgid "Boomeroid"
+msgstr "Boomeroide"
+
+msgid "Power Sword"
+msgstr "Spada del Potere"
+
+msgid "Brainsucker Launcher"
+msgstr "Lancia-Succhiacervelli"
+
+msgid "Entropy Launcher"
+msgstr "Lanciamissili Entropy"
+
+msgid "Dimension Missile Launcher"
+msgstr "Lanciamissili Dimension"
+
+msgid "Dimension Missile"
+msgstr "Missile Dimension"
+
+msgid "Vortex Mine"
+msgstr "Mina Vortex"
+
+msgid "Personal Disruptor Shield"
+msgstr "Scudo personale"
+
+msgid "Personal Teleporter"
+msgstr "Teletrasporto personale"
+
+msgid "Personal Cloaking Field"
+msgstr "Mimetizzatore personale"
+
+msgid "Dimension Force Field"
+msgstr "Campo di forza"
+
+msgid "Energy Pod"
+msgstr "Carica energetica"
+
+msgid "Medi-kit"
+msgstr "Kit medico"
+
+msgid "Motion Scanner"
+msgstr "Rilevatore di movimento"
+
+msgid "Brainsucker Pod"
+msgstr "Sonda Succhiacervello"
+
+msgid "Overspawn"
+msgstr "Distruttore"
+
+msgid "Entropy Pod"
+msgstr "Carica Entropy"
+
+msgid "Incendiary Grenade"
+msgstr "Granata incendiaria"
+
+msgid "Megapol Leg Armor"
+msgstr "Gambale"
+
+msgid "Megapol Body Armor"
+msgstr "Armatura"
+
+msgid "Megapol Right Arm Armor"
+msgstr "Bracciale sinistro"
+
+msgid "Megapol Left Arm Armor"
+msgstr "Bracciale destro"
+
+msgid "Megapol Helmet"
+msgstr "Elmetto"
+
+msgid "Marsec Leg Units"
+msgstr "Unità inferiore"
+
+msgid "Marsec Body Unit"
+msgstr "Unità corporea"
+
+msgid "Marsec Right Arm Unit"
+msgstr "Unità braccio sinistro"
+
+msgid "Marsec Left Arm Unit"
+msgstr "Unità braccio destro"
+
+msgid "Marsec Head Unit"
+msgstr "Unità superiore"
+
+msgid "X-COM Leg Shields"
+msgstr "Scudi per gambe"
+
+msgid "X-COM Body Shield"
+msgstr "Scudo corporeo"
+
+msgid "X-COM Right Arm Shield"
+msgstr "Scudo per braccio sinistro"
+
+msgid "X-COM Left Arm Shield"
+msgstr "Scudo per braccio destro"
+
+msgid "X-COM Head Shield"
+msgstr "Scudo per la testa"
+
+msgid "Psimorph's Mindbender"
+msgstr "Incanalatore mentale"
+
+msgid "Megaspawn's Disruptor"
+msgstr "Disgregatore"
+
+msgid "Megaspawn's Launcher"
+msgstr "Lanciamissili"
+
+msgid "Spitter's Vomit Funnel"
+msgstr "Bocca Lanciavomito"
+
+msgid "Multiworm's Spit"
+msgstr "Sputo Multiverme"
+
+msgid "Alien Egg's Vomit Tube"
+msgstr "Lanciavomito Uova Aliene"
+
+msgid "Hyperworm's Bite"
+msgstr "Morso Iperverme"
+
+msgid "Queenspawn's Tentacles"
+msgstr "Tentacoli Regina Aliena"
+
+msgid "Popper's Bomb"
+msgstr "Bomba Kamikaze"
+
+msgid "Psiclone"
+msgstr "Psiclone"
+
+msgid "Elerium"
+msgstr "Carica di Elerio"
+
+msgid "Alien Artifact"
+msgstr "Artefatto Alieno"
+
+msgid "per unit"
+msgstr "per unità"
+
+msgid "per clip"
+msgstr "per colpo"
+
+msgid "per gramme"
+msgstr "per grammo"
+
+msgid "Building"
+msgstr "Edificio"
+
+msgid "The Senate"
+msgstr "Il Senato"
+
+msgid "Judgment Central"
+msgstr "Tribunale"
+
+msgid "Enforcer Academy"
+msgstr "Accademia di polizia"
+
+msgid "Law Control Station"
+msgstr "Stazione di controllo"
+
+msgid "Megastation One"
+msgstr "Megastazione Uno"
+
+msgid "Megastation Two"
+msgstr "Megastazione Due"
+
+msgid "Phoenix Sanatorium"
+msgstr "Sanatorio Phoenix"
+
+msgid "Nightingale Tower"
+msgstr "Torre Nightingale"
+
+msgid "Iliad Institute"
+msgstr "Istituto Iliade"
+
+msgid "Bosch Institute"
+msgstr "IstitutoBosch"
+
+msgid "Marge Piercy Academy"
+msgstr "Accademia Marge Piercy"
+
+msgid "Rescue One"
+msgstr "Soccorso Uno"
+
+msgid "Rescue Two"
+msgstr "Soccorso Due"
+
+msgid "Rescue Three"
+msgstr "Soccorso Tre"
+
+msgid "Quadrax Tower"
+msgstr "Torre Quadrax"
+
+msgid "Gygax Memorial Building"
+msgstr "Memoriale Gygax"
+
+msgid "Parallax Tower"
+msgstr "Torre Parallax"
+
+msgid "Tsunami Building"
+msgstr "Grattacielo Tsunami"
+
+msgid "Venus Spires"
+msgstr "Palazzo Venus"
+
+msgid "Raven Reaches"
+msgstr "Complesso Raven"
+
+msgid "Mahler Building"
+msgstr "Palazzo Mahler"
+
+msgid "The Gugarin Institute"
+msgstr "Istituto Gugarin"
+
+msgid "Lincoln Tower"
+msgstr "Torre Lincoln"
+
+msgid "The Armageddon Centre"
+msgstr "Centro Armageddon"
+
+msgid "Cyborg Institute"
+msgstr "Istituto Cyborg"
+
+msgid "Uhuru Tower"
+msgstr "Torre Uhuru"
+
+msgid "The Karpov Building"
+msgstr "Palazzo Karpov"
+
+msgid "Nietzsche Institute"
+msgstr "Istituto Nietzsche"
+
+msgid "Foucault Tower"
+msgstr "Torre Fouchault"
+
+msgid "Edifice Tower"
+msgstr "Torre Edifice"
+
+msgid "The Ozone Building"
+msgstr "Palazzo dell'Ozono"
+
+msgid "The New Empire Tower"
+msgstr "Grattacielo New Empire"
+
+msgid "Descartes Towers"
+msgstr "Torri Descartes"
+
+msgid "Transtellar Spacelines"
+msgstr "Linee spaziali Transtellar"
+
+msgid "Galactic Central"
+msgstr "Galactic Central"
+
+msgid "Megavision One"
+msgstr "Megavision Uno"
+
+msgid "Megavision Two"
+msgstr "Megavision Due"
+
+msgid "Megavision Three"
+msgstr "Megavision Tre"
+
+msgid "Megatribe Warriors"
+msgstr "Megatribe Warriors"
+
+msgid "Meteor Kings"
+msgstr "Meteor Kings"
+
+msgid "Dog Star Wanderers"
+msgstr "Dog Star Wanderers"
+
+msgid "Garden of Delights"
+msgstr "Giardino delle Delizie"
+
+msgid "The Lineage Foundation"
+msgstr "L'Albero della Vita"
+
+msgid "Aldous Huxley Emporium"
+msgstr "Emporio Aldous Huxley"
+
+msgid "Hypermart Zone"
+msgstr "Hypermarket"
+
+msgid "Acropolis Apartments"
+msgstr "Appartamenti Acropolis"
+
+msgid "Atlantis Apartments"
+msgstr "Appartamenti Atlantis"
+
+msgid "Babylon Apartments"
+msgstr "Appartamenti Babylon"
+
+msgid "Ptolemy Apartments"
+msgstr "Appartamenti Ptolemy"
+
+msgid "Habizone Apartments"
+msgstr "Appartamenti Habizone"
+
+msgid "Ecozone Apartments"
+msgstr "Appartamenti Ecozone"
+
+msgid "Stellar Apartments"
+msgstr "Appartamenti Stellar"
+
+msgid "Lone Ranger Apartments"
+msgstr "Appartamenti Lone Ranger"
+
+msgid "Eden Mansions"
+msgstr "Residence Eden"
+
+msgid "Utopia Mansions"
+msgstr "Residence Utopia"
+
+msgid "Nirvana Mansions"
+msgstr "Residence Nirvana"
+
+msgid "Cyclops Mansions"
+msgstr "Residence Cyclops"
+
+msgid "Cultivator One"
+msgstr "Coltivatore Uno"
+
+msgid "Cultivator Two"
+msgstr "Coltivatore Due"
+
+msgid "Cultivator Three"
+msgstr "Coltivatore Tre"
+
+msgid "Cityclean One"
+msgstr "Cityclean Uno"
+
+msgid "Cityclean Two"
+msgstr "Cityclean Due"
+
+msgid "Cityclean Three"
+msgstr "Cityclean Tre"
+
+msgid "Hydrozone One"
+msgstr "Hydrozone Uno"
+
+msgid "Hydrozone Two"
+msgstr "Hydrozone Due"
+
+msgid "Hydrozone Three"
+msgstr "Hydrozone Tre"
+
+msgid "Appliances One"
+msgstr "Fabbrica Uno"
+
+msgid "Appliances Two"
+msgstr "Fabbrica Due"
+
+msgid "Appliances Three"
+msgstr "Fabbrica Tre"
+
+msgid "Arms One"
+msgstr "Armi Uno"
+
+msgid "Arms Two"
+msgstr "Armi Due"
+
+msgid "Arms Three"
+msgstr "Armi Tre"
+
+msgid "Robot One"
+msgstr "Robot Uno"
+
+msgid "Robot Two"
+msgstr "Robot Due"
+
+msgid "Robot Three"
+msgstr "Robot Tre"
+
+msgid "Car One"
+msgstr "Auto Uno"
+
+msgid "Car Two"
+msgstr "Auto Due"
+
+msgid "Car Three"
+msgstr "Auto Tre"
+
+msgid "Flyer One"
+msgstr "Aereo Uno"
+
+msgid "Flyer Two"
+msgstr "Aereo Due"
+
+msgid "Flyer Three"
+msgstr "Aereo Tre"
+
+msgid "Megaflyer One"
+msgstr "Megavolo Uno"
+
+msgid "Megaflyer Two"
+msgstr "Megavolo Due"
+
+msgid "Megaflyer Three"
+msgstr "Megavolo Tre"
+
+msgid "Construction One"
+msgstr "Costruzione Uno"
+
+msgid "Construction Two"
+msgstr "Costruzione Due"
+
+msgid "Construction Three"
+msgstr "Costruzione Tre"
+
+msgid "George Orwell Block"
+msgstr "Quartiere George Orwell"
+
+msgid "Thomas More Tower"
+msgstr "Torre Thomas More"
+
+msgid "Dickens Estate"
+msgstr "Proprietà Dickens"
+
+msgid "Oliver Twist Block"
+msgstr "Blocco Oliver Twist"
+
+msgid "Campesino Apartments"
+msgstr "Appartamenti Campesino"
+
+msgid "Grey Visitor Towers"
+msgstr "Torri Grigie"
+
+msgid "Scrooge Mansions"
+msgstr "Magione Scrooge"
+
+msgid "Borstal Block"
+msgstr "Blocco Borstal"
+
+msgid "Heavenly Towers"
+msgstr "Torri del Paradiso"
+
+msgid "Civic Project"
+msgstr "Progetto Civico"
+
+msgid "Chronos Block"
+msgstr "Blocco Chronos"
+
+msgid "Necronomicon Mansions"
+msgstr "Magione Necronomicon"
+
+msgid "Angel Heart Heights"
+msgstr "Alture Angel Heart"
+
+msgid "Lovecraft Block"
+msgstr "Blocco Lovecraft"
+
+msgid "Bakunin Block"
+msgstr "Quartiere Bakunin"
+
+msgid "Saturn Block"
+msgstr "Zona di Saturno"
+
+msgid "Hades Block"
+msgstr "Blocco Hades"
+
+msgid "Neptune Towers"
+msgstr "Torri di Nettuno"
+
+msgid "Maze Towers"
+msgstr "Torri Maze"
+
+msgid "Grimoire Block"
+msgstr "Proprietà Grimoire"
+
+msgid "Durruti Block"
+msgstr "Blocco Durruti"
+
+msgid "Blue Doctor Project"
+msgstr "Progetto Dottore Blu"
+
+msgid "Enlightenment Towers"
+msgstr "Torri delle Delizie"
+
+msgid "Renaissance Block"
+msgstr "Blocco della Rinascita"
+
+msgid "Slum City"
+msgstr "Città Buia"
+
+msgid "Warehouse One"
+msgstr "Magazzino Uno"
+
+msgid "Warehouse Two"
+msgstr "Magazzino Due"
+
+msgid "Warehouse Three"
+msgstr "Magazzino Tre"
+
+msgid "Warehouse Four"
+msgstr "Magazzino Quattro"
+
+msgid "Warehouse Five"
+msgstr "Magazzino Cinque"
+
+msgid "Warehouse Six"
+msgstr "Magazzino Sei"
+
+msgid "Warehouse Seven"
+msgstr "Magazzino Sette"
+
+msgid "Warehouse Eight"
+msgstr "Magazzino Otto"
+
+msgid "Warehouse Nine"
+msgstr "Magazzino Nove"
+
+msgid "Warehouse Ten"
+msgstr "Magazzino Dieci"
+
+msgid "Warehouse Eleven"
+msgstr "Magazzino Undici"
+
+msgid "Warehouse Twelve"
+msgstr "Magazzino Dodici"
+
+msgid "Energen Building"
+msgstr "Palazzo Energen"
+
+msgid "Midas Building"
+msgstr "Palazzo Midas"
+
+msgid "Recyclotorium One"
+msgstr "Riciclatore Uno"
+
+msgid "Recyclotorium Two"
+msgstr "Riciclatore Due"
+
+msgid "Recyclotorium Three"
+msgstr "Riciclatore Tre"
+
+msgid "Temple of the Apocalypse"
+msgstr "Tempio dell'Apocalisse"
+
+msgid "Temple of the Millenium"
+msgstr "Tempio del Millennio"
+
+msgid "Temple of the Visitors"
+msgstr "Tempio dei Visitatori"
+
+msgid "Temple of Humility"
+msgstr "Tempio dell'Umiltà"
+
+msgid "Temple of Doom"
+msgstr "Tempio del Giudizio"
+
+msgid "Temple of Sanity"
+msgstr "Tempio della Sanità"
+
+msgid "Earth"
+msgstr "Terra"
+
+msgid "Corridor"
+msgstr "Corridoio"
+
+msgid "Access Lift"
+msgstr "Rampa d'accesso"
+
+msgid "Living Quarters"
+msgstr "Unità Abitative"
+
+msgid "Stores"
+msgstr "Magazzini"
+
+msgid "Cells"
+msgstr "Celle"
+
+msgid "Medical Bay"
+msgstr "Centro Medico"
+
+msgid "Training Area"
+msgstr "Centro Addestramento"
+
+msgid "Psi-gym"
+msgstr "Psi-gym"
+
+msgid "Security Station"
+msgstr "Stazione di Sicurezza"
+
+msgid "Advanced Security Station"
+msgstr "Stazione di Sicurezza Avanzata"
+
+msgid "Vehicle Repair Bay"
+msgstr "Hangar di Riparazione"
+
+msgid "Biochemistry Lab"
+msgstr "Laboratorio Biochimico"
+
+msgid "Advanced Biochemistry Lab"
+msgstr "Laboratorio di Biochimica Avanzata"
+
+msgid "Quantum Physics Lab"
+msgstr "Laboratorio di Fisica Quantistica"
+
+msgid "Advanced Quantum Physics Lab"
+msgstr "Laboratorio Avanzato di Fisica Quantistica"
+
+msgid "Alien Containment"
+msgstr "Unità di Contenimento"
+
+msgid "Advanced Alien Containment"
+msgstr "Unità di Contenimento Avanzata"
+
+msgid "Workshop"
+msgstr "Officina"
+
+msgid "Advanced Workshop"
+msgstr "Officina Avanzata"
+
+msgid "Empty section"
+msgstr "Sezione vuota"
+
+msgid "Bolter 4000 Laser Gun"
+msgstr "Cannone laser Bolter 4000"
+
+msgid "Lancer 7000 Laser Gun"
+msgstr "Cannone laser Lancer 7000"
+
+msgid "Rendor Plasma Gun"
+msgstr "Cannone al Plasma Rendor"
+
+msgid "Lineage Plasma Cannon"
+msgstr "Cannone al Plasma Lineage"
+
+msgid "Plasma Multi-System"
+msgstr "Sistema Multiplo al Plasma"
+
+msgid "Light Disruptor Beam"
+msgstr "Raggio Disgr. Leggero"
+
+msgid "Medium Disruptor Beam"
+msgstr "Raggio Disgr. Medio"
+
+msgid "Heavy Disruptor Beam"
+msgstr "Raggio Disgr. Pesante"
+
+msgid "40mm Auto Cannon"
+msgstr "Cannone Automatico 40mm"
+
+msgid "Janitor Missile Array"
+msgstr "Lanciamissili Janitor"
+
+msgid "Justice Missile Launcher"
+msgstr "Lanciamissili Justice"
+
+msgid "Prophet Missile Array"
+msgstr "Lanciamissili Prophet"
+
+msgid "Retribution Missile Launcher"
+msgstr "Lanciamissili Retribution"
+
+msgid "Disruptor Bomb Launcher"
+msgstr "Missili Disgregatori"
+
+msgid "Stasis Bomb Launcher"
+msgstr "Bombe di Stasi"
+
+msgid "Disruptor Multi-Bomb Launcher"
+msgstr "Lanciamissili Multiplo Disgr."
+
+msgid "Laser Defense Array"
+msgstr "Difesa Antimissili Laser"
+
+msgid "Plasma Defense Array"
+msgstr "Difesa Antimissili Plasma"
+
+msgid "SD Standard"
+msgstr "SD Standard"
+
+msgid "SD Deluxe"
+msgstr "SD Deluxe"
+
+msgid "SD Sports"
+msgstr "SD Sport"
+
+msgid "SD Turbo"
+msgstr "SD Turbo"
+
+msgid "SD Elite"
+msgstr "SD Elite"
+
+msgid "SD Special"
+msgstr "SD Special"
+
+msgid "40mm Auto Cannon Turret"
+msgstr "Torretta Automatica 40mm"
+
+msgid "Airguard Anti-Air Cannon"
+msgstr "Cannone Antiaereo Airguard"
+
+msgid "GLM Array"
+msgstr "Lanciamissili GLM"
+
+msgid "Plasma Turret Cannon"
+msgstr "Torretta al Plasma"
+
+msgid "GLM Air defense"
+msgstr "Difesa Aerea GLM"
+
+msgid "Rumble Cannon"
+msgstr "Cannone Rumble"
+
+msgid "Metro Roadhog"
+msgstr "Road Hog"
+
+msgid "Metro Roadgrav"
+msgstr "Roadgrav"
+
+msgid "Metro Turbograv"
+msgstr "Turbograv"
+
+msgid "Metro Powergrav"
+msgstr "Powergrav"
+
+msgid "Metro Multipower Plus"
+msgstr "Multipower Plus"
+
+msgid "Light Weapons Control"
+msgstr "Controllo Armi Leggero"
+
+msgid "Medium Weapons Control"
+msgstr "Controllo Armi Medio"
+
+msgid "Heavy Weapons Control"
+msgstr "Controllo Armi Pesante"
+
+msgid "Advanced Control System"
+msgstr "Sistema di Controllo Avanzato"
+
+msgid "Cargo Module"
+msgstr "Modulo Cargo"
+
+msgid "Passenger Module"
+msgstr "Modulo Passeggeri"
+
+msgid "Bio-Transport Module"
+msgstr "Modulo Biologico"
+
+msgid "Missile Evasion Matrix"
+msgstr "Contromisure Elettroniche"
+
+msgid "Small Disruption Shield"
+msgstr "Scudo a Disgr. Leggero"
+
+msgid "Large Disruption Shield"
+msgstr "Scudo a Disgr. Pesante"
+
+msgid "Cloaking Field"
+msgstr "Mimetizzatore"
+
+msgid "Teleporter"
+msgstr "Teletrasporto"
+
+msgid "Dimension Shifter"
+msgstr "Varco Dimensionale"
+
+msgid "Senate"
+msgstr "Senato"
+
+msgid "Police Station"
+msgstr "Stazione di polizia"
+
+msgid "Hospital"
+msgstr "Ospedale"
+
+msgid "School"
+msgstr "Scuola"
+
+msgid "Rescue Station"
+msgstr "Stazione di soccorso"
+
+msgid "Offices"
+msgstr "Uffici"
+
+msgid "Corporate HQ"
+msgstr "QG della Corporazione"
+
+msgid "Space Port"
+msgstr "Spazioporto"
+
+msgid "Sensodrome"
+msgstr "Sensodromo"
+
+msgid "Astrodome"
+msgstr "Astrodromo"
+
+msgid "Procreation Park"
+msgstr "Parco di Procreazione"
+
+msgid "Shopping Mall"
+msgstr "Centro commerciale"
+
+msgid "Car Park"
+msgstr "Parcheggio"
+
+msgid "Apartments"
+msgstr "Appartamenti"
+
+msgid "Luxury Apartments"
+msgstr "Appartamenti di lusso"
+
+msgid "Hotel"
+msgstr "Hotel"
+
+msgid "Atmosphere Processor"
+msgstr "Processore atmosferico"
+
+msgid "Hydro-Farm"
+msgstr "Idrofattoria"
+
+msgid "Sewage Works"
+msgstr "Depuratore"
+
+msgid "Water Purifier"
+msgstr "Stazione di purificazione"
+
+msgid "Appliances Factory"
+msgstr "Fabbrica"
+
+msgid "Arms Factory"
+msgstr "Fabbrica di armi"
+
+msgid "Robot Factory"
+msgstr "Fabbrica di robot"
+
+msgid "Car Factory"
+msgstr "Fabbrica di automobili"
+
+msgid "Flyer Factory"
+msgstr "Fabbrica di aerei"
+
+msgid "Large Flyer Factory"
+msgstr "Fabbrica di mezzi volanti"
+
+msgid "Construction Factory"
+msgstr "Centro di costruzione"
+
+msgid "Slums"
+msgstr "Bassifondi"
+
+msgid "Ruins"
+msgstr "Rovine"
+
+msgid "Warehouse"
+msgstr "Magazzino"
+
+msgid "Space Ship"
+msgstr "Nave Spaziale"
+
+msgid "Power Station"
+msgstr "Stazione energetica"
+
+msgid "Recyclotorium"
+msgstr "Riciclatore"
+
+msgid "Outdoor Parks"
+msgstr "Parchi all'aperto"
+
+msgid "People Tubes"
+msgstr "Tubi di trasporto"
+
+msgid "Temple of Sirius"
+msgstr "Tempio di Sirio"
+
+msgid "X-COM Base"
+msgstr "Base X-COM"
+
+msgid "UFOs"
+msgstr "UFO"
+
+msgid "Incubator Chamber"
+msgstr "Incubatore"
+
+msgid "Spawning Chamber"
+msgstr "Camere di generazione"
+
+msgid "Food Chamber"
+msgstr "Camere del cibo"
+
+msgid "Megapod Chamber"
+msgstr "Camera Megapod"
+
+msgid "Sleeping Chamber"
+msgstr "Camere dormitorio"
+
+msgid "Organic Factory"
+msgstr "Fabbrica organica"
+
+msgid "Alien Farm"
+msgstr "Fattoria Aliena"
+
+msgid "Control Chamber"
+msgstr "Camera di controllo"
+
+msgid "Maintenance Factory"
+msgstr "Centro manutenzione"
+
+msgid "Dimension Gate Generator"
+msgstr "Portale Dimensionale"
+
+msgid "Transporter"
+msgstr "Trasporto"
+
+msgid "Fast Attack ship"
+msgstr "Nave d'Assalto Veloce"
+
+msgid "Destroyer"
+msgstr "Incrociatore"
+
+msgid "Assault craft"
+msgstr "Nave d'Assalto"
+
+msgid "Bomber"
+msgstr "Bombardiere"
+
+msgid "Escort"
+msgstr "Nave Scorta"
+
+msgid "Battleship"
+msgstr "Corazzata"
+
+msgid "Mothership"
+msgstr "Nave Madre"
+
+msgid "Property"
+msgstr "Proprietà"
+
+msgid "Financial services"
+msgstr "Servizi finanziari"
+
+msgid "Import/Export"
+msgstr "Import/Export"
+
+msgid "Security services"
+msgstr "Servizi di sicurezza"
+
+msgid "Transport services"
+msgstr "Servizi di trasprto"
+
+msgid "Administration"
+msgstr "Amministrazione"
+
+msgid "Genetics"
+msgstr "Genetica"
+
+msgid "Construction"
+msgstr "Costruzione"
+
+msgid "Vehicle manufacture"
+msgstr "Produzione veicolo"
+
+msgid "Nanotechnology"
+msgstr "Nanotecnologia"
+
+msgid "Personal armaments"
+msgstr "Armamenti personali"
+
+msgid "Security systems droids"
+msgstr "Droidi di Sicurezza"
+
+msgid "Power cells"
+msgstr "Cellule energetiche"
+
+msgid "Furniture"
+msgstr "Mobili"
+
+msgid "X-COM"
+msgstr "X-COM"
+
+msgid "Alien"
+msgstr "Alieni"
+
+msgid "Government"
+msgstr "Governo"
+
+msgid "Megapol"
+msgstr "Megapol"
+
+msgid "Cult of Sirius"
+msgstr "Culto di Sirio"
+
+msgid "Marsec"
+msgstr "Marsec"
+
+msgid "Superdynamics"
+msgstr "Superdynamics"
+
+msgid "General Metro"
+msgstr "General Metro"
+
+msgid "Cyberweb"
+msgstr "Cyberweb"
+
+msgid "Transtellar"
+msgstr "Transtellar"
+
+msgid "Solmine"
+msgstr "Solmine"
+
+msgid "Sensovision"
+msgstr "Sensovision"
+
+msgid "Lifetree"
+msgstr "Lifetree"
+
+msgid "Nutrivend"
+msgstr "Nutrivend"
+
+msgid "Evonet"
+msgstr "Evonet"
+
+msgid "Sanctuary Clinic"
+msgstr "Sanctuary Clinic"
+
+msgid "Nanotech"
+msgstr "Nanotech"
+
+msgid "Energen"
+msgstr "Energen"
+
+msgid "Synthemesh"
+msgstr "Synthemesh"
+
+msgid "Gravball League"
+msgstr "Gravball"
+
+msgid "Psyke"
+msgstr "Psyke"
+
+msgid "Diablo"
+msgstr "Diablo"
+
+msgid "Osiron"
+msgstr "Osiron"
+
+msgid "S.E.L.F."
+msgstr "S.E.L.F."
+
+msgid "Mutant Alliance"
+msgstr "Alleanza dei Mutati"
+
+msgid "Extropians"
+msgstr "Extropiani"
+
+msgid "Technocrats"
+msgstr "Tecnocrati"
+
+msgid "Civilian"
+msgstr "Civili"
+
+msgid "#X-COM"
+msgstr "#X-COM"
+
+msgid "#Alien"
+msgstr "#Aliena"
+
+msgid "#Government"
+msgstr "#Governativa"
+
+msgid "#Police"
+msgstr "#Poliziesca"
+
+msgid "#Corporation"
+msgstr "#Corporativa"
+
+msgid "#Psiclone gang"
+msgstr "#Banda Psiclone"
+
+msgid "#Cult"
+msgstr "#Di culto"
+
+msgid "#Cyborg"
+msgstr "#Cyborg"
+
+msgid "#Hybrid"
+msgstr "#Ibrida"
+
+msgid "#Sectoid"
+msgstr "#Sectoide"
+
+msgid "#Political"
+msgstr "#Politica"
+
+msgid "The following people have been reported dead:"
+msgstr "Le seguenti persone risultano morte:"
+
+msgid "has been reported dead."
+msgstr "è stato dato come morto."
+
+msgid "Dank"
+msgstr "Fetido"
+
+msgid "Dingy"
+msgstr "Malridotto"
+
+msgid "Reasonable"
+msgstr "Ragionevole"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Nice"
+msgstr "Buono"
+
+msgid "Good"
+msgstr "Ottimo"
+
+msgid "Pleasant"
+msgstr "Piacevole"
+
+msgid "Pleasing"
+msgstr "Gradevole"
+
+msgid "Expensive"
+msgstr "Costoso"
+
+msgid "Luxurious"
+msgstr "Di lusso"
+
+msgid "Exclusive"
+msgstr "Esclusivo"
+
+msgid "At"
+msgstr "A"
+
+msgid "Returning to base"
+msgstr "Ritorno alla base"
+
+msgid "Observation Duty"
+msgstr "Osservazione"
+
+msgid "Searching for"
+msgstr "In cerca di"
+
+msgid "Tailing"
+msgstr "In coda a"
+
+msgid "Spying"
+msgstr "Spionaggio"
+
+msgid "Reporting to base"
+msgstr "Rapporto alla base"
+
+msgid "Fusion Powerfuel"
+msgstr "Propulsione a fusione"
+
+msgid "Elerium-115"
+msgstr "Elerio-115"
+
+msgid "Zorium"
+msgstr "Zorio"
+
+msgid "Multi-Cannon Round"
+msgstr "Cartucce per multi-cannone"
+
+msgid "Janitor Missile"
+msgstr "Missile Janitor"
+
+msgid "Justice Missile"
+msgstr "Missile Justice"
+
+msgid "Prophet Missile"
+msgstr "Missile Prophet"
+
+msgid "Retribution Missile"
+msgstr "Missile Retribution"
+
+msgid "Disruptor Bomb"
+msgstr "Bomba disgregatrice"
+
+msgid "Stasis Bomb"
+msgstr "Bomba di stasi"
+
+msgid "Disruptor Multi-Bomb"
+msgstr "Multi-bomba disgregatrice"
+
+msgid "Repeater 40mm Cannon Round"
+msgstr "Cartucce per cannone 40mm"
+
+msgid "Airguard 52mm Cannon Round"
+msgstr "Cartucce per cannone 52mm"
+
+msgid "Ground Launched Missile"
+msgstr "Lanciamissili terrestre"
+
+msgid "Air Defense Missile"
+msgstr "Missile da difesa aerea"
+
+msgid "#Megapol Lawpistol Clip"
+msgstr "#Munizioni per pistola Megapol"
+
+msgid "#Marsec M4000 Gun Clip"
+msgstr "#Munizioni per Marsec M4000"
+
+msgid "#Megapol Laser Pod"
+msgstr "#Carica laser Megapol"
+
+msgid "#Auto Cannon AP Clip"
+msgstr "#Cartucce AP per cannone automatico"
+
+msgid "#Auto Cannon HE Clip"
+msgstr "#Cartucce HE per cannone automatico"
+
+msgid "#Auto Cannon I Clip"
+msgstr "#Cartucce IN per cannone automatico"
+
+msgid "#Megapol Plasma Pod"
+msgstr "#Carica Plasma Megapol"
+
+msgid "#Heavy Launcher Alien Gas Missile"
+msgstr "#Missile a gas anti-Alieni"
+
+msgid "#Heavy Launcher Blaster MIssile"
+msgstr "#Missile esplosivo"
+
+msgid "#Heavy Launcher Incendiary Missile"
+msgstr "#Missile incendiario"
+
+msgid "#MiniLauncher Alien Gas Missile"
+msgstr "#Minimissile a gas anti-Alieni"
+
+msgid "#MiniLauncher HE Missile"
+msgstr "#Missile esplosivo per Minimissile"
+
+msgid "#MiniLauncher I Missile"
+msgstr "#Missile incendiario per Minimissile"
+
+msgid "#Toxigun A-Clip"
+msgstr "#Carica di tossina A"
+
+msgid "#Toxigun B-Clip"
+msgstr "#Carica di tossina B"
+
+msgid "#Toxigun C-Clip"
+msgstr "#Carica di tossina C"
+
+msgid "#Brainsucker Pod"
+msgstr "#Sonda Succhiacervello"
+
+msgid "#Entropy Pod"
+msgstr "#Carica Entropy"
+
+msgid "#Dimension Missile"
+msgstr "#Missile Dimension"
+
+msgid "#Tracker Gun Clip"
+msgstr "#Munizioni per pistola tracciante"
+
+msgid ""
+"#The applicants were given a variety of agility and speed tests; the "
+"combined result is shown."
+msgstr "#Gli esaminati hanno compiuto molti test di agilità e velocità; i risultati combinati sono mostrati."
+
+msgid "#Stamina was tested with an 'until you drop' style assault course."
+msgstr "#La resistenza è stata provata con un percorso d'assalto massacrante."
+
+msgid ""
+"#Reaction times were carefully tested, using both electronic and traditional"
+" methods."
+msgstr "#I tempi di reazione sono stati controllati usando metodi elettronici e tradizionali."
+
+msgid ""
+"#A selection of exercises were monitored to obtain the strength rating of "
+"the applicants."
+msgstr "#I risultati di una serie di esercizi sono stati uniti per ottenere il valore della forza degli esaminati."
+
+msgid "#This is an initial estimate of the applicants' psychic abilities."
+msgstr "#Questa è una prima stima delle capacità psichiche dei soggetti."
+
+msgid ""
+"#The applicants were tested with a selection of traditional firearms to see "
+"how they would fare in a basic sniper situation."
+msgstr "#Gli esaminati sono stati messi alla prova con armi da fuoco tradizionali per verificare la loro mira."
+
+msgid ""
+"#The applicants were tested using advanced simulator technologies; a "
+"combined result is shown for on road/off road/flying vehicles."
+msgstr "#Per gli esami sono stati usati simulatori tecnologicamente avanzati; il risultato finale è mostrato per la guida di veicoli stradali/fuoristrada/volanti."
+
+msgid ""
+"#Perception is the ability to spot small, but occasionally vital, details "
+"that others may miss; it was tested using an extensive observation test."
+msgstr "#La percezione, ovvero la capacità di notare dettagli molto piccoli ma spesso vitali che agli altri sfuggono; è stata messa alla prova con test durissimi."
+
+msgid ""
+"#Biochemistry - the ability to perform research furthering understanding of "
+"the chemistry of living organisms. The values shown below were obtained from"
+" the governing body for Biochemistry."
+msgstr "#Biochimica - l'abilità di svolgere ricerche scoprendo i meccanismi chimici che regolano la vita degli organismi. I valori mostrati di seguito sono stati assegnati dalle massime autorità della Biochimica."
+
+msgid ""
+"#Quantum Physics - the ability to perform research leading to a greater "
+"understanding of the area of physics exploited by Alien technologies. The "
+"values shown below were obtained from the governing body for physics."
+msgstr "#Fisica Quantistica - l'abilità di svolgere ricerche per comprendere a fondo l'area della fisica sfruttata dalle più avanzate tecnologie Aliene. I valori qui sotto sono stati assegnati dalle massime autorità della fisica."
+
+msgid ""
+"#Engineering skills - repairing cars/flying vehicles, as well as the "
+"production of weapons or devices."
+msgstr "#Abilità ingegneristiche - la riparazione di macchine e aerei, come pure la produzione di armi ed equipaggiamenti."
+
+msgid "#Weapons for vehicles"
+msgstr "#Armamenti per veicoli"
+
+msgid "#Engines for vehicles"
+msgstr "#Motori per veicoli"
+
+msgid "#Equipment for vehicles"
+msgstr "#Equipaggiamenti per veicoli"
+
+msgid "#Prefab vehicles"
+msgstr "#Veicoli prefabbricati"
+
+msgid "#Armor for personnel"
+msgstr "#Armature per il personale"
+
+msgid "#Equipment for personnel"
+msgstr "#Equipaggiamento per il personale"
+
+msgid "Help Window"
+msgstr "Finestra di Aiuto"
+
+msgid "Cancel"
+msgstr "Annulla"
+
+msgid "Agent"
+msgstr "Agente"
+
+msgid "Engineer"
+msgstr "Ingegnere"
+
+msgid "Biochemist"
+msgstr "Biochimico"
+
+msgid "Quantum Physicist"
+msgstr "Fisico Quantistico"
+
+msgid "Agility"
+msgstr "Agilità"
+
+msgid "Stamina"
+msgstr "Resistenza"
+
+msgid "Reactions"
+msgstr "Reazione"
+
+msgid "Strength"
+msgstr "Forza"
+
+msgid "Psi"
+msgstr "Psi"
+
+msgid "Accuracy"
+msgstr "Accuratezza"
+
+msgid "Piloting"
+msgstr "Pilotaggio"
+
+msgid "Perception"
+msgstr "Percezione"
+
+msgid "Biochemistry"
+msgstr "Biochimica"
+
+msgid "Quantum Physics"
+msgstr "Fisica Quantistica"
+
+msgid "Engineering"
+msgstr "Ingegneria"
+
+msgid "UFOpaedia tool bar: '<<<<'"
+msgstr "Barra degli strumenti dell'UFOpaedia: '<<<<'"
+
+msgid "UFOpaedia tool bar: '<<'"
+msgstr "Barra degli strumenti dell'UFOpaedia: '<<'"
+
+msgid "UFOpaedia tool bar: '>>'"
+msgstr "Barra degli strumenti dell'UFOpaedia: '>>'"
+
+msgid "UFOpaedia tool bar: '>>>>'"
+msgstr "Barra degli strumenti dell'UFOpaedia: '>>>>'"
+
+msgid "UFOpaedia tool bar: 'OK'"
+msgstr "Barra degli strumenti dell'UFOpaedia: 'OK'"
+
+msgid "#There is no help available for this item."
+msgstr "#Non è previsto alcun aiuto per quest'oggetto."
+
+msgid "#Keeps the changes you have made and returns to the previous screen."
+msgstr "#Rende validi i cambiamenti effettuati e ritorna allo schermo precedente."
+
+msgid ""
+"#Cancels (forgets) any changes you have made on this screen and returns to "
+"the previous screen."
+msgstr "#Annulla tutti i cambiamenti effettuati in questa schermata e torna a quella precedente."
+
+msgid ""
+"#This displays a list of agents available for recruitment, or currently "
+"employed at the selected base."
+msgstr "#Mostra una lista di tutti gli agenti disponibili per il reclutamento, o di quelli impiegati nella base selezionata."
+
+msgid ""
+"#This displays a list of engineers available for recruitment, or currently "
+"employed at the selected base."
+msgstr "#Mostra una lista degli ingegneri disponibili per il reclutamento, o di quelli impiegati nella base selezionata."
+
+msgid ""
+"#This displays a list of Bio-Scientists available for recruitment, or "
+"currently employed at the selected base."
+msgstr "#Mostra una lista dei biochimici disponibili per il reclutamento, o di quelli impiegati nella base selezionata."
+
+msgid ""
+"#This displays a list of Quantum-Scientists available for recruitment, or "
+"currently employed at the selected base."
+msgstr "#Mostra una lista dei fisici quantistici disponibili per il reclutamento, o di quelli impiegati nella base selezionata."
+
+msgid ""
+"#When the agility button is set the bar graphs show the relative agility of "
+"the listed agents."
+msgstr "#Quando viene selezionato il pulsante dell'agilità il grafico a barre mostra i dati relativi agli agenti elencati."
+
+msgid ""
+"#When the stamina button is set the bar graphs show the relative stamina of "
+"the listed agents."
+msgstr "#Quando viene selezionato il pulsante della resistenza il grafico a barre mostra i dati relativi agli agenti elencati."
+
+msgid ""
+"#When the reactions button is set the bar graphs show the relative reaction "
+"ratings of the listed agents."
+msgstr "#Quando viene selezionato il pulsante della reazione il grafico a barre mostra i dati relativi agli agenti elencati."
+
+msgid ""
+"#When the strength button is set the bar graphs show the relative strengths "
+"of the listed agents."
+msgstr "#Quando viene selezionato il pulsante della forza il grafico a barre mostra i dati relativi agli agenti elencati."
+
+msgid ""
+"#When the Psi button is set the bar graphs show the relative Psionic ability"
+" of the listed agents."
+msgstr "#Quando viene selezionato il pulsante dell'abilità psichica il grafico a barre mostra i dati relativi agli agenti elencati."
+
+msgid ""
+"#When the accuracy button is set the bar graphs show the relative ability to"
+" use ranged weapons for the listed agents."
+msgstr "#Quando viene selezionato il pulsante della precisione il grafico a barre mostra i dati relativi agli agenti elencati."
+
+msgid ""
+"#When the piloting button is set the bar graphs show the relative "
+"driving/flying skills of the listed agents."
+msgstr "#Quando viene selezionato il pulsante del pilotaggio il grafico a barre mostra i dati relativi agli agenti elencati."
+
+msgid ""
+"#When this button is set, the graph shows the relative perception levels of "
+"the listed scientists."
+msgstr "#Quando viene premuto il pulsante, il grafico evidenzia il livello di percezione degli scienziati elencati.."
+
+msgid ""
+"#When this button is set, the graph shows the Biochemistry competency level "
+"of the listed scientists."
+msgstr "#Quando viene premuto il pulsante, il grafico evidenzia il livello di competenza biochimica degli scienziati elencati."
+
+msgid ""
+"#When this button is set, the graph shows the Quantum mechanics competency "
+"levels of the listed scientists."
+msgstr "#Quando viene premuto il pulsante, il grafico evidenzia il livello di competenza in fisica quantistica degli scienziati elencati."
+
+msgid ""
+"#When this button is set, the graph shows the engineering skill level of the"
+" listed scientists."
+msgstr "#Quando viene premuto il pulsante, il grafico evidenzia il livello di abilità ingegneristica degli scienziati elencati."
+
+msgid "This button skips to the previous UFOpaedia section."
+msgstr "Questo pulsante fa tornare alla sezione precedente dell'UFOpaedia."
+
+msgid "This button skips to the previous UFOpaedia page."
+msgstr "Questo pulsante fa tornare alla pagina precedente dell'UFOpaedia."
+
+msgid "This button skips to the next UFOpaedia page."
+msgstr "Questo pulsante attiva la prossima pagina dell'UFOpaedia."
+
+msgid "This button skips to the next UFOpaedia section."
+msgstr "Questo pulsante attiva la prossima sezione dell'UFOpaedia."
+
+msgid ""
+"This button exits the UFOpaedia and returns you to what you where doing "
+"before."
+msgstr "Questo pulsante chiude l'UFOpaedia e fa tornare al gioco, nella stessa sezione in cui vi trovavate prima."
+
+msgid "Error"
+msgstr "Errore"
+
+msgid "No living space"
+msgstr "Spazio abitativo esaurito"
+
+msgid "Not enough money"
+msgstr "Soldi insufficienti"
+
+msgid "Base already selected"
+msgstr "La base è già selezionata"
+
+msgid "No Transports available"
+msgstr "Non ci sono trasporti disponibili"
+
+msgid "No Transport space available"
+msgstr "I trasporti sono a pieno carico"
+
+msgid "No room"
+msgstr "Non c'è spazio"
+
+msgid "Not enough parts"
+msgstr "Non ci sono abbastanza componenti"
+
+msgid "Not enough space"
+msgstr "Non c'è abbastanza spazio"
+
+msgid "No Agents Selected"
+msgstr "Nessun agente selezionato"
+
+msgid "Out of money"
+msgstr "Soldi esauriti"
+
+msgid "File not found"
+msgstr "File non trovato"
+
+msgid "Equipment in use"
+msgstr "Equipaggiamento in uso"
+
+msgid "Cannot create scenario"
+msgstr "Impossibile creare scenario"
+
+msgid "Alien artifact"
+msgstr "Artefatto Alieno"
+
+msgid "Map too small"
+msgstr "Mappa troppo piccola"
+
+msgid "An unlisted error has occured."
+msgstr "Si è verificato un errore ignoto."
+
+msgid ""
+"You will need to build more living space, or sack some agents before "
+"recruiting more staff."
+msgstr "Devi costruire altre unità abitative oppure licenziare qualcuno prima di assumere altro personale."
+
+msgid "You cannot afford to employ any more staff."
+msgstr "Non ti puoi permettere di assumere altro personale."
+
+msgid ""
+"You must select two different bases to transfer to / from, you may not "
+"select the same base twice."
+msgstr "Devi selezionare due basi diverse per i trasferimenti, non puoi selezionare due volte la stessa base."
+
+msgid ""
+"There are no transport crafts available to deliver all of your new stock."
+msgstr "Non ci sono mezzi di trasporto disponibili per consegnare tutto il nuovo equipaggiamento."
+
+msgid "There is not enough cargo space to deliver all of your new stock."
+msgstr "Non c'è abbastanza spazio per consegnare tutto il nuovo equipaggiamento."
+
+msgid "You have no more room in this facility."
+msgstr "In questa struttura non c'è più spazio libero."
+
+msgid "You do not have enough parts to make this item."
+msgstr "Non ci sono componenti sufficienti per produrre quest'oggetto."
+
+msgid ""
+"You do not have enough room to make any more of this item. Manufacture "
+"stopped."
+msgstr "Non c'è spazio a sufficienza per costruire altri oggetti di questo tipo. Produzione sospesa."
+
+msgid "#You need to select the agents you want to put on observation duty."
+msgstr "#Devi selezionare l'agente da assegnare alla missione di spionaggio."
+
+msgid ""
+"You need to select the agents you want to become active within the building."
+msgstr "Devi selezionare gli agenti che saranno attivi all'interno dell'edificio."
+
+msgid "You need to select the agents you want to investigate this building."
+msgstr "Devi selezionare gli agenti che dovranno esaminare quest'edificio."
+
+msgid "You do not have available funds to make the requested purchases."
+msgstr "Non hai fondi a sufficienza per acquistare quanto selezionato."
+
+msgid "No scenario files could be found."
+msgstr "Nessun file scenario localizzato."
+
+msgid "You cannot afford to pay off this organization."
+msgstr "Non puoi permetterti di pagare quest'organizzazione."
+
+msgid "Passenger module cannot be removed as it is currently in use."
+msgstr "Il modulo passeggeri non può essere rimosso perché è in uso."
+
+msgid ""
+"The scenario must have at least two organizations containing units to play."
+msgstr "Uno scenario deve avere almeno due organizzazioni con unità con cui giocare."
+
+msgid "You must research Alien technology before you can use it."
+msgstr "Devi svolgere ricerche sulle tecnologie Aliene prima di poterle usare."
+
+msgid "This map may be to small to deploy all the units, continue anyway?"
+msgstr "Questa mappa potrebbe essere troppo piccola per tutte le unità, continui comunque?"
+
+msgid ""
+"#First you select the base that you wish to recruit some staff to, this base"
+" must have some spare living space. You select a base by clicking on the "
+"desired mini-base icon (shown)."
+msgstr "#Per prima cosa indica la base dove vuoi assumere personale, a patto che abbia spazio abitativo libero. Puoi selezionarne una cliccando sulla mini-icona corrispondente."
+
+msgid ""
+"#The second thing to do is click on the button for the type of person you "
+"wish to recruit, here we have agents selected."
+msgstr "#Come secondo passo clicca sul pulsante della categoria di personale che vuoi assumere; in modo da vedere i candidati."
+
+msgid ""
+"#Depending on which type of person you selected a bar of skill buttons is "
+"shown, from which a number of relative bar graphs is be displayed. (see "
+"point 4)"
+msgstr "#A seconda del tipo di personale compare una barra che indica le abilità, in forma di grafici a barre, che vengono visualizzati, collegati (vedi al punto 4)."
+
+msgid ""
+"#This is the list of people up for selection, there ability at the selected "
+"skill is shown as a bar, your current staff are shown as blue, and the "
+"applicants are shown in yellow. By clicking you can sack or hire "
+"respectively."
+msgstr "#Questa è la lista degli uomini che puoi assumere e delle loro abilità. Quelle del personale che già lavora per te sono mostrate in blu, quelle degli aspiranti lavoratori in giallo. Da qui puoi assumere e licenziare chiunque."
+
+msgid "#Don't forget to take there wages into account!!!"
+msgstr "#Non dimenticare di controllare anche gli stipendi richiesti!!!"
+
+msgid ""
+"#Once you are happy with your selection, click OK, otherwise, click Cancel "
+"and everything will go back to normal."
+msgstr "#Quando ritieni di aver finito clicca sul pulsante OK. Se premi 'Annulla', tutto quello che hai fatto non verrà considerato."
+
+msgid "Buying and Selling"
+msgstr "Comprare e vendere"
+
+msgid "MONEY> $"
+msgstr "SOLDI> $"
+
+msgid "Weapons"
+msgstr "Armi"
+
+msgid "Engines"
+msgstr "Motori"
+
+msgid "Equipment"
+msgstr "Equipagg."
+
+msgid "Vehicles"
+msgstr "Veicoli"
+
+msgid "Vehicle maintenance"
+msgstr "Manutenzione veicoli"
+
+msgid "Armor"
+msgstr "Armatura"
+
+msgid "Personnel"
+msgstr "Personale"
+
+msgid "PRICE"
+msgstr "PREZZO"
+
+msgid "STOCK"
+msgstr "SCORTE"
+
+msgid "PRICE: $"
+msgstr "PREZZO: $"
+
+msgid "STOCK:"
+msgstr "SCORTE:"
+
+msgid "Buy:"
+msgstr "Compra:"
+
+msgid "Sell:"
+msgstr "Vendi:"
+
+msgid "AT>"
+msgstr "A>"
+
+msgid "PERSONNEL RECRUITMENT"
+msgstr "ASSUNZIONE PERSONALE"
+
+msgid "Living space:"
+msgstr "Spazio abitativo:"
+
+msgid "Total>"
+msgstr "Totale>"
+
+msgid "Remaining>"
+msgstr "Restante>"
+
+msgid "##Psi"
+msgstr "##Psi"
+
+msgid "Sack"
+msgstr "Licenzia"
+
+msgid "Employ"
+msgstr "Assumi"
+
+msgid "NAME"
+msgstr "NOME"
+
+msgid "TEST RESULT"
+msgstr "RISULTATO TEST"
+
+msgid "MONTHLY SALARY"
+msgstr "SALARIO MENSILE"
+
+msgid "EMPLOY"
+msgstr "ASSUMI"
+
+msgid "No avoidance"
+msgstr "Non fuggire"
+
+msgid "Avoid"
+msgstr "Fuggi"
+
+msgid "Do not attack"
+msgstr "Non attaccare"
+
+msgid "Attack"
+msgstr "Attacca"
+
+msgid "No pursuit"
+msgstr "Non inseguire"
+
+msgid "Pursue"
+msgstr "Insegui"
+
+msgid "No evasion"
+msgstr "Non ripararti"
+
+msgid "Evade Fire"
+msgstr "Riparati"
+
+msgid "Only respond to attacking units."
+msgstr "Rispondi solo se attaccato."
+
+msgid "Respond to all hostile units."
+msgstr "Attacca tutte le unità ostili."
+
+msgid "Ignore hostile units."
+msgstr "Ignora le unità ostili."
+
+msgid "UnLocked."
+msgstr "Sbloccato."
+
+msgid "Locked."
+msgstr "Bloccato."
+
+msgid "BUY AND SELL"
+msgstr "COMPRA E VENDI"
+
+msgid "Personal Equipment"
+msgstr "Equipaggiamento personale"
+
+msgid "Personal Armor"
+msgstr "Armatura personale"
+
+msgid "Vehicle Equipment"
+msgstr "Equipaggiamento veicoli"
+
+msgid "Airborne Vehicle Weapons"
+msgstr "Armi mezzi aerei"
+
+msgid "Airborne Vehicle Engines / Fuel"
+msgstr "Motori mezzi aerei/carburante"
+
+msgid "Road Vehicle Weapons"
+msgstr "Armi mezzi terrestri"
+
+msgid "Road Vehicle Engines / Fuel"
+msgstr "Motori mezzi terrestri/carburante"
+
+msgid "Funds exceeded"
+msgstr "Fondi non sufficienti"
+
+msgid "Order limited by your available funds."
+msgstr "Ordine limitato ai tuoi fondi attuali."
+
+msgid "Storage space exceeded"
+msgstr "Spazio disponibile superato"
+
+msgid "Order limited by the available storage space at this base."
+msgstr "Ordine limitato in base allo spazio qui disponibile."
+
+msgid "Order canceled by the hostile manufacturer."
+msgstr "Ordine annullato dal rifiuto del produttore."
+
+msgid "Industrial Action"
+msgstr "Sciopero"
+
+msgid ""
+"Industrial action by the Air Transport and General Workers Union has "
+"prevented immediate delivery of some of the items you ordered. To prevent a "
+"backlog of orders building up, the organization(s) concerned have canceled "
+"your order(s) and refunded your money. They apologize for the inconvenience "
+"caused."
+msgstr "Uno sciopero dei trasporti aerei e dell'Unione Lavoratori ha ritardato la consegna immediata di alcune delle merci ordinate. Per evitare un accumulo di ordini, la/le organizzazione/i in questione hanno annullato i tuoi ordini e ti hanno restituito i soldi. Si scusano per questo increscioso episodio."
+
+msgid "Vehicle Licensing Problem"
+msgstr "Problema nella registrazione dei veicoli"
+
+msgid ""
+"An unprecedented workload at the Vehicle Licensing Center has prevented "
+"immediate registration of at least one vehicle ordered by you. To prevent a "
+"backlog of orders building up, the organization(s) concerned have canceled "
+"your order(s) and refunded your money. They apologize for the inconvenience "
+"caused."
+msgstr "Un grande carico di lavoro al Centro Registrazione Veicoli ha impedito che almeno uno dei veicoli da te ordinati sia stato registrato immediatamente. Per evitare un accumulo di ordini, la/le organizzazione/i in questione hanno annullato i tuoi ordini e ti hanno restituito i soldi. Si scusano per questo increscioso episodio."
+
+msgid "Cancel Buy and Sell"
+msgstr "Annulla Compra e Vendi"
+
+msgid "Are you sure?"
+msgstr "Sei sicuro?"
+
+msgid "Pay:"
+msgstr "Paga:"
+
+msgid "ALIEN TAKEOVER"
+msgstr "CONQUISTA ALIENA"
+
+msgid ""
+"Our intelligence sources have informed us that the Aliens have taken control"
+" of this organization. This means that they will actively assist the Aliens "
+"and oppose the work of X-COM. We will be forced to stop all trade relations "
+"with them and must be cautious when conducting operations within their "
+"buildings. Right and wrong no longer exists for these people, we must do all"
+" we can to protect the city from them. This must not be the end. We will "
+"fight on."
+msgstr "Le nostre fonti informative ci hanno comunicato che gli Alieni hanno preso il controllo di quest'organizzazione, che ora li aiuterà in ogni modo, opponendosi alla X-COM. Dobbiamo interrompere tutti i nostri contatti con essa ed essere estremamente cauti quando operiamo nei loro edifici. Il bene e il male non esistono più per queste persone, dobbiamo proteggere a tutti i costi la città da quelli come loro. Non dobbiamo arrenderci, dobbiamo combattere!"
+
+msgid "ALIEN INFILTRATION"
+msgstr "INFLITRAZIONE ALIENA"
+
+msgid "HIRE AND FIRE"
+msgstr "ASSUMI E LICENZIA"
+
+msgid "FIRE"
+msgstr "LICENZIA"
+
+msgid "X-COM Agents"
+msgstr "Agenti X-COM"
+
+msgid "Biochemists"
+msgstr "Biochimici"
+
+msgid "Engineers"
+msgstr "Ingegneri"
+
+msgid "Quantum Physicists"
+msgstr "Fisici quantistici"
+
+msgid "Accommodation exceeded"
+msgstr "Troppo personale"
+
+msgid "Hiring not possible due to lack of available accommodation."
+msgstr "E' impossibile assumere perché non c'è spazio abitativo"
+
+msgid "Hiring not possible due to lack of funds."
+msgstr "E' impossibile assumere perché sono finiti i soldi."
+
+msgid "Weekly Salary"
+msgstr "Salario settimanale"
+
+msgid "Health"
+msgstr "Salute"
+
+msgid "Speed"
+msgstr "Velocità"
+
+msgid "Bravery"
+msgstr "Coraggio"
+
+msgid "Psi-energy"
+msgstr "Energia Psi"
+
+msgid "Psi-attack"
+msgstr "Attacco Psi"
+
+msgid "Psi-defense"
+msgstr "Difesa Psi"
+
+msgid "Biochemistry skill"
+msgstr "Abilità biochimica"
+
+msgid "Engineering skill"
+msgstr "Abilità ingegneristica"
+
+msgid "Quantum physics skill"
+msgstr "Abilità fisico quantistica"
+
+msgid "Cancel Hire and Fire"
+msgstr "Annulla Assumi e Licenzia"
+
+msgid "Loading"
+msgstr "Attendi un attimo"
+
+msgid "Switching to Alien Dimension"
+msgstr "Passaggio alla Dimensione Aliena"
+
+msgid "Returning to city"
+msgstr "Ritorno alla città"
+
+msgid "Confirm Sales/Purchases"
+msgstr "Conferma vendite/acquisti"
+
+msgid "Confirm Orders"
+msgstr "Conferma ordini"
+
+msgid "unit(s) hired"
+msgstr "unità assunta/e"
+
+msgid "unit(s) fired."
+msgstr "unità licenziata/e."
+
+msgid "AGENT LOCATION"
+msgstr "POSIZIONE AGENTE"
+
+msgid "VEHICLE LOCATION"
+msgstr "POSIZIONE VEICOLO"
+
+msgid "Unassigned Agents"
+msgstr "Agenti non assegnati"
+
+msgid "Vehicle Assignments"
+msgstr "Ordini per i veicoli"
+
+msgid ""
+"X-COM is ALLIED with this organization. The relationship cannot be improved."
+msgstr "La X-COM è già ALLEATA con quest'organizzazione. Non possiamo fare di più."
+
+msgid ""
+"This organization is under Alien control. The Alien race will not enter "
+"negotiations with X-COM."
+msgstr "Quest'organizzazione è controllata dagli Alieni; per questo non farà negoziati con la X-COM."
+
+msgid ""
+"Whilst X-COM continue to oppose our Alien friends we will remain hostile. "
+"Negotiations are impossible."
+msgstr "Fino a che la X-COM combatterà i nostri amici Alieni noi le saremo nemici. Trattare è impossibile."
+
+msgid "It will cost: $"
+msgstr "Costerà: $"
+
+msgid "to improve relations to:"
+msgstr "migliorare le relazioni con:"
+
+msgid "ALLIED"
+msgstr "ALLEATO"
+
+msgid "FRIENDLY"
+msgstr "AMICHEVOLE"
+
+msgid "NEUTRAL"
+msgstr "NEUTRALE"
+
+msgid "UNFRIENDLY"
+msgstr "OSTILE"
+
+msgid "Pay organization"
+msgstr "Paga compagnia"
+
+msgid "Show ten most infiltrated organizations not under Alien control."
+msgstr "Elenca le prime dieci compagnie con infiltrazione Aliena, ma non ancora completamente controllate."
+
+msgid "BASE ATTACK"
+msgstr "ATTACCO ALLA BASE"
+
+msgid ""
+"Hostile forces have invaded your base. Equip your Agents before battle."
+msgstr "Forze ostili hanno attaccato la nostra base. Prepara gli uomini per la battaglia."
+
+msgid "Dimension Gates"
+msgstr "Portali Dimensionali"
+
+msgid "The Alien Dimension"
+msgstr "La Dimensione Aliena"
+
+msgid "One Way To Win"
+msgstr "La via per la vittoria"
+
+msgid "UFO spotted."
+msgstr "UFO individuato."
+
+msgid "Alien corpse found."
+msgstr "Corpo Alieno recuperato."
+
+msgid "Live Alien spotted."
+msgstr "Alieno vivo avvistato."
+
+msgid "Not enough money to buy this building."
+msgstr "Soldi insufficienti per costruire questa struttura."
+
+msgid "Planning permission refused for this building."
+msgstr "Permesso di costruzione della struttura rifiutato."
+
+msgid "The owner does not wish to sell this building."
+msgstr "Il proprietario non intende vendere quest'edificio."
+
+msgid "There has been an explosion."
+msgstr "C'è stata un'esplosione."
+
+msgid "Building under attack:"
+msgstr "Edificio sotto attacco:"
+
+msgid "Attacked by:"
+msgstr "Attaccato da:"
+
+msgid "destroyed by"
+msgstr "distrutto da"
+
+msgid "Vehicle heavily damaged:"
+msgstr "Veicolo gravemente danneggiato:"
+
+msgid "Vehicle moderately damaged:"
+msgstr "Veicolo danneggiato:"
+
+msgid "Vehicle lightly damaged:"
+msgstr "Veicolo leggermente danneggiato:"
+
+msgid ": Weapon out of ammo:"
+msgstr ": munizioni esaurite:"
+
+msgid "Organization attacked:"
+msgstr "Organizzazione attaccata:"
+
+msgid "Organization raided:"
+msgstr "Organizzazione saccheggiata:"
+
+msgid "Raided by:"
+msgstr "Saccheggiata da:"
+
+msgid "Organization stormed:"
+msgstr "Organizzazione assalita:"
+
+msgid "Stormed by:"
+msgstr "Assalita da:"
+
+msgid "An illegal road vehicle has been detected."
+msgstr "Rilevato un veicolo stradale non autorizzato."
+
+msgid "An illegal flyer has been detected."
+msgstr "Rilevato un mezzo aereo non autorizzato."
+
+msgid "Treaty signed:"
+msgstr "Trattato siglato:"
+
+msgid "Staff resign at:"
+msgstr "Dimissioni a:"
+
+msgid "Resignations:"
+msgstr "Dimissioni:"
+
+msgid "Welcome to X-COM Apocalypse"
+msgstr "Benvenuto a X-COM: Apocalypse"
+
+msgid "Alien attacks VIP."
+msgstr "Attacco Alieno a un VIP."
+
+msgid "Crazed VIP attacks VIP."
+msgstr "Un VIP impazzito attacca un VIP."
+
+msgid "Dimension gate spotted."
+msgstr "Rilevato Portale Dimensionale."
+
+msgid "Vehicle low on fuel:"
+msgstr "Veicolo in riserva:"
+
+msgid "Vehicle out of fuel:"
+msgstr "Veicolo senza carburante:"
+
+msgid "Acquisition of:"
+msgstr "Acquisizione di:"
+
+msgid "Acquired by:"
+msgstr "Acquisito da:"
+
+msgid "Vehicle Repaired:"
+msgstr "Veicolo riparato:"
+
+msgid "Vehicle returning to base as damaged:"
+msgstr "Veicolo in ritorno alla base danneggiato:"
+
+msgid "Vehicle has no engine:"
+msgstr "Veicolo senza motore:"
+
+msgid "X-COM Base destroyed due to collapsing building."
+msgstr "Base X-COM distrutta dal crollo dell'edificio."
+
+msgid "Unable to buy base as building destroyed."
+msgstr "Impossibile costruire una base, l'edificio è distrutto."
+
+msgid "collapsing building"
+msgstr "l'edificio sta crollando"
+
+msgid "Vehicle destroyed:"
+msgstr "Veicolo distrutto:"
+
+msgid "UFO crash landed:"
+msgstr "L'UFO è precipitato:"
+
+msgid "Unmanned UFO recovered:"
+msgstr "UFO sconosciuto recuperato:"
+
+msgid "New recruit arrived:"
+msgstr "Nuova recluta:"
+
+msgid ""
+"Our Agents are unable to find an entrance to this building. Our Scientists "
+"back at HQ must complete their research."
+msgstr "I nostri agenti non sono in grado di trovare l'ingresso dell'edificio. E' necessario che gli scienziati al quartier generale completino le loro ricerche."
+
+msgid "X-COM base destroyed by hostile forces."
+msgstr "La base X-COM è stata distrutta dalle forze nemiche."
+
+msgid ""
+": Unable to reach destination due to damaged people tube network and / or "
+"poor diplomatic relations with Transtellar."
+msgstr ": Non in grado di raggiungere la destinazione a causa di un guasto al sistema dei tubi di trasporto e/o per i pessimi rapporti con la Transtellar."
+
+msgid "Agent(s) rearmed:"
+msgstr "Agenti ri-armati:"
+
+msgid "Unit killed:"
+msgstr "Unità eliminata:"
+
+msgid "TRANSFER"
+msgstr "TRASFERISCI"
+
+msgid "Aliens"
+msgstr "Alieni"
+
+msgid "(Alive)"
+msgstr "(vivi)"
+
+msgid "(Dead)"
+msgstr "(morti)"
+
+msgid "Transfer limited by available storage space."
+msgstr "Trasferimento limitato allo spazio disponibile."
+
+msgid "Transfer limited by available accommodation."
+msgstr "Trasferimento limitato alla capacità abitativa disponibile."
+
+msgid "Alien Containment space exceeded"
+msgstr "Unità di Contenimento esaurita"
+
+msgid "Transfer limited by available Alien Containment space."
+msgstr "Trasferimento limitato alla capacità dell'Unità di Contenimento."
+
+msgid ""
+"Industrial action by the Air Transport and General Workers Union has "
+"prevented immediate execution of some of your transfer instructions. To "
+"prevent a backlog of work building up, Transtellar have canceled the "
+"affected transfers. They apologize for the inconvenience caused."
+msgstr "Uno sciopero dei trasporti aerei e dell'Unione Lavoratori ha ritardato il trasferimento immediato di alcune delle merci ordinate. Per evitare un accumulo di lavoro, la Transtellar ha annullato tutti i trasferimenti in corso. Si scusa per quest'inconveniente."
+
+msgid "Cancel Transfer"
+msgstr "Annulla trasferimento"
+
+msgid "Confirm Transfers"
+msgstr "Conferma trasferimento"
+
+msgid "This hostile organization refuses to carry out the requested transfer."
+msgstr "Questa organizzazione ostile si rifiuta di effettuare il trasferimento richiesto."
+
+msgid "January,"
+msgstr "Gennaio,"
+
+msgid "February,"
+msgstr "Febbraio,"
+
+msgid "March,"
+msgstr "Marzo,"
+
+msgid "April,"
+msgstr "Aprile,"
+
+msgid "May,"
+msgstr "Maggio,"
+
+msgid "June,"
+msgstr "Giugno,"
+
+msgid "July,"
+msgstr "Luglio,"
+
+msgid "August,"
+msgstr "Agosto,"
+
+msgid "September,"
+msgstr "Settembre,"
+
+msgid "October,"
+msgstr "Ottobre,"
+
+msgid "November,"
+msgstr "Novembre,"
+
+msgid "December,"
+msgstr "Dicembre,"
+
+msgid "Bio-Transport"
+msgstr "Bio-Trasporto"
+
+msgid "Brainsucker Pods"
+msgstr "Sonda Succhiacervello"
+
+msgid "Brainsucker Autopsy"
+msgstr "Autopsia del Succhiacervelli"
+
+msgid "Brainsucker"
+msgstr "Succhiacervelli"
+
+msgid "Multiworm Egg Autopsy"
+msgstr "Autopsia dell'uovo di Multiverme"
+
+msgid "Multiworm Egg"
+msgstr "Uovo di Multiverme"
+
+msgid "Multiworm Autopsy"
+msgstr "Autopsia del Multiverme"
+
+msgid "Multiworm"
+msgstr "Multiverme"
+
+msgid "Hyperworm Autopsy"
+msgstr "Autopsia dell'Iperverme"
+
+msgid "Hyperworm"
+msgstr "Iperverme"
+
+msgid "Chrysalis Autopsy"
+msgstr "Autopsia della Crisalide"
+
+msgid "Chrysalis"
+msgstr "Crisalide"
+
+msgid "Anthropod Autopsy"
+msgstr "Autopsia dell'Antropode"
+
+msgid "Anthropod"
+msgstr "Antropode"
+
+msgid "Psimorph Autopsy"
+msgstr "Autopsia dello Psimorfo"
+
+msgid "Psimorph"
+msgstr "Psimorfo"
+
+msgid "Spitter Autopsy"
+msgstr "Autopsia dello Sputatore"
+
+msgid "Spitter"
+msgstr "Sputatore"
+
+msgid "Megaspawn Autopsy"
+msgstr "Autopsia del Megaspawn"
+
+msgid "Megaspawn"
+msgstr "Megaspawn"
+
+msgid "Popper Autopsy"
+msgstr "Autopsia del Kamikaze"
+
+msgid "Popper"
+msgstr "Kamikaze"
+
+msgid "Skeletoid Autopsy"
+msgstr "Autopsia dello Scheletoide"
+
+msgid "Skeletoid"
+msgstr "Scheletoide"
+
+msgid "Micronoid Autopsy"
+msgstr "Autopsia dei Micronoidi"
+
+msgid "Micronoid"
+msgstr "Micronoidi"
+
+msgid "Queenspawn Autopsy"
+msgstr "Autopsia della Regina"
+
+msgid "Queenspawn"
+msgstr "Regina"
+
+msgid "Overspawn Autopsy"
+msgstr "Autopsia del Distruttore"
+
+msgid "The Alien Genetic Structure"
+msgstr "La struttura genetica degli Alieni"
+
+msgid "The Alien Life Cycle"
+msgstr "Il ciclo vitale degli Alieni"
+
+msgid "The Real Alien Threat"
+msgstr "La vera minaccia Aliena"
+
+msgid "Biological Warfare"
+msgstr "Guerra biologica"
+
+msgid "Toxin Type B"
+msgstr "Tossina tipo B"
+
+msgid "Toxin Type C"
+msgstr "Tossina tipo C"
+
+msgid "Alien Gas"
+msgstr "Gas Alieno"
+
+msgid "Disruptor Armor"
+msgstr "Armatura a Disgregazione"
+
+msgid "Disruptor Inversion Bomb"
+msgstr "Bomba a Inversione Disgregatrice"
+
+msgid "Stasis Field Bomb"
+msgstr "Bombe di Stasi"
+
+msgid "X-COM Advanced Control System"
+msgstr "Sistema di Controllo Avanzato X-COM"
+
+msgid "Alien Propulsion System"
+msgstr "Propulsione delle navi Aliene"
+
+msgid "Alien Control System"
+msgstr "Sistema di controllo delle navi Aliene"
+
+msgid "Alien Energy Source"
+msgstr "Fonte energetica delle navi Aliene"
+
+msgid "UFO type 1"
+msgstr "UFO tipo 1"
+
+msgid "UFO type 2"
+msgstr "UFO tipo 2"
+
+msgid "UFO type 3"
+msgstr "UFO tipo 3"
+
+msgid "UFO type 4"
+msgstr "UFO tipo 4"
+
+msgid "UFO type 5"
+msgstr "UFO tipo 5"
+
+msgid "UFO type 6"
+msgstr "UFO tipo 6"
+
+msgid "UFO type 7"
+msgstr "UFO tipo 7"
+
+msgid "UFO type 8"
+msgstr "UFO tipo 8"
+
+msgid "UFO type 9"
+msgstr "UFO tipo 9"
+
+msgid "UFO type 10"
+msgstr "UFO tipo 10"
+
+msgid "Alien building"
+msgstr "Struttura Aliena"
+
+msgid "One way to win"
+msgstr "La via per la vittoria"
+
+msgid ""
+"The mysterious atmospheric phenomenon from which the UFOs are emerging "
+"requires urgent attention. We must find out where the Alien craft are coming"
+" from."
+msgstr "Il misterioso fenomeno atmosferico dal quale emergono gli UFO deve essere esaminato con urgenza. Dobbiamo scoprire la provenienza delle navi Aliene."
+
+msgid "We must analyze the data from our Alien Dimension probe."
+msgstr "Dobbiamo analizzare i dati forniti dalla nostra sonda dimensionale."
+
+msgid ""
+"We need to build an automated device that can be sent through a Dimension "
+"gate. This will provide invaluable data which can prepare us for manned "
+"missions."
+msgstr "Dobbiamo creare un mezzo automatico da inviare attraverso un Portale Dimensionale. In questo modo otterremo dati indispensabili per preparare missioni con uomini a bordo."
+
+msgid ""
+"The capture and study of live Alien specimens will help us understand the "
+"nature of the Alien threat. In order to do this we need an inter-dimensional"
+" transport vehicle that can contain and sustain Alien life forms."
+msgstr "La cattura e lo studio di esemplari Alieni viventi ci aiuterà a comprendere meglio la natura della minaccia Aliena. Perciò ci serve un velivolo interdimensionale in grado di contenere e mantenere in vita forme di vita extraterrestri."
+
+msgid ""
+"A craft capable of carrying our agents into the Alien Dimensions is "
+"required. The vast Alien structures must be explored and studied. This will "
+"help us understand their function and their weaknesses."
+msgstr "Ci serve un mezzo capace di portare i nostri agenti nella Dimensione Aliena. Le vaste strutture Aliene devono essere esplorate e studiate. In questo modo potremo comprendere il loro funzionamento e le loro debolezze."
+
+msgid ""
+"In order to combat the increasing aggression and power of Alien craft we "
+"must build an inter-dimensional weapons platform."
+msgstr "Per riuscire a contrastare l'aggressività e la potenza sempre crescenti delle navi Aliene dobbiamo costruire una piattaforma d'arma interdimensionale."
+
+msgid ""
+"The Alien threat can only be stopped by destroying their ability to create "
+"Dimension gates. A full assault on the Alien Dimensions requires a craft of "
+"immense power."
+msgstr "La minaccia Aliena può essere vinta solo impedendo ai nostri nemici di creare Porte Dimensionali: però un assalto nella Dimensione Aliena richiede un mezzo potentissimo."
+
+msgid "These pods contain a dormant Alien creature."
+msgstr "Queste sonde contengono una creatura Aliena dormiente."
+
+msgid ""
+"This small Alien creature has been seen to attack humans by jumping on the "
+"head and gripping with all its limbs."
+msgstr "Questo piccolo Alieno attacca gli esseri umani saltandogli in testa e aggrappandosi con tutti i suoi artigli."
+
+msgid ""
+"A live Brainsucker is a valuable specimen - we must research it as soon as "
+"possible."
+msgstr "Un Succhiacervello vivo è un esemplare notevole - dobbiamo esaminarlo al più presto."
+
+msgid "This stationary Alien life form appears to be some form of Alien egg."
+msgstr "Sembra che questa forma di vita Aliena sia un qualche tipo di uovo."
+
+msgid ""
+"A live Multiworm egg gives us an excellent opportunity to observe the Alien "
+"life cycle in progress."
+msgstr "Un uovo di Multiverme intatto è un'eccellente opportunità di osservare il progredire del ciclo di vita Alieno."
+
+msgid ""
+"The Multiworm corpse decays rapidly, consumed by its own defense mechanisms."
+" If research is not undertaken soon then we will not be able to preserve the"
+" remains."
+msgstr "Il corpo del Multiverme marcisce in fretta, consumato dai suoi stessi meccanismi di difesa. Se non iniziamo subito le ricerche presto non ci sarà più nulla da esaminare."
+
+msgid ""
+"A live Multiworm is a rare catch and must be studied immediately as it is a "
+"highly unstable life form."
+msgstr "Un Multiverme vivo è cosa rara; deve essere studiato immediatamente per via della precarietà della sua forma vitale."
+
+msgid ""
+"The Hyperworm corpse is extremely heavy for its size and appears to be a "
+"primitive creature."
+msgstr "Il corpo dell'Iperverme è molto pesante per la sua dimensione; sembra sia molto primitivo."
+
+msgid "The Hyperworm is a small, highly active carnivore."
+msgstr "L'Iperverme è un piccolo carnivoro altamente attivo."
+
+msgid ""
+"The remains of an Alien Chrysalis produces pungent fumes as it decays "
+"rapidly."
+msgstr "I resti di una Crisalide Aliena esalano fumi tossici e si consumano rapidamente."
+
+msgid ""
+"The study of a live Alien Chrysalis could represent a significant advance in"
+" our knowledge of the Alien life cycle."
+msgstr "Lo studio di una Crisalide vivente potrebbe essere un passo fondamentale sulla strada per comprendere il ciclo di vita Alieno."
+
+msgid ""
+"The Anthropod is the Alien creature that most resembles the human form."
+msgstr "L'Antropode è la creatura Aliena che più si avvicina alla forma umana."
+
+msgid "The Anthropod is a robust humanoid Alien soldier."
+msgstr "L'Antropode è un robusto soldato Alieno di forma umanoide."
+
+msgid "The Psimorph creature is a large mass of tentacles."
+msgstr "Lo Psimorfo è una creatura costituita da un'enorme massa di tentacoli."
+
+msgid ""
+"A living Psimorph is an extremely dangerous entity which must be kept "
+"unconscious, otherwise its Psionic ability would result in subversion of our"
+" personnel."
+msgstr "Uno Psimorfo vivente è estremamente pericoloso; deve essere mantenuto incosciente, oppure userà la sua abilità psionica per prendere il controllo del nostro personale."
+
+msgid ""
+"This ungainly creature has a huge funnel for propelling a deadly liquid."
+msgstr "Questa strana creatura ha un grosso tubo per sparare un liquido mortale."
+
+msgid "The Spitter is humanoid in form but has a funnel shaped head."
+msgstr "Lo Sputatore è un umanoide, ma ha la testa a forma di tubo."
+
+msgid "An extremely large warrior creature."
+msgstr "Una creatura guerriera di dimensioni davvero notevoli."
+
+msgid ""
+"Due to the size of the Megaspawn we need a lot of free space in the Alien "
+"Containment facility to hold it and an advanced Bio-lab to study it."
+msgstr "Viste le dimensioni del Megaspawn ci serve un'Unità di Contenimento Avanzata per conservarlo e un laboratorio biologico avanzato per studiarlo."
+
+msgid "A small bipedal Alien creature."
+msgstr "Una piccola creatura Aliena bipede."
+
+msgid "An extremely dangerous Alien that must be kept sedated."
+msgstr "Si tratta di un Alieno estremamente pericoloso: deve essere tenuto sotto sedativo."
+
+msgid "A humanoid Alien with an exo-skeleton structure."
+msgstr "Un Alieno umanoide con una struttura esoscheletrica."
+
+msgid "An intelligent, airborne humanoid Alien warrior."
+msgstr "Un guerriero Alieno volante, umanoide e molto intelligente."
+
+msgid "An unusual jelly like Alien life form."
+msgstr "Una strana forma di vita Aliena gelatinosa."
+
+msgid "A swarming amoebae-like Alien life form."
+msgstr "Una forma di vita Aliena ameboide."
+
+msgid "This is a huge egg laying Alien creature."
+msgstr "Si tratta di un'enorme creatura che vive per deporre uova."
+
+msgid ""
+"The enormous hulk of the Queenspawn requires great effort to transport and "
+"contain."
+msgstr "L'enorme mole della Regina richiede notevoli sforzi sia per il trasporto che per il contenimento."
+
+msgid "The Overspawn is an extremely dangerous Alien terror weapon."
+msgstr "Il Distruttore è un terribile strumento di terrore Alieno."
+
+msgid "A gigantic monster that has ravaged the city."
+msgstr "Un mostro gigantesco che ha devastato la città."
+
+msgid "Investigate the genetic relationships between Alien life forms."
+msgstr "Indagare sulle relazioni genetiche tra le diverse forme di vita Aliene."
+
+msgid "Research the primary stages of the Alien life cycle."
+msgstr "Esaminare le fasi primarie del ciclo di vita Alieno."
+
+msgid ""
+"Investigate the source of the Alien intelligence and their secret purpose."
+msgstr "Indagare sulla sorgente dell'intelligenza Aliena e sul suo scopo finale."
+
+msgid ""
+"The aim is to develop a toxin that specifically targets the early stages of "
+"the Alien life cycle."
+msgstr "Lo scopo è sviluppare una tossina che elimini gli Alieni alle prime fasi del loro sviluppo."
+
+msgid "A toxin needs to be developed to combat the higher Alien life forms."
+msgstr "Bisogna sviluppare una tossina per combattere le forme di vita Aliene più evolute."
+
+msgid ""
+"A powerful Biological warfare weapon designed to target the Micronoid "
+"parasites."
+msgstr "Una potente arma biologica progettata per eliminare i parassiti Micronoidi."
+
+msgid ""
+"There is a possibility that a multi-toxin can be suspended in gaseous form, "
+"which would increase the efficiency of our Biological weaponry."
+msgstr "C'è la possibilità che una multi-tossina possa essere generata in forma gassosa, incrementando di molto l'efficacia di quest'arma biologica."
+
+msgid "A security station using Alien disrupter technology."
+msgstr "Una stazione di sicurezza che usa la tecnologia Aliena della Disgregazione."
+
+msgid "For researching advanced Alien organic technology."
+msgstr "Per la ricerca sulle tecnologie organiche Aliene avanzate."
+
+msgid "For researching advanced Alien technology."
+msgstr "Per la ricerca sulle tecnologie Aliene avanzate."
+
+msgid "To secure and research large or dangerous Alien life forms."
+msgstr "Per contenere ed esaminare Alieni di grandi dimensioni o pericolosi."
+
+msgid "Needed for building new vehicle types."
+msgstr "Necessario per costruire nuovi tipi di veicoli."
+
+msgid "An Alien beam weapon."
+msgstr "Un'arma a raggi Aliena."
+
+msgid "An intelligent Alien proximity mine"
+msgstr "Una mina di prossimità Aliena intelligente."
+
+msgid "Fires Brainsucker pods."
+msgstr "Lancia Sonde Succhiacervelli."
+
+msgid "An Alien organic weapon."
+msgstr "Un'arma organica Aliena."
+
+msgid "Ammunition for an Alien weapon."
+msgstr "Munizioni per un'arma Aliena."
+
+msgid "An Alien guided missile weapon."
+msgstr "Un missile guidato Alieno."
+
+msgid "An Alien guided missile."
+msgstr "Un missile guidato Alieno."
+
+msgid "A powerful Alien grenade."
+msgstr "Una potente granata Aliena."
+
+msgid "An Alien energy shield."
+msgstr "Uno scudo energetico Alieno."
+
+msgid "An Alien teleportation device."
+msgstr "Un dispositivo di teletrasporto Alieno."
+
+msgid "An Alien device which limits detection."
+msgstr "Un dispositivo Alieno per la mimetizzazione."
+
+msgid ""
+"A device based on disruption field research which could be used to disable "
+"Alien disruption shields."
+msgstr "Un dispositivo basato sul campo disgregatore che può essere usato per disabilitare i campi disgregatori Alieni."
+
+msgid "Personal armor can be developed based on disrupter research"
+msgstr "Armatura personale sviluppabile dopo ricerche sulla tecnologia della disgregazione."
+
+msgid "A beam weapon deployed on Alien craft."
+msgstr "Un'arma a raggi presente sui velivoli Alieni."
+
+msgid "An Alien guided missile launched from Alien craft."
+msgstr "Un missile guidato Alieno lanciato da una nave Aliena."
+
+msgid "An Alien missile with an immobilizing effect."
+msgstr "Un missile Alieno con capacità d'immobilizzare il bersaglio."
+
+msgid "A multiple warhead missile."
+msgstr "Un missile a testata multipla."
+
+msgid "A superior weapons control system."
+msgstr "Un sistema di controllo d'arma molto avanzato."
+
+msgid "For transporting Alien life forms."
+msgstr "Per il trasporto di forme di vita Aliene."
+
+msgid "Reduced detection of vehicles."
+msgstr "Riduce la visibilità dei veicoli."
+
+msgid "Instantly transports a vehicle over short ranges."
+msgstr "Teletrasporta un velivolo per brevi distanze."
+
+msgid "Transports a vehicle between Dimensions."
+msgstr "Permette a un velivolo di spostarsi di dimensione."
+
+msgid "Alien craft propulsion."
+msgstr "Sistema di propulsione Alieno."
+
+msgid "Alien craft guidance System."
+msgstr "Sistema di pilotaggio Alieno."
+
+msgid "Alien craft energy generator."
+msgstr "Sistema energetico Alieno."
+
+msgid "Alien inter-dimensional craft"
+msgstr "Nave Aliena interdimensionale"
+
+msgid "This research could reveal a weakness in the Alien defenses."
+msgstr "Questa ricerca potrebbe rivelare qualche debolezza nelle difese Aliene."
+
+msgid "We must discover a way to beat the Aliens once and for all"
+msgstr "Dobbiamo trovare un modo di battere gli Alieni una volta per tutte"
+
+msgid "Disruptor Inversion Bomb launcher"
+msgstr "Lanciatore di Bombe Disgregatrici"
+
+msgid "Stasis Field Bomb launcher"
+msgstr "Lanciatore di Bombe di Stasi"
+
+msgid "Disruptor Multi-Bomb launcher"
+msgstr "Lanciamissili Multiplo Disgregatore"
+
+msgid "Toxin Type A"
+msgstr "Tossina tipo A"
+
+msgid "Heavy Launcher Alien Gas Missile"
+msgstr "Lanciamissili a gas anti-Alieni"
+
+msgid "Mini Launcher Alien Gas Missile"
+msgstr "Minimissile a gas anti-Alieni"
+
+msgid "Disruptor Armor (legs)"
+msgstr "Armatura Disgregatrice (gambe)"
+
+msgid "Disruptor Armor (torso)"
+msgstr "Armatura Disgregatrice (torso)"
+
+msgid "Disruptor Armor (right arm)"
+msgstr "Armatura Disgregatrice (braccio sx)"
+
+msgid "Disruptor Armor (left arm)"
+msgstr "Armatura Disgregatrice (braccio dx)"
+
+msgid "Disruptor Armor (head)"
+msgstr "Armatura Disgregatrice (testa)"
+
+msgid "The Senate considers X-COM to be a worthy ally."
+msgstr "Il Senato considera la X-COM un alleato importante."
+
+msgid "The Senate is content with our mutually beneficial relationship."
+msgstr "Il Senato è soddisfatto delle relazioni che intercorrono con la X-COM."
+
+msgid ""
+"The Senate is less favorable to the X-COM organization and thereis a danger "
+"that the relationship could deteriorate."
+msgstr "Il Senato è contrariato con la X-COM ed esiste il reale pericolo chele relazioni si possano deteriorare."
+
+msgid ""
+"The Senate is now openly hostile to X-COM and no further fundingwill be "
+"available."
+msgstr "Il Senato è apertamente ostile alla X-COM, e non concederà più alcun finanziamento."
+
+msgid "Alien Egg"
+msgstr "Uovo Alieno"
+
+msgid "Micronoid Aggregate"
+msgstr "Aggregato di Micronoidi"
+
+msgid "Rookie"
+msgstr "Recluta"
+
+msgid "Squaddie"
+msgstr "Soldato"
+
+msgid "Squad leader"
+msgstr "Caporale"
+
+msgid "Sergeant"
+msgstr "Sergente"
+
+msgid "Captain"
+msgstr "Capitano"
+
+msgid "Colonel"
+msgstr "Colonnello"
+
+msgid "Commander"
+msgstr "Comandante"
+
+msgid "Ammo Clip"
+msgstr "Munizioni"
+
+msgid "Structure Probe"
+msgstr "Sonda strutturale"
+
+msgid "Vortex Analyser"
+msgstr "Analizzatore Vortex"
+
+msgid "Multitracker"
+msgstr "Multirilevatore"
+
+msgid "Medi-Kit"
+msgstr "Kit medico"
+
+msgid "BLANK"
+msgstr "BLANK"
+
+msgid "1st"
+msgstr "1"
+
+msgid "2nd"
+msgstr "2"
+
+msgid "3rd"
+msgstr "3"
+
+msgid "4th"
+msgstr "4"
+
+msgid "5th"
+msgstr "5"
+
+msgid "6th"
+msgstr "6"
+
+msgid "7th"
+msgstr "7"
+
+msgid "8th"
+msgstr "8"
+
+msgid "9th"
+msgstr "9"
+
+msgid "10th"
+msgstr "10"
+
+msgid "11th"
+msgstr "11"
+
+msgid "12th"
+msgstr "12"
+
+msgid "13th"
+msgstr "13"
+
+msgid "14th"
+msgstr "14"
+
+msgid "15th"
+msgstr "15"
+
+msgid "16th"
+msgstr "16"
+
+msgid "17th"
+msgstr "17"
+
+msgid "18th"
+msgstr "18"
+
+msgid "19th"
+msgstr "19"
+
+msgid "20th"
+msgstr "20"
+
+msgid "21st"
+msgstr "21"
+
+msgid "22nd"
+msgstr "22"
+
+msgid "23rd"
+msgstr "23"
+
+msgid "24th"
+msgstr "24"
+
+msgid "25th"
+msgstr "25"
+
+msgid "26th"
+msgstr "26"
+
+msgid "27th"
+msgstr "27"
+
+msgid "28th"
+msgstr "28"
+
+msgid "29th"
+msgstr "29"
+
+msgid "30th"
+msgstr "30"
+
+msgid "31st"
+msgstr "31"
+
+msgid "Monday"
+msgstr "Lunedì"
+
+msgid "Tuesday"
+msgstr "Martedì"
+
+msgid "Wednesday"
+msgstr "Mercoledì"
+
+msgid "Thursday"
+msgstr "Giovedì"
+
+msgid "Friday"
+msgstr "Venerdì"
+
+msgid "Saturday"
+msgstr "Sabato"
+
+msgid "Sunday"
+msgstr "Domenica"
+
+msgid "Click on building to buy"
+msgstr "Clicca sulla struttura da comprare"
+
+msgid "Money = $"
+msgstr "Soldi = $"
+
+msgid "This Building will cost $%d"
+msgstr "Questo edificio costerà $%d"
+
+msgid "Enter Name>"
+msgstr "Inserisci il nome>"
+
+msgid "Cost to build"
+msgstr "Costo di costr."
+
+msgid "Days to build"
+msgstr "Giorni di costruzione"
+
+msgid "Maintenance cost"
+msgstr "Costo manutenzione"
+
+msgid "Facility:"
+msgstr "Struttura:"
+
+msgid "Number in base"
+msgstr "Numero nella base"
+
+msgid "Can't destroy: living quarters in use."
+msgstr "Impossibile distruggere: spazio in uso."
+
+msgid "= Accommodation in base"
+msgstr "= spazio abitativo nella base"
+
+msgid "Number living on base"
+msgstr "Numero presente nella base"
+
+msgid "-> Fraction of accommodation in use"
+msgstr "-> percentuale di spazio abitativo usato"
+
+msgid "Can't destroy: storage in use."
+msgstr "Impossibile distruggere: magazzino in uso."
+
+msgid "= Storage space in base"
+msgstr "=  spazio di magazzino nella base"
+
+msgid "Storage space used"
+msgstr "Spazio di magazzino usato"
+
+msgid "-> Fraction of storage space used"
+msgstr "-> percentuale di magazzino usato"
+
+msgid "= Number of beds"
+msgstr "= numero di letti"
+
+msgid "Number of patients"
+msgstr "Numero dei pazienti"
+
+msgid "-> Efficiency per patient"
+msgstr "-> Efficacia per paziente"
+
+msgid "= Number of places"
+msgstr "= numero di posti"
+
+msgid "Number using the facilities"
+msgstr "Utilizzatori della struttura"
+
+msgid "-> Efficiency per user"
+msgstr "-> Efficacia per utente"
+
+msgid "Bio-lab space in base"
+msgstr "Spazio Bio-Lab nella base"
+
+msgid "No project assigned"
+msgstr "Nessun progetto assegnato"
+
+msgid "Not assigned to lab"
+msgstr "Non assegnato al laboratorio"
+
+msgid "Quantum lab space in base"
+msgstr "Spazio Quantum-Lab nella base"
+
+msgid "Not assigned to workshop"
+msgstr "Non assegnato all'officina"
+
+msgid "-> Fraction of Quantum lab space assigned"
+msgstr "-> Percentuale di spazio Quantum-Lab assegnata"
+
+msgid "Can't destroy: containment space in use."
+msgstr "Impossibile distruggere: Unità in uso."
+
+msgid "= Alien Containment space"
+msgstr "= capacità contenimento Alieni"
+
+msgid "Containment space used"
+msgstr "Spazio di contenimento usato"
+
+msgid "-> Fraction of containment space used"
+msgstr "-> Percentuale di spazio di contenimento usato"
+
+msgid "Can't destroy: advanced containment space in use."
+msgstr "Impossibile distruggere: Unità Avanzata in uso."
+
+msgid "= Advanced Alien Containment space"
+msgstr "= capacità di contenimento avanzato Alieni"
+
+msgid "Advanced containment space used"
+msgstr "Spazio di contenimento avanzato usato"
+
+msgid "-> Fraction of advanced containment space used"
+msgstr "-> Percentuale di contenimento avanzato usato"
+
+msgid "Workshop space in base"
+msgstr "Spazio nell'officina della base"
+
+msgid "Workshop space assigned to projects"
+msgstr "Parte di officina assegnata a progetti"
+
+msgid "-> Fraction of Workshop space assigned"
+msgstr "-> Percentuale dello spazio di officina assegnato"
+
+msgid "Destroy facility"
+msgstr "Distruggi struttura"
+
+msgid "ALIEN CONTAINMENT"
+msgstr "UNITA' CONTENIMENTO ALIENI"
+
+msgid "Space required"
+msgstr "Spazio richiesto"
+
+msgid "Space in base"
+msgstr "Spazio nella base"
+
+msgid "Advanced space required"
+msgstr "Spazio avanzato richiesto"
+
+msgid "Advanced space in base"
+msgstr "Spazio avanzato nella base"
+
+msgid "Type"
+msgstr "Tipo"
+
+msgid "Size"
+msgstr "Dimensione"
+
+msgid "Quantity in Alien Containment"
+msgstr "Quantità nell'Unità di Contenimento"
+
+msgid "To be Destroyed"
+msgstr "Da distruggere"
+
+msgid "Quantity in Advanced Alien Containment"
+msgstr "Quantità nell'Unità di Contenimento Avanzata"
+
+msgid "Alive"
+msgstr "Vivi"
+
+msgid "Dead"
+msgstr "Morti"
+
+msgid "Space Exceeded"
+msgstr "Capacità superata"
+
+msgid "Alien Containment space exceeded. Destroy more Aliens!"
+msgstr "Capacità dell'Unità di Contenimento superata. Elimina più Alieni!"
+
+msgid "ALIEN STRUCTURE"
+msgstr "STRUTTURA ALIENA"
+
+msgid "Adjust Wage"
+msgstr "Impostazione salario"
+
+msgid "No advice at this time."
+msgstr "Nessun avviso al momento."
+
+msgid "You have to reduce wages to become profitable."
+msgstr "Devi ridurre gli stipendi se non vuoi fare bancarotta."
+
+msgid "You should take on more staff if you wish to be productive."
+msgstr "Devi assumere più personale per essere produttivo."
+
+msgid "Increase wages to attract more staff."
+msgstr "Aumenta gli stipendi per attirare personale."
+
+msgid "Cut wages to improve your profit margin."
+msgstr "Riduci gli stipendi per avere più profitto."
+
+msgid "Economic Information"
+msgstr "Avviso economico"
+
+msgid "Current mean wage"
+msgstr "Stipendio medio attuale"
+
+msgid "Mean income per head:"
+msgstr "Incasso per persona:"
+
+msgid "Fixed costs at building:"
+msgstr "Costo fisso degli edifici:"
+
+msgid "Weekly revenue generated:"
+msgstr "Ricavo settimanale:"
+
+msgid "Current staff level:"
+msgstr "Livello attuale del personale:"
+
+msgid "Aliens in building"
+msgstr "Alieni nell'edificio"
+
+msgid "Dimension:"
+msgstr "Dimensione:"
+
+msgid "Charted Gates:"
+msgstr "Porte segnalate:"
+
+msgid "Uncharted Gates:"
+msgstr "Porte non segnalate:"
+
+msgid "Total Gate count:"
+msgstr "Conto totale porte:"
+
+msgid "Buildings:"
+msgstr "Edifici:"
+
+msgid "UFOs:"
+msgstr "UFO:"
+
+msgid "Weight:"
+msgstr "Peso:"
+
+msgid "Protection rating:"
+msgstr "Grado di protezione:"
+
+msgid "Reload time:"
+msgstr "Tempo di ricarica:"
+
+msgid "n/a"
+msgstr "n/a"
+
+msgid "Blast radius:"
+msgstr "Raggio esplosivo:"
+
+msgid "Laser guided"
+msgstr "Guida laser"
+
+msgid "Accuracy:"
+msgstr "Accuratezza:"
+
+msgid "Power:"
+msgstr "Potenza:"
+
+msgid "Recharge rate:"
+msgstr "Velocità di ricarica:"
+
+msgid "Location :"
+msgstr "Posizione:"
+
+msgid "Base :"
+msgstr "Base:"
+
+msgid "Traveling by people tube"
+msgstr "Spostamento con tubi di trasporto"
+
+msgid "Traveling by vehicle"
+msgstr "Spostamento con veicolo"
+
+msgid "WARNING!"
+msgstr "Attenzione!"
+
+msgid "Illegal vehicle"
+msgstr "Non registrato"
+
+msgid "Enter defensive diplomatic negotiations with:"
+msgstr "Avviare trattative diplomatiche con:"
+
+msgid "Diplomacy"
+msgstr "Diplomazia"
+
+msgid "Enter aggressive diplomatic negotiations with:"
+msgstr "Avviare trattative aggressive con:"
+
+msgid "Against:"
+msgstr "Contro:"
+
+msgid ": allied with:"
+msgstr ":  ALLEATO con:"
+
+msgid ": formerly allied with:"
+msgstr ":  un tempo ALLEATO con:"
+
+msgid ": friendly with:"
+msgstr ": AMICO di:"
+
+msgid ": formerly friemdly with:"
+msgstr ":  un tempo AMICO di:"
+
+msgid ": neutral towards:"
+msgstr ":  NEUTRALE verso:"
+
+msgid ": formerly neutral towards:"
+msgstr ":  un tempo NEUTRALE verso:"
+
+msgid ": unfriendly towards:"
+msgstr ":  OSTILE verso:"
+
+msgid ": formerly unfriendly towards:"
+msgstr ":  un tempo OSTILE verso:"
+
+msgid ": hostile towards:"
+msgstr ":  NEMICO di:"
+
+msgid ": formerly hostile towards:"
+msgstr ":  un tempo NEMICO di:"
+
+msgid ": Attitude unknown towards:"
+msgstr ":  Attitudine non conosciuta:"
+
+msgid "Available Funds $"
+msgstr "Fondi disponibili $"
+
+msgid ": is currently owned by:"
+msgstr ": correntemente controllato da:"
+
+msgid "Function:"
+msgstr "Funzione:"
+
+msgid "Current workforce:"
+msgstr "Forza lavoro attuale:"
+
+msgid "Current wage:"
+msgstr "Stipendio attuale:"
+
+msgid "Maximum workforce:"
+msgstr "Massima forza lavoro:"
+
+msgid "Fixed costs:"
+msgstr "Costi fissi:"
+
+msgid "Current income:"
+msgstr "Incasso attuale:"
+
+msgid "Potential income:"
+msgstr "Incasso potenziale:"
+
+msgid "Bidding"
+msgstr "Offerta"
+
+msgid "Would you like to take part in this auction?"
+msgstr "Intendi partecipare a quest'asta?"
+
+msgid "Building up for auction:"
+msgstr "Preparativi per l'asta:"
+
+msgid "Auctioned by:"
+msgstr "Messo all'asta da:"
+
+msgid "Bidding begins at: $"
+msgstr "La base d'asta è: $"
+
+msgid "Going..."
+msgstr "Si comincia..."
+
+msgid "Last chance to bid..."
+msgstr "Ultima possibilità di rilanciare..."
+
+msgid "Gone!!"
+msgstr "Andato!!"
+
+msgid ": sold to:"
+msgstr ":  venduto a:"
+
+msgid "for: $"
+msgstr "per: $"
+
+msgid "Sold!"
+msgstr "Venduto!"
+
+msgid "No buyers"
+msgstr "Nessun compratore"
+
+msgid "No buyers found for this building."
+msgstr "Nessun compratore per questo edificio."
+
+msgid "General recruitment"
+msgstr "Reclutamento generale"
+
+msgid "Income per capita:"
+msgstr "Reddito pro capite:"
+
+msgid "Mean wage in building:"
+msgstr "Stipendio medio dell'edificio:"
+
+msgid "Mean wage in city:"
+msgstr "Stipendio medio in città:"
+
+msgid "Number of applicants:"
+msgstr "Numero di candidati:"
+
+msgid "Cost per applicant:"
+msgstr "Costo per candidato:"
+
+msgid "Cost to recruit all applicants:"
+msgstr "Costo per assumere tutti i candidati:"
+
+msgid "X-COM balance:"
+msgstr "Bilancio X-COM:"
+
+msgid "DIPLOMATIC RIFT"
+msgstr "INCIDENTE DIPLOMATICO"
+
+msgid "An alliance with X-COM has been requested by:"
+msgstr "Una proposta di alleanza per la X-COM è arrivata da:"
+
+msgid "SCORE"
+msgstr "PUNTEGGIO"
+
+msgid "CATEGORY"
+msgstr "CATEGORIA"
+
+msgid "WEEK"
+msgstr "SETTIMANA"
+
+msgid "TOTAL"
+msgstr "TOTALE"
+
+msgid "Tactical Missions"
+msgstr "Missioni tattiche"
+
+msgid "Research Completed"
+msgstr "Ricerca completata"
+
+msgid "Alien Incidents in City"
+msgstr "Incidenti Alieni in città"
+
+msgid "UFOs Shot Down"
+msgstr "UFO abbattuti"
+
+msgid "X-COM Craft Shot Down"
+msgstr "Mezzi X-COM abbattuti"
+
+msgid "UFO Incursions"
+msgstr "Incursioni UFO"
+
+msgid "Damage to City"
+msgstr "Danni alla città"
+
+msgid "Alien Buildings Destroyed"
+msgstr "Edifici Alieni distrutti"
+
+msgid "Total"
+msgstr "Totale"
+
+msgid ""
+"All selected units and craft have arrived at %s. Proceed with investigation?"
+" (%i units)"
+msgstr "Tutte le unità e i mezzi selezionati sono arrivati a %s. Procedere con la missione? (%i unità)"
+
+msgid "Commence Investigation"
+msgstr "Iniziare l'investigazione"
+
+msgid "UFOPAEDIA"
+msgstr "UFOPAEDIA"
+
+msgid "Constitution"
+msgstr "Robustezza"
+
+msgid "Weight"
+msgstr "Peso"
+
+msgid "Passengers"
+msgstr "Passeggeri"
+
+msgid "Weapons space"
+msgstr "Spazio per le armi"
+
+msgid "Weapons slots"
+msgstr "Alloggiamenti per le armi"
+
+msgid "Engine size"
+msgstr "Dimensione motore"
+
+msgid "Equipment space"
+msgstr "Spazio per gli equipaggiamenti"
+
+msgid "Construction cost"
+msgstr "Costo di costruzione"
+
+msgid "Weekly cost"
+msgstr "Costo settimanale"
+
+msgid "Capacity"
+msgstr "Capacità"
+
+msgid "Power"
+msgstr "Potenza"
+
+msgid "Top Speed"
+msgstr "Velocità massima"
+
+msgid "Damage"
+msgstr "Danni"
+
+msgid "Range"
+msgstr "Raggio"
+
+msgid "Fire Rate"
+msgstr "Velocità di fuoco"
+
+msgid "r/s"
+msgstr "c/s"
+
+msgid "Velocity"
+msgstr "Velocità"
+
+msgid "Ammo capacity"
+msgstr "Munizioni"
+
+msgid "Cargo"
+msgstr "Cargo"
+
+msgid "Aliens Held"
+msgstr "Alieni cont."
+
+msgid "Jamming"
+msgstr "Contromisure"
+
+msgid "Shielding"
+msgstr "Scudi"
+
+msgid "Cloaks Craft"
+msgstr "Stealth"
+
+msgid "Teleports"
+msgstr "Teletrasporti"
+
+msgid "Dimension shifts"
+msgstr "Varchi dimensionali"
+
+msgid "Balance"
+msgstr "Bilancio"
+
+msgid "Buildings"
+msgstr "Edifici"
+
+msgid "Head:"
+msgstr "Testa:"
+
+msgid "Income"
+msgstr "Incasso"
+
+msgid "Job:"
+msgstr "Lavoro:"
+
+msgid "Unclassified"
+msgstr "Non classificato"
+
+msgid "Rank:"
+msgstr "Grado:"
+
+msgid "Base:"
+msgstr "Base:"
+
+msgid "Missions"
+msgstr "Missioni"
+
+msgid "Kills"
+msgstr "Uccisioni"
+
+msgid "Wage"
+msgstr "Stipendio"
+
+msgid "Energy"
+msgstr "Energia"
+
+msgid "Firing skill"
+msgstr "Mira"
+
+msgid "Organization:"
+msgstr "Organizzazione:"
+
+msgid "Apprentice"
+msgstr "Apprendista"
+
+msgid "Worker"
+msgstr "Lavoratore"
+
+msgid "Admin"
+msgstr "Amministrazione"
+
+msgid "Security"
+msgstr "Sicurezza"
+
+msgid "Management"
+msgstr "Management"
+
+msgid "Director"
+msgstr "Direttore"
+
+msgid "President"
+msgstr "Presidente"
+
+msgid "Wage:"
+msgstr "Stipendio:"
+
+msgid "Residence:"
+msgstr "Residenza:"
+
+msgid "Unknown"
+msgstr "Sconosciuto"
+
+msgid "Hang out:"
+msgstr "Abitazione:"
+
+msgid "Work Place:"
+msgstr "Posto di lavoro:"
+
+msgid "Owned Buildings:"
+msgstr "Edifici posseduti:"
+
+msgid "Select:"
+msgstr "Scegli:"
+
+msgid "Select Vehicle/Person:"
+msgstr "Scegli il veicolo/la persona:"
+
+msgid "Car Number"
+msgstr "Numero macchina"
+
+msgid "Person Number"
+msgstr "Numero persona"
+
+msgid "Range:"
+msgstr "Raggio d'azione:"
+
+msgid "Rounds:"
+msgstr "Munizioni:"
+
+msgid "Wounded"
+msgstr "Ferito"
+
+msgid "Not assigned to training"
+msgstr "Non in addestramento"
+
+msgid "Psionic training (efficiency="
+msgstr "Addestr. psionico (eff.="
+
+msgid "Combat training (efficiency="
+msgstr "Addestr. al combattimento (eff.="
+
+msgid "Traveling to:"
+msgstr "Trasferimento a:"
+
+msgid "map point"
+msgstr "punto della mappa"
+
+msgid "VIP spotted:"
+msgstr "VIP individuato:"
+
+msgid "Spotted by Agent:"
+msgstr "Individuato dall'agente:"
+
+msgid "Do you wish to tail this VIP?"
+msgstr "Vuoi pedinare questo VIP?"
+
+msgid "VIP spotted"
+msgstr "VIP individuato"
+
+msgid "Diplomatic relations for:"
+msgstr "Relazioni diplomatiche per:"
+
+msgid "Espionage by Agent:"
+msgstr "Spionaggio dell'agente:"
+
+msgid "Do you wish to continue espionage?"
+msgstr "Vuoi continuare a spiare?"
+
+msgid "Diplomatic relations determined"
+msgstr "Relazioni diplomatiche determinate"
+
+msgid "You do not have enough:"
+msgstr "Non hai abbastanza:"
+
+msgid "Money"
+msgstr "Soldi"
+
+msgid "Storage Space"
+msgstr "Spazio in magazzino"
+
+msgid "No Project"
+msgstr "Nessun progetto"
+
+msgid "Total Skill:"
+msgstr "Abilità totale:"
+
+msgid "Which screen?"
+msgstr "Quale schermata?"
+
+msgid "Which screen would you like to go to?"
+msgstr "A quale schermata vuoi passare?"
+
+msgid "Number to make"
+msgstr "Numero da produrre"
+
+msgid "Number made:"
+msgstr "Numero prodotto:"
+
+msgid "Biochemistry research at:"
+msgstr "Ricerca biochimica su:"
+
+msgid "Quantum physics research at:"
+msgstr "Ricerca fisico-quantistica su:"
+
+msgid "Engineering at:"
+msgstr "Lavoro d'ingegneria su:"
+
+msgid "Select project:"
+msgstr "Scegli il progetto:"
+
+msgid "Select product to make:"
+msgstr "Scegli cosa produrre:"
+
+msgid "Lots"
+msgstr "Lotti"
+
+msgid "Item required:"
+msgstr "Oggetti necessari:"
+
+msgid "Amount required"
+msgstr "Quantità necessaria"
+
+msgid "Amount in stores"
+msgstr "Quantità in magazzino"
+
+msgid "Cost"
+msgstr "Costo"
+
+msgid "Research project completed:"
+msgstr "Progetto di ricerca completato:"
+
+msgid "Do you wish to view the UFOpaedia report?"
+msgstr "Vuoi consultare il rapporto nell'UFOpaedia?"
+
+msgid "Manufacture Completed"
+msgstr "Produzione completata"
+
+msgid "Do you wish to reassign the Workshop?"
+msgstr "Vuoi riassegnare il lavoro in officina?"
+
+msgid "Response range (radius):"
+msgstr "Raggio di risposta:"
+
+msgid "Preservation level:"
+msgstr "Livello di sicurezza:"
+
+msgid "Altitude:"
+msgstr "Altitudine:"
+
+msgid "Empty saved game slot"
+msgstr "Spazio per il salvataggio libero"
+
+msgid "Base 1"
+msgstr "Base 1"
+
+msgid ": Insufficient ammunition/fuel in stores:"
+msgstr ":  Scorte di munizioni/carburante insufficienti:"
+
+msgid "Fuel"
+msgstr "Carburante"
+
+msgid "Reload time"
+msgstr "Tempo di ricarica"
+
+msgid "Ammo type"
+msgstr "Munizioni"
+
+msgid "Travelling"
+msgstr "In viaggio"
+
+msgid "Location:"
+msgstr "Posizione:"
+
+msgid "Acceleration"
+msgstr "Accelerazione"
+
+msgid "Deceleration"
+msgstr "Decelerazione"
+
+msgid "Malfunctioning"
+msgstr "Malfunzionamento"
+
+msgid "Out of Ammo"
+msgstr "Munizioni esaurite"
+
+msgid "Reloading"
+msgstr "Ricarica"
+
+msgid "Ready to Fire"
+msgstr "Pronto al fuoco"
+
+msgid "ALERT"
+msgstr "ALLARME"
+
+msgid "At:"
+msgstr "A:"
+
+msgid "Select units to investigate:"
+msgstr "Scegli l'unità da esaminare:"
+
+msgid "Building owner:"
+msgstr "Possessore edificio:"
+
+msgid "Unit"
+msgstr "Unità"
+
+msgid "Rank"
+msgstr "Grado"
+
+msgid "Location"
+msgstr "Posizione"
+
+msgid "Destination"
+msgstr "Destinazione"
+
+msgid "Not parked"
+msgstr "Non parcheggiato"
+
+msgid "Map point:"
+msgstr "Punto della mappa:"
+
+msgid "No Psi-gyms in base"
+msgstr "Nessuna Psy-gim nella base"
+
+msgid "No training facilities in base"
+msgstr "Nessuna struttura d'addestramento"
+
+msgid "No Hostile Forces Discovered"
+msgstr "Nessuna presenza ostile rilevata"
+
+msgid "Cargo arrived:"
+msgstr "Cargo arrivato:"
+
+msgid "Cancel Orders"
+msgstr "Annulla ordini"
+
+msgid "Cancel Alien Containment management orders. Are you sure?"
+msgstr "Annulla ordini di gestione Contenimento Alieni. Sei sicuro?"
+
+msgid "No Sale"
+msgstr "Nessuna vendita"
+
+msgid "RESEARCH AND MANUFACTURE"
+msgstr "RICERCA E PRODUZIONE"
+
+msgid "Select laboratory or workshop"
+msgstr "Scegli il laboratorio o l'officina"
+
+msgid "SELECT BIOCHEMISTRY PROJECT"
+msgstr "SCEGLI PROGETTO BIOCHIMICO"
+
+msgid "SELECT QUANTUM PHYSICS PROJECT"
+msgstr "SCEGLI PROGETTO FISICO-QUANTISTICO"
+
+msgid "SELECT MANUFACTURING PROJECT"
+msgstr "SCEGLI PROGETTO DI PRODUZIONE"
+
+msgid "Project"
+msgstr "Progetto"
+
+msgid "Progress"
+msgstr "Progresso"
+
+msgid "Skill"
+msgstr "Abilità"
+
+msgid "Unit Cost"
+msgstr "Costo unità"
+
+msgid "Skill Hours"
+msgstr "Ore richieste"
+
+msgid "Orders Required"
+msgstr "Ordini richieste"
+
+msgid ""
+"Explicit Alien Containment orders are required, concerning the Aliens to be "
+"destroyed."
+msgstr "Sono richiesti espliciti ordini di Contenimento per quanto riguarda gli Alieni da distruggere."
+
+msgid "Project complete"
+msgstr "Progetto completo"
+
+msgid "This project is already complete."
+msgstr "Questo progetto è già completo."
+
+msgid "Project in progress"
+msgstr "Progetto in corso"
+
+msgid "This project is already in progress elsewhere."
+msgstr "Questo progetto è già in lavorazione altrove."
+
+msgid "Project too large"
+msgstr "Progetto troppo complesso"
+
+msgid "This project requires an advanced lab or workshop."
+msgstr "Questo progetto richiede un laboratorio o un'officina avanzati."
+
+msgid "Supplier:"
+msgstr "Fornitore:"
+
+msgid "Transferred goods have arrived:"
+msgstr "Quanto trasferito è arrivato:"
+
+msgid "Items from tactical combat zone have arrived:"
+msgstr "Sono arrivati gli oggetti dalla zona di combattimento tattica:"
+
+msgid "Building Regulations"
+msgstr "Regolamento edifici"
+
+msgid ""
+"Regulation 44(1)(e) of the health and safety at work (labs and workshops) "
+"act (2074) prohibits the construction of more than 6 small or more than 4 "
+"large labs or workshops in any one basement. Contractors therefore refuse to"
+" carry out the proposed illegal construction work."
+msgstr "Legge n.44(1)(e) sulla sicurezza del posto di lavoro (laboratori e officine) l'atto (2074) vieta la costruzione di più di 6 laboratori e officine piccoli o di più di 4 grandi in un singolo edificio. La ditta costruttrice si rifiuta di infrangere la legge proseguendo i lavori."
+
+msgid ""
+"The proposed construction work is not possible with your available funds."
+msgstr "Il lavoro di costruzione ordinato non è al momento finanziabile dalla X-COM."
+
+msgid "Production costs exceed your available funds."
+msgstr "Il costo di produzione supera le tue disponibilità finanziarie."
+
+msgid "There is insufficient space to store production output of this item."
+msgstr "Non c'è spazio a sufficienza per immagazzinare la produzione."
+
+msgid "Manufacturing halted"
+msgstr "Produzione sospesa"
+
+msgid "Can't destroy: Biochemistry lab in use."
+msgstr "Impossibile distruggere: Bio-lab in uso."
+
+msgid "Can't destroy: Quantum physics lab in use."
+msgstr "Impossibile distruggere: lab. fisico-quant. in uso."
+
+msgid "Can't destroy: workshop in use."
+msgstr "Impossibile distruggere: officina in uso."
+
+msgid "Facility in use"
+msgstr "Struttura in uso"
+
+msgid "Cannot investigate as building destroyed"
+msgstr "Investigazione impossibile: l'edificio è distrutto"
+
+msgid "Cannot raid as building destroyed"
+msgstr "Raid impossibile: l'edificio è distrutto"
+
+msgid "Completion status:"
+msgstr "Parte completata:"
+
+msgid "Facility completed"
+msgstr "Struttura completata"
+
+msgid "Usage"
+msgstr "Uso"
+
+msgid "Lab size needed"
+msgstr "Dimensioni lab."
+
+msgid "Small"
+msgstr "Piccolo"
+
+msgid "Large"
+msgstr "Grande"
+
+msgid "MESSAGE HISTORY"
+msgstr "ELENCO MESSAGGI"
+
+msgid "BASES"
+msgstr "BASI"
+
+msgid "Confirm Alien Containment Orders"
+msgstr "Conferma ordini Contenimento Alieni"
+
+msgid "Alien specimens from tactical combat zone have arrived:"
+msgstr "Sono arrivati esemplari Alieni dalla zona di combattimento tattica:"
+
+msgid "Transferred Alien specimens have arrived:"
+msgstr "Gli esemplari Alieni trasferiti sono arrivati:"
+
+msgid "Alien specimens arrived:"
+msgstr "Esemplari Alieni arrivati:"
+
+msgid "No Alien Containment Facility"
+msgstr "Non c'è un'Unità di Contenimento Alieni'"
+
+msgid "Quantity:"
+msgstr "Quantità:"
+
+msgid "Planning Permission Denied"
+msgstr "Permesso negato"
+
+msgid ""
+"Planning permission is denied for this proposed extension to the base, on "
+"the grounds that the additional excavations required would seriously weaken "
+"the foundations of the building."
+msgstr "Permesso per l'ampliamento della base negato, con il motivo che i lavori di scavo richiesti indebolirebbero troppo le fondamenta dell'edificio."
+
+msgid "Area Occupied By Existing Facility"
+msgstr "Area occupata da un edificio"
+
+msgid ""
+"Existing facilities in this area of the base must be destroyed before "
+"construction work can begin."
+msgstr "Le strutture esistenti in quest'area della base devono essere distrutte prima dell'inizio dei lavori di costruzione."
+
+msgid "Transfer"
+msgstr "Trasferimento"
+
+msgid "At least two bases are required before transfers become possible."
+msgstr "Devi avere almeno due basi prima di poter effettuare trasferimenti."
+
+msgid "Alien Containment is not in use at this base."
+msgstr "L'Unità di Contenimento di questa base è inutilizzata."
+
+msgid "Complete"
+msgstr "Completa"
+
+msgid "OFFER CASH SETTLEMENT"
+msgstr "OFFRI ACCORDO ECONOMICO"
+
+msgid "UFO"
+msgstr "UFO"
+
+msgid "No Entrance"
+msgstr "Ingresso vietato"
+
+msgid ""
+"You will lose any equipment left on the floor. Are you sure you wish to "
+"leave this agent?"
+msgstr "Perderai l'equipaggiamento abbandonato a terra. Sei sicuro di voler abbandonare questo agente?"
+
+msgid "BUY NEW BASE"
+msgstr "COMPRA UNA NUOVA BASE"
+
+msgid "Market Announcement"
+msgstr "Mercato"
+
+msgid ""
+"The following items have come on to the market and can now be purchased, "
+"subject to availability:"
+msgstr "Si sono resi disponibili, e possono essere acquistati, i seguenti oggetti:"
+
+msgid "(Android training not possible)"
+msgstr "(Allenamento androidi non possibile)"
+
+msgid "Buy This Building"
+msgstr "Compra quest'edificio"
+
+msgid "Equip vehicle"
+msgstr "Equipaggia veicolo"
+
+msgid "Equip agent"
+msgstr "Equipaggia agente"
+
+msgid "Hire & Fire"
+msgstr "Assumi & licenzia"
+
+msgid "Return"
+msgstr "Ritorna"
+
+msgid "Buy stuff"
+msgstr "Compra materiale"
+
+msgid "Research and manufacture"
+msgstr "Ricerca"
+
+msgid "Destroy facility here"
+msgstr "Distruggi la struttura"
+
+msgid "Yes"
+msgstr "Sì"
+
+msgid "No"
+msgstr "No"
+
+msgid "Exit"
+msgstr "Esci"
+
+msgid "UFOpaedia"
+msgstr "UFOpaedia"
+
+msgid "Base"
+msgstr "Base"
+
+msgid "Equip"
+msgstr "Equipaggia"
+
+msgid "Observe VIP's"
+msgstr "Osserva VIP"
+
+msgid "Dimension Map"
+msgstr "Mappa dimensionale"
+
+msgid "Save/Load game"
+msgstr "Salva/carica partita"
+
+msgid "Budget"
+msgstr "Bilancio"
+
+msgid "Investigate Building"
+msgstr "Investiga edificio"
+
+msgid "Raid Building"
+msgstr "Raid nell'edificio"
+
+msgid "Spy on Organization"
+msgstr "Spia l'organizzazione"
+
+msgid "Show available equipment"
+msgstr "Mostra equipagg."
+
+msgid "Show available armor"
+msgstr "Mostra armature"
+
+msgid "Bid"
+msgstr "Rilancia"
+
+msgid "No Bid"
+msgstr "Non rilanciare"
+
+msgid "Index"
+msgstr "Indice"
+
+msgid "Base Facilities"
+msgstr "Strutture della base"
+
+msgid "Organizations"
+msgstr "Organizzazioni"
+
+msgid "VIP's"
+msgstr "VIP"
+
+msgid "Alien Craft"
+msgstr "Navicelle Aliene"
+
+msgid "Staff"
+msgstr "Staff"
+
+msgid "Pause"
+msgstr "Pausa"
+
+msgid "Slow speed"
+msgstr "Lento"
+
+msgid "Normal speed"
+msgstr "Tempo reale"
+
+msgid "Double speed"
+msgstr "Tempo doppio"
+
+msgid "Quadruple speed"
+msgstr "Tempo quadruplo"
+
+msgid "Ultra fast"
+msgstr "Ultratempo"
+
+msgid "Switch map view"
+msgstr "Cambia visuale"
+
+msgid "Options"
+msgstr "Opzioni"
+
+msgid "Dimension map"
+msgstr "Mappa dimensione"
+
+msgid "Bases tab"
+msgstr "Quadro della base"
+
+msgid "X-COM Vehicles tab"
+msgstr "Quadro del velivolo"
+
+msgid "Agent tab"
+msgstr "Quadro dell'agente"
+
+msgid "Biochemistry tab"
+msgstr "Quadro biochimica"
+
+msgid "Engineering tab"
+msgstr "Quadro ingegneria"
+
+msgid "Quantum physics tab"
+msgstr "Quadro fisica quantistica"
+
+msgid "Message history"
+msgstr "Elenco messaggi"
+
+msgid "Center on message"
+msgstr "Centra su"
+
+msgid "Switch camera mode"
+msgstr "Cambia inquadratura"
+
+msgid "Bases"
+msgstr "Basi"
+
+msgid "Buy new base"
+msgstr "Compra una nuova base"
+
+msgid "Buy/Sell"
+msgstr "Compra/vendi"
+
+msgid "Hire/Fire staff"
+msgstr "Assumi/licenzia"
+
+msgid "Go to building"
+msgstr "Vai all'edificio"
+
+msgid "Attack hostile unit"
+msgstr "Attacca unità ostile"
+
+msgid "Go to map point"
+msgstr "Vai al punto della mappa"
+
+msgid "Go into Dimension Gate"
+msgstr "Entra nel Portale Dimensionale"
+
+msgid "Attack building"
+msgstr "Attacca l'edificio"
+
+msgid "Return to base"
+msgstr "Torna alla base"
+
+msgid "Rules of engagement"
+msgstr "Regole d'ingaggio"
+
+msgid "Manual control"
+msgstr "Controllo manuale"
+
+msgid "Psi-Training"
+msgstr "Addestramento Psi"
+
+msgid "Combat Training"
+msgstr "Addestra al combattimento"
+
+msgid "Assign project"
+msgstr "Assegna progetto"
+
+msgid "Stop project"
+msgstr "Sospendi progetto"
+
+msgid "Set all vehicles"
+msgstr "Prepara tutti i veicoli"
+
+msgid "Set all of same make"
+msgstr "Prepara tutti uguali"
+
+msgid "RETURN"
+msgstr "RITORNA"
+
+msgid "Info"
+msgstr "Informazioni"
+
+msgid "Sell vehicle"
+msgstr "Vendi veicolo"
+
+msgid "Comments"
+msgstr "Commenti"
+
+msgid "Ufopaedia"
+msgstr "Ufopaedia"
+
+msgid "Scroll Up"
+msgstr "Scorri in alto"
+
+msgid "Scroll Down"
+msgstr "Scorri in basso"
+
+msgid "Low altitude"
+msgstr "Bassa quota"
+
+msgid "Medium altitude"
+msgstr "Media quota"
+
+msgid "High altitude"
+msgstr "Alta quota"
+
+msgid "Highest altitude"
+msgstr "Altissima quota"
+
+msgid "Evasive"
+msgstr "Evasiva"
+
+msgid "Defensive"
+msgstr "Difensiva"
+
+msgid "Standard"
+msgstr "Standard"
+
+msgid "Aggressive"
+msgstr "Aggressiva"
+
+msgid "Vehicle location / passengers"
+msgstr "Posizione veicolo/passeggeri"
+
+msgid "Unit location"
+msgstr "Posizione unità"
+
+msgid "Investigate building for Alien activity"
+msgstr "Cerca tracce di Alieni nell'edificio"
+
+msgid "Raid building"
+msgstr "Raid nell'edificio"
+
+msgid "Send selected units to investigate incident"
+msgstr "Invia le unità selezionate a investigare sull'incidente"
+
+msgid "Ignore this incident"
+msgstr "Ignora quest'incidente"
+
+msgid "Continue"
+msgstr "Continua"
+
+msgid "Center and pause game"
+msgstr "Centra e metti in pausa il gioco"
+
+msgid "Scroll Left"
+msgstr "Scorri a sinistra"
+
+msgid "Scroll Right"
+msgstr "Scorri a destra"
+
+msgid "Alien infiltration graph"
+msgstr "Grafico infiltrazione Aliena"
+
+msgid "Performance log"
+msgstr "Resoconto attività X-COM"
+
+msgid "Save game"
+msgstr "Salva partita"
+
+msgid "Load game"
+msgstr "Carica partita"
+
+msgid "Delete game"
+msgstr "Cancella partita"
+
+msgid "Hostile vehicles tab"
+msgstr "Quadro veicoli nemici"
+
+msgid "Select organization"
+msgstr "Scegli l'organizzazione"
+
+msgid "Select units"
+msgstr "Scegli le unità"
+
+msgid "Select equipment"
+msgstr "Scegli l'equipaggiamento"
+
+msgid "Agent equipment"
+msgstr "Equipaggiamento agente"
+
+msgid "Airborne vehicle equipment/fuel"
+msgstr "Equipaggiamento/carburante mezzi aerei"
+
+msgid "Road vehicle equipment/fuel"
+msgstr "Equipaggiamento/carburante mezzi terrestri"
+
+msgid "X-COM agents"
+msgstr "Agenti X-COM"
+
+msgid "Quantum physicists"
+msgstr "Fisici quantistici"
+
+msgid "Buy"
+msgstr "Compra"
+
+msgid "Sell"
+msgstr "Vendi"
+
+msgid "Softer"
+msgstr "Diminuisci"
+
+msgid "Louder"
+msgstr "Aumenta"
+
+msgid "Organizations tab"
+msgstr "Quadro organizzazione"
+
+msgid "View all organizations"
+msgstr "Vedi tutte le organizzazioni"
+
+msgid "View allied organizations"
+msgstr "Vedi organizzazioni alleate"
+
+msgid "View friendly organizations"
+msgstr "Vedi organizzazioni amichevoli"
+
+msgid "View neutral organizations"
+msgstr "Vedi organizzazioni neutrali"
+
+msgid "View unfriendly organizations"
+msgstr "Vedi organizzazioni ostili"
+
+msgid "View hostile organizations"
+msgstr "Vedi organizzazioni nemiche"
+
+msgid "Offer settlement"
+msgstr "Proponi trattato"
+
+msgid "Contain"
+msgstr "Contieni"
+
+msgid "Destroy"
+msgstr "Distruggi"
+
+msgid "Keep on board"
+msgstr "Tieni a bordo"
+
+msgid "Click on destination building for selected vehicle"
+msgstr "Clicca sull'edificio destinazione del veicolo selezionato"
+
+msgid "Click on target vehicle for selected vehicle"
+msgstr "Clicca sul veicolo destinazione del mezzo selezionato"
+
+msgid "Click on destination map point for selected vehicle"
+msgstr "Clicca sul punto della mappa destinazione del mezzo scelto"
+
+msgid "Click on destination Dimension Gate for selected vehicle"
+msgstr "Clicca sul Portale Dimensionale destinazione del mezzo scelto"
+
+msgid "Click on building for selected vehicle to attack"
+msgstr "Clicca sull'edificio che il veicolo selezionato deve attaccare"
+
+msgid "-<Not implemented (selmode==7)>-"
+msgstr "-<Non implementato (selmode==7)>-"
+
+msgid "-<Not implemented (selmode==8)>-"
+msgstr "-<Non implementato (selmode==8)>-"
+
+msgid "Manual control of vehicle"
+msgstr "Controllo manuale del velivolo"
+
+msgid "Select target vehicle for selected vehicle to fire at"
+msgstr "Scegli il veicolo a cui il mezzo scelto deve sparare"
+
+msgid "Click on destination building for selected vehicles"
+msgstr "Clicca sull'edificio destinazione dei veicoli selezionati"
+
+msgid "Click on target vehicle for selected vehicles"
+msgstr "Clicca sul veicolo destinazione dei mezzi selezionati"
+
+msgid "Click on destination map point for selected vehicles"
+msgstr "Clicca sul punto della mappa destinazione dei mezzi scelti"
+
+msgid "Click on destination Dimension Gate for selected vehicles"
+msgstr "Clicca sul Portale Dimensionale destinazione dei mezzi scelti"
+
+msgid "Click on building for selected vehicles to attack"
+msgstr "Clicca sull'edificio che i veicoli selezionati devono attaccare"
+
+msgid "-<Not implemented (selmode==7)(plural)>-"
+msgstr "-< Non implementato(selmode==7)(plurale)>-"
+
+msgid "-<Not implemented (selmode==8)(plural)>-"
+msgstr "-< Non implementato(selmode==8)(plurale)>-"
+
+msgid "Manual control of vehicles"
+msgstr "Controllo manuale dei veicoli"
+
+msgid "Select target vehicle for vehicles to fire at"
+msgstr "Scegli il veicolo a cui i mezzi scelti devono sparare"
+
+msgid "Click on destination building for selected person"
+msgstr "Clicca sull'edificio destinazione della persona selezionata"
+
+msgid "Click on destination building for selected people"
+msgstr "Clicca sull'edificio destinazione delle persone selezionate"
+
+msgid "WEEKLY FUNDING ASSESSMENT"
+msgstr "FINANZIAMENTI DELLA SETTIMANA"
+
+msgid "Current income>"
+msgstr "Incasso attuale>"
+
+msgid "Funding adjustment>"
+msgstr "Variazioni nei finanziamenti>"
+
+msgid ""
+"The Senate has declared total hostility to X-COM and there will be no "
+"further funding. Furthermore, the Senate will take any steps necessary to "
+"destroy the X-COM organization if it refuses to cease operation."
+msgstr "Il Senato è ora totalmente ostile alla X-COM, per cui non ci saranno ulteriori finanziamenti. Inoltre, il Senato intraprenderà tutti i passi necessari a distruggere la X-COM se questa non si scioglierà da sola."
+
+msgid ""
+"The Senate has an unfavorable attitude to X-COM and has reduced funding "
+"accordingly."
+msgstr "Il Senato non vede con favore l'operato della X-COM e ha deciso di ridurre i finanziamenti concessi."
+
+msgid ""
+"The Senate has a favorable attitude to X-COM and has increased funding "
+"accordingly."
+msgstr "Il Senato apprezza l'operato della X-COM e ha deciso di aumentare i finanziamenti concessi."
+
+msgid ""
+"The Senate considers the performance of X-COM to be so abysmal that it will "
+"cease funding from now on."
+msgstr "Il Senato considera le prestazioni della X-COM estremamente scadenti, e sospenderà immediatamente tutti i finanziamenti."
+
+msgid ""
+"The Senate is not pleased with the performance of X-COM and has reduced "
+"funding accordingly."
+msgstr "Il Senato non è contento dei risultato ottenuti dalla X-COM e per questo motivo ne ha ridotto i finanziamenti."
+
+msgid ""
+"The Senate is pleased with the performance of X-COM and has increased "
+"funding accordingly."
+msgstr "Il Senato è soddisfatto dei risultati raggiunti dalla X-COM e ha decretato un aumento dei suoi finanziamenti."
+
+msgid ""
+"Unfortunately the Senate has to limit X-COM funding due to the poor state of"
+" government finances."
+msgstr "Sfortunatamente il Senato ha dovuto ridurre i finanziamenti alla X-COM a seguito delle disastrose condizioni del bilancio cittadino."
+
+msgid "Income for next week>"
+msgstr "Incasso per la prossima settimana>"
+
+msgid "Week"
+msgstr "Settimana"
+
+msgid "X-COM III Setup screen"
+msgstr "Impostazioni di X-COM III"
+
+msgid "Start Campaign Game"
+msgstr "Inizia una nuova campagna"
+
+msgid "Load Saved Game"
+msgstr "Riprendi una partita salvata"
+
+msgid "Scenario Generator"
+msgstr "Generatore di scenari"
+
+msgid "Quit"
+msgstr "Esci"
+
+msgid "Warning"
+msgstr "Attenzione"
+
+msgid "CONTINUE"
+msgstr "CONTINUA"
+
+msgid "QUIT"
+msgstr "ESCI"
+
+msgid "Scenario Loaded >"
+msgstr "Scenario caricato >"
+
+msgid "New scenario"
+msgstr "Nuovo scenario"
+
+msgid "Load Scenario Generator Set-up"
+msgstr "Carica le impostazioni del generatore di scenari"
+
+msgid "Save Scenario Generator Set-up"
+msgstr "Salva le impostazioni del generatore di scenari"
+
+msgid "Play scenario"
+msgstr "Gioca scenario"
+
+msgid "Return to main menu"
+msgstr "Torna al menu principale"
+
+msgid "Select map type"
+msgstr "Scegli tipo mappa"
+
+msgid "Seed"
+msgstr "Produci"
+
+msgid "Toggle map size"
+msgstr "Dimensioni mappa"
+
+msgid "Medium"
+msgstr "Media"
+
+msgid "Deployment"
+msgstr "Posizionamento"
+
+msgid "Raid"
+msgstr "Raid"
+
+msgid "Defend"
+msgstr "Difesa"
+
+msgid "Units"
+msgstr "Unità"
+
+msgid "Select Units"
+msgstr "Scegli unità"
+
+msgid "Select Equipment"
+msgstr "Scegli equipaggiamento"
+
+msgid "Enter filename to save as:"
+msgstr "Inserisci il nome del salvataggio:"
+
+msgid "Select file to load:"
+msgstr "Scegli il file da caricare:"
+
+msgid "Enter description of scenario:"
+msgstr "Immetti la descrizione dello scenario:"
+
+msgid "Select tactical area:"
+msgstr "Scegli l'area tattica:"
+
+msgid "X-COM Agent"
+msgstr "Agente X-COM"
+
+msgid "X-COM Biochemist"
+msgstr "Biochimico X-COM"
+
+msgid "X-COM Mechanic"
+msgstr "Meccanico X-COM"
+
+msgid "X-COM Quantum Physicist"
+msgstr "Fisico quantistico X-COM"
+
+msgid "Gang leader"
+msgstr "Boss criminale"
+
+msgid "Corporate Boss"
+msgstr "Capo di corporazione"
+
+msgid "Cult Leader"
+msgstr "Leader spirituale"
+
+msgid "Politician"
+msgstr "Politico"
+
+msgid "Chief of Police"
+msgstr "Capo della polizia"
+
+msgid "Corporate hood"
+msgstr "Membro corporazione"
+
+msgid "Police"
+msgstr "Polizia"
+
+msgid "Gangster"
+msgstr "Gangster"
+
+msgid "Cultist"
+msgstr "Cultista"
+
+msgid "Building security"
+msgstr "Sicurezza edificio"
+
+msgid "Android"
+msgstr "Androide"
+
+msgid "Alien Grey"
+msgstr "Alieno Grigio"
+
+msgid "Upper Class Female"
+msgstr "Donna d'alta classe"
+
+msgid "Upper Class Male"
+msgstr "Uomo d'alta classe"
+
+msgid "Civilian Female"
+msgstr "Donna comune"
+
+msgid "Civilian Male"
+msgstr "Uomo comune"
+
+msgid "Lower Class Male"
+msgstr "Uomo di classe inferiore"
+
+msgid "Lower Class Female"
+msgstr "Donna di classe inferiore"
+
+msgid "Multiworm egg"
+msgstr "Uovo di Multiverme"
+
+msgid "FINANCE"
+msgstr "FINANZE"
+
+msgid "Initial funds>"
+msgstr "Fondi iniziali >"
+
+msgid "EMPLOYEE TYPE"
+msgstr "TIPO IMPIEGATO"
+
+msgid "QUANTITY"
+msgstr "QUANTITA'"
+
+msgid "WAGES"
+msgstr "STIPENDI"
+
+msgid "MAINTENANCE"
+msgstr "MANUTENZIONE"
+
+msgid "TOTAL OVERHEADS>"
+msgstr "TOTALE COMPLESSIVO>"
+
+msgid "Remaining funds>"
+msgstr "Fondi rimanenti >"
+
+msgid "Agents"
+msgstr "Agenti"
+
+msgid "Owner>"
+msgstr "Possessore>"
+
+msgid "Function>"
+msgstr "Funzione>"
+
+msgid "Building Name>"
+msgstr "Nome edificio>"
+
+msgid "X-COM IS DEFEATED"
+msgstr "LA X-COM E' STATA SCONFITTA"
+
+msgid "THE ALIENS ARE DEFEATED"
+msgstr "HAI SCONFITTO GLI ALIENI"
+
+msgid "Final Score>"
+msgstr "Punteggio finale>"
+
+msgid ""
+"Due to bad debts the X-COM organization has been closed down. All operations"
+" have ceased, bases dismantled and personnel discharged. With no other hope "
+"for humanity the Aliens will inevitably conquer Earth."
+msgstr "A causa dei molti debiti l'organizzazione X-COM ha dovuto chiudere. Tutte le attività sono cessate, le basi sono smantellate e il personale licenziato. Senza quest'ultima difesa gli Alieni conquisteranno sicuramente la Terra."
+
+msgid ""
+"All X-COM bases have been destroyed. All research data is lost and all "
+"personnel have left. With no other hope for humanity the Aliens will "
+"inevitably conquer Earth."
+msgstr "Tutte le basi X-COM sono state distrutte: tutte le scoperte sono andate distrutte. La razza umana ha visto morire la sua ultima speranza; gli Alieni conquisteranno presto la Terra."
+
+msgid ""
+"The Aliens have been defeated. With all Dimension Gates closed and their "
+"homeworld destroyed the Aliens cannot get through to our Dimension. We are "
+"victorious."
+msgstr "Gli Alieni sono stati sconfitti. Tutti i Portali Dimensionali e le camere Megapod sono stati distrutti; essi non potranno più raggiungere la nostra dimensione. La razza umana ha vinto."
+
+msgid "Game Options"
+msgstr "Opzioni di gioco"
+
+msgid "Save or load game"
+msgstr "Salva/Carica partita"
+
+msgid "Current Score"
+msgstr "Punteggio attuale"
+
+msgid "Finance"
+msgstr "Finanze"
+
+msgid "SELECT DIFFICULTY"
+msgstr "SCEGLI LA DIFFICOLTA'"
+
+msgid "Novice"
+msgstr "Molto facile"
+
+msgid "Easy"
+msgstr "Facile"
+
+msgid "Hard"
+msgstr "Difficile"
+
+msgid "Superhuman"
+msgstr "Impossibile"
+
+msgid "OPTIONS"
+msgstr "OPZIONI"
+
+msgid "Message toggles"
+msgstr "Visualizza messaggi"
+
+msgid "Overheads"
+msgstr "Totali"
+
+msgid "Auto-scroll"
+msgstr "Auto-scrolling"
+
+msgid "Master Volume"
+msgstr "Volume principale"
+
+msgid "Sound Effects"
+msgstr "Effetti sonori"
+
+msgid "Test Left"
+msgstr "Test sinistro"
+
+msgid "Test Right"
+msgstr "Test destro"
+
+msgid "Swap"
+msgstr "Scambia"
+
+msgid "Save or Load Game"
+msgstr "Salva/Carica partita"
+
+msgid "Delete Saved Game"
+msgstr "Cancella partita salvata"
+
+msgid "Saving game"
+msgstr "Salvataggio in corso"
+
+msgid "Loading game"
+msgstr "Caricamento in corso"
+
+msgid "Deleting saved game"
+msgstr "Cancellazione partita salvata"
+
+msgid "Overwrite Saved Game"
+msgstr "Sovrascrivi partita salvata"
+
+msgid "Abandon and Restart Game"
+msgstr "Termina e riavvia il gioco"
+
+msgid "Restart Game"
+msgstr "Riavvia il gioco"
+
+msgid "Save Game"
+msgstr "Salva la partita"
+
+msgid "Load Game"
+msgstr "Carica una partita"
+
+msgid "Delete Old Saved Game"
+msgstr "Cancella vecchio salvataggio"
+
+msgid "Quit X-COM Apocalypse"
+msgstr "Esci da X-COM Apocalypse"
+
+msgid "Quit Game"
+msgstr "Esci dalla partita"
+
+msgid "SAVE GAME"
+msgstr "SALVATAGGIO PARTITA"
+
+msgid "LOAD GAME"
+msgstr "CARICAMENTO PARTITA"
+
+msgid "DELETE OLD SAVED GAME"
+msgstr "CANCELLA VECCHIO SALVATAGGIO"
+
+msgid "Tool tips"
+msgstr "Suggerimenti"
+
+msgid "Action music"
+msgstr "Musica durante l'azione"
+
+msgid "Message Toggles"
+msgstr "Messaggi visualizzati"
+
+msgid "UFO spotted"
+msgstr "UFO individuato"
+
+msgid "Vehicle lightly damaged"
+msgstr "Veicolo scarsamente danneggiato"
+
+msgid "Vehicle moderately damage"
+msgstr "Veicolo moderatamente danneggiato"
+
+msgid "Vehicle heavily damaged"
+msgstr "Veicolo pesantemente danneggiato"
+
+msgid "Vehicle destroyed"
+msgstr "Veicolo distrutto"
+
+msgid "Vehicle damaged and returning to base"
+msgstr "Veicolo danneggiato in rientro alla base"
+
+msgid "Weapon out of ammo"
+msgstr "Munizioni esaurite"
+
+msgid "Vehicle low on fuel"
+msgstr "Veicolo a corto di carburante"
+
+msgid "Cargo has arrived at base"
+msgstr "Il cargo è arrivato alla base"
+
+msgid "Vehicle repaired"
+msgstr "Veicolo riparato"
+
+msgid "Vehicle rearmed"
+msgstr "Veicolo riarmato"
+
+msgid "Not enough ammo to rearm vehicle"
+msgstr "Munizioni insufficienti per riarmare"
+
+msgid "Vehicle refuelled"
+msgstr "Veicolo rifornito"
+
+msgid "Not enough fuel to refuel vehicle"
+msgstr "Carburante insufficiente per rifornire"
+
+msgid "Unauthorized vehicle detected"
+msgstr "Rilevato velivolo non autorizzato"
+
+msgid "Always pause to display this message?"
+msgstr "Sempre in pausa con questo messaggio?"
+
+msgid "Alien Craft Propulsion"
+msgstr "Sistema propulsivo Alieno"
+
+msgid "Alien Craft Control Systems"
+msgstr "Sistema di controllo Alieno"
+
+msgid "Alien Craft Energy Source"
+msgstr "Fonte energetica Aliena"
+
+msgid "Brainsucker Pod autopsy"
+msgstr "Autopsia della Sonda Succhiacervello"
+
+msgid "Multiworm Egg autopsy"
+msgstr "Autopsia dell'Uovo di Multiverme"
+
+msgid "Micronoid Aggregate Autopsy"
+msgstr "Autopsia di un Aggregato di Micronoidi"
+
+msgid "Front armor"
+msgstr "Armatura frontale"
+
+msgid "Back armor"
+msgstr "Armatura posteriore"
+
+msgid "Left armor"
+msgstr "Armatura sinistra"
+
+msgid "Right armor"
+msgstr "Armatura destra"
+
+msgid "Top armor"
+msgstr "Armatura superiore"
+
+msgid "Bottom armor"
+msgstr "Armatura inferiore"
+
+msgid "Turn Rate"
+msgstr "Perc. di virata"
+
+msgid "Alien Infiltration"
+msgstr "Infiltrazione Aliena"
+
+msgid "Alien infiltration potential:"
+msgstr "Probabilità infiltrazione Aliena:"
+
+msgid "Very low"
+msgstr "Molto bassa"
+
+msgid "Low"
+msgstr "Bassa"
+
+msgid "Average"
+msgstr "Media"
+
+msgid "High"
+msgstr "Alta"
+
+msgid "Very high"
+msgstr "Molto alta"
+
+msgid "Depends on clip"
+msgstr "Dipendente dai proiettili"
+
+msgid "Damage Type"
+msgstr "Tipo di danno"
+
+msgid "Protection"
+msgstr "Protezione"
+
+msgid "Smoke"
+msgstr "Fumogeno"
+
+msgid "Anti-Alien Gas"
+msgstr "Gas anti-Alieni"
+
+msgid "Incendiary"
+msgstr "Incendiario"
+
+msgid "Stun Gas"
+msgstr "Gas stordente"
+
+msgid "Explosive"
+msgstr "Esplosivo"
+
+msgid "Stun"
+msgstr "Stordente"
+
+msgid "Psionic Blast"
+msgstr "Colpo psionico"
+
+msgid "Armor Piercing"
+msgstr "Penetrazione"
+
+msgid "Laser Beam"
+msgstr "Raggio laser"
+
+msgid "Plasma"
+msgstr "Plasma"
+
+msgid "Toxin A"
+msgstr "Tossina A"
+
+msgid "Toxin B"
+msgstr "Tossina B"
+
+msgid "Toxin C"
+msgstr "Tossina C"
+
+msgid "Disruptor Beam"
+msgstr "Raggio Disgregatore"
+
+msgid "Entropy Enzyme"
+msgstr "Enzima Entropy"
+
+msgid "Falling Object"
+msgstr "Caduta"
+
+msgid "Morale"
+msgstr "Morale"
+
+msgid "Ammo types:"
+msgstr "Munizioni:"
+
+msgid "Rounds"
+msgstr "Colpi"
+
+msgid "(Recharges)"
+msgstr "(ricariche)"
+
+msgid "Days service"
+msgstr "Giorni di servizio"
+
+msgid "Improvement"
+msgstr "Miglioramento"
+
+msgid "Toggle statistics/service record"
+msgstr "Attiva statistiche/dati servizio"
+
+msgid "Fire rate"
+msgstr "Perc. di fuoco"
+
+msgid "Turn rate"
+msgstr "Perc. di virata"
+
+msgid "Ammo Type:"
+msgstr "Tipo di munizione:"
+
+msgid "EQUIP AGENT"
+msgstr "EQUIPAGGIA AGENTE"
+
+msgid "EQUIP VEHICLE"
+msgstr "EQUIPAGGIA VEICOLO"
+
+msgid ""
+"You have not found any Aliens in this building. As a consequence of your "
+"unwelcome intrusion the owner of the building is less favorably disposed "
+"towards X-Com."
+msgstr "Non hai trovato alcun Alieno nell'edificio; di conseguenza il suo proprietario non vede di buon occhio l'operato della X-Com."
+
+msgid ""
+"You have not found any Aliens in this building. As a consequence of your "
+"unwelcome intrusion the owner of the building has now become unfriendly "
+"towards X-Com."
+msgstr "Non hai trovato alcun Alieno nell'edificio. A causa di questa indesiderata intrusione, il suo proprietario non vede di buon occhio l'operato della X-Com."
+
+msgid ""
+"You have not found any Aliens in this building. As a consequence of your "
+"unwelcome intrusion the owner of the building has now become hostile towards"
+" X-Com."
+msgstr "Non hai trovato alcun Alieno nell'edificio. A causa di questa indesiderata intrusione, il suo proprietario non vede di buon occhio l'operato della X-Com."
+
+msgid ""
+"We are unhappy with the recent activity of your organization and request "
+"compensation to restore normal diplomatic relations. If you do not comply "
+"your craft and Agents may be subject to hostile actions."
+msgstr "Non siamo contenti dell'operato della tua organizzazione, e chiediamo una compenso per normalizzare la situazione. Se non accetterete i vostri mezzi e i vostri agenti saranno trattati come elementi nemici."
+
+msgid "Mission completed in Alien building."
+msgstr "Missione nella struttura Aliena completata."
+
+msgid "X-COM returning from mission at:"
+msgstr "La X-COM sta rientrando dalla missione a:"
+
+msgid "Base mission completed at:"
+msgstr "Missione nella base completata a:"
+
+msgid "X-COM returning from UFO mission."
+msgstr "La X-COM sta rientrando dalla missione UFO."
+
+msgid "X-COM returning from raid at:"
+msgstr "La X-COM sta rientrando dal raid a:"
+
+msgid "Launcher AG Missile"
+msgstr "Lanciamissili a gas anti-Alieni"
+
+msgid "Launcher HE Missile"
+msgstr "Missile esplosivo"
+
+msgid "Launcher IN Missile"
+msgstr "Missile incendiario"
+
+msgid "Psi-Grenade"
+msgstr "Granata PSI"
+
+msgid "Motion scanner"
+msgstr "Rilevatore di movimento"
+
+msgid "Psimorph's mindbender"
+msgstr "Incanalatore mentale"
+
+msgid "Megaspawn's disruptor"
+msgstr "Disgregatore Megaspawn"
+
+msgid "Megaspawn's launcher"
+msgstr "Lanciamissili Megaspawn"
+
+msgid "Spitter's vomit funnel"
+msgstr "Bocca Lanciavomito"
+
+msgid "Multiworm's spit"
+msgstr "Sputo Multiverme"
+
+msgid "Alien egg's vomit tube"
+msgstr "Lanciavomito Uova Aliene"
+
+msgid "Hyperworm's bite"
+msgstr "Morso Iperverme"
+
+msgid "Queenspawn's tentacles"
+msgstr "Tentacoli Regina Aliena"
+
+msgid "Popper's bomb"
+msgstr "Bomba Kamikaze"
+
+msgid "Elerium Pod"
+msgstr "Carica di Elerio"
+
+msgid "Elerium pod"
+msgstr "Carica di Elerio"
+
+msgid "Plasma Beam"
+msgstr "Raggio Plasma"
+
+msgid "Alien Toxin-A"
+msgstr "Tossina Aliena A"
+
+msgid "Alien Toxin-B"
+msgstr "Tossina Aliena B"
+
+msgid "Alien Toxin-C"
+msgstr "Tossina Aliena C"
+
+msgid "Hot Plasma"
+msgstr "Plasma incandescente"
+
+msgid "Entropy"
+msgstr "Entropy"
+
+msgid "Tracker Dart"
+msgstr "Razzo tracciante"
+
+msgid "Destabilisation"
+msgstr "Destabilizzatore"
+
+msgid "Spit"
+msgstr "Sputo"
+
+msgid "Bite"
+msgstr "Morso"
+
+msgid "MarSec"
+msgstr "Marsec"
+
+msgid "SuperDynamics"
+msgstr "SuperDynamics"
+
+msgid "SolMine"
+msgstr "SolMine"
+
+msgid "NanoTech"
+msgstr "Nanotech"
+
+msgid "All your units are unconscious or dead. You lose."
+msgstr "Tutte le unità sono svenute o morte. Hai perso."
+
+msgid "All hostile units are dead or unconscious. You win."
+msgstr "Tutti gli avversari sono morti o svenuti. Hai vinto."
+
+msgid "Unit has died:"
+msgstr "Unità morta:"
+
+msgid "Hostile unit has died."
+msgstr "Unità nemica morta."
+
+msgid "Unit has died."
+msgstr "Unità morta."
+
+msgid "Unit critically wounded:"
+msgstr "Unità gravemente ferita:"
+
+msgid "Unit has lost consciousness:"
+msgstr "Unità svenuta:"
+
+msgid "Unit has left combat zone:"
+msgstr "L'unità ha lasciato la battaglia:"
+
+msgid "Current score:"
+msgstr "Punteggio attuale:"
+
+msgid "Unit has frozen:"
+msgstr "Unità immobilizzata:"
+
+msgid "Unit has gone berserk:"
+msgstr "L'unità è furiosa:"
+
+msgid "Unit has panicked:"
+msgstr "Unità in preda al panico:"
+
+msgid "Unit has stopped panicking:"
+msgstr "Unità tornata in se:"
+
+msgid "A player has left the game."
+msgstr "Un giocatore ha lasciato il gioco."
+
+msgid "The host has left the game."
+msgstr "Il creatore ha lasciato il gioco."
+
+msgid "Turn:"
+msgstr "Turno:"
+
+msgid "Side:"
+msgstr "Parte:"
+
+msgid "Player:"
+msgstr "Giocatore:"
+
+msgid "Computer"
+msgstr "Computer"
+
+msgid "No active units. End of turn."
+msgstr "Nessun'unità attiva. Fine turno."
+
+msgid "Hostile unit spotted:"
+msgstr "Unità nemica individuata:"
+
+msgid "Unit under attack:"
+msgstr "Unità sotto attacco:"
+
+msgid "Psionic attack on unit:"
+msgstr "Attacco psionico sull'unità:"
+
+msgid "Unit being Psi-drained:"
+msgstr "Sottrazione forza Psi dell'unità:"
+
+msgid "Unit under Psionic control:"
+msgstr "Unità sotto controllo psionico:"
+
+msgid "Unit freed from Psionic control:"
+msgstr "Unità liberata dal controllo psionico:"
+
+msgid "Unit injured:"
+msgstr "Unità ferita:"
+
+msgid "Unit badly injured:"
+msgstr "Unità seriamente ferita:"
+
+msgid "Unit under fire:"
+msgstr "Unità sotto il fuoco:"
+
+msgid "Building has been disabled"
+msgstr "Edificio disattivato"
+
+msgid "SQUAD ASSIGNMENT"
+msgstr "ASSEGNAZIONE SQUADRA"
+
+msgid "Unit Healing:"
+msgstr "Unità in cura:"
+
+msgid "All your units have fled the combat zone. You lose."
+msgstr "Tutte le tue unità hanno lasciato il combattimento. Hai perso."
+
+msgid "All hostile units have fled the combat zone. You win."
+msgstr "Tutte le unità nemiche hanno lasciato il combattimento. Hai vinto."
+
+msgid "Unit Brainsucked:"
+msgstr "Unità catturata da Succhiacervelli:"
+
+msgid "All your units have fled the combat zone. You win."
+msgstr "Le tue unità hanno preso possesso della zona di combattimento. Hai vinto."
+
+msgid "All hostile units have fled the combat zone. You lose."
+msgstr "Le unità avversarie hanno preso possesso della zona di combattimento. Hai perso."
+
+msgid ": Out of ammo"
+msgstr ": Munizioni terminate"
+
+msgid "Psi-drain"
+msgstr "Risucchio Psi"
+
+msgid "Mind Control"
+msgstr "Controllo mentale"
+
+msgid "Panic"
+msgstr "Panico"
+
+msgid "Probe"
+msgstr "Sonda"
+
+msgid "Psi-lend"
+msgstr "Passaggio Psi"
+
+msgid "Psi-unpanic"
+msgstr "Antipanico Psi"
+
+msgid "Psi-unstun"
+msgstr "Antistordente Psi"
+
+msgid "MIND PROBE"
+msgstr "CONTROLLO MENTALE"
+
+msgid "Structure probe"
+msgstr "Sonda strutturale"
+
+msgid "-recharges"
+msgstr "-ricariche"
+
+msgid "Mind shield"
+msgstr "Scudo mentale"
+
+msgid "Mind bender"
+msgstr "Incanalatore mentale"
+
+msgid "Alien detector"
+msgstr "Rilevatore di Alieni"
+
+msgid "Personal disruption shield"
+msgstr "Scudo a Disgregazione"
+
+msgid "Personal teleporter"
+msgstr "Teletrasporto personale"
+
+msgid "Personal Cloaking field"
+msgstr "Mimetizzatore personale"
+
+msgid "Dimension force field"
+msgstr "Campo di forza dimensionale"
+
+msgid "None"
+msgstr "Nessuno"
+
+msgid "Delay = %i"
+msgstr "Ritardo = %i"
+
+msgid "Range = %2.1fm."
+msgstr "Raggio = %2.1fm."
+
+msgid "Initializing"
+msgstr "Inizializzazione"
+
+msgid "(debug) Validating Map"
+msgstr "Conformazione mappa"
+
+msgid "Deploying Units"
+msgstr "Schieramento unità"
+
+msgid "Experience Processing"
+msgstr "Preparazione missione"
+
+msgid "Initializing LOS"
+msgstr "Inizializzazione LOS"
+
+msgid "Anonymous"
+msgstr "Anonimo"
+
+msgid "Enter Game Name"
+msgstr "Scrivi il nome del gioco"
+
+msgid "Enter Your Name"
+msgstr "Scrivi il tuo nome"
+
+msgid "Pick Organization:"
+msgstr "Scegli un'organizzazione:"
+
+msgid "Master volume:"
+msgstr "Volume principale:"
+
+msgid "Sound FX volume:"
+msgstr "Volume effetti sonori:"
+
+msgid "Music volume:"
+msgstr "Volume musica:"
+
+msgid "Swap left/right :"
+msgstr "Scambia sinistro/destro :"
+
+msgid "Time Units"
+msgstr "UT"
+
+msgid "Too Far"
+msgstr "Lontano"
+
+msgid "Blocked"
+msgstr "Bloccato"
+
+msgid "Game Turn:"
+msgstr "Turno di gioco:"
+
+msgid "Start Turn"
+msgstr "Inizia turno"
+
+msgid "Enter password:"
+msgstr "Scrivi la password:"
+
+msgid "Incorrect password!"
+msgstr "Password sbagliata!"
+
+msgid "Hot Seat Game"
+msgstr "Gioco a inviti"
+
+msgid "Enter number of players:"
+msgstr "Numero di giocatori:"
+
+msgid "Player"
+msgstr "Giocatore"
+
+msgid "Enter your name:"
+msgstr "Scrivi il tuo nome:"
+
+msgid "Confirm password:"
+msgstr "Conferma password:"
+
+msgid "Examine and reassign units by clicking on players' names"
+msgstr "Esamina e riassegna le unità cliccando sul nome del giocatore"
+
+msgid "Execute remaining movement orders for this unit?"
+msgstr "Esegui gli ordini di movimento residui dell'unità?"
+
+msgid "Hidden Movement"
+msgstr "Movimenti nascosti"
+
+msgid "Activates now."
+msgstr "Attivare ora."
+
+msgid "Activates at end of turn."
+msgstr "Attivare a fine turno."
+
+msgid "Turns before activation:"
+msgstr "Turni prima dell'attivazione:"
+
+msgid ": TUs reserved for kneeling"
+msgstr ": UT riservate per inginocchiarsi"
+
+msgid ": TUs reserved for aimed shot"
+msgstr ": UT riservate per mirare"
+
+msgid ": TUs reserved for snap shot"
+msgstr ": UT riservate per fuoco rapido"
+
+msgid ": TUs reserved for auto fire"
+msgstr ": UT riservate per fuoco automatico"
+
+msgid ": TUs reserved for kneeling and aimed shot"
+msgstr ": UT riservate per inginocchiarsi e mirare"
+
+msgid ": TUs reserved for kneeling and snap shot"
+msgstr ": UT riservate per inginocchiarsi e fuoco rapido"
+
+msgid ": TUs reserved for kneeling and auto fire"
+msgstr ": UT riservate per inginocchiarsi e fuoco automatico"
+
+msgid "ABORT MISSION"
+msgstr "ABBANDONA MISSIONE"
+
+msgid "Units Lost :"
+msgstr "Unità perse :"
+
+msgid "Very Poor"
+msgstr "Molto scarso"
+
+msgid "Poor"
+msgstr "Scarso"
+
+msgid "Very Good"
+msgstr "Molto buono"
+
+msgid "Out of turn activity paused"
+msgstr "Attività fuori turno in pausa"
+
+msgid "Out of turn activity restarted"
+msgstr "Attività fuori turno riavviata"
+
+msgid "Not Enough TU's"
+msgstr "UT insufficienti"
+
+msgid "TU cost per item picked up:"
+msgstr "Costo in UT per oggetto raccolto:"
+
+msgid "Auto-execute remaining orders"
+msgstr "Esegui gli ordini rimanenti"
+
+msgid "Not enough TU's - TU cost per throw:"
+msgstr "UT non sufficienti - Costo in UT per ogni lancio:"
+
+msgid "Too far to throw"
+msgstr "Troppo lontano per lanciare"
+
+msgid "No arc of throw"
+msgstr "Nessuna traiettoria di lancio"
+
+msgid "No line of fire"
+msgstr "Nessuna linea di fuoco"
+
+msgid "Out of range"
+msgstr "Fuori bersaglio"
+
+msgid "Not enough TU's - TU cost per wound:"
+msgstr "UT non sufficienti - Costo in UT per ogni ferita:"
+
+msgid "Not enough TU's - TU cost to use:"
+msgstr "UT non sufficienti - Costo in UT per l'utilizzo:"
+
+msgid "Not enough TU's - TU cost to activate:"
+msgstr "UT non sufficienti - Costo in UT per l'attivazione:"
+
+msgid "Not enough TU's - TU cost per attempt:"
+msgstr "UT non sufficienti - Costo in UT per ogni tentativo:"
+
+msgid "Up"
+msgstr "In alto"
+
+msgid "Down"
+msgstr "In basso"
+
+msgid "Toggle map level display mode"
+msgstr "Cambia visualizzazione livello mappa"
+
+msgid "Toggle camera mode"
+msgstr "Cambia inquadratura"
+
+msgid "Safe mode"
+msgstr "Difensivo"
+
+msgid "Cautious mode"
+msgstr "Cauto"
+
+msgid "Aggressive mode"
+msgstr "Aggressivo"
+
+msgid "Crawl"
+msgstr "Strisciare"
+
+msgid "Walk"
+msgstr "Camminare"
+
+msgid "Run"
+msgstr "Correre"
+
+msgid "No shot"
+msgstr "Rispondi al fuoco"
+
+msgid "Aimed shot"
+msgstr "Prendi la mira"
+
+msgid "Snap shot"
+msgstr "Fuoco rapido"
+
+msgid "Auto shot"
+msgstr "Fuoco automatico"
+
+msgid "Stand up"
+msgstr "In piedi"
+
+msgid "Kneel down"
+msgstr "In ginocchio"
+
+msgid "Throw object"
+msgstr "Lancia oggetto"
+
+msgid "Cannot throw"
+msgstr "Impossibile lanciare"
+
+msgid "Drop object"
+msgstr "Lascia oggetto"
+
+msgid "Yes, prime grenade"
+msgstr "Sì, innesca granata"
+
+msgid "No, cancel operation"
+msgstr "No, annulla operazione"
+
+msgid "Group formation"
+msgstr "In formazione"
+
+msgid "Exit Psionics"
+msgstr "Termina Psionica"
+
+msgid "Psionically protect unit"
+msgstr "Protezione psionica unità"
+
+msgid "Lend Psionic strength"
+msgstr "Cedi forza psionica"
+
+msgid "Unstun unit"
+msgstr "Fai riprendere l'unità"
+
+msgid "Unpanic unit"
+msgstr "Fai calmare l'unità"
+
+msgid "Probe unit"
+msgstr "Sonda unità"
+
+msgid "Control body"
+msgstr "Controllo corporeo"
+
+msgid "Stun unit"
+msgstr "Stordisci unità"
+
+msgid "Panic unit"
+msgstr "Terrorizza unità"
+
+msgid "Squad icons"
+msgstr "Icone della squadra"
+
+msgid "Level indicator"
+msgstr "Indicatore di livello"
+
+msgid "Create a hotseat game"
+msgstr "Crea un gioco a inviti"
+
+msgid "Create a network game"
+msgstr "Crea un gioco via network"
+
+msgid "Join a network game"
+msgstr "Entra in un gioco via network"
+
+msgid "Start game"
+msgstr "Inizia il gioco"
+
+msgid "Quit game"
+msgstr "Esci dal gioco"
+
+msgid "Return to game"
+msgstr "Torna al gioco"
+
+msgid "Sound volumes"
+msgstr "Volumi sonori"
+
+msgid "Return to options"
+msgstr "Torna alle opzioni"
+
+msgid "Plays a random sound effect"
+msgstr "Esegui un effetto sonoro casuale"
+
+msgid "Single file"
+msgstr "In fila"
+
+msgid "Start turn"
+msgstr "Inizia turno"
+
+msgid "Return to start game screen"
+msgstr "Torna allo schermo di gioco"
+
+msgid "TU cost per shot:"
+msgstr "Costo in UT per colpo:"
+
+msgid "TU cost:"
+msgstr "Costo in UT:"
+
+msgid "Start real time game"
+msgstr "Inizia gioco in tempo reale"
+
+msgid "Start turn-based game"
+msgstr "Inizia gioco a turni"
+
+msgid "Multiplayer game"
+msgstr "Modalità multigiocatore"
+
+msgid "End turn"
+msgstr "Fine turno"
+
+msgid "Reserve TUs for auto shot"
+msgstr "Riserva UT per fuoco automatico"
+
+msgid "Reserve TUs for snap shot"
+msgstr "Riserva UT per fuoco rapido"
+
+msgid "Reserve TUs for aimed shot"
+msgstr "Riserva UT per mirare"
+
+msgid "Reserve TUs for kneel"
+msgstr "Riserva UT per inginocchiarsi"
+
+msgid "TU cost to activate:"
+msgstr "Costo in UT per l'attivazione:"
+
+msgid "TU cost to use:"
+msgstr "Costo in UT per l'utilizzo:"
+
+msgid "TU cost per wound:"
+msgstr "Costo in UT per ogni ferita:"
+
+msgid "Deployment Failed"
+msgstr "Schieramento fallito"
+
+msgid "Due to a lack of space some units were not placed on the map."
+msgstr "A causa di mancanza di spazio alcune unità non sono state posizionate sulla mappa."
+
+msgid "Number of missing units:"
+msgstr "Numero di unità mancanti:"
+
+msgid "No player controlled units"
+msgstr "Nessun'unità controllata dal giocatore"
+
+msgid ""
+"No player controlled units were placed on the map; the game will run in "
+"observation mode."
+msgstr "Sulla mappa non sono presenti unità controllate dal giocatore: gioco in modalità osservazione."
+
+msgid "TU cost per attempt:"
+msgstr "Costo in UT per tentativo:"
+
+msgid "Review briefing"
+msgstr "Controlla l'obiettivo della missione"
+
+msgid "Assign units to squad"
+msgstr "Assegna le unità alla squadra"
+
+msgid "The following units will be lost if left in combat zone:"
+msgstr "Le unità seguenti saranno perse se resteranno sul campo di battaglia:"
+
+msgid "Abort mission?"
+msgstr "Abbandona missione?"
+
+msgid "Hostile unit spotted"
+msgstr "Unità nemica individuata"
+
+msgid "Unit has died"
+msgstr "L'unità è morta"
+
+msgid "Hostile unit has died"
+msgstr "L'unità nemica è morta"
+
+msgid "Unknown Unit has died"
+msgstr "L'unità ignota è morta"
+
+msgid "Unit critically wounded"
+msgstr "Unità gravemente ferita"
+
+msgid "Unit badly injured"
+msgstr "Unità seriamente ferita"
+
+msgid "Unit injured"
+msgstr "Unità ferita"
+
+msgid "Unit under fire"
+msgstr "Unità sotto il fuoco"
+
+msgid "Unit has lost consciousness"
+msgstr "Unità svenuta"
+
+msgid "Unit has left combat zone"
+msgstr "L'unità ha lasciato la battaglia"
+
+msgid "Unit has frozen"
+msgstr "Unità immobilizzata"
+
+msgid "Unit has gone beserk"
+msgstr "L'unità è furiosa"
+
+msgid "Unit has panicked"
+msgstr "Unità in preda al panico"
+
+msgid "Unit has stopped panicking"
+msgstr "Unità di nuovo calma"
+
+msgid "Psionic attack on unit"
+msgstr "Attacco psionico sull'unità"
+
+msgid "Unit under Psionic control"
+msgstr "Unità sotto controllo psionico"
+
+msgid "Unit freed from Psionic control"
+msgstr "Unità liberata dal controllo psionico"
+
+msgid ""
+"Search the building for Alien life forms or other hostile forces. Engage the"
+" enemy, but where possible stun Aliens using a Stun Grapple, Stun Grenade, "
+"or Psionic power. Live Aliens are essential for our research. If all hostile"
+" units are eliminated or stunned then we can recover any equipment and Alien"
+" artifacts. A Bio-Transport module must be at the investigation site to "
+"enable the recovery of unconscious or dead Aliens. Be careful to avoid "
+"endangering any civilians and remember that the organization which owns the "
+"building will not be pleased if there is extensive damage to the structure."
+msgstr "Setaccia l'edificio in cerca di forme di vita aliene o di forze ostili. Affronta il nemico, ma se possibile cerca di stordire gli Alieni con le armi appropriate, o con i poteri psionici. Gli Alieni vivi sono di capitale importanza per le nostre ricerche; se tutti i nemici saranno resi inoffensivi potremo recuperare il loro equipaggiamento. E' fondamentale utilizzare una Camera di Contenimento. Cerca di non provocare vittime civili e ricorda che l'organizzazione proprietaria dell'edificio non sarà per niente contenta se la struttura subirà danni eccessivi."
+
+msgid ""
+"Eliminate the building security forces and recover any equipment or valuable"
+" items left in the combat area. Use explosive or incendiary munitions to "
+"damage the building and inflict economic penalties on the owning "
+"organization, but remember that this can destroy any potential bounty. A "
+"raid will create a state of hostility between the organization and X-COM and"
+" you should be aware of the consequences of such a serious course of action."
+msgstr "Elimina le forze di sicurezza dell'edificio e recupera tutto l'equipaggiamento che rimane sul campo di battaglia. Usa munizioni esplosive o incendiarie per danneggiare l'edificio e provocare danni economici all'organizzazione che lo possiede, ma ricordati che questo modo di agire può essere molto pericoloso, perché crea un clima di aperta ostilità fra l'organizzazione e la X-COM, che potrebbe avere serie conseguenze sulle nostre prossime operazioni."
+
+msgid ""
+"The Aliens have located your base and have launched an attack. Defend the "
+"base from costly damage by eliminating all invading forces. You must also "
+"safeguard your Scientists and Engineers, either by defending them or exiting"
+" them from the combat zone. You can retreat from the base to cut your "
+"losses, but the base will be lost."
+msgstr "Gli Alieni hanno localizzato la tua base e la stanno attaccando; difendila, eliminando tutte le forze avversarie. Devi anche proteggere la vita dei tuoi scienziati e degli ingegneri, difendendoli o facendoli evacuare. Puoi anche ritirarti per minimizzare le perdite, ma in questo modo la base stessa sarà persa."
+
+msgid ""
+"The Aliens have located your base and have launched an attack. Defend the "
+"base from costly damage by eliminating all invading forces. If all hostile "
+"forces are eliminated X-COM will be saved. If you are defeated then X-COM "
+"will be wiped out, leaving the world open to Alien domination. The fate of "
+"humanity will be determined by this conflict. Good luck."
+msgstr "Gli Alieni hanno localizzato la tua ultima base e la stanno attaccando. Difendila a ogni costo: se eliminerai tutti i nemici la      X-COM sarà salva, ma se verrai sconfitto la X-COM sarà solo un ricordo, e la Terra sarà presto sotto il dominio Alieno. Il destino dell'umanità dipende da questa battaglia! Buona fortuna."
+
+msgid "NOT USED! - you should not see this message"
+msgstr "La struttura Aliena deve essere esplorata, e tutto deve essere rilevato. I dati verranno trasmessi alla nostra base, e permetteranno ai nostri scienziati di avviare ricerche sulla funzione dell'edificio. Questo ci aiuterà a scoprire i suoi punti deboli, e potremo così disattivarlo in un futuro assalto. Cerca di non mettere a rischio tutte le tue forze; ritirati se la resistenza che incontri è troppo forte."
+
+msgid ""
+"The Incubator Chamber contains Alien Eggs. These Eggs are held at an exact "
+"temperature inside Incubators providing an environment for the Eggs to hatch"
+" at an optimum rate. Research reveals that a number of Incubators exist, "
+"they must all be destroyed."
+msgstr "Le Camere di Incubazione contengono le Uova Aliene, mantenendole alla temperatura ottimale affinché si possano schiudere al momento giusto. I nostri scienziati hanno rilevato l'esistenza di numerose di queste strutture: devono essere distrutte."
+
+msgid ""
+"The Spawning Chamber appears to be a very special structure. Very few Aliens"
+" enter this structure although vast numbers of Aliens regularly leave the "
+"building. Our research indicates that this building is the lair for some "
+"kind of Alien queen. We believe this Alien to be the sole producer of Alien "
+"Eggs from which all Aliens hatch. Whilst the primary objective is the "
+"destruction of the Queen and all Alien Eggs, the live capture of the Alien "
+"Queen would be a vicious insult to the Aliens."
+msgstr "La Camera di Generazione è un edificio piuttosto misterioso; pochissimi Alieni ne varcano la soglia, ma moltissimi ne escono. I nostri scienziati sospettano pertanto che si tratti del covo di una Regina Aliena, in grado di produrre le uova da cui si generano tutte le specie di Alieni. Nonostante il nostro obiettivo rimanga la distruzione di tutte le uova, la cattura di tale regina rappresenterebbe un duro colpo per gli Alieni."
+
+msgid ""
+"The Food Chamber contains the Aliens' food source in the form of plants. "
+"These plants require organic heat and light sources to prevent them from "
+"decaying. The Mutant alliance also informs us that a number of Sectoids are "
+"held captive within the Food Chamber. Our old enemy has apparently become an"
+" Alien delicacy. Whilst the rescue of any Sectoids will guarantee an "
+"Alliance with the Mutants, the primary objective is to destroy the Alien "
+"heat and light sources as indicated here."
+msgstr "La Camera del Cibo contiene le piante, alimento principale della razza Aliena,  e garantisce il mantenimento di una temperatura idele per la loro crescita. L'Allenaza dei Mutati  ci ha messo al corrente della presenza di creature Sectoidi, considerate dagli Alieni una prelibatezza.  Il recupero di unità Sectoidi potrebbe garantirci l'alleanza con i Mutati, ma l'obiettivo  principale rimane la distruzione delle sorgenti di luce e calore, qui indicate."
+
+msgid ""
+"The Megapods are the means by which the Aliens create new structures. The "
+"small Egg-like objects are eventually replanted and grow into massive "
+"organic structures. Our discoveries are shocking; this building is "
+"practically overflowing with Pods. Our Scientists fear that the Aliens are "
+"planning a massive expansion and who knows how we could stop them then. All "
+"Megapods must be destroyed thus preventing the Aliens building any new "
+"structures."
+msgstr "I Megapod servono per creare le strutture che compongono la Dimensione Aliena: all'inizio sono piccole uova, che vengono poi deposte per la maturazione in enormi strutture organiche. Le nostre scoperte hanno indicato questo edificio come un luogo di raccolta di Megapod; devono essere tutti distrutti, per evitare una crescita eccessiva della civiltà Aliena."
+
+msgid ""
+"The Alien Dimension contains many structures linked by an irregular snaking "
+"chain. The Sleeping Chamber lies at the start of the chain and allows the "
+"Aliens to rejuvenate nocturnally. The Aliens regularly connect themselves to"
+" sleeping units, which appears to be a necessary operation in order for them"
+" to stay alive. Explore the area with caution and destroy all sleeping units"
+" as pictured here. After disabling the building, all Agents must exit the as"
+" soon as possible."
+msgstr "La Dimensione Aliena contiene numerose strutture collegate attraverso una lunga catena irregolare: la Camera Dormitorio si trova esattamente all'inizio di tale catena, e consente agli Alieni di riposarsi. Essi si collegano regolarmente a singole unità dormitorio; dato che un'interruzione di questa procedura li porterebbe alla morte, è necessario distruggere tutte le unità dormitorio indicate. Gli agenti devono muversi con attenzione e uscire dalla Camera il più presto possibile."
+
+msgid ""
+"The Organic Factory provides a construction center for Alien UFOs. In their "
+"initial stage of development the UFOs resemble small mushroom-like objects. "
+"These objects increase in size until they reach the colossal sizes of the "
+"UFOs we have encountered. When fully grown the UFOs detach themselves from "
+"their stem and become fully functional Alien attack vessels. All embryonic "
+"UFOs must be destroyed."
+msgstr "La Fabbrica Organica è la struttura in cui vengono costruiti gli UFO. Inizialmente essi sembrano dei piccoli ammassi spugnosi, che quindi crescono fino a raggiungere le dimensioni colossali dei più grandi UFO conosciuti dalla X-COM. Alla fine del processo gli UFO escono dalla struttura, e diventano velivoli d'assalto pienamente operativi. La distruzione di queste strutture è vitale per ridurre l'attività Aliena sulla Terra."
+
+msgid ""
+"The destruction of the Food Chambers leads us to the Alien Farm. This "
+"contains a number of strange white blocks. Our Scientists believe that these"
+" curious objects influence the atmospheric conditions of the Alien "
+"Dimension, although it has been impossible to prove this. Whatever the "
+"purpose of these blocks, their destruction can only hinder the Alien cause. "
+"Research indicates that the blocks are located in multiple locations, "
+"although only this site has been photographed. Destroy all of the blocks to "
+"disable the building."
+msgstr "La distruzione delle Camere del Cibo ci conduce alla Fattoria Aliena; questo edificio contiene un gran numero di strani ammassi bianchi, che crediamo possano influenzare l'atmosfera della Dimensone Aliena, anche se non si può averne l'assoluta certezza. Tali ammassi si trovano in differenti punti, anche se conosciamo la posizione esatta di pochi di essi. Cerca di distruggerli."
+
+msgid ""
+"The Control Chamber houses giant organic brains which control the operation "
+"of Alien entities within the Alien dimension. The destruction of these "
+"organic brains will make any remaining Aliens more desperate, as their "
+"ultimate defeat becomes an imminent reality."
+msgstr "Nella Camera di Controllo si trova un enorme cervello organico che gestisce tutto quello che avviene nella Dimensione Aliena. Se riuscirai a distruggerlo, la sconfitta degli avversari sarà molto piu vicina!"
+
+msgid ""
+"The Maintenance Factory appears to contain a number of sacred Alien "
+"structures. We believe that the Alien Dimension is fueled by the structures "
+"pictured here. These heart units must be destroyed in order to weaken the "
+"remaining structures. Our success here will indeed be a severe blow to the "
+"Aliens as exactly half of the Alien Dimension will lie in ruins."
+msgstr "La Fabbrica di Mantenimento sembra custodire un certo numero di strutture, qui indicate, che riteniamo alimentino l'intera Dimensione Aliena; tali strutture devono essere distrutte, in modo da indebolire la civiltà nemica. Il nostro successo in questa missione rappresenterà un passo importante, dato che la metà esatta della Dimensione Aliena sarà ridotta in rovine."
+
+msgid ""
+"The destruction of the Dimension Gates is our ultimate goal. From evidence "
+"collected at previous Alien buildings, we have managed to composite this "
+"picture of our objectives. The Alien Generators must be destroyed, "
+"simultaneously disabling the protective laser web. Destroy all of the "
+"generators to disable the building. Upon disabling the building it is "
+"imperative that all Agents evacuate as a matter of urgency. Our forces must "
+"return to the Earth dimension before the final Dimension Gate closes "
+"forever.Victory is in our sights - Good Luck!"
+msgstr "La distruzione dei Portali Dimensionali è il nostro obiettivo finale. Dagli indizi raccolti negli edifici Alieni, siamo giunti alla conclusione che i loro generatori devono essere distrutti, disabilitando nello stesso tempo la rete di laser protettiva; pertanto è necessario distruggere tutti i generatori per disabilitare i sistemi dell'edificio, e fare in modo che i soldati ritornino nella nostra dimensione prima che i Portali si chiudano per sempre. La vittoria è a portata di mano - Buona fortuna!"
+
+msgid ""
+"Raiding forces must eliminate all other forces, whether they are raiders or "
+"defenders. Raiders are deployed on the edge of the combat zone. All "
+"defending forces are allied with each other and must repel any raiders. "
+"Defenders are deployed in the center of the combat zone"
+msgstr "Le forze di attacco devono eliminare tutti gli avversari, siano essi altri attaccanti o difensori. Gli attaccanti sono posizionati ai margini della zona di combattimento; i difensori si trovano al centro della stessa,  e devono respingere gli attaccanti."
+
+msgid ""
+"You must attempt to capture the crashed UFO by eliminating the defending "
+"Alien forces. There is only one chance to succeed in this mission because "
+"failure will mean that the surviving Aliens will attempt to destroy their "
+"craft. They would rather die than allow us to recover their advanced "
+"technology. Your priority is to eliminate the enemy with maximum force."
+msgstr "Devi cercare di catturare l'UFO precipitato eliminando le forze Aliene che lo difendono. Questo è il solo modo per avere successo nella missione, perché altrimenti gli Alieni superstiti distruggeranno l'UFO: sono addestrati a morire piuttosto che a svelarci i loro segreti tecnologici. La tua priorità è di eliminare le forze nemiche con tutti i mezzi possibili."
+
+msgid ""
+"Hostile troops have located your base and have launched an attack. Defend "
+"the base from costly damage by eliminating all invading forces. You must "
+"also safeguard your Scientists and Engineers, either by defending them or "
+"exiting them from the combat zone. You can retreat from the base to cut your"
+" losses, but the base will be lost."
+msgstr "Truppe nemiche hanno localizzato la tua base, e la stanno attaccando. Per difenderla devi eliminare tutti gli invasori. Devi anche proteggere le vite di scienziati e ingegneri, difendendoli o facendoli evacuare dalla zona dei combattimenti. Per minimizzare le perdite tu puoi ritirare dalla base, ma in questo modo la perderai."
+
+msgid ""
+"Hostile troops have located your base and have launched an attack. Defend "
+"the base from costly damage. If all hostile forces are eliminated X-COM will"
+" be saved. If you are defeated then X-COM will be wiped out, leaving the "
+"world open to Alien domination. The fate of humanity will be determined by "
+"this conflict. Good luck."
+msgstr "Truppe nemiche hanno scoperto la tua base, e la stanno attaccando. Devi difenderla a ogni costo. Se eliminerai tutte le forze nemiche la X-COM sarà salva, ma se verrai sconfitto la X-COM scomparirà, lasciando il campo libero alla dominazione Aliena. Il destino dell'intera umanità dipende dalle sorti di questa battaglia. Buona fortuna!"
+
+msgid "MISSION BRIEFING"
+msgstr "BRIEFING"
+
+msgid "TACTICAL SCENARIO"
+msgstr ""
+
+msgid "Multi-worm"
+msgstr "Multiverme"
+
+msgid "Time units"
+msgstr "UT"
