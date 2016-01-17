@@ -61,7 +61,8 @@ void UfopaediaCategory::Begin()
 	for (auto entry = Entries.begin(); entry != Entries.end(); entry++)
 	{
 		sp<UfopaediaEntry> e = *entry;
-		TextButton *tb = new TextButton(nullptr, tr(e->Title, "paedia_string"), infolabel->GetFont());
+		TextButton *tb =
+		    new TextButton(nullptr, tr(e->Title, "paedia_string"), infolabel->GetFont());
 		tb->Name = "Index" + Strings::FromInteger(idx);
 		tb->RenderStyle = TextButton::TextButtonRenderStyles::SolidButtonStyle;
 		tb->TextHAlign = HorizontalAlignment::Left;

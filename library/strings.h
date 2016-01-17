@@ -106,7 +106,7 @@ class Strings
 	static bool IsWhiteSpace(UniChar c);
 };
 
-UString tr(const UString &str, const UString domain = "openapoc");
+UString tr(const UString &str, const UString domain = "ufo_string");
 
 #ifdef DUMP_TRANSLATION_STRINGS
 void dumpStrings();
