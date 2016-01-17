@@ -470,9 +470,9 @@ void CityView::EventOccurred(Event *e)
 		}
 	}
 	// Exclude mouse down events that are over the form
-	else if (!activeTab->eventIsWithin(e) && !baseForm->eventIsWithin(e))
+	else if (e->Type == EVENT_MOUSE_DOWN &&
+	         (!activeTab->eventIsWithin(e) && !baseForm->eventIsWithin(e)))
 	{
-
 		if (this->getViewMode() == TileViewMode::Strategy && e->Type == EVENT_MOUSE_DOWN &&
 		    e->Data.Mouse.Button == 2)
 		{
