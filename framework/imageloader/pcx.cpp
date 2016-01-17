@@ -82,11 +82,11 @@ class PCXImageLoader : public OpenApoc::ImageLoader
 			return nullptr;
 		}
 
-		uint8_t b = data[size - (256 * 3) - 1];
-		if (b != 0x0C)
+		uint8_t pal = data[size - (256 * 3) - 1];
+		if (pal != 0x0C)
 		{
 			LogWarning("File \"%s\" had invalid PCX palette identifier byte 0x%02x", path.c_str(),
-			           static_cast<unsigned>(b));
+			           static_cast<unsigned>(pal));
 			return nullptr;
 		}
 

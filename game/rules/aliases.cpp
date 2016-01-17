@@ -2,7 +2,7 @@
 #include "game/rules/rules_private.h"
 #include "game/rules/rules_helper.h"
 #include "framework/logger.h"
-#include "framework/framework.h"
+#include "framework/trace.h"
 
 namespace OpenApoc
 {

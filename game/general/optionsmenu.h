@@ -2,10 +2,7 @@
 #pragma once
 
 #include "framework/stage.h"
-#include "framework/includes.h"
 
-#include "game/resources/gamecore.h"
-#include "game/apocresources/apocresource.h"
 #include "forms/forms.h"
 
 namespace OpenApoc

@@ -1,7 +1,6 @@
 #pragma once
 #include "library/sp.h"
 #include "library/vec.h"
-#include "library/strings.h"
 
 namespace OpenApoc
 {

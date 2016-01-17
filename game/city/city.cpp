@@ -9,7 +9,6 @@
 #include "game/rules/vequipment.h"
 #include "framework/framework.h"
 #include "framework/trace.h"
-#include "game/resources/gamecore.h"
 #include "game/city/projectile.h"
 #include "game/tileview/tileobject_vehicle.h"
 #include "game/tileview/tileobject_scenery.h"

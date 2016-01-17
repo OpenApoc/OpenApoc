@@ -5,7 +5,6 @@
 #include "game/general/mainmenu.h"
 #include "game/resources/gamecore.h"
 #include <tuple>
-#include <physfs.h>
 
 namespace OpenApoc
 {

@@ -1,7 +1,4 @@
 #include "framework/event.h"
-#include "framework/logger.h"
-
-#include <sstream>
 
 namespace OpenApoc
 {

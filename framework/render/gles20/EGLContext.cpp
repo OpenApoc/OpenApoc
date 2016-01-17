@@ -15,8 +15,8 @@ namespace OpenApoc
 //--------------------------------------------------------------------------------
 GLContext::GLContext()
     : display_(egl::NO_DISPLAY), surface_(egl::NO_SURFACE), context_(egl::NO_CONTEXT),
-      screen_width_(0), screen_height_(0), es3_supported_(false), egl_context_initialized_(false),
-      gles_initialized_(false)
+      screen_width_(0), screen_height_(0), gles_initialized_(false), egl_context_initialized_(false),
+      es3_supported_(false)
 {
 	auto eglInitialized = egl::sys::LoadFunctions();
 	if (!eglInitialized)

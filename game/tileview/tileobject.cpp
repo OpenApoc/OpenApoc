@@ -1,6 +1,5 @@
 #include "game/tileview/tileobject.h"
 
-#include "framework/renderer.h"
 #include "game/tileview/tile.h"
 #include "framework/logger.h"
 

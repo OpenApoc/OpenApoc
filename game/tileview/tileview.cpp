@@ -5,9 +5,7 @@
 
 #include "framework/includes.h"
 #include "framework/framework.h"
-#include "framework/image.h"
 #include "game/resources/gamecore.h"
-#include "game/city/vehicle.h"
 
 namespace OpenApoc
 {

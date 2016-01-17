@@ -28,7 +28,6 @@
 #else
 
 #if defined(ERROR_DIALOG)
-#include <SDL_video.h>
 #include <SDL_messagebox.h>
 #endif
 

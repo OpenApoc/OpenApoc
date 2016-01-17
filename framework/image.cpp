@@ -1,7 +1,6 @@
 #include "library/sp.h"
 #include "framework/image.h"
 #include "framework/palette.h"
-#include "framework/renderer.h"
 #include "framework/logger.h"
 
 // Use physfs for RGBImage::saveBitmap directory creation
@@ -23,7 +22,8 @@ static bool WriteUse(ImageLockUse use)
 
 Image::~Image() {}
 
-Image::Image(Vec2<unsigned int> size) : size(size), dirty(true), bounds(0, 0, size.x, size.y) {}
+Image::Image(Vec2<unsigned int> size) : size(size), dirty(true), bounds(0, 0, size.x, size.y), indexInSet(0)
+{}
 
 Surface::Surface(Vec2<unsigned int> size) : Image(size) {}
 

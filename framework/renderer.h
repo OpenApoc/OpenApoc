@@ -2,6 +2,7 @@
 #include "library/sp.h"
 #include "library/vec.h"
 #include "library/colour.h"
+#include "library/strings.h"
 #include <memory>
 
 namespace OpenApoc

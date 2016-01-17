@@ -2,7 +2,6 @@
 #include "game/rules/rules_private.h"
 #include "library/strings.h"
 #include "framework/framework.h"
-#include "game/tileview/voxel.h"
 #include "game/rules/rules_helper.h"
 
 #include <glm/glm.hpp>

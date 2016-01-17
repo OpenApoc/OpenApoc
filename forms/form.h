@@ -3,8 +3,6 @@
 
 #include "control.h"
 
-#include <typeinfo>
-
 namespace OpenApoc
 {
 

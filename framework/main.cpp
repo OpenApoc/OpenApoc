@@ -1,4 +1,3 @@
-#include <physfs.h>
 #include "framework/framework.h"
 #include "framework/trace.h"
 #include "version.h"

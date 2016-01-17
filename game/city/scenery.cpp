@@ -6,7 +6,6 @@
 #include "game/gamestate.h"
 #include "game/tileview/tile.h"
 #include "game/city/city.h"
-#include "framework/framework.h"
 #include "game/city/doodad.h"
 
 namespace OpenApoc

@@ -3,19 +3,15 @@
 #include "game/city/vehicle.h"
 #include "game/city/vequipment.h"
 #include "game/rules/rules.h"
-#include "game/city/projectile.h"
 #include "game/organisation.h"
-#include "framework/image.h"
 #include "game/city/city.h"
 #include "game/city/building.h"
 #include "game/city/vehiclemission.h"
-#include "game/city/vequipment.h"
 #include "game/rules/vequipment.h"
 #include "game/gamestate.h"
 #include "game/tileview/tileobject_vehicle.h"
 #include "game/tileview/tileobject_shadow.h"
 
-#include <cfloat>
 #include <random>
 #include <limits>
 

@@ -1,7 +1,6 @@
 #include "game/city/building.h"
 #include "game/organisation.h"
 #include "framework/framework.h"
-#include "framework/includes.h"
 
 namespace OpenApoc
 {

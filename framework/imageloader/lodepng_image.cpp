@@ -8,7 +8,6 @@
 #include "library/vec.h"
 
 #include <vector>
-#include <physfs.h>
 #include "framework/imageloader/lodepng.h"
 
 using namespace OpenApoc;

@@ -2,7 +2,6 @@
 #include "game/general/difficultymenu.h"
 #include "game/city/city.h"
 #include "game/city/cityview.h"
-#include "game/organisation.h"
 
 namespace OpenApoc
 {
@@ -63,7 +62,6 @@ void DifficultyMenu::EventOccurred(Event *e)
 		else
 		{
 			LogWarning("Unknown button pressed: %s", e->Forms().RaisedBy->Name.c_str());
-			ruleName = "rules/difficulty1.xml";
 			return;
 		}
 

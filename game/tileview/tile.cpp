@@ -1,6 +1,5 @@
 #include "library/sp.h"
 #include "game/tileview/tile.h"
-#include "framework/framework.h"
 #include "framework/trace.h"
 #include "game/tileview/tileobject_projectile.h"
 #include "game/city/projectile.h"

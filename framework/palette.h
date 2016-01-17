@@ -2,7 +2,6 @@
 #pragma once
 
 #include "framework/includes.h"
-#include "image.h"
 #include "renderer.h"
 
 namespace OpenApoc

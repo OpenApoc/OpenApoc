@@ -1,5 +1,6 @@
 #include "game/rules/rules_private.h"
 #include "framework/logger.h"
+#include "framework/trace.h"
 #include "rules_helper.h"
 
 namespace OpenApoc

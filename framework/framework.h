@@ -2,14 +2,12 @@
 #pragma once
 #include "library/sp.h"
 
-#include "logger.h"
 #include "includes.h"
 #include "event.h"
 #include "data.h"
 #include "stagestack.h"
 #include "renderer.h"
 #include "sound.h"
-#include "font.h"
 
 #include "framework/ThreadPool/ThreadPool.h"
 

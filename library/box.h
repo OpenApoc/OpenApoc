@@ -2,7 +2,6 @@
 #pragma once
 
 #include "vec.h"
-#include "line.h"
 
 namespace OpenApoc
 {

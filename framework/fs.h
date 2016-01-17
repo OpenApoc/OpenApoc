@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cstdint>
-#include <fstream>
 
 #include "library/strings.h"
 #include "library/sp.h"

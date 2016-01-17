@@ -7,7 +7,6 @@
 #include "game/rules/vequipment.h"
 #include <vector>
 #include <map>
-#include <set>
 #include <list>
 
 namespace OpenApoc

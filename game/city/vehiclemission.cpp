@@ -5,7 +5,6 @@
 #include "game/city/scenery.h"
 #include "game/rules/buildingdef.h"
 #include "framework/logger.h"
-#include "game/tileview/tile.h"
 #include "game/tileview/tileobject_vehicle.h"
 #include "game/tileview/tileobject_scenery.h"
 #include "game/rules/scenerytiledef.h"
@@ -104,7 +103,6 @@ class VehicleRandomDestination : public VehicleMission
 	virtual bool getNextDestination(Vec3<float> &dest) override
 	{
 		std::ignore = dest;
-		static Vec3<float> invalidDestination{0, 0, 0};
 		LogError("Should never be called");
 		return false;
 	}
@@ -428,8 +426,6 @@ class VehicleGotoBuildingMission : public VehicleMission
 		float shortestPathCost = std::numeric_limits<float>::max();
 		Vec3<int> closestIncompletePathPad;
 		float closestIncompletePathCost = std::numeric_limits<float>::max();
-
-		Vec3<int> target;
 
 		for (auto dest : b->landingPadLocations)
 		{

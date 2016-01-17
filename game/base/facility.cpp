@@ -1,5 +1,4 @@
 #include "game/base/facility.h"
-#include "library/strings.h"
 
 namespace OpenApoc
 {

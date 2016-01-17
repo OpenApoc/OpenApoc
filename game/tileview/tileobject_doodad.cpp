@@ -1,6 +1,5 @@
 
 #include "game/tileview/tileobject_doodad.h"
-#include "game/rules/doodaddef.h"
 
 namespace OpenApoc
 {
