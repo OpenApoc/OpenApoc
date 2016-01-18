@@ -698,7 +698,7 @@ static bool ParseVehicleTypeNode(tinyxml2::XMLElement *node, VehicleType &vehicl
 					         vehicle.id.c_str(), voxelSliceString.c_str());
 					return false;
 				}
-				LogInfo("Vehicle \"%s\" layer %d \"%s\"", vehicle.id.c_str(), layer,
+				LogInfo("Vehicle \"%s\" layer %d \"%s\"", vehicle.id.c_str(), layerCount,
 				        voxelSliceString.c_str());
 				vehicle.voxelMap->setSlice(layerCount, layer);
 				layerCount++;
