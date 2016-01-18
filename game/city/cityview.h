@@ -48,8 +48,8 @@ class VehicleTileInfo
 	bool selected;
 	float healthProportion;
 	bool shield;
-	bool faded;          // Faded when they enter the alien dimension?
-	int containedAgents; // 0-13, 0-12 having numbers, 13+ being '+'
+	bool faded;     // Faded when they enter the alien dimension?
+	int passengers; // 0-13, 0-12 having numbers, 13+ being '+'
 	CityUnitState state;
 	bool operator==(const VehicleTileInfo &other) const;
 };

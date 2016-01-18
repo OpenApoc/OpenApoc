@@ -535,7 +535,7 @@ VehicleTileInfo CityView::createVehicleInfo(sp<Vehicle> v)
 
 	t.healthProportion = currentHealth / maxHealth;
 	// Clamp passengers to 13 as anything beyond that gets the same icon
-	t.containedAgents = std::max(13, v->getPassengers());
+	t.passengers = std::min(13, v->getPassengers());
 	// FIXME Fade out vehicles that are on the way to/back from the alien dimension
 	t.faded = false;
 
@@ -587,6 +587,37 @@ sp<Control> CityView::createVehicleInfoControl(const VehicleTileInfo &info)
 	healthGraphic->Size = healthBarSize;
 	healthGraphic->ImagePosition = FillMethod::Stretch;
 
+	sp<Graphic> stateGraphic;
+
+	switch (info.state)
+	{
+		case CityUnitState::InBase:
+			stateGraphic = vehicleIcon->createChild<Graphic>(this->icons[CityIcon::InBase]);
+			break;
+		case CityUnitState::InVehicle:
+			stateGraphic = vehicleIcon->createChild<Graphic>(this->icons[CityIcon::InVehicle]);
+			break;
+		case CityUnitState::InBuilding:
+			stateGraphic = vehicleIcon->createChild<Graphic>(this->icons[CityIcon::InBuilding]);
+			break;
+		case CityUnitState::InMotion:
+			stateGraphic = vehicleIcon->createChild<Graphic>(this->icons[CityIcon::InMotion]);
+			break;
+	}
+
+	stateGraphic->AutoSize = true;
+	stateGraphic->Location = {0, 0};
+	stateGraphic->Name = "OWNED_VEHICLE_STATE_" + info.vehicle->name;
+
+	if (info.passengers)
+	{
+		auto passengerGraphic =
+		    vehicleIcon->createChild<Graphic>(this->vehiclePassengerCountIcons[info.passengers]);
+		passengerGraphic->AutoSize = true;
+		passengerGraphic->Location = {0, 0};
+		passengerGraphic->Name = "OWNED_VEHICLE_PASSENGERS_" + info.vehicle->name;
+	}
+
 	return baseControl;
 }
 
@@ -594,7 +625,7 @@ bool VehicleTileInfo::operator==(const VehicleTileInfo &other) const
 {
 	return (this->vehicle == other.vehicle && this->selected == other.selected &&
 	        this->healthProportion == other.healthProportion && this->shield == other.shield &&
-	        this->containedAgents == other.containedAgents && this->state == other.state);
+	        this->passengers == other.passengers && this->state == other.state);
 }
 
 }; // namespace OpenApoc
