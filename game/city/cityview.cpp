@@ -542,10 +542,14 @@ VehicleTileInfo CityView::createVehicleInfo(sp<Vehicle> v)
 	auto b = v->building.lock();
 	if (b)
 	{
-		// If (this building is the 'owning' base of the vehicle)
-		//   t.state = InBase
-		// else
-		t.state = CityUnitState::InBuilding;
+		if (b->base) // && b->base == vehicle->homeBase)
+		{
+			t.state = CityUnitState::InBase;
+		}
+		else
+		{
+			t.state = CityUnitState::InBuilding;
+		}
 	}
 	else
 	{
