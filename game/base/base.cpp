@@ -24,7 +24,7 @@ Base::Base(GameState &state, sp<Building> building) : bld(building)
 		}
 	}
 	auto &def = state.getRules().getFacilityDefs().at("ACCESS_LIFT");
-	if (canBuildFacility(def, building->def.getBaseLift(), true) != BuildError::None)
+	if (canBuildFacility(def, building->def.getBaseLift(), true) != BuildError::NoError)
 	{
 		LogError("Building %s has invalid lift location", building->def.getName().c_str());
 	}
@@ -126,12 +126,12 @@ Base::BuildError Base::canBuildFacility(const FacilityDef &def, Vec2<int> pos, b
 			return BuildError::NoMoney;
 		}
 	}
-	return BuildError::None;
+	return BuildError::NoError;
 }
 
 void Base::buildFacility(const FacilityDef &def, Vec2<int> pos, bool free)
 {
-	if (canBuildFacility(def, pos, free) == BuildError::None)
+	if (canBuildFacility(def, pos, free) == BuildError::NoError)
 	{
 		facilities.emplace_back(new Facility(def));
 		auto facility = facilities.back();
@@ -164,12 +164,12 @@ Base::BuildError Base::canDestroyFacility(Vec2<int> pos) const
 		return BuildError::Occupied;
 	}
 	// TODO: Check if facility is in use
-	return BuildError::None;
+	return BuildError::NoError;
 }
 
 void Base::destroyFacility(Vec2<int> pos)
 {
-	if (canDestroyFacility(pos) == BuildError::None)
+	if (canDestroyFacility(pos) == BuildError::NoError)
 	{
 		auto facility = getFacility(pos);
 		for (auto f = facilities.begin(); f != facilities.end(); ++f)

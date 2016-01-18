@@ -8,7 +8,7 @@ class FacilityDef
 {
   private:
 	FacilityDef()
-	    : fixed(false), buildCost(0), buildTime(0), weeklyCost(0), capacityType(Capacity::None),
+	    : fixed(false), buildCost(0), buildTime(0), weeklyCost(0), capacityType(Capacity::Nothing),
 	      capacityAmount(0), size(1)
 	{
 	}
@@ -17,7 +17,7 @@ class FacilityDef
   public:
 	enum class Capacity
 	{
-		None,
+		Nothing,
 		Quarters,
 		Stores,
 		Medical,

@@ -59,7 +59,7 @@ bool RulesLoader::ParseFacilityDefinition(Rules &rules, tinyxml2::XMLElement *ro
 		{
 			if (!ReadElement(node,
 			                 std::map<UString, FacilityDef::Capacity>{
-			                     {"none", FacilityDef::Capacity::None},
+			                     {"none", FacilityDef::Capacity::Nothing},
 			                     {"quarters", FacilityDef::Capacity::Quarters},
 			                     {"stores", FacilityDef::Capacity::Stores},
 			                     {"medical", FacilityDef::Capacity::Medical},

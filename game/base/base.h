@@ -24,7 +24,7 @@ class Base
 	static const int SIZE = 8;
 	enum class BuildError
 	{
-		None,
+		NoError,
 		Occupied,
 		OutOfBounds,
 		NoMoney
