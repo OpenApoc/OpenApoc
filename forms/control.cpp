@@ -696,13 +696,16 @@ std::list<UString> Control::WordWrapText(sp<OpenApoc::BitmapFont> Font, UString 
 
 void Control::SetParent(sp<Control> Parent)
 {
-	auto previousParent = this->owningControl.lock();
-	if (previousParent)
+	if (Parent)
 	{
-		LogWarning("Reparenting control");
+		auto previousParent = this->owningControl.lock();
+		if (previousParent)
+		{
+			LogError("Reparenting control");
+		}
+		Parent->Controls.push_back(shared_from_this());
 	}
 	owningControl = Parent;
-	Parent->Controls.push_back(shared_from_this());
 }
 
 Vec2<int> Control::GetLocationOnScreen() const

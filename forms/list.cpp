@@ -182,6 +182,10 @@ void ListBox::UnloadResources() {}
 
 void ListBox::Clear()
 {
+	for (auto &c : Controls)
+	{
+		c->SetParent(nullptr);
+	}
 	Controls.clear();
 	this->selected = nullptr;
 	this->hovered = nullptr;

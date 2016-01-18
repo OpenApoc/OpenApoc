@@ -45,6 +45,24 @@ static const std::vector<UString> TAB_FORM_NAMES = {
     "FORM_CITY_UI_1", "FORM_CITY_UI_2", "FORM_CITY_UI_3", "FORM_CITY_UI_4",
     "FORM_CITY_UI_5", "FORM_CITY_UI_6", "FORM_CITY_UI_7", "FORM_CITY_UI_8",
 };
+
+static const std::vector<UString> CITY_ICON_VEHICLE_PASSENGER_COUNT_RESOURCES = {
+    {""}, // 0 has no image
+    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:51:xcom3/UFODATA/PAL_01.DAT"}, // 1
+    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:52:xcom3/UFODATA/PAL_01.DAT"}, // 2
+    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:53:xcom3/UFODATA/PAL_01.DAT"}, // 3
+    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:54:xcom3/UFODATA/PAL_01.DAT"}, // 4
+    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:55:xcom3/UFODATA/PAL_01.DAT"}, // 5
+    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:56:xcom3/UFODATA/PAL_01.DAT"}, // 6
+    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:57:xcom3/UFODATA/PAL_01.DAT"}, // 7
+    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:58:xcom3/UFODATA/PAL_01.DAT"}, // 8
+    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:59:xcom3/UFODATA/PAL_01.DAT"}, // 9
+    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:60:xcom3/UFODATA/PAL_01.DAT"}, // 10
+    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:61:xcom3/UFODATA/PAL_01.DAT"}, // 11
+    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:62:xcom3/UFODATA/PAL_01.DAT"}, // 12
+    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:63:xcom3/UFODATA/PAL_01.DAT"}, // 13+
+};
+
 } // anonymous namespace
 
 CityView::CityView(sp<GameState> state)
@@ -91,6 +109,17 @@ CityView::CityView(sp<GameState> state)
 			LogError("Failed to open city icon resource \"%s\"", path.c_str());
 		}
 		this->icons[type] = image;
+	}
+
+	for (auto &passengerResource : CITY_ICON_VEHICLE_PASSENGER_COUNT_RESOURCES)
+	{
+		auto image = fw().data->load_image(passengerResource);
+		if (!image && passengerResource != "")
+		{
+			LogError("Failed to open city vehicle passenger icon resource \"%s\"",
+			         passengerResource.c_str());
+		}
+		this->vehiclePassengerCountIcons.push_back(image);
 	}
 
 	auto img = std::make_shared<RGBImage>(Vec2<int>{1, 2});
@@ -209,82 +238,42 @@ void CityView::Update(StageCmd *const cmd)
 		         TAB_FORM_NAMES[1].c_str());
 	}
 
-	// Clear the list
-	this->playerVehicleListControls.clear();
-	ownedVehicleList->Clear();
 	ownedVehicleList->ItemSpacing = 0;
 
 	auto selected = this->selectedVehicle.lock();
+	std::map<sp<Vehicle>, std::pair<VehicleTileInfo, sp<Control>>> newVehicleListControls;
 
-	for (auto &v : state->getPlayer()->vehicles)
+	ownedVehicleList->Clear();
+
+	if (activeTab == uiTabs[1])
 	{
-		auto vehicle = v.lock();
-		if (!vehicle)
+		for (auto &v : state->getPlayer()->vehicles)
 		{
-			continue;
+			auto vehicle = v.lock();
+			if (!vehicle)
+			{
+				continue;
+			}
+			auto info = this->createVehicleInfo(vehicle);
+			auto it = this->vehicleListControls.find(vehicle);
+			sp<Control> control;
+			if (it != this->vehicleListControls.end() && it->second.first == info)
+			{
+				// Control unchanged, don't regenerate
+				control = it->second.second;
+			}
+			else
+			{
+				control = createVehicleInfoControl(info);
+			}
+			newVehicleListControls[vehicle] = std::make_pair(info, control);
+			ownedVehicleList->AddItem(control);
 		}
-		// FIXME: Add selection
-		sp<Image> frame;
-		if (vehicle == selected)
-		{
-			frame = this->icons[CityIcon::SelectedFrame];
-		}
-		else
-		{
-			frame = this->icons[CityIcon::UnselectedFrame];
-		}
-		auto baseControl = std::make_shared<GraphicButton>(frame, frame);
-		baseControl->Size = frame->size;
-		// FIXME: There's an extra 1 pixel here that's annoying
-		baseControl->Size.x -= 1;
-		baseControl->Name = "OWNED_VEHICLE_FRAME_" + vehicle->name;
-		auto vehicleIcon = baseControl->createChild<Graphic>(vehicle->type.icon);
-		vehicleIcon->AutoSize = true;
-		vehicleIcon->Location = {1, 1};
-		vehicleIcon->Name = "OWNED_VEHICLE_ICON_" + vehicle->name;
-		ownedVehicleList->AddItem(baseControl);
-
-		int currentHealth;
-		int maxHealth;
-		sp<Image> img;
-
-		if (vehicle->getShield() != 0)
-		{
-			img = this->shieldImage;
-			currentHealth = vehicle->getShield();
-			maxHealth = vehicle->getMaxShield();
-		}
-		else
-		{
-			img = this->healthImage;
-			currentHealth = vehicle->getHealth();
-			maxHealth = vehicle->getMaxHealth();
-		}
-
-		auto healthGraphic = baseControl->createChild<Graphic>(img);
-
-		// FIXME: Put these somewhere slightly less magic?
-		Vec2<int> healthBarOffset = {27, 2};
-		Vec2<int> healthBarSize = {3, 20};
-
-		float healthProportion = (float)currentHealth / (float)maxHealth;
-
-		// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
-		// top-left, so fix that up a bit
-		int healthBarHeight = (float)healthBarSize.y * healthProportion;
-		healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
-		healthBarSize.y = healthBarHeight;
-		healthGraphic->Location = healthBarOffset;
-		healthGraphic->Size = healthBarSize;
-		healthGraphic->ImagePosition = FillMethod::Stretch;
-
-		// FIXME: Currently we might get events from 'any' of the controls here, maybe this could be
-		// simplified by having a top-level 'full-size' transparent button or something equally
-		// evil? (But hopefully less evil than this?)
-		this->playerVehicleListControls[baseControl] = vehicle;
-		this->playerVehicleListControls[vehicleIcon] = vehicle;
-		this->playerVehicleListControls[healthGraphic] = vehicle;
 	}
+
+	// Clear the old list and reset to the new one (May be empty is not on a vehicle-displaying tab
+	this->vehicleListControls.clear();
+	this->vehicleListControls = std::move(newVehicleListControls);
 
 	activeTab->Update();
 	baseForm->Update();
@@ -300,16 +289,12 @@ void CityView::EventOccurred(Event *e)
 	{
 		if (e->Forms().EventFlag == FormEventType::MouseDown)
 		{
-			auto it = this->playerVehicleListControls.find(e->Forms().RaisedBy);
-
-			if (it != this->playerVehicleListControls.end())
+			for (auto &vehicleListEntry : this->vehicleListControls)
 			{
-				auto vehicle = it->second.lock();
-				if (vehicle)
+				if (vehicleListEntry.second.second == e->Forms().RaisedBy)
 				{
-					this->selectedVehicle = vehicle;
+					this->selectedVehicle = vehicleListEntry.first;
 				}
-				return;
 			}
 		}
 		else if (e->Forms().EventFlag == FormEventType::ButtonClick)
@@ -526,4 +511,90 @@ void CityView::EventOccurred(Event *e)
 		TileView::EventOccurred(e);
 	}
 }
+
+VehicleTileInfo CityView::createVehicleInfo(sp<Vehicle> v)
+{
+	VehicleTileInfo t;
+	t.vehicle = v;
+	t.selected = (v == this->selectedVehicle.lock());
+
+	float maxHealth;
+	float currentHealth;
+	if (v->getShield() != 0)
+	{
+		maxHealth = v->getMaxShield();
+		currentHealth = v->getShield();
+		t.shield = true;
+	}
+	else
+	{
+		maxHealth = v->getMaxHealth();
+		currentHealth = v->getHealth();
+		t.shield = false;
+	}
+
+	t.healthProportion = currentHealth / maxHealth;
+	// Clamp passengers to 13 as anything beyond that gets the same icon
+	t.containedAgents = std::max(13, v->getPassengers());
+	// FIXME Fade out vehicles that are on the way to/back from the alien dimension
+	t.faded = false;
+
+	auto b = v->building.lock();
+	if (b)
+	{
+		// If (this building is the 'owning' base of the vehicle)
+		//   t.state = InBase
+		// else
+		t.state = CityUnitState::InBuilding;
+	}
+	else
+	{
+		t.state = CityUnitState::InMotion;
+	}
+	return t;
+}
+
+sp<Control> CityView::createVehicleInfoControl(const VehicleTileInfo &info)
+{
+	LogInfo("Creating city info control for vehicle \"%s\"", info.vehicle->name.c_str());
+
+	auto frame = info.selected ? this->icons[CityIcon::SelectedFrame]
+	                           : this->icons[CityIcon::UnselectedFrame];
+	auto baseControl = std::make_shared<GraphicButton>(frame, frame);
+	baseControl->Size = frame->size;
+	// FIXME: There's an extra 1 pixel here that's annoying
+	baseControl->Size.x -= 1;
+	baseControl->Name = "OWNED_VEHICLE_FRAME_" + info.vehicle->name;
+
+	auto vehicleIcon = baseControl->createChild<Graphic>(info.vehicle->type.icon);
+	vehicleIcon->AutoSize = true;
+	vehicleIcon->Location = {1, 1};
+	vehicleIcon->Name = "OWNED_VEHICLE_ICON_" + info.vehicle->name;
+
+	// FIXME: Put these somewhere slightly less magic?
+	Vec2<int> healthBarOffset = {27, 2};
+	Vec2<int> healthBarSize = {3, 20};
+
+	auto healthImg = info.shield ? this->shieldImage : this->healthImage;
+
+	auto healthGraphic = baseControl->createChild<Graphic>(healthImg);
+	// This is a bit annoying as the health bar starts at the bottom, but the coord origin is
+	// top-left, so fix that up a bit
+	int healthBarHeight = (float)healthBarSize.y * info.healthProportion;
+	healthBarOffset.y = healthBarOffset.y + (healthBarSize.y - healthBarHeight);
+	healthBarSize.y = healthBarHeight;
+	healthGraphic->Location = healthBarOffset;
+	healthGraphic->Size = healthBarSize;
+	healthGraphic->ImagePosition = FillMethod::Stretch;
+
+	return baseControl;
+}
+
+bool VehicleTileInfo::operator==(const VehicleTileInfo &other) const
+{
+	return (this->vehicle == other.vehicle && this->selected == other.selected &&
+	        this->healthProportion == other.healthProportion && this->shield == other.shield &&
+	        this->containedAgents == other.containedAgents && this->state == other.state);
+}
+
 }; // namespace OpenApoc
