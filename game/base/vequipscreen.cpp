@@ -303,7 +303,7 @@ void VEquipScreen::Render()
 
 		// All equipment has a weight
 		statsLabels[statsCount]->SetText(tr("Weight"));
-		statsValues[statsCount]->SetText(UString::format("%d", (int)highlightedEquipment->weight));
+		statsValues[statsCount]->SetText(UString::format("%d", highlightedEquipment->weight));
 		statsCount++;
 
 		// Draw equipment stats
@@ -313,23 +313,23 @@ void VEquipScreen::Render()
 			{
 				auto &engineType = static_cast<const VEngineType &>(*highlightedEquipment);
 				statsLabels[statsCount]->SetText(tr("Top Speed"));
-				statsValues[statsCount]->SetText(UString::format("%d", (int)engineType.top_speed));
+				statsValues[statsCount]->SetText(UString::format("%d", engineType.top_speed));
 				statsCount++;
 				statsLabels[statsCount]->SetText(tr("Power"));
-				statsValues[statsCount]->SetText(UString::format("%d", (int)engineType.power));
+				statsValues[statsCount]->SetText(UString::format("%d", engineType.power));
 				break;
 			}
 			case VEquipmentType::Type::Weapon:
 			{
 				auto &weaponType = static_cast<const VWeaponType &>(*highlightedEquipment);
 				statsLabels[statsCount]->SetText(tr("Damage"));
-				statsValues[statsCount]->SetText(UString::format("%d", (int)weaponType.damage));
+				statsValues[statsCount]->SetText(UString::format("%d", weaponType.damage));
 				statsCount++;
 				statsLabels[statsCount]->SetText(tr("Range"));
-				statsValues[statsCount]->SetText(UString::format("%d", (int)weaponType.range));
+				statsValues[statsCount]->SetText(UString::format("%d", weaponType.range));
 				statsCount++;
 				statsLabels[statsCount]->SetText(tr("Accuracy"));
-				statsValues[statsCount]->SetText(UString::format("%d", (int)weaponType.accuracy));
+				statsValues[statsCount]->SetText(UString::format("%d", weaponType.accuracy));
 				statsCount++;
 
 				// Only show rounds if non-zero (IE not infinite ammo)
@@ -337,7 +337,7 @@ void VEquipScreen::Render()
 				{
 					statsLabels[statsCount]->SetText(tr("Rounds"));
 					statsValues[statsCount]->SetText(
-					    UString::format("%d", (int)highlightedEquipment->max_ammo));
+					    UString::format("%d", highlightedEquipment->max_ammo));
 					statsCount++;
 				}
 				break;
@@ -350,42 +350,42 @@ void VEquipScreen::Render()
 				{
 					statsLabels[statsCount]->SetText(tr("Accuracy"));
 					statsValues[statsCount]->SetText(
-					    UString::format("%d", (int)generalType.accuracy_modifier));
+					    UString::format("%d", generalType.accuracy_modifier));
 					statsCount++;
 				}
 				if (generalType.cargo_space)
 				{
 					statsLabels[statsCount]->SetText(tr("Cargo"));
 					statsValues[statsCount]->SetText(
-					    UString::format("%d", (int)generalType.cargo_space));
+					    UString::format("%d", generalType.cargo_space));
 					statsCount++;
 				}
 				if (generalType.passengers)
 				{
 					statsLabels[statsCount]->SetText(tr("Passengers"));
 					statsValues[statsCount]->SetText(
-					    UString::format("%d", (int)generalType.passengers));
+					    UString::format("%d", generalType.passengers));
 					statsCount++;
 				}
 				if (generalType.alien_space)
 				{
 					statsLabels[statsCount]->SetText(tr("Aliens Held"));
 					statsValues[statsCount]->SetText(
-					    UString::format("%d", (int)generalType.alien_space));
+					    UString::format("%d", generalType.alien_space));
 					statsCount++;
 				}
 				if (generalType.missile_jamming)
 				{
 					statsLabels[statsCount]->SetText(tr("Jamming"));
 					statsValues[statsCount]->SetText(
-					    UString::format("%d", (int)generalType.missile_jamming));
+					    UString::format("%d", generalType.missile_jamming));
 					statsCount++;
 				}
 				if (generalType.shielding)
 				{
 					statsLabels[statsCount]->SetText(tr("Shielding"));
 					statsValues[statsCount]->SetText(
-					    UString::format("%d", (int)generalType.shielding));
+					    UString::format("%d", generalType.shielding));
 					statsCount++;
 				}
 				if (generalType.cloaking)

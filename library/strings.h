@@ -5,6 +5,8 @@
 #include <iterator>
 #include <limits>
 #include <string>
+#include <boost/format.hpp>
+#include <boost/locale/format.hpp>
 
 namespace OpenApoc
 {
@@ -15,6 +17,28 @@ class UString
 {
   private:
 	std::string u8Str;
+
+	static boost::format &_format(boost::format &f)
+	{
+		return f;
+	}
+
+	template <typename T, typename... Args>
+	static boost::format &_format(boost::format &f, T const &arg, Args &&...args)
+	{
+		return _format(f % arg, std::forward<Args>(args)...);
+	}
+
+	static boost::locale::format &_lformat(boost::locale::format &f)
+	{
+		return f;
+	}
+
+	template <typename T, typename... Args>
+	static boost::locale::format &_lformat(boost::locale::format &f, T const &arg, Args &&...args)
+	{
+		return _lformat(f % arg, std::forward<Args>(args)...);
+	}
 
   public:
 	// ASSUMPTIONS:
@@ -36,7 +60,12 @@ class UString
 	UString(const UString &other);
 	UString &operator=(const UString &other);
 
-	static UString format(const UString format, ...);
+	template <typename... Args>
+	static UString format(const UString &fmt, Args &&...args)
+	{
+		boost::format f(fmt.str());
+		return _format(f, std::forward<Args>(args)...).str();
+	}
 
 	std::string str() const;
 	std::wstring wstr() const;
@@ -107,6 +136,13 @@ class Strings
 };
 
 UString tr(const UString &str, const UString domain = "ufo_string");
+
+template <typename... Args>
+static UString tr(const UString &fmt, const UString domain = "ufo_string", Args &&...args)
+{
+	boost::locale::format f(boost::locale::translate(fmt.str()).str(domain.str()));
+	return _lformat(f, std::forward<Args>(args)...).str();
+}
 
 #ifdef DUMP_TRANSLATION_STRINGS
 void dumpStrings();

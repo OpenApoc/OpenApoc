@@ -83,27 +83,6 @@ UString::UString(UniChar uc) : u8Str()
 	u8Str = boost::locale::conv::utf_to_utf<char>(&uc, &uc + 1);
 }
 
-UString UString::format(const UString fmt, ...)
-{
-	// FIXME: This will break on systems where the c_str() and vsnprintf const char* formats are
-	// different
-	const char *u8Fmt = fmt.c_str();
-	va_list arglist;
-	va_start(arglist, fmt);
-
-	// vsnprintf returns the number it would have written /excluding/ the '\0'
-	int size = vsnprintf(nullptr, 0, u8Fmt, arglist) + 1;
-	va_end(arglist);
-
-	up<char[]> str(new char[size + 1]);
-
-	va_start(arglist, fmt);
-	vsnprintf(str.get(), size, u8Fmt, arglist);
-	va_end(arglist);
-
-	return UString(str.get());
-}
-
 std::string UString::str() const { return this->u8Str; };
 
 const char *UString::c_str() const { return this->u8Str.c_str(); }
