@@ -363,8 +363,7 @@ void VEquipScreen::Render()
 				if (generalType.passengers)
 				{
 					statsLabels[statsCount]->SetText(tr("Passengers"));
-					statsValues[statsCount]->SetText(
-					    UString::format("%d", generalType.passengers));
+					statsValues[statsCount]->SetText(UString::format("%d", generalType.passengers));
 					statsCount++;
 				}
 				if (generalType.alien_space)
@@ -384,8 +383,7 @@ void VEquipScreen::Render()
 				if (generalType.shielding)
 				{
 					statsLabels[statsCount]->SetText(tr("Shielding"));
-					statsValues[statsCount]->SetText(
-					    UString::format("%d", generalType.shielding));
+					statsValues[statsCount]->SetText(UString::format("%d", generalType.shielding));
 					statsCount++;
 				}
 				if (generalType.cloaking)

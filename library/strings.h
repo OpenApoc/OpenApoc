@@ -18,24 +18,18 @@ class UString
   private:
 	std::string u8Str;
 
-	static boost::format &_format(boost::format &f)
-	{
-		return f;
-	}
+	static boost::format &_format(boost::format &f) { return f; }
 
 	template <typename T, typename... Args>
-	static boost::format &_format(boost::format &f, T const &arg, Args &&...args)
+	static boost::format &_format(boost::format &f, T const &arg, Args &&... args)
 	{
 		return _format(f % arg, std::forward<Args>(args)...);
 	}
 
-	static boost::locale::format &_lformat(boost::locale::format &f)
-	{
-		return f;
-	}
+	static boost::locale::format &_lformat(boost::locale::format &f) { return f; }
 
 	template <typename T, typename... Args>
-	static boost::locale::format &_lformat(boost::locale::format &f, T const &arg, Args &&...args)
+	static boost::locale::format &_lformat(boost::locale::format &f, T const &arg, Args &&... args)
 	{
 		return _lformat(f % arg, std::forward<Args>(args)...);
 	}
@@ -60,8 +54,7 @@ class UString
 	UString(const UString &other);
 	UString &operator=(const UString &other);
 
-	template <typename... Args>
-	static UString format(const UString &fmt, Args &&...args)
+	template <typename... Args> static UString format(const UString &fmt, Args &&... args)
 	{
 		boost::format f(fmt.str());
 		return _format(f, std::forward<Args>(args)...).str();
@@ -138,7 +131,7 @@ class Strings
 UString tr(const UString &str, const UString domain = "ufo_string");
 
 template <typename... Args>
-static UString tr(const UString &fmt, const UString domain = "ufo_string", Args &&...args)
+static UString tr(const UString &fmt, const UString domain = "ufo_string", Args &&... args)
 {
 	boost::locale::format f(boost::locale::translate(fmt.str()).str(domain.str()));
 	return _lformat(f, std::forward<Args>(args)...).str();
