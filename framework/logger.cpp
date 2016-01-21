@@ -168,6 +168,7 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 #ifdef UNIT_TEST
 		outFile = stderr;
 #else
+		#ifndef ANDROID
 		outFile = fopen(LOG_PATH LOGFILE, "w");
 		if (!outFile)
 		{
@@ -176,6 +177,7 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 			LOGE("Failed to open logfile \"%s\"\n", LOGFILE);
 			return;
 		}
+		#endif
 #endif
 	}
 
@@ -194,12 +196,14 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 
 	va_list arglist;
 	va_start(arglist, format);
-	fprintf(outFile, "%s %llu %s: ", level_prefix, clockns, prefix.c_str());
-	vfprintf(outFile, format.c_str(), arglist);
 #ifdef ANDROID
 	LOGD("%s %llu %s: ", level_prefix, clockns, prefix.c_str());
 	LOGDV(format.c_str(), arglist);
-#endif
+	va_end(arglist);
+#else
+	fprintf(outFile, "%s %llu %s: ", level_prefix, clockns, prefix.c_str());
+	vfprintf(outFile, format.c_str(), arglist);
+
 	// On error print a backtrace to the log file
 	if (level == LogLevel::Error)
 		print_backtrace(outFile);
@@ -217,7 +221,7 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 		fprintf(stderr, "\n");
 		va_end(arglist);
 	}
-
+#endif
 #if defined(ERROR_DIALOG)
 	if (level == LogLevel::Error)
 	{
