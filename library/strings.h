@@ -26,14 +26,6 @@ class UString
 		return _format(f % arg, std::forward<Args>(args)...);
 	}
 
-	static boost::locale::format &_lformat(boost::locale::format &f) { return f; }
-
-	template <typename T, typename... Args>
-	static boost::locale::format &_lformat(boost::locale::format &f, T const &arg, Args &&... args)
-	{
-		return _lformat(f % arg, std::forward<Args>(args)...);
-	}
-
   public:
 	// ASSUMPTIONS:
 	// All std::string/char are utf8
@@ -110,6 +102,15 @@ class UString
 	const_iterator end() const;
 
 	static UniChar u8Char(char c);
+
+	//_lformat shouldn't be used directly, instead use OpenApoc::tr()
+	static boost::locale::format &_lformat(boost::locale::format &f) { return f; }
+
+	template <typename T, typename... Args>
+	static boost::locale::format &_lformat(boost::locale::format &f, T const &arg, Args &&... args)
+	{
+		return _lformat(f % arg, std::forward<Args>(args)...);
+	}
 };
 
 UString operator+(const UString &lhs, const UString &rhs);
@@ -130,11 +131,17 @@ class Strings
 
 UString tr(const UString &str, const UString domain = "ufo_string");
 
+template <typename... Args> static UString tr(const UString &fmt, Args &&... args)
+{
+	boost::locale::format f(boost::locale::translate(fmt.str()).str("ufo_string"));
+	return UString::_lformat(f, std::forward<Args>(args)...).str();
+}
+
 template <typename... Args>
-static UString tr(const UString &fmt, const UString domain = "ufo_string", Args &&... args)
+static UString tr(const UString &fmt, const UString domain, Args &&... args)
 {
 	boost::locale::format f(boost::locale::translate(fmt.str()).str(domain.str()));
-	return _lformat(f, std::forward<Args>(args)...).str();
+	return UString::_lformat(f, std::forward<Args>(args)...).str();
 }
 
 #ifdef DUMP_TRANSLATION_STRINGS
