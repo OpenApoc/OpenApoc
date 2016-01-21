@@ -67,6 +67,8 @@ static std::map<UString, UString> defaultConfig = {
     {"Audio.SampleGain", "20"},
     {"Audio.MusicGain", "20"},
     {"Framework.ThreadPoolSize", "0"},
+    {"Visual.ScaleX", "100"},
+    {"Visual.ScaleY", "100"},
 };
 
 std::map<UString, std::unique_ptr<OpenApoc::RendererFactory>> *registeredRenderers = nullptr;
@@ -160,6 +162,11 @@ class FrameworkPrivate
 
 	StageStack ProgramStages;
 	sp<Surface> defaultSurface;
+	// The display size may be scaled up to windowSize
+	Vec2<int> displaySize;
+	Vec2<int> windowSize;
+
+	sp<Surface> scaleSurface;
 };
 
 Framework::Framework(const UString programName, const std::vector<UString> cmdline)
@@ -368,10 +375,8 @@ void Framework::Run()
 				p->ProgramStages.Clear();
 				break;
 		}
-		{
-			TraceObj objBind{"RendererSurfaceBinding"};
-			RendererSurfaceBinding b(*this->renderer, p->defaultSurface);
-		}
+		auto surface = p->scaleSurface ? p->scaleSurface : p->defaultSurface;
+		RendererSurfaceBinding b(*this->renderer, surface);
 		{
 			TraceObj objClear{"clear"};
 			this->renderer->clear();
@@ -380,6 +385,13 @@ void Framework::Run()
 		{
 			TraceObj updateObj("Render");
 			p->ProgramStages.Current()->Render();
+			if (p->scaleSurface)
+			{
+				RendererSurfaceBinding scaleBind(*this->renderer, p->defaultSurface);
+				TraceObj objClear{"clear scale"};
+				this->renderer->clear();
+				this->renderer->drawScaled(p->scaleSurface, {0, 0}, p->windowSize);
+			}
 			{
 				TraceObj flipObj("Flip");
 #ifndef OPENAPOC_GLES
@@ -754,6 +766,35 @@ void Framework::Display_Initialise()
 		abort();
 	}
 	this->p->defaultSurface = this->renderer->getDefaultSurface();
+
+	int width, height;
+	SDL_GetWindowSize(p->window, &width, &height);
+	p->windowSize = {width, height};
+
+	// FIXME: Scale is currently stored as an integer in 1/100 units (ie 100 is 1.0 == same size)
+	int scaleX = Settings->getInt("Visual.ScaleX");
+	int scaleY = Settings->getInt("Visual.ScaleY");
+
+	if (scaleX != 100 || scaleY != 100)
+	{
+		float scaleXFloat = (float)scaleX / 100.0f;
+		float scaleYFloat = (float)scaleY / 100.0f;
+		p->displaySize.x = (int)((float)p->windowSize.x * scaleXFloat);
+		p->displaySize.y = (int)((float)p->windowSize.y * scaleYFloat);
+		if (p->displaySize.x < 640 || p->displaySize.y < 480)
+		{
+			LogError(
+			    "Requested scaled size of {%d,%d} is lower than {640,480} and probably won't work",
+			    p->displaySize.x, p->displaySize.y);
+		}
+		LogInfo("Scaling from {%d,%d} to {%d,%d}", p->displaySize.x, p->displaySize.y,
+		        p->windowSize.x, p->windowSize.y);
+		p->scaleSurface = std::make_shared<Surface>(p->displaySize);
+	}
+	else
+	{
+		p->displaySize = p->windowSize;
+	}
 }
 
 void Framework::Display_Shutdown()
@@ -767,24 +808,11 @@ void Framework::Display_Shutdown()
 	SDL_DestroyWindow(p->window);
 }
 
-int Framework::Display_GetWidth()
-{
-	int width;
-	SDL_GetWindowSize(p->window, &width, 0);
-	return width;
-}
+int Framework::Display_GetWidth() { return p->displaySize.x; }
 
-int Framework::Display_GetHeight()
-{
-	int height;
-	SDL_GetWindowSize(p->window, 0, &height);
-	return height;
-}
+int Framework::Display_GetHeight() { return p->displaySize.y; }
 
-Vec2<int> Framework::Display_GetSize()
-{
-	return Vec2<int>(this->Display_GetWidth(), this->Display_GetHeight());
-}
+Vec2<int> Framework::Display_GetSize() { return p->displaySize; }
 
 void Framework::Display_SetTitle(UString NewTitle)
 {
