@@ -21,6 +21,7 @@ class Building;
 class GameState;
 class VEquipment;
 class VEquipmentType;
+class Base;
 
 class VehicleMover
 {
@@ -53,6 +54,9 @@ class Vehicle : public std::enable_shared_from_this<Vehicle>
 
 	/* The building we are current landed in (May be nullptr if in the air) */
 	std::weak_ptr<Building> building;
+
+	/* Player owned vehicles always have a 'home base' */
+	std::weak_ptr<Base> homeBase;
 
 	/* 'launch' the vehicle into the city */
 	void launch(TileMap &map, Vec3<float> initialPosition);

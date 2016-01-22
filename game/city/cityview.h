@@ -74,6 +74,8 @@ class CityView : public TileView
 	sp<Image> healthImage;
 	sp<Image> shieldImage;
 
+	bool followVehicle;
+
 	VehicleTileInfo createVehicleInfo(sp<Vehicle> v);
 	sp<Control> createVehicleInfoControl(const VehicleTileInfo &info);
 

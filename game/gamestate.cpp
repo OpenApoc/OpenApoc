@@ -122,6 +122,7 @@ GameState::GameState(const UString &rulesFileName)
 			continue;
 		auto owner = this->getPlayer();
 		auto testVehicle = std::make_shared<Vehicle>(vType, owner);
+		testVehicle->homeBase = base;
 		testVehicle->equipDefaultEquipment(getRules());
 		this->city->vehicles.push_back(testVehicle);
 		owner->vehicles.push_back(testVehicle);

@@ -69,7 +69,7 @@ CityView::CityView(sp<GameState> state)
     : TileView(state->city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
                Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Isometric),
       baseForm(fw().gamecore->GetForm("FORM_CITY_UI")), updateSpeed(UpdateSpeed::Speed1),
-      state(state)
+      state(state), followVehicle(false)
 {
 	baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED1")->SetChecked(true);
 	for (auto &formName : TAB_FORM_NAMES)
@@ -277,6 +277,21 @@ void CityView::Update(StageCmd *const cmd)
 
 	activeTab->Update();
 	baseForm->Update();
+
+	// If we have 'follow vehicle' enabled we clobber any other movement that may have occurred in
+	// this frame
+	if (this->followVehicle)
+	{
+		auto v = this->selectedVehicle.lock();
+		if (v)
+		{
+			// The selected vehicle may not have a tile object if it's not on the map
+			if (v->tileObject)
+			{
+				this->setScreenCenterTile(v->tileObject->getPosition());
+			}
+		}
+	}
 }
 
 void CityView::EventOccurred(Event *e)
@@ -391,7 +406,9 @@ void CityView::EventOccurred(Event *e)
 			auto &cname = e->Forms().RaisedBy->Name;
 			if (cname == "BUTTON_FOLLOW_VEHICLE")
 			{
-				LogWarning("Follow vehicle");
+				this->followVehicle =
+				    std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy)->IsChecked();
+				LogInfo("Follow vehicle %s", this->followVehicle ? "ON" : "OFF");
 			}
 			else if (cname == "BUTTON_TOGGLE_STRATMAP")
 			{
@@ -542,7 +559,7 @@ VehicleTileInfo CityView::createVehicleInfo(sp<Vehicle> v)
 	auto b = v->building.lock();
 	if (b)
 	{
-		if (b->base) // && b->base == vehicle->homeBase)
+		if (b->base == v->homeBase.lock())
 		{
 			t.state = CityUnitState::InBase;
 		}

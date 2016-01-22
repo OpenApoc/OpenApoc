@@ -39,7 +39,7 @@ class TileView : public Stage
 
   public:
 	int maxZDraw;
-	Vec2<float> centerPos;
+	Vec3<float> centerPos;
 	Vec2<float> isoScrollSpeed;
 	Vec2<float> stratScrollSpeed;
 
@@ -53,6 +53,7 @@ class TileView : public Stage
 
 	Vec2<int> getScreenOffset() const;
 	void setScreenCenterTile(Vec2<float> center);
+	void setScreenCenterTile(Vec3<float> center);
 
 	template <typename T> Vec2<T> tileToScreenCoords(Vec3<T> c, TileViewMode v) const
 	{
