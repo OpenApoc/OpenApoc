@@ -216,8 +216,9 @@ class SDLRawBackend : public SoundBackend
 		wantFormat.callback = mixingCallback;
 		wantFormat.userdata = this;
 		devID = SDL_OpenAudioDevice(
-		    deviceName,
-		    0, // capturing is not supported
+		    nullptr, // "NULL" here is a 'reasonable default', which uses the platform default when
+		             // available
+		    0,       // capturing is not supported
 		    &wantFormat, &outputFormat,
 		    SDL_AUDIO_ALLOW_ANY_CHANGE); // hopefully we'll get a sane output format
 		mixVolumes.musicVolume = 1.0f;
