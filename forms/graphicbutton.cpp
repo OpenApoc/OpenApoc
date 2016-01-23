@@ -30,10 +30,7 @@ void GraphicButton::EventOccured(Event *e)
 	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
 	    e->Forms().EventFlag == FormEventType::MouseClick)
 	{
-		auto ce = new FormsEvent();
-		ce->Forms() = e->Forms();
-		ce->Forms().EventFlag = FormEventType::ButtonClick;
-		fw().PushEvent(ce);
+		this->pushFormEvent(FormEventType::ButtonClick, e);
 
 		if (ScrollBarPrev != nullptr)
 		{
