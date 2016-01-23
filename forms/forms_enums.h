@@ -25,6 +25,8 @@ enum class FormEventType
 
 	ButtonClick,
 	CheckBoxChange,
+	CheckBoxSelected,
+	CheckBoxDeSelected,
 	ScrollBarChange,
 	TextChanged,
 	TextEditFinish,

@@ -177,6 +177,176 @@ CityView::CityView(sp<GameState> state)
 	                  {
 		                  this->activeTab = this->uiTabs[7];
 		              });
+	this->baseForm->FindControl("BUTTON_FOLLOW_VEHICLE")
+	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) -> void
+	                  {
+		                  this->followVehicle =
+		                      std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy)->IsChecked();
+		              });
+	this->baseForm->FindControl("BUTTON_TOGGLE_STRATMAP")
+	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) -> void
+	                  {
+		                  bool strategy =
+		                      std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy)->IsChecked();
+		                  this->setViewMode(strategy ? TileViewMode::Strategy
+		                                             : TileViewMode::Isometric);
+		              });
+	this->baseForm->FindControl("BUTTON_SPEED0")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) -> void
+	                  {
+		                  this->updateSpeed = UpdateSpeed::Pause;
+		              });
+	this->baseForm->FindControl("BUTTON_SPEED1")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) -> void
+	                  {
+		                  this->updateSpeed = UpdateSpeed::Speed1;
+		              });
+	this->baseForm->FindControl("BUTTON_SPEED2")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) -> void
+	                  {
+		                  this->updateSpeed = UpdateSpeed::Speed2;
+		              });
+	this->baseForm->FindControl("BUTTON_SPEED3")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) -> void
+	                  {
+		                  this->updateSpeed = UpdateSpeed::Speed3;
+		              });
+	this->baseForm->FindControl("BUTTON_SPEED4")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) -> void
+	                  {
+		                  this->updateSpeed = UpdateSpeed::Speed4;
+		              });
+	this->baseForm->FindControl("BUTTON_SPEED5")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) -> void
+	                  {
+		                  this->updateSpeed = UpdateSpeed::Speed5;
+		              });
+	this->baseForm->FindControl("BUTTON_SHOW_ALIEN_INFILTRATION")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
+	                  {
+		                  this->stageCmd.cmd = StageCmd::Command::PUSH;
+		                  this->stageCmd.nextStage = mksp<InfiltrationScreen>();
+		              });
+	this->baseForm->FindControl("BUTTON_SHOW_SCORE")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
+	                  {
+		                  this->stageCmd.cmd = StageCmd::Command::PUSH;
+		                  this->stageCmd.nextStage = mksp<ScoreScreen>();
+		              });
+	this->baseForm->FindControl("BUTTON_SHOW_UFOPAEDIA")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
+	                  {
+		                  this->stageCmd.cmd = StageCmd::Command::PUSH;
+		                  this->stageCmd.nextStage = mksp<Ufopaedia>();
+		              });
+	this->baseForm->FindControl("BUTTON_SHOW_OPTIONS")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
+	                  {
+		                  this->stageCmd.cmd = StageCmd::Command::PUSH;
+		                  this->stageCmd.nextStage = mksp<InGameOptions>(this->state);
+		              });
+	this->baseForm->FindControl("BUTTON_SHOW_LOG")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
+	                  {
+		                  LogWarning("Show log");
+		              });
+	this->baseForm->FindControl("BUTTON_ZOOM_EVENT")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
+	                  {
+		                  LogWarning("Zoom to event");
+		              });
+
+	auto baseManagementForm = this->uiTabs[0];
+	baseManagementForm->FindControl("BUTTON_SHOW_BASE")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
+	                  {
+		                  this->stageCmd.cmd = StageCmd::Command::PUSH;
+		                  this->stageCmd.nextStage = mksp<BaseScreen>(this->state);
+		              });
+	auto vehicleForm = this->uiTabs[1];
+	vehicleForm->FindControl("BUTTON_EQUIP_VEHICLE")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
+	                  {
+		                  this->stageCmd.cmd = StageCmd::Command::PUSH;
+		                  auto equipScreen = mksp<VEquipScreen>(this->state);
+		                  // FIXME: Restrict this to player owned vehicles?
+		                  auto selectedVehicle = this->selectedVehicle.lock();
+		                  if (selectedVehicle)
+		                  {
+			                  equipScreen->setSelectedVehicle(selectedVehicle);
+		                  }
+		                  this->stageCmd.nextStage = equipScreen;
+		              });
+	vehicleForm->FindControl("BUTTON_GOTO_BUILDING")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
+	                  {
+		                  auto v = this->selectedVehicle.lock();
+		                  if (v && v->owner == this->state->getPlayer())
+		                  {
+			                  LogInfo("Select building for vehicle \"%s\"", v->name.c_str());
+			                  this->selectionState = SelectionState::VehicleGotoBuilding;
+		                  }
+
+		              });
+	vehicleForm->FindControl("BUTTON_GOTO_LOCATION")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
+	                  {
+		                  auto v = this->selectedVehicle.lock();
+		                  if (v && v->owner == this->state->getPlayer())
+		                  {
+			                  LogInfo("Select building for vehicle \"%s\"", v->name.c_str());
+			                  this->selectionState = SelectionState::VehicleGotoLocation;
+		                  }
+
+		              });
+	vehicleForm->FindControl("BUTTON_GOTO_BASE")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
+	                  {
+		                  auto v = this->selectedVehicle.lock();
+		                  if (v && v->owner == this->state->getPlayer())
+		                  {
+			                  LogWarning("Goto base for vehicle \"%s\"", v->name.c_str());
+			                  auto base = v->homeBase.lock();
+			                  if (!base)
+			                  {
+				                  LogError("Vehicle \"%s\" has no home base", v->name.c_str());
+			                  }
+			                  auto bld = base->bld.lock();
+			                  if (!bld)
+			                  {
+				                  LogError("Base \"%s\" has no building", base->name.c_str());
+			                  }
+			                  LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name.c_str(),
+			                             bld->def.getName().c_str());
+			                  // FIXME: Don't clear missions if not replacing current mission
+			                  v->missions.clear();
+			                  v->missions.emplace_back(
+			                      VehicleMission::gotoBuilding(*v, this->state->city->map, bld));
+			                  v->missions.front()->start();
+		                  }
+		              });
+	vehicleForm->FindControl("BUTTON_VEHICLE_ATTACK")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
+	                  {
+		                  auto v = this->selectedVehicle.lock();
+		                  if (v && v->owner == this->state->getPlayer())
+		                  {
+			                  LogInfo("Select target for vehicle \"%s\"", v->name.c_str());
+			                  this->selectionState = SelectionState::VehicleGotoLocation;
+		                  }
+
+		              });
+	vehicleForm->FindControl("BUTTON_VEHICLE_ATTACK_BUILDING")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
+	                  {
+		                  auto v = this->selectedVehicle.lock();
+		                  if (v && v->owner == this->state->getPlayer())
+		                  {
+			                  LogInfo("Select target building for vehicle \"%s\"", v->name.c_str());
+			                  this->selectionState = SelectionState::VehicleGotoLocation;
+		                  }
+
+		              });
 }
 
 CityView::~CityView() {}
@@ -309,6 +479,11 @@ void CityView::Update(StageCmd *const cmd)
 			}
 			newVehicleListControls[vehicle] = std::make_pair(info, control);
 			ownedVehicleList->AddItem(control);
+
+			control->addCallback(FormEventType::MouseDown, [this, vehicle](Event *e) -> void
+			                     {
+				                     this->selectedVehicle = vehicle;
+				                 });
 		}
 	}
 
@@ -341,181 +516,12 @@ void CityView::EventOccurred(Event *e)
 	activeTab->EventOccured(e);
 	baseForm->EventOccured(e);
 
-	if (e->Type() == EVENT_FORM_INTERACTION)
+	if (activeTab->eventIsWithin(e) || baseForm->eventIsWithin(e))
 	{
-		if (e->Forms().EventFlag == FormEventType::MouseDown)
-		{
-			for (auto &vehicleListEntry : this->vehicleListControls)
-			{
-				if (vehicleListEntry.second.second == e->Forms().RaisedBy)
-				{
-					this->selectedVehicle = vehicleListEntry.first;
-				}
-			}
-		}
-		else if (e->Forms().EventFlag == FormEventType::ButtonClick)
-		{
-			auto &cname = e->Forms().RaisedBy->Name;
-
-			if (cname == "BUTTON_SHOW_ALIEN_INFILTRATION")
-			{
-				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage = mksp<InfiltrationScreen>();
-				return;
-			}
-			else if (cname == "BUTTON_SHOW_SCORE")
-			{
-				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage = mksp<ScoreScreen>();
-				return;
-			}
-			else if (cname == "BUTTON_SHOW_UFOPAEDIA")
-			{
-				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage = mksp<Ufopaedia>();
-				return;
-			}
-			else if (cname == "BUTTON_SHOW_OPTIONS")
-			{
-				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage = mksp<InGameOptions>(state);
-				return;
-			}
-			else if (cname == "BUTTON_SHOW_LOG")
-			{
-				LogWarning("Show log");
-			}
-			else if (cname == "BUTTON_ZOOM_EVENT")
-			{
-				LogWarning("Zoom to event");
-			}
-			else if (cname == "BUTTON_SHOW_BASE")
-			{
-				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage = mksp<BaseScreen>(state);
-				return;
-			}
-			else if (cname == "BUTTON_EQUIP_VEHICLE")
-			{
-				stageCmd.cmd = StageCmd::Command::PUSH;
-				auto equipScreen = mksp<VEquipScreen>(state);
-				// FIXME: Restrict this to player owned vehicles?
-				auto selectedVehicle = this->selectedVehicle.lock();
-				if (selectedVehicle)
-				{
-					equipScreen->setSelectedVehicle(selectedVehicle);
-				}
-				stageCmd.nextStage = equipScreen;
-
-				return;
-			}
-			else if (cname == "BUTTON_GOTO_BUILDING")
-			{
-				auto v = this->selectedVehicle.lock();
-				if (v && v->owner == state->getPlayer())
-				{
-					LogInfo("Select building for vehicle \"%s\"", v->name.c_str());
-					this->selectionState = SelectionState::VehicleGotoBuilding;
-				}
-			}
-			else if (cname == "BUTTON_GOTO_LOCATION")
-			{
-				auto v = this->selectedVehicle.lock();
-				if (v && v->owner == state->getPlayer())
-				{
-					LogInfo("Select location for vehicle \"%s\"", v->name.c_str());
-					this->selectionState = SelectionState::VehicleGotoLocation;
-				}
-			}
-			else if (cname == "BUTTON_GOTO_BASE")
-			{
-				auto v = this->selectedVehicle.lock();
-				if (v && v->owner == state->getPlayer())
-				{
-					LogWarning("Goto base for vehicle \"%s\"", v->name.c_str());
-					auto base = v->homeBase.lock();
-					if (!base)
-					{
-						LogError("Vehicle \"%s\" has no home base", v->name.c_str());
-					}
-					auto bld = base->bld.lock();
-					if (!bld)
-					{
-						LogError("Base \"%s\" has no building", base->name.c_str());
-					}
-					LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name.c_str(),
-					           bld->def.getName().c_str());
-					// FIXME: Don't clear missions if not replacing current mission
-					v->missions.clear();
-					v->missions.emplace_back(
-					    VehicleMission::gotoBuilding(*v, state->city->map, bld));
-					v->missions.front()->start();
-				}
-			}
-			else if (cname == "BUTTON_VEHICLE_ATTACK")
-			{
-				auto v = this->selectedVehicle.lock();
-				if (v && v->owner == state->getPlayer())
-				{
-					LogInfo("Select target vehicle for vehicle \"%s\"", v->name.c_str());
-					this->selectionState = SelectionState::VehicleAttackVehicle;
-				}
-			}
-			else if (cname == "BUTTON_VEHICLE_ATTACK_BUILDING")
-			{
-				auto v = this->selectedVehicle.lock();
-				if (v && v->owner == state->getPlayer())
-				{
-					LogInfo("Select target building building for vehicle \"%s\"", v->name.c_str());
-					this->selectionState = SelectionState::VehicleAttackBuilding;
-				}
-			}
-		}
-		else if (e->Forms().EventFlag == FormEventType::CheckBoxChange)
-		{
-			auto &cname = e->Forms().RaisedBy->Name;
-			if (cname == "BUTTON_FOLLOW_VEHICLE")
-			{
-				this->followVehicle =
-				    std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy)->IsChecked();
-				LogInfo("Follow vehicle %s", this->followVehicle ? "ON" : "OFF");
-			}
-			else if (cname == "BUTTON_TOGGLE_STRATMAP")
-			{
-				bool strategy =
-				    std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy)->IsChecked();
-				this->setViewMode(strategy ? TileViewMode::Strategy : TileViewMode::Isometric);
-			}
-			else
-			{
-				if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED0")->IsChecked())
-				{
-					this->updateSpeed = UpdateSpeed::Pause;
-				}
-				else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED1")->IsChecked())
-				{
-					this->updateSpeed = UpdateSpeed::Speed1;
-				}
-				else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED2")->IsChecked())
-				{
-					this->updateSpeed = UpdateSpeed::Speed2;
-				}
-				else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED3")->IsChecked())
-				{
-					this->updateSpeed = UpdateSpeed::Speed3;
-				}
-				else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED4")->IsChecked())
-				{
-					this->updateSpeed = UpdateSpeed::Speed4;
-				}
-				else if (baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED5")->IsChecked())
-				{
-					this->updateSpeed = UpdateSpeed::Speed5;
-				}
-			}
-		}
+		return;
 	}
-	else if (e->Type() == EVENT_KEY_DOWN && e->Keyboard().KeyCode == SDLK_ESCAPE)
+
+	if (e->Type() == EVENT_KEY_DOWN && e->Keyboard().KeyCode == SDLK_ESCAPE)
 	{
 		stageCmd.cmd = StageCmd::Command::POP;
 		return;
@@ -543,8 +549,7 @@ void CityView::EventOccurred(Event *e)
 		}
 	}
 	// Exclude mouse down events that are over the form
-	else if (e->Type() == EVENT_MOUSE_DOWN &&
-	         (!activeTab->eventIsWithin(e) && !baseForm->eventIsWithin(e)))
+	else if (e->Type() == EVENT_MOUSE_DOWN)
 	{
 		if (this->getViewMode() == TileViewMode::Strategy && e->Type() == EVENT_MOUSE_DOWN &&
 		    e->Mouse().Button == 2)

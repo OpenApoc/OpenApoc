@@ -66,8 +66,16 @@ void CheckBox::SetChecked(bool checked)
 {
 	if (Checked == checked)
 		return;
-	this->pushFormEvent(FormEventType::CheckBoxChange, nullptr);
 	Checked = checked;
+	this->pushFormEvent(FormEventType::CheckBoxChange, nullptr);
+	if (checked)
+	{
+		this->pushFormEvent(FormEventType::CheckBoxSelected, nullptr);
+	}
+	else
+	{
+		this->pushFormEvent(FormEventType::CheckBoxDeSelected, nullptr);
+	}
 }
 
 sp<Control> CheckBox::CopyTo(sp<Control> CopyParent)

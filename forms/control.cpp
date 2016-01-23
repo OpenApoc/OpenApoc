@@ -727,6 +727,8 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 		case FormEventType::ListBoxChangeSelected:
 		case FormEventType::ScrollBarChange:
 		case FormEventType::TextChanged:
+		case FormEventType::CheckBoxSelected:
+		case FormEventType::CheckBoxDeSelected:
 		{
 			event = new FormsEvent();
 			if (parentEvent)

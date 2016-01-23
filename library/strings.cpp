@@ -210,15 +210,9 @@ bool Strings::IsFloat(const UString &s)
 	return (endpos != u8str.c_str());
 }
 
-UString Strings::FromInteger(int i)
-{
-	return UString::format("%d", i);
-}
+UString Strings::FromInteger(int i) { return UString::format("%d", i); }
 
-UString Strings::FromFloat(float f)
-{
-	return UString::format("%f", f);
-}
+UString Strings::FromFloat(float f) { return UString::format("%f", f); }
 
 bool Strings::IsWhiteSpace(UniChar c)
 {
