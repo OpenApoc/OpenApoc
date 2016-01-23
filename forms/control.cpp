@@ -688,7 +688,7 @@ bool Control::eventIsWithin(const Event *e) const
 
 void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 {
-	this->triggerEventCallbacks(type);
+	FormsEvent *event = nullptr;
 	switch (type)
 	{
 		// Mouse events fall-through
@@ -699,26 +699,26 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 		case FormEventType::MouseMove:
 		case FormEventType::MouseClick:
 		{
-			auto event = new FormsEvent();
+			event = new FormsEvent();
 			event->Forms().RaisedBy = shared_from_this();
 			event->Forms().EventFlag = type;
 			event->Forms().MouseInfo = parentEvent->Mouse();
 			event->Forms().MouseInfo.X -= resolvedLocation.x;
 			event->Forms().MouseInfo.Y -= resolvedLocation.y;
 			fw().PushEvent(event);
-			return;
+			break;
 		}
 		// Keyboard events fall-through
 		case FormEventType::KeyDown:
 		case FormEventType::KeyUp:
 		case FormEventType::KeyPress:
 		{
-			auto event = new FormsEvent();
+			event = new FormsEvent();
 			event->Forms().RaisedBy = shared_from_this();
 			event->Forms().EventFlag = type;
 			event->Forms().KeyInfo = parentEvent->Keyboard();
 			fw().PushEvent(event);
-			return;
+			break;
 		}
 		// Forms events fall-through
 		case FormEventType::ButtonClick:
@@ -728,7 +728,7 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 		case FormEventType::ScrollBarChange:
 		case FormEventType::TextChanged:
 		{
-			auto event = new FormsEvent();
+			event = new FormsEvent();
 			if (parentEvent)
 			{
 				event->Forms() = parentEvent->Forms();
@@ -736,23 +736,24 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 			event->Forms().RaisedBy = shared_from_this();
 			event->Forms().EventFlag = type;
 			fw().PushEvent(event);
-			return;
+			break;
 		}
 
 		default:
 			LogError("Unexpected event type %d", (int)type);
 	}
+	this->triggerEventCallbacks(event);
 }
 
-void Control::triggerEventCallbacks(FormEventType type)
+void Control::triggerEventCallbacks(FormsEvent *e)
 {
-	for (auto &callback : this->callbacks[type])
+	for (auto &callback : this->callbacks[e->Forms().EventFlag])
 	{
-		callback(shared_from_this());
+		callback(e);
 	}
 }
 
-void Control::addCallback(FormEventType event, std::function<void(sp<Control> c)> callback)
+void Control::addCallback(FormEventType event, std::function<void(FormsEvent *e)> callback)
 {
 	this->callbacks[event].push_back(callback);
 }

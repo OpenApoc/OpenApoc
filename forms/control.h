@@ -21,6 +21,7 @@ class Palette;
 class RadioButton;
 class Control;
 class RadioButtonGroup;
+class FormsEvent;
 
 class Control : public std::enable_shared_from_this<Control>
 {
@@ -28,7 +29,7 @@ class Control : public std::enable_shared_from_this<Control>
 	sp<Surface> controlArea;
 	sp<void> data;
 
-	std::map<FormEventType, std::list<std::function<void(sp<Control> c)>>> callbacks;
+	std::map<FormEventType, std::list<std::function<void(FormsEvent *e)>>> callbacks;
 
   protected:
 	sp<Palette> palette;
@@ -54,7 +55,7 @@ class Control : public std::enable_shared_from_this<Control>
 
 	void pushFormEvent(FormEventType type, Event *parentEvent);
 
-	void triggerEventCallbacks(FormEventType type);
+	void triggerEventCallbacks(FormsEvent *e);
 
   public:
 	UString Name;
@@ -123,7 +124,7 @@ class Control : public std::enable_shared_from_this<Control>
 		return newControl;
 	}
 
-	void addCallback(FormEventType event, std::function<void(sp<Control> c)> callback);
+	void addCallback(FormEventType event, std::function<void(FormsEvent *e)> callback);
 };
 
 }; // namespace OpenApoc

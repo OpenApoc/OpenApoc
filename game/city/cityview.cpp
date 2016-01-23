@@ -138,42 +138,42 @@ CityView::CityView(sp<GameState> state)
 	this->shieldImage = img;
 
 	this->baseForm->FindControl("BUTTON_TAB_1")
-	    ->addCallback(FormEventType::ButtonClick, [this](sp<Control>) -> void
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
 	                  {
 		                  this->activeTab = this->uiTabs[0];
 		              });
 	this->baseForm->FindControl("BUTTON_TAB_2")
-	    ->addCallback(FormEventType::ButtonClick, [this](sp<Control>) -> void
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
 	                  {
 		                  this->activeTab = this->uiTabs[1];
 		              });
 	this->baseForm->FindControl("BUTTON_TAB_3")
-	    ->addCallback(FormEventType::ButtonClick, [this](sp<Control>) -> void
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
 	                  {
 		                  this->activeTab = this->uiTabs[2];
 		              });
 	this->baseForm->FindControl("BUTTON_TAB_4")
-	    ->addCallback(FormEventType::ButtonClick, [this](sp<Control>) -> void
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
 	                  {
 		                  this->activeTab = this->uiTabs[3];
 		              });
 	this->baseForm->FindControl("BUTTON_TAB_5")
-	    ->addCallback(FormEventType::ButtonClick, [this](sp<Control>) -> void
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
 	                  {
 		                  this->activeTab = this->uiTabs[4];
 		              });
 	this->baseForm->FindControl("BUTTON_TAB_6")
-	    ->addCallback(FormEventType::ButtonClick, [this](sp<Control>) -> void
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
 	                  {
 		                  this->activeTab = this->uiTabs[5];
 		              });
 	this->baseForm->FindControl("BUTTON_TAB_7")
-	    ->addCallback(FormEventType::ButtonClick, [this](sp<Control>) -> void
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
 	                  {
 		                  this->activeTab = this->uiTabs[6];
 		              });
 	this->baseForm->FindControl("BUTTON_TAB_8")
-	    ->addCallback(FormEventType::ButtonClick, [this](sp<Control>) -> void
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
 	                  {
 		                  this->activeTab = this->uiTabs[7];
 		              });
