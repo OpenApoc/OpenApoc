@@ -269,13 +269,26 @@ CityView::CityView(sp<GameState> state)
 	                  {
 		                  this->stageCmd.cmd = StageCmd::Command::PUSH;
 		                  auto equipScreen = mksp<VEquipScreen>(this->state);
-		                  // FIXME: Restrict this to player owned vehicles?
-		                  auto selectedVehicle = this->selectedVehicle.lock();
-		                  if (selectedVehicle)
+		                  auto v = this->selectedVehicle.lock();
+		                  if (v && v->owner == this->state->getPlayer())
 		                  {
-			                  equipScreen->setSelectedVehicle(selectedVehicle);
+			                  equipScreen->setSelectedVehicle(v);
 		                  }
 		                  this->stageCmd.nextStage = equipScreen;
+		              });
+	vehicleForm->FindControl("BUTTON_VEHICLE_BUILDING")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
+	                  {
+		                  auto v = this->selectedVehicle.lock();
+		                  if (v && v->owner == this->state->getPlayer())
+		                  {
+			                  auto b = v->building.lock();
+			                  if (b)
+			                  {
+				                  this->stageCmd.cmd = StageCmd::Command::PUSH;
+				                  this->stageCmd.nextStage = mksp<BuildingScreen>(b);
+			                  }
+		                  }
 		              });
 	vehicleForm->FindControl("BUTTON_GOTO_BUILDING")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
