@@ -36,7 +36,7 @@ City::City(GameState &state) : map(state.getRules().getCitySize(), layerMap)
 	for (auto &def : state.getRules().getBuildingDefs())
 	{
 		this->buildings.emplace_back(
-		    std::make_shared<Building>(def, state.getOrganisation(def.getOwnerName())));
+		    mksp<Building>(def, state.getOrganisation(def.getOwnerName())));
 	}
 	Trace::end("City::buildings");
 
@@ -75,15 +75,15 @@ City::City(GameState &state) : map(state.getRules().getCitySize(), layerMap)
 				}
 
 				auto &cityTileDef = state.getRules().getSceneryTileDef(tileID);
-				auto scenery = std::make_shared<Scenery>(cityTileDef, Vec3<int>{x, y, z}, bld);
+				auto scenery = mksp<Scenery>(cityTileDef, Vec3<int>{x, y, z}, bld);
 				map.addObjectToMap(scenery);
 				if (cityTileDef.getOverlaySprite())
 				{
 					// FIXME: Bit of a hack to make the overlay always be at the 'top' of the tile -
 					// as getPosition() returns the /center/ add half a tile
-					scenery->overlayDoodad = std::make_shared<StaticDoodad>(
-					    cityTileDef.getOverlaySprite(), scenery->getPosition(),
-					    cityTileDef.getImageOffset());
+					scenery->overlayDoodad =
+					    mksp<StaticDoodad>(cityTileDef.getOverlaySprite(), scenery->getPosition(),
+					                       cityTileDef.getImageOffset());
 					map.addObjectToMap(scenery->overlayDoodad);
 				}
 				this->scenery.insert(scenery);
@@ -182,7 +182,7 @@ City::City(GameState &state) : map(state.getRules().getCitySize(), layerMap)
 	{
 		if (!b->def.getBaseCorridors().empty())
 		{
-			b->base = std::make_shared<Base>(state, b);
+			b->base = mksp<Base>(state, b);
 			this->baseBuildings.emplace_back(b);
 		}
 	}
@@ -350,7 +350,7 @@ void City::update(GameState &state, unsigned int ticks)
 
 sp<Doodad> City::placeDoodad(const DoodadDef &def, Vec3<float> position)
 {
-	auto doodad = std::make_shared<AnimatedDoodad>(def, position);
+	auto doodad = mksp<AnimatedDoodad>(def, position);
 	map.addObjectToMap(doodad);
 	this->doodads.insert(doodad);
 	return doodad;

@@ -28,7 +28,7 @@ GameState::GameState(const UString &rulesFileName)
 		{
 			LogError("Multiple organisations with ID \"%s\"", org.ID.c_str());
 		}
-		this->organisations[org.ID] = std::make_shared<Organisation>(org);
+		this->organisations[org.ID] = mksp<Organisation>(org);
 		/* FIXME: Make 'player' organisation selectable? */
 		if (org.ID == "ORG_X-COM")
 		{
@@ -65,7 +65,7 @@ GameState::GameState(const UString &rulesFileName)
 			continue;
 		}
 
-		auto testVehicle = std::make_shared<Vehicle>(*vehicleTypeIt->second, owner);
+		auto testVehicle = mksp<Vehicle>(*vehicleTypeIt->second, owner);
 
 		testVehicle->equipDefaultEquipment(getRules());
 
@@ -121,7 +121,7 @@ GameState::GameState(const UString &rulesFileName)
 		if (!vType.equipment_screen)
 			continue;
 		auto owner = this->getPlayer();
-		auto testVehicle = std::make_shared<Vehicle>(vType, owner);
+		auto testVehicle = mksp<Vehicle>(vType, owner);
 		testVehicle->homeBase = base;
 		testVehicle->equipDefaultEquipment(getRules());
 		this->city->vehicles.push_back(testVehicle);

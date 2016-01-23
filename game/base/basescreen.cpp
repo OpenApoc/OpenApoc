@@ -83,7 +83,7 @@ void BaseScreen::Begin()
 		if (facility.fixed)
 			continue;
 
-		auto graphic = std::make_shared<Graphic>(fw().data->load_image(facility.sprite));
+		auto graphic = mksp<Graphic>(fw().data->load_image(facility.sprite));
 		graphic->AutoSize = true;
 		graphic->SetData(const_cast<FacilityDef *>(&facility));
 		facilities->AddItem(graphic);
@@ -128,7 +128,7 @@ void BaseScreen::EventOccurred(Event *e)
 			{
 				// FIXME: If you don't have any vehicles this button should do nothing
 				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage = std::make_shared<VEquipScreen>(state);
+				stageCmd.nextStage = mksp<VEquipScreen>(state);
 				return;
 			}
 		}

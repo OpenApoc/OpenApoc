@@ -412,7 +412,7 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 				attribvalue = node->Attribute("groupid");
 				if (radiogroups.find(attribvalue) == radiogroups.end())
 				{
-					radiogroups[attribvalue] = std::make_shared<RadioButtonGroup>(attribvalue);
+					radiogroups[attribvalue] = mksp<RadioButtonGroup>(attribvalue);
 				}
 				group = radiogroups[attribvalue];
 			}
@@ -639,7 +639,7 @@ sp<Control> Control::CopyTo(sp<Control> CopyParent)
 	}
 	else
 	{
-		copy = std::make_shared<Control>(takesFocus);
+		copy = mksp<Control>(takesFocus);
 	}
 	CopyControlData(copy);
 	return copy;

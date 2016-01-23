@@ -546,7 +546,7 @@ void Vehicle::addEquipment(Vec2<int> pos, const VEquipmentType &type)
 	{
 		case VEquipmentType::Type::Engine:
 		{
-			auto engine = std::make_shared<VEngine>(static_cast<const VEngineType &>(type));
+			auto engine = mksp<VEngine>(static_cast<const VEngineType &>(type));
 			this->equipment.emplace_back(engine);
 			engine->equippedPosition = slotOrigin;
 			LogInfo("Equipped \"%s\" with engine \"%s\"", this->name.c_str(), type.name.c_str());
@@ -555,7 +555,7 @@ void Vehicle::addEquipment(Vec2<int> pos, const VEquipmentType &type)
 		case VEquipmentType::Type::Weapon:
 		{
 			auto &wtype = static_cast<const VWeaponType &>(type);
-			auto weapon = std::make_shared<VWeapon>(wtype, shared_from_this(), wtype.max_ammo);
+			auto weapon = mksp<VWeapon>(wtype, shared_from_this(), wtype.max_ammo);
 			this->equipment.emplace_back(weapon);
 			weapon->equippedPosition = slotOrigin;
 			LogInfo("Equipped \"%s\" with weapon \"%s\"", this->name.c_str(), type.name.c_str());
@@ -564,7 +564,7 @@ void Vehicle::addEquipment(Vec2<int> pos, const VEquipmentType &type)
 		case VEquipmentType::Type::General:
 		{
 			auto &gtype = static_cast<const VGeneralEquipmentType &>(type);
-			auto equipment = std::make_shared<VGeneralEquipment>(gtype);
+			auto equipment = mksp<VGeneralEquipment>(gtype);
 			LogInfo("Equipped \"%s\" with general equipment \"%s\"", this->name.c_str(),
 			        type.name.c_str());
 			equipment->equippedPosition = slotOrigin;

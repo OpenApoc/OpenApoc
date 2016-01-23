@@ -46,7 +46,7 @@ void MainMenu::EventOccurred(Event *e)
 		if (e->Forms().RaisedBy->Name == "BUTTON_OPTIONS")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<OptionsMenu>();
+			stageCmd.nextStage = mksp<OptionsMenu>();
 			return;
 		}
 		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
@@ -57,13 +57,13 @@ void MainMenu::EventOccurred(Event *e)
 		if (e->Forms().RaisedBy->Name == "BUTTON_NEWGAME")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<DifficultyMenu>();
+			stageCmd.nextStage = mksp<DifficultyMenu>();
 			return;
 		}
 		if (e->Forms().RaisedBy->Name == "BUTTON_DEBUG")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<DebugMenu>();
+			stageCmd.nextStage = mksp<DebugMenu>();
 			return;
 		}
 	}

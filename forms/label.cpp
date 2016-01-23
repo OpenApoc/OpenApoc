@@ -93,7 +93,7 @@ sp<Control> Label::CopyTo(sp<Control> CopyParent)
 	}
 	else
 	{
-		copy = std::make_shared<Label>(this->text, this->font);
+		copy = mksp<Label>(this->text, this->font);
 	}
 	copy->TextHAlign = this->TextHAlign;
 	copy->TextVAlign = this->TextVAlign;

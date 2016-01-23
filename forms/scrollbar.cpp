@@ -172,7 +172,7 @@ sp<Control> ScrollBar::CopyTo(sp<Control> CopyParent)
 	}
 	else
 	{
-		copy = std::make_shared<ScrollBar>();
+		copy = mksp<ScrollBar>();
 	}
 	copy->Value = this->Value;
 	copy->Maximum = this->Maximum;

@@ -49,7 +49,7 @@ void BootUp::Update(StageCmd *const cmd)
 	{
 		asyncGamecoreLoad.wait();
 		cmd->cmd = StageCmd::Command::REPLACE;
-		cmd->nextStage = std::make_shared<MainMenu>();
+		cmd->nextStage = mksp<MainMenu>();
 	}
 }
 

@@ -49,7 +49,7 @@ LOFTemps::LOFTemps(IFile &datFile, IFile &tabFile)
 			return;
 		}
 
-		auto slice = std::make_shared<VoxelSlice>(Vec2<int>{width, height});
+		auto slice = mksp<VoxelSlice>(Vec2<int>{width, height});
 
 		for (unsigned int y = 0; y < height; y++)
 		{

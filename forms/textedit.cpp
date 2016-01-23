@@ -246,7 +246,7 @@ sp<Control> TextEdit::CopyTo(sp<Control> CopyParent)
 	}
 	else
 	{
-		copy = std::make_shared<TextEdit>(this->text, this->font);
+		copy = mksp<TextEdit>(this->text, this->font);
 	}
 	copy->TextHAlign = this->TextHAlign;
 	copy->TextVAlign = this->TextVAlign;

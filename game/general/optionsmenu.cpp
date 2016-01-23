@@ -42,13 +42,13 @@ void OptionsMenu::EventOccurred(Event *e)
 		if (e->Forms().RaisedBy->Name == "BUTTON_TEST_UFOPAEDIA")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<Ufopaedia>();
+			stageCmd.nextStage = mksp<Ufopaedia>();
 			return;
 		}
 		if (e->Forms().RaisedBy->Name == "BUTTON_DEBUGGING")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<DebugMenu>();
+			stageCmd.nextStage = mksp<DebugMenu>();
 			return;
 		}
 		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")

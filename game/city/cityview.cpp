@@ -122,14 +122,14 @@ CityView::CityView(sp<GameState> state)
 		this->vehiclePassengerCountIcons.push_back(image);
 	}
 
-	auto img = std::make_shared<RGBImage>(Vec2<int>{1, 2});
+	auto img = mksp<RGBImage>(Vec2<int>{1, 2});
 	{
 		RGBImageLock l(img);
 		l.set({0, 0}, Colour{255, 255, 219});
 		l.set({0, 1}, Colour{215, 0, 0});
 	}
 	this->healthImage = img;
-	img = std::make_shared<RGBImage>(Vec2<int>{1, 2});
+	img = mksp<RGBImage>(Vec2<int>{1, 2});
 	{
 		RGBImageLock l(img);
 		l.set({0, 0}, Colour{160, 236, 252});
@@ -351,25 +351,25 @@ void CityView::EventOccurred(Event *e)
 			else if (cname == "BUTTON_SHOW_ALIEN_INFILTRATION")
 			{
 				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage = std::make_shared<InfiltrationScreen>();
+				stageCmd.nextStage = mksp<InfiltrationScreen>();
 				return;
 			}
 			else if (cname == "BUTTON_SHOW_SCORE")
 			{
 				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage = std::make_shared<ScoreScreen>();
+				stageCmd.nextStage = mksp<ScoreScreen>();
 				return;
 			}
 			else if (cname == "BUTTON_SHOW_UFOPAEDIA")
 			{
 				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage = std::make_shared<Ufopaedia>();
+				stageCmd.nextStage = mksp<Ufopaedia>();
 				return;
 			}
 			else if (cname == "BUTTON_SHOW_OPTIONS")
 			{
 				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage = std::make_shared<InGameOptions>(state);
+				stageCmd.nextStage = mksp<InGameOptions>(state);
 				return;
 			}
 			else if (cname == "BUTTON_SHOW_LOG")
@@ -383,13 +383,13 @@ void CityView::EventOccurred(Event *e)
 			else if (cname == "BUTTON_SHOW_BASE")
 			{
 				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage = std::make_shared<BaseScreen>(state);
+				stageCmd.nextStage = mksp<BaseScreen>(state);
 				return;
 			}
 			else if (cname == "BUTTON_EQUIP_VEHICLE")
 			{
 				stageCmd.cmd = StageCmd::Command::PUSH;
-				auto equipScreen = std::make_shared<VEquipScreen>(state);
+				auto equipScreen = mksp<VEquipScreen>(state);
 				// FIXME: Restrict this to player owned vehicles?
 				auto selectedVehicle = this->selectedVehicle.lock();
 				if (selectedVehicle)
@@ -616,7 +616,7 @@ void CityView::EventOccurred(Event *e)
 						else if (this->selectionState == SelectionState::Normal)
 						{
 							stageCmd.cmd = StageCmd::Command::PUSH;
-							stageCmd.nextStage = std::make_shared<BuildingScreen>(building);
+							stageCmd.nextStage = mksp<BuildingScreen>(building);
 						}
 
 						return;
@@ -689,7 +689,7 @@ sp<Control> CityView::createVehicleInfoControl(const VehicleTileInfo &info)
 
 	auto frame = info.selected ? this->icons[CityIcon::SelectedFrame]
 	                           : this->icons[CityIcon::UnselectedFrame];
-	auto baseControl = std::make_shared<GraphicButton>(frame, frame);
+	auto baseControl = mksp<GraphicButton>(frame, frame);
 	baseControl->Size = frame->size;
 	// FIXME: There's an extra 1 pixel here that's annoying
 	baseControl->Size.x -= 1;

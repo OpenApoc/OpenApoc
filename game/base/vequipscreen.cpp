@@ -57,8 +57,7 @@ void VEquipScreen::Begin()
 			    "Invalid vehicle found in list - this should never happen as they're cleaned up "
 			    "at the end of each city update?");
 		}
-		auto graphic =
-		    std::make_shared<Graphic>(fw().data->load_image(vehicle->type.equip_icon_big_path));
+		auto graphic = mksp<Graphic>(fw().data->load_image(vehicle->type.equip_icon_big_path));
 		graphic->AutoSize = true;
 		list->AddItem(graphic);
 		this->vehicleSelectionControls[graphic] = vehicle;

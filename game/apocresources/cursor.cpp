@@ -20,7 +20,7 @@ ApocCursor::ApocCursor(sp<Palette> pal) : cursorPos{0, 0}
 
 	while (images.size() < cursorCount)
 	{
-		auto palImg = std::make_shared<PaletteImage>(Vec2<int>{24, 24});
+		auto palImg = mksp<PaletteImage>(Vec2<int>{24, 24});
 		PaletteImageLock l(palImg, ImageLockUse::Write);
 		for (int y = 0; y < 24; y++)
 		{

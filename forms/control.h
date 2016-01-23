@@ -110,7 +110,7 @@ class Control : public std::enable_shared_from_this<Control>
 
 	template <typename T, typename... Args> sp<T> createChild(Args &&... args)
 	{
-		sp<T> newControl = std::make_shared<T>(std::forward<Args>(args)...);
+		sp<T> newControl = mksp<T>(std::forward<Args>(args)...);
 		newControl->SetParent(shared_from_this());
 		return newControl;
 	}

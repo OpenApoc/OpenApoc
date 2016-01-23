@@ -1133,7 +1133,7 @@ OGL30Renderer::OGL30Renderer()
 	glGetIntegerv(GL_VIEWPORT, viewport);
 	LogInfo("Viewport {%d,%d,%d,%d}", viewport[0], viewport[1], viewport[2], viewport[3]);
 	assert(viewport[0] == 0 && viewport[1] == 0);
-	this->defaultSurface = std::make_shared<Surface>(Vec2<int>{viewport[2], viewport[3]});
+	this->defaultSurface = mksp<Surface>(Vec2<int>{viewport[2], viewport[3]});
 	this->defaultSurface->rendererPrivateData.reset(new FBOData(0));
 	this->currentSurface = this->defaultSurface;
 
@@ -1190,7 +1190,7 @@ void OGL30Renderer::draw(sp<Image> image, Vec2<float> position)
 			    std::dynamic_pointer_cast<GLPaletteSpritesheet>(owningSet->rendererPrivateData);
 			if (!ss)
 			{
-				ss = std::make_shared<GLPaletteSpritesheet>(owningSet);
+				ss = mksp<GLPaletteSpritesheet>(owningSet);
 				owningSet->rendererPrivateData = ss;
 			}
 			switch (this->state)

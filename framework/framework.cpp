@@ -336,7 +336,7 @@ void Framework::Run()
 	TRACE_FN;
 	LogInfo("Program loop started");
 
-	p->ProgramStages.Push(std::make_shared<BootUp>());
+	p->ProgramStages.Push(mksp<BootUp>());
 
 	this->renderer->setPalette(this->data->load_palette("xcom3/ufodata/PAL_06.DAT"));
 
@@ -789,7 +789,7 @@ void Framework::Display_Initialise()
 		}
 		LogInfo("Scaling from {%d,%d} to {%d,%d}", p->displaySize.x, p->displaySize.y,
 		        p->windowSize.x, p->windowSize.y);
-		p->scaleSurface = std::make_shared<Surface>(p->displaySize);
+		p->scaleSurface = mksp<Surface>(p->displaySize);
 	}
 	else
 	{

@@ -133,7 +133,7 @@ sp<ApocalypseFont> ApocalypseFont::loadFont(tinyxml2::XMLElement *fontElement)
 		file.seekg(glyphSize * offset, std::ios::beg);
 		int glyphWidth = 0;
 
-		auto glyphImage = std::make_shared<PaletteImage>(Vec2<int>(width, height));
+		auto glyphImage = mksp<PaletteImage>(Vec2<int>(width, height));
 		{
 			PaletteImageLock imgLock(glyphImage, ImageLockUse::Write);
 
@@ -149,7 +149,7 @@ sp<ApocalypseFont> ApocalypseFont::loadFont(tinyxml2::XMLElement *fontElement)
 				}
 			}
 		}
-		auto trimmedGlyph = std::make_shared<PaletteImage>(Vec2<int>{glyphWidth + 2, height});
+		auto trimmedGlyph = mksp<PaletteImage>(Vec2<int>{glyphWidth + 2, height});
 		PaletteImage::blit(glyphImage, Vec2<int>{0, 0}, trimmedGlyph);
 		font->fontbitmaps[c] = trimmedGlyph;
 
@@ -157,7 +157,7 @@ sp<ApocalypseFont> ApocalypseFont::loadFont(tinyxml2::XMLElement *fontElement)
 	}
 
 	// FIXME: Bit of a hack to handle spaces?
-	auto spaceImage = std::make_shared<PaletteImage>(Vec2<int>{spacewidth, height});
+	auto spaceImage = mksp<PaletteImage>(Vec2<int>{spacewidth, height});
 	// Defaults to transparent (0)
 	font->fontbitmaps[UString::u8Char(' ')] = spaceImage;
 

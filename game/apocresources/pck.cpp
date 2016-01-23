@@ -166,7 +166,7 @@ void PCK::LoadVersion1Format(IFile &pck, IFile &tab, int Index)
 				return;
 			}
 		}
-		img = std::make_shared<PaletteImage>(Vec2<int>{c0_maxwidth, c0_height});
+		img = mksp<PaletteImage>(Vec2<int>{c0_maxwidth, c0_height});
 		PaletteImageLock region(img);
 		c0_idx = 0;
 		for (int c0_y = 0; c0_y < c0_height; c0_y++)
@@ -244,7 +244,7 @@ void PCK::LoadVersion2Format(IFile &pck, IFile &tab, int Index)
 					         i);
 					return;
 				}
-				img = std::make_shared<PaletteImage>(
+				img = mksp<PaletteImage>(
 				    Vec2<int>{c1_imgheader.RightMostPixel, c1_imgheader.BottomMostPixel});
 
 				PaletteImageLock lock(img);
@@ -342,7 +342,7 @@ void PCK::LoadVersion2Format(IFile &pck, IFile &tab, int Index)
 sp<ImageSet> PCKLoader::load(Data &data, UString PckFilename, UString TabFilename)
 {
 	PCK *p = new PCK(data, PckFilename, TabFilename);
-	auto imageSet = std::make_shared<ImageSet>();
+	auto imageSet = mksp<ImageSet>();
 	imageSet->maxSize = Vec2<int>{0, 0};
 	imageSet->images.resize(p->images.size());
 	for (unsigned int i = 0; i < p->images.size(); i++)
@@ -375,7 +375,7 @@ static_assert(sizeof(struct strat_header) == 4, "Invalid strat_header size");
 
 static sp<PaletteImage> loadStrategy(IFile &file)
 {
-	auto img = std::make_shared<PaletteImage>(Vec2<int>{8, 8}); // All strategy map tiles are 8x8
+	auto img = mksp<PaletteImage>(Vec2<int>{8, 8}); // All strategy map tiles are 8x8
 	unsigned int offset = 0;
 
 	struct strat_header header;
@@ -411,7 +411,7 @@ static sp<PaletteImage> loadStrategy(IFile &file)
 
 sp<ImageSet> PCKLoader::load_strat(Data &data, UString PckFilename, UString TabFilename)
 {
-	auto imageSet = std::make_shared<ImageSet>();
+	auto imageSet = mksp<ImageSet>();
 	auto tabFile = data.fs.open(TabFilename);
 	if (!tabFile)
 	{
@@ -484,7 +484,7 @@ static sp<PaletteImage> loadShadow(IFile &file, uint8_t shadedIdx)
 		LogError("Unexpected EOF reading shadow PCK header\n");
 		return nullptr;
 	}
-	auto img = std::make_shared<PaletteImage>(Vec2<int>{header.width, header.height});
+	auto img = mksp<PaletteImage>(Vec2<int>{header.width, header.height});
 	PaletteImageLock region(img);
 
 	uint8_t b = 0;
@@ -539,7 +539,7 @@ sp<ImageSet> PCKLoader::load_shadow(Data &data, UString PckFilename, UString Tab
                                     uint8_t shadedIdx)
 {
 	TRACE_FN;
-	auto imageSet = std::make_shared<ImageSet>();
+	auto imageSet = mksp<ImageSet>();
 	auto tabFile = data.fs.open(TabFilename);
 	if (!tabFile)
 	{

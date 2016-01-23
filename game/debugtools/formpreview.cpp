@@ -12,7 +12,7 @@ FormPreview::FormPreview() : Stage()
 	currentSelectedControl = nullptr;
 	glowindex = 0;
 
-	previewselector = std::make_shared<Form>();
+	previewselector = mksp<Form>();
 	previewselector->Size = {200, 300};
 	previewselector->Location = {2, 2};
 	previewselector->BackgroundColour = {192, 192, 192, 255};
@@ -69,7 +69,7 @@ FormPreview::FormPreview() : Stage()
 		// lb->AddItem( l );
 	}
 
-	propertyeditor = std::make_shared<Form>();
+	propertyeditor = mksp<Form>();
 	propertyeditor->Location = {2, 304};
 	propertyeditor->Size.x = 200;
 	propertyeditor->Size.y = fw().Display_GetHeight() - propertyeditor->Location.y - 2;

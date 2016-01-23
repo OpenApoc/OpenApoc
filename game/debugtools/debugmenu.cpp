@@ -49,7 +49,7 @@ void DebugMenu::EventOccurred(Event *e)
 		else if (e->Forms().RaisedBy->Name == "BUTTON_FORMPREVIEW")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = std::make_shared<FormPreview>();
+			stageCmd.nextStage = mksp<FormPreview>();
 		}
 	}
 }

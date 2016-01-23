@@ -187,7 +187,7 @@ bool RulesLoader::ParseRules(Rules &rules, tinyxml2::XMLElement *root)
 				nodename = nodeufo->Name();
 				if (nodename == "category")
 				{
-					Ufopaedia::UfopaediaDB.push_back(std::make_shared<UfopaediaCategory>(nodeufo));
+					Ufopaedia::UfopaediaDB.push_back(mksp<UfopaediaCategory>(nodeufo));
 				}
 			}
 		}

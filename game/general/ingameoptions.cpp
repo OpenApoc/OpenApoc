@@ -72,7 +72,7 @@ void InGameOptions::EventOccurred(Event *e)
 		else if (e->Forms().RaisedBy->Name == "BUTTON_ABANDONGAME")
 		{
 			stageCmd.cmd = StageCmd::Command::REPLACE;
-			stageCmd.nextStage = std::make_shared<MainMenu>();
+			stageCmd.nextStage = mksp<MainMenu>();
 			return;
 		}
 		else if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")

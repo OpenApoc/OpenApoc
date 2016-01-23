@@ -12,7 +12,7 @@ sp<Palette> loadApocPalette(Data &data, const UString fileName)
 	if (!f)
 		return nullptr;
 	auto numEntries = f.size() / 3;
-	auto p = std::make_shared<Palette>(numEntries);
+	auto p = mksp<Palette>(numEntries);
 	for (unsigned int i = 0; i < numEntries; i++)
 	{
 		uint8_t colour[3];
@@ -112,7 +112,7 @@ sp<Palette> loadPCXPalette(Data &data, const UString fileName)
 
 	file.seekg(file.size() - (256 * 3));
 
-	auto p = std::make_shared<Palette>(256);
+	auto p = mksp<Palette>(256);
 
 	for (unsigned int i = 0; i < 256; i++)
 	{

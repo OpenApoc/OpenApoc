@@ -79,7 +79,7 @@ sp<Control> CheckBox::CopyTo(sp<Control> CopyParent)
 	}
 	else
 	{
-		copy = std::make_shared<CheckBox>(imagechecked, imageunchecked);
+		copy = mksp<CheckBox>(imagechecked, imageunchecked);
 	}
 	copy->Checked = this->Checked;
 	CopyControlData(copy);

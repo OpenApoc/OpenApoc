@@ -42,7 +42,7 @@ UfopaediaCategory::UfopaediaCategory(tinyxml2::XMLElement *Element)
 			for (node2 = node->FirstChildElement(); node2 != nullptr;
 			     node2 = node2->NextSiblingElement())
 			{
-				sp<UfopaediaEntry> newentry = std::make_shared<UfopaediaEntry>(node2);
+				sp<UfopaediaEntry> newentry = mksp<UfopaediaEntry>(node2);
 				Entries.push_back(newentry);
 			}
 		}
@@ -61,7 +61,7 @@ void UfopaediaCategory::Begin()
 	for (auto entry = Entries.begin(); entry != Entries.end(); entry++)
 	{
 		sp<UfopaediaEntry> e = *entry;
-		auto tb = std::make_shared<TextButton>(tr(e->Title, "paedia_string"), infolabel->GetFont());
+		auto tb = mksp<TextButton>(tr(e->Title, "paedia_string"), infolabel->GetFont());
 		tb->Name = "Index" + Strings::FromInteger(idx);
 		tb->RenderStyle = TextButton::TextButtonRenderStyles::SolidButtonStyle;
 		tb->TextHAlign = HorizontalAlignment::Left;

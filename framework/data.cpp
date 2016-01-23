@@ -138,7 +138,7 @@ sp<VoxelSlice> Data::load_voxel_slice(const UString &path)
 				LogError("Failed to open LOFTemps tab file \"%s\"", splitString[2].c_str());
 				return nullptr;
 			}
-			lofTemps = std::make_shared<LOFTemps>(datFile, tabFile);
+			lofTemps = mksp<LOFTemps>(datFile, tabFile);
 			this->LOFVoxelCache[cacheKey] = lofTemps;
 			this->pinnedLOFVoxels.push(lofTemps);
 			this->pinnedLOFVoxels.pop();
@@ -455,7 +455,7 @@ sp<Palette> Data::load_palette(const UString &path)
 	if (img)
 	{
 		unsigned int idx = 0;
-		auto p = std::make_shared<Palette>(img->size.x * img->size.y);
+		auto p = mksp<Palette>(img->size.x * img->size.y);
 		RGBImageLock src{img, ImageLockUse::Read};
 		for (unsigned int y = 0; y < img->size.y; y++)
 		{

@@ -149,9 +149,9 @@ class RawMusicLoader : public MusicLoader
 			LogInfo("Raw music track %d out of bounds", track);
 			return nullptr;
 		}
-		return std::make_shared<RawMusicTrack>(data, path, strings[0], starts[track],
-		                                       (ends[track] - starts[track]) /
-		                                           (MusicChannels * MusicBytesPerSample));
+		return mksp<RawMusicTrack>(data, path, strings[0], starts[track],
+		                           (ends[track] - starts[track]) /
+		                               (MusicChannels * MusicBytesPerSample));
 	}
 };
 

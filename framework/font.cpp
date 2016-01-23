@@ -14,7 +14,7 @@ sp<PaletteImage> BitmapFont::getString(const UString &Text)
 {
 	int height = this->GetFontHeight();
 	int width = this->GetFontWidth(Text);
-	auto img = std::make_shared<PaletteImage>(Vec2<int>{width, height});
+	auto img = mksp<PaletteImage>(Vec2<int>{width, height});
 	int pos = 0;
 
 	auto u8Str = Text.str();

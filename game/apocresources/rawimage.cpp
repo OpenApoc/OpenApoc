@@ -27,7 +27,7 @@ sp<PaletteImage> RawImage::load(Data &data, const UString &filename, const Vec2<
 		           size.x, size.y);
 	}
 
-	auto image = std::make_shared<PaletteImage>(size);
+	auto image = mksp<PaletteImage>(size);
 
 	PaletteImageLock l(image, ImageLockUse::Write);
 

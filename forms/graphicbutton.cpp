@@ -119,7 +119,7 @@ sp<Control> GraphicButton::CopyTo(sp<Control> CopyParent)
 	}
 	else
 	{
-		copy = std::make_shared<GraphicButton>(this->image, this->imagedepressed, this->imagehover);
+		copy = mksp<GraphicButton>(this->image, this->imagedepressed, this->imagehover);
 	}
 	if (this->ScrollBarPrev)
 	{

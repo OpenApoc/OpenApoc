@@ -66,10 +66,10 @@ void DifficultyMenu::EventOccurred(Event *e)
 			return;
 		}
 
-		auto state = std::make_shared<GameState>(ruleName);
+		auto state = mksp<GameState>(ruleName);
 
 		stageCmd.cmd = StageCmd::Command::REPLACE;
-		stageCmd.nextStage = std::make_shared<CityView>(state);
+		stageCmd.nextStage = mksp<CityView>(state);
 		return;
 	}
 }

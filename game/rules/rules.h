@@ -35,7 +35,7 @@ class Rules
 	std::vector<UString> landingPadTiles;
 	Vec3<int> citySize;
 	std::vector<UString> tileIDs;
-	std::shared_ptr<ResourceAliases> aliases;
+	sp<ResourceAliases> aliases;
 	friend class RulesLoader;
 
   public:

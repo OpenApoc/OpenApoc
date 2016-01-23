@@ -53,7 +53,7 @@ class RawSampleLoader : public SampleLoader
 			return nullptr;
 		}
 
-		auto sample = std::make_shared<Sample>();
+		auto sample = mksp<Sample>();
 
 		sample->format.frequency = frequency;
 		sample->format.channels = 1;

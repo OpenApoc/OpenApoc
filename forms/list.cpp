@@ -253,7 +253,7 @@ sp<Control> ListBox::CopyTo(sp<Control> CopyParent)
 	}
 	else
 	{
-		copy = std::make_shared<ListBox>(scrollCopy);
+		copy = mksp<ListBox>(scrollCopy);
 	}
 
 	copy->ItemSize = this->ItemSize;

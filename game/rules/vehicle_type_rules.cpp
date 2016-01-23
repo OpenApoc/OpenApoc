@@ -673,7 +673,7 @@ static bool ParseVehicleTypeNode(tinyxml2::XMLElement *node, VehicleType &vehicl
 			         vehicle.id.c_str());
 			return false;
 		}
-		vehicle.voxelMap = std::make_shared<VoxelMap>(Vec3<int>{sizeX, sizeY, sizeZ});
+		vehicle.voxelMap = mksp<VoxelMap>(Vec3<int>{sizeX, sizeY, sizeZ});
 
 		int layerCount = 0;
 

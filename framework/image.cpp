@@ -42,7 +42,7 @@ PaletteImage::~PaletteImage() {}
 
 sp<RGBImage> PaletteImage::toRGBImage(sp<Palette> p)
 {
-	sp<RGBImage> i = std::make_shared<RGBImage>(size);
+	sp<RGBImage> i = mksp<RGBImage>(size);
 
 	RGBImageLock imgLock{i, ImageLockUse::Write};
 

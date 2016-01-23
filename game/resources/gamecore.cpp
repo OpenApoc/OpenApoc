@@ -116,8 +116,7 @@ void GameCore::ParseXMLDoc(UString XMLFilename)
 					nodename = nodeufo->Name();
 					if (nodename == "category")
 					{
-						Ufopaedia::UfopaediaDB.push_back(
-						    std::make_shared<UfopaediaCategory>(nodeufo));
+						Ufopaedia::UfopaediaDB.push_back(mksp<UfopaediaCategory>(nodeufo));
 					}
 				}
 			}
@@ -150,7 +149,7 @@ void GameCore::ParseGameXML(tinyxml2::XMLElement *Source)
 
 void GameCore::ParseFormXML(tinyxml2::XMLElement *Source)
 {
-	auto form = std::make_shared<Form>();
+	auto form = mksp<Form>();
 	form->ReadFormStyle(Source);
 	forms[Source->Attribute("id")] = form;
 }

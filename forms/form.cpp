@@ -54,7 +54,7 @@ void Form::UnloadResources() { Control::UnloadResources(); }
 sp<Control> Form::CopyTo(sp<Control> CopyParent)
 {
 	std::ignore = CopyParent;
-	auto copy = std::make_shared<Form>();
+	auto copy = mksp<Form>();
 	CopyControlData(copy);
 	return copy;
 }

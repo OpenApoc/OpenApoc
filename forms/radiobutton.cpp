@@ -25,8 +25,7 @@ sp<Control> RadioButton::CopyTo(sp<Control> CopyParent)
 			auto groupIt = CopyParent->radiogroups.find(this->group->ID);
 			if (groupIt == CopyParent->radiogroups.end())
 			{
-				CopyParent->radiogroups[this->group->ID] =
-				    std::make_shared<RadioButtonGroup>(this->group->ID);
+				CopyParent->radiogroups[this->group->ID] = mksp<RadioButtonGroup>(this->group->ID);
 			}
 			newGroup = CopyParent->radiogroups[this->group->ID];
 		}
@@ -34,7 +33,7 @@ sp<Control> RadioButton::CopyTo(sp<Control> CopyParent)
 	}
 	else
 	{
-		copy = std::make_shared<RadioButton>(newGroup, imagechecked, imageunchecked);
+		copy = mksp<RadioButton>(newGroup, imagechecked, imageunchecked);
 	}
 	CopyControlData(copy);
 	if (newGroup)

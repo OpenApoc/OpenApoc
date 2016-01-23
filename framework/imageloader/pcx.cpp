@@ -90,7 +90,7 @@ class PCXImageLoader : public OpenApoc::ImageLoader
 			return nullptr;
 		}
 
-		auto p = std::make_shared<Palette>(256);
+		auto p = mksp<Palette>(256);
 
 		const uint8_t *palette_data = reinterpret_cast<uint8_t *>(&data[size - (256 * 3)]);
 		for (unsigned i = 0; i < 256; i++)
@@ -105,7 +105,7 @@ class PCXImageLoader : public OpenApoc::ImageLoader
 		auto sizeX = (header->XEnd - header->XStart + 1);
 		auto sizeY = (header->YEnd - header->YStart + 1);
 
-		auto pimg = std::make_shared<PaletteImage>(Vec2<unsigned int>{sizeX, sizeY});
+		auto pimg = mksp<PaletteImage>(Vec2<unsigned int>{sizeX, sizeY});
 
 		{
 			PaletteImageLock lock(pimg);

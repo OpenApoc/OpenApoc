@@ -93,10 +93,9 @@ sp<Projectile> VWeapon::fire(Vec3<float> target)
 			         weaponType.id.c_str());
 	}
 
-	return std::make_shared<Projectile>(
-	    owner, vehicleTile->getPosition(), velocity,
-	    static_cast<int>(this->getRange() / weaponType.speed * TICK_SCALE), c, weaponType.tail_size,
-	    2.0f);
+	return mksp<Projectile>(owner, vehicleTile->getPosition(), velocity,
+	                        static_cast<int>(this->getRange() / weaponType.speed * TICK_SCALE), c,
+	                        weaponType.tail_size, 2.0f);
 }
 
 void VWeapon::update(int ticks)

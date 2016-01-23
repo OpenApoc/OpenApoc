@@ -113,7 +113,7 @@ sp<Control> Graphic::CopyTo(sp<Control> CopyParent)
 	}
 	else
 	{
-		copy = std::make_shared<Graphic>(this->image);
+		copy = mksp<Graphic>(this->image);
 	}
 	copy->ImageHAlign = this->ImageHAlign;
 	copy->ImageVAlign = this->ImageVAlign;

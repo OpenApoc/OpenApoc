@@ -264,7 +264,7 @@ void TileMap::addObjectToMap(sp<Projectile> projectile)
 	{
 		LogError("Projectile already has tile object");
 	}
-	// FIXME: std::make_shared<> doesn't work for private (but accessible due to friend)
+	// FIXME: mksp<> doesn't work for private (but accessible due to friend)
 	// constructors?
 	sp<TileObjectProjectile> obj(new TileObjectProjectile(*this, projectile));
 	obj->setPosition(projectile->getPosition());
@@ -281,7 +281,7 @@ void TileMap::addObjectToMap(sp<Vehicle> vehicle)
 	{
 		LogError("Vehicle already has shadow object");
 	}
-	// FIXME: std::make_shared<> doesn't work for private (but accessible due to friend)
+	// FIXME: mksp<> doesn't work for private (but accessible due to friend)
 	// constructors?
 	sp<TileObjectVehicle> obj(new TileObjectVehicle(*this, vehicle));
 	obj->setPosition(vehicle->getPosition());
@@ -298,7 +298,7 @@ void TileMap::addObjectToMap(sp<Scenery> scenery)
 	{
 		LogError("Scenery already has tile object");
 	}
-	// FIXME: std::make_shared<> doesn't work for private (but accessible due to friend)
+	// FIXME: mksp<> doesn't work for private (but accessible due to friend)
 	// constructors?
 	sp<TileObjectScenery> obj(new TileObjectScenery(*this, scenery));
 	obj->setPosition(scenery->getPosition());
@@ -311,7 +311,7 @@ void TileMap::addObjectToMap(sp<Doodad> doodad)
 	{
 		LogError("Doodad already has tile object");
 	}
-	// FIXME: std::make_shared<> doesn't work for private (but accessible due to friend)
+	// FIXME: mksp<> doesn't work for private (but accessible due to friend)
 	// constructors?
 	sp<TileObjectDoodad> obj(new TileObjectDoodad(*this, doodad));
 	obj->setPosition(doodad->getPosition());

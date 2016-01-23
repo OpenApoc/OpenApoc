@@ -41,7 +41,7 @@ class LodepngImageLoader : public OpenApoc::ImageLoader
 			return nullptr;
 		}
 		OpenApoc::Vec2<int> size(width, height);
-		auto img = std::make_shared<OpenApoc::RGBImage>(size);
+		auto img = mksp<OpenApoc::RGBImage>(size);
 		OpenApoc::RGBImageLock dst(img, OpenApoc::ImageLockUse::Write);
 
 		for (int y = 0; y < size.y; y++)

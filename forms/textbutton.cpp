@@ -158,7 +158,7 @@ sp<Control> TextButton::CopyTo(sp<Control> CopyParent)
 	}
 	else
 	{
-		copy = std::make_shared<TextButton>(this->text, this->font);
+		copy = mksp<TextButton>(this->text, this->font);
 	}
 	copy->TextHAlign = this->TextHAlign;
 	copy->TextVAlign = this->TextVAlign;
