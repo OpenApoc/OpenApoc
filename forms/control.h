@@ -22,7 +22,7 @@ class Control : public std::enable_shared_from_this<Control>
 {
   private:
 	sp<Surface> controlArea;
-	void *data;
+	sp<void> data;
 
   protected:
 	sp<Palette> palette;
@@ -103,8 +103,8 @@ class Control : public std::enable_shared_from_this<Control>
 
 	virtual sp<Control> CopyTo(sp<Control> CopyParent);
 
-	template <typename T> T *GetData() const { return static_cast<T *>(data); }
-	void SetData(void *Data) { data = Data; }
+	template <typename T> sp<T> GetData() const { return std::static_pointer_cast<T>(data); }
+	void SetData(sp<void> Data) { data = Data; }
 
 	bool eventIsWithin(const Event *e) const;
 

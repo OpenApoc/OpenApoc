@@ -46,7 +46,7 @@ class ListBox : public Control
 	virtual sp<Control> CopyTo(sp<Control> CopyParent) override;
 	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 
-	template <typename T> T *GetHoveredData() const
+	template <typename T> sp<T> GetHoveredData() const
 	{
 		if (hovered != nullptr)
 		{
@@ -55,7 +55,7 @@ class ListBox : public Control
 		return nullptr;
 	}
 
-	template <typename T> T *GetSelectedData() const
+	template <typename T> sp<T> GetSelectedData() const
 	{
 		if (selected != nullptr)
 		{

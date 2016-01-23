@@ -85,7 +85,7 @@ void BaseScreen::Begin()
 
 		auto graphic = mksp<Graphic>(fw().data->load_image(facility.sprite));
 		graphic->AutoSize = true;
-		graphic->SetData(const_cast<FacilityDef *>(&facility));
+		graphic->SetData(mksp<FacilityDef>(facility));
 		facilities->AddItem(graphic);
 	}
 }

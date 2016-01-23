@@ -1,12 +1,7 @@
 #include "library/strings.h"
 #include "framework/logger.h"
-#include "library/sp.h"
 
 #include <boost/locale.hpp>
-
-#ifdef _MSC_VER
-#define snprintf _snprintf
-#endif
 
 #ifdef DUMP_TRANSLATION_STRINGS
 #include <map>
@@ -217,20 +212,17 @@ bool Strings::IsFloat(const UString &s)
 
 UString Strings::FromInteger(int i)
 {
-	char buffer[50];
-	snprintf(buffer, 50, "%d", i);
-	return UString(buffer);
+	return UString::format("%d", i);
 }
 
 UString Strings::FromFloat(float f)
 {
-	char buffer[50];
-	snprintf(buffer, 50, "%f", f);
-	return UString(buffer);
+	return UString::format("%f", f);
 }
 
 bool Strings::IsWhiteSpace(UniChar c)
-{ // FIXME: Only works on ASCII whitespace
+{
+	// FIXME: Only works on ASCII whitespace
 	return isspace(c);
 }
 

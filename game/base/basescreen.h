@@ -28,7 +28,7 @@ class BaseScreen : public Stage
 	Base &base;
 	Vec2<int> selection, mousePos;
 	sp<const Facility> selFacility;
-	FacilityDef *dragFacility;
+	sp<const FacilityDef> dragFacility;
 	bool drag;
 
 	sp<Graphic> baseView, selGraphic;
