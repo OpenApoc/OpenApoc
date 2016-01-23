@@ -688,6 +688,7 @@ bool Control::eventIsWithin(const Event *e) const
 
 void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 {
+	this->triggerEventCallbacks(type);
 	switch (type)
 	{
 		// Mouse events fall-through
@@ -741,6 +742,19 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 		default:
 			LogError("Unexpected event type %d", (int)type);
 	}
+}
+
+void Control::triggerEventCallbacks(FormEventType type)
+{
+	for (auto &callback : this->callbacks[type])
+	{
+		callback(shared_from_this());
+	}
+}
+
+void Control::addCallback(FormEventType event, std::function<void(sp<Control> c)> callback)
+{
+	this->callbacks[event].push_back(callback);
 }
 
 }; // namespace OpenApoc

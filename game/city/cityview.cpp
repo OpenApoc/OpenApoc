@@ -136,6 +136,47 @@ CityView::CityView(sp<GameState> state)
 		l.set({0, 1}, Colour{4, 100, 252});
 	}
 	this->shieldImage = img;
+
+	this->baseForm->FindControlTyped<GraphicButton>("BUTTON_TAB_1")
+	    ->addCallback(FormEventType::ButtonClick, [this](sp<Control>) -> void
+	                  {
+		                  this->activeTab = this->uiTabs[0];
+		              });
+	this->baseForm->FindControlTyped<GraphicButton>("BUTTON_TAB_2")
+	    ->addCallback(FormEventType::ButtonClick, [this](sp<Control>) -> void
+	                  {
+		                  this->activeTab = this->uiTabs[1];
+		              });
+	this->baseForm->FindControlTyped<GraphicButton>("BUTTON_TAB_3")
+	    ->addCallback(FormEventType::ButtonClick, [this](sp<Control>) -> void
+	                  {
+		                  this->activeTab = this->uiTabs[2];
+		              });
+	this->baseForm->FindControlTyped<GraphicButton>("BUTTON_TAB_4")
+	    ->addCallback(FormEventType::ButtonClick, [this](sp<Control>) -> void
+	                  {
+		                  this->activeTab = this->uiTabs[3];
+		              });
+	this->baseForm->FindControlTyped<GraphicButton>("BUTTON_TAB_5")
+	    ->addCallback(FormEventType::ButtonClick, [this](sp<Control>) -> void
+	                  {
+		                  this->activeTab = this->uiTabs[4];
+		              });
+	this->baseForm->FindControlTyped<GraphicButton>("BUTTON_TAB_6")
+	    ->addCallback(FormEventType::ButtonClick, [this](sp<Control>) -> void
+	                  {
+		                  this->activeTab = this->uiTabs[5];
+		              });
+	this->baseForm->FindControlTyped<GraphicButton>("BUTTON_TAB_7")
+	    ->addCallback(FormEventType::ButtonClick, [this](sp<Control>) -> void
+	                  {
+		                  this->activeTab = this->uiTabs[6];
+		              });
+	this->baseForm->FindControlTyped<GraphicButton>("BUTTON_TAB_8")
+	    ->addCallback(FormEventType::ButtonClick, [this](sp<Control>) -> void
+	                  {
+		                  this->activeTab = this->uiTabs[7];
+		              });
 }
 
 CityView::~CityView() {}
@@ -316,39 +357,7 @@ void CityView::EventOccurred(Event *e)
 		{
 			auto &cname = e->Forms().RaisedBy->Name;
 
-			if (cname == "BUTTON_TAB_1")
-			{
-				this->activeTab = uiTabs[0];
-			}
-			else if (cname == "BUTTON_TAB_2")
-			{
-				this->activeTab = uiTabs[1];
-			}
-			else if (cname == "BUTTON_TAB_3")
-			{
-				this->activeTab = uiTabs[2];
-			}
-			else if (cname == "BUTTON_TAB_4")
-			{
-				this->activeTab = uiTabs[3];
-			}
-			else if (cname == "BUTTON_TAB_5")
-			{
-				this->activeTab = uiTabs[4];
-			}
-			else if (cname == "BUTTON_TAB_6")
-			{
-				this->activeTab = uiTabs[5];
-			}
-			else if (cname == "BUTTON_TAB_7")
-			{
-				this->activeTab = uiTabs[6];
-			}
-			else if (cname == "BUTTON_TAB_8")
-			{
-				this->activeTab = uiTabs[7];
-			}
-			else if (cname == "BUTTON_SHOW_ALIEN_INFILTRATION")
+			if (cname == "BUTTON_SHOW_ALIEN_INFILTRATION")
 			{
 				stageCmd.cmd = StageCmd::Command::PUSH;
 				stageCmd.nextStage = mksp<InfiltrationScreen>();

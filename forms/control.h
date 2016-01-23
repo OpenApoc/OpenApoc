@@ -7,6 +7,10 @@
 #include "framework/logger.h"
 #include "library/colour.h"
 
+#include <map>
+#include <list>
+#include <functional>
+
 namespace OpenApoc
 {
 
@@ -15,7 +19,7 @@ class Event;
 class Surface;
 class Palette;
 class RadioButton;
-
+class Control;
 class RadioButtonGroup;
 
 class Control : public std::enable_shared_from_this<Control>
@@ -23,6 +27,8 @@ class Control : public std::enable_shared_from_this<Control>
   private:
 	sp<Surface> controlArea;
 	sp<void> data;
+
+	std::map<FormEventType, std::list<std::function<void(sp<Control> c)>>> callbacks;
 
   protected:
 	sp<Palette> palette;
@@ -47,6 +53,8 @@ class Control : public std::enable_shared_from_this<Control>
 	void CopyControlData(sp<Control> CopyOf);
 
 	void pushFormEvent(FormEventType type, Event *parentEvent);
+
+	void triggerEventCallbacks(FormEventType type);
 
   public:
 	UString Name;
@@ -114,6 +122,8 @@ class Control : public std::enable_shared_from_this<Control>
 		newControl->SetParent(shared_from_this());
 		return newControl;
 	}
+
+	void addCallback(FormEventType event, std::function<void(sp<Control> c)> callback);
 };
 
 }; // namespace OpenApoc
