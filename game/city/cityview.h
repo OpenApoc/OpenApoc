@@ -39,6 +39,16 @@ enum class CityUnitState
 	InMotion,
 };
 
+enum class SelectionState
+{
+	Normal,
+	VehicleGotoBuilding,
+	VehicleGotoLocation,
+	VehicleAttackVehicle,
+	VehicleAttackBuilding,
+	BuildBase,
+};
+
 // All the info required to draw a single vehicle info chunk, kept together to make it easier to
 // track when something has changed and requires a re-draw
 class VehicleTileInfo
@@ -78,6 +88,8 @@ class CityView : public TileView
 
 	VehicleTileInfo createVehicleInfo(sp<Vehicle> v);
 	sp<Control> createVehicleInfoControl(const VehicleTileInfo &info);
+
+	SelectionState selectionState;
 
   public:
 	CityView(sp<GameState> state);

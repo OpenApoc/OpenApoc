@@ -69,7 +69,7 @@ CityView::CityView(sp<GameState> state)
     : TileView(state->city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
                Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Isometric),
       baseForm(fw().gamecore->GetForm("FORM_CITY_UI")), updateSpeed(UpdateSpeed::Speed1),
-      state(state), followVehicle(false)
+      state(state), followVehicle(false), selectionState(SelectionState::Normal)
 {
 	baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED1")->SetChecked(true);
 	for (auto &formName : TAB_FORM_NAMES)
@@ -400,6 +400,67 @@ void CityView::EventOccurred(Event *e)
 
 				return;
 			}
+			else if (cname == "BUTTON_GOTO_BUILDING")
+			{
+				auto v = this->selectedVehicle.lock();
+				if (v && v->owner == state->getPlayer())
+				{
+					LogInfo("Select building for vehicle \"%s\"", v->name.c_str());
+					this->selectionState = SelectionState::VehicleGotoBuilding;
+				}
+			}
+			else if (cname == "BUTTON_GOTO_LOCATION")
+			{
+				auto v = this->selectedVehicle.lock();
+				if (v && v->owner == state->getPlayer())
+				{
+					LogInfo("Select location for vehicle \"%s\"", v->name.c_str());
+					this->selectionState = SelectionState::VehicleGotoLocation;
+				}
+			}
+			else if (cname == "BUTTON_GOTO_BASE")
+			{
+				auto v = this->selectedVehicle.lock();
+				if (v && v->owner == state->getPlayer())
+				{
+					LogWarning("Goto base for vehicle \"%s\"", v->name.c_str());
+					auto base = v->homeBase.lock();
+					if (!base)
+					{
+						LogError("Vehicle \"%s\" has no home base", v->name.c_str());
+					}
+					auto bld = base->bld.lock();
+					if (!bld)
+					{
+						LogError("Base \"%s\" has no building", base->name.c_str());
+					}
+					LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name.c_str(),
+					           bld->def.getName().c_str());
+					// FIXME: Don't clear missions if not replacing current mission
+					v->missions.clear();
+					v->missions.emplace_back(
+					    VehicleMission::gotoBuilding(*v, state->city->map, bld));
+					v->missions.front()->start();
+				}
+			}
+			else if (cname == "BUTTON_VEHICLE_ATTACK")
+			{
+				auto v = this->selectedVehicle.lock();
+				if (v && v->owner == state->getPlayer())
+				{
+					LogInfo("Select target vehicle for vehicle \"%s\"", v->name.c_str());
+					this->selectionState = SelectionState::VehicleAttackVehicle;
+				}
+			}
+			else if (cname == "BUTTON_VEHICLE_ATTACK_BUILDING")
+			{
+				auto v = this->selectedVehicle.lock();
+				if (v && v->owner == state->getPlayer())
+				{
+					LogInfo("Select target building building for vehicle \"%s\"", v->name.c_str());
+					this->selectionState = SelectionState::VehicleAttackBuilding;
+				}
+			}
 		}
 		else if (e->Forms().EventFlag == FormEventType::CheckBoxChange)
 		{
@@ -486,7 +547,6 @@ void CityView::EventOccurred(Event *e)
 		}
 		else if (e->Type() == EVENT_MOUSE_DOWN && e->Mouse().Button == 1)
 		{
-
 			// If a click has not been handled by a form it's in the map. See if we intersect with
 			// anything
 			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
@@ -503,13 +563,61 @@ void CityView::EventOccurred(Event *e)
 					    std::dynamic_pointer_cast<TileObjectScenery>(collision.obj)->getOwner();
 					LogInfo("Clicked on scenery at {%d,%d,%d}", scenery->pos.x, scenery->pos.y,
 					        scenery->pos.z);
+					if (this->selectionState == SelectionState::VehicleGotoLocation)
+					{
+
+						auto v = this->selectedVehicle.lock();
+						if (v && v->owner == state->getPlayer())
+						{
+							Vec3<int> targetPos{scenery->pos.x, scenery->pos.y,
+							                    state->city->map.size.z - 1};
+							// FIXME: Use vehicle 'height' hint to select target height?
+							// FIXME: Don't clear missions if not replacing current mission
+							v->missions.clear();
+							v->missions.emplace_back(
+							    VehicleMission::gotoLocation(*v, state->city->map, targetPos));
+							v->missions.front()->start();
+							LogWarning("Vehicle \"%s\" going to location {%d,%d,%d}",
+							           v->name.c_str(), targetPos.x, targetPos.y, targetPos.z);
+						}
+						this->selectionState = SelectionState::Normal;
+					}
 					auto building = scenery->building;
 					if (building)
 					{
 						LogInfo("Scenery owned by building \"%s\"",
 						        building->def.getName().c_str());
-						stageCmd.cmd = StageCmd::Command::PUSH;
-						stageCmd.nextStage = std::make_shared<BuildingScreen>(building);
+						if (this->selectionState == SelectionState::VehicleGotoBuilding)
+						{
+							auto v = this->selectedVehicle.lock();
+							if (v && v->owner == state->getPlayer())
+							{
+								LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name.c_str(),
+								           building->def.getName().c_str());
+								// FIXME: Don't clear missions if not replacing current mission
+								v->missions.clear();
+								v->missions.emplace_back(
+								    VehicleMission::gotoBuilding(*v, state->city->map, building));
+								v->missions.front()->start();
+							}
+							this->selectionState = SelectionState::Normal;
+						}
+						else if (this->selectionState == SelectionState::VehicleAttackBuilding)
+						{
+							auto v = this->selectedVehicle.lock();
+							if (v)
+							{
+								// TODO: Attack building mission
+								LogWarning("Vehicle \"%s\" attack building \"%s\"", v->name.c_str(),
+								           building->def.getName().c_str());
+							}
+							this->selectionState = SelectionState::Normal;
+						}
+						else if (this->selectionState == SelectionState::Normal)
+						{
+							stageCmd.cmd = StageCmd::Command::PUSH;
+							stageCmd.nextStage = std::make_shared<BuildingScreen>(building);
+						}
 
 						return;
 					}
