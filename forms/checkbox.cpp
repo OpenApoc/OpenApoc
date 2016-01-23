@@ -66,10 +66,7 @@ void CheckBox::SetChecked(bool checked)
 {
 	if (Checked == checked)
 		return;
-	auto e = new FormsEvent();
-	e->Forms().RaisedBy = shared_from_this();
-	e->Forms().EventFlag = FormEventType::CheckBoxChange;
-	fw().PushEvent(e);
+	this->pushFormEvent(FormEventType::CheckBoxChange, nullptr);
 	Checked = checked;
 }
 

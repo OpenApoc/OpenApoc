@@ -143,11 +143,7 @@ void ListBox::EventOccured(Event *e)
 			if (hovered != ctrl)
 			{
 				hovered = ctrl;
-				auto le = new FormsEvent();
-				le->Forms() = e->Forms();
-				le->Forms().RaisedBy = shared_from_this();
-				le->Forms().EventFlag = FormEventType::ListBoxChangeHover;
-				fw().PushEvent(le);
+				this->pushFormEvent(FormEventType::ListBoxChangeHover, e);
 			}
 		}
 		else if (e->Forms().EventFlag == FormEventType::MouseDown)
@@ -155,11 +151,7 @@ void ListBox::EventOccured(Event *e)
 			if (selected != ctrl && ctrl->GetParent() == shared_from_this() && ctrl != scroller)
 			{
 				selected = ctrl;
-				auto le = new FormsEvent();
-				le->Forms() = e->Forms();
-				le->Forms().RaisedBy = shared_from_this();
-				le->Forms().EventFlag = FormEventType::ListBoxChangeSelected;
-				fw().PushEvent(le);
+				this->pushFormEvent(FormEventType::ListBoxChangeSelected, e);
 			}
 		}
 	}

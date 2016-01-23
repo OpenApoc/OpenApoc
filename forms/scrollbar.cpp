@@ -29,10 +29,7 @@ bool ScrollBar::SetValue(int newValue)
 	if (newValue == Value)
 		return false;
 
-	auto e = new FormsEvent();
-	e->Forms().RaisedBy = shared_from_this();
-	e->Forms().EventFlag = FormEventType::ScrollBarChange;
-	fw().PushEvent(e);
+	this->pushFormEvent(FormEventType::ScrollBarChange, nullptr);
 	Value = newValue;
 	return true;
 }

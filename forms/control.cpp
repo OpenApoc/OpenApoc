@@ -67,8 +67,6 @@ void Control::EventOccured(Event *e)
 		}
 	}
 
-	Event *newevent;
-
 	if (e->Type() == EVENT_MOUSE_MOVE || e->Type() == EVENT_MOUSE_DOWN ||
 	    e->Type() == EVENT_MOUSE_UP)
 	{
@@ -82,36 +80,16 @@ void Control::EventOccured(Event *e)
 			{
 				if (!mouseInside)
 				{
-					newevent = new FormsEvent();
-					newevent->Forms().RaisedBy = shared_from_this();
-					newevent->Forms().EventFlag = FormEventType::MouseEnter;
-					newevent->Forms().MouseInfo = e->Mouse();
-					newevent->Forms().MouseInfo.X -= resolvedLocation.x;
-					newevent->Forms().MouseInfo.Y -= resolvedLocation.y;
-					fw().PushEvent(newevent);
+					this->pushFormEvent(FormEventType::MouseEnter, e);
 				}
-
-				newevent = new FormsEvent();
-				newevent->Forms().RaisedBy = shared_from_this();
-				newevent->Forms().EventFlag = FormEventType::MouseMove;
-				newevent->Forms().MouseInfo = e->Mouse();
-				newevent->Forms().MouseInfo.X -= resolvedLocation.x;
-				newevent->Forms().MouseInfo.Y -= resolvedLocation.y;
-				fw().PushEvent(newevent);
-
+				this->pushFormEvent(FormEventType::MouseMove, e);
 				e->Handled = true;
 			}
 			else
 			{
 				if (mouseInside)
 				{
-					newevent = new FormsEvent();
-					newevent->Forms().RaisedBy = shared_from_this();
-					newevent->Forms().EventFlag = FormEventType::MouseLeave;
-					newevent->Forms().MouseInfo = e->Mouse();
-					newevent->Forms().MouseInfo.X -= resolvedLocation.x;
-					newevent->Forms().MouseInfo.Y -= resolvedLocation.y;
-					fw().PushEvent(newevent);
+					this->pushFormEvent(FormEventType::MouseLeave, e);
 				}
 			}
 		}
@@ -120,13 +98,7 @@ void Control::EventOccured(Event *e)
 		{
 			if (newInside)
 			{
-				newevent = new FormsEvent();
-				newevent->Forms().RaisedBy = shared_from_this();
-				newevent->Forms().EventFlag = FormEventType::MouseDown;
-				newevent->Forms().MouseInfo = e->Mouse();
-				newevent->Forms().MouseInfo.X -= resolvedLocation.x;
-				newevent->Forms().MouseInfo.Y -= resolvedLocation.y;
-				fw().PushEvent(newevent);
+				this->pushFormEvent(FormEventType::MouseDown, e);
 				mouseDepressed = true;
 			}
 		}
@@ -135,23 +107,11 @@ void Control::EventOccured(Event *e)
 		{
 			if (newInside)
 			{
-				newevent = new FormsEvent();
-				newevent->Forms().RaisedBy = shared_from_this();
-				newevent->Forms().EventFlag = FormEventType::MouseUp;
-				newevent->Forms().MouseInfo = e->Mouse();
-				newevent->Forms().MouseInfo.X -= resolvedLocation.x;
-				newevent->Forms().MouseInfo.Y -= resolvedLocation.y;
-				fw().PushEvent(newevent);
+				this->pushFormEvent(FormEventType::MouseUp, e);
 
 				if (mouseDepressed)
 				{
-					newevent = new FormsEvent();
-					newevent->Forms().RaisedBy = shared_from_this();
-					newevent->Forms().EventFlag = FormEventType::MouseClick;
-					newevent->Forms().MouseInfo = e->Mouse();
-					newevent->Forms().MouseInfo.X -= resolvedLocation.x;
-					newevent->Forms().MouseInfo.Y -= resolvedLocation.y;
-					fw().PushEvent(newevent);
+					this->pushFormEvent(FormEventType::MouseClick, e);
 				}
 			}
 			mouseDepressed = false;
@@ -185,28 +145,16 @@ void Control::EventOccured(Event *e)
 
 			if (e->Type() == EVENT_FINGER_MOVE)
 			{
+				MouseEvent fakeMouseEvent(EVENT_MOUSE_MOVE);
+				fakeMouseEvent.Mouse() = FakeMouseData;
 				if (newInside)
 				{
 					if (!mouseInside)
 					{
-						newevent = new FormsEvent();
-						newevent->Forms().RaisedBy = shared_from_this();
-						newevent->Forms().EventFlag = FormEventType::MouseEnter;
-						// newevent->Forms().MouseInfo = e->Mouse();
-						newevent->Forms().MouseInfo = FakeMouseData;
-						newevent->Forms().MouseInfo.X -= resolvedLocation.x;
-						newevent->Forms().MouseInfo.Y -= resolvedLocation.y;
-						fw().PushEvent(newevent);
+						this->pushFormEvent(FormEventType::MouseEnter, &fakeMouseEvent);
 					}
 
-					newevent = new FormsEvent();
-					newevent->Forms().RaisedBy = shared_from_this();
-					newevent->Forms().EventFlag = FormEventType::MouseMove;
-					// newevent->Forms().MouseInfo = e->Mouse();
-					newevent->Forms().MouseInfo = FakeMouseData;
-					newevent->Forms().MouseInfo.X -= resolvedLocation.x;
-					newevent->Forms().MouseInfo.Y -= resolvedLocation.y;
-					fw().PushEvent(newevent);
+					this->pushFormEvent(FormEventType::MouseMove, &fakeMouseEvent);
 
 					e->Handled = true;
 				}
@@ -214,30 +162,18 @@ void Control::EventOccured(Event *e)
 				{
 					if (mouseInside)
 					{
-						newevent = new FormsEvent();
-						newevent->Forms().RaisedBy = shared_from_this();
-						newevent->Forms().EventFlag = FormEventType::MouseLeave;
-						// newevent->Forms().MouseInfo = e->Mouse();
-						newevent->Forms().MouseInfo = FakeMouseData;
-						newevent->Forms().MouseInfo.X -= resolvedLocation.x;
-						newevent->Forms().MouseInfo.Y -= resolvedLocation.y;
-						fw().PushEvent(newevent);
+						this->pushFormEvent(FormEventType::MouseLeave, &fakeMouseEvent);
 					}
 				}
 			}
 
 			if (e->Type() == EVENT_FINGER_DOWN)
 			{
+				MouseEvent fakeMouseEvent(EVENT_MOUSE_DOWN);
+				fakeMouseEvent.Mouse() = FakeMouseData;
 				if (newInside)
 				{
-					newevent = new FormsEvent();
-					newevent->Forms().RaisedBy = shared_from_this();
-					newevent->Forms().EventFlag = FormEventType::MouseDown;
-					// newevent->Forms().MouseInfo = e->Mouse();
-					newevent->Forms().MouseInfo = FakeMouseData;
-					newevent->Forms().MouseInfo.X -= resolvedLocation.x;
-					newevent->Forms().MouseInfo.Y -= resolvedLocation.y;
-					fw().PushEvent(newevent);
+					this->pushFormEvent(FormEventType::MouseDown, &fakeMouseEvent);
 					mouseDepressed = true;
 
 					e->Handled = true;
@@ -246,27 +182,15 @@ void Control::EventOccured(Event *e)
 
 			if (e->Type() == EVENT_FINGER_UP)
 			{
+				MouseEvent fakeMouseEvent(EVENT_MOUSE_UP);
+				fakeMouseEvent.Mouse() = FakeMouseData;
 				if (newInside)
 				{
-					newevent = new FormsEvent();
-					newevent->Forms().RaisedBy = shared_from_this();
-					newevent->Forms().EventFlag = FormEventType::MouseUp;
-					// newevent->Forms().MouseInfo = e->Mouse();
-					newevent->Forms().MouseInfo = FakeMouseData;
-					newevent->Forms().MouseInfo.X -= resolvedLocation.x;
-					newevent->Forms().MouseInfo.Y -= resolvedLocation.y;
-					fw().PushEvent(newevent);
+					this->pushFormEvent(FormEventType::MouseUp, &fakeMouseEvent);
 
 					if (mouseDepressed)
 					{
-						newevent = new FormsEvent();
-						newevent->Forms().RaisedBy = shared_from_this();
-						newevent->Forms().EventFlag = FormEventType::MouseClick;
-						// newevent->Forms().MouseInfo = e->Mouse();
-						newevent->Forms().MouseInfo = FakeMouseData;
-						newevent->Forms().MouseInfo.X -= resolvedLocation.x;
-						newevent->Forms().MouseInfo.Y -= resolvedLocation.y;
-						fw().PushEvent(newevent);
+						this->pushFormEvent(FormEventType::MouseClick, &fakeMouseEvent);
 					}
 				}
 				// FIXME: This will result in collisions with real mouse events.
@@ -280,12 +204,8 @@ void Control::EventOccured(Event *e)
 	{
 		if (IsFocused())
 		{
-			newevent = new FormsEvent();
-			newevent->Forms().RaisedBy = shared_from_this();
-			newevent->Forms().EventFlag =
-			    (e->Type() == EVENT_KEY_DOWN ? FormEventType::KeyDown : FormEventType::KeyUp);
-			newevent->Forms().KeyInfo = e->Keyboard();
-			fw().PushEvent(newevent);
+			this->pushFormEvent(
+			    e->Type() == EVENT_KEY_DOWN ? FormEventType::KeyDown : FormEventType::KeyUp, e);
 
 			e->Handled = true;
 		}
@@ -294,11 +214,7 @@ void Control::EventOccured(Event *e)
 	{
 		if (IsFocused())
 		{
-			newevent = new FormsEvent();
-			newevent->Forms().RaisedBy = shared_from_this();
-			newevent->Forms().EventFlag = FormEventType::KeyPress;
-			newevent->Forms().KeyInfo = e->Keyboard();
-			fw().PushEvent(newevent);
+			this->pushFormEvent(FormEventType::KeyPress, e);
 
 			e->Handled = true;
 		}
@@ -769,4 +685,62 @@ bool Control::eventIsWithin(const Event *e) const
 	// Only mouse & finger events have a location to be within
 	return false;
 }
+
+void Control::pushFormEvent(FormEventType type, Event *parentEvent)
+{
+	switch (type)
+	{
+		// Mouse events fall-through
+		case FormEventType::MouseEnter:
+		case FormEventType::MouseLeave:
+		case FormEventType::MouseDown:
+		case FormEventType::MouseUp:
+		case FormEventType::MouseMove:
+		case FormEventType::MouseClick:
+		{
+			auto event = new FormsEvent();
+			event->Forms().RaisedBy = shared_from_this();
+			event->Forms().EventFlag = type;
+			event->Forms().MouseInfo = parentEvent->Mouse();
+			event->Forms().MouseInfo.X -= resolvedLocation.x;
+			event->Forms().MouseInfo.Y -= resolvedLocation.y;
+			fw().PushEvent(event);
+			return;
+		}
+		// Keyboard events fall-through
+		case FormEventType::KeyDown:
+		case FormEventType::KeyUp:
+		case FormEventType::KeyPress:
+		{
+			auto event = new FormsEvent();
+			event->Forms().RaisedBy = shared_from_this();
+			event->Forms().EventFlag = type;
+			event->Forms().KeyInfo = parentEvent->Keyboard();
+			fw().PushEvent(event);
+			return;
+		}
+		// Forms events fall-through
+		case FormEventType::ButtonClick:
+		case FormEventType::CheckBoxChange:
+		case FormEventType::ListBoxChangeHover:
+		case FormEventType::ListBoxChangeSelected:
+		case FormEventType::ScrollBarChange:
+		case FormEventType::TextChanged:
+		{
+			auto event = new FormsEvent();
+			if (parentEvent)
+			{
+				event->Forms() = parentEvent->Forms();
+			}
+			event->Forms().RaisedBy = shared_from_this();
+			event->Forms().EventFlag = type;
+			fw().PushEvent(event);
+			return;
+		}
+
+		default:
+			LogError("Unexpected event type %d", (int)type);
+	}
+}
+
 }; // namespace OpenApoc

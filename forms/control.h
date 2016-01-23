@@ -2,10 +2,10 @@
 #pragma once
 #include "library/sp.h"
 
-#include "framework/includes.h"
-#include "library/colour.h"
+#include "forms/forms_enums.h"
 #include "framework/font.h"
 #include "framework/logger.h"
+#include "library/colour.h"
 
 namespace OpenApoc
 {
@@ -45,6 +45,8 @@ class Control : public std::enable_shared_from_this<Control>
 	std::list<UString> WordWrapText(sp<OpenApoc::BitmapFont> UseFont, UString WrapText) const;
 
 	void CopyControlData(sp<Control> CopyOf);
+
+	void pushFormEvent(FormEventType type, Event *parentEvent);
 
   public:
 	UString Name;
