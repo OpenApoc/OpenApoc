@@ -19,7 +19,7 @@ class GameState;
 class BaseScreen : public Stage
 {
   private:
-	static const int TILE_SIZE;
+	static const int TILE_SIZE, MINI_SIZE;
 	static const Vec2<int> NO_SELECTION;
 	static const std::unordered_map<std::vector<bool>, int> TILE_CORRIDORS;
 
@@ -35,9 +35,11 @@ class BaseScreen : public Stage
 	sp<Label> selText, buildTime;
 	std::vector<sp<Label>> statsLabels;
 	std::vector<sp<Label>> statsValues;
+	std::vector<sp<GraphicButton>> miniViews;
 
-	void RenderBase();
 	int getCorridorSprite(Vec2<int> pos) const;
+	void RenderBase();
+	void RenderMiniBase();
 	sp<GameState> state;
 
   public:

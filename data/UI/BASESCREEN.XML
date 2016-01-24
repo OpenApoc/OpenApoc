@@ -33,6 +33,54 @@
         <imageposition>tile</imageposition>
         <image/>
       </graphic>
+      <graphicbutton id="BUTTON_BASE_1">
+        <position x="24" y="53"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_2">
+        <position x="60" y="53"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_3">
+        <position x="96" y="53"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_4">
+        <position x="132" y="53"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_5">
+        <position x="24" y="89"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_6">
+        <position x="60" y="89"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_7">
+        <position x="96" y="89"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_8">
+        <position x="132" y="89"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
       <graphic id="GRAPHIC_SELECTED_FACILITY">
         <position x="62" y="186"/>
         <size width="64" height="64"/>

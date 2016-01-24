@@ -12,6 +12,7 @@ namespace OpenApoc
 {
 
 const int BaseScreen::TILE_SIZE = 32;
+const int BaseScreen::MINI_SIZE = 4;
 const Vec2<int> BaseScreen::NO_SELECTION = {-1, -1};
 
 // key is North South West East (true = occupied, false = vacant)
@@ -74,6 +75,16 @@ void BaseScreen::Begin()
 			LogError("Failed to find UI control matching \"%s\"", valueName.c_str());
 		}
 		statsValues.push_back(value);
+	}
+	for (int i = 0; i < 8; i++)
+	{
+		auto viewName = UString::format("BUTTON_BASE_%d", i + 1);
+		auto view = form->FindControlTyped<GraphicButton>(viewName);
+		if (!view)
+		{
+			LogError("Failed to find UI control matching \"%s\"", viewName.c_str());
+		}
+		miniViews.push_back(view);
 	}
 
 	auto facilities = form->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
@@ -206,11 +217,11 @@ void BaseScreen::EventOccurred(Event *e)
 		selText->SetText(tr(dragFacility->name));
 		selGraphic->SetImage(fw().data->load_image(dragFacility->sprite));
 		statsLabels[0]->SetText(tr("Cost to build"));
-		statsValues[0]->SetText("$" + Strings::FromInteger(dragFacility->buildCost));
+		statsValues[0]->SetText(UString::format("$%d", dragFacility->buildCost));
 		statsLabels[1]->SetText(tr("Days to build"));
-		statsValues[1]->SetText(Strings::FromInteger(dragFacility->buildTime));
+		statsValues[1]->SetText(UString::format("%d", dragFacility->buildTime));
 		statsLabels[2]->SetText(tr("Maintenance cost"));
-		statsValues[2]->SetText("$" + Strings::FromInteger(dragFacility->weeklyCost));
+		statsValues[2]->SetText(UString::format("$%d", dragFacility->weeklyCost));
 	}
 	else if (selFacility != nullptr)
 	{
@@ -219,9 +230,9 @@ void BaseScreen::EventOccurred(Event *e)
 		if (selFacility->def.capacityAmount > 0)
 		{
 			statsLabels[0]->SetText(tr("Capacity"));
-			statsValues[0]->SetText(Strings::FromInteger(selFacility->def.capacityAmount));
+			statsValues[0]->SetText(UString::format("%d", selFacility->def.capacityAmount));
 			statsLabels[1]->SetText(tr("Usage"));
-			statsValues[1]->SetText("0%");
+			statsValues[1]->SetText(UString::format("%d%%", 0));
 		}
 	}
 	else if (selection != NO_SELECTION)
@@ -254,6 +265,7 @@ void BaseScreen::Render()
 	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
 	form->Render();
 	RenderBase();
+	RenderMiniBase();
 	fw().gamecore->MouseCursor->Render();
 }
 
@@ -267,9 +279,9 @@ void BaseScreen::RenderBase()
 	sp<Image> grid = fw().data->load_image(
 	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:xcom3/UFODATA/BASE.PCX");
 	Vec2<int> i;
-	for (i.x = 0; i.x < Base::SIZE; ++i.x)
+	for (i.x = 0; i.x < Base::SIZE; i.x++)
 	{
-		for (i.y = 0; i.y < Base::SIZE; ++i.y)
+		for (i.y = 0; i.y < Base::SIZE; i.y++)
 		{
 			Vec2<int> pos = BASE_POS + i * TILE_SIZE;
 			fw().renderer->draw(grid, pos);
@@ -277,9 +289,9 @@ void BaseScreen::RenderBase()
 	}
 
 	// Draw corridors
-	for (i.x = 0; i.x < Base::SIZE; ++i.x)
+	for (i.x = 0; i.x < Base::SIZE; i.x++)
 	{
-		for (i.y = 0; i.y < Base::SIZE; ++i.y)
+		for (i.y = 0; i.y < Base::SIZE; i.y++)
 		{
 			int sprite = getCorridorSprite(i);
 			if (sprite != 0)
@@ -337,7 +349,7 @@ void BaseScreen::RenderBase()
 	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:3:xcom3/UFODATA/BASE.PCX");
 	for (auto &facility : base.getFacilities())
 	{
-		for (int y = 0; y < facility->def.size; ++y)
+		for (int y = 0; y < facility->def.size; y++)
 		{
 			Vec2<int> tile = facility->pos + Vec2<int>{-1, y};
 			if (getCorridorSprite(tile) != 0)
@@ -346,7 +358,7 @@ void BaseScreen::RenderBase()
 				fw().renderer->draw(doorLeft, pos + Vec2<int>{TILE_SIZE / 2, 0});
 			}
 		}
-		for (int x = 0; x < facility->def.size; ++x)
+		for (int x = 0; x < facility->def.size; x++)
 		{
 			Vec2<int> tile = facility->pos + Vec2<int>{x, facility->def.size};
 			if (getCorridorSprite(tile) != 0)
@@ -391,4 +403,55 @@ void BaseScreen::RenderBase()
 		fw().renderer->draw(facility, pos);
 	}
 }
+
+void BaseScreen::RenderMiniBase()
+{
+	const Vec2<int> BASE_POS = form->Location + miniViews[0]->Location;
+
+	// Draw corridors
+	Vec2<int> i;
+	for (i.x = 0; i.x < Base::SIZE; i.x++)
+	{
+		for (i.y = 0; i.y < Base::SIZE; i.y++)
+		{
+			int sprite = getCorridorSprite(i);
+			if (sprite != 0)
+			{
+				sprite -= 3;
+			}
+			Vec2<int> pos = BASE_POS + i * MINI_SIZE;
+			auto image = UString::format(
+			    "RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:%d:xcom3/UFODATA/BASE.PCX", sprite);
+			fw().renderer->draw(fw().data->load_image(image), pos);
+		}
+	}
+
+	// Draw facilities
+	sp<Image> normal =
+	    fw().data->load_image("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:16:xcom3/UFODATA/BASE.PCX");
+	sp<Image> highlighted =
+	    fw().data->load_image("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:17:xcom3/UFODATA/BASE.PCX");
+	sp<Image> selected =
+	    fw().data->load_image("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:18:xcom3/UFODATA/BASE.PCX");
+	for (auto &facility : base.getFacilities())
+	{
+		sp<Image> sprite = (facility->buildTime == 0) ? normal : highlighted;
+		for (i.x = 0; i.x < facility->def.size; i.x++)
+		{
+			for (i.y = 0; i.y < facility->def.size; i.y++)
+			{
+				Vec2<int> pos = BASE_POS + (facility->pos + i) * MINI_SIZE;
+				fw().renderer->draw(sprite, pos);
+			}
+		}
+	}
+
+	// Draw selection
+	{
+		Vec2<int> pos = BASE_POS - 2;
+		Vec2<int> size = miniViews[0]->Size + 4;
+		fw().renderer->drawRect(pos, size, Colour{255, 0, 0});
+	}
+}
+
 }; // namespace OpenApoc
