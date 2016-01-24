@@ -12,7 +12,9 @@ const Vec2<int> VEquipScreen::EQUIP_GRID_SLOT_SIZE{16, 16};
 const Vec2<int> VEquipScreen::EQUIP_GRID_SLOTS{16, 16};
 
 static const Colour EQUIP_GRID_COLOUR{40, 40, 40, 255};
-static const Colour EQUIP_GRID_COLOUR_SELECTED{255, 40, 40, 255};
+static const Colour EQUIP_GRID_COLOUR_ENGINE{255, 255, 40, 255};
+static const Colour EQUIP_GRID_COLOUR_WEAPON{255, 40, 40, 255};
+static const Colour EQUIP_GRID_COLOUR_GENERAL{255, 40, 255, 255};
 static const float GLOW_COUNTER_INCREMENT = M_PI / 15.0f;
 
 VEquipScreen::VEquipScreen(sp<GameState> state)
@@ -466,13 +468,23 @@ void VEquipScreen::Render()
 			{
 				// Scale the sin curve from (-1, 1) to (0, 1)
 				float glowFactor = (sin(this->glowCounter) + 1.0f) / 2.0f;
+				Colour equipColour;
+				switch (selectionType)
+				{
+					case VEquipmentType::Type::Engine:
+						equipColour = EQUIP_GRID_COLOUR_ENGINE;
+						break;
+					case VEquipmentType::Type::Weapon:
+						equipColour = EQUIP_GRID_COLOUR_WEAPON;
+						break;
+					case VEquipmentType::Type::General:
+						equipColour = EQUIP_GRID_COLOUR_GENERAL;
+						break;
+				}
 				Colour selectedColour;
-				selectedColour.r =
-				    mix(EQUIP_GRID_COLOUR_SELECTED.r, EQUIP_GRID_COLOUR.r, glowFactor);
-				selectedColour.g =
-				    mix(EQUIP_GRID_COLOUR_SELECTED.g, EQUIP_GRID_COLOUR.g, glowFactor);
-				selectedColour.b =
-				    mix(EQUIP_GRID_COLOUR_SELECTED.b, EQUIP_GRID_COLOUR.b, glowFactor);
+				selectedColour.r = mix(equipColour.r, EQUIP_GRID_COLOUR.r, glowFactor);
+				selectedColour.g = mix(equipColour.g, EQUIP_GRID_COLOUR.g, glowFactor);
+				selectedColour.b = mix(equipColour.b, EQUIP_GRID_COLOUR.b, glowFactor);
 				selectedColour.a = 255;
 				fw().renderer->drawLine(p00, p01, selectedColour, 2);
 				fw().renderer->drawLine(p01, p11, selectedColour, 2);
