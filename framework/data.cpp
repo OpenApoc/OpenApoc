@@ -168,9 +168,18 @@ sp<ImageSet> Data::load_image_set(const UString &path)
 		return imgSet;
 	}
 	TRACE_FN_ARGS1("path", path);
+	// Raw resources come in the format:
+	//"RAW:PATH:WIDTH:HEIGHT[:optional/ignored]"
+	if (path.substr(0, 4) == "RAW:")
+	{
+		auto splitString = path.split(':');
+		imgSet = RawImage::load_set(
+		    *this, splitString[1],
+		    Vec2<int>{Strings::ToInteger(splitString[2]), Strings::ToInteger(splitString[3])});
+	}
 	// PCK resources come in the format:
 	//"PCK:PCKFILE:TABFILE[:optional/ignored]"
-	if (path.substr(0, 4) == "PCK:")
+	else if (path.substr(0, 4) == "PCK:")
 	{
 		auto splitString = path.split(':');
 		imgSet = PCKLoader::load(*this, splitString[1], splitString[2]);
@@ -264,24 +273,45 @@ sp<Image> Data::load_image(const UString &path)
 	if (path.substr(0, 4) == "RAW:")
 	{
 		auto splitString = path.split(':');
-		// RAW:PATH:WIDTH:HEIGHT
-		if (splitString.size() != 4 && splitString.size() != 5)
+		// Raw resources come in the format:
+		//"RAW:PATH:WIDTH:HEIGHT[:PALETTE]"
+		// or
+		//"RAW:PATH:WIDTH:HEIGHT:INDEX[:PALETTE]" (for imagesets)
+		if (splitString.size() != 4 && splitString.size() != 5 && splitString.size() != 6)
 		{
 			LogError("Invalid RAW resource string: \"%s\"", path.c_str());
 			return nullptr;
 		}
 
-		auto pImg =
-		    RawImage::load(*this, splitString[1], Vec2<int>{Strings::ToInteger(splitString[2]),
-		                                                    Strings::ToInteger(splitString[3])});
+		sp<PaletteImage> pImg;
+		size_t palettePos;
+		if (splitString.size() >= 5 && Strings::IsInteger(splitString[4]))
+		{
+			auto imageSet = this->load_image_set(splitString[0] + ":" + splitString[1] + ":" +
+			                                     splitString[2] + ":" + splitString[3]);
+			if (!imageSet)
+			{
+				return nullptr;
+			}
+			pImg = std::dynamic_pointer_cast<PaletteImage>(
+			    imageSet->images[Strings::ToInteger(splitString[4])]);
+			palettePos = 5;
+		}
+		else
+		{
+			pImg = RawImage::load(
+			    *this, splitString[1],
+			    Vec2<int>{Strings::ToInteger(splitString[2]), Strings::ToInteger(splitString[3])});
+			palettePos = 4;
+		}
 		if (!pImg)
 		{
 			LogError("Failed to load RAW image: \"%s\"", path.c_str());
 			return nullptr;
 		}
-		if (splitString.size() == 5)
+		if (splitString.size() > palettePos)
 		{
-			auto pal = this->load_palette(splitString[4]);
+			auto pal = this->load_palette(splitString[palettePos]);
 			if (!pal)
 			{
 				LogError("Failed to load palette for RAW image: \"%s\"", path.c_str());
