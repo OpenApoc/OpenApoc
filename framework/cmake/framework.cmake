@@ -87,27 +87,3 @@ foreach (PHYSFS_LIBRARY ${PC_PHYSFS_LIBRARIES})
 endforeach(PHYSFS_LIBRARY)
 
 list(APPEND FRAMEWORK_LIBRARIES ${PHYSFS_LIBRARIES})
-
-pkg_check_modules(PC_ICU icu-uc)
-pkg_check_modules(PC_ICU_IO icu-io)
-if (NOT PC_ICU_FOUND OR NOT PC_ICU_IO_FOUND)
-		message(WARNING "Failed to find ICU pkgconfig - trying to include/link anyway...")
-	#Ubuntu 12.04 icu doesn't have a pkgconfig - try 'current' paths anyway
-	find_path(ICU_INCLUDE_DIR unicode/unistr.h HINTS ${FRAMEWORK_INCLUDE_DIRS})
-	find_path(ICU_IO_INCLUDE_DIR unicode/ustdio.h HINTS ${FRAMEWORK_INCLUDE_DIRS})
-	if (NOT ICU_INCLUDE_DIR OR NOT ICU_IO_INCLUDE_DIR)
-		message(FATAL_ERROR "libicu not found")
-	endif()
-	#HACK - this assumes the library path is already searched?
-	list(APPEND FRAMEWORK_LIBRARIES icuuc)
-	list(APPEND FRAMEWORK_LIBRARIES icudata)
-	list(APPEND FRAMEWORK_LIBRARIES icuio)
-else()
-	find_path(ICU_INCLUDE_DIR unicode/unistr.h HINTS ${PC_ICU_INCLUDEDIR})
-	list(APPEND FRAMEWORK_INCLUDE_DIRS ${ICU_INCLUDE_DIR})
-	find_path(ICU_IO_INCLUDE_DIR unicode/ustdio.h HINTS ${PC_ICU_IO_INCLUDEDIR})
-	list(APPEND FRAMEWORK_INCLUDE_DIRS ${ICU_IO_INCLUDE_DIR})
-
-	list(APPEND FRAMEWORK_LIBRARIES ${PC_ICU_LIBRARIES} ${PC_ICU_IO_LIBRARIES})
-	list(APPEND FRAMEWORK_LIBRARIES ${ICU_LIBRARIES})
-endif()
