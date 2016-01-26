@@ -107,11 +107,11 @@
       <building x0="53" x1="57" y0="71" y1="75" owner="ORG_TRANSTELLAR" name="Ecozone Apartments"/>
       <building x0="32" x1="39" y0="37" y1="41" owner="ORG_OSIRON" name="George Orwell Block"/>
       <building x0="32" x1="39" y0="42" y1="46" owner="ORG_GOVERNMENT" name="Thomas More Tower">
-        <base x="6" y="4">
+        <base x="6" y="3">
           <corridor x0="2" x1="4" y0="1" y1="2"/>
           <corridor x0="2" x1="4" y0="4" y1="5"/>
           <corridor x0="0" x1="1" y0="1" y1="5"/>
-          <corridor x0="6" x1="7" y0="1" y1="5"/>
+          <corridor x0="5" x1="6" y0="1" y1="5"/>
         </base>
       </building>
       <building x0="32" x1="39" y0="47" y1="51" owner="ORG_DIABLO" name="Dickens Estate"/>
