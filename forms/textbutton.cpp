@@ -3,22 +3,20 @@
 #include "forms/textbutton.h"
 #include "framework/framework.h"
 #include "game/resources/gamecore.h"
+#include "forms/label.h"
 
 namespace OpenApoc
 {
 
 TextButton::TextButton(UString Text, sp<BitmapFont> font)
-    : Control(), text(Text), font(font), cached(nullptr),
+    : Control(), cached(nullptr),
       buttonclick(
           fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
       buttonbackground(fw().data->load_image("UI/TEXTBUTTONBACK.PNG")),
       TextHAlign(HorizontalAlignment::Centre), TextVAlign(VerticalAlignment::Centre),
       RenderStyle(TextButtonRenderStyles::MenuButtonStyle)
 {
-	if (font)
-	{
-		palette = font->getPalette();
-	}
+	label = mksp<Label>(Text, font);
 }
 
 TextButton::~TextButton() {}
@@ -42,6 +40,14 @@ void TextButton::EventOccured(Event *e)
 
 void TextButton::OnRender()
 {
+	if (label->GetParent() == nullptr)
+	{
+		label->SetParent(shared_from_this());
+		label->Size = this->Size;
+		label->TextHAlign = this->TextHAlign;
+		label->TextVAlign = this->TextVAlign;
+	}
+
 	if (cached == nullptr || cached->size != Vec2<unsigned int>{Size.x, Size.y})
 	{
 		cached.reset(new Surface{Vec2<unsigned int>{Size.x, Size.y}});
@@ -58,62 +64,17 @@ void TextButton::OnRender()
 			case TextButtonRenderStyles::MenuButtonStyle:
 				fw().renderer->drawScaled(buttonbackground, Vec2<float>{0, 0},
 				                          Vec2<float>{Size.x, Size.y});
+				fw().renderer->drawRect(Vec2<float>{2, 2}, Vec2<float>{Size.x - 4, Size.y - 4},
+				                        Colour{48, 48, 48});
 				fw().renderer->drawFilledRect(
 				    Vec2<float>{3, 3}, Vec2<float>{Size.x - 6, Size.y - 6}, Colour{160, 160, 160});
-				fw().renderer->drawLine(Vec2<float>{2, 4}, Vec2<float>{Size.x - 2, 4},
+				fw().renderer->drawLine(Vec2<float>{3, 3}, Vec2<float>{Size.x - 3, 3},
 				                        Colour{220, 220, 220});
-				fw().renderer->drawLine(Vec2<float>{2, Size.y - 4},
-				                        Vec2<float>{Size.x - 2, Size.y - 4}, Colour{80, 80, 80});
-				fw().renderer->drawLine(Vec2<float>{2, Size.y - 3},
-				                        Vec2<float>{Size.x - 2, Size.y - 3}, Colour{64, 64, 64});
-				fw().renderer->drawRect(Vec2<float>{3, 3}, Vec2<float>{Size.x - 6, Size.y - 6},
-				                        Colour{48, 48, 48});
+				fw().renderer->drawLine(Vec2<float>{3, Size.y - 5},
+				                        Vec2<float>{Size.x - 3, Size.y - 5}, Colour{100, 100, 100});
+				fw().renderer->drawLine(Vec2<float>{3, Size.y - 4},
+				                        Vec2<float>{Size.x - 3, Size.y - 4}, Colour{64, 64, 64});
 				break;
-		}
-
-		int xpos;
-		int ypos;
-		std::list<UString> lines = WordWrapText(font, text);
-
-		switch (TextVAlign)
-		{
-			case VerticalAlignment::Top:
-				ypos = 0;
-				break;
-			case VerticalAlignment::Centre:
-				ypos = (Size.y / 2) - ((font->GetFontHeight() * lines.size()) / 2);
-				break;
-			case VerticalAlignment::Bottom:
-				ypos = Size.y - (font->GetFontHeight() * lines.size());
-				break;
-			default:
-				LogError("Unknown TextVAlign");
-				return;
-		}
-
-		while (lines.size() > 0)
-		{
-			switch (TextHAlign)
-			{
-				case HorizontalAlignment::Left:
-					xpos = 0;
-					break;
-				case HorizontalAlignment::Centre:
-					xpos = (Size.x / 2) - (font->GetFontWidth(lines.front()) / 2);
-					break;
-				case HorizontalAlignment::Right:
-					xpos = Size.x - font->GetFontWidth(lines.front());
-					break;
-				default:
-					LogError("Unknown TextHAlign");
-					return;
-			}
-
-			auto textImage = font->getString(lines.front());
-			fw().renderer->draw(textImage, Vec2<float>{xpos, ypos});
-
-			lines.pop_front();
-			ypos += font->GetFontHeight();
 		}
 	}
 	fw().renderer->draw(cached, Vec2<float>{0, 0});
@@ -127,7 +88,7 @@ void TextButton::OnRender()
 				                              Colour{255, 255, 255});
 				break;
 			case TextButtonRenderStyles::MenuButtonStyle:
-				fw().renderer->drawRect(Vec2<float>{1, 1}, Vec2<float>{Size.x - 2, Size.y - 2},
+				fw().renderer->drawRect(Vec2<float>{0, 0}, Vec2<float>{Size.x, Size.y},
 				                        Colour{255, 255, 255}, 2);
 				break;
 		}
@@ -141,24 +102,24 @@ void TextButton::Update()
 
 void TextButton::UnloadResources() {}
 
-UString TextButton::GetText() const { return text; }
+UString TextButton::GetText() const { return label->GetText(); }
 
-void TextButton::SetText(UString Text) { text = Text; }
+void TextButton::SetText(UString Text) { label->SetText(Text); }
 
-sp<BitmapFont> TextButton::GetFont() const { return font; }
+sp<BitmapFont> TextButton::GetFont() const { return label->GetFont(); }
 
-void TextButton::SetFont(sp<BitmapFont> NewFont) { font = NewFont; }
+void TextButton::SetFont(sp<BitmapFont> NewFont) { label->SetFont(NewFont); }
 
 sp<Control> TextButton::CopyTo(sp<Control> CopyParent)
 {
 	sp<TextButton> copy;
 	if (CopyParent)
 	{
-		copy = CopyParent->createChild<TextButton>(this->text, this->font);
+		copy = CopyParent->createChild<TextButton>(label->GetText(), label->GetFont());
 	}
 	else
 	{
-		copy = mksp<TextButton>(this->text, this->font);
+		copy = mksp<TextButton>(label->GetText(), label->GetFont());
 	}
 	copy->TextHAlign = this->TextHAlign;
 	copy->TextVAlign = this->TextVAlign;
@@ -173,11 +134,11 @@ void TextButton::ConfigureFromXML(tinyxml2::XMLElement *Element)
 
 	if (Element->Attribute("text") != nullptr)
 	{
-		text = tr(Element->Attribute("text"));
+		label->SetText(tr(Element->Attribute("text")));
 	}
 	if (Element->FirstChildElement("font") != nullptr)
 	{
-		font = fw().gamecore->GetFont(Element->FirstChildElement("font")->GetText());
+		label->SetFont(fw().gamecore->GetFont(Element->FirstChildElement("font")->GetText()));
 	}
 }
 }; // namespace OpenApoc

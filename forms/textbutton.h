@@ -11,13 +11,13 @@ namespace OpenApoc
 class BitmapFont;
 class Sample;
 class Image;
+class Label;
 
 class TextButton : public Control
 {
 
   private:
-	UString text;
-	sp<BitmapFont> font;
+	sp<Label> label;
 	sp<Surface> cached;
 
 	sp<Sample> buttonclick;
