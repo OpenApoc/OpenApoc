@@ -42,6 +42,8 @@ class Renderer
 	                        Scaler scaler = Scaler::Linear) = 0;
 	virtual void drawTinted(sp<Image> i, Vec2<float> position, Colour tint) = 0;
 	virtual void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c) = 0;
+	// drawRect() is expected to grow inwards, so {position, position + size} specifies the bounds
+	// of the rect no matter the thickness
 	virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c,
 	                      float thickness = 1.0) = 0;
 	virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0) = 0;
