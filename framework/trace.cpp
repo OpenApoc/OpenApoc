@@ -60,13 +60,16 @@ class TraceManager
 
 static std::unique_ptr<TraceManager> trace_manager;
 
+#if defined(PTHREADS_AVAILABLE)
+#include <pthread.h>
+#endif
+
 // thread_local isn't implemented until msvc 2015 (_MSC_VER 1900)
 #if defined(_MSC_VER) && _MSC_VER < 1900
 static __declspec(thread) EventList *events = nullptr;
 #else
 #if defined(BROKEN_THREAD_LOCAL)
 #warning Using pthread path
-#include <pthread.h>
 
 static pthread_key_t eventListKey;
 
@@ -155,6 +158,9 @@ void Trace::enable()
 
 void Trace::setThreadName(const UString &name)
 {
+#if defined(PTHREADS_AVAILABLE)
+	pthread_setname_np(pthread_self(), name.c_str());
+#endif
 	if (!Trace::enabled)
 		return;
 
