@@ -1003,12 +1003,72 @@ class OGL30Renderer : public Renderer
 	virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c,
 	                      float thickness = 1.0) override
 	{
-		this->drawLine(position, Vec2<float>{position.x + size.x, position.y}, c, thickness);
-		this->drawLine(Vec2<float>{position.x + size.x, position.y},
-		               Vec2<float>{position.x + size.x, position.y + size.y}, c, thickness);
-		this->drawLine(Vec2<float>{position.x + size.x, position.y + size.y},
-		               Vec2<float>{position.x, position.y + size.y}, c, thickness);
-		this->drawLine(Vec2<float>{position.x, position.y + size.y}, position, c, thickness);
+
+		// The lines are all shifted in x/y by {capsize} to ensure the corners are correcly covered
+		// and don't overlap (which may be an issue if alpha != 1.0f:
+		//
+		// The cap 'ownership' for lines 1,2,3,4 is shifted by (x-1), (y-1), (x+1), (y+1)
+		// In picture form:
+		//
+		// 4333333
+		// 4     2
+		// 4     2
+		// 1111112
+		//
+		// At the corners we have a bit of complexity to correctly cap & avoid overlap:
+		//
+		// p0 = position
+		// p1 = position + size
+		//
+		//  p1.y|----+-------+---------------------------+
+		//      |    |       |                           |
+		//      v    |       |   Line 3                  |
+		//      Y    |       |                           |
+		//      ^    |       C-------------------+-------+
+		//      |    | Line 4|                   |       |
+		//      |    |       |                   |       |
+		//      |    |       |                   |       |
+		//      |    |       |                   | Line 2|
+		//      |    |       |                   |       |
+		//      |    D-------+-------------------+       |
+		//      |    |            ^              |       |
+		//      |    |  Line 1    | thickness    |       |
+		//      |    |            v              |       |
+		//  p0.y|----A---------------------------B-------+
+		//      |    |                                   |
+		//     0+----------------> X <-----------------------
+		//      0   p0.x                                 p1.x
+		//
+		// As wide lines are apparently a massive ballache in opengl to stick to any kind of raster
+		// standard, this is actually implemented using rects for each line.
+		// Assuming that wide lines are centered around {+0.5, +0.5} A.y (for example) would be
+		//
+		// Line1 goes from origin A (p0) to with size (size.x - thickness, thickness)
+		// Line2 goes from origin B (p1.x - thickness, p0.y) with size (thickness, size.y -
+		// thickness)
+		// Line3 goes from origin C (p0.x + thickness, p1.y - thickness) with size (size.x -
+		// thickness, thickness)
+		// Line4 goes from origin D(p0.x, p0.y + thickness) with size (thickness, size.y -
+		// thickness)
+		Vec2<float> p0 = position;
+		Vec2<float> p1 = position + size;
+
+		Vec2<float> A = {p0};
+		Vec2<float> sizeA = {size.x - thickness, thickness};
+
+		Vec2<float> B = {p1.x - thickness, p0.y};
+		Vec2<float> sizeB = {thickness, size.y - thickness};
+
+		Vec2<float> C = {p0.x + thickness, p1.y - thickness};
+		Vec2<float> sizeC = {size.x - thickness, thickness};
+
+		Vec2<float> D = {p0.x, p0.y + thickness};
+		Vec2<float> sizeD = {thickness, size.y - thickness};
+
+		this->drawFilledRect(A, sizeA, c);
+		this->drawFilledRect(B, sizeB, c);
+		this->drawFilledRect(C, sizeC, c);
+		this->drawFilledRect(D, sizeD, c);
 	}
 	virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0) override
 	{
@@ -1129,7 +1189,7 @@ class OGL30Renderer : public Renderer
 		if (currentBoundFBO == 0)
 			flipY = true;
 		colourProgram->setUniforms(this->currentSurface->size, flipY, c);
-		Line l(p0, p1, thickness);
+		Line l(p0 + Vec2<float>{0.5, 0.5}, p1 + Vec2<float>{0.5, 0.5}, thickness);
 		l.draw(colourProgram->posLoc);
 	}
 
