@@ -689,6 +689,8 @@ class FBOData : public RendererImageData
 		               NULL);
 		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::NEAREST);
 		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::NEAREST);
+		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_S, gl::CLAMP_TO_EDGE);
+		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_T, gl::CLAMP_TO_EDGE);
 
 		gl::GenRenderbuffers(1, &depthBuffer);
 		gl::BindRenderbuffer(gl::RENDERBUFFER, depthBuffer);
@@ -728,6 +730,8 @@ class GLRGBImage : public RendererImageData
 		BindTexture b(this->texID);
 		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::NEAREST);
 		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::NEAREST);
+		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_S, gl::CLAMP_TO_EDGE);
+		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_T, gl::CLAMP_TO_EDGE);
 		gl::TexImage2D(gl::TEXTURE_2D, 0, gl::RGBA, parent->size.x, parent->size.y, 0, gl::RGBA,
 		               gl::UNSIGNED_BYTE, l.getData());
 	}
@@ -747,6 +751,8 @@ class GLPalette : public RendererImageData
 		BindTexture b(this->texID);
 		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::NEAREST);
 		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::NEAREST);
+		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_S, gl::CLAMP_TO_EDGE);
+		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_T, gl::CLAMP_TO_EDGE);
 		gl::TexImage2D(gl::TEXTURE_2D, 0, gl::RGBA, parent->colours.size(), 1, 0, gl::RGBA,
 		               gl::UNSIGNED_BYTE, parent->colours.data());
 	}
@@ -768,6 +774,8 @@ class GLPaletteImage : public RendererImageData
 		UnpackAlignment align(1);
 		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::NEAREST);
 		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::NEAREST);
+		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_S, gl::CLAMP_TO_EDGE);
+		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_T, gl::CLAMP_TO_EDGE);
 		gl::TexImage2D(gl::TEXTURE_2D, 0, gl::R8UI, parent->size.x, parent->size.y, 0,
 		               gl::RED_INTEGER, gl::UNSIGNED_BYTE, l.getData());
 	}
@@ -1115,8 +1123,6 @@ class OGL30Renderer : public Renderer
 		BindTexture t(img.texID);
 		TexParam<gl::TEXTURE_MAG_FILTER> mag(img.texID, filter);
 		TexParam<gl::TEXTURE_MIN_FILTER> min(img.texID, filter);
-		TexParam<gl::TEXTURE_WRAP_S> wrapS(img.texID, gl::CLAMP_TO_EDGE);
-		TexParam<gl::TEXTURE_WRAP_T> wrapT(img.texID, gl::CLAMP_TO_EDGE);
 		Quad q(pos, Rect<float>{{0, 0}, {1, 1}}, rotationCenter, rotationAngleRadians);
 		q.draw(rgbProgram->posLoc, rgbProgram->texcoordLoc);
 	}
@@ -1164,8 +1170,6 @@ class OGL30Renderer : public Renderer
 		BindTexture t(fbo.tex);
 		TexParam<gl::TEXTURE_MAG_FILTER> mag(fbo.tex, filter);
 		TexParam<gl::TEXTURE_MIN_FILTER> min(fbo.tex, filter);
-		TexParam<gl::TEXTURE_WRAP_S> wrapS(fbo.tex, gl::CLAMP_TO_EDGE);
-		TexParam<gl::TEXTURE_WRAP_T> wrapT(fbo.tex, gl::CLAMP_TO_EDGE);
 		Quad q(pos, Rect<float>{{0, 0}, {1, 1}});
 		q.draw(rgbProgram->posLoc, rgbProgram->texcoordLoc);
 	}
