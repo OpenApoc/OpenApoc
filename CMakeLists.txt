@@ -63,6 +63,8 @@ ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} framework/main.cpp ${sources}
 
 target_link_libraries(${CMAKE_PROJECT_NAME} ${Boost_LIBRARIES})
 target_include_directories(${CMAKE_PROJECT_NAME} SYSTEM PUBLIC ${Boost_INCLUDE_DIRS})
+# Assume all targets using cmake have pthreads
+target_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC PTHREADS_AVAILABLE)
 
 set_property(TARGET OpenApoc PROPERTY CXX_STANDARD 11)
 set_property(TARGET OpenApoc PROPERTY CXX_STANDARD_REQUIRED ON)

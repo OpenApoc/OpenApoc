@@ -13,12 +13,20 @@ static void CreateGameCore(std::atomic<bool> *isComplete)
 {
 	TRACE_FN;
 
-	UString ruleset = fw().Settings->getString("GameRules");
+	try
+	{
 
-	fw().gamecore.reset(new GameCore());
+		UString ruleset = fw().Settings->getString("GameRules");
 
-	fw().gamecore->Load(ruleset);
-	*isComplete = true;
+		fw().gamecore.reset(new GameCore());
+
+		fw().gamecore->Load(ruleset);
+		*isComplete = true;
+	}
+	catch (std::exception &e)
+	{
+		LogError("Exception creating GameCore: %s", e.what());
+	}
 }
 
 void BootUp::Begin()
