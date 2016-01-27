@@ -16,5 +16,7 @@
     <include>UI/CITY/infiltration.xml</include>
     <include>UI/CITY/score.xml</include>
     <include>UI/CITY/building.xml</include>
+    <include>UI/CITY/basebuy.xml</include>
+    <include>UI/CITY/baseselect.xml</include>
   </game>
 </openapoc>

@@ -17,6 +17,7 @@
 #include "game/tileview/voxel.h"
 #include "game/city/scenery.h"
 #include "game/city/buildingscreen.h"
+#include "game/city/baseselectscreen.h"
 
 namespace OpenApoc
 {
@@ -262,6 +263,12 @@ CityView::CityView(sp<GameState> state)
 	                  {
 		                  this->stageCmd.cmd = StageCmd::Command::PUSH;
 		                  this->stageCmd.nextStage = mksp<BaseScreen>(this->state);
+		              });
+	baseManagementForm->FindControl("BUTTON_BUILD_BASE")
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
+	                  {
+		                  this->stageCmd.cmd = StageCmd::Command::PUSH;
+		                  this->stageCmd.nextStage = mksp<BaseSelectScreen>();
 		              });
 	auto vehicleForm = this->uiTabs[1];
 	vehicleForm->FindControl("BUTTON_EQUIP_VEHICLE")
