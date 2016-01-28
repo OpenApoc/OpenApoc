@@ -176,7 +176,7 @@ void Control::EventOccured(Event *e)
 					this->pushFormEvent(FormEventType::MouseDown, &fakeMouseEvent);
 					mouseDepressed = true;
 
-					e->Handled = true;
+					//e->Handled = true;
 				}
 			}
 
