@@ -168,7 +168,7 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 #ifdef UNIT_TEST
 		outFile = stderr;
 #else
-		#ifndef ANDROID
+#ifndef ANDROID
 		outFile = fopen(LOG_PATH LOGFILE, "w");
 		if (!outFile)
 		{
@@ -177,7 +177,7 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 			LOGE("Failed to open logfile \"%s\"\n", LOGFILE);
 			return;
 		}
-		#endif
+#endif
 #endif
 	}
 
