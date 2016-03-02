@@ -197,7 +197,7 @@ add_custom_target(tidy ${CLANG_TIDY} ${FORMAT_SOURCES} -p ${CMAKE_BINARY_DIR}
 
 # Localisation
 
-set(LANGUAGES en_GB fr_FR de_DE cs es it pl ru_RU)
+set(LANGUAGES en_GB fr_FR de_DE cs es it pl pt_BR ru_RU uk)
 
 find_package(Gettext)
 if (GETTEXT_FOUND)
