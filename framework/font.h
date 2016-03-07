@@ -17,15 +17,27 @@ class Palette;
 
 class BitmapFont
 {
+  protected:
+	int spacewidth;
+	int fontheight;
+	int averagecharacterwidth;
+	std::map<UniChar, sp<PaletteImage>> fontbitmaps;
+	UString name;
+	sp<Palette> palette;
+
   public:
 	virtual ~BitmapFont();
-	virtual sp<PaletteImage> getGlyph(UniChar codepoint) = 0;
+	virtual sp<PaletteImage> getGlyph(UniChar codepoint);
 	virtual sp<PaletteImage> getString(const UString &Text);
-	virtual int GetFontHeight() = 0;
+	virtual int GetFontHeight();
 	virtual int GetFontWidth(const UString &Text);
-	virtual UString getName() = 0;
-	virtual int GetEstimateCharacters(int FitInWidth) = 0;
-	virtual sp<Palette> getPalette() = 0;
+	virtual UString getName();
+	virtual int GetEstimateCharacters(int FitInWidth);
+	virtual sp<Palette> getPalette();
+
+	/* Reads in set of "Character":"glyph description string" pairs */
+	static sp<BitmapFont> loadFont(const std::map<UniChar, UString> &charMap, int spaceWidth,
+	                               int fontHeight, UString fontName, sp<Palette> defaultPalette);
 };
 
 }; // namespace OpenApoc

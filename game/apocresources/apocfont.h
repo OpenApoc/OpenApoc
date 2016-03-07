@@ -11,25 +11,9 @@ namespace OpenApoc
 class Image;
 class Renderer;
 
-class ApocalypseFont : public BitmapFont
+class ApocalypseFont
 {
-
-  private:
-	ApocalypseFont() {}
-	std::map<UniChar, sp<PaletteImage>> fontbitmaps;
-	int spacewidth;
-	int fontheight;
-	UString name;
-	int averagecharacterwidth;
-	sp<Palette> palette;
-
   public:
-	static sp<ApocalypseFont> loadFont(tinyxml2::XMLElement *fontElement);
-	virtual ~ApocalypseFont();
-	sp<PaletteImage> getGlyph(UniChar codepoint) override;
-	int GetFontHeight() override;
-	UString getName() override;
-	int GetEstimateCharacters(int FitInWidth) override;
-	sp<Palette> getPalette() override;
+	static sp<BitmapFont> loadFont(tinyxml2::XMLElement *fontElement);
 };
 }; // namespace OpenApoc
