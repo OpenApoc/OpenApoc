@@ -79,7 +79,7 @@ sp<BitmapFont> ApocalypseFont::loadFont(tinyxml2::XMLElement *fontElement)
 		if (charMap.find(c) != charMap.end())
 		{
 			LogError("Font \"%s\" has multiple glyphs for string \"%s\" - skipping glyph",
-			         fontName.c_str(), pointString);
+			         fontName.c_str(), glyphString);
 			continue;
 		}
 
