@@ -1,6 +1,8 @@
 #pragma once
 #include "library/vec.h"
 #include "library/strings.h"
+#include "game/organisation.h"
+#include "game/stateobject.h"
 #include <set>
 
 namespace OpenApoc
@@ -9,52 +11,42 @@ namespace OpenApoc
 class Rules;
 class Image;
 class Sample;
-class VEquipmentType
+class VEquipmentType : public StateObject<VEquipmentType>
 {
   public:
+	VEquipmentType();
 	enum class Type
 	{
 		Engine,
 		Weapon,
 		General,
 	};
+	static const std::map<Type, UString> TypeMap;
 
 	enum class User
 	{
 		Ground,
 		Air,
+		Ammo,
 	};
+	static const std::map<User, UString> UserMap;
 
 	virtual ~VEquipmentType() = default;
-	virtual bool isValid(Rules &rules);
 
+	// Shared stuff
 	Type type;
 	UString id;
 	UString name;
 	int weight;
 	int max_ammo;
 	UString ammo_type;
-	UString equipscreen_sprite_name;
 	sp<Image> equipscreen_sprite;
 	Vec2<int> equipscreen_size;
-	UString manufacturer;
+	StateRef<Organisation> manufacturer;
 	int store_space;
 	std::set<User> users;
 
-  protected:
-	VEquipmentType(Type type, const UString &id);
-};
-
-class VWeaponType : public VEquipmentType
-{
-  private:
-	friend class RulesLoader;
-	VWeaponType(const UString &id);
-
-  public:
-	virtual ~VWeaponType() = default;
-	bool isValid(Rules &rules) override;
-
+	// Weapons
 	int speed;
 	int projectile_image; // FIXME: What is this?
 	int damage;
@@ -67,37 +59,15 @@ class VWeaponType : public VEquipmentType
 	int firing_arc_1;
 	int firing_arc_2;
 	bool point_defence;
-	UString fire_sfx_path;
 	sp<Sample> fire_sfx;
-	UString explosion_graphic;
-	UString icon_path;
+	int explosion_graphic;
 	sp<Image> icon;
-};
 
-class VEngineType : public VEquipmentType
-{
-  private:
-	friend class RulesLoader;
-	VEngineType(const UString &id);
-
-  public:
-	virtual ~VEngineType() = default;
-	bool isValid(Rules &rules) override;
-
+	// Engine stuff
 	int power;
 	int top_speed;
-};
 
-class VGeneralEquipmentType : public VEquipmentType
-{
-  private:
-	friend class RulesLoader;
-	VGeneralEquipmentType(const UString &id);
-
-  public:
-	virtual ~VGeneralEquipmentType() = default;
-	bool isValid(Rules &rules) override;
-
+	// Other ('general') equipment stuff
 	int accuracy_modifier;
 	int cargo_space;
 	int passengers;

@@ -27,21 +27,19 @@ VEquipScreen::VEquipScreen(sp<GameState> state)
 
 {
 	form->FindControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->SetChecked(true);
-	sp<Vehicle> vehicle;
-	for (auto &vehiclePtr : state->getPlayer()->vehicles)
+
+	for (auto &v : state->vehicles)
 	{
-		vehicle = vehiclePtr.lock();
-		if (vehicle)
-			break;
-		LogError("Invalid vehicle found in list - this should never happen as they're cleaned up "
-		         "at the end of each city update?");
+		auto vehicle = v.second;
+		if (vehicle->owner != state->getPlayer())
+			continue;
+		this->setSelectedVehicle(vehicle);
+		break;
 	}
-	if (vehicle == nullptr)
+	if (!this->selected)
 	{
-		LogError(
-		    "No vehicles - 'original' apoc didn't allow the equip screen to appear in this case");
+		LogError("No vehicles found - the original apoc didn't open the equip screen in this case");
 	}
-	this->setSelectedVehicle(vehicle);
 }
 
 VEquipScreen::~VEquipScreen() {}
@@ -50,16 +48,12 @@ void VEquipScreen::Begin()
 {
 
 	auto list = form->FindControlTyped<ListBox>("VEHICLE_SELECT_BOX");
-	for (auto &vehiclePtr : state->getPlayer()->vehicles)
+	for (auto &v : state->vehicles)
 	{
-		auto vehicle = vehiclePtr.lock();
-		if (!vehicle)
-		{
-			LogError(
-			    "Invalid vehicle found in list - this should never happen as they're cleaned up "
-			    "at the end of each city update?");
-		}
-		auto graphic = mksp<Graphic>(fw().data->load_image(vehicle->type.equip_icon_big_path));
+		auto vehicle = v.second;
+		if (vehicle->owner != state->getPlayer())
+			continue;
+		auto graphic = mksp<Graphic>(vehicle->type->equip_icon_big);
 		graphic->AutoSize = true;
 		list->AddItem(graphic);
 		this->vehicleSelectionControls[graphic] = vehicle;
@@ -140,7 +134,7 @@ void VEquipScreen::EventOccurred(Event *e)
 	{
 		// Wipe any previously-highlighted stuff
 		this->highlightedVehicle = nullptr;
-		this->highlightedEquipment = nullptr;
+		this->highlightedEquipment = "";
 
 		Vec2<int> mousePos{e->Mouse().X, e->Mouse().Y};
 
@@ -149,7 +143,7 @@ void VEquipScreen::EventOccurred(Event *e)
 		{
 			if (pair.first.within(mousePos))
 			{
-				this->highlightedEquipment = &pair.second->type;
+				this->highlightedEquipment = pair.second->type;
 				return;
 			}
 		}
@@ -159,7 +153,7 @@ void VEquipScreen::EventOccurred(Event *e)
 		{
 			if (pair.first.within(mousePos))
 			{
-				this->highlightedEquipment = &pair.second;
+				this->highlightedEquipment = pair.second;
 				this->drawHighlightBox = true;
 				this->highlightBoxColour = {255, 255, 255, 255};
 				this->highlightBox = pair.first;
@@ -169,11 +163,11 @@ void VEquipScreen::EventOccurred(Event *e)
 
 		// Check if we're over any vehicles in the side bar
 	}
-	auto bld = this->selected->building.lock();
-	sp<Base> base;
-	if (bld)
+	StateRef<Base> base;
+	for (auto &b : state->player_bases)
 	{
-		base = bld->base;
+		if (b.second->building == selected->currentlyLandedBuilding)
+			base = {state.get(), b.first};
 	}
 	// Only allow removing equipment if we're in a base, otherwise it'll disappear
 	if (e->Type() == EVENT_MOUSE_DOWN && base)
@@ -186,7 +180,7 @@ void VEquipScreen::EventOccurred(Event *e)
 			if (pair.first.within(mousePos))
 			{
 				// FIXME: base->addBackToInventory(item); vehicle->unequip(item);
-				this->draggedEquipment = &pair.second->type;
+				this->draggedEquipment = pair.second->type;
 				this->draggedEquipmentOffset = pair.first.p0 - mousePos;
 
 				// Return the equipment to the inventory
@@ -204,7 +198,7 @@ void VEquipScreen::EventOccurred(Event *e)
 			if (pair.first.within(mousePos))
 			{
 				// Dragging an object doesn't (Yet) remove it from the inventory
-				this->draggedEquipment = &pair.second;
+				this->draggedEquipment = pair.second;
 				this->draggedEquipmentOffset = pair.first.p0 - mousePos;
 				return;
 			}
@@ -223,7 +217,7 @@ void VEquipScreen::EventOccurred(Event *e)
 			// If this is within the grid try to snap it
 			Vec2<int> equipmentGridPos = equipmentPos - equipOffset;
 			equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
-			if (this->selected->canAddEquipment(equipmentGridPos, *this->draggedEquipment))
+			if (this->selected->canAddEquipment(equipmentGridPos, this->draggedEquipment))
 			{
 				if (base->inventory[draggedEquipment->id] <= 0)
 				{
@@ -231,10 +225,10 @@ void VEquipScreen::EventOccurred(Event *e)
 					         this->draggedEquipment->id.c_str());
 				}
 				base->inventory[draggedEquipment->id]--;
-				this->selected->addEquipment(equipmentGridPos, *this->draggedEquipment);
+				this->selected->addEquipment(*state, equipmentGridPos, this->draggedEquipment);
 				// FIXME: Add ammo to equipment
 			}
-			this->draggedEquipment = nullptr;
+			this->draggedEquipment = "";
 		}
 	}
 }
@@ -312,7 +306,7 @@ void VEquipScreen::Render()
 		{
 			case VEquipmentType::Type::Engine:
 			{
-				auto &engineType = static_cast<const VEngineType &>(*highlightedEquipment);
+				auto &engineType = *highlightedEquipment;
 				statsLabels[statsCount]->SetText(tr("Top Speed"));
 				statsValues[statsCount]->SetText(UString::format("%d", engineType.top_speed));
 				statsCount++;
@@ -322,7 +316,7 @@ void VEquipScreen::Render()
 			}
 			case VEquipmentType::Type::Weapon:
 			{
-				auto &weaponType = static_cast<const VWeaponType &>(*highlightedEquipment);
+				auto &weaponType = *highlightedEquipment;
 				statsLabels[statsCount]->SetText(tr("Damage"));
 				statsValues[statsCount]->SetText(UString::format("%d", weaponType.damage));
 				statsCount++;
@@ -345,8 +339,7 @@ void VEquipScreen::Render()
 			}
 			case VEquipmentType::Type::General:
 			{
-				auto &generalType =
-				    static_cast<const VGeneralEquipmentType &>(*highlightedEquipment);
+				auto &generalType = *highlightedEquipment;
 				if (generalType.accuracy_modifier)
 				{
 					statsLabels[statsCount]->SetText(tr("Accuracy"));
@@ -449,7 +442,7 @@ void VEquipScreen::Render()
 		statsValues[8]->SetText(
 		    UString::format("%d/%d", vehicle->getCargo(), vehicle->getMaxCargo()));
 
-		iconGraphic->SetImage(vehicle->type.equip_icon_small);
+		iconGraphic->SetImage(vehicle->type->equip_icon_small);
 	}
 	// Now draw the form, the actual equipment is then drawn on top
 	form->Render();
@@ -458,7 +451,7 @@ void VEquipScreen::Render()
 	Vec2<int> equipOffset = paperDollControl->Location + form->Location;
 	// Draw the equipment grid
 	{
-		for (auto &slot : selected->type.equipment_layout_slots)
+		for (auto &slot : selected->type->equipment_layout_slots)
 		{
 			Vec2<int> p00 = (slot.bounds.p0 * EQUIP_GRID_SLOT_SIZE) + equipOffset;
 			Vec2<int> p11 = (slot.bounds.p1 * EQUIP_GRID_SLOT_SIZE) + equipOffset;
@@ -510,7 +503,7 @@ void VEquipScreen::Render()
 		Rect<int> slotBounds;
 		bool slotFound = false;
 
-		for (auto &slot : this->selected->type.equipment_layout_slots)
+		for (auto &slot : this->selected->type->equipment_layout_slots)
 		{
 			if (slot.bounds.p0 == pos)
 			{
@@ -534,8 +527,8 @@ void VEquipScreen::Render()
 		pos *= EQUIP_GRID_SLOT_SIZE;
 		pos += equipOffset;
 
-		int diffX = slotBounds.getWidth() - e->type.equipscreen_size.x;
-		int diffY = slotBounds.getHeight() - e->type.equipscreen_size.y;
+		int diffX = slotBounds.getWidth() - e->type->equipscreen_size.x;
+		int diffY = slotBounds.getHeight() - e->type->equipscreen_size.y;
 
 		switch (alignX)
 		{
@@ -564,16 +557,16 @@ void VEquipScreen::Render()
 				break;
 		}
 
-		fw().renderer->draw(e->type.equipscreen_sprite, pos);
+		fw().renderer->draw(e->type->equipscreen_sprite, pos);
 		Vec2<int> endPos = pos;
-		endPos.x += e->type.equipscreen_sprite->size.x;
-		endPos.y += e->type.equipscreen_sprite->size.y;
+		endPos.x += e->type->equipscreen_sprite->size.x;
+		endPos.y += e->type->equipscreen_sprite->size.y;
 		this->equippedItems.emplace_back(std::make_pair(Rect<int>{pos, endPos}, e));
 	}
 
 	// Only draw inventory that can be used by this type of craft
 	VEquipmentType::User allowedEquipmentUser;
-	switch (this->selected->type.type)
+	switch (this->selected->type->type)
 	{
 		case VehicleType::Type::Flying:
 			allowedEquipmentUser = VEquipmentType::User::Air;
@@ -588,11 +581,11 @@ void VEquipScreen::Render()
 			allowedEquipmentUser = VEquipmentType::User::Air;
 	}
 	// Draw the inventory if the selected is in a building, and that is a base
-	auto bld = this->selected->building.lock();
-	sp<Base> base;
-	if (bld)
+	StateRef<Base> base;
+	for (auto &b : state->player_bases)
 	{
-		base = bld->base;
+		if (b.second->building == selected->currentlyLandedBuilding)
+			base = {state.get(), b.first};
 	}
 	if (base)
 	{
@@ -604,19 +597,19 @@ void VEquipScreen::Render()
 			static const int INVENTORY_COUNT_Y_GAP = 4;
 			// The gap between the end of one inventory image and the start of the next
 			static const int INVENTORY_IMAGE_X_GAP = 4;
-			auto equipIt = state->getRules().getVehicleEquipmentTypes().find(invPair.first);
-			if (equipIt == state->getRules().getVehicleEquipmentTypes().end())
+			auto equipIt = state->vehicle_equipment.find(invPair.first);
+			if (equipIt == state->vehicle_equipment.end())
 			{
 				// It's not vehicle equipment, skip
 				continue;
 			}
-			auto &equipmentType = *equipIt->second;
-			if (equipmentType.type != this->selectionType)
+			auto equipmentType = StateRef<VEquipmentType>{state.get(), equipIt->first};
+			if (equipmentType->type != this->selectionType)
 			{
 				// Skip equipment of different types
 				continue;
 			}
-			if (!equipmentType.users.count(allowedEquipmentUser))
+			if (!equipmentType->users.count(allowedEquipmentUser))
 			{
 				// The selected vehicle is not a valid user of the equipment, don't draw
 				continue;
@@ -628,7 +621,7 @@ void VEquipScreen::Render()
 				continue;
 			}
 			auto countImage = labelFont->getString(UString::format("%d", count));
-			auto &equipmentImage = equipmentType.equipscreen_sprite;
+			auto &equipmentImage = equipmentType->equipscreen_sprite;
 			fw().renderer->draw(equipmentImage, inventoryPosition);
 
 			Vec2<int> countLabelPosition = inventoryPosition;
@@ -693,12 +686,12 @@ void VEquipScreen::setSelectedVehicle(sp<Vehicle> vehicle)
 	}
 	LogInfo("Selecting vehicle \"%s\"", vehicle->name.c_str());
 	this->selected = vehicle;
-	auto backgroundImage = vehicle->type.equipment_screen;
+	auto backgroundImage = vehicle->type->equipment_screen;
 	if (!backgroundImage)
 	{
 		LogError("Trying to view equipment screen of vehicle \"%s\" which has no equipment screen "
 		         "background",
-		         vehicle->type.name.c_str());
+		         vehicle->type->name.c_str());
 	}
 
 	auto backgroundControl = form->FindControlTyped<Graphic>("BACKGROUND");

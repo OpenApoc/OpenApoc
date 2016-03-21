@@ -72,6 +72,7 @@ class CityView : public TileView
 	UpdateSpeed updateSpeed;
 
 	sp<GameState> state;
+	StateRef<City> city;
 	std::map<CityIcon, sp<Image>> icons;
 
 	std::vector<sp<Image>> vehiclePassengerCountIcons;
@@ -92,7 +93,7 @@ class CityView : public TileView
 	SelectionState selectionState;
 
   public:
-	CityView(sp<GameState> state);
+	CityView(sp<GameState> state, StateRef<City> city);
 	virtual ~CityView();
 	virtual void Update(StageCmd *const cmd) override;
 	virtual void Render() override;

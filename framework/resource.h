@@ -1,0 +1,15 @@
+#pragma once
+
+#include "library/strings.h"
+
+namespace OpenApoc
+{
+
+// ResObjects are constant objects that can be described by a string (Images, Samples, whatever)
+class ResObject
+{
+  public:
+	UString path;
+};
+
+} // namespace OpenApoc;

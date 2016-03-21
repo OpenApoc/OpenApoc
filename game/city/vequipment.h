@@ -1,6 +1,7 @@
 #pragma once
 #include "library/vec.h"
 #include "library/sp.h"
+#include "game/rules/vequipment.h"
 
 namespace OpenApoc
 {
@@ -15,26 +16,26 @@ class Projectile;
 class VEquipment
 {
   public:
-	const VEquipmentType &type;
+	StateRef<VEquipmentType> type;
 	virtual ~VEquipment() = default;
 
 	Vec2<int> equippedPosition;
 
   protected:
-	VEquipment(const VEquipmentType &type);
+	VEquipment(StateRef<VEquipmentType> type);
 };
 
 class VGeneralEquipment : public VEquipment
 {
   public:
-	VGeneralEquipment(const VGeneralEquipmentType &type);
+	VGeneralEquipment(StateRef<VEquipmentType> type);
 	~VGeneralEquipment() override = default;
 };
 
 class VEngine : public VEquipment
 {
   public:
-	VEngine(const VEngineType &type);
+	VEngine(StateRef<VEquipmentType> type);
 	~VEngine() override = default;
 };
 
@@ -51,12 +52,12 @@ class VWeapon : public VEquipment
 
   private:
 	State state;
-	std::weak_ptr<Vehicle> owner;
+	StateRef<Vehicle> owner;
 	int ammo;
 	int reloadTime;
 
   public:
-	VWeapon(const VWeaponType &type, sp<Vehicle> owner, int initialAmmo,
+	VWeapon(StateRef<VEquipmentType>, StateRef<Vehicle> owner, int initialAmmo,
 	        State initialState = State::Ready);
 	~VWeapon() override = default;
 

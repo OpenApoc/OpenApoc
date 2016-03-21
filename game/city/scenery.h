@@ -2,44 +2,44 @@
 
 #include "library/sp.h"
 #include "library/vec.h"
+#include "game/rules/scenery_tile_type.h"
+#include "game/stateobject.h"
 #include <set>
 
 namespace OpenApoc
 {
 
 class TileObjectScenery;
-class SceneryTileDef;
+class SceneryTileType;
 class Building;
 class Collision;
 class GameState;
 class TileMap;
-class StaticDoodad;
+class Doodad;
+class City;
 
 class Scenery : public std::enable_shared_from_this<Scenery>
 {
 
   public:
-	const SceneryTileDef &tileDef;
+	StateRef<SceneryTileType> type;
 
 	const Vec3<float> getPosition() const
-	{ // The "position" is the center, so offset by {0.5,0.5,0.5}
-		Vec3<float> offsetPos = pos;
+	{
+		// The "position" is the center, so offset by {0.5,0.5,0.5}
+		Vec3<float> offsetPos = currentPosition;
 		offsetPos += Vec3<float>{0.5, 0.5, 0.5};
 		return offsetPos;
 	}
 
-	Vec3<int> pos;
-	// May be NULL for no building
-	sp<Building> building;
-	sp<TileObjectScenery> tileObject;
-
-	std::set<sp<Scenery>> supports;
-	std::set<sp<Scenery>> supportedBy;
-
-	void handleCollision(GameState &state, Collision &c);
+	Vec3<int> initialPosition;
+	Vec3<float> currentPosition;
 
 	bool damaged;
 	bool falling;
+	bool destroyed;
+
+	void handleCollision(GameState &state, Collision &c);
 
 	void update(GameState &state, unsigned int ticks);
 	void collapse(GameState &state);
@@ -49,9 +49,15 @@ class Scenery : public std::enable_shared_from_this<Scenery>
 
 	bool isAlive() const;
 
-	sp<StaticDoodad> overlayDoodad;
+	sp<TileObjectScenery> tileObject;
+	sp<Doodad> overlayDoodad;
+	std::set<sp<Scenery>> supports;
+	std::set<sp<Scenery>> supportedBy;
+	// May be NULL for no building
+	StateRef<Building> building;
+	StateRef<City> city;
 
-	Scenery(const SceneryTileDef &tileDef, Vec3<int> pos, sp<Building> bld);
+	Scenery();
 	~Scenery() = default;
 };
 } // namespace OpenApoc

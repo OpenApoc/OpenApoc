@@ -1,7 +1,8 @@
 #pragma once
 #include "library/sp.h"
-
-#include "includes.h"
+#include "library/rect.h"
+#include "library/vec.h"
+#include "framework/resource.h"
 
 namespace OpenApoc
 {
@@ -18,7 +19,7 @@ enum class ImageLockUse
 	ReadWrite,
 };
 
-class Image
+class Image : public ResObject
 {
   protected:
 	Image(Vec2<unsigned int> size);
@@ -31,10 +32,8 @@ class Image
 	bool dirty;
 	Rect<unsigned int> bounds;
 
-	std::weak_ptr<ImageSet> owningSet;
+	wp<ImageSet> owningSet;
 	unsigned indexInSet;
-
-	UString sourcePath;
 };
 
 // A surface is an image you can render to. No SW locking is allowed!
@@ -110,7 +109,7 @@ class RGBImageLock
 	void *getData();
 };
 
-class ImageSet
+class ImageSet : public ResObject
 {
   public:
 	std::vector<sp<Image>> images;

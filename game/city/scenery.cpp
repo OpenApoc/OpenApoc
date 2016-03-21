@@ -2,7 +2,7 @@
 #include "game/city/building.h"
 #include "framework/logger.h"
 #include "game/tileview/tileobject_scenery.h"
-#include "game/rules/scenerytiledef.h"
+#include "game/rules/scenery_tile_type.h"
 #include "game/gamestate.h"
 #include "game/tileview/tile.h"
 #include "game/city/city.h"
@@ -10,10 +10,7 @@
 
 namespace OpenApoc
 {
-Scenery::Scenery(const SceneryTileDef &tileDef, Vec3<int> pos, sp<Building> bld)
-    : tileDef(tileDef), pos(pos), building(bld), damaged(false), falling(false)
-{
-}
+Scenery::Scenery() : damaged(false), falling(false), destroyed(false) {}
 
 void Scenery::handleCollision(GameState &state, Collision &c)
 {
@@ -34,18 +31,18 @@ void Scenery::handleCollision(GameState &state, Collision &c)
 		return;
 	}
 	// Landing pads are immortal (else this completely destroys pathing)
-	if (this->tileDef.getIsLandingPad())
+	if (this->type->isLandingPad)
 	{
 		return;
 	}
-	if (!this->damaged && tileDef.getDamagedTile())
+	if (!this->damaged && type->damagedTile)
 	{
 		this->damaged = true;
 	}
 	else
 	{
 		// Don't destroy bottom tiles, else everything will leak out
-		if (this->pos.z != 0)
+		if (this->initialPosition.z != 0)
 		{
 			this->tileObject->removeFromMap();
 			this->tileObject.reset();
@@ -65,15 +62,9 @@ void Scenery::collapse(GameState &state)
 		return;
 	// Landing pads can't collapse, and may magically float, otherwise it screws up pathing (same
 	// reason why they can't be destroyed when hit)
-	if (this->tileDef.getIsLandingPad())
+	if (this->type->isLandingPad)
 		return;
 	this->falling = true;
-
-	auto ret = state.city->fallingScenery.insert(shared_from_this());
-	if (ret.second == false)
-	{
-		LogError("Scenery object already in fallingSenery list?");
-	}
 
 	for (auto &s : this->supports)
 		s->collapse(state);
@@ -82,7 +73,7 @@ void Scenery::collapse(GameState &state)
 void Scenery::update(GameState &state, unsigned int ticks)
 {
 	if (!this->falling)
-		LogError("Not falling?");
+		return;
 	if (!this->tileObject)
 	{
 		LogError("Falling scenery with no object?");
@@ -108,19 +99,13 @@ void Scenery::update(GameState &state, unsigned int ticks)
 				// Any other scenery
 				// FIXME: Cause damage to scenery we hit?
 				this->falling = false;
-				auto doodad = state.city->placeDoodad(
-				    state.getRules().getDoodadDef("DOODAD_EXPLOSION_3"), currentPos);
+				auto doodad = city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_EXPLOSION_3"},
+				                                currentPos);
 				this->tileObject->removeFromMap();
 				this->tileObject.reset();
 				if (this->overlayDoodad)
 					this->overlayDoodad->remove(state);
 				this->overlayDoodad = nullptr;
-				auto count = state.city->fallingScenery.erase(shared_from_this());
-				if (count != 1)
-				{
-					LogError("Removed %u objects from fallingScenery list?",
-					         static_cast<unsigned>(count));
-				}
 				// return as we can't be destroyed more than once
 				return;
 			}
@@ -161,7 +146,7 @@ bool Scenery::canRepair() const
 
 void Scenery::repair(GameState &state)
 {
-	auto &map = state.city->map;
+	auto &map = this->city->map;
 	if (this->isAlive())
 		LogError("Trying to fix something that isn't broken");
 	this->damaged = false;
@@ -173,18 +158,18 @@ void Scenery::repair(GameState &state)
 	if (this->overlayDoodad)
 		this->overlayDoodad->remove(state);
 	this->overlayDoodad = nullptr;
-	map.addObjectToMap(shared_from_this());
-	if (tileDef.getOverlaySprite())
+	map->addObjectToMap(shared_from_this());
+	if (type->overlaySprite)
 	{
-		this->overlayDoodad = mksp<StaticDoodad>(tileDef.getOverlaySprite(), this->getPosition(),
-		                                         tileDef.getImageOffset());
-		map.addObjectToMap(this->overlayDoodad);
+		this->overlayDoodad =
+		    mksp<Doodad>(this->getPosition(), type->imageOffset, false, 1, type->overlaySprite);
+		map->addObjectToMap(this->overlayDoodad);
 	}
 }
 
 bool Scenery::isAlive() const
 {
-	if (this->damaged || this->falling || this->tileObject == nullptr)
+	if (this->damaged || this->falling || this->destroyed)
 		return false;
 	return true;
 }

@@ -1,7 +1,8 @@
 #pragma once
 #include "library/sp.h"
-
 #include "library/vec.h"
+#include "framework/resource.h"
+
 #include <vector>
 #include <memory>
 
@@ -20,33 +21,33 @@ class Collision
 	explicit operator bool() const { return obj != nullptr; }
 };
 
-class VoxelSlice
+class VoxelSlice : public ResObject
 {
-  private:
+  public:
 	Vec2<int> size;
 	std::vector<bool> bits;
 
-  public:
 	bool getBit(Vec2<int> pos) const;
 	void setBit(Vec2<int> pos, bool b);
 	const Vec2<int> &getSize() const { return this->size; }
 
 	VoxelSlice(Vec2<int> size);
+	VoxelSlice() = default;
 };
 
 class VoxelMap
 {
-  private:
+  public:
 	Vec3<int> size;
 	std::vector<sp<VoxelSlice>> slices;
 
-  public:
 	bool getBit(Vec3<int> pos) const;
 	void setSlice(int z, sp<VoxelSlice> slice);
 
 	const Vec3<int> &getSize() const { return this->size; }
 
 	VoxelMap(Vec3<int> size);
+	VoxelMap() = default;
 };
 
 }; // namespace OpenApoc

@@ -7,6 +7,7 @@
 #include "game/city/vehiclemission.h"
 #include "game/city/vequipment.h"
 #include "game/rules/vequipment.h"
+#include "game/rules/scenery_tile_type.h"
 #include "framework/framework.h"
 #include "framework/trace.h"
 #include "game/city/projectile.h"
@@ -30,186 +31,23 @@ static std::vector<std::set<TileObject::Type>> layerMap = {
     {TileObject::Type::Projectile, TileObject::Type::Vehicle, TileObject::Type::Shadow},
 };
 
-City::City(GameState &state) : map(state.getRules().getCitySize(), layerMap)
-{
-	Trace::start("City::buildings");
-	for (auto &def : state.getRules().getBuildingDefs())
-	{
-		this->buildings.emplace_back(
-		    mksp<Building>(def, state.getOrganisation(def.getOwnerName())));
-	}
-	Trace::end("City::buildings");
-
-	Trace::start("City::scenery");
-	for (int z = 0; z < this->map.size.z; z++)
-	{
-		for (int y = 0; y < this->map.size.y; y++)
-		{
-			for (int x = 0; x < this->map.size.x; x++)
-			{
-				auto tileID = state.getRules().getSceneryTileAt(Vec3<int>{x, y, z});
-				if (tileID == "")
-					continue;
-				sp<Building> bld = nullptr;
-
-				for (auto b : this->buildings)
-				{
-					if (b->def.getBounds().withinInclusive(Vec2<int>{x, y}))
-					{
-						if (bld)
-						{
-							LogError("Multiple buildings on tile at %d,%d,%d", x, y, z);
-						}
-						bld = b;
-						for (auto &padID : state.getRules().getLandingPadTiles())
-						{
-							if (padID == tileID)
-							{
-								LogInfo("Building %s has landing pad at {%d,%d,%d}",
-								        b->def.getName().c_str(), x, y, z);
-								b->landingPadLocations.emplace_back(x, y, z);
-								break;
-							}
-						}
-					}
-				}
-
-				auto &cityTileDef = state.getRules().getSceneryTileDef(tileID);
-				auto scenery = mksp<Scenery>(cityTileDef, Vec3<int>{x, y, z}, bld);
-				map.addObjectToMap(scenery);
-				if (cityTileDef.getOverlaySprite())
-				{
-					// FIXME: Bit of a hack to make the overlay always be at the 'top' of the tile -
-					// as getPosition() returns the /center/ add half a tile
-					scenery->overlayDoodad =
-					    mksp<StaticDoodad>(cityTileDef.getOverlaySprite(), scenery->getPosition(),
-					                       cityTileDef.getImageOffset());
-					map.addObjectToMap(scenery->overlayDoodad);
-				}
-				this->scenery.insert(scenery);
-			}
-		}
-	}
-	Trace::end("City::scenery");
-
-	Trace::start("City::scenery::support");
-	for (auto &s : this->scenery)
-	{
-		if (s->pos.z == 0)
-		{
-			continue;
-		}
-		auto pos = s->pos;
-		pos.z -= 1;
-
-		bool supported = false;
-
-		auto *t = map.getTile(pos);
-		for (auto &obj : t->ownedObjects)
-		{
-			switch (obj->getType())
-			{
-				case TileObject::Type::Scenery:
-				{
-					auto supportingSceneryTile = std::static_pointer_cast<TileObjectScenery>(obj);
-					auto supportingSceneryObject = supportingSceneryTile->getOwner();
-					supportingSceneryObject->supports.insert(s);
-					s->supportedBy.insert(supportingSceneryObject);
-					supported = true;
-					break;
-				}
-				default:
-					break;
-			}
-		}
-
-		if (!supported)
-		{
-
-			std::vector<Vec3<int>> dirs = {
-			    {1, 0, 0}, {-1, 0, 0}, {0, 1, 0}, {0, -1, 0},
-			};
-			for (auto &d : dirs)
-			{
-				pos = s->pos;
-				pos += d;
-
-				if (pos.x < 0 || pos.x >= map.size.x || pos.y < 0 || pos.y >= map.size.y)
-				{
-					continue;
-				}
-
-				auto *t = map.getTile(pos);
-				for (auto &obj : t->ownedObjects)
-				{
-					switch (obj->getType())
-					{
-						case TileObject::Type::Scenery:
-						{
-							auto supportingSceneryTile =
-							    std::static_pointer_cast<TileObjectScenery>(obj);
-							auto supportingSceneryObject = supportingSceneryTile->getOwner();
-							supportingSceneryObject->supports.insert(s);
-							s->supportedBy.insert(supportingSceneryObject);
-							supported = true;
-							break;
-						}
-						default:
-							break;
-					}
-				}
-			}
-		}
-		if (!supported)
-		{
-			LogWarning("Scenery tile at {%d,%d,%d} has no support", s->pos.x, s->pos.y, s->pos.z);
-		}
-	}
-	Trace::end("City::scenery::support");
-
-	/* Sanity check - all buildings should at have least one landing pad */
-	for (auto b : this->buildings)
-	{
-		if (b->landingPadLocations.empty())
-		{
-			LogError("Building \"%s\" has no landing pads", b->def.getName().c_str());
-		}
-	}
-	/* Keep a cache of base locations (using pointers since you can't have a vector of references)
-	 */
-	Trace::start("City::baseBuildings");
-	for (auto b : this->buildings)
-	{
-		if (!b->def.getBaseCorridors().empty())
-		{
-			b->base = mksp<Base>(state, b);
-			this->baseBuildings.emplace_back(b);
-		}
-	}
-	Trace::end("City::baseBuildings");
-}
-
 City::~City()
 {
 	TRACE_FN;
 	// Note due to backrefs to Tile*s etc. we need to destroy all tile objects
 	// before the TileMap
-	for (auto &v : this->vehicles)
-	{
-		if (v->tileObject)
-			v->tileObject->removeFromMap();
-	}
-	this->vehicles.clear();
 	for (auto &p : this->projectiles)
 	{
 		if (p->tileObject)
 			p->tileObject->removeFromMap();
+		p->tileObject = nullptr;
 	}
 	this->projectiles.clear();
 	for (auto &s : this->scenery)
 	{
 		if (s->tileObject)
 			s->tileObject->removeFromMap();
+		s->tileObject = nullptr;
 	}
 	// FIXME: Due to tiles possibly being cross-supported we need to clear that sp<> to avoid leaks
 	// Should this be pushed into a weak_ptr<> or some other ref?
@@ -218,9 +56,33 @@ City::~City()
 		s->supports.clear();
 		s->supportedBy.clear();
 	}
-	this->scenery.clear();
-	this->buildings.clear();
-	this->baseBuildings.clear();
+
+	for (auto &b : this->buildings)
+	{
+		b.second->landed_vehicles.clear();
+	}
+}
+
+void City::initMap()
+{
+	if (this->map)
+	{
+		LogError("Called on city with existing map");
+		return;
+	}
+	this->map.reset(new TileMap(this->size, layerMap));
+	for (auto &s : this->scenery)
+	{
+		this->map->addObjectToMap(s);
+	}
+	for (auto &p : this->projectiles)
+	{
+		this->map->addObjectToMap(p);
+	}
+	for (auto &d : this->doodads)
+	{
+		this->map->addObjectToMap(d);
+	}
 }
 
 void City::update(GameState &state, unsigned int ticks)
@@ -237,12 +99,13 @@ void City::update(GameState &state, unsigned int ticks)
 	Trace::start("City::update::buildings->landed_vehicles");
 	for (auto it = this->buildings.begin(); it != this->buildings.end();)
 	{
-		auto b = *it++;
-		for (auto &v : b->landed_vehicles)
+		auto b = it->second;
+		it++;
+		for (auto v : b->landed_vehicles)
 		{
 			for (auto &e : v->equipment)
 			{
-				if (e->type.type != VEquipmentType::Type::Weapon)
+				if (e->type->type != VEquipmentType::Type::Weapon)
 					continue;
 				auto w = std::dynamic_pointer_cast<VWeapon>(e);
 				w->reload(std::numeric_limits<int>::max());
@@ -251,17 +114,23 @@ void City::update(GameState &state, unsigned int ticks)
 				continue;
 			if (v->missions.empty())
 			{
-				auto &dest = this->buildings[bld_distribution(state.rng)];
-				v->missions.emplace_back(VehicleMission::gotoBuilding(*v, this->map, dest));
+				auto bldIt = this->buildings.begin();
+				auto count = bld_distribution(state.rng);
+				while (count--)
+					bldIt++;
+				StateRef<Building> dest = {&state, bldIt->first};
+				v->missions.emplace_back(VehicleMission::gotoBuilding(*v, dest));
 				v->missions.front()->start();
 			}
 		}
 	}
 	Trace::end("City::update::buildings->landed_vehicles");
 	Trace::start("City::update::vehices->update");
-	for (auto it = this->vehicles.begin(); it != this->vehicles.end();)
+	for (auto pair : state.vehicles)
 	{
-		auto v = *it++;
+		auto v = pair.second;
+		if (v->city != this)
+			continue;
 		v->update(state, ticks);
 	}
 	Trace::end("City::update::vehices->update");
@@ -275,7 +144,7 @@ void City::update(GameState &state, unsigned int ticks)
 	for (auto &p : this->projectiles)
 	{
 		auto func = std::bind(&Projectile::checkProjectileCollision, p, std::placeholders::_1);
-		collisions.emplace_back(fw().threadPool->enqueue(func, std::ref(map)));
+		collisions.emplace_back(fw().threadPool->enqueue(func, std::ref(*map)));
 	}
 	for (auto &future : collisions)
 	{
@@ -292,8 +161,7 @@ void City::update(GameState &state, unsigned int ticks)
 			// FIXME: Handle collision
 			this->projectiles.erase(c.projectile);
 			// FIXME: Get doodad from weapon definition?
-			auto doodad =
-			    this->placeDoodad(state.getRules().getDoodadDef("DOODAD_EXPLOSION_0"), c.position);
+			auto doodad = this->placeDoodad({&state, "DOODAD_EXPLOSION_0"}, c.position);
 
 			switch (c.obj->getType())
 			{
@@ -308,9 +176,8 @@ void City::update(GameState &state, unsigned int ticks)
 					// FIXME: Don't just explode scenery, but damaged tiles/falling stuff? Different
 					// explosion doodads? Not all weapons instantly destory buildings too
 
-					auto doodad =
-					    this->placeDoodad(state.getRules().getDoodadDef("DOODAD_EXPLOSION_2"),
-					                      sceneryTile->getPosition());
+					auto doodad = this->placeDoodad({&state, "DOODAD_EXPLOSION_2"},
+					                                sceneryTile->getPosition());
 					sceneryTile->getOwner()->handleCollision(state, c);
 					break;
 				}
@@ -320,13 +187,12 @@ void City::update(GameState &state, unsigned int ticks)
 		}
 	}
 	Trace::end("City::update::projectiles->update");
-	Trace::start("City::update::fallingScenery->update");
-	for (auto it = this->fallingScenery.begin(); it != this->fallingScenery.end();)
+	Trace::start("City::update::scenery->update");
+	for (auto &s : this->scenery)
 	{
-		auto s = *it++;
 		s->update(state, ticks);
 	}
-	Trace::end("City::update::fallingScenery->update");
+	Trace::end("City::update::scenery->update");
 	Trace::start("City::update::doodads->update");
 	for (auto it = this->doodads.begin(); it != this->doodads.end();)
 	{
@@ -334,26 +200,36 @@ void City::update(GameState &state, unsigned int ticks)
 		d->update(state, ticks);
 	}
 	Trace::end("City::update::doodads->update");
-
-	// Cleanup any now-dead vehicle references:
-	for (auto org : state.organisations)
-	{
-		auto &vList = org.second->vehicles;
-		vList.erase(std::remove_if(vList.begin(), vList.end(),
-		                           [](wp<Vehicle> ptr)
-		                           {
-			                           return !ptr.lock();
-			                       }),
-		            vList.end());
-	}
 }
 
-sp<Doodad> City::placeDoodad(const DoodadDef &def, Vec3<float> position)
+sp<Doodad> City::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 {
-	auto doodad = mksp<AnimatedDoodad>(def, position);
-	map.addObjectToMap(doodad);
+	auto doodad = mksp<Doodad>(position, type);
+	map->addObjectToMap(doodad);
 	this->doodads.insert(doodad);
 	return doodad;
+}
+
+template <> sp<City> StateObject<City>::get(const GameState &state, const UString &id)
+{
+	auto it = state.cities.find(id);
+	if (it == state.cities.end())
+	{
+		LogError("No citymap matching ID \"%s\"", id.c_str());
+		return nullptr;
+	}
+	return it->second;
+}
+
+template <> const UString &StateObject<City>::getPrefix()
+{
+	static UString prefix = "CITYMAP_";
+	return prefix;
+}
+template <> const UString &StateObject<City>::getTypeName()
+{
+	static UString name = "City";
+	return name;
 }
 
 } // namespace OpenApoc

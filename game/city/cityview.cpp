@@ -66,11 +66,11 @@ static const std::vector<UString> CITY_ICON_VEHICLE_PASSENGER_COUNT_RESOURCES = 
 
 } // anonymous namespace
 
-CityView::CityView(sp<GameState> state)
-    : TileView(state->city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
+CityView::CityView(sp<GameState> state, StateRef<City> city)
+    : TileView(*city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
                Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Isometric),
       baseForm(fw().gamecore->GetForm("FORM_CITY_UI")), updateSpeed(UpdateSpeed::Speed1),
-      state(state), followVehicle(false), selectionState(SelectionState::Normal)
+      state(state), city(city), followVehicle(false), selectionState(SelectionState::Normal)
 {
 	baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED1")->SetChecked(true);
 	for (auto &formName : TAB_FORM_NAMES)
@@ -86,14 +86,14 @@ CityView::CityView(sp<GameState> state)
 	}
 	this->activeTab = this->uiTabs[0];
 
-	for (auto &base : state->playerBases)
+	for (auto &pair : state->player_bases)
 	{
-		auto bld = base->bld.lock();
+		auto bld = pair.second->building;
 		if (!bld)
 		{
 			LogError("Base with invalid bld");
 		}
-		auto bldBounds = bld->def.getBounds();
+		auto bldBounds = bld->bounds;
 
 		Vec2<int> buildingCenter = (bldBounds.p0 + bldBounds.p1) / 2;
 		this->setScreenCenterTile(buildingCenter);
@@ -289,7 +289,7 @@ CityView::CityView(sp<GameState> state)
 		                  auto v = this->selectedVehicle.lock();
 		                  if (v && v->owner == this->state->getPlayer())
 		                  {
-			                  auto b = v->building.lock();
+			                  auto b = v->currentlyLandedBuilding;
 			                  if (b)
 			                  {
 				                  this->stageCmd.cmd = StageCmd::Command::PUSH;
@@ -326,22 +326,16 @@ CityView::CityView(sp<GameState> state)
 		                  if (v && v->owner == this->state->getPlayer())
 		                  {
 			                  LogWarning("Goto base for vehicle \"%s\"", v->name.c_str());
-			                  auto base = v->homeBase.lock();
-			                  if (!base)
-			                  {
-				                  LogError("Vehicle \"%s\" has no home base", v->name.c_str());
-			                  }
-			                  auto bld = base->bld.lock();
+			                  auto bld = v->homeBuilding;
 			                  if (!bld)
 			                  {
-				                  LogError("Base \"%s\" has no building", base->name.c_str());
+				                  LogError("Vehicle \"%s\" has no building", v->name.c_str());
 			                  }
 			                  LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name.c_str(),
-			                             bld->def.getName().c_str());
+			                             bld->name.c_str());
 			                  // FIXME: Don't clear missions if not replacing current mission
 			                  v->missions.clear();
-			                  v->missions.emplace_back(
-			                      VehicleMission::gotoBuilding(*v, this->state->city->map, bld));
+			                  v->missions.emplace_back(VehicleMission::gotoBuilding(*v, bld));
 			                  v->missions.front()->start();
 		                  }
 		              });
@@ -376,17 +370,20 @@ void CityView::Render()
 	TileView::Render();
 	if (state->showVehiclePath)
 	{
-		for (auto v : state->city->vehicles)
+		for (auto pair : state->vehicles)
 		{
+			auto v = pair.second;
+			if (v->city != this->city)
+				continue;
 			auto vTile = v->tileObject;
 			if (!vTile)
 				continue;
-			auto &path = v->missions.front()->getCurrentPlannedPath();
+			auto &path = v->missions.front()->currentPlannedPath;
 			Vec3<float> prevPos = vTile->getPosition();
-			for (auto *tile : path)
+			for (auto p : path)
 			{
 				auto screenOffset = this->getScreenOffset();
-				Vec3<float> pos = tile->position;
+				Vec3<float> pos = {p.x, p.y, p.z};
 				Vec2<float> screenPosA = this->tileToScreenCoords(prevPos);
 				screenPosA += screenOffset;
 				Vec2<float> screenPosB = this->tileToScreenCoords(pos);
@@ -457,7 +454,7 @@ void CityView::Update(StageCmd *const cmd)
 	*cmd = stageCmd;
 	stageCmd = StageCmd();
 
-	state->city->update(*state, ticks);
+	this->city->update(*state, ticks);
 
 	// FIXME: Possibly more efficient ways than re-generating all controls every frame?
 
@@ -478,10 +475,10 @@ void CityView::Update(StageCmd *const cmd)
 
 	if (activeTab == uiTabs[1])
 	{
-		for (auto &v : state->getPlayer()->vehicles)
+		for (auto &v : state->vehicles)
 		{
-			auto vehicle = v.lock();
-			if (!vehicle)
+			auto vehicle = v.second;
+			if (vehicle->owner != state->getPlayer())
 			{
 				continue;
 			}
@@ -552,7 +549,7 @@ void CityView::EventOccurred(Event *e)
 	{
 		LogInfo("Repairing...");
 		std::set<sp<Scenery>> stuffToRepair;
-		for (auto &s : state->city->scenery)
+		for (auto &s : this->city->scenery)
 		{
 			if (s->canRepair())
 			{
@@ -560,12 +557,11 @@ void CityView::EventOccurred(Event *e)
 			}
 		}
 		LogInfo("Repairing %u tiles out of %u", static_cast<unsigned>(stuffToRepair.size()),
-		        static_cast<unsigned>(state->city->scenery.size()));
+		        static_cast<unsigned>(this->city->scenery.size()));
 
 		for (auto &s : stuffToRepair)
 		{
 			s->repair(*state);
-			state->city->fallingScenery.erase(s);
 		}
 	}
 	// Exclude mouse down events that are over the form
@@ -588,28 +584,28 @@ void CityView::EventOccurred(Event *e)
 			    Vec2<float>{e->Mouse().X, e->Mouse().Y} - screenOffset, 9.99f);
 			auto clickBottom = this->screenToTileCoords(
 			    Vec2<float>{e->Mouse().X, e->Mouse().Y} - screenOffset, 0.0f);
-			auto collision = state->city->map.findCollision(clickTop, clickBottom);
+			auto collision = this->city->map->findCollision(clickTop, clickBottom);
 			if (collision)
 			{
 				if (collision.obj->getType() == TileObject::Type::Scenery)
 				{
 					auto scenery =
 					    std::dynamic_pointer_cast<TileObjectScenery>(collision.obj)->getOwner();
-					LogInfo("Clicked on scenery at {%d,%d,%d}", scenery->pos.x, scenery->pos.y,
-					        scenery->pos.z);
+					LogInfo("Clicked on scenery at {%f,%f,%f}", scenery->currentPosition.x,
+					        scenery->currentPosition.y, scenery->currentPosition.z);
 					if (this->selectionState == SelectionState::VehicleGotoLocation)
 					{
 
 						auto v = this->selectedVehicle.lock();
 						if (v && v->owner == state->getPlayer())
 						{
-							Vec3<int> targetPos{scenery->pos.x, scenery->pos.y,
-							                    state->city->map.size.z - 1};
+							Vec3<int> targetPos{scenery->currentPosition.x,
+							                    scenery->currentPosition.y,
+							                    this->city->map->size.z - 1};
 							// FIXME: Use vehicle 'height' hint to select target height?
 							// FIXME: Don't clear missions if not replacing current mission
 							v->missions.clear();
-							v->missions.emplace_back(
-							    VehicleMission::gotoLocation(*v, state->city->map, targetPos));
+							v->missions.emplace_back(VehicleMission::gotoLocation(*v, targetPos));
 							v->missions.front()->start();
 							LogWarning("Vehicle \"%s\" going to location {%d,%d,%d}",
 							           v->name.c_str(), targetPos.x, targetPos.y, targetPos.z);
@@ -619,19 +615,18 @@ void CityView::EventOccurred(Event *e)
 					auto building = scenery->building;
 					if (building)
 					{
-						LogInfo("Scenery owned by building \"%s\"",
-						        building->def.getName().c_str());
+						LogInfo("Scenery owned by building \"%s\"", building->name.c_str());
 						if (this->selectionState == SelectionState::VehicleGotoBuilding)
 						{
 							auto v = this->selectedVehicle.lock();
 							if (v && v->owner == state->getPlayer())
 							{
 								LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name.c_str(),
-								           building->def.getName().c_str());
+								           building->name.c_str());
 								// FIXME: Don't clear missions if not replacing current mission
 								v->missions.clear();
 								v->missions.emplace_back(
-								    VehicleMission::gotoBuilding(*v, state->city->map, building));
+								    VehicleMission::gotoBuilding(*v, building));
 								v->missions.front()->start();
 							}
 							this->selectionState = SelectionState::Normal;
@@ -643,7 +638,7 @@ void CityView::EventOccurred(Event *e)
 							{
 								// TODO: Attack building mission
 								LogWarning("Vehicle \"%s\" attack building \"%s\"", v->name.c_str(),
-								           building->def.getName().c_str());
+								           building->name.c_str());
 							}
 							this->selectionState = SelectionState::Normal;
 						}
@@ -698,10 +693,10 @@ VehicleTileInfo CityView::createVehicleInfo(sp<Vehicle> v)
 	// FIXME Fade out vehicles that are on the way to/back from the alien dimension
 	t.faded = false;
 
-	auto b = v->building.lock();
+	auto b = v->currentlyLandedBuilding;
 	if (b)
 	{
-		if (b->base == v->homeBase.lock())
+		if (b == v->homeBuilding)
 		{
 			t.state = CityUnitState::InBase;
 		}
@@ -729,7 +724,7 @@ sp<Control> CityView::createVehicleInfoControl(const VehicleTileInfo &info)
 	baseControl->Size.x -= 1;
 	baseControl->Name = "OWNED_VEHICLE_FRAME_" + info.vehicle->name;
 
-	auto vehicleIcon = baseControl->createChild<Graphic>(info.vehicle->type.icon);
+	auto vehicleIcon = baseControl->createChild<Graphic>(info.vehicle->type->icon);
 	vehicleIcon->AutoSize = true;
 	vehicleIcon->Location = {1, 1};
 	vehicleIcon->Name = "OWNED_VEHICLE_ICON_" + info.vehicle->name;

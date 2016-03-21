@@ -2,8 +2,8 @@
 
 #include "framework/stage.h"
 #include "library/vec.h"
-
 #include "forms/forms.h"
+#include "game/gamestate.h"
 
 #include <unordered_map>
 #include <vector>
@@ -13,7 +13,6 @@ namespace OpenApoc
 
 class Base;
 class Facility;
-class FacilityDef;
 class GameState;
 
 class BaseScreen : public Stage
@@ -25,10 +24,10 @@ class BaseScreen : public Stage
 
 	sp<Form> form;
 	StageCmd stageCmd;
-	Base &base;
+	StateRef<Base> base;
 	Vec2<int> selection, mousePos;
-	sp<const Facility> selFacility;
-	sp<const FacilityDef> dragFacility;
+	sp<Facility> selFacility;
+	StateRef<FacilityType> dragFacility;
 	bool drag;
 
 	sp<Graphic> baseView, selGraphic;

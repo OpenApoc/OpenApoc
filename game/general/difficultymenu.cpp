@@ -39,26 +39,26 @@ void DifficultyMenu::EventOccurred(Event *e)
 
 	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
 	{
-		UString ruleName;
+		UString initialStatePath;
 		if (e->Forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY1") == 0)
 		{
-			ruleName = "rules/difficulty1.xml";
+			initialStatePath = "data/difficulty1_patched";
 		}
 		else if (e->Forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY2") == 0)
 		{
-			ruleName = "rules/difficulty2.xml";
+			initialStatePath = "data/difficulty2_patched";
 		}
 		else if (e->Forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY3") == 0)
 		{
-			ruleName = "rules/difficulty3.xml";
+			initialStatePath = "data/difficulty3_patched";
 		}
 		else if (e->Forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY4") == 0)
 		{
-			ruleName = "rules/difficulty4.xml";
+			initialStatePath = "data/difficulty4_patched";
 		}
 		else if (e->Forms().RaisedBy->Name.compare("BUTTON_DIFFICULTY5") == 0)
 		{
-			ruleName = "rules/difficulty5.xml";
+			initialStatePath = "data/difficulty5_patched";
 		}
 		else
 		{
@@ -66,10 +66,13 @@ void DifficultyMenu::EventOccurred(Event *e)
 			return;
 		}
 
-		auto state = mksp<GameState>(ruleName);
+		auto state = mksp<GameState>();
+		state->loadGame(initialStatePath);
+		state->startGame();
+		state->initState();
 
 		stageCmd.cmd = StageCmd::Command::REPLACE;
-		stageCmd.nextStage = mksp<CityView>(state);
+		stageCmd.nextStage = mksp<CityView>(state, StateRef<City>{state.get(), "CITYMAP_HUMAN"});
 		return;
 	}
 }

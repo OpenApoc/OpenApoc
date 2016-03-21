@@ -1,0 +1,1015 @@
+research data, dimension gates: UFO2P.EXE (13EE80) [28]
+
+00 00 00 FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF 32 00 88 13 00 00 01 
+08 0A 00
+
+=================
+
+00 : lab size required (01 : large, 00 : small)
+
+00 : unknown1 (required for leads to 1&2 ?)
+
+00 : unknown2
+
+FF : prerequisite type (00 = craft equipment, 01 = agent equipment, 03 =
+alien life form) (none in this case)
+
+FF FF : unknown3
+
+FF FF : prerequisite (none in this case), see prerequisite type
+
+FF FF : leads to 1?
+
+FF FF : leads to 2?
+
+FF FF : tech prerequisite 1
+
+FF FF : tech prerequisite 2
+
+FF FF : tech prerequisite 3
+
+32 00 : score
+
+88 13 00 00 : skill hours
+
+01 : research group (00 = biochemical, 01 = quantum physics)
+
+08 : UFOPadia group (00 = Vehicles, 01 = Base Facilities, 02 = Vehicle 
+Equipment, 03 = Equipment, 04 = Organizations, 05 = VIP's, 06 = Aliens, 07 = Buildings, 08 = The 
+Alien Dimension, 09 = Alien Craft)
+
+0A 00 : UFOpedia entry, see APPENDICES (depends on UFOPaedia group)
+
+=================
+
+manufacturing data, dimension probe: UFO2P.EXE (13FD34) [48]
+
+01 00 A8 61 00 00 64 00 00 00 00 00 02 00 FF FF FF FF FF 00 FF FF FF FF FF 
+FF FF FF FF FF FF FF FF FF FF FF FF FF 70 17 00 00 03 00 14 00 01 00
+
+==================
+
+01 00 : manufacturable : 00 = false, 01 = true
+
+A0 61 00 00 : skill hours
+
+64 00 : unused1 (?)
+
+00 00 00 00 : unused2 (?)
+
+02 00 : tech required to build item, see APPENDIX F
+
+FF FF : unknown 1
+
+FF : unused 3 (?)
+
+FF FF FF FF : unused 4 (?)
+Note: changing the last FF disallows manufacturing somehow... Perhaps 'needed parts'?
+
+00 FF FF FF : unused 5 (?)
+
+FF FF FF FF : unused 6 (?)
+
+FF FF FF FF : unused 7 (?)
+
+FF FF FF FF : unused 8 (?)
+
+70 17 00 00: manufacturing cost
+
+03 00 : item type (00 = vehicle equipment, 01 = agent equipment, 02 =  
+vehicle equipment ammo, 03 = craft)
+
+14 00 : item itself, see APPENDIX B-E
+
+01 00 : lab size required (01 : large, 00 : small)
+
+==================
+
+funding : UFO2P.EXE (141470) [8]
+
+E0 22 02 00 60 67 01 00
+
+==================
+
+E0 22 02 00 : starting funds
+
+60 67 01 00 : starting funding
+
+==================
+
+craft data, Alien Probe : UFO2P.EXE (189C8C) [126]
+
+01 00 01 00 00 00 01 00 01 00 01 00 20 00 20 00 40 00 30 00 00 00 08 00 08 
+00 0E 00 58 00 40 00 20 00 20 00 10 00 0C 00 79 00 00 00 00 00 50 00 0F 00 
+E8 03 02 00 02 00 02 00 02 00 02 00 02 00 00 06 F4 01 32 00 00 00 00 00 00 
+00 00 00 00 00 01 06 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00
+
+==================
+
+01 00 : manufacturer, see APPENDIX A
+
+01 00 : movement type, 00 = ground, 01 = flying, 02 = overspawn
+
+00 00 : animation type, 00 = UFOs, 01 = directional
+
+01 00 : size x?
+
+01 00 : size y?
+
+01 00 : size z?
+
+20 00 : Image Position 1 (?)
+
+20 00 : Image Position 2 (?)
+
+40 00 : Image Position 3 (?)
+
+30 00 : Image Position 4 (?)
+
+00 00 : graphic frame to be used
+
+08 00 : built in acceleration (researchable craft, UFOs)
+
+08 00 : built in unknown
+
+0E 00 : built in top speed (researchable craft, UFOs)
+Note : all three need a value to enable inter dimensional travel, doesn't 
+work for ground vehicles
+
+58 00 : shadow graphic?
+
+40 00 : Shadow Image Position 1 (?)
+tested values : 00 = shadow disappears, 30 = normal shadow, FF = shadow does 
+not become hidden behind buildings
+
+20 00 : Shadow Image Position 2 (?)
+
+20 00 : Shadow Image Position 3 (?)
+
+10 00 : Shadow Image Position 4 (?)
+
+0C 00 : position of bullets fired from ship?
+
+79 00 : chance to evade bullets
+
+00 00 : unknown1, only on alien scout and escort, value 02
+
+00 00 : unused1?
+
+50 00 : max constitution
+
+0F 00 : remaining hitpoints before 'downed' (UFOs)
+
+E8 03 : weight
+
+02 00 : rear armor
+
+02 00 : top armor
+
+02 00 : right armor
+
+02 00 : left armor
+
+02 00 : bottom armor
+
+02 00 : front armor
+
+00 06 : passengers
+
+F4 01 : agressiveness? (lower=more agressive)
+
+32 00 : score
+
+00 : equipment layout data file, see POLICE hOVERCAR EQUIPMENT LAYOUT
+
+00 00 00 00 00 00 00 00 : equip screen picture filename (none in this case)
+located in UFODATA folder, pcx files
+
+00 : unused2?
+
+01 : unknown2
+
+06 : craft equipment, see APPENDIX B
+
+remaining 00's : additional equipment slot space
+
+==================
+
+craft equipment data, bolter 4000 : UFO2P.EXE (18AD60) [23]
+
+01 00 01 00 32 00 00 00 FF FF 00 00 00 00 01 03 64 00 3C 00 03 00 28 00
+
+==================
+
+01 : item type (00 = engine, 01 = weapon, 02 = equipment)
+
+00 : data to use, see CRAFT WEAPON DATA 2
+
+01 00 : item group (00 = ground vehicles only, 01 = air vehicles only, 02 = 
+ammo?, 03 = both)
+
+32 00 : weight
+
+00 00 : max. ammo
+
+FF FF : ammo type used, none in this case
+
+00 00 : unknown1
+
+00 00 : picture to use
+
+01 : size x
+
+03 : size y
+
+64 00 : unknown2
+
+3C 00 : unknown3
+
+03 00 : manufacturer
+
+28 00 : buy limit?
+
+==================
+
+craft weapon data, Bolter 4000 : UFO2P.EXE (18B1E0) [34]
+
+26 00 04 00 0C 00 2D 00 0C 00 16 00 00 00 00 00 90 01 40 06 02 00 02 00 00 
+00 FF FF 48 00 48 00 08 00
+
+==================
+
+26 00 : speed
+
+04 00 : projectile image
+
+0C 00 : damage
+
+2D 00 : accuracy
+
+0C 00 : fire delay
+
+16 00 : tail size
+note: needs to be set to 23(?) for guided weapons
+
+00 00 : guided : 00 = false, 01 = true
+
+00 00 : turn rate
+note: needs to be set for guided weapons
+
+90 01 : range * 2
+
+40 06 02 00 : firing arc
+
+02 00 : unknown
+
+00 00 : point defence : 00 = false, 01 = true
+
+FF FF : unknown
+
+48 00 : sound to use
+
+48 00 : idem?
+
+08 00 : explosion on impact graphic ( = damage type? )
+
+==================
+
+craft engine data, Metro Roadhog : UFO2P.EXE (18B534) [6]
+
+C8 00 00 00 03 00
+
+==================
+
+C8 00 00 00 : engine power
+
+03 00 : top speed
+
+==================
+
+craft cargo data, Light weapons control : UFO2P.EXE (18B576) [18]
+
+5A 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+==================
+
+5A 00 : accuracy modifier (100 - value)
+
+00 00 : cargo space
+
+00 00 : passengers
+
+00 00 : aliens held
+
+00 00 : missile jamming (100 - value)
+
+00 00 : shielding
+
+00 00 : cloaking
+
+00 00 : teleporting
+
+00 00 : dimension shifting (not used)
+
+==================
+
+police hovercar equipment layout : UFO2P.EXE (18BB2A) [362]
+
+09 00 05 01 01 03 01 01 01 00 0A 01 01 03 01 01 01 00 07 03 02 02 00 01 01 
+01 07 0B 01 01 02 00 00 00 08 0B 01 01 02 00 00 00 07 0C 01 01 02 00 00 00 
+08 0C 01 01 02 00 00 00 07 0D 01 01 02 00 00 00 08 0D 01 01 02 00 00 00 00 
+...
+
+==================
+
+09 00 : amount of slots (2 weapon + 1 engine + 6 cargo spaces)
+
+05 : x location of slot (left weapon, in this case)
+
+01 : y location of slot
+
+01 : x size of slot
+
+03 : y size of slot
+
+01 : slot type (00 = engine, 01 = weapon, 02 = cargo)
+
+01 : unknown 1
+
+01 : x centering of item in slot (00 = left, 01 = center, 02 = right)
+
+00 : y centering of item in slot (00 = up, 01 = center, 02 = down)
+
+0A : x location of slot (right weapon)
+
+...
+
+07 : x location of slot (engine)
+
+...
+
+==================
+
+phoenix hovercar economics : UFO2P.EXE (18DD10) [22]
+
+01 00 E0 2E 00 00 04 00 0F 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+==================
+
+01 00 : available from week
+
+E0 2E 00 00 : base price
+
+04 00 : minimum stock increase
+
+0F 00 : maximum stock increase
+
+00 00 00 00 : current price (in savegame.0X)?
+
+00 00 00 00 : current amount for sale (in savegame.0X)?
+
+00 00 00 00 : last week amount for sale (in savegame.0X)?
+
+==================
+
+Agent Weapon Data : UFO2P.EXE (19AD4C) [38]
+
+04 00 00 00 38 00 00 00 3C 00 00 00 00 00 00 00 90 01 E8 03 02 00 02 00 00
+00 FF FF FF FF FF FF 04 00 FF FF 07 00
+
+==================
+
+04 00 : unknown 1
+
+00 00 : unknown 2
+
+38 00 : Power
+
+00 00 : Unknown 3
+
+3C 00 : Unknown 4
+
+00 00 : Unknown 5
+
+00 00 : Unknown 6
+
+00 00 : Unknown 7
+
+90 01 : Unknown 8
+
+E8 03 : Unknown 9
+
+02 00 : Unknown 10
+
+02 00 : Unknown 11
+
+00 00 : Unknown 12
+
+FF FF : Unknown 13
+
+FF FF : unknown 14
+
+FF FF : Unknown 15
+
+04 00 : Unknown 16
+
+FF FF : Unknown 17
+
+07 00 : Unknown 18
+
+===================
+
+police hovercar 5 craft data : SAVEGAME.0X (N/A) [630]
+
+FF FF 05 00 01 00 0A 00 50 6F 6C 69 63 65 20 48 6F 76 65 72 63 61 72 20 35 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+13 00 48 00 FF FF 00 00 00 00 00 00 00 00 00 00 01 00 01 00 01 00 20 00 20 
+00 40 00 30 00 13 00 48 00 01 00 05 00 13 00 48 00 FF FF 14 00 49 00 FF FF 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 09 FF 32 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 13 00 48 00 FF FF 67 00 00 00 00 00 
+00 00 00 00 04 00 04 00 0C 00 00 00 00 00 00 01 03 00 32 00 00 00 00 00 04 
+00 7A 00 70 02 10 09 F0 FF 00 00 01 00 FF FF 00 00 00 00 00 00 01 00 01 00 
+01 00 00 00 28 00 00 00 00 00 FF FF 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF 00 00 
+00 00 00 00 00 00 00 00 00 00 06* 00 04 00 00 00 00 00 00 00 00 00 00 00 00 
+00 B6 03 00 00 00 00 02 00 02 00 02 00 02 00 02 00 02 00 00 00 64 00 01 01 
+09 15 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 2C 01 E0 2E 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00
+
+==================
+
+FF FF 05 00 : unknown
+
+01 : movement type, 00 = ground, 01 = flying, 02 = overspawn
+
+0A : craft type, see APPENDIX C
+
+50 6F 6C 69 63 65 20 48 6F 76 65 72 63 61 72 20 35 : Police Hovercar 5, name
+
+13 : overhead map icon location x
+
+48 : overhead map icon location y
+
+FF FF : unknown
+
+01 : size x?
+
+01 : size y?
+
+01 : size z?
+
+20 : x position of graphic?
+
+20 : y position of graphic?
+
+40 : unknown
+
+30 : unknown
+
+13 : ? location x
+
+48 : ? location y
+
+01 : unknown
+
+05 : unknown
+
+13 : ? location x
+
+48 : ? location y
+
+...
+
+06* : vehicle mission? (06 = auto-attacks nearby enemies, only works on 
+vehicles owned by Megapol)
+
+==================
+
+car One Building data : CITYMAP5.BLD (000000) [226]
+
+4C 00 03 00 10 00 03 00 0A 00 00 00 5E 09 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 18 00 00 00 00 
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 F0 4B 64 0A 9F 08 41 00 AD 00 
+07 00 00 00 00 03 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 
+00
+
+==================
+
+4C 00 : building name
+
+03 00 : x1 position
+
+10 00 : x2 position
+
+03 00 : y1 position
+
+0A 00 : y2 position
+
+00 00 : unknown
+
+5E 09 : unknown
+
+series of 00 : used in savedgames
+
+18 : building function
+
+F0 4B 64 0A 9F 08 41 :unknown
+
+AD : unknown
+
+07 : unknown
+
+00 : purchaseable building?
+
+03 : owner, see APPENDIX A
+
+==================
+
+APPENDIX A : organization values
+--------------------------------
+00 X-COM
+01 Alien
+02 Government
+03 Megapol
+04 Cult of Sirius
+05 Marsec
+06 Superdynamics
+07 General Metro
+08 Cyberweb
+09 Transtellar
+0A Solmine
+0B Sensovision
+0C Lifetree
+0D Nutrivend
+0E Evonet
+0F Sanctuary Clinic
+10 Nanotech
+11 Energen
+12 Synthemesh
+13 Gravball League
+14 Psyke
+15 Diablo
+16 Osiron
+17 S.E.L.F.
+18 Mutant Alliance
+19 Extropians
+1A Technocrats
+1B Civilian
+
+APPENDIX B : equipment values
+--------------------------------
+;flying vehicle equipment
+
+00 Empty Section
+01 Bolter 4000 Laser Gun
+02 Lancer 7000 Laser Gun
+03 Rendor Plasma Gun
+04 Lineage Plasma Cannon
+05 Plasma Multi-System
+06 Light Disruptor Beam
+07 Medium Disruptor Beam
+08 Heavy Disruptor Beam
+09 40mm Auto Cannon
+0A Janitor Missile Array
+0B Justice Missile Launcher
+0C Prophet Missile Array
+0D Retribution Missile Launcher
+0E Disruptor Bomb Launcher
+0F Stasis Bomb Launcher
+10 Disruptor Multi-Bomb Launcher
+11 Laser Defense Array
+12 Plasma Defense Array
+13 SD Standard
+14 SD Deluxe
+15 SD Sports
+16 SD Turbo
+17 SD Elite
+18 SD Special
+
+;ground vehicle equipment
+
+19 40mm Auto Cannon Turret
+1A Airguard Anti-Air Cannon
+1B GLM Array
+1C Plasma Turret Cannon
+1D GLM Air defense
+1E Rumble Cannon
+1F Metro Roadhog
+20 Metro Roadgrav
+21 Metro Turbograv
+22 Metro Powergrav
+23 Metro Multipower Plus
+
+;both
+
+24 Light Weapons Control
+25 Medium Weapons Control
+26 Heavy Weapons Control
+27 Advanced Control System
+28 Cargo Module
+29 Passenger Module
+2A Bio-Transport Module
+2B Missile Evasion Matrix
+2C Small Disruption Shield
+2D Large Disruption Shield
+2E Cloaking Field
+2F Teleporter
+30 Dimension Shifter
+
+FF placeholder for larger equipment (not 1x1)
+
+Appendix C : craft values
+--------------------------------
+00 Alien Probe
+01 Alien Scout
+02 Alien Transporter
+03 Alien Fast Attack Ship
+04 Alien Destroyer
+05 Alien Assault Ship
+06 Alien Bomber
+07 Alien Escort
+08 Alien Battleship
+09 Alien Mothership
+0A Police Hovercar
+0B Airtaxi
+0C Rescue Transport
+0D Construction Vehicle
+0E Airtrans
+0F Space Liner
+10 Phoenix Hovercar
+11 Hoverbike
+12 Valkyrie Interceptor
+13 Hawk Air Warrior
+14 Dimension Probe
+15 Biotrans
+16 Explorer
+17 Retaliator
+18 Annihilator
+19 Autotaxi
+1A Autotrans
+1B Police Car
+1C Civilian Car
+1D Stormdog
+1E Wolfhound APC
+1F Blazer Turbo Bike
+20 Griffon AFV
+21 Overspawn
+
+Appendix D : Agent Equipment Values
+--------------------------------
+00 Empty
+01 Megapol AP Grenade
+02 Megapol Stun Grenade
+03 Megapol Smoke Grenade
+04 Marsec Proximity Mine
+05 Marsec High Explosive
+06 Megapol Lawpistol
+07 Megapol Lawpistol Clip
+08 Marsec M4000 Machine Gun
+09 Marsec M4000 Gun Clip
+0A Megapol Laser Sniper Gun
+0B Megapol Laser Pod
+0C Megapol Auto Cannon
+0D Auto Cannon AP Clip
+0E Auto Cannon HE Clip
+0F Auto Cannon IN Clip
+10 Megapol Plasma Gun
+11 Megapol Plasma Pod
+12 Marsec Heavy Launcher
+13 Heavy Launcher AG Missile
+14 Heavy Launcher HE Missile
+15 Heavy Launcher IN Missile
+16 Marsec MiniLauncher
+17 MiniLauncher AG Missile
+18 MiniLauncher HE Missile
+19 MiniLauncher IN Missile
+1A Megapol Stun Grapple
+1B Alien Gas Grenade
+1C Tracker Gun Clip
+1D Tracker Gun
+1E Multi-Tracker
+1F PSI-Grenade
+20 ForceWeb
+21 Toxigun
+22 Toxigun A-Clip
+23 Toxigun B-Clip
+24 Toxigun C-Clip
+25 Dimension Destabiliser
+26 Mind Shield
+27 Mind Bender
+28 Alien Detector
+29 Disruptor Gun
+2A Devastator Cannon
+2B Boomeroid
+2C Power Sword
+2D Brainsucker Launcher
+2E Entropy Launcher
+2F Dimension Missile Launcher
+30 Dimension Missile
+31 Vortex Mine
+32 Personal Disruptor Shield
+33 Personal Teleporter
+34 Personal Cloaking Field
+35 Dimension Force Field
+36 Energy Pod
+37 Medi-kit
+38 Motion Scanner
+39 Brainsucker Pod
+3A Entropy Pod
+3B Incendiary Grenade
+3C Megapol Leg Armor
+3D Megapol Body Armor
+3E Megapol Right Arm Armor
+3F Megapol Left Arm Armor
+40 Megapol Helmet
+41 Marsec Leg Units
+42 Marsec Body Unit
+43 Marsec Right Arm Unit
+44 Marsec Left Arm Unit
+45 Marsec Head Unit
+46 X-COM Leg Shields
+47 X-COM Body Shield
+48 X-COM Right Arm Shield
+49 X-COM Left Arm Shield
+4A X-COM Head Shield
+4B Psimorph's Mindbender
+4C Megaspawn's Disruptor
+4D Megaspawn's Launcher
+4E Spitter's Vomit Funnel
+4F Multiworm's Spit
+50 Alien Egg's Vomit Tube
+51 Hyperworm's Bite
+52 Queenspawn's Tentacles
+53 Popper's Bomb
+54 Psiclone
+55 Elerium Pod
+56 Alien Artifact
+
+Appendix E : Vehicle Equipment Ammo Values
+--------------------------------
+00 Fusion Powerfuel
+01 Elerium-115
+02 Zorium
+03 40mm Auto Cannon round
+04 Janitor Missile
+05 Justice Missile
+06 Prophet Missile
+07 Retribution Missile
+08 Disruptor Bomb
+09 Stasis Bomb
+0A Disruptor Multi-Bomb
+0B 40mm Auto Cannon Ammo
+0C Airguard Anti-Air Ammo
+0D GLM Array Missile
+0E GLM Air defense Missile
+
+Appendix F : tech values
+--------------------------------
+00 Dimension Gates
+01 The Alien Dimension
+02 Dimension Probe
+03 Bio-Transport
+04 Explorer
+05 Retaliator
+06 Annihilator
+07 Brainsucker Pods
+08 Brainsucker Autopsy
+09 Brainsucker
+0A Multiworm Egg Autopsy
+0B Multiworm Egg
+0C Multiworm Autopsy
+0D Multiworm
+0E Hyperworm Autopsy
+0F Hyperworm
+10 Chrysalis Autopsy
+11 Chrysalis
+12 Anthropod Autopsy
+13 Anthropod
+14 Psimorph Autopsy
+15 Psimorph
+16 Spitter Autopsy
+17 Spitter
+18 Megaspawn Autopsy
+19 Megaspawn
+1A Popper Autopsy
+1B Popper
+1C Skeletoid Autopsy
+1D Skeletoid
+1E Micronoid Autopsy
+1F Micronoid
+20 Queenspawn Autopsy
+21 Queenspawn
+22 Overspawn Autopsy
+23 Overspawn Autopsy
+24 The Alien Genetic Structure
+25 The Alien Life Cycle
+26 The Real Alien Threat
+27 Biological Warfare
+28 Toxin Type B
+29 Toxin Type C
+2A Alien Gas
+2B Advanced Security Station
+2C Advanced Biochemistry Lab
+2D Advanced Quantum Physics Lab
+2E Advanced Alien Containment
+2F Advanced Workshop
+30 Disruptor Gun
+31 Devastator Cannon
+32 Boomeroid
+33 Brainsucker Launcher
+34 Entropy Launcher
+35 Entropy Pod
+36 Dimension Missile Launcher
+37 Dimension Missile
+38 Vortex Mine
+39 Personal Disruptor Shield
+3A Personal Teleporter
+3B Personal Cloaking Field
+3C Dimension Destabiliser
+3D Disruptor Armor
+3E Light Disruptor Beam
+3F Medium Disruptor Beam
+40 Heavy Disruptor Beam
+41 Disruptor Inversion Bomb
+42 Stasis Field Bomb
+43 Disruptor Multi-Bomb
+44 X-COM Advanced Control System
+45 Bio-Transport Module
+46 Small Disruption Shield
+47 Large Disruption Shield
+48 Cloaking Field
+49 Teleporter
+4A Dimension Shifter
+4B Alien Propulsion System
+4C Alien Control System
+4D Alien Energy Source
+4E UFO type 1
+4F UFO type 2
+50 UFO type 3
+51 UFO type 4
+52 UFO type 5
+53 UFO type 6
+54 UFO type 7
+55 UFO type 8
+56 UFO type 9
+57 UFO type 10
+58 Alien building
+59 Alien building
+5A Alien building
+5B Alien building
+5C Alien building
+5D Alien building
+5E Alien building
+5F Alien building
+60 Alien building
+61 Alien building
+62 One way to win
+
+NOTES
+=====
+
+$19174C (ufo2p.exe): ufopaedia equipment ?
+
+$907-$908 (tactgame.0x): selected squad #
+
+$6ABAC (savegame.0x): item alien artifact true/false (dimension destabiliser)
+
+437081 (savegame.0X): UFO shot down score
+
+437218 (savegame.0X): small shield enabled for UFOs true/false
+
+443543: savegame cequip alien artifact true/false
+
+644415 (ufo2p.exe): 74 -> 75 disable UFO drop troops 
+
+
+KNOWN DATA (UFO2P.EXE) english
+==============================
+1300148 - 1300691		;facility data
+
+1302012 - 1303901		;UFO mission data
+1303902	- 1303903		;not used?
+1303904 - 1304463		;UFO crew data
+1304464 - 1305023		;UFO drop troops data
+
+1305450 - 1305478		;craft ammo manufacturers data
+
+1306240 - 1309011		;research data
+1309012 - 1310003		;not used?
+1310004 - 1312152		;manufacturing data
+
+1315942 - 1316442		;funding data
+
+1319284 - 1319363		;same as below (not used/for megaprime vehicles?)
+1319364 - 1319463		;cequip score req data
+
+1319592 - 1319678		;aequip alien artifact data
+1319679 - 1320330		;unknown; used for equipping routine??
+1320332 - 1321355		;base layout data
+
+1349026 - 1349486		;vehicle names
+1349488 - 1351087		;aequip names
+1351089 - 1351120		;unit measurements
+1351122 - 1353322		;building names
+1353324 - 1353639		;facility names
+1353641 - 1354564		;cequip names
+1354566 - 1355304		;building functions
+
+1355537 - 1355822		;org names
+
+1356174 - 1356442		;craft ammo names
+
+1369018 - 1370656		;research topics
+1370658 - 1376753		;research short descriptions
+1376755 - 1377625		;manufacturing items
+1377627 - 1377939		;senate relationships
+1377941 - 1378103		;alien unit names
+1378105 - 1378168		;agent ranks
+
+1387229 - 1387318		;ufopaedia categories
+
+1391631 - 1392287		;unit names
+
+1393142 - 1393176		;difficulty levels
+
+1394838 - 1395054		;damage types
+
+1396752 - 1397090		;UFO growth rates
+1397092 - 1397490		;UFO mission patterns
+
+1398132 - 1403112		;unit stats data
+1403116 - 1404952		:equipment sets (builtin)
+
+1609384 - 1609492		;organization # vehicles
+1609496 - 1609652		:vehicle park spawn table
+
+1609792 - 1612924		;default relations
+
+1612940 - 1617223		;vehicle data
+1617224 - 1618398		;cequip1 data
+1618400 - 1619248		;cequip3 data (weapons)
+1619250				;not used?
+1619252 - 1619316		;cequip3 data (engines)
+1619318 - 1619550		;cequip3 data (cargo)
+
+1620416 - 1629103		;vehicle slot data
+1629104 - 1630926		;market data (vehicles & cequip)
+1630930 - 1630931		;not used?
+1630932 - 1631258		;market data (cequip ammo)
+1631262 - 1632231		;not used?
+1632232 - 1634142		;market data (aequip)
+
+1644906 - 1645187		;starting available UFOPaedia entries
+
+1645484 - 1646020		;alien building defenses data
+
+1681936 - 1682762		;damage mod data
+1682764 - 1684434		;aequip3 data
+1684436 - 1684584		;aequip2 data (protection)
+1684586 - 1685160		;aequip2 data (weapons)
+1685162 - 1686726		;aequip1 data
+1686728 - 1687219		;aequip2 data (other)
+1687220 - 1687356		;aequip score req data
+1687360 - 1689998		;aequip sets data
+END
+
+KNOWN DATA (SAVEGAME.0X)
+========================
+
+176-178				;time before next UFO incursion
+
+548 - 2115			;relations
+
+33136 - 77864			;vehicles
+
+97870 - 122503			;buildings
+
+133962 - 134505			;facilities
+134506 - 171585			;agents
+
+212288 - 224548			;funding
+
+424970 - 424988			;UFOs in AD
+
+428146 - 430048			;organizations vehicle park
+
+430536 - 435277			;market

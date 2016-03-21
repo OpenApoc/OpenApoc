@@ -1,6 +1,7 @@
 #pragma once
 #include "library/sp.h"
 #include "library/strings.h"
+#include "game/stateobject.h"
 #include <vector>
 
 namespace OpenApoc
@@ -15,14 +16,10 @@ class DoodadFrame
 	int time;
 };
 
-class DoodadDef
+class DoodadType : public StateObject<DoodadType>
 {
-  private:
-	DoodadDef() {}
-	friend class RulesLoader;
-
   public:
-	UString ID;
+	DoodadType() = default;
 	int lifetime;
 	Vec2<int> imageOffset;
 	std::vector<DoodadFrame> frames;

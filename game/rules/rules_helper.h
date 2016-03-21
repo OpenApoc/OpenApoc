@@ -77,6 +77,25 @@ bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName,
 }
 
 template <typename T>
+bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName,
+                   const std::map<T, UString> &reversedValueMap, T &output)
+{
+	UString str;
+	if (!ReadAttribute(element, attributeName, str))
+		return false;
+	for (auto &pair : reversedValueMap)
+	{
+		if (pair.second == str)
+		{
+			output = pair.first;
+			return true;
+		}
+	}
+	LogWarning("No matching value for \"%s\"", str.c_str());
+	return false;
+}
+
+template <typename T>
 bool ReadAttribute(tinyxml2::XMLElement *element, const UString &attributeName, T &output,
                    const T &defaultValue)
 {

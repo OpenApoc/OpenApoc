@@ -1,6 +1,6 @@
 #pragma once
 
-#include "game/rules/facilitydef.h"
+#include "game/rules/facility_type.h"
 #include "library/vec.h"
 
 namespace OpenApoc
@@ -9,11 +9,11 @@ namespace OpenApoc
 class Facility
 {
   public:
-	const FacilityDef &def;
+	Facility(StateRef<FacilityType> type);
+	Facility() = default;
+	StateRef<FacilityType> type;
 	Vec2<int> pos;
 	int buildTime;
-
-	Facility(const FacilityDef &def);
 };
 
 }; // namespace OpenApoc

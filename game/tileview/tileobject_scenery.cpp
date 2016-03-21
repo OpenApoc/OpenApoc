@@ -1,5 +1,5 @@
 #include "game/tileview/tileobject_scenery.h"
-#include "game/rules/scenerytiledef.h"
+#include "game/rules/scenery_tile_type.h"
 
 namespace OpenApoc
 {
@@ -15,19 +15,20 @@ void TileObjectScenery::draw(Renderer &r, TileView &view, Vec2<float> screenPosi
 		LogError("Called with no owning scenery object");
 		return;
 	}
-	auto &tileDef = scenery->damaged ? *scenery->tileDef.getDamagedTile() : scenery->tileDef;
+	// FIXME: If damaged use damaged tile sprites?
+	auto &type = scenery->type;
 	sp<Image> sprite;
 	sp<Image> overlaySprite;
 	Vec2<float> transformedScreenPos = screenPosition;
 	switch (mode)
 	{
 		case TileViewMode::Isometric:
-			sprite = tileDef.getSprite();
-			overlaySprite = tileDef.getOverlaySprite();
-			transformedScreenPos -= tileDef.getImageOffset();
+			sprite = type->sprite;
+			overlaySprite = type->overlaySprite;
+			transformedScreenPos -= type->imageOffset;
 			break;
 		case TileViewMode::Strategy:
-			sprite = tileDef.getStrategySprite();
+			sprite = type->strategySprite;
 			// All strategy sprites so far are 8x8 so offset by 4 to draw from the center
 			// FIXME: Not true for large sprites (2x2 UFOs?)
 			transformedScreenPos -= Vec2<float>{4, 4};
@@ -60,6 +61,6 @@ sp<Scenery> TileObjectScenery::getOwner()
 	return s;
 }
 
-sp<VoxelMap> TileObjectScenery::getVoxelMap() { return this->getOwner()->tileDef.getVoxelMap(); }
+sp<VoxelMap> TileObjectScenery::getVoxelMap() { return this->getOwner()->type->voxelMap; }
 
 } // namespace OpenApoc

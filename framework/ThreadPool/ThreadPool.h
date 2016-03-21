@@ -64,7 +64,7 @@ inline ThreadPool::ThreadPool(size_t threads) : stop(false)
 				    {
 					    task();
 				    }
-				    catch (std::exception e)
+				    catch (std::exception &e)
 				    {
 					    LogError("Exception occurred in threadpool: %s", e.what());
 				    }

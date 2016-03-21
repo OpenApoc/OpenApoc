@@ -2,6 +2,7 @@
 
 #include "library/sp.h"
 #include "library/vec.h"
+#include "game/city/building.h"
 #include <list>
 
 namespace OpenApoc
@@ -16,26 +17,44 @@ class UString;
 class VehicleMission
 {
   public:
-	Vehicle &vehicle;
-	VehicleMission(Vehicle &vehicle);
-	virtual bool getNextDestination(Vec3<float> &dest) = 0;
-	virtual ~VehicleMission();
-	virtual const std::list<Tile *> &getCurrentPlannedPath() = 0;
+	VehicleMission();
+	bool getNextDestination(Vec3<float> &dest);
 
-	virtual void update(unsigned int ticks) = 0;
-	virtual bool isFinished() = 0;
-	virtual void start() = 0;
+	void update(unsigned int ticks);
+	bool isFinished();
+	void start();
 
-	static VehicleMission *randomDestination(Vehicle &v, TileMap &map);
-	static VehicleMission *gotoLocation(Vehicle &v, TileMap &map, Vec3<int> target);
-	static VehicleMission *gotoBuilding(Vehicle &v, TileMap &map, sp<Building> target);
-	static VehicleMission *snooze(Vehicle &v, TileMap &map, unsigned int ticks);
+	static VehicleMission *gotoLocation(Vehicle &v, Vec3<int> target);
+	static VehicleMission *gotoBuilding(Vehicle &v, StateRef<Building> target);
+	static VehicleMission *snooze(Vehicle &v, unsigned int ticks);
 
 	// INTERNAL: Not to be used directly (Only works when in building)
-	static VehicleMission *takeOff(Vehicle &v, TileMap &map);
+	static VehicleMission *takeOff(Vehicle &v);
 	// INTERNAL: Not to be used directly (Only works if directly above a pad)
-	static VehicleMission *land(Vehicle &v, TileMap &map, sp<Building> b);
+	static VehicleMission *land(Vehicle &v, StateRef<Building> b);
 
-	virtual const UString &getName() = 0;
+	UString getName();
+
+	enum MissionType
+	{
+		GotoLocation,
+		GotoBuilding,
+		FollowVehicle,
+		AttackVehicle,
+		AttackBuilding,
+		Snooze,
+		TakeOff,
+		Land,
+	};
+	static const std::map<MissionType, UString> TypeMap;
+
+	MissionType type;
+
+	Vec3<int> targetLocation;
+	StateRef<Building> targetBuilding;
+	StateRef<Vehicle> targetVehicle;
+	unsigned int snoozeTime;
+
+	std::list<Vec3<int>> currentPlannedPath;
 };
 } // namespace OpenApoc

@@ -3,139 +3,46 @@
 #include "game/city/vequipment.h"
 #include "game/city/building.h"
 #include "game/city/vehicle.h"
+#include "game/city/vehiclemission.h"
+#include "game/city/scenery.h"
 #include "game/organisation.h"
 #include "game/base/base.h"
 #include "game/rules/vequipment.h"
 
 #include "framework/includes.h"
 #include "framework/framework.h"
+#include "game/tileview/tileobject_vehicle.h"
 
 #include <random>
 
 namespace OpenApoc
 {
 
-GameState::GameState(const UString &rulesFileName)
-    : player(nullptr), rules(rulesFileName), showTileOrigin(false), showVehiclePath(false),
-      showSelectableBounds(false), rng(std::random_device{}()),
-      // Initial time is 12:00:00 (midday) - at 60 seconds / minute * 60 minutes / hour * 12 hours
-      // FIXME: Make this set-able? Use a 'proper' timespec instead of a tick count?
-      time(TICKS_PER_SECOND * 60 * 60 * 12)
+GameState::GameState()
+    : player(this), showTileOrigin(false), showVehiclePath(false), showSelectableBounds(false),
+      time(0)
 {
-	for (auto &org : getRules().getOrganisations())
+}
+
+GameState::~GameState()
+{
+	for (auto &v : this->vehicles)
 	{
-		if (this->organisations.find(org.ID) != this->organisations.end())
+		auto vehicle = v.second;
+		if (vehicle->tileObject)
 		{
-			LogError("Multiple organisations with ID \"%s\"", org.ID.c_str());
+			vehicle->tileObject->removeFromMap();
 		}
-		this->organisations[org.ID] = mksp<Organisation>(org);
-		/* FIXME: Make 'player' organisation selectable? */
-		if (org.ID == "ORG_X-COM")
-		{
-			this->player = this->organisations[org.ID];
-		}
-	}
-
-	if (!this->player)
-	{
-		LogError("No player organisation defined");
-	}
-
-	this->city.reset(new City(*this));
-
-	// Place some random testing vehicles
-	std::uniform_int_distribution<int> bld_distribution(0, this->city->buildings.size() - 1);
-
-	// Loop through all vehicle types and weapons to get a decent spread for testing
-	auto vehicleTypeIt = getRules().getVehicleTypes().begin();
-
-	for (int i = 0; i < 100; i++)
-	{
-		while (vehicleTypeIt->second->type != VehicleType::Type::Flying)
-		{
-			vehicleTypeIt++;
-			if (vehicleTypeIt == getRules().getVehicleTypes().end())
-				vehicleTypeIt = getRules().getVehicleTypes().begin();
-		}
-		auto owner = this->getOrganisation(vehicleTypeIt->second->manufacturer);
-		// We add player vehicles a bit later
-		if (owner == this->getPlayer())
-		{
-			vehicleTypeIt++;
-			continue;
-		}
-
-		auto testVehicle = mksp<Vehicle>(*vehicleTypeIt->second, owner);
-
-		testVehicle->equipDefaultEquipment(getRules());
-
-		this->city->vehicles.push_back(testVehicle);
-		owner->vehicles.push_back(testVehicle);
-		auto b = this->city->buildings[bld_distribution(rng)];
-		b->landed_vehicles.insert(testVehicle);
-		testVehicle->building = b;
-
-		// Initialise these vehicles with a random weapon cooldown to stop them all firing at
-		// exactly the same time when starting the game
-		for (auto e : testVehicle->equipment)
-		{
-
-			if (e->type.type != VEquipmentType::Type::Weapon)
-			{
-				continue;
-			}
-			auto weapon = std::dynamic_pointer_cast<VWeapon>(e);
-
-			auto &weaponType = static_cast<const VWeaponType &>(weapon->type);
-
-			std::uniform_int_distribution<int> reload_distribution(0, weaponType.fire_delay *
-			                                                              TICK_SCALE);
-			int initialDelay = reload_distribution(rng);
-			if (initialDelay != 0)
-			{
-				weapon->setReloadTime(initialDelay);
-			}
-		}
-
-		vehicleTypeIt++;
-	}
-
-	if (this->city->baseBuildings.empty())
-	{
-		LogError("No valid base buildings");
-	}
-	std::uniform_int_distribution<int> base_distribution(0, this->city->baseBuildings.size() - 1);
-	auto base = this->city->baseBuildings[base_distribution(rng)]->base;
-	this->playerBases.emplace_back(base);
-	base->name = "Test Base";
-	base->bld.lock()->owner = this->getPlayer();
-	base->startingBase(*this, rng);
-
-	// Give the player some extra vehicles to test the equipment stuff (as the x-com built vehicles
-	// don't come with much)
-
-	for (auto &it : getRules().getVehicleTypes())
-	{
-		auto &vType = *it.second;
-		// Only give stuff that can be equipped
-		if (!vType.equipment_screen)
-			continue;
-		auto owner = this->getPlayer();
-		auto testVehicle = mksp<Vehicle>(vType, owner);
-		testVehicle->homeBase = base;
-		testVehicle->equipDefaultEquipment(getRules());
-		this->city->vehicles.push_back(testVehicle);
-		owner->vehicles.push_back(testVehicle);
-		auto b = base->bld.lock();
-		b->landed_vehicles.insert(testVehicle);
-		testVehicle->building = b;
-	}
-
-	// Give that base some inventory
-	for (auto &pair : getRules().getVehicleEquipmentTypes())
-	{
-		auto &equipmentID = pair.first;
-		base->inventory[equipmentID] = 10;
+		vehicle->tileObject = nullptr;
+		// Detatch some back-pointers otherwise we get circular sp<> depedencies and leak
+		// FIXME: This is not a 'good' way of doing this, maybe add a destroyVehicle() function? Or
+		// make StateRefWeak<> or something?
+		//
+		vehicle->city = "";
+		vehicle->homeBuilding = "";
+		vehicle->currentlyLandedBuilding = "";
+		vehicle->missions.clear();
+		vehicle->equipment.clear();
 	}
 }
 
@@ -145,16 +52,145 @@ UString GameState::getPlayerBalance() const
 	return Strings::FromInteger(this->getPlayer()->balance);
 }
 
-sp<Organisation> GameState::getOrganisation(const UString &orgID)
+StateRef<Organisation> GameState::getOrganisation(const UString &orgID)
 {
-	auto f = this->organisations.find(orgID);
-	if (f == this->organisations.end())
-	{
-		LogError("No organisation matching ID \"%s\"", orgID.c_str());
-	}
-	return f->second;
+	return StateRef<Organisation>(this, orgID);
 }
 
-sp<Organisation> GameState::getPlayer() const { return this->player; }
+StateRef<Organisation> GameState::getPlayer() const { return this->player; }
+
+bool GameState::isValid()
+{
+	if (!this->rules.isValid())
+		return false;
+
+	return true;
+}
+
+void GameState::initState()
+{
+	for (auto &city : this->cities)
+	{
+		city.second->initMap();
+		for (auto &v : this->vehicles)
+		{
+			auto vehicle = v.second;
+			if (vehicle->city == city.second)
+			{
+				city.second->map->addObjectToMap(vehicle);
+			}
+		}
+	}
+}
+
+void GameState::startGame()
+{
+	for (auto &pair : this->cities)
+	{
+		auto &city = pair.second;
+		// Start the game with all buildings whole
+		for (auto &tilePair : city->initial_tiles)
+		{
+			auto s = mksp<Scenery>();
+
+			s->type = tilePair.second;
+			s->initialPosition = tilePair.first;
+			s->currentPosition = s->initialPosition;
+
+			city->scenery.insert(s);
+		}
+	}
+
+	// FIXME: How to create vehicles with unique name?
+	int vehicle_count = 0;
+
+	auto buildingIt = this->cities["CITYMAP_HUMAN"]->buildings.begin();
+
+	// Create some random vehicles
+	for (int i = 0; i < 10; i++)
+	{
+		for (auto vehicleType : this->vehicle_types)
+		{
+			auto &type = vehicleType.second;
+			if (type->type != VehicleType::Type::Flying)
+				continue;
+			if (type->manufacturer == this->getPlayer())
+				continue;
+
+			auto v = mksp<Vehicle>();
+			v->type = {this, vehicleType.first};
+			v->name = type->name;
+			v->city = {this, "CITYMAP_HUMAN"};
+			v->currentlyLandedBuilding = {this, buildingIt->first};
+			v->owner = type->manufacturer;
+			v->health = type->health;
+			auto vID = UString::format("%s%d", Vehicle::getPrefix().c_str(), vehicle_count++);
+
+			buildingIt++;
+			if (buildingIt == this->cities["CITYMAP_HUMAN"]->buildings.end())
+				buildingIt = this->cities["CITYMAP_HUMAN"]->buildings.begin();
+
+			// Vehicle::equipDefaultEquipment uses the state reference from itself, so make sure the
+			// vehicle table has the entry before calling it
+			this->vehicles[vID] = v;
+
+			v->equipDefaultEquipment(*this);
+
+			v->missions.emplace_back(VehicleMission::gotoLocation(*v, {0, 0, 0}));
+		}
+	}
+
+	// Create the intial starting base
+	// Randomly shuffle buildings until we find one with a base layout
+	sp<City> humanCity = this->cities["CITYMAP_HUMAN"];
+	int buildingCount = humanCity->buildings.size();
+
+	std::vector<sp<Building>> buildingsWithBases;
+	for (auto &b : humanCity->buildings)
+	{
+		if (b.second->base_layout)
+			buildingsWithBases.push_back(b.second);
+	}
+
+	if (buildingsWithBases.empty())
+	{
+		LogError("City map has no buildings with valid base layouts");
+	}
+
+	std::uniform_int_distribution<int> bldDist(0, buildingsWithBases.size() - 1);
+
+	auto bld = buildingsWithBases[bldDist(this->rng)];
+
+	auto base = mksp<Base>(*this, StateRef<Building>{this, bld});
+	base->startingBase(*this, this->rng);
+	// FIXME: Make the base names increment (NEED TO BE UNIQUE!!)
+	this->player_bases[Base::getPrefix() + "1"] = base;
+	bld->owner = this->getPlayer();
+
+	// Give the player one of each equi-able vehicle
+	for (auto &it : this->vehicle_types)
+	{
+		auto &type = it.second;
+		if (!type->equipment_screen)
+			continue;
+		auto v = mksp<Vehicle>();
+		v->type = {this, type};
+		v->name = type->name;
+		v->city = {this, "CITYMAP_HUMAN"};
+		v->currentlyLandedBuilding = {this, bld};
+		v->homeBuilding = {this, bld};
+		v->owner = this->getPlayer();
+		v->health = type->health;
+		auto vID = UString::format("%s%d", Vehicle::getPrefix().c_str(), vehicle_count++);
+		this->vehicles[vID] = v;
+		v->equipDefaultEquipment(*this);
+	}
+	// Give that base some inventory
+	for (auto &pair : this->vehicle_equipment)
+	{
+		auto &equipmentID = pair.first;
+		base->inventory[equipmentID] = 10;
+	}
+}
 
 }; // namespace OpenApoc

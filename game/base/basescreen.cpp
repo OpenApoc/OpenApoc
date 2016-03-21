@@ -29,21 +29,22 @@ const std::unordered_map<std::vector<bool>, int> BaseScreen::TILE_CORRIDORS = {
 int BaseScreen::getCorridorSprite(Vec2<int> pos) const
 {
 	if (pos.x < 0 || pos.y < 0 || pos.x >= Base::SIZE || pos.y >= Base::SIZE ||
-	    !base.getCorridors()[pos.x][pos.y])
+	    !base->getCorridors()[pos.x][pos.y])
 	{
 		return 0;
 	}
-	bool north = pos.y > 0 && base.getCorridors()[pos.x][pos.y - 1];
-	bool south = pos.y < Base::SIZE - 1 && base.getCorridors()[pos.x][pos.y + 1];
-	bool west = pos.x > 0 && base.getCorridors()[pos.x - 1][pos.y];
-	bool east = pos.x < Base::SIZE - 1 && base.getCorridors()[pos.x + 1][pos.y];
+	bool north = pos.y > 0 && base->getCorridors()[pos.x][pos.y - 1];
+	bool south = pos.y < Base::SIZE - 1 && base->getCorridors()[pos.x][pos.y + 1];
+	bool west = pos.x > 0 && base->getCorridors()[pos.x - 1][pos.y];
+	bool east = pos.x < Base::SIZE - 1 && base->getCorridors()[pos.x + 1][pos.y];
 	return TILE_CORRIDORS.at({north, south, west, east});
 }
 
 BaseScreen::BaseScreen(sp<GameState> state)
-    : Stage(), form(fw().gamecore->GetForm("FORM_BASESCREEN")), base(*state->playerBases.front()),
-      selection(-1, -1), dragFacility(nullptr), drag(false), baseView(nullptr), selGraphic(nullptr),
-      selText(nullptr), buildTime(nullptr), state(state)
+    : Stage(), form(fw().gamecore->GetForm("FORM_BASESCREEN")),
+      base({state.get(), state->player_bases.begin()->first}), selection(-1, -1),
+      dragFacility(nullptr), drag(false), baseView(nullptr), selGraphic(nullptr), selText(nullptr),
+      buildTime(nullptr), state(state)
 {
 }
 
@@ -52,7 +53,7 @@ BaseScreen::~BaseScreen() {}
 void BaseScreen::Begin()
 {
 	form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
-	form->FindControlTyped<TextEdit>("TEXT_BASE_NAME")->SetText(base.name);
+	form->FindControlTyped<TextEdit>("TEXT_BASE_NAME")->SetText(base->name);
 
 	buildTime = form->FindControlTyped<Label>("TEXT_BUILD_TIME");
 	baseView = form->FindControlTyped<Graphic>("GRAPHIC_BASE_VIEW");
@@ -88,15 +89,15 @@ void BaseScreen::Begin()
 	}
 
 	auto facilities = form->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
-	for (auto &i : state->getRules().getFacilityDefs())
+	for (auto &i : state->facility_types)
 	{
 		auto &facility = i.second;
-		if (facility.fixed)
+		if (facility->fixed)
 			continue;
 
-		auto graphic = mksp<Graphic>(fw().data->load_image(facility.sprite));
+		auto graphic = mksp<Graphic>(facility->sprite);
 		graphic->AutoSize = true;
-		graphic->SetData(mksp<FacilityDef>(facility));
+		graphic->SetData(mksp<UString>(i.first));
 		facilities->AddItem(graphic);
 	}
 }
@@ -149,7 +150,7 @@ void BaseScreen::EventOccurred(Event *e)
 			if (e->Forms().RaisedBy->Name == "TEXT_BASE_NAME")
 			{
 				auto name = form->FindControlTyped<TextEdit>("TEXT_BASE_NAME");
-				base.name = name->GetText();
+				base->name = name->GetText();
 				return;
 			}
 		}
@@ -160,7 +161,7 @@ void BaseScreen::EventOccurred(Event *e)
 			{
 				selection = {e->Forms().MouseInfo.X, e->Forms().MouseInfo.Y};
 				selection /= TILE_SIZE;
-				selFacility = base.getFacility(selection);
+				selFacility = base->getFacility(selection);
 				return;
 			}
 			else if (e->Forms().EventFlag == FormEventType::MouseLeave)
@@ -176,14 +177,18 @@ void BaseScreen::EventOccurred(Event *e)
 			if (e->Forms().RaisedBy->Name == "LISTBOX_FACILITIES" && !drag)
 			{
 				auto list = form->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
-				dragFacility = list->GetHoveredData<FacilityDef>();
-				return;
+				auto dragFacilityName = list->GetHoveredData<UString>();
+				if (dragFacilityName)
+				{
+					dragFacility = StateRef<FacilityType>{state.get(), *dragFacilityName};
+					return;
+				}
 			}
 		}
 
 		if (e->Forms().EventFlag == FormEventType::MouseDown)
 		{
-			if (!drag && dragFacility != nullptr)
+			if (!drag && dragFacility)
 			{
 				drag = true;
 			}
@@ -191,13 +196,13 @@ void BaseScreen::EventOccurred(Event *e)
 
 		if (e->Forms().EventFlag == FormEventType::MouseUp)
 		{
-			if (drag && dragFacility != nullptr)
+			if (drag && dragFacility)
 			{
-				base.buildFacility(*dragFacility, selection);
+				base->buildFacility(dragFacility, selection);
 				form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
 				// FIXME: Report build errors
 				drag = false;
-				dragFacility = nullptr;
+				dragFacility = "";
 			}
 		}
 	}
@@ -212,10 +217,10 @@ void BaseScreen::EventOccurred(Event *e)
 	{
 		value->SetText("");
 	}
-	if (dragFacility != nullptr)
+	if (dragFacility)
 	{
 		selText->SetText(tr(dragFacility->name));
-		selGraphic->SetImage(fw().data->load_image(dragFacility->sprite));
+		selGraphic->SetImage(dragFacility->sprite);
 		statsLabels[0]->SetText(tr("Cost to build"));
 		statsValues[0]->SetText(UString::format("$%d", dragFacility->buildCost));
 		statsLabels[1]->SetText(tr("Days to build"));
@@ -225,12 +230,12 @@ void BaseScreen::EventOccurred(Event *e)
 	}
 	else if (selFacility != nullptr)
 	{
-		selText->SetText(tr(selFacility->def.name));
-		selGraphic->SetImage(fw().data->load_image(selFacility->def.sprite));
-		if (selFacility->def.capacityAmount > 0)
+		selText->SetText(tr(selFacility->type->name));
+		selGraphic->SetImage(selFacility->type->sprite);
+		if (selFacility->type->capacityAmount > 0)
 		{
 			statsLabels[0]->SetText(tr("Capacity"));
-			statsValues[0]->SetText(UString::format("%d", selFacility->def.capacityAmount));
+			statsValues[0]->SetText(UString::format("%d", selFacility->type->capacityAmount));
 			statsLabels[1]->SetText(tr("Usage"));
 			statsValues[1]->SetText(UString::format("%d%%", 0));
 		}
@@ -311,9 +316,9 @@ void BaseScreen::RenderBase()
 	sp<Image> circleL = fw().data->load_image(
 	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:26:xcom3/UFODATA/BASE.PCX");
 	buildTime->Visible = true;
-	for (auto &facility : base.getFacilities())
+	for (auto &facility : base->getFacilities())
 	{
-		sp<Image> sprite = fw().data->load_image(facility->def.sprite);
+		sp<Image> sprite = facility->type->sprite;
 		Vec2<int> pos = BASE_POS + facility->pos * TILE_SIZE;
 		if (facility->buildTime == 0)
 		{
@@ -324,7 +329,7 @@ void BaseScreen::RenderBase()
 			// Fade out facility
 			fw().renderer->drawTinted(sprite, pos, Colour(255, 255, 255, 128));
 			// Draw construction overlay
-			if (facility->def.size == 1)
+			if (facility->type->size == 1)
 			{
 				fw().renderer->draw(circleS, pos);
 			}
@@ -334,7 +339,7 @@ void BaseScreen::RenderBase()
 			}
 			// Draw time remaining
 			buildTime->Size = {TILE_SIZE, TILE_SIZE};
-			buildTime->Size *= facility->def.size;
+			buildTime->Size *= facility->type->size;
 			buildTime->Location = pos;
 			buildTime->SetText(Strings::FromInteger(facility->buildTime));
 			buildTime->Render();
@@ -347,9 +352,9 @@ void BaseScreen::RenderBase()
 	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:2:xcom3/UFODATA/BASE.PCX");
 	sp<Image> doorBottom = fw().data->load_image(
 	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:3:xcom3/UFODATA/BASE.PCX");
-	for (auto &facility : base.getFacilities())
+	for (auto &facility : base->getFacilities())
 	{
-		for (int y = 0; y < facility->def.size; y++)
+		for (int y = 0; y < facility->type->size; y++)
 		{
 			Vec2<int> tile = facility->pos + Vec2<int>{-1, y};
 			if (getCorridorSprite(tile) != 0)
@@ -358,9 +363,9 @@ void BaseScreen::RenderBase()
 				fw().renderer->draw(doorLeft, pos + Vec2<int>{TILE_SIZE / 2, 0});
 			}
 		}
-		for (int x = 0; x < facility->def.size; x++)
+		for (int x = 0; x < facility->type->size; x++)
 		{
-			Vec2<int> tile = facility->pos + Vec2<int>{x, facility->def.size};
+			Vec2<int> tile = facility->pos + Vec2<int>{x, facility->type->size};
 			if (getCorridorSprite(tile) != 0)
 			{
 				Vec2<int> pos = BASE_POS + tile * TILE_SIZE;
@@ -374,23 +379,23 @@ void BaseScreen::RenderBase()
 	{
 		Vec2<int> pos = selection;
 		Vec2<int> size = {TILE_SIZE, TILE_SIZE};
-		if (drag && dragFacility != nullptr)
+		if (drag && dragFacility)
 		{
 			size *= dragFacility->size;
 		}
 		else if (selFacility != nullptr)
 		{
 			pos = selFacility->pos;
-			size *= selFacility->def.size;
+			size *= selFacility->type->size;
 		}
 		pos = BASE_POS + pos * TILE_SIZE;
 		fw().renderer->drawRect(pos, size, Colour{255, 255, 255});
 	}
 
 	// Draw dragged facility
-	if (drag && dragFacility != nullptr)
+	if (drag && dragFacility)
 	{
-		sp<Image> facility = fw().data->load_image(dragFacility->sprite);
+		sp<Image> facility = dragFacility->sprite;
 		Vec2<int> pos;
 		if (selection == NO_SELECTION)
 		{
@@ -433,12 +438,12 @@ void BaseScreen::RenderMiniBase()
 	    fw().data->load_image("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:17:xcom3/UFODATA/BASE.PCX");
 	sp<Image> selected =
 	    fw().data->load_image("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:18:xcom3/UFODATA/BASE.PCX");
-	for (auto &facility : base.getFacilities())
+	for (auto &facility : base->getFacilities())
 	{
 		sp<Image> sprite = (facility->buildTime == 0) ? normal : highlighted;
-		for (i.x = 0; i.x < facility->def.size; i.x++)
+		for (i.x = 0; i.x < facility->type->size; i.x++)
 		{
-			for (i.y = 0; i.y < facility->def.size; i.y++)
+			for (i.y = 0; i.y < facility->type->size; i.y++)
 			{
 				Vec2<int> pos = BASE_POS + (facility->pos + i) * MINI_SIZE;
 				fw().renderer->draw(sprite, pos);

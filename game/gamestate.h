@@ -6,30 +6,41 @@
 #include <vector>
 #include "library/strings.h"
 #include "game/organisation.h"
+#include "game/rules/facility_type.h"
 #include "game/base/base.h"
 #include "game/rules/rules.h"
+#include "game/stateobject.h"
+#include "game/rules/doodad_type.h"
+#include "game/city/city.h"
 
 namespace OpenApoc
 {
 
 class City;
 class Rules;
+class Base;
 
 static const unsigned TICKS_PER_SECOND = 60;
 
 class GameState
 {
-  private:
-	sp<Organisation> player;
+  public:
+	std::map<UString, sp<VehicleType>> vehicle_types;
+	std::map<UString, sp<Organisation>> organisations;
+	std::map<UString, sp<FacilityType>> facility_types;
+	std::map<UString, sp<DoodadType>> doodad_types;
+	std::map<UString, sp<VEquipmentType>> vehicle_equipment;
+	std::map<UString, sp<BaseLayout>> base_layouts;
+	std::map<UString, sp<Base>> player_bases;
+	std::map<UString, sp<City>> cities;
+	std::map<UString, sp<Vehicle>> vehicles;
+
 	Rules rules;
 
-  public:
-	GameState(const UString &rulesFileName);
+	StateRef<Organisation> player;
 
-	std::unique_ptr<City> city;
-
-	std::map<UString, sp<Organisation>> organisations;
-	std::vector<sp<Base>> playerBases;
+	GameState();
+	~GameState();
 
 	bool showTileOrigin;
 	bool showVehiclePath;
@@ -38,13 +49,28 @@ class GameState
 	std::default_random_engine rng;
 
 	UString getPlayerBalance() const;
-	sp<Organisation> getOrganisation(const UString &orgID);
-	sp<Organisation> getPlayer() const;
+	StateRef<Organisation> getOrganisation(const UString &orgID);
+	StateRef<Organisation> getPlayer() const;
 
 	// The time from game start in ticks
-	uint64_t time;
+	// FIXME: Is a 32bit val enough?
+	// That should be 60ticks/sec 60secs/min 60mins/hour 24hours/day 7days/week = 118 weeks?
+	unsigned int time;
 
 	Rules &getRules() { return this->rules; };
+
+	bool loadGame(const UString &path);
+	bool saveGame(const UString &path);
+
+	bool isValid();
+
+	// Called on a newly started Game to setup initial state that isn't serialized in (random
+	// vehicle positions etc.) - it is not called
+	void startGame();
+	// Called after serializing in to hook up 'secondary' data (stuff that is derived from stuff
+	// that is serialized but not serialized itself). This should also be called on starting a new
+	// game after startGame()
+	void initState();
 };
 
 }; // namespace OpenApoc

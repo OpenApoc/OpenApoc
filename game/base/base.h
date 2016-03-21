@@ -3,24 +3,31 @@
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
+#include "game/gamestate.h"
+#include "game/stateobject.h"
+#include "game/city/building.h"
 
 #include <random>
+#include <vector>
 
 namespace OpenApoc
 {
 
 class Building;
-class FacilityDef;
 class Facility;
 class GameState;
 
-class Base
+class Base : public StateObject<Base>
 {
-  private:
+  public:
 	std::vector<std::vector<bool>> corridors;
 	std::vector<sp<Facility>> facilities;
+	std::map<UString, unsigned> inventory;
+	UString name;
+	StateRef<Building> building;
 
-  public:
+	Base() = default;
+
 	static const int SIZE = 8;
 	enum class BuildError
 	{
@@ -30,22 +37,18 @@ class Base
 		NoMoney
 	};
 
-	std::weak_ptr<Building> bld;
-	UString name;
+	Base(GameState &state, StateRef<Building> building);
 
-	Base(GameState &state, sp<Building> building);
-
-	sp<const Facility> getFacility(Vec2<int> pos) const;
+	sp<Facility> getFacility(Vec2<int> pos) const;
 	const std::vector<std::vector<bool>> &getCorridors() const { return corridors; }
 	const std::vector<sp<Facility>> &getFacilities() const { return facilities; }
 
 	void startingBase(GameState &state, std::default_random_engine &rng);
-	BuildError canBuildFacility(const FacilityDef &def, Vec2<int> pos, bool free = false) const;
-	void buildFacility(const FacilityDef &def, Vec2<int> pos, bool free = false);
+	BuildError canBuildFacility(StateRef<FacilityType> type, Vec2<int> pos,
+	                            bool free = false) const;
+	void buildFacility(StateRef<FacilityType> type, Vec2<int> pos, bool free = false);
 	BuildError canDestroyFacility(Vec2<int> pos) const;
 	void destroyFacility(Vec2<int> pos);
-
-	std::map<UString, unsigned> inventory;
 };
 
 }; // namespace OpenApoc

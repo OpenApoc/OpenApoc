@@ -1,20 +1,14 @@
 #pragma once
 #include "library/strings.h"
+#include "game/stateobject.h"
+#include "framework/image.h"
 
 namespace OpenApoc
 {
-class RulesLoader;
-class FacilityDef
+class FacilityType : public StateObject<FacilityType>
 {
-  private:
-	FacilityDef()
-	    : fixed(false), buildCost(0), buildTime(0), weeklyCost(0), capacityType(Capacity::Nothing),
-	      capacityAmount(0), size(1)
-	{
-	}
-	friend class RulesLoader;
-
   public:
+	FacilityType();
 	enum class Capacity
 	{
 		Nothing,
@@ -29,8 +23,7 @@ class FacilityDef
 		Workshop,
 		Aliens,
 	};
-
-	UString id;
+	static const std::map<Capacity, UString> CapacityMap;
 	UString name;
 	bool fixed;
 	int buildCost;
@@ -39,6 +32,6 @@ class FacilityDef
 	Capacity capacityType;
 	int capacityAmount;
 	int size;
-	UString sprite;
+	sp<Image> sprite;
 };
 };

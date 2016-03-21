@@ -80,6 +80,12 @@ void InGameOptions::EventOccurred(Event *e)
 			stageCmd.cmd = StageCmd::Command::QUIT;
 			return;
 		}
+		else if (e->Forms().RaisedBy->Name == "BUTTON_SAVEGAME")
+		{
+			// FIXME: Save game selector
+			this->state->saveGame("save");
+			return;
+		}
 	}
 	if (e->Type() == EVENT_FORM_INTERACTION &&
 	    e->Forms().EventFlag == FormEventType::ScrollBarChange)

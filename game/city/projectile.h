@@ -2,11 +2,12 @@
 #include "library/sp.h"
 #include "library/vec.h"
 #include "library/colour.h"
+#include "game/stateobject.h"
+#include "game/city/vehicle.h"
 
 namespace OpenApoc
 {
 
-class Vehicle;
 class Weapon;
 class GameState;
 class TileObjectProjectile;
@@ -21,12 +22,14 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 		Beam,
 		Missile,
 	};
+	static const std::map<Type, UString> TypeMap;
 
 	// Beams have a width & tail length
 	// FIXME: Make this a non-constant colour?
 	// FIXME: Width is currently just used for drawing - TODO What is "collision" size of beams?
-	Projectile(sp<Vehicle> firer, Vec3<float> position, Vec3<float> velocity, unsigned int lifetime,
-	           const Colour &colour, float beamLength, float beamWidth);
+	Projectile(StateRef<Vehicle> firer, Vec3<float> position, Vec3<float> velocity,
+	           unsigned int lifetime, const Colour &colour, float beamLength, float beamWidth);
+	Projectile();
 	virtual void update(GameState &state, unsigned int ticks);
 
 	Vec3<float> getVelocity() const { return this->velocity; }
@@ -41,13 +44,12 @@ class Projectile : public std::enable_shared_from_this<Projectile>
 
 	sp<TileObjectProjectile> tileObject;
 
-  private:
 	Type type;
 	Vec3<float> position;
 	Vec3<float> velocity;
 	unsigned int age;
 	unsigned int lifetime;
-	sp<Vehicle> firer;
+	StateRef<Vehicle> firer;
 	Vec3<float> previousPosition;
 	Colour colour;
 	float beamLength;

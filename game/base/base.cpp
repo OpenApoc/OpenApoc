@@ -2,7 +2,6 @@
 #include "game/city/building.h"
 #include "game/organisation.h"
 #include "game/base/facility.h"
-#include "game/rules/buildingdef.h"
 #include "framework/framework.h"
 
 #include <unordered_set>
@@ -10,36 +9,36 @@
 namespace OpenApoc
 {
 
-Base::Base(GameState &state, sp<Building> building) : bld(building)
+Base::Base(GameState &state, StateRef<Building> building) : building(building)
 {
 	corridors = std::vector<std::vector<bool>>(SIZE, std::vector<bool>(SIZE, false));
-	for (auto &rect : building->def.getBaseCorridors())
+	for (auto &rect : building->base_layout->baseCorridors)
 	{
-		for (int x = rect.p0.x; x <= rect.p1.x; ++x)
+		for (int x = rect.p0.x; x < rect.p1.x; ++x)
 		{
-			for (int y = rect.p0.y; y <= rect.p1.y; ++y)
+			for (int y = rect.p0.y; y < rect.p1.y; ++y)
 			{
 				corridors[x][y] = true;
 			}
 		}
 	}
-	auto &def = state.getRules().getFacilityDefs().at("ACCESS_LIFT");
-	if (canBuildFacility(def, building->def.getBaseLift(), true) != BuildError::NoError)
+	StateRef<FacilityType> type = {&state, FacilityType::getPrefix() + "ACCESS_LIFT"};
+	if (canBuildFacility(type, building->base_layout->baseLift, true) != BuildError::NoError)
 	{
-		LogError("Building %s has invalid lift location", building->def.getName().c_str());
+		LogError("Building %s has invalid lift location", building->name.c_str());
 	}
 	else
 	{
-		buildFacility(def, building->def.getBaseLift(), true);
+		buildFacility(type, building->base_layout->baseLift, true);
 	}
 }
 
-sp<const Facility> Base::getFacility(Vec2<int> pos) const
+sp<Facility> Base::getFacility(Vec2<int> pos) const
 {
 	for (auto &facility : facilities)
 	{
-		if (pos.x >= facility->pos.x && pos.x < facility->pos.x + facility->def.size &&
-		    pos.y >= facility->pos.y && pos.y < facility->pos.y + facility->def.size)
+		if (pos.x >= facility->pos.x && pos.x < facility->pos.x + facility->type->size &&
+		    pos.y >= facility->pos.y && pos.y < facility->pos.y + facility->type->size)
 		{
 			return facility;
 		}
@@ -63,14 +62,14 @@ void Base::startingBase(GameState &state, std::default_random_engine &rng)
 	}
 
 	// Randomly fill them with facilities
-	for (auto &i : state.getRules().getFacilityDefs())
+	for (auto &i : state.facility_types)
 	{
-		if (i.second.fixed)
+		if (i.second->fixed)
 			continue;
 		if (positions.empty())
 			break;
 		std::uniform_int_distribution<int> facilityPos(0, positions.size() - 1);
-		buildFacility(i.second, positions[facilityPos(rng)], true);
+		buildFacility({&state, i.first}, positions[facilityPos(rng)], true);
 
 		// Clear used positions
 		for (auto pos = positions.begin(); pos != positions.end();)
@@ -87,15 +86,15 @@ void Base::startingBase(GameState &state, std::default_random_engine &rng)
 	}
 }
 
-Base::BuildError Base::canBuildFacility(const FacilityDef &def, Vec2<int> pos, bool free) const
+Base::BuildError Base::canBuildFacility(StateRef<FacilityType> type, Vec2<int> pos, bool free) const
 {
-	if (pos.x < 0 || pos.y < 0 || pos.x + def.size > SIZE || pos.y + def.size > SIZE)
+	if (pos.x < 0 || pos.y < 0 || pos.x + type->size > SIZE || pos.y + type->size > SIZE)
 	{
 		return BuildError::OutOfBounds;
 	}
-	for (int x = pos.x; x < pos.x + def.size; ++x)
+	for (int x = pos.x; x < pos.x + type->size; ++x)
 	{
-		for (int y = pos.y; y < pos.y + def.size; ++y)
+		for (int y = pos.y; y < pos.y + type->size; ++y)
 		{
 			if (getFacility({x, y}) != nullptr)
 			{
@@ -103,9 +102,9 @@ Base::BuildError Base::canBuildFacility(const FacilityDef &def, Vec2<int> pos, b
 			}
 		}
 	}
-	for (int x = pos.x; x < pos.x + def.size; ++x)
+	for (int x = pos.x; x < pos.x + type->size; ++x)
 	{
-		for (int y = pos.y; y < pos.y + def.size; ++y)
+		for (int y = pos.y; y < pos.y + type->size; ++y)
 		{
 			if (!corridors[x][y])
 			{
@@ -115,13 +114,12 @@ Base::BuildError Base::canBuildFacility(const FacilityDef &def, Vec2<int> pos, b
 	}
 	if (!free)
 	{
-		auto building = bld.lock();
 		if (!building)
 		{
 			LogError("Building disappeared");
 			return BuildError::OutOfBounds;
 		}
-		else if (building->owner->balance - def.buildCost < 0)
+		else if (building->owner->balance - type->buildCost < 0)
 		{
 			return BuildError::NoMoney;
 		}
@@ -129,25 +127,24 @@ Base::BuildError Base::canBuildFacility(const FacilityDef &def, Vec2<int> pos, b
 	return BuildError::NoError;
 }
 
-void Base::buildFacility(const FacilityDef &def, Vec2<int> pos, bool free)
+void Base::buildFacility(StateRef<FacilityType> type, Vec2<int> pos, bool free)
 {
-	if (canBuildFacility(def, pos, free) == BuildError::NoError)
+	if (canBuildFacility(type, pos, free) == BuildError::NoError)
 	{
-		facilities.emplace_back(new Facility(def));
-		auto facility = facilities.back();
+		auto facility = mksp<Facility>(type);
+		facilities.push_back(facility);
 		facility->pos = pos;
 		if (!free)
 		{
-			auto building = bld.lock();
 			if (!building)
 			{
 				LogError("Building disappeared");
 			}
 			else
 			{
-				building->owner->balance -= def.buildCost;
+				building->owner->balance -= type->buildCost;
 			}
-			facility->buildTime = def.buildTime;
+			facility->buildTime = type->buildTime;
 		}
 	}
 }
@@ -159,7 +156,7 @@ Base::BuildError Base::canDestroyFacility(Vec2<int> pos) const
 	{
 		return BuildError::OutOfBounds;
 	}
-	if (facility->def.fixed)
+	if (facility->type->fixed)
 	{
 		return BuildError::Occupied;
 	}
@@ -183,4 +180,25 @@ void Base::destroyFacility(Vec2<int> pos)
 	}
 }
 
+template <> sp<Base> StateObject<Base>::get(const GameState &state, const UString &id)
+{
+	auto it = state.player_bases.find(id);
+	if (it == state.player_bases.end())
+	{
+		LogError("No baseas matching ID \"%s\"", id.c_str());
+		return nullptr;
+	}
+	return it->second;
+}
+
+template <> const UString &StateObject<Base>::getPrefix()
+{
+	static UString prefix = "BASE_";
+	return prefix;
+}
+template <> const UString &StateObject<Base>::getTypeName()
+{
+	static UString name = "Base";
+	return name;
+}
 }; // namespace OpenApoc

@@ -9,12 +9,22 @@
 namespace OpenApoc
 {
 
-Projectile::Projectile(sp<Vehicle> firer, Vec3<float> position, Vec3<float> velocity,
+const std::map<Projectile::Type, UString> Projectile::TypeMap = {
+    {Projectile::Type::Beam, "beam"}, {Projectile::Type::Missile, "missile"},
+};
+
+Projectile::Projectile(StateRef<Vehicle> firer, Vec3<float> position, Vec3<float> velocity,
                        unsigned int lifetime, const Colour &colour, float beamLength,
                        float beamWidth)
     : type(Type::Beam), position(position), velocity(velocity), age(0), lifetime(lifetime),
       firer(firer), previousPosition(position), colour(colour), beamLength(beamLength),
       beamWidth(beamWidth)
+{
+}
+
+Projectile::Projectile()
+    : type(Type::Beam), position(0, 0, 0), velocity(0, 0, 0), age(0), lifetime(0),
+      previousPosition(0, 0, 0), colour(0, 0, 0), beamLength(0), beamWidth(0)
 {
 }
 
@@ -33,7 +43,8 @@ void Projectile::update(GameState &state, unsigned int ticks)
 	    this->age >= this->lifetime)
 	{
 		auto this_shared = shared_from_this();
-		state.city->projectiles.erase(std::dynamic_pointer_cast<Projectile>(this_shared));
+		for (auto &city : state.cities)
+			city.second->projectiles.erase(std::dynamic_pointer_cast<Projectile>(this_shared));
 		this->tileObject->removeFromMap();
 		this->tileObject.reset();
 	}

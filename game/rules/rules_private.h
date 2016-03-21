@@ -11,12 +11,6 @@ class RulesLoader
   public:
 	static bool ParseRules(Rules &rules, tinyxml2::XMLElement *root);
 
-	static bool ParseVehicleType(Rules &rules, tinyxml2::XMLElement *root);
-	static bool ParseOrganisationDefinition(Rules &rules, tinyxml2::XMLElement *root);
-	static bool ParseCityDefinition(Rules &rules, tinyxml2::XMLElement *root);
-	static bool ParseVehicleEquipment(Rules &rules, tinyxml2::XMLElement *root);
-	static bool ParseFacilityDefinition(Rules &rules, tinyxml2::XMLElement *root);
-	static bool ParseDoodadDefinition(Rules &rules, tinyxml2::XMLElement *root);
 	static bool ParseAliases(Rules &rules, tinyxml2::XMLElement *root);
 
 	// These check the validity of the ID string (Useful when creating new objects)

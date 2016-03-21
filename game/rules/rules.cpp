@@ -23,16 +23,6 @@ bool RulesLoader::isValidStringID(const UString &str)
 	// With gettext everything is a valid string
 	return true;
 }
-bool RulesLoader::isValidOrganisationID(const UString &str)
-{
-	static UString id_prefix = "ORG_";
-	// This also catches empty string etc.?
-	if (str.substr(0, id_prefix.length()) != id_prefix)
-	{
-		return false;
-	}
-	return true;
-}
 bool RulesLoader::isValidVehicleTypeID(const UString &str)
 {
 	static UString id_prefix = "VEHICLE_";
@@ -43,16 +33,8 @@ bool RulesLoader::isValidVehicleTypeID(const UString &str)
 	}
 	return true;
 }
-bool RulesLoader::isValidOrganisation(const Rules &rules, const UString &str)
-{
-	auto &orgs = rules.getOrganisations();
-	for (auto &org : orgs)
-	{
-		if (org.ID == str)
-			return true;
-	}
-	return false;
-}
+
+Rules::Rules() {}
 
 Rules::Rules(const UString &rootFileName) : aliases(new ResourceAliases())
 {
@@ -95,46 +77,6 @@ Rules::Rules(const UString &rootFileName) : aliases(new ResourceAliases())
 		LogError("Error loading ruleset \"%s\" from \"%s\"", rulesetName.c_str(),
 		         systemPath.c_str());
 	}
-
-	/* Post-processing/checks go here */
-	for (auto &p : this->buildingTiles)
-	{
-		auto &sceneryTile = p.second;
-		if (sceneryTile.damagedTileID != "")
-		{
-			auto damagedTileIt = this->buildingTiles.find(sceneryTile.damagedTileID);
-			if (damagedTileIt == this->buildingTiles.end())
-			{
-				LogError("Tile \"%s\" has damaged tile ID \"%s\" which does not exist",
-				         p.first.c_str(), sceneryTile.damagedTileID.c_str());
-				continue;
-			}
-			sceneryTile.damagedTile = &damagedTileIt->second;
-		}
-	}
-
-	for (auto &vequipment : this->vehicle_equipment)
-	{
-		if (!vequipment.second)
-		{
-			LogError("vequipment[%s] points to null?", vequipment.first.c_str());
-		}
-		if (!vequipment.second->isValid(*this))
-		{
-			LogError("Invalid equipment ID \"%s\"", vequipment.second->id.c_str());
-		}
-	}
-	for (auto &vehicle : this->vehicle_types)
-	{
-		if (!vehicle.second)
-		{
-			LogError("vehicle[%s] points to null?", vehicle.first.c_str());
-		}
-		if (!vehicle.second->isValid(*this))
-		{
-			LogError("Invalid vehicle ID \"%s\"", vehicle.second->id.c_str());
-		}
-	}
 }
 
 bool RulesLoader::ParseRules(Rules &rules, tinyxml2::XMLElement *root)
@@ -152,32 +94,7 @@ bool RulesLoader::ParseRules(Rules &rules, tinyxml2::XMLElement *root)
 	     e = e->NextSiblingElement())
 	{
 		UString name = e->Name();
-		if (name == "vehicle")
-		{
-			if (!ParseVehicleType(rules, e))
-				return false;
-		}
-		else if (name == "organisation")
-		{
-			if (!ParseOrganisationDefinition(rules, e))
-				return false;
-		}
-		else if (name == "city")
-		{
-			if (!ParseCityDefinition(rules, e))
-				return false;
-		}
-		else if (name == "vehicle_equipment")
-		{
-			if (!ParseVehicleEquipment(rules, e))
-				return false;
-		}
-		else if (name == "facilitydef")
-		{
-			if (!ParseFacilityDefinition(rules, e))
-				return false;
-		}
-		else if (name == "ufopaedia")
+		if (name == "ufopaedia")
 		{
 			tinyxml2::XMLElement *nodeufo;
 			UString nodename;
@@ -218,12 +135,7 @@ bool RulesLoader::ParseRules(Rules &rules, tinyxml2::XMLElement *root)
 				return false;
 			}
 		}
-		else if (name == "doodad")
-		{
-			if (!ParseDoodadDefinition(rules, e))
-				return false;
-		}
-		else if (name == "aliases")
+		if (name == "aliases")
 		{
 			if (!ParseAliases(rules, e))
 				return false;
@@ -238,26 +150,10 @@ bool RulesLoader::ParseRules(Rules &rules, tinyxml2::XMLElement *root)
 	return true;
 }
 
-const UString &Rules::getSceneryTileAt(Vec3<int> offset) const
+bool Rules::isValid()
 {
-	static const UString noTile = "";
-	if (offset.x < 0 || offset.x >= citySize.x || offset.y < 0 || offset.y >= citySize.y ||
-	    offset.z < 0 || offset.z >= citySize.z)
-	{
-		LogError("Trying to get tile {%d,%d,%d} in city of size {%d,%d,%d}", offset.x, offset.y,
-		         offset.z, citySize.x, citySize.y, citySize.z);
-		return noTile;
-	}
-	unsigned index = offset.z * citySize.x * citySize.y + offset.y * citySize.x + offset.x;
-	if (index >= tileIDs.size())
-	{
-		LogError("Tile {%d,%d,%d} would go over ID array! (city size {%d,%d,%d}, id offset %u, "
-		         "id array size %u",
-		         offset.x, offset.y, offset.z, citySize.x, citySize.y, citySize.z, index,
-		         tileIDs.size());
-		return noTile;
-	}
-	return tileIDs[index];
+	// FIXME: Pull out validation for after loading in here
+	return true;
 }
 
 }; // namespace OpenApoc

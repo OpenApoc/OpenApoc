@@ -10,18 +10,13 @@
 namespace OpenApoc
 {
 
-VWeapon::VWeapon(const VWeaponType &type, sp<Vehicle> owner, int initialAmmo, State initialState)
+VWeapon::VWeapon(StateRef<VEquipmentType> type, StateRef<Vehicle> owner, int initialAmmo,
+                 State initialState)
     : VEquipment(type), state(initialState), owner(owner), ammo(initialAmmo), reloadTime(0)
 {
 }
 sp<Projectile> VWeapon::fire(Vec3<float> target)
 {
-	auto &weaponType = static_cast<const VWeaponType &>(this->type);
-	auto owner = this->owner.lock();
-	if (!owner)
-	{
-		LogError("Called on weapon with no owner?");
-	}
 	auto vehicleTile = owner->tileObject;
 	if (!vehicleTile)
 	{
@@ -32,34 +27,34 @@ sp<Projectile> VWeapon::fire(Vec3<float> target)
 		LogWarning("Trying to fire weapon in state %d", this->state);
 		return nullptr;
 	}
-	if (this->ammo <= 0 && this->type.max_ammo != 0)
+	if (this->ammo <= 0 && this->type->max_ammo != 0)
 	{
 		LogWarning("Trying to fire weapon with no ammo");
 		return nullptr;
 	}
-	this->reloadTime = weaponType.fire_delay * TICK_SCALE;
+	this->reloadTime = type->fire_delay * TICK_SCALE;
 	this->state = State::Reloading;
-	if (this->type.max_ammo != 0)
+	if (this->type->max_ammo != 0)
 		this->ammo--;
 
-	if (weaponType.fire_sfx)
+	if (type->fire_sfx)
 	{
-		fw().soundBackend->playSample(weaponType.fire_sfx, vehicleTile->getPosition());
+		fw().soundBackend->playSample(type->fire_sfx, vehicleTile->getPosition());
 	}
 
-	if (this->ammo == 0 && this->type.max_ammo != 0)
+	if (this->ammo == 0 && this->type->max_ammo != 0)
 	{
 		this->state = State::OutOfAmmo;
 	}
 
 	Vec3<float> velocity = target - vehicleTile->getPosition();
 	velocity = glm::normalize(velocity);
-	velocity *= weaponType.speed;
+	velocity *= type->speed;
 
 	Colour c;
 	// FIXME: Implement 'proper' weapon projectile images
 	// For now just change the colour so you can at least see they're different
-	switch (weaponType.projectile_image)
+	switch (type->projectile_image)
 	{
 		case 0:                   // Missile ("GLM array" "janitor" "prophet")
 		case 1:                   // Bigger missile ("GLM air defence" "justice" "retribution"
@@ -89,13 +84,13 @@ sp<Projectile> VWeapon::fire(Vec3<float> target)
 			c = {255, 128, 255, 255}; // Pink
 			break;
 		default:
-			LogError("Unknown projectile_image \"%d\" for type \"%s\"", weaponType.projectile_image,
-			         weaponType.id.c_str());
+			LogError("Unknown projectile_image \"%d\" for type \"%s\"", type->projectile_image,
+			         type->id.c_str());
 	}
 
 	return mksp<Projectile>(owner, vehicleTile->getPosition(), velocity,
-	                        static_cast<int>(this->getRange() / weaponType.speed * TICK_SCALE), c,
-	                        weaponType.tail_size, 2.0f);
+	                        static_cast<int>(this->getRange() / type->speed * TICK_SCALE), c,
+	                        type->tail_size, 2.0f);
 }
 
 void VWeapon::update(int ticks)
@@ -124,7 +119,7 @@ void VWeapon::update(int ticks)
 
 int VWeapon::reload(int ammoAvailable)
 {
-	int ammoRequired = this->type.max_ammo - this->ammo;
+	int ammoRequired = this->type->max_ammo - this->ammo;
 	int reloadAmount = std::min(ammoRequired, ammoAvailable);
 	this->ammo += reloadAmount;
 	return reloadAmount;
@@ -132,8 +127,8 @@ int VWeapon::reload(int ammoAvailable)
 
 float VWeapon::getRange() const
 {
-	auto &weaponType = static_cast<const VWeaponType &>(this->type);
-	return weaponType.range;
+	auto &type = this->type;
+	return type->range;
 }
 
 void VWeapon::setReloadTime(int ticks)

@@ -10,7 +10,7 @@ BuildingScreen::BuildingScreen(sp<Building> building)
     : Stage(), menuform(fw().gamecore->GetForm("FORM_BUILDING_SCREEN")), building(building)
 {
 	auto nameLabel = menuform->FindControlTyped<Label>("LABEL_BUILDING_NAME");
-	nameLabel->SetText(tr(building->def.getName()));
+	nameLabel->SetText(tr(building->name));
 }
 
 BuildingScreen::~BuildingScreen() {}

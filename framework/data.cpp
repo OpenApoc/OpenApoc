@@ -109,6 +109,8 @@ Data::~Data() {}
 
 sp<VoxelSlice> Data::load_voxel_slice(const UString &path)
 {
+	if (path == "")
+		return nullptr;
 	sp<VoxelSlice> slice;
 	if (path.substr(0, 9) == "LOFTEMPS:")
 	{
@@ -156,6 +158,7 @@ sp<VoxelSlice> Data::load_voxel_slice(const UString &path)
 		LogError("Failed to load VoxelSlice \"%s\"", path.c_str());
 		return nullptr;
 	}
+	slice->path = path;
 	return slice;
 }
 
@@ -204,6 +207,7 @@ sp<ImageSet> Data::load_image_set(const UString &path)
 	this->pinnedImageSets.pop();
 
 	this->imageSetCache[cacheKey] = imgSet;
+	imgSet->path = path;
 	return imgSet;
 }
 
@@ -237,6 +241,7 @@ sp<Sample> Data::load_sample(UString path)
 		return nullptr;
 	}
 	this->sampleCache[cacheKey] = sample;
+	sample->path = path;
 	return sample;
 }
 
@@ -248,7 +253,10 @@ sp<MusicTrack> Data::load_music(const UString &path)
 	{
 		auto track = loader->loadMusic(path);
 		if (track)
+		{
+			track->path = path;
 			return track;
+		}
 	}
 	LogInfo("Failed to load music track \"%s\"", path.c_str());
 	return nullptr;
@@ -468,7 +476,7 @@ sp<Image> Data::load_image(const UString &path)
 	this->pinnedImages.pop();
 
 	this->imageCache[cacheKey] = img;
-	img->sourcePath = path;
+	img->path = path;
 	return img;
 }
 

@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "library/strings.h"
+#include "framework/resource.h"
 
 namespace OpenApoc
 {
@@ -34,7 +35,7 @@ class BackendSampleData
 	virtual ~BackendSampleData() {}
 };
 
-class Sample
+class Sample : public ResObject
 {
   public:
 	AudioFormat format;
@@ -45,7 +46,7 @@ class Sample
 	virtual ~Sample() {}
 };
 
-class MusicTrack
+class MusicTrack : public ResObject
 {
   public:
 	unsigned int sampleCount; // may be estimated? Or 0 if we just don't know?

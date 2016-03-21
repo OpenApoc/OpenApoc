@@ -2,6 +2,7 @@
 
 #include "library/strings.h"
 #include "library/sp.h"
+#include "game/stateobject.h"
 
 #include <list>
 
@@ -9,18 +10,16 @@ namespace OpenApoc
 {
 
 class Vehicle;
+template <typename T> class StateObject;
 
-class Organisation
+class Organisation : public StateObject<Organisation>
 {
   public:
-	UString ID;
 	UString name;
 	int balance;
 	int income;
 
-	std::list<wp<Vehicle>> vehicles;
-
-	Organisation(const UString &ID = "", const UString &name = "", int balance = 0, int income = 0);
+	Organisation(const UString &name = "", int balance = 0, int income = 0);
 	bool isHostileTo(const Organisation &other) const;
 };
 

@@ -18,6 +18,7 @@ if(COMPILER_SUPPORTS_pthread)
 endif()
 
 option(LTO "Build using link-time-optimisations" OFF)
+option(ENABLE_TESTS "Build some unit tests" OFF)
 
 CHECK_CXX_COMPILER_FLAG("-flto"
 	COMPILER_SUPPORTS_LTO)
@@ -40,6 +41,9 @@ find_package(Boost REQUIRED COMPONENTS locale)
 
 
 # find openapoc sources
+AUX_SOURCE_DIRECTORY(tools sources)
+AUX_SOURCE_DIRECTORY(tools/extractors sources)
+AUX_SOURCE_DIRECTORY(tools/extractors/common sources)
 AUX_SOURCE_DIRECTORY(game sources)
 AUX_SOURCE_DIRECTORY(game/apocresources sources)
 AUX_SOURCE_DIRECTORY(game/base sources)
@@ -54,6 +58,7 @@ AUX_SOURCE_DIRECTORY(library sources)
 AUX_SOURCE_DIRECTORY(shaders sources)
 AUX_SOURCE_DIRECTORY(transitions sources)
 AUX_SOURCE_DIRECTORY(forms sources)
+
 
 # declare tinyxml library
 SET(REQUIRED_TINYXML_LIBRARIES tinyxml2)
@@ -117,8 +122,10 @@ ADD_CUSTOM_COMMAND( TARGET OpenApoc
 			RUNTIME DESTINATION bin)
 	install(DIRECTORY data/ DESTINATION share/OpenApoc)
 
-enable_testing()
-add_subdirectory(tests)
+if(ENABLE_TESTS)
+	enable_testing()
+	add_subdirectory(tests)
+endif()
 
 file(GLOB_RECURSE FORMAT_SOURCES ${CMAKE_SOURCE_DIR}/*.cpp
 		${CMAKE_SOURCE_DIR}/*.c ${CMAKE_SOURCE_DIR}/*.h)
@@ -175,7 +182,8 @@ set(CLANG_TIDY clang-tidy CACHE STRING "clang-tidy executable name in PATH")
 set(CLANG_TIDY_FIX OFF tidy CACHE BOOL "Pass -fix to clang-tidy (DANGEROUS)")
 
 find_package(Git)
-execute_process(COMMAND ${GIT_EXECUTABLE} -C ${CMAKE_SOURCE_DIR} describe --tags --all --long
+execute_process(COMMAND ${GIT_EXECUTABLE} -C ${CMAKE_SOURCE_DIR} describe
+		--tags --all --long --always
 		OUTPUT_VARIABLE OPENAPOC_VERSION_STRING_RAW
 		OUTPUT_STRIP_TRAILING_WHITESPACE)
 
@@ -186,13 +194,27 @@ string(MAKE_C_IDENTIFIER "${OPENAPOC_VERSION_STRING_RAW}" OPENAPOC_VERSION_STRIN
 
 configure_file(version.h.in version.h)
 
-if (CLANG_TIDY_FIX)
-		set(CLANG_TIDY_OPTIONS "-fix")
-endif()
+list(APPEND CLANG_TIDY_OPTIONS -header-filter=.*)
 
-add_custom_target(tidy ${CLANG_TIDY} ${FORMAT_SOURCES} -p ${CMAKE_BINARY_DIR}
-		${CLANG_TIDY_OPTIONS}
-		DEPENDS ${FORMAT_SOURCES} ${CMAKE_BINARY_DIR}/compile_commands.json)
+add_custom_target(tidy)
+add_custom_target(tidy-fix)
+
+foreach(TIDY_SOURCE ${FORMAT_SOURCES})
+		string(MAKE_C_IDENTIFIER ${TIDY_SOURCE} TIDY_SOURCE_STRIPPED)
+		add_custom_target(tidy-${TIDY_SOURCE_STRIPPED} ${CLANG_TIDY}
+				${TIDY_SOURCE} -p ${CMAKE_BINARY_DIR} ${CLANG_TIDY_OPTIONS}
+				DEPENDS ${FORMAT_SOURCES} ${CMAKE_BINARY_DIR}/compile_commands.json)
+		add_dependencies(tidy tidy-${TIDY_SOURCE_STRIPPED})
+endforeach()
+
+foreach(TIDY_SOURCE ${FORMAT_SOURCES})
+		string(MAKE_C_IDENTIFIER ${TIDY_SOURCE} TIDY_SOURCE_STRIPPED)
+		add_custom_target(tidy-fix-${TIDY_SOURCE_STRIPPED} ${CLANG_TIDY}
+				${TIDY_SOURCE} -p ${CMAKE_BINARY_DIR} ${CLANG_TIDY_OPTIONS}
+				-fix -fix-errors
+				DEPENDS ${FORMAT_SOURCES} ${CMAKE_BINARY_DIR}/compile_commands.json)
+		add_dependencies(tidy-fix tidy-fix-${TIDY_SOURCE_STRIPPED})
+endforeach()
 
 
 # Localisation

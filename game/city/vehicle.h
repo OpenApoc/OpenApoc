@@ -3,6 +3,7 @@
 #include "framework/includes.h"
 #include "game/tileview/tile.h"
 #include "game/rules/vehicle_type.h"
+#include "game/organisation.h"
 
 #include <deque>
 #include <list>
@@ -22,6 +23,7 @@ class GameState;
 class VEquipment;
 class VEquipmentType;
 class Base;
+class City;
 
 class VehicleMover
 {
@@ -32,45 +34,40 @@ class VehicleMover
 	virtual ~VehicleMover();
 };
 
-class Vehicle : public std::enable_shared_from_this<Vehicle>
+class Vehicle : public StateObject<Vehicle>, public std::enable_shared_from_this<Vehicle>
 {
   public:
 	virtual ~Vehicle();
-	// An empty name will generate a name from type.name and type.numCreated
-	Vehicle(const VehicleType &type, sp<Organisation> owner, UString name = "");
+	Vehicle();
 
-	void equipDefaultEquipment(Rules &rules);
+	void equipDefaultEquipment(GameState &state);
 
-	const VehicleType &type;
-	sp<Organisation> owner;
-
+	StateRef<VehicleType> type;
+	StateRef<Organisation> owner;
 	UString name;
+	std::list<up<VehicleMission>> missions;
+	std::list<sp<VEquipment>> equipment;
+	Vec3<float> position;
+	Vec3<float> velocity;
+	Vec3<float> facing;
+	StateRef<City> city;
+	int health;
+	int shield;
+	StateRef<Building> homeBuilding;
+	StateRef<Building> currentlyLandedBuilding;
 
 	sp<TileObjectVehicle> tileObject;
 	sp<TileObjectShadow> shadowObject;
 
-	std::deque<std::unique_ptr<VehicleMission>> missions;
 	std::unique_ptr<VehicleMover> mover;
 
-	/* The building we are current landed in (May be nullptr if in the air) */
-	std::weak_ptr<Building> building;
-
-	/* Player owned vehicles always have a 'home base' */
-	std::weak_ptr<Base> homeBase;
-
 	/* 'launch' the vehicle into the city */
-	void launch(TileMap &map, Vec3<float> initialPosition);
+	void launch(TileMap &map, GameState &state, Vec3<float> initialPosition);
 	/* 'land' the vehicle in a building*/
-	void land(TileMap &map, sp<Building> b);
+	void land(GameState &state, StateRef<Building> b);
 
-	std::list<sp<VEquipment>> equipment;
-	Vec3<float> position;
-
-	int health;
-	int shield;
-
-	bool canAddEquipment(Vec2<int> pos, const VEquipmentType &type) const;
-	void addEquipment(Vec2<int> pos, const VEquipmentType &type);
+	bool canAddEquipment(Vec2<int> pos, StateRef<VEquipmentType> type) const;
+	void addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentType> type);
 	void removeEquipment(sp<VEquipment> object);
 
 	const Vec3<float> &getPosition() const { return this->position; }

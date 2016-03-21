@@ -3,6 +3,6 @@
 namespace OpenApoc
 {
 
-Facility::Facility(const FacilityDef &def) : def(def), buildTime(0) {}
+Facility::Facility(StateRef<FacilityType> type) : type(type), pos(0, 0), buildTime(0) {}
 
 }; // namespace OpenApoc

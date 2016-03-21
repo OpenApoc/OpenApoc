@@ -5,6 +5,7 @@
 #include "game/general/difficultymenu.h"
 #include "game/debugtools/debugmenu.h"
 #include "game/resources/gamecore.h"
+#include "game/city/cityview.h"
 
 namespace OpenApoc
 {
@@ -65,6 +66,24 @@ void MainMenu::EventOccurred(Event *e)
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = mksp<DebugMenu>();
 			return;
+		}
+		if (e->Forms().RaisedBy->Name == "BUTTON_LOADGAME")
+		{
+			// FIXME: Save game selector
+			auto state = mksp<GameState>();
+			if (state->loadGame("save") == false)
+			{
+				LogError("Failed to load 'save'");
+				return;
+			}
+			state->initState();
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			// FIXME:
+			// if (state->inBattlescale)
+			// 	nextStage = mksp<BattleScape>..
+			// else
+			stageCmd.nextStage =
+			    mksp<CityView>(state, StateRef<City>{state.get(), "CITYMAP_HUMAN"});
 		}
 	}
 

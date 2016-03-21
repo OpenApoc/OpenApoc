@@ -5,6 +5,7 @@
 #include "library/rect.h"
 #include "library/strings.h"
 #include "game/rules/vequipment.h"
+#include "game/stateobject.h"
 #include <vector>
 #include <map>
 #include <list>
@@ -16,7 +17,7 @@ class RulesLoader;
 class Image;
 class VoxelMap;
 
-class VehicleType
+class VehicleType : public StateObject<VehicleType>
 {
   public:
 	enum class Type
@@ -25,17 +26,28 @@ class VehicleType
 		Ground,
 		UFO,
 	};
+	static const std::map<Type, UString> TypeMap;
 	enum class Direction
 	{
 		N,
+		NNE,
 		NE,
+		NEE,
 		E,
+		SEE,
 		SE,
+		SSE,
 		S,
+		SSW,
 		SW,
+		SWW,
 		W,
+		NWW,
 		NW,
+		NNW
 	};
+	static const std::map<Direction, UString> DirectionMap;
+	static const Vec3<float> &directionToVector(Direction);
 	enum class Banking
 	{
 		Flat,
@@ -44,6 +56,7 @@ class VehicleType
 		Ascending,
 		Descending,
 	};
+	static const std::map<Banking, UString> BankingMap;
 	enum class ArmourDirection
 	{
 		Top,
@@ -53,18 +66,21 @@ class VehicleType
 		Left,
 		Right,
 	};
+	static const std::map<ArmourDirection, UString> ArmourDirectionMap;
 	enum class AlignmentX
 	{
 		Left,
 		Right,
 		Centre,
 	};
+	static const std::map<AlignmentX, UString> AlignmentXMap;
 	enum class AlignmentY
 	{
 		Top,
 		Bottom,
 		Centre,
 	};
+	static const std::map<AlignmentY, UString> AlignmentYMap;
 
 	// This is explictly mutable it can be used through a const ref
 	// FIXME: Should this go somewhere else in the state? If the rules are meant to be immutable
@@ -72,10 +88,9 @@ class VehicleType
 	mutable unsigned numCreated;
 
 	Type type;
-	UString id;
 
 	UString name;
-	UString manufacturer;
+	StateRef<Organisation> manufacturer;
 
 	Vec3<float> size;
 	Vec2<float> image_offset;
@@ -88,38 +103,29 @@ class VehicleType
 	int passengers;
 	float aggressiveness;
 	int score;
-	UString icon_path;
 	sp<Image> icon;
 
 	// The following (equip screen, equip icon big and small) are only required
 	// for vehicles able to be used by the player
-	UString equipment_screen_path;
 	sp<Image> equipment_screen;
 
-	UString equip_icon_big_path;
 	sp<Image> equip_icon_big;
 
-	UString equip_icon_small_path;
 	sp<Image> equip_icon_small;
 
 	// All vehicles (flying,ground,ufo) have strategy sprites
-	std::map<Direction, UString> strategy_sprite_paths;
-	std::vector<std::pair<Vec3<float>, sp<Image>>> directional_strategy_sprites;
+	std::map<Vec3<float>, sp<Image>> directional_strategy_sprites;
 
 	// Flying and ground vehicles have a directional sprite (with optional non-flat banking)
-	std::map<Banking, std::map<Direction, UString>> sprite_paths;
-	std::vector<std::pair<Vec3<float>, sp<Image>>> directional_sprites;
+	std::map<Banking, std::map<Vec3<float>, sp<Image>>> directional_sprites;
 
 	// Flying vehicles and UFOs have a shadow
 	Vec2<float> shadow_offset;
-	std::map<Direction, UString> shadow_sprite_paths;
-	std::vector<std::pair<Vec3<float>, sp<Image>>> directional_shadow_sprites;
+	std::map<Vec3<float>, sp<Image>> directional_shadow_sprites;
 
 	// UFOs have a non-directional animated sprite
-	std::list<UString> animation_sprite_paths;
 	std::list<sp<Image>> animation_sprites;
 	// UFOs also have a 'crashed' sprite
-	UString crashed_sprite_path;
 	sp<Image> crashed_sprite;
 
 	sp<VoxelMap> voxelMap;
@@ -131,6 +137,7 @@ class VehicleType
 		AlignmentX align_x;
 		AlignmentY align_y;
 		Rect<int> bounds;
+		EquipmentLayoutSlot() = default;
 		EquipmentLayoutSlot(VEquipmentType::Type type, AlignmentX align_x, AlignmentY align_y,
 		                    Rect<int> bounds)
 		    : type(type), align_x(align_x), align_y(align_y), bounds(bounds)
@@ -138,13 +145,9 @@ class VehicleType
 		}
 	};
 	std::list<EquipmentLayoutSlot> equipment_layout_slots;
-	std::list<std::pair<Vec2<int>, UString>> initial_equipment_list;
+	std::list<std::pair<Vec2<int>, StateRef<VEquipmentType>>> initial_equipment_list;
 
 	virtual ~VehicleType() = default;
-	virtual bool isValid(Rules &rules);
-
-  private:
-	VehicleType(Type type, const UString &id);
-	friend class RulesLoader;
+	VehicleType() = default;
 };
 }; // namespace OpenApoc

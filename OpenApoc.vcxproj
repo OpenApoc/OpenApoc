@@ -88,7 +88,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>12.0.21005.1</_ProjectFileVersion>
-    <NuGetPackageImportStamp>92f41cfa</NuGetPackageImportStamp>
+    <NuGetPackageImportStamp>e22c5729</NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -331,8 +331,21 @@
     <ClCompile Include="framework\renderer.cpp" />
     <ClCompile Include="framework\render\gl20\ogl_2_0_renderer.cpp" />
     <ClCompile Include="framework\render\gl30\ogl_3_0_renderer.cpp" />
+    <ClCompile Include="game\rules\doodad_type.cpp" />
+    <ClCompile Include="tools\extractors\common\strtab.cpp" />
+    <ClCompile Include="tools\extractors\common\ufo2p.cpp" />
+    <ClCompile Include="tools\extractors\extractors.cpp" />
+    <ClCompile Include="tools\extractors\extract_base_layouts.cpp" />
+    <ClCompile Include="tools\extractors\extract_buildings.cpp" />
+    <ClCompile Include="tools\extractors\extract_city_map.cpp" />
+    <ClCompile Include="tools\extractors\extract_city_scenery.cpp" />
+    <ClCompile Include="tools\extractors\extract_facilities.cpp" />
+    <ClCompile Include="tools\extractors\extract_organisations.cpp" />
+    <ClCompile Include="tools\extractors\extract_vehicles.cpp" />
+    <ClCompile Include="tools\extractors\extract_vehicle_equipment.cpp" />
     <None Include="framework\render\gles20\EGLContext.cpp" />
     <None Include="framework\render\gles20\ogles_2_0_renderer.cpp" />
+    <ClCompile Include="framework\serialize.cpp" />
     <ClCompile Include="framework\sound.cpp" />
     <ClCompile Include="framework\sound\null_backend.cpp" />
     <ClCompile Include="framework\sound\sdlraw_backend.cpp" />
@@ -342,6 +355,7 @@
     <ClCompile Include="game\base\facility.cpp" />
     <ClCompile Include="game\base\vequipscreen.cpp" />
     <ClCompile Include="game\city\basebuyscreen.cpp" />
+    <ClCompile Include="game\city\baselayout.cpp" />
     <ClCompile Include="game\city\baseselectscreen.cpp" />
     <ClCompile Include="game\city\building.cpp" />
     <ClCompile Include="game\city\buildingscreen.cpp" />
@@ -355,18 +369,17 @@
     <ClCompile Include="game\debugtools\debugmenu.cpp" />
     <ClCompile Include="game\debugtools\formpreview.cpp" />
     <ClCompile Include="game\gamestate.cpp" />
+    <ClCompile Include="game\gamestate_serialize.cpp" />
     <ClCompile Include="game\general\optionsmenu.cpp" />
     <ClCompile Include="game\organisation.cpp" />
     <ClCompile Include="game\resources\gamecore.cpp" />
     <ClCompile Include="game\apocresources\apocfont.cpp" />
     <ClCompile Include="game\boot.cpp" />
     <ClCompile Include="game\rules\aliases.cpp" />
-    <ClCompile Include="game\rules\citydef_rules.cpp" />
-    <ClCompile Include="game\rules\doodad_rules.cpp" />
-    <ClCompile Include="game\rules\facilitydef_rules.cpp" />
-    <ClCompile Include="game\rules\organisationdef_rules.cpp" />
+    <ClCompile Include="game\rules\facility_type.cpp" />
     <ClCompile Include="game\rules\rules.cpp" />
     <ClCompile Include="game\rules\rules_helper.cpp" />
+    <ClCompile Include="game\rules\scenery_tile_type.cpp" />
     <ClCompile Include="game\rules\vehicle_type_rules.cpp" />
     <ClCompile Include="game\rules\vequipment_rules.cpp" />
     <ClCompile Include="game\tileview\tile.cpp" />
@@ -433,9 +446,26 @@
     <ClInclude Include="framework\render\gl20\gl_2_0.hpp" />
     <ClInclude Include="framework\render\gl30\gl_3_0.hpp" />
     <ClInclude Include="framework\render\gles20\egl.hpp" />
+    <ClInclude Include="tools\extractors\common\audio.h" />
+    <ClInclude Include="tools\extractors\common\baselayout.h" />
+    <ClInclude Include="tools\extractors\common\canonstring.h" />
+    <ClInclude Include="tools\extractors\common\crc32.h" />
+    <ClInclude Include="tools\extractors\common\datachunk.h" />
+    <ClInclude Include="tools\extractors\common\facilities.h" />
+    <ClInclude Include="tools\extractors\common\organisations.h" />
+    <ClInclude Include="tools\extractors\common\research.h" />
+    <ClInclude Include="tools\extractors\common\strtab.h" />
+    <ClInclude Include="tools\extractors\common\ufo2p.h" />
+    <ClInclude Include="tools\extractors\common\ufopaedia.h" />
+    <ClInclude Include="tools\extractors\common\vec.h" />
+    <ClInclude Include="tools\extractors\common\vehicle.h" />
+    <ClInclude Include="tools\extractors\common\vequipment.h" />
+    <ClInclude Include="tools\extractors\extractors.h" />
     <None Include="framework\render\gles20\EGLContext.h" />
     <ClInclude Include="framework\render\gles20\gles_2_0.hpp" />
+    <ClInclude Include="framework\resource.h" />
     <ClInclude Include="framework\sampleloader_interface.h" />
+    <ClInclude Include="framework\serialize.h" />
     <ClInclude Include="framework\sound.h" />
     <ClInclude Include="framework\sound_interface.h" />
     <ClInclude Include="framework\trace.h" />
@@ -445,6 +475,7 @@
     <ClInclude Include="game\base\facility.h" />
     <ClInclude Include="game\base\vequipscreen.h" />
     <ClInclude Include="game\city\basebuyscreen.h" />
+    <ClInclude Include="game\city\baselayout.h" />
     <ClInclude Include="game\city\baseselectscreen.h" />
     <ClInclude Include="game\city\building.h" />
     <ClInclude Include="game\city\buildingscreen.h" />
@@ -460,16 +491,16 @@
     <ClInclude Include="game\general\optionsmenu.h" />
     <ClInclude Include="game\organisation.h" />
     <ClInclude Include="game\resources\gamecore.h" />
-    <ClInclude Include="game\rules\buildingdef.h" />
-    <ClInclude Include="game\rules\doodaddef.h" />
+    <ClInclude Include="game\rules\doodad_type.h" />
+    <ClInclude Include="game\rules\facility_type.h" />
     <ClInclude Include="game\rules\resource_aliases.h" />
-    <ClInclude Include="game\rules\scenerytiledef.h" />
-    <ClInclude Include="game\rules\facilitydef.h" />
     <ClInclude Include="game\rules\rules.h" />
     <ClInclude Include="game\rules\rules_helper.h" />
     <ClInclude Include="game\rules\rules_private.h" />
+    <ClInclude Include="game\rules\scenery_tile_type.h" />
     <ClInclude Include="game\rules\vehicle_type.h" />
     <ClInclude Include="game\rules\vequipment.h" />
+    <ClInclude Include="game\stateobject.h" />
     <ClInclude Include="game\tileview\tile.h" />
     <ClInclude Include="game\tileview\tileobject.h" />
     <ClInclude Include="game\tileview\tileobject_doodad.h" />

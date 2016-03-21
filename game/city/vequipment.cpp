@@ -4,10 +4,10 @@
 namespace OpenApoc
 {
 
-VEquipment::VEquipment(const VEquipmentType &type) : type(type) {}
+VEquipment::VEquipment(StateRef<VEquipmentType> type) : type(type) {}
 
-VEngine::VEngine(const VEngineType &type) : VEquipment(type) {}
+VEngine::VEngine(StateRef<VEquipmentType> type) : VEquipment(type) {}
 
-VGeneralEquipment::VGeneralEquipment(const VGeneralEquipmentType &type) : VEquipment(type) {}
+VGeneralEquipment::VGeneralEquipment(StateRef<VEquipmentType> type) : VEquipment(type) {}
 
 } // namespace OpenApoc
