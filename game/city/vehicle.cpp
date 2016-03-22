@@ -169,13 +169,12 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 		{
 			if (equipment->type->type != VEquipmentType::Type::Weapon)
 				continue;
-			auto weapon = std::dynamic_pointer_cast<VWeapon>(equipment);
-			weapon->update(ticks);
-			if (weapon->canFire())
+			equipment->update(ticks);
+			if (equipment->canFire())
 			{
 				// Find something to shoot at!
 				// FIXME: Only run on 'aggressive'? And not already a manually-selected target?
-				float range = weapon->getRange();
+				float range = equipment->getRange();
 				// Find the closest enemy within the firing arc
 				float closestEnemyRange = std::numeric_limits<float>::max();
 				sp<TileObjectVehicle> closestEnemy;
@@ -222,7 +221,7 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 					// and fire at the center of the tile
 					auto target = closestEnemy->getPosition();
 					target += Vec3<float>{0.5, 0.5, 0.5};
-					auto projectile = weapon->fire(target);
+					auto projectile = equipment->fire(target);
 					if (projectile)
 					{
 						vehicleTile->map.addObjectToMap(projectile);
@@ -285,8 +284,7 @@ float Vehicle::getSpeed() const
 	{
 		if (e->type->type != VEquipmentType::Type::Engine)
 			continue;
-		auto engine = std::dynamic_pointer_cast<VEngine>(e);
-		speed += engine->type->top_speed;
+		speed += e->type->top_speed;
 	}
 
 	return speed;
@@ -308,8 +306,7 @@ int Vehicle::getMaxShield() const
 	{
 		if (e->type->type != VEquipmentType::Type::General)
 			continue;
-		auto equipment = std::dynamic_pointer_cast<VEquipment>(e);
-		maxShield += equipment->type->shielding;
+		maxShield += e->type->shielding;
 	}
 
 	return maxShield;
@@ -336,8 +333,7 @@ int Vehicle::getAccuracy() const
 	{
 		if (e->type->type != VEquipmentType::Type::General)
 			continue;
-		auto equipment = std::dynamic_pointer_cast<VEquipment>(e);
-		accuracy += equipment->type->accuracy_modifier;
+		accuracy += e->type->accuracy_modifier;
 	}
 	return accuracy;
 }
@@ -355,8 +351,7 @@ int Vehicle::getAcceleration() const
 	{
 		if (e->type->type != VEquipmentType::Type::Engine)
 			continue;
-		auto engine = std::dynamic_pointer_cast<VEngine>(e);
-		power += engine->type->power;
+		power += e->type->power;
 	}
 	if (weight == 0)
 	{
@@ -410,8 +405,7 @@ int Vehicle::getMaxPassengers() const
 	{
 		if (e->type->type != VEquipmentType::Type::General)
 			continue;
-		auto equipment = std::dynamic_pointer_cast<VEquipment>(e);
-		passengers += equipment->type->passengers;
+		passengers += e->type->passengers;
 	}
 	return passengers;
 }
@@ -429,8 +423,7 @@ int Vehicle::getMaxCargo() const
 	{
 		if (e->type->type != VEquipmentType::Type::General)
 			continue;
-		auto equipment = std::dynamic_pointer_cast<VEquipment>(e);
-		cargo += equipment->type->cargo_space;
+		cargo += e->type->cargo_space;
 	}
 	return cargo;
 }
@@ -540,7 +533,8 @@ void Vehicle::addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentT
 	{
 		case VEquipmentType::Type::Engine:
 		{
-			auto engine = mksp<VEngine>(type);
+			auto engine = mksp<VEquipment>();
+			engine->type = type;
 			this->equipment.emplace_back(engine);
 			engine->equippedPosition = slotOrigin;
 			LogInfo("Equipped \"%s\" with engine \"%s\"", this->name.c_str(), type->name.c_str());
@@ -548,9 +542,11 @@ void Vehicle::addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentT
 		}
 		case VEquipmentType::Type::Weapon:
 		{
-			auto &wtype = type;
 			auto thisRef = StateRef<Vehicle>(&state, shared_from_this());
-			auto weapon = mksp<VWeapon>(wtype, thisRef, wtype->max_ammo);
+			auto weapon = mksp<VEquipment>();
+			weapon->type = type;
+			weapon->owner = thisRef;
+			weapon->ammo = type->max_ammo;
 			this->equipment.emplace_back(weapon);
 			weapon->equippedPosition = slotOrigin;
 			LogInfo("Equipped \"%s\" with weapon \"%s\"", this->name.c_str(), type->name.c_str());
@@ -558,8 +554,8 @@ void Vehicle::addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentT
 		}
 		case VEquipmentType::Type::General:
 		{
-			auto &gtype = type;
-			auto equipment = mksp<VGeneralEquipment>(gtype);
+			auto equipment = mksp<VEquipment>();
+			equipment->type = type;
 			LogInfo("Equipped \"%s\" with general equipment \"%s\"", this->name.c_str(),
 			        type->name.c_str());
 			equipment->equippedPosition = slotOrigin;

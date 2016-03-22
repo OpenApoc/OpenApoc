@@ -107,8 +107,7 @@ void City::update(GameState &state, unsigned int ticks)
 			{
 				if (e->type->type != VEquipmentType::Type::Weapon)
 					continue;
-				auto w = std::dynamic_pointer_cast<VWeapon>(e);
-				w->reload(std::numeric_limits<int>::max());
+				e->reload(std::numeric_limits<int>::max());
 			}
 			if (v->owner == state.getPlayer())
 				continue;

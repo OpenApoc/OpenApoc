@@ -16,53 +16,35 @@ class Projectile;
 class VEquipment
 {
   public:
+	VEquipment();
+	~VEquipment() = default;
+
 	StateRef<VEquipmentType> type;
-	virtual ~VEquipment() = default;
 
+	// All equipment state
 	Vec2<int> equippedPosition;
-
-  protected:
-	VEquipment(StateRef<VEquipmentType> type);
-};
-
-class VGeneralEquipment : public VEquipment
-{
-  public:
-	VGeneralEquipment(StateRef<VEquipmentType> type);
-	~VGeneralEquipment() override = default;
-};
-
-class VEngine : public VEquipment
-{
-  public:
-	VEngine(StateRef<VEquipmentType> type);
-	~VEngine() override = default;
-};
-
-class VWeapon : public VEquipment
-{
-  public:
-	enum class State
+	// General equipment state
+	// Engine equipemnt state
+	// Weapon equipment state
+	enum class WeaponState
 	{
 		Ready,
 		Disabled,
 		Reloading,
 		OutOfAmmo,
 	};
-
-  private:
-	State state;
+	static const std::map<WeaponState, UString> WeaponStateMap;
+	WeaponState weaponState;
 	StateRef<Vehicle> owner;
 	int ammo;
 	int reloadTime;
 
-  public:
-	VWeapon(StateRef<VEquipmentType>, StateRef<Vehicle> owner, int initialAmmo,
-	        State initialState = State::Ready);
-	~VWeapon() override = default;
-
+	// All equipment methods
+	// General equipment methods
+	// Engine equipment methods
+	// Weapon equipment methods
 	float getRange() const;
-	bool canFire() const { return state == State::Ready; }
+	bool canFire() const;
 	void update(int ticks);
 	void setReloadTime(int ticks);
 	// Reload uses up to 'ammoAvailable' to reload the weapon. It returns the amount

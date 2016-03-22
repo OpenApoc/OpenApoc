@@ -13,6 +13,7 @@
 #include "game/base/facility.h"
 #include "game/city/vehicle.h"
 #include "game/city/vehiclemission.h"
+#include "game/city/vequipment.h"
 #include "game/city/projectile.h"
 
 namespace OpenApoc
@@ -578,6 +579,18 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("current_planned_path"), m.currentPlannedPath);
 }
 
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, VEquipment &e)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("type"), e.type);
+	serializeIn(state, node->getNode("equipped_position"), e.equippedPosition);
+	serializeIn(state, node->getNode("weapon_state"), e.weaponState, VEquipment::WeaponStateMap);
+	serializeIn(state, node->getNode("owner"), e.owner);
+	serializeIn(state, node->getNode("ammo"), e.ammo);
+	serializeIn(state, node->getNode("reload_time"), e.reloadTime);
+}
+
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Vehicle &v)
 {
 	if (!node)
@@ -586,7 +599,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("owner"), v.owner);
 	serializeIn(state, node->getNode("name"), v.name);
 	serializeIn(state, node->getNode("missions"), v.missions);
-	// serializeIn(state, node->getNode("equipment"), v.equipment);
+	serializeIn(state, node->getNode("equipment"), v.equipment);
 	serializeIn(state, node->getNode("position"), v.position);
 	serializeIn(state, node->getNode("velocity"), v.velocity);
 	serializeIn(state, node->getNode("facing"), v.facing);
@@ -1011,13 +1024,23 @@ template <> void serializeOut(sp<SerializationNode> node, const VehicleMission &
 	serializeOut(node->addNode("current_planned_path"), m.currentPlannedPath);
 }
 
+template <> void serializeOut(sp<SerializationNode> node, const VEquipment &e)
+{
+	serializeOut(node->addNode("type"), e.type);
+	serializeOut(node->addNode("equipped_position"), e.equippedPosition);
+	serializeOut(node->addNode("weapon_state"), e.weaponState, VEquipment::WeaponStateMap);
+	serializeOut(node->addNode("owner"), e.owner);
+	serializeOut(node->addNode("ammo"), e.ammo);
+	serializeOut(node->addNode("reload_time"), e.reloadTime);
+}
+
 template <> void serializeOut(sp<SerializationNode> node, const Vehicle &v)
 {
 	serializeOut(node->addNode("type"), v.type);
 	serializeOut(node->addNode("owner"), v.owner);
 	serializeOut(node->addNode("name"), v.name);
 	serializeOut(node->addNode("missions"), v.missions);
-	// serializeOut(node->addNode("equipment"), v.equipment);
+	serializeOut(node->addNode("equipment"), v.equipment);
 	serializeOut(node->addNode("position"), v.position);
 	serializeOut(node->addNode("velocity"), v.velocity);
 	serializeOut(node->addNode("facing"), v.facing);

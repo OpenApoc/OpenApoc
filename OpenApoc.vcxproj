@@ -365,7 +365,6 @@
     <ClCompile Include="game\city\vehicle.cpp" />
     <ClCompile Include="game\city\vehiclemission.cpp" />
     <ClCompile Include="game\city\vequipment.cpp" />
-    <ClCompile Include="game\city\vweapon.cpp" />
     <ClCompile Include="game\debugtools\debugmenu.cpp" />
     <ClCompile Include="game\debugtools\formpreview.cpp" />
     <ClCompile Include="game\gamestate.cpp" />
