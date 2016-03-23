@@ -19,7 +19,7 @@ namespace OpenApoc
 TileMap::TileMap(Vec3<int> size, std::vector<std::set<TileObject::Type>> layerMap)
     : layerMap(layerMap), size(size)
 {
-	tiles.reserve(size.z * size.y * size.z);
+	tiles.reserve(size.x * size.y * size.z);
 	for (int z = 0; z < size.z; z++)
 	{
 		for (int y = 0; y < size.y; y++)
