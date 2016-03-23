@@ -146,8 +146,6 @@ VehicleMission::VehicleMission() : targetLocation(0, 0, 0), timeToSnooze(0) {}
 
 bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float> &dest)
 {
-	auto tName = this->getName();
-	LogWarning("called on %s", tName.c_str());
 	switch (this->type)
 	{
 		case TakeOff:      // Fall-through
@@ -188,8 +186,6 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 
 void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks)
 {
-	auto tName = this->getName();
-	LogWarning("called on %s", tName.c_str());
 	switch (this->type)
 	{
 		case TakeOff:
@@ -271,8 +267,6 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks)
 
 bool VehicleMission::isFinished(GameState &state, Vehicle &v)
 {
-	auto tName = this->getName();
-	LogWarning("called on %s", tName.c_str());
 	switch (this->type)
 	{
 		case TakeOff:
@@ -309,8 +303,6 @@ bool VehicleMission::isFinished(GameState &state, Vehicle &v)
 
 void VehicleMission::start(GameState &state, Vehicle &v)
 {
-	auto tName = this->getName();
-	LogWarning("called on %s", tName.c_str());
 	switch (this->type)
 	{
 		case TakeOff: // Fall-through
