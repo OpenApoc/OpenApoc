@@ -17,7 +17,7 @@
 namespace OpenApoc
 {
 
-sp<SerializationNode> SerializationNode::getNodeReq(const UString name)
+sp<SerializationNode> SerializationNode::getNodeReq(const UString &name)
 {
 	auto node = this->getNodeOpt(name);
 	if (!node)
@@ -27,7 +27,7 @@ sp<SerializationNode> SerializationNode::getNodeReq(const UString name)
 	return node;
 }
 
-sp<SerializationNode> SerializationNode::getSectionReq(const UString name)
+sp<SerializationNode> SerializationNode::getSectionReq(const UString &name)
 {
 	auto node = this->getSectionOpt(name);
 	if (!node)
@@ -37,7 +37,7 @@ sp<SerializationNode> SerializationNode::getSectionReq(const UString name)
 	return node;
 }
 
-sp<SerializationNode> SerializationNode::getNextSiblingReq(const UString name)
+sp<SerializationNode> SerializationNode::getNextSiblingReq(const UString &name)
 {
 	auto node = this->getNextSiblingOpt(name);
 	if (!node)
@@ -158,9 +158,9 @@ class XMLSerializationArchive : public SerializationArchive,
 	friend class SerializationArchive;
 
   public:
-	sp<SerializationNode> newRoot(const UString prefix, const UString name) override;
-	sp<SerializationNode> getRoot(const UString prefix, const UString name) override;
-	bool write(const UString path) override;
+	sp<SerializationNode> newRoot(const UString &prefix, const UString &name) override;
+	sp<SerializationNode> getRoot(const UString &prefix, const UString &name) override;
+	bool write(const UString &path) override;
 	~XMLSerializationArchive() override = default;
 };
 
@@ -174,15 +174,19 @@ class XMLSerializationNode : public SerializationNode
 
   public:
 	XMLSerializationNode(sp<XMLSerializationArchive> archive, xml_node node,
-	                     sp<XMLSerializationNode> parent, UString prefix)
-	    : archive(archive), node(node), parent(parent), prefix(prefix){};
+	                     sp<XMLSerializationNode> parent)
+	    : archive(archive), node(node), parent(parent){};
 
-	sp<SerializationNode> addNode(const UString name, const UString value = "") override;
-	sp<SerializationNode> addSection(const UString name) override;
+	XMLSerializationNode(sp<XMLSerializationArchive> archive, xml_node node,
+		const UString &prefix)
+		: archive(archive), node(node), parent(nullptr), prefix(prefix){};
 
-	sp<SerializationNode> getNodeOpt(const UString name) override;
-	sp<SerializationNode> getNextSiblingOpt(const UString name) override;
-	sp<SerializationNode> getSectionOpt(const UString name) override;
+	sp<SerializationNode> addNode(const UString &name, const UString &value = "") override;
+	sp<SerializationNode> addSection(const UString &name) override;
+
+	sp<SerializationNode> getNodeOpt(const UString &name) override;
+	sp<SerializationNode> getNextSiblingOpt(const UString &name) override;
+	sp<SerializationNode> getSectionOpt(const UString &name) override;
 
 	UString getName() override;
 	void setName(const UString &str) override;
@@ -208,6 +212,13 @@ class XMLSerializationNode : public SerializationNode
 	void setValueBoolVector(const std::vector<bool> &vec) override;
 
 	UString getFullPath() override;
+	const UString &getPrefix() const override
+	{
+		if (this->parent)
+			return this->parent->getPrefix();
+		else
+			return this->prefix;
+	}
 
 	~XMLSerializationNode() override = default;
 };
@@ -242,16 +253,15 @@ sp<SerializationArchive> SerializationArchive::readArchive(const UString &name)
 	return archive;
 }
 
-sp<SerializationNode> XMLSerializationArchive::newRoot(const UString prefix, const UString name)
+sp<SerializationNode> XMLSerializationArchive::newRoot(const UString &prefix, const UString &name)
 {
 	auto path = prefix + name + ".xml";
 	auto root = this->docRoots[path].root().append_child();
 	root.set_name(name.c_str());
-	return std::make_shared<XMLSerializationNode>(shared_from_this(), root, nullptr,
-	                                              prefix + name + "/");
+	return std::make_shared<XMLSerializationNode>(shared_from_this(), root, prefix + name + "/");
 }
 
-sp<SerializationNode> XMLSerializationArchive::getRoot(const UString prefix, const UString name)
+sp<SerializationNode> XMLSerializationArchive::getRoot(const UString &prefix, const UString &name)
 {
 	auto path = prefix + name + ".xml";
 	auto it = this->docRoots.find(path);
@@ -266,11 +276,10 @@ sp<SerializationNode> XMLSerializationArchive::getRoot(const UString prefix, con
 		LogWarning("Failed to find root with name \"%s\" in \"%s\"", name.c_str(), path.c_str());
 		return nullptr;
 	}
-	return std::make_shared<XMLSerializationNode>(shared_from_this(), root, nullptr,
-	                                              prefix + name + "/");
+	return std::make_shared<XMLSerializationNode>(shared_from_this(), root, prefix + name + "/");
 }
 
-bool XMLSerializationArchive::write(const UString path)
+bool XMLSerializationArchive::write(const UString &path)
 {
 	std::map<UString, std::string> contents;
 
@@ -284,17 +293,16 @@ bool XMLSerializationArchive::write(const UString path)
 	return writePack(path, contents);
 }
 
-sp<SerializationNode> XMLSerializationNode::addNode(const UString name, const UString value)
+sp<SerializationNode> XMLSerializationNode::addNode(const UString &name, const UString &value)
 {
 	auto newNode = this->node.append_child();
 	newNode.set_name(name.c_str());
 	newNode.set_value(value.c_str());
 	return std::make_shared<XMLSerializationNode>(
-	    this->archive, newNode, std::static_pointer_cast<XMLSerializationNode>(shared_from_this()),
-	    this->prefix);
+	    this->archive, newNode, std::static_pointer_cast<XMLSerializationNode>(shared_from_this()));
 }
 
-sp<SerializationNode> XMLSerializationNode::getNodeOpt(const UString name)
+sp<SerializationNode> XMLSerializationNode::getNodeOpt(const UString &name)
 {
 	auto newNode = this->node.child(name.c_str());
 	if (!newNode)
@@ -302,22 +310,20 @@ sp<SerializationNode> XMLSerializationNode::getNodeOpt(const UString name)
 		return nullptr;
 	}
 	return std::make_shared<XMLSerializationNode>(
-	    this->archive, newNode, std::static_pointer_cast<XMLSerializationNode>(shared_from_this()),
-	    this->prefix);
+	    this->archive, newNode, std::static_pointer_cast<XMLSerializationNode>(shared_from_this()));
 }
 
-sp<SerializationNode> XMLSerializationNode::getNextSiblingOpt(const UString name)
+sp<SerializationNode> XMLSerializationNode::getNextSiblingOpt(const UString &name)
 {
 	auto newNode = this->node.next_sibling(name.c_str());
 	if (!newNode)
 	{
 		return nullptr;
 	}
-	return std::make_shared<XMLSerializationNode>(this->archive, newNode, this->parent,
-	                                              this->prefix);
+	return std::make_shared<XMLSerializationNode>(this->archive, newNode, this->parent);
 }
 
-sp<SerializationNode> XMLSerializationNode::addSection(const UString name)
+sp<SerializationNode> XMLSerializationNode::addSection(const UString &name)
 {
 	auto includeNode =
 	    std::static_pointer_cast<XMLSerializationNode>(this->addNode(UString{"xi:include"}));
@@ -326,12 +332,12 @@ sp<SerializationNode> XMLSerializationNode::addSection(const UString name)
 	attribute.set_value(path.c_str());
 	auto nsAttribute = includeNode->node.append_attribute("xmlns:xi");
 	nsAttribute.set_value("http://www.w3.org/2001/XInclude");
-	return this->archive->newRoot(this->prefix, name);
+	return this->archive->newRoot(this->getPrefix(), name);
 }
 
-sp<SerializationNode> XMLSerializationNode::getSectionOpt(const UString name)
+sp<SerializationNode> XMLSerializationNode::getSectionOpt(const UString &name)
 {
-	return archive->getRoot(this->prefix, name);
+	return archive->getRoot(this->getPrefix(), name);
 }
 
 UString XMLSerializationNode::getName() { return node.name(); }

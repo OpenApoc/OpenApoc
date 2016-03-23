@@ -14,24 +14,24 @@ namespace OpenApoc
 class SerializationNode : public std::enable_shared_from_this<SerializationNode>
 {
   public:
-	sp<SerializationNode> virtual addNode(const UString name, const UString value = "") = 0;
-	sp<SerializationNode> virtual addSection(const UString name) = 0;
+	sp<SerializationNode> virtual addNode(const UString &name, const UString &value = "") = 0;
+	sp<SerializationNode> virtual addSection(const UString &name) = 0;
 
 	// Opt versions may return nullptr (they're 'optional'), Req gets throw an exception if
 	// missing
-	sp<SerializationNode> virtual getNodeReq(const UString name);
-	sp<SerializationNode> virtual getNodeOpt(const UString name) = 0;
-	sp<SerializationNode> virtual getNextSiblingReq(const UString name);
-	sp<SerializationNode> virtual getNextSiblingOpt(const UString name) = 0;
-	sp<SerializationNode> virtual getSectionReq(const UString name);
-	sp<SerializationNode> virtual getSectionOpt(const UString name) = 0;
+	sp<SerializationNode> virtual getNodeReq(const UString &name);
+	sp<SerializationNode> virtual getNodeOpt(const UString &name) = 0;
+	sp<SerializationNode> virtual getNextSiblingReq(const UString &name);
+	sp<SerializationNode> virtual getNextSiblingOpt(const UString &name) = 0;
+	sp<SerializationNode> virtual getSectionReq(const UString &name);
+	sp<SerializationNode> virtual getSectionOpt(const UString &name) = 0;
 
-	sp<SerializationNode> getNode(const UString name) { return this->getNodeOpt(name); }
-	sp<SerializationNode> getNextSibling(const UString name)
+	sp<SerializationNode> getNode(const UString &name) { return this->getNodeOpt(name); }
+	sp<SerializationNode> getNextSibling(const UString &name)
 	{
 		return this->getNextSiblingOpt(name);
 	}
-	sp<SerializationNode> getSection(const UString name) { return this->getSectionOpt(name); }
+	sp<SerializationNode> getSection(const UString &name) { return this->getSectionOpt(name); }
 
 	virtual UString getName() = 0;
 	virtual void setName(const UString &str) = 0;
@@ -58,6 +58,7 @@ class SerializationNode : public std::enable_shared_from_this<SerializationNode>
 	virtual void setValueBoolVector(const std::vector<bool> &v) = 0;
 
 	virtual UString getFullPath() = 0;
+	virtual const UString &getPrefix() const = 0;
 
 	virtual ~SerializationNode() = default;
 };
@@ -68,9 +69,9 @@ class SerializationArchive
 	static sp<SerializationArchive> createArchive();
 	static sp<SerializationArchive> readArchive(const UString &path);
 
-	sp<SerializationNode> virtual newRoot(const UString prefix, const UString name) = 0;
-	sp<SerializationNode> virtual getRoot(const UString prefix, const UString name) = 0;
-	bool virtual write(const UString path) = 0;
+	sp<SerializationNode> virtual newRoot(const UString &prefix, const UString &name) = 0;
+	sp<SerializationNode> virtual getRoot(const UString &prefix, const UString &name) = 0;
+	bool virtual write(const UString &path) = 0;
 	virtual ~SerializationArchive() = default;
 };
 
