@@ -18,12 +18,14 @@ class VehicleMission
 {
   public:
 	VehicleMission();
-	bool getNextDestination(Vec3<float> &dest);
 
-	void update(unsigned int ticks);
-	bool isFinished();
-	void start();
+	// Methods used in pathfinding etc.
+	bool getNextDestination(GameState &state, Vehicle &v, Vec3<float> &dest);
+	void update(GameState &state, Vehicle &v, unsigned int ticks);
+	bool isFinished(GameState &state, Vehicle &v);
+	void start(GameState &state, Vehicle &v);
 
+	// Methods to create new missions
 	static VehicleMission *gotoLocation(Vehicle &v, Vec3<int> target);
 	static VehicleMission *gotoBuilding(Vehicle &v, StateRef<Building> target);
 	static VehicleMission *snooze(Vehicle &v, unsigned int ticks);
@@ -50,10 +52,14 @@ class VehicleMission
 
 	MissionType type;
 
+	// GotoLocation TakeOff
 	Vec3<int> targetLocation;
+	// GotoBuilding AttackBuilding Land
 	StateRef<Building> targetBuilding;
+	// FollowVehicle AttackVehicle
 	StateRef<Vehicle> targetVehicle;
-	unsigned int snoozeTime;
+	// Snooze
+	unsigned int timeToSnooze;
 
 	std::list<Vec3<int>> currentPlannedPath;
 };

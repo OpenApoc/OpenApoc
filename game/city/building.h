@@ -27,9 +27,6 @@ class Building : public StateObject<Building>
 
 	std::vector<Vec3<int>> landingPadLocations;
 	std::set<StateRef<Vehicle>> landed_vehicles;
-
-	// FIXME: Remove after moving Base to new StateObject stuff
-	sp<Base> base;
 };
 
 }; // namespace OpenApoc

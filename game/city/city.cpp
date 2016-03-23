@@ -74,6 +74,18 @@ void City::initMap()
 	for (auto &s : this->scenery)
 	{
 		this->map->addObjectToMap(s);
+		if (s->type->isLandingPad)
+		{
+			Vec2<int> pos = {s->initialPosition.x, s->initialPosition.y};
+
+			for (auto &b : this->buildings)
+			{
+				if (b.second->bounds.within(pos))
+				{
+					b.second->landingPadLocations.push_back(s->initialPosition);
+				}
+			}
+		}
 	}
 	for (auto &p : this->projectiles)
 	{
@@ -119,7 +131,7 @@ void City::update(GameState &state, unsigned int ticks)
 					bldIt++;
 				StateRef<Building> dest = {&state, bldIt->first};
 				v->missions.emplace_back(VehicleMission::gotoBuilding(*v, dest));
-				v->missions.front()->start();
+				v->missions.front()->start(state, *v);
 			}
 		}
 	}

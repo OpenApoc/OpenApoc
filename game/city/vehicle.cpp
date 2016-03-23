@@ -26,12 +26,13 @@ class FlyingVehicleMover : public VehicleMover
 	    : VehicleMover(v), goalPosition(initialGoal)
 	{
 	}
-	virtual void update(unsigned int ticks) override
+	virtual void update(GameState &state, unsigned int ticks) override
 	{
+		LogWarning("Moving");
 		float speed = vehicle.getSpeed();
 		if (!vehicle.missions.empty())
 		{
-			vehicle.missions.front()->update(ticks);
+			vehicle.missions.front()->update(state, this->vehicle, ticks);
 			auto vehicleTile = this->vehicle.tileObject;
 			if (!vehicleTile)
 			{
@@ -55,7 +56,7 @@ class FlyingVehicleMover : public VehicleMover
 						dir = glm::normalize(vectorToGoal);
 					}
 					vehicleTile->setDirection(dir);
-					while (vehicle.missions.front()->isFinished())
+					while (vehicle.missions.front()->isFinished(state, this->vehicle))
 					{
 						LogInfo("Vehicle mission \"%s\" finished",
 						        vehicle.missions.front()->getName().c_str());
@@ -64,7 +65,7 @@ class FlyingVehicleMover : public VehicleMover
 						{
 							LogInfo("Vehicle mission \"%s\" starting",
 							        vehicle.missions.front()->getName().c_str());
-							vehicle.missions.front()->start();
+							vehicle.missions.front()->start(state, this->vehicle);
 							continue;
 						}
 						else
@@ -74,7 +75,8 @@ class FlyingVehicleMover : public VehicleMover
 						}
 					}
 					if (vehicle.missions.empty() ||
-					    vehicle.missions.front()->getNextDestination(goalPosition) == false)
+					    vehicle.missions.front()->getNextDestination(state, this->vehicle,
+					                                                 goalPosition) == false)
 					{
 						distanceLeft = 0;
 						break;
@@ -115,6 +117,7 @@ Vehicle::~Vehicle() {}
 
 void Vehicle::launch(TileMap &map, GameState &state, Vec3<float> initialPosition)
 {
+	LogWarning("Launching");
 	if (this->tileObject)
 	{
 		LogError("Trying to launch already-launched vehicle");
@@ -155,13 +158,24 @@ void Vehicle::land(GameState &state, StateRef<Building> b)
 	this->position = {0, 0, 0};
 }
 
+void Vehicle::setupMover()
+{
+	switch (this->type->type)
+	{
+		case VehicleType::Type::Flying:
+			this->mover.reset(new FlyingVehicleMover(*this, this->position));
+		default:
+			LogWarning("TODO: non flying vehicle movers");
+	}
+}
+
 void Vehicle::update(GameState &state, unsigned int ticks)
 
 {
 	if (!this->missions.empty())
-		this->missions.front()->update(ticks);
+		this->missions.front()->update(state, *this, ticks);
 	if (this->mover)
-		this->mover->update(ticks);
+		this->mover->update(state, ticks);
 	auto vehicleTile = this->tileObject;
 	if (vehicleTile)
 	{

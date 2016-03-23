@@ -43,6 +43,7 @@ GameState::~GameState()
 		vehicle->currentlyLandedBuilding = "";
 		vehicle->missions.clear();
 		vehicle->equipment.clear();
+		vehicle->mover = nullptr;
 	}
 }
 
@@ -75,10 +76,17 @@ void GameState::initState()
 		for (auto &v : this->vehicles)
 		{
 			auto vehicle = v.second;
-			if (vehicle->city == city.second)
+			if (vehicle->city == city.second && !vehicle->currentlyLandedBuilding)
 			{
 				city.second->map->addObjectToMap(vehicle);
 			}
+		}
+	}
+	for (auto &v : this->vehicles)
+	{
+		if (!v.second->currentlyLandedBuilding)
+		{
+			v.second->setupMover();
 		}
 	}
 }
@@ -134,9 +142,9 @@ void GameState::startGame()
 			// vehicle table has the entry before calling it
 			this->vehicles[vID] = v;
 
-			v->equipDefaultEquipment(*this);
+			v->currentlyLandedBuilding->landed_vehicles.insert({this, vID});
 
-			v->missions.emplace_back(VehicleMission::gotoLocation(*v, {0, 0, 0}));
+			v->equipDefaultEquipment(*this);
 		}
 	}
 
@@ -183,6 +191,7 @@ void GameState::startGame()
 		v->health = type->health;
 		auto vID = UString::format("%s%d", Vehicle::getPrefix().c_str(), vehicle_count++);
 		this->vehicles[vID] = v;
+		v->currentlyLandedBuilding->landed_vehicles.insert({this, vID});
 		v->equipDefaultEquipment(*this);
 	}
 	// Give that base some inventory

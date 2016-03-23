@@ -336,7 +336,7 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 			                  // FIXME: Don't clear missions if not replacing current mission
 			                  v->missions.clear();
 			                  v->missions.emplace_back(VehicleMission::gotoBuilding(*v, bld));
-			                  v->missions.front()->start();
+			                  v->missions.front()->start(*this->state, *v);
 		                  }
 		              });
 	vehicleForm->FindControl("BUTTON_VEHICLE_ATTACK")
@@ -455,6 +455,12 @@ void CityView::Update(StageCmd *const cmd)
 	stageCmd = StageCmd();
 
 	this->city->update(*state, ticks);
+	// move vehicles in all cities on any city screen
+	if (ticks > 0)
+	{
+		for (auto &v : state->vehicles)
+			v.second->update(*state, ticks);
+	}
 
 	// FIXME: Possibly more efficient ways than re-generating all controls every frame?
 
@@ -606,7 +612,7 @@ void CityView::EventOccurred(Event *e)
 							// FIXME: Don't clear missions if not replacing current mission
 							v->missions.clear();
 							v->missions.emplace_back(VehicleMission::gotoLocation(*v, targetPos));
-							v->missions.front()->start();
+							v->missions.front()->start(*this->state, *v);
 							LogWarning("Vehicle \"%s\" going to location {%d,%d,%d}",
 							           v->name.c_str(), targetPos.x, targetPos.y, targetPos.z);
 						}
@@ -627,7 +633,7 @@ void CityView::EventOccurred(Event *e)
 								v->missions.clear();
 								v->missions.emplace_back(
 								    VehicleMission::gotoBuilding(*v, building));
-								v->missions.front()->start();
+								v->missions.front()->start(*this->state, *v);
 							}
 							this->selectionState = SelectionState::Normal;
 						}

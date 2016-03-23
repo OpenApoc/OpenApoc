@@ -30,7 +30,7 @@ class VehicleMover
   public:
 	Vehicle &vehicle;
 	VehicleMover(Vehicle &vehicle);
-	virtual void update(unsigned int ticks) = 0;
+	virtual void update(GameState &state, unsigned int ticks) = 0;
 	virtual ~VehicleMover();
 };
 
@@ -65,6 +65,8 @@ class Vehicle : public StateObject<Vehicle>, public std::enable_shared_from_this
 	void launch(TileMap &map, GameState &state, Vec3<float> initialPosition);
 	/* 'land' the vehicle in a building*/
 	void land(GameState &state, StateRef<Building> b);
+	/* Sets up the 'mover' after state serialize in */
+	void setupMover();
 
 	bool canAddEquipment(Vec2<int> pos, StateRef<VEquipmentType> type) const;
 	void addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentType> type);

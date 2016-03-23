@@ -480,7 +480,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("base_layout"), b.base_layout);
 	// FIXME: Are landing pad locations useful to serialize?
 	serializeIn(state, node->getNode("landingPadLocations"), b.landingPadLocations);
-	// serializeIn(state, node->getNode("landed_vehicles"), b.landed_vehicles);
+	serializeIn(state, node->getNode("landed_vehicles"), b.landed_vehicles);
 }
 
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Scenery &s)
@@ -575,7 +575,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("target_location"), m.targetLocation);
 	serializeIn(state, node->getNode("target_building"), m.targetBuilding);
 	serializeIn(state, node->getNode("target_vehicle"), m.targetVehicle);
-	serializeIn(state, node->getNode("snooze_time"), m.snoozeTime);
+	serializeIn(state, node->getNode("time_to_snooze"), m.timeToSnooze);
 	serializeIn(state, node->getNode("current_planned_path"), m.currentPlannedPath);
 }
 
@@ -940,8 +940,7 @@ template <> void serializeOut(sp<SerializationNode> node, const Building &b)
 	serializeOut(node->addNode("base_layout"), b.base_layout);
 	// FIXME: Are landing pad locations useful to serialize?
 	serializeOut(node->addNode("landingPadLocations"), b.landingPadLocations);
-	// serializeOut(node->addNode("landed_vehicles"), b.landed_vehicles);
-	// serializeOut(node->addNode("base"), b.base);
+	serializeOut(node->addNode("landed_vehicles"), b.landed_vehicles);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const Scenery &s)
@@ -1020,7 +1019,7 @@ template <> void serializeOut(sp<SerializationNode> node, const VehicleMission &
 	serializeOut(node->addNode("target_location"), m.targetLocation);
 	serializeOut(node->addNode("target_building"), m.targetBuilding);
 	serializeOut(node->addNode("target_vehicle"), m.targetVehicle);
-	serializeOut(node->addNode("snooze_time"), m.snoozeTime);
+	serializeOut(node->addNode("time_to_snooze"), m.timeToSnooze);
 	serializeOut(node->addNode("current_planned_path"), m.currentPlannedPath);
 }
 
