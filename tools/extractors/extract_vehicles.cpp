@@ -251,9 +251,9 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty dif
 				    VehicleType::Direction::W,  VehicleType::Direction::NWW,
 				    VehicleType::Direction::NW, VehicleType::Direction::NNW};
 				std::vector<VehicleType::Banking> bankings = {
-				    VehicleType::Banking::Flat,       VehicleType::Banking::Left,
-				    VehicleType::Banking::Right,      VehicleType::Banking::Ascending,
-				    VehicleType::Banking::Descending,
+				    VehicleType::Banking::Flat,       VehicleType::Banking::Descending,
+				    VehicleType::Banking::Ascending,      VehicleType::Banking::Left,
+				    VehicleType::Banking::Right,
 				};
 				int image_offset = 577; // stratmap.pck:577 is the first directional sprite
 				for (auto &dir : directions)

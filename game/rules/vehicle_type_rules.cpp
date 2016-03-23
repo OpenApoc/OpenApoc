@@ -50,22 +50,22 @@ const std::map<VehicleType::AlignmentY, UString> VehicleType::AlignmentYMap = {
 };
 
 static const std::map<VehicleType::Direction, Vec3<float>> DirectionVectors = {
-    {VehicleType::Direction::N, glm::normalize(Vec3<float>{1, 0, 0})},
-    {VehicleType::Direction::NNE, glm::normalize(Vec3<float>{2, 1, 0})},
-    {VehicleType::Direction::NE, glm::normalize(Vec3<float>{1, 1, 0})},
-    {VehicleType::Direction::NEE, glm::normalize(Vec3<float>{1, 2, 0})},
-    {VehicleType::Direction::E, glm::normalize(Vec3<float>{0, 1, 0})},
-    {VehicleType::Direction::SEE, glm::normalize(Vec3<float>{-1, 2, 0})},
-    {VehicleType::Direction::SE, glm::normalize(Vec3<float>{-1, 1, 0})},
-    {VehicleType::Direction::SSE, glm::normalize(Vec3<float>{-2, 1, 0})},
-    {VehicleType::Direction::S, glm::normalize(Vec3<float>{-1, 0, 0})},
-    {VehicleType::Direction::SSW, glm::normalize(Vec3<float>{-2, -1, 0})},
-    {VehicleType::Direction::SW, glm::normalize(Vec3<float>{-1, -1, 0})},
-    {VehicleType::Direction::SWW, glm::normalize(Vec3<float>{-1, -2, 0})},
-    {VehicleType::Direction::W, glm::normalize(Vec3<float>{0, -1, 0})},
-    {VehicleType::Direction::NWW, glm::normalize(Vec3<float>{1, -2, 0})},
-    {VehicleType::Direction::NW, glm::normalize(Vec3<float>{1, -1, 0})},
-    {VehicleType::Direction::NNW, glm::normalize(Vec3<float>{2, -1, 0})}};
+    {VehicleType::Direction::N, glm::normalize(Vec3<float>{0, -1, 0})},
+    {VehicleType::Direction::NNE, glm::normalize(Vec3<float>{1, -2, 0})},
+    {VehicleType::Direction::NE, glm::normalize(Vec3<float>{1, -1, 0})},
+    {VehicleType::Direction::NEE, glm::normalize(Vec3<float>{2, -1, 0})},
+    {VehicleType::Direction::E, glm::normalize(Vec3<float>{1, 0, 0})},
+    {VehicleType::Direction::SEE, glm::normalize(Vec3<float>{2, 1, 0})},
+    {VehicleType::Direction::SE, glm::normalize(Vec3<float>{1, 1, 0})},
+    {VehicleType::Direction::SSE, glm::normalize(Vec3<float>{1, 2, 0})},
+    {VehicleType::Direction::S, glm::normalize(Vec3<float>{0, 1, 0})},
+    {VehicleType::Direction::SSW, glm::normalize(Vec3<float>{-1, 2, 0})},
+    {VehicleType::Direction::SW, glm::normalize(Vec3<float>{-1, 1, 0})},
+    {VehicleType::Direction::SWW, glm::normalize(Vec3<float>{-2, 1, 0})},
+    {VehicleType::Direction::W, glm::normalize(Vec3<float>{-1, 0, 0})},
+    {VehicleType::Direction::NWW, glm::normalize(Vec3<float>{-2, -1, 0})},
+    {VehicleType::Direction::NW, glm::normalize(Vec3<float>{-1, -1, 0})},
+    {VehicleType::Direction::NNW, glm::normalize(Vec3<float>{-1, -2, 0})}};
 
 const Vec3<float> &VehicleType::directionToVector(VehicleType::Direction d)
 {
