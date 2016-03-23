@@ -14,7 +14,11 @@ class TileObjectVehicle : public TileObject
 
 	sp<Vehicle> getVehicle();
 	const Vec3<float> &getDirection() { return this->getVehicle()->velocity; }
-	void setDirection(const Vec3<float> &dir) { this->getVehicle()->facing = dir; this->getVehicle()->velocity = dir; }
+	void setDirection(const Vec3<float> &dir)
+	{
+		this->getVehicle()->facing = dir;
+		this->getVehicle()->velocity = dir;
+	}
 
 	sp<VoxelMap> getVoxelMap() override;
 
