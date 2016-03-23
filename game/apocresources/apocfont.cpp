@@ -49,7 +49,6 @@ sp<BitmapFont> ApocalypseFont::loadFont(tinyxml2::XMLElement *fontElement)
 			         nodeName.c_str());
 			continue;
 		}
-		int offset;
 		auto *glyphPath = glyphNode->Attribute("glyph");
 		if (!glyphPath)
 		{
@@ -69,9 +68,9 @@ sp<BitmapFont> ApocalypseFont::loadFont(tinyxml2::XMLElement *fontElement)
 
 		if (pointString.length() != 1)
 		{
-			LogError("apocfont \"%s\" glyph w/offset %d has %d codepoints, expected one - skipping "
+			LogError("apocfont \"%s\" glyph \"%s\" has %d codepoints, expected one - skipping "
 			         "glyph",
-			         fontName.c_str(), offset, pointString.length());
+			         fontName.c_str(), glyphString, pointString.length());
 			continue;
 		}
 		UniChar c = pointString[0];
