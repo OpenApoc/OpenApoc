@@ -83,10 +83,9 @@ void TileObjectVehicle::draw(Renderer &r, TileView &view, Vec2<float> screenPosi
 
 TileObjectVehicle::~TileObjectVehicle() {}
 
-TileObjectVehicle::TileObjectVehicle(TileMap &map, sp<Vehicle> vehicle,
-                                     Vec3<float> initialDirection)
+TileObjectVehicle::TileObjectVehicle(TileMap &map, sp<Vehicle> vehicle)
     : TileObject(map, TileObject::Type::Vehicle, vehicle->getPosition(), Vec3<float>{0, 0, 0}),
-      vehicle(vehicle), direction(initialDirection)
+      vehicle(vehicle)
 {
 }
 
