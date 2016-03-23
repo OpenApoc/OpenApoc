@@ -14,6 +14,7 @@ class Trace
 {
   public:
 	static void enable();
+	static void disable();
 
 	static void start(const UString &name,
 	                  const std::vector<std::pair<UString, UString>> &args = {});

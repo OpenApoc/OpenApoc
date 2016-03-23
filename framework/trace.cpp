@@ -56,6 +56,7 @@ class TraceManager
 		return list;
 	}
 	~TraceManager();
+	void write();
 };
 
 static std::unique_ptr<TraceManager> trace_manager;
@@ -83,9 +84,16 @@ static std::chrono::time_point<std::chrono::high_resolution_clock> traceStartTim
 
 TraceManager::~TraceManager()
 {
-	assert(OpenApoc::Trace::enabled);
+	if (OpenApoc::Trace::enabled)
+		this->write();
+}
 
-	std::ofstream outFile("/sdcard/openapoc/data/openapoc_trace.json");
+void TraceManager::write()
+{
+	assert(OpenApoc::Trace::enabled);
+	OpenApoc::Trace::enabled = false;
+
+	std::ofstream outFile("openapoc_trace.json");
 
 	// FIXME: Use proper json parser instead of magically constructing from strings?
 
@@ -114,19 +122,24 @@ TraceManager::~TraceManager()
 			{
 				case EventType::Begin:
 				{
-					outFile << "\"ph\":\"B\","
-					        << "\"args\":{";
+					outFile << "\"ph\":\"B\"";
 
-					bool firstArg = true;
-
-					for (auto &arg : event.args)
+					if (!event.args.empty())
 					{
-						if (!firstArg)
-							outFile << ",";
-						firstArg = false;
-						outFile << "\"" << arg.first.str() << "\":\"" << arg.second.str() << "\"";
+						outFile << ",\"args\":{";
+
+						bool firstArg = true;
+
+						for (auto &arg : event.args)
+						{
+							if (!firstArg)
+								outFile << ",";
+							firstArg = false;
+							outFile << "\"" << arg.first.str() << "\":\"" << arg.second.str()
+							        << "\"";
+						}
+						outFile << "}";
 					}
-					outFile << "}";
 					break;
 				}
 				case EventType::End:
@@ -138,6 +151,7 @@ TraceManager::~TraceManager()
 	}
 	listMutex.unlock();
 	outFile << "]}\n";
+	outFile.flush();
 }
 
 namespace OpenApoc
@@ -154,6 +168,17 @@ void Trace::enable()
 #endif
 	Trace::enabled = true;
 	traceStartTime = std::chrono::high_resolution_clock::now();
+}
+
+void Trace::disable()
+{
+	assert(trace_manager);
+	trace_manager->write();
+	trace_manager.reset(nullptr);
+#if defined(BROKEN_THREAD_LOCAL)
+	pthread_key_delete(&eventListKey);
+#endif
+	Trace::enabled = false;
 }
 
 void Trace::setThreadName(const UString &name)

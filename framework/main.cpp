@@ -54,98 +54,107 @@ int main(int argc, char *argv[])
 		LogInfo("Tracing enabled");
 	}
 
-	Trace::setThreadName("main");
-
-	TraceObj obj("main");
-	Framework *fw = new Framework(UString(argv[0]), cmdline);
-
-	if (extract_data)
 	{
-		// FIXME: Remove ruleset
-		UString ruleset = fw->Settings->getString("GameRules");
-		fw->gamecore.reset(new GameCore());
-		fw->gamecore->Load(ruleset);
-		std::map<UString, InitialGameStateExtractor::Difficulty> difficultyOutputFiles = {
-		    {"data/difficulty1", InitialGameStateExtractor::Difficulty::DIFFICULTY_1},
-		    {"data/difficulty2", InitialGameStateExtractor::Difficulty::DIFFICULTY_2},
-		    {"data/difficulty3", InitialGameStateExtractor::Difficulty::DIFFICULTY_3},
-		    {"data/difficulty4", InitialGameStateExtractor::Difficulty::DIFFICULTY_4},
-		    {"data/difficulty5", InitialGameStateExtractor::Difficulty::DIFFICULTY_5},
-		};
 
-		for (auto &dpair : difficultyOutputFiles)
+		Trace::setThreadName("main");
+
+		TraceObj obj("main");
+		Framework *fw = new Framework(UString(argv[0]), cmdline);
+
+		if (extract_data)
 		{
-			GameState s;
-			InitialGameStateExtractor e;
-			LogWarning("Extracting initial game state for \"%s\"", dpair.first.c_str());
-			e.extract(s, dpair.second);
-			LogWarning("Finished extracting initial game state for \"%s\"", dpair.first.c_str());
+			// FIXME: Remove ruleset
+			UString ruleset = fw->Settings->getString("GameRules");
+			fw->gamecore.reset(new GameCore());
+			fw->gamecore->Load(ruleset);
+			std::map<UString, InitialGameStateExtractor::Difficulty> difficultyOutputFiles = {
+			    {"data/difficulty1", InitialGameStateExtractor::Difficulty::DIFFICULTY_1},
+			    {"data/difficulty2", InitialGameStateExtractor::Difficulty::DIFFICULTY_2},
+			    {"data/difficulty3", InitialGameStateExtractor::Difficulty::DIFFICULTY_3},
+			    {"data/difficulty4", InitialGameStateExtractor::Difficulty::DIFFICULTY_4},
+			    {"data/difficulty5", InitialGameStateExtractor::Difficulty::DIFFICULTY_5},
+			};
 
-			if (serialization_test)
+			for (auto &dpair : difficultyOutputFiles)
 			{
-				LogWarning("Saving initial state to \"%s\"", dpair.first.c_str());
-				s.saveGame(dpair.first);
-				LogWarning("Done saving initial state");
-			}
+				GameState s;
+				InitialGameStateExtractor e;
+				LogWarning("Extracting initial game state for \"%s\"", dpair.first.c_str());
+				e.extract(s, dpair.second);
+				LogWarning("Finished extracting initial game state for \"%s\"",
+				           dpair.first.c_str());
 
-			LogWarning("Importing common patch");
-			s.loadGame("data/common_patch");
-			LogWarning("Done importing common patch");
+				if (serialization_test)
+				{
+					LogWarning("Saving initial state to \"%s\"", dpair.first.c_str());
+					s.saveGame(dpair.first);
+					LogWarning("Done saving initial state");
+				}
 
-			UString patchName = dpair.first + "_patch";
-			LogWarning("Trying to import patch \"%s\"", patchName.c_str());
-			s.loadGame(patchName);
-			LogWarning("Patching finished");
+				LogWarning("Importing common patch");
+				s.loadGame("data/common_patch");
+				LogWarning("Done importing common patch");
 
-			UString patchedOutputName = dpair.first + "_patched";
-			LogWarning("Saving patched state to \"%s\"", patchedOutputName.c_str());
-			s.saveGame(patchedOutputName);
-			LogWarning("Done saving patched state");
+				UString patchName = dpair.first + "_patch";
+				LogWarning("Trying to import patch \"%s\"", patchName.c_str());
+				s.loadGame(patchName);
+				LogWarning("Patching finished");
 
-			if (serialization_test)
-			{
-				auto outPath2 = patchedOutputName + "2";
+				UString patchedOutputName = dpair.first + "_patched";
+				LogWarning("Saving patched state to \"%s\"", patchedOutputName.c_str());
+				s.saveGame(patchedOutputName);
+				LogWarning("Done saving patched state");
 
-				GameState s2;
+				if (serialization_test)
+				{
+					auto outPath2 = patchedOutputName + "2";
 
-				LogWarning("Running serialization-in test");
-				s2.loadGame(patchedOutputName);
-				LogWarning("serialization-in done");
+					GameState s2;
 
-				LogWarning("Running serialization-out2 test");
-				s2.saveGame(outPath2);
-				LogWarning("serialization-out2 done");
+					LogWarning("Running serialization-in test");
+					s2.loadGame(patchedOutputName);
+					LogWarning("serialization-in done");
 
-				LogWarning("'starting' game");
-				s2.startGame();
-				s2.initState();
-				LogWarning("Finished starting game");
+					LogWarning("Running serialization-out2 test");
+					s2.saveGame(outPath2);
+					LogWarning("serialization-out2 done");
 
-				LogWarning("Saving 'in progress' game");
-				s2.saveGame(dpair.first + "_saved");
-				LogWarning("Done saving game");
+					LogWarning("'starting' game");
+					s2.startGame();
+					s2.initState();
+					LogWarning("Finished starting game");
 
-				GameState s3;
-				LogWarning("Loading 'in progress' game");
-				s3.loadGame(dpair.first + "_saved");
-				LogWarning("Done loading 'in progress' game");
+					LogWarning("Saving 'in progress' game");
+					s2.saveGame(dpair.first + "_saved");
+					LogWarning("Done saving game");
 
-				LogWarning("Re-saving 'in progress' game");
-				s3.saveGame(dpair.first + "_saved2");
-				LogWarning("Done re-saving 'in progress' game");
+					GameState s3;
+					LogWarning("Loading 'in progress' game");
+					s3.loadGame(dpair.first + "_saved");
+					LogWarning("Done loading 'in progress' game");
+
+					LogWarning("Re-saving 'in progress' game");
+					s3.saveGame(dpair.first + "_saved2");
+					LogWarning("Done re-saving 'in progress' game");
+				}
 			}
 		}
-	}
 
-	if (run_game)
-	{
-		fw->Run();
-	}
-	delete fw;
+		if (run_game)
+		{
+			fw->Run();
+		}
+		delete fw;
 
 #ifdef DUMP_TRANSLATION_STRINGS
-	dumpStrings();
+		dumpStrings();
 #endif
+	}
+
+	if (enable_trace)
+	{
+		Trace::disable();
+	}
 
 	return 0;
 }
