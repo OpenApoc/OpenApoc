@@ -125,8 +125,8 @@ static bool readPack(const UString &name, std::map<UString, std::string> &conten
 			continue;
 		}
 
-		LogInfo("Reading %u bytes for file \"%s\" in zip \"%s\"", stat.m_uncomp_size,
-		        filename.c_str(), path.c_str());
+		LogInfo("Reading %lu bytes for file \"%s\" in zip \"%s\"",
+		        (unsigned long)stat.m_uncomp_size, filename.c_str(), path.c_str());
 
 		data.reset(new char[stat.m_uncomp_size]);
 
