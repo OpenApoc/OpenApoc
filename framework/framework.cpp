@@ -783,9 +783,11 @@ void Framework::Display_Initialise()
 		p->displaySize.y = (int)((float)p->windowSize.y * scaleYFloat);
 		if (p->displaySize.x < 640 || p->displaySize.y < 480)
 		{
-			LogError(
-			    "Requested scaled size of {%d,%d} is lower than {640,480} and probably won't work",
-			    p->displaySize.x, p->displaySize.y);
+			LogWarning("Requested scaled size of {%d,%d} is lower than {640,480} and probably "
+			           "won't work, so forcing 640x480",
+			           p->displaySize.x, p->displaySize.y);
+			p->displaySize.x = std::max(640, p->displaySize.x);
+			p->displaySize.y = std::max(480, p->displaySize.y);
 		}
 		LogInfo("Scaling from {%d,%d} to {%d,%d}", p->displaySize.x, p->displaySize.y,
 		        p->windowSize.x, p->windowSize.y);

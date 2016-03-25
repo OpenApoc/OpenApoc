@@ -177,9 +177,8 @@ class XMLSerializationNode : public SerializationNode
 	                     sp<XMLSerializationNode> parent)
 	    : archive(archive), node(node), parent(parent){};
 
-	XMLSerializationNode(sp<XMLSerializationArchive> archive, xml_node node,
-		const UString &prefix)
-		: archive(archive), node(node), parent(nullptr), prefix(prefix){};
+	XMLSerializationNode(sp<XMLSerializationArchive> archive, xml_node node, const UString &prefix)
+	    : archive(archive), node(node), parent(nullptr), prefix(prefix){};
 
 	sp<SerializationNode> addNode(const UString &name, const UString &value = "") override;
 	sp<SerializationNode> addSection(const UString &name) override;
