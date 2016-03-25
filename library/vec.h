@@ -17,6 +17,16 @@ template <typename T> using Vec2 = glm::tvec2<T, glm::highp>;
 
 static inline float mix(float a, float b, float factor) { return a * (1.0f - factor) + b * factor; }
 
+template <typename T>
+static inline T clamp(const T &v, const T& min, const T& max)
+{
+	if (v < min)
+		return min;
+	if (v > max)
+		return max;
+	return v;
+}
+
 } // namespace OpenApoc
 
 namespace glm

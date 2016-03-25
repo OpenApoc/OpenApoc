@@ -77,8 +77,12 @@ void TileObject::setPosition(Vec3<float> newPosition)
 	    newPosition.x > map.size.x + 1 || newPosition.y > map.size.y + 1 ||
 	    newPosition.z > map.size.z + 1)
 	{
-		LogError("Trying to place object at {%f,%f,%f} in map of size {%d,%d,%d}", newPosition.x,
+		LogWarning("Trying to place object at {%f,%f,%f} in map of size {%d,%d,%d}", newPosition.x,
 		         newPosition.y, newPosition.z, map.size.x, map.size.y, map.size.z);
+		newPosition.x = clamp(newPosition.x, 0.0f, (float)map.size.x+1);
+		newPosition.y = clamp(newPosition.y, 0.0f, (float)map.size.y+1);
+		newPosition.z = clamp(newPosition.z, 0.0f, (float)map.size.z+1);
+		LogWarning("Clamped object to {%f,%f,%f}", newPosition.x, newPosition.y, newPosition.z);
 	}
 	this->removeFromMap();
 
