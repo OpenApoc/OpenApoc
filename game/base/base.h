@@ -16,6 +16,7 @@ namespace OpenApoc
 class Building;
 class Facility;
 class GameState;
+class FacilityType;
 
 class Base : public StateObject<Base>
 {
