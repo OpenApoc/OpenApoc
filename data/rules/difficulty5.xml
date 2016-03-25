@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<openapoc_rules name="Superhuman">
-  <include>rules/common/common.xml</include>
-  <include>rules/city/citymap5.xml</include>
-</openapoc_rules>

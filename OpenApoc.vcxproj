@@ -374,10 +374,7 @@
     <ClCompile Include="game\resources\gamecore.cpp" />
     <ClCompile Include="game\apocresources\apocfont.cpp" />
     <ClCompile Include="game\boot.cpp" />
-    <ClCompile Include="game\rules\aliases.cpp" />
     <ClCompile Include="game\rules\facility_type.cpp" />
-    <ClCompile Include="game\rules\rules.cpp" />
-    <ClCompile Include="game\rules\rules_helper.cpp" />
     <ClCompile Include="game\rules\scenery_tile_type.cpp" />
     <ClCompile Include="game\rules\vehicle_type_rules.cpp" />
     <ClCompile Include="game\rules\vequipment_rules.cpp" />
@@ -456,7 +453,6 @@
     <ClInclude Include="tools\extractors\common\strtab.h" />
     <ClInclude Include="tools\extractors\common\ufo2p.h" />
     <ClInclude Include="tools\extractors\common\ufopaedia.h" />
-    <ClInclude Include="tools\extractors\common\vec.h" />
     <ClInclude Include="tools\extractors\common\vehicle.h" />
     <ClInclude Include="tools\extractors\common\vequipment.h" />
     <ClInclude Include="tools\extractors\extractors.h" />
@@ -493,9 +489,6 @@
     <ClInclude Include="game\rules\doodad_type.h" />
     <ClInclude Include="game\rules\facility_type.h" />
     <ClInclude Include="game\rules\resource_aliases.h" />
-    <ClInclude Include="game\rules\rules.h" />
-    <ClInclude Include="game\rules\rules_helper.h" />
-    <ClInclude Include="game\rules\rules_private.h" />
     <ClInclude Include="game\rules\scenery_tile_type.h" />
     <ClInclude Include="game\rules\vehicle_type.h" />
     <ClInclude Include="game\rules\vequipment.h" />

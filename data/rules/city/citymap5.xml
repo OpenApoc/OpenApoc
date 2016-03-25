@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<openapoc_rules>
-  <include>rules/city/citymap_tiles.xml</include>
-  <include>rules/city/citymap5_map.xml</include>
-  <include>rules/city/citymap5_buildings.xml</include>
-</openapoc_rules>

@@ -1,6 +1,3 @@
-#include "game/rules/rules.h"
-#include "game/rules/rules_private.h"
-#include "game/rules/rules_helper.h"
 #include "game/rules/vequipment.h"
 #include "framework/framework.h"
 

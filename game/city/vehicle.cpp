@@ -2,7 +2,6 @@
 #include "framework/logger.h"
 #include "game/city/vehicle.h"
 #include "game/city/vequipment.h"
-#include "game/rules/rules.h"
 #include "game/organisation.h"
 #include "game/city/city.h"
 #include "game/city/building.h"

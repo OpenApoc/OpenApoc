@@ -60,14 +60,6 @@ StateRef<Organisation> GameState::getOrganisation(const UString &orgID)
 
 StateRef<Organisation> GameState::getPlayer() const { return this->player; }
 
-bool GameState::isValid()
-{
-	if (!this->rules.isValid())
-		return false;
-
-	return true;
-}
-
 void GameState::initState()
 {
 	for (auto &city : this->cities)

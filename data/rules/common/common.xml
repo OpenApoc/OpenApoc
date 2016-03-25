@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<openapoc_rules>
-  <include>rules/common/ufopaedia.xml</include>
-  <include>rules/common/vehicle_equipment.xml</include>
-  <include>rules/common/doodads.xml</include>
-  <include>rules/common/rawsounds.xml</include>
-</openapoc_rules>
