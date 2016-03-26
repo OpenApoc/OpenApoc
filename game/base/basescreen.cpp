@@ -190,7 +190,10 @@ void BaseScreen::EventOccurred(Event *e)
 		{
 			if (!drag && dragFacility)
 			{
-				drag = true;
+				if (e->Forms().RaisedBy->Name == "LISTBOX_FACILITIES")
+				{
+					drag = true;
+				}
 			}
 		}
 
