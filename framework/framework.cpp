@@ -1,12 +1,12 @@
 #include "library/sp.h"
 
 #include "framework/framework.h"
-#include "game/boot.h"
 #include "framework/renderer.h"
 #include "framework/renderer_interface.h"
-#include "framework/sound_interface.h"
 #include "framework/sound.h"
+#include "framework/sound_interface.h"
 #include "framework/trace.h"
+#include "game/boot.h"
 
 #include "game/resources/gamecore.h"
 
@@ -15,8 +15,8 @@
 #include <string>
 
 // Use physfs to get prefs dir
-#include <physfs.h>
 #include <SDL_syswm.h>
+#include <physfs.h>
 
 // Boost locale for setting the system locale
 #include <boost/locale.hpp>

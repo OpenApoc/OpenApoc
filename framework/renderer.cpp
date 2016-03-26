@@ -1,5 +1,5 @@
-#include "library/sp.h"
 #include "framework/renderer.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {

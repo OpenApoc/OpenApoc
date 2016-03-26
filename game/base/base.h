@@ -1,11 +1,11 @@
 #pragma once
 
+#include "game/city/building.h"
+#include "game/gamestate.h"
+#include "game/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
-#include "game/gamestate.h"
-#include "game/stateobject.h"
-#include "game/city/building.h"
 
 #include <random>
 #include <vector>

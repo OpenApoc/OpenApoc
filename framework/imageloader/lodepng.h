@@ -29,8 +29,8 @@ freely, subject to the following restrictions:
 #include <string.h> /*for size_t*/
 
 #ifdef __cplusplus
-#include <vector>
 #include <string>
+#include <vector>
 #endif /*__cplusplus*/
 
 extern const char *LODEPNG_VERSION_STRING;
@@ -88,8 +88,7 @@ source files with custom allocators.*/
 
 #ifdef LODEPNG_COMPILE_PNG
 /*The PNG color types (also used for raw).*/
-typedef enum LodePNGColorType
-{
+typedef enum LodePNGColorType {
 	LCT_GREY = 0,       /*greyscale: 1,2,4,8,16 bit*/
 	LCT_RGB = 2,        /*RGB: 8,16 bit*/
 	LCT_PALETTE = 3,    /*palette: 1,2,4,8 bit*/
@@ -545,8 +544,7 @@ void lodepng_decoder_settings_init(LodePNGDecoderSettings *settings);
 
 #ifdef LODEPNG_COMPILE_ENCODER
 /*automatically use color type with less bits per pixel if losslessly possible. Default: AUTO*/
-typedef enum LodePNGFilterStrategy
-{
+typedef enum LodePNGFilterStrategy {
 	/*every filter at zero*/
 	LFS_ZERO,
 	/*Use filter that gives minimum sum, as described in the official PNG filter heuristic.*/

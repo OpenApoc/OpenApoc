@@ -1,8 +1,8 @@
 #pragma once
+#include "game/stateobject.h"
+#include "library/rect.h"
 #include "library/sp.h"
 #include "library/vec.h"
-#include "library/rect.h"
-#include "game/stateobject.h"
 
 #include <set>
 

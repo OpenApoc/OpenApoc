@@ -1,10 +1,10 @@
-#include "library/sp.h"
+#include "framework/data.h"
 #include "framework/logger.h"
 #include "framework/musicloader_interface.h"
-#include "framework/data.h"
+#include "library/sp.h"
 #include <algorithm>
-#include <vector>
 #include <memory>
+#include <vector>
 
 namespace
 {

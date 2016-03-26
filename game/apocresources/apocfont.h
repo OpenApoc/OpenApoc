@@ -2,8 +2,8 @@
 #pragma once
 #include "library/sp.h"
 
-#include "framework/includes.h"
 #include "framework/font.h"
+#include "framework/includes.h"
 
 namespace OpenApoc
 {

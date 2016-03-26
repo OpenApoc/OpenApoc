@@ -11,8 +11,8 @@
 //#define MINIZ_HEADER_FILE_ONLY
 #include "dependencies/miniz/miniz.c"
 
-#include <map>
 #include <iostream>
+#include <map>
 
 namespace OpenApoc
 {

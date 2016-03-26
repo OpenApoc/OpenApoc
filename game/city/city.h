@@ -4,9 +4,9 @@
 
 #include "framework/includes.h"
 
-#include "game/tileview/tile.h"
 #include "game/rules/scenery_tile_type.h"
 #include "game/stateobject.h"
+#include "game/tileview/tile.h"
 
 namespace OpenApoc
 {

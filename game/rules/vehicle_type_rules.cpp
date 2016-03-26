@@ -1,8 +1,8 @@
-#include "library/sp.h"
-#include "library/strings.h"
+#include "game/rules/vehicle_type.h"
 #include "framework/framework.h"
 #include "game/tileview/voxel.h"
-#include "game/rules/vehicle_type.h"
+#include "library/sp.h"
+#include "library/strings.h"
 
 #include <glm/glm.hpp>
 #include <map>

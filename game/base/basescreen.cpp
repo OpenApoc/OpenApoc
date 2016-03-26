@@ -1,12 +1,12 @@
 #include "library/sp.h"
 
-#include "game/base/basescreen.h"
+#include "framework/framework.h"
+#include "framework/image.h"
 #include "game/base/base.h"
+#include "game/base/basescreen.h"
 #include "game/base/facility.h"
 #include "game/base/vequipscreen.h"
 #include "game/resources/gamecore.h"
-#include "framework/framework.h"
-#include "framework/image.h"
 
 namespace OpenApoc
 {

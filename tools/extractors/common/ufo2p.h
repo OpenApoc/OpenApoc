@@ -1,24 +1,24 @@
 #pragma once
 
-#include "canonstring.h"
-#include "strtab.h"
-#include "datachunk.h"
-#include "research.h"
-#include "vehicle.h"
-#include "ufopaedia.h"
 #include "audio.h"
 #include "baselayout.h"
-#include "vequipment.h"
-#include "organisations.h"
+#include "canonstring.h"
+#include "datachunk.h"
 #include "facilities.h"
+#include "organisations.h"
+#include "research.h"
+#include "strtab.h"
+#include "ufopaedia.h"
+#include "vehicle.h"
+#include "vequipment.h"
 
+#include "game/organisation.h"
+#include "game/rules/facility_type.h"
 #include "game/rules/vehicle_type.h"
 #include "game/rules/vequipment.h"
-#include "game/rules/facility_type.h"
-#include "game/organisation.h"
 
-#include <memory>
 #include <algorithm>
+#include <memory>
 #include <string>
 
 #define BUILDING_NAME_STRTAB_OFFSET_START 1351122

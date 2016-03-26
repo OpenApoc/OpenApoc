@@ -2,9 +2,9 @@
 #pragma once
 #include "library/sp.h"
 
-#include "framework/image.h"
 #include "control.h"
 #include "forms_enums.h"
+#include "framework/image.h"
 
 namespace OpenApoc
 {

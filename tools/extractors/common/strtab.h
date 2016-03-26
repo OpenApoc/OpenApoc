@@ -1,7 +1,7 @@
 #pragma once
+#include <fstream>
 #include <string>
 #include <vector>
-#include <fstream>
 
 namespace OpenApoc
 {

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "library/strings.h"
 #include "library/sp.h"
+#include "library/strings.h"
 
+#include <exception>
+#include <iterator>
 #include <list>
 #include <vector>
-#include <iterator>
-#include <exception>
 
 namespace OpenApoc
 {

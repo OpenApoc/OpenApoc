@@ -1,13 +1,13 @@
 #pragma once
+#include "game/city/baselayout.h"
+#include "game/city/building.h"
+#include "game/organisation.h"
 #include "library/sp.h"
 #include "library/vec.h"
-#include "game/organisation.h"
-#include "game/city/building.h"
-#include "game/city/baselayout.h"
 
+#include <memory>
 #include <set>
 #include <vector>
-#include <memory>
 
 namespace OpenApoc
 {

@@ -4,10 +4,10 @@
 #include <boost/locale.hpp>
 
 #ifdef DUMP_TRANSLATION_STRINGS
+#include <fstream>
+#include <iostream>
 #include <map>
 #include <set>
-#include <iostream>
-#include <fstream>
 #endif
 namespace OpenApoc
 {

@@ -4,8 +4,8 @@
 #include <memory>
 #include <vector>
 
-#include "library/strings.h"
 #include "framework/resource.h"
+#include "library/strings.h"
 
 namespace OpenApoc
 {
@@ -60,7 +60,8 @@ class MusicTrack : public ResObject
 	};
 
 	std::function<MusicCallbackReturn(sp<MusicTrack> track, unsigned int maxSamples,
-	                                  void *sampleBuffer, unsigned int *returnedSamples)> callback;
+	                                  void *sampleBuffer, unsigned int *returnedSamples)>
+	    callback;
 	virtual const UString &getName() const = 0;
 	virtual ~MusicTrack() {}
 };

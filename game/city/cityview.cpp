@@ -1,23 +1,23 @@
-#include "library/sp.h"
 #include "game/city/city.h"
-#include "game/city/cityview.h"
 #include "framework/framework.h"
-#include "game/resources/gamecore.h"
-#include "game/ufopaedia/ufopaedia.h"
-#include "game/city/infiltrationscreen.h"
-#include "game/city/scorescreen.h"
-#include "game/general/ingameoptions.h"
-#include "game/city/vehiclemission.h"
-#include "game/city/vehicle.h"
-#include "game/city/building.h"
 #include "game/base/basescreen.h"
 #include "game/base/vequipscreen.h"
-#include "game/tileview/tileobject_vehicle.h"
-#include "game/tileview/tileobject_scenery.h"
-#include "game/tileview/voxel.h"
-#include "game/city/scenery.h"
-#include "game/city/buildingscreen.h"
 #include "game/city/baseselectscreen.h"
+#include "game/city/building.h"
+#include "game/city/buildingscreen.h"
+#include "game/city/cityview.h"
+#include "game/city/infiltrationscreen.h"
+#include "game/city/scenery.h"
+#include "game/city/scorescreen.h"
+#include "game/city/vehicle.h"
+#include "game/city/vehiclemission.h"
+#include "game/general/ingameoptions.h"
+#include "game/resources/gamecore.h"
+#include "game/tileview/tileobject_scenery.h"
+#include "game/tileview/tileobject_vehicle.h"
+#include "game/tileview/voxel.h"
+#include "game/ufopaedia/ufopaedia.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {
@@ -139,228 +139,179 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 	this->shieldImage = img;
 
 	this->baseForm->FindControl("BUTTON_TAB_1")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  this->activeTab = this->uiTabs[0];
-		              });
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [this](Event *e) -> void { this->activeTab = this->uiTabs[0]; });
 	this->baseForm->FindControl("BUTTON_TAB_2")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  this->activeTab = this->uiTabs[1];
-		              });
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [this](Event *e) -> void { this->activeTab = this->uiTabs[1]; });
 	this->baseForm->FindControl("BUTTON_TAB_3")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  this->activeTab = this->uiTabs[2];
-		              });
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [this](Event *e) -> void { this->activeTab = this->uiTabs[2]; });
 	this->baseForm->FindControl("BUTTON_TAB_4")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  this->activeTab = this->uiTabs[3];
-		              });
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [this](Event *e) -> void { this->activeTab = this->uiTabs[3]; });
 	this->baseForm->FindControl("BUTTON_TAB_5")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  this->activeTab = this->uiTabs[4];
-		              });
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [this](Event *e) -> void { this->activeTab = this->uiTabs[4]; });
 	this->baseForm->FindControl("BUTTON_TAB_6")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  this->activeTab = this->uiTabs[5];
-		              });
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [this](Event *e) -> void { this->activeTab = this->uiTabs[5]; });
 	this->baseForm->FindControl("BUTTON_TAB_7")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  this->activeTab = this->uiTabs[6];
-		              });
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [this](Event *e) -> void { this->activeTab = this->uiTabs[6]; });
 	this->baseForm->FindControl("BUTTON_TAB_8")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  this->activeTab = this->uiTabs[7];
-		              });
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [this](Event *e) -> void { this->activeTab = this->uiTabs[7]; });
 	this->baseForm->FindControl("BUTTON_FOLLOW_VEHICLE")
-	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) -> void
-	                  {
-		                  this->followVehicle =
-		                      std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy)->IsChecked();
-		              });
+	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) -> void {
+		    this->followVehicle =
+		        std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy)->IsChecked();
+		});
 	this->baseForm->FindControl("BUTTON_TOGGLE_STRATMAP")
-	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) -> void
-	                  {
-		                  bool strategy =
-		                      std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy)->IsChecked();
-		                  this->setViewMode(strategy ? TileViewMode::Strategy
-		                                             : TileViewMode::Isometric);
-		              });
+	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) -> void {
+		    bool strategy = std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy)->IsChecked();
+		    this->setViewMode(strategy ? TileViewMode::Strategy : TileViewMode::Isometric);
+		});
 	this->baseForm->FindControl("BUTTON_SPEED0")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) -> void
-	                  {
-		                  this->updateSpeed = UpdateSpeed::Pause;
-		              });
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *e) -> void { this->updateSpeed = UpdateSpeed::Pause; });
 	this->baseForm->FindControl("BUTTON_SPEED1")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) -> void
-	                  {
-		                  this->updateSpeed = UpdateSpeed::Speed1;
-		              });
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *e) -> void { this->updateSpeed = UpdateSpeed::Speed1; });
 	this->baseForm->FindControl("BUTTON_SPEED2")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) -> void
-	                  {
-		                  this->updateSpeed = UpdateSpeed::Speed2;
-		              });
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *e) -> void { this->updateSpeed = UpdateSpeed::Speed2; });
 	this->baseForm->FindControl("BUTTON_SPEED3")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) -> void
-	                  {
-		                  this->updateSpeed = UpdateSpeed::Speed3;
-		              });
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *e) -> void { this->updateSpeed = UpdateSpeed::Speed3; });
 	this->baseForm->FindControl("BUTTON_SPEED4")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) -> void
-	                  {
-		                  this->updateSpeed = UpdateSpeed::Speed4;
-		              });
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *e) -> void { this->updateSpeed = UpdateSpeed::Speed4; });
 	this->baseForm->FindControl("BUTTON_SPEED5")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) -> void
-	                  {
-		                  this->updateSpeed = UpdateSpeed::Speed5;
-		              });
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *e) -> void { this->updateSpeed = UpdateSpeed::Speed5; });
 	this->baseForm->FindControl("BUTTON_SHOW_ALIEN_INFILTRATION")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  this->stageCmd.cmd = StageCmd::Command::PUSH;
-		                  this->stageCmd.nextStage = mksp<InfiltrationScreen>();
-		              });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+		    this->stageCmd.cmd = StageCmd::Command::PUSH;
+		    this->stageCmd.nextStage = mksp<InfiltrationScreen>();
+		});
 	this->baseForm->FindControl("BUTTON_SHOW_SCORE")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  this->stageCmd.cmd = StageCmd::Command::PUSH;
-		                  this->stageCmd.nextStage = mksp<ScoreScreen>();
-		              });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+		    this->stageCmd.cmd = StageCmd::Command::PUSH;
+		    this->stageCmd.nextStage = mksp<ScoreScreen>();
+		});
 	this->baseForm->FindControl("BUTTON_SHOW_UFOPAEDIA")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  this->stageCmd.cmd = StageCmd::Command::PUSH;
-		                  this->stageCmd.nextStage = mksp<Ufopaedia>();
-		              });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+		    this->stageCmd.cmd = StageCmd::Command::PUSH;
+		    this->stageCmd.nextStage = mksp<Ufopaedia>();
+		});
 	this->baseForm->FindControl("BUTTON_SHOW_OPTIONS")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  this->stageCmd.cmd = StageCmd::Command::PUSH;
-		                  this->stageCmd.nextStage = mksp<InGameOptions>(this->state);
-		              });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+		    this->stageCmd.cmd = StageCmd::Command::PUSH;
+		    this->stageCmd.nextStage = mksp<InGameOptions>(this->state);
+		});
 	this->baseForm->FindControl("BUTTON_SHOW_LOG")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  LogWarning("Show log");
-		              });
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [this](Event *e) -> void { LogWarning("Show log"); });
 	this->baseForm->FindControl("BUTTON_ZOOM_EVENT")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  LogWarning("Zoom to event");
-		              });
+	    ->addCallback(FormEventType::ButtonClick,
+	                  [this](Event *e) -> void { LogWarning("Zoom to event"); });
 
 	auto baseManagementForm = this->uiTabs[0];
 	baseManagementForm->FindControl("BUTTON_SHOW_BASE")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  this->stageCmd.cmd = StageCmd::Command::PUSH;
-		                  this->stageCmd.nextStage = mksp<BaseScreen>(this->state);
-		              });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+		    this->stageCmd.cmd = StageCmd::Command::PUSH;
+		    this->stageCmd.nextStage = mksp<BaseScreen>(this->state);
+		});
 	baseManagementForm->FindControl("BUTTON_BUILD_BASE")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  this->stageCmd.cmd = StageCmd::Command::PUSH;
-		                  this->stageCmd.nextStage = mksp<BaseSelectScreen>();
-		              });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+		    this->stageCmd.cmd = StageCmd::Command::PUSH;
+		    this->stageCmd.nextStage = mksp<BaseSelectScreen>();
+		});
 	auto vehicleForm = this->uiTabs[1];
 	vehicleForm->FindControl("BUTTON_EQUIP_VEHICLE")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  this->stageCmd.cmd = StageCmd::Command::PUSH;
-		                  auto equipScreen = mksp<VEquipScreen>(this->state);
-		                  auto v = this->selectedVehicle.lock();
-		                  if (v && v->owner == this->state->getPlayer())
-		                  {
-			                  equipScreen->setSelectedVehicle(v);
-		                  }
-		                  this->stageCmd.nextStage = equipScreen;
-		              });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+		    this->stageCmd.cmd = StageCmd::Command::PUSH;
+		    auto equipScreen = mksp<VEquipScreen>(this->state);
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    equipScreen->setSelectedVehicle(v);
+		    }
+		    this->stageCmd.nextStage = equipScreen;
+		});
 	vehicleForm->FindControl("BUTTON_VEHICLE_BUILDING")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  auto v = this->selectedVehicle.lock();
-		                  if (v && v->owner == this->state->getPlayer())
-		                  {
-			                  auto b = v->currentlyLandedBuilding;
-			                  if (b)
-			                  {
-				                  this->stageCmd.cmd = StageCmd::Command::PUSH;
-				                  this->stageCmd.nextStage = mksp<BuildingScreen>(b);
-			                  }
-		                  }
-		              });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    auto b = v->currentlyLandedBuilding;
+			    if (b)
+			    {
+				    this->stageCmd.cmd = StageCmd::Command::PUSH;
+				    this->stageCmd.nextStage = mksp<BuildingScreen>(b);
+			    }
+		    }
+		});
 	vehicleForm->FindControl("BUTTON_GOTO_BUILDING")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  auto v = this->selectedVehicle.lock();
-		                  if (v && v->owner == this->state->getPlayer())
-		                  {
-			                  LogInfo("Select building for vehicle \"%s\"", v->name.c_str());
-			                  this->selectionState = SelectionState::VehicleGotoBuilding;
-		                  }
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    LogInfo("Select building for vehicle \"%s\"", v->name.c_str());
+			    this->selectionState = SelectionState::VehicleGotoBuilding;
+		    }
 
-		              });
+		});
 	vehicleForm->FindControl("BUTTON_GOTO_LOCATION")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  auto v = this->selectedVehicle.lock();
-		                  if (v && v->owner == this->state->getPlayer())
-		                  {
-			                  LogInfo("Select building for vehicle \"%s\"", v->name.c_str());
-			                  this->selectionState = SelectionState::VehicleGotoLocation;
-		                  }
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    LogInfo("Select building for vehicle \"%s\"", v->name.c_str());
+			    this->selectionState = SelectionState::VehicleGotoLocation;
+		    }
 
-		              });
+		});
 	vehicleForm->FindControl("BUTTON_GOTO_BASE")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  auto v = this->selectedVehicle.lock();
-		                  if (v && v->owner == this->state->getPlayer())
-		                  {
-			                  LogWarning("Goto base for vehicle \"%s\"", v->name.c_str());
-			                  auto bld = v->homeBuilding;
-			                  if (!bld)
-			                  {
-				                  LogError("Vehicle \"%s\" has no building", v->name.c_str());
-			                  }
-			                  LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name.c_str(),
-			                             bld->name.c_str());
-			                  // FIXME: Don't clear missions if not replacing current mission
-			                  v->missions.clear();
-			                  v->missions.emplace_back(VehicleMission::gotoBuilding(*v, bld));
-			                  v->missions.front()->start(*this->state, *v);
-		                  }
-		              });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    LogWarning("Goto base for vehicle \"%s\"", v->name.c_str());
+			    auto bld = v->homeBuilding;
+			    if (!bld)
+			    {
+				    LogError("Vehicle \"%s\" has no building", v->name.c_str());
+			    }
+			    LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name.c_str(),
+			               bld->name.c_str());
+			    // FIXME: Don't clear missions if not replacing current mission
+			    v->missions.clear();
+			    v->missions.emplace_back(VehicleMission::gotoBuilding(*v, bld));
+			    v->missions.front()->start(*this->state, *v);
+		    }
+		});
 	vehicleForm->FindControl("BUTTON_VEHICLE_ATTACK")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  auto v = this->selectedVehicle.lock();
-		                  if (v && v->owner == this->state->getPlayer())
-		                  {
-			                  LogInfo("Select target for vehicle \"%s\"", v->name.c_str());
-			                  this->selectionState = SelectionState::VehicleGotoLocation;
-		                  }
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    LogInfo("Select target for vehicle \"%s\"", v->name.c_str());
+			    this->selectionState = SelectionState::VehicleGotoLocation;
+		    }
 
-		              });
+		});
 	vehicleForm->FindControl("BUTTON_VEHICLE_ATTACK_BUILDING")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void
-	                  {
-		                  auto v = this->selectedVehicle.lock();
-		                  if (v && v->owner == this->state->getPlayer())
-		                  {
-			                  LogInfo("Select target building for vehicle \"%s\"", v->name.c_str());
-			                  this->selectionState = SelectionState::VehicleGotoLocation;
-		                  }
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    LogInfo("Select target building for vehicle \"%s\"", v->name.c_str());
+			    this->selectionState = SelectionState::VehicleGotoLocation;
+		    }
 
-		              });
+		});
 }
 
 CityView::~CityView() {}
@@ -503,10 +454,9 @@ void CityView::Update(StageCmd *const cmd)
 			newVehicleListControls[vehicle] = std::make_pair(info, control);
 			ownedVehicleList->AddItem(control);
 
-			control->addCallback(FormEventType::MouseDown, [this, vehicle](Event *e) -> void
-			                     {
-				                     this->selectedVehicle = vehicle;
-				                 });
+			control->addCallback(FormEventType::MouseDown, [this, vehicle](Event *e) -> void {
+				this->selectedVehicle = vehicle;
+			});
 		}
 	}
 

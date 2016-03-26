@@ -1,9 +1,9 @@
 #include "game/city/doodad.h"
-#include "game/tileview/tile.h"
-#include "game/tileview/tileobject_doodad.h"
 #include "framework/framework.h"
 #include "game/city/city.h"
 #include "game/gamestate.h"
+#include "game/tileview/tile.h"
+#include "game/tileview/tileobject_doodad.h"
 
 namespace OpenApoc
 {

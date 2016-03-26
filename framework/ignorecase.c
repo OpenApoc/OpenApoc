@@ -1,12 +1,12 @@
 /** \file ignorecase.c */
 
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
 
-#include <physfs.h>
 #include "framework/ignorecase.h"
+#include <physfs.h>
 
 /**
  * Please see ignorecase.h for details.

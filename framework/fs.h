@@ -2,8 +2,8 @@
 
 #include <cstdint>
 
-#include "library/strings.h"
 #include "library/sp.h"
+#include "library/strings.h"
 
 #define PROGRAM_NAME "OpenApoc"
 #define PROGRAM_ORGANISATION "OpenApoc"

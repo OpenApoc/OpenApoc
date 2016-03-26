@@ -1,7 +1,7 @@
 #include "library/sp.h"
 
-#include "game/ufopaedia/ufopaedia.h"
 #include "framework/framework.h"
+#include "game/ufopaedia/ufopaedia.h"
 
 namespace OpenApoc
 {

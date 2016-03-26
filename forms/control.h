@@ -7,9 +7,9 @@
 #include "framework/logger.h"
 #include "library/colour.h"
 
-#include <map>
-#include <list>
 #include <functional>
+#include <list>
+#include <map>
 
 namespace OpenApoc
 {

@@ -1,7 +1,7 @@
 #pragma once
+#include "game/rules/doodad_type.h"
 #include "library/sp.h"
 #include "library/vec.h"
-#include "game/rules/doodad_type.h"
 
 namespace OpenApoc
 {

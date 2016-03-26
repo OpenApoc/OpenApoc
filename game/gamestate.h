@@ -1,18 +1,18 @@
 #pragma once
 #include "library/sp.h"
 
-#include <random>
-#include <memory>
-#include <vector>
-#include "library/strings.h"
-#include "game/organisation.h"
-#include "game/rules/facility_type.h"
 #include "game/base/base.h"
-#include "game/stateobject.h"
-#include "game/rules/doodad_type.h"
-#include "game/rules/vequipment.h"
-#include "game/rules/vehicle_type.h"
 #include "game/city/city.h"
+#include "game/organisation.h"
+#include "game/rules/doodad_type.h"
+#include "game/rules/facility_type.h"
+#include "game/rules/vehicle_type.h"
+#include "game/rules/vequipment.h"
+#include "game/stateobject.h"
+#include "library/strings.h"
+#include <memory>
+#include <random>
+#include <vector>
 
 namespace OpenApoc
 {

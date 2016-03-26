@@ -1,7 +1,7 @@
 #include "game/apocresources/apocpalette.h"
-#include "framework/palette.h"
 #include "framework/data.h"
 #include "framework/logger.h"
+#include "framework/palette.h"
 
 namespace OpenApoc
 {

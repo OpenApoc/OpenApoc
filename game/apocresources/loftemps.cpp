@@ -1,7 +1,7 @@
-#include "library/sp.h"
 #include "game/apocresources/loftemps.h"
-#include "framework/logger.h"
 #include "framework/data.h"
+#include "framework/logger.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {

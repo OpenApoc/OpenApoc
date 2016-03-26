@@ -1,9 +1,9 @@
 #pragma once
 
-#include "framework/stage.h"
-#include "library/vec.h"
 #include "forms/forms.h"
+#include "framework/stage.h"
 #include "game/gamestate.h"
+#include "library/vec.h"
 
 #include <unordered_map>
 #include <vector>

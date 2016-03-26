@@ -1,11 +1,11 @@
-#include "version.h"
 #include "game/general/mainmenu.h"
 #include "framework/framework.h"
-#include "game/general/optionsmenu.h"
-#include "game/general/difficultymenu.h"
-#include "game/debugtools/debugmenu.h"
-#include "game/resources/gamecore.h"
 #include "game/city/cityview.h"
+#include "game/debugtools/debugmenu.h"
+#include "game/general/difficultymenu.h"
+#include "game/general/optionsmenu.h"
+#include "game/resources/gamecore.h"
+#include "version.h"
 
 namespace OpenApoc
 {

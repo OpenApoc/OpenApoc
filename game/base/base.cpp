@@ -1,8 +1,8 @@
 #include "game/base/base.h"
+#include "framework/framework.h"
+#include "game/base/facility.h"
 #include "game/city/building.h"
 #include "game/organisation.h"
-#include "game/base/facility.h"
-#include "framework/framework.h"
 
 #include <unordered_set>
 

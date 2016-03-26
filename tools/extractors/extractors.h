@@ -1,6 +1,6 @@
 #pragma once
-#include "library/strings.h"
 #include "game/gamestate.h"
+#include "library/strings.h"
 
 #include "tools/extractors/common/ufo2p.h"
 

@@ -1,8 +1,8 @@
 #pragma once
 #include "library/sp.h"
 
-#include "game/apocresources/apocresource.h"
 #include "framework/font.h"
+#include "game/apocresources/apocresource.h"
 
 namespace OpenApoc
 {

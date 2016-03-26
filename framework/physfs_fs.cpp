@@ -1,6 +1,6 @@
 #include "framework/fs.h"
-#include "framework/logger.h"
 #include "framework/ignorecase.h"
+#include "framework/logger.h"
 
 #include <physfs.h>
 

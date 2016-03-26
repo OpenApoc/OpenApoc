@@ -1,8 +1,8 @@
 #include "library/sp.h"
 
-#include "game/resources/gamecore.h"
 #include "framework/framework.h"
 #include "framework/trace.h"
+#include "game/resources/gamecore.h"
 
 #include "game/ufopaedia/ufopaedia.h"
 

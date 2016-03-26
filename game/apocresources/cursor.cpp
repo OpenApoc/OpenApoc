@@ -1,8 +1,8 @@
 #include "library/sp.h"
 
-#include "game/apocresources/cursor.h"
 #include "framework/framework.h"
 #include "framework/palette.h"
+#include "game/apocresources/cursor.h"
 
 namespace OpenApoc
 {

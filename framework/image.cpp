@@ -1,11 +1,11 @@
-#include "library/sp.h"
 #include "framework/image.h"
-#include "framework/palette.h"
 #include "framework/logger.h"
+#include "framework/palette.h"
+#include "library/sp.h"
 
 // Use physfs for RGBImage::saveBitmap directory creation
-#include <physfs.h>
 #include <SDL_surface.h>
+#include <physfs.h>
 
 namespace OpenApoc
 {

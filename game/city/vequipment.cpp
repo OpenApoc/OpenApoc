@@ -1,11 +1,11 @@
-#include "library/sp.h"
 #include "game/city/vequipment.h"
-#include "game/rules/vequipment.h"
-#include "framework/logger.h"
 #include "framework/framework.h"
-#include "game/city/vehicle.h"
+#include "framework/logger.h"
 #include "game/city/projectile.h"
+#include "game/city/vehicle.h"
+#include "game/rules/vequipment.h"
 #include "game/tileview/tileobject_vehicle.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {

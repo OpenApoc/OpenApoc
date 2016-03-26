@@ -1,13 +1,13 @@
 #include "game/city/vehiclemission.h"
-#include "game/tileview/tile.h"
-#include "game/city/vehicle.h"
+#include "framework/logger.h"
 #include "game/city/building.h"
 #include "game/city/scenery.h"
-#include "framework/logger.h"
-#include "game/tileview/tileobject_vehicle.h"
-#include "game/tileview/tileobject_scenery.h"
-#include "game/rules/scenery_tile_type.h"
+#include "game/city/vehicle.h"
 #include "game/gamestate.h"
+#include "game/rules/scenery_tile_type.h"
+#include "game/tileview/tile.h"
+#include "game/tileview/tileobject_scenery.h"
+#include "game/tileview/tileobject_vehicle.h"
 
 namespace OpenApoc
 {

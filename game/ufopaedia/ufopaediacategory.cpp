@@ -1,8 +1,8 @@
 #include "library/sp.h"
 
-#include "ufopaediacategory.h"
-#include "ufopaedia.h"
 #include "framework/framework.h"
+#include "ufopaedia.h"
+#include "ufopaediacategory.h"
 
 namespace OpenApoc
 {

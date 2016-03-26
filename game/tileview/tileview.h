@@ -1,10 +1,10 @@
 #pragma once
 #include "library/sp.h"
 
-#include "framework/stage.h"
 #include "framework/includes.h"
-#include "framework/palette.h"
 #include "framework/logger.h"
+#include "framework/palette.h"
+#include "framework/stage.h"
 
 namespace OpenApoc
 {

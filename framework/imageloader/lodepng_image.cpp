@@ -2,13 +2,13 @@
 // Created by Alexey on 20.11.2015.
 //
 
-#include "library/sp.h"
 #include "framework/imageloader_interface.h"
 #include "framework/logger.h"
+#include "library/sp.h"
 #include "library/vec.h"
 
-#include <vector>
 #include "framework/imageloader/lodepng.h"
+#include <vector>
 
 using namespace OpenApoc;
 

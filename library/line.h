@@ -1,8 +1,8 @@
 
 #pragma once
 
-#include "vec.h"
 #include "angle.h"
+#include "vec.h"
 
 namespace OpenApoc
 {

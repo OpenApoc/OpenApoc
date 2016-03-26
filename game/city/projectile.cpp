@@ -1,10 +1,10 @@
-#include "library/sp.h"
 #include "game/city/projectile.h"
 #include "framework/logger.h"
-#include "game/gamestate.h"
 #include "game/city/city.h"
+#include "game/gamestate.h"
 #include "game/tileview/tileobject_projectile.h"
 #include "game/tileview/voxel.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {

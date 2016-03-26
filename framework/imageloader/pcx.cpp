@@ -1,7 +1,7 @@
-#include "library/sp.h"
 #include "framework/imageloader_interface.h"
 #include "framework/logger.h"
 #include "framework/palette.h"
+#include "library/sp.h"
 #include "library/vec.h"
 
 using namespace OpenApoc;

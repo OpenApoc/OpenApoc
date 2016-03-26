@@ -1,10 +1,10 @@
-#include "library/sp.h"
 #include "game/tileview/tileview.h"
 #include "game/tileview/tile.h"
 #include "game/tileview/tileobject.h"
+#include "library/sp.h"
 
-#include "framework/includes.h"
 #include "framework/framework.h"
+#include "framework/includes.h"
 #include "game/resources/gamecore.h"
 
 namespace OpenApoc

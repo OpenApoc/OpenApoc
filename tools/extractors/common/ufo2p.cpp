@@ -1,13 +1,13 @@
 #include "ufo2p.h"
-#include "crc32.h"
 #include "canonstring.h"
+#include "crc32.h"
 #include "framework/framework.h"
 
-#include <set>
-#include <map>
-#include <sstream>
-#include <iterator>
 #include <iomanip>
+#include <iterator>
+#include <map>
+#include <set>
+#include <sstream>
 
 namespace OpenApoc
 {

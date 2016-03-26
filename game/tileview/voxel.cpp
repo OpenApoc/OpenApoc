@@ -1,8 +1,8 @@
-#include "library/sp.h"
 #include "game/tileview/voxel.h"
+#include "framework/logger.h"
 #include "game/tileview/tile.h"
 #include "game/tileview/tileobject.h"
-#include "framework/logger.h"
+#include "library/sp.h"
 
 #include <iterator>
 

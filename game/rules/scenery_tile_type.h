@@ -1,7 +1,7 @@
 #pragma once
+#include "game/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
-#include "game/stateobject.h"
 
 #include <memory>
 

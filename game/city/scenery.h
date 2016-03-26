@@ -1,9 +1,9 @@
 #pragma once
 
-#include "library/sp.h"
-#include "library/vec.h"
 #include "game/rules/scenery_tile_type.h"
 #include "game/stateobject.h"
+#include "library/sp.h"
+#include "library/vec.h"
 #include <set>
 
 namespace OpenApoc

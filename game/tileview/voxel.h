@@ -1,10 +1,10 @@
 #pragma once
+#include "framework/resource.h"
 #include "library/sp.h"
 #include "library/vec.h"
-#include "framework/resource.h"
 
-#include <vector>
 #include <memory>
+#include <vector>
 
 namespace OpenApoc
 {

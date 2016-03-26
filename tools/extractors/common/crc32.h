@@ -49,8 +49,7 @@ template <typename InputIterator> std::uint_fast32_t crc(InputIterator first, In
 	// have a true (fast) 32-bit type.
 	return std::uint_fast32_t{0xFFFFFFFFuL} &
 	       ~std::accumulate(first, last, ~std::uint_fast32_t{0} & std::uint_fast32_t{0xFFFFFFFFuL},
-	                        [](std::uint_fast32_t checksum, std::uint_fast8_t value)
-	                        {
+	                        [](std::uint_fast32_t checksum, std::uint_fast8_t value) {
 		                        return table[(checksum ^ value) & 0xFFu] ^ (checksum >> 8);
 		                    });
 }

@@ -2,11 +2,11 @@
 
 #include "framework/logger.h"
 
-#include <vector>
+#include <cassert>
 #include <cstdlib>
 #include <fstream>
-#include <cassert>
 #include <iostream>
+#include <vector>
 
 namespace OpenApoc
 {

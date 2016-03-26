@@ -1,7 +1,7 @@
 #pragma once
 #include "library/sp.h"
-#include "sound.h"
 #include "library/strings.h"
+#include "sound.h"
 
 namespace OpenApoc
 {

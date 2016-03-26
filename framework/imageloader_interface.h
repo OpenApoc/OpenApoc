@@ -1,8 +1,8 @@
 #pragma once
-#include "library/sp.h"
-#include "image.h"
-#include "library/strings.h"
 #include "framework/fs.h"
+#include "image.h"
+#include "library/sp.h"
+#include "library/strings.h"
 
 namespace OpenApoc
 {

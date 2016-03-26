@@ -1,8 +1,8 @@
 #pragma once
 
+#include "game/city/building.h"
 #include "library/sp.h"
 #include "library/vec.h"
-#include "game/city/building.h"
 #include <list>
 
 namespace OpenApoc

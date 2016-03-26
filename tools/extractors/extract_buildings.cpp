@@ -1,6 +1,6 @@
-#include "tools/extractors/extractors.h"
-#include "framework/framework.h"
 #include "framework/data.h"
+#include "framework/framework.h"
+#include "tools/extractors/extractors.h"
 
 #include "game/city/building.h"
 

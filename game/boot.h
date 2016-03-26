@@ -2,11 +2,11 @@
 #pragma once
 #include "library/sp.h"
 
-#include "framework/stage.h"
 #include "framework/includes.h"
+#include "framework/stage.h"
 
-#include <future>
 #include <atomic>
+#include <future>
 
 namespace OpenApoc
 {

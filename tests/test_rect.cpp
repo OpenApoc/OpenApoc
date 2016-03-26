@@ -1,5 +1,5 @@
-#include "library/rect.h"
 #include "framework/logger.h"
+#include "library/rect.h"
 
 using namespace OpenApoc;
 

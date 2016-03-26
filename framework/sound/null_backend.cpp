@@ -1,6 +1,6 @@
-#include "library/sp.h"
-#include "framework/sound_interface.h"
 #include "framework/logger.h"
+#include "framework/sound_interface.h"
+#include "library/sp.h"
 
 namespace
 {

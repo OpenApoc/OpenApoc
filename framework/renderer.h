@@ -1,8 +1,8 @@
 #pragma once
-#include "library/sp.h"
-#include "library/vec.h"
 #include "library/colour.h"
+#include "library/sp.h"
 #include "library/strings.h"
+#include "library/vec.h"
 #include <memory>
 
 namespace OpenApoc

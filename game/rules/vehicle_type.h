@@ -1,14 +1,14 @@
 #pragma once
 #include "library/sp.h"
 
-#include "library/vec.h"
-#include "library/rect.h"
-#include "library/strings.h"
 #include "game/rules/vequipment.h"
 #include "game/stateobject.h"
-#include <vector>
-#include <map>
+#include "library/rect.h"
+#include "library/strings.h"
+#include "library/vec.h"
 #include <list>
+#include <map>
+#include <vector>
 
 namespace OpenApoc
 {

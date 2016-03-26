@@ -3,8 +3,8 @@
 
 #include "framework/includes.h"
 #include "game/tileview/tileobject.h"
-#include <set>
 #include <functional>
+#include <set>
 #include <vector>
 
 // DANGER WILL ROBINSON - MADE UP VALUES AHEAD

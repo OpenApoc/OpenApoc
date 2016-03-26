@@ -1,8 +1,8 @@
 
 #include "game/general/optionsmenu.h"
-#include "game/ufopaedia/ufopaedia.h"
-#include "game/debugtools/debugmenu.h"
 #include "framework/framework.h"
+#include "game/debugtools/debugmenu.h"
+#include "game/ufopaedia/ufopaedia.h"
 
 namespace OpenApoc
 {

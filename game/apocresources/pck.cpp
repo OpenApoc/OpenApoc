@@ -1,10 +1,10 @@
-#include "library/sp.h"
-#include "framework/logger.h"
 #include "game/apocresources/pck.h"
 #include "framework/data.h"
 #include "framework/image.h"
+#include "framework/logger.h"
 #include "framework/renderer.h"
 #include "framework/trace.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {

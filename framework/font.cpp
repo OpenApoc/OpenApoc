@@ -1,7 +1,7 @@
-#include "library/sp.h"
+#include "framework/font.h"
 #include "framework/framework.h"
 #include "framework/image.h"
-#include "framework/font.h"
+#include "library/sp.h"
 
 #include <boost/locale.hpp>
 

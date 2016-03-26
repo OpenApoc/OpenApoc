@@ -1,7 +1,7 @@
-#include "tools/extractors/extractors.h"
-#include "framework/framework.h"
 #include "framework/data.h"
+#include "framework/framework.h"
 #include "game/tileview/voxel.h"
+#include "tools/extractors/extractors.h"
 
 #include "game/rules/scenery_tile_type.h"
 

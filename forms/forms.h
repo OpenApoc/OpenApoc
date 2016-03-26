@@ -1,15 +1,15 @@
 
 #pragma once
 
-#include "forms_enums.h"
+#include "checkbox.h"
 #include "control.h"
 #include "form.h"
-#include "label.h"
+#include "forms_enums.h"
 #include "graphic.h"
-#include "textbutton.h"
 #include "graphicbutton.h"
-#include "checkbox.h"
+#include "label.h"
+#include "list.h"
 #include "radiobutton.h"
 #include "scrollbar.h"
-#include "list.h"
+#include "textbutton.h"
 #include "textedit.h"

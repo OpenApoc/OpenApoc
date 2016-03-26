@@ -1,6 +1,6 @@
 #pragma once
-#include "library/sp.h"
 #include "game/tileview/voxel.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {

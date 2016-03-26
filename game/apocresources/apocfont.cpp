@@ -1,9 +1,9 @@
 #include "library/sp.h"
 
-#include "game/apocresources/apocfont.h"
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "framework/palette.h"
+#include "game/apocresources/apocfont.h"
 
 #include <boost/locale.hpp>
 

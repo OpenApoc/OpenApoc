@@ -1,10 +1,10 @@
 #include "game/tileview/tileobject.h"
 
-#include "game/tileview/tile.h"
 #include "framework/logger.h"
+#include "game/tileview/tile.h"
 
-#include <cmath>
 #include <algorithm>
+#include <cmath>
 
 namespace OpenApoc
 {

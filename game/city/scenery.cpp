@@ -1,12 +1,12 @@
 #include "game/city/scenery.h"
-#include "game/city/building.h"
 #include "framework/logger.h"
-#include "game/tileview/tileobject_scenery.h"
-#include "game/rules/scenery_tile_type.h"
-#include "game/gamestate.h"
-#include "game/tileview/tile.h"
+#include "game/city/building.h"
 #include "game/city/city.h"
 #include "game/city/doodad.h"
+#include "game/gamestate.h"
+#include "game/rules/scenery_tile_type.h"
+#include "game/tileview/tile.h"
+#include "game/tileview/tileobject_scenery.h"
 
 namespace OpenApoc
 {

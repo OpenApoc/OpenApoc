@@ -1,24 +1,24 @@
 #include "game/city/city.h"
+#include "framework/framework.h"
+#include "framework/trace.h"
 #include "game/city/building.h"
-#include "game/organisation.h"
-#include "game/city/scenery.h"
 #include "game/city/doodad.h"
+#include "game/city/projectile.h"
+#include "game/city/scenery.h"
 #include "game/city/vehicle.h"
 #include "game/city/vehiclemission.h"
 #include "game/city/vequipment.h"
-#include "game/rules/vequipment.h"
+#include "game/organisation.h"
 #include "game/rules/scenery_tile_type.h"
-#include "framework/framework.h"
-#include "framework/trace.h"
-#include "game/city/projectile.h"
-#include "game/tileview/tileobject_vehicle.h"
-#include "game/tileview/tileobject_scenery.h"
+#include "game/rules/vequipment.h"
 #include "game/tileview/tileobject_projectile.h"
+#include "game/tileview/tileobject_scenery.h"
+#include "game/tileview/tileobject_vehicle.h"
 #include "game/tileview/voxel.h"
 
-#include <limits>
 #include <functional>
 #include <future>
+#include <limits>
 
 namespace OpenApoc
 {

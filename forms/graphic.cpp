@@ -1,6 +1,6 @@
-#include "library/sp.h"
 #include "forms/graphic.h"
 #include "framework/framework.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {

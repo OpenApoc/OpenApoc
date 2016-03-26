@@ -1,10 +1,10 @@
 #include "game/base/vequipscreen.h"
-#include "game/city/vequipment.h"
-#include "framework/framework.h"
-#include "game/city/vehicle.h"
-#include "game/city/building.h"
-#include "game/resources/gamecore.h"
 #include "forms/forms.h"
+#include "framework/framework.h"
+#include "game/city/building.h"
+#include "game/city/vehicle.h"
+#include "game/city/vequipment.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc
 {

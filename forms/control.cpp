@@ -1,8 +1,8 @@
 #include "library/sp.h"
 
 #include "forms/control.h"
-#include "framework/framework.h"
 #include "forms/forms.h"
+#include "framework/framework.h"
 
 namespace OpenApoc
 {

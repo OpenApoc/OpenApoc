@@ -1,7 +1,7 @@
 #pragma once
-#include "library/vec.h"
-#include "library/sp.h"
 #include "game/rules/vequipment.h"
+#include "library/sp.h"
+#include "library/vec.h"
 
 namespace OpenApoc
 {

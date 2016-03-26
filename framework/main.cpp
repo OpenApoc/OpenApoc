@@ -1,9 +1,9 @@
 #include "framework/framework.h"
 #include "framework/trace.h"
-#include "version.h"
 #include "game/city/city.h"
 #include "game/resources/gamecore.h"
 #include "tools/extractors/extractors.h"
+#include "version.h"
 #include <SDL_main.h>
 
 using namespace OpenApoc;

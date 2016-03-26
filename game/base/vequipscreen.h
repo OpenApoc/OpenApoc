@@ -1,8 +1,8 @@
 #pragma once
 
 #include "framework/stage.h"
-#include "library/sp.h"
 #include "game/rules/vequipment.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {

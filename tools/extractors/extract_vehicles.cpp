@@ -4,8 +4,8 @@
 #include "framework/framework.h"
 #include "game/tileview/voxel.h"
 
-#include <map>
 #include <list>
+#include <map>
 #include <set>
 
 namespace OpenApoc

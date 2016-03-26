@@ -3,9 +3,9 @@
 #endif
 
 #include "framework/logger.h"
+#include <chrono>
 #include <cstdarg>
 #include <mutex>
-#include <chrono>
 #ifdef BACKTRACE_LIBUNWIND
 #ifndef _GNU_SOURCE
 #define _GNU_SOURCE
@@ -14,8 +14,8 @@
 #define UNW_LOCAL_ONLY
 #include <libunwind.h>
 #elif defined(BACKTRACE_WINDOWS)
-#include <windows.h>
 #include <DbgHelp.h>
+#include <windows.h>
 #endif
 
 #ifndef LOGFILE

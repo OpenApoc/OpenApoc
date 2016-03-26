@@ -1,7 +1,7 @@
 #pragma once
-#include "library/strings.h"
-#include "game/stateobject.h"
 #include "framework/image.h"
+#include "game/stateobject.h"
+#include "library/strings.h"
 
 namespace OpenApoc
 {

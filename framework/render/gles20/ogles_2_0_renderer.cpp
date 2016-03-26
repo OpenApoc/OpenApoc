@@ -1,10 +1,10 @@
-#include "library/sp.h"
-#include "framework/renderer_interface.h"
-#include "framework/logger.h"
 #include "framework/image.h"
+#include "framework/logger.h"
 #include "framework/palette.h"
-#include <memory>
+#include "framework/renderer_interface.h"
+#include "library/sp.h"
 #include <array>
+#include <memory>
 
 // namespace
 //{

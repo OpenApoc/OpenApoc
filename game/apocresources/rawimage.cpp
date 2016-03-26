@@ -1,8 +1,8 @@
-#include "library/sp.h"
 #include "game/apocresources/rawimage.h"
-#include "framework/logger.h"
 #include "framework/data.h"
 #include "framework/image.h"
+#include "framework/logger.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {

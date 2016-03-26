@@ -1,8 +1,8 @@
 #pragma once
-#include "library/vec.h"
-#include "library/strings.h"
 #include "game/organisation.h"
 #include "game/stateobject.h"
+#include "library/strings.h"
+#include "library/vec.h"
 #include <set>
 
 namespace OpenApoc

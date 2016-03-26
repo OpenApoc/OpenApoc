@@ -1,9 +1,9 @@
 #pragma once
 
 #include "framework/includes.h"
-#include "game/tileview/tile.h"
-#include "game/rules/vehicle_type.h"
 #include "game/organisation.h"
+#include "game/rules/vehicle_type.h"
+#include "game/tileview/tile.h"
 
 #include <deque>
 #include <list>

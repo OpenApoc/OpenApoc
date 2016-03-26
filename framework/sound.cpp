@@ -1,12 +1,12 @@
 #include "framework/sound.h"
 #include "framework/logger.h"
-#include "framework/sampleloader_interface.h"
 #include "framework/musicloader_interface.h"
+#include "framework/sampleloader_interface.h"
 #include "framework/sound_interface.h"
+#include <array>
+#include <limits>
 #include <map>
 #include <memory>
-#include <limits>
-#include <array>
 
 namespace OpenApoc
 {

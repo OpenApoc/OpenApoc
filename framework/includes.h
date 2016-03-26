@@ -5,18 +5,18 @@
 
 #include <tinyxml2.h>
 
-#include <map>
+#include <algorithm>
 #include <cmath>
-#include <vector>
-#include <memory>
 #include <iostream>
 #include <list>
-#include <algorithm>
+#include <map>
+#include <memory>
+#include <vector>
 
+#include "library/angle.h"
+#include "library/box.h"
+#include "library/colour.h"
+#include "library/memory.h"
+#include "library/rect.h"
 #include "library/strings.h"
 #include "library/vec.h"
-#include "library/box.h"
-#include "library/rect.h"
-#include "library/colour.h"
-#include "library/angle.h"
-#include "library/memory.h"

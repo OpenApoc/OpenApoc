@@ -2,11 +2,11 @@
 #pragma once
 
 #include "framework/includes.h"
+#include <boost/format.hpp>
+#include <boost/locale/format.hpp>
 #include <iterator>
 #include <limits>
 #include <string>
-#include <boost/format.hpp>
-#include <boost/locale/format.hpp>
 
 namespace OpenApoc
 {

@@ -1,8 +1,8 @@
 #pragma once
-#include "library/sp.h"
-#include "library/rect.h"
-#include "library/vec.h"
 #include "framework/resource.h"
+#include "library/rect.h"
+#include "library/sp.h"
+#include "library/vec.h"
 
 namespace OpenApoc
 {

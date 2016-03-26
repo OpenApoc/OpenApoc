@@ -3,8 +3,8 @@
 #include "library/sp.h"
 
 #include "control.h"
-#include "framework/font.h"
 #include "forms_enums.h"
+#include "framework/font.h"
 
 namespace OpenApoc
 {

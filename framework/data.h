@@ -1,15 +1,15 @@
 #pragma once
 #include "library/sp.h"
 
-#include "framework/includes.h"
-#include "framework/image.h"
-#include "framework/sound.h"
 #include "framework/fs.h"
+#include "framework/image.h"
+#include "framework/includes.h"
+#include "framework/sound.h"
 
-#include <memory>
-#include <map>
-#include <queue>
 #include <list>
+#include <map>
+#include <memory>
+#include <queue>
 #include <vector>
 
 namespace OpenApoc
