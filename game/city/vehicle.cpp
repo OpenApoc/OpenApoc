@@ -27,7 +27,6 @@ class FlyingVehicleMover : public VehicleMover
 	}
 	virtual void update(GameState &state, unsigned int ticks) override
 	{
-		LogWarning("Moving");
 		float speed = vehicle.getSpeed();
 		if (!vehicle.missions.empty())
 		{
