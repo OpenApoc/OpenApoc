@@ -77,9 +77,9 @@ template <typename T> class StateRef
 	StateRef() : state(nullptr){};
 	StateRef(const GameState *state) : state(state) {}
 	StateRef(const GameState *state, const UString &id) : state(state), id(id) {}
-	StateRef(const StateRef<T> &other) : state(other.state), obj(other.obj), id(other.id) {}
+	StateRef(const StateRef<T> &other) : obj(other.obj), state(other.state), id(other.id) {}
 
-	StateRef(const GameState *state, sp<T> ptr) : state(state), obj(ptr)
+	StateRef(const GameState *state, sp<T> ptr) : obj(ptr), state(state)
 	{
 		if (obj)
 			id = T::getId(*state, obj);
