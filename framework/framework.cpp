@@ -14,8 +14,12 @@
 #include <iostream>
 #include <string>
 
-// Use physfs to get prefs dir
+// SDL_syswm includes windows.h on windows, which does all kinds of polluting
+// defines/namespace stuff, so try to avoid that
+#define WIN32_LEAN_AND_MEAN
+#define NOMINMAX
 #include <SDL_syswm.h>
+// Use physfs to get prefs dir
 #include <physfs.h>
 
 // Boost locale for setting the system locale
