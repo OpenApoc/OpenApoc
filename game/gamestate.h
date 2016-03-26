@@ -9,6 +9,7 @@
 #include "game/rules/vehicle_type.h"
 #include "game/rules/vequipment.h"
 #include "game/stateobject.h"
+#include "game/ufopaedia.h"
 #include "library/strings.h"
 #include <memory>
 #include <random>
@@ -34,6 +35,7 @@ class GameState
 	std::map<UString, sp<Base>> player_bases;
 	std::map<UString, sp<City>> cities;
 	std::map<UString, sp<Vehicle>> vehicles;
+	std::map<UString, sp<UfopaediaCategory>> ufopaedia;
 
 	StateRef<Organisation> player;
 

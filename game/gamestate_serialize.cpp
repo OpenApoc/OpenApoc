@@ -610,6 +610,27 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("currentlyLandedBuilding"), v.currentlyLandedBuilding);
 }
 
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, UfopaediaEntry &e)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("title"), e.title);
+	serializeIn(state, node->getNode("description"), e.description);
+	serializeIn(state, node->getNode("background"), e.background);
+	serializeIn(state, node->getNode("data_id"), e.data_id);
+}
+
+template <>
+void serializeIn(const GameState *state, sp<SerializationNode> node, UfopaediaCategory &c)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("title"), c.title);
+	serializeIn(state, node->getNode("description"), c.description);
+	serializeIn(state, node->getNode("background"), c.background);
+	serializeIn(state, node->getNode("entries"), c.entries);
+}
+
 void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &s)
 {
 	if (!node)
@@ -623,6 +644,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &
 	serializeIn(state, node->getSection("base_layouts"), s.base_layouts);
 	serializeIn(state, node->getSection("player_bases"), s.player_bases);
 	serializeIn(state, node->getSection("vehicles"), s.vehicles);
+	serializeIn(state, node->getSection("ufopaedia"), s.ufopaedia);
 	serializeIn(state, node->getNode("player"), s.player);
 	serializeIn(state, node->getNode("time"), s.time);
 }
@@ -1050,6 +1072,22 @@ template <> void serializeOut(sp<SerializationNode> node, const Vehicle &v)
 	serializeOut(node->addNode("currentlyLandedBuilding"), v.currentlyLandedBuilding);
 }
 
+template <> void serializeOut(sp<SerializationNode> node, const UfopaediaEntry &e)
+{
+	serializeOut(node->addNode("title"), e.title);
+	serializeOut(node->addNode("description"), e.description);
+	serializeOut(node->addNode("background"), e.background);
+	serializeOut(node->addNode("data_id"), e.data_id);
+}
+
+template <> void serializeOut(sp<SerializationNode> node, const UfopaediaCategory &c)
+{
+	serializeOut(node->addNode("title"), c.title);
+	serializeOut(node->addNode("description"), c.description);
+	serializeOut(node->addNode("background"), c.background);
+	serializeOut(node->addNode("entries"), c.entries);
+}
+
 void serializeOut(sp<SerializationNode> node, const GameState &state)
 {
 	serializeOut(node->addSection("vehicle_types"), state.vehicle_types);
@@ -1061,6 +1099,7 @@ void serializeOut(sp<SerializationNode> node, const GameState &state)
 	serializeOut(node->addSection("base_layouts"), state.base_layouts);
 	serializeOut(node->addSection("player_bases"), state.player_bases);
 	serializeOut(node->addSection("vehicles"), state.vehicles);
+	serializeOut(node->addSection("ufopaedia"), state.ufopaedia);
 	serializeOut(node->addNode("player"), state.player);
 	serializeOut(node->addNode("time"), state.time);
 }

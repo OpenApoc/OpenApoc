@@ -24,11 +24,6 @@
             <size width="44" height="32"/>
             <font>SMALFONT</font>
           </textbutton>
-          <textbutton id="BUTTON_TEST_UFOPAEDIA" text="Test UFOPaedia">
-            <position x="right" y="bottom"/>
-            <size width="44" height="32"/>
-            <font>SMALFONT</font>
-          </textbutton>
           <textbutton id="BUTTON_DEBUGGING" text="Debug Menu">
             <position x="right" y="bottom"/>
             <size width="44" height="32"/>

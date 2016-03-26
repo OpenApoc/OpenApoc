@@ -1,28 +1,25 @@
-
 #pragma once
-#include "library/sp.h"
-
-#include "framework/includes.h"
-#include "framework/stage.h"
 
 #include "forms/forms.h"
-
-#include "ufopaediacategory.h"
+#include "framework/includes.h"
+#include "framework/stage.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {
 
-class Ufopaedia : public Stage
+class GameState;
+
+class UfopaediaView : public Stage
 {
   private:
 	sp<Form> menuform;
 	StageCmd stageCmd;
+	GameState &state;
 
   public:
-	static std::vector<sp<UfopaediaCategory>> UfopaediaDB;
-
-	Ufopaedia();
-	~Ufopaedia();
+	UfopaediaView(GameState &state);
+	~UfopaediaView();
 	// Stage control
 	virtual void Begin() override;
 	virtual void Pause() override;

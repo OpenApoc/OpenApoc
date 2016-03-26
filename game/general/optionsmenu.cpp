@@ -1,8 +1,7 @@
-
 #include "game/general/optionsmenu.h"
 #include "framework/framework.h"
 #include "game/debugtools/debugmenu.h"
-#include "game/ufopaedia/ufopaedia.h"
+#include "game/resources/gamecore.h"
 
 namespace OpenApoc
 {
@@ -37,12 +36,6 @@ void OptionsMenu::EventOccurred(Event *e)
 	{
 		if (e->Forms().RaisedBy->Name == "BUTTON_TEST_XCOMBASE")
 		{
-			return;
-		}
-		if (e->Forms().RaisedBy->Name == "BUTTON_TEST_UFOPAEDIA")
-		{
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<Ufopaedia>();
 			return;
 		}
 		if (e->Forms().RaisedBy->Name == "BUTTON_DEBUGGING")

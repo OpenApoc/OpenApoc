@@ -332,6 +332,8 @@
     <ClCompile Include="framework\render\gl20\ogl_2_0_renderer.cpp" />
     <ClCompile Include="framework\render\gl30\ogl_3_0_renderer.cpp" />
     <ClCompile Include="game\rules\doodad_type.cpp" />
+    <ClCompile Include="game\ufopaedia\ufopaediacategoryview.cpp" />
+    <ClCompile Include="game\ufopaedia\ufopaediaview.cpp" />
     <ClCompile Include="tools\extractors\common\strtab.cpp" />
     <ClCompile Include="tools\extractors\common\ufo2p.cpp" />
     <ClCompile Include="tools\extractors\extractors.cpp" />
@@ -386,9 +388,6 @@
     <ClCompile Include="game\tileview\tileobject_shadow.cpp" />
     <ClCompile Include="game\tileview\tileobject_vehicle.cpp" />
     <ClCompile Include="game\tileview\tileview.cpp" />
-    <ClCompile Include="game\ufopaedia\ufopaedia.cpp" />
-    <ClCompile Include="game\ufopaedia\ufopaediacategory.cpp" />
-    <ClCompile Include="game\ufopaedia\ufopaediaentry.cpp" />
     <ClCompile Include="library\configfile.cpp" />
     <ClCompile Include="game\apocresources\cursor.cpp" />
     <ClCompile Include="framework\event.cpp" />
@@ -442,6 +441,9 @@
     <ClInclude Include="framework\render\gl20\gl_2_0.hpp" />
     <ClInclude Include="framework\render\gl30\gl_3_0.hpp" />
     <ClInclude Include="framework\render\gles20\egl.hpp" />
+    <ClInclude Include="game\ufopaedia.h" />
+    <ClInclude Include="game\ufopaedia\ufopaediacategoryview.h" />
+    <ClInclude Include="game\ufopaedia\ufopaediaview.h" />
     <ClInclude Include="tools\extractors\common\audio.h" />
     <ClInclude Include="tools\extractors\common\baselayout.h" />
     <ClInclude Include="tools\extractors\common\canonstring.h" />
@@ -502,9 +504,6 @@
     <ClInclude Include="game\tileview\tileobject_vehicle.h" />
     <ClInclude Include="game\tileview\tileview.h" />
     <ClInclude Include="game\tileview\voxel.h" />
-    <ClInclude Include="game\ufopaedia\ufopaedia.h" />
-    <ClInclude Include="game\ufopaedia\ufopaediacategory.h" />
-    <ClInclude Include="game\ufopaedia\ufopaediaentry.h" />
     <ClInclude Include="library\angle.h" />
     <ClInclude Include="game\apocresources\apocfont.h" />
     <ClInclude Include="game\boot.h" />

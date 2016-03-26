@@ -16,7 +16,7 @@
 #include "game/tileview/tileobject_scenery.h"
 #include "game/tileview/tileobject_vehicle.h"
 #include "game/tileview/voxel.h"
-#include "game/ufopaedia/ufopaedia.h"
+#include "game/ufopaedia/ufopaediaview.h"
 #include "library/sp.h"
 
 namespace OpenApoc
@@ -203,7 +203,7 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 	this->baseForm->FindControl("BUTTON_SHOW_UFOPAEDIA")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<Ufopaedia>();
+		    this->stageCmd.nextStage = mksp<UfopaediaView>(*this->state);
 		});
 	this->baseForm->FindControl("BUTTON_SHOW_OPTIONS")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {

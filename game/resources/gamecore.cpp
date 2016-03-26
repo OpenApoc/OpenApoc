@@ -1,10 +1,8 @@
-#include "library/sp.h"
-
+#include "game/resources/gamecore.h"
+#include "forms/forms.h"
 #include "framework/framework.h"
 #include "framework/trace.h"
-#include "game/resources/gamecore.h"
-
-#include "game/ufopaedia/ufopaedia.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {
@@ -22,11 +20,7 @@ void GameCore::Load(UString CoreXMLFilename)
 	Loaded = true;
 }
 
-GameCore::~GameCore()
-{
-	delete MouseCursor;
-	Ufopaedia::UfopaediaDB.clear();
-}
+GameCore::~GameCore() { delete MouseCursor; }
 
 void GameCore::ParseXMLDoc(UString XMLFilename)
 {
@@ -106,19 +100,6 @@ void GameCore::ParseXMLDoc(UString XMLFilename)
 			else if (nodename == "alias")
 			{
 				aliases[UString(node->Attribute("id"))] = UString(node->GetText());
-			}
-			else if (nodename == "ufopaedia")
-			{
-				tinyxml2::XMLElement *nodeufo;
-				for (nodeufo = node->FirstChildElement(); nodeufo != nullptr;
-				     nodeufo = nodeufo->NextSiblingElement())
-				{
-					nodename = nodeufo->Name();
-					if (nodename == "category")
-					{
-						Ufopaedia::UfopaediaDB.push_back(mksp<UfopaediaCategory>(nodeufo));
-					}
-				}
 			}
 			else
 			{
