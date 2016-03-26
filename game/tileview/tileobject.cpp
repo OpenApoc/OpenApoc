@@ -9,8 +9,8 @@
 namespace OpenApoc
 {
 
-TileObject::TileObject(TileMap &map, Type type, Vec3<float> position, Vec3<float> bounds)
-    : map(map), type(type), owningTile(nullptr), position(position), bounds(bounds)
+TileObject::TileObject(TileMap &map, Type type, Vec3<float> bounds)
+    : map(map), type(type), owningTile(nullptr), bounds(bounds)
 {
 }
 
@@ -134,7 +134,6 @@ void TileObject::setPosition(Vec3<float> newPosition)
 			}
 		}
 	}
-	this->position = newPosition;
 	// Quick sanity check
 	for (auto *t : this->intersectingTiles)
 	{

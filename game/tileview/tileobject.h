@@ -30,7 +30,7 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	virtual void draw(Renderer &r, TileView &view, Vec2<float> screenPosition,
 	                  TileViewMode mode) = 0;
 	const Type &getType() const { return this->type; }
-	const Vec3<float> &getPosition() const { return this->position; }
+	virtual const Vec3<float> getPosition() const = 0;
 
 	virtual void setPosition(Vec3<float> newPosition);
 	virtual void removeFromMap();
@@ -52,10 +52,8 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	Tile *owningTile;
 	std::vector<Tile *> intersectingTiles;
 
-	TileObject(TileMap &map, Type type, Vec3<float> initialPosition, Vec3<float> bounds);
+	TileObject(TileMap &map, Type type, Vec3<float> bounds);
 
-	// The position is the /center/ of the object.
-	Vec3<float> position;
 	// The bounds is a cube centered around the 'position' used for stuff like collision detection
 	Vec3<float> bounds;
 };

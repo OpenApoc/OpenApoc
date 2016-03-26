@@ -268,6 +268,7 @@ const Vec3<float> &Vehicle::getDirection() const
 
 void Vehicle::setPosition(const Vec3<float> &pos)
 {
+	this->position = pos;
 	if (!this->tileObject)
 	{
 		LogError("setPosition called on vehicle with no tile object");

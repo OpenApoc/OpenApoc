@@ -35,9 +35,19 @@ void TileObjectDoodad::draw(Renderer &r, TileView &view, Vec2<float> screenPosit
 TileObjectDoodad::~TileObjectDoodad() {}
 
 TileObjectDoodad::TileObjectDoodad(TileMap &map, sp<Doodad> doodad)
-    : TileObject(map, TileObject::Type::Doodad, doodad->getPosition(), Vec3<float>{0, 0, 0}),
-      doodad(doodad)
+    : TileObject(map, TileObject::Type::Doodad, Vec3<float>{0, 0, 0}), doodad(doodad)
 {
+}
+
+const Vec3<float> TileObjectDoodad::getPosition() const
+{
+	auto d = this->doodad.lock();
+	if (!d)
+	{
+		LogError("Called with no owning doodad object");
+		return {0, 0, 0};
+	}
+	return d->getPosition();
 }
 
 } // namespace OpenApoc

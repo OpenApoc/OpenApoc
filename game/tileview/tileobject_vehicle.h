@@ -21,6 +21,7 @@ class TileObjectVehicle : public TileObject
 	}
 
 	sp<VoxelMap> getVoxelMap() override;
+	const Vec3<float> getPosition() const override;
 
   private:
 	friend class TileMap;

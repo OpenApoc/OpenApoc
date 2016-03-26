@@ -84,13 +84,23 @@ void TileObjectVehicle::draw(Renderer &r, TileView &view, Vec2<float> screenPosi
 TileObjectVehicle::~TileObjectVehicle() {}
 
 TileObjectVehicle::TileObjectVehicle(TileMap &map, sp<Vehicle> vehicle)
-    : TileObject(map, TileObject::Type::Vehicle, vehicle->getPosition(), Vec3<float>{0, 0, 0}),
-      vehicle(vehicle)
+    : TileObject(map, TileObject::Type::Vehicle, Vec3<float>{0, 0, 0}), vehicle(vehicle)
 {
 }
 
 sp<VoxelMap> TileObjectVehicle::getVoxelMap() { return this->getVehicle()->type->voxelMap; }
 
 sp<Vehicle> TileObjectVehicle::getVehicle() { return this->vehicle.lock(); }
+
+const Vec3<float> TileObjectVehicle::getPosition() const
+{
+	auto v = this->vehicle.lock();
+	if (!v)
+	{
+		LogError("Called with no owning vehicle object");
+		return {0, 0, 0};
+	}
+	return v->getPosition();
+}
 
 } // namespace OpenApoc

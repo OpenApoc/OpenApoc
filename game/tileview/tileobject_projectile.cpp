@@ -37,10 +37,19 @@ void TileObjectProjectile::draw(Renderer &r, TileView &view, Vec2<float> screenP
 TileObjectProjectile::~TileObjectProjectile() {}
 
 TileObjectProjectile::TileObjectProjectile(TileMap &map, sp<Projectile> projectile)
-    : TileObject(map, TileObject::Type::Projectile, projectile->getPosition(),
-                 Vec3<float>{0, 0, 0}),
-      projectile(projectile)
+    : TileObject(map, TileObject::Type::Projectile, Vec3<float>{0, 0, 0}), projectile(projectile)
 {
+}
+
+const Vec3<float> TileObjectProjectile::getPosition() const
+{
+	auto p = this->projectile.lock();
+	if (!p)
+	{
+		LogError("Called with no owning projectile object");
+		return {0, 0, 0};
+	}
+	return p->getPosition();
 }
 
 } // namespace OpenApoc

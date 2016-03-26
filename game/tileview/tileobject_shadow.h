@@ -13,11 +13,13 @@ class TileObjectShadow : public TileObject
 	void draw(Renderer &r, TileView &view, Vec2<float> screenPosition, TileViewMode mode) override;
 	virtual ~TileObjectShadow();
 	void setPosition(Vec3<float> newPosition) override;
+	const Vec3<float> getPosition() const override;
 
   private:
 	friend class TileMap;
 	std::weak_ptr<Vehicle> owner;
 	TileObjectShadow(TileMap &map, sp<Vehicle> owner);
+	Vec3<float> shadowPosition;
 	bool fellOffTheBottomOfTheMap;
 };
 

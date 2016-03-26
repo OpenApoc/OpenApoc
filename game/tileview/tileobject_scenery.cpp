@@ -46,8 +46,7 @@ void TileObjectScenery::draw(Renderer &r, TileView &view, Vec2<float> screenPosi
 TileObjectScenery::~TileObjectScenery() {}
 
 TileObjectScenery::TileObjectScenery(TileMap &map, sp<Scenery> scenery)
-    : TileObject(map, TileObject::Type::Scenery, scenery->getPosition(), Vec3<float>{1, 1, 1}),
-      scenery(scenery)
+    : TileObject(map, TileObject::Type::Scenery, Vec3<float>{1, 1, 1}), scenery(scenery)
 {
 }
 
@@ -62,5 +61,16 @@ sp<Scenery> TileObjectScenery::getOwner()
 }
 
 sp<VoxelMap> TileObjectScenery::getVoxelMap() { return this->getOwner()->type->voxelMap; }
+
+const Vec3<float> TileObjectScenery::getPosition() const
+{
+	auto s = this->scenery.lock();
+	if (!s)
+	{
+		LogError("Called with no owning scenery object");
+		return {0, 0, 0};
+	}
+	return s->getPosition();
+}
 
 } // namespace OpenApoc
