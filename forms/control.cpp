@@ -569,38 +569,45 @@ std::list<UString> Control::WordWrapText(sp<OpenApoc::BitmapFont> Font, UString 
 
 	if (txtwidth > Size.x)
 	{
-		UString textleft = WrapText;
-		unsigned int estlinelength = Font->GetEstimateCharacters(Size.x);
+		// TODO: Need to implement a list of line break characters
+		auto remainingChunks = WrapText.splitlist(" ");
+		UString currentLine;
 
-		while (textleft.length() > 0)
+		while (!remainingChunks.empty())
 		{
-			if (textleft.length() > estlinelength)
+			UString currentTestLine;
+			if (currentLine != "")
+				currentTestLine = currentLine + " ";
+
+			auto &currentChunk = remainingChunks.front();
+			currentTestLine += currentChunk;
+
+			auto estimatedLength = Font->GetFontWidth(currentTestLine);
+
+			if (estimatedLength < Size.x)
 			{
-				int charidx;
-				for (charidx = estlinelength - 1; charidx > 1; charidx--)
-				{
-					// TODO: Need to implement a list of line break characters
-					if (textleft.substr(charidx, 1) == UString(" "))
-					{
-						lines.push_back(textleft.substr(0, charidx));
-						textleft = textleft.substr(charidx + 1, textleft.length() - charidx);
-						break;
-					}
-				}
-				if (charidx == 1)
-				{
-					LogWarning(
-					    "No break in line \"%s\" found - this will probably overflow the control",
-					    textleft.c_str());
-					break;
-				}
+				currentLine = currentTestLine;
+				remainingChunks.pop_front();
 			}
 			else
 			{
-				lines.push_back(textleft);
-				textleft = "";
+				if (currentLine == "")
+				{
+					LogWarning(
+					    "No break in line \"%s\" found - this will probably overflow the control",
+					    currentTestLine.c_str());
+					currentLine = currentTestLine;
+					remainingChunks.pop_front();
+				}
+				else
+				{
+					lines.push_back(currentLine);
+					currentLine = "";
+				}
 			}
 		}
+		if (currentLine != "")
+			lines.push_back(currentLine);
 	}
 	else
 	{

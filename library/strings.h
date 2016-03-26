@@ -60,6 +60,7 @@ class UString
 	UString toUpper() const;
 	UString toLower() const;
 	std::vector<UString> split(const UString &delims) const;
+	std::list<UString> splitlist(const UString &delims) const;
 
 	size_t length() const;
 	UString substr(size_t offset, size_t length = npos) const;

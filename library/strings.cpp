@@ -148,6 +148,24 @@ std::vector<UString> UString::split(const UString &delims) const
 	return strings;
 }
 
+std::list<UString> UString::splitlist(const UString &delims) const
+{
+	// FIXME: Probably won't work if any of 'delims' is outside the ASCII range
+	// FIXME: Doesn't work for more than 1 character in delims
+	std::list<UString> strings;
+	std::stringstream ss(this->u8Str);
+	std::string tok;
+	if (delims.length() != 1)
+	{
+		LogError("Invalid delim length %zu", delims.length());
+	}
+	while (std::getline(ss, tok, delims.u8Str[0]))
+	{
+		strings.push_back(tok);
+	}
+	return strings;
+}
+
 UniChar UString::u8Char(char c)
 {
 	// FIXME: I believe all the <256 codepoints just map?
