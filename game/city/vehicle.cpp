@@ -109,7 +109,7 @@ VehicleMover::VehicleMover(Vehicle &v) : vehicle(v) {}
 
 VehicleMover::~VehicleMover() {}
 
-Vehicle::Vehicle() : health(0), shield(0) {}
+Vehicle::Vehicle() : position(0, 0, 0), velocity(0, 0, 0), facing(1, 0, 0), health(0), shield(0) {}
 
 Vehicle::~Vehicle() {}
 

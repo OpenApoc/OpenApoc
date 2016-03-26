@@ -48,7 +48,8 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 		auto b = mksp<Building>();
 		b->name = data.building_names->get(entry.name_idx);
 		b->owner = {&state, data.get_org_id(entry.owner_idx)};
-		b->bounds = {entry.x0, entry.y0, entry.x1, entry.y1};
+		// Our rects are exclusive of p2
+		b->bounds = {entry.x0, entry.y0, entry.x1 + 1, entry.y1 + 1};
 		auto id =
 		    UString::format("%s%s", Building::getPrefix().c_str(), canon_string(b->name).c_str());
 

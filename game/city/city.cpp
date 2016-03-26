@@ -83,8 +83,25 @@ void City::initMap()
 				if (b.second->bounds.within(pos))
 				{
 					b.second->landingPadLocations.push_back(s->initialPosition);
+					LogInfo("Pad {%d,%d} is within building %s {%d,%d},{%d,%d}", pos.x, pos.y,
+					        b.first.c_str(), b.second->bounds.p0.x, b.second->bounds.p0.y,
+					        b.second->bounds.p1.x, b.second->bounds.p1.y);
 				}
 			}
+		}
+	}
+	for (auto &b : this->buildings)
+	{
+		if (b.second->landingPadLocations.empty())
+		{
+			LogError("Building %s has no landing pads", b.first.c_str());
+		}
+		LogInfo("Building %s has %u landing pads:", b.first.c_str(),
+		        (unsigned)b.second->landingPadLocations.size());
+
+		for (auto &loc : b.second->landingPadLocations)
+		{
+			LogInfo("Pad: {%d,%d,%d}", loc.x, loc.y, loc.z);
 		}
 	}
 	for (auto &p : this->projectiles)

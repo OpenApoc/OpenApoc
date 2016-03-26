@@ -170,12 +170,12 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 				         "you've reached the target?",
 				         name.c_str());
 			}
-			dest = {0, 0, 0};
-			return true;
+			dest = {0, 0, 9};
+			return false;
 		}
 		case Snooze:
 		{
-			dest = {0, 0, 0};
+			dest = {0, 0, 9};
 			return false;
 		}
 		default:
