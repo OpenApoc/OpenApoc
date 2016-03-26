@@ -14,8 +14,9 @@
 #define UNW_LOCAL_ONLY
 #include <libunwind.h>
 #elif defined(BACKTRACE_WINDOWS)
-#include <DbgHelp.h>
 #include <windows.h>
+// windows.h must be included before DbgHelp.h
+#include <DbgHelp.h>
 #endif
 
 #ifndef LOGFILE
