@@ -7,6 +7,7 @@
 #include "facilities.h"
 #include "organisations.h"
 #include "research.h"
+#include "scenerytile.h"
 #include "strtab.h"
 #include "ufopaedia.h"
 #include "vehicle.h"
@@ -57,6 +58,8 @@ class UFO2P
 
 	std::unique_ptr<StrTab> facility_names;
 	std::unique_ptr<DataChunk<facility_data_t>> facility_data;
+
+	std::unique_ptr<DataChunk<scenery_minimap_colour_t>> scenery_minimap_colour;
 
 	UString get_org_id(int idx)
 	{

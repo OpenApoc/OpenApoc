@@ -8,6 +8,8 @@
 namespace OpenApoc
 {
 
+static UString SCENERY_MINIMAP_PALETTE = "xcom3/ufodata/base.pcx";
+
 #define TILE_TYPE_GENERAL (0x00)
 #define TILE_TYPE_ROAD (0x01)
 #define TILE_TYPE_PEOPLE_TUBE_JUNCTION (0x02)
@@ -64,6 +66,8 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
                                                    UString stratmapFile, UString lofFile,
                                                    UString ovrFile, sp<City> city)
 {
+	auto &data = this->ufo2p;
+	auto minimap_palette = fw().data->load_palette(SCENERY_MINIMAP_PALETTE);
 	auto inFile = fw().data->fs.open("xcom3/ufodata/" + datFile + ".dat");
 	if (!inFile)
 	{
@@ -136,6 +140,15 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 			                                     (int)entry.overlaytile_idx);
 			tile->overlaySprite = fw().data->load_image(overlayString);
 		}
+
+		// FIXME: Only the 'human' city has a minimap visible from the base screen? So this doesn't
+		// exist for the alien map?
+		if (datFile == "citymap")
+		{
+			uint8_t palette_index = data.scenery_minimap_colour->get(i).palette_index;
+			tile->minimap_colour = minimap_palette->GetColour(palette_index);
+		}
+
 		city->tile_types[id] = tile;
 	}
 }

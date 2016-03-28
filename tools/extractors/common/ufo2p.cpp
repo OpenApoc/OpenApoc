@@ -87,6 +87,9 @@ UFO2P::UFO2P(std::string file_name)
 	    new StrTab(file, FACILITY_STRTAB_OFFSET_START, FACILITY_STRTAB_OFFSET_END));
 	this->facility_data.reset(
 	    new DataChunk<facility_data_t>(file, FACILITY_DATA_OFFSET_START, FACILITY_DATA_OFFSET_END));
+
+	this->scenery_minimap_colour.reset(new DataChunk<scenery_minimap_colour_t>(
+	    file, SCENERY_MINIMAP_COLOUR_DATA_OFFSET_START, SCENERY_MINIMAP_COLOUR_DATA_OFFSET_END));
 }
 
 } // namespace OpenApoc

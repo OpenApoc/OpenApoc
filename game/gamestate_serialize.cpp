@@ -449,6 +449,16 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("teleporting"), e.teleporting);
 }
 
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Colour &c)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("r"), c.r);
+	serializeIn(state, node->getNode("g"), c.g);
+	serializeIn(state, node->getNode("b"), c.b);
+	serializeIn(state, node->getNode("a"), c.a);
+}
+
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, SceneryTileType &t)
 {
 	if (!node)
@@ -460,6 +470,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("damagedTile"), t.damagedTile);
 	serializeIn(state, node->getNode("imageOffset"), t.imageOffset);
 	serializeIn(state, node->getNode("isLandingPad"), t.isLandingPad);
+	serializeIn(state, node->getNode("minimap_colour"), t.minimap_colour);
 }
 
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, BaseLayout &l)
@@ -506,16 +517,6 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("lifetime"), doodad.lifetime);
 	serializeIn(state, node->getNode("sprite"), doodad.sprite);
 	serializeIn(state, node->getNode("type"), doodad.type);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Colour &c)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("r"), c.r);
-	serializeIn(state, node->getNode("g"), c.g);
-	serializeIn(state, node->getNode("b"), c.b);
-	serializeIn(state, node->getNode("a"), c.a);
 }
 
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Projectile &p)
@@ -937,6 +938,14 @@ template <> void serializeOut(sp<SerializationNode> node, const VEquipmentType &
 	serializeOut(node->addNode("teleporting"), e.teleporting);
 }
 
+template <> void serializeOut(sp<SerializationNode> node, const Colour &c)
+{
+	serializeOut(node->addNode("r"), c.r);
+	serializeOut(node->addNode("g"), c.g);
+	serializeOut(node->addNode("b"), c.b);
+	serializeOut(node->addNode("a"), c.a);
+}
+
 template <> void serializeOut(sp<SerializationNode> node, const SceneryTileType &t)
 {
 	serializeOut(node->addNode("sprite"), t.sprite);
@@ -946,6 +955,7 @@ template <> void serializeOut(sp<SerializationNode> node, const SceneryTileType 
 	serializeOut(node->addNode("damagedTile"), t.damagedTile);
 	serializeOut(node->addNode("imageOffset"), t.imageOffset);
 	serializeOut(node->addNode("isLandingPad"), t.isLandingPad);
+	serializeOut(node->addNode("minimap_colour"), t.minimap_colour);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const BaseLayout &l)
@@ -1000,14 +1010,6 @@ template <> void serializeOut(sp<SerializationNode> node, const Base &base)
 	serializeOut(node->addNode("inventory"), base.inventory);
 	serializeOut(node->addNode("name"), base.name);
 	serializeOut(node->addNode("building"), base.building);
-}
-
-template <> void serializeOut(sp<SerializationNode> node, const Colour &c)
-{
-	serializeOut(node->addNode("r"), c.r);
-	serializeOut(node->addNode("g"), c.g);
-	serializeOut(node->addNode("b"), c.b);
-	serializeOut(node->addNode("a"), c.a);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const Projectile &p)

@@ -21,5 +21,6 @@ class SceneryTileType : public StateObject<SceneryTileType>
 	StateRef<SceneryTileType> damagedTile;
 	Vec2<float> imageOffset;
 	bool isLandingPad;
+	Colour minimap_colour;
 };
 }; // namespace OpenApoc
