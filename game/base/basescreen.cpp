@@ -98,6 +98,7 @@ void BaseScreen::Begin()
 		auto graphic = mksp<Graphic>(facility->sprite);
 		graphic->AutoSize = true;
 		graphic->SetData(mksp<UString>(i.first));
+		graphic->Name = "FACILITY_BUILD_TILE";
 		facilities->AddItem(graphic);
 	}
 }
@@ -171,10 +172,9 @@ void BaseScreen::EventOccurred(Event *e)
 				return;
 			}
 		}
-
-		if (e->Forms().EventFlag == FormEventType::ListBoxChangeHover)
+		if (e->Forms().RaisedBy->Name == "LISTBOX_FACILITIES")
 		{
-			if (e->Forms().RaisedBy->Name == "LISTBOX_FACILITIES" && !drag)
+			if (!drag && e->Forms().EventFlag == FormEventType::ListBoxChangeHover)
 			{
 				auto list = form->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
 				auto dragFacilityName = list->GetHoveredData<UString>();
@@ -183,6 +183,15 @@ void BaseScreen::EventOccurred(Event *e)
 					dragFacility = StateRef<FacilityType>{state.get(), *dragFacilityName};
 					return;
 				}
+			}
+		}
+		if (e->Forms().RaisedBy->Name == "FACILITY_BUILD_TILE")
+		{
+			if (!drag && e->Forms().EventFlag == FormEventType::MouseLeave)
+			{
+				selection = NO_SELECTION;
+				selFacility = nullptr;
+				dragFacility = "";
 			}
 		}
 
