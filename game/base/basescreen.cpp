@@ -114,6 +114,8 @@ void BaseScreen::Begin()
 			auto it = minimap_image_z.find(pos2d);
 			if (it == minimap_image_z.end() || it->second < pos.z)
 			{
+				if (tile->minimap_colour.a == 0)
+					continue;
 				minimap_image_z[pos2d] = pos.z;
 				l.set(pos2d, tile->minimap_colour);
 			}
