@@ -101,6 +101,36 @@ void BaseScreen::Begin()
 		graphic->Name = "FACILITY_BUILD_TILE";
 		facilities->AddItem(graphic);
 	}
+
+	{
+		this->minimap_image = mksp<RGBImage>(Vec2<unsigned int>{100, 100});
+		RGBImageLock l(this->minimap_image);
+		std::map<Vec2<int>, int> minimap_image_z;
+		for (auto &pair : state->cities["CITYMAP_HUMAN"]->initial_tiles)
+		{
+			auto &pos = pair.first;
+			Vec2<int> pos2d = {pos.x, pos.y};
+			auto &tile = pair.second;
+			auto it = minimap_image_z.find(pos2d);
+			if (it == minimap_image_z.end() || it->second < pos.z)
+			{
+				minimap_image_z[pos2d] = pos.z;
+				l.set(pos2d, tile->minimap_colour);
+			}
+		}
+
+		// Set the bounds of the current base to be a red block
+		for (int y = this->base->building->bounds.p0.y; y < this->base->building->bounds.p1.y; y++)
+		{
+			for (int x = this->base->building->bounds.p0.x; x < this->base->building->bounds.p1.x;
+			     x++)
+			{
+				l.set({x, y}, {255, 0, 0, 255});
+			}
+		}
+	}
+
+	this->form->FindControlTyped<Graphic>("MINIMAP")->SetImage(this->minimap_image);
 }
 
 void BaseScreen::Pause() {}

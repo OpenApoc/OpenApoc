@@ -41,6 +41,8 @@ class BaseScreen : public Stage
 	void RenderMiniBase();
 	sp<GameState> state;
 
+	sp<RGBImage> minimap_image;
+
   public:
 	BaseScreen(sp<GameState> state);
 	~BaseScreen();
