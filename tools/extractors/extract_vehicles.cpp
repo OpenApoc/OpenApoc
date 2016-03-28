@@ -14,28 +14,28 @@ namespace OpenApoc
 // XXX HACK - UFOs have different number of animation frames, I don't know any
 //  link between this and stored data, hence a lookup table
 std::map<UString, int> UFOAnimationFrames = {
-    {"VEHICLE_ALIEN_PROBE", 6},        {"VEHICLE_ALIEN_SCOUT", 6},
-    {"VEHICLE_ALIEN_TRANSPORTER", 12}, {"VEHICLE_ALIEN_FAST_ATTACK_SHIP", 12},
-    {"VEHICLE_ALIEN_DESTROYER", 12},   {"VEHICLE_ALIEN_ASSAULT_SHIP", 12},
-    {"VEHICLE_ALIEN_BOMBER", 12},      {"VEHICLE_ALIEN_ESCORT", 12},
-    {"VEHICLE_ALIEN_BATTLESHIP", 3},   {"VEHICLE_ALIEN_MOTHERSHIP", 6},
+    {"VEHICLETYPE_ALIEN_PROBE", 6},        {"VEHICLETYPE_ALIEN_SCOUT", 6},
+    {"VEHICLETYPE_ALIEN_TRANSPORTER", 12}, {"VEHICLETYPE_ALIEN_FAST_ATTACK_SHIP", 12},
+    {"VEHICLETYPE_ALIEN_DESTROYER", 12},   {"VEHICLETYPE_ALIEN_ASSAULT_SHIP", 12},
+    {"VEHICLETYPE_ALIEN_BOMBER", 12},      {"VEHICLETYPE_ALIEN_ESCORT", 12},
+    {"VEHICLETYPE_ALIEN_BATTLESHIP", 3},   {"VEHICLETYPE_ALIEN_MOTHERSHIP", 6},
 };
 
 // Magic lookup table for the small/large equipscreen icons
 // no idea if this is stored in the .exe/data files somewhere...
-std::map<UString, int> EquipscreenSprite = {{"VEHICLE_ANNIHILATOR", 0},
-                                            {"VEHICLE_WOLFHOUND_APC", 1},
-                                            {"VEHICLE_BLAZER_TURBO_BIKE", 2},
-                                            {"VEHICLE_BIOTRANS", 3},
-                                            {"VEHICLE_VALKYRIE_INTERCEPTOR", 4},
-                                            {"VEHICLE_PHOENIX_HOVERCAR", 5},
-                                            {"VEHICLE_DIMENSION_PROBE", 6},
-                                            {"VEHICLE_RETALIATOR", 7},
-                                            {"VEHICLE_STORMDOG", 8},
-                                            {"VEHICLE_EXPLORER", 9},
-                                            {"VEHICLE_HOVERBIKE", 10},
-                                            {"VEHICLE_HAWK_AIR_WARRIOR", 11},
-                                            {"VEHICLE_GRIFFON_AFV", 12}};
+std::map<UString, int> EquipscreenSprite = {{"VEHICLETYPE_ANNIHILATOR", 0},
+                                            {"VEHICLETYPE_WOLFHOUND_APC", 1},
+                                            {"VEHICLETYPE_BLAZER_TURBO_BIKE", 2},
+                                            {"VEHICLETYPE_BIOTRANS", 3},
+                                            {"VEHICLETYPE_VALKYRIE_INTERCEPTOR", 4},
+                                            {"VEHICLETYPE_PHOENIX_HOVERCAR", 5},
+                                            {"VEHICLETYPE_DIMENSION_PROBE", 6},
+                                            {"VEHICLETYPE_RETALIATOR", 7},
+                                            {"VEHICLETYPE_STORMDOG", 8},
+                                            {"VEHICLETYPE_EXPLORER", 9},
+                                            {"VEHICLETYPE_HOVERBIKE", 10},
+                                            {"VEHICLETYPE_HAWK_AIR_WARRIOR", 11},
+                                            {"VEHICLETYPE_GRIFFON_AFV", 12}};
 
 static void extract_equipment_layout(GameState &state, sp<VehicleType> vehicle, UFO2P &data,
                                      vehicle_equipment_layout_t layout,
