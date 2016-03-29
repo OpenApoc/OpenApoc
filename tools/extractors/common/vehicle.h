@@ -60,7 +60,10 @@ struct vehicle_equipment_layout_slot_t
 #define VEHICLE_EQUIPMENT_LAYOUT_SLOT_TYPE_WEAPON 0x01
 #define VEHICLE_EQUIPMENT_LAYOUT_SLOT_TYPE_GENERAL 0x02
 	uint8_t type;
-	uint8_t unknown;
+	uint8_t no_partial_equipment; // '1' if equipment must be fully contained within this slot (All
+                                  // weapons & engines)
+                                  // '0' if a single equipment object can
+                                  // overlap multiple slots (All 'general' equipment)
 #define VEHICLE_EQUIPMENT_LAYOUT_SLOT_ALIGN_LEFT 0x00
 #define VEHICLE_EQUIPMENT_LAYOUT_SLOT_ALIGN_CENTRE 0x01
 #define VEHICLE_EQUIPMENT_LAYOUT_SLOT_ALIGN_RIGHT 0x02
