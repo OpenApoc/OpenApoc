@@ -22,7 +22,7 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <graphicbutton id="BUTTON_ORGANISATIONS">
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_ORGANISATIONS">
         <position x="4" y="62"/>
         <size width="636" height="40"/>
         <image/>
@@ -34,7 +34,7 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <graphicbutton id="BUTTON_VEHICLES">
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_VEHICLES">
         <position x="4" y="102"/>
         <size width="636" height="40"/>
         <image/>
@@ -46,7 +46,7 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <graphicbutton id="BUTTON_VEHICLEEQUIPMENT">
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_VEHICLEEQUIPMENT">
         <position x="4" y="142"/>
         <size width="636" height="40"/>
         <image/>
@@ -58,7 +58,7 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <graphicbutton id="BUTTON_EQUIPMENT">
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_EQUIPMENT">
         <position x="4" y="182"/>
         <size width="636" height="40"/>
         <image/>
@@ -70,7 +70,7 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <graphicbutton id="BUTTON_FACILITIES">
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_FACILITIES">
         <position x="4" y="222"/>
         <size width="636" height="40"/>
         <image/>
@@ -82,7 +82,7 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <graphicbutton id="BUTTON_ALIENCRAFT">
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_ALIENCRAFT">
         <position x="4" y="262"/>
         <size width="636" height="40"/>
         <image/>
@@ -94,7 +94,7 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <graphicbutton id="BUTTON_ALIENS">
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_ALIENS">
         <position x="4" y="302"/>
         <size width="636" height="40"/>
         <image/>
@@ -106,7 +106,7 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <graphicbutton id="BUTTON_ALIENDIMENSION">
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_ALIENDIMENSION">
         <position x="4" y="342"/>
         <size width="636" height="40"/>
         <image/>
@@ -118,7 +118,7 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <graphicbutton id="BUTTON_BUILDINGS">
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_BUILDINGS">
         <position x="4" y="382"/>
         <size width="636" height="40"/>
         <image/>
