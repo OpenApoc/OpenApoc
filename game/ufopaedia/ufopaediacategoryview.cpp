@@ -50,28 +50,40 @@ void UfopaediaCategoryView::EventOccurred(Event *e)
 		if (e->Forms().RaisedBy->Name == "BUTTON_NEXT_TOPIC")
 		{
 			LogWarning("Next topic");
-			if (this->position_iterator == this->category->entries.end())
+			do
 			{
-				this->position_iterator = this->category->entries.begin();
-			}
-			else
-			{
-				this->position_iterator++;
-			}
+				if (this->position_iterator == this->category->entries.end())
+				{
+					this->position_iterator = this->category->entries.begin();
+				}
+				else
+				{
+					this->position_iterator++;
+				}
+				// Loop until we find the end (which shows the category intro screen)
+				// or a visible entry
+			} while (this->position_iterator != this->category->entries.end() &&
+			         !this->position_iterator->second->isVisible());
 			this->setFormData();
 			return;
 		}
 		if (e->Forms().RaisedBy->Name == "BUTTON_PREVIOUS_TOPIC")
 		{
 			LogWarning("Prev topic");
-			if (this->position_iterator == this->category->entries.begin())
+			do
 			{
-				this->position_iterator = this->category->entries.end();
-			}
-			else
-			{
-				this->position_iterator--;
-			}
+				if (this->position_iterator == this->category->entries.begin())
+				{
+					this->position_iterator = this->category->entries.end();
+				}
+				else
+				{
+					this->position_iterator--;
+				}
+				// Loop until we find the end (which shows the category intro screen)
+				// or a visible entry
+			} while (this->position_iterator != this->category->entries.end() &&
+			         !this->position_iterator->second->isVisible());
 			this->setFormData();
 			return;
 		}

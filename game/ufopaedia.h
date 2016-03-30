@@ -1,13 +1,16 @@
 #pragma once
 
 #include "framework/image.h"
+#include "game/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
 
 namespace OpenApoc
 {
 
-class UfopaediaEntry
+class ResearchTopic;
+
+class UfopaediaEntry : public StateObject<UfopaediaEntry>
 {
   public:
 	UString title;
@@ -16,6 +19,8 @@ class UfopaediaEntry
 	// The ID of the 'dynamic' data shown with this entry (income/balance for organisations, stats
 	// for weapons etc.)
 	UString data_id;
+	StateRef<ResearchTopic> required_research;
+	const bool isVisible() const;
 };
 
 class UfopaediaCategory

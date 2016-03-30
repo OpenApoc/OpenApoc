@@ -30,6 +30,7 @@ class InitialGameStateExtractor
 	void extractFacilities(GameState &state, Difficulty difficulty);
 	void extractBaseLayouts(GameState &state, Difficulty difficulty);
 	void extractVehicleEquipment(GameState &state, Difficulty difficulty);
+	void extractResearch(GameState &state, Difficulty difficulty);
 
 	void extractBuildings(GameState &state, UString bldFileName, sp<City> city);
 	void extractCityMap(GameState &state, UString fileName, UString tilePrefix, sp<City> city);

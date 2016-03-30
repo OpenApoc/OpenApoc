@@ -10,6 +10,7 @@ void InitialGameStateExtractor::extract(GameState &state, Difficulty difficulty)
 	this->extractVehicles(state, difficulty);
 	this->extractFacilities(state, difficulty);
 	this->extractBaseLayouts(state, difficulty);
+	this->extractResearch(state, difficulty);
 
 	std::map<Difficulty, UString> humanMapNames = {
 	    {Difficulty::DIFFICULTY_1, "citymap1"}, {Difficulty::DIFFICULTY_2, "citymap2"},

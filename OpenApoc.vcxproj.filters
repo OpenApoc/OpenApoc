@@ -435,6 +435,15 @@
     <ClCompile Include="game\ufopaedia\ufopaediaview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\research.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\ufopaedia.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tools\extractors\extract_research.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -792,6 +801,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\ufopaedia\ufopaediaview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\research.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

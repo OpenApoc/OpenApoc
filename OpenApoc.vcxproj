@@ -331,7 +331,9 @@
     <ClCompile Include="framework\renderer.cpp" />
     <ClCompile Include="framework\render\gl20\ogl_2_0_renderer.cpp" />
     <ClCompile Include="framework\render\gl30\ogl_3_0_renderer.cpp" />
+    <ClCompile Include="game\research.cpp" />
     <ClCompile Include="game\rules\doodad_type.cpp" />
+    <ClCompile Include="game\ufopaedia.cpp" />
     <ClCompile Include="game\ufopaedia\ufopaediacategoryview.cpp" />
     <ClCompile Include="game\ufopaedia\ufopaediaview.cpp" />
     <ClCompile Include="tools\extractors\common\strtab.cpp" />
@@ -343,6 +345,7 @@
     <ClCompile Include="tools\extractors\extract_city_scenery.cpp" />
     <ClCompile Include="tools\extractors\extract_facilities.cpp" />
     <ClCompile Include="tools\extractors\extract_organisations.cpp" />
+    <ClCompile Include="tools\extractors\extract_research.cpp" />
     <ClCompile Include="tools\extractors\extract_vehicles.cpp" />
     <ClCompile Include="tools\extractors\extract_vehicle_equipment.cpp" />
     <None Include="framework\render\gles20\EGLContext.cpp" />
@@ -441,6 +444,7 @@
     <ClInclude Include="framework\render\gl20\gl_2_0.hpp" />
     <ClInclude Include="framework\render\gl30\gl_3_0.hpp" />
     <ClInclude Include="framework\render\gles20\egl.hpp" />
+    <ClInclude Include="game\research.h" />
     <ClInclude Include="game\ufopaedia.h" />
     <ClInclude Include="game\ufopaedia\ufopaediacategoryview.h" />
     <ClInclude Include="game\ufopaedia\ufopaediaview.h" />

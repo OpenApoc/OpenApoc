@@ -4,6 +4,7 @@
 #include "game/base/base.h"
 #include "game/city/city.h"
 #include "game/organisation.h"
+#include "game/research.h"
 #include "game/rules/doodad_type.h"
 #include "game/rules/facility_type.h"
 #include "game/rules/vehicle_type.h"
@@ -36,6 +37,7 @@ class GameState
 	std::map<UString, sp<City>> cities;
 	std::map<UString, sp<Vehicle>> vehicles;
 	std::map<UString, sp<UfopaediaCategory>> ufopaedia;
+	std::map<UString, sp<ResearchTopic>> research;
 
 	StateRef<Organisation> player;
 
