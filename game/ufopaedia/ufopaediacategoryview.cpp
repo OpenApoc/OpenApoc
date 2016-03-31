@@ -40,7 +40,6 @@ void UfopaediaCategoryView::EventOccurred(Event *e)
 
 	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
 	{
-		LogWarning("Click from \"%s\"", e->Forms().RaisedBy->Name.c_str());
 		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
 			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
@@ -49,7 +48,6 @@ void UfopaediaCategoryView::EventOccurred(Event *e)
 		}
 		if (e->Forms().RaisedBy->Name == "BUTTON_NEXT_TOPIC")
 		{
-			LogWarning("Next topic");
 			do
 			{
 				if (this->position_iterator == this->category->entries.end())
@@ -69,7 +67,6 @@ void UfopaediaCategoryView::EventOccurred(Event *e)
 		}
 		if (e->Forms().RaisedBy->Name == "BUTTON_PREVIOUS_TOPIC")
 		{
-			LogWarning("Prev topic");
 			do
 			{
 				if (this->position_iterator == this->category->entries.begin())
@@ -85,6 +82,54 @@ void UfopaediaCategoryView::EventOccurred(Event *e)
 			} while (this->position_iterator != this->category->entries.end() &&
 			         !this->position_iterator->second->isVisible());
 			this->setFormData();
+			return;
+		}
+		if (e->Forms().RaisedBy->Name == "BUTTON_NEXT_SECTION")
+		{
+			auto it = state.ufopaedia.begin();
+			// First find myself
+			while (it->second != this->category)
+			{
+				it++;
+				if (it == state.ufopaedia.end())
+				{
+					LogError("Failed to find current category \"%s\"",
+					         this->category->title.c_str());
+				}
+			}
+			// Increment it once to get the next
+			it++;
+			// Loop around to the beginning
+			if (it == state.ufopaedia.end())
+			{
+				it = state.ufopaedia.begin();
+			}
+			stageCmd.cmd = StageCmd::Command::REPLACE;
+			stageCmd.nextStage = mksp<UfopaediaCategoryView>(state, it->second);
+			return;
+		}
+		if (e->Forms().RaisedBy->Name == "BUTTON_PREVIOUS_SECTION")
+		{
+			auto it = state.ufopaedia.begin();
+			// First find myself
+			while (it->second != this->category)
+			{
+				it++;
+				if (it == state.ufopaedia.end())
+				{
+					LogError("Failed to find current category \"%s\"",
+					         this->category->title.c_str());
+				}
+			}
+			// Loop around to the beginning
+			if (it == state.ufopaedia.begin())
+			{
+				it = state.ufopaedia.end();
+			}
+			// Decrement it once to get the previous
+			it--;
+			stageCmd.cmd = StageCmd::Command::REPLACE;
+			stageCmd.nextStage = mksp<UfopaediaCategoryView>(state, it->second);
 			return;
 		}
 	}
