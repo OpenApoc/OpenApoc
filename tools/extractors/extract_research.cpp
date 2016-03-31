@@ -53,6 +53,33 @@ void InitialGameStateExtractor::extractResearch(GameState &state, Difficulty dif
 			LogError("Multiple research topics with ID \"%s\"", id.c_str());
 		}
 		state.research[id] = r;
+		//FIXME: The ufopaedia entries here don't seem to directly map to the IDs we're currently using?
+		// May also be a many:1 ratio (e.g. the "alien gas" research topic unlocks multiple ufopaedia entries) making this more complex
+#if 0
+
+		auto ufopaediaEntryID = "PAEDIAENTRY_" + canon_string(r->name);
+		auto ufopaediaCatID =
+		    "PAEDIACATEGORY_" + canon_string(data.ufopaedia_group->get(rdata.ufopaediaGroup));
+		auto paediaCat = state.ufopaedia[ufopaediaCatID];
+		if (!paediaCat)
+		{
+			state.ufopaedia[ufopaediaCatID] = mksp<UfopaediaCategory>();
+			paediaCat = state.ufopaedia[ufopaediaCatID];
+		}
+		auto paediaEntry = paediaCat->entries[ufopaediaEntryID];
+		if (!paediaEntry)
+		{
+			paediaCat->entries[ufopaediaEntryID] = mksp<UfopaediaEntry>();
+			paediaEntry = paediaCat->entries[ufopaediaEntryID];
+		}
+		if (paediaEntry->required_research)
+		{
+			LogError("Multiple required research for UFOPaedia topic \"%s\" - \"%s\" and \"%s\"",
+			         ufopaediaEntryID.c_str(), r->name.c_str(),
+			         paediaEntry->required_research->name.c_str());
+		}
+		paediaEntry->required_research = {&state, id};
+#endif
 	}
 }
 

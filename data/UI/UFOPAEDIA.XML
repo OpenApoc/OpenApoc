@@ -46,7 +46,7 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <graphicbutton id="BUTTON_PAEDIACATEGORY_VEHICLEEQUIPMENT">
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_VEHICLE_EQUIPMENT">
         <position x="4" y="142"/>
         <size width="636" height="40"/>
         <image/>
@@ -70,7 +70,7 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <graphicbutton id="BUTTON_PAEDIACATEGORY_FACILITIES">
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_BASE_FACILITIES">
         <position x="4" y="222"/>
         <size width="636" height="40"/>
         <image/>
@@ -82,7 +82,7 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <graphicbutton id="BUTTON_PAEDIACATEGORY_ALIENCRAFT">
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_ALIEN_CRAFT">
         <position x="4" y="262"/>
         <size width="636" height="40"/>
         <image/>
@@ -106,7 +106,7 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <graphicbutton id="BUTTON_PAEDIACATEGORY_ALIENDIMENSION">
+      <graphicbutton id="BUTTON_PAEDIACATEGORY_THE_ALIEN_DIMENSION">
         <position x="4" y="342"/>
         <size width="636" height="40"/>
         <image/>
