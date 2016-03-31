@@ -211,18 +211,15 @@ void UfopaediaCategoryView::setFormData()
 		title = category->title;
 		description = category->description;
 		background = category->background;
-		LogWarning("Showing ufopaedia category \"%s\"", title.c_str());
 	}
 	else
 	{
 		title = this->position_iterator->second->title;
 		description = this->position_iterator->second->description;
 		background = this->position_iterator->second->background;
-		LogWarning("Showing ufopaedia entry \"%s\"", title.c_str());
 	}
 	menuform->FindControlTyped<Graphic>("BACKGROUND_PICTURE")->SetImage(background);
 	auto tr_description = tr(description);
-	LogInfo("description = \"%s\"", tr_description.c_str());
 	auto tr_title = tr(title);
 	menuform->FindControlTyped<Label>("TEXT_INFO")->SetText(tr_description);
 	menuform->FindControlTyped<Label>("TEXT_TITLE_DATA")->SetText(tr_title);
