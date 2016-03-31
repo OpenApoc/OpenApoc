@@ -30,6 +30,8 @@
     <ProjectGuid>{BBD67CA5-14A6-47AB-87A9-FFE0166B5D5C}</ProjectGuid>
     <RootNamespace>OpenApoc</RootNamespace>
     <Keyword>Win32Proj</Keyword>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">.\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -569,6 +571,7 @@
     <Import Project="packages\boost_system.1.60.0.0\build\native\boost_system.targets" Condition="Exists('packages\boost_system.1.60.0.0\build\native\boost_system.targets')" />
     <Import Project="packages\boost_date_time.1.60.0.0\build\native\boost_date_time.targets" Condition="Exists('packages\boost_date_time.1.60.0.0\build\native\boost_date_time.targets')" />
     <Import Project="packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets" Condition="Exists('packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets')" />
+    <Import Project="packages\boost_filesystem.1.60.0.0\build\native\boost_filesystem.targets" Condition="Exists('packages\boost_filesystem.1.60.0.0\build\native\boost_filesystem.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -582,5 +585,6 @@
     <Error Condition="!Exists('packages\boost_system.1.60.0.0\build\native\boost_system.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost_system.1.60.0.0\build\native\boost_system.targets'))" />
     <Error Condition="!Exists('packages\boost_date_time.1.60.0.0\build\native\boost_date_time.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost_date_time.1.60.0.0\build\native\boost_date_time.targets'))" />
     <Error Condition="!Exists('packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets'))" />
+    <Error Condition="!Exists('packages\boost_filesystem.1.60.0.0\build\native\boost_filesystem.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\boost_filesystem.1.60.0.0\build\native\boost_filesystem.targets'))" />
   </Target>
 </Project>
