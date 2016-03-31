@@ -10,13 +10,37 @@ namespace OpenApoc
 UfopaediaCategoryView::UfopaediaCategoryView(GameState &state, sp<UfopaediaCategory> cat)
     : Stage(), menuform(fw().gamecore->GetForm("FORM_UFOPAEDIA_BASE")), state(state), category(cat)
 {
-	this->position_iterator = cat->entries.end();
-	this->setFormData();
 }
 
 UfopaediaCategoryView::~UfopaediaCategoryView() {}
 
-void UfopaediaCategoryView::Begin() {}
+void UfopaediaCategoryView::Begin()
+{
+	auto infoLabel = menuform->FindControlTyped<Label>("TEXT_INFO");
+	auto entryList = menuform->FindControlTyped<ListBox>("LISTBOX_SHORTCUTS");
+	entryList->Clear();
+	entryList->ItemSize = infoLabel->GetFont()->GetFontHeight() + 2;
+	for (auto &pair : this->category->entries)
+	{
+		auto entry = pair.second;
+		// Skip non-visible entries
+		if (!entry->isVisible())
+		{
+			continue;
+		}
+
+		auto entryControl = mksp<TextButton>(tr(entry->title), infoLabel->GetFont());
+		entryControl->Name = "ENTRY_SHORTCUT";
+		entryControl->RenderStyle = TextButton::TextButtonRenderStyles::SolidButtonStyle;
+		entryControl->TextHAlign = HorizontalAlignment::Left;
+		entryControl->TextVAlign = VerticalAlignment::Centre;
+		entryControl->SetData(entry);
+		entryList->AddItem(entryControl);
+	}
+	// Start with the intro page
+	this->position_iterator = this->category->entries.end();
+	this->setFormData();
+}
 
 void UfopaediaCategoryView::Pause() {}
 
@@ -42,7 +66,6 @@ void UfopaediaCategoryView::EventOccurred(Event *e)
 	{
 		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
-			menuform->FindControl("INFORMATION_PANEL")->Visible = false;
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
@@ -132,6 +155,33 @@ void UfopaediaCategoryView::EventOccurred(Event *e)
 			stageCmd.nextStage = mksp<UfopaediaCategoryView>(state, it->second);
 			return;
 		}
+		if (e->Forms().RaisedBy->Name == "ENTRY_SHORTCUT")
+		{
+			auto entry = e->Forms().RaisedBy->GetData<UfopaediaEntry>();
+			if (!entry)
+			{
+				LogError("Invalid UfopaediaEntry in shortcut control");
+			}
+			auto it = this->category->entries.begin();
+			// Find the entry iterator
+			while (it->second != entry)
+			{
+				it++;
+				if (it == this->category->entries.end())
+				{
+					LogError("Failed to find current category \"%s\"",
+					         this->category->title.c_str());
+				}
+			}
+			this->position_iterator = it;
+			this->setFormData();
+		}
+		if (e->Forms().RaisedBy->Name == "BUTTON_INFORMATION")
+		{
+			menuform->FindControl("INFORMATION_PANEL")->Visible =
+			    !menuform->FindControl("INFORMATION_PANEL")->Visible;
+			return;
+		}
 	}
 }
 
@@ -176,6 +226,9 @@ void UfopaediaCategoryView::setFormData()
 	auto tr_title = tr(title);
 	menuform->FindControlTyped<Label>("TEXT_INFO")->SetText(tr_description);
 	menuform->FindControlTyped<Label>("TEXT_TITLE_DATA")->SetText(tr_title);
+
+	// Every time you we change the entry reset the info panel
+	menuform->FindControl("INFORMATION_PANEL")->Visible = false;
 }
 
 bool UfopaediaCategoryView::IsTransition() { return false; }
