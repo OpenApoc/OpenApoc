@@ -148,6 +148,6 @@ class VehicleType : public StateObject<VehicleType>
 	std::list<std::pair<Vec2<int>, StateRef<VEquipmentType>>> initial_equipment_list;
 
 	virtual ~VehicleType() = default;
-	VehicleType() = default;
+	VehicleType();
 };
 }; // namespace OpenApoc
