@@ -71,7 +71,7 @@ class SerializationArchive
 
 	sp<SerializationNode> virtual newRoot(const UString &prefix, const UString &name) = 0;
 	sp<SerializationNode> virtual getRoot(const UString &prefix, const UString &name) = 0;
-	bool virtual write(const UString &path) = 0;
+	bool virtual write(const UString &path, bool pack = true) = 0;
 	virtual ~SerializationArchive() = default;
 };
 

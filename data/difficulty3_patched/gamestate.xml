@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gamestate>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vehicle_types.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="organisations.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="facility_types.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="doodad_types.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vehicle_equipment.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="cities.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="base_layouts.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="player_bases.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vehicles.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ufopaedia.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="research.xml" />
+  <player>ORG_X-COM</player>
+  <time>0</time>
+</gamestate>

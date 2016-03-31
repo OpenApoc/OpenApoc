@@ -1140,7 +1140,7 @@ void serializeOut(sp<SerializationNode> node, const GameState &state)
 
 } // anonymous namespace
 
-bool GameState::saveGame(const UString &path)
+bool GameState::saveGame(const UString &path, bool pack)
 {
 	auto archive = SerializationArchive::createArchive();
 	try
@@ -1152,7 +1152,7 @@ bool GameState::saveGame(const UString &path)
 	{
 		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().c_str());
 	}
-	archive->write(path);
+	archive->write(path, pack);
 	return true;
 }
 

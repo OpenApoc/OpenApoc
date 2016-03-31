@@ -19,9 +19,9 @@ const std::map<VEquipmentType::User, UString> VEquipmentType::UserMap = {
 VEquipmentType::VEquipmentType()
     : weight(0), max_ammo(0), store_space(0), speed(0), projectile_image(0), damage(0), accuracy(0),
       fire_delay(0), tail_size(0), guided(false), turn_rate(0), range(0), firing_arc_1(0),
-      firing_arc_2(0), point_defence(false), power(0), top_speed(0), accuracy_modifier(0),
-      cargo_space(0), passengers(0), alien_space(0), missile_jamming(0), shielding(0),
-      cloaking(false), teleporting(false){};
+      firing_arc_2(0), point_defence(false), explosion_graphic(0), power(0), top_speed(0),
+      accuracy_modifier(0), cargo_space(0), passengers(0), alien_space(0), missile_jamming(0),
+      shielding(0), cloaking(false), teleporting(false){};
 
 template <> const UString &StateObject<VEquipmentType>::getPrefix()
 {

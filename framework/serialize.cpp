@@ -11,6 +11,8 @@
 //#define MINIZ_HEADER_FILE_ONLY
 #include "dependencies/miniz/miniz.c"
 
+#include <boost/filesystem.hpp>
+#include <boost/filesystem/fstream.hpp>
 #include <iostream>
 #include <map>
 
@@ -45,6 +47,116 @@ sp<SerializationNode> SerializationNode::getNextSiblingReq(const UString &name)
 		throw SerializationException("Missing sibling of \"" + name + "\"", shared_from_this());
 	}
 	return node;
+}
+
+static bool writeDir(const UString &name, const std::map<UString, std::string> &contents)
+{
+	for (auto p : contents)
+	{
+		auto fullPathStr = name + "/" + p.first;
+		boost::filesystem::path fullPath(fullPathStr.c_str());
+		LogInfo("Writing to \"%s\"", fullPathStr.c_str());
+		auto dirPath = fullPath;
+		dirPath.remove_filename();
+		LogInfo("Directory: \"%s\"", dirPath.string().c_str());
+		if (boost::filesystem::exists(dirPath) && !boost::filesystem::is_directory(dirPath))
+		{
+			LogError("Trying to write to a directory \"%s\" but is already exists and is not a "
+			         "directory",
+			         dirPath.string().c_str());
+			return false;
+		}
+		if (!boost::filesystem::exists(dirPath))
+		{
+			if (!boost::filesystem::create_directories(dirPath))
+			{
+				LogError("Failed to create directory \"%s\"", dirPath.string().c_str());
+				return false;
+			}
+		}
+		boost::filesystem::ofstream outStream(fullPath, std::ios::out | std::ios::binary);
+		if (!outStream)
+		{
+			LogError("Failed to open \"%s\" for writing", fullPath.string().c_str());
+			return false;
+		}
+		outStream.write(p.second.c_str(), p.second.size());
+		if (!outStream)
+		{
+			LogError("Failed to write \"%s\"", fullPath.string().c_str());
+			return false;
+		}
+	}
+	return true;
+}
+
+static bool readDir(const UString &name, std::map<UString, std::string> &contents)
+{
+	boost::filesystem::path basePath = name.str();
+	if (!boost::filesystem::is_directory(basePath))
+	{
+		LogInfo("Path \"%s\" not a directory, not reading DirArchive", name.c_str());
+		return false;
+	}
+	boost::filesystem::recursive_directory_iterator dir(basePath), end;
+	while (dir != end)
+	{
+		auto path = dir->path();
+		if (boost::filesystem::is_directory(path))
+		{
+			LogInfo("Skipping directory \"%s\"", path.string().c_str());
+		}
+		else
+		{
+			// Assume all non-directories are possible to read bytes from
+			auto size = boost::filesystem::file_size(path);
+			LogInfo("Reading %llu bytes from \"%s\"", (unsigned long long)size,
+			        path.string().c_str());
+			up<char[]> data(new char[size]);
+			// FIXME: boost::filesystem::relative is exactly what we want here, but only appeared in
+			// boost 1.60, which is newer than is available on lots of platforms.
+			// So instead we do some evil substr instead
+			boost::filesystem::path relativePath; // = boost::filesystem::relative(path, basePath);
+#if BOOST_VERSION < 106000
+			{
+				boost::filesystem::path p1(basePath);
+				p1 = boost::filesystem::canonical(p1);
+				boost::filesystem::path p2(path);
+				p2 = boost::filesystem::canonical(p2);
+				auto p1str = p1.string();
+				auto p2str = p2.string();
+				auto newStr = p2str.substr(p1str.size());
+				if (newStr[0] == '/' || newStr[0] == '\\')
+					newStr = newStr.substr(1);
+				relativePath = newStr;
+			}
+#else
+			relativePath = boost::filesystem::relative(path, basePath);
+#endif
+			LogInfo("relativePath = \"%s\"", relativePath.c_str());
+			boost::filesystem::ifstream inStream(path, std::ios::in | std::ios::binary);
+			if (!inStream)
+			{
+				LogError("Failed to open \"%s\" for reading", path.string().c_str());
+				return false;
+			}
+			inStream.read(data.get(), size);
+			if (!inStream)
+			{
+				LogError("Failed to read %llu bytes from \"%s\"", (unsigned long long)size,
+				         path.string().c_str());
+				return false;
+			}
+			std::string fileContents(data.get(), size);
+			auto contentsPath = relativePath.string();
+			// We use '/' for directory separators everywhere else, so this needs
+			// to be consistent
+			std::replace(contentsPath.begin(), contentsPath.end(), '\\', '/');
+			contents[contentsPath] = std::move(fileContents);
+		}
+		dir++;
+	}
+	return true;
 }
 
 static bool writePack(const UString &name, const std::map<UString, std::string> &contents)
@@ -160,7 +272,7 @@ class XMLSerializationArchive : public SerializationArchive,
   public:
 	sp<SerializationNode> newRoot(const UString &prefix, const UString &name) override;
 	sp<SerializationNode> getRoot(const UString &prefix, const UString &name) override;
-	bool write(const UString &path) override;
+	bool write(const UString &path, bool pack) override;
 	~XMLSerializationArchive() override = default;
 };
 
@@ -230,8 +342,17 @@ sp<SerializationArchive> SerializationArchive::createArchive()
 sp<SerializationArchive> SerializationArchive::readArchive(const UString &name)
 {
 	std::map<UString, std::string> contents;
-	if (!readPack(name, contents))
+	if (readDir(name, contents))
 	{
+		LogInfo("Reading directory \"%s\"", name.c_str());
+	}
+	else if (readPack(name, contents))
+	{
+		LogInfo("Reading pack \"%s\"", name.c_str());
+	}
+	else
+	{
+		LogInfo("Failed to find archive at \"%s\"", name.c_str());
 		return nullptr;
 	}
 
@@ -243,8 +364,8 @@ sp<SerializationArchive> SerializationArchive::readArchive(const UString &name)
 		auto parse_result = doc.load_string(pair.second.c_str());
 		if (!parse_result)
 		{
-			LogError("Failed to parse \"%s\" : \"%s\" at \"%zu\"", pair.first.c_str(),
-			         parse_result.description(), parse_result.offset);
+			LogError("Failed to parse \"%s\" : \"%s\" at \"%llu\"", pair.first.c_str(),
+			         parse_result.description(), (unsigned long long)parse_result.offset);
 			return nullptr;
 		}
 		LogInfo("Parsed \"%s\"", pair.first.c_str());
@@ -256,6 +377,9 @@ sp<SerializationNode> XMLSerializationArchive::newRoot(const UString &prefix, co
 {
 	auto path = prefix + name + ".xml";
 	auto root = this->docRoots[path].root().append_child();
+	auto decl = this->docRoots[path].prepend_child(pugi::node_declaration);
+	decl.append_attribute("version") = "1.0";
+	decl.append_attribute("encoding") = "UTF-8";
 	root.set_name(name.c_str());
 	return std::make_shared<XMLSerializationNode>(shared_from_this(), root, prefix + name + "/");
 }
@@ -278,18 +402,21 @@ sp<SerializationNode> XMLSerializationArchive::getRoot(const UString &prefix, co
 	return std::make_shared<XMLSerializationNode>(shared_from_this(), root, prefix + name + "/");
 }
 
-bool XMLSerializationArchive::write(const UString &path)
+bool XMLSerializationArchive::write(const UString &path, bool pack)
 {
 	std::map<UString, std::string> contents;
 
 	for (auto &root : this->docRoots)
 	{
 		std::stringstream ss;
-		root.second.save(ss);
+		root.second.save(ss, "  ");
 		contents[root.first] = ss.str();
 	}
 
-	return writePack(path, contents);
+	if (pack)
+		return writePack(path, contents);
+	else
+		return writeDir(path, contents);
 }
 
 sp<SerializationNode> XMLSerializationNode::addNode(const UString &name, const UString &value)
@@ -327,10 +454,10 @@ sp<SerializationNode> XMLSerializationNode::addSection(const UString &name)
 	auto includeNode =
 	    std::static_pointer_cast<XMLSerializationNode>(this->addNode(UString{"xi:include"}));
 	auto path = name + ".xml";
-	auto attribute = includeNode->node.append_attribute("href");
-	attribute.set_value(path.c_str());
 	auto nsAttribute = includeNode->node.append_attribute("xmlns:xi");
 	nsAttribute.set_value("http://www.w3.org/2001/XInclude");
+	auto attribute = includeNode->node.append_attribute("href");
+	attribute.set_value(path.c_str());
 	return this->archive->newRoot(this->getPrefix(), name);
 }
 

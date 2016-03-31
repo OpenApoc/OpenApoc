@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CITYMAP_HUMAN>
+  <sp>
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="buildings.xml"/>
+  </sp>
+</CITYMAP_HUMAN>

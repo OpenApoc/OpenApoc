@@ -60,7 +60,7 @@ class GameState
 	unsigned int time;
 
 	bool loadGame(const UString &path);
-	bool saveGame(const UString &path);
+	bool saveGame(const UString &path, bool pack = true);
 
 	// Called on a newly started Game to setup initial state that isn't serialized in (random
 	// vehicle positions etc.) - it is not called

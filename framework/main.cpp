@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
 
 				UString patchedOutputName = dpair.first + "_patched";
 				LogWarning("Saving patched state to \"%s\"", patchedOutputName.c_str());
-				s.saveGame(patchedOutputName);
+				s.saveGame(patchedOutputName, false);
 				LogWarning("Done saving patched state");
 
 				if (serialization_test)

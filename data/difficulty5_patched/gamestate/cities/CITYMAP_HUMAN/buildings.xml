@@ -1,0 +1,2401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildings>
+  <entry>
+    <key>BUILDING_ACROPOLIS_APARTMENTS</key>
+    <value>
+      <sp>
+        <name>Acropolis Apartments</name>
+        <owner>ORG_SANCTUARY_CLINIC</owner>
+        <bounds>
+          <p0>
+            <x>23</x>
+            <y>17</y>
+          </p0>
+          <p1>
+            <x>28</x>
+            <y>25</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_ALDOUS_HUXLEY_EMPORIUM</key>
+    <value>
+      <sp>
+        <name>Aldous Huxley Emporium</name>
+        <owner>ORG_NUTRIVEND</owner>
+        <bounds>
+          <p0>
+            <x>53</x>
+            <y>3</y>
+          </p0>
+          <p1>
+            <x>64</x>
+            <y>10</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_ANGEL_HEART_HEIGHTS</key>
+    <value>
+      <sp>
+        <name>Angel Heart Heights</name>
+        <owner>ORG_S_E_L_F_</owner>
+        <bounds>
+          <p0>
+            <x>33</x>
+            <y>74</y>
+          </p0>
+          <p1>
+            <x>39</x>
+            <y>80</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_APPLIANCES_ONE</key>
+    <value>
+      <sp>
+        <name>Appliances One</name>
+        <owner>ORG_NANOTECH</owner>
+        <bounds>
+          <p0>
+            <x>17</x>
+            <y>17</y>
+          </p0>
+          <p1>
+            <x>22</x>
+            <y>22</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_APPLIANCES_THREE</key>
+    <value>
+      <sp>
+        <name>Appliances Three</name>
+        <owner>ORG_NANOTECH</owner>
+        <bounds>
+          <p0>
+            <x>65</x>
+            <y>47</y>
+          </p0>
+          <p1>
+            <x>85</x>
+            <y>52</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_APPLIANCES_TWO</key>
+    <value>
+      <sp>
+        <name>Appliances Two</name>
+        <owner>ORG_SUPERDYNAMICS</owner>
+        <bounds>
+          <p0>
+            <x>77</x>
+            <y>29</y>
+          </p0>
+          <p1>
+            <x>85</x>
+            <y>34</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_ARMS_ONE</key>
+    <value>
+      <sp>
+        <name>Arms One</name>
+        <owner>ORG_MARSEC</owner>
+        <bounds>
+          <p0>
+            <x>75</x>
+            <y>59</y>
+          </p0>
+          <p1>
+            <x>82</x>
+            <y>70</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_ARMS_TWO</key>
+    <value>
+      <sp>
+        <name>Arms Two</name>
+        <owner>ORG_MEGAPOL</owner>
+        <bounds>
+          <p0>
+            <x>90</x>
+            <y>59</y>
+          </p0>
+          <p1>
+            <x>97</x>
+            <y>70</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_ATLANTIS_APARTMENTS</key>
+    <value>
+      <sp>
+        <name>Atlantis Apartments</name>
+        <owner>ORG_SANCTUARY_CLINIC</owner>
+        <bounds>
+          <p0>
+            <x>71</x>
+            <y>3</y>
+          </p0>
+          <p1>
+            <x>82</x>
+            <y>10</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_BABYLON_APARTMENTS</key>
+    <value>
+      <sp>
+        <name>Babylon Apartments</name>
+        <owner>ORG_MARSEC</owner>
+        <bounds>
+          <p0>
+            <x>83</x>
+            <y>11</y>
+          </p0>
+          <p1>
+            <x>88</x>
+            <y>18</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_BAKUNIN_BLOCK</key>
+    <value>
+      <sp>
+        <name>Bakunin Block</name>
+        <owner>ORG_MUTANT_ALLIANCE</owner>
+        <bounds>
+          <p0>
+            <x>31</x>
+            <y>89</y>
+          </p0>
+          <p1>
+            <x>41</x>
+            <y>97</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_BORSTAL_BLOCK</key>
+    <value>
+      <sp>
+        <name>Borstal Block</name>
+        <owner>ORG_OSIRON</owner>
+        <bounds>
+          <p0>
+            <x>45</x>
+            <y>50</y>
+          </p0>
+          <p1>
+            <x>48</x>
+            <y>55</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_BOSCH_INSTITUTE</key>
+    <value>
+      <sp>
+        <name>Bosch Institute</name>
+        <owner>ORG_LIFETREE</owner>
+        <bounds>
+          <p0>
+            <x>89</x>
+            <y>12</y>
+          </p0>
+          <p1>
+            <x>96</x>
+            <y>22</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_CAMPESINO_APARTMENTS</key>
+    <value>
+      <sp>
+        <name>Campesino Apartments</name>
+        <owner>ORG_DIABLO</owner>
+        <bounds>
+          <p0>
+            <x>19</x>
+            <y>56</y>
+          </p0>
+          <p1>
+            <x>29</x>
+            <y>66</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_CAR_ONE</key>
+    <value>
+      <sp>
+        <name>Car One</name>
+        <owner>ORG_GENERAL_METRO</owner>
+        <bounds>
+          <p0>
+            <x>3</x>
+            <y>3</y>
+          </p0>
+          <p1>
+            <x>17</x>
+            <y>11</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_CAR_TWO</key>
+    <value>
+      <sp>
+        <name>Car Two</name>
+        <owner>ORG_GENERAL_METRO</owner>
+        <bounds>
+          <p0>
+            <x>90</x>
+            <y>41</y>
+          </p0>
+          <p1>
+            <x>96</x>
+            <y>51</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_CHRONOS_BLOCK</key>
+    <value>
+      <sp>
+        <name>Chronos Block</name>
+        <owner>ORG_OSIRON</owner>
+        <bounds>
+          <p0>
+            <x>48</x>
+            <y>55</y>
+          </p0>
+          <p1>
+            <x>54</x>
+            <y>60</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_CITYCLEAN_ONE</key>
+    <value>
+      <sp>
+        <name>Cityclean One</name>
+        <owner>ORG_EVONET</owner>
+        <bounds>
+          <p0>
+            <x>11</x>
+            <y>12</y>
+          </p0>
+          <p1>
+            <x>16</x>
+            <y>22</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_CITYCLEAN_THREE</key>
+    <value>
+      <sp>
+        <name>Cityclean Three</name>
+        <owner>ORG_EVONET</owner>
+        <bounds>
+          <p0>
+            <x>89</x>
+            <y>52</y>
+          </p0>
+          <p1>
+            <x>96</x>
+            <y>58</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_CITYCLEAN_TWO</key>
+    <value>
+      <sp>
+        <name>Cityclean Two</name>
+        <owner>ORG_EVONET</owner>
+        <bounds>
+          <p0>
+            <x>3</x>
+            <y>35</y>
+          </p0>
+          <p1>
+            <x>13</x>
+            <y>46</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_CIVIC_PROJECT</key>
+    <value>
+      <sp>
+        <name>Civic Project</name>
+        <owner>ORG_OSIRON</owner>
+        <bounds>
+          <p0>
+            <x>51</x>
+            <y>46</y>
+          </p0>
+          <p1>
+            <x>54</x>
+            <y>51</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_CONSTRUCTION_ONE</key>
+    <value>
+      <sp>
+        <name>Construction One</name>
+        <owner>ORG_SYNTHEMESH</owner>
+        <bounds>
+          <p0>
+            <x>3</x>
+            <y>15</y>
+          </p0>
+          <p1>
+            <x>10</x>
+            <y>22</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_CONSTRUCTION_TWO</key>
+    <value>
+      <sp>
+        <name>Construction Two</name>
+        <owner>ORG_SYNTHEMESH</owner>
+        <bounds>
+          <p0>
+            <x>3</x>
+            <y>22</y>
+          </p0>
+          <p1>
+            <x>10</x>
+            <y>29</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_CULTIVATOR_ONE</key>
+    <value>
+      <sp>
+        <name>Cultivator One</name>
+        <owner>ORG_NUTRIVEND</owner>
+        <bounds>
+          <p0>
+            <x>89</x>
+            <y>29</y>
+          </p0>
+          <p1>
+            <x>96</x>
+            <y>40</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_CULTIVATOR_TWO</key>
+    <value>
+      <sp>
+        <name>Cultivator Two</name>
+        <owner>ORG_NUTRIVEND</owner>
+        <bounds>
+          <p0>
+            <x>59</x>
+            <y>41</y>
+          </p0>
+          <p1>
+            <x>83</x>
+            <y>46</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_DICKENS_ESTATE</key>
+    <value>
+      <sp>
+        <name>Dickens Estate</name>
+        <owner>ORG_DIABLO</owner>
+        <bounds>
+          <p0>
+            <x>32</x>
+            <y>47</y>
+          </p0>
+          <p1>
+            <x>40</x>
+            <y>52</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_DOG_STAR_WANDERERS</key>
+    <value>
+      <sp>
+        <name>Dog Star Wanderers</name>
+        <owner>ORG_GRAVBALL_LEAGUE</owner>
+        <bounds>
+          <p0>
+            <x>75</x>
+            <y>70</y>
+          </p0>
+          <p1>
+            <x>82</x>
+            <y>76</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_ECOZONE_APARTMENTS</key>
+    <value>
+      <sp>
+        <name>Ecozone Apartments</name>
+        <owner>ORG_TRANSTELLAR</owner>
+        <bounds>
+          <p0>
+            <x>53</x>
+            <y>71</y>
+          </p0>
+          <p1>
+            <x>58</x>
+            <y>76</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_EDEN_MANSIONS</key>
+    <value>
+      <sp>
+        <name>Eden Mansions</name>
+        <owner>ORG_GOVERNMENT</owner>
+        <bounds>
+          <p0>
+            <x>71</x>
+            <y>11</y>
+          </p0>
+          <p1>
+            <x>76</x>
+            <y>22</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_EDIFICE_TOWER</key>
+    <value>
+      <sp>
+        <name>Edifice Tower</name>
+        <owner>ORG_NANOTECH</owner>
+        <bounds>
+          <p0>
+            <x>53</x>
+            <y>17</y>
+          </p0>
+          <p1>
+            <x>58</x>
+            <y>25</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_ENERGEN_BUILDING</key>
+    <value>
+      <sp>
+        <name>Energen Building</name>
+        <owner>ORG_ENERGEN</owner>
+        <bounds>
+          <p0>
+            <x>17</x>
+            <y>3</y>
+          </p0>
+          <p1>
+            <x>22</x>
+            <y>10</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_ENFORCER_ACADEMY</key>
+    <value>
+      <sp>
+        <name>Enforcer Academy</name>
+        <owner>ORG_MEGAPOL</owner>
+        <bounds>
+          <p0>
+            <x>23</x>
+            <y>47</y>
+          </p0>
+          <p1>
+            <x>28</x>
+            <y>52</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_FLYER_ONE</key>
+    <value>
+      <sp>
+        <name>Flyer One</name>
+        <owner>ORG_MEGAPOL</owner>
+        <bounds>
+          <p0>
+            <x>16</x>
+            <y>89</y>
+          </p0>
+          <p1>
+            <x>22</x>
+            <y>99</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_FLYER_TWO</key>
+    <value>
+      <sp>
+        <name>Flyer Two</name>
+        <owner>ORG_SUPERDYNAMICS</owner>
+        <bounds>
+          <p0>
+            <x>23</x>
+            <y>89</y>
+          </p0>
+          <p1>
+            <x>29</x>
+            <y>99</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_FOUCAULT_TOWER</key>
+    <value>
+      <sp>
+        <name>Foucault Tower</name>
+        <owner>ORG_ENERGEN</owner>
+        <bounds>
+          <p0>
+            <x>47</x>
+            <y>17</y>
+          </p0>
+          <p1>
+            <x>52</x>
+            <y>25</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_GALACTIC_CENTRAL</key>
+    <value>
+      <sp>
+        <name>Galactic Central</name>
+        <owner>ORG_TRANSTELLAR</owner>
+        <bounds>
+          <p0>
+            <x>88</x>
+            <y>89</y>
+          </p0>
+          <p1>
+            <x>97</x>
+            <y>99</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_GARDEN_OF_DELIGHTS</key>
+    <value>
+      <sp>
+        <name>Garden of Delights</name>
+        <owner>ORG_SANCTUARY_CLINIC</owner>
+        <bounds>
+          <p0>
+            <x>77</x>
+            <y>11</y>
+          </p0>
+          <p1>
+            <x>82</x>
+            <y>16</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_GEORGE_ORWELL_BLOCK</key>
+    <value>
+      <sp>
+        <name>George Orwell Block</name>
+        <owner>ORG_OSIRON</owner>
+        <bounds>
+          <p0>
+            <x>32</x>
+            <y>37</y>
+          </p0>
+          <p1>
+            <x>40</x>
+            <y>42</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_GREY_VISITOR_TOWERS</key>
+    <value>
+      <sp>
+        <name>Grey Visitor Towers</name>
+        <owner>ORG_OSIRON</owner>
+        <bounds>
+          <p0>
+            <x>42</x>
+            <y>40</y>
+          </p0>
+          <p1>
+            <x>50</x>
+            <y>45</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_GRIMOIRE_BLOCK</key>
+    <value>
+      <sp>
+        <name>Grimoire Block</name>
+        <owner>ORG_GOVERNMENT</owner>
+        <bounds>
+          <p0>
+            <x>64</x>
+            <y>69</y>
+          </p0>
+          <p1>
+            <x>74</x>
+            <y>74</y>
+          </p1>
+        </bounds>
+        <base_layout>BASELAYOUT_6</base_layout>
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_GYGAX_MEMORIAL_BUILDING</key>
+    <value>
+      <sp>
+        <name>Gygax Memorial Building</name>
+        <owner>ORG_SOLMINE</owner>
+        <bounds>
+          <p0>
+            <x>59</x>
+            <y>11</y>
+          </p0>
+          <p1>
+            <x>64</x>
+            <y>16</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_HABIZONE_APARTMENTS</key>
+    <value>
+      <sp>
+        <name>Habizone Apartments</name>
+        <owner>ORG_SENSOVISION</owner>
+        <bounds>
+          <p0>
+            <x>65</x>
+            <y>84</y>
+          </p0>
+          <p1>
+            <x>70</x>
+            <y>96</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_HADES_BLOCK</key>
+    <value>
+      <sp>
+        <name>Hades Block</name>
+        <owner>ORG_PSYKE</owner>
+        <bounds>
+          <p0>
+            <x>64</x>
+            <y>58</y>
+          </p0>
+          <p1>
+            <x>68</x>
+            <y>62</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_HEAVENLY_TOWERS</key>
+    <value>
+      <sp>
+        <name>Heavenly Towers</name>
+        <owner>ORG_OSIRON</owner>
+        <bounds>
+          <p0>
+            <x>48</x>
+            <y>48</y>
+          </p0>
+          <p1>
+            <x>51</x>
+            <y>53</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_HYDROZONE_ONE</key>
+    <value>
+      <sp>
+        <name>Hydrozone One</name>
+        <owner>ORG_EVONET</owner>
+        <bounds>
+          <p0>
+            <x>17</x>
+            <y>11</y>
+          </p0>
+          <p1>
+            <x>22</x>
+            <y>16</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_HYDROZONE_TWO</key>
+    <value>
+      <sp>
+        <name>Hydrozone Two</name>
+        <owner>ORG_EVONET</owner>
+        <bounds>
+          <p0>
+            <x>59</x>
+            <y>75</y>
+          </p0>
+          <p1>
+            <x>70</x>
+            <y>78</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_HYPERMART_ZONE</key>
+    <value>
+      <sp>
+        <name>Hypermart Zone</name>
+        <owner>ORG_NUTRIVEND</owner>
+        <bounds>
+          <p0>
+            <x>90</x>
+            <y>72</y>
+          </p0>
+          <p1>
+            <x>96</x>
+            <y>89</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_ILIAD_INSTITUTE</key>
+    <value>
+      <sp>
+        <name>Iliad Institute</name>
+        <owner>ORG_LIFETREE</owner>
+        <bounds>
+          <p0>
+            <x>65</x>
+            <y>11</y>
+          </p0>
+          <p1>
+            <x>70</x>
+            <y>16</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_JUDGMENT_CENTRAL</key>
+    <value>
+      <sp>
+        <name>Judgment Central</name>
+        <owner>ORG_MEGAPOL</owner>
+        <bounds>
+          <p0>
+            <x>41</x>
+            <y>29</y>
+          </p0>
+          <p1>
+            <x>46</x>
+            <y>34</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_LAW_CONTROL_STATION</key>
+    <value>
+      <sp>
+        <name>Law Control Station</name>
+        <owner>ORG_MEGAPOL</owner>
+        <bounds>
+          <p0>
+            <x>23</x>
+            <y>71</y>
+          </p0>
+          <p1>
+            <x>28</x>
+            <y>75</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_LOVECRAFT_BLOCK</key>
+    <value>
+      <sp>
+        <name>Lovecraft Block</name>
+        <owner>ORG_GOVERNMENT</owner>
+        <bounds>
+          <p0>
+            <x>36</x>
+            <y>84</y>
+          </p0>
+          <p1>
+            <x>40</x>
+            <y>88</y>
+          </p1>
+        </bounds>
+        <base_layout>BASELAYOUT_0</base_layout>
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_MARGE_PIERCY_ACADEMY</key>
+    <value>
+      <sp>
+        <name>Marge Piercy Academy</name>
+        <owner>ORG_LIFETREE</owner>
+        <bounds>
+          <p0>
+            <x>47</x>
+            <y>83</y>
+          </p0>
+          <p1>
+            <x>58</x>
+            <y>88</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_MAZE_TOWERS</key>
+    <value>
+      <sp>
+        <name>Maze Towers</name>
+        <owner>ORG_PSYKE</owner>
+        <bounds>
+          <p0>
+            <x>67</x>
+            <y>64</y>
+          </p0>
+          <p1>
+            <x>71</x>
+            <y>68</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_MEGAFLYER_ONE</key>
+    <value>
+      <sp>
+        <name>Megaflyer One</name>
+        <owner>ORG_SUPERDYNAMICS</owner>
+        <bounds>
+          <p0>
+            <x>16</x>
+            <y>35</y>
+          </p0>
+          <p1>
+            <x>28</x>
+            <y>40</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_MEGAFLYER_TWO</key>
+    <value>
+      <sp>
+        <name>Megaflyer Two</name>
+        <owner>ORG_MARSEC</owner>
+        <bounds>
+          <p0>
+            <x>16</x>
+            <y>41</y>
+          </p0>
+          <p1>
+            <x>28</x>
+            <y>46</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_MEGASTATION_ONE</key>
+    <value>
+      <sp>
+        <name>Megastation One</name>
+        <owner>ORG_MEGAPOL</owner>
+        <bounds>
+          <p0>
+            <x>59</x>
+            <y>47</y>
+          </p0>
+          <p1>
+            <x>64</x>
+            <y>52</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_MEGASTATION_TWO</key>
+    <value>
+      <sp>
+        <name>Megastation Two</name>
+        <owner>ORG_MEGAPOL</owner>
+        <bounds>
+          <p0>
+            <x>47</x>
+            <y>65</y>
+          </p0>
+          <p1>
+            <x>58</x>
+            <y>70</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_MEGATRIBE_WARRIORS</key>
+    <value>
+      <sp>
+        <name>Megatribe Warriors</name>
+        <owner>ORG_GRAVBALL_LEAGUE</owner>
+        <bounds>
+          <p0>
+            <x>77</x>
+            <y>17</y>
+          </p0>
+          <p1>
+            <x>82</x>
+            <y>22</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_MEGAVISION_ONE</key>
+    <value>
+      <sp>
+        <name>Megavision One</name>
+        <owner>ORG_SENSOVISION</owner>
+        <bounds>
+          <p0>
+            <x>23</x>
+            <y>11</y>
+          </p0>
+          <p1>
+            <x>28</x>
+            <y>16</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_MEGAVISION_TWO</key>
+    <value>
+      <sp>
+        <name>Megavision Two</name>
+        <owner>ORG_SENSOVISION</owner>
+        <bounds>
+          <p0>
+            <x>47</x>
+            <y>3</y>
+          </p0>
+          <p1>
+            <x>52</x>
+            <y>10</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_METEOR_KINGS</key>
+    <value>
+      <sp>
+        <name>Meteor Kings</name>
+        <owner>ORG_GRAVBALL_LEAGUE</owner>
+        <bounds>
+          <p0>
+            <x>17</x>
+            <y>83</y>
+          </p0>
+          <p1>
+            <x>28</x>
+            <y>88</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_MIDAS_BUILDING</key>
+    <value>
+      <sp>
+        <name>Midas Building</name>
+        <owner>ORG_ENERGEN</owner>
+        <bounds>
+          <p0>
+            <x>3</x>
+            <y>64</y>
+          </p0>
+          <p1>
+            <x>10</x>
+            <y>81</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_NECRONOMICON_MANSIONS</key>
+    <value>
+      <sp>
+        <name>Necronomicon Mansions</name>
+        <owner>ORG_DIABLO</owner>
+        <bounds>
+          <p0>
+            <x>36</x>
+            <y>61</y>
+          </p0>
+          <p1>
+            <x>39</x>
+            <y>72</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_NEPTUNE_TOWERS</key>
+    <value>
+      <sp>
+        <name>Neptune Towers</name>
+        <owner>ORG_PSYKE</owner>
+        <bounds>
+          <p0>
+            <x>61</x>
+            <y>65</y>
+          </p0>
+          <p1>
+            <x>65</x>
+            <y>69</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_NIETZSCHE_INSTITUTE</key>
+    <value>
+      <sp>
+        <name>Nietzsche Institute</name>
+        <owner>ORG_SUPERDYNAMICS</owner>
+        <bounds>
+          <p0>
+            <x>53</x>
+            <y>11</y>
+          </p0>
+          <p1>
+            <x>58</x>
+            <y>16</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_NIGHTINGALE_TOWER</key>
+    <value>
+      <sp>
+        <name>Nightingale Tower</name>
+        <owner>ORG_SANCTUARY_CLINIC</owner>
+        <bounds>
+          <p0>
+            <x>82</x>
+            <y>3</y>
+          </p0>
+          <p1>
+            <x>95</x>
+            <y>10</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_NIRVANA_MANSIONS</key>
+    <value>
+      <sp>
+        <name>Nirvana Mansions</name>
+        <owner>ORG_LIFETREE</owner>
+        <bounds>
+          <p0>
+            <x>45</x>
+            <y>89</y>
+          </p0>
+          <p1>
+            <x>61</x>
+            <y>96</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_OLIVER_TWIST_BLOCK</key>
+    <value>
+      <sp>
+        <name>Oliver Twist Block</name>
+        <owner>ORG_DIABLO</owner>
+        <bounds>
+          <p0>
+            <x>32</x>
+            <y>52</y>
+          </p0>
+          <p1>
+            <x>40</x>
+            <y>57</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_PARALLAX_TOWER</key>
+    <value>
+      <sp>
+        <name>Parallax Tower</name>
+        <owner>ORG_S_E_L_F_</owner>
+        <bounds>
+          <p0>
+            <x>59</x>
+            <y>16</y>
+          </p0>
+          <p1>
+            <x>64</x>
+            <y>23</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_PHOENIX_SANATORIUM</key>
+    <value>
+      <sp>
+        <name>Phoenix Sanatorium</name>
+        <owner>ORG_SANCTUARY_CLINIC</owner>
+        <bounds>
+          <p0>
+            <x>46</x>
+            <y>71</y>
+          </p0>
+          <p1>
+            <x>52</x>
+            <y>77</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_PTOLEMY_APARTMENTS</key>
+    <value>
+      <sp>
+        <name>Ptolemy Apartments</name>
+        <owner>ORG_SENSOVISION</owner>
+        <bounds>
+          <p0>
+            <x>41</x>
+            <y>17</y>
+          </p0>
+          <p1>
+            <x>46</x>
+            <y>25</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_QUADRAX_TOWER</key>
+    <value>
+      <sp>
+        <name>Quadrax Tower</name>
+        <owner>ORG_GOVERNMENT</owner>
+        <bounds>
+          <p0>
+            <x>35</x>
+            <y>11</y>
+          </p0>
+          <p1>
+            <x>40</x>
+            <y>23</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_RECYCLOTORIUM_ONE</key>
+    <value>
+      <sp>
+        <name>Recyclotorium One</name>
+        <owner>ORG_EVONET</owner>
+        <bounds>
+          <p0>
+            <x>29</x>
+            <y>29</y>
+          </p0>
+          <p1>
+            <x>39</x>
+            <y>34</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_RECYCLOTORIUM_TWO</key>
+    <value>
+      <sp>
+        <name>Recyclotorium Two</name>
+        <owner>ORG_X-COM</owner>
+        <bounds>
+          <p0>
+            <x>3</x>
+            <y>53</y>
+          </p0>
+          <p1>
+            <x>10</x>
+            <y>64</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_RESCUE_ONE</key>
+    <value>
+      <sp>
+        <name>Rescue One</name>
+        <owner>ORG_MEGAPOL</owner>
+        <bounds>
+          <p0>
+            <x>65</x>
+            <y>17</y>
+          </p0>
+          <p1>
+            <x>70</x>
+            <y>22</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_RESCUE_THREE</key>
+    <value>
+      <sp>
+        <name>Rescue Three</name>
+        <owner>ORG_MEGAPOL</owner>
+        <bounds>
+          <p0>
+            <x>71</x>
+            <y>83</y>
+          </p0>
+          <p1>
+            <x>76</x>
+            <y>88</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_RESCUE_TWO</key>
+    <value>
+      <sp>
+        <name>Rescue Two</name>
+        <owner>ORG_MEGAPOL</owner>
+        <bounds>
+          <p0>
+            <x>17</x>
+            <y>75</y>
+          </p0>
+          <p1>
+            <x>24</x>
+            <y>78</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_ROBOT_ONE</key>
+    <value>
+      <sp>
+        <name>Robot One</name>
+        <owner>ORG_CYBERWEB</owner>
+        <bounds>
+          <p0>
+            <x>17</x>
+            <y>29</y>
+          </p0>
+          <p1>
+            <x>22</x>
+            <y>34</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_ROBOT_TWO</key>
+    <value>
+      <sp>
+        <name>Robot Two</name>
+        <owner>ORG_CYBERWEB</owner>
+        <bounds>
+          <p0>
+            <x>23</x>
+            <y>29</y>
+          </p0>
+          <p1>
+            <x>28</x>
+            <y>34</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_SATURN_BLOCK</key>
+    <value>
+      <sp>
+        <name>Saturn Block</name>
+        <owner>ORG_S_E_L_F_</owner>
+        <bounds>
+          <p0>
+            <x>71</x>
+            <y>56</y>
+          </p0>
+          <p1>
+            <x>74</x>
+            <y>61</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_SCROOGE_MANSIONS</key>
+    <value>
+      <sp>
+        <name>Scrooge Mansions</name>
+        <owner>ORG_MUTANT_ALLIANCE</owner>
+        <bounds>
+          <p0>
+            <x>42</x>
+            <y>52</y>
+          </p0>
+          <p1>
+            <x>45</x>
+            <y>57</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_TEMPLE_OF_DOOM</key>
+    <value>
+      <sp>
+        <name>Temple of Doom</name>
+        <owner>ORG_CULT_OF_SIRIUS</owner>
+        <bounds>
+          <p0>
+            <x>77</x>
+            <y>35</y>
+          </p0>
+          <p1>
+            <x>82</x>
+            <y>40</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_TEMPLE_OF_HUMILITY</key>
+    <value>
+      <sp>
+        <name>Temple of Humility</name>
+        <owner>ORG_CULT_OF_SIRIUS</owner>
+        <bounds>
+          <p0>
+            <x>47</x>
+            <y>29</y>
+          </p0>
+          <p1>
+            <x>52</x>
+            <y>34</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_TEMPLE_OF_SANITY</key>
+    <value>
+      <sp>
+        <name>Temple of Sanity</name>
+        <owner>ORG_CULT_OF_SIRIUS</owner>
+        <bounds>
+          <p0>
+            <x>59</x>
+            <y>83</y>
+          </p0>
+          <p1>
+            <x>64</x>
+            <y>88</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_TEMPLE_OF_THE_APOCALYPSE</key>
+    <value>
+      <sp>
+        <name>Temple of the Apocalypse</name>
+        <owner>ORG_CULT_OF_SIRIUS</owner>
+        <bounds>
+          <p0>
+            <x>3</x>
+            <y>29</y>
+          </p0>
+          <p1>
+            <x>10</x>
+            <y>34</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_TEMPLE_OF_THE_MILLENIUM</key>
+    <value>
+      <sp>
+        <name>Temple of the Millenium</name>
+        <owner>ORG_CULT_OF_SIRIUS</owner>
+        <bounds>
+          <p0>
+            <x>29</x>
+            <y>11</y>
+          </p0>
+          <p1>
+            <x>34</x>
+            <y>16</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_TEMPLE_OF_THE_VISITORS</key>
+    <value>
+      <sp>
+        <name>Temple of the Visitors</name>
+        <owner>ORG_CULT_OF_SIRIUS</owner>
+        <bounds>
+          <p0>
+            <x>65</x>
+            <y>3</y>
+          </p0>
+          <p1>
+            <x>70</x>
+            <y>10</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_THE_KARPOV_BUILDING</key>
+    <value>
+      <sp>
+        <name>The Karpov Building</name>
+        <owner>ORG_SYNTHEMESH</owner>
+        <bounds>
+          <p0>
+            <x>41</x>
+            <y>3</y>
+          </p0>
+          <p1>
+            <x>46</x>
+            <y>10</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_THE_LINEAGE_FOUNDATION</key>
+    <value>
+      <sp>
+        <name>The Lineage Foundation</name>
+        <owner>ORG_SANCTUARY_CLINIC</owner>
+        <bounds>
+          <p0>
+            <x>77</x>
+            <y>82</y>
+          </p0>
+          <p1>
+            <x>83</x>
+            <y>88</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_THE_NEW_EMPIRE_TOWER</key>
+    <value>
+      <sp>
+        <name>The New Empire Tower</name>
+        <owner>ORG_TECHNOCRATS</owner>
+        <bounds>
+          <p0>
+            <x>84</x>
+            <y>84</y>
+          </p0>
+          <p1>
+            <x>88</x>
+            <y>88</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_THE_OZONE_BUILDING</key>
+    <value>
+      <sp>
+        <name>The Ozone Building</name>
+        <owner>ORG_EXTROPIANS</owner>
+        <bounds>
+          <p0>
+            <x>53</x>
+            <y>29</y>
+          </p0>
+          <p1>
+            <x>63</x>
+            <y>34</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_THE_SENATE</key>
+    <value>
+      <sp>
+        <name>The Senate</name>
+        <owner>ORG_GOVERNMENT</owner>
+        <bounds>
+          <p0>
+            <x>64</x>
+            <y>28</y>
+          </p0>
+          <p1>
+            <x>76</x>
+            <y>40</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_THOMAS_MORE_TOWER</key>
+    <value>
+      <sp>
+        <name>Thomas More Tower</name>
+        <owner>ORG_GOVERNMENT</owner>
+        <bounds>
+          <p0>
+            <x>32</x>
+            <y>42</y>
+          </p0>
+          <p1>
+            <x>40</x>
+            <y>47</y>
+          </p1>
+        </bounds>
+        <base_layout>BASELAYOUT_4</base_layout>
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_TRANSTELLAR_SPACELINES</key>
+    <value>
+      <sp>
+        <name>Transtellar Spacelines</name>
+        <owner>ORG_TRANSTELLAR</owner>
+        <bounds>
+          <p0>
+            <x>3</x>
+            <y>83</y>
+          </p0>
+          <p1>
+            <x>16</x>
+            <y>100</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_TSUNAMI_BUILDING</key>
+    <value>
+      <sp>
+        <name>Tsunami Building</name>
+        <owner>ORG_MUTANT_ALLIANCE</owner>
+        <bounds>
+          <p0>
+            <x>23</x>
+            <y>3</y>
+          </p0>
+          <p1>
+            <x>31</x>
+            <y>10</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_UHURU_TOWER</key>
+    <value>
+      <sp>
+        <name>Uhuru Tower</name>
+        <owner>ORG_CYBERWEB</owner>
+        <bounds>
+          <p0>
+            <x>29</x>
+            <y>17</y>
+          </p0>
+          <p1>
+            <x>34</x>
+            <y>25</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_UTOPIA_MANSIONS</key>
+    <value>
+      <sp>
+        <name>Utopia Mansions</name>
+        <owner>ORG_SANCTUARY_CLINIC</owner>
+        <bounds>
+          <p0>
+            <x>71</x>
+            <y>89</y>
+          </p0>
+          <p1>
+            <x>88</x>
+            <y>96</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_VENUS_SPIRES</key>
+    <value>
+      <sp>
+        <name>Venus Spires</name>
+        <owner>ORG_NUTRIVEND</owner>
+        <bounds>
+          <p0>
+            <x>32</x>
+            <y>3</y>
+          </p0>
+          <p1>
+            <x>40</x>
+            <y>10</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_WAREHOUSE_EIGHT</key>
+    <value>
+      <sp>
+        <name>Warehouse Eight</name>
+        <owner>ORG_GOVERNMENT</owner>
+        <bounds>
+          <p0>
+            <x>20</x>
+            <y>69</y>
+          </p0>
+          <p1>
+            <x>22</x>
+            <y>74</y>
+          </p1>
+        </bounds>
+        <base_layout>BASELAYOUT_3</base_layout>
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_WAREHOUSE_ELEVEN</key>
+    <value>
+      <sp>
+        <name>Warehouse Eleven</name>
+        <owner>ORG_GOVERNMENT</owner>
+        <bounds>
+          <p0>
+            <x>74</x>
+            <y>53</y>
+          </p0>
+          <p1>
+            <x>78</x>
+            <y>57</y>
+          </p1>
+        </bounds>
+        <base_layout>BASELAYOUT_10</base_layout>
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_WAREHOUSE_FIVE</key>
+    <value>
+      <sp>
+        <name>Warehouse Five</name>
+        <owner>ORG_SOLMINE</owner>
+        <bounds>
+          <p0>
+            <x>11</x>
+            <y>59</y>
+          </p0>
+          <p1>
+            <x>13</x>
+            <y>68</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_WAREHOUSE_FOUR</key>
+    <value>
+      <sp>
+        <name>Warehouse Four</name>
+        <owner>ORG_OSIRON</owner>
+        <bounds>
+          <p0>
+            <x>10</x>
+            <y>53</y>
+          </p0>
+          <p1>
+            <x>16</x>
+            <y>58</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_WAREHOUSE_NINE</key>
+    <value>
+      <sp>
+        <name>Warehouse Nine</name>
+        <owner>ORG_OSIRON</owner>
+        <bounds>
+          <p0>
+            <x>80</x>
+            <y>53</y>
+          </p0>
+          <p1>
+            <x>82</x>
+            <y>58</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_WAREHOUSE_ONE</key>
+    <value>
+      <sp>
+        <name>Warehouse One</name>
+        <owner>ORG_GOVERNMENT</owner>
+        <bounds>
+          <p0>
+            <x>3</x>
+            <y>11</y>
+          </p0>
+          <p1>
+            <x>10</x>
+            <y>15</y>
+          </p1>
+        </bounds>
+        <base_layout>BASELAYOUT_1</base_layout>
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_WAREHOUSE_SEVEN</key>
+    <value>
+      <sp>
+        <name>Warehouse Seven</name>
+        <owner>ORG_SUPERDYNAMICS</owner>
+        <bounds>
+          <p0>
+            <x>18</x>
+            <y>69</y>
+          </p0>
+          <p1>
+            <x>20</x>
+            <y>74</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_WAREHOUSE_SIX</key>
+    <value>
+      <sp>
+        <name>Warehouse Six</name>
+        <owner>ORG_SOLMINE</owner>
+        <bounds>
+          <p0>
+            <x>16</x>
+            <y>69</y>
+          </p0>
+          <p1>
+            <x>18</x>
+            <y>74</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_WAREHOUSE_TEN</key>
+    <value>
+      <sp>
+        <name>Warehouse Ten</name>
+        <owner>ORG_GOVERNMENT</owner>
+        <bounds>
+          <p0>
+            <x>78</x>
+            <y>53</y>
+          </p0>
+          <p1>
+            <x>80</x>
+            <y>58</y>
+          </p1>
+        </bounds>
+        <base_layout>BASELAYOUT_9</base_layout>
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_WAREHOUSE_THREE</key>
+    <value>
+      <sp>
+        <name>Warehouse Three</name>
+        <owner>ORG_MARSEC</owner>
+        <bounds>
+          <p0>
+            <x>17</x>
+            <y>47</y>
+          </p0>
+          <p1>
+            <x>22</x>
+            <y>52</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_WAREHOUSE_TWO</key>
+    <value>
+      <sp>
+        <name>Warehouse Two</name>
+        <owner>ORG_GOVERNMENT</owner>
+        <bounds>
+          <p0>
+            <x>3</x>
+            <y>46</y>
+          </p0>
+          <p1>
+            <x>10</x>
+            <y>53</y>
+          </p1>
+        </bounds>
+        <base_layout>BASELAYOUT_7</base_layout>
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+</buildings>

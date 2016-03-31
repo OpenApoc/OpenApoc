@@ -37,7 +37,7 @@ if (LTO)
 		endif()
 endif(LTO)
 
-find_package(Boost REQUIRED COMPONENTS locale)
+find_package(Boost REQUIRED COMPONENTS locale filesystem)
 
 
 # find openapoc sources
