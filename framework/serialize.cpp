@@ -13,6 +13,7 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
+#include <boost/uuid/sha1.hpp>
 #include <iostream>
 #include <map>
 
@@ -49,8 +50,109 @@ sp<SerializationNode> SerializationNode::getNextSiblingReq(const UString &name)
 	return node;
 }
 
+static UString calculate_checksum(const std::string &str)
+{
+	UString hashString;
+
+	boost::uuids::detail::sha1 sha;
+	sha.process_bytes(str.c_str(), str.size());
+	unsigned int hash[5];
+	sha.get_digest(hash);
+	for (int i = 0; i < 5; i++)
+	{
+		unsigned int v = hash[i];
+		for (int j = 0; j < 4; j++)
+		{
+			// FIXME: Probably need to do the reverse for big endian?
+			unsigned int byteHex = v & 0xff000000;
+			byteHex >>= 24;
+			hashString += UString::format("%02x", byteHex).str();
+			v <<= 8;
+		}
+	}
+
+	return hashString;
+}
+
+static std::string writeManifest(const std::map<UString, std::string> &contents)
+{
+	pugi::xml_document manifestDoc;
+	auto decl = manifestDoc.prepend_child(pugi::node_declaration);
+	decl.append_attribute("version") = "1.0";
+	decl.append_attribute("encoding") = "UTF-8";
+	auto root = manifestDoc.root().append_child();
+	root.set_name("openapoc_manifest");
+	for (auto &p : contents)
+	{
+		auto node = root.append_child();
+		node.set_name("gamestate_xml");
+		node.text().set(p.first.c_str());
+		auto sha1sum = calculate_checksum(p.second);
+		node.append_attribute("SHA1") = sha1sum.c_str();
+	}
+	std::stringstream ss;
+	manifestDoc.save(ss, "  ");
+	return ss.str();
+}
+
+static std::map<UString, UString> readManifest(const std::string &manifestData)
+{
+	std::map<UString, UString> shaMap;
+	std::stringstream ss(manifestData);
+	pugi::xml_document manifestDoc;
+	auto parse_result = manifestDoc.load(ss);
+	if (!parse_result)
+	{
+		LogError("Failed to parse openapoc_manifest.xml : \"%s\" at \"%llu\"",
+		         parse_result.description(), (unsigned long long)parse_result.offset);
+		return {};
+	}
+	auto rootNode = manifestDoc.child("openapoc_manifest");
+	if (!rootNode)
+	{
+		LogError("openapoc_manifest.xml has invalid root node");
+		return {};
+	}
+	auto gamestateNode = rootNode.child("gamestate_xml");
+	while (gamestateNode)
+	{
+		UString fileName = gamestateNode.text().get();
+		auto shaAttribute = gamestateNode.attribute("SHA1");
+		if (!shaAttribute)
+		{
+			LogWarning("openapoc_manifest.xml gamestate_xml node \"%s\" has no SHA1 attribute",
+			           fileName.c_str());
+			shaMap[fileName] = "";
+		}
+		else
+		{
+			shaMap[fileName] = shaAttribute.value();
+		}
+		LogInfo("Manifest \"%s\" sha1=\"%s\"", fileName.c_str(), shaAttribute.value());
+		gamestateNode = gamestateNode.next_sibling("gamestate_xml");
+	}
+	return shaMap;
+}
+
 static bool writeDir(const UString &name, const std::map<UString, std::string> &contents)
 {
+	auto manifestData = writeManifest(contents);
+	auto manifestPathStr = name + "/openapoc_manifest.xml";
+	boost::filesystem::path manifestPath(manifestPathStr.str());
+	boost::filesystem::ofstream outManifest(manifestPath, std::ios::out | std::ios::binary);
+	if (!outManifest)
+	{
+		LogError("Failed to open manifest file \"%s\" for writing", manifestPath.string().c_str());
+		return false;
+	}
+
+	outManifest.write(manifestData.c_str(), manifestData.size());
+	if (!outManifest)
+	{
+		LogError("Failed to write manifest file \"%s\"", manifestPath.string().c_str());
+		return false;
+	}
+
 	for (auto p : contents)
 	{
 		auto fullPathStr = name + "/" + p.first;
@@ -86,6 +188,10 @@ static bool writeDir(const UString &name, const std::map<UString, std::string> &
 			LogError("Failed to write \"%s\"", fullPath.string().c_str());
 			return false;
 		}
+
+		auto sha1sum = calculate_checksum(p.second);
+
+		LogInfo("file \"%s\" SHA1 \"%s\"", fullPath.string().c_str(), sha1sum.c_str());
 	}
 	return true;
 }
@@ -98,64 +204,81 @@ static bool readDir(const UString &name, std::map<UString, std::string> &content
 		LogInfo("Path \"%s\" not a directory, not reading DirArchive", name.c_str());
 		return false;
 	}
-	boost::filesystem::recursive_directory_iterator dir(basePath), end;
-	while (dir != end)
+	auto manifestPath = basePath;
+	manifestPath /= "openapoc_manifest.xml";
+	boost::filesystem::ifstream manifestInStream(manifestPath, std::ios::in | std::ios::binary);
+	if (!manifestInStream)
 	{
-		auto path = dir->path();
-		if (boost::filesystem::is_directory(path))
+		LogError("Failed to open manifest \"%s\"", manifestPath.string().c_str());
+		return false;
+	}
+	auto manifestSize = boost::filesystem::file_size(manifestPath);
+
+	LogInfo("Reading %llu bytes from manifest \"%s\"", (unsigned long long)manifestSize,
+	        manifestPath.string().c_str());
+
+	up<char[]> manifestData(new char[manifestSize]);
+	manifestInStream.read(manifestData.get(), manifestSize);
+
+	if (!manifestInStream)
+	{
+		LogError("Failed to read %llu bytes from manifest \"%s\"", (unsigned long long)manifestSize,
+		         manifestPath.string().c_str());
+		return false;
+	}
+
+	auto manifestContents = readManifest(std::string(manifestData.get(), manifestSize));
+
+	if (manifestContents.empty())
+	{
+		LogError("Manfest \"%s\" contains no entries", manifestPath.string().c_str());
+		return false;
+	}
+
+	for (auto &p : manifestContents)
+	{
+		auto fullPath = basePath;
+		fullPath /= p.first.str();
+		boost::filesystem::ifstream inStream(fullPath, std::ios::in | std::ios::binary);
+		if (!inStream)
 		{
-			LogInfo("Skipping directory \"%s\"", path.string().c_str());
+			LogError("Failed to open file \"%s\" for reading", fullPath.string().c_str());
+			return false;
+		}
+		auto size = boost::filesystem::file_size(fullPath);
+		LogInfo("Reading %llu bytes from \"%s\"", (unsigned long long)size,
+		        fullPath.string().c_str());
+		up<char[]> data(new char[size]);
+
+		inStream.read(data.get(), size);
+
+		if (!inStream)
+		{
+			LogError("Failed to read %llu bytes from \"%s\"", (unsigned long long)size,
+			         fullPath.string().c_str());
+			return false;
+		}
+
+		std::string fileContents(data.get(), size);
+
+		auto sha1Sum = calculate_checksum(fileContents);
+		auto expectedSha1Sum = p.second;
+		if (expectedSha1Sum != "")
+		{
+			if (sha1Sum != expectedSha1Sum)
+			{
+				LogError("File \"%s\" has incorrect checksum \"%s\", expected \"%s\"",
+				         fullPath.string().c_str(), sha1Sum.c_str(), expectedSha1Sum.c_str());
+				// Don't return false, as we can allow the user to continue?
+			}
 		}
 		else
 		{
-			// Assume all non-directories are possible to read bytes from
-			auto size = boost::filesystem::file_size(path);
-			LogInfo("Reading %llu bytes from \"%s\"", (unsigned long long)size,
-			        path.string().c_str());
-			up<char[]> data(new char[size]);
-			// FIXME: boost::filesystem::relative is exactly what we want here, but only appeared in
-			// boost 1.60, which is newer than is available on lots of platforms.
-			// So instead we do some evil substr instead
-			boost::filesystem::path relativePath; // = boost::filesystem::relative(path, basePath);
-#if BOOST_VERSION < 106000
-			{
-				boost::filesystem::path p1(basePath);
-				p1 = boost::filesystem::canonical(p1);
-				boost::filesystem::path p2(path);
-				p2 = boost::filesystem::canonical(p2);
-				auto p1str = p1.string();
-				auto p2str = p2.string();
-				auto newStr = p2str.substr(p1str.size());
-				if (newStr[0] == '/' || newStr[0] == '\\')
-					newStr = newStr.substr(1);
-				relativePath = newStr;
-			}
-#else
-			relativePath = boost::filesystem::relative(path, basePath);
-#endif
-			LogInfo("relativePath = \"%s\"", relativePath.c_str());
-			boost::filesystem::ifstream inStream(path, std::ios::in | std::ios::binary);
-			if (!inStream)
-			{
-				LogError("Failed to open \"%s\" for reading", path.string().c_str());
-				return false;
-			}
-			inStream.read(data.get(), size);
-			if (!inStream)
-			{
-				LogError("Failed to read %llu bytes from \"%s\"", (unsigned long long)size,
-				         path.string().c_str());
-				return false;
-			}
-			std::string fileContents(data.get(), size);
-			auto contentsPath = relativePath.string();
-			// We use '/' for directory separators everywhere else, so this needs
-			// to be consistent
-			std::replace(contentsPath.begin(), contentsPath.end(), '\\', '/');
-			contents[contentsPath] = std::move(fileContents);
+			LogWarning("Skipping missing checksum for file \"%s\"", fullPath.string().c_str());
 		}
-		dir++;
+		contents[p.first] = std::move(fileContents);
 	}
+
 	return true;
 }
 

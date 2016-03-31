@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc_manifest>
+  <gamestate_xml SHA1="">gamestate.xml</gamestate_xml>
+  <gamestate_xml SHA1="">gamestate/cities.xml</gamestate_xml>
+  <gamestate_xml SHA1="">gamestate/cities/CITYMAP_HUMAN.xml</gamestate_xml>
+  <gamestate_xml SHA1="">gamestate/cities/CITYMAP_HUMAN/buildings.xml</gamestate_xml>
+</openapoc_manifest>
