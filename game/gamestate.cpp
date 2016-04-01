@@ -192,6 +192,19 @@ void GameState::startGame()
 		auto &equipmentID = pair.first;
 		base->inventory[equipmentID] = 10;
 	}
+
+	for (auto &agentTypePair : this->initial_agents)
+	{
+		auto type = agentTypePair.first;
+		auto count = agentTypePair.second;
+		while (count > 0)
+		{
+			auto agent = this->agent_generator.createAgent(*this, type);
+			agent->home_base = {this, base};
+			agent->owner = this->getPlayer();
+			count--;
+		}
+	}
 }
 
 }; // namespace OpenApoc

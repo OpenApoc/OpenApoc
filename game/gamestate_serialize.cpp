@@ -169,6 +169,9 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, T &val,
 	    UString::format("Invalid enum value for %s: \"%s\"", typeid(T).name(), str.c_str()), node);
 }
 
+template <typename T>
+void serializeIn(const GameState *state, sp<SerializationNode> node, std::list<T> &list);
+
 template <typename Key, typename Value>
 void serializeIn(const GameState *state, sp<SerializationNode> node, std::map<Key, Value> &map)
 {
@@ -648,6 +651,70 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("score"), r.score);
 }
 
+// FIXME: These enums don't quite work the same way as the other map style - maybe a common way
+// could be used?
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Agent::Type &t)
+{
+	serializeIn(state, node, t, Agent::TypeMap);
+}
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Agent::Gender &g)
+{
+	serializeIn(state, node, g, Agent::GenderMap);
+}
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Agent::Species &s)
+{
+	serializeIn(state, node, s, Agent::SpeciesMap);
+}
+
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, AgentStats &s)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("health"), s.health);
+	serializeIn(state, node->getNode("accuracy"), s.accuracy);
+	serializeIn(state, node->getNode("reactions"), s.reactions);
+	serializeIn(state, node->getNode("speed"), s.speed);
+	serializeIn(state, node->getNode("stamina"), s.stamina);
+	serializeIn(state, node->getNode("bravery"), s.bravery);
+	serializeIn(state, node->getNode("strength"), s.strength);
+	serializeIn(state, node->getNode("psi_energy"), s.psi_energy);
+	serializeIn(state, node->getNode("psi_attack"), s.psi_attack);
+	serializeIn(state, node->getNode("psi_defence"), s.psi_defence);
+	serializeIn(state, node->getNode("physics_skill"), s.physics_skill);
+	serializeIn(state, node->getNode("biochem_skill"), s.biochem_skill);
+	serializeIn(state, node->getNode("engineering_skill"), s.engineering_skill);
+}
+
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Agent &a)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("name"), a.name);
+	serializeIn(state, node->getNode("portrait"), a.portrait);
+	serializeIn(state, node->getNode("type"), a.type, Agent::TypeMap);
+	serializeIn(state, node->getNode("species"), a.species, Agent::SpeciesMap);
+	serializeIn(state, node->getNode("gender"), a.gender, Agent::GenderMap);
+	serializeIn(state, node->getNode("initial_stats"), a.initial_stats);
+	serializeIn(state, node->getNode("current_stats"), a.current_stats);
+	serializeIn(state, node->getNode("home_base"), a.home_base);
+	serializeIn(state, node->getNode("owner"), a.owner);
+}
+
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, AgentGenerator &g)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("num_created"), g.num_created);
+	serializeIn(state, node->getNode("first_names"), g.first_names);
+	serializeIn(state, node->getNode("second_names"), g.second_names);
+	serializeIn(state, node->getNode("type_chance"), g.type_chance);
+	serializeIn(state, node->getNode("species_chance"), g.species_chance);
+	serializeIn(state, node->getNode("gender_chance"), g.gender_chance);
+	serializeIn(state, node->getNode("portraits"), g.portraits);
+	serializeIn(state, node->getNode("min_stats"), g.min_stats);
+	serializeIn(state, node->getNode("max_stats"), g.max_stats);
+}
+
 void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &s)
 {
 	if (!node)
@@ -663,6 +730,9 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &
 	serializeIn(state, node->getSection("vehicles"), s.vehicles);
 	serializeIn(state, node->getSection("ufopaedia"), s.ufopaedia);
 	serializeIn(state, node->getSection("research"), s.research);
+	serializeIn(state, node->getSection("agents"), s.agents);
+	serializeIn(state, node->getSection("agent_generator"), s.agent_generator);
+	serializeIn(state, node->getNode("initial_agents"), s.initial_agents);
 	serializeIn(state, node->getNode("player"), s.player);
 	serializeIn(state, node->getNode("time"), s.time);
 }
@@ -758,6 +828,8 @@ template <> void serializeOut<Sample>(sp<SerializationNode> node, const sp<Sampl
 		node->setValue(ptr->path);
 	}
 }
+
+template <typename T> void serializeOut(sp<SerializationNode> node, const std::list<T> &list);
 
 template <typename Key, typename Value>
 void serializeOut(sp<SerializationNode> node, const std::map<Key, Value> &map)
@@ -1121,6 +1193,64 @@ template <> void serializeOut(sp<SerializationNode> node, const ResearchTopic &r
 	serializeOut(node->addNode("score"), r.score);
 }
 
+// FIXME: These enums don't quite work the same way as the other map style - maybe a common way
+// could be used?
+template <> void serializeOut(sp<SerializationNode> node, const Agent::Type &t)
+{
+	serializeOut(node, t, Agent::TypeMap);
+}
+template <> void serializeOut(sp<SerializationNode> node, const Agent::Gender &g)
+{
+	serializeOut(node, g, Agent::GenderMap);
+}
+template <> void serializeOut(sp<SerializationNode> node, const Agent::Species &s)
+{
+	serializeOut(node, s, Agent::SpeciesMap);
+}
+
+template <> void serializeOut(sp<SerializationNode> node, const AgentStats &s)
+{
+	serializeOut(node->addNode("health"), s.health);
+	serializeOut(node->addNode("accuracy"), s.accuracy);
+	serializeOut(node->addNode("reactions"), s.reactions);
+	serializeOut(node->addNode("speed"), s.speed);
+	serializeOut(node->addNode("stamina"), s.stamina);
+	serializeOut(node->addNode("bravery"), s.bravery);
+	serializeOut(node->addNode("strength"), s.strength);
+	serializeOut(node->addNode("psi_energy"), s.psi_energy);
+	serializeOut(node->addNode("psi_attack"), s.psi_attack);
+	serializeOut(node->addNode("psi_defence"), s.psi_defence);
+	serializeOut(node->addNode("physics_skill"), s.physics_skill);
+	serializeOut(node->addNode("biochem_skill"), s.biochem_skill);
+	serializeOut(node->addNode("engineering_skill"), s.engineering_skill);
+}
+
+template <> void serializeOut(sp<SerializationNode> node, const Agent &a)
+{
+	serializeOut(node->addNode("name"), a.name);
+	serializeOut(node->addNode("portrait"), a.portrait);
+	serializeOut(node->addNode("type"), a.type, Agent::TypeMap);
+	serializeOut(node->addNode("species"), a.species, Agent::SpeciesMap);
+	serializeOut(node->addNode("gender"), a.gender, Agent::GenderMap);
+	serializeOut(node->addNode("initial_stats"), a.initial_stats);
+	serializeOut(node->addNode("current_stats"), a.current_stats);
+	serializeOut(node->addNode("home_base"), a.home_base);
+	serializeOut(node->addNode("owner"), a.owner);
+}
+
+template <> void serializeOut(sp<SerializationNode> node, const AgentGenerator &g)
+{
+	serializeOut(node->addNode("num_created"), g.num_created);
+	serializeOut(node->addNode("first_names"), g.first_names);
+	serializeOut(node->addNode("second_names"), g.second_names);
+	serializeOut(node->addNode("type_chance"), g.type_chance);
+	serializeOut(node->addNode("species_chance"), g.species_chance);
+	serializeOut(node->addNode("gender_chance"), g.gender_chance);
+	serializeOut(node->addNode("portraits"), g.portraits);
+	serializeOut(node->addNode("min_stats"), g.min_stats);
+	serializeOut(node->addNode("max_stats"), g.max_stats);
+}
+
 void serializeOut(sp<SerializationNode> node, const GameState &state)
 {
 	serializeOut(node->addSection("vehicle_types"), state.vehicle_types);
@@ -1134,6 +1264,9 @@ void serializeOut(sp<SerializationNode> node, const GameState &state)
 	serializeOut(node->addSection("vehicles"), state.vehicles);
 	serializeOut(node->addSection("ufopaedia"), state.ufopaedia);
 	serializeOut(node->addSection("research"), state.research);
+	serializeOut(node->addSection("agents"), state.agents);
+	serializeOut(node->addSection("agent_generator"), state.agent_generator);
+	serializeOut(node->addNode("initial_agents"), state.initial_agents);
 	serializeOut(node->addNode("player"), state.player);
 	serializeOut(node->addNode("time"), state.time);
 }

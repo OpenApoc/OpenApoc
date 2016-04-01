@@ -201,4 +201,15 @@ template <> const UString &StateObject<Base>::getTypeName()
 	static UString name = "Base";
 	return name;
 }
+template <> const UString &StateObject<Base>::getId(const GameState &state, const sp<Base> ptr)
+{
+	static const UString emptyString = "";
+	for (auto &b : state.player_bases)
+	{
+		if (b.second == ptr)
+			return b.first;
+	}
+	LogError("No base matching pointer %p", ptr.get());
+	return emptyString;
+}
 }; // namespace OpenApoc

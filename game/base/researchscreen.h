@@ -22,6 +22,7 @@ class ResearchScreen : public Stage
 	StageCmd stageCmd;
 	StateRef<Base> base;
 	StateRef<Facility> selected_lab;
+	std::list<StateRef<Facility>> labs;
 
 	sp<GameState> state;
 

@@ -3,4 +3,23 @@
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="facility_types.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="doodad_types.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ufopaedia.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_generator.xml"/>
+  <initial_agents>
+    <entry>
+      <key>soldier</key>
+      <value>10</value>
+    </entry>
+    <entry>
+      <key>physicist</key>
+      <value>5</value>
+    </entry>
+    <entry>
+      <key>biochemist</key>
+      <value>5</value>
+    </entry>
+    <entry>
+      <key>engineer</key>
+      <value>5</value>
+    </entry>
+  </initial_agents>
 </gamestate>

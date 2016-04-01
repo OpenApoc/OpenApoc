@@ -4,4 +4,5 @@
   <gamestate_xml SHA1="">gamestate/doodad_types.xml</gamestate_xml>
   <gamestate_xml SHA1="">gamestate/facility_types.xml</gamestate_xml>
   <gamestate_xml SHA1="">gamestate/ufopaedia.xml</gamestate_xml>
+  <gamestate_xml SHA1="">gamestate/agent_generator.xml</gamestate_xml>
 </openapoc_manifest>

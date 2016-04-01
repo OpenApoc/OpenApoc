@@ -1,6 +1,7 @@
 #pragma once
 #include "library/sp.h"
 
+#include "game/agent.h"
 #include "game/base/base.h"
 #include "game/city/city.h"
 #include "game/organisation.h"
@@ -38,6 +39,11 @@ class GameState
 	std::map<UString, sp<Vehicle>> vehicles;
 	std::map<UString, sp<UfopaediaCategory>> ufopaedia;
 	std::map<UString, sp<ResearchTopic>> research;
+
+	std::map<UString, sp<Agent>> agents;
+	AgentGenerator agent_generator;
+
+	std::map<Agent::Type, unsigned> initial_agents;
 
 	StateRef<Organisation> player;
 
