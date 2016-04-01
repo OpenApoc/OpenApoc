@@ -444,6 +444,9 @@
     <ClCompile Include="tools\extractors\extract_research.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\base\researchscreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -804,6 +807,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\research.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\base\researchscreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
