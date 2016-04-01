@@ -333,6 +333,7 @@
     <ClCompile Include="framework\renderer.cpp" />
     <ClCompile Include="framework\render\gl20\ogl_2_0_renderer.cpp" />
     <ClCompile Include="framework\render\gl30\ogl_3_0_renderer.cpp" />
+    <ClCompile Include="game\agent.cpp" />
     <ClCompile Include="game\base\researchscreen.cpp" />
     <ClCompile Include="game\research.cpp" />
     <ClCompile Include="game\rules\doodad_type.cpp" />
@@ -447,6 +448,7 @@
     <ClInclude Include="framework\render\gl20\gl_2_0.hpp" />
     <ClInclude Include="framework\render\gl30\gl_3_0.hpp" />
     <ClInclude Include="framework\render\gles20\egl.hpp" />
+    <ClInclude Include="game\agent.h" />
     <ClInclude Include="game\base\researchscreen.h" />
     <ClInclude Include="game\research.h" />
     <ClInclude Include="game\ufopaedia.h" />
