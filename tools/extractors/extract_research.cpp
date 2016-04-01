@@ -53,8 +53,9 @@ void InitialGameStateExtractor::extractResearch(GameState &state, Difficulty dif
 			LogError("Multiple research topics with ID \"%s\"", id.c_str());
 		}
 		state.research[id] = r;
-		//FIXME: The ufopaedia entries here don't seem to directly map to the IDs we're currently using?
-		// May also be a many:1 ratio (e.g. the "alien gas" research topic unlocks multiple ufopaedia entries) making this more complex
+// FIXME: The ufopaedia entries here don't seem to directly map to the IDs we're currently using?
+// May also be a many:1 ratio (e.g. the "alien gas" research topic unlocks multiple ufopaedia
+// entries) making this more complex
 #if 0
 
 		auto ufopaediaEntryID = "PAEDIAENTRY_" + canon_string(r->name);

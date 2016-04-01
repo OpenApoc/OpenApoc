@@ -5,6 +5,7 @@
 #include "game/base/base.h"
 #include "game/base/basescreen.h"
 #include "game/base/facility.h"
+#include "game/base/researchscreen.h"
 #include "game/base/vequipscreen.h"
 #include "game/resources/gamecore.h"
 
@@ -174,6 +175,13 @@ void BaseScreen::EventOccurred(Event *e)
 				// FIXME: If you don't have any vehicles this button should do nothing
 				stageCmd.cmd = StageCmd::Command::PUSH;
 				stageCmd.nextStage = mksp<VEquipScreen>(state);
+				return;
+			}
+			else if (e->Forms().RaisedBy->Name == "BUTTON_BASE_RES_AND_MANUF")
+			{
+				// FIXME: If you don't have any vehicles this button should do nothing
+				stageCmd.cmd = StageCmd::Command::PUSH;
+				stageCmd.nextStage = mksp<ResearchScreen>(state, this->base);
 				return;
 			}
 		}

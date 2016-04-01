@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <form id="FORM_RESEARCHSCREEN">
+    <style minwidth="640" minheight="480">
+      <position x="centre" y="centre"/>
+      <size width="640" height="480"/>
+      <graphic>
+        <image>xcom3/UFODATA/RESEARCH.PCX</image>
+        <position x="0" y="0"/>
+        <size width="640" height="480"/>
+      </graphic>
+      <label text="RESEARCH AND MANUFACTURE">
+        <position x="20" y="0"/>
+        <size width="600" height="36"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>BIGFONT</font>
+      </label>
+      <label id="TEXT_FUNDS">
+        <position x="572" y="11"/>
+        <size width="60" height="10"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <graphicbutton id="BUTTON_BASE_1">
+        <position x="24" y="53"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_2">
+        <position x="60" y="53"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_3">
+        <position x="96" y="53"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_4">
+        <position x="132" y="53"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_5">
+        <position x="24" y="89"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_6">
+        <position x="60" y="89"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_7">
+        <position x="96" y="89"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_8">
+        <position x="132" y="89"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_RESEARCH_NEWPROJECT">
+        <position x="602" y="40"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:58:xcom3/UFODATA/RESEARCH.PCX</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_RESEARCH_CANCELPROJECT">
+        <position x="602" y="80"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:59:xcom3/UFODATA/RESEARCH.PCX</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_OK">
+        <position x="602" y="443"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
+      </graphicbutton>
+    </style>
+  </form>
+</openapoc>
