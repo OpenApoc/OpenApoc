@@ -1,5 +1,7 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+# Don't do LF normalization on data files, as they are checksummed
+*.xml -text
 
 # Custom for Visual Studio
 *.cs     diff=csharp
