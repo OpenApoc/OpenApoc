@@ -176,7 +176,7 @@ void Trace::disable()
 	trace_manager->write();
 	trace_manager.reset(nullptr);
 #if defined(BROKEN_THREAD_LOCAL)
-	pthread_key_delete(&eventListKey);
+	pthread_key_delete(eventListKey);
 #endif
 	Trace::enabled = false;
 }
