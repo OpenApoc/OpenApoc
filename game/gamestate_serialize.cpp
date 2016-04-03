@@ -558,6 +558,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("type"), facility.type);
 	serializeIn(state, node->getNode("pos"), facility.pos);
 	serializeIn(state, node->getNode("buildTime"), facility.buildTime);
+	serializeIn(state, node->getNode("assigned_agents"), facility.assigned_agents);
 }
 
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Base &base)
@@ -685,6 +686,14 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("engineering_skill"), s.engineering_skill);
 }
 
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, AgentPortrait &p)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("photo"), p.photo);
+	serializeIn(state, node->getNode("icon"), p.icon);
+}
+
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Agent &a)
 {
 	if (!node)
@@ -698,6 +707,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("current_stats"), a.current_stats);
 	serializeIn(state, node->getNode("home_base"), a.home_base);
 	serializeIn(state, node->getNode("owner"), a.owner);
+	serializeIn(state, node->getNode("assigned_to_lab"), a.assigned_to_lab);
 }
 
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, AgentGenerator &g)
@@ -1090,6 +1100,7 @@ template <> void serializeOut(sp<SerializationNode> node, const Facility &facili
 	serializeOut(node->addNode("type"), facility.type);
 	serializeOut(node->addNode("pos"), facility.pos);
 	serializeOut(node->addNode("buildTime"), facility.buildTime);
+	serializeOut(node->addNode("assigned_agents"), facility.assigned_agents);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const Base &base)
@@ -1225,6 +1236,12 @@ template <> void serializeOut(sp<SerializationNode> node, const AgentStats &s)
 	serializeOut(node->addNode("engineering_skill"), s.engineering_skill);
 }
 
+template <> void serializeOut(sp<SerializationNode> node, const AgentPortrait &p)
+{
+	serializeOut(node->addNode("photo"), p.photo);
+	serializeOut(node->addNode("icon"), p.icon);
+}
+
 template <> void serializeOut(sp<SerializationNode> node, const Agent &a)
 {
 	serializeOut(node->addNode("name"), a.name);
@@ -1236,6 +1253,7 @@ template <> void serializeOut(sp<SerializationNode> node, const Agent &a)
 	serializeOut(node->addNode("current_stats"), a.current_stats);
 	serializeOut(node->addNode("home_base"), a.home_base);
 	serializeOut(node->addNode("owner"), a.owner);
+	serializeOut(node->addNode("assigned_to_lab"), a.assigned_to_lab);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const AgentGenerator &g)

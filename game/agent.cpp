@@ -23,6 +23,8 @@ const std::map<Agent::Gender, UString> Agent::GenderMap = {
     {Agent::Gender::Male, "male"}, {Agent::Gender::Female, "female"},
 };
 
+Agent::Agent() : assigned_to_lab(false) {}
+
 AgentStats::AgentStats()
     : health(0), accuracy(0), reactions(0), speed(0), stamina(0), bravery(0), strength(0),
       psi_energy(0), psi_attack(0), psi_defence(0), physics_skill(0), biochem_skill(0),
@@ -50,6 +52,17 @@ template <> const UString &StateObject<Agent>::getTypeName()
 {
 	static UString name = "Agent";
 	return name;
+}
+template <> const UString &StateObject<Agent>::getId(const GameState &state, const sp<Agent> ptr)
+{
+	static const UString emptyString = "";
+	for (auto &a : state.agents)
+	{
+		if (a.second == ptr)
+			return a.first;
+	}
+	LogError("No agent matching pointer %p", ptr.get());
+	return emptyString;
 }
 
 AgentGenerator::AgentGenerator() : num_created(0) {}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc_manifest>
   <gamestate_xml SHA1="16415064f3037a04e535c3a6644ef5d2b000726e">gamestate.xml</gamestate_xml>
-  <gamestate_xml SHA1="d1b51c40f0402adcb69eadfc09a8642efc534e2d">gamestate/agent_generator.xml</gamestate_xml>
+  <gamestate_xml SHA1="b2db496939d0d36b94f9224721bc9c869672160e">gamestate/agent_generator.xml</gamestate_xml>
   <gamestate_xml SHA1="1dca603614f430b312839921dfaffaea1ba434b8">gamestate/agents.xml</gamestate_xml>
   <gamestate_xml SHA1="0b1fc22224d3d4d266780fe20b1db95ee052bba0">gamestate/base_layouts.xml</gamestate_xml>
   <gamestate_xml SHA1="9f859d3887a364db435ca7462c26d9522ffca803">gamestate/cities.xml</gamestate_xml>

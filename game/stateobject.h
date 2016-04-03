@@ -165,6 +165,12 @@ template <typename T> class StateRef
 		id = newId;
 		return *this;
 	}
+
+	sp<T> getSp() const
+	{
+		resolve();
+		return obj;
+	}
 };
 
 } // namespace OpenApoc

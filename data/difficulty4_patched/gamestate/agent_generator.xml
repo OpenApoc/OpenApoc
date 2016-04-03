@@ -67,13 +67,19 @@
         <entry>
           <key>male</key>
           <value>
-            <entry>PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:1:xcom3/ufodata/pal_01.dat</entry>
+            <entry>
+              <photo>PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:1:xcom3/ufodata/pal_01.dat</photo>
+              <icon>PCK:xcom3/ufodata/agntico.pck:xcom3/ufodata/agntico.tab:1:xcom3/ufodata/pal_01.dat</icon>
+            </entry>
           </value>
         </entry>
         <entry>
           <key>female</key>
           <value>
-            <entry>PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:1:xcom3/ufodata/pal_01.dat</entry>
+            <entry>
+              <photo>PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:1:xcom3/ufodata/pal_01.dat</photo>
+              <icon>PCK:xcom3/ufodata/agntico.pck:xcom3/ufodata/agntico.tab:1:xcom3/ufodata/pal_01.dat</icon>
+            </entry>
           </value>
         </entry>
       </value>
@@ -84,13 +90,19 @@
         <entry>
           <key>male</key>
           <value>
-            <entry>PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:1:xcom3/ufodata/pal_01.dat</entry>
+            <entry>
+              <photo>PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:1:xcom3/ufodata/pal_01.dat</photo>
+              <icon>PCK:xcom3/ufodata/agntico.pck:xcom3/ufodata/agntico.tab:1:xcom3/ufodata/pal_01.dat</icon>
+            </entry>
           </value>
         </entry>
         <entry>
           <key>female</key>
           <value>
-            <entry>PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:1:xcom3/ufodata/pal_01.dat</entry>
+            <entry>
+              <photo>PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:1:xcom3/ufodata/pal_01.dat</photo>
+              <icon>PCK:xcom3/ufodata/agntico.pck:xcom3/ufodata/agntico.tab:1:xcom3/ufodata/pal_01.dat</icon>
+            </entry>
           </value>
         </entry>
       </value>
@@ -101,13 +113,19 @@
         <entry>
           <key>male</key>
           <value>
-            <entry>PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:1:xcom3/ufodata/pal_01.dat</entry>
+            <entry>
+              <photo>PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:1:xcom3/ufodata/pal_01.dat</photo>
+              <icon>PCK:xcom3/ufodata/agntico.pck:xcom3/ufodata/agntico.tab:1:xcom3/ufodata/pal_01.dat</icon>
+            </entry>
           </value>
         </entry>
         <entry>
           <key>female</key>
           <value>
-            <entry>PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:1:xcom3/ufodata/pal_01.dat</entry>
+            <entry>
+              <photo>PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:1:xcom3/ufodata/pal_01.dat</photo>
+              <icon>PCK:xcom3/ufodata/agntico.pck:xcom3/ufodata/agntico.tab:1:xcom3/ufodata/pal_01.dat</icon>
+            </entry>
           </value>
         </entry>
       </value>

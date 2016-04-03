@@ -33,10 +33,17 @@ class AgentStats
 	int engineering_skill;
 };
 
+class AgentPortrait
+{
+  public:
+	sp<Image> photo;
+	sp<Image> icon;
+};
+
 class Agent : public StateObject<Agent>
 {
   public:
-	Agent() = default;
+	Agent();
 
 	enum class Type
 	{
@@ -63,7 +70,7 @@ class Agent : public StateObject<Agent>
 	static const std::map<Gender, UString> GenderMap;
 
 	UString name;
-	sp<Image> portrait;
+	AgentPortrait portrait;
 
 	Type type;
 	Species species;
@@ -74,6 +81,8 @@ class Agent : public StateObject<Agent>
 
 	StateRef<Base> home_base;
 	StateRef<Organisation> owner;
+
+	bool assigned_to_lab;
 };
 
 class AgentGenerator
@@ -90,7 +99,7 @@ class AgentGenerator
 	std::map<Agent::Species, float> species_chance;
 	std::map<Agent::Gender, float> gender_chance;
 
-	std::map<Agent::Species, std::map<Agent::Gender, std::list<sp<Image>>>> portraits;
+	std::map<Agent::Species, std::map<Agent::Gender, std::list<AgentPortrait>>> portraits;
 
 	std::map<Agent::Species, AgentStats> min_stats;
 	std::map<Agent::Species, AgentStats> max_stats;

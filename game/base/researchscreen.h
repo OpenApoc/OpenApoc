@@ -21,13 +21,18 @@ class ResearchScreen : public Stage
 	sp<Form> form;
 	StageCmd stageCmd;
 	StateRef<Base> base;
-	StateRef<Facility> selected_lab;
-	std::list<StateRef<Facility>> labs;
+	sp<Facility> selected_lab;
+	std::list<sp<Facility>> labs;
 
 	sp<GameState> state;
 
+	void setCurrentLabInfo();
+	sp<Control> createAgentControl(Vec2<int> size, StateRef<Agent> agent);
+	// FIXME: healthImage has a copy in CityView - maybe opportunity to merge?
+	sp<Image> healthImage;
+
   public:
-	ResearchScreen(sp<GameState> state, StateRef<Base> base, StateRef<Facility> selected_lab = {});
+	ResearchScreen(sp<GameState> state, StateRef<Base> base, sp<Facility> selected_lab = nullptr);
 	~ResearchScreen();
 	// Stage control
 	virtual void Begin() override;
