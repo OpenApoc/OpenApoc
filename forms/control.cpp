@@ -594,8 +594,8 @@ std::list<UString> Control::WordWrapText(sp<OpenApoc::BitmapFont> Font, UString 
 				if (currentLine == "")
 				{
 					LogWarning(
-						"No break in line \"%s\" found - this will probably overflow the control",
-					           currentTestLine.c_str());
+					    "No break in line \"%s\" found - this will probably overflow the control",
+					    currentTestLine.c_str());
 					currentLine = currentTestLine;
 					remainingChunks.pop_front();
 				}
