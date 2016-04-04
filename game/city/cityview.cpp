@@ -496,7 +496,8 @@ void CityView::EventOccurred(Event *e)
 
 	if (e->Type() == EVENT_KEY_DOWN && e->Keyboard().KeyCode == SDLK_ESCAPE)
 	{
-		stageCmd.cmd = StageCmd::Command::POP;
+		stageCmd.cmd = StageCmd::Command::PUSH;
+		stageCmd.nextStage = mksp<InGameOptions>(state);
 		return;
 	}
 	// FIXME: Check if scancode is better/worse
