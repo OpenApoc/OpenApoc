@@ -594,8 +594,8 @@ std::list<UString> Control::WordWrapText(sp<OpenApoc::BitmapFont> Font, UString 
 				if (currentLine == "")
 				{
 					LogWarning(
-					    "No break in line \"%s\" found - this will probably overflow the control",
-					    currentTestLine.c_str());
+						"No break in line \"%s\" found - this will probably overflow the control",
+					           currentTestLine.c_str());
 					currentLine = currentTestLine;
 					remainingChunks.pop_front();
 				}
@@ -629,6 +629,23 @@ void Control::SetParent(sp<Control> Parent)
 		Parent->Controls.push_back(shared_from_this());
 	}
 	owningControl = Parent;
+}
+
+sp<Control> Control::GetAncestor(sp<Control> Parent)
+{
+	sp<Control> ancestor = shared_from_this();
+	while (ancestor != nullptr)
+	{
+		if (ancestor->GetParent() == Parent)
+		{
+			break;
+		}
+		else
+		{
+			ancestor = ancestor->GetParent();
+		}
+	}
+	return ancestor;
 }
 
 Vec2<int> Control::GetLocationOnScreen() const

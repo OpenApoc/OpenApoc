@@ -118,11 +118,12 @@ void ListBox::EventOccured(Event *e)
 	if (e->Type() == EVENT_FORM_INTERACTION)
 	{
 		sp<Control> ctrl = e->Forms().RaisedBy;
+		sp<Control> child = ctrl->GetAncestor(shared_from_this());
 		if (e->Forms().EventFlag == FormEventType::MouseMove)
 		{
 			// FIXME: Scrolling amount should match wheel amount
 			// Should wheel orientation match as well? Who has horizontal scrolls??
-			if (ctrl == shared_from_this() || ctrl->GetParent() == shared_from_this())
+			if (ctrl == shared_from_this() || child != nullptr)
 			{
 				int wheelDelta =
 				    e->Forms().MouseInfo.WheelVertical + e->Forms().MouseInfo.WheelHorizontal;
@@ -138,19 +139,23 @@ void ListBox::EventOccured(Event *e)
 
 			if (ctrl == shared_from_this() || ctrl == scroller)
 			{
-				ctrl = nullptr;
+				child = nullptr;
 			}
-			if (hovered != ctrl)
+			if (hovered != child)
 			{
-				hovered = ctrl;
+				hovered = child;
 				this->pushFormEvent(FormEventType::ListBoxChangeHover, e);
 			}
 		}
 		else if (e->Forms().EventFlag == FormEventType::MouseDown)
 		{
-			if (selected != ctrl && ctrl->GetParent() == shared_from_this() && ctrl != scroller)
+			if (ctrl == shared_from_this() || ctrl == scroller)
 			{
-				selected = ctrl;
+				child = nullptr;
+			}
+			if (selected != child && child != nullptr)
+			{
+				selected = child;
 				this->pushFormEvent(FormEventType::ListBoxChangeSelected, e);
 			}
 		}
@@ -346,7 +351,7 @@ void ListBox::setSelected(sp<Control> c)
 	if (!found)
 	{
 		LogError(
-		    "Trying set ListBox selected control to something that isn't a member of the list");
+			"Trying set ListBox selected control to something that isn't a member of the list");
 	}
 	this->selected = c;
 }

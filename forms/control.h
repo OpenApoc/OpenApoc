@@ -107,6 +107,7 @@ class Control : public std::enable_shared_from_this<Control>
 	sp<Control> GetParent() const;
 	sp<Form> GetForm();
 	void SetParent(sp<Control> Parent);
+	sp<Control> GetAncestor(sp<Control> Parent);
 
 	Vec2<int> GetLocationOnScreen() const;
 
