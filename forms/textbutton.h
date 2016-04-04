@@ -27,17 +27,18 @@ class TextButton : public Control
 	virtual void OnRender() override;
 
   public:
-	enum class TextButtonRenderStyles
+	enum class ButtonRenderStyle
 	{
-		SolidButtonStyle,
-		MenuButtonStyle
+		Flat,
+		Bevel,
+		Menu
 	};
 
 	HorizontalAlignment TextHAlign;
 	VerticalAlignment TextVAlign;
-	TextButtonRenderStyles RenderStyle;
+	ButtonRenderStyle RenderStyle;
 
-	TextButton(UString Text = "", sp<BitmapFont> font = nullptr);
+	TextButton(const UString &Text = "", sp<BitmapFont> font = nullptr);
 	virtual ~TextButton();
 
 	virtual void EventOccured(Event *e) override;
@@ -45,7 +46,7 @@ class TextButton : public Control
 	virtual void UnloadResources() override;
 
 	UString GetText() const;
-	void SetText(UString Text);
+	void SetText(const UString &Text);
 
 	sp<BitmapFont> GetFont() const;
 	void SetFont(sp<BitmapFont> NewFont);

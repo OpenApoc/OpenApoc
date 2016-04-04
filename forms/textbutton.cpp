@@ -8,13 +8,13 @@
 namespace OpenApoc
 {
 
-TextButton::TextButton(UString Text, sp<BitmapFont> font)
+TextButton::TextButton(const UString &Text, sp<BitmapFont> font)
     : Control(), cached(nullptr),
       buttonclick(
           fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
       buttonbackground(fw().data->load_image("UI/TEXTBUTTONBACK.PNG")),
       TextHAlign(HorizontalAlignment::Centre), TextVAlign(VerticalAlignment::Centre),
-      RenderStyle(TextButtonRenderStyles::MenuButtonStyle)
+      RenderStyle(ButtonRenderStyle::Menu)
 {
 	label = mksp<Label>(Text, font);
 }
@@ -48,26 +48,28 @@ void TextButton::OnRender()
 		label->TextVAlign = this->TextVAlign;
 	}
 
-	if (cached == nullptr || cached->size != Vec2<unsigned int>{Size.x, Size.y})
+	if (cached == nullptr || cached->size != Vec2<unsigned int>{Size})
 	{
-		cached.reset(new Surface{Vec2<unsigned int>{Size.x, Size.y}});
+		cached.reset(new Surface{Vec2<unsigned int>{Size}});
 
 		RendererSurfaceBinding b(*fw().renderer, cached);
 		fw().renderer->clear();
 
 		switch (RenderStyle)
 		{
-			case TextButtonRenderStyles::SolidButtonStyle:
-				fw().renderer->drawFilledRect(Vec2<float>{0, 0}, Vec2<float>{Size.x, Size.y},
-				                              BackgroundColour);
+			case ButtonRenderStyle::Flat:
+				fw().renderer->drawFilledRect(Vec2<float>{0, 0}, Size, BackgroundColour);
 				break;
-			case TextButtonRenderStyles::MenuButtonStyle:
-				fw().renderer->drawScaled(buttonbackground, Vec2<float>{0, 0},
-				                          Vec2<float>{Size.x, Size.y});
-				fw().renderer->drawRect(Vec2<float>{2, 2}, Vec2<float>{Size.x - 4, Size.y - 4},
-				                        Colour{48, 48, 48});
-				fw().renderer->drawFilledRect(
-				    Vec2<float>{3, 3}, Vec2<float>{Size.x - 6, Size.y - 6}, Colour{160, 160, 160});
+			case ButtonRenderStyle::Bevel:
+				fw().renderer->drawFilledRect(Vec2<float>{0, 0}, Size, Colour{112, 112, 112});
+				fw().renderer->drawRect(Vec2<float>{0, 0}, Size, Colour{16, 16, 16});
+				fw().renderer->drawRect(Vec2<float>{2, 2}, Size - 2, Colour{64, 64, 64});
+				fw().renderer->drawRect(Vec2<float>{1, 1}, Size - 2, Colour{212, 212, 212});
+				break;
+			case ButtonRenderStyle::Menu:
+				fw().renderer->drawScaled(buttonbackground, Vec2<float>{0, 0}, Size);
+				fw().renderer->drawRect(Vec2<float>{2, 2}, Size - 4, Colour{48, 48, 48});
+				fw().renderer->drawFilledRect(Vec2<float>{3, 3}, Size - 6, Colour{160, 160, 160});
 				fw().renderer->drawLine(Vec2<float>{3, 3}, Vec2<float>{Size.x - 3, 3},
 				                        Colour{220, 220, 220});
 				fw().renderer->drawLine(Vec2<float>{3, Size.y - 5},
@@ -83,11 +85,19 @@ void TextButton::OnRender()
 	{
 		switch (RenderStyle)
 		{
-			case TextButtonRenderStyles::SolidButtonStyle:
+			case ButtonRenderStyle::Flat:
 				fw().renderer->drawFilledRect(Vec2<float>{0, 0}, Vec2<float>{Size.x, Size.y},
 				                              Colour{255, 255, 255});
 				break;
-			case TextButtonRenderStyles::MenuButtonStyle:
+			case ButtonRenderStyle::Bevel:
+				fw().renderer->drawRect(Vec2<float>{0, 0}, Vec2<float>{Size.x, Size.y},
+				                        Colour{16, 16, 16}, 2.0f);
+				fw().renderer->drawRect(Vec2<float>{3, 3}, Vec2<float>{Size.x - 4, Size.y - 4},
+				                        Colour{64, 64, 64});
+				fw().renderer->drawRect(Vec2<float>{2, 2}, Vec2<float>{Size.x - 4, Size.y - 4},
+				                        Colour{212, 212, 212});
+				break;
+			case ButtonRenderStyle::Menu:
 				fw().renderer->drawRect(Vec2<float>{0, 0}, Vec2<float>{Size.x, Size.y},
 				                        Colour{255, 255, 255}, 2);
 				break;
@@ -104,7 +114,7 @@ void TextButton::UnloadResources() {}
 
 UString TextButton::GetText() const { return label->GetText(); }
 
-void TextButton::SetText(UString Text) { label->SetText(Text); }
+void TextButton::SetText(const UString &Text) { label->SetText(Text); }
 
 sp<BitmapFont> TextButton::GetFont() const { return label->GetFont(); }
 

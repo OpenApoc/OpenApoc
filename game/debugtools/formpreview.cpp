@@ -63,7 +63,7 @@ FormPreview::FormPreview() : Stage()
 	std::vector<UString> idlist = fw().gamecore->GetFormIDs();
 	for (auto idx = idlist.begin(); idx != idlist.end(); idx++)
 	{
-		l = lb->createChild<Label>((UString)*idx, fw().gamecore->GetFont("SMALFONT"));
+		l = lb->createChild<Label>(*idx, fw().gamecore->GetFont("SMALFONT"));
 		l->Name = l->GetText();
 		l->BackgroundColour = {192, 80, 80, 0};
 		// lb->AddItem( l );

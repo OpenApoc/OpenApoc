@@ -7,7 +7,7 @@
 namespace OpenApoc
 {
 
-Label::Label(UString Text, sp<BitmapFont> font)
+Label::Label(const UString &Text, sp<BitmapFont> font)
     : Control(), text(Text), font(font), TextHAlign(HorizontalAlignment::Left),
       TextVAlign(VerticalAlignment::Top), WordWrap(true)
 {
@@ -78,7 +78,7 @@ void Label::UnloadResources() {}
 
 UString Label::GetText() const { return text; }
 
-void Label::SetText(UString Text) { text = Text; }
+void Label::SetText(const UString &Text) { text = Text; }
 
 sp<BitmapFont> Label::GetFont() const { return font; }
 

@@ -31,7 +31,7 @@ void UfopaediaCategoryView::Begin()
 
 		auto entryControl = mksp<TextButton>(tr(entry->title), infoLabel->GetFont());
 		entryControl->Name = "ENTRY_SHORTCUT";
-		entryControl->RenderStyle = TextButton::TextButtonRenderStyles::SolidButtonStyle;
+		entryControl->RenderStyle = TextButton::ButtonRenderStyle::Flat;
 		entryControl->TextHAlign = HorizontalAlignment::Left;
 		entryControl->TextVAlign = VerticalAlignment::Centre;
 		entryControl->SetData(entry);

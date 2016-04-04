@@ -24,7 +24,7 @@ class Label : public Control
 	VerticalAlignment TextVAlign;
 	bool WordWrap;
 
-	Label(UString Text = "", sp<BitmapFont> font = nullptr);
+	Label(const UString &Text = "", sp<BitmapFont> font = nullptr);
 	virtual ~Label();
 
 	virtual void EventOccured(Event *e) override;
@@ -32,7 +32,7 @@ class Label : public Control
 	virtual void UnloadResources() override;
 
 	UString GetText() const;
-	void SetText(UString Text);
+	void SetText(const UString &Text);
 
 	sp<BitmapFont> GetFont() const;
 	void SetFont(sp<BitmapFont> NewFont);

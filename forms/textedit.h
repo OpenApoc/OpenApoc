@@ -34,7 +34,7 @@ class TextEdit : public Control
 	HorizontalAlignment TextHAlign;
 	VerticalAlignment TextVAlign;
 
-	TextEdit(UString Text = "", sp<BitmapFont> font = nullptr);
+	TextEdit(const UString &Text = "", sp<BitmapFont> font = nullptr);
 	virtual ~TextEdit();
 
 	virtual void EventOccured(Event *e) override;
@@ -42,7 +42,7 @@ class TextEdit : public Control
 	virtual void UnloadResources() override;
 
 	UString GetText() const;
-	void SetText(UString Text);
+	void SetText(const UString &Text);
 
 	sp<BitmapFont> GetFont() const;
 	void SetFont(sp<BitmapFont> NewFont);

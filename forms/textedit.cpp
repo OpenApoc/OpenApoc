@@ -7,7 +7,7 @@
 namespace OpenApoc
 {
 
-TextEdit::TextEdit(UString Text, sp<BitmapFont> font)
+TextEdit::TextEdit(const UString &Text, sp<BitmapFont> font)
     : Control(), caretDraw(false), caretTimer(0), text(Text), font(font), editting(false),
       editShift(false), editAltGr(false), SelectionStart(Text.length()),
       TextHAlign(HorizontalAlignment::Left), TextVAlign(VerticalAlignment::Centre)
@@ -110,8 +110,8 @@ void TextEdit::EventOccured(Event *e)
 				default:
 					// FIXME: This should use SDL Text Input API!
 					UString convert(SDL_GetKeyName(
-					    e->Keyboard()
-					        .KeyCode)); // SDLK* are based on Unicode, if I read the docs right
+						e->Keyboard()
+						.KeyCode)); // SDLK* are based on Unicode, if I read the docs right
 					if (convert.length() == 1 && convert.c_str()[0] != 0)
 					{
 						text.insert(SelectionStart, convert.c_str());
@@ -220,7 +220,7 @@ void TextEdit::UnloadResources() {}
 
 UString TextEdit::GetText() const { return text; }
 
-void TextEdit::SetText(UString Text)
+void TextEdit::SetText(const UString &Text)
 {
 	text = Text;
 	SelectionStart = text.length();
