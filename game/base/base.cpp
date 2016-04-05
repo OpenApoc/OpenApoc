@@ -96,9 +96,9 @@ Base::BuildError Base::canBuildFacility(StateRef<FacilityType> type, Vec2<int> p
 	{
 		for (int y = pos.y; y < pos.y + type->size; ++y)
 		{
-			if (getFacility({x, y}) != nullptr)
+			if (!corridors[x][y])
 			{
-				return BuildError::Occupied;
+				return BuildError::OutOfBounds;
 			}
 		}
 	}
@@ -106,9 +106,9 @@ Base::BuildError Base::canBuildFacility(StateRef<FacilityType> type, Vec2<int> p
 	{
 		for (int y = pos.y; y < pos.y + type->size; ++y)
 		{
-			if (!corridors[x][y])
+			if (getFacility({x, y}) != nullptr)
 			{
-				return BuildError::OutOfBounds;
+				return BuildError::Occupied;
 			}
 		}
 	}

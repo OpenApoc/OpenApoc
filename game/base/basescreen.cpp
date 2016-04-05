@@ -180,17 +180,9 @@ void BaseScreen::EventOccurred(Event *e)
 			}
 			else if (e->Forms().RaisedBy->Name == "BUTTON_BASE_RES_AND_MANUF")
 			{
-				// FIXME: If you don't have any vehicles this button should do nothing
+				// FIXME: If you don't have any facilities this button should do nothing
 				stageCmd.cmd = StageCmd::Command::PUSH;
 				stageCmd.nextStage = mksp<ResearchScreen>(state, this->base);
-				return;
-			}
-			// test
-			else if (e->Forms().RaisedBy->Name == "BUTTON_BASE_HIREFIRESTAFF")
-			{
-				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage =
-				    mksp<MessageBox>("Game Over", "Quit?", MessageBox::ButtonOptions::YesNo);
 				return;
 			}
 		}
@@ -259,11 +251,46 @@ void BaseScreen::EventOccurred(Event *e)
 		{
 			if (drag && dragFacility)
 			{
-				base->buildFacility(dragFacility, selection);
-				form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
-				// FIXME: Report build errors
+				if (selection != NO_SELECTION)
+				{
+					Base::BuildError error = base->canBuildFacility(dragFacility, selection);
+					switch (error)
+					{
+						case Base::BuildError::NoError:
+							base->buildFacility(dragFacility, selection);
+							form->FindControlTyped<Label>("TEXT_FUNDS")
+							    ->SetText(state->getPlayerBalance());
+							break;
+						case Base::BuildError::Occupied:
+							stageCmd.cmd = StageCmd::Command::PUSH;
+							stageCmd.nextStage = mksp<MessageBox>(
+							    tr("Area Occupied By Existing Facility"),
+							    tr("Existing facilities in this area of the base must be destroyed "
+							       "before construction work can begin."),
+							    MessageBox::ButtonOptions::Ok);
+							break;
+						case Base::BuildError::OutOfBounds:
+							stageCmd.cmd = StageCmd::Command::PUSH;
+							stageCmd.nextStage = mksp<MessageBox>(
+							    tr("Planning Permission Denied"),
+							    tr("Planning permission is denied for this proposed extension to "
+							       "the base, on the grounds that the additional excavations "
+							       "required would seriously weaken the foundations of the "
+							       "building."),
+							    MessageBox::ButtonOptions::Ok);
+							break;
+						case Base::BuildError::NoMoney:
+							stageCmd.cmd = StageCmd::Command::PUSH;
+							stageCmd.nextStage = mksp<MessageBox>(
+							    tr("Funds exceeded"), tr("The proposed construction work is not "
+							                             "possible with your available funds."),
+							    MessageBox::ButtonOptions::Ok);
+							break;
+					}
+				}
 				drag = false;
 				dragFacility = "";
+				selection = NO_SELECTION;
 			}
 		}
 	}
