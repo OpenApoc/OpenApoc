@@ -249,6 +249,7 @@ void BaseScreen::EventOccurred(Event *e)
 
 		if (e->Forms().EventFlag == FormEventType::MouseUp)
 		{
+			// Facility construction
 			if (drag && dragFacility)
 			{
 				if (selection != NO_SELECTION)
@@ -290,7 +291,35 @@ void BaseScreen::EventOccurred(Event *e)
 				}
 				drag = false;
 				dragFacility = "";
-				selection = NO_SELECTION;
+			}
+			// Facility removal
+			else if (selFacility)
+			{
+				if (selection != NO_SELECTION)
+				{
+					Base::BuildError error = base->canDestroyFacility(selection);
+					switch (error)
+					{
+					case Base::BuildError::NoError:
+						stageCmd.cmd = StageCmd::Command::PUSH;
+						stageCmd.nextStage = mksp<MessageBox>(
+							tr("Destroy facility"), tr("Are you sure?"),
+							MessageBox::ButtonOptions::YesNo,
+							[this] {
+							this->base->destroyFacility(this->selection);
+							this->selFacility = nullptr;
+						});
+						break;
+					case Base::BuildError::Occupied:
+						stageCmd.cmd = StageCmd::Command::PUSH;
+						stageCmd.nextStage = mksp<MessageBox>(
+							tr("Facility in use"),
+							tr(""),
+							MessageBox::ButtonOptions::Ok);
+					default:
+						break;
+					}
+				}
 			}
 		}
 	}

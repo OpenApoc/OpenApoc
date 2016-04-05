@@ -93,7 +93,7 @@ void MessageBox::EventOccurred(Event *e)
 			         e->Forms().RaisedBy->Name == "BUTTON_NO")
 			{
 				stageCmd.cmd = StageCmd::Command::POP;
-				if (callbackYes)
+				if (callbackNo)
 					callbackNo();
 				return;
 			}
