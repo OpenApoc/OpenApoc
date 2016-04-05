@@ -110,8 +110,8 @@ void TextEdit::EventOccured(Event *e)
 				default:
 					// FIXME: This should use SDL Text Input API!
 					UString convert(SDL_GetKeyName(
-						e->Keyboard()
-						.KeyCode)); // SDLK* are based on Unicode, if I read the docs right
+					    e->Keyboard()
+					        .KeyCode)); // SDLK* are based on Unicode, if I read the docs right
 					if (convert.length() == 1 && convert.c_str()[0] != 0)
 					{
 						text.insert(SelectionStart, convert.c_str());

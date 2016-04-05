@@ -190,7 +190,7 @@ void BaseScreen::EventOccurred(Event *e)
 			{
 				stageCmd.cmd = StageCmd::Command::PUSH;
 				stageCmd.nextStage =
-					mksp<MessageBox>("Game Over", "Quit?", MessageBox::ButtonOptions::YesNo);
+				    mksp<MessageBox>("Game Over", "Quit?", MessageBox::ButtonOptions::YesNo);
 				return;
 			}
 		}
