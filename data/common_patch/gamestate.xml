@@ -22,4 +22,46 @@
       <value>5</value>
     </entry>
   </initial_agents>
+  <initial_facilities>
+    <entry>
+      <key>FACILITYTYPE_VEHICLE_REPAIR_BAY</key>
+      <value>1</value>
+    </entry>
+    <entry>
+      <key>FACILITYTYPE_ALIEN_CONTAINMENT</key>
+      <value>1</value>
+    </entry>
+    <entry>
+      <key>FACILITYTYPE_BIOCHEMISTRY_LAB</key>
+      <value>1</value>
+    </entry>
+    <entry>
+      <key>FACILITYTYPE_LIVING_QUARTERS</key>
+      <value>3</value>
+    </entry>
+    <entry>
+      <key>FACILITYTYPE_MEDICAL_BAY</key>
+      <value>1</value>
+    </entry>
+    <entry>
+      <key>FACILITYTYPE_PSI-GYM</key>
+      <value>1</value>
+    </entry>
+    <entry>
+      <key>FACILITYTYPE_QUANTUM_PHYSICS_LAB</key>
+      <value>1</value>
+    </entry>
+    <entry>
+      <key>FACILITYTYPE_STORES</key>
+      <value>2</value>
+    </entry>
+    <entry>
+      <key>FACILITYTYPE_TRAINING_AREA</key>
+      <value>1</value>
+    </entry>
+    <entry>
+      <key>FACILITYTYPE_WORKSHOP</key>
+      <value>1</value>
+    </entry>
+  </initial_facilities>
 </gamestate>

@@ -170,7 +170,7 @@ void GameState::startGame()
 	auto bld = buildingsWithBases[bldDist(this->rng)];
 
 	auto base = mksp<Base>(*this, StateRef<Building>{this, bld});
-	base->startingBase(*this, this->rng);
+	base->startingBase(*this);
 	// FIXME: Make the base names increment (NEED TO BE UNIQUE!!)
 	this->player_bases[Base::getPrefix() + "1"] = base;
 	bld->owner = this->getPlayer();

@@ -44,6 +44,7 @@ class GameState
 	AgentGenerator agent_generator;
 
 	std::map<Agent::Type, unsigned> initial_agents;
+	std::map<UString, unsigned> initial_facilities;
 
 	StateRef<Organisation> player;
 

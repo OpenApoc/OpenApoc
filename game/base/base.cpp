@@ -4,7 +4,7 @@
 #include "game/city/building.h"
 #include "game/organisation.h"
 
-#include <unordered_set>
+#include <random>
 
 namespace OpenApoc
 {
@@ -46,7 +46,7 @@ sp<Facility> Base::getFacility(Vec2<int> pos) const
 	return nullptr;
 }
 
-void Base::startingBase(GameState &state, std::default_random_engine &rng)
+void Base::startingBase(GameState &state)
 {
 	// Figure out positions available for placement
 	std::vector<Vec2<int>> positions;
@@ -56,32 +56,46 @@ void Base::startingBase(GameState &state, std::default_random_engine &rng)
 		{
 			if (corridors[x][y] && getFacility({x, y}) == nullptr)
 			{
+				// FIXME: Store free positions for every possible size?
 				positions.push_back({x, y});
 			}
 		}
 	}
 
 	// Randomly fill them with facilities
-	for (auto &i : state.facility_types)
+	for (auto &facilityTypePair : state.initial_facilities)
 	{
-		if (i.second->fixed)
-			continue;
 		if (positions.empty())
 			break;
-		std::uniform_int_distribution<int> facilityPos(0, positions.size() - 1);
-		buildFacility({&state, i.first}, positions[facilityPos(rng)], true);
 
-		// Clear used positions
-		for (auto pos = positions.begin(); pos != positions.end();)
+		auto type = facilityTypePair.first;
+		auto count = facilityTypePair.second;
+		while (count > 0)
 		{
-			if (getFacility(*pos) != nullptr)
+			auto facilityPos = std::uniform_int_distribution<int>(0, positions.size() - 1);
+			Vec2<int> random;
+			BuildError error;
+			do
 			{
-				pos = positions.erase(pos);
-			}
-			else
+				random = positions[facilityPos(state.rng)];
+				error = canBuildFacility({&state, type}, random, true);
+			} while (error != BuildError::NoError); // Try harder
+			buildFacility({&state, type}, random, true);
+
+			// Clear used positions
+			for (auto pos = positions.begin(); pos != positions.end();)
 			{
-				++pos;
+				if (getFacility(*pos) != nullptr)
+				{
+					pos = positions.erase(pos);
+				}
+				else
+				{
+					++pos;
+				}
 			}
+
+			count--;
 		}
 	}
 }

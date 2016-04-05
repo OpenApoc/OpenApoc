@@ -7,7 +7,6 @@
 #include "library/strings.h"
 #include "library/vec.h"
 
-#include <random>
 #include <vector>
 
 namespace OpenApoc
@@ -44,7 +43,7 @@ class Base : public StateObject<Base>
 	const std::vector<std::vector<bool>> &getCorridors() const { return corridors; }
 	const std::vector<sp<Facility>> &getFacilities() const { return facilities; }
 
-	void startingBase(GameState &state, std::default_random_engine &rng);
+	void startingBase(GameState &state);
 	BuildError canBuildFacility(StateRef<FacilityType> type, Vec2<int> pos,
 	                            bool free = false) const;
 	void buildFacility(StateRef<FacilityType> type, Vec2<int> pos, bool free = false);

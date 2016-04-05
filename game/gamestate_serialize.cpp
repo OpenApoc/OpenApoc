@@ -743,6 +743,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &
 	serializeIn(state, node->getSection("agents"), s.agents);
 	serializeIn(state, node->getSection("agent_generator"), s.agent_generator);
 	serializeIn(state, node->getNode("initial_agents"), s.initial_agents);
+	serializeIn(state, node->getNode("initial_facilities"), s.initial_facilities);
 	serializeIn(state, node->getNode("player"), s.player);
 	serializeIn(state, node->getNode("time"), s.time);
 }
@@ -1285,6 +1286,7 @@ void serializeOut(sp<SerializationNode> node, const GameState &state)
 	serializeOut(node->addSection("agents"), state.agents);
 	serializeOut(node->addSection("agent_generator"), state.agent_generator);
 	serializeOut(node->addNode("initial_agents"), state.initial_agents);
+	serializeOut(node->addNode("initial_facilities"), state.initial_facilities);
 	serializeOut(node->addNode("player"), state.player);
 	serializeOut(node->addNode("time"), state.time);
 }
