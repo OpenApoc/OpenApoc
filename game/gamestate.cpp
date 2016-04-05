@@ -1,5 +1,6 @@
 #include "game/gamestate.h"
 #include "game/base/base.h"
+#include "game/base/facility.h"
 #include "game/city/building.h"
 #include "game/city/city.h"
 #include "game/city/scenery.h"
@@ -44,6 +45,13 @@ GameState::~GameState()
 		vehicle->missions.clear();
 		vehicle->equipment.clear();
 		vehicle->mover = nullptr;
+	}
+	for (auto &b : this->player_bases)
+	{
+		for (auto &f : b.second->facilities)
+		{
+			f->assigned_agents.clear();
+		}
 	}
 }
 

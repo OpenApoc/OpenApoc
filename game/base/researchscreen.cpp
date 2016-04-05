@@ -46,6 +46,59 @@ void ResearchScreen::Begin()
 		l.set({0, 1}, Colour{215, 0, 0});
 	}
 	this->healthImage = img;
+	auto unassignedAgentList = form->FindControlTyped<ListBox>("LIST_UNASSIGNED");
+	unassignedAgentList->addCallback(
+	    FormEventType::ListBoxChangeSelected, [this](Event *e) -> void {
+		    LogWarning("unassigned agent selected");
+		    if (this->assigned_agent_count >= this->selected_lab->type->capacityAmount)
+		    {
+			    LogWarning("no free space in lab");
+			    return;
+		    }
+		    auto list = std::static_pointer_cast<ListBox>(e->Forms().RaisedBy);
+		    auto agent = list->GetSelectedData<Agent>();
+		    if (!agent)
+		    {
+			    LogError("No agent in selected data");
+			    return;
+		    }
+		    if (agent->assigned_to_lab)
+		    {
+			    LogError("Agent \"%s\" already assigned to a lab?", agent->name.c_str());
+			    return;
+		    }
+		    agent->assigned_to_lab = true;
+		    this->selected_lab->assigned_agents.push_back({state.get(), agent});
+		    this->setCurrentLabInfo();
+		});
+	auto removeFn = [this](Event *e) -> void {
+		LogWarning("assigned agent selected");
+		auto list = std::static_pointer_cast<ListBox>(e->Forms().RaisedBy);
+		auto agent = list->GetSelectedData<Agent>();
+		if (!agent)
+		{
+			LogError("No agent in selected data");
+			return;
+		}
+		if (!agent->assigned_to_lab)
+		{
+			LogError("Agent \"%s\" not assigned to a lab?", agent->name.c_str());
+			return;
+		}
+		agent->assigned_to_lab = false;
+		this->selected_lab->assigned_agents.remove({state.get(), agent});
+		this->setCurrentLabInfo();
+	};
+	auto assignedAgentListCol1 = form->FindControlTyped<ListBox>("LIST_ASSIGNED_COL1");
+	assignedAgentListCol1->addCallback(FormEventType::ListBoxChangeSelected, removeFn);
+	auto assignedAgentListCol2 = form->FindControlTyped<ListBox>("LIST_ASSIGNED_COL2");
+	assignedAgentListCol2->addCallback(FormEventType::ListBoxChangeSelected, removeFn);
+
+	// Set the listboxes to always emit events, otherwise the first entry is considered 'selected'
+	// to clicking on it won't get a callback
+	assignedAgentListCol1->AlwaysEmitSelectionEvents = true;
+	assignedAgentListCol2->AlwaysEmitSelectionEvents = true;
+	unassignedAgentList->AlwaysEmitSelectionEvents = true;
 
 	setCurrentLabInfo();
 }
@@ -109,6 +162,7 @@ bool ResearchScreen::IsTransition() { return false; }
 void ResearchScreen::setCurrentLabInfo()
 {
 	int totalLabSkill = 0;
+	this->assigned_agent_count = 0;
 	auto labType = this->selected_lab->type->capacityType;
 	UString labTypeName = "UNKNOWN";
 	Agent::Type listedAgentType;
@@ -135,6 +189,9 @@ void ResearchScreen::setCurrentLabInfo()
 
 	form->FindControlTyped<Label>("TEXT_LAB_TYPE")->SetText(labTypeName);
 
+	auto font = fw().gamecore->GetFont("SMALFONT");
+	auto agentEntryHeight = font->GetFontHeight() * 3;
+
 	auto unassignedAgentList = form->FindControlTyped<ListBox>("LIST_UNASSIGNED");
 	unassignedAgentList->Clear();
 	auto assignedAgentListCol1 = form->FindControlTyped<ListBox>("LIST_ASSIGNED_COL1");
@@ -156,18 +213,42 @@ void ResearchScreen::setCurrentLabInfo()
 			{
 				if (assigned_agent.getSp() == agent.second)
 				{
+					this->assigned_agent_count++;
+					if (this->assigned_agent_count > this->selected_lab->type->capacityAmount)
+					{
+						LogError("Selected lab has %d assigned agents, but has a capacity of %d",
+						         this->assigned_agent_count,
+						         this->selected_lab->type->capacityAmount);
+					}
 					assigned_to_current_lab = true;
+					switch (labType)
+					{
+						case FacilityType::Capacity::Physics:
+							totalLabSkill += agent.second->current_stats.physics_skill;
+							break;
+						case FacilityType::Capacity::Chemistry:
+							totalLabSkill += agent.second->current_stats.biochem_skill;
+							break;
+						case FacilityType::Capacity::Workshop:
+							totalLabSkill += agent.second->current_stats.engineering_skill;
+							break;
+						default:
+							LogError("Unexpected lab type");
+					}
 					break;
 				}
 			}
 			if (!assigned_to_current_lab)
 				continue;
 		}
-		auto agentControl = this->createAgentControl({130, 40}, {state.get(), agent.second});
+		auto agentControl =
+		    this->createAgentControl({130, agentEntryHeight}, {state.get(), agent.second});
 
 		if (assigned_to_current_lab)
 		{
-			if (assignedAgentListCol1->Controls.size() < 5)
+			// FIXME: This should stop at 5 entries, but there's always a 'scrollbar' control, so
+			// stop at 6 instead
+			if (assignedAgentListCol1->Controls.size() < 6)
 				assignedAgentListCol1->AddItem(agentControl);
 			else
 				assignedAgentListCol2->AddItem(agentControl);
@@ -177,6 +258,12 @@ void ResearchScreen::setCurrentLabInfo()
 			unassignedAgentList->AddItem(agentControl);
 		}
 	}
+	assignedAgentListCol1->ItemSize = agentEntryHeight;
+	assignedAgentListCol2->ItemSize = agentEntryHeight;
+	unassignedAgentList->ItemSize = agentEntryHeight;
+
+	auto totalSkillLabel = form->FindControlTyped<Label>("TEXT_TOTAL_SKILL");
+	totalSkillLabel->SetText(UString::format(tr("Total Skill: %d"), totalLabSkill));
 }
 // FIXME: Put this in the rules somewhere?
 // FIXME: This could be shared with the citview ICON_RESOURCES?

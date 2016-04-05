@@ -31,6 +31,8 @@ class ResearchScreen : public Stage
 	// FIXME: healthImage has a copy in CityView - maybe opportunity to merge?
 	sp<Image> healthImage;
 
+	int assigned_agent_count;
+
   public:
 	ResearchScreen(sp<GameState> state, StateRef<Base> base, sp<Facility> selected_lab = nullptr);
 	~ResearchScreen();
