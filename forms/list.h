@@ -26,6 +26,7 @@ class ListBox : public Control
 	int ItemSize, ItemSpacing;
 	Orientation ListOrientation;
 	Colour HoverColour, SelectedColour;
+	bool AlwaysEmitSelectionEvents;
 
 	ListBox();
 	ListBox(sp<ScrollBar> ExternalScrollBar);
