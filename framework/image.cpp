@@ -140,34 +140,42 @@ RGBImageLock::~RGBImageLock() {}
 
 Colour RGBImageLock::get(Vec2<unsigned int> pos)
 {
+#ifndef NDEBUG
 	if (!ReadUse(this->use))
 	{
 		LogError("Trying to get() on image lock without specifying 'read' use");
 		return 0;
 	}
+#endif
 	unsigned offset = pos.y * this->img->size.x + pos.x;
+#ifndef NDEBUG
 	if (pos.x >= this->img->size.x || pos.y >= this->img->size.y)
 	{
 		LogError("Getting {%u,%u} in image of size {%u,%u}", pos.x, pos.y, this->img->size.x,
 		         this->img->size.y);
 	}
+#endif
 	assert(offset < this->img->size.x * this->img->size.y);
 	return this->img->pixels[offset];
 }
 
 void RGBImageLock::set(Vec2<unsigned int> pos, Colour c)
 {
+#ifndef NDEBUG
 	if (!WriteUse(this->use))
 	{
 		LogError("Trying to set() on image lock without specifying 'write' use");
 		return;
 	}
+#endif
 	unsigned offset = pos.y * this->img->size.x + pos.x;
+#ifndef NDEBUG
 	if (pos.x >= this->img->size.x || pos.y >= this->img->size.y)
 	{
 		LogError("Setting {%u,%u} in image of size {%u,%u}", pos.x, pos.y, this->img->size.x,
 		         this->img->size.y);
 	}
+#endif
 	assert(offset < this->img->size.x * this->img->size.y);
 	this->img->pixels[offset] = c;
 }
@@ -184,34 +192,42 @@ PaletteImageLock::~PaletteImageLock() {}
 
 uint8_t PaletteImageLock::get(Vec2<unsigned int> pos)
 {
+#ifndef NDEBUG
 	if (!ReadUse(this->use))
 	{
 		LogError("Trying to get() on image lock without specifying 'read' use");
 		return 0;
 	}
+#endif
 	unsigned offset = pos.y * this->img->size.x + pos.x;
+#ifndef NDEBUG
 	if (pos.x >= this->img->size.x || pos.y >= this->img->size.y)
 	{
 		LogError("Getting {%u,%u} in image of size {%u,%u}", pos.x, pos.y, this->img->size.x,
 		         this->img->size.y);
 	}
+#endif
 	assert(offset < this->img->size.x * this->img->size.y);
 	return this->img->indices[offset];
 }
 
 void PaletteImageLock::set(Vec2<unsigned int> pos, uint8_t idx)
 {
+#ifndef NDEBUG
 	if (!WriteUse(this->use))
 	{
 		LogError("Trying to set() on image lock without specifying 'write' use");
 		return;
 	}
+#endif
 	unsigned offset = pos.y * this->img->size.x + pos.x;
+#ifndef NDEBUG
 	if (pos.x >= this->img->size.x || pos.y >= this->img->size.y)
 	{
 		LogError("Setting {%u,%u} in image of size {%u,%u}", pos.x, pos.y, this->img->size.x,
 		         this->img->size.y);
 	}
+#endif
 	assert(offset < this->img->size.x * this->img->size.y);
 	this->img->indices[offset] = idx;
 }

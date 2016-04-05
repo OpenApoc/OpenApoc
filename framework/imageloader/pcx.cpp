@@ -105,10 +105,10 @@ class PCXImageLoader : public OpenApoc::ImageLoader
 		auto sizeX = (header->XEnd - header->XStart + 1);
 		auto sizeY = (header->YEnd - header->YStart + 1);
 
-		auto pimg = mksp<PaletteImage>(Vec2<unsigned int>{sizeX, sizeY});
+		auto img = mksp<RGBImage>(Vec2<unsigned int>{sizeX, sizeY});
 
 		{
-			PaletteImageLock lock(pimg);
+			RGBImageLock lock(img);
 
 			const uint8_t *img_data = reinterpret_cast<uint8_t *>(&data[sizeof(struct PcxHeader)]);
 
@@ -146,7 +146,7 @@ class PCXImageLoader : public OpenApoc::ImageLoader
 					}
 					while (run_length > 0 && x <= header->XEnd)
 					{
-						lock.set({x, y}, idx);
+						lock.set({x, y}, p->GetColour(idx));
 						x++;
 						run_length--;
 					}
@@ -154,7 +154,7 @@ class PCXImageLoader : public OpenApoc::ImageLoader
 			}
 		}
 
-		return pimg->toRGBImage(p);
+		return img;
 	}
 
 	virtual UString getName() override { return "PCX"; }
