@@ -203,7 +203,10 @@ void BaseScreen::EventOccurred(Event *e)
 			{
 				selection = {e->Forms().MouseInfo.X, e->Forms().MouseInfo.Y};
 				selection /= TILE_SIZE;
-				selFacility = base->getFacility(selection);
+				if (!drag)
+				{
+					selFacility = base->getFacility(selection);
+				}
 				return;
 			}
 			else if (e->Forms().EventFlag == FormEventType::MouseLeave)
@@ -300,24 +303,21 @@ void BaseScreen::EventOccurred(Event *e)
 					Base::BuildError error = base->canDestroyFacility(selection);
 					switch (error)
 					{
-					case Base::BuildError::NoError:
-						stageCmd.cmd = StageCmd::Command::PUSH;
-						stageCmd.nextStage = mksp<MessageBox>(
-							tr("Destroy facility"), tr("Are you sure?"),
-							MessageBox::ButtonOptions::YesNo,
-							[this] {
-							this->base->destroyFacility(this->selection);
-							this->selFacility = nullptr;
-						});
-						break;
-					case Base::BuildError::Occupied:
-						stageCmd.cmd = StageCmd::Command::PUSH;
-						stageCmd.nextStage = mksp<MessageBox>(
-							tr("Facility in use"),
-							tr(""),
-							MessageBox::ButtonOptions::Ok);
-					default:
-						break;
+						case Base::BuildError::NoError:
+							stageCmd.cmd = StageCmd::Command::PUSH;
+							stageCmd.nextStage =
+							    mksp<MessageBox>(tr("Destroy facility"), tr("Are you sure?"),
+							                     MessageBox::ButtonOptions::YesNo, [this] {
+								                     this->base->destroyFacility(this->selection);
+								                     this->selFacility = nullptr;
+								                 });
+							break;
+						case Base::BuildError::Occupied:
+							stageCmd.cmd = StageCmd::Command::PUSH;
+							stageCmd.nextStage = mksp<MessageBox>(tr("Facility in use"), tr(""),
+							                                      MessageBox::ButtonOptions::Ok);
+						default:
+							break;
 					}
 				}
 			}
