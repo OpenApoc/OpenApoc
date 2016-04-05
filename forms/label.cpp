@@ -25,7 +25,7 @@ void Label::OnRender()
 {
 	int xpos;
 	int ypos;
-	std::list<UString> lines = WordWrapText(font, text);
+	std::list<UString> lines = font->WordWrapText(text, Size.x);
 
 	switch (TextVAlign)
 	{
@@ -33,10 +33,10 @@ void Label::OnRender()
 			ypos = 0;
 			break;
 		case VerticalAlignment::Centre:
-			ypos = (Size.y / 2) - ((font->GetFontHeight() * lines.size()) / 2);
+			ypos = (Size.y / 2) - (font->GetFontHeight(text, Size.x) / 2);
 			break;
 		case VerticalAlignment::Bottom:
-			ypos = Size.y - (font->GetFontHeight() * lines.size());
+			ypos = Size.y - font->GetFontHeight(text, Size.x);
 			break;
 		default:
 			LogError("Unknown TextVAlign");

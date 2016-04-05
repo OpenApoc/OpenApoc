@@ -560,63 +560,6 @@ sp<Form> Control::GetForm()
 	return std::dynamic_pointer_cast<Form>(c);
 }
 
-std::list<UString> Control::WordWrapText(sp<OpenApoc::BitmapFont> Font, UString WrapText) const
-{
-	int txtwidth;
-	std::list<UString> lines;
-
-	txtwidth = Font->GetFontWidth(WrapText);
-
-	if (txtwidth > Size.x)
-	{
-		// TODO: Need to implement a list of line break characters
-		auto remainingChunks = WrapText.splitlist(" ");
-		UString currentLine;
-
-		while (!remainingChunks.empty())
-		{
-			UString currentTestLine;
-			if (currentLine != "")
-				currentTestLine = currentLine + " ";
-
-			auto &currentChunk = remainingChunks.front();
-			currentTestLine += currentChunk;
-
-			auto estimatedLength = Font->GetFontWidth(currentTestLine);
-
-			if (estimatedLength < Size.x)
-			{
-				currentLine = currentTestLine;
-				remainingChunks.pop_front();
-			}
-			else
-			{
-				if (currentLine == "")
-				{
-					LogWarning(
-					    "No break in line \"%s\" found - this will probably overflow the control",
-					    currentTestLine.c_str());
-					currentLine = currentTestLine;
-					remainingChunks.pop_front();
-				}
-				else
-				{
-					lines.push_back(currentLine);
-					currentLine = "";
-				}
-			}
-		}
-		if (currentLine != "")
-			lines.push_back(currentLine);
-	}
-	else
-	{
-		lines.push_back(WrapText);
-	}
-
-	return lines;
-}
-
 void Control::SetParent(sp<Control> Parent)
 {
 	if (Parent)

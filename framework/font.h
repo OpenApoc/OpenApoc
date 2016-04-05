@@ -5,9 +5,7 @@
 #include "framework/includes.h"
 #include "library/strings.h"
 
-#define APOCFONT_ALIGN_LEFT 0
-#define APOCFONT_ALIGN_CENTRE 1
-#define APOCFONT_ALIGN_RIGHT 2
+#include <list>
 
 namespace OpenApoc
 {
@@ -29,11 +27,13 @@ class BitmapFont
 	virtual ~BitmapFont();
 	virtual sp<PaletteImage> getGlyph(UniChar codepoint);
 	virtual sp<PaletteImage> getString(const UString &Text);
-	virtual int GetFontHeight();
 	virtual int GetFontWidth(const UString &Text);
-	virtual UString getName();
-	virtual int GetEstimateCharacters(int FitInWidth);
-	virtual sp<Palette> getPalette();
+	virtual int GetFontHeight() const;
+	virtual int GetFontHeight(const UString &Text, int MaxWidth);
+	virtual UString getName() const;
+	virtual int GetEstimateCharacters(int FitInWidth) const;
+	virtual sp<Palette> getPalette() const;
+	std::list<UString> WordWrapText(const UString &Text, int MaxWidth);
 
 	/* Reads in set of "Character":"glyph description string" pairs */
 	static sp<BitmapFont> loadFont(const std::map<UniChar, UString> &charMap, int spaceWidth,

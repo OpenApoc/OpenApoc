@@ -45,11 +45,20 @@ int BitmapFont::GetFontWidth(const UString &Text)
 	return textlen;
 }
 
-int BitmapFont::GetFontHeight() { return fontheight; }
+int BitmapFont::GetFontHeight() const { return fontheight; }
 
-UString BitmapFont::getName() { return this->name; }
+int BitmapFont::GetFontHeight(const UString &Text, int MaxWidth)
+{
+	std::list<UString> lines = WordWrapText(Text, MaxWidth);
+	return lines.size() * fontheight;
+}
 
-int BitmapFont::GetEstimateCharacters(int FitInWidth) { return FitInWidth / averagecharacterwidth; }
+UString BitmapFont::getName() const { return this->name; }
+
+int BitmapFont::GetEstimateCharacters(int FitInWidth) const
+{
+	return FitInWidth / averagecharacterwidth;
+}
 
 sp<PaletteImage> BitmapFont::getGlyph(UniChar codepoint)
 {
@@ -65,7 +74,7 @@ sp<PaletteImage> BitmapFont::getGlyph(UniChar codepoint)
 	return fontbitmaps[codepoint];
 }
 
-sp<Palette> BitmapFont::getPalette() { return this->palette; }
+sp<Palette> BitmapFont::getPalette() const { return this->palette; }
 
 sp<BitmapFont> BitmapFont::loadFont(const std::map<UniChar, UString> &glyphMap, int spaceWidth,
                                     int fontHeight, UString fontName, sp<Palette> defaultPalette)
@@ -100,9 +109,9 @@ sp<BitmapFont> BitmapFont::loadFont(const std::map<UniChar, UString> &glyphMap, 
 		// First find the widest non-transparent part of the glyph
 		{
 			PaletteImageLock imgLock(paletteImage, ImageLockUse::Read);
-			for (int y = 0; y < paletteImage->size.y; y++)
+			for (unsigned int y = 0; y < paletteImage->size.y; y++)
 			{
-				for (int x = 0; x < paletteImage->size.x; x++)
+				for (unsigned int x = 0; x < paletteImage->size.x; x++)
 				{
 					if (imgLock.get({x, y}) != 0)
 					{
@@ -128,6 +137,63 @@ sp<BitmapFont> BitmapFont::loadFont(const std::map<UniChar, UString> &glyphMap, 
 	font->fontbitmaps[UString::u8Char(' ')] = spaceImage;
 
 	return font;
+}
+
+std::list<UString> BitmapFont::WordWrapText(const UString &Text, int MaxWidth)
+{
+	int txtwidth;
+	std::list<UString> lines;
+
+	txtwidth = GetFontWidth(Text);
+
+	if (txtwidth > MaxWidth)
+	{
+		// TODO: Need to implement a list of line break characters
+		auto remainingChunks = Text.splitlist(" ");
+		UString currentLine;
+
+		while (!remainingChunks.empty())
+		{
+			UString currentTestLine;
+			if (currentLine != "")
+				currentTestLine = currentLine + " ";
+
+			auto &currentChunk = remainingChunks.front();
+			currentTestLine += currentChunk;
+
+			auto estimatedLength = GetFontWidth(currentTestLine);
+
+			if (estimatedLength < MaxWidth)
+			{
+				currentLine = currentTestLine;
+				remainingChunks.pop_front();
+			}
+			else
+			{
+				if (currentLine == "")
+				{
+					LogWarning(
+					    "No break in line \"%s\" found - this will probably overflow the control",
+					    currentTestLine.c_str());
+					currentLine = currentTestLine;
+					remainingChunks.pop_front();
+				}
+				else
+				{
+					lines.push_back(currentLine);
+					currentLine = "";
+				}
+			}
+		}
+		if (currentLine != "")
+			lines.push_back(currentLine);
+	}
+	else
+	{
+		lines.push_back(Text);
+	}
+
+	return lines;
 }
 
 }; // namespace OpenApoc

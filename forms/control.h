@@ -49,8 +49,6 @@ class Control : public std::enable_shared_from_this<Control>
 
 	sp<Control> GetRootControl();
 
-	std::list<UString> WordWrapText(sp<OpenApoc::BitmapFont> UseFont, UString WrapText) const;
-
 	void CopyControlData(sp<Control> CopyOf);
 
 	void pushFormEvent(FormEventType type, Event *parentEvent);

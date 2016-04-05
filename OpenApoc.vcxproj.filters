@@ -447,6 +447,36 @@
     <ClCompile Include="game\base\researchscreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\agent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.codecvt_error_category.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.operations.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.path.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.path_traits.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.portability.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.unique_path.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.utf8_codecvt_facet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\..\lib\native\src\boost_filesystem.windows_file_codecvt.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="game\general\messagebox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -810,6 +840,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\base\researchscreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\agent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="game\general\messagebox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
