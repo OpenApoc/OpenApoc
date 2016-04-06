@@ -1,20 +1,16 @@
-
 #pragma once
-#include "library/sp.h"
-
-#include "data.h"
-#include "event.h"
-#include "includes.h"
-#include "renderer.h"
-#include "sound.h"
-#include "stagestack.h"
 
 #include "framework/ThreadPool/ThreadPool.h"
-
-#include "library/configfile.h"
-#include "library/strings.h"
-
+#include "framework/configfile.h"
+#include "framework/data.h"
+#include "framework/event.h"
+#include "framework/includes.h"
+#include "framework/renderer.h"
+#include "framework/sound.h"
+#include "framework/stagestack.h"
 #include "game/gamestate.h"
+#include "library/sp.h"
+#include "library/strings.h"
 
 // FIXME: Remove SDL headers - we currently use SDL types directly in input events
 #include <SDL_keyboard.h>

@@ -1,8 +1,8 @@
 #pragma once
 #include "game/stateobject.h"
+#include "library/colour.h"
 #include "library/sp.h"
 #include "library/vec.h"
-
 #include <memory>
 
 namespace OpenApoc

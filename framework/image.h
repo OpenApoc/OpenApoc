@@ -1,5 +1,6 @@
 #pragma once
 #include "framework/resource.h"
+#include "library/colour.h"
 #include "library/rect.h"
 #include "library/sp.h"
 #include "library/vec.h"

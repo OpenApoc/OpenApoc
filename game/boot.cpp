@@ -35,6 +35,7 @@ void BootUp::Begin()
 	logoimage = fw().data->load_image("UI/LOGO.PNG");
 	loadtime = 0;
 	fw().Display_SetIcon();
+	loadingimageangle = 0;
 
 	this->gamecoreLoadComplete = false;
 	this->asyncGamecoreLoad = fw().threadPool->enqueue(CreateGameCore, &this->gamecoreLoadComplete);
@@ -51,7 +52,9 @@ void BootUp::EventOccurred(Event *e) { std::ignore = e; }
 void BootUp::Update(StageCmd *const cmd)
 {
 	loadtime++;
-	loadingimageangle.Add(5);
+	loadingimageangle += (M_PI + 0.05f);
+	if (loadingimageangle >= M_PI * 2.0f)
+		loadingimageangle -= M_PI * 2.0f;
 
 	if (gamecoreLoadComplete)
 	{
@@ -75,7 +78,7 @@ void BootUp::Render()
 	fw().renderer->drawRotated(
 	    loadingimage, Vec2<float>{24, 24},
 	    Vec2<float>{fw().Display_GetWidth() - 50, fw().Display_GetHeight() - 50},
-	    loadingimageangle.ToRadians());
+	    loadingimageangle);
 }
 
 bool BootUp::IsTransition() { return false; }

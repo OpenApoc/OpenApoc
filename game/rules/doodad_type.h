@@ -2,6 +2,7 @@
 #include "game/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
+#include "library/vec.h"
 #include <vector>
 
 namespace OpenApoc

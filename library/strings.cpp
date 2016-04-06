@@ -1,6 +1,4 @@
 #include "library/strings.h"
-#include "framework/logger.h"
-
 #include <boost/locale.hpp>
 
 #ifdef DUMP_TRANSLATION_STRINGS
@@ -9,6 +7,7 @@
 #include <map>
 #include <set>
 #endif
+
 namespace OpenApoc
 {
 
@@ -139,7 +138,8 @@ std::vector<UString> UString::split(const UString &delims) const
 	std::string tok;
 	if (delims.length() != 1)
 	{
-		LogError("Invalid delim length %zu", delims.length());
+		// Invalid delim length
+		return strings;
 	}
 	while (std::getline(ss, tok, delims.u8Str[0]))
 	{
@@ -157,7 +157,8 @@ std::list<UString> UString::splitlist(const UString &delims) const
 	std::string tok;
 	if (delims.length() != 1)
 	{
-		LogError("Invalid delim length %zu", delims.length());
+		// Invalid delim length
+		return strings;
 	}
 	while (std::getline(ss, tok, delims.u8Str[0]))
 	{

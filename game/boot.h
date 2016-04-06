@@ -1,10 +1,7 @@
-
 #pragma once
-#include "library/sp.h"
-
 #include "framework/includes.h"
 #include "framework/stage.h"
-
+#include "library/sp.h"
 #include <atomic>
 #include <future>
 
@@ -19,7 +16,7 @@ class BootUp : public Stage
 	sp<Image> loadingimage;
 	sp<Image> logoimage;
 	int loadtime;
-	Angle<float> loadingimageangle;
+	float loadingimageangle;
 
 	std::future<void> asyncGamecoreLoad;
 	std::atomic<bool> gamecoreLoadComplete;

@@ -7,6 +7,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/framework/cmake/")
 
 include(framework)
+add_subdirectory(library)
 
 # check compiler
 INCLUDE(CheckCXXCompilerFlag)
@@ -54,7 +55,6 @@ AUX_SOURCE_DIRECTORY(game/tileview sources)
 AUX_SOURCE_DIRECTORY(game/resources sources)
 AUX_SOURCE_DIRECTORY(game/ufopaedia sources)
 AUX_SOURCE_DIRECTORY(game/debugtools sources)
-AUX_SOURCE_DIRECTORY(library sources)
 AUX_SOURCE_DIRECTORY(shaders sources)
 AUX_SOURCE_DIRECTORY(transitions sources)
 AUX_SOURCE_DIRECTORY(forms sources)
@@ -67,6 +67,7 @@ ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} framework/main.cpp ${sources}
 		${FRAMEWORK_SOURCES})
 
 target_link_libraries(${CMAKE_PROJECT_NAME} ${Boost_LIBRARIES})
+target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Library)
 target_include_directories(${CMAKE_PROJECT_NAME} SYSTEM PUBLIC ${Boost_INCLUDE_DIRS})
 # Assume all targets using cmake have pthreads
 target_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC PTHREADS_AVAILABLE)
@@ -81,18 +82,10 @@ PKG_CHECK_MODULES(PC_TINYXML2 REQUIRED tinyxml2)
 
 FIND_PATH(TINYXML2_INCLUDE_DIR tinyxml2.h HINTS ${PC_TINYXML2_INCLUDEDIR})
 
-#Require the glm matrix/vector maths library
-FIND_PATH(GLM_INCLUDE_DIR glm/glm.hpp)
-MARK_AS_ADVANCED(GLM_INCLUDE_DIR)
-if (NOT GLM_INCLUDE_DIR)
-		message(FATAL_ERROR "GLM headers not found")
-endif()
-
 #All platforms that use CMake (Non-windows) have case sensitive filesystems
 ADD_DEFINITIONS(-DDATA_DIRECTORY="${CMAKE_INSTALL_PREFIX}/share/OpenApoc")
 
 INCLUDE_DIRECTORIES(SYSTEM ${TINYXML2_INCLUDE_DIR})
-INCLUDE_DIRECTORIES(SYSTEM ${GLM_INCLUDE_DIR})
 INCLUDE_DIRECTORIES(SYSTEM ${FRAMEWORK_INCLUDE_DIRS})
 INCLUDE_DIRECTORIES(.)
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})

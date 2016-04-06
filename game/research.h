@@ -1,6 +1,7 @@
 #pragma once
 
 #include "game/stateobject.h"
+#include <map>
 
 namespace OpenApoc
 {

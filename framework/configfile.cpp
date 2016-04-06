@@ -2,7 +2,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #endif
 
-#include "library/configfile.h"
+#include "framework/configfile.h"
 #include "framework/logger.h"
 
 #include <fstream>

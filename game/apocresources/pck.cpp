@@ -85,6 +85,34 @@ void PCK::ProcessFile(Data &d, UString PckFilename, UString TabFilename, int Ind
 	}
 }
 
+// FIXME: Replace Memory with vector<char> or something? Or jhust change the loader to write
+// directly into the Image?
+class Memory
+{
+  private:
+	std::vector<char> data;
+
+  public:
+	Memory(size_t InitialSize = 0) : data(InitialSize) {}
+
+	size_t GetSize() { return data.size(); }
+
+	void Resize(size_t length) { data.resize(length); }
+
+	void AppendData(void *data, size_t length)
+	{
+		size_t startSize = this->GetSize();
+		this->Resize(startSize + length);
+		memcpy(this->GetDataOffset(startSize), data, length);
+	}
+
+	void *GetData() { return data.data(); }
+
+	void Clear() { data.clear(); }
+
+	void *GetDataOffset(size_t offset) { return &(data.data()[offset]); }
+};
+
 void PCK::LoadVersion1Format(IFile &pck, IFile &tab, int Index)
 {
 	sp<PaletteImage> img;

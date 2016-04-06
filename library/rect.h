@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vec.h"
+#include "library/vec.h"
 #include <set>
 
 namespace OpenApoc

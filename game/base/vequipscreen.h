@@ -2,7 +2,10 @@
 
 #include "framework/stage.h"
 #include "game/rules/vequipment.h"
+#include "library/colour.h"
+#include "library/rect.h"
 #include "library/sp.h"
+#include <map>
 
 namespace OpenApoc
 {

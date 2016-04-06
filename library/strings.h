@@ -1,12 +1,12 @@
-
 #pragma once
 
-#include "framework/includes.h"
 #include <boost/format.hpp>
 #include <boost/locale/format.hpp>
 #include <iterator>
 #include <limits>
+#include <list>
 #include <string>
+#include <vector>
 
 namespace OpenApoc
 {

@@ -2,6 +2,7 @@
 #include "framework/image.h"
 #include "game/stateobject.h"
 #include "library/strings.h"
+#include <map>
 
 namespace OpenApoc
 {
