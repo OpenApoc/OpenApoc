@@ -18,10 +18,10 @@ Colour &Palette::GetColour(unsigned int idx)
 	return colours[idx];
 }
 
-void Palette::SetColour(unsigned int idx, Colour &c)
+void Palette::SetColour(unsigned int idx, Colour c)
 {
 	assert(idx < colours.size());
-	colours[idx] = c;
+	colours[idx] = std::move(c);
 }
 
 Palette::Palette(const Palette &source) { this->colours = source.colours; }

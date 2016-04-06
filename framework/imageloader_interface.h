@@ -28,4 +28,28 @@ template <typename T> class ImageLoaderRegister
   public:
 	ImageLoaderRegister(UString name) { registerImageLoader(new T, name); }
 };
+
+class ImageWriter
+{
+  public:
+	virtual ~ImageWriter() {}
+	virtual bool writeImage(sp<RGBImage> image, std::ostream &stream) = 0;
+	virtual bool writeImage(sp<PaletteImage> image, std::ostream &stream,
+	                        sp<Palette> defaultPalette = nullptr) = 0;
+	virtual UString getName() = 0;
+};
+
+class ImageWriterFactory
+{
+  public:
+	virtual ImageWriter *create() = 0;
+	virtual ~ImageWriterFactory() {}
+};
+
+void registerImageWriter(ImageWriterFactory *factory, UString name);
+template <typename T> class ImageWriterRegister
+{
+  public:
+	ImageWriterRegister(UString name) { registerImageWriter(new T, name); }
+};
 };

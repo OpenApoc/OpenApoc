@@ -17,6 +17,7 @@ namespace OpenApoc
 class ImageLoader;
 class SampleLoader;
 class MusicLoader;
+class ImageWriter;
 class VoxelSlice;
 class LOFTemps;
 class ResourceAliases;
@@ -40,6 +41,7 @@ class Data
 	std::list<std::unique_ptr<ImageLoader>> imageLoaders;
 	std::list<std::unique_ptr<SampleLoader>> sampleLoaders;
 	std::list<std::unique_ptr<MusicLoader>> musicLoaders;
+	std::list<std::unique_ptr<ImageWriter>> imageWriters;
 
   public:
 	std::weak_ptr<ResourceAliases> aliases;
@@ -55,6 +57,7 @@ class Data
 	sp<ImageSet> load_image_set(const UString &path);
 	sp<Palette> load_palette(const UString &path);
 	sp<VoxelSlice> load_voxel_slice(const UString &path);
+	bool write_image(UString systemPath, sp<Image> image, sp<Palette> palette = nullptr);
 };
 
 } // namespace OpenApoc

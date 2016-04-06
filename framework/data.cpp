@@ -14,6 +14,8 @@
 #include "framework/musicloader_interface.h"
 #include "framework/sampleloader_interface.h"
 
+#include <fstream>
+
 using namespace OpenApoc;
 
 namespace
@@ -22,6 +24,7 @@ std::map<UString, std::unique_ptr<OpenApoc::ImageLoaderFactory>> *registeredImag
 std::map<UString, std::unique_ptr<OpenApoc::MusicLoaderFactory>> *registeredMusicLoaders = nullptr;
 std::map<UString, std::unique_ptr<OpenApoc::SampleLoaderFactory>> *registeredSampleLoaders =
     nullptr;
+std::map<UString, std::unique_ptr<OpenApoc::ImageWriterFactory>> *registeredImageWriters = nullptr;
 }; // anonymous namespace
 
 namespace OpenApoc
@@ -54,6 +57,15 @@ void registerMusicLoader(MusicLoaderFactory *factory, UString name)
 	}
 	registeredMusicLoaders->emplace(name, std::unique_ptr<MusicLoaderFactory>(factory));
 }
+void registerImageWriter(ImageWriterFactory *factory, UString name)
+{
+	if (!registeredImageWriters)
+	{
+		registeredImageWriters =
+		    new std::map<UString, std::unique_ptr<OpenApoc::ImageWriterFactory>>();
+	}
+	registeredImageWriters->emplace(name, std::unique_ptr<ImageWriterFactory>(factory));
+}
 
 Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize,
            int voxelCacheSize)
@@ -70,6 +82,19 @@ Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize
 		}
 		else
 			LogWarning("Failed to load image loader %s", t.c_str());
+	}
+
+	for (auto &imageWriter : *registeredImageWriters)
+	{
+		auto t = imageWriter.first;
+		ImageWriter *l = imageWriter.second->create();
+		if (l)
+		{
+			this->imageWriters.emplace_back(l);
+			LogInfo("Initialised image writer %s", t.c_str());
+		}
+		else
+			LogWarning("Failed to load image writer %s", t.c_str());
 	}
 
 	for (auto &sampleBackend : *registeredSampleLoaders)
@@ -488,6 +513,12 @@ sp<Palette> Data::load_palette(const UString &path)
 		LogInfo("Read \"%s\" as PCX palette", path.c_str());
 		return pal;
 	}
+	pal = loadPNGPalette(*this, path);
+	if (pal)
+	{
+		LogInfo("Read \"%s\" as PNG palette", path.c_str());
+		return pal;
+	}
 
 	sp<RGBImage> img = std::dynamic_pointer_cast<RGBImage>(this->load_image(path));
 	if (img)
@@ -516,6 +547,72 @@ sp<Palette> Data::load_palette(const UString &path)
 	}
 	LogError("Failed to open palette \"%s\"", path.c_str());
 	return nullptr;
+}
+
+bool Data::write_image(UString systemPath, sp<Image> image, sp<Palette> palette)
+{
+	std::ofstream outFile(systemPath.str(), std::ios::binary);
+	if (!outFile)
+	{
+		LogWarning("Failed to open \"%s\" for writing", systemPath.c_str());
+		return false;
+	}
+
+	for (auto &writer : imageWriters)
+	{
+		auto palImg = std::dynamic_pointer_cast<PaletteImage>(image);
+		auto rgbImg = std::dynamic_pointer_cast<RGBImage>(image);
+		if (palImg)
+		{
+			if (!palette)
+			{
+				UString defaultPalettePath = "xcom3/ufodata/pal_01.dat";
+				LogInfo("Loading default palette \"%s\"", defaultPalettePath.c_str());
+				palette = this->load_palette(defaultPalettePath);
+				if (!palette)
+				{
+					LogWarning("Failed to write palette image - no palette supplied and failed to "
+					           "load default");
+					return false;
+				}
+			}
+			if (writer->writeImage(palImg, outFile, palette))
+			{
+				LogInfo("Successfully wrote palette image \"%s\" using \"%s\"", systemPath.c_str(),
+				        writer->getName().c_str());
+				return true;
+			}
+			else
+			{
+				LogWarning("Failed to write palette image \"%s\" using \"%s\"", systemPath.c_str(),
+				           writer->getName().c_str());
+				continue;
+			}
+		}
+		else if (rgbImg)
+		{
+			if (writer->writeImage(rgbImg, outFile))
+			{
+				LogInfo("Successfully wrote RGB image \"%s\" using \"%s\"", systemPath.c_str(),
+				        writer->getName().c_str());
+				return true;
+			}
+			else
+			{
+				LogWarning("Failed to write RGB image \"%s\" using \"%s\"", systemPath.c_str(),
+				           writer->getName().c_str());
+				continue;
+			}
+		}
+		else
+		{
+			LogError("Unknown image type");
+			return false;
+		}
+	}
+
+	LogWarning("No writes succeeded for image \"%s\"", systemPath.c_str());
+	return false;
 }
 
 }; // namespace OpenApoc
