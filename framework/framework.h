@@ -37,6 +37,7 @@ class Framework
   private:
 	std::unique_ptr<FrameworkPrivate> p;
 	UString programName;
+	bool createWindow;
 	void Audio_Initialise();
 	void Audio_Shutdown();
 
@@ -53,7 +54,8 @@ class Framework
 
 	std::unique_ptr<ThreadPool> threadPool;
 
-	Framework(const UString programName, const std::vector<UString> cmdline);
+	Framework(const UString programName, const std::vector<UString> cmdline,
+	          bool createWindow = true);
 	~Framework();
 
 	static Framework &getInstance();

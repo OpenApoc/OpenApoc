@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
 		Trace::setThreadName("main");
 
 		TraceObj obj("main");
-		Framework *fw = new Framework(UString(argv[0]), cmdline);
+		Framework *fw = new Framework(UString(argv[0]), cmdline, run_game);
 
 		if (extract_data)
 		{

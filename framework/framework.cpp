@@ -171,10 +171,16 @@ class FrameworkPrivate
 	Vec2<int> windowSize;
 
 	sp<Surface> scaleSurface;
+
+	FrameworkPrivate()
+	    : quitProgram(false), window(nullptr), context(0), displaySize(0, 0), windowSize(0, 0)
+	{
+	}
 };
 
-Framework::Framework(const UString programName, const std::vector<UString> cmdline)
-    : p(new FrameworkPrivate), programName(programName)
+Framework::Framework(const UString programName, const std::vector<UString> cmdline,
+                     bool createWindow)
+    : p(new FrameworkPrivate), programName(programName), createWindow(createWindow)
 {
 	TRACE_FN;
 	LogInfo("Starting framework");
@@ -299,8 +305,11 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 	}
 	srand(static_cast<unsigned int>(SDL_GetTicks()));
 
-	Display_Initialise();
-	Audio_Initialise();
+	if (createWindow)
+	{
+		Display_Initialise();
+		Audio_Initialise();
+	}
 
 	Framework::instance = this;
 }
@@ -317,8 +326,11 @@ Framework::~Framework()
 	SaveSettings();
 
 	LogInfo("Shutdown");
-	Display_Shutdown();
-	Audio_Shutdown();
+	if (createWindow)
+	{
+		Display_Shutdown();
+		Audio_Shutdown();
+	}
 	LogInfo("SDL shutdown");
 	PHYSFS_deinit();
 	SDL_Quit();
@@ -336,6 +348,11 @@ Framework &Framework::getInstance()
 
 void Framework::Run()
 {
+	if (!createWindow)
+	{
+		LogError("Trying to run framework without window");
+		return;
+	}
 	int frame = 0;
 	TRACE_FN;
 	LogInfo("Program loop started");
@@ -682,6 +699,10 @@ void Framework::SaveSettings()
 
 void Framework::Display_Initialise()
 {
+	if (!this->createWindow)
+	{
+		return;
+	}
 	TRACE_FN;
 	LogInfo("Init display");
 	int display_flags = SDL_WINDOW_OPENGL;
@@ -837,6 +858,10 @@ void Framework::Display_Initialise()
 
 void Framework::Display_Shutdown()
 {
+	if (!p->window)
+	{
+		return;
+	}
 	TRACE_FN;
 	LogInfo("Shutdown Display");
 	p->defaultSurface.reset();
@@ -854,11 +879,18 @@ Vec2<int> Framework::Display_GetSize() { return p->displaySize; }
 
 void Framework::Display_SetTitle(UString NewTitle)
 {
-	SDL_SetWindowTitle(p->window, NewTitle.c_str());
+	if (p->window)
+	{
+		SDL_SetWindowTitle(p->window, NewTitle.c_str());
+	}
 }
 
 void Framework::Display_SetIcon()
 {
+	if (!p->window)
+	{
+		return;
+	}
 #ifdef _WIN32
 	SDL_SysWMinfo info;
 	SDL_VERSION(&info.version);
