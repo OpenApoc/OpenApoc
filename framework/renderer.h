@@ -15,6 +15,7 @@ class Surface;
 class RendererImageData
 {
   public:
+	virtual sp<Image> readBack();
 	virtual ~RendererImageData();
 };
 

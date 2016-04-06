@@ -1,4 +1,5 @@
 #include "framework/renderer.h"
+#include "framework/logger.h"
 #include "library/sp.h"
 
 namespace OpenApoc
@@ -15,5 +16,11 @@ RendererSurfaceBinding::~RendererSurfaceBinding() { r.setSurface(prevBinding); }
 Renderer::~Renderer() {}
 
 RendererImageData::~RendererImageData() {}
+
+sp<Image> RendererImageData::readBack()
+{
+	LogWarning("NOT IMPLEMENTED");
+	return nullptr;
+}
 
 }; // namespace OpenApoc

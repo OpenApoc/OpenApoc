@@ -434,6 +434,38 @@ void Framework::ProcessEvents()
 			LogError("Invalid event on queue");
 			continue;
 		}
+		if (e->Type() == EVENT_KEY_DOWN)
+		{
+			if (e->Keyboard().KeyCode == SDLK_F5)
+			{
+				UString screenshotName = "screenshot.png";
+				LogWarning("Writing screenshot to \"%s\"", screenshotName.c_str());
+				if (!p->defaultSurface->rendererPrivateData)
+				{
+					LogWarning("No renderer data on surface - nothing drawn yet?");
+				}
+				else
+				{
+					auto img = p->defaultSurface->rendererPrivateData->readBack();
+					if (!img)
+					{
+						LogWarning("No image returned");
+					}
+					else
+					{
+						auto ret = data->write_image(screenshotName, img);
+						if (!ret)
+						{
+							LogWarning("Failed to write screenshot");
+						}
+						else
+						{
+							LogWarning("Wrote screenshot to \"%s\"", screenshotName.c_str());
+						}
+					}
+				}
+			}
+		}
 		switch (e->Type())
 		{
 			case EVENT_WINDOW_CLOSED:

@@ -671,13 +671,33 @@ class FBOData : public RendererImageData
 	GLuint depthBuffer;
 	Vec2<float> size;
 	// Constructor /only/ to be used for default surface (FBO ID == 0)
-	FBOData(GLuint fbo)
+	FBOData(GLuint fbo, Vec2<int> size)
 	    // FIXME: Check FBO == 0
 	    // FIXME: Warn if trying to texture from FBO 0
 	    : fbo(fbo),
 	      tex(-1),
-	      size(0, 0)
+	      size(size)
 	{
+	}
+
+	sp<Image> readBack() override
+	{
+		auto img = mksp<RGBImage>(size);
+		BindFramebuffer f(this->fbo);
+
+		RGBImageLock l(img);
+		// Foiled once again by inverted y! Read in each line bottom->top writing top->bottom in the
+		// image
+		uint8_t *imgPos = reinterpret_cast<uint8_t *>(l.getData());
+		unsigned imgStride = size.x * 4;
+		for (int y = 0; y < size.y; y++)
+		{
+			gl::ReadPixels(0, size.y - 1 - y, size.x, size.y - y, gl::RGBA, gl::UNSIGNED_BYTE,
+			               imgPos);
+			imgPos += imgStride;
+		}
+
+		return img;
 	}
 
 	FBOData(Vec2<int> size) : size(size.x, size.y)
@@ -1282,7 +1302,7 @@ OGL30Renderer::OGL30Renderer()
 	LogInfo("Viewport {%d,%d,%d,%d}", viewport[0], viewport[1], viewport[2], viewport[3]);
 	assert(viewport[0] == 0 && viewport[1] == 0);
 	this->defaultSurface = mksp<Surface>(Vec2<int>{viewport[2], viewport[3]});
-	this->defaultSurface->rendererPrivateData.reset(new FBOData(0));
+	this->defaultSurface->rendererPrivateData.reset(new FBOData(0, {viewport[2], viewport[3]}));
 	this->currentSurface = this->defaultSurface;
 
 	GLint maxTexArrayLayers;
