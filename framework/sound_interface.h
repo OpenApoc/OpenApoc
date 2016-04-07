@@ -10,11 +10,6 @@ class SoundBackendFactory
 	virtual ~SoundBackendFactory() {}
 };
 
-void registerSoundBackend(SoundBackendFactory *factory, UString name);
-
-template <typename T> class SoundBackendRegister
-{
-  public:
-	SoundBackendRegister(UString name) { registerSoundBackend(new T, name); }
-};
+SoundBackendFactory *getNullSoundBackend();
+SoundBackendFactory *getSDLSoundBackend();
 }; // namespace OpenApoc

@@ -325,6 +325,9 @@ class SDLRawBackendFactory : public SoundBackendFactory
 	virtual ~SDLRawBackendFactory() {}
 };
 
-SoundBackendRegister<SDLRawBackendFactory> load_at_init_SDLRaw_sound("SDLRaw");
-
 }; // anonymous namespace
+
+namespace OpenApoc
+{
+SoundBackendFactory *getSDLSoundBackend() { return new SDLRawBackendFactory(); }
+} // namespace OpenApoc

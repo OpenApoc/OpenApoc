@@ -22,12 +22,6 @@ class SampleLoaderFactory
 	virtual ~SampleLoaderFactory() {}
 };
 
-void registerSampleLoader(SampleLoaderFactory *factory, UString name);
-
-template <typename T> class SampleLoaderRegister
-{
-  public:
-	SampleLoaderRegister(UString name) { registerSampleLoader(new T, name); }
-};
+SampleLoaderFactory *getRAWSampleLoaderFactory();
 
 }; // namespace OpenApoc

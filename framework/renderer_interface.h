@@ -11,12 +11,6 @@ class RendererFactory
 	virtual ~RendererFactory() {}
 };
 
-void registerRenderer(RendererFactory *factory, UString name);
-
-template <typename T> class RendererRegister
-{
-  public:
-	RendererRegister(UString name) { registerRenderer(new T, name); }
-};
-
+RendererFactory *getGL20RendererFactory();
+RendererFactory *getGL30RendererFactory();
 }; // namespace OpenApoc

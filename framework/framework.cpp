@@ -74,31 +74,12 @@ static std::map<UString, UString> defaultConfig = {
     {"Visual.ScaleX", "100"},
     {"Visual.ScaleY", "100"},
 };
-
-std::map<UString, std::unique_ptr<OpenApoc::RendererFactory>> *registeredRenderers = nullptr;
-std::map<UString, std::unique_ptr<OpenApoc::SoundBackendFactory>> *registeredSoundBackends =
-    nullptr;
 };
 
 namespace OpenApoc
 {
 
 Framework *Framework::instance = nullptr;
-
-void registerRenderer(RendererFactory *factory, UString name)
-{
-	if (!registeredRenderers)
-		registeredRenderers = new std::map<UString, std::unique_ptr<OpenApoc::RendererFactory>>();
-	registeredRenderers->emplace(name, std::unique_ptr<RendererFactory>(factory));
-}
-
-void registerSoundBackend(SoundBackendFactory *factory, UString name)
-{
-	if (!registeredSoundBackends)
-		registeredSoundBackends =
-		    new std::map<UString, std::unique_ptr<OpenApoc::SoundBackendFactory>>();
-	registeredSoundBackends->emplace(name, std::unique_ptr<SoundBackendFactory>(factory));
-}
 
 class JukeBoxImpl : public JukeBox
 {
@@ -160,6 +141,9 @@ class FrameworkPrivate
 	SDL_DisplayMode screenMode;
 	SDL_Window *window;
 	SDL_GLContext context;
+
+	std::map<UString, std::unique_ptr<OpenApoc::RendererFactory>> registeredRenderers;
+	std::map<UString, std::unique_ptr<OpenApoc::SoundBackendFactory>> registeredSoundBackends;
 
 	// FIXME: Wrap eventQueue in mutex if handing events with multiple threads
 	std::list<Event *> eventQueue;
@@ -799,10 +783,13 @@ void Framework::Display_Initialise()
 	SDL_GL_MakeCurrent(p->window, p->context); // for good measure?
 	SDL_ShowCursor(SDL_DISABLE);
 
+	p->registeredRenderers["GL_3_0"].reset(getGL30RendererFactory());
+	p->registeredRenderers["GL_2_0"].reset(getGL20RendererFactory());
+
 	for (auto &rendererName : Settings->getString("Visual.Renderers").split(':'))
 	{
-		auto rendererFactory = registeredRenderers->find(rendererName);
-		if (rendererFactory == registeredRenderers->end())
+		auto rendererFactory = p->registeredRenderers.find(rendererName);
+		if (rendererFactory == p->registeredRenderers.end())
 		{
 			LogInfo("Renderer \"%s\" not in supported list", rendererName.c_str());
 			continue;
@@ -911,10 +898,13 @@ void Framework::Audio_Initialise()
 	TRACE_FN;
 	LogInfo("Initialise Audio");
 
+	p->registeredSoundBackends["SDLRaw"].reset(getSDLSoundBackend());
+	p->registeredSoundBackends["null"].reset(getNullSoundBackend());
+
 	for (auto &soundBackendName : Settings->getString("Audio.Backends").split(':'))
 	{
-		auto backendFactory = registeredSoundBackends->find(soundBackendName);
-		if (backendFactory == registeredSoundBackends->end())
+		auto backendFactory = p->registeredSoundBackends.find(soundBackendName);
+		if (backendFactory == p->registeredSoundBackends.end())
 		{
 			LogInfo("Sound backend %s not in supported list", soundBackendName.c_str());
 			continue;

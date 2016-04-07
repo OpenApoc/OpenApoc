@@ -71,5 +71,9 @@ class RawSampleLoaderFactory : public SampleLoaderFactory
 	virtual SampleLoader *create(Data &data) override { return new RawSampleLoader(data); }
 };
 
-SampleLoaderRegister<RawSampleLoaderFactory> load_at_init_raw_sample("raw");
 }; // anonymous namespace
+
+namespace OpenApoc
+{
+SampleLoaderFactory *getRAWSampleLoaderFactory() { return new RawSampleLoaderFactory(); }
+}

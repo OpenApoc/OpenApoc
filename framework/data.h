@@ -22,6 +22,11 @@ class VoxelSlice;
 class LOFTemps;
 class ResourceAliases;
 
+class ImageLoaderFactory;
+class ImageWriterFactory;
+class SampleLoaderFactory;
+class MusicLoaderFactory;
+
 class Data
 {
 
@@ -42,6 +47,11 @@ class Data
 	std::list<std::unique_ptr<SampleLoader>> sampleLoaders;
 	std::list<std::unique_ptr<MusicLoader>> musicLoaders;
 	std::list<std::unique_ptr<ImageWriter>> imageWriters;
+
+	std::map<UString, std::unique_ptr<ImageLoaderFactory>> registeredImageBackends;
+	std::map<UString, std::unique_ptr<ImageWriterFactory>> registeredImageWriters;
+	std::map<UString, std::unique_ptr<SampleLoaderFactory>> registeredSampleLoaders;
+	std::map<UString, std::unique_ptr<MusicLoaderFactory>> registeredMusicLoaders;
 
   public:
 	std::weak_ptr<ResourceAliases> aliases;

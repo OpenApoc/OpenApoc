@@ -167,5 +167,9 @@ class PCXImageLoaderFactory : public OpenApoc::ImageLoaderFactory
 	virtual ~PCXImageLoaderFactory() {}
 };
 
-OpenApoc::ImageLoaderRegister<PCXImageLoaderFactory> register_at_load_pcx_image("pcx");
 } // anonymous namespace
+
+namespace OpenApoc
+{
+ImageLoaderFactory *getPCXImageLoaderFactory() { return new PCXImageLoaderFactory(); }
+} // namespace OpenApoc

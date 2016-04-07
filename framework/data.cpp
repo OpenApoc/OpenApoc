@@ -18,60 +18,16 @@
 
 using namespace OpenApoc;
 
-namespace
-{
-std::map<UString, std::unique_ptr<OpenApoc::ImageLoaderFactory>> *registeredImageBackends = nullptr;
-std::map<UString, std::unique_ptr<OpenApoc::MusicLoaderFactory>> *registeredMusicLoaders = nullptr;
-std::map<UString, std::unique_ptr<OpenApoc::SampleLoaderFactory>> *registeredSampleLoaders =
-    nullptr;
-std::map<UString, std::unique_ptr<OpenApoc::ImageWriterFactory>> *registeredImageWriters = nullptr;
-}; // anonymous namespace
-
 namespace OpenApoc
 {
-
-void registerImageLoader(ImageLoaderFactory *factory, UString name)
-{
-	if (!registeredImageBackends)
-	{
-		registeredImageBackends =
-		    new std::map<UString, std::unique_ptr<OpenApoc::ImageLoaderFactory>>();
-	}
-	registeredImageBackends->emplace(name, std::unique_ptr<ImageLoaderFactory>(factory));
-}
-void registerSampleLoader(SampleLoaderFactory *factory, UString name)
-{
-	if (!registeredSampleLoaders)
-	{
-		registeredSampleLoaders =
-		    new std::map<UString, std::unique_ptr<OpenApoc::SampleLoaderFactory>>();
-	}
-	registeredSampleLoaders->emplace(name, std::unique_ptr<SampleLoaderFactory>(factory));
-}
-void registerMusicLoader(MusicLoaderFactory *factory, UString name)
-{
-	if (!registeredMusicLoaders)
-	{
-		registeredMusicLoaders =
-		    new std::map<UString, std::unique_ptr<OpenApoc::MusicLoaderFactory>>();
-	}
-	registeredMusicLoaders->emplace(name, std::unique_ptr<MusicLoaderFactory>(factory));
-}
-void registerImageWriter(ImageWriterFactory *factory, UString name)
-{
-	if (!registeredImageWriters)
-	{
-		registeredImageWriters =
-		    new std::map<UString, std::unique_ptr<OpenApoc::ImageWriterFactory>>();
-	}
-	registeredImageWriters->emplace(name, std::unique_ptr<ImageWriterFactory>(factory));
-}
 
 Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize,
            int voxelCacheSize)
     : fs(paths)
 {
-	for (auto &imageBackend : *registeredImageBackends)
+	registeredImageBackends["lodepng"].reset(getLodePNGImageLoaderFactory());
+	registeredImageBackends["pcx"].reset(getPCXImageLoaderFactory());
+	for (auto &imageBackend : registeredImageBackends)
 	{
 		auto t = imageBackend.first;
 		ImageLoader *l = imageBackend.second->create();
@@ -84,7 +40,9 @@ Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize
 			LogWarning("Failed to load image loader %s", t.c_str());
 	}
 
-	for (auto &imageWriter : *registeredImageWriters)
+	registeredImageWriters["lodepng"].reset(getLodePNGImageWriterFactory());
+
+	for (auto &imageWriter : registeredImageWriters)
 	{
 		auto t = imageWriter.first;
 		ImageWriter *l = imageWriter.second->create();
@@ -97,7 +55,8 @@ Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize
 			LogWarning("Failed to load image writer %s", t.c_str());
 	}
 
-	for (auto &sampleBackend : *registeredSampleLoaders)
+	registeredSampleLoaders["raw"].reset(getRAWSampleLoaderFactory());
+	for (auto &sampleBackend : registeredSampleLoaders)
 	{
 		auto t = sampleBackend.first;
 		SampleLoader *s = sampleBackend.second->create(*this);
@@ -110,7 +69,8 @@ Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize
 			LogWarning("Failed to load sample loader %s", t.c_str());
 	}
 
-	for (auto &musicLoader : *registeredMusicLoaders)
+	registeredMusicLoaders["raw"].reset(getRAWMusicLoaderFactory());
+	for (auto &musicLoader : registeredMusicLoaders)
 	{
 		auto t = musicLoader.first;
 		MusicLoader *m = musicLoader.second->create(*this);

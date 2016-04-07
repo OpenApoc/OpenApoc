@@ -1429,6 +1429,9 @@ class OGL30RendererFactory : public OpenApoc::RendererFactory
 	}
 };
 
-OpenApoc::RendererRegister<OGL30RendererFactory> register_at_load_gl_3_0_renderer("GL_3_0");
-
 }; // anonymous namespace
+
+namespace OpenApoc
+{
+RendererFactory *getGL30RendererFactory() { return new OGL30RendererFactory(); }
+} // namespace OpenApoc

@@ -22,12 +22,8 @@ class ImageLoaderFactory
 	virtual ~ImageLoaderFactory() {}
 };
 
-void registerImageLoader(ImageLoaderFactory *factory, UString name);
-template <typename T> class ImageLoaderRegister
-{
-  public:
-	ImageLoaderRegister(UString name) { registerImageLoader(new T, name); }
-};
+ImageLoaderFactory *getLodePNGImageLoaderFactory();
+ImageLoaderFactory *getPCXImageLoaderFactory();
 
 class ImageWriter
 {
@@ -46,10 +42,5 @@ class ImageWriterFactory
 	virtual ~ImageWriterFactory() {}
 };
 
-void registerImageWriter(ImageWriterFactory *factory, UString name);
-template <typename T> class ImageWriterRegister
-{
-  public:
-	ImageWriterRegister(UString name) { registerImageWriter(new T, name); }
-};
+ImageWriterFactory *getLodePNGImageWriterFactory();
 };

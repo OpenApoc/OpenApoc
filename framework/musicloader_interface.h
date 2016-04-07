@@ -21,11 +21,6 @@ class MusicLoaderFactory
 	virtual ~MusicLoaderFactory() {}
 };
 
-void registerMusicLoader(MusicLoaderFactory *factory, UString name);
+MusicLoaderFactory *getRAWMusicLoaderFactory();
 
-template <typename T> class MusicLoaderRegister
-{
-  public:
-	MusicLoaderRegister(UString name) { registerMusicLoader(new T, name); }
-};
 }; // namespace OpenApoc

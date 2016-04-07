@@ -70,6 +70,9 @@ class NullSoundBackendFactory : public SoundBackendFactory
 	virtual ~NullSoundBackendFactory() {}
 };
 
-SoundBackendRegister<NullSoundBackendFactory> load_at_init_null_sound("null");
-
 }; // anonymous namespace
+
+namespace OpenApoc
+{
+SoundBackendFactory *getNullSoundBackend() { return new NullSoundBackendFactory(); }
+} // namespace OpenApoc

@@ -161,6 +161,9 @@ class RawMusicLoaderFactory : public MusicLoaderFactory
 	virtual MusicLoader *create(Data &data) override { return new RawMusicLoader(data); }
 };
 
-MusicLoaderRegister<RawMusicLoaderFactory> load_at_init_raw_music("raw");
-
 }; // anonymous namespace
+
+namespace OpenApoc
+{
+MusicLoaderFactory *getRAWMusicLoaderFactory() { return new RawMusicLoaderFactory; }
+} // namespace OpenApoc

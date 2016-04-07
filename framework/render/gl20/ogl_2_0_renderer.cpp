@@ -1006,6 +1006,9 @@ class OGL20RendererFactory : public OpenApoc::RendererFactory
 	}
 };
 
-OpenApoc::RendererRegister<OGL20RendererFactory> register_at_load_gl_2_0_renderer("GL_2_0");
+} // anonymous namespace
 
-}; // anonymous namespace
+namespace OpenApoc
+{
+RendererFactory *getGL20RendererFactory() { return new OGL20RendererFactory(); }
+} // namespace OpenApoc

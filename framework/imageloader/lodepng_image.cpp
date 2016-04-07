@@ -203,8 +203,6 @@ class LodepngImageLoaderFactory : public OpenApoc::ImageLoaderFactory
 	virtual ~LodepngImageLoaderFactory() {}
 };
 
-OpenApoc::ImageLoaderRegister<LodepngImageLoaderFactory> register_at_load_lodepng_image("lodepng");
-
 class LodepngImageWriter : public OpenApoc::ImageWriter
 {
   private:
@@ -290,6 +288,10 @@ class LodepngImageWriterFactory : public OpenApoc::ImageWriterFactory
 	virtual ~LodepngImageWriterFactory() {}
 };
 
-OpenApoc::ImageWriterRegister<LodepngImageWriterFactory>
-    register_at_load_lodepng_image_writer("lodepng");
 } // anonymous namespace
+
+namespace OpenApoc
+{
+ImageWriterFactory *getLodePNGImageWriterFactory() { return new LodepngImageWriterFactory(); }
+ImageLoaderFactory *getLodePNGImageLoaderFactory() { return new LodepngImageLoaderFactory(); }
+} // namespace OpenApoc
