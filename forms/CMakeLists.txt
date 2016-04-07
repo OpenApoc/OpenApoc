@@ -15,7 +15,8 @@ set (FORMS_SOURCE_FILES
 	radiobutton.cpp
 	scrollbar.cpp
 	textbutton.cpp
-	textedit.cpp)
+	textedit.cpp
+	ui.cpp)
 source_group(forms\\sources FILES ${LIBRARY_SOURCE_FILES})
 
 set (FORMS_HEADER_FILES
@@ -31,7 +32,8 @@ set (FORMS_HEADER_FILES
 	radiobutton.h
 	scrollbar.h
 	textbutton.h
-	textedit.h)
+	textedit.h
+	ui.h)
 
 source_group(forms\\headers FILES ${LIBRARY_HEADER_FILES})
 

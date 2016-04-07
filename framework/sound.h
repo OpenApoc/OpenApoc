@@ -1,5 +1,5 @@
 #pragma once
-#include "framework/resource.h"
+#include "library/resource.h"
 #include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"

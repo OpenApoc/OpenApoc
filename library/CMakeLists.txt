@@ -6,9 +6,18 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
 find_package(Boost REQUIRED COMPONENTS locale)
 
-set (LIBRARY_SOURCE_FILES strings.cpp)
+set (LIBRARY_SOURCE_FILES
+	strings.cpp
+	voxel.cpp)
 source_group(library\\sources FILES ${LIBRARY_SOURCE_FILES})
-set (LIBRARY_HEADER_FILES colour.h rect.h sp.h strings.h vec.h)
+set (LIBRARY_HEADER_FILES
+	colour.h
+	rect.h
+	sp.h
+	strings.h
+	vec.h
+	resource.h
+	voxel.h)
 source_group(library\\headers FILES ${LIBRARY_HEADER_FILES})
 
 list(APPEND ALL_SOURCE_FILES ${LIBRARY_SOURCE_FILES})

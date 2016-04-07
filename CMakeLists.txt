@@ -4,10 +4,7 @@ PROJECT(OpenApoc CXX C)
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
-add_subdirectory(library)
-add_subdirectory(framework)
-add_subdirectory(forms)
-add_subdirectory(tools)
+
 
 # check compiler
 INCLUDE(CheckCXXCompilerFlag)
@@ -33,27 +30,21 @@ if (LTO)
 		endif()
 endif(LTO)
 
-# find openapoc sources
-AUX_SOURCE_DIRECTORY(tools sources)
-AUX_SOURCE_DIRECTORY(tools/extractors sources)
-AUX_SOURCE_DIRECTORY(tools/extractors/common sources)
-AUX_SOURCE_DIRECTORY(game sources)
-AUX_SOURCE_DIRECTORY(game/apocresources sources)
-AUX_SOURCE_DIRECTORY(game/base sources)
-AUX_SOURCE_DIRECTORY(game/general sources)
-AUX_SOURCE_DIRECTORY(game/city sources)
-AUX_SOURCE_DIRECTORY(game/rules sources)
-AUX_SOURCE_DIRECTORY(game/tileview sources)
-AUX_SOURCE_DIRECTORY(game/resources sources)
-AUX_SOURCE_DIRECTORY(game/ufopaedia sources)
-AUX_SOURCE_DIRECTORY(game/debugtools sources)
+add_subdirectory(library)
+add_subdirectory(framework)
+add_subdirectory(forms)
+add_subdirectory(game/state)
+add_subdirectory(game/ui)
+add_subdirectory(tools)
 
-ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} framework/main.cpp ${sources}
+ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} game/main.cpp ${sources}
 		${FRAMEWORK_SOURCES})
 
 target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Library)
 target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Framework)
 target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Forms)
+target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_GameState)
+target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_GameUI)
 
 set_property(TARGET OpenApoc PROPERTY CXX_STANDARD 11)
 set_property(TARGET OpenApoc PROPERTY CXX_STANDARD_REQUIRED ON)

@@ -1,6 +1,6 @@
 #include "forms/label.h"
+#include "forms/ui.h"
 #include "framework/framework.h"
-#include "game/resources/gamecore.h"
 #include "library/sp.h"
 #include <tinyxml2.h>
 
@@ -114,7 +114,7 @@ void Label::ConfigureFromXML(tinyxml2::XMLElement *Element)
 	}
 	if (Element->FirstChildElement("font") != nullptr)
 	{
-		font = fw().gamecore->GetFont(Element->FirstChildElement("font")->GetText());
+		font = ui().GetFont(Element->FirstChildElement("font")->GetText());
 	}
 	subnode = Element->FirstChildElement("alignment");
 	if (subnode != nullptr)

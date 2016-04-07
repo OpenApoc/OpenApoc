@@ -44,7 +44,6 @@ set (FRAMEWORK_HEADER_FILES
 	palette.h
 	renderer.h
 	renderer_interface.h
-	resource.h
 	sampleloader_interface.h
 	serialize.h
 	sound.h
@@ -56,6 +55,32 @@ set (FRAMEWORK_HEADER_FILES
 
 source_group(framework\\headers FILES ${FRAMEWORK_HEADER_FILES})
 list(APPEND ALL_HEADER_FILES ${FRAMEWORK_HEADER_FILES})
+
+set (APOCRESOURCES_SOURCE_FILES
+	apocresources/apocfont.cpp
+	apocresources/apocpalette.cpp
+	apocresources/cursor.cpp
+	apocresources/loftemps.cpp
+	apocresources/pck.cpp
+	apocresources/rawimage.cpp)
+
+source_group(framework\\apocresources\\sources FILES
+		${APOCRESOURCES_SOURCE_FILES})
+list(APPEND ALL_SOURCE_FILES ${APOCRESOURCES_SOURCE_FILES})
+
+set (APOCRESOURCES_HEADER_FILES
+	apocresources/apocfont.h
+	apocresources/apocpalette.h
+	apocresources/apocresource.h
+	apocresources/cursor.h
+	apocresources/loftemps.h
+	apocresources/pck.h
+	apocresources/rawimage.h)
+
+source_group(framework\\apocresources\\headers FILES
+		${APOCRESOURCES_HEADER_FILES})
+list(APPEND ALL_HEADER_FILES ${APOCRESOURCES_HEADER_FILES})
+
 
 set (IMAGELOADER_SOURCE_FILES
 	imageloader/lodepng.cpp
@@ -134,6 +159,7 @@ source_group(framework\\renderer\\headers FILES
 
 add_library(OpenApoc_Framework STATIC
 	${FRAMEWORK_SOURCE_FILES} ${FRAMEWORK_HEADER_FILES}
+	${APOCRESOURCES_SOURCE_FILES} ${APOCRESOURCES_HEADER_FILES}
 	${IMAGELOADER_SOURCE_FILES} ${IMAGELOADER_HEADER_FILES}
 	${SAMPLELOADER_SOURCE_FILES} ${SAMPLELOADER_HEADER_FILES}
 	${MUSICLOADER_SOURCE_FILES} ${MUSICLOADER_HEADER_FILES}

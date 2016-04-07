@@ -1,7 +1,7 @@
 #include "forms/textbutton.h"
 #include "forms/label.h"
+#include "forms/ui.h"
 #include "framework/framework.h"
-#include "game/resources/gamecore.h"
 #include "library/sp.h"
 #include <tinyxml2.h>
 
@@ -148,7 +148,7 @@ void TextButton::ConfigureFromXML(tinyxml2::XMLElement *Element)
 	}
 	if (Element->FirstChildElement("font") != nullptr)
 	{
-		label->SetFont(fw().gamecore->GetFont(Element->FirstChildElement("font")->GetText()));
+		label->SetFont(ui().GetFont(Element->FirstChildElement("font")->GetText()));
 	}
 }
 }; // namespace OpenApoc

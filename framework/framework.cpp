@@ -1,15 +1,11 @@
-#include "library/sp.h"
-
 #include "framework/framework.h"
+#include "framework/apocresources/cursor.h"
 #include "framework/renderer.h"
 #include "framework/renderer_interface.h"
 #include "framework/sound.h"
 #include "framework/sound_interface.h"
 #include "framework/trace.h"
-#include "game/boot.h"
-
-#include "game/resources/gamecore.h"
-
+#include "library/sp.h"
 #include <SDL.h>
 #include <iostream>
 #include <string>
@@ -174,6 +170,8 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 		LogError("Multiple Framework instances created");
 	}
 
+	this->instance = this;
+
 	PHYSFS_init(programName.c_str());
 #ifdef ANDROID
 	SDL_SetHint(SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH, "1");
@@ -294,17 +292,12 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 		Display_Initialise();
 		Audio_Initialise();
 	}
-
-	Framework::instance = this;
 }
 
 Framework::~Framework()
 {
 	TRACE_FN;
 	LogInfo("Destroying framework");
-	// Kill gamecore and program stages first, so any resources are cleaned before
-	// backends are de-inited
-	gamecore.reset();
 	p->ProgramStages.Clear();
 	LogInfo("Saving config");
 	SaveSettings();
@@ -330,7 +323,7 @@ Framework &Framework::getInstance()
 	return *Framework::instance;
 }
 
-void Framework::Run()
+void Framework::Run(sp<Stage> initialStage)
 {
 	if (!createWindow)
 	{
@@ -341,7 +334,7 @@ void Framework::Run()
 	TRACE_FN;
 	LogInfo("Program loop started");
 
-	p->ProgramStages.Push(mksp<BootUp>());
+	p->ProgramStages.Push(initialStage);
 
 	this->renderer->setPalette(this->data->load_palette("xcom3/ufodata/PAL_06.DAT"));
 
@@ -390,6 +383,7 @@ void Framework::Run()
 		{
 			TraceObj updateObj("Render");
 			p->ProgramStages.Current()->Render();
+			this->cursor->Render();
 			if (p->scaleSurface)
 			{
 				RendererSurfaceBinding scaleBind(*this->renderer, p->defaultSurface);
@@ -435,6 +429,7 @@ void Framework::ProcessEvents()
 			LogError("Invalid event on queue");
 			continue;
 		}
+		this->cursor->EventOccured(e);
 		if (e->Type() == EVENT_KEY_DOWN)
 		{
 			if (e->Keyboard().KeyCode == SDLK_F5)
@@ -841,10 +836,12 @@ void Framework::Display_Initialise()
 	{
 		p->displaySize = p->windowSize;
 	}
+	this->cursor.reset(new ApocCursor(this->data->load_palette("xcom3/tacdata/TACTICAL.PAL")));
 }
 
 void Framework::Display_Shutdown()
 {
+	this->cursor.reset();
 	if (!p->window)
 	{
 		return;
@@ -948,5 +945,7 @@ void Framework::Audio_Shutdown()
 sp<Stage> Framework::Stage_GetPrevious() { return p->ProgramStages.Previous(); }
 
 sp<Stage> Framework::Stage_GetPrevious(sp<Stage> From) { return p->ProgramStages.Previous(From); }
+
+Vec2<int> Framework::getCursorPosition() { return this->cursor->getPosition(); }
 
 }; // namespace OpenApoc

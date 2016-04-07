@@ -8,7 +8,6 @@
 #include "framework/renderer.h"
 #include "framework/sound.h"
 #include "framework/stagestack.h"
-#include "game/gamestate.h"
 #include "library/sp.h"
 #include "library/strings.h"
 
@@ -23,10 +22,10 @@ namespace OpenApoc
 
 class Shader;
 class GameCore;
+class FrameworkPrivate;
+class ApocCursor;
 
 #define FRAMES_PER_SECOND 100
-
-class FrameworkPrivate;
 
 class Framework
 {
@@ -39,10 +38,10 @@ class Framework
 
 	static Framework *instance;
 
+	up<ApocCursor> cursor;
+
   public:
 	std::unique_ptr<Data> data;
-	std::unique_ptr<GameCore> gamecore;
-
 	std::unique_ptr<ConfigFile> Settings;
 	std::unique_ptr<Renderer> renderer;
 	std::unique_ptr<SoundBackend> soundBackend;
@@ -56,7 +55,7 @@ class Framework
 
 	static Framework &getInstance();
 
-	void Run();
+	void Run(sp<Stage> initialStage);
 	void ProcessEvents();
 	void PushEvent(Event *e);
 	void TranslateSDLEvents();
@@ -78,6 +77,8 @@ class Framework
 
 	sp<Stage> Stage_GetPrevious();
 	sp<Stage> Stage_GetPrevious(sp<Stage> From);
+
+	Vec2<int> getCursorPosition();
 };
 
 static inline Framework &fw() { return Framework::getInstance(); }
