@@ -65,22 +65,27 @@ void Base::startingBase(GameState &state)
 	// Randomly fill them with facilities
 	for (auto &facilityTypePair : state.initial_facilities)
 	{
-		if (positions.empty())
-			break;
-
 		auto type = facilityTypePair.first;
 		auto count = facilityTypePair.second;
+		StateRef<FacilityType> facility = {&state, type};
 		while (count > 0)
 		{
+			if (positions.size() < facility->size * facility->size)
+			{
+				LogError("Can't place all starting facilities in building %s", building->name.c_str());
+				return;
+			}
+
 			auto facilityPos = std::uniform_int_distribution<int>(0, positions.size() - 1);
 			Vec2<int> random;
 			BuildError error;
 			do
 			{
 				random = positions[facilityPos(state.rng)];
-				error = canBuildFacility({&state, type}, random, true);
+				error = canBuildFacility(facility, random, true);
 			} while (error != BuildError::NoError); // Try harder
-			buildFacility({&state, type}, random, true);
+
+			buildFacility(facility, random, true);
 
 			// Clear used positions
 			for (auto pos = positions.begin(); pos != positions.end();)
