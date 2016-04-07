@@ -81,9 +81,7 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <PropertyGroup Label="UserMacros">
-    <NuGetPackageImportStamp>7ecefbe2</NuGetPackageImportStamp>
-  </PropertyGroup>
+  <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(SolutionDir)\dependencies\glm;$(SolutionDir)\;$(IncludePath)</IncludePath>
   </PropertyGroup>
@@ -163,11 +161,23 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\boost.1.60.0.0\build\native\boost.targets" Condition="Exists('..\packages\boost.1.60.0.0\build\native\boost.targets')" />
+    <Import Project="..\packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets" Condition="Exists('..\packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets')" />
+    <Import Project="..\packages\boost_date_time.1.60.0.0\build\native\boost_date_time.targets" Condition="Exists('..\packages\boost_date_time.1.60.0.0\build\native\boost_date_time.targets')" />
+    <Import Project="..\packages\boost_filesystem.1.60.0.0\build\native\boost_filesystem.targets" Condition="Exists('..\packages\boost_filesystem.1.60.0.0\build\native\boost_filesystem.targets')" />
+    <Import Project="..\packages\boost_locale.1.60.0.0\build\native\boost_locale.targets" Condition="Exists('..\packages\boost_locale.1.60.0.0\build\native\boost_locale.targets')" />
+    <Import Project="..\packages\boost_system.1.60.0.0\build\native\boost_system.targets" Condition="Exists('..\packages\boost_system.1.60.0.0\build\native\boost_system.targets')" />
+    <Import Project="..\packages\boost_thread.1.60.0.0\build\native\boost_thread.targets" Condition="Exists('..\packages\boost_thread.1.60.0.0\build\native\boost_thread.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\boost.1.60.0.0\build\native\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.60.0.0\build\native\boost.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_chrono.1.60.0.0\build\native\boost_chrono.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_date_time.1.60.0.0\build\native\boost_date_time.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_date_time.1.60.0.0\build\native\boost_date_time.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_filesystem.1.60.0.0\build\native\boost_filesystem.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_filesystem.1.60.0.0\build\native\boost_filesystem.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_locale.1.60.0.0\build\native\boost_locale.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_locale.1.60.0.0\build\native\boost_locale.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_system.1.60.0.0\build\native\boost_system.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_system.1.60.0.0\build\native\boost_system.targets'))" />
+    <Error Condition="!Exists('..\packages\boost_thread.1.60.0.0\build\native\boost_thread.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost_thread.1.60.0.0\build\native\boost_thread.targets'))" />
   </Target>
 </Project>
