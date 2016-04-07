@@ -1,23 +1,21 @@
 #pragma once
 
-#include "audio.h"
-#include "baselayout.h"
-#include "canonstring.h"
-#include "datachunk.h"
-#include "facilities.h"
-#include "organisations.h"
-#include "research.h"
-#include "scenerytile.h"
-#include "strtab.h"
-#include "ufopaedia.h"
-#include "vehicle.h"
-#include "vequipment.h"
-
-#include "game/organisation.h"
-#include "game/rules/facility_type.h"
-#include "game/rules/vehicle_type.h"
-#include "game/rules/vequipment.h"
-
+#include "game/state/organisation.h"
+#include "game/state/rules/facility_type.h"
+#include "game/state/rules/vehicle_type.h"
+#include "game/state/rules/vequipment.h"
+#include "tools/extractors/common/audio.h"
+#include "tools/extractors/common/baselayout.h"
+#include "tools/extractors/common/canonstring.h"
+#include "tools/extractors/common/datachunk.h"
+#include "tools/extractors/common/facilities.h"
+#include "tools/extractors/common/organisations.h"
+#include "tools/extractors/common/research.h"
+#include "tools/extractors/common/scenerytile.h"
+#include "tools/extractors/common/strtab.h"
+#include "tools/extractors/common/ufopaedia.h"
+#include "tools/extractors/common/vehicle.h"
+#include "tools/extractors/common/vequipment.h"
 #include <algorithm>
 #include <memory>
 #include <string>

@@ -1,8 +1,7 @@
 #include "framework/data.h"
 #include "framework/framework.h"
+#include "game/state/city/building.h"
 #include "tools/extractors/extractors.h"
-
-#include "game/city/building.h"
 
 namespace OpenApoc
 {

@@ -1,6 +1,6 @@
 #include "framework/data.h"
 #include "framework/framework.h"
-#include "game/rules/scenery_tile_type.h"
+#include "game/state/rules/scenery_tile_type.h"
 #include "tools/extractors/extractors.h"
 
 #include <map>

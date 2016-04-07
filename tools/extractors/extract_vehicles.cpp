@@ -1,9 +1,7 @@
-#include "common/ufo2p.h"
-#include "extractors.h"
-
 #include "framework/framework.h"
-#include "game/tileview/voxel.h"
-
+#include "library/voxel.h"
+#include "tools/extractors/common/ufo2p.h"
+#include "tools/extractors/extractors.h"
 #include <list>
 #include <map>
 #include <set>

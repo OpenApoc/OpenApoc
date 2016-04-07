@@ -1,9 +1,9 @@
 #include "framework/data.h"
 #include "framework/framework.h"
-#include "game/tileview/voxel.h"
+#include "framework/palette.h"
+#include "game/state/rules/scenery_tile_type.h"
+#include "library/voxel.h"
 #include "tools/extractors/extractors.h"
-
-#include "game/rules/scenery_tile_type.h"
 
 namespace OpenApoc
 {

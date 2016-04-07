@@ -1,7 +1,6 @@
 #pragma once
-#include "game/gamestate.h"
+#include "game/state/gamestate.h"
 #include "library/strings.h"
-
 #include "tools/extractors/common/ufo2p.h"
 
 namespace OpenApoc
