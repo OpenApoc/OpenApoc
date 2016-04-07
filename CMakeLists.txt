@@ -12,11 +12,6 @@ add_subdirectory(tools)
 INCLUDE(CheckCXXCompilerFlag)
 INCLUDE(CheckCCompilerFlag)
 
-CHECK_CXX_COMPILER_FLAG("-pthread" COMPILER_SUPPORTS_pthread)
-if(COMPILER_SUPPORTS_pthread)
-	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
-endif()
-
 option(LTO "Build using link-time-optimisations" OFF)
 option(ENABLE_TESTS "Build some unit tests" OFF)
 

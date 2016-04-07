@@ -114,7 +114,6 @@ add_library(OpenApoc_Framework STATIC
 
 set_property(TARGET OpenApoc_Framework PROPERTY CXX_STANDARD 11)
 set_property(TARGET OpenApoc_Framework PROPERTY CXX_STANDARD_REQUIRED ON)
-target_compile_definitions(OpenApoc_Framework PUBLIC PTHREADS_AVAILABLE)
 
 target_compile_definitions(OpenApoc_Framework PUBLIC
 		"-DRENDERERS=\"GL_3_0:GL_2_0\"")
@@ -124,6 +123,9 @@ target_compile_definitions(OpenApoc_Framework PUBLIC
 find_package(Boost REQUIRED COMPONENTS locale filesystem system)
 target_link_libraries(OpenApoc_Framework PUBLIC ${Boost_LIBRARIES})
 target_include_directories(OpenApoc_Framework PUBLIC ${Boost_INCLUDE_DIRS})
+
+find_package(Threads)
+target_link_libraries(OpenApoc_Framework PUBLIC ${CMAKE_THREAD_LIBS_INIT})
 
 
 #Require the glm matrix/vector maths library
