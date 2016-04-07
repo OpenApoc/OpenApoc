@@ -19,7 +19,7 @@ after_build:
 - echo %APPVEYOR_REPO_COMMIT% > OpenApoc-%APPVEYOR_BUILD_VERSION%\git-commit
 - echo %APPVEYOR_BUILD_VERSION% > OpenApoc-%APPVEYOR_BUILD_VERSION%\build-id
 - copy x64\Release\*.dll OpenApoc-%APPVEYOR_BUILD_VERSION%\
-- copy x64\Release\OpenApoc.exe OpenApoc-%APPVEYOR_BUILD_VERSION%\
+- copy x64\Release\*.exe OpenApoc-%APPVEYOR_BUILD_VERSION%\
 - xcopy /E data OpenApoc-%APPVEYOR_BUILD_VERSION%\data\
 - 7z a OpenApoc-msvc.zip OpenApoc-%APPVEYOR_BUILD_VERSION%
 artifacts:
