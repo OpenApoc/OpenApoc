@@ -1,5 +1,5 @@
 # project name, and type
-PROJECT(OpenApoc CXX C)
+PROJECT(OpenApoc_Framework CXX C)
 
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
