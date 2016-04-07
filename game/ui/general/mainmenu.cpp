@@ -4,6 +4,7 @@
 #include "game/ui/city/cityview.h"
 #include "game/ui/debugtools/debugmenu.h"
 #include "game/ui/general/difficultymenu.h"
+#include "game/ui/general/loadingscreen.h"
 #include "game/ui/general/optionsmenu.h"
 #include "version.h"
 
@@ -70,19 +71,19 @@ void MainMenu::EventOccurred(Event *e)
 		{
 			// FIXME: Save game selector
 			auto state = mksp<GameState>();
-			if (state->loadGame("save") == false)
-			{
-				LogError("Failed to load 'save'");
-				return;
-			}
-			state->initState();
+			UString savePath = "save";
+			auto loadTask = fw().threadPool->enqueue([state, savePath]() -> void {
+				if (state->loadGame(savePath) == false)
+				{
+					LogError("Failed to load '%s'", savePath.c_str());
+					return;
+				}
+				state->initState();
+			});
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			// FIXME:
-			// if (state->inBattlescale)
-			// 	nextStage = mksp<BattleScape>..
-			// else
-			stageCmd.nextStage =
-			    mksp<CityView>(state, StateRef<City>{state.get(), "CITYMAP_HUMAN"});
+			stageCmd.nextStage = mksp<LoadingScreen>(std::move(loadTask), [state]() -> sp<Stage> {
+				return mksp<CityView>(state, StateRef<City>{state.get(), "CITYMAP_HUMAN"});
+			});
 		}
 	}
 }

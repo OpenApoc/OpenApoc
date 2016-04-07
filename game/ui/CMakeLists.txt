@@ -18,6 +18,7 @@ set (GAMEUI_SOURCE_FILES
 	debugtools/formpreview.cpp
 	general/difficultymenu.cpp
 	general/ingameoptions.cpp
+	general/loadingscreen.cpp
 	general/mainmenu.cpp
 	general/messagebox.cpp
 	general/optionsmenu.cpp
@@ -40,6 +41,7 @@ set (GAMEUI_HEADER_FILES
 	debugtools/formpreview.h
 	general/difficultymenu.h
 	general/ingameoptions.h
+	general/loadingscreen.h
 	general/mainmenu.h
 	general/messagebox.h
 	general/optionsmenu.h

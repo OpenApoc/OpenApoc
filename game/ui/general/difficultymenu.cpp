@@ -4,6 +4,7 @@
 #include "game/state/city/city.h"
 #include "game/state/gamestate.h"
 #include "game/ui/city/cityview.h"
+#include "game/ui/general/loadingscreen.h"
 
 namespace OpenApoc
 {
@@ -22,6 +23,14 @@ void DifficultyMenu::Pause() {}
 void DifficultyMenu::Resume() {}
 
 void DifficultyMenu::Finish() {}
+
+static void loadGame(sp<GameState> state, UString initialStatePath)
+{
+	state->loadGame(initialStatePath);
+	state->startGame();
+	state->initState();
+	return;
+}
 
 void DifficultyMenu::EventOccurred(Event *e)
 {
@@ -66,12 +75,16 @@ void DifficultyMenu::EventOccurred(Event *e)
 		}
 
 		auto state = mksp<GameState>();
-		state->loadGame(initialStatePath);
-		state->startGame();
-		state->initState();
+		auto loadTask = fw().threadPool->enqueue([state, initialStatePath]() -> void {
+			state->loadGame(initialStatePath);
+			state->startGame();
+			state->initState();
+		});
 
 		stageCmd.cmd = StageCmd::Command::REPLACE;
-		stageCmd.nextStage = mksp<CityView>(state, StateRef<City>{state.get(), "CITYMAP_HUMAN"});
+		stageCmd.nextStage = mksp<LoadingScreen>(std::move(loadTask), [state]() -> sp<Stage> {
+			return mksp<CityView>(state, StateRef<City>{state.get(), "CITYMAP_HUMAN"});
+		});
 		return;
 	}
 }
