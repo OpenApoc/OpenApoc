@@ -82,7 +82,11 @@ sp<Palette> OpenApoc::loadPNGPalette(Data &d, const UString fileName)
 		uint8_t *palPos = pixels.data();
 		for (unsigned int i = 0; i < 256; i++)
 		{
-			pal->SetColour(i, Colour{*palPos++, *palPos++, *palPos++, *palPos++});
+			uint8_t r = *palPos++;
+			uint8_t g = *palPos++;
+			uint8_t b = *palPos++;
+			uint8_t a = *palPos++;
+			pal->SetColour(i, Colour{r, g, b, a});
 		}
 		return pal;
 	}
