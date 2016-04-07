@@ -1,3 +1,7 @@
+#ifdef _WIN32
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #include "framework/fs.h"
 #include "framework/ignorecase.h"
 #include "framework/logger.h"
@@ -5,6 +9,7 @@
 #include <physfs.h>
 
 #ifndef _WIN32
+#define _CRT_SECURE_NO_WARNINGS
 #ifdef ANDROID
 #define be16toh(x) htobe16(x)
 #define be32toh(x) htobe32(x)
