@@ -321,6 +321,7 @@
     <ClCompile Include="forms\list.cpp" />
     <ClCompile Include="forms\textbutton.cpp" />
     <ClCompile Include="forms\textedit.cpp" />
+    <ClCompile Include="framework\configfile.cpp" />
     <ClCompile Include="framework\font.cpp" />
     <ClCompile Include="framework\ignorecase.c" />
     <ClCompile Include="framework\image.cpp" />
@@ -328,13 +329,16 @@
     <ClCompile Include="framework\imageloader\lodepng_image.cpp" />
     <ClCompile Include="framework\imageloader\pcx.cpp" />
     <ClCompile Include="framework\logger.cpp" />
+    <ClCompile Include="framework\musicloader\music.cpp" />
     <ClCompile Include="framework\palette.cpp" />
     <ClCompile Include="framework\physfs_fs.cpp" />
     <ClCompile Include="framework\renderer.cpp" />
     <ClCompile Include="framework\render\gl20\ogl_2_0_renderer.cpp" />
     <ClCompile Include="framework\render\gl30\ogl_3_0_renderer.cpp" />
+    <ClCompile Include="framework\sampleloader\rawsound.cpp" />
     <ClCompile Include="game\agent.cpp" />
     <ClCompile Include="game\base\researchscreen.cpp" />
+    <ClCompile Include="game\city\cityview.cpp" />
     <ClCompile Include="game\general\messagebox.cpp" />
     <ClCompile Include="game\research.cpp" />
     <ClCompile Include="game\rules\doodad_type.cpp" />
@@ -396,16 +400,12 @@
     <ClCompile Include="game\tileview\tileobject_shadow.cpp" />
     <ClCompile Include="game\tileview\tileobject_vehicle.cpp" />
     <ClCompile Include="game\tileview\tileview.cpp" />
-    <ClCompile Include="library\configfile.cpp" />
     <ClCompile Include="game\apocresources\cursor.cpp" />
     <ClCompile Include="framework\event.cpp" />
     <ClCompile Include="framework\framework.cpp" />
     <ClCompile Include="framework\main.cpp" />
     <ClCompile Include="game\general\mainmenu.cpp" />
-    <ClCompile Include="library\memory.cpp" />
-    <ClCompile Include="game\apocresources\music.cpp" />
     <ClCompile Include="game\apocresources\pck.cpp" />
-    <ClCompile Include="game\apocresources\rawsound.cpp" />
     <ClCompile Include="framework\stagestack.cpp" />
     <ClCompile Include="framework\data.cpp" />
     <ClCompile Include="game\city\city.cpp" />
@@ -413,7 +413,6 @@
     <ClCompile Include="game\base\basescreen.cpp" />
     <ClCompile Include="library\strings.cpp" />
     <ClCompile Include="game\apocresources\rawimage.cpp" />
-    <ClCompile Include="game\city\cityview.cpp" />
     <ClCompile Include="game\city\scorescreen.cpp" />
     <ClCompile Include="game\city\infiltrationscreen.cpp" />
     <ClCompile Include="game\general\ingameoptions.cpp" />
@@ -435,6 +434,7 @@
     <ClInclude Include="forms\list.h" />
     <ClInclude Include="forms\textbutton.h" />
     <ClInclude Include="forms\textedit.h" />
+    <ClInclude Include="framework\configfile.h" />
     <ClInclude Include="framework\font.h" />
     <ClInclude Include="framework\fs.h" />
     <ClInclude Include="framework\ignorecase.h" />
@@ -519,9 +519,7 @@
     <ClInclude Include="library\angle.h" />
     <ClInclude Include="game\apocresources\apocfont.h" />
     <ClInclude Include="game\boot.h" />
-    <ClInclude Include="library\box.h" />
     <ClInclude Include="library\colour.h" />
-    <ClInclude Include="library\configfile.h" />
     <ClInclude Include="game\apocresources\cursor.h" />
     <ClInclude Include="framework\event.h" />
     <ClInclude Include="library\rect.h" />
@@ -530,9 +528,7 @@
     <ClInclude Include="library\vec.h" />
     <ClInclude Include="framework\framework.h" />
     <ClInclude Include="framework\includes.h" />
-    <ClInclude Include="library\line.h" />
     <ClInclude Include="game\general\mainmenu.h" />
-    <ClInclude Include="library\memory.h" />
     <ClInclude Include="game\apocresources\pck.h" />
     <ClInclude Include="framework\stage.h" />
     <ClInclude Include="framework\stagestack.h" />

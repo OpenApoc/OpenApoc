@@ -24,9 +24,6 @@
     <ClCompile Include="game\boot.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="library\configfile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="game\apocresources\cursor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -42,16 +39,7 @@
     <ClCompile Include="game\general\mainmenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="library\memory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="game\apocresources\music.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="game\apocresources\pck.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="game\apocresources\rawsound.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="framework\stagestack.cpp">
@@ -148,9 +136,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game\apocresources\rawimage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="game\city\cityview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="game\city\scorescreen.cpp">
@@ -477,6 +462,18 @@
     <ClCompile Include="game\general\messagebox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="game\city\cityview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\configfile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\musicloader\music.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="framework\sampleloader\rawsound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="library\angle.h">
@@ -486,12 +483,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\boot.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="library\box.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="library\configfile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\apocresources\cursor.h">
@@ -506,13 +497,7 @@
     <ClInclude Include="framework\includes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="library\line.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="game\general\mainmenu.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="library\memory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\apocresources\pck.h">
@@ -846,6 +831,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="game\general\messagebox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="framework\configfile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
