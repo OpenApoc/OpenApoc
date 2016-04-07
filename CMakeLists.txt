@@ -6,6 +6,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
 add_subdirectory(library)
 add_subdirectory(framework)
+add_subdirectory(forms)
 add_subdirectory(tools)
 
 # check compiler
@@ -32,9 +33,6 @@ if (LTO)
 		endif()
 endif(LTO)
 
-find_package(Boost REQUIRED COMPONENTS locale filesystem system)
-
-
 # find openapoc sources
 AUX_SOURCE_DIRECTORY(tools sources)
 AUX_SOURCE_DIRECTORY(tools/extractors sources)
@@ -49,51 +47,24 @@ AUX_SOURCE_DIRECTORY(game/tileview sources)
 AUX_SOURCE_DIRECTORY(game/resources sources)
 AUX_SOURCE_DIRECTORY(game/ufopaedia sources)
 AUX_SOURCE_DIRECTORY(game/debugtools sources)
-AUX_SOURCE_DIRECTORY(forms sources)
-
-
-# declare tinyxml library
-SET(REQUIRED_TINYXML_LIBRARIES tinyxml2)
 
 ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} framework/main.cpp ${sources}
 		${FRAMEWORK_SOURCES})
 
 target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Library)
 target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Framework)
-target_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC PTHREADS_AVAILABLE)
+target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Forms)
 
 set_property(TARGET OpenApoc PROPERTY CXX_STANDARD 11)
 set_property(TARGET OpenApoc PROPERTY CXX_STANDARD_REQUIRED ON)
 
 # check dependencies and include libraries
-FIND_PACKAGE(PkgConfig)
-PKG_CHECK_MODULES(PC_TINYXML2 REQUIRED tinyxml2)
 
-
-FIND_PATH(TINYXML2_INCLUDE_DIR tinyxml2.h HINTS ${PC_TINYXML2_INCLUDEDIR})
 
 #All platforms that use CMake (Non-windows) have case sensitive filesystems
 ADD_DEFINITIONS(-DDATA_DIRECTORY="${CMAKE_INSTALL_PREFIX}/share/OpenApoc")
 
-INCLUDE_DIRECTORIES(SYSTEM ${TINYXML2_INCLUDE_DIR})
-INCLUDE_DIRECTORIES(SYSTEM ${FRAMEWORK_INCLUDE_DIRS})
-INCLUDE_DIRECTORIES(.)
 INCLUDE_DIRECTORIES(${CMAKE_BINARY_DIR})
-
-foreach (TINYXML2_LIBRARY ${PC_TINYXML2_LIBRARIES})
-		find_library(TINYXML2_LIBRARY_PATH ${TINYXML2_LIBRARY} HINTS
-				${PC_TINYXML2_LIBRARY_DIRS})
-		if (NOT TINYXML2_LIBRARY_PATH)
-				message(FATAL_ERROR "Failed to find tinyxml2 library
-				${TINYXML2_LIBRARY} in ${PC_TINYXML2_LIBRARY_DIRS}")
-		endif()
-		list(APPEND TINYXML2_LIBRARIES ${TINYXML2_LIBRARY_PATH})
-endforeach(TINYXML2_LIBRARY)
-
-
-
-TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME} ${TINYXML2_LIBRARIES})
-TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME} ${FRAMEWORK_LIBRARIES})
 
 # apoc data copy
 SET( EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin )
