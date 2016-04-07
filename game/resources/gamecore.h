@@ -1,8 +1,12 @@
 #pragma once
-#include "library/sp.h"
-
 #include "framework/font.h"
 #include "game/apocresources/apocresource.h"
+#include "library/sp.h"
+
+namespace tinyxml2
+{
+class XMLElement;
+} // namespace tinyxml2
 
 namespace OpenApoc
 {

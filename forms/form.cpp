@@ -1,4 +1,5 @@
 #include "form.h"
+#include <tinyxml2.h>
 
 namespace OpenApoc
 {

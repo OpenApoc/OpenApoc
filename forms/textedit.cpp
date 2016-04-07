@@ -1,8 +1,8 @@
-#include "library/sp.h"
-
 #include "forms/textedit.h"
 #include "framework/framework.h"
 #include "game/resources/gamecore.h"
+#include "library/sp.h"
+#include <tinyxml2.h>
 
 namespace OpenApoc
 {

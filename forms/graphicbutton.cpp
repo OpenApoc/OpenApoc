@@ -1,8 +1,8 @@
-#include "library/sp.h"
-
 #include "forms/graphicbutton.h"
 #include "forms/scrollbar.h"
 #include "framework/framework.h"
+#include "library/sp.h"
+#include <tinyxml2.h>
 
 namespace OpenApoc
 {

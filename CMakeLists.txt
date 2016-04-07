@@ -4,10 +4,9 @@ PROJECT(OpenApoc CXX C)
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/framework/cmake/")
-
-include(framework)
 add_subdirectory(library)
+add_subdirectory(framework)
+add_subdirectory(tools)
 
 # check compiler
 INCLUDE(CheckCXXCompilerFlag)
@@ -55,8 +54,6 @@ AUX_SOURCE_DIRECTORY(game/tileview sources)
 AUX_SOURCE_DIRECTORY(game/resources sources)
 AUX_SOURCE_DIRECTORY(game/ufopaedia sources)
 AUX_SOURCE_DIRECTORY(game/debugtools sources)
-AUX_SOURCE_DIRECTORY(shaders sources)
-AUX_SOURCE_DIRECTORY(transitions sources)
 AUX_SOURCE_DIRECTORY(forms sources)
 
 
@@ -66,10 +63,8 @@ SET(REQUIRED_TINYXML_LIBRARIES tinyxml2)
 ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} framework/main.cpp ${sources}
 		${FRAMEWORK_SOURCES})
 
-target_link_libraries(${CMAKE_PROJECT_NAME} ${Boost_LIBRARIES})
 target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Library)
-target_include_directories(${CMAKE_PROJECT_NAME} SYSTEM PUBLIC ${Boost_INCLUDE_DIRS})
-# Assume all targets using cmake have pthreads
+target_link_libraries(${CMAKE_PROJECT_NAME} OpenApoc_Framework)
 target_compile_definitions(${CMAKE_PROJECT_NAME} PUBLIC PTHREADS_AVAILABLE)
 
 set_property(TARGET OpenApoc PROPERTY CXX_STANDARD 11)

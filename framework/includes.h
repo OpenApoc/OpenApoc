@@ -13,5 +13,4 @@
 #include <list>
 #include <map>
 #include <memory>
-#include <tinyxml2.h>
 #include <vector>

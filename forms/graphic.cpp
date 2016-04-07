@@ -1,6 +1,7 @@
 #include "forms/graphic.h"
 #include "framework/framework.h"
 #include "library/sp.h"
+#include <tinyxml2.h>
 
 namespace OpenApoc
 {

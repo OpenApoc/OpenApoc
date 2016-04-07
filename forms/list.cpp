@@ -1,8 +1,8 @@
-
 #include "forms/list.h"
 #include "forms/scrollbar.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include <tinyxml2.h>
 
 namespace OpenApoc
 {

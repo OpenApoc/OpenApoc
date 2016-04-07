@@ -1,15 +1,17 @@
-
 #pragma once
-#include "library/sp.h"
-
 #include "forms/forms_enums.h"
 #include "framework/font.h"
 #include "framework/logger.h"
 #include "library/colour.h"
-
+#include "library/sp.h"
 #include <functional>
 #include <list>
 #include <map>
+
+namespace tinyxml2
+{
+class XMLElement;
+} // namespace tinyxml2
 
 namespace OpenApoc
 {

@@ -1,9 +1,9 @@
-#include "library/sp.h"
-
-#include "forms/label.h"
 #include "forms/textbutton.h"
+#include "forms/label.h"
 #include "framework/framework.h"
 #include "game/resources/gamecore.h"
+#include "library/sp.h"
+#include <tinyxml2.h>
 
 namespace OpenApoc
 {

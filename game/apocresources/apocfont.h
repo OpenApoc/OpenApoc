@@ -1,9 +1,11 @@
-
 #pragma once
+#include "framework/font.h"
 #include "library/sp.h"
 
-#include "framework/font.h"
-#include "framework/includes.h"
+namespace tinyxml2
+{
+class XMLElement;
+} // namespace tinyxml2
 
 namespace OpenApoc
 {

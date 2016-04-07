@@ -3,6 +3,7 @@
 #include "framework/framework.h"
 #include "framework/trace.h"
 #include "library/sp.h"
+#include <tinyxml2.h>
 
 namespace OpenApoc
 {
