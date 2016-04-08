@@ -11,6 +11,9 @@
 //#define MINIZ_HEADER_FILE_ONLY
 #include "dependencies/miniz/miniz.c"
 
+// Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
+// symbols as part of the module that uses it
+#define BOOST_ALL_NO_LIB
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/uuid/sha1.hpp>
