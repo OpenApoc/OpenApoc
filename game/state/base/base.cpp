@@ -72,7 +72,8 @@ void Base::startingBase(GameState &state)
 		{
 			if (positions.size() < facility->size * facility->size)
 			{
-				LogError("Can't place all starting facilities in building %s", building->name.c_str());
+				LogError("Can't place all starting facilities in building %s",
+				         building->name.c_str());
 				return;
 			}
 
