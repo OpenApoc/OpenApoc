@@ -49,28 +49,37 @@ int main(int argc, char *argv[])
 		    {"data/difficulty5", InitialGameStateExtractor::Difficulty::DIFFICULTY_5},
 		};
 
+		std::list<std::future<void>> tasks;
+
 		for (auto &dpair : difficultyOutputFiles)
 		{
-			GameState s;
-			InitialGameStateExtractor e;
-			LogWarning("Extracting initial game state for \"%s\"", dpair.first.c_str());
-			e.extract(s, dpair.second);
-			LogWarning("Finished extracting initial game state for \"%s\"", dpair.first.c_str());
+			auto future = fw->threadPool->enqueue([dpair]() -> void {
+				GameState s;
+				InitialGameStateExtractor e;
+				LogWarning("Extracting initial game state for \"%s\"", dpair.first.c_str());
+				e.extract(s, dpair.second);
+				LogWarning("Finished extracting initial game state for \"%s\"",
+				           dpair.first.c_str());
 
-			LogWarning("Importing common patch");
-			s.loadGame("data/common_patch");
-			LogWarning("Done importing common patch");
+				LogWarning("Importing common patch");
+				s.loadGame("data/common_patch");
+				LogWarning("Done importing common patch");
 
-			UString patchName = dpair.first + "_patch";
-			LogWarning("Trying to import patch \"%s\"", patchName.c_str());
-			s.loadGame(patchName);
-			LogWarning("Patching finished");
+				UString patchName = dpair.first + "_patch";
+				LogWarning("Trying to import patch \"%s\"", patchName.c_str());
+				s.loadGame(patchName);
+				LogWarning("Patching finished");
 
-			UString patchedOutputName = dpair.first + "_patched";
-			LogWarning("Saving patched state to \"%s\"", patchedOutputName.c_str());
-			s.saveGame(patchedOutputName, false);
-			LogWarning("Done saving patched state");
+				UString patchedOutputName = dpair.first + "_patched";
+				LogWarning("Saving patched state to \"%s\"", patchedOutputName.c_str());
+				s.saveGame(patchedOutputName, false);
+				LogWarning("Done saving patched state");
+			});
+			tasks.push_back(std::move(future));
 		}
+
+		for (auto &task : tasks)
+			task.wait();
 
 		delete fw;
 	}
