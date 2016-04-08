@@ -4,7 +4,7 @@ PROJECT(OpenApoc CXX C)
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
-
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # check compiler
 INCLUDE(CheckCXXCompilerFlag)
@@ -122,7 +122,6 @@ else()
 	message("xmllint not found, disabling format-xml target")
 endif()
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CLANG_TIDY clang-tidy CACHE STRING "clang-tidy executable name in PATH")
 set(CLANG_TIDY_FIX OFF tidy CACHE BOOL "Pass -fix to clang-tidy (DANGEROUS)")
 
