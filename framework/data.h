@@ -9,6 +9,7 @@
 #include <list>
 #include <map>
 #include <memory>
+#include <mutex>
 #include <queue>
 #include <vector>
 
@@ -32,11 +33,16 @@ class Data
 
   private:
 	std::map<UString, std::weak_ptr<Image>> imageCache;
+	std::recursive_mutex imageCacheLock;
 	std::map<UString, std::weak_ptr<ImageSet>> imageSetCache;
+	std::recursive_mutex imageSetCacheLock;
 
 	std::map<UString, std::weak_ptr<Sample>> sampleCache;
+	std::recursive_mutex sampleCacheLock;
 	std::map<UString, std::weak_ptr<MusicTrack>> musicCache;
+	std::recursive_mutex musicCacheLock;
 	std::map<UString, std::weak_ptr<LOFTemps>> LOFVoxelCache;
+	std::recursive_mutex voxelCacheLock;
 
 	// Pin open 'imageCacheSize' images
 	std::queue<sp<Image>> pinnedImages;

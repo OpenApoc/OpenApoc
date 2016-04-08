@@ -94,6 +94,7 @@ Data::~Data() {}
 
 sp<VoxelSlice> Data::load_voxel_slice(const UString &path)
 {
+	std::lock_guard<std::recursive_mutex> l(this->voxelCacheLock);
 	if (path == "")
 		return nullptr;
 	sp<VoxelSlice> slice;
@@ -149,6 +150,7 @@ sp<VoxelSlice> Data::load_voxel_slice(const UString &path)
 
 sp<ImageSet> Data::load_image_set(const UString &path)
 {
+	std::lock_guard<std::recursive_mutex> l(this->imageSetCacheLock);
 	UString cacheKey = path.toUpper();
 	sp<ImageSet> imgSet = this->imageSetCache[cacheKey].lock();
 	if (imgSet)
@@ -198,6 +200,7 @@ sp<ImageSet> Data::load_image_set(const UString &path)
 
 sp<Sample> Data::load_sample(UString path)
 {
+	std::lock_guard<std::recursive_mutex> l(this->sampleCacheLock);
 	auto aliasMap = this->aliases.lock();
 	if (aliasMap)
 	{
@@ -232,6 +235,7 @@ sp<Sample> Data::load_sample(UString path)
 
 sp<MusicTrack> Data::load_music(const UString &path)
 {
+	std::lock_guard<std::recursive_mutex> l(this->musicCacheLock);
 	TRACE_FN_ARGS1("path", path);
 	// No cache for music tracks, just stream of disk
 	for (auto &loader : this->musicLoaders)
@@ -249,6 +253,7 @@ sp<MusicTrack> Data::load_music(const UString &path)
 
 sp<Image> Data::load_image(const UString &path)
 {
+	std::lock_guard<std::recursive_mutex> l(this->imageCacheLock);
 	if (path == "")
 	{
 		return nullptr;
