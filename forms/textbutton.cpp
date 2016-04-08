@@ -1,6 +1,7 @@
 #include "forms/textbutton.h"
 #include "forms/label.h"
 #include "forms/ui.h"
+#include "framework/event.h"
 #include "framework/framework.h"
 #include "library/sp.h"
 #include <tinyxml2.h>

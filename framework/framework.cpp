@@ -1,5 +1,6 @@
 #include "framework/framework.h"
 #include "framework/apocresources/cursor.h"
+#include "framework/event.h"
 #include "framework/renderer.h"
 #include "framework/renderer_interface.h"
 #include "framework/sound.h"

@@ -1,4 +1,5 @@
 #include "forms/checkbox.h"
+#include "framework/event.h"
 #include "framework/framework.h"
 #include "library/sp.h"
 #include <tinyxml2.h>

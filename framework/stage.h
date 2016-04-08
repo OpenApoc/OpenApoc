@@ -2,13 +2,12 @@
 #pragma once
 #include "library/sp.h"
 
-#include "event.h"
-
 namespace OpenApoc
 {
 
 class Stage;
 class Surface;
+class Event;
 
 class StageCmd
 {

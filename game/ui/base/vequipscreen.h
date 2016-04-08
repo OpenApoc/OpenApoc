@@ -16,6 +16,7 @@ class Palette;
 class VEquipment;
 class BitmapFont;
 class GameState;
+class Control;
 
 class VEquipScreen : public Stage
 {

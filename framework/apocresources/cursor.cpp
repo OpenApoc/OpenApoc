@@ -1,4 +1,5 @@
 #include "framework/apocresources/cursor.h"
+#include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/palette.h"
 #include "library/sp.h"

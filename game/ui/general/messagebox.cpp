@@ -1,5 +1,6 @@
 #include "game/ui/general/messagebox.h"
 #include "forms/ui.h"
+#include "framework/event.h"
 #include "framework/framework.h"
 
 namespace OpenApoc

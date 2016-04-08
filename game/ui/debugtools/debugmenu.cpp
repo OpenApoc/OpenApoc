@@ -1,9 +1,9 @@
-#include "library/sp.h"
-
-#include "forms/ui.h"
-#include "framework/framework.h"
 #include "game/ui/debugtools/debugmenu.h"
+#include "forms/ui.h"
+#include "framework/event.h"
+#include "framework/framework.h"
 #include "game/ui/debugtools/formpreview.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {

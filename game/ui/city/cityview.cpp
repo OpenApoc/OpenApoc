@@ -1,5 +1,6 @@
 #include "game/state/city/city.h"
 #include "forms/ui.h"
+#include "framework/event.h"
 #include "framework/framework.h"
 #include "game/state/city/building.h"
 #include "game/state/city/scenery.h"

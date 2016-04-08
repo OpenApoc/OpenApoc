@@ -1,5 +1,6 @@
 #include "game/ui/general/difficultymenu.h"
 #include "forms/ui.h"
+#include "framework/event.h"
 #include "framework/framework.h"
 #include "game/state/city/city.h"
 #include "game/state/gamestate.h"

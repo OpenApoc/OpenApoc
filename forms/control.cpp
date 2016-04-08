@@ -1,5 +1,6 @@
 #include "forms/control.h"
 #include "forms/forms.h"
+#include "framework/event.h"
 #include "framework/framework.h"
 #include "library/sp.h"
 #include <tinyxml2.h>

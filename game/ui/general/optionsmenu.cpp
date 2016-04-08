@@ -1,5 +1,6 @@
 #include "game/ui/general/optionsmenu.h"
 #include "forms/ui.h"
+#include "framework/event.h"
 #include "framework/framework.h"
 #include "game/ui/debugtools/debugmenu.h"
 

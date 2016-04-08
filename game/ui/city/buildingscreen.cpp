@@ -1,5 +1,6 @@
 #include "game/ui/city/buildingscreen.h"
 #include "forms/ui.h"
+#include "framework/event.h"
 #include "framework/framework.h"
 #include "game/state/city/building.h"
 

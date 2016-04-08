@@ -1,5 +1,7 @@
+#define _USE_MATH_DEFINES
 #include "game/ui/general/loadingscreen.h"
 #include "framework/framework.h"
+#include <cmath>
 
 namespace OpenApoc
 {

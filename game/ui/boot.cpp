@@ -1,6 +1,8 @@
+#define _USE_MATH_DEFINES
 #include "game/ui/boot.h"
 #include "framework/framework.h"
 #include "game/ui/general/mainmenu.h"
+#include <cmath>
 
 namespace OpenApoc
 {

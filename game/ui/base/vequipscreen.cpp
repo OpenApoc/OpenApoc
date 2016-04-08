@@ -1,11 +1,14 @@
 #include "game/ui/base/vequipscreen.h"
 #include "forms/forms.h"
 #include "forms/ui.h"
+#include "framework/event.h"
+#include "framework/event.h"
 #include "framework/framework.h"
 #include "game/state/city/building.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vequipment.h"
 #include "game/state/gamestate.h"
+#include <cmath>
 
 namespace OpenApoc
 {

@@ -3,19 +3,12 @@
 #include "framework/ThreadPool/ThreadPool.h"
 #include "framework/configfile.h"
 #include "framework/data.h"
-#include "framework/event.h"
 #include "framework/includes.h"
 #include "framework/renderer.h"
 #include "framework/sound.h"
 #include "framework/stagestack.h"
 #include "library/sp.h"
 #include "library/strings.h"
-
-// FIXME: Remove SDL headers - we currently use SDL types directly in input events
-#include <SDL_keyboard.h>
-#include <SDL_keycode.h>
-#include <SDL_mouse.h>
-#include <SDL_scancode.h>
 
 namespace OpenApoc
 {
@@ -24,6 +17,7 @@ class Shader;
 class GameCore;
 class FrameworkPrivate;
 class ApocCursor;
+class Event;
 
 #define FRAMES_PER_SECOND 100
 

@@ -1,6 +1,7 @@
 #include "game/ui/ufopaedia/ufopaediacategoryview.h"
 #include "forms/forms.h"
 #include "forms/ui.h"
+#include "framework/event.h"
 #include "framework/framework.h"
 #include "game/state/gamestate.h"
 #include "library/sp.h"

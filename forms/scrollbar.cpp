@@ -1,4 +1,5 @@
 #include "forms/scrollbar.h"
+#include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/includes.h"
 #include <tinyxml2.h>
