@@ -294,21 +294,23 @@ void UfopaediaCategoryView::setFormStats()
 					statsLabels[row]->SetText(tr("Passengers"));
 					statsValues[row++]->SetText(Strings::FromInteger(ref->passengers));
 					int weaponSpace = 0;
-					int weaponAmount = 0; // FIXME: Figure this out
+					int weaponAmount = 0;
 					int engineSpace = 0;
 					int generalSpace = 0;
 					for (auto &slot : ref->equipment_layout_slots)
 					{
+						int space = slot.bounds.size().x * slot.bounds.size().y;
 						switch (slot.type)
 						{
 							case VEquipmentType::Type::Engine:
-								engineSpace++;
+								engineSpace += space;
 								break;
 							case VEquipmentType::Type::Weapon:
-								weaponSpace++;
+								weaponSpace += space;
+								weaponAmount++;
 								break;
 							case VEquipmentType::Type::General:
-								generalSpace++;
+								generalSpace += space;
 								break;
 						}
 					}
@@ -346,7 +348,7 @@ void UfopaediaCategoryView::setFormStats()
 							statsLabels[row]->SetText(tr("Range"));
 							statsValues[row++]->SetText(UString::format("%dm", ref->range));
 							statsLabels[row]->SetText(tr("Fire Rate"));
-							statsValues[row++]->SetText(UString::format("%d r/s", ref->fire_delay));
+							statsValues[row++]->SetText(UString::format("%d.00 r/s", ref->fire_delay));
 							if (ref->max_ammo > 0)
 							{
 								statsLabels[row]->SetText(tr("Ammo type"));
@@ -363,7 +365,7 @@ void UfopaediaCategoryView::setFormStats()
 						case VEquipmentType::Type::General:
 							if (ref->accuracy_modifier > 0)
 							{
-								statsLabels[row]->SetText(tr("Range"));
+								statsLabels[row]->SetText(tr("Accuracy"));
 								statsValues[row++]->SetText(
 								    UString::format("+%d%%", ref->accuracy_modifier));
 							}
