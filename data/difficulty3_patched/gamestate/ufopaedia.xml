@@ -2231,7 +2231,7 @@
             <value>
               <sp>
                 <title>Sensovision</title>
-                <description>The entertainment industry entered a new phase with the advent of Psionic projectors. Actors connected to Psionic sensors can record their thoughts and experiences in any environment. The recorded patterns are edited into 'Sensovision'	experiences and replayed at 'Sensodromes' where many people can connect to Psionic receivers. The receiver allows people to see, hear, feel and smell what the actor experienced. Sensoviosion actors are wealthy celebrities and the Sensovision corporation is now selling the expensive receiver sets into peoples homes. The only competition comes from the addictive and illegal Psionic implant known as Psiclone, which is supplied by the criminal syndicates.</description>
+                <description>The entertainment industry entered a new phase with the advent of Psionic projectors. Actors connected to Psionic sensors can record their thoughts and experiences in any environment. The recorded patterns are edited into 'Sensovision' experiences and replayed at 'Sensodromes' where many people can connect to Psionic receivers. The receiver allows people to see, hear, feel and smell what the actor experienced. Sensoviosion actors are wealthy celebrities and the Sensovision corporation is now selling the expensive receiver sets into peoples homes. The only competition comes from the addictive and illegal Psionic implant known as Psiclone, which is supplied by the criminal syndicates.</description>
                 <background>xcom3/UFOPAEDI/21SENSO.PCX</background>
                 <data_id>ORG_SENSOVISION</data_id>
                 <data_type>organisation</data_type>
@@ -2257,7 +2257,7 @@
             <value>
               <sp>
                 <title>Superdynamics</title>
-                <description>The refinement of Elerium powered anti-grav propulsion units has created a new industry for ecologically friendly power sources. Superdynamics has developed sophisticated plants for producing power units of all sizes as well as a variety of airborne anti-grav vehicles. The cost of manufacture is high and Elerium is also in short supply. This means that privately owned vehicles are rare, but	Superdynamics developed and installed the anti-grav system for the People Tubes. These safe and efficient tube ways rapidly became the mass transit system for Mega-Primus in direct competition to the road network.</description>
+                <description>The refinement of Elerium powered anti-grav propulsion units has created a new industry for ecologically friendly power sources. Superdynamics has developed sophisticated plants for producing power units of all sizes as well as a variety of airborne anti-grav vehicles. The cost of manufacture is high and Elerium is also in short supply. This means that privately owned vehicles are rare, but Superdynamics developed and installed the anti-grav system for the People Tubes. These safe and efficient tube ways rapidly became the mass transit system for Mega-Primus in direct competition to the road network.</description>
                 <background>xcom3/UFOPAEDI/23SUPERD.PCX</background>
                 <data_id>ORG_SUPERDYNAMICS</data_id>
                 <data_type>organisation</data_type>
@@ -2684,7 +2684,7 @@
             <value>
               <sp>
                 <title>Hoverbike</title>
-                <description>The unusual Hoverbike with 'side car' is used for military purposes or for the personal pleasure of wayward youth who enjoy speed and altitude. Its good power to weight ratio means that this is the most maneuverable air vehicle but it can only carry light armaments. The Hoverbike can be a valuable means of transport for the	Agent on investigative missions where speed of response is essential.</description>
+                <description>The unusual Hoverbike with 'side car' is used for military purposes or for the personal pleasure of wayward youth who enjoy speed and altitude. Its good power to weight ratio means that this is the most maneuverable air vehicle but it can only carry light armaments. The Hoverbike can be a valuable means of transport for the Agent on investigative missions where speed of response is essential.</description>
                 <background>xcom3/UFOPAEDI/12BIKE2.PCX</background>
                 <data_id>VEHICLETYPE_HOVERBIKE</data_id>
                 <data_type>vehicle</data_type>
