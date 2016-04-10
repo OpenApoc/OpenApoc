@@ -115,7 +115,7 @@ template <typename T> class StateRef
 		resolve();
 		return obj;
 	}
-	operator const bool() const
+	explicit operator const bool() const
 	{
 		resolve();
 		return !!obj;
@@ -165,12 +165,12 @@ template <typename T> class StateRef
 		id = newId;
 		return *this;
 	}
-
 	sp<T> getSp() const
 	{
 		resolve();
 		return obj;
 	}
+	const bool operator<(const StateRef<T> other) const { return this->id < other.id; }
 };
 
 } // namespace OpenApoc
