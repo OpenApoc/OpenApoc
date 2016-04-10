@@ -9,7 +9,7 @@
 namespace OpenApoc
 {
 
-UfopaediaView::UfopaediaView(GameState &state)
+UfopaediaView::UfopaediaView(sp<GameState> state)
     : Stage(), menuform(ui().GetForm("FORM_UFOPAEDIA_TITLE")), state(state)
 {
 }
@@ -47,7 +47,7 @@ void UfopaediaView::EventOccurred(Event *e)
 
 		if (e->Forms().RaisedBy->Name.substr(0, 7) == "BUTTON_")
 		{
-			for (auto &cat : state.ufopaedia)
+			for (auto &cat : state->ufopaedia)
 			{
 				auto catName = cat.first;
 				UString butName = "BUTTON_" + catName;

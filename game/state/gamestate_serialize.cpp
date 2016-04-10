@@ -14,7 +14,6 @@
 #include "game/state/city/vequipment.h"
 #include "game/state/rules/scenery_tile_type.h"
 #include "game/state/rules/vequipment.h"
-#include "game/state/tileview/voxel.h"
 #include "library/voxel.h"
 
 namespace OpenApoc
@@ -624,6 +623,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("description"), e.description);
 	serializeIn(state, node->getNode("background"), e.background);
 	serializeIn(state, node->getNode("data_id"), e.data_id);
+	serializeIn(state, node->getNode("data_type"), e.data_type, UfopaediaEntry::DataMap);
 	serializeIn(state, node->getNode("required_research"), e.required_research);
 }
 
@@ -1182,6 +1182,7 @@ template <> void serializeOut(sp<SerializationNode> node, const UfopaediaEntry &
 	serializeOut(node->addNode("description"), e.description);
 	serializeOut(node->addNode("background"), e.background);
 	serializeOut(node->addNode("data_id"), e.data_id);
+	serializeOut(node->addNode("data_type"), e.data_type, UfopaediaEntry::DataMap);
 	serializeOut(node->addNode("required_research"), e.required_research);
 }
 

@@ -11,10 +11,10 @@ namespace OpenApoc
 {
 
 const std::map<VEquipment::WeaponState, UString> VEquipment::WeaponStateMap = {
-    {VEquipment::WeaponState::Ready, "ready"},
-    {VEquipment::WeaponState::Disabled, "disabled"},
-    {VEquipment::WeaponState::Reloading, "reloading"},
-    {VEquipment::WeaponState::OutOfAmmo, "outofammo"},
+    {WeaponState::Ready, "ready"},
+    {WeaponState::Disabled, "disabled"},
+    {WeaponState::Reloading, "reloading"},
+    {WeaponState::OutOfAmmo, "outofammo"},
 };
 
 VEquipment::VEquipment()
@@ -37,8 +37,8 @@ sp<Projectile> VEquipment::fire(Vec3<float> target)
 	if (this->weaponState != WeaponState::Ready)
 	{
 		UString stateName = "UNKNOWN";
-		auto it = VEquipment::WeaponStateMap.find(this->weaponState);
-		if (it != VEquipment::WeaponStateMap.end())
+		auto it = WeaponStateMap.find(this->weaponState);
+		if (it != WeaponStateMap.end())
 			stateName = it->second;
 		LogWarning("Trying to fire weapon in state %s", stateName.c_str());
 		return nullptr;

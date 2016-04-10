@@ -14,12 +14,25 @@ class ResearchTopic;
 class UfopaediaEntry : public StateObject<UfopaediaEntry>
 {
   public:
+	enum class Data
+	{
+		None,
+		Organisation,
+		Vehicle,
+		VehicleEquipment,
+		Equipment,
+		Facility,
+		Building
+	};
+	static const std::map<Data, UString> DataMap;
+	UfopaediaEntry();
 	UString title;
 	UString description;
 	sp<Image> background;
 	// The ID of the 'dynamic' data shown with this entry (income/balance for organisations, stats
 	// for weapons etc.)
 	UString data_id;
+	Data data_type;
 	StateRef<ResearchTopic> required_research;
 	const bool isVisible() const;
 };
@@ -31,8 +44,6 @@ class UfopaediaCategory
 	UString description;
 	sp<Image> background;
 	std::map<UString, sp<UfopaediaEntry>> entries;
-	// FIXME: Add an enum or something for the 'type' of data to show the dynamic extra stuff at the
-	// side? (w/ UfopaediaEntry::data_id to select the specific object)
 };
 
 } // namespace OpenApoc

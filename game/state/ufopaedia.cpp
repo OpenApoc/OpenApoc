@@ -4,6 +4,17 @@
 namespace OpenApoc
 {
 
+const std::map<UfopaediaEntry::Data, UString> UfopaediaEntry::DataMap = {
+
+    {Data::None, "none"},           {Data::Organisation, "organisation"},
+    {Data::Vehicle, "vehicle"},     {Data::VehicleEquipment, "vequipment"},
+    {Data::Equipment, "equipment"}, {Data::Facility, "facility"},
+    {Data::Building, "building"}
+
+};
+
+UfopaediaEntry::UfopaediaEntry() : data_type(Data::None) {}
+
 const bool UfopaediaEntry::isVisible() const
 {
 	// No required research = always visible

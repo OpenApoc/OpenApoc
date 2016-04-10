@@ -579,7 +579,8 @@
                 <title>Access Lift</title>
                 <description>The connection between the basement level and the outside world is provided by a set of heavy duty gravlifts.</description>
                 <background>xcom3/UFOPAEDI/19LIFT-F.PCX</background>
-                <data_id>FACILITY</data_id>
+				<data_id>FACILITYTYPE_ACCESS_LIFT</data_id>
+                <data_type>facility</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -591,7 +592,8 @@
                 <title>Advanced Alien Containment</title>
                 <description>NOT USED IN GAME ANYMORE!</description>
                 <background>xcom3/UFOPAEDI/23AACN-F.PCX</background>
-                <data_id>FACILITY</data_id>
+				<data_id>FACILITYTYPE_ADVANCED_ALIEN_CONTAINMENT</data_id>
+                <data_type>facility</data_type>
                 <required_research>RESEARCH_ADVANCED_ALIEN_CONTAINMENT</required_research>
               </sp>
             </value>
@@ -603,7 +605,8 @@
                 <title>Advanced Biochemistry Lab</title>
                 <description>This larger and better equipped version of the Biochemistry Lab will enable the study of live Alien specimens. Psionic devices are available to assist in communication with intelligent Alien beings. The Advanced Biochemistry Lab allows up to ten Biochemists to work at any one time.</description>
                 <background>xcom3/UFOPAEDI/31ABIO-F.PCX</background>
-                <data_id>FACILITY</data_id>
+				<data_id>FACILITYTYPE_ADVANCED_BIOCHEMISTRY_LAB</data_id>
+                <data_type>facility</data_type>
                 <required_research>RESEARCH_ADVANCED_BIOCHEMISTRY_LAB</required_research>
               </sp>
             </value>
@@ -615,7 +618,8 @@
                 <title>Advanced Quantum Physics Lab</title>
                 <description>A larger, better equipped lab for researching the larger pieces of Alien technology. The lab can accommodate ten Quantum Physicists.</description>
                 <background>xcom3/UFOPAEDI/30ADQ-F.PCX</background>
-                <data_id>FACILITY</data_id>
+				<data_id>FACILITYTYPE_ADVANCED_QUANTUM_PHYSICS_LAB</data_id>
+                <data_type>facility</data_type>
                 <required_research>RESEARCH_ADVANCED_QUANTUM_PHYSICS_LAB</required_research>
               </sp>
             </value>
@@ -627,7 +631,8 @@
                 <title>Advanced Security Station</title>
                 <description>Security is a very important issue for a base when it contains vital personnel and technology. Advanced Security Stations provide the best protection for base facilities. Weapon emplacements are based on Alien Disruptor technology.</description>
                 <background>xcom3/UFOPAEDI/27ADS-F.PCX</background>
-                <data_id>FACILITY</data_id>
+				<data_id>FACILITYTYPE_ADVANCED_SECURITY_STATION</data_id>
+                <data_type>facility</data_type>
                 <required_research>RESEARCH_ADVANCED_SECURITY_STATION</required_research>
               </sp>
             </value>
@@ -639,7 +644,8 @@
                 <title>Advanced Workshop</title>
                 <description>Larger pieces of technology require more space and power to construct. The Advanced Workshop is designed for large construction projects such as new vehicles. The facility can accommodate up to ten Engineers.</description>
                 <background>xcom3/UFOPAEDI/33ACON-F.PCX</background>
-                <data_id>FACILITY</data_id>
+				<data_id>FACILITYTYPE_ADVANCED_WORKSHOP</data_id>
+                <data_type>facility</data_type>
                 <required_research>RESEARCH_ADVANCED_WORKSHOP</required_research>
               </sp>
             </value>
@@ -651,7 +657,8 @@
                 <title>Alien Containment</title>
                 <description>Live Alien specimens require an enclosed, controlled environment. The Alien Containment system can generate different types of atmosphere at various pressures. The unit is also secure enough to prevent the escape of Aliens into the base. This facility can accommodate up to twenty human sized life forms.</description>
                 <background>xcom3/UFOPAEDI/22ACON-F.PCX</background>
-                <data_id>FACILITY</data_id>
+				<data_id>FACILITYTYPE_ALIEN_CONTAINMENT</data_id>
+                <data_type>facility</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -663,7 +670,8 @@
                 <title>Biochemistry Lab</title>
                 <description>Any research involving Alien creatures must be conducted in a Biochemistry Lab. These labs can accommodate up to five Biochemists working at one time and each lab can be assigned a specific research project.</description>
                 <background>xcom3/UFOPAEDI/32BIOL-F.PCX</background>
-                <data_id>FACILITY</data_id>
+				<data_id>FACILITYTYPE_BIOCHEMISTRY_LAB</data_id>
+                <data_type>facility</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -675,7 +683,8 @@
                 <title>Living Quarters</title>
                 <description>Accommodation and recreation for X-COM Agents. New living quarters will have to be built as more Agents, Scientists and Engineers are hired.</description>
                 <background>xcom3/UFOPAEDI/18BAR-F.PCX</background>
-                <data_id>FACILITY</data_id>
+				<data_id>FACILITYTYPE_LIVING_QUARTERS</data_id>
+                <data_type>facility</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -687,7 +696,8 @@
                 <title>Medical Bay</title>
                 <description>The highest quality medical care is available only from a dedicated medical unit. Any injuries would otherwise have to be dealt with by the city hospitals, where the safety of Agents cannot be guaranteed. Injured Agents are automatically healed when they reside at a base with a Medical Bay, but if the capacity of the Medical Bays are exceeded then healing will not take place at 100% efficiency.</description>
                 <background>xcom3/UFOPAEDI/24MEDB-F.PCX</background>
-                <data_id>FACILITY</data_id>
+				<data_id>FACILITYTYPE_MEDICAL_BAY</data_id>
+                <data_type>facility</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -699,7 +709,8 @@
                 <title>Psi-Gym</title>
                 <description>Agents which are naturally talented in Psionic skills need to train hard to maintain and improve their power, attack and defense. The Psi-Gym is equipped with the latest Psionic technology and Psionic training is not possible without such a facility. Agents assigned to Psionic training will automatically use any Psi Gym at a base, but if the capacity of the gyms is exceeded then training will not take place at 100% efficiency.</description>
                 <background>xcom3/UFOPAEDI/26PSI-F.PCX</background>
-                <data_id>FACILITY</data_id>
+				<data_id>FACILITYTYPE_PSI-GYM</data_id>
+                <data_type>facility</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -711,7 +722,8 @@
                 <title>Quantum Physics Lab</title>
                 <description>These labs are specifically equipped for high energy particle experiments designed to analyze and replicate Alien technology. The lab can accommodate five Quantum Physicists and each lab can be assigned a specific research project.</description>
                 <background>xcom3/UFOPAEDI/29QLAB-F.PCX</background>
-                <data_id>FACILITY</data_id>
+				<data_id>FACILITYTYPE_QUANTUM_PHYSICS_LAB</data_id>
+                <data_type>facility</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -723,7 +735,8 @@
                 <title>Security Station</title>
                 <description>Should a base come under attack a Security Station will act as a defensive buffer which can assist Agents in defensive fire. Heavy Plasma Gun emplacements are directed down adjacent corridors. The Security Station is designed so that it will not obstruct the smooth functioning of the base.</description>
                 <background>xcom3/UFOPAEDI/28SECU-F.PCX</background>
-                <data_id>FACILITY</data_id>
+				<data_id>FACILITYTYPE_SECURITY_STATION</data_id>
+                <data_type>facility</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -735,7 +748,8 @@
                 <title>Stores</title>
                 <description>All equipment and raw materials must be safely stored. Spare storage capacity should be maintained in order to allow for purchases and transfers from other bases.</description>
                 <background>xcom3/UFOPAEDI/20STOR-F.PCX</background>
-                <data_id>FACILITY</data_id>
+				<data_id>FACILITYTYPE_STORES</data_id>
+                <data_type>facility</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -747,7 +761,8 @@
                 <title>Training Area</title>
                 <description>Training in physical skills is essential for X-COM Agents. Without a fully equipped training area, Agents residing at the base would waste a lot of time when they could be improving their weapons skills, reactions and stamina. Agents assigned to combat training will automatically use any training facilities at a base, but if the capacity of Training Areas is exceeded then training will not take place at 100% efficiency.</description>
                 <background>xcom3/UFOPAEDI/25TRAI-F.PCX</background>
-                <data_id>FACILITY</data_id>
+				<data_id>FACILITYTYPE_TRAINING_AREA</data_id>
+                <data_type>facility</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -759,7 +774,8 @@
                 <title>Vehicle Repair Bay</title>
                 <description>Repair bays are required for repairing damaged craft. A single bay can only deal with one vehicle at a time, but if there is more than one damaged vehicle per repair bay, then all vehicles will still be repaired, but at less than 100% efficiency.</description>
                 <background>xcom3/UFOPAEDI/17VBAY-F.PCX</background>
-                <data_id>FACILITY</data_id>
+				<data_id>FACILITYTYPE_VEHICLE_REPAIR_BAY</data_id>
+                <data_type>facility</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -771,7 +787,8 @@
                 <title>Workshop</title>
                 <description>X-COM Engineers require the best facilities for the construction of new technology. The latest atomic replicators are installed which can accurately recreate most substances and micro-structures in the known universe. The facility can be used to create small pieces of equipment such as personal weaponry and armor. The workshop can accommodate five Engineers and each Workshop can be assigned to produce a specific item.</description>
                 <background>xcom3/UFOPAEDI/34CONS-F.PCX</background>
-                <data_id>FACILITY</data_id>
+				<data_id>FACILITYTYPE_WORKSHOP</data_id>
+                <data_type>facility</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -795,7 +812,7 @@
                 <title>Apartments</title>
                 <description>Vast apartment blocks are standard accommodation in the city. They should be treated carefully in any combat situation because of the high density of civilians at all times of day. An Alien incident in an accommodation block should be dealt with promptly.</description>
                 <background>xcom3/UFOPAEDI/01ACCOM1.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -807,7 +824,7 @@
                 <title>Appliances Factory</title>
                 <description>All types of consumer durables are produced here. The vast factory complex is highly automated and there are many robots on the production lines.</description>
                 <background>xcom3/UFOPAEDI/06FACT1.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -819,7 +836,7 @@
                 <title>Arms Factory</title>
                 <description>An arms factory produces munitions and weaponry of all sizes from the smallest Lawpistol slug to the most destructive fusion bombs. Any combat within the factory would be extremely dangerous, so any X-COM Agents must proceed with extreme caution when investigating these buildings.</description>
                 <background>xcom3/UFOPAEDI/07FACT2.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -831,7 +848,7 @@
                 <title>Astrodome</title>
                 <description>The Astrodome contains huge stadiums and other facilities for various modern sports. GravBall is the most popular sport in the city, despite being dangerous. Five players in each team are equipped with anti-grav units and ball throwers. The six remaining team members are firmly routed on the ground and are used to protect the goal area or retrieve fallen balls. The maze of corridors and high stands makes the Astrodome a dangerous place for combat.</description>
                 <background>xcom3/UFOPAEDI/03ASTRO.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -843,7 +860,7 @@
                 <title>Car Factory</title>
                 <description>The Car Factory produces many of the smaller vehicles that are part of everyday life in Mega-Primus.</description>
                 <background>xcom3/UFOPAEDI/09FACT4.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -855,7 +872,7 @@
                 <title>Construction Factory</title>
                 <description>All types of building materials and components are created here. The high walkways and open factory floors create a dangerous environment for any firearms combat.</description>
                 <background>xcom3/UFOPAEDI/12FACT7.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -867,7 +884,7 @@
                 <title>Corporate HQ</title>
                 <description>Larger corporations may have a prestigious and expensive office building as a corporate head quarters. No expense would be spared on the interior decoration of these buildings. The equally lavish ventilation system may also be appreciated by Alien life forms.</description>
                 <background>xcom3/UFOPAEDI/32CORPHQ.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -879,7 +896,7 @@
                 <title>Flyer Factory</title>
                 <description>All kinds of small flying vehicles are produced here, such as Hovercars, Hoverbikes and transports. There are many Elerium supplies stored here which could be the target of hostile raiders.</description>
                 <background>xcom3/UFOPAEDI/10FACT5.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -891,7 +908,7 @@
                 <title>Hospital</title>
                 <description>The large hospitals of Mega-Primus are important buildings with high revenue potential. The very best Nano technology is used for the benefit of those that can afford it. Life extension is the service in most demand, but there is also the possibility of limb replacements and strength enhancements which are popular with GravBall players.</description>
                 <background>xcom3/UFOPAEDI/14HOSPIT.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -903,7 +920,7 @@
                 <title>Hydro-Farm</title>
                 <description>Open fields are unsustainable because of exposure to harmful radiation caused by the collapse of the ozone layer. The Hydro-Farms of Mega-Primus are efficient, clean and highly productive. Their controlled environments can produce any kind of vegetable or fruit, or rear any kind of animal. Unfortunately they are also quite good at nurturing the odd Alien which finds its way inside.</description>
                 <background>xcom3/UFOPAEDI/13FARM.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -915,7 +932,7 @@
                 <title>Large Flyer Factory</title>
                 <description>The cavernous interior of this factory is designed for construction of the largest vehicles such as the Valkyrie Interceptor, or the great Space Liners. There are large quantities of valuable construction materials, such as Elerium, stored in various parts of the building.</description>
                 <background>xcom3/UFOPAEDI/11FACT6.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -927,7 +944,7 @@
                 <title>Luxury Apartments</title>
                 <description>The wealthy citizens of Mega-Primus reside in exclusive apartment buildings. Alien infiltration can be particularly dangerous here, because the people which own and control most of the city could be exposed to danger.</description>
                 <background>xcom3/UFOPAEDI/02ACCOM2.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -939,7 +956,7 @@
                 <title>Offices</title>
                 <description>Office buildings are designed to be attractive work environments. They are heavily populated and any Alien activity would soon be discovered. However, the ducting between floors and walls could be the ideal places for Aliens to hide and move around.</description>
                 <background>xcom3/UFOPAEDI/15OFFICE.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -951,7 +968,7 @@
                 <title>People Tubes</title>
                 <description>The People Tube network is the mass transit system for the whole city. The anti-gravity pathways suspend the traveler above the floor and safely propels them at speeds of about 25 miles an hour.</description>
                 <background>xcom3/UFOPAEDI/16PEOPLE.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -963,7 +980,7 @@
                 <title>Police Station</title>
                 <description>Mega-Primus has numerous police stations equipped with Hovercars, road vehicles and substantial armories. These stations are generally well defended against raiders or Alien infiltration.</description>
                 <background>xcom3/UFOPAEDI/17POLICE.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -975,7 +992,7 @@
                 <title>Power Station</title>
                 <description>The highly efficient Power Stations use cold fusion technology to generate energy for the city. They should be protected from Alien infiltration as far as possible. Any damage to them could result in serious power shortages.</description>
                 <background>xcom3/UFOPAEDI/18POWER.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -987,7 +1004,7 @@
                 <title>Procreation Park</title>
                 <description>Since giving birth is now a risky process all babies are now developed in artificial wombs. This has the added advantage of allowing the prospective parents to view the baby's progress by visiting special Procreation Parks. These buildings are designed to be attractive places to visit with open green spaces, bushes and trees.</description>
                 <background>xcom3/UFOPAEDI/19PROCPK.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -999,7 +1016,7 @@
                 <title>Recyclotorium</title>
                 <description>The Recyclotorium is capable of recycling all kinds of waste product, organic or mineral. The city is an ecologically self contained area. This would not be possible without these complex recycling stations.</description>
                 <background>xcom3/UFOPAEDI/21RESYK.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1011,7 +1028,7 @@
                 <title>Rescue Station</title>
                 <description>Rescue Stations are fully equipped to deal with any emergency, whether it is a fire or a road traffic accident. However, there are rarely any serious problems in the city and the stations only have a skeleton staff. They could be good hiding place for Aliens, but the relatively open internal structure of the buildings would not help them in a combat situation.</description>
                 <background>xcom3/UFOPAEDI/20RESCUE.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1023,7 +1040,7 @@
                 <title>Robot Factory</title>
                 <description>Mega-Primus is highly automated and requires the services of many robots to perform routine tasks. They are all produced in Robot Factories, which are also largely automated using the latest Nano technological construction techniques.</description>
                 <background>xcom3/UFOPAEDI/08FACT3.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1035,7 +1052,7 @@
                 <title>School</title>
                 <description>Education is a serious matter for citizens of Mega-Primus and the latest Psionic devices are used to fill students' minds with the correct understanding of any topic in the curriculum. The buildings themselves are reminiscent of the old style schools and contain little more than corridors and classrooms.</description>
                 <background>xcom3/UFOPAEDI/22SCHOOL.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1047,7 +1064,7 @@
                 <title>Senate</title>
                 <description>The Senate building accommodates the civil service, law courts and the Senate chamber. It is a maze of lavish marble interiors and large corridors. It is a building which should be protected from Alien infiltration at all costs.</description>
                 <background>xcom3/UFOPAEDI/23SENATE.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1059,7 +1076,7 @@
                 <title>Sensodrome</title>
                 <description>Sensodromes contain studios for all types of Sensovision broadcasting. The Psionic projectors on top of the building send signals to Sensovision arenas and into peoples homes.</description>
                 <background>xcom3/UFOPAEDI/25SENSOS.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1071,7 +1088,7 @@
                 <title>Sewage Works</title>
                 <description>The sewage works recycles everything possible from the organic waste produced by the city. The solid waste produces food and fertilizer for the Hydro-Farms. Water is then passed back to the water purifying stations. Since the building is largely automated, its dank, dark maze of pipes and walkways provide an ideal habitat for Alien creatures.</description>
                 <background>xcom3/UFOPAEDI/26SEWAGE.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1083,7 +1100,7 @@
                 <title>Shopping Mall</title>
                 <description>The vast shopping malls are popular places for citizens. Although most goods are purchased via the Internet, the shopping mall allows potential customers to try before they buy.</description>
                 <background>xcom3/UFOPAEDI/27SHOPS.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1095,7 +1112,7 @@
                 <title>Slums</title>
                 <description>The slum dwellings located outside the city boundaries are the remnants of an old civilization. They are still heavily populated and used by gangsters and political groups as a base of support. They are dangerous places which are difficult to attack with ground forces. There is always the prospect of finding Psiclone or Elerium during a successful raid.</description>
                 <background>xcom3/UFOPAEDI/34SLUMS.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1107,7 +1124,7 @@
                 <title>Space Port</title>
                 <description>The enormous Space Port is a vital connection to the outside world. Many passengers pass through on vacation to Mars or other distant destinations. Large quantities of manufactured goods are exported to the mining colonies and raw materials are imported. The Space Port generates huge revenues, but it would also be lucrative for any raider or terrorist.</description>
                 <background>xcom3/UFOPAEDI/28SPACE.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1119,7 +1136,7 @@
                 <title>Temple of Sirius</title>
                 <description>The Cult Of Sirius builds temples to worship the superior Alien master race. It is rumored that these temples contain altars where bizarre rituals take place.</description>
                 <background>xcom3/UFOPAEDI/33SIRIUS.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1131,7 +1148,7 @@
                 <title>Warehouse</title>
                 <description>The warehouse is used to store large quantities of merchandise for import or export. The cavernous interiors are easy to defend and raiders should be careful.</description>
                 <background>xcom3/UFOPAEDI/30WAREHS.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1143,7 +1160,7 @@
                 <title>Water Purifier</title>
                 <description>City regulations stipulate the highest possible water quality. The tall water purifiers are largely automated buildings and are difficult areas for combat, they also provide good hiding places for Alien spawn. The tall structures are also vulnerable to collapse, so explosive munitions should be avoided.</description>
                 <background>xcom3/UFOPAEDI/31WATER.PCX</background>
-                <data_id>BUILDING</data_id>
+                <data_type>building</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1167,7 +1184,7 @@
                 <title>Alien Gas Grenade</title>
                 <description>A grenade which releases the X-COM developed anti-Alien gas. It does not harm humans or terrain but will be lethal for any Alien remaining within its dense gas cloud.</description>
                 <background>xcom3/UFOPAEDI/W27.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_ALIEN_GAS</required_research>
               </sp>
             </value>
@@ -1179,7 +1196,7 @@
                 <title>Auto Cannon AP Clip</title>
                 <description>Armor piercing ammunition for the Auto Cannon.</description>
                 <background>xcom3/UFOPAEDI/W13.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1191,7 +1208,7 @@
                 <title>Auto Cannon HE Clip</title>
                 <description>High Explosive ammunition for the Auto Cannon.</description>
                 <background>xcom3/UFOPAEDI/W14.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1203,7 +1220,7 @@
                 <title>Auto Cannon IN Clip</title>
                 <description>Incendiary ammunition for the Auto Cannon.</description>
                 <background>xcom3/UFOPAEDI/W15.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1215,7 +1232,7 @@
                 <title>Boomeroid</title>
                 <description>The Boomeroid is a devastating and terrifying weapon. It is actually a semi-intelligent device that hurls itself towards any moving organic target and then explodes when it reaches a pre-set range.The Boomeroid has to be primed for explosion proximity as well as time delay.</description>
                 <background>xcom3/UFOPAEDI/W43.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_BOOMEROID</required_research>
               </sp>
             </value>
@@ -1227,7 +1244,7 @@
                 <title>Brainsucker Launcher</title>
                 <description>This weapon is an organic launcher for Brainsucker Pods. If the pod lands within the vicinity of a human target it will burst open and the Brainsucker will attack the victim. It is not a useful weapon for us to replicate, even if it were possible.</description>
                 <background>xcom3/UFOPAEDI/W45.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_BRAINSUCKER_LAUNCHER</required_research>
               </sp>
             </value>
@@ -1239,7 +1256,7 @@
                 <title>Devastator Cannon</title>
                 <description>This is an immensely devastating version of the standard Disruptor Gun. Again it is based on the same inter-dimensional technology that seems to power the Dimension Gates. It is possible that these weapons are actually drawing power from some remote source connected by an inter-dimensional field. This amazing technology seems to be incongruous with the Aliens' organic weaponry and may originate from some other Alien intelligence.</description>
                 <background>xcom3/UFOPAEDI/W42.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_DEVASTATOR_CANNON</required_research>
               </sp>
             </value>
@@ -1251,7 +1268,7 @@
                 <title>Dimension Destabiliser</title>
                 <description>An X-COM developed Disruptor Beam weapon based on Alien technology. It is a faster firing and more effective weapon than the Devastator Cannon.</description>
                 <background>xcom3/UFOPAEDI/W37.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_DIMENSION_DESTABILISER</required_research>
               </sp>
             </value>
@@ -1263,7 +1280,7 @@
                 <title>Dimension Missile</title>
                 <description>The missile explodes with devastating power. It seems to use an inter-dimensional flux to suck in anti-matter from an alternate dimension. This instantly generates an atomic reaction which destroys the missile and most of its surrounding matter. It should not be used in situations where buildings and civilians need to be protected.</description>
                 <background>xcom3/UFOPAEDI/W48.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_DIMENSION_MISSILE</required_research>
               </sp>
             </value>
@@ -1275,7 +1292,7 @@
                 <title>Dimension Missile Launcher</title>
                 <description>This launcher propels devastating Dimension Missiles which contain an immensely powerful explosive system. The missile is guided to its target and is very accurate at long ranges. The technology is reproducible and quite distinct from the organic weaponry that is used by most Aliens.</description>
                 <background>xcom3/UFOPAEDI/W47.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_DIMENSION_MISSILE_LAUNCHER</required_research>
               </sp>
             </value>
@@ -1287,7 +1304,7 @@
                 <title>Disruptor Gun</title>
                 <description>The Disruptor Gun is a remarkable piece of technology. It propels a beam of sub-atomic particles at immense speeds and quantity. The chamber which generates the energy is an inter-dimensional device which materializes energy from an alternative dimension. The power source, once initiated, is self-perpetuating and no ammunition or energy pods are required to sustain the fire power. Our replicators can reproduce this technology fairly accurately.</description>
                 <background>xcom3/UFOPAEDI/W41.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_DISRUPTOR_GUN</required_research>
               </sp>
             </value>
@@ -1299,7 +1316,7 @@
                 <title>Elerium</title>
                 <description>Since its introduction during the first Alien invasion, Elerium has proved to be an essential power source for interplanetary travel and military use. It is mined from distant planetary systems and transported back to Earth where its rarity ensures a high price. Tiny quantities contained in small pods fetch a high price. Corporations store pods in preference to gold because the stability of its value is guaranteed.</description>
                 <background>xcom3/UFOPAEDI/ELER.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1311,7 +1328,7 @@
                 <title>Entropy Launcher</title>
                 <description>This weapon is essentially an organism that is genetically engineered to launch a living missile which flies directly towards its chosen target. The missile then erupts and a foul smelling sticky goo smothers the unfortunate victim. The substance is a combination of enzymes and acids that can erode metallic or organic compounds. Unfortunately this weapon is not very effective against Aliens and we cannot replicate it.</description>
                 <background>xcom3/UFOPAEDI/W46.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_ENTROPY_LAUNCHER</required_research>
               </sp>
             </value>
@@ -1323,7 +1340,7 @@
                 <title>Entropy Pod</title>
                 <description>The pod is a genetically engineered missile that flies directly towards a target. It is fired from the Entropy Launcher.</description>
                 <background>xcom3/UFOPAEDI/W58.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_ENTROPY_POD</required_research>
               </sp>
             </value>
@@ -1335,7 +1352,7 @@
                 <title>Heavy Launcher AG Missile</title>
                 <description>This conventional missile contains a highly effective gas which targets Alien life forms. The gas is harmless against humans and structures making it ideal for forcing Aliens to flee from cover.</description>
                 <background>xcom3/UFOPAEDI/W19.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_ALIEN_GAS</required_research>
               </sp>
             </value>
@@ -1347,7 +1364,7 @@
                 <title>Heavy Launcher HE Missile</title>
                 <description>High explosive ammunition for the Heavy Launcher.</description>
                 <background>xcom3/UFOPAEDI/W20.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1359,7 +1376,7 @@
                 <title>Heavy Launcher IN Missile</title>
                 <description>Incendiary ammunition for the Heavy Launcher.</description>
                 <background>xcom3/UFOPAEDI/W21.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1371,7 +1388,7 @@
                 <title>Incendiary Grenade</title>
                 <description>A grenade which disperses an incendiary agent, creating fires within a large radius. The incendiary grenade was originally created by Diablo and is popular with many of the city's criminal gangs.</description>
                 <background>xcom3/UFOPAEDI/W59.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1383,7 +1400,7 @@
                 <title>Marsec Armour</title>
                 <description>An expensive, Elerium powered armor system. This armour offers less protection than the Megapol armour on average but will not slow down the wearer so much. The expensive torso section also has an integrated levitation unit which will allow the wearer to fly or hover in the air. This is an extremely useful ability, but an airborne Agent will suffer an accuracy penalty while using weapons or throwing grenades.</description>
                 <background>xcom3/UFOPAEDI/ARMOUR2.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1395,7 +1412,7 @@
                 <title>Marsec Heavy Launcher</title>
                 <description>A guided missile launcher that can fire explosive or incendiary missiles. It is an extremely devastating device and should be used with extreme caution. It is unwieldy because of its bulk and Agents with heavy launchers should at least be equipped with a supplementary weapon such as the Megapol Lawpistol.</description>
                 <background>xcom3/UFOPAEDI/W18.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1407,7 +1424,7 @@
                 <title>Marsec High Explosive</title>
                 <description>A high explosive system for breaking through barriers or impassable terrain. Extra care must be taken when throwing this device. Its increased size means that it can't be thrown the same distance as a conventional grenade.</description>
                 <background>xcom3/UFOPAEDI/W05.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1419,7 +1436,7 @@
                 <title>Marsec M4000 Gun Clip</title>
                 <description>Ammunition for the M4000 Machine Gun.</description>
                 <background>xcom3/UFOPAEDI/W09.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1431,7 +1448,7 @@
                 <title>Marsec M4000 Machine Gun</title>
                 <description>A military automatic firing projectile weapon. It is good at close range using automatic fire, but not accurate enough to be effective at longer ranges.</description>
                 <background>xcom3/UFOPAEDI/W08.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1443,7 +1460,7 @@
                 <title>Marsec MiniLauncher</title>
                 <description>A sophisticated single handed missile launcher. Although the guided missiles are small they are quite destructive.</description>
                 <background>xcom3/UFOPAEDI/W22.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1455,7 +1472,7 @@
                 <title>Marsec Proximity Mine</title>
                 <description>A powerful explosive that will detonate when a sizable moving object moves within its detection field. The range of the proximity field can be programmed.</description>
                 <background>xcom3/UFOPAEDI/W04.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1467,7 +1484,7 @@
                 <title>Medi-Kit</title>
                 <description>A compact but highly sophisticated life support kit. Wounds and bleeding can be healed quickly by injecting Nanobots into the bloodstream. When the device is activated the operator must select a part of the body affected by critical wounds. The device will cure these wounds quickly, but only if the Agent remains inactive while it is in operation.</description>
                 <background>xcom3/UFOPAEDI/W55.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1479,7 +1496,7 @@
                 <title>Megapol AP Grenade</title>
                 <description>The Megapol AP Grenade is a standard anti-personnel grenade with a timer mechanism. It can also be activated on impact making it highly useful in time-critical combat situations.</description>
                 <background>xcom3/UFOPAEDI/W01.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1491,7 +1508,7 @@
                 <title>Megapol Auto Cannon</title>
                 <description>The Megapol Auto Cannon is a bulky but versatile weapon. It can fire armor piercing rounds, high explosive shells or incendiary shells. It is best used at medium range with explosive or incendiary ammunition, or at close range with armor piercing rounds.</description>
                 <background>xcom3/UFOPAEDI/W12.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1503,7 +1520,7 @@
                 <title>Megapol Armour</title>
                 <description>This is a standard issue armour which provides very effective protection but inhibits the wearer's speed. The leg, torso, arms and helmet are all separate components and can be mixed with other armour types. Under no circumstances should an Agent be sent into combat without full armour cover.</description>
                 <background>xcom3/UFOPAEDI/ARMOUR1.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1515,7 +1532,7 @@
                 <title>Megapol Laser Pod</title>
                 <description>Ammunition for the Laser Sniper Gun.</description>
                 <background>xcom3/UFOPAEDI/W11.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1527,7 +1544,7 @@
                 <title>Megapol Laser Sniper Gun</title>
                 <description>A laser gun with a laser sight designed for accurate long range shooting. This weapon is a good complement for the Marsec M4000 Machine Gun and should be used by Agents with good accuracy ratings.</description>
                 <background>xcom3/UFOPAEDI/W10.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1539,7 +1556,7 @@
                 <title>Megapol Lawpistol</title>
                 <description>A standard issue hand gun which is good at short range and quite powerful. Its usefulness should not be underestimated because it allows an Agent to use other equipment, such as a grenade, with the spare hand.</description>
                 <background>xcom3/UFOPAEDI/W06.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1551,7 +1568,7 @@
                 <title>Megapol Lawpistol Clip</title>
                 <description>Ammunition for the Lawpistol.</description>
                 <background>xcom3/UFOPAEDI/W07.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1563,7 +1580,7 @@
                 <title>Megapol Plasma Gun</title>
                 <description>An expensive but effective single-handed plasma weapon. Its small size and power make it a versatile weapon. It can be used effectively at long or short range and leaves one hand free to use other equipment or grenades.</description>
                 <background>xcom3/UFOPAEDI/W16.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1575,7 +1592,7 @@
                 <title>Megapol Plasma Pod</title>
                 <description>Ammunition for the Plasma Gun.</description>
                 <background>xcom3/UFOPAEDI/W17.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1587,7 +1604,7 @@
                 <title>Megapol Smoke Grenade</title>
                 <description>This explosive device generates an instant smoke cloud that inhibits visibility. This can be used in combat situations for surprise attacks or to provide cover for retreating Agents.</description>
                 <background>xcom3/UFOPAEDI/W03.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1599,7 +1616,7 @@
                 <title>Megapol Stun Grapple</title>
                 <description>The Stun Grapple is a powerful police weapon used for stunning and capturing prisoners. It is effective against Aliens but can only be activated at a very short range. Larger Aliens may need weakening before they can be stunned.</description>
                 <background>xcom3/UFOPAEDI/W26.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1611,7 +1628,7 @@
                 <title>Megapol Stun Grenade</title>
                 <description>The Stun Grenade can be used to stun targets within a small area for a brief time. Larger Aliens may need weakening before they can be stunned.</description>
                 <background>xcom3/UFOPAEDI/W02.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1623,7 +1640,7 @@
                 <title>Mind Bender</title>
                 <description>A Psionic projection device for psionically trained Agents. This device must be used in order to initiate Psionic attacks in combat situations. The target needs to be within clear line of sight of the operator before an attack can begin. The Agent has a choice of four different attacks of increasing difficulty. Psionic Probe reveals information about the target, Psionic Panic reduces morale, Psionic Stun will render the target unconscious and psionic control will allow complete control of the target.</description>
                 <background>xcom3/UFOPAEDI/W39.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1635,7 +1652,7 @@
                 <title>MiniLauncher AG Missile</title>
                 <description>Developed by X-COM to target Alien life forms. When the warhead explodes it releases a cloud of gas deadly to Aliens but harmless to humans.</description>
                 <background>xcom3/UFOPAEDI/W23.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_ALIEN_GAS</required_research>
               </sp>
             </value>
@@ -1647,7 +1664,7 @@
                 <title>MiniLauncher HE Missile</title>
                 <description>Explosive ammunition for the MiniLauncher.</description>
                 <background>xcom3/UFOPAEDI/W24.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1659,7 +1676,7 @@
                 <title>MiniLauncher IN Missile</title>
                 <description>Incendiary ammunition for the MiniLauncher.</description>
                 <background>xcom3/UFOPAEDI/W25.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1671,7 +1688,7 @@
                 <title>Motion Scanner</title>
                 <description>When this unit is activated the display shows anything moving relative to its position. The sensors can penetrate any kind of terrain.</description>
                 <background>xcom3/UFOPAEDI/W56.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1683,7 +1700,7 @@
                 <title>Personal Cloaking Field</title>
                 <description>The Personal Cloaking Field generates a warping effect that bends various wave forms. Effectively this means that the user is considerably less visible to radar, infra-red and visual sighting. The field is disabled temporarily if the user initiates combat.</description>
                 <background>xcom3/UFOPAEDI/W52.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_PERSONAL_CLOAKING_FIELD</required_research>
               </sp>
             </value>
@@ -1695,7 +1712,7 @@
                 <title>Personal Disruptor Shield</title>
                 <description>The Personal Disruptor Shield generates an energy field which warps the space around the user. This causes beams or projectiles to be deflected and dissipated. Any hit causes the shield's energy to drain and if it reaches a critically low level it will malfunction. It is a highly sophisticated device that we can reproduce only with great effort.</description>
                 <background>xcom3/UFOPAEDI/W50.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_PERSONAL_DISRUPTOR_SHIELD</required_research>
               </sp>
             </value>
@@ -1707,7 +1724,7 @@
                 <title>Personal Teleporter</title>
                 <description>This extraordinary device uses inter-dimensional capability to transport the user over short distances via a dimensional flux. The energy level depletes according to the distance jumped, but it recovers over time.</description>
                 <background>xcom3/UFOPAEDI/W51.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_PERSONAL_TELEPORTER</required_research>
               </sp>
             </value>
@@ -1719,7 +1736,7 @@
                 <title>Power Sword</title>
                 <description>A close combat weapon that uses an Elerium Plasma Generator to enhance the blade. It is a very powerful device but can only be used against adjacent targets.</description>
                 <background>xcom3/UFOPAEDI/W44.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1731,7 +1748,7 @@
                 <title>Psiclone</title>
                 <description>The Psiclone implant is manufactured and distributed by criminal gangs. It allows the user to experience any mental state or images just by imagining them. Its widespread popularity and detrimental effect on the health of young citizens led the Senate to ban the use or distribution of the device. The price of Psiclone implants has subsequently soared and this has resulted in open warfare between the criminal gangs and Megapol.</description>
                 <background>xcom3/UFOPAEDI/W53.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -1743,7 +1760,7 @@
                 <title>Toxigun</title>
                 <description>An X-COM weapon designed to shoot high powered projectiles containing anti-Alien toxic fluids. It is designed to cause minimal harm to other targets and is not very good at penetrating armor.</description>
                 <background>xcom3/UFOPAEDI/W33.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_BIOLOGICAL_WARFARE</required_research>
               </sp>
             </value>
@@ -1755,7 +1772,7 @@
                 <title>Toxigun A-Clip</title>
                 <description>Ammunition for Toxigun. It contains a lethal fast acting poison designed to target Alien life forms. It is not so effective against the more advanced bipedal Alien types.</description>
                 <background>xcom3/UFOPAEDI/W34.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_BIOLOGICAL_WARFARE</required_research>
               </sp>
             </value>
@@ -1767,7 +1784,7 @@
                 <title>Toxigun B-Clip</title>
                 <description>Ammunition for Toxigun. It contains a lethal fast acting poison designed to target Alien lifeforms. It effectively renders the earlier A-type toxin obsolete because it is more powerful and more effective against the higher Alien life forms.</description>
                 <background>xcom3/UFOPAEDI/W35.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_TOXIN_TYPE_B</required_research>
               </sp>
             </value>
@@ -1779,7 +1796,7 @@
                 <title>Toxigun C-Clip</title>
                 <description>Ammunition for Toxigun. A fast acting poison which targets all Alien life forms with equally devastating effects. This toxin effectively supersedes the A or B types.</description>
                 <background>xcom3/UFOPAEDI/W36.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_TOXIN_TYPE_C</required_research>
               </sp>
             </value>
@@ -1791,7 +1808,7 @@
                 <title>Vortex Mine</title>
                 <description>This explosive device uses a tiny dimensional flux generator which allows anti-matter to seep through a tiny dimensional warp. The resultant explosion is very powerful.</description>
                 <background>xcom3/UFOPAEDI/W49.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_VORTEX_MINE</required_research>
               </sp>
             </value>
@@ -1803,7 +1820,7 @@
                 <title>X-COM Disruptor Armour</title>
                 <description>A lightweight armour developed by X-COM using Alien disruption field technology. This offers superb protection and excellent mobility.</description>
                 <background>xcom3/UFOPAEDI/ARMOUR3.PCX</background>
-                <data_id>EQUIPMENT</data_id>
+                <data_type>equipment</data_type>
                 <required_research>RESEARCH_DISRUPTOR_ARMOR</required_research>
               </sp>
             </value>
@@ -1827,7 +1844,6 @@
                 <title>Alien</title>
                 <description>The Alien scare first began on 7th March, 2084 when a strange Dimension Gate appeared in the skies above Mega-Primus. During the following days strange UFOs came and went, but they did not appear to attack anything or abduct anyone. It was only when strange reports of Alien monsters lurking in the recesses of city buildings filtered through to the senatorial security committee that the plan to enlist X-COM was proposed.</description>
                 <background>xcom3/UFOPAEDI/02ALIEN.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -1839,7 +1855,8 @@
                 <title>Cult Of Sirius</title>
                 <description>This bizarre cult has whipped up a religious frenzy following the appearance of the Dimension Gates. The cult has long believed in redemption of the human race by a superior Alien race. They believe the UFOs and Aliens to be harmless and are rapidly gaining credibility and recruits from the general population. This represents a considerable threat to X-COM because the cultists will do anything to assist the Aliens in their purpose, whatever that might be.</description>
                 <background>xcom3/UFOPAEDI/03CHURCH.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_CULT_OF_SIRIUS</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -1851,7 +1868,8 @@
                 <title>Cyberweb</title>
                 <description>The Cyberweb corporation developed artificial life forms to provide a willing and obedient workforce for the future. However, popular protest against unemployment forced the Senate to pass laws against artificial life. No more Androids could be built and they were banned from employment except the most menial and degrading jobs. Cyberweb had to change strategy and compete with the Nanotech corporation for medical and military contracts. The unfortunate Androids were either banished from the city or had to be bought and sold as household servants or pets. Androids are good for combat, although they possess no Psionic abilities, and the few that remain may well risk seeking employment by X-COM and join the battle against the Aliens.</description>
                 <background>xcom3/UFOPAEDI/04CYBERW.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_CYBERWEB</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -1863,7 +1881,8 @@
                 <title>Diablo</title>
                 <description>Diablo is a criminal syndicate with a particularly violent reputation. They have muscled in on the Psiclone trade and have consequently become bigger and more powerful than Psyke. Gang members are intensely loyal to their cause and hostile to any outsiders.</description>
                 <background>xcom3/UFOPAEDI/05DIABLO.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_DIABLO</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -1875,7 +1894,8 @@
                 <title>Energen</title>
                 <description>Energen builds power stations which use fusion power cells to generate energy. This is an alternative but cheaper large scale power system than equivalent Elerium units. However, the corporation is wary of attempts by Solmine to create cheaper Elerium energy systems. This can only be achieved by lowering the price of Elerium which could happen if the rebellious mining colonies are totally subdued.</description>
                 <background>xcom3/UFOPAEDI/06ENERGE.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_ENERGEN</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -1887,7 +1907,8 @@
                 <title>Evonet</title>
                 <description>Recycling is the business of Evonet. According to city regulations all waste has to be recycled, Evonet have turned this into a profitable enterprise through the construction of their recyclotoriums. These buildings process organic waste, including sewage, into foodstuffs for human and animal consumption. The corporation also owns the sewage works and the highly sophisticated water plants which purify water according to the high standards required by the city Senate.</description>
                 <background>xcom3/UFOPAEDI/07EVONET.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_EVONET</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -1899,7 +1920,8 @@
                 <title>Extropians</title>
                 <description>The Extropians are one of the city's major political organizations that dominate the Senate. The Extropian philosophy is basically a faith in a bright technological future - a brave new world free of disease, pollution, old age and dull aesthetics. They pioneered the city regulations governing the future-retro styling of the architecture and vehicles. They have strong support from Solmine, Marsec and the larger corporations.</description>
                 <background>xcom3/UFOPAEDI/08EXTRO1.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_EXTROPIANS</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -1911,7 +1933,8 @@
                 <title>General Metro</title>
                 <description>The General Metro corporation designs and manufactures road vehicles. Since the corporation installed an efficient anti-grav system inside the road structure it became possible to produce low powered anti-grav road vehicles which were cheap and efficient, despite being limited to the road system. The vehicle designs were based on the exuberant styling of the 1950s according to the requirements of city planners. General Metro is a major competitor to Superdynamics, as both corporations provide transport systems.</description>
                 <background>xcom3/UFOPAEDI/09GENMET.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_GENERAL_METRO</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -1923,7 +1946,8 @@
                 <title>Government</title>
                 <description>Mega-Primus is a city state ruled by thirteen elected senators. This Government is directly responsible for the legal system and the mass transit systems. All other city services, including the policing of the city, are contracted to various corporations. In practice the immense bureaucracy holds the most power. Senior civil servants are responsible for maintaining the city edicts and defining citizenship and its obligations. They cannot be removed from their jobs except through proven misconduct.</description>
                 <background>xcom3/UFOPAEDI/10GOVRNM.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_GOVERNMENT</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -1935,7 +1959,8 @@
                 <title>GravBall League</title>
                 <description>GravBall is a fast paced aerial version of Soccer where the players use anti-grav backpacks to fly around an immense stadium. Due to the fast and violent nature of the game, players wear tough armor, injuries are still common though. Cybernetic implants are used to substitute for mangled limbs, but a GravBall player must be at least 50% original human flesh in order to qualify in the GravBall league. Due to the popularity of the sport the GravBall League, which owns all the stadiums in the city, has become a prosperous corporation. However, alternative recreations such as Sensovision or the illegal Psiclone are proving to be serious competition.</description>
                 <background>xcom3/UFOPAEDI/01AIRBAL.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_GRAVBALL_LEAGUE</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -1947,7 +1972,8 @@
                 <title>Lifetree</title>
                 <description>The Lifetree corporation runs the city schools and universities. They have developed a controversial but highly effective Psionic tutoring system which imparts knowledge far more efficiently than reading or listening to lecturers. If the student resists the knowledge transfer then pain results. Lifetree have been accused of brainwashing since the introduction of the 'moral education' program which is designed to turn the youth into model citizens. They are competing with Sensovision in the production of Psionic devices.</description>
                 <background>xcom3/UFOPAEDI/11LIFETR.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_LIFETREE</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -1959,7 +1985,8 @@
                 <title>MarSec</title>
                 <description>The ominous and highly secretive Marsec corporation took over from X-COM as the leading provider of off-world security, as X-COM centered its activities around Mega-Primus. During the initial years of their operation Marsec was empowered to impose order on the rebellious Mars colony. Marsec (Mars Security) developed high technology weaponry and vehicles by recruiting top Scientists from Earth and using the equipment left by X-COM. With the establishment of the remote Elerium mining colonies, Marsec secured contracts for military equipment despite competition from Megapol.</description>
                 <background>xcom3/UFOPAEDI/12MARSEC.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_MARSEC</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -1971,7 +1998,8 @@
                 <title>Megapol</title>
                 <description>Megapol not only runs the city police force and prison service, it also manufactures vehicles, weapons and munitions. It directly competes with the Marsec corporation for lucrative markets in the mining colonies and Mega-Primus. The major problems for Megapol are the criminal gangs that distribute Psiclone and the UFO incursions which are regarded as a threat to city security. Police vehicles bravely intercept UFOs as they materialize from the Dimension Gates, but they are woefully under equipped to deal with them.</description>
                 <background>xcom3/UFOPAEDI/13MEGAPO.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_MEGAPOL</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -1983,7 +2011,8 @@
                 <title>Mutant Alliance</title>
                 <description>The first wave of Alien incursions resulted in many genetic experiments involving crossbreeding humans and the Alien species known as Sectoids. These hybrids have survived in human society, but they have been denied the right to procreate within the city. They also suffer discrimination in employment and education. Although they are genetically almost identical to humans, they retain some Alien facial characteristics and are renowned (and distrusted) for their Psionic abilities. Hybrids Psionic abilities may well prove useful to X-COM in the war against the Aliens. The Mutant Alliance is active in city politics and promotes the concerns of the hybrid community.</description>
                 <background>xcom3/UFOPAEDI/15MUTE_A.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_MUTANT_ALLIANCE</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -1995,7 +2024,8 @@
                 <title>Nanotech</title>
                 <description>The Nanotech corporation has specialized in developing microscopic robots which are used in the medical and pharmaceutical industries. The intelligence of these devices is limited, but they can be designed to perform a wide variety of tasks, such as killing bacteria or manufacturing chemicals. Nanotech also produce the highly effective Medi-Kits used in military combat which use Nanobots to perform battlefield surgery and tissue repair.</description>
                 <background>xcom3/UFOPAEDI/16NANOTE.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_NANOTECH</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -2007,7 +2037,8 @@
                 <title>Nutrivend</title>
                 <description>Nutrivend has developed a highly efficient organic farming system that produces huge quantities of fruit, vegetables and livestock of all known varieties. The corporation also owns food processing plants and shops. The city regulations governing the additives in food are so strict that rival producers cannot compete economically, with the single exception of Evonet.</description>
                 <background>xcom3/UFOPAEDI/17NUTRIV.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_NUTRIVEND</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -2019,7 +2050,8 @@
                 <title>Osiron</title>
                 <description>The Osiron syndicate is the wealthiest criminal operation in the city area. Although they are based in the slum areas they are able to conduct apparently legitimate business in the city and there is no proven link between Osiron and violent crime. It is widely suspected that they employ the services of the other gangs where possible, only resorting to direct action if necessary.</description>
                 <background>xcom3/UFOPAEDI/14MENTAT.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_OSIRON</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -2031,7 +2063,8 @@
                 <title>Psyke</title>
                 <description>Psyke is a criminal syndicate which is based in the slum areas. The organization is originally thought to have developed the Psiclone implant in 2081 with the aid of a renegade Marsec scientist. The design was quickly copied by the other syndicates creating an unprecedented level of gang warfare. The degradation of city life is frequently blamed on Psyke's activities, but they are no longer the biggest gang in the region.</description>
                 <background>xcom3/UFOPAEDI/18PSYKE.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_PSYKE</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -2043,7 +2076,8 @@
                 <title>Santuary Clinic</title>
                 <description>Longevity is the major obsession of medical research. Life can be prolonged by genetically reprogramming cell death mechanisms, but disease is still a major killer. Nano technology is employed to destroy cancer cells and solve all kinds of medical problems. Operations are no longer performed by humans - artificial intelligence's are employed instead. The Sanctuary Clinic controls hospitals, pharmaceutical plants and the procreation parks.</description>
                 <background>xcom3/UFOPAEDI/19S_CLIN.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_SANCTUARY_CLINIC</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -2055,7 +2089,8 @@
                 <title>Sentient Engine Liberation Front</title>
                 <description>The city edict of 2076 effectively banished Androids from most areas of city life. They were forced into slum areas and treated as little more than vermin. They considered themselves to be artificial life forms of equal intellect to human beings and decided to fight back. SELF is an organization dedicated to fight for equality for all sentient life forms, whether flesh or machine. Their activity has been limited to pressure group politics, but there are demands within their ranks to resort to more direct, violent action.</description>
                 <background>xcom3/UFOPAEDI/20SELF.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_S_E_L_F_</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -2067,7 +2102,8 @@
                 <title>Sensovision</title>
                 <description>The entertainment industry entered a new phase with the advent of Psionic projectors. Actors connected to Psionic sensors can record their thoughts and experiences in any environment. The recorded patterns are edited into 'Sensovision'	experiences and replayed at 'Sensodromes' where many people can connect to Psionic receivers. The receiver allows people to see, hear, feel and smell what the actor experienced. Sensoviosion actors are wealthy celebrities and the Sensovision corporation is now selling the expensive receiver sets into peoples homes. The only competition comes from the addictive and illegal Psionic implant known as Psiclone, which is supplied by the criminal syndicates.</description>
                 <background>xcom3/UFOPAEDI/21SENSO.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_SENSOVISION</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -2079,7 +2115,8 @@
                 <title>Solmine</title>
                 <description>The discovery of Elerium sources in distant solar systems has produced a new gold rush. The Solmine corporation owns most of the mining operations and it imports Elerium directly to Mega-Primus. These mining operations sustain the economies of the numerous small colonies, but they are still governed from Earth. There have been demands for independence and some rebellions. Major corporations, fearing diminished profits and raised Elerium prices have suppressed these revolts with the aid of Solmine and Marsec.</description>
                 <background>xcom3/UFOPAEDI/22SOLMIN.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_SOLMINE</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -2091,7 +2128,8 @@
                 <title>Superdynamics</title>
                 <description>The refinement of Elerium powered anti-grav propulsion units has created a new industry for ecologically friendly power sources. Superdynamics has developed sophisticated plants for producing power units of all sizes as well as a variety of airborne anti-grav vehicles. The cost of manufacture is high and Elerium is also in short supply. This means that privately owned vehicles are rare, but	Superdynamics developed and installed the anti-grav system for the People Tubes. These safe and efficient tube ways rapidly became the mass transit system for Mega-Primus in direct competition to the road network.</description>
                 <background>xcom3/UFOPAEDI/23SUPERD.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_SUPERDYNAMICS</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -2103,7 +2141,8 @@
                 <title>Synthemesh</title>
                 <description>Manufacturing is largely automated but the ideas for new products still come from human designers. Synthemesh employs many designers to keep generating the latest fashions which fuel consumer demand. The manufacturing plants produce mostly consumer durables, but the corporation also controls a fleet of construction vehicles which are used to build or repair the city infrastructure.</description>
                 <background>xcom3/UFOPAEDI/24SYNTHM.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_SYNTHEMESH</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -2115,7 +2154,8 @@
                 <title>Technocrats</title>
                 <description>Politically the Technocrat's philosophy is really no different to the Extropians, except they are a little less colorful and more skeptical of technological solutions to social problems. They believe in a structured and ordered society which rigidly adheres to laws and punishes corruption. They draw most support from the smaller corporations and the populations of the mining colonies.</description>
                 <background>xcom3/UFOPAEDI/25TECHNO.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_TECHNOCRATS</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -2127,7 +2167,8 @@
                 <title>Transtellar</title>
                 <description>The Transtellar corporation owns the Space Port and many of the Space Liners that ship to the city. They also own many warehouses spread throughout the city which are used by many corporations involved in importing and exporting. The city goods transport service and the taxi service are owned and run by Transtellar. The corporation has been regarded suspiciously by Megapol which considers the corporation susceptible to Alien contamination.</description>
                 <background>xcom3/UFOPAEDI/26TRANST.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_TRANSTELLAR</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -2139,7 +2180,8 @@
                 <title>X-Com</title>
                 <description>The Extraterrestrial combat force known as X-COM was originally founded in 1998 to defend the Earth from Alien invasion. After a period of obsolescence, X-COM was revived in 2040 to fight the second Alien war under the seas of the Earth. X-COM has now been enlisted to investigate recent Alien incursions. The city's senators have agreed to fund a covert initiative, with the assistance of local Megapol stations, who will pass on reports of possible Alien activity directly to the X-COM base commander. X-COM is under pressure to solve the Alien problem before new elections to the Senate. Senators and the corporate elite of Mega-Primus are nervous about the prospect of popular panic undermining the social fabric of the city.</description>
                 <background>xcom3/UFOPAEDI/27XCOM.PCX</background>
-                <data_id>ORGANISATIONS</data_id>
+                <data_type>organisation</data_type>
+				<data_id>ORG_X-COM</data_id>
                 <required_research/>
               </sp>
             </value>
@@ -2331,7 +2373,8 @@
                 <title>Airtaxi</title>
                 <description>The wealthy citizen would not normally travel by people-tube or road, but instead hire the services of a fast and reliable Airtaxi. The styling is conspicuously based on the more humble road going version, but the ride is more refined. Expect the occasional Airtaxi you see to contain a VIP, or flamboyant Sensovision celebrity.</description>
                 <background>xcom3/UFOPAEDI/07TAXI2.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_AIRTAXI</data_id>
+                <data_type>vehicle</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2343,7 +2386,8 @@
                 <title>Airtrans</title>
                 <description>Heavy transportation is mainly undertaken by these heavy duty air transports. Manufactured goods are transported entirely by air, given the unreliability and dangers of road transport in the deregulated areas, or slums. The Airtrans is a computer controlled craft, but must be manned by law according to the inter-personal contact ordinances.</description>
                 <background>xcom3/UFOPAEDI/09TRANS2.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_AIRTRANS</data_id>
+                <data_type>vehicle</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2355,7 +2399,8 @@
                 <title>Annihilator</title>
                 <description>The ultimate expression of X-COM technology - a mean, fast and devastating craft which, if properly equipped, is more than a match for the biggest Alien attack ships. The Annihilator will help secure X-COM domination of the Alien Dimension.</description>
                 <background>xcom3/UFOPAEDI/11ANNIHA.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_ANNIHILATOR</data_id>
+                <data_type>vehicle</data_type>
                 <required_research>RESEARCH_ANNIHILATOR</required_research>
               </sp>
             </value>
@@ -2367,7 +2412,8 @@
                 <title>Autotaxi</title>
                 <description>The road going Autotaxi is a more luxurious and relaxed form of public transport than the bustling People Tubes. Although a driver is not technically required regulations specify that a 'driver' is needed to fulfill the required inter-personal contact, which is necessary in a society dominated by automation.</description>
                 <background>xcom3/UFOPAEDI/08TAXI1.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_AUTOTAXI</data_id>
+                <data_type>vehicle</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2379,7 +2425,8 @@
                 <title>Autotrans</title>
                 <description>A computer controlled, fully automated goods vehicle. The road going Autotrans is a more economical version of the Airtrans, but the AI is still so advanced that they can anticipate demand for their services with uncanny accuracy and rarely need to be ordered in advance.</description>
                 <background>xcom3/UFOPAEDI/10TRANS1.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_AUTOTRANS</data_id>
+                <data_type>vehicle</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2391,7 +2438,8 @@
                 <title>Biotrans</title>
                 <description>This inter-dimensional transport is designed for transporting Alien life forms or Alien technology captured during tactical missions in the Alien Dimension.</description>
                 <background>xcom3/UFOPAEDI/14ATRAN.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_BIOTRANS</data_id>
+                <data_type>vehicle</data_type>
                 <required_research>RESEARCH_BIO-TRANSPORT</required_research>
               </sp>
             </value>
@@ -2403,7 +2451,8 @@
                 <title>Blazer Turbo Bike</title>
                 <description>The road going anti-grav 'bike' is a plaything of rich speed freaks. It is extremely fast and maneuverable. Consequently it is ideal for the lone X-COM Agent.</description>
                 <background>xcom3/UFOPAEDI/13BIKE.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_BLAZER_TURBO_BIKE</data_id>
+                <data_type>vehicle</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2415,7 +2464,8 @@
                 <title>Civilian Car</title>
                 <description>The private car is a luxury which is only afforded by celebrities and gangsters. The road system in the city is an anti-grav ducting system that allows for fast and safe travel by low powered anti-grav vehicles. Although the car hovers over the road it is not capable of leaving it, except through exceptionally careless manual driving.</description>
                 <background>xcom3/UFOPAEDI/01CIVIL.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_CIVILIAN_CAR</data_id>
+                <data_type>vehicle</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2427,7 +2477,8 @@
                 <title>Construction Vehicle</title>
                 <description>This multipurpose craft is used to build and repair any type of building within the city boundary. It will also repair roads, bridges and other structures. The aesthetic regulations also require construction vehicles to be equipped for landscape gardening and forestry work.</description>
                 <background>xcom3/UFOPAEDI/02CONSTR.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_CONSTRUCTION_VEHICLE</data_id>
+                <data_type>vehicle</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2439,7 +2490,8 @@
                 <title>Dimension Probe</title>
                 <description>This unmanned automated probe is designed to explore the Alien Dimension and has minimal armaments and defenses. The Probe will enable X-COM to test its new adaptation of the Aliens inter-dimensional technology. Exploration is a vital requirement for developing further knowledge of the Alien threat and the probe is just the first step.</description>
                 <background>xcom3/UFOPAEDI/15PROBE.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_DIMENSION_PROBE</data_id>
+                <data_type>vehicle</data_type>
                 <required_research>RESEARCH_DIMENSION_PROBE</required_research>
               </sp>
             </value>
@@ -2451,7 +2503,8 @@
                 <title>Explorer</title>
                 <description>The first manned inter-dimensional vehicle produced for the initial exploration of Alien structures. The craft only has a small equipment and armament load and must conduct its excursions with great care.</description>
                 <background>xcom3/UFOPAEDI/16EXPLOR.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_EXPLORER</data_id>
+                <data_type>vehicle</data_type>
                 <required_research>RESEARCH_EXPLORER</required_research>
               </sp>
             </value>
@@ -2463,7 +2516,8 @@
                 <title>Griffon AFV</title>
                 <description>The meanest Marsec manufactured land based vehicle is an extremely heavily armored all-terrain vehicle with a choice of three different turret mountings. Projectile and Plasma Cannons can be fitted, or a missile launching unit for targeting airborne vehicles.</description>
                 <background>xcom3/UFOPAEDI/23TANK1.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_GRIFFON_AFV</data_id>
+                <data_type>vehicle</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2475,7 +2529,8 @@
                 <title>Hawk Air Warrior</title>
                 <description>The Hawk is essentially a heavy weapons platform capable of carrying a significant payload. It is the most powerful vehicle manufactured by Marsec and should be the first line of defense against any invasion force, wherever it comes from.</description>
                 <background>xcom3/UFOPAEDI/17HAWK.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_HAWK_AIR_WARRIOR</data_id>
+                <data_type>vehicle</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2487,7 +2542,8 @@
                 <title>Hoverbike</title>
                 <description>The unusual Hoverbike with 'side car' is used for military purposes or for the personal pleasure of wayward youth who enjoy speed and altitude. Its good power to weight ratio means that this is the most maneuverable air vehicle but it can only carry light armaments. The Hoverbike can be a valuable means of transport for the	Agent on investigative missions where speed of response is essential.</description>
                 <background>xcom3/UFOPAEDI/12BIKE2.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_HOVERBIKE</data_id>
+                <data_type>vehicle</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2499,7 +2555,8 @@
                 <title>Phoenix Hovercar</title>
                 <description>The Phoenix is manufactured by Marsec mainly for military purposes. This sleek but rugged vehicle is used for reconnaissance in dangerous environments such as the Mars colony. A variety of weapon and engine configurations can be used and a well equipped Phoenix is more than a match for a police Hovercar.</description>
                 <background>xcom3/UFOPAEDI/18PHEONX.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_PHOENIX_HOVERCAR</data_id>
+                <data_type>vehicle</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2511,7 +2568,8 @@
                 <title>Police Car</title>
                 <description>The standard Megapol patrol vehicle is proudly styled in the current retro fashion, but is still capable of carrying several types of weapon system. The recent prevalence for criminals to engage in road combats has led to an increase in patrols and an upgrade in armament.</description>
                 <background>xcom3/UFOPAEDI/04POLICE.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_POLICE_CAR</data_id>
+                <data_type>vehicle</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2523,7 +2581,8 @@
                 <title>Police Hovercar</title>
                 <description>Megapol's police Hovercars are the scourge of the slum dwelling criminal gangs. They are well armed and able to travel freely within and outside the city boundaries, scouring the ground or air for unlicensed or criminal vehicles. They are no match for heavier military vehicles, but Megapol is able to manufacture many of these scout cars and can replace any losses. The vehicle's styling is required to conform to city aesthetic ordinances concerning pleasurable design of public vehicles.</description>
                 <background>xcom3/UFOPAEDI/03POLIC2.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_POLICE_HOVERCAR</data_id>
+                <data_type>vehicle</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2535,7 +2594,8 @@
                 <title>Rescue Transport</title>
                 <description>The airborne rescue vehicle serves as an ambulance and fire engine. It is specially equipped to deal with rescue situations involving car accidents and other disasters. However dealing with the Alien invasion is well beyond the scope of the rescue service which normally has little to do given the strict safety regulations governing all aspects of city life.</description>
                 <background>xcom3/UFOPAEDI/05RESCUE.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_RESCUE_TRANSPORT</data_id>
+                <data_type>vehicle</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2547,7 +2607,8 @@
                 <title>Retaliator</title>
                 <description>The development of the Retaliator shifts the emphasis from exploration to attack. Our Engineers have at last produced a craft which can match the capabilities of many of the Alien ships.</description>
                 <background>xcom3/UFOPAEDI/19RETALI.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_RETALIATOR</data_id>
+                <data_type>vehicle</data_type>
                 <required_research>RESEARCH_RETALIATOR</required_research>
               </sp>
             </value>
@@ -2558,8 +2619,9 @@
               <sp>
                 <title>Space Liner</title>
                 <description>The huge Space Liners enable commerce with Mars, the Moon and the deep space mining colonies. Huge quantities of manufactured goods are transported outwards, the Space Liners then return laden with raw materials and small quantities of the precious Elerium.</description>
+				<data_id>VEHICLETYPE_SPACE_LINER</data_id>
                 <background>xcom3/UFOPAEDI/06SPACE.PCX</background>
-                <data_id>VEHICLE</data_id>
+                <data_type>vehicle</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2571,7 +2633,8 @@
                 <title>Stormdog</title>
                 <description>A Marsec vehicle renowned for its handling and power. Once loaded with weapons systems it proves to be a useful military vehicle and an ideal transport for X-COM Agents.</description>
                 <background>xcom3/UFOPAEDI/20ROADWR.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_STORMDOG</data_id>
+                <data_type>vehicle</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2583,7 +2646,8 @@
                 <title>Valkyrie Interceptor</title>
                 <description>The Valkyrie is the standard military vehicle manufactured by Marsec. Its sleek lines appear reminiscent of old rocket designs, but it is a fully capable anti-grav dependent craft with a variety of engine configurations. There is space for many types of armaments and equipment loads. It is capable of solar system travel and is feared by the criminal cartels when it is used to police the space lanes to Mars and beyond.</description>
                 <background>xcom3/UFOPAEDI/22STARFR.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_VALKYRIE_INTERCEPTOR</data_id>
+                <data_type>vehicle</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2595,7 +2659,8 @@
                 <title>Wolfhound APC</title>
                 <description>Military vehicles are rarely required within the boundaries of Mega-Primus, but if trouble erupts in the deregulated areas then the Wolfhound Armored Personnel Carrier is normally deployed into the conflict zone. Its armament load is small and is primarily used for secure transport.</description>
                 <background>xcom3/UFOPAEDI/21STALAG.PCX</background>
-                <data_id>VEHICLE</data_id>
+				<data_id>VEHICLETYPE_WOLFHOUND_APC</data_id>
+                <data_type>vehicle</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2619,7 +2684,8 @@
                 <title>40mm Auto Cannon</title>
                 <description>The standard cannon for police and military vehicles; it fires a high velocity armor piercing shell.</description>
                 <background>xcom3/UFOPAEDI/V13.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_40MM_AUTO_CANNON</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2631,7 +2697,8 @@
                 <title>40mm Auto Cannon Turret</title>
                 <description>A discreet, but powerful computer targeting turret system. Designed for small road vehicles.</description>
                 <background>xcom3/UFOPAEDI/V01.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_40MM_AUTO_CANNON_TURRET</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2643,7 +2710,8 @@
                 <title>Advanced Control System</title>
                 <description>X-COM Scientists have devised a superior and more compact weapons control system designed specifically for X-COM vehicles. It assists targeting of the more agile UFOs.</description>
                 <background>xcom3/UFOPAEDI/V28.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_ADVANCED_CONTROL_SYSTEM</data_id>
+                <data_type>vequipment</data_type>
                 <required_research>RESEARCH_X-COM_ADVANCED_CONTROL_SYSTEM</required_research>
               </sp>
             </value>
@@ -2655,7 +2723,8 @@
                 <title>Airguard Anti-Air Cannon</title>
                 <description>A more powerful and accurate cannon system manufactured by Marsec and designed for small road vehicles.</description>
                 <background>xcom3/UFOPAEDI/V16.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_AIRGUARD_ANTI-AIR_CANNON</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2667,7 +2736,8 @@
                 <title>Bio-Transport Module</title>
                 <description>This X-COM produced unit is designed to contain Alien specimens, alive or dead. In order to retrieve Alien life forms, X-COM Agents must have Bio-Transport capability at a building after a tactical combat mission.</description>
                 <background>xcom3/UFOPAEDI/V32.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_BIO-TRANSPORT_MODULE</data_id>
+                <data_type>vequipment</data_type>
                 <required_research>RESEARCH_BIO-TRANSPORT_MODULE</required_research>
               </sp>
             </value>
@@ -2679,7 +2749,8 @@
                 <title>Bolter 4000 Laser Gun</title>
                 <description>Mid-powered Laser Beam gun commonly used in airborne police vehicles. The atomic power cells contained in these weapons allow for many thousands of shots before they expire.</description>
                 <background>xcom3/UFOPAEDI/V02.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_BOLTER_4000_LASER_GUN</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2691,7 +2762,8 @@
                 <title>Cargo Module</title>
                 <description>A standard module for transporting goods. X-COM Agents should have cargo capacity at a building after a tactical combat mission in order to retrieve equipment and Alien artifacts.</description>
                 <background>xcom3/UFOPAEDI/V33.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_CARGO_MODULE</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2703,7 +2775,8 @@
                 <title>Cloaking Field</title>
                 <description>The Cloaking Field is an Alien defense system that disrupts the detectors of missiles or weapon control systems. Effectively this means that the craft is almost invisible to radar, infra-red and visual sighting. It is very effective but the field must be disabled temporarily if the craft is using any of its own weapons systems.</description>
                 <background>xcom3/UFOPAEDI/V25.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_CLOAKING_FIELD</data_id>
+                <data_type>vequipment</data_type>
                 <required_research>RESEARCH_CLOAKING_FIELD</required_research>
               </sp>
             </value>
@@ -2715,7 +2788,7 @@
                 <title>Dimension Shifter</title>
                 <description>NOT USED!</description>
                 <background>xcom3/UFOPAEDI/V26.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+                <data_type>vequipment</data_type>
                 <required_research>RESEARCH_DIMENSION_SHIFTER</required_research>
               </sp>
             </value>
@@ -2727,7 +2800,8 @@
                 <title>Disruptor Bomb Launcher</title>
                 <description>This Alien missile system is incredibly destructive. The explosive force exceeds the Retribution Missiles and its speed is greater. Fortunately the range is quite limited.</description>
                 <background>xcom3/UFOPAEDI/V21.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_DISRUPTOR_BOMB_LAUNCHER</data_id>
+                <data_type>vequipment</data_type>
                 <required_research>RESEARCH_DISRUPTOR_INVERSION_BOMB</required_research>
               </sp>
             </value>
@@ -2739,7 +2813,8 @@
                 <title>Disruptor Multi-Bomb Launcher</title>
                 <description>The multi-bomb has a short range but splits into fast, multiple independently targeted missiles. This makes it a deadly weapon against numerous small targets.</description>
                 <background>xcom3/UFOPAEDI/V20.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_DISRUPTOR_MULTI-BOMB_LAUNCHER</data_id>
+                <data_type>vequipment</data_type>
                 <required_research>RESEARCH_DISRUPTOR_MULTI-BOMB</required_research>
               </sp>
             </value>
@@ -2751,7 +2826,8 @@
                 <title>GLM Air Defense</title>
                 <description>A missile launcher which transforms the heavy tank into an effective air defense unit.</description>
                 <background>xcom3/UFOPAEDI/23TANK3.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_GLM_AIR_DEFENSE</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2763,7 +2839,8 @@
                 <title>GLM Array</title>
                 <description>A compact ground launched missile system for small road vehicles. This will turn a humble road car into a serious threat to airborne vehicles.</description>
                 <background>xcom3/UFOPAEDI/V03.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_GLM_ARRAY</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2775,7 +2852,8 @@
                 <title>Heavy Disruptor Beam</title>
                 <description>The Heavy Dispruptor Beam is an immensely powerful weapon. Its only drawbacks are its size and difficulty of manufacture. The energy chamber is enormous, drawing energy from another dimension. It is possible that the weapon's original power source is actually located in some alternative dimension.</description>
                 <background>xcom3/UFOPAEDI/V31.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_HEAVY_DISRUPTOR_BEAM</data_id>
+                <data_type>vequipment</data_type>
                 <required_research>RESEARCH_HEAVY_DISRUPTOR_BEAM</required_research>
               </sp>
             </value>
@@ -2787,7 +2865,8 @@
                 <title>Heavy Weapons Control</title>
                 <description>The largest and most complex weapons control system available from Cyberweb.An expensive unit that should only be used on heavily loaded weapons platforms.</description>
                 <background>xcom3/UFOPAEDI/V08.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_HEAVY_WEAPONS_CONTROL</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2799,7 +2878,8 @@
                 <title>Janitor Missile Array</title>
                 <description>Primarily a short range anti-air missile system. It is effective against smaller air vehicles.</description>
                 <background>xcom3/UFOPAEDI/V19.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_JANITOR_MISSILE_ARRAY</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2811,7 +2891,8 @@
                 <title>Justice Missile Launcher</title>
                 <description>A long range missile system with a powerful fusion warhead. Only useful against ground targets or slow moving vehicles.</description>
                 <background>xcom3/UFOPAEDI/V05.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_JUSTICE_MISSILE_LAUNCHER</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2823,7 +2904,8 @@
                 <title>Lancer 7000 Laser Gun</title>
                 <description>High energy Laser Beam weapon designed for military and police vehicles. Powerful atomic cells provide the energy source.</description>
                 <background>xcom3/UFOPAEDI/V10.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_LANCER_7000_LASER_GUN</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2835,7 +2917,8 @@
                 <title>Large Disruption Shield</title>
                 <description>A larger and more powerful version of the Small Disruption Shield designed for larger Alien craft. Its absorption level is much greater, but will still malfunction if the power level is reduced to zero.</description>
                 <background>xcom3/UFOPAEDI/V24.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_LARGE_DISRUPTION_SHIELD</data_id>
+                <data_type>vequipment</data_type>
                 <required_research>RESEARCH_LARGE_DISRUPTION_SHIELD</required_research>
               </sp>
             </value>
@@ -2847,7 +2930,8 @@
                 <title>Laser Defense Array</title>
                 <description>This Megapol produced defense system uses a large number of accurate, short range laser guns to shoot down incoming missiles.</description>
                 <background>xcom3/UFOPAEDI/V04.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_LASER_DEFENSE_ARRAY</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2859,7 +2943,8 @@
                 <title>Light Disruptor Beam</title>
                 <description>Alien weapons technology is based on a complex sub-atomic particle system. The Disruptor Beam is generated from an inter-dimensional power source. It propels sub-atomic particles which disintegrate molecules in their path. The weapon does not require ammunition since the energy chamber appears to be a self-perpetuating energy source.</description>
                 <background>xcom3/UFOPAEDI/V29.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_LIGHT_DISRUPTOR_BEAM</data_id>
+                <data_type>vequipment</data_type>
                 <required_research>RESEARCH_LIGHT_DISRUPTOR_BEAM</required_research>
               </sp>
             </value>
@@ -2871,7 +2956,8 @@
                 <title>Light Weapons Control</title>
                 <description>A complex AI unit manufactured by Cyberweb. It is designed to assist the aiming and intelligent targeting for all installed weapons systems.</description>
                 <background>xcom3/UFOPAEDI/V06.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_LIGHT_WEAPONS_CONTROL</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2883,7 +2969,8 @@
                 <title>Lineage Plasma Cannon</title>
                 <description>The Marsec corporation has privileged access to Elerium supplies due to a strong security role in the Elerium mining colonies. The Lineage weapons technology represents the ultimate Elerium powered accelerators. They are expensive but devastating.</description>
                 <background>xcom3/UFOPAEDI/V11.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_LINEAGE_PLASMA_CANNON</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2895,7 +2982,8 @@
                 <title>Medium Disruptor Beam</title>
                 <description>The Medium Disruptor Beam is a more powerful version of the Light Disruptor Beam. It uses the same sub-atomic, inter-dimensional technology but the energy chamber is larger. It is capable of penetrating the heaviest armor.</description>
                 <background>xcom3/UFOPAEDI/V30.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_MEDIUM_DISRUPTOR_BEAM</data_id>
+                <data_type>vequipment</data_type>
                 <required_research>RESEARCH_MEDIUM_DISRUPTOR_BEAM</required_research>
               </sp>
             </value>
@@ -2907,7 +2995,8 @@
                 <title>Medium Weapons Control</title>
                 <description>A more complex and capable version of the Light Weapons Control. Accuracy is improved over the smaller model.</description>
                 <background>xcom3/UFOPAEDI/V07.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_MEDIUM_WEAPONS_CONTROL</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2919,7 +3008,8 @@
                 <title>Metro Multipower Plus</title>
                 <description>The ultimate road vehicle engine, strictly for armored military vehicles.</description>
                 <background>xcom3/UFOPAEDI/H05.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_METRO_MULTIPOWER_PLUS</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2931,7 +3021,8 @@
                 <title>Metro Powergrav</title>
                 <description>A powerful road engine normally reserved for police or military use.</description>
                 <background>xcom3/UFOPAEDI/H04.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_METRO_POWERGRAV</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2943,7 +3034,8 @@
                 <title>Metro Roadgrav</title>
                 <description>A standard road vehicle anti-grav unit.</description>
                 <background>xcom3/UFOPAEDI/H02.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_METRO_ROADGRAV</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2955,7 +3047,8 @@
                 <title>Metro Roadhog</title>
                 <description>A low powered road engine for bikes and small vehicles.</description>
                 <background>xcom3/UFOPAEDI/H01.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_METRO_ROADHOG</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2967,7 +3060,8 @@
                 <title>Metro Turbograv</title>
                 <description>A high powered road vehicle engine for standard size road vehicles</description>
                 <background>xcom3/UFOPAEDI/H03.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_METRO_TURBOGRAV</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2979,7 +3073,8 @@
                 <title>Missile Evasion Matrix</title>
                 <description>The Cyberweb evasion system is designed to track hostile missiles and disrupt their guidance systems using various forms of radiation. It is not totally effective but a very useful complement for other defense systems.</description>
                 <background>xcom3/UFOPAEDI/V09.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_MISSILE_EVASION_MATRIX</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -2991,7 +3086,8 @@
                 <title>Passenger Module</title>
                 <description>Allows a vehicle to carry an extra four passengers in addition to the standard passenger capacity for the vehicle type.</description>
                 <background>xcom3/UFOPAEDI/V34.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_PASSENGER_MODULE</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -3003,7 +3099,8 @@
                 <title>Plasma Defense Array</title>
                 <description>The Marsec version of the defense array uses more powerful and accurate plasma beam weapons to defend against missile attacks.</description>
                 <background>xcom3/UFOPAEDI/V14.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_PLASMA_DEFENSE_ARRAY</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -3015,7 +3112,8 @@
                 <title>Plasma Multi-System</title>
                 <description>The Plasma Multi-System is a series of connected plasma turrets designed to provide all round fire power. This weapon is ideally suited to installation in larger, less maneuverable craft.</description>
                 <background>xcom3/UFOPAEDI/V12.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_PLASMA_MULTI-SYSTEM</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -3027,7 +3125,8 @@
                 <title>Plasma Turret Cannon</title>
                 <description>The Plasma Turret Cannon is a powerful weapon, but lacks the ability to track and hit fast airborne vehicles.</description>
                 <background>xcom3/UFOPAEDI/23TANK2.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_PLASMA_TURRET_CANNON</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -3039,7 +3138,8 @@
                 <title>Prophet Missile Array</title>
                 <description>The Prophet system is more effective than the Janitor missiles against faster moving targets. Its guidance systems are much more accurate, but the array only has a limited missile capacity.</description>
                 <background>xcom3/UFOPAEDI/V18.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_PROPHET_MISSILE_ARRAY</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -3051,7 +3151,8 @@
                 <title>Rendor Plasma Gun</title>
                 <description>A popular but expensive alternative to the Bolter laser gun. The rare Elerium fuel is used to power both the plasma chamber and the electro-magnetic accelerators that propel the ultra-heated plasma to near light speeds.</description>
                 <background>xcom3/UFOPAEDI/V15.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_RENDOR_PLASMA_GUN</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -3063,7 +3164,8 @@
                 <title>Retribution Missile Launcher</title>
                 <description>This is an extremely powerful long range missile system, which should only be used with extreme caution. The destructive fusion warhead is designed to be used against distant ground targets.</description>
                 <background>xcom3/UFOPAEDI/V17.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_RETRIBUTION_MISSILE_LAUNCHER</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -3075,7 +3177,8 @@
                 <title>Rumble Cannon</title>
                 <description>A powerful cannon which fires explosive shells over large distances. Its effectiveness is limited to static or slow moving targets.</description>
                 <background>xcom3/UFOPAEDI/23TANK4.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_RUMBLE_CANNON</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -3087,7 +3190,8 @@
                 <title>SD Deluxe</title>
                 <description>A more high-powered version of the Superdynamics standard, but still small enough for a Hoverbike.</description>
                 <background>xcom3/UFOPAEDI/F02.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_SD_DELUXE</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -3099,7 +3203,8 @@
                 <title>SD Elite</title>
                 <description>A high powered anti-grav unit generally restricted to military or police vehicles.</description>
                 <background>xcom3/UFOPAEDI/F05.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_SD_ELITE</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -3111,7 +3216,8 @@
                 <title>SD Special</title>
                 <description>The ultimate engine upgrade for large airborne vehicles.</description>
                 <background>xcom3/UFOPAEDI/F06.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_SD_SPECIAL</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -3123,7 +3229,8 @@
                 <title>SD Sports</title>
                 <description>Larger anti-grav units give more speed and acceleration for Hovercars and other small airborne vehicles.</description>
                 <background>xcom3/UFOPAEDI/F03.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_SD_SPORTS</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -3135,7 +3242,8 @@
                 <title>SD Standard</title>
                 <description>A compact anti-grav unit suitable for Hoverbikes and smaller vehicles only.</description>
                 <background>xcom3/UFOPAEDI/F01.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_SD_STANDARD</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -3147,7 +3255,8 @@
                 <title>SD Turbo</title>
                 <description>A large anti-grav unit designed for military vehicles or commercial transports.</description>
                 <background>xcom3/UFOPAEDI/F04.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_SD_TURBO</data_id>
+                <data_type>vequipment</data_type>
                 <required_research/>
               </sp>
             </value>
@@ -3159,7 +3268,8 @@
                 <title>Small Disruption Shield</title>
                 <description>The Aliens have manufactured an energy shield that can protect an entire vehicle. It is far more effective than any armor system and can turn a small vehicle into a deadly weapons platform. The disruption field it generates can absorb any kind of beam or projectile, but it loses power for each hit. Power levels are gradually restored but the unit will cease functioning if the power level is reduced to zero.</description>
                 <background>xcom3/UFOPAEDI/V23.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_SMALL_DISRUPTION_SHIELD</data_id>
+                <data_type>vequipment</data_type>
                 <required_research>RESEARCH_SMALL_DISRUPTION_SHIELD</required_research>
               </sp>
             </value>
@@ -3171,7 +3281,8 @@
                 <title>Stasis Bomb Launcher</title>
                 <description>This unusual Alien weapon causes an inter-dimensional flux field to surround the target when it is hit, rendering it immobile and inactive. The field only lasts a short while but during this time the target vehicle is extremely vulnerable.</description>
                 <background>xcom3/UFOPAEDI/V22.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_STASIS_BOMB_LAUNCHER</data_id>
+                <data_type>vequipment</data_type>
                 <required_research>RESEARCH_STASIS_FIELD_BOMB</required_research>
               </sp>
             </value>
@@ -3183,7 +3294,8 @@
                 <title>Teleporter</title>
                 <description>The Aliens have developed a very effective teleportation system that allows a craft to jump instantly over short distances. The unit is automatically activated when a vehicle is under fire and receiving damage. Its offensive use is limited because the destination cannot be controlled accurately.</description>
                 <background>xcom3/UFOPAEDI/V27.PCX</background>
-                <data_id>VEHICLEEQUIP</data_id>
+				<data_id>VEQUIPMENTTYPE_TELEPORTER</data_id>
+                <data_type>vequipment</data_type>
                 <required_research>RESEARCH_TELEPORTER</required_research>
               </sp>
             </value>

@@ -7,20 +7,18 @@ namespace OpenApoc
 {
 
 const std::map<Agent::Type, UString> Agent::TypeMap = {
-    {Agent::Type::Soldier, "soldier"},
-    {Agent::Type::Physicist, "physicist"},
-    {Agent::Type::BioChemist, "biochemist"},
-    {Agent::Type::Engineer, "engineer"},
+    {Type::Soldier, "soldier"},
+    {Type::Physicist, "physicist"},
+    {Type::BioChemist, "biochemist"},
+    {Type::Engineer, "engineer"},
 };
 
 const std::map<Agent::Species, UString> Agent::SpeciesMap = {
-    {Agent::Species::Human, "human"},
-    {Agent::Species::Mutant, "mutant"},
-    {Agent::Species::Android, "android"},
+    {Species::Human, "human"}, {Species::Mutant, "mutant"}, {Species::Android, "android"},
 };
 
 const std::map<Agent::Gender, UString> Agent::GenderMap = {
-    {Agent::Gender::Male, "male"}, {Agent::Gender::Female, "female"},
+    {Gender::Male, "male"}, {Gender::Female, "female"},
 };
 
 Agent::Agent() : assigned_to_lab(false) {}

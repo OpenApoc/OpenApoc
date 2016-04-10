@@ -204,7 +204,7 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 	this->baseForm->FindControl("BUTTON_SHOW_UFOPAEDIA")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<UfopaediaView>(*this->state);
+		    this->stageCmd.nextStage = mksp<UfopaediaView>(this->state);
 		});
 	this->baseForm->FindControl("BUTTON_SHOW_OPTIONS")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {

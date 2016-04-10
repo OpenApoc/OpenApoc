@@ -5,15 +5,16 @@ namespace OpenApoc
 {
 
 const std::map<ResearchTopic::Type, UString> ResearchTopic::TypeMap = {
-    {ResearchTopic::Type::BioChem, "biochem"}, {ResearchTopic::Type::Physics, "physics"},
+    {Type::BioChem, "biochem"}, {Type::Physics, "physics"},
 };
 
 const std::map<ResearchTopic::LabSize, UString> ResearchTopic::LabSizeMap = {
-    {ResearchTopic::LabSize::Small, "small"}, {ResearchTopic::LabSize::Large, "large"},
+    {LabSize::Small, "small"}, {LabSize::Large, "large"},
 };
 
 ResearchTopic::ResearchTopic()
-    : man_hours(0), man_hours_progress(0), type(Type::BioChem), required_lab_size(LabSize::Small)
+    : man_hours(0), man_hours_progress(0), type(Type::BioChem), required_lab_size(LabSize::Small),
+      score(0)
 {
 }
 

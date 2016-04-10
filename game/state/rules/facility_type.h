@@ -9,7 +9,6 @@ namespace OpenApoc
 class FacilityType : public StateObject<FacilityType>
 {
   public:
-	FacilityType();
 	enum class Capacity
 	{
 		Nothing,
@@ -22,9 +21,10 @@ class FacilityType : public StateObject<FacilityType>
 		Chemistry,
 		Physics,
 		Workshop,
-		Aliens,
+		Aliens
 	};
 	static const std::map<Capacity, UString> CapacityMap;
+	FacilityType();
 	UString name;
 	bool fixed;
 	int buildCost;

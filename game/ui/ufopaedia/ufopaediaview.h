@@ -15,10 +15,10 @@ class UfopaediaView : public Stage
   private:
 	sp<Form> menuform;
 	StageCmd stageCmd;
-	GameState &state;
+	sp<GameState> state;
 
   public:
-	UfopaediaView(GameState &state);
+	UfopaediaView(sp<GameState> state);
 	~UfopaediaView();
 	// Stage control
 	virtual void Begin() override;
