@@ -101,6 +101,7 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state, Diffic
 			{
 				auto gData = data.vehicle_general_equipment->get(edata.data_idx);
 				e->type = VEquipmentType::Type::General;
+				e->accuracy_modifier = gData.accuracy_modifier;
 				e->cargo_space = gData.cargo_space;
 				e->passengers = gData.passengers;
 				e->alien_space = gData.alien_space;

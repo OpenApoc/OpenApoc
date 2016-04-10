@@ -431,6 +431,8 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("accuracy"), e.accuracy);
 	serializeIn(state, node->getNode("fire_delay"), e.fire_delay);
 	serializeIn(state, node->getNode("tail_size"), e.tail_size);
+	serializeIn(state, node->getNode("guided"), e.guided);
+	serializeIn(state, node->getNode("turn_rate"), e.turn_rate);
 	serializeIn(state, node->getNode("range"), e.range);
 	serializeIn(state, node->getNode("firing_arc_1"), e.firing_arc_1);
 	serializeIn(state, node->getNode("firing_arc_2"), e.firing_arc_2);
@@ -1018,6 +1020,8 @@ template <> void serializeOut(sp<SerializationNode> node, const VEquipmentType &
 	serializeOut(node->addNode("accuracy"), e.accuracy);
 	serializeOut(node->addNode("fire_delay"), e.fire_delay);
 	serializeOut(node->addNode("tail_size"), e.tail_size);
+	serializeOut(node->addNode("guided"), e.guided);
+	serializeOut(node->addNode("turn_rate"), e.turn_rate);
 	serializeOut(node->addNode("range"), e.range);
 	serializeOut(node->addNode("firing_arc_1"), e.firing_arc_1);
 	serializeOut(node->addNode("firing_arc_2"), e.firing_arc_2);
