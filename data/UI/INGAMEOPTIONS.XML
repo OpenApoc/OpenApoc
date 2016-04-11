@@ -113,6 +113,11 @@
           <font>SMALLSET</font>
           <size width="300" height="16"/>
         </label>
+        <textbutton text="Give all research" id="BUTTON_GIVE_ALL_RESEARCH">
+          <position x="310" y="140"/>
+          <font>SMALLSET</font>
+          <size width="200" height="32"/>
+        </textbutton>
       </graphic>
     </style>
   </form>

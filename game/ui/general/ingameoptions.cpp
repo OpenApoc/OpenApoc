@@ -86,6 +86,26 @@ void InGameOptions::EventOccurred(Event *e)
 			this->state->saveGame("save");
 			return;
 		}
+		else if (e->Forms().RaisedBy->Name == "BUTTON_GIVE_ALL_RESEARCH")
+		{
+			for (auto &r : this->state->research)
+			{
+				LogWarning("Topic \"%s\"", r.first.c_str());
+				auto &topic = r.second;
+				if (topic->isComplete())
+				{
+					LogWarning("Topic \"%s\" already complete", r.first.c_str());
+				}
+				else
+				{
+					topic->man_hours_progress = topic->man_hours;
+					LogWarning("Topic \"%s\" marked as complete", r.first.c_str());
+				}
+			}
+			// FIXME: Save game selector
+			this->state->saveGame("save");
+			return;
+		}
 	}
 	if (e->Type() == EVENT_FORM_INTERACTION &&
 	    e->Forms().EventFlag == FormEventType::ScrollBarChange)

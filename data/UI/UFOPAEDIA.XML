@@ -159,114 +159,114 @@
           <alignment horizontal="left" vertical="top"/>
           <font>SMALFONT</font>
         </label>
-		  <label id="LABEL_1" text="LABEL_1">
-			<position x="340" y="66"/>
-			<size width="135" height="15"/>
-			<alignment horizontal="left" vertical="centre"/>
-			<font>SMALFONT</font>
-		  </label>
-		  <label id="LABEL_2" text="LABEL_2">
-			<position x="340" y="82"/>
-			<size width="135" height="15"/>
-			<alignment horizontal="left" vertical="centre"/>
-			<font>SMALFONT</font>
-		  </label>
-		  <label id="LABEL_3" text="LABEL_3">
-			<position x="340" y="98"/>
-			<size width="135" height="15"/>
-			<alignment horizontal="left" vertical="centre"/>
-			<font>SMALFONT</font>
-		  </label>
-		  <label id="LABEL_4" text="LABEL_4">
-			<position x="340" y="114"/>
-			<size width="135" height="15"/>
-			<alignment horizontal="left" vertical="centre"/>
-			<font>SMALFONT</font>
-		  </label>
-		  <label id="LABEL_5" text="LABEL_5">
-			<position x="340" y="130"/>
-			<size width="135" height="15"/>
-			<alignment horizontal="left" vertical="centre"/>
-			<font>SMALFONT</font>
-		  </label>
-		  <label id="LABEL_6" text="LABEL_6">
-			<position x="340" y="146"/>
-			<size width="135" height="15"/>
-			<alignment horizontal="left" vertical="centre"/>
-			<font>SMALFONT</font>
-		  </label>
-		  <label id="LABEL_7" text="LABEL_7">
-			<position x="340" y="162"/>
-			<size width="135" height="15"/>
-			<alignment horizontal="left" vertical="centre"/>
-			<font>SMALFONT</font>
-		  </label>
-		  <label id="LABEL_8" text="LABEL_8">
-			<position x="340" y="178"/>
-			<size width="135" height="15"/>
-			<alignment horizontal="left" vertical="centre"/>
-			<font>SMALFONT</font>
-		  </label>
-		  <label id="LABEL_9" text="LABEL_9">
-			<position x="340" y="194"/>
-			<size width="135" height="15"/>
-			<alignment horizontal="left" vertical="centre"/>
-			<font>SMALFONT</font>
-		  </label>
-		  <label id="VALUE_1" text="VALUE_1">
-			<position x="475" y="66"/>
-			<size width="135" height="15"/>
-			<alignment horizontal="right" vertical="centre"/>
-			<font>SMALFONT</font>
-		  </label>
-		  <label id="VALUE_2" text="VALUE_2">
-			<position x="475" y="82"/>
-			<size width="135" height="15"/>
-			<alignment horizontal="right" vertical="centre"/>
-			<font>SMALFONT</font>
-		  </label>
-		  <label id="VALUE_3" text="VALUE_3">
-			<position x="475" y="98"/>
-			<size width="135" height="15"/>
-			<alignment horizontal="right" vertical="centre"/>
-			<font>SMALFONT</font>
-		  </label>
-		  <label id="VALUE_4" text="VALUE_4">
-			<position x="475" y="114"/>
-			<size width="135" height="15"/>
-			<alignment horizontal="right" vertical="centre"/>
-			<font>SMALFONT</font>
-		  </label>
-		  <label id="VALUE_5" text="VALUE_5">
-			<position x="475" y="130"/>
-			<size width="135" height="15"/>
-			<alignment horizontal="right" vertical="centre"/>
-			<font>SMALFONT</font>
-		  </label>
-		  <label id="VALUE_6" text="VALUE_6">
-			<position x="475" y="146"/>
-			<size width="135" height="15"/>
-			<alignment horizontal="right" vertical="centre"/>
-			<font>SMALFONT</font>
-		  </label>
-		  <label id="VALUE_7" text="VALUE_7">
-			<position x="475" y="162"/>
-			<size width="135" height="15"/>
-			<alignment horizontal="right" vertical="centre"/>
-			<font>SMALFONT</font>
-		  </label>
-		  <label id="VALUE_8" text="VALUE_8">
-			<position x="475" y="178"/>
-			<size width="135" height="15"/>
-			<alignment horizontal="right" vertical="centre"/>
-			<font>SMALFONT</font>
-		  </label>
-		  <label id="VALUE_9" text="VALUE_9">
-			<position x="475" y="194"/>
-			<size width="135" height="15"/>
-			<alignment horizontal="right" vertical="centre"/>
-			<font>SMALFONT</font>
-		  </label>
+        <label id="LABEL_1" text="LABEL_1">
+          <position x="340" y="66"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="left" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="LABEL_2" text="LABEL_2">
+          <position x="340" y="82"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="left" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="LABEL_3" text="LABEL_3">
+          <position x="340" y="98"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="left" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="LABEL_4" text="LABEL_4">
+          <position x="340" y="114"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="left" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="LABEL_5" text="LABEL_5">
+          <position x="340" y="130"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="left" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="LABEL_6" text="LABEL_6">
+          <position x="340" y="146"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="left" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="LABEL_7" text="LABEL_7">
+          <position x="340" y="162"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="left" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="LABEL_8" text="LABEL_8">
+          <position x="340" y="178"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="left" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="LABEL_9" text="LABEL_9">
+          <position x="340" y="194"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="left" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="VALUE_1" text="VALUE_1">
+          <position x="475" y="66"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="right" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="VALUE_2" text="VALUE_2">
+          <position x="475" y="82"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="right" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="VALUE_3" text="VALUE_3">
+          <position x="475" y="98"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="right" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="VALUE_4" text="VALUE_4">
+          <position x="475" y="114"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="right" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="VALUE_5" text="VALUE_5">
+          <position x="475" y="130"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="right" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="VALUE_6" text="VALUE_6">
+          <position x="475" y="146"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="right" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="VALUE_7" text="VALUE_7">
+          <position x="475" y="162"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="right" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="VALUE_8" text="VALUE_8">
+          <position x="475" y="178"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="right" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="VALUE_9" text="VALUE_9">
+          <position x="475" y="194"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="right" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
         <graphicbutton id="BUTTON_QUIT">
           <position x="602" y="442"/>
           <size width="35" height="34"/>
