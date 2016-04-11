@@ -9,12 +9,10 @@
 #include "game/state/city/vehiclemission.h"
 #include "game/state/city/vequipment.h"
 #include "game/state/gamestate.h"
-#include "game/state/organisation.h"
 #include "game/state/rules/scenery_tile_type.h"
 #include "game/state/rules/vequipment.h"
 #include "game/state/tileview/tileobject_projectile.h"
 #include "game/state/tileview/tileobject_scenery.h"
-#include "game/state/tileview/tileobject_vehicle.h"
 #include "game/state/tileview/voxel.h"
 
 #include <functional>

@@ -24,7 +24,7 @@ class Scenery : public std::enable_shared_from_this<Scenery>
   public:
 	StateRef<SceneryTileType> type;
 
-	const Vec3<float> getPosition() const
+	Vec3<float> getPosition() const
 	{
 		// The "position" is the center, so offset by {0.5,0.5,0.5}
 		Vec3<float> offsetPos = currentPosition;

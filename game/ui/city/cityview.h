@@ -94,9 +94,9 @@ class CityView : public TileView
   public:
 	CityView(sp<GameState> state, StateRef<City> city);
 	virtual ~CityView();
-	virtual void Update(StageCmd *const cmd) override;
-	virtual void Render() override;
-	virtual void EventOccurred(Event *e) override;
+	void Update(StageCmd *const cmd) override;
+	void Render() override;
+	void EventOccurred(Event *e) override;
 };
 
 }; // namespace OpenApoc

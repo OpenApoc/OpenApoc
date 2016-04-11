@@ -863,7 +863,7 @@ class OGL30Renderer : public Renderer
 	sp<Palette> currentPalette;
 
 	friend class RendererSurfaceBinding;
-	virtual void setSurface(sp<Surface> s) override
+	void setSurface(sp<Surface> s) override
 	{
 		if (this->currentSurface == s)
 		{
@@ -879,14 +879,14 @@ class OGL30Renderer : public Renderer
 		this->currentBoundFBO = fbo->fbo;
 		gl::Viewport(0, 0, s->size.x, s->size.y);
 	}
-	virtual sp<Surface> getSurface() override { return currentSurface; }
+	sp<Surface> getSurface() override { return currentSurface; }
 	sp<Surface> defaultSurface;
 
   public:
 	OGL30Renderer();
 	virtual ~OGL30Renderer();
-	virtual void clear(Colour c = Colour{0, 0, 0, 0}) override;
-	virtual void setPalette(sp<Palette> p) override
+	void clear(Colour c = Colour{0, 0, 0, 0}) override;
+	void setPalette(sp<Palette> p) override
 	{
 		if (p == this->currentPalette)
 			return;
@@ -895,11 +895,11 @@ class OGL30Renderer : public Renderer
 			p->rendererPrivateData.reset(new GLPalette(p));
 		this->currentPalette = p;
 	}
-	virtual sp<Palette> getPalette() override { return this->currentPalette; }
+	sp<Palette> getPalette() override { return this->currentPalette; }
 
-	virtual void draw(sp<Image> i, Vec2<float> position) override;
-	virtual void drawRotated(sp<Image> image, Vec2<float> center, Vec2<float> position,
-	                         float angle) override
+	void draw(sp<Image> i, Vec2<float> position) override;
+	void drawRotated(sp<Image> image, Vec2<float> center, Vec2<float> position,
+	                 float angle) override
 	{
 		auto size = image->size;
 		if (this->state != RendererState::Idle)
@@ -920,8 +920,8 @@ class OGL30Renderer : public Renderer
 		sp<PaletteImage> paletteImage = std::dynamic_pointer_cast<PaletteImage>(image);
 		LogError("Unsupported image type");
 	}
-	virtual void drawScaled(sp<Image> image, Vec2<float> position, Vec2<float> size,
-	                        Scaler scaler = Scaler::Linear) override
+	void drawScaled(sp<Image> image, Vec2<float> position, Vec2<float> size,
+	                Scaler scaler = Scaler::Linear) override
 	{
 
 		if (this->state != RendererState::Idle)
@@ -973,7 +973,7 @@ class OGL30Renderer : public Renderer
 		}
 		LogError("Unsupported image type");
 	}
-	virtual void drawTinted(sp<Image> i, Vec2<float> position, Colour tint) override
+	void drawTinted(sp<Image> i, Vec2<float> position, Colour tint) override
 	{
 		auto scaler = Scaler::Linear;
 		auto size = i->size;
@@ -1027,9 +1027,8 @@ class OGL30Renderer : public Renderer
 		}
 		LogError("Unsupported image type");
 	}
-	virtual void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c) override;
-	virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c,
-	                      float thickness = 1.0) override
+	void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c) override;
+	void drawRect(Vec2<float> position, Vec2<float> size, Colour c, float thickness = 1.0) override
 	{
 
 		// The lines are all shifted in x/y by {capsize} to ensure the corners are correcly covered
@@ -1098,15 +1097,15 @@ class OGL30Renderer : public Renderer
 		this->drawFilledRect(C, sizeC, c);
 		this->drawFilledRect(D, sizeD, c);
 	}
-	virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0) override
+	void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0) override
 	{
 		if (this->state != RendererState::Idle)
 			this->flush();
 		this->DrawLine(p1, p2, c, thickness);
 	}
-	virtual void flush() override;
-	virtual UString getName() override;
-	virtual sp<Surface> getDefaultSurface() override { return this->defaultSurface; }
+	void flush() override;
+	UString getName() override;
+	sp<Surface> getDefaultSurface() override { return this->defaultSurface; }
 
 	void BindProgram(sp<Program> p)
 	{

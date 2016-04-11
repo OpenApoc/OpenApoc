@@ -1,5 +1,4 @@
 #include "game/state/tileview/voxel.h"
-#include "framework/logger.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject.h"
 #include "library/sp.h"

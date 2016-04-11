@@ -2,7 +2,6 @@
 #include "library/sp.h"
 
 #include "library/vec.h"
-#include <memory>
 
 namespace OpenApoc
 {

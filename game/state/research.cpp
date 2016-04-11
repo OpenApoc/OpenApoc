@@ -18,7 +18,7 @@ ResearchTopic::ResearchTopic()
 {
 }
 
-const bool ResearchTopic::isComplete() const { return this->man_hours_progress >= this->man_hours; }
+bool ResearchTopic::isComplete() const { return this->man_hours_progress >= this->man_hours; }
 
 template <>
 sp<ResearchTopic> StateObject<ResearchTopic>::get(const GameState &state, const UString &id)

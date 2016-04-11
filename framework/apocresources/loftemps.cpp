@@ -1,5 +1,4 @@
 #include "framework/apocresources/loftemps.h"
-#include "framework/data.h"
 #include "framework/logger.h"
 #include "library/sp.h"
 

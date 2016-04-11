@@ -14,7 +14,7 @@ class TileObjectShadow : public TileObject
 	          TileViewMode mode) override;
 	virtual ~TileObjectShadow();
 	void setPosition(Vec3<float> newPosition) override;
-	const Vec3<float> getPosition() const override;
+	Vec3<float> getPosition() const override;
 
   private:
 	friend class TileMap;

@@ -16,7 +16,7 @@ class Graphic : public Control
 	sp<Image> image;
 
   protected:
-	virtual void OnRender() override;
+	void OnRender() override;
 
   public:
 	HorizontalAlignment ImageHAlign;
@@ -27,15 +27,15 @@ class Graphic : public Control
 	Graphic(sp<Image> Image = nullptr);
 	virtual ~Graphic();
 
-	virtual void EventOccured(Event *e) override;
-	virtual void Update() override;
-	virtual void UnloadResources() override;
+	void EventOccured(Event *e) override;
+	void Update() override;
+	void UnloadResources() override;
 
 	sp<Image> GetImage() const;
 	void SetImage(sp<Image> Image);
 
-	virtual sp<Control> CopyTo(sp<Control> CopyParent) override;
-	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
+	sp<Control> CopyTo(sp<Control> CopyParent) override;
+	void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 };
 
 }; // namespace OpenApoc

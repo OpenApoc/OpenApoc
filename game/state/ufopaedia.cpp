@@ -15,7 +15,7 @@ const std::map<UfopaediaEntry::Data, UString> UfopaediaEntry::DataMap = {
 
 UfopaediaEntry::UfopaediaEntry() : data_type(Data::None) {}
 
-const bool UfopaediaEntry::isVisible() const
+bool UfopaediaEntry::isVisible() const
 {
 	// No required research = always visible
 	if (!this->required_research)

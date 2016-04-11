@@ -10,7 +10,7 @@ namespace
 
 using namespace OpenApoc;
 
-static std::set<int> allowedSampleRates = {
+std::set<int> allowedSampleRates = {
     11025, 22050,
 };
 
@@ -20,7 +20,7 @@ class RawSampleLoader : public SampleLoader
 
   public:
 	RawSampleLoader(Data &data) : data(data) {}
-	virtual sp<Sample> loadSample(UString path) override
+	sp<Sample> loadSample(UString path) override
 	{
 		// Raw sound format strings come in the form:
 		// RAWSOUND:FILENAME:SAMPLERATE

@@ -1,7 +1,5 @@
 #include "game/state/rules/vehicle_type.h"
-#include "framework/framework.h"
 #include "game/state/gamestate.h"
-#include "game/state/tileview/voxel.h"
 #include "library/sp.h"
 #include "library/strings.h"
 
@@ -12,41 +10,32 @@ namespace OpenApoc
 {
 
 const std::map<VehicleType::Type, UString> VehicleType::TypeMap = {
-    {VehicleType::Type::Flying, "flying"},
-    {VehicleType::Type::Ground, "ground"},
-    {VehicleType::Type::UFO, "ufo"},
+    {Type::Flying, "flying"}, {Type::Ground, "ground"}, {Type::UFO, "ufo"},
 };
 
 const std::map<VehicleType::Banking, UString> VehicleType::BankingMap = {
-    {VehicleType::Banking::Flat, "flat"},
-    {VehicleType::Banking::Left, "left"},
-    {VehicleType::Banking::Right, "right"},
-    {VehicleType::Banking::Ascending, "ascending"},
-    {VehicleType::Banking::Descending, "descending"},
+    {Banking::Flat, "flat"},
+    {Banking::Left, "left"},
+    {Banking::Right, "right"},
+    {Banking::Ascending, "ascending"},
+    {Banking::Descending, "descending"},
 };
 
 const std::map<VehicleType::ArmourDirection, UString> VehicleType::ArmourDirectionMap = {
 
-    {VehicleType::ArmourDirection::Top, "top"},
-    {VehicleType::ArmourDirection::Bottom, "bottom"},
-    {VehicleType::ArmourDirection::Front, "front"},
-    {VehicleType::ArmourDirection::Rear, "rear"},
-    {VehicleType::ArmourDirection::Left, "left"},
-    {VehicleType::ArmourDirection::Right, "right"},
+    {ArmourDirection::Top, "top"},     {ArmourDirection::Bottom, "bottom"},
+    {ArmourDirection::Front, "front"}, {ArmourDirection::Rear, "rear"},
+    {ArmourDirection::Left, "left"},   {ArmourDirection::Right, "right"},
 };
 
 const std::map<VehicleType::AlignmentX, UString> VehicleType::AlignmentXMap = {
 
-    {VehicleType::AlignmentX::Left, "left"},
-    {VehicleType::AlignmentX::Centre, "centre"},
-    {VehicleType::AlignmentX::Right, "right"},
+    {AlignmentX::Left, "left"}, {AlignmentX::Centre, "centre"}, {AlignmentX::Right, "right"},
 };
 
 const std::map<VehicleType::AlignmentY, UString> VehicleType::AlignmentYMap = {
 
-    {VehicleType::AlignmentY::Top, "top"},
-    {VehicleType::AlignmentY::Centre, "centre"},
-    {VehicleType::AlignmentY::Bottom, "bottom"},
+    {AlignmentY::Top, "top"}, {AlignmentY::Centre, "centre"}, {AlignmentY::Bottom, "bottom"},
 };
 
 static const std::map<VehicleType::Direction, Vec3<float>> DirectionVectors = {
@@ -67,7 +56,7 @@ static const std::map<VehicleType::Direction, Vec3<float>> DirectionVectors = {
     {VehicleType::Direction::NW, glm::normalize(Vec3<float>{-1, -1, 0})},
     {VehicleType::Direction::NNW, glm::normalize(Vec3<float>{-1, -2, 0})}};
 
-const Vec3<float> &VehicleType::directionToVector(VehicleType::Direction d)
+const Vec3<float> &VehicleType::directionToVector(Direction d)
 {
 	static Vec3<float> fallback = {1, 0, 0};
 	auto it = DirectionVectors.find(d);
@@ -94,8 +83,8 @@ static std::map<VehicleType::Banking, Vec3<float>> banking_vectors = {
 
 VehicleType::VehicleType()
     : numCreated(0), type(Type::Flying), size(0, 0, 0), image_offset(0, 0), acceleration(0),
-      top_speed(0), health(0), weight(0), passengers(0), aggressiveness(0), score(0),
-      shadow_offset(0)
+      top_speed(0), health(0), crash_health(0), weight(0), passengers(0), aggressiveness(0),
+      score(0), shadow_offset(0)
 {
 }
 

@@ -1,6 +1,5 @@
 #include "game/state/city/scenery.h"
 #include "framework/logger.h"
-#include "game/state/city/building.h"
 #include "game/state/city/city.h"
 #include "game/state/city/doodad.h"
 #include "game/state/gamestate.h"

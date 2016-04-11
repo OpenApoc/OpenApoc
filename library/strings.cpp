@@ -214,7 +214,7 @@ float Strings::ToFloat(const UString &s)
 	return static_cast<float>(strtod(u8str.c_str(), NULL));
 }
 
-uint8_t Strings::ToU8(const UString &s) { return static_cast<uint8_t>(Strings::ToInteger(s)); }
+uint8_t Strings::ToU8(const UString &s) { return static_cast<uint8_t>(ToInteger(s)); }
 
 bool Strings::IsInteger(const UString &s)
 {

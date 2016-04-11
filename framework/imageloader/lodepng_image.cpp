@@ -97,14 +97,13 @@ namespace
 
 class LodepngImageLoader : public OpenApoc::ImageLoader
 {
-  private:
   public:
 	LodepngImageLoader()
 	{
 		// empty?
 	}
 
-	virtual sp<Image> loadImage(IFile &file) override
+	sp<Image> loadImage(IFile &file) override
 	{
 		auto data = file.readAll();
 		auto dataSize = file.size();
@@ -196,19 +195,18 @@ class LodepngImageLoader : public OpenApoc::ImageLoader
 		return img;
 	}
 
-	virtual UString getName() override { return "lodepng"; }
+	UString getName() override { return "lodepng"; }
 };
 
 class LodepngImageLoaderFactory : public OpenApoc::ImageLoaderFactory
 {
   public:
-	virtual OpenApoc::ImageLoader *create() override { return new LodepngImageLoader(); }
+	OpenApoc::ImageLoader *create() override { return new LodepngImageLoader(); }
 	virtual ~LodepngImageLoaderFactory() {}
 };
 
 class LodepngImageWriter : public OpenApoc::ImageWriter
 {
-  private:
   public:
 	LodepngImageWriter() {}
 
@@ -287,7 +285,7 @@ class LodepngImageWriter : public OpenApoc::ImageWriter
 class LodepngImageWriterFactory : public OpenApoc::ImageWriterFactory
 {
   public:
-	virtual OpenApoc::ImageWriter *create() override { return new LodepngImageWriter(); }
+	OpenApoc::ImageWriter *create() override { return new LodepngImageWriter(); }
 	virtual ~LodepngImageWriterFactory() {}
 };
 

@@ -34,7 +34,7 @@ class ResearchTopic : public StateObject<ResearchTopic>
 
 	unsigned score;
 
-	const bool isComplete() const;
+	bool isComplete() const;
 };
 
 } // namespace OpenApoc

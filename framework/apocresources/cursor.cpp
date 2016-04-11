@@ -34,7 +34,7 @@ ApocCursor::ApocCursor(sp<Palette> pal) : cursorPos{0, 0}
 		images.push_back(palImg->toRGBImage(pal));
 	}
 
-	CurrentType = ApocCursor::Normal;
+	CurrentType = CursorType::Normal;
 }
 
 ApocCursor::~ApocCursor() {}

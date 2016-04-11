@@ -1,11 +1,9 @@
 #include "game/ui/tileview/tileview.h"
-#include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/includes.h"
 #include "game/state/tileview/tile.h"
 #include "game/state/tileview/tileobject.h"
-#include "library/sp.h"
 
 namespace OpenApoc
 {

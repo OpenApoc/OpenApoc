@@ -177,13 +177,13 @@ void FormPreview::Render()
 		if (glowindex < 256)
 		{
 			fw().renderer->drawRect(border, currentSelectedControl->Size,
-			                        OpenApoc::Colour(glowindex, glowindex, glowindex), 3.0f);
+			                        Colour(glowindex, glowindex, glowindex), 3.0f);
 		}
 		else
 		{
 			int revglow = 255 - (glowindex - 256);
 			fw().renderer->drawRect(border, currentSelectedControl->Size,
-			                        OpenApoc::Colour(revglow, revglow, revglow), 3.0f);
+			                        Colour(revglow, revglow, revglow), 3.0f);
 		}
 	}
 }

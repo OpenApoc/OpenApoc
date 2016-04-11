@@ -9,7 +9,7 @@ namespace OpenApoc
 void InitialGameStateExtractor::extractBaseLayouts(GameState &state, Difficulty difficulty)
 {
 	auto &data = this->ufo2p;
-	for (int i = 0; i < data.baselayouts->count(); i++)
+	for (unsigned i = 0; i < data.baselayouts->count(); i++)
 	{
 		UString id = UString::format("%s%d", BaseLayout::getPrefix().c_str(), i);
 		auto layout = mksp<BaseLayout>();

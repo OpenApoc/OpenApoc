@@ -4,7 +4,6 @@
 #include "game/state/organisation.h"
 #include "game/state/rules/vehicle_type.h"
 #include "game/state/tileview/tile.h"
-#include <deque>
 #include <list>
 
 namespace OpenApoc

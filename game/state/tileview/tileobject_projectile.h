@@ -12,7 +12,7 @@ class TileObjectProjectile : public TileObject
 	void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
 	          TileViewMode mode) override;
 	virtual ~TileObjectProjectile();
-	const Vec3<float> getPosition() const override;
+	Vec3<float> getPosition() const override;
 
   private:
 	friend class TileMap;

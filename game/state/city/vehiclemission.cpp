@@ -148,9 +148,9 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 {
 	switch (this->type)
 	{
-		case TakeOff:      // Fall-through
-		case GotoLocation: // Fall-through
-		case Land:
+		case MissionType::TakeOff:      // Fall-through
+		case MissionType::GotoLocation: // Fall-through
+		case MissionType::Land:
 		{
 			if (currentPlannedPath.empty())
 				return false;
@@ -161,7 +161,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 			       + Vec3<float>{0.5, 0.5, 0.5};
 			return true;
 		}
-		case GotoBuilding:
+		case MissionType::GotoBuilding:
 		{
 			if (v.currentlyLandedBuilding != this->targetBuilding)
 			{
@@ -173,7 +173,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 			dest = {0, 0, 9};
 			return false;
 		}
-		case Snooze:
+		case MissionType::Snooze:
 		{
 			dest = {0, 0, 9};
 			return false;
@@ -188,7 +188,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks)
 {
 	switch (this->type)
 	{
-		case TakeOff:
+		case MissionType::TakeOff:
 		{
 			if (v.tileObject)
 			{
@@ -245,13 +245,13 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks)
 			LogInfo("No pad in building \"%s\" free - waiting", b.id.c_str());
 			return;
 		}
-		case Land:
+		case MissionType::Land:
 			return;
-		case GotoBuilding:
+		case MissionType::GotoBuilding:
 			return;
-		case GotoLocation:
+		case MissionType::GotoLocation:
 			return;
-		case Snooze:
+		case MissionType::Snooze:
 		{
 			if (ticks >= this->timeToSnooze)
 				this->timeToSnooze = 0;
@@ -269,9 +269,9 @@ bool VehicleMission::isFinished(GameState &state, Vehicle &v)
 {
 	switch (this->type)
 	{
-		case TakeOff:
+		case MissionType::TakeOff:
 			return v.tileObject && this->currentPlannedPath.empty();
-		case Land:
+		case MissionType::Land:
 		{
 			auto b = this->targetBuilding;
 			if (!b)
@@ -289,11 +289,11 @@ bool VehicleMission::isFinished(GameState &state, Vehicle &v)
 			}
 			return false;
 		}
-		case GotoLocation:
+		case MissionType::GotoLocation:
 			return this->currentPlannedPath.empty();
-		case GotoBuilding:
+		case MissionType::GotoBuilding:
 			return this->targetBuilding == v.currentlyLandedBuilding;
-		case Snooze:
+		case MissionType::Snooze:
 			return this->timeToSnooze == 0;
 		default:
 			LogWarning("TODO: Implement");
@@ -305,11 +305,11 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 {
 	switch (this->type)
 	{
-		case TakeOff: // Fall-through
-		case Snooze:
+		case MissionType::TakeOff: // Fall-through
+		case MissionType::Snooze:
 			// No setup
 			return;
-		case Land:
+		case MissionType::Land:
 		{
 			auto b = this->targetBuilding;
 			if (!b)
@@ -352,7 +352,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			this->currentPlannedPath = {padPosition};
 			return;
 		}
-		case GotoLocation:
+		case MissionType::GotoLocation:
 		{
 
 			auto vehicleTile = v.tileObject;
@@ -378,7 +378,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			return;
 		}
-		case GotoBuilding:
+		case MissionType::GotoBuilding:
 		{
 			auto name = this->getName();
 			LogInfo("Vehicle mission %s checking state", name.c_str());
@@ -508,21 +508,21 @@ UString VehicleMission::getName()
 		name = it->second;
 	switch (this->type)
 	{
-		case GotoLocation:
+		case MissionType::GotoLocation:
 			name += UString::format(" {%d,%d,%d}", this->targetLocation.x, this->targetLocation.y,
 			                        this->targetLocation.z);
 			break;
-		case GotoBuilding:
+		case MissionType::GotoBuilding:
 			break;
-		case FollowVehicle:
+		case MissionType::FollowVehicle:
 			break;
-		case AttackBuilding:
+		case MissionType::AttackBuilding:
 			break;
-		case Snooze:
+		case MissionType::Snooze:
 			break;
-		case TakeOff:
+		case MissionType::TakeOff:
 			break;
-		case Land:
+		case MissionType::Land:
 			name += " in " + this->targetBuilding.id;
 			break;
 	}
@@ -530,14 +530,14 @@ UString VehicleMission::getName()
 }
 
 const std::map<VehicleMission::MissionType, UString> VehicleMission::TypeMap = {
-    {VehicleMission::MissionType::GotoLocation, "GotoLocation"},
-    {VehicleMission::MissionType::GotoBuilding, "GotoBuilding"},
-    {VehicleMission::MissionType::FollowVehicle, "FollowVehicle"},
-    {VehicleMission::MissionType::AttackVehicle, "AttackVehicle"},
-    {VehicleMission::MissionType::AttackBuilding, "AttackBuilding"},
-    {VehicleMission::MissionType::Snooze, "Snooze"},
-    {VehicleMission::MissionType::TakeOff, "TakeOff"},
-    {VehicleMission::MissionType::Land, "Land"},
+    {MissionType::GotoLocation, "GotoLocation"},
+    {MissionType::GotoBuilding, "GotoBuilding"},
+    {MissionType::FollowVehicle, "FollowVehicle"},
+    {MissionType::AttackVehicle, "AttackVehicle"},
+    {MissionType::AttackBuilding, "AttackBuilding"},
+    {MissionType::Snooze, "Snooze"},
+    {MissionType::TakeOff, "TakeOff"},
+    {MissionType::Land, "Land"},
 };
 
 } // namespace OpenApoc

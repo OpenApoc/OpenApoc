@@ -13,17 +13,17 @@ up<UI> UI::instance = nullptr;
 
 UI &UI::getInstance()
 {
-	if (!UI::instance)
+	if (!instance)
 	{
-		UI::instance.reset(new UI);
-		UI::instance->Load(fw().Settings->getString("GameRules"));
+		instance.reset(new UI);
+		instance->Load(fw().Settings->getString("GameRules"));
 	}
-	return *UI::instance;
+	return *instance;
 }
 
 UI &ui() { return UI::getInstance(); };
 
-void UI::unload() { UI::instance.reset(nullptr); }
+void UI::unload() { instance.reset(nullptr); }
 
 UI::UI() : fonts(), forms() {}
 

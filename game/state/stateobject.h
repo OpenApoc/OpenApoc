@@ -120,34 +120,34 @@ template <typename T> class StateRef
 		resolve();
 		return !!obj;
 	}
-	const bool operator==(const StateRef<T> other) const
+	bool operator==(const StateRef<T> other) const
 	{
 		resolve();
 		other.resolve();
 		return obj == other.obj;
 	}
-	const bool operator!=(const StateRef<T> other) const
+	bool operator!=(const StateRef<T> other) const
 	{
 		resolve();
 		other.resolve();
 		return obj != other.obj;
 	}
-	const bool operator==(const sp<T> other) const
+	bool operator==(const sp<T> other) const
 	{
 		resolve();
 		return obj == other;
 	}
-	const bool operator!=(const sp<T> other) const
+	bool operator!=(const sp<T> other) const
 	{
 		resolve();
 		return obj != other;
 	}
-	const bool operator==(const T *other) const
+	bool operator==(const T *other) const
 	{
 		resolve();
 		return obj.get() == other;
 	}
-	const bool operator!=(const T *other) const
+	bool operator!=(const T *other) const
 	{
 		resolve();
 		return obj.get() != other;

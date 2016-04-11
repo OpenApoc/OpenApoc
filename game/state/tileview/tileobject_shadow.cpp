@@ -83,11 +83,11 @@ void TileObjectShadow::setPosition(Vec3<float> newPosition)
 TileObjectShadow::~TileObjectShadow() {}
 
 TileObjectShadow::TileObjectShadow(TileMap &map, sp<Vehicle> vehicle)
-    : TileObject(map, TileObject::Type::Vehicle, Vec3<float>{0, 0, 0}), owner(vehicle),
+    : TileObject(map, Type::Vehicle, Vec3<float>{0, 0, 0}), owner(vehicle),
       fellOffTheBottomOfTheMap(false)
 {
 }
 
-const Vec3<float> TileObjectShadow::getPosition() const { return this->shadowPosition; }
+Vec3<float> TileObjectShadow::getPosition() const { return this->shadowPosition; }
 
 } // namespace OpenApoc

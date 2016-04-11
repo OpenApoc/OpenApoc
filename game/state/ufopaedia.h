@@ -34,7 +34,7 @@ class UfopaediaEntry : public StateObject<UfopaediaEntry>
 	UString data_id;
 	Data data_type;
 	StateRef<ResearchTopic> required_research;
-	const bool isVisible() const;
+	bool isVisible() const;
 };
 
 class UfopaediaCategory

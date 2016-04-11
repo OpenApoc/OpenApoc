@@ -24,7 +24,7 @@ class FlyingVehicleMover : public VehicleMover
 	    : VehicleMover(v), goalPosition(initialGoal)
 	{
 	}
-	virtual void update(GameState &state, unsigned int ticks) override
+	void update(GameState &state, unsigned int ticks) override
 	{
 		float speed = vehicle.getSpeed();
 		if (!vehicle.missions.empty())

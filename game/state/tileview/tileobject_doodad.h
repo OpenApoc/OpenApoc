@@ -17,7 +17,7 @@ class TileObjectDoodad : public TileObject
 
 	sp<VoxelMap> getVoxelMap() override { return nullptr; }
 
-	const Vec3<float> getPosition() const override;
+	Vec3<float> getPosition() const override;
 
   private:
 	friend class TileMap;

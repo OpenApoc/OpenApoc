@@ -18,8 +18,8 @@ class ListBox : public Control
 	void ConfigureInternalScrollBar();
 
   protected:
-	virtual void OnRender() override;
-	virtual void PostRender() override;
+	void OnRender() override;
+	void PostRender() override;
 
   public:
 	sp<ScrollBar> scroller;
@@ -32,9 +32,9 @@ class ListBox : public Control
 	ListBox(sp<ScrollBar> ExternalScrollBar);
 	virtual ~ListBox();
 
-	virtual void EventOccured(Event *e) override;
-	virtual void Update() override;
-	virtual void UnloadResources() override;
+	void EventOccured(Event *e) override;
+	void Update() override;
+	void UnloadResources() override;
 
 	void setSelected(sp<Control> c);
 
@@ -44,8 +44,8 @@ class ListBox : public Control
 	sp<Control> RemoveItem(int Index);
 	sp<Control> operator[](int Index);
 
-	virtual sp<Control> CopyTo(sp<Control> CopyParent) override;
-	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
+	sp<Control> CopyTo(sp<Control> CopyParent) override;
+	void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 
 	template <typename T> sp<T> GetHoveredData() const
 	{

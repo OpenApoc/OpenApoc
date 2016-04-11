@@ -1,28 +1,25 @@
 #include "game/state/rules/vequipment.h"
-#include "framework/framework.h"
 #include "game/state/gamestate.h"
 
 namespace OpenApoc
 {
 
 const std::map<VEquipmentType::Type, UString> VEquipmentType::TypeMap = {
-    {VEquipmentType::Type::Engine, "engine"},
-    {VEquipmentType::Type::Weapon, "weapon"},
-    {VEquipmentType::Type::General, "general"},
+    {Type::Engine, "engine"}, {Type::Weapon, "weapon"}, {Type::General, "general"},
 };
 
 const std::map<VEquipmentType::User, UString> VEquipmentType::UserMap = {
-    {VEquipmentType::User::Ground, "ground"}, {VEquipmentType::User::Air, "air"},
+    {User::Ground, "ground"}, {User::Air, "air"},
 };
 
 // A bit painful but as not everything is expected to be set we have to zero all the non-constructed
 // types
 VEquipmentType::VEquipmentType()
-    : weight(0), max_ammo(0), store_space(0), speed(0), projectile_image(0), damage(0), accuracy(0),
-      fire_delay(0), tail_size(0), guided(false), turn_rate(0), range(0), firing_arc_1(0),
-      firing_arc_2(0), point_defence(false), explosion_graphic(0), power(0), top_speed(0),
-      accuracy_modifier(0), cargo_space(0), passengers(0), alien_space(0), missile_jamming(0),
-      shielding(0), cloaking(false), teleporting(false){};
+    : type(Type::General), weight(0), max_ammo(0), store_space(0), speed(0), projectile_image(0),
+      damage(0), accuracy(0), fire_delay(0), tail_size(0), guided(false), turn_rate(0), range(0),
+      firing_arc_1(0), firing_arc_2(0), point_defence(false), explosion_graphic(0), power(0),
+      top_speed(0), accuracy_modifier(0), cargo_space(0), passengers(0), alien_space(0),
+      missile_jamming(0), shielding(0), cloaking(false), teleporting(false){};
 
 template <> const UString &StateObject<VEquipmentType>::getPrefix()
 {

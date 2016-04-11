@@ -31,7 +31,7 @@ struct PcxHeader
 	uint8_t Reserved2[54];   /* Reserved (Always 0) */
 };
 
-static const uint8_t PcxIdentifier = 0x0A;
+const uint8_t PcxIdentifier = 0x0A;
 
 static_assert(sizeof(struct PcxHeader) == 128, "PcxHeader unexpected size");
 
@@ -41,7 +41,7 @@ class PCXImageLoader : public OpenApoc::ImageLoader
 	PCXImageLoader() {}
 	virtual ~PCXImageLoader() {}
 
-	virtual sp<OpenApoc::Image> loadImage(IFile &file) override
+	sp<OpenApoc::Image> loadImage(IFile &file) override
 	{
 		auto size = file.size();
 		auto path = file.systemPath();
@@ -157,13 +157,13 @@ class PCXImageLoader : public OpenApoc::ImageLoader
 		return img;
 	}
 
-	virtual UString getName() override { return "PCX"; }
+	UString getName() override { return "PCX"; }
 };
 
 class PCXImageLoaderFactory : public OpenApoc::ImageLoaderFactory
 {
   public:
-	virtual OpenApoc::ImageLoader *create() override { return new PCXImageLoader(); }
+	OpenApoc::ImageLoader *create() override { return new PCXImageLoader(); }
 	virtual ~PCXImageLoaderFactory() {}
 };
 

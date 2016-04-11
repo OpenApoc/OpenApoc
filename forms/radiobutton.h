@@ -28,7 +28,7 @@ class RadioButton : public CheckBox
 	virtual ~RadioButton();
 	void SetChecked(bool checked) override;
 
-	virtual sp<Control> CopyTo(sp<Control> CopyParent) override;
+	sp<Control> CopyTo(sp<Control> CopyParent) override;
 };
 
 }; // namespace OpenApoc

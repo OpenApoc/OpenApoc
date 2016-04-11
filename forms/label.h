@@ -17,7 +17,7 @@ class Label : public Control
 	sp<BitmapFont> font;
 
   protected:
-	virtual void OnRender() override;
+	void OnRender() override;
 
   public:
 	HorizontalAlignment TextHAlign;
@@ -27,9 +27,9 @@ class Label : public Control
 	Label(const UString &Text = "", sp<BitmapFont> font = nullptr);
 	virtual ~Label();
 
-	virtual void EventOccured(Event *e) override;
-	virtual void Update() override;
-	virtual void UnloadResources() override;
+	void EventOccured(Event *e) override;
+	void Update() override;
+	void UnloadResources() override;
 
 	UString GetText() const;
 	void SetText(const UString &Text);
@@ -37,8 +37,8 @@ class Label : public Control
 	sp<BitmapFont> GetFont() const;
 	void SetFont(sp<BitmapFont> NewFont);
 
-	virtual sp<Control> CopyTo(sp<Control> CopyParent) override;
-	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
+	sp<Control> CopyTo(sp<Control> CopyParent) override;
+	void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 };
 
 }; // namespace OpenApoc

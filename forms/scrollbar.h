@@ -25,16 +25,16 @@ class ScrollBar : public Control
 	void LoadResources();
 
   protected:
-	virtual void OnRender() override;
+	void OnRender() override;
 
   public:
-	enum class ScrollBarRenderStyles
+	enum class ScrollBarRenderStyle
 	{
-		SolidButtonStyle,
-		MenuButtonStyle
+		Flat,
+		Menu
 	};
 
-	ScrollBarRenderStyles RenderStyle;
+	ScrollBarRenderStyle RenderStyle;
 	Colour GripperColour;
 	int Minimum;
 	int Maximum;
@@ -43,16 +43,16 @@ class ScrollBar : public Control
 	ScrollBar();
 	virtual ~ScrollBar();
 
-	virtual void EventOccured(Event *e) override;
-	virtual void Update() override;
-	virtual void UnloadResources() override;
+	void EventOccured(Event *e) override;
+	void Update() override;
+	void UnloadResources() override;
 	virtual int GetValue() const { return Value; }
 	virtual bool SetValue(int newValue);
 	virtual void ScrollPrev();
 	virtual void ScrollNext();
 
-	virtual sp<Control> CopyTo(sp<Control> CopyParent) override;
-	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
+	sp<Control> CopyTo(sp<Control> CopyParent) override;
+	void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 };
 
 }; // namespace OpenApoc

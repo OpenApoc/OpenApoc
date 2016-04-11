@@ -1,5 +1,4 @@
 #include "game/state/base/base.h"
-#include "framework/framework.h"
 #include "game/state/base/facility.h"
 #include "game/state/city/building.h"
 #include "game/state/organisation.h"

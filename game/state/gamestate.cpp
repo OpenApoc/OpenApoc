@@ -1,6 +1,4 @@
 #include "game/state/gamestate.h"
-#include "framework/framework.h"
-#include "framework/includes.h"
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
 #include "game/state/city/building.h"
@@ -8,9 +6,7 @@
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
-#include "game/state/city/vequipment.h"
 #include "game/state/organisation.h"
-#include "game/state/rules/vequipment.h"
 #include "game/state/tileview/tileobject_vehicle.h"
 #include <random>
 

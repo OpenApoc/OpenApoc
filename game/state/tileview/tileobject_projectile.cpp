@@ -38,11 +38,11 @@ void TileObjectProjectile::draw(Renderer &r, TileTransform &transform, Vec2<floa
 TileObjectProjectile::~TileObjectProjectile() {}
 
 TileObjectProjectile::TileObjectProjectile(TileMap &map, sp<Projectile> projectile)
-    : TileObject(map, TileObject::Type::Projectile, Vec3<float>{0, 0, 0}), projectile(projectile)
+    : TileObject(map, Type::Projectile, Vec3<float>{0, 0, 0}), projectile(projectile)
 {
 }
 
-const Vec3<float> TileObjectProjectile::getPosition() const
+Vec3<float> TileObjectProjectile::getPosition() const
 {
 	auto p = this->projectile.lock();
 	if (!p)

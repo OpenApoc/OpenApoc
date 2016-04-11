@@ -1,7 +1,5 @@
 #include "framework/apocresources/apocfont.h"
 #include "framework/framework.h"
-#include "framework/image.h"
-#include "framework/palette.h"
 #include "library/sp.h"
 // Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
 // symbols as part of the module that uses it

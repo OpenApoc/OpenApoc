@@ -86,7 +86,7 @@ void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 TileObjectVehicle::~TileObjectVehicle() {}
 
 TileObjectVehicle::TileObjectVehicle(TileMap &map, sp<Vehicle> vehicle)
-    : TileObject(map, TileObject::Type::Vehicle, Vec3<float>{0, 0, 0}), vehicle(vehicle)
+    : TileObject(map, Type::Vehicle, Vec3<float>{0, 0, 0}), vehicle(vehicle)
 {
 }
 
@@ -94,7 +94,7 @@ sp<VoxelMap> TileObjectVehicle::getVoxelMap() { return this->getVehicle()->type-
 
 sp<Vehicle> TileObjectVehicle::getVehicle() { return this->vehicle.lock(); }
 
-const Vec3<float> TileObjectVehicle::getPosition() const
+Vec3<float> TileObjectVehicle::getPosition() const
 {
 	auto v = this->vehicle.lock();
 	if (!v)

@@ -22,7 +22,7 @@ class GraphicButton : public Control
 	sp<Sample> buttonclick;
 
   protected:
-	virtual void OnRender() override;
+	void OnRender() override;
 
   public:
 	sp<ScrollBar> ScrollBarPrev, ScrollBarNext;
@@ -31,9 +31,9 @@ class GraphicButton : public Control
 	              sp<Image> imageHover = nullptr);
 	virtual ~GraphicButton();
 
-	virtual void EventOccured(Event *e) override;
-	virtual void Update() override;
-	virtual void UnloadResources() override;
+	void EventOccured(Event *e) override;
+	void Update() override;
+	void UnloadResources() override;
 
 	sp<Image> GetImage() const;
 	void SetImage(sp<Image> Image);
@@ -42,8 +42,8 @@ class GraphicButton : public Control
 	sp<Image> GetHoverImage() const;
 	void SetHoverImage(sp<Image> Image);
 
-	virtual sp<Control> CopyTo(sp<Control> CopyParent) override;
-	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
+	sp<Control> CopyTo(sp<Control> CopyParent) override;
+	void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
 };
 
 }; // namespace OpenApoc

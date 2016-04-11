@@ -17,7 +17,6 @@
 #include <boost/filesystem.hpp>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/uuid/sha1.hpp>
-#include <iostream>
 #include <map>
 
 namespace OpenApoc

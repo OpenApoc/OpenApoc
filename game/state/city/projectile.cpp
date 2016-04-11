@@ -1,16 +1,14 @@
 #include "game/state/city/projectile.h"
-#include "framework/logger.h"
 #include "game/state/city/city.h"
 #include "game/state/gamestate.h"
 #include "game/state/tileview/tileobject_projectile.h"
 #include "game/state/tileview/voxel.h"
-#include "library/sp.h"
 
 namespace OpenApoc
 {
 
 const std::map<Projectile::Type, UString> Projectile::TypeMap = {
-    {Projectile::Type::Beam, "beam"}, {Projectile::Type::Missile, "missile"},
+    {Type::Beam, "beam"}, {Type::Missile, "missile"},
 };
 
 Projectile::Projectile(StateRef<Vehicle> firer, Vec3<float> position, Vec3<float> velocity,

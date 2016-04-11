@@ -1,7 +1,6 @@
 #pragma once
 
 #include "game/state/city/building.h"
-#include "library/sp.h"
 #include "library/strings.h"
 #include "library/vec.h"
 #include <list>
@@ -39,7 +38,7 @@ class VehicleMission
 
 	UString getName();
 
-	enum MissionType
+	enum class MissionType
 	{
 		GotoLocation,
 		GotoBuilding,

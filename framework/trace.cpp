@@ -166,7 +166,7 @@ void Trace::enable()
 #if defined(BROKEN_THREAD_LOCAL)
 	pthread_key_create(&eventListKey, NULL);
 #endif
-	Trace::enabled = true;
+	enabled = true;
 	traceStartTime = std::chrono::high_resolution_clock::now();
 }
 
@@ -178,7 +178,7 @@ void Trace::disable()
 #if defined(BROKEN_THREAD_LOCAL)
 	pthread_key_delete(eventListKey);
 #endif
-	Trace::enabled = false;
+	enabled = false;
 }
 
 void Trace::setThreadName(const UString &name)
@@ -186,7 +186,7 @@ void Trace::setThreadName(const UString &name)
 #if defined(PTHREADS_AVAILABLE)
 	pthread_setname_np(pthread_self(), name.c_str());
 #endif
-	if (!Trace::enabled)
+	if (!enabled)
 		return;
 
 #if defined(BROKEN_THREAD_LOCAL)
@@ -206,7 +206,7 @@ void Trace::setThreadName(const UString &name)
 
 void Trace::start(const UString &name, const std::vector<std::pair<UString, UString>> &args)
 {
-	if (!Trace::enabled)
+	if (!enabled)
 		return;
 #if defined(BROKEN_THREAD_LOCAL)
 	EventList *events = (EventList *)pthread_getspecific(eventListKey);
@@ -226,7 +226,7 @@ void Trace::start(const UString &name, const std::vector<std::pair<UString, UStr
 }
 void Trace::end(const UString &name)
 {
-	if (!Trace::enabled)
+	if (!enabled)
 		return;
 #if defined(BROKEN_THREAD_LOCAL)
 	EventList *events = (EventList *)pthread_getspecific(eventListKey);

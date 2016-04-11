@@ -5,7 +5,6 @@
 #include <cassert>
 #include <cstdlib>
 #include <fstream>
-#include <iostream>
 #include <vector>
 
 namespace OpenApoc
@@ -36,6 +35,6 @@ template <typename T> class DataChunk
 		return readData[offset];
 	}
 
-	int count() { return readData.size(); }
+	unsigned count() { return readData.size(); }
 };
 } // namespace OpenApoc

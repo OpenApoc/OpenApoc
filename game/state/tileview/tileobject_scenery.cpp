@@ -48,7 +48,7 @@ void TileObjectScenery::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 TileObjectScenery::~TileObjectScenery() {}
 
 TileObjectScenery::TileObjectScenery(TileMap &map, sp<Scenery> scenery)
-    : TileObject(map, TileObject::Type::Scenery, Vec3<float>{1, 1, 1}), scenery(scenery)
+    : TileObject(map, Type::Scenery, Vec3<float>{1, 1, 1}), scenery(scenery)
 {
 }
 
@@ -64,7 +64,7 @@ sp<Scenery> TileObjectScenery::getOwner()
 
 sp<VoxelMap> TileObjectScenery::getVoxelMap() { return this->getOwner()->type->voxelMap; }
 
-const Vec3<float> TileObjectScenery::getPosition() const
+Vec3<float> TileObjectScenery::getPosition() const
 {
 	auto s = this->scenery.lock();
 	if (!s)

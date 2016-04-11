@@ -19,7 +19,7 @@ class ApocCursor
 	Vec2<int> cursorPos;
 
   public:
-	enum CursorType
+	enum class CursorType
 	{
 		Normal,
 		ThrowTarget,

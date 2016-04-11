@@ -109,7 +109,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty dif
 	auto &data = this->ufo2p;
 	LogInfo("Number of vehicle strings: %zu", data.vehicle_names->readStrings.size());
 
-	for (int i = 0; i < data.vehicle_data->count(); i++)
+	for (unsigned i = 0; i < data.vehicle_data->count(); i++)
 	{
 		auto v = data.vehicle_data->get(i);
 

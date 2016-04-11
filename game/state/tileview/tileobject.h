@@ -30,7 +30,7 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	virtual void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
 	                  TileViewMode mode) = 0;
 	const Type &getType() const { return this->type; }
-	virtual const Vec3<float> getPosition() const = 0;
+	virtual Vec3<float> getPosition() const = 0;
 
 	virtual void setPosition(Vec3<float> newPosition);
 	virtual void removeFromMap();

@@ -226,7 +226,7 @@ class SDLRawBackend : public SoundBackend
 		mixVolumes.overallVolume = 1.0f;
 		SDL_PauseAudioDevice(devID, 0); // Run at once?
 	}
-	virtual void playSample(sp<Sample> sample, float gain) override
+	void playSample(sp<Sample> sample, float gain) override
 	{
 		// Clamp to 0..1
 		gain = std::min(1.0f, std::max(0.0f, gain));
@@ -242,8 +242,7 @@ class SDLRawBackend : public SoundBackend
 		SDL_UnlockAudioDevice(devID);
 	}
 
-	virtual void playMusic(std::function<void(void *)> finishedCallback,
-	                       void *callbackData) override
+	void playMusic(std::function<void(void *)> finishedCallback, void *callbackData) override
 	{
 		musicFinishedCallback = finishedCallback;
 		musicCallbackData = callbackData;
@@ -251,7 +250,7 @@ class SDLRawBackend : public SoundBackend
 		LogInfo("Playing music on SDL backend");
 	}
 
-	virtual void setTrack(sp<MusicTrack> track) override
+	void setTrack(sp<MusicTrack> track) override
 	{
 		SDL_LockAudioDevice(devID);
 		LogInfo("Setting track to %p", track.get());
@@ -259,7 +258,7 @@ class SDLRawBackend : public SoundBackend
 		SDL_UnlockAudioDevice(devID);
 	}
 
-	virtual void stopMusic() override { musicPaused = true; }
+	void stopMusic() override { musicPaused = true; }
 
 	virtual ~SDLRawBackend()
 	{
@@ -270,7 +269,7 @@ class SDLRawBackend : public SoundBackend
 
 	virtual const AudioFormat &getPreferredFormat() { return preferredFormat; }
 
-	virtual float getGain(Gain g) override
+	float getGain(Gain g) override
 	{
 		float reqGain = 0;
 		switch (g)
@@ -287,7 +286,7 @@ class SDLRawBackend : public SoundBackend
 		}
 		return reqGain;
 	}
-	virtual void setGain(Gain g, float f) override
+	void setGain(Gain g, float f) override
 	{
 		// Clamp to 0..1
 		f = std::min(1.0f, std::max(0.0f, f));
@@ -303,14 +302,13 @@ class SDLRawBackend : public SoundBackend
 				mixVolumes.musicVolume = f;
 				break;
 		}
-		return;
 	}
 };
 
 class SDLRawBackendFactory : public SoundBackendFactory
 {
   public:
-	virtual SoundBackend *create() override
+	SoundBackend *create() override
 	{
 		LogWarning("Creating SDLRaw sound backend (Might have issues!)");
 		int ret = SDL_InitSubSystem(SDL_INIT_AUDIO);

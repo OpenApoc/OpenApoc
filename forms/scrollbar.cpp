@@ -12,9 +12,8 @@ ScrollBar::ScrollBar()
       gripperbutton(fw().data->load_image(
           "PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:4:UI/menuopt.pal")),
       buttonerror(fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/EXTRA/TEXTBEEP.RAW:22050")),
-      Value(0), BarOrientation(Orientation::Vertical),
-      RenderStyle(ScrollBarRenderStyles::MenuButtonStyle), GripperColour(220, 192, 192), Minimum(0),
-      Maximum(10), LargeChange(2)
+      Value(0), BarOrientation(Orientation::Vertical), RenderStyle(ScrollBarRenderStyle::Menu),
+      GripperColour(220, 192, 192), Minimum(0), Maximum(10), LargeChange(2)
 {
 	// LoadResources();
 }
@@ -122,10 +121,10 @@ void ScrollBar::OnRender()
 
 	switch (RenderStyle)
 	{
-		case ScrollBarRenderStyles::SolidButtonStyle:
+		case ScrollBarRenderStyle::Flat:
 			fw().renderer->drawFilledRect(newpos, newsize, GripperColour);
 			break;
-		case ScrollBarRenderStyles::MenuButtonStyle:
+		case ScrollBarRenderStyle::Menu:
 			fw().renderer->draw(gripperbutton, newpos);
 			break;
 	}
@@ -155,7 +154,7 @@ void ScrollBar::Update()
 		grippersize = 16.0f;
 		segmentsize = (size - grippersize) / static_cast<float>(segments - 1);
 	}
-	if (RenderStyle == ScrollBarRenderStyles::MenuButtonStyle)
+	if (RenderStyle == ScrollBarRenderStyle::Menu)
 	{
 		grippersize = gripperbutton->size.x;
 		segmentsize = (size - grippersize) / static_cast<float>(segments - 1);

@@ -109,13 +109,13 @@ class TileView : public Stage, public TileTransform
 		return this->screenToTileCoords(screenPos, z, this->viewMode);
 	}
 	// Stage control
-	virtual void Begin() override;
-	virtual void Pause() override;
-	virtual void Resume() override;
-	virtual void Finish() override;
-	virtual void EventOccurred(Event *e) override;
-	virtual void Render() override;
-	virtual bool IsTransition() override;
+	void Begin() override;
+	void Pause() override;
+	void Resume() override;
+	void Finish() override;
+	void EventOccurred(Event *e) override;
+	void Render() override;
+	bool IsTransition() override;
 
 	virtual void setViewMode(TileViewMode newMode);
 	virtual TileViewMode getViewMode() const;

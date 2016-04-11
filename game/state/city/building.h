@@ -1,11 +1,8 @@
 #pragma once
 #include "game/state/city/baselayout.h"
-#include "game/state/city/building.h"
 #include "game/state/organisation.h"
-#include "library/sp.h"
 #include "library/vec.h"
 
-#include <memory>
 #include <set>
 #include <vector>
 

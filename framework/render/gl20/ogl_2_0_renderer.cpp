@@ -643,7 +643,7 @@ class OGL20Renderer : public Renderer
 	sp<Palette> currentPalette;
 
 	friend class RendererSurfaceBinding;
-	virtual void setSurface(sp<Surface> s) override
+	void setSurface(sp<Surface> s) override
 	{
 		if (this->currentSurface == s)
 		{
@@ -659,7 +659,7 @@ class OGL20Renderer : public Renderer
 		this->currentBoundFBO = fbo->fbo;
 		gl::Viewport(0, 0, s->size.x, s->size.y);
 	}
-	virtual sp<Surface> getSurface() override { return currentSurface; }
+	sp<Surface> getSurface() override { return currentSurface; }
 	sp<Surface> defaultSurface;
 
   public:
@@ -682,13 +682,13 @@ class OGL20Renderer : public Renderer
 		gl::BlendFunc(gl::SRC_ALPHA, gl::ONE_MINUS_SRC_ALPHA);
 	}
 	virtual ~OGL20Renderer(){};
-	virtual void clear(Colour c = Colour{0, 0, 0, 0}) override
+	void clear(Colour c = Colour{0, 0, 0, 0}) override
 	{
 		this->flush();
 		gl::ClearColor(c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, c.a / 255.0f);
 		gl::Clear(gl::COLOR_BUFFER_BIT);
 	}
-	virtual void setPalette(sp<Palette> p) override
+	void setPalette(sp<Palette> p) override
 	{
 		if (p == this->currentPalette)
 			return;
@@ -697,13 +697,13 @@ class OGL20Renderer : public Renderer
 			p->rendererPrivateData.reset(new GLPalette(p));
 		this->currentPalette = p;
 	}
-	virtual sp<Palette> getPalette() override { return this->currentPalette; }
-	virtual void draw(sp<Image> image, Vec2<float> position) override
+	sp<Palette> getPalette() override { return this->currentPalette; }
+	void draw(sp<Image> image, Vec2<float> position) override
 	{
 		drawScaled(image, position, image->size, Scaler::Nearest);
 	}
-	virtual void drawRotated(sp<Image> image, Vec2<float> center, Vec2<float> position,
-	                         float angle) override
+	void drawRotated(sp<Image> image, Vec2<float> center, Vec2<float> position,
+	                 float angle) override
 	{
 		auto size = image->size;
 		sp<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
@@ -722,8 +722,8 @@ class OGL20Renderer : public Renderer
 		sp<PaletteImage> paletteImage = std::dynamic_pointer_cast<PaletteImage>(image);
 		LogError("Unsupported image type");
 	}
-	virtual void drawScaled(sp<Image> image, Vec2<float> position, Vec2<float> size,
-	                        Scaler scaler = Scaler::Linear) override
+	void drawScaled(sp<Image> image, Vec2<float> position, Vec2<float> size,
+	                Scaler scaler = Scaler::Linear) override
 	{
 
 		sp<RGBImage> rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
@@ -774,19 +774,18 @@ class OGL20Renderer : public Renderer
 		LogError("Unsupported image type");
 	}
 
-	virtual void drawTinted(sp<Image> i, Vec2<float> position, Colour tint) override
+	void drawTinted(sp<Image> i, Vec2<float> position, Colour tint) override
 	{
 		LogError("Unimplemented function");
 		std::ignore = i;
 		std::ignore = position;
 		std::ignore = tint;
 	}
-	virtual void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c) override
+	void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c) override
 	{
 		this->DrawRect(position, size, c);
 	}
-	virtual void drawRect(Vec2<float> position, Vec2<float> size, Colour c,
-	                      float thickness = 1.0) override
+	void drawRect(Vec2<float> position, Vec2<float> size, Colour c, float thickness = 1.0) override
 	{
 
 		// The lines are all shifted in x/y by {capsize} to ensure the corners are correcly covered
@@ -855,13 +854,13 @@ class OGL20Renderer : public Renderer
 		this->drawFilledRect(C, sizeC, c);
 		this->drawFilledRect(D, sizeD, c);
 	}
-	virtual void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0) override
+	void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0) override
 	{
 		this->DrawLine(p1, p2, c, thickness);
 	}
-	virtual void flush() override { /* Nothing to flush */}
-	virtual UString getName() override { return "OGL2.0 Renderer"; }
-	virtual sp<Surface> getDefaultSurface() override { return this->defaultSurface; }
+	void flush() override { /* Nothing to flush */}
+	UString getName() override { return "OGL2.0 Renderer"; }
+	sp<Surface> getDefaultSurface() override { return this->defaultSurface; }
 
 	void BindProgram(sp<Program> p)
 	{
@@ -975,7 +974,7 @@ class OGL20RendererFactory : public OpenApoc::RendererFactory
 
   public:
 	OGL20RendererFactory() : alreadyInitialised(false), functionLoadSuccess(false) {}
-	virtual OpenApoc::Renderer *create() override
+	OpenApoc::Renderer *create() override
 	{
 		if (!alreadyInitialised)
 		{

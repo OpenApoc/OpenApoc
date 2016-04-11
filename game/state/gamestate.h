@@ -13,9 +13,7 @@
 #include "game/state/stateobject.h"
 #include "game/state/ufopaedia.h"
 #include "library/strings.h"
-#include <memory>
 #include <random>
-#include <vector>
 
 namespace OpenApoc
 {

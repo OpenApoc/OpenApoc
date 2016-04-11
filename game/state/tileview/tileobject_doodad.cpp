@@ -36,11 +36,11 @@ void TileObjectDoodad::draw(Renderer &r, TileTransform &transform, Vec2<float> s
 TileObjectDoodad::~TileObjectDoodad() {}
 
 TileObjectDoodad::TileObjectDoodad(TileMap &map, sp<Doodad> doodad)
-    : TileObject(map, TileObject::Type::Doodad, Vec3<float>{0, 0, 0}), doodad(doodad)
+    : TileObject(map, Type::Doodad, Vec3<float>{0, 0, 0}), doodad(doodad)
 {
 }
 
-const Vec3<float> TileObjectDoodad::getPosition() const
+Vec3<float> TileObjectDoodad::getPosition() const
 {
 	auto d = this->doodad.lock();
 	if (!d)

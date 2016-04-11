@@ -86,13 +86,13 @@ class JukeBoxImpl : public JukeBox
 	Framework &fw;
 	unsigned int position;
 	std::vector<sp<MusicTrack>> trackList;
-	JukeBox::PlayMode mode;
+	PlayMode mode;
 
   public:
-	JukeBoxImpl(Framework &fw) : fw(fw), mode(JukeBox::PlayMode::Loop) {}
+	JukeBoxImpl(Framework &fw) : fw(fw), mode(PlayMode::Loop) {}
 	virtual ~JukeBoxImpl() { this->stop(); }
 
-	virtual void play(std::vector<UString> tracks, JukeBox::PlayMode mode) override
+	void play(std::vector<UString> tracks, PlayMode mode) override
 	{
 		this->trackList.clear();
 		this->position = 0;
@@ -126,10 +126,10 @@ class JukeBoxImpl : public JukeBox
 		jukebox->fw.soundBackend->setTrack(jukebox->trackList[jukebox->position]);
 
 		jukebox->position++;
-		if (jukebox->mode == JukeBox::PlayMode::Loop)
+		if (jukebox->mode == PlayMode::Loop)
 			jukebox->position = jukebox->position % jukebox->trackList.size();
 	}
-	virtual void stop() override { fw.soundBackend->stopMusic(); }
+	void stop() override { fw.soundBackend->stopMusic(); }
 };
 
 class FrameworkPrivate
@@ -142,8 +142,8 @@ class FrameworkPrivate
 	SDL_Window *window;
 	SDL_GLContext context;
 
-	std::map<UString, std::unique_ptr<OpenApoc::RendererFactory>> registeredRenderers;
-	std::map<UString, std::unique_ptr<OpenApoc::SoundBackendFactory>> registeredSoundBackends;
+	std::map<UString, std::unique_ptr<RendererFactory>> registeredRenderers;
+	std::map<UString, std::unique_ptr<SoundBackendFactory>> registeredSoundBackends;
 
 	// FIXME: Wrap eventQueue in mutex if handing events with multiple threads
 	std::list<Event *> eventQueue;
@@ -315,16 +315,16 @@ Framework::~Framework()
 	LogInfo("SDL shutdown");
 	PHYSFS_deinit();
 	SDL_Quit();
-	Framework::instance = nullptr;
+	instance = nullptr;
 }
 
 Framework &Framework::getInstance()
 {
-	if (!Framework::instance)
+	if (!instance)
 	{
 		LogError("Framework::getInstance() called with no live Framework");
 	}
-	return *Framework::instance;
+	return *instance;
 }
 
 void Framework::Run(sp<Stage> initialStage)
