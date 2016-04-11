@@ -16,7 +16,7 @@ class UfopaediaEntry : public StateObject<UfopaediaEntry>
   public:
 	enum class Data
 	{
-		None,
+		Nothing,
 		Organisation,
 		Vehicle,
 		VehicleEquipment,
