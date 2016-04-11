@@ -16,7 +16,7 @@
                 <description>The Anthropod is capable of performing all the actions of an equivalent human soldier and can use weapons and equipment. It can feed voraciously, but strangely it does not seem to live very long in our environment, with a life span of only five days. There seems to be no further stage of development beyond this form.</description>
                 <background>xcom3/UFOPAEDI/01ANTHPD.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -34,7 +34,7 @@
                 <description>This creature was built for warfare, immensely strong and aggressive. Underneath the thick outer skin a significant digestive system is revealed. There is a well protected brain structure that seems to match human size in terms of its neuron count. The well formed brain is vulnerable to Psionic influence although it is not capable of Psionic attacks. This indicates an important weakness of this species. The tissues recovered from this specimen will contribute to our biological warfare research.</description>
                 <background>xcom3/UFOPAEDI/01AUTOPS.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -52,7 +52,7 @@
                 <description>The life span of a Brainsucker is very short, eight hours at most. It has no reproduction or feeding system. Instead it attacks human victims by grasping the head with its claws and inserting its proboscis into the victims throat. The Brainsucker dies immediately after a successful attack, but our tests reveal that the victim is subsequently transformed into an Alien controlled entity. We will not understand the mechanism which causes this until we have completed studies on the full Alien life cycle.</description>
                 <background>xcom3/UFOPAEDI/02BRSUCK.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -70,7 +70,7 @@
                 <description>This life form appears to have a simple structure with no distinguishable organs apart from an efficient heart and cardiovascular system. There appears to be no means of ingesting food or separate brain structure rendering it immune from Psionic influence. It seems that this creature has little purpose in life except that it is known to attack humans and seems to be designed to do only that. Its complex organic structure may be useful for developing toxins to counter any threat to our race.</description>
                 <background>xcom3/UFOPAEDI/02AUTOPS.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -88,7 +88,7 @@
                 <description>The pod has a hard and extremely tough skin, this peels back in the presence of human beings. A creature popularly referred to as a Brainsucker then emerges fully formed and active. Our conclusion is that these pods are a genetically engineered device designed to attack only human life forms.</description>
                 <background>xcom3/UFOPAEDI/W57.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -106,7 +106,7 @@
                 <description>A Chrysalis is the most vulnerable stage of Alien development because it possesses no attack mechanisms. Its skin is tough, but vulnerable to fire and incendiary ammunition. A new Alien will grow inside the Chrysalis and emerge after a period of three days. It seems that a variety of Alien forms could develop at this stage, dependent on the genetic information carried by the Hyperworm. The physiology of these new forms contains many new cell structures. We have now gained a significant understanding of Alien genetics.</description>
                 <background>xcom3/UFOPAEDI/03CHRYSL.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -124,7 +124,7 @@
                 <description>The Chrysalis appears to be an important stage in the Alien life cycle. The cell structures we have discovered seem to suggest that the emerging Aliens have a different physiology to those previously encountered. This could indicate that there will be further stages to our biological research. The Chrysalis contains no advanced brain structure and will not respond to Psionic attacks.</description>
                 <background>xcom3/UFOPAEDI/03AUTOPS.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -142,7 +142,7 @@
                 <description>Our studies show that the Hyperworms can consume large quantities of both organic and metallic matter. Its powerful jaws can also be used in close combat. It has a very high metabolic rate and can move at fast speeds with a snake-like action. It has a short life span and only lives for two to five days depending on how much food it can find. At the end of this feeding period it finds a safe place and suddenly inflates into a balloon like structure which is fixed firmly to its surrounding terrain. This structure appears to be some form of Chrysalis, inside which another life form begins to grow.</description>
                 <background>xcom3/UFOPAEDI/04HPWORM.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -160,7 +160,7 @@
                 <description>The Hyperworms' function appears to be little more than feeding. It has powerful jaws and razor sharp teeth designed for ripping and slicing. Its belly appears to be small and the body contains some curious structures containing folds of tough skin. It appears to be quite vulnerable to fire and incendiary ammunition. There is no recognizable brain structure in the Hyperworm and it is well protected from Psionic influence.</description>
                 <background>xcom3/UFOPAEDI/04AUTOPS.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -178,7 +178,7 @@
                 <description>It is difficult to disable the Megaspawn's weapon systems because they are an intrinsic part of its structure. One weapon uses energy beams while the other fires a powerful organic missile, which is generated by specialized organs. Our tests also conclude that the Megaspawn is protected from Psionic attacks.</description>
                 <background>xcom3/UFOPAEDI/06MGTRON.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -196,7 +196,7 @@
                 <description>The Megaspawn is essentially a huge organic weapons platform. It has two distinct weapons systems grown into its body. Although these must be added artificially, the nervous system is directly connected to them, suggesting that the creature is solely a genetically engineered combat unit.</description>
                 <background>xcom3/UFOPAEDI/06AUTOPS.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -214,7 +214,7 @@
                 <description>The capture of a Micronoid Aggregate is an essential step in the advancement of our knowledge. This formless mass of micro-organisms is found inside the bloodstream of other Alien forms. Each microscopic organism is an independent and intelligent life form. They communicate with each other using Psionic projection, but they are unresponsive to human Psionics. It is unclear whether these creatures are parasites or an integral part of the Alien spawn.</description>
                 <background>xcom3/UFOPAEDI/14MICRON.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -232,7 +232,7 @@
                 <description>This is not one single creature but billions of micro-organisms. These organisms have been found in the cardiovascular systems of other Aliens, but until now we were unaware of their extraordinary capability to act independently. It is clear that our research must concentrate on these unusual life forms.</description>
                 <background>xcom3/UFOPAEDI/14AUTOPS.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -250,7 +250,7 @@
                 <description>The Multiworm is clearly a crucial stage in the complex Alien life cycle. It is capable of attacking by propelling a fluid from pores along the side of the body containing a complex mix of micro-organisms that use enzymes and acids to break down the molecular structure of the target. Fortunately the range of the propellant is fairly short. The Multiworm is slow moving, but care should be taken in combat because it may release its offspring in the throes of death, creating an even greater threat.</description>
                 <background>xcom3/UFOPAEDI/07MLTWRM.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -268,7 +268,7 @@
                 <description>This creature is a rapacious carnivore whose feeding frenzy contributes to the rapid growth of younger lifeforms called Hyperworms which are reared inside its body. The gestation period for the Hyperworms is about three days and each Multiworm gives birth to four offspring. The birth process is lethal for the parent - the Hyperworms explode from the Multiworms body and consume it within a matter of seconds. The brain structure of the Multiworm is undeveloped and it is unlikely to be affected by Psionic attacks. The tissue analysis from the autopsy will provide an invaluable contribution to our biological warfare research.</description>
                 <background>xcom3/UFOPAEDI/07AUTOPS.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -286,7 +286,7 @@
                 <description>The gestation period for a Multiworm is approximately two days. During this time the egg will protect itself with a weapon that launches a fluid containing micro-organisms. These organisms consist of various types, some containing acids designed to erode metallic compounds and others containing unusual enzymes that rapidly break down organic matter. Fortunately the range of this weapon is limited. The Alien embryos are not sufficiently advanced to be susceptible to Psionic attacks.</description>
                 <background>xcom3/UFOPAEDI/05WRMEGG.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -304,7 +304,7 @@
                 <description>A large worm-like creature quickly develops inside the protective skin of the Alien egg. This worm appears to contain the embryos of a further four life forms. We cannot tell how the next stage in the life cycle develops from the autopsy results, but the tissues will be useful for our toxicology research.</description>
                 <background>xcom3/UFOPAEDI/05AUTOPS.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -322,7 +322,7 @@
                 <description>This enormous creature is deposited by an Alien Mothership. Its primary objective appears to be destruction of the city and annihilation of X-COM bases. The terror and panic that it causes amongst the population indicates a change in Alien strategy. It is possible that they have abandoned their attempts at infiltration and are now only concerned with revenge and retribution against X-COM.</description>
                 <background>xcom3/UFOPAEDI/08AUTOPS.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -340,7 +340,7 @@
                 <description>The Overspawn is a hybrid creature, derived from the Megaspawn genetic pool. It is difficult to kill, but will eventually succumb to bombardment by Disruptor Beams and other powerful weapons. Fortunately it has no ranged combat capability.</description>
                 <background>xcom3/UFOPAEDI/08AUTOPS.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -358,7 +358,7 @@
                 <description>The Popper runs at high speed towards its victim and explodes when within a range of about fifteen feet. If the Popper is attacked with armor piercing, incendiary or explosive ammunition then the explosive effect is likely to be triggered. We recommend that other forms of weaponry be used against this creature in most combat situations.</description>
                 <background>xcom3/UFOPAEDI/09POPPER.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -376,7 +376,7 @@
                 <description>The Popper is little more than a walking bomb. Its simple brain structure means that Psionic attacks have a very low chance of success. Its body contains no obvious explosive device, although there are several chemicals mixed into the creatures stomach creating a highly unstable explosive compound.</description>
                 <background>xcom3/UFOPAEDI/09AUTOPS.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -394,7 +394,7 @@
                 <description>The Psimorph is a rare and highly specialized Alien. Its Psionic powers and defense are formidable, it is likely to be used as an Alien commander in battle situations. Despite its ability to fly, its mobility is limited due to its bulk and lack of a skeletal structure. Unlike other Alien types it seems to survive quite well in our environment. It represents a serious threat to our Agents. Our best form of defense is with biological weapons and strong Psi-defense.</description>
                 <background>xcom3/UFOPAEDI/10PSMRPH.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -412,7 +412,7 @@
                 <description>The creature has internal devices that generate an anti-grav field allowing it to float through the air. Without this mechanism the Psimorph would collapse in a mass of jelly-like flesh and tentacles. It has a number of separate brain structures which are extremely well developed indicating potential leadership functions and Psionic capabilities. All of the major organs are duplicated about twelve times which would seem to be a defense mechanism allowing the creature to function despite sustaining massive damage.</description>
                 <background>xcom3/UFOPAEDI/10AUTOPS.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -430,7 +430,7 @@
                 <description>The Alien queen is ultimately the production unit for all Alien life forms. Its mobility is severely limited when fully grown and it also requires exactly the right atmospheric conditions in order to breed properly and produce the Alien eggs. These conditions are only provided by the spawning chambers inside an Alien building, which also provide a food source by plugging directly into the Queenspawn's blood supply. This confirms that the Aliens cannot conquer our dimension without a steady supply of Alien reinforcements through the Dimension Gates, although their motive for such incursions is still unknown.</description>
                 <background>xcom3/UFOPAEDI/11QNSPWN.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -448,7 +448,7 @@
                 <description>The massive form of the Alien queen is designed to lay huge numbers of Alien eggs during its life time. The Queenspawn uses a complex asexual reproduction system to produce large numbers of Alien eggs in order to create new types of Alien creature. The importance of the Queenspawn for Alien population growth makes it an important strategic target.</description>
                 <background>xcom3/UFOPAEDI/11AUTOPS.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -466,7 +466,7 @@
                 <description>The Skeletoid is a highly effective Alien soldier with great intelligence and the ability to fly. Its agile body is capable of withstanding great damage and it can use a variety of weapons and equipment. The brain is susceptible to Psionic influence, but some form of resistance does seem to exist.</description>
                 <background>xcom3/UFOPAEDI/12SKELTD.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -484,7 +484,7 @@
                 <description>This creature has a light body with a strong exoskeleton structure which is further covered in tough skin. Unusual spherical implants appear to provide flying capability. The mechanism is different to the Elerium powered gravity wave and we do not know how it works at this stage. The brain structure is well developed.</description>
                 <background>xcom3/UFOPAEDI/12AUTOPS.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -502,7 +502,7 @@
                 <description>This unfortunate creature dedicates its short life to combat and protection of more vulnerable Alien forms. It has limited intelligence and attacks using its funnel head which projects a mix of deadly micro-organisms up to medium range. Despite its humanoid form it is incapable of using other weapons or equipment. It has no eyes, ears or nose but it can accurately detect the presence of nearby organic life forms. This ability is based on a specialized form of Psionic receptor and makes the creature very dangerous in combat situations.</description>
                 <background>xcom3/UFOPAEDI/13SPTTER.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -520,7 +520,7 @@
                 <description>The alarming appearance of the Spitter reflects the fact that this creature's only purpose is to be used in combat. The funnel head propels a liquid containing micro-organisms which secrete acids and enzymes. The large stomach of the creature generates the deadly vomit and would suggest that it sucks up the remains of any victim with its funnel head. With no discernible brain structure this creature is immune from Psionic attacks.</description>
                 <background>xcom3/UFOPAEDI/13AUTOPS.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -538,7 +538,7 @@
                 <description>Our initial results show that the distinct Alien life forms are related genetically and form part of a complex life cycle.</description>
                 <background>xcom3/UFOPAEDI/GENETICS.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -556,7 +556,7 @@
                 <description>It is clear that the Alien life cycle is an extremely rapid sequence of changes. The eggs always develop into Multiworms which then give birth to Hyperworms which form a Chrysalis. At this stage the genetic variation produces a variety of Alien types which develop inside the Chrysalis. The whole process from the egg hatching to emergence from the Chrysalis only seems to take about ten days, provided that there is an adequate supply of food. Fortunately these life forms do not survive very well in our world and it is unclear how an invasion could be successful.</description>
                 <background>xcom3/UFOPAEDI/LIFECYCL.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -574,7 +574,7 @@
                 <description>It is now clear to us that the Micronoid organisms are the source of the Alien intelligence and they are using the various Alien forms to initiate an assault on our dimension. The large Alien life forms cannot survive in our dimension - the Micronoids must transfer to a new host in order to conquer our world and the ideal host is our own race. Brainsuckers are used to introduce Micronoids into the human bloodstream which then gain control of the brain and have access to all the knowledge and abilities of the host. We now understand the physiology of the Micronoids sufficiently in order to develop a specific toxin that will kill the organisms in the bloodstream.</description>
                 <background>xcom3/UFOPAEDI/THREAT.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -604,7 +604,7 @@
                 <description>The Assault Ship effectively replaces the Alien Transport as a troop carrier. It can deposit large numbers of Aliens into city buildings and is armed with a powerful beam weapon. This craft is highly dangerous and must be stopped at all costs.</description>
                 <background>xcom3/UFOPAEDI/08UFO-F.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -622,7 +622,7 @@
                 <description>This immense craft is heavily armored, well armed and has a large crew. It is equipped with a Heavy Disruptor Beam and Disruptor Missiles. If the Aliens can produce just a handful of these devastating leviathans, the future of our world looks bleak.</description>
                 <background>xcom3/UFOPAEDI/11UFO-F.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -640,7 +640,7 @@
                 <description>The Alien Bomber is equipped with an unusual missile launcher which fires a missile that splits into multiple, independently targeted missiles. It also has a light beam weapon to deal with close air combat. There is a limited crew on board.</description>
                 <background>xcom3/UFOPAEDI/09UFO-F.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -658,7 +658,7 @@
                 <description>The control stations onboard the Alien craft direct the propulsion system and control its ability to transform matter into anti-matter.</description>
                 <background>xcom3/UFOPAEDI/13UFO-G.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -676,7 +676,7 @@
                 <description>The energy source for the Alien craft is generated in special dimension chambers which suck incredible amounts of energy from the Alien Dimension. These systems are highly unstable and should be treated with caution in combat situations.</description>
                 <background>xcom3/UFOPAEDI/POWER.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -694,7 +694,7 @@
                 <description>The propulsion system of the Alien craft is built into the external fabric of the craft itself. It generates a dimensional field that warps the craft through space and allows the craft to pass undamaged through Dimension Gates.</description>
                 <background>xcom3/UFOPAEDI/PROPULS.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -712,7 +712,7 @@
                 <description>The Destroyer is heavily armored and its behavior is aggressive. It is armed with a powerful Alien Missile Launcher capable of immense destruction. It can also deposit Alien beings into the city.</description>
                 <background>xcom3/UFOPAEDI/07UFO-F.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -730,7 +730,7 @@
                 <description>This craft is fast and nimble. On its own it represents no threat, but is deadly when combined with other Alien combat ships. It is armed with a missile which generates a Stasis Field on impact. This field holds the target still for a small period of time so craft that rely on evasion for defense, become vulnerable.</description>
                 <background>xcom3/UFOPAEDI/10UFO-F.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -748,7 +748,7 @@
                 <description>This craft is well armored, highly maneuverable and armed with a powerful beam weapon. It is designed to protect other more vulnerable Alien ships. Avoid these craft if the threat to our vehicles is too great and concentrate on shooting down the Alien Transports.</description>
                 <background>xcom3/UFOPAEDI/06UFO-F.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -766,7 +766,7 @@
                 <description>The Mothership is an extremely large, well equipped vessel. It is armed with a Heavy Disruptor Beam, Disruptor Multi-Bombs and Stasis Field Bombs. It represents a very serious threat to the city because its purpose seems to be mass destruction rather than infiltration. If the Aliens become desperate they will deploy this craft to raze the city to the ground. They must be stopped at all costs.</description>
                 <background>xcom3/UFOPAEDI/12UFO-F.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -784,7 +784,7 @@
                 <description>The structure of the vehicle suggests an organic construction process. The skin is composed of a strong and unusual compound that allows the craft to travel without harm through the Dimension Gates. This unmanned craft is equipped with an unusual type of beam weapon. Its limited capability suggests that it is purely designed to collect information and then return to the Alien Dimension.</description>
                 <background>xcom3/UFOPAEDI/02UFO-F.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -802,7 +802,7 @@
                 <description>This vessel appears to be a surveillance craft. Its structure is very strange and there is no evidence of any crew or cargo. The craft's internals appear to have been intentionally destroyed by the Aliens from a remote location. The craft is armed with small beam weapon. The craft does not appear to be a great threat to the city, but can only be a precursor to more dangerous incursions.</description>
                 <background>xcom3/UFOPAEDI/03UFO-F.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -820,7 +820,7 @@
                 <description>The primary mission of this craft is to deposit Alien life forms inside city buildings. This represents a serious challenge for our ground forces, but if they can be shot down before they unload their passengers, then the problem will be minimized. The craft is armed with the same beam weapon as the Scout Ships or Probes, but it is slower moving and an easier target to hit.</description>
                 <background>xcom3/UFOPAEDI/05UFO-F.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -2554,7 +2554,7 @@
                 <description>The Alien scare first began on 7th March, 2084 when a strange Dimension Gate appeared in the skies above Mega-Primus. During the following days strange UFOs came and went, but they did not appear to attack anything or abduct anyone. It was only when strange reports of Alien monsters lurking in the recesses of city buildings filtered through to the senatorial security committee that the plan to enlist X-COM was proposed.</description>
                 <background>xcom3/UFOPAEDI/02ALIEN.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics />
@@ -2998,7 +2998,7 @@
                 <description>Our Scientists believe that this building influences the atmospheric conditions within the Alien world.</description>
                 <background>xcom3/UFOPAEDI/06ALNFRM.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -3016,7 +3016,7 @@
                 <description>The nerve center of the Alien city is concentrated in this building. The more intelligent Alien life forms are employed here to maintain and defend the building and its complex functions. Psimorphs will probably be found supervising operations and coordinating the defenders.</description>
                 <background>xcom3/UFOPAEDI/07CNTTWR.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -3034,7 +3034,7 @@
                 <description>The Dimension Gates appear to be the means by which the Alien craft travel from their home world. Our craft cannot travel through these gates without being annihilated by an anti-matter implosion. We must disable a UFO and recover its control systems, propulsion systems and power sources for research.</description>
                 <background>xcom3/UFOPAEDI/13GATE.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -3052,7 +3052,7 @@
                 <description>Our final mission awaits our forces. This building sustains the three Dimension Gates which create a direct connection with our dimension. Soon after the building is destroyed the Dimension Gates will fade away and the link with the Alien world will be broken forever. The Aliens will be vanquished and victory will be ours.</description>
                 <background>xcom3/UFOPAEDI/09DIMGTE.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -3070,7 +3070,7 @@
                 <description>The Alien food source appears to be plants. This building provides the perfect balance of light and heat for the Alien plants.</description>
                 <background>xcom3/UFOPAEDI/02FDCHMB.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -3088,7 +3088,7 @@
                 <description>The Incubator is a warm and humid collection of chambers in which Alien eggs are stored ready for hatching. They will be well protected by Alien warriors because of their vulnerability at this stage of the life cycle. You should also expect to meet many Multiworms preparing to give birth to the Hyperworm vermin which burst from the innards of their parents in their final death agony.</description>
                 <background>xcom3/UFOPAEDI/00INCUBA.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -3106,7 +3106,7 @@
                 <description>The Maintenance Factory produces the nutrients and energy for all other buildings. This is done by pumping the nutrient liquid through the connecting tube that runs through the city, just like blood in a cardiovascular system. The destruction of this building will be a significant blow to the Aliens and allow us to destoy all remaining structures.</description>
                 <background>xcom3/UFOPAEDI/08MNTFCT.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -3124,7 +3124,7 @@
                 <description>The Alien city is a complex organic growth in which each building type functions as a highly specialized organ. The Megapod Chamber is the reproduction organ of the Alien city which nutures numerous egg shaped structures. These Megapods are giant seeds which grow to a large size before being transported to a new location. The seeds then grow and develop into other Alien buildings. The Megapod Chamber is extremely well defended but once it is destroyed we will be close to victory.</description>
                 <background>xcom3/UFOPAEDI/03MGCHMB.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -3142,7 +3142,7 @@
                 <description>NOT USED</description>
                 <background>xcom3/UFOPAEDI/12TO-WIN.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -3160,7 +3160,7 @@
                 <description>This building produces strange organic mushroooms which grow into Alien craft. All other Alien technology is produced here as well - weapons for craft and equipment for Alien warriors. The nature of this building makes it an essential target for our forces, even though it is very well defended.</description>
                 <background>xcom3/UFOPAEDI/05ORGFCT.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -3178,7 +3178,7 @@
                 <description>This building seems to function as a nocturnal rejuvenation center for the Aliens. We have identified the weak points that will allow us to destroy this building. You will receive a full briefing before you enter the combat zone. Once this task is accomplished we can gain information about the next Alien building through the exposed tubing that connects the Alien city.</description>
                 <background>xcom3/UFOPAEDI/04SLCHMB.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -3196,7 +3196,7 @@
                 <description>This structure appears to be the source of all Alien eggs. Few Aliens enter the building but many are seen to leave. Our Scientists fear the existence of a frightful Alien Queen. Excercise extreme caution if you encounter such an Alien.</description>
                 <background>xcom3/UFOPAEDI/01SPWNCH.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
@@ -3214,7 +3214,7 @@
                 <description>The Alien Dimension consists of a bleak, hostile environment with an organic city. This city undoubtedly constructs Alien craft and nurtures the Alien brood. The structure of the buildings is immensely strong, but there appears to be weak point which will allow our Agents and vehicles to gain access to the building south of the dimension gates. If we can research this building further then we will have the necessary information to send in our squads to destroy it. We should then be able to gain access to the next building via the organic tubing that joins the Alien city together like a giant umbilical cord.</description>
                 <background>xcom3/UFOPAEDI/11DIMENS.PCX</background>
                 <data_id></data_id>
-                <data_type>none</data_type>
+                <data_type>nothing</data_type>
                 <dependency>
                   <type>any</type>
                   <topics>
