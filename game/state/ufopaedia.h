@@ -1,6 +1,7 @@
 #pragma once
 
 #include "framework/image.h"
+#include "game/state/research.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -33,7 +34,7 @@ class UfopaediaEntry : public StateObject<UfopaediaEntry>
 	// for weapons etc.)
 	UString data_id;
 	Data data_type;
-	StateRef<ResearchTopic> required_research;
+	ResearchDependency dependency;
 	bool isVisible() const;
 };
 

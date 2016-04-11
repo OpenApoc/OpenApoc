@@ -7,6 +7,19 @@ namespace OpenApoc
 {
 
 class UfopaediaEntry;
+class Base;
+class ResearchDependency;
+class ItemDependency;
+
+class ProjectDependencies
+{
+  public:
+	ProjectDependencies() = default;
+	std::list<ResearchDependency> research;
+	std::list<ItemDependency> items;
+
+	bool satisfied(StateRef<Base> base) const;
+};
 
 class ResearchTopic : public StateObject<ResearchTopic>
 {
@@ -34,7 +47,36 @@ class ResearchTopic : public StateObject<ResearchTopic>
 
 	unsigned score;
 
+	ProjectDependencies dependencies;
+
 	bool isComplete() const;
+};
+
+class ResearchDependency
+{
+  public:
+	ResearchDependency();
+	enum class Type
+	{
+		Any,
+		All,
+	};
+	static const std::map<Type, UString> TypeMap;
+	Type type;
+
+	std::set<StateRef<ResearchTopic>> topics;
+
+	bool satisfied() const;
+};
+
+class ItemDependency
+{
+  public:
+	ItemDependency() = default;
+	// FIXME: Replace with StateRef<GenericItemClass> or something?
+	std::map<UString, int> items;
+
+	bool satisfied(StateRef<Base> base) const;
 };
 
 } // namespace OpenApoc

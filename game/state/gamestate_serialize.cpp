@@ -617,6 +617,21 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("currentlyLandedBuilding"), v.currentlyLandedBuilding);
 }
 
+template <>
+void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchDependency::Type &t)
+{
+	serializeIn(state, node, t, ResearchDependency::TypeMap);
+}
+
+template <>
+void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchDependency &d)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("type"), d.type);
+	serializeIn(state, node->getNode("topics"), d.topics);
+}
+
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, UfopaediaEntry &e)
 {
 	if (!node)
@@ -626,7 +641,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("background"), e.background);
 	serializeIn(state, node->getNode("data_id"), e.data_id);
 	serializeIn(state, node->getNode("data_type"), e.data_type, UfopaediaEntry::DataMap);
-	serializeIn(state, node->getNode("required_research"), e.required_research);
+	serializeIn(state, node->getNode("dependency"), e.dependency);
 }
 
 template <>
@@ -638,6 +653,22 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, UfopaediaCa
 	serializeIn(state, node->getNode("description"), c.description);
 	serializeIn(state, node->getNode("background"), c.background);
 	serializeIn(state, node->getNode("entries"), c.entries);
+}
+
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, ItemDependency &d)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("items"), d.items);
+}
+
+template <>
+void serializeIn(const GameState *state, sp<SerializationNode> node, ProjectDependencies &d)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("research"), d.research);
+	serializeIn(state, node->getNode("items"), d.items);
 }
 
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchTopic &r)
@@ -653,6 +684,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("required_lab_size"), r.required_lab_size,
 	            ResearchTopic::LabSizeMap);
 	serializeIn(state, node->getNode("score"), r.score);
+	serializeIn(state, node->getNode("dependencies"), r.dependencies);
 }
 
 // FIXME: These enums don't quite work the same way as the other map style - maybe a common way
@@ -1180,6 +1212,17 @@ template <> void serializeOut(sp<SerializationNode> node, const Vehicle &v)
 	serializeOut(node->addNode("currentlyLandedBuilding"), v.currentlyLandedBuilding);
 }
 
+template <> void serializeOut(sp<SerializationNode> node, const ResearchDependency::Type &t)
+{
+	serializeOut(node, t, ResearchDependency::TypeMap);
+}
+
+template <> void serializeOut(sp<SerializationNode> node, const ResearchDependency &d)
+{
+	serializeOut(node->addNode("type"), d.type);
+	serializeOut(node->addNode("topics"), d.topics);
+}
+
 template <> void serializeOut(sp<SerializationNode> node, const UfopaediaEntry &e)
 {
 	serializeOut(node->addNode("title"), e.title);
@@ -1187,7 +1230,7 @@ template <> void serializeOut(sp<SerializationNode> node, const UfopaediaEntry &
 	serializeOut(node->addNode("background"), e.background);
 	serializeOut(node->addNode("data_id"), e.data_id);
 	serializeOut(node->addNode("data_type"), e.data_type, UfopaediaEntry::DataMap);
-	serializeOut(node->addNode("required_research"), e.required_research);
+	serializeOut(node->addNode("dependency"), e.dependency);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const UfopaediaCategory &c)
@@ -1196,6 +1239,17 @@ template <> void serializeOut(sp<SerializationNode> node, const UfopaediaCategor
 	serializeOut(node->addNode("description"), c.description);
 	serializeOut(node->addNode("background"), c.background);
 	serializeOut(node->addNode("entries"), c.entries);
+}
+
+template <> void serializeOut(sp<SerializationNode> node, const ProjectDependencies &d)
+{
+	serializeOut(node->addNode("research"), d.research);
+	serializeOut(node->addNode("items"), d.items);
+}
+
+template <> void serializeOut(sp<SerializationNode> node, const ItemDependency &d)
+{
+	serializeOut(node->addNode("items"), d.items);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const ResearchTopic &r)
@@ -1209,6 +1263,7 @@ template <> void serializeOut(sp<SerializationNode> node, const ResearchTopic &r
 	serializeOut(node->addNode("required_lab_size"), r.required_lab_size,
 	             ResearchTopic::LabSizeMap);
 	serializeOut(node->addNode("score"), r.score);
+	serializeOut(node->addNode("dependencies"), r.dependencies);
 }
 
 // FIXME: These enums don't quite work the same way as the other map style - maybe a common way

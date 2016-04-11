@@ -45,6 +45,27 @@ void InitialGameStateExtractor::extractResearch(GameState &state, Difficulty dif
 				LogError("Unexpected labSize 0x%02x for research item %s", (unsigned)rdata.labSize,
 				         id.c_str());
 		}
+		// FIXME: this assumed all listed techs are reqired, which is not true for some topics
+		// (It's possible that an unknown member in research_data_t marks this, or it's done
+		// in-code)
+		// This should be fixed up in the patch.
+
+		ResearchDependency dependency;
+		dependency.type = ResearchDependency::Type::All;
+
+		for (int pre = 0; pre < 3; pre++)
+		{
+
+			if (rdata.prereqTech[pre] != 0xffff)
+			{
+				auto prereqId = ResearchTopic::getPrefix() +
+				                canon_string(data.research_names->get(rdata.prereqTech[pre]));
+				dependency.topics.emplace(StateRef<ResearchTopic>{&state, prereqId});
+			}
+		}
+
+		r->dependencies.research.push_back(dependency);
+
 		r->score = rdata.score;
 
 		if (state.research.find(id) != state.research.end())

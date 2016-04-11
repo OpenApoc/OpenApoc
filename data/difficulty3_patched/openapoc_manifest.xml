@@ -23,8 +23,8 @@
   <gamestate_xml SHA1="81386b2514f6a695441a2ee8d5ead6311015bee0">gamestate/facility_types.xml</gamestate_xml>
   <gamestate_xml SHA1="7eab4d2363210a2ccec85dafda7d205534ff63c0">gamestate/organisations.xml</gamestate_xml>
   <gamestate_xml SHA1="a86ed75b4170a0cd3556a0e1eb8f8d4d39f0fd0b">gamestate/player_bases.xml</gamestate_xml>
-  <gamestate_xml SHA1="073456ab21474b3cc84d7eea9285d1a3114d70e6">gamestate/research.xml</gamestate_xml>
-  <gamestate_xml SHA1="24e7e29955c56e8684dd933d81804c3a63d095d7">gamestate/ufopaedia.xml</gamestate_xml>
+  <gamestate_xml SHA1="86191495364d901c5c59a55a7821e80bb33fb558">gamestate/research.xml</gamestate_xml>
+  <gamestate_xml SHA1="6ff8a9bd4432b79040a6521e674f8a4af641f743">gamestate/ufopaedia.xml</gamestate_xml>
   <gamestate_xml SHA1="68d21acc6cb56136c0bbf7dc0836890802250c97">gamestate/vehicle_equipment.xml</gamestate_xml>
   <gamestate_xml SHA1="af910da2c9ac0cdeb1d9287eb408115ea9db24bb">gamestate/vehicle_types.xml</gamestate_xml>
   <gamestate_xml SHA1="d12ae543608589a131c3f3ff6aa85247688bde81">gamestate/vehicles.xml</gamestate_xml>

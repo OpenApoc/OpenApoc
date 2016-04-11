@@ -17,7 +17,10 @@
                 <background>xcom3/UFOPAEDI/01ANTHPD.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_ANTHROPOD</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -30,7 +33,10 @@
                 <background>xcom3/UFOPAEDI/01AUTOPS.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_ANTHROPOD_AUTOPSY</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -43,7 +49,10 @@
                 <background>xcom3/UFOPAEDI/02BRSUCK.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_BRAINSUCKER</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -56,7 +65,10 @@
                 <background>xcom3/UFOPAEDI/02AUTOPS.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_BRAINSUCKER_AUTOPSY</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -69,7 +81,10 @@
                 <background>xcom3/UFOPAEDI/W57.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_BRAINSUCKER_PODS</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -82,7 +97,10 @@
                 <background>xcom3/UFOPAEDI/03CHRYSL.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_CHRYSALIS</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -95,7 +113,10 @@
                 <background>xcom3/UFOPAEDI/03AUTOPS.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_CHRYSALIS_AUTOPSY</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -108,7 +129,10 @@
                 <background>xcom3/UFOPAEDI/04HPWORM.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_HYPERWORM</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -121,7 +145,10 @@
                 <background>xcom3/UFOPAEDI/04AUTOPS.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_HYPERWORM_AUTOPSY</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -134,7 +161,10 @@
                 <background>xcom3/UFOPAEDI/06MGTRON.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_MEGASPAWN</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -147,7 +177,10 @@
                 <background>xcom3/UFOPAEDI/06AUTOPS.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_MEGASPAWN_AUTOPSY</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -160,7 +193,10 @@
                 <background>xcom3/UFOPAEDI/14MICRON.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_MICRONOID</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -173,7 +209,10 @@
                 <background>xcom3/UFOPAEDI/14AUTOPS.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_MICRONOID_AUTOPSY</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -186,7 +225,10 @@
                 <background>xcom3/UFOPAEDI/07MLTWRM.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_MULTIWORM</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -199,7 +241,10 @@
                 <background>xcom3/UFOPAEDI/07AUTOPS.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_MULTIWORM_AUTOPSY</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -212,7 +257,10 @@
                 <background>xcom3/UFOPAEDI/05WRMEGG.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_MULTIWORM_EGG</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -225,7 +273,10 @@
                 <background>xcom3/UFOPAEDI/05AUTOPS.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_MULTIWORM_EGG_AUTOPSY</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -238,7 +289,10 @@
                 <background>xcom3/UFOPAEDI/08AUTOPS.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_OVERSPAWN_AUTOPSY</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -251,7 +305,10 @@
                 <background>xcom3/UFOPAEDI/08AUTOPS.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_OVERSPAWN_AUTOPSY_1</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -264,7 +321,10 @@
                 <background>xcom3/UFOPAEDI/09POPPER.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_POPPER</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -277,7 +337,10 @@
                 <background>xcom3/UFOPAEDI/09AUTOPS.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_POPPER_AUTOPSY</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -290,7 +353,10 @@
                 <background>xcom3/UFOPAEDI/10PSMRPH.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_PSIMORPH</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -303,7 +369,10 @@
                 <background>xcom3/UFOPAEDI/10AUTOPS.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_PSIMORPH_AUTOPSY</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -316,7 +385,10 @@
                 <background>xcom3/UFOPAEDI/11QNSPWN.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_QUEENSPAWN</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -329,7 +401,10 @@
                 <background>xcom3/UFOPAEDI/11AUTOPS.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_QUEENSPAWN_AUTOPSY</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -342,7 +417,10 @@
                 <background>xcom3/UFOPAEDI/12SKELTD.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_SKELETOID</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -355,7 +433,10 @@
                 <background>xcom3/UFOPAEDI/12AUTOPS.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_SKELETOID_AUTOPSY</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -368,7 +449,10 @@
                 <background>xcom3/UFOPAEDI/13SPTTER.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_SPITTER</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -381,7 +465,10 @@
                 <background>xcom3/UFOPAEDI/13AUTOPS.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_SPITTER_AUTOPSY</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -394,7 +481,10 @@
                 <background>xcom3/UFOPAEDI/GENETICS.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_THE_ALIEN_GENETIC_STRUCTURE</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -407,7 +497,10 @@
                 <background>xcom3/UFOPAEDI/LIFECYCL.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_THE_ALIEN_LIFE_CYCLE</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -420,7 +513,10 @@
                 <background>xcom3/UFOPAEDI/THREAT.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_THE_REAL_ALIEN_THREAT</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -445,7 +541,10 @@
                 <background>xcom3/UFOPAEDI/08UFO-F.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_UFO_TYPE_6</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -458,7 +557,10 @@
                 <background>xcom3/UFOPAEDI/11UFO-F.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_UFO_TYPE_9</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -471,7 +573,10 @@
                 <background>xcom3/UFOPAEDI/09UFO-F.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_UFO_TYPE_7</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -484,7 +589,10 @@
                 <background>xcom3/UFOPAEDI/13UFO-G.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_ALIEN_CONTROL_SYSTEM</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -497,7 +605,10 @@
                 <background>xcom3/UFOPAEDI/POWER.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_ALIEN_ENERGY_SOURCE</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -510,7 +621,10 @@
                 <background>xcom3/UFOPAEDI/PROPULS.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_ALIEN_PROPULSION_SYSTEM</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -523,7 +637,10 @@
                 <background>xcom3/UFOPAEDI/07UFO-F.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_UFO_TYPE_5</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -536,7 +653,10 @@
                 <background>xcom3/UFOPAEDI/10UFO-F.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_UFO_TYPE_8</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -549,7 +669,10 @@
                 <background>xcom3/UFOPAEDI/06UFO-F.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_UFO_TYPE_4</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -562,7 +685,10 @@
                 <background>xcom3/UFOPAEDI/12UFO-F.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_UFO_TYPE_10</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -575,7 +701,10 @@
                 <background>xcom3/UFOPAEDI/02UFO-F.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_UFO_TYPE_1</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -588,7 +717,10 @@
                 <background>xcom3/UFOPAEDI/03UFO-F.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_UFO_TYPE_2</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -601,7 +733,10 @@
                 <background>xcom3/UFOPAEDI/05UFO-F.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_UFO_TYPE_3</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -626,7 +761,10 @@
                 <background>xcom3/UFOPAEDI/19LIFT-F.PCX</background>
                 <data_id>FACILITYTYPE_ACCESS_LIFT</data_id>
                 <data_type>facility</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -639,7 +777,10 @@
                 <background>xcom3/UFOPAEDI/23AACN-F.PCX</background>
                 <data_id>FACILITYTYPE_ADVANCED_ALIEN_CONTAINMENT</data_id>
                 <data_type>facility</data_type>
-                <required_research>RESEARCH_ADVANCED_ALIEN_CONTAINMENT</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -652,7 +793,10 @@
                 <background>xcom3/UFOPAEDI/31ABIO-F.PCX</background>
                 <data_id>FACILITYTYPE_ADVANCED_BIOCHEMISTRY_LAB</data_id>
                 <data_type>facility</data_type>
-                <required_research>RESEARCH_ADVANCED_BIOCHEMISTRY_LAB</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -665,7 +809,10 @@
                 <background>xcom3/UFOPAEDI/30ADQ-F.PCX</background>
                 <data_id>FACILITYTYPE_ADVANCED_QUANTUM_PHYSICS_LAB</data_id>
                 <data_type>facility</data_type>
-                <required_research>RESEARCH_ADVANCED_QUANTUM_PHYSICS_LAB</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -678,7 +825,10 @@
                 <background>xcom3/UFOPAEDI/27ADS-F.PCX</background>
                 <data_id>FACILITYTYPE_ADVANCED_SECURITY_STATION</data_id>
                 <data_type>facility</data_type>
-                <required_research>RESEARCH_ADVANCED_SECURITY_STATION</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -691,7 +841,10 @@
                 <background>xcom3/UFOPAEDI/33ACON-F.PCX</background>
                 <data_id>FACILITYTYPE_ADVANCED_WORKSHOP</data_id>
                 <data_type>facility</data_type>
-                <required_research>RESEARCH_ADVANCED_WORKSHOP</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -704,7 +857,10 @@
                 <background>xcom3/UFOPAEDI/22ACON-F.PCX</background>
                 <data_id>FACILITYTYPE_ALIEN_CONTAINMENT</data_id>
                 <data_type>facility</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -717,7 +873,10 @@
                 <background>xcom3/UFOPAEDI/32BIOL-F.PCX</background>
                 <data_id>FACILITYTYPE_BIOCHEMISTRY_LAB</data_id>
                 <data_type>facility</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -730,7 +889,10 @@
                 <background>xcom3/UFOPAEDI/18BAR-F.PCX</background>
                 <data_id>FACILITYTYPE_LIVING_QUARTERS</data_id>
                 <data_type>facility</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -743,7 +905,10 @@
                 <background>xcom3/UFOPAEDI/24MEDB-F.PCX</background>
                 <data_id>FACILITYTYPE_MEDICAL_BAY</data_id>
                 <data_type>facility</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -756,7 +921,10 @@
                 <background>xcom3/UFOPAEDI/26PSI-F.PCX</background>
                 <data_id>FACILITYTYPE_PSI-GYM</data_id>
                 <data_type>facility</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -769,7 +937,10 @@
                 <background>xcom3/UFOPAEDI/29QLAB-F.PCX</background>
                 <data_id>FACILITYTYPE_QUANTUM_PHYSICS_LAB</data_id>
                 <data_type>facility</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -782,7 +953,10 @@
                 <background>xcom3/UFOPAEDI/28SECU-F.PCX</background>
                 <data_id>FACILITYTYPE_SECURITY_STATION</data_id>
                 <data_type>facility</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -795,7 +969,10 @@
                 <background>xcom3/UFOPAEDI/20STOR-F.PCX</background>
                 <data_id>FACILITYTYPE_STORES</data_id>
                 <data_type>facility</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -808,7 +985,10 @@
                 <background>xcom3/UFOPAEDI/25TRAI-F.PCX</background>
                 <data_id>FACILITYTYPE_TRAINING_AREA</data_id>
                 <data_type>facility</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -821,7 +1001,10 @@
                 <background>xcom3/UFOPAEDI/17VBAY-F.PCX</background>
                 <data_id>FACILITYTYPE_VEHICLE_REPAIR_BAY</data_id>
                 <data_type>facility</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -834,7 +1017,10 @@
                 <background>xcom3/UFOPAEDI/34CONS-F.PCX</background>
                 <data_id>FACILITYTYPE_WORKSHOP</data_id>
                 <data_type>facility</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -859,7 +1045,10 @@
                 <background>xcom3/UFOPAEDI/01ACCOM1.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -872,7 +1061,10 @@
                 <background>xcom3/UFOPAEDI/06FACT1.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -885,7 +1077,10 @@
                 <background>xcom3/UFOPAEDI/07FACT2.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -898,7 +1093,10 @@
                 <background>xcom3/UFOPAEDI/03ASTRO.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -911,7 +1109,10 @@
                 <background>xcom3/UFOPAEDI/09FACT4.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -924,7 +1125,10 @@
                 <background>xcom3/UFOPAEDI/12FACT7.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -937,7 +1141,10 @@
                 <background>xcom3/UFOPAEDI/32CORPHQ.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -950,7 +1157,10 @@
                 <background>xcom3/UFOPAEDI/10FACT5.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -963,7 +1173,10 @@
                 <background>xcom3/UFOPAEDI/14HOSPIT.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -976,7 +1189,10 @@
                 <background>xcom3/UFOPAEDI/13FARM.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -989,7 +1205,10 @@
                 <background>xcom3/UFOPAEDI/11FACT6.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1002,7 +1221,10 @@
                 <background>xcom3/UFOPAEDI/02ACCOM2.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1015,7 +1237,10 @@
                 <background>xcom3/UFOPAEDI/15OFFICE.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1028,7 +1253,10 @@
                 <background>xcom3/UFOPAEDI/16PEOPLE.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1041,7 +1269,10 @@
                 <background>xcom3/UFOPAEDI/17POLICE.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1054,7 +1285,10 @@
                 <background>xcom3/UFOPAEDI/18POWER.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1067,7 +1301,10 @@
                 <background>xcom3/UFOPAEDI/19PROCPK.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1080,7 +1317,10 @@
                 <background>xcom3/UFOPAEDI/21RESYK.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1093,7 +1333,10 @@
                 <background>xcom3/UFOPAEDI/20RESCUE.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1106,7 +1349,10 @@
                 <background>xcom3/UFOPAEDI/08FACT3.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1119,7 +1365,10 @@
                 <background>xcom3/UFOPAEDI/22SCHOOL.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1132,7 +1381,10 @@
                 <background>xcom3/UFOPAEDI/23SENATE.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1145,7 +1397,10 @@
                 <background>xcom3/UFOPAEDI/25SENSOS.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1158,7 +1413,10 @@
                 <background>xcom3/UFOPAEDI/26SEWAGE.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1171,7 +1429,10 @@
                 <background>xcom3/UFOPAEDI/27SHOPS.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1184,7 +1445,10 @@
                 <background>xcom3/UFOPAEDI/34SLUMS.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1197,7 +1461,10 @@
                 <background>xcom3/UFOPAEDI/28SPACE.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1210,7 +1477,10 @@
                 <background>xcom3/UFOPAEDI/33SIRIUS.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1223,7 +1493,10 @@
                 <background>xcom3/UFOPAEDI/30WAREHS.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1236,7 +1509,10 @@
                 <background>xcom3/UFOPAEDI/31WATER.PCX</background>
                 <data_id></data_id>
                 <data_type>building</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1261,7 +1537,10 @@
                 <background>xcom3/UFOPAEDI/W27.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_ALIEN_GAS</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1274,7 +1553,10 @@
                 <background>xcom3/UFOPAEDI/W13.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1287,7 +1569,10 @@
                 <background>xcom3/UFOPAEDI/W14.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1300,7 +1585,10 @@
                 <background>xcom3/UFOPAEDI/W15.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1313,7 +1601,10 @@
                 <background>xcom3/UFOPAEDI/W43.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_BOOMEROID</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1326,7 +1617,10 @@
                 <background>xcom3/UFOPAEDI/W45.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_BRAINSUCKER_LAUNCHER</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1339,7 +1633,10 @@
                 <background>xcom3/UFOPAEDI/W42.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_DEVASTATOR_CANNON</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1352,7 +1649,10 @@
                 <background>xcom3/UFOPAEDI/W37.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_DIMENSION_DESTABILISER</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1365,7 +1665,10 @@
                 <background>xcom3/UFOPAEDI/W48.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_DIMENSION_MISSILE</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1378,7 +1681,10 @@
                 <background>xcom3/UFOPAEDI/W47.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_DIMENSION_MISSILE_LAUNCHER</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1391,7 +1697,10 @@
                 <background>xcom3/UFOPAEDI/W41.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_DISRUPTOR_GUN</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1404,7 +1713,10 @@
                 <background>xcom3/UFOPAEDI/ELER.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1417,7 +1729,10 @@
                 <background>xcom3/UFOPAEDI/W46.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_ENTROPY_LAUNCHER</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1430,7 +1745,10 @@
                 <background>xcom3/UFOPAEDI/W58.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_ENTROPY_POD</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1443,7 +1761,10 @@
                 <background>xcom3/UFOPAEDI/W19.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_ALIEN_GAS</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1456,7 +1777,10 @@
                 <background>xcom3/UFOPAEDI/W20.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1469,7 +1793,10 @@
                 <background>xcom3/UFOPAEDI/W21.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1482,7 +1809,10 @@
                 <background>xcom3/UFOPAEDI/W59.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1495,7 +1825,10 @@
                 <background>xcom3/UFOPAEDI/ARMOUR2.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1508,7 +1841,10 @@
                 <background>xcom3/UFOPAEDI/W18.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1521,7 +1857,10 @@
                 <background>xcom3/UFOPAEDI/W05.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1534,7 +1873,10 @@
                 <background>xcom3/UFOPAEDI/W09.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1547,7 +1889,10 @@
                 <background>xcom3/UFOPAEDI/W08.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1560,7 +1905,10 @@
                 <background>xcom3/UFOPAEDI/W22.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1573,7 +1921,10 @@
                 <background>xcom3/UFOPAEDI/W04.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1586,7 +1937,10 @@
                 <background>xcom3/UFOPAEDI/W55.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1599,7 +1953,10 @@
                 <background>xcom3/UFOPAEDI/W01.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1612,7 +1969,10 @@
                 <background>xcom3/UFOPAEDI/W12.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1625,7 +1985,10 @@
                 <background>xcom3/UFOPAEDI/ARMOUR1.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1638,7 +2001,10 @@
                 <background>xcom3/UFOPAEDI/W11.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1651,7 +2017,10 @@
                 <background>xcom3/UFOPAEDI/W10.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1664,7 +2033,10 @@
                 <background>xcom3/UFOPAEDI/W06.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1677,7 +2049,10 @@
                 <background>xcom3/UFOPAEDI/W07.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1690,7 +2065,10 @@
                 <background>xcom3/UFOPAEDI/W16.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1703,7 +2081,10 @@
                 <background>xcom3/UFOPAEDI/W17.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1716,7 +2097,10 @@
                 <background>xcom3/UFOPAEDI/W03.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1729,7 +2113,10 @@
                 <background>xcom3/UFOPAEDI/W26.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1742,7 +2129,10 @@
                 <background>xcom3/UFOPAEDI/W02.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1755,7 +2145,10 @@
                 <background>xcom3/UFOPAEDI/W39.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1768,7 +2161,10 @@
                 <background>xcom3/UFOPAEDI/W23.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_ALIEN_GAS</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1781,7 +2177,10 @@
                 <background>xcom3/UFOPAEDI/W24.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1794,7 +2193,10 @@
                 <background>xcom3/UFOPAEDI/W25.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1807,7 +2209,10 @@
                 <background>xcom3/UFOPAEDI/W56.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1820,7 +2225,10 @@
                 <background>xcom3/UFOPAEDI/W52.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_PERSONAL_CLOAKING_FIELD</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1833,7 +2241,10 @@
                 <background>xcom3/UFOPAEDI/W50.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_PERSONAL_DISRUPTOR_SHIELD</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1846,7 +2257,10 @@
                 <background>xcom3/UFOPAEDI/W51.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_PERSONAL_TELEPORTER</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1859,7 +2273,10 @@
                 <background>xcom3/UFOPAEDI/W44.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1872,7 +2289,10 @@
                 <background>xcom3/UFOPAEDI/W53.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1885,7 +2305,10 @@
                 <background>xcom3/UFOPAEDI/W33.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_BIOLOGICAL_WARFARE</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1898,7 +2321,10 @@
                 <background>xcom3/UFOPAEDI/W34.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_BIOLOGICAL_WARFARE</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1911,7 +2337,10 @@
                 <background>xcom3/UFOPAEDI/W35.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_TOXIN_TYPE_B</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1924,7 +2353,10 @@
                 <background>xcom3/UFOPAEDI/W36.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_TOXIN_TYPE_C</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1937,7 +2369,10 @@
                 <background>xcom3/UFOPAEDI/W49.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_VORTEX_MINE</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1950,7 +2385,10 @@
                 <background>xcom3/UFOPAEDI/ARMOUR3.PCX</background>
                 <data_id></data_id>
                 <data_type>equipment</data_type>
-                <required_research>RESEARCH_DISRUPTOR_ARMOR</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1975,7 +2413,10 @@
                 <background>xcom3/UFOPAEDI/02ALIEN.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -1988,7 +2429,10 @@
                 <background>xcom3/UFOPAEDI/03CHURCH.PCX</background>
                 <data_id>ORG_CULT_OF_SIRIUS</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2001,7 +2445,10 @@
                 <background>xcom3/UFOPAEDI/04CYBERW.PCX</background>
                 <data_id>ORG_CYBERWEB</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2014,7 +2461,10 @@
                 <background>xcom3/UFOPAEDI/05DIABLO.PCX</background>
                 <data_id>ORG_DIABLO</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2027,7 +2477,10 @@
                 <background>xcom3/UFOPAEDI/06ENERGE.PCX</background>
                 <data_id>ORG_ENERGEN</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2040,7 +2493,10 @@
                 <background>xcom3/UFOPAEDI/07EVONET.PCX</background>
                 <data_id>ORG_EVONET</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2053,7 +2509,10 @@
                 <background>xcom3/UFOPAEDI/08EXTRO1.PCX</background>
                 <data_id>ORG_EXTROPIANS</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2066,7 +2525,10 @@
                 <background>xcom3/UFOPAEDI/09GENMET.PCX</background>
                 <data_id>ORG_GENERAL_METRO</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2079,7 +2541,10 @@
                 <background>xcom3/UFOPAEDI/10GOVRNM.PCX</background>
                 <data_id>ORG_GOVERNMENT</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2092,7 +2557,10 @@
                 <background>xcom3/UFOPAEDI/01AIRBAL.PCX</background>
                 <data_id>ORG_GRAVBALL_LEAGUE</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2105,7 +2573,10 @@
                 <background>xcom3/UFOPAEDI/11LIFETR.PCX</background>
                 <data_id>ORG_LIFETREE</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2118,7 +2589,10 @@
                 <background>xcom3/UFOPAEDI/12MARSEC.PCX</background>
                 <data_id>ORG_MARSEC</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2131,7 +2605,10 @@
                 <background>xcom3/UFOPAEDI/13MEGAPO.PCX</background>
                 <data_id>ORG_MEGAPOL</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2144,7 +2621,10 @@
                 <background>xcom3/UFOPAEDI/15MUTE_A.PCX</background>
                 <data_id>ORG_MUTANT_ALLIANCE</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2157,7 +2637,10 @@
                 <background>xcom3/UFOPAEDI/16NANOTE.PCX</background>
                 <data_id>ORG_NANOTECH</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2170,7 +2653,10 @@
                 <background>xcom3/UFOPAEDI/17NUTRIV.PCX</background>
                 <data_id>ORG_NUTRIVEND</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2183,7 +2669,10 @@
                 <background>xcom3/UFOPAEDI/14MENTAT.PCX</background>
                 <data_id>ORG_OSIRON</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2196,7 +2685,10 @@
                 <background>xcom3/UFOPAEDI/18PSYKE.PCX</background>
                 <data_id>ORG_PSYKE</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2209,7 +2701,10 @@
                 <background>xcom3/UFOPAEDI/19S_CLIN.PCX</background>
                 <data_id>ORG_SANCTUARY_CLINIC</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2222,7 +2717,10 @@
                 <background>xcom3/UFOPAEDI/20SELF.PCX</background>
                 <data_id>ORG_S_E_L_F_</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2235,7 +2733,10 @@
                 <background>xcom3/UFOPAEDI/21SENSO.PCX</background>
                 <data_id>ORG_SENSOVISION</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2248,7 +2749,10 @@
                 <background>xcom3/UFOPAEDI/22SOLMIN.PCX</background>
                 <data_id>ORG_SOLMINE</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2261,7 +2765,10 @@
                 <background>xcom3/UFOPAEDI/23SUPERD.PCX</background>
                 <data_id>ORG_SUPERDYNAMICS</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2274,7 +2781,10 @@
                 <background>xcom3/UFOPAEDI/24SYNTHM.PCX</background>
                 <data_id>ORG_SYNTHEMESH</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2287,7 +2797,10 @@
                 <background>xcom3/UFOPAEDI/25TECHNO.PCX</background>
                 <data_id>ORG_TECHNOCRATS</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2300,7 +2813,10 @@
                 <background>xcom3/UFOPAEDI/26TRANST.PCX</background>
                 <data_id>ORG_TRANSTELLAR</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2313,7 +2829,10 @@
                 <background>xcom3/UFOPAEDI/27XCOM.PCX</background>
                 <data_id>ORG_X-COM</data_id>
                 <data_type>organisation</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2338,7 +2857,10 @@
                 <background>xcom3/UFOPAEDI/06ALNFRM.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_ALIEN_BUILDING_2</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2351,7 +2873,10 @@
                 <background>xcom3/UFOPAEDI/07CNTTWR.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_ALIEN_BUILDING_5</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2364,7 +2889,10 @@
                 <background>xcom3/UFOPAEDI/13GATE.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_DIMENSION_GATES</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2377,7 +2905,10 @@
                 <background>xcom3/UFOPAEDI/09DIMGTE.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_ALIEN_BUILDING_9</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2390,7 +2921,10 @@
                 <background>xcom3/UFOPAEDI/02FDCHMB.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_ALIEN_BUILDING_1</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2403,7 +2937,10 @@
                 <background>xcom3/UFOPAEDI/00INCUBA.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_ALIEN_BUILDING_4</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2416,7 +2953,10 @@
                 <background>xcom3/UFOPAEDI/08MNTFCT.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_ALIEN_BUILDING_3</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2429,7 +2969,10 @@
                 <background>xcom3/UFOPAEDI/03MGCHMB.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_ALIEN_BUILDING_8</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2442,7 +2985,10 @@
                 <background>xcom3/UFOPAEDI/12TO-WIN.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_ONE_WAY_TO_WIN</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2455,7 +3001,10 @@
                 <background>xcom3/UFOPAEDI/05ORGFCT.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_ALIEN_BUILDING_7</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2468,7 +3017,10 @@
                 <background>xcom3/UFOPAEDI/04SLCHMB.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_ALIEN_BUILDING</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2481,7 +3033,10 @@
                 <background>xcom3/UFOPAEDI/01SPWNCH.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_ALIEN_BUILDING_6</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2494,7 +3049,10 @@
                 <background>xcom3/UFOPAEDI/11DIMENS.PCX</background>
                 <data_id></data_id>
                 <data_type>none</data_type>
-                <required_research>RESEARCH_THE_ALIEN_DIMENSION</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2519,7 +3077,10 @@
                 <background>xcom3/UFOPAEDI/07TAXI2.PCX</background>
                 <data_id>VEHICLETYPE_AIRTAXI</data_id>
                 <data_type>vehicle</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2532,7 +3093,10 @@
                 <background>xcom3/UFOPAEDI/09TRANS2.PCX</background>
                 <data_id>VEHICLETYPE_AIRTRANS</data_id>
                 <data_type>vehicle</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2545,7 +3109,10 @@
                 <background>xcom3/UFOPAEDI/11ANNIHA.PCX</background>
                 <data_id>VEHICLETYPE_ANNIHILATOR</data_id>
                 <data_type>vehicle</data_type>
-                <required_research>RESEARCH_ANNIHILATOR</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2558,7 +3125,10 @@
                 <background>xcom3/UFOPAEDI/08TAXI1.PCX</background>
                 <data_id>VEHICLETYPE_AUTOTAXI</data_id>
                 <data_type>vehicle</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2571,7 +3141,10 @@
                 <background>xcom3/UFOPAEDI/10TRANS1.PCX</background>
                 <data_id>VEHICLETYPE_AUTOTRANS</data_id>
                 <data_type>vehicle</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2584,7 +3157,10 @@
                 <background>xcom3/UFOPAEDI/14ATRAN.PCX</background>
                 <data_id>VEHICLETYPE_BIOTRANS</data_id>
                 <data_type>vehicle</data_type>
-                <required_research>RESEARCH_BIO-TRANSPORT</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2597,7 +3173,10 @@
                 <background>xcom3/UFOPAEDI/13BIKE.PCX</background>
                 <data_id>VEHICLETYPE_BLAZER_TURBO_BIKE</data_id>
                 <data_type>vehicle</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2610,7 +3189,10 @@
                 <background>xcom3/UFOPAEDI/01CIVIL.PCX</background>
                 <data_id>VEHICLETYPE_CIVILIAN_CAR</data_id>
                 <data_type>vehicle</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2623,7 +3205,10 @@
                 <background>xcom3/UFOPAEDI/02CONSTR.PCX</background>
                 <data_id>VEHICLETYPE_CONSTRUCTION_VEHICLE</data_id>
                 <data_type>vehicle</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2636,7 +3221,10 @@
                 <background>xcom3/UFOPAEDI/15PROBE.PCX</background>
                 <data_id>VEHICLETYPE_DIMENSION_PROBE</data_id>
                 <data_type>vehicle</data_type>
-                <required_research>RESEARCH_DIMENSION_PROBE</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2649,7 +3237,10 @@
                 <background>xcom3/UFOPAEDI/16EXPLOR.PCX</background>
                 <data_id>VEHICLETYPE_EXPLORER</data_id>
                 <data_type>vehicle</data_type>
-                <required_research>RESEARCH_EXPLORER</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2662,7 +3253,10 @@
                 <background>xcom3/UFOPAEDI/23TANK1.PCX</background>
                 <data_id>VEHICLETYPE_GRIFFON_AFV</data_id>
                 <data_type>vehicle</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2675,7 +3269,10 @@
                 <background>xcom3/UFOPAEDI/17HAWK.PCX</background>
                 <data_id>VEHICLETYPE_HAWK_AIR_WARRIOR</data_id>
                 <data_type>vehicle</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2688,7 +3285,10 @@
                 <background>xcom3/UFOPAEDI/12BIKE2.PCX</background>
                 <data_id>VEHICLETYPE_HOVERBIKE</data_id>
                 <data_type>vehicle</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2701,7 +3301,10 @@
                 <background>xcom3/UFOPAEDI/18PHEONX.PCX</background>
                 <data_id>VEHICLETYPE_PHOENIX_HOVERCAR</data_id>
                 <data_type>vehicle</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2714,7 +3317,10 @@
                 <background>xcom3/UFOPAEDI/04POLICE.PCX</background>
                 <data_id>VEHICLETYPE_POLICE_CAR</data_id>
                 <data_type>vehicle</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2727,7 +3333,10 @@
                 <background>xcom3/UFOPAEDI/03POLIC2.PCX</background>
                 <data_id>VEHICLETYPE_POLICE_HOVERCAR</data_id>
                 <data_type>vehicle</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2740,7 +3349,10 @@
                 <background>xcom3/UFOPAEDI/05RESCUE.PCX</background>
                 <data_id>VEHICLETYPE_RESCUE_TRANSPORT</data_id>
                 <data_type>vehicle</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2753,7 +3365,10 @@
                 <background>xcom3/UFOPAEDI/19RETALI.PCX</background>
                 <data_id>VEHICLETYPE_RETALIATOR</data_id>
                 <data_type>vehicle</data_type>
-                <required_research>RESEARCH_RETALIATOR</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2766,7 +3381,10 @@
                 <background>xcom3/UFOPAEDI/06SPACE.PCX</background>
                 <data_id>VEHICLETYPE_SPACE_LINER</data_id>
                 <data_type>vehicle</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2779,7 +3397,10 @@
                 <background>xcom3/UFOPAEDI/20ROADWR.PCX</background>
                 <data_id>VEHICLETYPE_STORMDOG</data_id>
                 <data_type>vehicle</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2792,7 +3413,10 @@
                 <background>xcom3/UFOPAEDI/22STARFR.PCX</background>
                 <data_id>VEHICLETYPE_VALKYRIE_INTERCEPTOR</data_id>
                 <data_type>vehicle</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2805,7 +3429,10 @@
                 <background>xcom3/UFOPAEDI/21STALAG.PCX</background>
                 <data_id>VEHICLETYPE_WOLFHOUND_APC</data_id>
                 <data_type>vehicle</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2830,7 +3457,10 @@
                 <background>xcom3/UFOPAEDI/V13.PCX</background>
                 <data_id>VEQUIPMENTTYPE_40MM_AUTO_CANNON</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2843,7 +3473,10 @@
                 <background>xcom3/UFOPAEDI/V01.PCX</background>
                 <data_id>VEQUIPMENTTYPE_40MM_AUTO_CANNON_TURRET</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2856,7 +3489,10 @@
                 <background>xcom3/UFOPAEDI/V28.PCX</background>
                 <data_id>VEQUIPMENTTYPE_ADVANCED_CONTROL_SYSTEM</data_id>
                 <data_type>vequipment</data_type>
-                <required_research>RESEARCH_X-COM_ADVANCED_CONTROL_SYSTEM</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2869,7 +3505,10 @@
                 <background>xcom3/UFOPAEDI/V16.PCX</background>
                 <data_id>VEQUIPMENTTYPE_AIRGUARD_ANTI-AIR_CANNON</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2882,7 +3521,10 @@
                 <background>xcom3/UFOPAEDI/V32.PCX</background>
                 <data_id>VEQUIPMENTTYPE_BIO-TRANSPORT_MODULE</data_id>
                 <data_type>vequipment</data_type>
-                <required_research>RESEARCH_BIO-TRANSPORT_MODULE</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2895,7 +3537,10 @@
                 <background>xcom3/UFOPAEDI/V02.PCX</background>
                 <data_id>VEQUIPMENTTYPE_BOLTER_4000_LASER_GUN</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2908,7 +3553,10 @@
                 <background>xcom3/UFOPAEDI/V33.PCX</background>
                 <data_id>VEQUIPMENTTYPE_CARGO_MODULE</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2921,7 +3569,10 @@
                 <background>xcom3/UFOPAEDI/V25.PCX</background>
                 <data_id>VEQUIPMENTTYPE_CLOAKING_FIELD</data_id>
                 <data_type>vequipment</data_type>
-                <required_research>RESEARCH_CLOAKING_FIELD</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2934,7 +3585,10 @@
                 <background>xcom3/UFOPAEDI/V26.PCX</background>
                 <data_id></data_id>
                 <data_type>vequipment</data_type>
-                <required_research>RESEARCH_DIMENSION_SHIFTER</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2947,7 +3601,10 @@
                 <background>xcom3/UFOPAEDI/V21.PCX</background>
                 <data_id>VEQUIPMENTTYPE_DISRUPTOR_BOMB_LAUNCHER</data_id>
                 <data_type>vequipment</data_type>
-                <required_research>RESEARCH_DISRUPTOR_INVERSION_BOMB</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2960,7 +3617,10 @@
                 <background>xcom3/UFOPAEDI/V20.PCX</background>
                 <data_id>VEQUIPMENTTYPE_DISRUPTOR_MULTI-BOMB_LAUNCHER</data_id>
                 <data_type>vequipment</data_type>
-                <required_research>RESEARCH_DISRUPTOR_MULTI-BOMB</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2973,7 +3633,10 @@
                 <background>xcom3/UFOPAEDI/23TANK3.PCX</background>
                 <data_id>VEQUIPMENTTYPE_GLM_AIR_DEFENSE</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2986,7 +3649,10 @@
                 <background>xcom3/UFOPAEDI/V03.PCX</background>
                 <data_id>VEQUIPMENTTYPE_GLM_ARRAY</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -2999,7 +3665,10 @@
                 <background>xcom3/UFOPAEDI/V31.PCX</background>
                 <data_id>VEQUIPMENTTYPE_HEAVY_DISRUPTOR_BEAM</data_id>
                 <data_type>vequipment</data_type>
-                <required_research>RESEARCH_HEAVY_DISRUPTOR_BEAM</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3012,7 +3681,10 @@
                 <background>xcom3/UFOPAEDI/V08.PCX</background>
                 <data_id>VEQUIPMENTTYPE_HEAVY_WEAPONS_CONTROL</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3025,7 +3697,10 @@
                 <background>xcom3/UFOPAEDI/V19.PCX</background>
                 <data_id>VEQUIPMENTTYPE_JANITOR_MISSILE_ARRAY</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3038,7 +3713,10 @@
                 <background>xcom3/UFOPAEDI/V05.PCX</background>
                 <data_id>VEQUIPMENTTYPE_JUSTICE_MISSILE_LAUNCHER</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3051,7 +3729,10 @@
                 <background>xcom3/UFOPAEDI/V10.PCX</background>
                 <data_id>VEQUIPMENTTYPE_LANCER_7000_LASER_GUN</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3064,7 +3745,10 @@
                 <background>xcom3/UFOPAEDI/V24.PCX</background>
                 <data_id>VEQUIPMENTTYPE_LARGE_DISRUPTION_SHIELD</data_id>
                 <data_type>vequipment</data_type>
-                <required_research>RESEARCH_LARGE_DISRUPTION_SHIELD</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3077,7 +3761,10 @@
                 <background>xcom3/UFOPAEDI/V04.PCX</background>
                 <data_id>VEQUIPMENTTYPE_LASER_DEFENSE_ARRAY</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3090,7 +3777,10 @@
                 <background>xcom3/UFOPAEDI/V29.PCX</background>
                 <data_id>VEQUIPMENTTYPE_LIGHT_DISRUPTOR_BEAM</data_id>
                 <data_type>vequipment</data_type>
-                <required_research>RESEARCH_LIGHT_DISRUPTOR_BEAM</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3103,7 +3793,10 @@
                 <background>xcom3/UFOPAEDI/V06.PCX</background>
                 <data_id>VEQUIPMENTTYPE_LIGHT_WEAPONS_CONTROL</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3116,7 +3809,10 @@
                 <background>xcom3/UFOPAEDI/V11.PCX</background>
                 <data_id>VEQUIPMENTTYPE_LINEAGE_PLASMA_CANNON</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3129,7 +3825,10 @@
                 <background>xcom3/UFOPAEDI/V30.PCX</background>
                 <data_id>VEQUIPMENTTYPE_MEDIUM_DISRUPTOR_BEAM</data_id>
                 <data_type>vequipment</data_type>
-                <required_research>RESEARCH_MEDIUM_DISRUPTOR_BEAM</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3142,7 +3841,10 @@
                 <background>xcom3/UFOPAEDI/V07.PCX</background>
                 <data_id>VEQUIPMENTTYPE_MEDIUM_WEAPONS_CONTROL</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3155,7 +3857,10 @@
                 <background>xcom3/UFOPAEDI/H05.PCX</background>
                 <data_id>VEQUIPMENTTYPE_METRO_MULTIPOWER_PLUS</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3168,7 +3873,10 @@
                 <background>xcom3/UFOPAEDI/H04.PCX</background>
                 <data_id>VEQUIPMENTTYPE_METRO_POWERGRAV</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3181,7 +3889,10 @@
                 <background>xcom3/UFOPAEDI/H02.PCX</background>
                 <data_id>VEQUIPMENTTYPE_METRO_ROADGRAV</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3194,7 +3905,10 @@
                 <background>xcom3/UFOPAEDI/H01.PCX</background>
                 <data_id>VEQUIPMENTTYPE_METRO_ROADHOG</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3207,7 +3921,10 @@
                 <background>xcom3/UFOPAEDI/H03.PCX</background>
                 <data_id>VEQUIPMENTTYPE_METRO_TURBOGRAV</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3220,7 +3937,10 @@
                 <background>xcom3/UFOPAEDI/V09.PCX</background>
                 <data_id>VEQUIPMENTTYPE_MISSILE_EVASION_MATRIX</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3233,7 +3953,10 @@
                 <background>xcom3/UFOPAEDI/V34.PCX</background>
                 <data_id>VEQUIPMENTTYPE_PASSENGER_MODULE</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3246,7 +3969,10 @@
                 <background>xcom3/UFOPAEDI/V14.PCX</background>
                 <data_id>VEQUIPMENTTYPE_PLASMA_DEFENSE_ARRAY</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3259,7 +3985,10 @@
                 <background>xcom3/UFOPAEDI/V12.PCX</background>
                 <data_id>VEQUIPMENTTYPE_PLASMA_MULTI-SYSTEM</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3272,7 +4001,10 @@
                 <background>xcom3/UFOPAEDI/23TANK2.PCX</background>
                 <data_id>VEQUIPMENTTYPE_PLASMA_TURRET_CANNON</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3285,7 +4017,10 @@
                 <background>xcom3/UFOPAEDI/V18.PCX</background>
                 <data_id>VEQUIPMENTTYPE_PROPHET_MISSILE_ARRAY</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3298,7 +4033,10 @@
                 <background>xcom3/UFOPAEDI/V15.PCX</background>
                 <data_id>VEQUIPMENTTYPE_RENDOR_PLASMA_GUN</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3311,7 +4049,10 @@
                 <background>xcom3/UFOPAEDI/V17.PCX</background>
                 <data_id>VEQUIPMENTTYPE_RETRIBUTION_MISSILE_LAUNCHER</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3324,7 +4065,10 @@
                 <background>xcom3/UFOPAEDI/23TANK4.PCX</background>
                 <data_id>VEQUIPMENTTYPE_RUMBLE_CANNON</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3337,7 +4081,10 @@
                 <background>xcom3/UFOPAEDI/F02.PCX</background>
                 <data_id>VEQUIPMENTTYPE_SD_DELUXE</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3350,7 +4097,10 @@
                 <background>xcom3/UFOPAEDI/F05.PCX</background>
                 <data_id>VEQUIPMENTTYPE_SD_ELITE</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3363,7 +4113,10 @@
                 <background>xcom3/UFOPAEDI/F06.PCX</background>
                 <data_id>VEQUIPMENTTYPE_SD_SPECIAL</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3376,7 +4129,10 @@
                 <background>xcom3/UFOPAEDI/F03.PCX</background>
                 <data_id>VEQUIPMENTTYPE_SD_SPORTS</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3389,7 +4145,10 @@
                 <background>xcom3/UFOPAEDI/F01.PCX</background>
                 <data_id>VEQUIPMENTTYPE_SD_STANDARD</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3402,7 +4161,10 @@
                 <background>xcom3/UFOPAEDI/F04.PCX</background>
                 <data_id>VEQUIPMENTTYPE_SD_TURBO</data_id>
                 <data_type>vequipment</data_type>
-                <required_research />
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3415,7 +4177,10 @@
                 <background>xcom3/UFOPAEDI/V23.PCX</background>
                 <data_id>VEQUIPMENTTYPE_SMALL_DISRUPTION_SHIELD</data_id>
                 <data_type>vequipment</data_type>
-                <required_research>RESEARCH_SMALL_DISRUPTION_SHIELD</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3428,7 +4193,10 @@
                 <background>xcom3/UFOPAEDI/V22.PCX</background>
                 <data_id>VEQUIPMENTTYPE_STASIS_BOMB_LAUNCHER</data_id>
                 <data_type>vequipment</data_type>
-                <required_research>RESEARCH_STASIS_FIELD_BOMB</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>
@@ -3441,7 +4209,10 @@
                 <background>xcom3/UFOPAEDI/V27.PCX</background>
                 <data_id>VEQUIPMENTTYPE_TELEPORTER</data_id>
                 <data_type>vequipment</data_type>
-                <required_research>RESEARCH_TELEPORTER</required_research>
+                <dependency>
+                  <type>any</type>
+                  <topics />
+                </dependency>
               </sp>
             </value>
           </entry>

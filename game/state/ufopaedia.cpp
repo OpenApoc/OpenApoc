@@ -15,15 +15,6 @@ const std::map<UfopaediaEntry::Data, UString> UfopaediaEntry::DataMap = {
 
 UfopaediaEntry::UfopaediaEntry() : data_type(Data::Nothing) {}
 
-bool UfopaediaEntry::isVisible() const
-{
-	// No required research = always visible
-	if (!this->required_research)
-	{
-		return true;
-	}
-	// Otherwise only visible if the research is complete
-	return (this->required_research->isComplete());
-}
+bool UfopaediaEntry::isVisible() const { return this->dependency.satisfied(); }
 
 } // namespace OpenApoc

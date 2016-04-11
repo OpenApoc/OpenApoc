@@ -12,6 +12,10 @@ const std::map<ResearchTopic::LabSize, UString> ResearchTopic::LabSizeMap = {
     {LabSize::Small, "small"}, {LabSize::Large, "large"},
 };
 
+const std::map<ResearchDependency::Type, UString> ResearchDependency::TypeMap = {
+    {Type::Any, "any"}, {Type::All, "all"},
+};
+
 ResearchTopic::ResearchTopic()
     : man_hours(0), man_hours_progress(0), type(Type::BioChem), required_lab_size(LabSize::Small),
       score(0)
@@ -19,6 +23,38 @@ ResearchTopic::ResearchTopic()
 }
 
 bool ResearchTopic::isComplete() const { return this->man_hours_progress >= this->man_hours; }
+
+ResearchDependency::ResearchDependency() : type(Type::Any){};
+
+bool ResearchDependency::satisfied() const
+{
+	if (this->topics.empty())
+	{
+		// No dependencies == always satisfied
+		return true;
+	}
+	switch (this->type)
+	{
+		case Type::Any:
+		{
+			for (auto &r : this->topics)
+			{
+				if (r->isComplete())
+					return true;
+			}
+			return false;
+		}
+		case Type::All:
+		{
+			for (auto &r : this->topics)
+			{
+				if (!r->isComplete())
+					return false;
+			}
+			return true;
+		}
+	}
+}
 
 template <>
 sp<ResearchTopic> StateObject<ResearchTopic>::get(const GameState &state, const UString &id)

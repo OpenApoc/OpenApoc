@@ -10,9 +10,7 @@ struct research_data_t
 	uint16_t prereq;
 	uint16_t leadsTo1;
 	uint16_t leadsTo2;
-	uint16_t prereqTech1; // IDX into research list, 0xffff for none
-	uint16_t prereqTech2;
-	uint16_t prereqTech3;
+	uint16_t prereqTech[3]; // IDX into research list, 0xffff for none
 	uint16_t score;
 	uint32_t skillHours;
 	uint8_t researchGroup; // 0 = BioChem, 1 = Quantum Phys
