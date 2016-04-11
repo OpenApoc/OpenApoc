@@ -19,7 +19,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ANTHROPOD</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -35,7 +37,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ANTHROPOD_AUTOPSY</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -51,7 +55,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_BRAINSUCKER</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -67,7 +73,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_BRAINSUCKER_AUTOPSY</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -83,7 +91,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_BRAINSUCKER_PODS</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -99,7 +109,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_CHRYSALIS</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -115,7 +127,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_CHRYSALIS_AUTOPSY</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -131,7 +145,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_HYPERWORM</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -147,7 +163,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_HYPERWORM_AUTOPSY</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -163,7 +181,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_MEGASPAWN</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -179,7 +199,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_MEGASPAWN_AUTOPSY</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -195,7 +217,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_MICRONOID</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -211,7 +235,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_MICRONOID_AUTOPSY</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -227,7 +253,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_MULTIWORM</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -243,7 +271,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_MULTIWORM_AUTOPSY</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -259,7 +289,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_MULTIWORM_EGG</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -275,7 +307,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_MULTIWORM_EGG_AUTOPSY</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -291,7 +325,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_OVERSPAWN_AUTOPSY</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -307,7 +343,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_OVERSPAWN_AUTOPSY_1</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -323,7 +361,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_POPPER</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -339,7 +379,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_POPPER_AUTOPSY</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -355,7 +397,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_PSIMORPH</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -371,7 +415,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_PSIMORPH_AUTOPSY</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -387,7 +433,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_QUEENSPAWN</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -403,7 +451,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_QUEENSPAWN_AUTOPSY</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -419,7 +469,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_SKELETOID</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -435,7 +487,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_SKELETOID_AUTOPSY</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -451,7 +505,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_SPITTER</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -467,7 +523,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_SPITTER_AUTOPSY</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -483,7 +541,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_THE_ALIEN_GENETIC_STRUCTURE</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -499,7 +559,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_THE_ALIEN_LIFE_CYCLE</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -515,7 +577,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_THE_REAL_ALIEN_THREAT</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -543,7 +607,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_UFO_TYPE_6</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -559,7 +625,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_UFO_TYPE_9</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -575,7 +643,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_UFO_TYPE_7</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -591,7 +661,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ALIEN_CONTROL_SYSTEM</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -607,7 +679,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ALIEN_ENERGY_SOURCE</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -623,7 +697,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ALIEN_PROPULSION_SYSTEM</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -639,7 +715,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_UFO_TYPE_5</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -655,7 +733,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_UFO_TYPE_8</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -671,7 +751,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_UFO_TYPE_4</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -687,7 +769,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_UFO_TYPE_10</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -703,7 +787,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_UFO_TYPE_1</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -719,7 +805,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_UFO_TYPE_2</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -735,7 +823,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_UFO_TYPE_3</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -779,7 +869,9 @@
                 <data_type>facility</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ADVANCED_ALIEN_CONTAINMENT</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -795,7 +887,9 @@
                 <data_type>facility</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ADVANCED_BIOCHEMISTRY_LAB</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -811,7 +905,9 @@
                 <data_type>facility</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ADVANCED_QUANTUM_PHYSICS_LAB</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -827,7 +923,9 @@
                 <data_type>facility</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ADVANCED_SECURITY_STATION</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -843,7 +941,9 @@
                 <data_type>facility</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ADVANCED_WORKSHOP</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -1539,7 +1639,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ALIEN_GAS</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -1603,7 +1705,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_BOOMEROID</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -1619,7 +1723,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_BRAINSUCKER_LAUNCHER</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -1635,7 +1741,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_DEVASTATOR_CANNON</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -1651,7 +1759,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_DIMENSION_DESTABILISER</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -1667,7 +1777,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_DIMENSION_MISSILE</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -1683,7 +1795,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_DIMENSION_MISSILE_LAUNCHER</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -1699,7 +1813,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_DISRUPTOR_GUN</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -1731,7 +1847,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ENTROPY_LAUNCHER</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -1747,7 +1865,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ENTROPY_POD</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -1763,7 +1883,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ALIEN_GAS</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -2163,7 +2285,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ALIEN_GAS</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -2227,7 +2351,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_PERSONAL_CLOAKING_FIELD</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -2243,7 +2369,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_PERSONAL_DISRUPTOR_SHIELD</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -2259,7 +2387,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_PERSONAL_TELEPORTER</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -2307,7 +2437,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_BIOLOGICAL_WARFARE</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -2323,7 +2455,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_BIOLOGICAL_WARFARE</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -2339,7 +2473,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_TOXIN_TYPE_B</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -2355,7 +2491,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_TOXIN_TYPE_C</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -2371,7 +2509,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_VORTEX_MINE</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -2387,7 +2527,9 @@
                 <data_type>equipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_DISRUPTOR_ARMOR</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -2859,7 +3001,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ALIEN_BUILDING_2</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -2875,7 +3019,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ALIEN_BUILDING_5</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -2891,7 +3037,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_DIMENSION_GATES</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -2907,7 +3055,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ALIEN_BUILDING_9</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -2923,7 +3073,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ALIEN_BUILDING_1</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -2939,7 +3091,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ALIEN_BUILDING_4</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -2955,7 +3109,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ALIEN_BUILDING_3</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -2971,7 +3127,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ALIEN_BUILDING_8</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -2987,7 +3145,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ONE_WAY_TO_WIN</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -3003,7 +3163,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ALIEN_BUILDING_7</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -3019,7 +3181,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ALIEN_BUILDING</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -3035,7 +3199,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ALIEN_BUILDING_6</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -3051,7 +3217,9 @@
                 <data_type>none</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_THE_ALIEN_DIMENSION</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -3111,7 +3279,9 @@
                 <data_type>vehicle</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_ANNIHILATOR</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -3159,7 +3329,9 @@
                 <data_type>vehicle</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_BIO-TRANSPORT</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -3223,7 +3395,9 @@
                 <data_type>vehicle</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_DIMENSION_PROBE</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -3239,7 +3413,9 @@
                 <data_type>vehicle</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_EXPLORER</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -3367,7 +3543,9 @@
                 <data_type>vehicle</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_RETALIATOR</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -3491,7 +3669,9 @@
                 <data_type>vequipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_X-COM_ADVANCED_CONTROL_SYSTEM</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -3523,7 +3703,9 @@
                 <data_type>vequipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_BIO-TRANSPORT_MODULE</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -3571,7 +3753,9 @@
                 <data_type>vequipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_CLOAKING_FIELD</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -3587,7 +3771,9 @@
                 <data_type>vequipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_DIMENSION_SHIFTER</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -3603,7 +3789,9 @@
                 <data_type>vequipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_DISRUPTOR_INVERSION_BOMB</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -3619,7 +3807,9 @@
                 <data_type>vequipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_DISRUPTOR_MULTI-BOMB</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -3667,7 +3857,9 @@
                 <data_type>vequipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_HEAVY_DISRUPTOR_BEAM</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -3747,7 +3939,9 @@
                 <data_type>vequipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_LARGE_DISRUPTION_SHIELD</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -3779,7 +3973,9 @@
                 <data_type>vequipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_LIGHT_DISRUPTOR_BEAM</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -3827,7 +4023,9 @@
                 <data_type>vequipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_MEDIUM_DISRUPTOR_BEAM</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -4179,7 +4377,9 @@
                 <data_type>vequipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_SMALL_DISRUPTION_SHIELD</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -4195,7 +4395,9 @@
                 <data_type>vequipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_STASIS_FIELD_BOMB</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
@@ -4211,7 +4413,9 @@
                 <data_type>vequipment</data_type>
                 <dependency>
                   <type>any</type>
-                  <topics />
+                  <topics>
+                    <entry>RESEARCH_TELEPORTER</entry>
+                  </topics>
                 </dependency>
               </sp>
             </value>
