@@ -148,6 +148,10 @@ void City::update(GameState &state, unsigned int ticks)
 				StateRef<Building> dest = {&state, bldIt->first};
 				v->missions.emplace_back(VehicleMission::gotoBuilding(*v, dest));
 				v->missions.front()->start(state, *v);
+
+				// FIXME: Make snoozetime bounds/distribution readable from serialized GameState
+				std::uniform_int_distribution<unsigned int> snoozeTimeDist(10, 10000);
+				v->missions.emplace_back(VehicleMission::snooze(*v, snoozeTimeDist(state.rng)));
 			}
 		}
 	}
@@ -257,6 +261,20 @@ template <> const UString &StateObject<City>::getTypeName()
 {
 	static UString name = "City";
 	return name;
+}
+
+template <> const UString &StateObject<City>::getId(const GameState &state, const sp<City> ptr)
+{
+	static const UString emptyString = "";
+	for (auto &c : state.cities)
+	{
+		if (c.second == ptr)
+		{
+			return c.first;
+		}
+	}
+	LogError("No city matching pointer %p", ptr.get());
+	return emptyString;
 }
 
 } // namespace OpenApoc

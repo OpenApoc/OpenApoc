@@ -189,8 +189,10 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 	    ->addCallback(FormEventType::CheckBoxSelected,
 	                  [this](Event *e) -> void { this->updateSpeed = UpdateSpeed::Speed4; });
 	this->baseForm->FindControl("BUTTON_SPEED5")
-	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *e) -> void { this->updateSpeed = UpdateSpeed::Speed5; });
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) -> void {
+		    if (this->state->canTurbo())
+			    this->updateSpeed = UpdateSpeed::Speed5;
+		});
 	this->baseForm->FindControl("BUTTON_SHOW_ALIEN_INFILTRATION")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
@@ -354,6 +356,7 @@ void CityView::Render()
 void CityView::Update(StageCmd *const cmd)
 {
 	unsigned int ticks = 0;
+	bool turbo = false;
 	switch (this->updateSpeed)
 	{
 		case UpdateSpeed::Pause:
@@ -377,11 +380,15 @@ void CityView::Update(StageCmd *const cmd)
 			ticks = 6;
 			break;
 		case UpdateSpeed::Speed5:
-			LogWarning("FIXME: Sort out higher speed to not just hammer update (GOD-SLOW) - "
-			           "demoting to speed4");
-			/* FIXME: This should be '600' according to the scale above? */
-			ticks = 6;
-			this->updateSpeed = UpdateSpeed::Speed4;
+			if (!this->state->canTurbo())
+			{
+				this->updateSpeed = UpdateSpeed::Speed1;
+				ticks = 1;
+			}
+			else
+			{
+				turbo = true;
+			}
 			break;
 	}
 
@@ -405,12 +412,21 @@ void CityView::Update(StageCmd *const cmd)
 	*cmd = stageCmd;
 	stageCmd = StageCmd();
 
-	this->city->update(*state, ticks);
-	// move vehicles in all cities on any city screen
-	if (ticks > 0)
+	if (turbo)
 	{
-		for (auto &v : state->vehicles)
-			v.second->update(*state, ticks);
+		this->state->updateTurbo();
+		if (!this->state->canTurbo())
+		{
+			this->updateSpeed = UpdateSpeed::Speed1;
+		}
+	}
+	else
+	{
+		while (ticks > 0)
+		{
+			this->state->update();
+			ticks--;
+		}
 	}
 
 	// FIXME: Possibly more efficient ways than re-generating all controls every frame?

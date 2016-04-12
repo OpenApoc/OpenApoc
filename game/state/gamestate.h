@@ -22,9 +22,13 @@ class City;
 class Base;
 
 static const unsigned TICKS_PER_SECOND = 60;
+static const unsigned TURBO_TICKS = 600;
 
 class GameState
 {
+  private:
+	void update(unsigned int ticks);
+
   public:
 	std::map<UString, sp<VehicleType>> vehicle_types;
 	std::map<UString, sp<Organisation>> organisations;
@@ -45,6 +49,8 @@ class GameState
 	std::map<UString, unsigned> initial_facilities;
 
 	StateRef<Organisation> player;
+
+	StateRef<City> current_city;
 
 	GameState();
 	~GameState();
@@ -74,6 +80,20 @@ class GameState
 	// that is serialized but not serialized itself). This should also be called on starting a new
 	// game after startGame()
 	void initState();
+
+	// Returns true if we can go at max speed (IE push all update loops to 5 minute intervals -
+	// causes insta-completion of all routes etc.
+	// Cannot be done if:
+	// - there are any enemy units on the current map
+	// - there are any projectiles on the current map
+	bool canTurbo() const;
+
+	// Update progresses one 'tick'
+	void update();
+	// updateTurbo progresses 5 minutes at a time - can only be called if canTurbo() returns true.
+	// canTurbo() must be re-tested after each call to see if we should drop down to normal speed
+	// (e.g. enemy appeared, other user action required)
+	void updateTurbo();
 };
 
 }; // namespace OpenApoc

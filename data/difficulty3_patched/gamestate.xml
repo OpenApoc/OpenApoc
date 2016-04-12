@@ -73,6 +73,7 @@
       <value>1</value>
     </entry>
   </initial_facilities>
+  <current_city />
   <player>ORG_X-COM</player>
   <time>0</time>
 </gamestate>

@@ -145,6 +145,7 @@ void GameState::startGame()
 	// Create the intial starting base
 	// Randomly shuffle buildings until we find one with a base layout
 	sp<City> humanCity = this->cities["CITYMAP_HUMAN"];
+	this->current_city = {this, humanCity};
 	int buildingCount = humanCity->buildings.size();
 
 	std::vector<sp<Building>> buildingsWithBases;
@@ -207,6 +208,52 @@ void GameState::startGame()
 			count--;
 		}
 	}
+}
+
+bool GameState::canTurbo() const
+{
+	if (!this->current_city->projectiles.empty())
+	{
+		return false;
+	}
+	for (auto &v : this->vehicles)
+	{
+		if (v.second->city == this->current_city && v.second->tileObject != nullptr &&
+		    v.second->owner->isHostileTo(this->getPlayer()))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+void GameState::update(unsigned int ticks)
+{
+	for (auto &c : this->cities)
+	{
+		c.second->update(*this, ticks);
+	}
+	for (auto &v : this->vehicles)
+	{
+		v.second->update(*this, ticks);
+	}
+}
+
+void GameState::update() { this->update(1); }
+
+void GameState::updateTurbo()
+{
+	if (!this->canTurbo())
+	{
+		LogError("Called when canTurbo() is false");
+	}
+	unsigned ticksToUpdate = TURBO_TICKS;
+	// Turbo always re-aligns to TURBO_TICKS (5 minutes)
+	if (this->time % TURBO_TICKS)
+	{
+		ticksToUpdate -= ticksToUpdate % TURBO_TICKS;
+	}
+	this->update(ticksToUpdate);
 }
 
 }; // namespace OpenApoc
