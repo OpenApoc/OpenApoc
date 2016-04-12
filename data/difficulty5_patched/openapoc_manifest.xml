@@ -21,7 +21,7 @@
   <gamestate_xml SHA1="b100d38c68cdeec2b767fb3b35123b135d6fd6a9">gamestate/cities/CITYMAP_HUMAN/tile_types.xml</gamestate_xml>
   <gamestate_xml SHA1="87876067ff641a2ed28c2263dedf4a023d284169">gamestate/doodad_types.xml</gamestate_xml>
   <gamestate_xml SHA1="81386b2514f6a695441a2ee8d5ead6311015bee0">gamestate/facility_types.xml</gamestate_xml>
-  <gamestate_xml SHA1="7eab4d2363210a2ccec85dafda7d205534ff63c0">gamestate/organisations.xml</gamestate_xml>
+  <gamestate_xml SHA1="418982266672055365ccce0f3080db17c4473e9f">gamestate/organisations.xml</gamestate_xml>
   <gamestate_xml SHA1="a86ed75b4170a0cd3556a0e1eb8f8d4d39f0fd0b">gamestate/player_bases.xml</gamestate_xml>
   <gamestate_xml SHA1="86191495364d901c5c59a55a7821e80bb33fb558">gamestate/research.xml</gamestate_xml>
   <gamestate_xml SHA1="114f778214879709d10e2b9f085173c2aa2b7b01">gamestate/ufopaedia.xml</gamestate_xml>

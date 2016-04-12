@@ -10,10 +10,19 @@ Organisation::Organisation(const UString &name, int balance, int income)
 {
 }
 
-bool Organisation::isHostileTo(const Organisation &other) const
+bool Organisation::isHostileTo(StateRef<Organisation> other)
 {
-	// FIXME: Everyone is hostile!
-	return (this != &other);
+	if (other == this)
+	{
+		// Not hostile to yourself
+		return false;
+	}
+	// FIXME: Make the hostile threshold read from serialized GameState?
+	if (this->current_relations[other] <= -50)
+	{
+		return true;
+	}
+	return false;
 }
 
 template <>

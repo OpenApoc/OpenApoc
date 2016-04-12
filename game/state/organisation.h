@@ -2,6 +2,7 @@
 
 #include "game/state/stateobject.h"
 #include "library/strings.h"
+#include <map>
 
 namespace OpenApoc
 {
@@ -17,7 +18,8 @@ class Organisation : public StateObject<Organisation>
 	int income;
 
 	Organisation(const UString &name = "", int balance = 0, int income = 0);
-	bool isHostileTo(const Organisation &other) const;
+	bool isHostileTo(StateRef<Organisation> other);
+	std::map<StateRef<Organisation>, float> current_relations;
 };
 
 }; // namespace OpenApoc

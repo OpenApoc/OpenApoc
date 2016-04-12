@@ -375,6 +375,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("name"), org.name);
 	serializeIn(state, node->getNode("balance"), org.balance);
 	serializeIn(state, node->getNode("income"), org.income);
+	serializeIn(state, node->getNode("current_relations"), org.current_relations);
 }
 
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, FacilityType &f)
@@ -999,6 +1000,7 @@ template <> void serializeOut(sp<SerializationNode> node, const Organisation &or
 	serializeOut(node->addNode("name"), org.name);
 	serializeOut(node->addNode("balance"), org.balance);
 	serializeOut(node->addNode("income"), org.income);
+	serializeOut(node->addNode("current_relations"), org.current_relations);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const FacilityType &f)
