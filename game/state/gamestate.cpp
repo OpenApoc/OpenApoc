@@ -83,6 +83,22 @@ void GameState::initState()
 			v.second->setupMover();
 		}
 	}
+	for (auto &c : this->cities)
+	{
+		auto &city = c.second;
+		for (auto &s : city->scenery)
+		{
+			for (auto &b : city->buildings)
+			{
+				auto &building = b.second;
+				Vec2<int> pos2d{s->initialPosition.x, s->initialPosition.y};
+				if (building->bounds.within(pos2d))
+				{
+					s->building = {this, building};
+				}
+			}
+		}
+	}
 }
 
 void GameState::startGame()
