@@ -47,6 +47,10 @@ GameState::~GameState()
 			f->assigned_agents.clear();
 		}
 	}
+	for (auto &org : this->organisations)
+	{
+		org.second->current_relations.clear();
+	}
 }
 
 // Just a handy shortcut since it's shown on every single screen
