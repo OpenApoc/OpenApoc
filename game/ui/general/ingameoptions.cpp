@@ -102,8 +102,6 @@ void InGameOptions::EventOccurred(Event *e)
 					LogWarning("Topic \"%s\" marked as complete", r.first.c_str());
 				}
 			}
-			// FIXME: Save game selector
-			this->state->saveGame("save");
 			return;
 		}
 	}
