@@ -171,6 +171,11 @@ template <typename T> class StateRef
 		return obj;
 	}
 	const bool operator<(const StateRef<T> other) const { return this->id < other.id; }
+	void clear()
+	{
+		this->obj = nullptr;
+		this->id = "";
+	}
 };
 
 } // namespace OpenApoc

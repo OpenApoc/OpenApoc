@@ -165,6 +165,35 @@ void Base::buildFacility(StateRef<FacilityType> type, Vec2<int> pos, bool free)
 			}
 			facility->buildTime = type->buildTime;
 		}
+		if (type->capacityAmount > 0)
+		{
+			ResearchTopic::LabSize size;
+			// FIXME: Make LabSize set-able outside of the facility size?
+			if (type->size > 1)
+			{
+				size = ResearchTopic::LabSize::Large;
+			}
+			else
+			{
+				size = ResearchTopic::LabSize::Small;
+			}
+			switch (type->capacityType)
+			{
+				case FacilityType::Capacity::Chemistry:
+					facility->lab = mksp<Lab>();
+					facility->lab->size = size;
+					facility->lab->type = ResearchTopic::Type::BioChem;
+					break;
+				case FacilityType::Capacity::Physics:
+					facility->lab = mksp<Lab>();
+					facility->lab->size = size;
+					facility->lab->type = ResearchTopic::Type::Physics;
+					break;
+				case FacilityType::Capacity::Workshop:
+					// TODO: Engineering 'labs'
+					break;
+			}
+		}
 	}
 }
 

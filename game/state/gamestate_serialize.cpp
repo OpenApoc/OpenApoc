@@ -554,6 +554,28 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getSection("projectiles"), city.projectiles);
 }
 
+template <>
+void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchTopic::Type &t)
+{
+	serializeIn(state, node, t, ResearchTopic::TypeMap);
+}
+
+template <>
+void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchTopic::LabSize &s)
+{
+	serializeIn(state, node, s, ResearchTopic::LabSizeMap);
+}
+
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Lab &lab)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("size"), lab.size);
+	serializeIn(state, node->getNode("type"), lab.type);
+	serializeIn(state, node->getNode("current_project"), lab.current_project);
+	serializeIn(state, node->getNode("assigned_agents"), lab.assigned_agents);
+}
+
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Facility &facility)
 {
 	if (!node)
@@ -561,7 +583,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("type"), facility.type);
 	serializeIn(state, node->getNode("pos"), facility.pos);
 	serializeIn(state, node->getNode("buildTime"), facility.buildTime);
-	serializeIn(state, node->getNode("assigned_agents"), facility.assigned_agents);
+	serializeIn(state, node->getNode("lab"), facility.lab);
 }
 
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Base &base)
@@ -671,7 +693,6 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, ProjectDepe
 	serializeIn(state, node->getNode("research"), d.research);
 	serializeIn(state, node->getNode("items"), d.items);
 }
-
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchTopic &r)
 {
 	if (!node)
@@ -681,9 +702,8 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("ufopaedia_entry"), r.ufopaedia_entry);
 	serializeIn(state, node->getNode("man_hours"), r.man_hours);
 	serializeIn(state, node->getNode("man_hours_progress"), r.man_hours_progress);
-	serializeIn(state, node->getNode("type"), r.type, ResearchTopic::TypeMap);
-	serializeIn(state, node->getNode("required_lab_size"), r.required_lab_size,
-	            ResearchTopic::LabSizeMap);
+	serializeIn(state, node->getNode("type"), r.type);
+	serializeIn(state, node->getNode("required_lab_size"), r.required_lab_size);
 	serializeIn(state, node->getNode("score"), r.score);
 	serializeIn(state, node->getNode("dependencies"), r.dependencies);
 }
@@ -759,6 +779,13 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("portraits"), g.portraits);
 	serializeIn(state, node->getNode("min_stats"), g.min_stats);
 	serializeIn(state, node->getNode("max_stats"), g.max_stats);
+}
+
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchState &r)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("topics"), r.topics);
 }
 
 void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &s)
@@ -1136,12 +1163,29 @@ template <> void serializeOut(sp<SerializationNode> node, const Doodad &doodad)
 	serializeOut(node->addNode("type"), doodad.type);
 }
 
+template <> void serializeOut(sp<SerializationNode> node, const ResearchTopic::Type &t)
+{
+	serializeOut(node, t, ResearchTopic::TypeMap);
+}
+template <> void serializeOut(sp<SerializationNode> node, const ResearchTopic::LabSize &s)
+{
+	serializeOut(node, s, ResearchTopic::LabSizeMap);
+}
+
+template <> void serializeOut(sp<SerializationNode> node, const Lab &lab)
+{
+	serializeOut(node->addNode("size"), lab.size);
+	serializeOut(node->addNode("type"), lab.type);
+	serializeOut(node->addNode("current_project"), lab.current_project);
+	serializeOut(node->addNode("assigned_agents"), lab.assigned_agents);
+}
+
 template <> void serializeOut(sp<SerializationNode> node, const Facility &facility)
 {
 	serializeOut(node->addNode("type"), facility.type);
 	serializeOut(node->addNode("pos"), facility.pos);
 	serializeOut(node->addNode("buildTime"), facility.buildTime);
-	serializeOut(node->addNode("assigned_agents"), facility.assigned_agents);
+	serializeOut(node->addNode("lab"), facility.lab);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const Base &base)
@@ -1262,9 +1306,8 @@ template <> void serializeOut(sp<SerializationNode> node, const ResearchTopic &r
 	serializeOut(node->addNode("ufopaedia_entry"), r.ufopaedia_entry);
 	serializeOut(node->addNode("man_hours"), r.man_hours);
 	serializeOut(node->addNode("man_hours_progress"), r.man_hours_progress);
-	serializeOut(node->addNode("type"), r.type, ResearchTopic::TypeMap);
-	serializeOut(node->addNode("required_lab_size"), r.required_lab_size,
-	             ResearchTopic::LabSizeMap);
+	serializeOut(node->addNode("type"), r.type);
+	serializeOut(node->addNode("required_lab_size"), r.required_lab_size);
 	serializeOut(node->addNode("score"), r.score);
 	serializeOut(node->addNode("dependencies"), r.dependencies);
 }
@@ -1332,6 +1375,11 @@ template <> void serializeOut(sp<SerializationNode> node, const AgentGenerator &
 	serializeOut(node->addNode("portraits"), g.portraits);
 	serializeOut(node->addNode("min_stats"), g.min_stats);
 	serializeOut(node->addNode("max_stats"), g.max_stats);
+}
+
+template <> void serializeOut(sp<SerializationNode> node, const ResearchState &r)
+{
+	serializeOut(node->addNode("topics"), r.topics);
 }
 
 void serializeOut(sp<SerializationNode> node, const GameState &state)

@@ -40,7 +40,7 @@ class GameState
 	std::map<UString, sp<City>> cities;
 	std::map<UString, sp<Vehicle>> vehicles;
 	std::map<UString, sp<UfopaediaCategory>> ufopaedia;
-	std::map<UString, sp<ResearchTopic>> research;
+	ResearchState research;
 
 	std::map<UString, sp<Agent>> agents;
 	AgentGenerator agent_generator;

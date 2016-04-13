@@ -44,7 +44,7 @@ GameState::~GameState()
 	{
 		for (auto &f : b.second->facilities)
 		{
-			f->assigned_agents.clear();
+			f->lab = nullptr;
 		}
 	}
 	for (auto &org : this->organisations)

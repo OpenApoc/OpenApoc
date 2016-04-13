@@ -7,6 +7,7 @@ namespace OpenApoc
 {
 
 class Agent;
+class Lab;
 
 class Facility
 {
@@ -17,7 +18,7 @@ class Facility
 	Vec2<int> pos;
 	int buildTime;
 
-	std::list<StateRef<Agent>> assigned_agents;
+	sp<Lab> lab;
 };
 
 }; // namespace OpenApoc

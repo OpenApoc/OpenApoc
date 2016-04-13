@@ -70,7 +70,7 @@ void ResearchScreen::Begin()
 			    return;
 		    }
 		    agent->assigned_to_lab = true;
-		    this->selected_lab->assigned_agents.push_back({state.get(), agent});
+		    this->selected_lab->lab->assigned_agents.push_back({state.get(), agent});
 		    this->setCurrentLabInfo();
 		});
 	auto removeFn = [this](Event *e) -> void {
@@ -88,7 +88,7 @@ void ResearchScreen::Begin()
 			return;
 		}
 		agent->assigned_to_lab = false;
-		this->selected_lab->assigned_agents.remove({state.get(), agent});
+		this->selected_lab->lab->assigned_agents.remove({state.get(), agent});
 		this->setCurrentLabInfo();
 	};
 	auto assignedAgentListCol1 = form->FindControlTyped<ListBox>("LIST_ASSIGNED_COL1");
@@ -209,7 +209,7 @@ void ResearchScreen::setCurrentLabInfo()
 
 		if (agent.second->assigned_to_lab)
 		{
-			for (auto &assigned_agent : this->selected_lab->assigned_agents)
+			for (auto &assigned_agent : this->selected_lab->lab->assigned_agents)
 			{
 				if (assigned_agent.getSp() == agent.second)
 				{

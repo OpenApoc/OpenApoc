@@ -10,6 +10,7 @@ class UfopaediaEntry;
 class Base;
 class ResearchDependency;
 class ItemDependency;
+class Agent;
 
 class ProjectDependencies
 {
@@ -77,6 +78,22 @@ class ItemDependency
 	std::map<UString, int> items;
 
 	bool satisfied(StateRef<Base> base) const;
+};
+
+class Lab : public StateObject<Lab>
+{
+  public:
+	ResearchTopic::LabSize size;
+	ResearchTopic::Type type;
+	StateRef<ResearchTopic> current_project;
+	std::list<StateRef<Agent>> assigned_agents;
+};
+
+class ResearchState
+{
+  public:
+	ResearchState();
+	std::map<UString, sp<ResearchTopic>> topics;
 };
 
 } // namespace OpenApoc

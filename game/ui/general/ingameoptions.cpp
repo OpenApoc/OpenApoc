@@ -88,7 +88,7 @@ void InGameOptions::EventOccurred(Event *e)
 		}
 		else if (e->Forms().RaisedBy->Name == "BUTTON_GIVE_ALL_RESEARCH")
 		{
-			for (auto &r : this->state->research)
+			for (auto &r : this->state->research.topics)
 			{
 				LogWarning("Topic \"%s\"", r.first.c_str());
 				auto &topic = r.second;

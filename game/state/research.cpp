@@ -61,8 +61,8 @@ bool ResearchDependency::satisfied() const
 template <>
 sp<ResearchTopic> StateObject<ResearchTopic>::get(const GameState &state, const UString &id)
 {
-	auto it = state.research.find(id);
-	if (it == state.research.end())
+	auto it = state.research.topics.find(id);
+	if (it == state.research.topics.end())
 	{
 		LogError("No research topic matching ID \"%s\"", id.c_str());
 		return nullptr;
@@ -80,5 +80,7 @@ template <> const UString &StateObject<ResearchTopic>::getTypeName()
 	static UString name = "ResearchTopic";
 	return name;
 }
+
+ResearchState::ResearchState() {}
 
 } // namespace OpenApoc

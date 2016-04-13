@@ -68,11 +68,11 @@ void InitialGameStateExtractor::extractResearch(GameState &state, Difficulty dif
 
 		r->score = rdata.score;
 
-		if (state.research.find(id) != state.research.end())
+		if (state.research.topics.find(id) != state.research.topics.end())
 		{
 			LogError("Multiple research topics with ID \"%s\"", id.c_str());
 		}
-		state.research[id] = r;
+		state.research.topics[id] = r;
 // FIXME: The ufopaedia entries here don't seem to directly map to the IDs we're currently using?
 // May also be a many:1 ratio (e.g. the "alien gas" research topic unlocks multiple ufopaedia
 // entries) making this more complex
