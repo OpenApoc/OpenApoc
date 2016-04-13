@@ -202,7 +202,8 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 						/* Can't fire on things a world away */
 						continue;
 					}
-					if (this->owner->isRelatedTo(otherVehicle->owner) != Organisation::Relation::Hostile)
+					if (this->owner->isRelatedTo(otherVehicle->owner) !=
+					    Organisation::Relation::Hostile)
 					{
 						/* Not hostile, skip */
 						continue;

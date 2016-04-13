@@ -68,7 +68,7 @@ void UfopaediaCategoryView::Begin()
 		{
 			LogError("Failed to find UI control matching \"%s\"", labelName.c_str());
 		}
-		//label->SetText("");
+		label->SetText("");
 		orgLabels.push_back(label);
 
 		auto valueName = UString::format("ORG_VALUE_%d", i + 1);
@@ -77,7 +77,7 @@ void UfopaediaCategoryView::Begin()
 		{
 			LogError("Failed to find UI control matching \"%s\"", valueName.c_str());
 		}
-		//value->SetText("");
+		value->SetText("");
 		orgValues.push_back(value);
 	}
 	// Start with the intro page
@@ -309,26 +309,27 @@ void UfopaediaCategoryView::setFormStats()
 							UString relation = tr(ref->name);
 							switch (ref->isRelatedTo(player))
 							{
-							case Organisation::Relation::Allied:
-								relation += tr(": allied towards:");
-								break;
-							case Organisation::Relation::Friendly:
-								relation += tr(": friendly towards:");
-								break;
-							case Organisation::Relation::Neutral:
-								relation += tr(": neutral towards:");
-								break;
-							case Organisation::Relation::Unfriendly:
-								relation += tr(": unfriendly towards:");
-								break;
-							case Organisation::Relation::Hostile:
-								relation += tr(": hostile towards:");
-								break;
+								case Organisation::Relation::Allied:
+									relation += tr(": allied towards:");
+									break;
+								case Organisation::Relation::Friendly:
+									relation += tr(": friendly towards:");
+									break;
+								case Organisation::Relation::Neutral:
+									relation += tr(": neutral towards:");
+									break;
+								case Organisation::Relation::Unfriendly:
+									relation += tr(": unfriendly towards:");
+									break;
+								case Organisation::Relation::Hostile:
+									relation += tr(": hostile towards:");
+									break;
 							}
 							relation += UString(" ") + tr(player->name);
 							orgLabels[0]->SetText(relation);
 							orgLabels[3]->SetText(tr("Alien Infiltration"));
-							orgValues[3]->SetText(UString::format("%d%%", 0)); // FIXME: Not implemented yet
+							orgValues[3]->SetText(
+							    UString::format("%d%%", 0)); // FIXME: Not implemented yet
 						}
 					}
 				}

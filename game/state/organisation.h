@@ -13,15 +13,14 @@ template <typename T> class StateObject;
 class Organisation : public StateObject<Organisation>
 {
   public:
-
-	  enum class Relation
-	  {
-		  Allied,
-		  Friendly,
-		  Neutral,
-		  Unfriendly,
-		  Hostile
-	  };
+	enum class Relation
+	{
+		Allied,
+		Friendly,
+		Neutral,
+		Unfriendly,
+		Hostile
+	};
 	UString name;
 	int balance;
 	int income;
