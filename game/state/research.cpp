@@ -55,6 +55,7 @@ bool ResearchDependency::satisfied() const
 		}
 		default:
 			LogError("Unexpected ResearchDependency Type");
+			return false;
 	}
 }
 
