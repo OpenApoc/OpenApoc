@@ -239,7 +239,7 @@ bool GameState::canTurbo() const
 	for (auto &v : this->vehicles)
 	{
 		if (v.second->city == this->current_city && v.second->tileObject != nullptr &&
-		    v.second->owner->isHostileTo(this->getPlayer()))
+		    v.second->owner->isRelatedTo(this->getPlayer()) == Organisation::Relation::Hostile)
 		{
 			return false;
 		}

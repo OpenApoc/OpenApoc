@@ -60,6 +60,26 @@ void UfopaediaCategoryView::Begin()
 		value->SetText("");
 		statsValues.push_back(value);
 	}
+	for (int i = 0; i < 4; i++)
+	{
+		auto labelName = UString::format("ORG_LABEL_%d", i + 1);
+		auto label = menuform->FindControlTyped<Label>(labelName);
+		if (!label)
+		{
+			LogError("Failed to find UI control matching \"%s\"", labelName.c_str());
+		}
+		//label->SetText("");
+		orgLabels.push_back(label);
+
+		auto valueName = UString::format("ORG_VALUE_%d", i + 1);
+		auto value = menuform->FindControlTyped<Label>(valueName);
+		if (!value)
+		{
+			LogError("Failed to find UI control matching \"%s\"", valueName.c_str());
+		}
+		//value->SetText("");
+		orgValues.push_back(value);
+	}
 	// Start with the intro page
 	this->position_iterator = this->category->entries.end();
 	this->setFormData();
@@ -258,6 +278,11 @@ void UfopaediaCategoryView::setFormStats()
 		statsLabels[i]->SetText("");
 		statsValues[i]->SetText("");
 	}
+	for (unsigned int i = 0; i < orgLabels.size(); i++)
+	{
+		orgLabels[i]->SetText("");
+		orgValues[i]->SetText("");
+	}
 	unsigned int row = 0;
 	if (this->position_iterator != this->category->entries.end())
 	{
@@ -270,11 +295,42 @@ void UfopaediaCategoryView::setFormStats()
 				case UfopaediaEntry::Data::Organisation:
 				{
 					StateRef<Organisation> ref = {state.get(), data_id};
-					// FIXME: Need to use different label positions
-					statsLabels[row]->SetText(tr("Balance"));
-					statsValues[row++]->SetText(UString::format("$%d", ref->balance));
-					statsLabels[row]->SetText(tr("Income"));
-					statsValues[row++]->SetText(UString::format("$%d", ref->income));
+					StateRef<Organisation> player = state->getPlayer();
+					// FIXME: Should this be hardcoded?
+					if (data_id != "ORG_ALIEN")
+					{
+						orgLabels[1]->SetText(tr("Balance"));
+						orgValues[1]->SetText(UString::format("$%d", ref->balance));
+						orgLabels[2]->SetText(tr("Income"));
+						orgValues[2]->SetText(UString::format("$%d", ref->income));
+
+						if (ref != player)
+						{
+							UString relation = tr(ref->name);
+							switch (ref->isRelatedTo(player))
+							{
+							case Organisation::Relation::Allied:
+								relation += tr(": allied towards:");
+								break;
+							case Organisation::Relation::Friendly:
+								relation += tr(": friendly towards:");
+								break;
+							case Organisation::Relation::Neutral:
+								relation += tr(": neutral towards:");
+								break;
+							case Organisation::Relation::Unfriendly:
+								relation += tr(": unfriendly towards:");
+								break;
+							case Organisation::Relation::Hostile:
+								relation += tr(": hostile towards:");
+								break;
+							}
+							relation += UString(" ") + tr(player->name);
+							orgLabels[0]->SetText(relation);
+							orgLabels[3]->SetText(tr("Alien Infiltration"));
+							orgValues[3]->SetText(UString::format("%d%%", 0)); // FIXME: Not implemented yet
+						}
+					}
 				}
 				break;
 				case UfopaediaEntry::Data::Vehicle:

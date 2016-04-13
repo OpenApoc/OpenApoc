@@ -17,8 +17,8 @@ class UfopaediaCategoryView : public Stage
 	StageCmd stageCmd;
 	sp<GameState> state;
 	sp<UfopaediaCategory> category;
-	std::vector<sp<Label>> statsLabels;
-	std::vector<sp<Label>> statsValues;
+	std::vector<sp<Label>> orgLabels, orgValues;
+	std::vector<sp<Label>> statsLabels, statsValues;
 	int baseY;
 
 	// The iterator showing the current position of the entry within the category.

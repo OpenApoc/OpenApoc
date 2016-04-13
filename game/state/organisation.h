@@ -13,12 +13,23 @@ template <typename T> class StateObject;
 class Organisation : public StateObject<Organisation>
 {
   public:
+
+	  enum class Relation
+	  {
+		  Allied,
+		  Friendly,
+		  Neutral,
+		  Unfriendly,
+		  Hostile
+	  };
 	UString name;
 	int balance;
 	int income;
 
 	Organisation(const UString &name = "", int balance = 0, int income = 0);
-	bool isHostileTo(StateRef<Organisation> other);
+	Relation isRelatedTo(StateRef<Organisation> other);
+	bool isPositiveTo(StateRef<Organisation> other);
+	bool isNegativeTo(StateRef<Organisation> other);
 	std::map<StateRef<Organisation>, float> current_relations;
 };
 

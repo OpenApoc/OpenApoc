@@ -10,19 +10,55 @@ Organisation::Organisation(const UString &name, int balance, int income)
 {
 }
 
-bool Organisation::isHostileTo(StateRef<Organisation> other)
+Organisation::Relation Organisation::isRelatedTo(StateRef<Organisation> other)
 {
 	if (other == this)
 	{
-		// Not hostile to yourself
-		return false;
+		// Assume maximum relations
+		return Relation::Allied;
 	}
-	// FIXME: Make the hostile threshold read from serialized GameState?
-	if (this->current_relations[other] <= -50)
+
+	float x = this->current_relations[other];
+	// FIXME: Make the thresholds read from serialized GameState?
+	if (x <= -50)
 	{
+		return Relation::Hostile;
+	}
+	else if (x <= -25)
+	{
+		return Relation::Unfriendly;
+	}
+	else if (x >= 25)
+	{
+		return Relation::Friendly;
+	}
+	else if (x >= 75)
+	{
+		return Relation::Allied;
+	}
+	return Relation::Neutral;
+}
+
+bool Organisation::isPositiveTo(StateRef<Organisation> other)
+{
+	if (other == this)
+	{
+		// No pessimism
 		return true;
 	}
-	return false;
+
+	return this->current_relations[other] >= 0;
+}
+
+bool Organisation::isNegativeTo(StateRef<Organisation> other)
+{
+	if (other == this)
+	{
+		// No pessimism
+		return false;
+	}
+
+	return this->current_relations[other] < 0;
 }
 
 template <>

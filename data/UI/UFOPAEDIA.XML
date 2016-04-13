@@ -266,6 +266,54 @@
           <size width="135" height="15"/>
           <alignment horizontal="right" vertical="centre"/>
           <font>SMALFONT</font>
+        </label>		
+        <label id="ORG_LABEL_1" text="LABEL_1">
+          <position x="35" y="270"/>
+          <size width="270" height="15"/>
+          <alignment horizontal="left" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="ORG_LABEL_2" text="LABEL_2">
+          <position x="35" y="296"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="left" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="ORG_LABEL_3" text="LABEL_3">
+          <position x="35" y="312"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="left" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="ORG_LABEL_4" text="LABEL_4">
+          <position x="35" y="338"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="left" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+		<label id="ORG_VALUE_1" text="VALUE_1">
+          <position x="170" y="270"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="right" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="ORG_VALUE_2" text="VALUE_2">
+          <position x="170" y="296"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="right" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="ORG_VALUE_3" text="VALUE_3">
+          <position x="170" y="312"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="right" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
+        <label id="ORG_VALUE_4" text="VALUE_4">
+          <position x="170" y="338"/>
+          <size width="135" height="15"/>
+          <alignment horizontal="right" vertical="centre"/>
+          <font>SMALFONT</font>
         </label>
         <graphicbutton id="BUTTON_QUIT">
           <position x="602" y="442"/>
