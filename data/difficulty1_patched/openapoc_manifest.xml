@@ -6,7 +6,7 @@
   <gamestate_xml SHA1="0b1fc22224d3d4d266780fe20b1db95ee052bba0">gamestate/base_layouts.xml</gamestate_xml>
   <gamestate_xml SHA1="9f859d3887a364db435ca7462c26d9522ffca803">gamestate/cities.xml</gamestate_xml>
   <gamestate_xml SHA1="cb6971d9cad364cd419b8e9bca4c9f71214e865c">gamestate/cities/CITYMAP_ALIEN.xml</gamestate_xml>
-  <gamestate_xml SHA1="5e01fb408e9400d8533abadeb338742a4e4ba463">gamestate/cities/CITYMAP_ALIEN/buildings.xml</gamestate_xml>
+  <gamestate_xml SHA1="1bfbd14789e5895ca27dd90be76b9119e0f92f72">gamestate/cities/CITYMAP_ALIEN/buildings.xml</gamestate_xml>
   <gamestate_xml SHA1="ff393872d806ae0a943bf1d004395845fdad1533">gamestate/cities/CITYMAP_ALIEN/doodads.xml</gamestate_xml>
   <gamestate_xml SHA1="02d7cb2a5bcb2b159765027ca687a1accf84ea1b">gamestate/cities/CITYMAP_ALIEN/initial_tiles.xml</gamestate_xml>
   <gamestate_xml SHA1="52fe14d9a8805ae6a71aac2cbc44de80a1e9d1da">gamestate/cities/CITYMAP_ALIEN/projectiles.xml</gamestate_xml>

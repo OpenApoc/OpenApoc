@@ -23,7 +23,7 @@ struct bld_file_entry
 static_assert(sizeof(struct bld_file_entry) == 226, "Unexpected bld_file_entry size");
 
 void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFileName,
-                                                 sp<City> city)
+                                                 sp<City> city, bool useAlienNames)
 {
 	auto &data = this->ufo2p;
 
@@ -45,7 +45,16 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 		inFile.read((char *)&entry, sizeof(entry));
 
 		auto b = mksp<Building>();
-		b->name = data.building_names->get(entry.name_idx);
+		if (useAlienNames)
+		{
+			LogWarning("Alien bld %d", entry.name_idx);
+			// FIXME: albld.bld seems to have unexpected name_idx?
+			b->name = data.alien_building_names->get(i);
+		}
+		else
+		{
+			b->name = data.building_names->get(entry.name_idx);
+		}
 		b->owner = {&state, data.get_org_id(entry.owner_idx)};
 		// Our rects are exclusive of p2
 		b->bounds = {entry.x0, entry.y0, entry.x1 + 1, entry.y1 + 1};

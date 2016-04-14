@@ -31,7 +31,8 @@ class InitialGameStateExtractor
 	void extractVehicleEquipment(GameState &state, Difficulty difficulty);
 	void extractResearch(GameState &state, Difficulty difficulty);
 
-	void extractBuildings(GameState &state, UString bldFileName, sp<City> city);
+	void extractBuildings(GameState &state, UString bldFileName, sp<City> city,
+	                      bool useAlienNames = false);
 	void extractCityMap(GameState &state, UString fileName, UString tilePrefix, sp<City> city);
 	void extractCityScenery(GameState &state, UString tilePrefix, UString datFile,
 	                        UString spriteFile, UString stratmapFile, UString lofFile,
