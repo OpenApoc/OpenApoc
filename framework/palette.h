@@ -16,8 +16,16 @@ class Palette
 	Palette(unsigned int size = 256, Colour initialColour = {0, 0, 0, 0});
 	~Palette();
 
-	Colour &GetColour(unsigned int Index);
-	void SetColour(unsigned int Index, Colour Col);
+	const Colour &GetColour(unsigned int idx) const
+	{
+		assert(idx < colours.size());
+		return colours[idx];
+	}
+	void SetColour(unsigned int idx, Colour c)
+	{
+		assert(idx < colours.size());
+		colours[idx] = std::move(c);
+	}
 
 	// Copy constructor copies everything /except/ the renderer private data
 	Palette(const Palette &);

@@ -12,18 +12,6 @@ Palette::Palette(unsigned int size, Colour initialColour) : colours(size)
 
 Palette::~Palette() {}
 
-Colour &Palette::GetColour(unsigned int idx)
-{
-	assert(idx < colours.size());
-	return colours[idx];
-}
-
-void Palette::SetColour(unsigned int idx, Colour c)
-{
-	assert(idx < colours.size());
-	colours[idx] = std::move(c);
-}
-
 Palette::Palette(const Palette &source) { this->colours = source.colours; }
 
 }; // namespace OpenApoc
