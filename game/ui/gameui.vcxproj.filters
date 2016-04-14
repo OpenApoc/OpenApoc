@@ -78,6 +78,9 @@
     <ClCompile Include="ufopaedia\ufopaediaview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="base\researchselect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boot.h">
@@ -141,6 +144,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ufopaedia\ufopaediaview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\researchselect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
