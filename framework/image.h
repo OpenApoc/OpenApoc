@@ -71,8 +71,18 @@ class PaletteImageLock
   public:
 	PaletteImageLock(sp<PaletteImage> img, ImageLockUse use = ImageLockUse::Write);
 	~PaletteImageLock();
-	uint8_t get(Vec2<unsigned int> pos);
-	void set(Vec2<unsigned int> pos, uint8_t idx);
+	uint8_t get(const Vec2<unsigned int> &pos) const
+	{
+		unsigned offset = pos.y * this->img->size.x + pos.x;
+		assert(offset < this->img->size.x * this->img->size.y);
+		return this->img->indices[offset];
+	}
+	void set(const Vec2<unsigned int> &pos, const uint8_t idx)
+	{
+		unsigned offset = pos.y * this->img->size.x + pos.x;
+		assert(offset < this->img->size.x * this->img->size.y);
+		this->img->indices[offset] = idx;
+	}
 
 	// FIXME: Magic backdoor to the index data
 	void *getData();
@@ -103,8 +113,18 @@ class RGBImageLock
   public:
 	RGBImageLock(sp<RGBImage> img, ImageLockUse use = ImageLockUse::Write);
 	~RGBImageLock();
-	Colour get(Vec2<unsigned int> pos);
-	void set(Vec2<unsigned int> pos, Colour c);
+	Colour get(const Vec2<unsigned int> &pos) const
+	{
+		unsigned offset = pos.y * this->img->size.x + pos.x;
+		assert(offset < this->img->size.x * this->img->size.y);
+		return this->img->pixels[offset];
+	}
+	void set(const Vec2<unsigned int> &pos, const Colour &c)
+	{
+		unsigned offset = pos.y * this->img->size.x + pos.x;
+		assert(offset < this->img->size.x * this->img->size.y);
+		this->img->pixels[offset] = c;
+	}
 
 	// FIXME: Magic backdoor to the RGBA data
 	void *getData();
