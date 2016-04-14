@@ -392,8 +392,6 @@ void CityView::Update(StageCmd *const cmd)
 			break;
 	}
 
-
-
 	if (turbo)
 	{
 		this->state->updateTurbo();
@@ -421,7 +419,7 @@ void CityView::Update(StageCmd *const cmd)
 	unsigned hoursClamped = hours % 24;
 
 	auto timeString =
-		UString::format("%02u:%02u:%02u", hoursClamped, minutesClamped, secondsClamped);
+	    UString::format("%02u:%02u:%02u", hoursClamped, minutesClamped, secondsClamped);
 	clockControl->SetText(timeString);
 
 	// FIXME: Possibly more efficient ways than re-generating all controls every frame?
