@@ -1,164 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <buildings>
   <entry>
-    <key>BUILDING_BUILDING</key>
+    <key>BUILDING_ALIEN_FARM</key>
     <value>
       <sp>
-        <name>Building</name>
-        <owner>ORG_ALIEN</owner>
-        <bounds>
-          <p0>
-            <x>44</x>
-            <y>50</y>
-          </p0>
-          <p1>
-            <x>53</x>
-            <y>60</y>
-          </p1>
-        </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>BUILDING_ILIAD_INSTITUTE</key>
-    <value>
-      <sp>
-        <name>Iliad Institute</name>
-        <owner>ORG_ALIEN</owner>
-        <bounds>
-          <p0>
-            <x>77</x>
-            <y>43</y>
-          </p0>
-          <p1>
-            <x>88</x>
-            <y>53</y>
-          </p1>
-        </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>BUILDING_JUDGMENT_CENTRAL</key>
-    <value>
-      <sp>
-        <name>Judgment Central</name>
-        <owner>ORG_ALIEN</owner>
-        <bounds>
-          <p0>
-            <x>68</x>
-            <y>59</y>
-          </p0>
-          <p1>
-            <x>75</x>
-            <y>68</y>
-          </p1>
-        </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>BUILDING_MEGAVISION_ONE</key>
-    <value>
-      <sp>
-        <name>Megavision One</name>
-        <owner>ORG_ALIEN</owner>
-        <bounds>
-          <p0>
-            <x>71</x>
-            <y>22</y>
-          </p0>
-          <p1>
-            <x>80</x>
-            <y>30</y>
-          </p1>
-        </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>BUILDING_PHOENIX_SANATORIUM</key>
-    <value>
-      <sp>
-        <name>Phoenix Sanatorium</name>
-        <owner>ORG_ALIEN</owner>
-        <bounds>
-          <p0>
-            <x>55</x>
-            <y>20</y>
-          </p0>
-          <p1>
-            <x>63</x>
-            <y>28</y>
-          </p1>
-        </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>BUILDING_QUADRAX_TOWER</key>
-    <value>
-      <sp>
-        <name>Quadrax Tower</name>
-        <owner>ORG_ALIEN</owner>
-        <bounds>
-          <p0>
-            <x>49</x>
-            <y>68</y>
-          </p0>
-          <p1>
-            <x>56</x>
-            <y>78</y>
-          </p1>
-        </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>BUILDING_RESCUE_ONE</key>
-    <value>
-      <sp>
-        <name>Rescue One</name>
-        <owner>ORG_ALIEN</owner>
-        <bounds>
-          <p0>
-            <x>41</x>
-            <y>21</y>
-          </p0>
-          <p1>
-            <x>49</x>
-            <y>29</y>
-          </p1>
-        </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>BUILDING_THE_SENATE</key>
-    <value>
-      <sp>
-        <name>The Senate</name>
+        <name>Alien Farm</name>
         <owner>ORG_ALIEN</owner>
         <bounds>
           <p0>
@@ -177,10 +23,120 @@
     </value>
   </entry>
   <entry>
-    <key>BUILDING_TRANSTELLAR_SPACELINES</key>
+    <key>BUILDING_CONTROL_CHAMBER</key>
     <value>
       <sp>
-        <name>Transtellar Spacelines</name>
+        <name>Control Chamber</name>
+        <owner>ORG_ALIEN</owner>
+        <bounds>
+          <p0>
+            <x>41</x>
+            <y>21</y>
+          </p0>
+          <p1>
+            <x>49</x>
+            <y>29</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_DIMENSION_GATE_GENERATOR</key>
+    <value>
+      <sp>
+        <name>Dimension Gate Generator</name>
+        <owner>ORG_ALIEN</owner>
+        <bounds>
+          <p0>
+            <x>71</x>
+            <y>22</y>
+          </p0>
+          <p1>
+            <x>80</x>
+            <y>30</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_FOOD_CHAMBER</key>
+    <value>
+      <sp>
+        <name>Food Chamber</name>
+        <owner>ORG_ALIEN</owner>
+        <bounds>
+          <p0>
+            <x>49</x>
+            <y>68</y>
+          </p0>
+          <p1>
+            <x>56</x>
+            <y>78</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_INCUBATOR_CHAMBER</key>
+    <value>
+      <sp>
+        <name>Incubator Chamber</name>
+        <owner>ORG_ALIEN</owner>
+        <bounds>
+          <p0>
+            <x>77</x>
+            <y>43</y>
+          </p0>
+          <p1>
+            <x>88</x>
+            <y>53</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_MAINTENANCE_FACTORY</key>
+    <value>
+      <sp>
+        <name>Maintenance Factory</name>
+        <owner>ORG_ALIEN</owner>
+        <bounds>
+          <p0>
+            <x>55</x>
+            <y>20</y>
+          </p0>
+          <p1>
+            <x>63</x>
+            <y>28</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_MEGAPOD_CHAMBER</key>
+    <value>
+      <sp>
+        <name>Megapod Chamber</name>
         <owner>ORG_ALIEN</owner>
         <bounds>
           <p0>
@@ -199,10 +155,10 @@
     </value>
   </entry>
   <entry>
-    <key>BUILDING_UHURU_TOWER</key>
+    <key>BUILDING_ORGANIC_FACTORY</key>
     <value>
       <sp>
-        <name>Uhuru Tower</name>
+        <name>Organic Factory</name>
         <owner>ORG_ALIEN</owner>
         <bounds>
           <p0>
@@ -212,6 +168,50 @@
           <p1>
             <x>35</x>
             <y>52</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_SLEEPING_CHAMBER</key>
+    <value>
+      <sp>
+        <name>Sleeping Chamber</name>
+        <owner>ORG_ALIEN</owner>
+        <bounds>
+          <p0>
+            <x>44</x>
+            <y>50</y>
+          </p0>
+          <p1>
+            <x>53</x>
+            <y>60</y>
+          </p1>
+        </bounds>
+        <base_layout />
+        <landingPadLocations />
+        <landed_vehicles />
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>BUILDING_SPAWNING_CHAMBER</key>
+    <value>
+      <sp>
+        <name>Spawning Chamber</name>
+        <owner>ORG_ALIEN</owner>
+        <bounds>
+          <p0>
+            <x>68</x>
+            <y>59</y>
+          </p0>
+          <p1>
+            <x>75</x>
+            <y>68</y>
           </p1>
         </bounds>
         <base_layout />

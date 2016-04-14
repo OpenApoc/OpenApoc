@@ -266,7 +266,7 @@
           <size width="135" height="15"/>
           <alignment horizontal="right" vertical="centre"/>
           <font>SMALFONT</font>
-        </label>		
+        </label>
         <label id="ORG_LABEL_1" text="LABEL_1">
           <position x="35" y="270"/>
           <size width="270" height="15"/>
@@ -291,7 +291,7 @@
           <alignment horizontal="left" vertical="centre"/>
           <font>SMALFONT</font>
         </label>
-		<label id="ORG_VALUE_1" text="VALUE_1">
+        <label id="ORG_VALUE_1" text="VALUE_1">
           <position x="170" y="270"/>
           <size width="135" height="15"/>
           <alignment horizontal="right" vertical="centre"/>

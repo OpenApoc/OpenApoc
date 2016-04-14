@@ -13,6 +13,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>80</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -39,6 +40,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>80</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -63,6 +65,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>80</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -91,6 +94,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>80</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -119,6 +123,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>80</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -145,6 +150,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>380</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -169,6 +175,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>420</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -193,6 +200,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>320</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -217,6 +225,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>460</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -241,6 +250,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>300</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -267,6 +277,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>440</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -291,6 +302,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>340</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -315,6 +327,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>400</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -339,6 +352,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>360</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -363,6 +377,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>480</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -387,6 +402,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -411,6 +427,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -435,6 +452,7 @@
           <type>biochem</type>
           <required_lab_size>large</required_lab_size>
           <score>100</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -463,6 +481,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -487,6 +506,7 @@
           <type>physics</type>
           <required_lab_size>large</required_lab_size>
           <score>300</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -514,6 +534,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>200</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -538,6 +559,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>200</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -562,6 +584,7 @@
           <type>physics</type>
           <required_lab_size>large</required_lab_size>
           <score>100</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -589,6 +612,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>80</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -613,6 +637,7 @@
           <type>biochem</type>
           <required_lab_size>large</required_lab_size>
           <score>200</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -639,6 +664,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -663,6 +689,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>120</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -687,6 +714,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>120</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -711,6 +739,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>100</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -735,6 +764,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>100</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -759,6 +789,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -783,6 +814,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -807,6 +839,7 @@
           <type>physics</type>
           <required_lab_size>large</required_lab_size>
           <score>200</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -833,6 +866,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>200</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -859,6 +893,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>100</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -883,6 +918,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>50</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -907,6 +943,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -931,6 +968,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -955,6 +993,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>80</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -983,6 +1022,7 @@
           <type>physics</type>
           <required_lab_size>large</required_lab_size>
           <score>400</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1009,6 +1049,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1037,6 +1078,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>100</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1061,6 +1103,7 @@
           <type>physics</type>
           <required_lab_size>large</required_lab_size>
           <score>300</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1087,6 +1130,7 @@
           <type>physics</type>
           <required_lab_size>large</required_lab_size>
           <score>400</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1113,6 +1157,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>100</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1137,6 +1182,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>100</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1161,6 +1207,7 @@
           <type>physics</type>
           <required_lab_size>large</required_lab_size>
           <score>120</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1188,6 +1235,7 @@
           <type>physics</type>
           <required_lab_size>large</required_lab_size>
           <score>400</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1214,6 +1262,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1238,6 +1287,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1262,6 +1312,7 @@
           <type>physics</type>
           <required_lab_size>large</required_lab_size>
           <score>300</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1288,6 +1339,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>200</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1312,6 +1364,7 @@
           <type>physics</type>
           <required_lab_size>large</required_lab_size>
           <score>300</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1338,6 +1391,7 @@
           <type>biochem</type>
           <required_lab_size>large</required_lab_size>
           <score>200</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1362,6 +1416,7 @@
           <type>biochem</type>
           <required_lab_size>large</required_lab_size>
           <score>200</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1386,6 +1441,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>300</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1410,6 +1466,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>300</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1434,6 +1491,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1458,6 +1516,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1482,6 +1541,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>120</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1506,6 +1566,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>120</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1530,6 +1591,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>500</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1554,6 +1616,7 @@
           <type>biochem</type>
           <required_lab_size>large</required_lab_size>
           <score>450</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1578,6 +1641,7 @@
           <type>biochem</type>
           <required_lab_size>large</required_lab_size>
           <score>450</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1602,6 +1666,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1626,6 +1691,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>200</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1650,6 +1716,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>200</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1674,6 +1741,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1698,6 +1766,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1722,6 +1791,7 @@
           <type>biochem</type>
           <required_lab_size>large</required_lab_size>
           <score>250</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1746,6 +1816,7 @@
           <type>biochem</type>
           <required_lab_size>large</required_lab_size>
           <score>250</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1770,6 +1841,7 @@
           <type>biochem</type>
           <required_lab_size>large</required_lab_size>
           <score>450</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1794,6 +1866,7 @@
           <type>biochem</type>
           <required_lab_size>large</required_lab_size>
           <score>450</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1818,6 +1891,7 @@
           <type>physics</type>
           <required_lab_size>large</required_lab_size>
           <score>200</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1845,6 +1919,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>200</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1869,6 +1944,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>200</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1893,6 +1969,7 @@
           <type>physics</type>
           <required_lab_size>large</required_lab_size>
           <score>200</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1919,6 +1996,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1943,6 +2021,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1967,6 +2046,7 @@
           <type>physics</type>
           <required_lab_size>large</required_lab_size>
           <score>300</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -1993,6 +2073,7 @@
           <type>physics</type>
           <required_lab_size>large</required_lab_size>
           <score>400</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -2019,6 +2100,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>50</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -2043,6 +2125,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>300</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -2071,6 +2154,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>400</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -2095,6 +2179,7 @@
           <type>biochem</type>
           <required_lab_size>small</required_lab_size>
           <score>500</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -2119,6 +2204,7 @@
           <type>biochem</type>
           <required_lab_size>large</required_lab_size>
           <score>100</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -2146,6 +2232,7 @@
           <type>biochem</type>
           <required_lab_size>large</required_lab_size>
           <score>100</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -2173,6 +2260,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>80</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -2197,6 +2285,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>200</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -2221,6 +2310,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>80</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -2245,6 +2335,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>100</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -2269,6 +2360,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>100</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -2293,6 +2385,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>120</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -2317,6 +2410,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>120</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -2341,6 +2435,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -2365,6 +2460,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -2389,6 +2485,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>200</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -2413,6 +2510,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>150</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>
@@ -2437,6 +2535,7 @@
           <type>physics</type>
           <required_lab_size>small</required_lab_size>
           <score>200</score>
+          <started>false</started>
           <dependencies>
             <research>
               <entry>

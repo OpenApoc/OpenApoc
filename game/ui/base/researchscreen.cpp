@@ -4,6 +4,7 @@
 #include "framework/framework.h"
 #include "game/state/base/facility.h"
 #include "game/state/gamestate.h"
+#include "game/ui/base/researchselect.h"
 
 namespace OpenApoc
 {
@@ -133,6 +134,18 @@ void ResearchScreen::EventOccurred(Event *e)
 				stageCmd.cmd = StageCmd::Command::POP;
 				return;
 			}
+			else if (e->Forms().RaisedBy->Name == "BUTTON_RESEARCH_NEWPROJECT")
+			{
+				if (!this->selected_lab)
+				{
+					// No lab selected, ignore this click
+					return;
+				}
+				stageCmd.cmd = StageCmd::Command::PUSH;
+				stageCmd.nextStage =
+				    mksp<ResearchSelect>(this->state, this->base, this->selected_lab->lab);
+				return;
+			}
 		}
 	}
 }
@@ -161,6 +174,19 @@ bool ResearchScreen::IsTransition() { return false; }
 
 void ResearchScreen::setCurrentLabInfo()
 {
+	if (!this->selected_lab)
+	{
+		auto unassignedAgentList = form->FindControlTyped<ListBox>("LIST_UNASSIGNED");
+		unassignedAgentList->Clear();
+		auto assignedAgentListCol1 = form->FindControlTyped<ListBox>("LIST_ASSIGNED_COL1");
+		assignedAgentListCol1->Clear();
+		auto assignedAgentListCol2 = form->FindControlTyped<ListBox>("LIST_ASSIGNED_COL2");
+		assignedAgentListCol2->Clear();
+		form->FindControlTyped<Label>("TEXT_LAB_TYPE")->SetText("");
+		auto totalSkillLabel = form->FindControlTyped<Label>("TEXT_TOTAL_SKILL");
+		totalSkillLabel->SetText(UString::format(tr("Total Skill: %d"), 0));
+		return;
+	}
 	int totalLabSkill = 0;
 	this->assigned_agent_count = 0;
 	auto labType = this->selected_lab->type->capacityType;

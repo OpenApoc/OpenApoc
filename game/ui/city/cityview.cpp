@@ -416,26 +416,6 @@ void CityView::Update(StageCmd *const cmd)
 			break;
 	}
 
-	// As the city view is the only screen that actually progresses time, incremnt that here
-	state->time += ticks;
-
-	auto clockControl = baseForm->FindControlTyped<Label>("CLOCK");
-
-	auto seconds = state->time / TICKS_PER_SECOND;
-	auto minutes = seconds / 60;
-	auto hours = minutes / 60;
-
-	unsigned secondsClamped = seconds % 60;
-	unsigned minutesClamped = minutes % 60;
-	unsigned hoursClamped = hours % 24;
-
-	auto timeString =
-	    UString::format("%02u:%02u:%02u", hoursClamped, minutesClamped, secondsClamped);
-	clockControl->SetText(timeString);
-
-	*cmd = stageCmd;
-	stageCmd = StageCmd();
-
 	if (turbo)
 	{
 		this->state->updateTurbo();
@@ -452,6 +432,19 @@ void CityView::Update(StageCmd *const cmd)
 			ticks--;
 		}
 	}
+	auto clockControl = baseForm->FindControlTyped<Label>("CLOCK");
+
+	auto seconds = state->time / TICKS_PER_SECOND;
+	auto minutes = seconds / 60;
+	auto hours = minutes / 60;
+
+	unsigned secondsClamped = seconds % 60;
+	unsigned minutesClamped = minutes % 60;
+	unsigned hoursClamped = hours % 24;
+
+	auto timeString =
+	    UString::format("%02u:%02u:%02u", hoursClamped, minutesClamped, secondsClamped);
+	clockControl->SetText(timeString);
 
 	// FIXME: Possibly more efficient ways than re-generating all controls every frame?
 
@@ -521,6 +514,8 @@ void CityView::Update(StageCmd *const cmd)
 			}
 		}
 	}
+	*cmd = stageCmd;
+	stageCmd = StageCmd();
 }
 
 void CityView::EventOccurred(Event *e)

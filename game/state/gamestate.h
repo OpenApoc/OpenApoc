@@ -22,7 +22,7 @@ class City;
 class Base;
 
 static const unsigned TICKS_PER_SECOND = 60;
-static const unsigned TURBO_TICKS = 600;
+static const unsigned TURBO_TICKS = 5 * 60 * TICKS_PER_SECOND;
 
 class GameState
 {

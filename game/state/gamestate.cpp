@@ -256,6 +256,7 @@ void GameState::update(unsigned int ticks)
 	{
 		v.second->update(*this, ticks);
 	}
+	this->time += ticks;
 }
 
 void GameState::update() { this->update(1); }

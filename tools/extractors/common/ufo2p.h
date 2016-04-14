@@ -23,6 +23,9 @@
 #define BUILDING_NAME_STRTAB_OFFSET_START 1351122
 #define BUILDING_NAME_STRTAB_OFFSET_END 1353322
 
+#define ALIEN_BUILDING_NAME_STRTAB_OFFSET_START 1355043
+#define ALIEN_BUILDING_NAME_STRTAB_OFFSET_END 1355211
+
 namespace OpenApoc
 {
 
@@ -37,6 +40,8 @@ class UFO2P
 	std::unique_ptr<StrTab> vehicle_names;
 	std::unique_ptr<StrTab> organisation_names;
 	std::unique_ptr<StrTab> building_names;
+
+	std::unique_ptr<StrTab> alien_building_names;
 
 	std::unique_ptr<DataChunk<vehicle_data_t>> vehicle_data;
 

@@ -25,7 +25,7 @@ void InitialGameStateExtractor::extract(GameState &state, Difficulty difficulty)
 	state.cities[alienMapId] = std::make_shared<City>();
 
 	this->extractBuildings(state, humanMapNames[difficulty], state.cities[humanMapId]);
-	this->extractBuildings(state, "albuild", state.cities[alienMapId]);
+	this->extractBuildings(state, "albuild", state.cities[alienMapId], true);
 
 	this->extractCityMap(state, humanMapNames[difficulty], "CITYMAP_", state.cities[humanMapId]);
 	this->extractCityMap(state, "alienmap", "ALIENMAP_", state.cities[alienMapId]);

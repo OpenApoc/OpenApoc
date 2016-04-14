@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="base\basescreen.cpp" />
     <ClCompile Include="base\researchscreen.cpp" />
+    <ClCompile Include="base\researchselect.cpp" />
     <ClCompile Include="base\vequipscreen.cpp" />
     <ClCompile Include="boot.cpp" />
     <ClCompile Include="city\basebuyscreen.cpp" />
@@ -44,6 +45,7 @@
   <ItemGroup>
     <ClInclude Include="base\basescreen.h" />
     <ClInclude Include="base\researchscreen.h" />
+    <ClInclude Include="base\researchselect.h" />
     <ClInclude Include="base\vequipscreen.h" />
     <ClInclude Include="boot.h" />
     <ClInclude Include="city\basebuyscreen.h" />

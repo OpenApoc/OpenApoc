@@ -47,6 +47,7 @@ class ResearchTopic : public StateObject<ResearchTopic>
 	LabSize required_lab_size;
 
 	unsigned score;
+	bool started;
 
 	ProjectDependencies dependencies;
 

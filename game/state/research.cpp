@@ -18,7 +18,7 @@ const std::map<ResearchDependency::Type, UString> ResearchDependency::TypeMap = 
 
 ResearchTopic::ResearchTopic()
     : man_hours(0), man_hours_progress(0), type(Type::BioChem), required_lab_size(LabSize::Small),
-      score(0)
+      score(0), started(false)
 {
 }
 
@@ -57,6 +57,27 @@ bool ResearchDependency::satisfied() const
 			LogError("Unexpected ResearchDependency Type");
 			return false;
 	}
+}
+
+bool ItemDependency::satisfied(StateRef<Base> base) const
+{
+	// FIXME: Add item tracking
+	return true;
+}
+
+bool ProjectDependencies::satisfied(StateRef<Base> base) const
+{
+	for (auto &r : this->research)
+	{
+		if (r.satisfied() == false)
+			return false;
+	}
+	for (auto &i : this->items)
+	{
+		if (i.satisfied(base) == false)
+			return false;
+	}
+	return true;
 }
 
 template <>
