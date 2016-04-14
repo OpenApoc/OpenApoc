@@ -705,6 +705,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("type"), r.type);
 	serializeIn(state, node->getNode("required_lab_size"), r.required_lab_size);
 	serializeIn(state, node->getNode("score"), r.score);
+	serializeIn(state, node->getNode("started"), r.started);
 	serializeIn(state, node->getNode("dependencies"), r.dependencies);
 }
 
@@ -1309,6 +1310,7 @@ template <> void serializeOut(sp<SerializationNode> node, const ResearchTopic &r
 	serializeOut(node->addNode("type"), r.type);
 	serializeOut(node->addNode("required_lab_size"), r.required_lab_size);
 	serializeOut(node->addNode("score"), r.score);
+	serializeOut(node->addNode("started"), r.started);
 	serializeOut(node->addNode("dependencies"), r.dependencies);
 }
 

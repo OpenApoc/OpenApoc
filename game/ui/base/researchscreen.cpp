@@ -142,7 +142,8 @@ void ResearchScreen::EventOccurred(Event *e)
 					return;
 				}
 				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage = mksp<ResearchSelect>(this->state, this->selected_lab->lab);
+				stageCmd.nextStage =
+				    mksp<ResearchSelect>(this->state, this->base, this->selected_lab->lab);
 				return;
 			}
 		}

@@ -11,18 +11,20 @@ namespace OpenApoc
 
 class GameState;
 class Lab;
+class Base;
 
 class ResearchSelect : public Stage
 {
   private:
 	sp<Form> form;
 	StageCmd stageCmd;
+	StateRef<Base> base;
 	sp<Lab> lab;
 
 	sp<GameState> state;
 
   public:
-	ResearchSelect(sp<GameState> state, sp<Lab> lab);
+	ResearchSelect(sp<GameState> state, StateRef<Base> base, sp<Lab> lab);
 	~ResearchSelect();
 	// Stage control
 	void Begin() override;
