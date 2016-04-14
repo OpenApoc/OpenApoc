@@ -185,11 +185,11 @@ void GameState::startGame()
 
 	auto base = mksp<Base>(*this, StateRef<Building>{this, bld});
 	base->startingBase(*this);
-	// FIXME: Make the base names increment (NEED TO BE UNIQUE!!)
-	this->player_bases[Base::getPrefix() + "1"] = base;
+	this->player_bases[Base::getPrefix() + Strings::FromInteger(this->player_bases.size() + 1)] =
+	    base;
 	bld->owner = this->getPlayer();
 
-	// Give the player one of each equi-able vehicle
+	// Give the player one of each equipable vehicle
 	for (auto &it : this->vehicle_types)
 	{
 		auto &type = it.second;

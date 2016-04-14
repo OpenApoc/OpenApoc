@@ -9,15 +9,20 @@ namespace OpenApoc
 {
 
 class Building;
+class GameState;
 
 class BaseBuyScreen : public Stage
 {
   private:
 	sp<Form> menuform;
 	StageCmd stageCmd;
+	int price;
+
+	sp<GameState> state;
+	sp<Building> building;
 
   public:
-	BaseBuyScreen(sp<Building> building);
+	BaseBuyScreen(sp<GameState> state, sp<Building> building);
 	~BaseBuyScreen();
 	// Stage control
 	void Begin() override;

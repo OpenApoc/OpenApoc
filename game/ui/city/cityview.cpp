@@ -225,14 +225,27 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 	baseManagementForm->FindControl("BUTTON_SHOW_BASE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<BaseScreen>(this->state);
+		    // FIXME: Show the last base for now
+		    auto lastBase = this->state->player_bases.end();
+		    lastBase--;
+		    StateRef<Base> base = {this->state.get(), lastBase->first};
+		    this->stageCmd.nextStage = mksp<BaseScreen>(this->state, base);
 		});
+	// FIX ME: Figure out how to use a separate Stage for base selection
 	baseManagementForm->FindControl("BUTTON_BUILD_BASE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
 		    // this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    // this->stageCmd.nextStage = mksp<BaseSelectScreen>();
-		    this->selectionState = SelectionState::BuildBase;
-		    this->viewMode = TileViewMode::Strategy;
+		    if (this->selectionState == SelectionState::BuildBase)
+		    {
+			    this->selectionState = SelectionState::Normal;
+			    this->viewMode = TileViewMode::Isometric;
+		    }
+		    else
+		    {
+			    this->selectionState = SelectionState::BuildBase;
+			    this->viewMode = TileViewMode::Strategy;
+		    }
 		});
 	auto vehicleForm = this->uiTabs[1];
 	vehicleForm->FindControl("BUTTON_EQUIP_VEHICLE")
@@ -638,7 +651,7 @@ void CityView::EventOccurred(Event *e)
 							if (building->base_layout && building->owner.id == "ORG_GOVERNMENT")
 							{
 								stageCmd.cmd = StageCmd::Command::PUSH;
-								stageCmd.nextStage = mksp<BaseBuyScreen>(building);
+								stageCmd.nextStage = mksp<BaseBuyScreen>(state, building);
 							}
 						}
 						else if (this->selectionState == SelectionState::Normal)

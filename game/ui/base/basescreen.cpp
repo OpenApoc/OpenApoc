@@ -42,9 +42,8 @@ int BaseScreen::getCorridorSprite(Vec2<int> pos) const
 	return TILE_CORRIDORS.at({north, south, west, east});
 }
 
-BaseScreen::BaseScreen(sp<GameState> state)
-    : Stage(), form(ui().GetForm("FORM_BASESCREEN")),
-      base({state.get(), state->player_bases.begin()->first}), selection(-1, -1),
+BaseScreen::BaseScreen(sp<GameState> state, StateRef<Base> base)
+    : Stage(), form(ui().GetForm("FORM_BASESCREEN")), base(base), selection(-1, -1),
       dragFacility(nullptr), drag(false), baseView(nullptr), selGraphic(nullptr), selText(nullptr),
       buildTime(nullptr), state(state)
 {

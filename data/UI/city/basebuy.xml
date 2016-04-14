@@ -15,6 +15,24 @@
         <alignment horizontal="centre" vertical="centre"/>
         <font>BIGFONT</font>
       </label>
+      <label id="TEXT_FUNDS">
+        <position x="572" y="11"/>
+        <size width="60" height="10"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+      <label id="TEXT_PRICE">
+        <position x="198" y="400"/>
+        <size width="260" height="36"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+	  <graphicbutton id="BUTTON_BUY_BASE">
+        <position x="602" y="40"/>
+        <size width="35" height="34"/>
+        <image/>
+        <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:77:xcom3/UFODATA/BUYBASE1.PCX</imagedepressed>
+      </graphicbutton>
       <graphicbutton id="BUTTON_OK">
         <position x="602" y="443"/>
         <size width="35" height="34"/>

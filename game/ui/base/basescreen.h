@@ -42,7 +42,7 @@ class BaseScreen : public Stage
 	sp<RGBImage> minimap_image;
 
   public:
-	BaseScreen(sp<GameState> state);
+	BaseScreen(sp<GameState> state, StateRef<Base> base);
 	~BaseScreen();
 	// Stage control
 	void Begin() override;

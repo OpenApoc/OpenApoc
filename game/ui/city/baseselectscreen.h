@@ -1,8 +1,8 @@
 
 #pragma once
 
-#include "framework/stage.h"
 #include "forms/forms.h"
+#include "framework/stage.h"
 
 namespace OpenApoc
 {
