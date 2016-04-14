@@ -166,7 +166,6 @@ void GameState::startGame()
 	// Randomly shuffle buildings until we find one with a base layout
 	sp<City> humanCity = this->cities["CITYMAP_HUMAN"];
 	this->current_city = {this, humanCity};
-	int buildingCount = humanCity->buildings.size();
 
 	std::vector<sp<Building>> buildingsWithBases;
 	for (auto &b : humanCity->buildings)

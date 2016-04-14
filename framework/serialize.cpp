@@ -292,8 +292,6 @@ static bool writePack(const UString &name, const std::map<UString, std::string> 
 
 	bool ret = false;
 
-	int idx = 0;
-
 	if (!mz_zip_writer_init_file(&archive, path.c_str(), 0))
 	{
 		LogError("Failed to init zip file \"%s\" for writing", path.c_str());
@@ -330,8 +328,6 @@ static bool readPack(const UString &name, std::map<UString, std::string> &conten
 	auto path = name + ".zip";
 
 	bool ret = false;
-
-	int idx = 0;
 
 	if (!mz_zip_reader_init_file(&archive, path.c_str(), 0))
 	{

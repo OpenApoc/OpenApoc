@@ -170,7 +170,7 @@ template <typename T> class StateRef
 		resolve();
 		return obj;
 	}
-	const bool operator<(const StateRef<T> other) const { return this->id < other.id; }
+	bool operator<(const StateRef<T> other) const { return this->id < other.id; }
 	void clear()
 	{
 		this->obj = nullptr;

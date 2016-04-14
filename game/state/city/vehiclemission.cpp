@@ -323,7 +323,6 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				LogError("Trying to land vehicle not in the air?");
 				return;
 			}
-			auto &map = vehicleTile->map;
 			auto padPosition = vehicleTile->getOwningTile()->position;
 			if (padPosition.z < 1)
 			{
