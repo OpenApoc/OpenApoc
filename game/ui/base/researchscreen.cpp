@@ -4,6 +4,7 @@
 #include "framework/framework.h"
 #include "game/state/base/facility.h"
 #include "game/state/gamestate.h"
+#include "game/ui/base/researchselect.h"
 
 namespace OpenApoc
 {
@@ -131,6 +132,17 @@ void ResearchScreen::EventOccurred(Event *e)
 			if (e->Forms().RaisedBy->Name == "BUTTON_OK")
 			{
 				stageCmd.cmd = StageCmd::Command::POP;
+				return;
+			}
+			else if (e->Forms().RaisedBy->Name == "BUTTON_RESEARCH_NEWPROJECT")
+			{
+				if (!this->selected_lab)
+				{
+					// No lab selected, ignore this click
+					return;
+				}
+				stageCmd.cmd = StageCmd::Command::PUSH;
+				stageCmd.nextStage = mksp<ResearchSelect>(this->state, this->selected_lab->lab);
 				return;
 			}
 		}
