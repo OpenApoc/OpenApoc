@@ -29,7 +29,6 @@ class FlyingVehicleMover : public VehicleMover
 		float speed = vehicle.getSpeed();
 		if (!vehicle.missions.empty())
 		{
-			vehicle.missions.front()->update(state, this->vehicle, ticks);
 			auto vehicleTile = this->vehicle.tileObject;
 			if (!vehicleTile)
 			{
