@@ -78,6 +78,15 @@ class TileView : public Stage, public TileTransform
 		return this->tileToScreenCoords(coords, this->viewMode);
 	}
 
+	template <typename T> Vec2<T> tileToOffsetScreenCoords(Vec3<T> c, TileViewMode v) const
+	{
+		return this->tileToScreenCoords(c, v) + Vec2<T>{this->getScreenOffset()};
+	}
+	template <typename T> Vec2<T> tileToOffsetScreenCoords(Vec3<T> c) const
+	{
+		return this->tileToScreenCoords(c, this->viewMode) + Vec2<T>{this->getScreenOffset()};
+	}
+
 	template <typename T> Vec3<T> screenToTileCoords(Vec2<T> screenPos, T z, TileViewMode v) const
 	{
 		switch (v)
@@ -108,6 +117,18 @@ class TileView : public Stage, public TileTransform
 	{
 		return this->screenToTileCoords(screenPos, z, this->viewMode);
 	}
+
+	template <typename T>
+	Vec3<T> offsetScreenToTileCoords(Vec2<T> screenPos, T z, TileViewMode v) const
+	{
+		return this->screenToTileCoords(screenPos - Vec2<T>{this->getScreenOffset()}, z, v);
+	}
+	template <typename T> Vec3<T> offsetScreenToTileCoords(Vec2<T> screenPos, T z) const
+	{
+		return this->screenToTileCoords(screenPos - Vec2<T>{this->getScreenOffset()}, z,
+		                                this->viewMode);
+	}
+
 	// Stage control
 	void Begin() override;
 	void Pause() override;

@@ -2,7 +2,6 @@
 #pragma once
 
 #include "framework/stage.h"
-
 #include "forms/forms.h"
 
 namespace OpenApoc

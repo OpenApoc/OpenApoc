@@ -6,7 +6,10 @@
 namespace OpenApoc
 {
 
-BaseBuyScreen::BaseBuyScreen() : Stage(), menuform(ui().GetForm("FORM_BUY_BASE_SCREEN")) {}
+BaseBuyScreen::BaseBuyScreen(sp<Building> building)
+    : Stage(), menuform(ui().GetForm("FORM_BUY_BASE_SCREEN"))
+{
+}
 
 BaseBuyScreen::~BaseBuyScreen() {}
 
@@ -33,7 +36,7 @@ void BaseBuyScreen::EventOccurred(Event *e)
 
 	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
 	{
-		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
+		if (e->Forms().RaisedBy->Name == "BUTTON_OK")
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;

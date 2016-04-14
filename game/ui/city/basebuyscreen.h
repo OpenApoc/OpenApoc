@@ -8,6 +8,8 @@
 namespace OpenApoc
 {
 
+class Building;
+
 class BaseBuyScreen : public Stage
 {
   private:
@@ -15,7 +17,7 @@ class BaseBuyScreen : public Stage
 	StageCmd stageCmd;
 
   public:
-	BaseBuyScreen();
+	BaseBuyScreen(sp<Building> building);
 	~BaseBuyScreen();
 	// Stage control
 	void Begin() override;

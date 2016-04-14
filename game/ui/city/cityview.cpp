@@ -11,6 +11,7 @@
 #include "game/state/tileview/voxel.h"
 #include "game/ui/base/basescreen.h"
 #include "game/ui/base/vequipscreen.h"
+#include "game/ui/city/basebuyscreen.h"
 #include "game/ui/city/baseselectscreen.h"
 #include "game/ui/city/buildingscreen.h"
 #include "game/ui/city/cityview.h"
@@ -228,8 +229,10 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 		});
 	baseManagementForm->FindControl("BUTTON_BUILD_BASE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
-		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<BaseSelectScreen>();
+		    // this->stageCmd.cmd = StageCmd::Command::PUSH;
+		    // this->stageCmd.nextStage = mksp<BaseSelectScreen>();
+		    this->selectionState = SelectionState::BuildBase;
+		    this->viewMode = TileViewMode::Strategy;
 		});
 	auto vehicleForm = this->uiTabs[1];
 	vehicleForm->FindControl("BUTTON_EQUIP_VEHICLE")
@@ -334,18 +337,39 @@ void CityView::Render()
 				continue;
 			auto &path = v->missions.front()->currentPlannedPath;
 			Vec3<float> prevPos = vTile->getPosition();
-			for (auto p : path)
+			for (auto pos : path)
 			{
-				auto screenOffset = this->getScreenOffset();
-				Vec3<float> pos = {p.x, p.y, p.z};
-				Vec2<float> screenPosA = this->tileToScreenCoords(prevPos);
-				screenPosA += screenOffset;
-				Vec2<float> screenPosB = this->tileToScreenCoords(pos);
-				screenPosB += screenOffset;
+				Vec2<float> screenPosA = this->tileToOffsetScreenCoords(prevPos);
+				Vec2<float> screenPosB = this->tileToOffsetScreenCoords(pos);
 
 				fw().renderer->drawLine(screenPosA, screenPosB, Colour{255, 0, 0, 128});
 
 				prevPos = pos;
+			}
+		}
+	}
+	if (selectionState == SelectionState::BuildBase && viewMode == TileViewMode::Strategy)
+	{
+		for (auto b : state->current_city->buildings)
+		{
+			auto building = b.second;
+			if (building->base_layout)
+			{
+				Vec3<float> posA = {building->bounds.p0.x, building->bounds.p0.y, 0};
+				Vec2<float> screenPosA = this->tileToOffsetScreenCoords(posA);
+				Vec3<float> posB = {building->bounds.p1.x, building->bounds.p1.y, 0};
+				Vec2<float> screenPosB = this->tileToOffsetScreenCoords(posB);
+
+				Colour borderColour;
+				if (building->owner == state->getPlayer())
+				{
+					borderColour = {188, 212, 88};
+				}
+				else if (building->owner.id == "ORG_GOVERNMENT")
+				{
+					borderColour = {160, 236, 252};
+				}
+				fw().renderer->drawRect(screenPosA, screenPosB - screenPosA, borderColour, 2.0f);
 			}
 		}
 	}
@@ -613,6 +637,14 @@ void CityView::EventOccurred(Event *e)
 								           building->name.c_str());
 							}
 							this->selectionState = SelectionState::Normal;
+						}
+						else if (this->selectionState == SelectionState::BuildBase)
+						{
+							if (building->base_layout && building->owner.id == "ORG_GOVERNMENT")
+							{
+								stageCmd.cmd = StageCmd::Command::PUSH;
+								stageCmd.nextStage = mksp<BaseBuyScreen>(building);
+							}
 						}
 						else if (this->selectionState == SelectionState::Normal)
 						{

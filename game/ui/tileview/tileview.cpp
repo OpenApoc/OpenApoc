@@ -13,7 +13,7 @@ TileView::TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
     : Stage(), map(map), isoTileSize(isoTileSize), stratTileSize(stratTileSize),
       viewMode(initialMode), scrollUp(false), scrollDown(false), scrollLeft(false),
       scrollRight(false), dpySize(fw().Display_GetWidth(), fw().Display_GetHeight()),
-      strategyViewBoxColour(128, 128, 128, 255), strategyViewBoxThickness(2.0f), maxZDraw(10),
+      strategyViewBoxColour(212, 176, 172, 255), strategyViewBoxThickness(2.0f), maxZDraw(10),
       centerPos(0, 0, 0), isoScrollSpeed(0.5, 0.5), stratScrollSpeed(2.0f, 2.0f),
       selectedTilePosition(0, 0, 0),
       selectedTileImageBack(fw().data->load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
@@ -184,18 +184,12 @@ void TileView::Render()
 
 	this->setScreenCenterTile(newPos);
 
-	auto screenOffset = this->getScreenOffset();
-
 	// screenOffset.x/screenOffset.y is the 'amount added to the tile coords' - so we want
 	// the inverse to tell which tiles are at the screen bounds
-	auto topLeft = screenToTileCoords(
-	    Vec2<int>{-screenOffset.x - isoTileSize.x, -screenOffset.y - isoTileSize.y}, 0);
-	auto topRight = screenToTileCoords(
-	    Vec2<int>{-screenOffset.x + dpySize.x, -screenOffset.y - isoTileSize.y}, 0);
-	auto bottomLeft = screenToTileCoords(
-	    Vec2<int>{-screenOffset.x - isoTileSize.x, -screenOffset.y + dpySize.y}, map.size.z);
-	auto bottomRight = screenToTileCoords(
-	    Vec2<int>{-screenOffset.x + dpySize.x, -screenOffset.y + dpySize.y}, map.size.z);
+	auto topLeft = offsetScreenToTileCoords(Vec2<int>{-isoTileSize.x, -isoTileSize.y}, 0);
+	auto topRight = offsetScreenToTileCoords(Vec2<int>{dpySize.x, -isoTileSize.y}, 0);
+	auto bottomLeft = offsetScreenToTileCoords(Vec2<int>{-isoTileSize.x, dpySize.y}, map.size.z);
+	auto bottomRight = offsetScreenToTileCoords(Vec2<int>{dpySize.x, dpySize.y}, map.size.z);
 
 	int minX = std::max(0, topLeft.x);
 	int maxX = std::min(map.size.x, bottomRight.x);
@@ -212,16 +206,9 @@ void TileView::Render()
 				for (int x = minX; x < maxX; x++)
 				{
 					auto tile = map.getTile(x, y, z);
-					auto screenPos = tileToScreenCoords(Vec3<float>{
-					    static_cast<float>(x), static_cast<float>(y), static_cast<float>(z)});
-					screenPos.x += screenOffset.x;
-					screenPos.y += screenOffset.y;
-
 					for (auto &obj : tile->drawnObjects[layer])
 					{
-						Vec2<float> pos = tileToScreenCoords(obj->getPosition());
-						pos.x += screenOffset.x;
-						pos.y += screenOffset.y;
+						Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
 						obj->draw(r, *this, pos, this->viewMode);
 					}
 				}
@@ -260,15 +247,10 @@ void TileView::Render()
 		Vec3<float> bottomRightIsoTilePos =
 		    this->screenToTileCoords(bottomRightIsoScreenPos, 0.0f, TileViewMode::Isometric);
 
-		Vec2<float> topLeftRectPos = this->tileToScreenCoords(topLeftIsoTilePos);
-		Vec2<float> topRightRectPos = this->tileToScreenCoords(topRightIsoTilePos);
-		Vec2<float> bottomLeftRectPos = this->tileToScreenCoords(bottomLeftIsoTilePos);
-		Vec2<float> bottomRightRectPos = this->tileToScreenCoords(bottomRightIsoTilePos);
-
-		topLeftRectPos += screenOffset;
-		topRightRectPos += screenOffset;
-		bottomLeftRectPos += screenOffset;
-		bottomRightRectPos += screenOffset;
+		Vec2<float> topLeftRectPos = this->tileToOffsetScreenCoords(topLeftIsoTilePos);
+		Vec2<float> topRightRectPos = this->tileToOffsetScreenCoords(topRightIsoTilePos);
+		Vec2<float> bottomLeftRectPos = this->tileToOffsetScreenCoords(bottomLeftIsoTilePos);
+		Vec2<float> bottomRightRectPos = this->tileToOffsetScreenCoords(bottomRightIsoTilePos);
 
 		r.drawLine(topLeftRectPos, topRightRectPos, this->strategyViewBoxColour,
 		           this->strategyViewBoxThickness);
