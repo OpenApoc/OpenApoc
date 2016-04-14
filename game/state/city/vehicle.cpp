@@ -169,8 +169,25 @@ void Vehicle::setupMover()
 void Vehicle::update(GameState &state, unsigned int ticks)
 
 {
+
 	if (!this->missions.empty())
 		this->missions.front()->update(state, *this, ticks);
+	while (!this->missions.empty() && this->missions.front()->isFinished(state, *this))
+	{
+		LogInfo("Vehicle mission \"%s\" finished", this->missions.front()->getName().c_str());
+		this->missions.pop_front();
+		if (!this->missions.empty())
+		{
+			LogInfo("Vehicle mission \"%s\" starting", this->missions.front()->getName().c_str());
+			this->missions.front()->start(state, *this);
+			continue;
+		}
+		else
+		{
+			LogInfo("No next vehicle mission, going idle");
+			break;
+		}
+	}
 	if (this->mover)
 		this->mover->update(state, ticks);
 	auto vehicleTile = this->tileObject;
