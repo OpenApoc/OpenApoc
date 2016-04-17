@@ -32,8 +32,29 @@ void ResearchSelect::Begin()
 			title->SetText(tr("Select Unknown Project"));
 			break;
 	}
+	this->redrawResearchList();
 
 	auto research_list = form->FindControlTyped<ListBox>("LIST");
+	research_list->AlwaysEmitSelectionEvents = true;
+
+	research_list->addCallback(FormEventType::ListBoxChangeSelected, [this](Event *e) -> void {
+		LogInfo("Research selection change");
+		auto list = std::static_pointer_cast<ListBox>(e->Forms().RaisedBy);
+		auto topic = list->GetSelectedData<ResearchTopic>();
+		if (topic->current_lab)
+		{
+			LogInfo("Topic already in progress");
+			return;
+		}
+		Lab::setResearch({state.get(), this->lab}, {state.get(), topic});
+		this->redrawResearchList();
+	});
+}
+
+void ResearchSelect::redrawResearchList()
+{
+	auto research_list = form->FindControlTyped<ListBox>("LIST");
+	research_list->Clear();
 	research_list->ItemSize = 20;
 	research_list->ItemSpacing = 1;
 
@@ -66,6 +87,8 @@ void ResearchSelect::Begin()
 		auto topic_name = control->createChild<Label>((r.second->name), ui().GetFont("SMALFONT"));
 		topic_name->Size = {200, 20};
 		topic_name->Location = {6, 0};
+
+		control->SetData(r.second);
 
 		research_list->AddItem(control);
 	}

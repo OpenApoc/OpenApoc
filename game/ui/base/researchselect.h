@@ -23,6 +23,8 @@ class ResearchSelect : public Stage
 
 	sp<GameState> state;
 
+	void redrawResearchList();
+
   public:
 	ResearchSelect(sp<GameState> state, StateRef<Base> base, sp<Lab> lab);
 	~ResearchSelect();

@@ -44,7 +44,9 @@ GameState::~GameState()
 	{
 		for (auto &f : b.second->facilities)
 		{
-			f->lab = nullptr;
+			if (f->lab)
+				f->lab->current_project = "";
+			f->lab = "";
 		}
 	}
 	for (auto &org : this->organisations)

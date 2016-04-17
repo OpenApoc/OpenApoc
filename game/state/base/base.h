@@ -45,9 +45,10 @@ class Base : public StateObject<Base>
 	void startingBase(GameState &state);
 	BuildError canBuildFacility(StateRef<FacilityType> type, Vec2<int> pos,
 	                            bool free = false) const;
-	void buildFacility(StateRef<FacilityType> type, Vec2<int> pos, bool free = false);
+	void buildFacility(GameState &state, StateRef<FacilityType> type, Vec2<int> pos,
+	                   bool free = false);
 	BuildError canDestroyFacility(Vec2<int> pos) const;
-	void destroyFacility(Vec2<int> pos);
+	void destroyFacility(GameState &state, Vec2<int> pos);
 };
 
 }; // namespace OpenApoc

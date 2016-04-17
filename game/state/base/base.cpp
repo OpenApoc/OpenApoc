@@ -28,7 +28,7 @@ Base::Base(GameState &state, StateRef<Building> building) : building(building)
 	}
 	else
 	{
-		buildFacility(type, building->base_layout->baseLift, true);
+		buildFacility(state, type, building->base_layout->baseLift, true);
 	}
 }
 
@@ -85,7 +85,7 @@ void Base::startingBase(GameState &state)
 				error = canBuildFacility(facility, random, true);
 			} while (error != BuildError::NoError); // Try harder
 
-			buildFacility(facility, random, true);
+			buildFacility(state, facility, random, true);
 
 			// Clear used positions
 			for (auto pos = positions.begin(); pos != positions.end();)
@@ -146,7 +146,7 @@ Base::BuildError Base::canBuildFacility(StateRef<FacilityType> type, Vec2<int> p
 	return BuildError::NoError;
 }
 
-void Base::buildFacility(StateRef<FacilityType> type, Vec2<int> pos, bool free)
+void Base::buildFacility(GameState &state, StateRef<FacilityType> type, Vec2<int> pos, bool free)
 {
 	if (canBuildFacility(type, pos, free) == BuildError::NoError)
 	{
@@ -180,15 +180,27 @@ void Base::buildFacility(StateRef<FacilityType> type, Vec2<int> pos, bool free)
 			switch (type->capacityType)
 			{
 				case FacilityType::Capacity::Chemistry:
-					facility->lab = mksp<Lab>();
-					facility->lab->size = size;
-					facility->lab->type = ResearchTopic::Type::BioChem;
+				{
+					auto lab = mksp<Lab>();
+					lab->size = size;
+					lab->type = ResearchTopic::Type::BioChem;
+					auto id = UString::format("%s%u", Lab::getPrefix().c_str(),
+					                          state.research.num_labs_created++);
+					state.research.labs[id] = lab;
+					facility->lab = {&state, id};
 					break;
+				}
 				case FacilityType::Capacity::Physics:
-					facility->lab = mksp<Lab>();
-					facility->lab->size = size;
-					facility->lab->type = ResearchTopic::Type::Physics;
+				{
+					auto lab = mksp<Lab>();
+					lab->size = size;
+					lab->type = ResearchTopic::Type::Physics;
+					auto id = UString::format("%s%u", Lab::getPrefix().c_str(),
+					                          state.research.num_labs_created++);
+					state.research.labs[id] = lab;
+					facility->lab = {&state, id};
 					break;
+				}
 				case FacilityType::Capacity::Workshop:
 					// TODO: Engineering 'labs'
 					break;
@@ -212,7 +224,7 @@ Base::BuildError Base::canDestroyFacility(Vec2<int> pos) const
 	return BuildError::NoError;
 }
 
-void Base::destroyFacility(Vec2<int> pos)
+void Base::destroyFacility(GameState &state, Vec2<int> pos)
 {
 	if (canDestroyFacility(pos) == BuildError::NoError)
 	{
@@ -221,6 +233,17 @@ void Base::destroyFacility(Vec2<int> pos)
 		{
 			if (*f == facility)
 			{
+				if (facility->lab)
+				{
+					auto id = facility->lab.id;
+					if (facility->lab->current_project)
+					{
+						facility->lab->current_project->current_lab = "";
+						facility->lab->current_project = "";
+					}
+					facility->lab = "";
+					state.research.labs.erase(id);
+				}
 				facilities.erase(f);
 				break;
 			}

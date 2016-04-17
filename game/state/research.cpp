@@ -103,6 +103,70 @@ template <> const UString &StateObject<ResearchTopic>::getTypeName()
 	return name;
 }
 
+template <>
+const UString &StateObject<ResearchTopic>::getId(const GameState &state,
+                                                 const sp<ResearchTopic> ptr)
+{
+	static const UString emptyString = "";
+	for (auto &r : state.research.topics)
+	{
+		if (r.second == ptr)
+			return r.first;
+	}
+	LogError("No research matching pointer %p", ptr.get());
+	return emptyString;
+}
+
+template <> sp<Lab> StateObject<Lab>::get(const GameState &state, const UString &id)
+{
+	auto it = state.research.labs.find(id);
+	if (it == state.research.labs.end())
+	{
+		LogError("No lab matching ID \"%s\"", id.c_str());
+		return nullptr;
+	}
+	return it->second;
+}
+
+template <> const UString &StateObject<Lab>::getPrefix()
+{
+	static UString prefix = "LAB_";
+	return prefix;
+}
+template <> const UString &StateObject<Lab>::getTypeName()
+{
+	static UString name = "Lab";
+	return name;
+}
+
+template <> const UString &StateObject<Lab>::getId(const GameState &state, const sp<Lab> ptr)
+{
+	static const UString emptyString = "";
+	for (auto &l : state.research.labs)
+	{
+		if (l.second == ptr)
+			return l.first;
+	}
+	LogError("No lab matching pointer %p", ptr.get());
+	return emptyString;
+}
+
 ResearchState::ResearchState() {}
+
+void Lab::setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic)
+{
+	if (topic->current_lab)
+	{
+		assert(topic->current_lab->current_project == topic);
+		topic->current_lab->current_project = "";
+		topic->current_lab = "";
+	}
+	if (lab->current_project)
+	{
+		lab->current_project->current_lab = "";
+	}
+	lab->current_project = topic;
+	topic->current_lab = lab;
+}
 
 } // namespace OpenApoc

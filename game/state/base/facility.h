@@ -18,7 +18,7 @@ class Facility
 	Vec2<int> pos;
 	int buildTime;
 
-	sp<Lab> lab;
+	StateRef<Lab> lab;
 };
 
 }; // namespace OpenApoc

@@ -259,7 +259,7 @@ void BaseScreen::EventOccurred(Event *e)
 					switch (error)
 					{
 						case Base::BuildError::NoError:
-							base->buildFacility(dragFacility, selection);
+							base->buildFacility(*state, dragFacility, selection);
 							form->FindControlTyped<Label>("TEXT_FUNDS")
 							    ->SetText(state->getPlayerBalance());
 							break;
@@ -303,12 +303,12 @@ void BaseScreen::EventOccurred(Event *e)
 					{
 						case Base::BuildError::NoError:
 							stageCmd.cmd = StageCmd::Command::PUSH;
-							stageCmd.nextStage =
-							    mksp<MessageBox>(tr("Destroy facility"), tr("Are you sure?"),
-							                     MessageBox::ButtonOptions::YesNo, [this] {
-								                     this->base->destroyFacility(this->selection);
-								                     this->selFacility = nullptr;
-								                 });
+							stageCmd.nextStage = mksp<MessageBox>(
+							    tr("Destroy facility"), tr("Are you sure?"),
+							    MessageBox::ButtonOptions::YesNo, [this] {
+								    this->base->destroyFacility(*this->state, this->selection);
+								    this->selFacility = nullptr;
+								});
 							break;
 						case Base::BuildError::Occupied:
 							stageCmd.cmd = StageCmd::Command::PUSH;
