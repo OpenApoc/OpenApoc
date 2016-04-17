@@ -49,6 +49,24 @@ void ResearchSelect::Begin()
 		Lab::setResearch({state.get(), this->lab}, {state.get(), topic});
 		this->redrawResearchList();
 	});
+
+	research_list->addCallback(FormEventType::ListBoxChangeHover, [this](Event *e) -> void {
+		LogInfo("Research selection change");
+		auto list = std::static_pointer_cast<ListBox>(e->Forms().RaisedBy);
+		auto topic = list->GetHoveredData<ResearchTopic>();
+		auto title = this->form->FindControlTyped<Label>("TEXT_SELECTED_TITLE");
+		auto description = this->form->FindControlTyped<Label>("TEXT_SELECTED_DESCRIPTION");
+		if (topic)
+		{
+			title->SetText(tr(topic->name));
+			description->SetText(tr(topic->description));
+		}
+		else
+		{
+			title->SetText("");
+			description->SetText("");
+		}
+	});
 }
 
 void ResearchSelect::redrawResearchList()
