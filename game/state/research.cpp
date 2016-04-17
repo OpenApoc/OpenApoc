@@ -151,7 +151,7 @@ template <> const UString &StateObject<Lab>::getId(const GameState &state, const
 	return emptyString;
 }
 
-ResearchState::ResearchState() {}
+ResearchState::ResearchState() : num_labs_created(0) {}
 
 void Lab::setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic)
 {
