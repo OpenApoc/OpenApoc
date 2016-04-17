@@ -92,6 +92,8 @@ class Lab : public StateObject<Lab>
 	std::list<StateRef<Agent>> assigned_agents;
 
 	static void setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic);
+
+	int getTotalSkill() const;
 };
 
 class ResearchState

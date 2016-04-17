@@ -169,4 +169,25 @@ void Lab::setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic)
 	topic->current_lab = lab;
 }
 
+int Lab::getTotalSkill() const
+{
+	int totalLabSkill = 0;
+	for (auto &agent : this->assigned_agents)
+	{
+		switch (this->type)
+		{
+			case ResearchTopic::Type::Physics:
+				totalLabSkill += agent->current_stats.physics_skill;
+				break;
+			case ResearchTopic::Type::BioChem:
+				totalLabSkill += agent->current_stats.biochem_skill;
+				break;
+			default:
+				// TODO Workshop 'labs'?
+				LogError("Unexpected lab type");
+		}
+	}
+	return totalLabSkill;
+}
+
 } // namespace OpenApoc

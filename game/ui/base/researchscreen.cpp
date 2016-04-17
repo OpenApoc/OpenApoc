@@ -187,7 +187,6 @@ void ResearchScreen::setCurrentLabInfo()
 		totalSkillLabel->SetText(UString::format(tr("Total Skill: %d"), 0));
 		return;
 	}
-	int totalLabSkill = 0;
 	this->assigned_agent_count = 0;
 	auto labType = this->selected_lab->type->capacityType;
 	UString labTypeName = "UNKNOWN";
@@ -247,20 +246,6 @@ void ResearchScreen::setCurrentLabInfo()
 						         this->selected_lab->type->capacityAmount);
 					}
 					assigned_to_current_lab = true;
-					switch (labType)
-					{
-						case FacilityType::Capacity::Physics:
-							totalLabSkill += agent.second->current_stats.physics_skill;
-							break;
-						case FacilityType::Capacity::Chemistry:
-							totalLabSkill += agent.second->current_stats.biochem_skill;
-							break;
-						case FacilityType::Capacity::Workshop:
-							totalLabSkill += agent.second->current_stats.engineering_skill;
-							break;
-						default:
-							LogError("Unexpected lab type");
-					}
 					break;
 				}
 			}
@@ -289,7 +274,8 @@ void ResearchScreen::setCurrentLabInfo()
 	unassignedAgentList->ItemSize = agentEntryHeight;
 
 	auto totalSkillLabel = form->FindControlTyped<Label>("TEXT_TOTAL_SKILL");
-	totalSkillLabel->SetText(UString::format(tr("Total Skill: %d"), totalLabSkill));
+	totalSkillLabel->SetText(
+	    UString::format(tr("Total Skill: %d"), this->selected_lab->lab->getTotalSkill()));
 }
 // FIXME: Put this in the rules somewhere?
 // FIXME: This could be shared with the citview ICON_RESOURCES?
