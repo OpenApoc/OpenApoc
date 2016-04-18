@@ -146,6 +146,14 @@ void ResearchScreen::EventOccurred(Event *e)
 				    mksp<ResearchSelect>(this->state, this->base, this->selected_lab->lab);
 				return;
 			}
+			else if (e->Forms().RaisedBy->Name == "BUTTON_RESEARCH_CANCELPROJECT")
+			{
+				if (!this->selected_lab)
+				{
+					return;
+				}
+				Lab::setResearch(this->selected_lab->lab, {state.get(), ""});
+			}
 		}
 	}
 }
