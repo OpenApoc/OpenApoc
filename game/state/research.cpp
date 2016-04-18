@@ -155,18 +155,24 @@ ResearchState::ResearchState() : num_labs_created(0) {}
 
 void Lab::setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic)
 {
-	if (topic->current_lab)
+	if (topic)
 	{
-		assert(topic->current_lab->current_project == topic);
-		topic->current_lab->current_project = "";
-		topic->current_lab = "";
+		if (topic->current_lab)
+		{
+			assert(topic->current_lab->current_project == topic);
+			topic->current_lab->current_project = "";
+			topic->current_lab = "";
+		}
 	}
 	if (lab->current_project)
 	{
 		lab->current_project->current_lab = "";
 	}
 	lab->current_project = topic;
-	topic->current_lab = lab;
+	if (topic)
+	{
+		topic->current_lab = lab;
+	}
 }
 
 int Lab::getTotalSkill() const
