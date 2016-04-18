@@ -230,6 +230,17 @@ Base::BuildError Base::canDestroyFacility(Vec2<int> pos) const
 	{
 		return BuildError::Occupied;
 	}
+	if (facility->lab)
+	{
+		if (facility->lab->current_project)
+		{
+			return BuildError::Occupied;
+		}
+		if (!facility->lab->assigned_agents.empty())
+		{
+			return BuildError::Occupied;
+		}
+	}
 	// TODO: Check if facility is in use
 	return BuildError::NoError;
 }
