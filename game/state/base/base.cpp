@@ -202,8 +202,18 @@ void Base::buildFacility(GameState &state, StateRef<FacilityType> type, Vec2<int
 					break;
 				}
 				case FacilityType::Capacity::Workshop:
-					// TODO: Engineering 'labs'
+				{
+					auto lab = mksp<Lab>();
+					lab->size = size;
+					lab->type = ResearchTopic::Type::Engineering;
+					auto id = UString::format("%s%u", Lab::getPrefix().c_str(),
+					                          state.research.num_labs_created++);
+					state.research.labs[id] = lab;
+					facility->lab = {&state, id};
 					break;
+				}
+				// TODO: Engineering 'labs'
+				break;
 			}
 		}
 	}

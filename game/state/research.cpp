@@ -5,7 +5,7 @@ namespace OpenApoc
 {
 
 const std::map<ResearchTopic::Type, UString> ResearchTopic::TypeMap = {
-    {Type::BioChem, "biochem"}, {Type::Physics, "physics"},
+    {Type::BioChem, "biochem"}, {Type::Physics, "physics"}, {Type::Engineering, "engineering"},
 };
 
 const std::map<ResearchTopic::LabSize, UString> ResearchTopic::LabSizeMap = {
@@ -181,6 +181,9 @@ int Lab::getTotalSkill() const
 				break;
 			case ResearchTopic::Type::BioChem:
 				totalLabSkill += agent->current_stats.biochem_skill;
+				break;
+			case ResearchTopic::Type::Engineering:
+				totalLabSkill += agent->current_stats.engineering_skill;
 				break;
 			default:
 				// TODO Workshop 'labs'?

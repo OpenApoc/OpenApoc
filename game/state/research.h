@@ -31,6 +31,7 @@ class ResearchTopic : public StateObject<ResearchTopic>
 	{
 		BioChem,
 		Physics,
+		Engineering,
 	};
 	static const std::map<Type, UString> TypeMap;
 	enum class LabSize
