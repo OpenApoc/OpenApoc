@@ -39,17 +39,17 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
+      <graphic id="GRAPHIC_PROGRESS_BAR">
+        <position x="326" y="226"/>
+        <size width="150" height="2"/>
+        <image/>
+      </graphic>
       <label id="TEXT_TOTAL_SKILL" text="Total Skill: 0">
         <position x="232" y="451"/>
         <size width="354" height="10"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <graphic id="GRAPHIC_PROJECT_COMPLETION">
-        <image/>
-        <position x="326" y="226"/>
-        <size width="149" height="6"/>
-      </graphic>
       <listbox id="LIST_LABS">
         <position x="277" y="58"/>
         <size height="100" width="264"/>

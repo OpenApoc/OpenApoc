@@ -13,6 +13,7 @@ namespace OpenApoc
 class Base;
 class Facility;
 class GameState;
+class ResearchTopic;
 class Agent;
 
 class ResearchScreen : public Stage
@@ -22,6 +23,7 @@ class ResearchScreen : public Stage
 	StageCmd stageCmd;
 	StateRef<Base> base;
 	sp<Facility> selected_lab;
+	StateRef<ResearchTopic> current_topic;
 	std::list<sp<Facility>> labs;
 
 	sp<GameState> state;

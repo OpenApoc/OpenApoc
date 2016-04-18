@@ -160,9 +160,11 @@ void ResearchScreen::Update(StageCmd *const cmd)
 void ResearchScreen::Render()
 {
 	auto labList = form->FindControlTyped<ListBox>("LIST_LABS");
-	if (this->selected_lab != labList->GetSelectedData<Facility>())
+	if (this->selected_lab != labList->GetSelectedData<Facility>() ||
+	    (this->selected_lab && this->selected_lab->lab->current_project != this->current_topic))
 	{
 		this->selected_lab = labList->GetSelectedData<Facility>();
+		this->current_topic = this->selected_lab->lab->current_project;
 		this->setCurrentLabInfo();
 	}
 	fw().Stage_GetPrevious(this->shared_from_this())->Render();
@@ -276,6 +278,44 @@ void ResearchScreen::setCurrentLabInfo()
 	auto totalSkillLabel = form->FindControlTyped<Label>("TEXT_TOTAL_SKILL");
 	totalSkillLabel->SetText(
 	    UString::format(tr("Total Skill: %d"), this->selected_lab->lab->getTotalSkill()));
+
+	if (this->selected_lab->lab->current_project)
+	{
+		auto &topic = this->selected_lab->lab->current_project;
+		auto progressBar = form->FindControlTyped<Graphic>("GRAPHIC_PROGRESS_BAR");
+		auto progressImage = mksp<RGBImage>(progressBar->Size);
+		float projectProgress =
+		    clamp((float)topic->man_hours_progress / (float)topic->man_hours, 0.0f, 1.0f);
+		// This creates an image with the size of the PROGRESS_BAR control, then fills
+		// up a proportion of it with red pixels (starting from the left) corresponding
+		// to the progress of the project.
+		int redWidth = progressBar->Size.x * projectProgress;
+		{
+			RGBImageLock l(progressImage);
+			for (int y = 0; y < progressBar->Size.y; y++)
+			{
+				for (int x = 0; x < redWidth; x++)
+				{
+					l.set({x, y}, {255, 0, 0, 255});
+				}
+			}
+		}
+		progressBar->SetImage(progressImage);
+		auto topicTitle = form->FindControlTyped<Label>("TEXT_CURRENT_PROJECT");
+		topicTitle->SetText(tr(topic->name));
+		auto completionPercent = form->FindControlTyped<Label>("TEXT_PROJECT_COMPLETION");
+		auto completionText = UString::format(tr("%d%%"), (int)(projectProgress * 100.0f));
+		completionPercent->SetText(completionText);
+	}
+	else
+	{
+		auto progressBar = form->FindControlTyped<Graphic>("GRAPHIC_PROGRESS_BAR");
+		progressBar->SetImage(nullptr);
+		auto topicTitle = form->FindControlTyped<Label>("TEXT_CURRENT_PROJECT");
+		topicTitle->SetText(tr("No Project"));
+		auto completionPercent = form->FindControlTyped<Label>("TEXT_PROJECT_COMPLETION");
+		topicTitle->SetText("");
+	}
 }
 // FIXME: Put this in the rules somewhere?
 // FIXME: This could be shared with the citview ICON_RESOURCES?
