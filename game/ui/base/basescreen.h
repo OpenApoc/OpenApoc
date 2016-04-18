@@ -33,6 +33,7 @@ class BaseScreen : public Stage
 	std::vector<sp<GraphicButton>> miniViews;
 
 	sp<GameState> state;
+	void ChangeBase(sp<Base> newBase);
 	void RenderBase();
 
   public:
