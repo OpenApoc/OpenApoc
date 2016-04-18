@@ -35,6 +35,103 @@ int BaseGraphics::getCorridorSprite(sp<Base> base, Vec2<int> pos)
 	return TILE_CORRIDORS.at({north, south, west, east});
 }
 
+void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
+{
+	// Draw grid
+	sp<Image> grid = fw().data->load_image(
+	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:xcom3/UFODATA/BASE.PCX");
+	Vec2<int> i;
+	for (i.x = 0; i.x < Base::SIZE; i.x++)
+	{
+		for (i.y = 0; i.y < Base::SIZE; i.y++)
+		{
+			Vec2<int> pos = renderPos + i * TILE_SIZE;
+			fw().renderer->draw(grid, pos);
+		}
+	}
+
+	// Draw corridors
+	for (i.x = 0; i.x < Base::SIZE; i.x++)
+	{
+		for (i.y = 0; i.y < Base::SIZE; i.y++)
+		{
+			int sprite = BaseGraphics::getCorridorSprite(base, i);
+			if (sprite != 0)
+			{
+				Vec2<int> pos = renderPos + i * TILE_SIZE;
+				auto image = UString::format(
+				    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:%d:xcom3/UFODATA/BASE.PCX",
+				    sprite);
+				fw().renderer->draw(fw().data->load_image(image), pos);
+			}
+		}
+	}
+
+	// Draw facilities
+	sp<Image> circleS = fw().data->load_image(
+	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:25:xcom3/UFODATA/BASE.PCX");
+	sp<Image> circleL = fw().data->load_image(
+	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:26:xcom3/UFODATA/BASE.PCX");
+	// buildTime->Visible = true;
+	for (auto &facility : base->getFacilities())
+	{
+		sp<Image> sprite = facility->type->sprite;
+		Vec2<int> pos = renderPos + facility->pos * TILE_SIZE;
+		if (facility->buildTime == 0)
+		{
+			fw().renderer->draw(sprite, pos);
+		}
+		else
+		{
+			// Fade out facility
+			fw().renderer->drawTinted(sprite, pos, Colour(255, 255, 255, 128));
+			// Draw construction overlay
+			if (facility->type->size == 1)
+			{
+				fw().renderer->draw(circleS, pos);
+			}
+			else
+			{
+				fw().renderer->draw(circleL, pos);
+			}
+			// Draw time remaining
+			// buildTime->Size = { TILE_SIZE, TILE_SIZE };
+			// buildTime->Size *= facility->type->size;
+			// buildTime->Location = pos;
+			// buildTime->SetText(Strings::FromInteger(facility->buildTime));
+			// buildTime->Render();
+		}
+	}
+	// buildTime->Visible = false;
+
+	// Draw doors
+	sp<Image> doorLeft = fw().data->load_image(
+	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:2:xcom3/UFODATA/BASE.PCX");
+	sp<Image> doorBottom = fw().data->load_image(
+	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:3:xcom3/UFODATA/BASE.PCX");
+	for (auto &facility : base->getFacilities())
+	{
+		for (int y = 0; y < facility->type->size; y++)
+		{
+			Vec2<int> tile = facility->pos + Vec2<int>{-1, y};
+			if (BaseGraphics::getCorridorSprite(base, tile) != 0)
+			{
+				Vec2<int> pos = renderPos + tile * TILE_SIZE;
+				fw().renderer->draw(doorLeft, pos + Vec2<int>{TILE_SIZE / 2, 0});
+			}
+		}
+		for (int x = 0; x < facility->type->size; x++)
+		{
+			Vec2<int> tile = facility->pos + Vec2<int>{x, facility->type->size};
+			if (BaseGraphics::getCorridorSprite(base, tile) != 0)
+			{
+				Vec2<int> pos = renderPos + tile * TILE_SIZE;
+				fw().renderer->draw(doorBottom, pos - Vec2<int>{0, TILE_SIZE / 2});
+			}
+		}
+	}
+}
+
 sp<RGBImage> BaseGraphics::drawMiniBase(sp<Base> base)
 {
 	auto minibase = mksp<RGBImage>(Vec2<unsigned int>{32, 32});
@@ -127,4 +224,5 @@ sp<RGBImage> BaseGraphics::drawMinimap(sp<GameState> state, sp<Building> selecte
 
 	return minimap;
 }
-}
+
+}; // namespace OpenApoc

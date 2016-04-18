@@ -16,9 +16,8 @@ namespace OpenApoc
 const Vec2<int> BaseScreen::NO_SELECTION = {-1, -1};
 
 BaseScreen::BaseScreen(sp<GameState> state, StateRef<Base> base)
-    : Stage(), form(ui().GetForm("FORM_BASESCREEN")), base(base), selection(-1, -1),
-      dragFacility(nullptr), drag(false), baseView(nullptr), selGraphic(nullptr), selText(nullptr),
-      buildTime(nullptr), state(state)
+    : Stage(), form(ui().GetForm("FORM_BASESCREEN")), base(base), selection(NO_SELECTION),
+      drag(false), state(state)
 {
 }
 
@@ -355,107 +354,14 @@ bool BaseScreen::IsTransition() { return false; }
 void BaseScreen::RenderBase()
 {
 	const Vec2<int> BASE_POS = form->Location + baseView->Location;
-	const int TILE_SIZE = BaseGraphics::TILE_SIZE;
 
-	// Draw grid
-	sp<Image> grid = fw().data->load_image(
-	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:xcom3/UFODATA/BASE.PCX");
-	Vec2<int> i;
-	for (i.x = 0; i.x < Base::SIZE; i.x++)
-	{
-		for (i.y = 0; i.y < Base::SIZE; i.y++)
-		{
-			Vec2<int> pos = BASE_POS + i * TILE_SIZE;
-			fw().renderer->draw(grid, pos);
-		}
-	}
-
-	// Draw corridors
-	for (i.x = 0; i.x < Base::SIZE; i.x++)
-	{
-		for (i.y = 0; i.y < Base::SIZE; i.y++)
-		{
-			int sprite = BaseGraphics::getCorridorSprite(base, i);
-			if (sprite != 0)
-			{
-				Vec2<int> pos = BASE_POS + i * TILE_SIZE;
-				auto image = UString::format(
-				    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:%d:xcom3/UFODATA/BASE.PCX",
-				    sprite);
-				fw().renderer->draw(fw().data->load_image(image), pos);
-			}
-		}
-	}
-
-	// Draw facilities
-	sp<Image> circleS = fw().data->load_image(
-	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:25:xcom3/UFODATA/BASE.PCX");
-	sp<Image> circleL = fw().data->load_image(
-	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:26:xcom3/UFODATA/BASE.PCX");
-	buildTime->Visible = true;
-	for (auto &facility : base->getFacilities())
-	{
-		sp<Image> sprite = facility->type->sprite;
-		Vec2<int> pos = BASE_POS + facility->pos * TILE_SIZE;
-		if (facility->buildTime == 0)
-		{
-			fw().renderer->draw(sprite, pos);
-		}
-		else
-		{
-			// Fade out facility
-			fw().renderer->drawTinted(sprite, pos, Colour(255, 255, 255, 128));
-			// Draw construction overlay
-			if (facility->type->size == 1)
-			{
-				fw().renderer->draw(circleS, pos);
-			}
-			else
-			{
-				fw().renderer->draw(circleL, pos);
-			}
-			// Draw time remaining
-			buildTime->Size = {TILE_SIZE, TILE_SIZE};
-			buildTime->Size *= facility->type->size;
-			buildTime->Location = pos;
-			buildTime->SetText(Strings::FromInteger(facility->buildTime));
-			buildTime->Render();
-		}
-	}
-	buildTime->Visible = false;
-
-	// Draw doors
-	sp<Image> doorLeft = fw().data->load_image(
-	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:2:xcom3/UFODATA/BASE.PCX");
-	sp<Image> doorBottom = fw().data->load_image(
-	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:3:xcom3/UFODATA/BASE.PCX");
-	for (auto &facility : base->getFacilities())
-	{
-		for (int y = 0; y < facility->type->size; y++)
-		{
-			Vec2<int> tile = facility->pos + Vec2<int>{-1, y};
-			if (BaseGraphics::getCorridorSprite(base, tile) != 0)
-			{
-				Vec2<int> pos = BASE_POS + tile * TILE_SIZE;
-				fw().renderer->draw(doorLeft, pos + Vec2<int>{TILE_SIZE / 2, 0});
-			}
-		}
-		for (int x = 0; x < facility->type->size; x++)
-		{
-			Vec2<int> tile = facility->pos + Vec2<int>{x, facility->type->size};
-			if (BaseGraphics::getCorridorSprite(base, tile) != 0)
-			{
-				Vec2<int> pos = BASE_POS + tile * TILE_SIZE;
-				fw().renderer->draw(doorBottom, pos - Vec2<int>{0, TILE_SIZE / 2});
-			}
-		}
-	}
+	BaseGraphics::renderBase(BASE_POS, base);
 
 	// Draw selection
 	if (selection != NO_SELECTION)
 	{
 		Vec2<int> pos = selection;
-		Vec2<int> size = {TILE_SIZE, TILE_SIZE};
+		Vec2<int> size = {BaseGraphics::TILE_SIZE, BaseGraphics::TILE_SIZE};
 		if (drag && dragFacility)
 		{
 			size *= dragFacility->size;
@@ -465,7 +371,7 @@ void BaseScreen::RenderBase()
 			pos = selFacility->pos;
 			size *= selFacility->type->size;
 		}
-		pos = BASE_POS + pos * TILE_SIZE;
+		pos = BASE_POS + pos * BaseGraphics::TILE_SIZE;
 		fw().renderer->drawRect(pos, size, Colour{255, 255, 255});
 	}
 
@@ -476,11 +382,13 @@ void BaseScreen::RenderBase()
 		Vec2<int> pos;
 		if (selection == NO_SELECTION)
 		{
-			pos = mousePos - Vec2<int>{TILE_SIZE / 2, TILE_SIZE / 2} * dragFacility->size;
+			pos = mousePos -
+			      Vec2<int>{BaseGraphics::TILE_SIZE, BaseGraphics::TILE_SIZE} / 2 *
+			          dragFacility->size;
 		}
 		else
 		{
-			pos = BASE_POS + selection * TILE_SIZE;
+			pos = BASE_POS + selection * BaseGraphics::TILE_SIZE;
 		}
 		fw().renderer->draw(facility, pos);
 	}

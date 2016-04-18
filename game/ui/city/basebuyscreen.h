@@ -9,17 +9,20 @@ namespace OpenApoc
 {
 
 class Building;
+class Base;
 class GameState;
 
 class BaseBuyScreen : public Stage
 {
   private:
-	sp<Form> menuform;
+	sp<Form> form;
+	sp<Graphic> baseView;
 	StageCmd stageCmd;
 	int price;
 
 	sp<GameState> state;
-	sp<Building> building;
+	sp<Base> base;
+	void RenderBase();
 
   public:
 	BaseBuyScreen(sp<GameState> state, sp<Building> building);

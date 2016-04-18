@@ -4,25 +4,32 @@
 #include "framework/framework.h"
 #include "game/state/city/building.h"
 #include "game/state/gamestate.h"
+#include "game/ui/base/basegraphics.h"
 #include "game/ui/general/messagebox.h"
 
 namespace OpenApoc
 {
 
 BaseBuyScreen::BaseBuyScreen(sp<GameState> state, sp<Building> building)
-    : Stage(), menuform(ui().GetForm("FORM_BUY_BASE_SCREEN")), state(state), building(building)
+    : Stage(), form(ui().GetForm("FORM_BUY_BASE_SCREEN")), state(state)
 {
 	price = building->bounds.size().x * building->bounds.size().y * 2000;
+	base = mksp<Base>(*state, StateRef<Building>{state.get(), building});
 }
 
 BaseBuyScreen::~BaseBuyScreen() {}
 
 void BaseBuyScreen::Begin()
 {
-	menuform->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
+	baseView = form->FindControlTyped<Graphic>("GRAPHIC_BASE_VIEW");
 
-	auto text = menuform->FindControlTyped<Label>("TEXT_PRICE");
+	form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
+
+	auto text = form->FindControlTyped<Label>("TEXT_PRICE");
 	text->SetText(UString::format(tr("This Building will cost $%d"), price));
+
+	form->FindControlTyped<Graphic>("GRAPHIC_MINIMAP")
+	    ->SetImage(BaseGraphics::drawMinimap(state, base->building));
 }
 
 void BaseBuyScreen::Pause() {}
@@ -33,7 +40,7 @@ void BaseBuyScreen::Finish() {}
 
 void BaseBuyScreen::EventOccurred(Event *e)
 {
-	menuform->EventOccured(e);
+	form->EventOccured(e);
 
 	if (e->Type() == EVENT_KEY_DOWN)
 	{
@@ -55,11 +62,9 @@ void BaseBuyScreen::EventOccurred(Event *e)
 			if (state->getPlayer()->balance >= price)
 			{
 				state->getPlayer()->balance -= price;
-
-				auto base = mksp<Base>(*state, StateRef<Building>{state.get(), building});
 				state->player_bases[Base::getPrefix() +
 				                    Strings::FromInteger(state->player_bases.size() + 1)] = base;
-				building->owner = state->getPlayer();
+				base->building->owner = state->getPlayer();
 
 				stageCmd.cmd = StageCmd::Command::POP;
 			}
@@ -76,7 +81,7 @@ void BaseBuyScreen::EventOccurred(Event *e)
 
 void BaseBuyScreen::Update(StageCmd *const cmd)
 {
-	menuform->Update();
+	form->Update();
 	*cmd = this->stageCmd;
 	// Reset the command to default
 	this->stageCmd = StageCmd();
@@ -86,9 +91,17 @@ void BaseBuyScreen::Render()
 {
 	fw().Stage_GetPrevious(this->shared_from_this())->Render();
 	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
-	menuform->Render();
+	form->Render();
+	RenderBase();
 }
 
 bool BaseBuyScreen::IsTransition() { return false; }
+
+void BaseBuyScreen::RenderBase()
+{
+	const Vec2<int> BASE_POS = form->Location + baseView->Location;
+
+	BaseGraphics::renderBase(BASE_POS, base);
+}
 
 }; // namespace OpenApoc
