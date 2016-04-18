@@ -142,88 +142,87 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 
 	this->baseForm->FindControl("BUTTON_TAB_1")
 	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *e) -> void { this->activeTab = this->uiTabs[0]; });
+	                  [this](Event *e) { this->activeTab = this->uiTabs[0]; });
 	this->baseForm->FindControl("BUTTON_TAB_2")
 	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *e) -> void { this->activeTab = this->uiTabs[1]; });
+	                  [this](Event *e) { this->activeTab = this->uiTabs[1]; });
 	this->baseForm->FindControl("BUTTON_TAB_3")
 	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *e) -> void { this->activeTab = this->uiTabs[2]; });
+	                  [this](Event *e) { this->activeTab = this->uiTabs[2]; });
 	this->baseForm->FindControl("BUTTON_TAB_4")
 	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *e) -> void { this->activeTab = this->uiTabs[3]; });
+	                  [this](Event *e) { this->activeTab = this->uiTabs[3]; });
 	this->baseForm->FindControl("BUTTON_TAB_5")
 	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *e) -> void { this->activeTab = this->uiTabs[4]; });
+	                  [this](Event *e) { this->activeTab = this->uiTabs[4]; });
 	this->baseForm->FindControl("BUTTON_TAB_6")
 	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *e) -> void { this->activeTab = this->uiTabs[5]; });
+	                  [this](Event *e) { this->activeTab = this->uiTabs[5]; });
 	this->baseForm->FindControl("BUTTON_TAB_7")
 	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *e) -> void { this->activeTab = this->uiTabs[6]; });
+	                  [this](Event *e) { this->activeTab = this->uiTabs[6]; });
 	this->baseForm->FindControl("BUTTON_TAB_8")
 	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *e) -> void { this->activeTab = this->uiTabs[7]; });
+	                  [this](Event *e) { this->activeTab = this->uiTabs[7]; });
 	this->baseForm->FindControl("BUTTON_FOLLOW_VEHICLE")
-	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) -> void {
+	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) {
 		    this->followVehicle =
 		        std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy)->IsChecked();
 		});
 	this->baseForm->FindControl("BUTTON_TOGGLE_STRATMAP")
-	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) -> void {
+	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) {
 		    bool strategy = std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy)->IsChecked();
 		    this->setViewMode(strategy ? TileViewMode::Strategy : TileViewMode::Isometric);
 		});
 	this->baseForm->FindControl("BUTTON_SPEED0")
 	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *e) -> void { this->updateSpeed = UpdateSpeed::Pause; });
+	                  [this](Event *e) { this->updateSpeed = UpdateSpeed::Pause; });
 	this->baseForm->FindControl("BUTTON_SPEED1")
 	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *e) -> void { this->updateSpeed = UpdateSpeed::Speed1; });
+	                  [this](Event *e) { this->updateSpeed = UpdateSpeed::Speed1; });
 	this->baseForm->FindControl("BUTTON_SPEED2")
 	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *e) -> void { this->updateSpeed = UpdateSpeed::Speed2; });
+	                  [this](Event *e) { this->updateSpeed = UpdateSpeed::Speed2; });
 	this->baseForm->FindControl("BUTTON_SPEED3")
 	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *e) -> void { this->updateSpeed = UpdateSpeed::Speed3; });
+	                  [this](Event *e) { this->updateSpeed = UpdateSpeed::Speed3; });
 	this->baseForm->FindControl("BUTTON_SPEED4")
 	    ->addCallback(FormEventType::CheckBoxSelected,
-	                  [this](Event *e) -> void { this->updateSpeed = UpdateSpeed::Speed4; });
+	                  [this](Event *e) { this->updateSpeed = UpdateSpeed::Speed4; });
 	this->baseForm->FindControl("BUTTON_SPEED5")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) -> void {
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
 		    if (this->state->canTurbo())
 			    this->updateSpeed = UpdateSpeed::Speed5;
 		});
 	this->baseForm->FindControl("BUTTON_SHOW_ALIEN_INFILTRATION")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    this->stageCmd.nextStage = mksp<InfiltrationScreen>();
 		});
 	this->baseForm->FindControl("BUTTON_SHOW_SCORE")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    this->stageCmd.nextStage = mksp<ScoreScreen>();
 		});
 	this->baseForm->FindControl("BUTTON_SHOW_UFOPAEDIA")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    this->stageCmd.nextStage = mksp<UfopaediaView>(this->state);
 		});
 	this->baseForm->FindControl("BUTTON_SHOW_OPTIONS")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    this->stageCmd.nextStage = mksp<InGameOptions>(this->state);
 		});
 	this->baseForm->FindControl("BUTTON_SHOW_LOG")
-	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *e) -> void { LogWarning("Show log"); });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) { LogWarning("Show log"); });
 	this->baseForm->FindControl("BUTTON_ZOOM_EVENT")
 	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *e) -> void { LogWarning("Zoom to event"); });
+	                  [this](Event *e) { LogWarning("Zoom to event"); });
 
 	auto baseManagementForm = this->uiTabs[0];
 	baseManagementForm->FindControl("BUTTON_SHOW_BASE")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    // FIXME: Show the last base for now
 		    auto lastBase = this->state->player_bases.end();
@@ -233,7 +232,7 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 		});
 	// FIX ME: Figure out how to use a separate Stage for base selection
 	baseManagementForm->FindControl("BUTTON_BUILD_BASE")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		    // this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    // this->stageCmd.nextStage = mksp<BaseSelectScreen>();
 		    if (this->selectionState == SelectionState::BuildBase)
@@ -249,7 +248,7 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 		});
 	auto vehicleForm = this->uiTabs[1];
 	vehicleForm->FindControl("BUTTON_EQUIP_VEHICLE")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    auto equipScreen = mksp<VEquipScreen>(this->state);
 		    auto v = this->selectedVehicle.lock();
@@ -260,7 +259,7 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 		    this->stageCmd.nextStage = equipScreen;
 		});
 	vehicleForm->FindControl("BUTTON_VEHICLE_BUILDING")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
 		    {
@@ -273,7 +272,7 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 		    }
 		});
 	vehicleForm->FindControl("BUTTON_GOTO_BUILDING")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
 		    {
@@ -283,7 +282,7 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 
 		});
 	vehicleForm->FindControl("BUTTON_GOTO_LOCATION")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
 		    {
@@ -293,7 +292,7 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 
 		});
 	vehicleForm->FindControl("BUTTON_GOTO_BASE")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
 		    {
@@ -312,7 +311,7 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 		    }
 		});
 	vehicleForm->FindControl("BUTTON_VEHICLE_ATTACK")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
 		    {
@@ -322,7 +321,7 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 
 		});
 	vehicleForm->FindControl("BUTTON_VEHICLE_ATTACK_BUILDING")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
 		    {
@@ -500,9 +499,8 @@ void CityView::Update(StageCmd *const cmd)
 			newVehicleListControls[vehicle] = std::make_pair(info, control);
 			ownedVehicleList->AddItem(control);
 
-			control->addCallback(FormEventType::MouseDown, [this, vehicle](Event *e) -> void {
-				this->selectedVehicle = vehicle;
-			});
+			control->addCallback(FormEventType::MouseDown,
+			                     [this, vehicle](Event *e) { this->selectedVehicle = vehicle; });
 		}
 	}
 

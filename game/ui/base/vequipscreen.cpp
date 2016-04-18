@@ -20,12 +20,9 @@ static const Colour EQUIP_GRID_COLOUR_GENERAL{255, 40, 255, 255};
 static const float GLOW_COUNTER_INCREMENT = M_PI / 15.0f;
 
 VEquipScreen::VEquipScreen(sp<GameState> state)
-    : Stage(), form(ui().GetForm("FORM_VEQUIPSCREEN")), selected(nullptr),
-      selectionType(VEquipmentType::Type::Weapon),
+    : Stage(), form(ui().GetForm("FORM_VEQUIPSCREEN")), selectionType(VEquipmentType::Type::Weapon),
       pal(fw().data->load_palette("xcom3/UFODATA/VROADWAR.PCX")),
-      labelFont(ui().GetFont("SMALFONT")), highlightedVehicle(nullptr),
-      highlightedEquipment(nullptr), drawHighlightBox(false), draggedEquipment(nullptr),
-      state(state), glowCounter(0)
+      labelFont(ui().GetFont("SMALFONT")), drawHighlightBox(false), state(state), glowCounter(0)
 
 {
 	form->FindControlTyped<RadioButton>("BUTTON_SHOW_WEAPONS")->SetChecked(true);

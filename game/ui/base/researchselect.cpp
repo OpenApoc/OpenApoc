@@ -37,7 +37,7 @@ void ResearchSelect::Begin()
 	auto research_list = form->FindControlTyped<ListBox>("LIST");
 	research_list->AlwaysEmitSelectionEvents = true;
 
-	research_list->addCallback(FormEventType::ListBoxChangeSelected, [this](Event *e) -> void {
+	research_list->addCallback(FormEventType::ListBoxChangeSelected, [this](Event *e) {
 		LogInfo("Research selection change");
 		auto list = std::static_pointer_cast<ListBox>(e->Forms().RaisedBy);
 		auto topic = list->GetSelectedData<ResearchTopic>();
@@ -50,7 +50,7 @@ void ResearchSelect::Begin()
 		this->redrawResearchList();
 	});
 
-	research_list->addCallback(FormEventType::ListBoxChangeHover, [this](Event *e) -> void {
+	research_list->addCallback(FormEventType::ListBoxChangeHover, [this](Event *e) {
 		LogInfo("Research selection change");
 		auto list = std::static_pointer_cast<ListBox>(e->Forms().RaisedBy);
 		auto topic = list->GetHoveredData<ResearchTopic>();

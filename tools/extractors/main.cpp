@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
 
 		for (auto &dpair : difficultyOutputFiles)
 		{
-			auto future = fw->threadPool->enqueue([dpair]() -> void {
+			auto future = fw->threadPool->enqueue([dpair]() {
 				GameState s;
 				InitialGameStateExtractor e;
 				LogWarning("Extracting initial game state for \"%s\"", dpair.first.c_str());

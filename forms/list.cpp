@@ -10,10 +10,9 @@ namespace OpenApoc
 ListBox::ListBox() : ListBox(nullptr) {}
 
 ListBox::ListBox(sp<ScrollBar> ExternalScrollBar)
-    : Control(), scroller_is_internal(ExternalScrollBar == nullptr), hovered(nullptr),
-      selected(nullptr), scroller(ExternalScrollBar), ItemSize(64), ItemSpacing(1),
-      ListOrientation(Orientation::Vertical), HoverColour(0, 0, 0, 0), SelectedColour(0, 0, 0, 0),
-      AlwaysEmitSelectionEvents(false)
+    : Control(), scroller_is_internal(ExternalScrollBar == nullptr), scroller(ExternalScrollBar),
+      ItemSize(64), ItemSpacing(1), ListOrientation(Orientation::Vertical), HoverColour(0, 0, 0, 0),
+      SelectedColour(0, 0, 0, 0), AlwaysEmitSelectionEvents(false)
 {
 }
 

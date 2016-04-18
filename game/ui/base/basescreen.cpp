@@ -33,6 +33,8 @@ void BaseScreen::ChangeBase(sp<Base> newBase)
 
 void BaseScreen::Begin()
 {
+	ChangeBase(base);
+
 	form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
 
 	buildTime = form->FindControlTyped<Label>("TEXT_BUILD_TIME");
@@ -71,7 +73,7 @@ void BaseScreen::Begin()
 		auto viewImage = BaseGraphics::drawMiniBase(viewBase);
 		view->SetImage(viewImage);
 		view->SetDepressedImage(viewImage);
-		view->addCallback(FormEventType::ButtonClick, [this](Event *e) -> void {
+		view->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 			this->ChangeBase(e->Forms().RaisedBy->GetData<Base>());
 		});
 		miniViews.push_back(view);
@@ -93,27 +95,21 @@ void BaseScreen::Begin()
 
 	form->FindControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *e) -> void { this->stageCmd.cmd = StageCmd::Command::POP; });
+	                  [this](Event *e) { this->stageCmd.cmd = StageCmd::Command::POP; });
 	form->FindControlTyped<GraphicButton>("BUTTON_BASE_EQUIPVEHICLE")
-	    ->addCallback(
-	        FormEventType::ButtonClick,
-	        [this](Event *e)
-	            -> void {
-					// FIXME: If you don't have any vehicles this button should do nothing
-		            this->stageCmd.cmd = StageCmd::Command::PUSH;
-		            this->stageCmd.nextStage = mksp<VEquipScreen>(state);
-		        });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
+		    // FIXME: If you don't have any vehicles this button should do nothing
+		    this->stageCmd.cmd = StageCmd::Command::PUSH;
+		    this->stageCmd.nextStage = mksp<VEquipScreen>(state);
+		});
 	form->FindControlTyped<GraphicButton>("BUTTON_BASE_RES_AND_MANUF")
-	    ->addCallback(
-	        FormEventType::ButtonClick,
-	        [this](Event *e)
-	            -> void {
-					// FIXME: If you don't have any facilities this button should do nothing
-		            this->stageCmd.cmd = StageCmd::Command::PUSH;
-		            this->stageCmd.nextStage = mksp<ResearchScreen>(state, this->base);
-		        });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
+		    // FIXME: If you don't have any facilities this button should do nothing
+		    this->stageCmd.cmd = StageCmd::Command::PUSH;
+		    this->stageCmd.nextStage = mksp<ResearchScreen>(state, this->base);
+		});
 	form->FindControlTyped<TextEdit>("TEXT_BASE_NAME")
-	    ->addCallback(FormEventType::TextEditFinish, [this](Event *e) -> void {
+	    ->addCallback(FormEventType::TextEditFinish, [this](Event *e) {
 		    this->base->name = std::dynamic_pointer_cast<TextEdit>(e->Forms().RaisedBy)->GetText();
 		});
 }

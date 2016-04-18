@@ -10,9 +10,8 @@ namespace OpenApoc
 {
 
 TextButton::TextButton(const UString &Text, sp<BitmapFont> font)
-    : Control(), cached(nullptr),
-      buttonclick(
-          fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
+    : Control(), buttonclick(fw().data->load_sample(
+                     "RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
       buttonbackground(fw().data->load_image("UI/TEXTBUTTONBACK.PNG")),
       TextHAlign(HorizontalAlignment::Centre), TextVAlign(VerticalAlignment::Centre),
       RenderStyle(ButtonRenderStyle::Menu)

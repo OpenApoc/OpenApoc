@@ -76,7 +76,7 @@ void DifficultyMenu::EventOccurred(Event *e)
 		}
 
 		auto state = mksp<GameState>();
-		auto loadTask = fw().threadPool->enqueue([state, initialStatePath]() -> void {
+		auto loadTask = fw().threadPool->enqueue([state, initialStatePath]() {
 			state->loadGame(initialStatePath);
 			state->startGame();
 			state->initState();

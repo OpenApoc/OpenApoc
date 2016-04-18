@@ -50,31 +50,30 @@ void ResearchScreen::Begin()
 	}
 	this->healthImage = img;
 	auto unassignedAgentList = form->FindControlTyped<ListBox>("LIST_UNASSIGNED");
-	unassignedAgentList->addCallback(
-	    FormEventType::ListBoxChangeSelected, [this](Event *e) -> void {
-		    LogWarning("unassigned agent selected");
-		    if (this->assigned_agent_count >= this->selected_lab->type->capacityAmount)
-		    {
-			    LogWarning("no free space in lab");
-			    return;
-		    }
-		    auto list = std::static_pointer_cast<ListBox>(e->Forms().RaisedBy);
-		    auto agent = list->GetSelectedData<Agent>();
-		    if (!agent)
-		    {
-			    LogError("No agent in selected data");
-			    return;
-		    }
-		    if (agent->assigned_to_lab)
-		    {
-			    LogError("Agent \"%s\" already assigned to a lab?", agent->name.c_str());
-			    return;
-		    }
-		    agent->assigned_to_lab = true;
-		    this->selected_lab->lab->assigned_agents.push_back({state.get(), agent});
-		    this->setCurrentLabInfo();
-		});
-	auto removeFn = [this](Event *e) -> void {
+	unassignedAgentList->addCallback(FormEventType::ListBoxChangeSelected, [this](Event *e) {
+		LogWarning("unassigned agent selected");
+		if (this->assigned_agent_count >= this->selected_lab->type->capacityAmount)
+		{
+			LogWarning("no free space in lab");
+			return;
+		}
+		auto list = std::static_pointer_cast<ListBox>(e->Forms().RaisedBy);
+		auto agent = list->GetSelectedData<Agent>();
+		if (!agent)
+		{
+			LogError("No agent in selected data");
+			return;
+		}
+		if (agent->assigned_to_lab)
+		{
+			LogError("Agent \"%s\" already assigned to a lab?", agent->name.c_str());
+			return;
+		}
+		agent->assigned_to_lab = true;
+		this->selected_lab->lab->assigned_agents.push_back({state.get(), agent});
+		this->setCurrentLabInfo();
+	});
+	auto removeFn = [this](Event *e) {
 		LogWarning("assigned agent selected");
 		auto list = std::static_pointer_cast<ListBox>(e->Forms().RaisedBy);
 		auto agent = list->GetSelectedData<Agent>();

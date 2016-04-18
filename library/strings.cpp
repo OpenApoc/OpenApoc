@@ -80,7 +80,7 @@ UString::UString(UniChar uc) : u8Str()
 	u8Str = boost::locale::conv::utf_to_utf<char>(&uc, &uc + 1);
 }
 
-std::string UString::str() const { return this->u8Str; };
+std::string UString::str() const { return this->u8Str; }
 
 const char *UString::c_str() const { return this->u8Str.c_str(); }
 

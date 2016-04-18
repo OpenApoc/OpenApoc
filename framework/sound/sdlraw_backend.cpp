@@ -17,7 +17,7 @@ struct SampleData
 {
 	unsigned char *samplePos;
 	float gain;
-	SampleData(unsigned char *samplePos, float gain) : samplePos(samplePos), gain(gain){};
+	SampleData(unsigned char *samplePos, float gain) : samplePos(samplePos), gain(gain) {}
 };
 
 class SDLSampleData : public BackendSampleData

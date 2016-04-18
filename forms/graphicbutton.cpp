@@ -11,8 +11,7 @@ namespace OpenApoc
 GraphicButton::GraphicButton(sp<Image> image, sp<Image> imageDepressed, sp<Image> imageHover)
     : Control(), image(image), imagedepressed(imageDepressed), imagehover(imageHover),
       buttonclick(
-          fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
-      ScrollBarPrev(nullptr), ScrollBarNext(nullptr)
+          fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050"))
 {
 }
 

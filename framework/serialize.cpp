@@ -408,10 +408,14 @@ class XMLSerializationNode : public SerializationNode
   public:
 	XMLSerializationNode(sp<XMLSerializationArchive> archive, xml_node node,
 	                     sp<XMLSerializationNode> parent)
-	    : archive(archive), node(node), parent(parent){};
+	    : archive(archive), node(node), parent(parent)
+	{
+	}
 
 	XMLSerializationNode(sp<XMLSerializationArchive> archive, xml_node node, const UString &prefix)
-	    : archive(archive), node(node), parent(nullptr), prefix(prefix){};
+	    : archive(archive), node(node), prefix(prefix)
+	{
+	}
 
 	sp<SerializationNode> addNode(const UString &name, const UString &value = "") override;
 	sp<SerializationNode> addSection(const UString &name) override;

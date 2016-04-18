@@ -77,7 +77,7 @@ void MainMenu::EventOccurred(Event *e)
 			// FIXME: Save game selector
 			auto state = mksp<GameState>();
 			UString savePath = "save";
-			auto loadTask = fw().threadPool->enqueue([state, savePath]() -> void {
+			auto loadTask = fw().threadPool->enqueue([state, savePath]() {
 				if (state->loadGame(savePath) == false)
 				{
 					LogError("Failed to load '%s'", savePath.c_str());
