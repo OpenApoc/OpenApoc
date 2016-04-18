@@ -81,6 +81,9 @@
     <ClCompile Include="base\researchselect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="base\basegraphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boot.h">
@@ -147,6 +150,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="base\researchselect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="base\basegraphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

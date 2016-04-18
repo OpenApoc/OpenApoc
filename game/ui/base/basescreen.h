@@ -1,8 +1,8 @@
 #pragma once
 #include "forms/forms.h"
 #include "framework/stage.h"
+#include "library/sp.h"
 #include "library/vec.h"
-#include <unordered_map>
 #include <vector>
 
 namespace OpenApoc
@@ -16,9 +16,7 @@ class FacilityType;
 class BaseScreen : public Stage
 {
   private:
-	static const int TILE_SIZE, MINI_SIZE;
 	static const Vec2<int> NO_SELECTION;
-	static const std::unordered_map<std::vector<bool>, int> TILE_CORRIDORS;
 
 	sp<Form> form;
 	StageCmd stageCmd;
@@ -34,12 +32,8 @@ class BaseScreen : public Stage
 	std::vector<sp<Label>> statsValues;
 	std::vector<sp<GraphicButton>> miniViews;
 
-	int getCorridorSprite(Vec2<int> pos) const;
-	void RenderBase();
-	void RenderMiniBase();
 	sp<GameState> state;
-
-	sp<RGBImage> minimap_image;
+	void RenderBase();
 
   public:
 	BaseScreen(sp<GameState> state, StateRef<Base> base);

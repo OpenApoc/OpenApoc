@@ -1,0 +1,130 @@
+#include "game/ui/base/basegraphics.h"
+#include "framework/framework.h"
+#include "game/state/base/base.h"
+#include "game/state/base/facility.h"
+#include "game/state/city/building.h"
+#include "game/state/city/city.h"
+#include "game/state/gamestate.h"
+#include <unordered_map>
+
+namespace OpenApoc
+{
+
+// key is North South West East (true = occupied, false = vacant)
+const std::unordered_map<std::vector<bool>, int> TILE_CORRIDORS = {
+    {{true, false, false, false}, 4}, {{false, false, false, true}, 5},
+    {{true, false, false, true}, 6},  {{false, true, false, false}, 7},
+    {{true, true, false, false}, 8},  {{false, true, false, true}, 9},
+    {{true, true, false, true}, 10},  {{false, false, true, false}, 11},
+    {{true, false, true, false}, 12}, {{false, false, true, true}, 13},
+    {{true, false, true, true}, 14},  {{false, true, true, false}, 15},
+    {{true, true, true, false}, 16},  {{false, true, true, true}, 17},
+    {{true, true, true, true}, 18}};
+
+int BaseGraphics::getCorridorSprite(sp<Base> base, Vec2<int> pos)
+{
+	if (pos.x < 0 || pos.y < 0 || pos.x >= Base::SIZE || pos.y >= Base::SIZE ||
+	    !base->getCorridors()[pos.x][pos.y])
+	{
+		return 0;
+	}
+	bool north = pos.y > 0 && base->getCorridors()[pos.x][pos.y - 1];
+	bool south = pos.y < Base::SIZE - 1 && base->getCorridors()[pos.x][pos.y + 1];
+	bool west = pos.x > 0 && base->getCorridors()[pos.x - 1][pos.y];
+	bool east = pos.x < Base::SIZE - 1 && base->getCorridors()[pos.x + 1][pos.y];
+	return TILE_CORRIDORS.at({north, south, west, east});
+}
+
+sp<RGBImage> BaseGraphics::drawMiniBase(sp<Base> base)
+{
+	auto minibase = mksp<RGBImage>(Vec2<unsigned int>{32, 32});
+
+	// Draw corridors
+	Vec2<int> i;
+	for (i.x = 0; i.x < Base::SIZE; i.x++)
+	{
+		for (i.y = 0; i.y < Base::SIZE; i.y++)
+		{
+			int sprite = BaseGraphics::getCorridorSprite(base, i);
+			if (sprite != 0)
+			{
+				sprite -= 3;
+			}
+			Vec2<int> pos = i * MINI_SIZE;
+			auto image = UString::format(
+			    "RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:%d:xcom3/UFODATA/BASE.PCX", sprite);
+			RGBImage::blit(std::dynamic_pointer_cast<RGBImage>(fw().data->load_image(image)),
+			               minibase, {0, 0}, pos);
+		}
+	}
+
+	// Draw facilities
+	sp<Image> normal =
+	    fw().data->load_image("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:16:xcom3/UFODATA/BASE.PCX");
+	sp<Image> highlighted =
+	    fw().data->load_image("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:17:xcom3/UFODATA/BASE.PCX");
+	sp<Image> selected =
+	    fw().data->load_image("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:18:xcom3/UFODATA/BASE.PCX");
+	for (auto &facility : base->getFacilities())
+	{
+		sp<Image> sprite = (facility->buildTime == 0) ? normal : highlighted;
+		for (i.x = 0; i.x < facility->type->size; i.x++)
+		{
+			for (i.y = 0; i.y < facility->type->size; i.y++)
+			{
+				Vec2<int> pos = (facility->pos + i) * MINI_SIZE;
+				RGBImage::blit(std::dynamic_pointer_cast<RGBImage>(sprite), minibase, {0, 0}, pos);
+			}
+		}
+	}
+
+	return minibase;
+}
+
+sp<RGBImage> BaseGraphics::drawMinimap(sp<GameState> state, sp<Building> selected)
+{
+	auto minimap = mksp<RGBImage>(Vec2<unsigned int>{100, 100});
+	RGBImageLock l(minimap);
+
+	// Draw the city tiles
+	std::map<Vec2<int>, int> minimap_z;
+	for (auto &pair : state->cities["CITYMAP_HUMAN"]->initial_tiles)
+	{
+		auto &pos = pair.first;
+		Vec2<int> pos2d = {pos.x, pos.y};
+		auto &tile = pair.second;
+		auto it = minimap_z.find(pos2d);
+		if (it == minimap_z.end() || it->second < pos.z)
+		{
+			if (tile->minimap_colour.a == 0)
+				continue;
+			minimap_z[pos2d] = pos.z;
+			l.set(pos2d, tile->minimap_colour);
+		}
+	}
+
+	// Draw all bases as yellow blocks
+	for (auto &pair : state->player_bases)
+	{
+		auto &base = pair.second;
+		for (int y = base->building->bounds.p0.y; y < base->building->bounds.p1.y; y++)
+		{
+			for (int x = base->building->bounds.p0.x; x < base->building->bounds.p1.x; x++)
+			{
+				l.set({x, y}, {255, 255, 0, 255});
+			}
+		}
+	}
+
+	// Draw the current base as a red block
+	for (int y = selected->bounds.p0.y; y < selected->bounds.p1.y; y++)
+	{
+		for (int x = selected->bounds.p0.x; x < selected->bounds.p1.x; x++)
+		{
+			l.set({x, y}, {255, 0, 0, 255});
+		}
+	}
+
+	return minimap;
+}
+}

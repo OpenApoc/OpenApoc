@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="base\basegraphics.cpp" />
     <ClCompile Include="base\basescreen.cpp" />
     <ClCompile Include="base\researchscreen.cpp" />
     <ClCompile Include="base\researchselect.cpp" />
@@ -43,6 +44,7 @@
     <ClCompile Include="ufopaedia\ufopaediaview.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="base\basegraphics.h" />
     <ClInclude Include="base\basescreen.h" />
     <ClInclude Include="base\researchscreen.h" />
     <ClInclude Include="base\researchselect.h" />

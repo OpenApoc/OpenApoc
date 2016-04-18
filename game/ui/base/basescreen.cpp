@@ -4,43 +4,16 @@
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "game/state/base/facility.h"
+#include "game/ui/base/basegraphics.h"
 #include "game/ui/base/basescreen.h"
 #include "game/ui/base/researchscreen.h"
 #include "game/ui/base/vequipscreen.h"
 #include "game/ui/general/messagebox.h"
-#include "library/sp.h"
 
 namespace OpenApoc
 {
 
-const int BaseScreen::TILE_SIZE = 32;
-const int BaseScreen::MINI_SIZE = 4;
 const Vec2<int> BaseScreen::NO_SELECTION = {-1, -1};
-
-// key is North South West East (true = occupied, false = vacant)
-const std::unordered_map<std::vector<bool>, int> BaseScreen::TILE_CORRIDORS = {
-    {{true, false, false, false}, 4}, {{false, false, false, true}, 5},
-    {{true, false, false, true}, 6},  {{false, true, false, false}, 7},
-    {{true, true, false, false}, 8},  {{false, true, false, true}, 9},
-    {{true, true, false, true}, 10},  {{false, false, true, false}, 11},
-    {{true, false, true, false}, 12}, {{false, false, true, true}, 13},
-    {{true, false, true, true}, 14},  {{false, true, true, false}, 15},
-    {{true, true, true, false}, 16},  {{false, true, true, true}, 17},
-    {{true, true, true, true}, 18}};
-
-int BaseScreen::getCorridorSprite(Vec2<int> pos) const
-{
-	if (pos.x < 0 || pos.y < 0 || pos.x >= Base::SIZE || pos.y >= Base::SIZE ||
-	    !base->getCorridors()[pos.x][pos.y])
-	{
-		return 0;
-	}
-	bool north = pos.y > 0 && base->getCorridors()[pos.x][pos.y - 1];
-	bool south = pos.y < Base::SIZE - 1 && base->getCorridors()[pos.x][pos.y + 1];
-	bool west = pos.x > 0 && base->getCorridors()[pos.x - 1][pos.y];
-	bool east = pos.x < Base::SIZE - 1 && base->getCorridors()[pos.x + 1][pos.y];
-	return TILE_CORRIDORS.at({north, south, west, east});
-}
 
 BaseScreen::BaseScreen(sp<GameState> state, StateRef<Base> base)
     : Stage(), form(ui().GetForm("FORM_BASESCREEN")), base(base), selection(-1, -1),
@@ -78,14 +51,20 @@ void BaseScreen::Begin()
 		}
 		statsValues.push_back(value);
 	}
-	for (int i = 0; i < 8; i++)
+	int b = 0;
+	for (auto &pair : state->player_bases)
 	{
-		auto viewName = UString::format("BUTTON_BASE_%d", i + 1);
+		auto &viewBase = pair.second;
+		auto viewName = UString::format("BUTTON_BASE_%d", ++b);
 		auto view = form->FindControlTyped<GraphicButton>(viewName);
 		if (!view)
 		{
 			LogError("Failed to find UI control matching \"%s\"", viewName.c_str());
 		}
+		view->SetData(viewBase);
+		auto viewImage = BaseGraphics::drawMiniBase(viewBase);
+		view->SetImage(viewImage);
+		view->SetDepressedImage(viewImage);
 		miniViews.push_back(view);
 	}
 
@@ -103,37 +82,8 @@ void BaseScreen::Begin()
 		facilities->AddItem(graphic);
 	}
 
-	{
-		this->minimap_image = mksp<RGBImage>(Vec2<unsigned int>{100, 100});
-		RGBImageLock l(this->minimap_image);
-		std::map<Vec2<int>, int> minimap_image_z;
-		for (auto &pair : state->cities["CITYMAP_HUMAN"]->initial_tiles)
-		{
-			auto &pos = pair.first;
-			Vec2<int> pos2d = {pos.x, pos.y};
-			auto &tile = pair.second;
-			auto it = minimap_image_z.find(pos2d);
-			if (it == minimap_image_z.end() || it->second < pos.z)
-			{
-				if (tile->minimap_colour.a == 0)
-					continue;
-				minimap_image_z[pos2d] = pos.z;
-				l.set(pos2d, tile->minimap_colour);
-			}
-		}
-
-		// Set the bounds of the current base to be a red block
-		for (int y = this->base->building->bounds.p0.y; y < this->base->building->bounds.p1.y; y++)
-		{
-			for (int x = this->base->building->bounds.p0.x; x < this->base->building->bounds.p1.x;
-			     x++)
-			{
-				l.set({x, y}, {255, 0, 0, 255});
-			}
-		}
-	}
-
-	this->form->FindControlTyped<Graphic>("MINIMAP")->SetImage(this->minimap_image);
+	this->form->FindControlTyped<Graphic>("GRAPHIC_MINIMAP")
+	    ->SetImage(BaseGraphics::drawMinimap(state, base->building));
 }
 
 void BaseScreen::Pause() {}
@@ -200,7 +150,7 @@ void BaseScreen::EventOccurred(Event *e)
 			if (e->Forms().EventFlag == FormEventType::MouseMove)
 			{
 				selection = {e->Forms().MouseInfo.X, e->Forms().MouseInfo.Y};
-				selection /= TILE_SIZE;
+				selection /= BaseGraphics::TILE_SIZE;
 				if (!drag)
 				{
 					selFacility = base->getFacility(selection);
@@ -357,7 +307,7 @@ void BaseScreen::EventOccurred(Event *e)
 	}
 	else if (selection != NO_SELECTION)
 	{
-		int sprite = getCorridorSprite(selection);
+		int sprite = BaseGraphics::getCorridorSprite(base, selection);
 		auto image = UString::format(
 		    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:%d:xcom3/UFODATA/BASE.PCX", sprite);
 		if (sprite != 0)
@@ -385,7 +335,19 @@ void BaseScreen::Render()
 	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
 	form->Render();
 	RenderBase();
-	RenderMiniBase();
+
+	// Highlight selected base
+	for (auto &view : miniViews)
+	{
+		auto viewBase = view->GetData<Base>();
+		if (base == viewBase)
+		{
+			Vec2<int> pos = form->Location + view->Location - 2;
+			Vec2<int> size = view->Size + 4;
+			fw().renderer->drawRect(pos, size, Colour{255, 0, 0});
+			break;
+		}
+	}
 }
 
 bool BaseScreen::IsTransition() { return false; }
@@ -393,6 +355,7 @@ bool BaseScreen::IsTransition() { return false; }
 void BaseScreen::RenderBase()
 {
 	const Vec2<int> BASE_POS = form->Location + baseView->Location;
+	const int TILE_SIZE = BaseGraphics::TILE_SIZE;
 
 	// Draw grid
 	sp<Image> grid = fw().data->load_image(
@@ -412,7 +375,7 @@ void BaseScreen::RenderBase()
 	{
 		for (i.y = 0; i.y < Base::SIZE; i.y++)
 		{
-			int sprite = getCorridorSprite(i);
+			int sprite = BaseGraphics::getCorridorSprite(base, i);
 			if (sprite != 0)
 			{
 				Vec2<int> pos = BASE_POS + i * TILE_SIZE;
@@ -471,7 +434,7 @@ void BaseScreen::RenderBase()
 		for (int y = 0; y < facility->type->size; y++)
 		{
 			Vec2<int> tile = facility->pos + Vec2<int>{-1, y};
-			if (getCorridorSprite(tile) != 0)
+			if (BaseGraphics::getCorridorSprite(base, tile) != 0)
 			{
 				Vec2<int> pos = BASE_POS + tile * TILE_SIZE;
 				fw().renderer->draw(doorLeft, pos + Vec2<int>{TILE_SIZE / 2, 0});
@@ -480,7 +443,7 @@ void BaseScreen::RenderBase()
 		for (int x = 0; x < facility->type->size; x++)
 		{
 			Vec2<int> tile = facility->pos + Vec2<int>{x, facility->type->size};
-			if (getCorridorSprite(tile) != 0)
+			if (BaseGraphics::getCorridorSprite(base, tile) != 0)
 			{
 				Vec2<int> pos = BASE_POS + tile * TILE_SIZE;
 				fw().renderer->draw(doorBottom, pos - Vec2<int>{0, TILE_SIZE / 2});
@@ -520,56 +483,6 @@ void BaseScreen::RenderBase()
 			pos = BASE_POS + selection * TILE_SIZE;
 		}
 		fw().renderer->draw(facility, pos);
-	}
-}
-
-void BaseScreen::RenderMiniBase()
-{
-	const Vec2<int> BASE_POS = form->Location + miniViews[0]->Location;
-
-	// Draw corridors
-	Vec2<int> i;
-	for (i.x = 0; i.x < Base::SIZE; i.x++)
-	{
-		for (i.y = 0; i.y < Base::SIZE; i.y++)
-		{
-			int sprite = getCorridorSprite(i);
-			if (sprite != 0)
-			{
-				sprite -= 3;
-			}
-			Vec2<int> pos = BASE_POS + i * MINI_SIZE;
-			auto image = UString::format(
-			    "RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:%d:xcom3/UFODATA/BASE.PCX", sprite);
-			fw().renderer->draw(fw().data->load_image(image), pos);
-		}
-	}
-
-	// Draw facilities
-	sp<Image> normal =
-	    fw().data->load_image("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:16:xcom3/UFODATA/BASE.PCX");
-	sp<Image> highlighted =
-	    fw().data->load_image("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:17:xcom3/UFODATA/BASE.PCX");
-	sp<Image> selected =
-	    fw().data->load_image("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:18:xcom3/UFODATA/BASE.PCX");
-	for (auto &facility : base->getFacilities())
-	{
-		sp<Image> sprite = (facility->buildTime == 0) ? normal : highlighted;
-		for (i.x = 0; i.x < facility->type->size; i.x++)
-		{
-			for (i.y = 0; i.y < facility->type->size; i.y++)
-			{
-				Vec2<int> pos = BASE_POS + (facility->pos + i) * MINI_SIZE;
-				fw().renderer->draw(sprite, pos);
-			}
-		}
-	}
-
-	// Draw selection
-	{
-		Vec2<int> pos = BASE_POS - 2;
-		Vec2<int> size = miniViews[0]->Size + 4;
-		fw().renderer->drawRect(pos, size, Colour{255, 0, 0});
 	}
 }
 
