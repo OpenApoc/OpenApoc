@@ -25,8 +25,7 @@ sp<Palette> OpenApoc::loadPNGPalette(Data &d, const UString fileName)
 	auto data = f.readAll();
 	auto dataSize = f.size();
 	unsigned int width, height;
-	LodePNGState png_state;
-	memset(&png_state, 0, sizeof(png_state));
+	lodepng::State png_state;
 	auto err = lodepng_inspect(&width, &height, &png_state,
 	                           reinterpret_cast<unsigned char *>(data.get()), dataSize);
 	if (err)
