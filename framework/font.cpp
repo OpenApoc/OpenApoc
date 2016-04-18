@@ -27,7 +27,7 @@ sp<PaletteImage> BitmapFont::getString(const UString &Text)
 	{
 		UniChar c = pointString[i];
 		auto glyph = this->getGlyph(c);
-		PaletteImage::blit(glyph, Vec2<int>{pos, 0}, img);
+		PaletteImage::blit(glyph, img, {0, 0}, {pos, 0});
 		pos += glyph->size.x;
 	}
 
@@ -126,7 +126,7 @@ sp<BitmapFont> BitmapFont::loadFont(const std::map<UniChar, UString> &glyphMap, 
 		}
 		// Trim the glyph to the max non-transparent width + 2 px
 		auto trimmedGlyph = mksp<PaletteImage>(Vec2<int>{maxWidth + 2, fontHeight});
-		PaletteImage::blit(paletteImage, {0, 0}, trimmedGlyph);
+		PaletteImage::blit(paletteImage, trimmedGlyph);
 
 		font->fontbitmaps[p.first] = trimmedGlyph;
 		totalGlyphWidth += trimmedGlyph->size.x;

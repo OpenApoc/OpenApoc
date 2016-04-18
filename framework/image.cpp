@@ -57,19 +57,21 @@ sp<RGBImage> PaletteImage::toRGBImage(sp<Palette> p)
 	return i;
 }
 
-void PaletteImage::blit(sp<PaletteImage> src, Vec2<unsigned int> offset, sp<PaletteImage> dst)
+void PaletteImage::blit(sp<PaletteImage> src, sp<PaletteImage> dst, Vec2<unsigned int> srcOffset,
+                        Vec2<unsigned int> dstOffset)
 {
 	PaletteImageLock reader(src, ImageLockUse::Read);
 	PaletteImageLock writer(dst, ImageLockUse::Write);
 
-	for (unsigned int y = 0; y < src->size.y; y++)
+	Vec2<unsigned int> size = {std::min(src->size.x - srcOffset.x, dst->size.x - dstOffset.x),
+	                           std::min(src->size.y - srcOffset.y, dst->size.y - dstOffset.y)};
+	Vec2<unsigned int> pos;
+	for (pos.y = 0; pos.y < size.y; pos.y++)
 	{
-		for (unsigned int x = 0; x < src->size.x; x++)
+		for (pos.x = 0; pos.x < size.x; pos.x++)
 		{
-			Vec2<unsigned int> readPos{x, y};
-			Vec2<unsigned int> writePos{readPos + offset};
-			if (writePos.x >= dst->size.x || writePos.y >= dst->size.y)
-				break;
+			Vec2<unsigned int> readPos = srcOffset + pos;
+			Vec2<unsigned int> writePos = dstOffset + pos;
 			writer.set(writePos, reader.get(readPos));
 		}
 	}
@@ -89,6 +91,26 @@ RGBImage::RGBImage(Vec2<unsigned int> size, Colour initialColour)
 	{
 		for (unsigned int i = 0; i < size.x * size.y; i++)
 			this->pixels[i] = initialColour;
+	}
+}
+
+void RGBImage::blit(sp<RGBImage> src, sp<RGBImage> dst, Vec2<unsigned int> srcOffset,
+                    Vec2<unsigned int> dstOffset)
+{
+	RGBImageLock reader(src, ImageLockUse::Read);
+	RGBImageLock writer(dst, ImageLockUse::Write);
+
+	Vec2<unsigned int> size = {std::min(src->size.x - srcOffset.x, dst->size.x - dstOffset.x),
+	                           std::min(src->size.y - srcOffset.y, dst->size.y - dstOffset.y)};
+	Vec2<unsigned int> pos;
+	for (pos.y = 0; pos.y < size.y; pos.y++)
+	{
+		for (pos.x = 0; pos.x < size.x; pos.x++)
+		{
+			Vec2<unsigned int> readPos = srcOffset + pos;
+			Vec2<unsigned int> writePos = dstOffset + pos;
+			writer.set(writePos, reader.get(readPos));
+		}
 	}
 }
 
