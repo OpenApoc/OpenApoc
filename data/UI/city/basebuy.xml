@@ -27,7 +27,7 @@
         <alignment horizontal="centre" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-	  <graphicbutton id="BUTTON_BUY_BASE">
+      <graphicbutton id="BUTTON_BUY_BASE">
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <image/>
