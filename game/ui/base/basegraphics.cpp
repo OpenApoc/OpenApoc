@@ -132,7 +132,7 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 	}
 }
 
-sp<RGBImage> BaseGraphics::drawMiniBase(sp<Base> base)
+sp<RGBImage> BaseGraphics::drawMiniBase(sp<Base> base, FacilityHighlight highlight, sp<Facility> selected)
 {
 	auto minibase = mksp<RGBImage>(Vec2<unsigned int>{32, 32});
 
@@ -156,15 +156,33 @@ sp<RGBImage> BaseGraphics::drawMiniBase(sp<Base> base)
 	}
 
 	// Draw facilities
-	sp<Image> normal =
+	sp<Image> spriteNormal =
 	    fw().data->load_image("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:16:xcom3/UFODATA/BASE.PCX");
-	sp<Image> highlighted =
+	sp<Image> spriteHighlighted =
 	    fw().data->load_image("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:17:xcom3/UFODATA/BASE.PCX");
-	sp<Image> selected =
+	sp<Image> spriteSelected =
 	    fw().data->load_image("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:18:xcom3/UFODATA/BASE.PCX");
 	for (auto &facility : base->getFacilities())
 	{
-		sp<Image> sprite = (facility->buildTime == 0) ? normal : highlighted;
+		bool highlighted = false;
+		switch (highlight)
+		{
+		case FacilityHighlight::None: break;
+		case FacilityHighlight::Construction: highlighted = (facility->buildTime > 0); break;
+		case FacilityHighlight::Quarters: highlighted = (facility->type->capacityType == FacilityType::Capacity::Quarters); break;
+		case FacilityHighlight::Stores: highlighted = (facility->type->capacityType == FacilityType::Capacity::Stores); break;
+		case FacilityHighlight::Labs: highlighted = (facility->lab != nullptr); break;
+		case FacilityHighlight::Aliens: highlighted = (facility->type->capacityType == FacilityType::Capacity::Aliens); break;
+		}
+		sp<Image> sprite = spriteNormal;
+		if (facility == selected)
+		{
+			sprite = spriteSelected;
+		}
+		else if (highlighted)
+		{
+			sprite = spriteHighlighted;
+		}
 		for (i.x = 0; i.x < facility->type->size; i.x++)
 		{
 			for (i.y = 0; i.y < facility->type->size; i.y++)
