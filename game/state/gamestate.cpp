@@ -187,6 +187,7 @@ void GameState::startGame()
 
 	auto base = mksp<Base>(*this, StateRef<Building>{this, bld});
 	base->startingBase(*this);
+	base->name = "Base " + Strings::FromInteger(this->player_bases.size() + 1);
 	this->player_bases[Base::getPrefix() + Strings::FromInteger(this->player_bases.size() + 1)] =
 	    base;
 	bld->owner = this->getPlayer();

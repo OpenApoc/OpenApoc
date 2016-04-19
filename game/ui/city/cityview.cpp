@@ -92,8 +92,8 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 	// Refresh base views
 	Resume();
 
-	base = {this->state.get(), this->state->player_bases.begin()->second};
-	auto bld = base->building;
+	this->base = {this->state.get(), this->state->player_bases.begin()->second};
+	auto bld = this->base->building;
 	if (!bld)
 	{
 		LogError("Base with invalid bld");
@@ -102,6 +102,8 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 
 	Vec2<int> buildingCenter = (bldBounds.p0 + bldBounds.p1) / 2;
 	this->setScreenCenterTile(buildingCenter);
+
+	this->uiTabs[0]->FindControlTyped<Label>("TEXT_BASE_NAME")->SetText(this->base->name);
 
 	for (auto &iconResource : CITY_ICON_RESOURCES)
 	{
@@ -350,6 +352,7 @@ void CityView::Resume()
 		view->SetDepressedImage(viewImage);
 		view->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 			this->base = {this->state.get(), e->Forms().RaisedBy->GetData<Base>()};
+			this->uiTabs[0]->FindControlTyped<Label>("TEXT_BASE_NAME")->SetText(this->base->name);
 		});
 		miniViews.push_back(view);
 	}
