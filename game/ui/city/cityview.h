@@ -7,6 +7,7 @@ namespace OpenApoc
 
 class Form;
 class GameState;
+class GraphicButton;
 
 enum class UpdateSpeed
 {
@@ -68,10 +69,12 @@ class CityView : public TileView
   private:
 	sp<Form> activeTab, baseForm;
 	std::vector<sp<Form>> uiTabs;
+	std::vector<sp<GraphicButton>> miniViews;
 	UpdateSpeed updateSpeed;
 
 	sp<GameState> state;
 	StateRef<City> city;
+	StateRef<Base> base;
 	std::map<CityIcon, sp<Image>> icons;
 
 	std::vector<sp<Image>> vehiclePassengerCountIcons;
@@ -94,6 +97,7 @@ class CityView : public TileView
   public:
 	CityView(sp<GameState> state, StateRef<City> city);
 	virtual ~CityView();
+	void Resume() override;
 	void Update(StageCmd *const cmd) override;
 	void Render() override;
 	void EventOccurred(Event *e) override;

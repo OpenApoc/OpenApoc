@@ -155,6 +155,54 @@
         <size width="640" height="128"/>
         <image>RAW:xcom3/ufodata/isobord1.dat:640:128:xcom3/ufodata/pal_01.dat</image>
       </graphic>
+	    <graphicbutton id="BUTTON_BASE_1">
+        <position x="90" y="52"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_2">
+        <position x="126" y="52"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_3">
+        <position x="162" y="52"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_4">
+        <position x="198" y="52"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_5">
+        <position x="234" y="52"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_6">
+        <position x="270" y="52"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_7">
+        <position x="306" y="52"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_8">
+        <position x="342" y="52"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
       <graphicbutton id="BUTTON_SHOW_BASE">
         <position x="408" y="75"/>
         <size width="27" height="46"/>

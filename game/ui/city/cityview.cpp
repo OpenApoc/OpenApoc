@@ -9,6 +9,7 @@
 #include "game/state/tileview/tileobject_scenery.h"
 #include "game/state/tileview/tileobject_vehicle.h"
 #include "game/state/tileview/voxel.h"
+#include "game/ui/base/basegraphics.h"
 #include "game/ui/base/basescreen.h"
 #include "game/ui/base/vequipscreen.h"
 #include "game/ui/city/basebuyscreen.h"
@@ -88,19 +89,19 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 	}
 	this->activeTab = this->uiTabs[0];
 
-	for (auto &pair : state->player_bases)
-	{
-		auto bld = pair.second->building;
-		if (!bld)
-		{
-			LogError("Base with invalid bld");
-		}
-		auto bldBounds = bld->bounds;
+	// Refresh base views
+	Resume();
 
-		Vec2<int> buildingCenter = (bldBounds.p0 + bldBounds.p1) / 2;
-		this->setScreenCenterTile(buildingCenter);
-		break;
+	base = {this->state.get(), this->state->player_bases.begin()->second};
+	auto bld = base->building;
+	if (!bld)
+	{
+		LogError("Base with invalid bld");
 	}
+	auto bldBounds = bld->bounds;
+
+	Vec2<int> buildingCenter = (bldBounds.p0 + bldBounds.p1) / 2;
+	this->setScreenCenterTile(buildingCenter);
 
 	for (auto &iconResource : CITY_ICON_RESOURCES)
 	{
@@ -224,11 +225,7 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 	baseManagementForm->FindControl("BUTTON_SHOW_BASE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    // FIXME: Show the last base for now
-		    auto lastBase = this->state->player_bases.end();
-		    lastBase--;
-		    StateRef<Base> base = {this->state.get(), lastBase->first};
-		    this->stageCmd.nextStage = mksp<BaseScreen>(this->state, base);
+		    this->stageCmd.nextStage = mksp<BaseScreen>(this->state, this->base);
 		});
 	// FIX ME: Figure out how to use a separate Stage for base selection
 	baseManagementForm->FindControl("BUTTON_BUILD_BASE")
@@ -334,6 +331,30 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 
 CityView::~CityView() {}
 
+void CityView::Resume()
+{
+	miniViews.clear();
+	int b = 0;
+	for (auto &pair : state->player_bases)
+	{
+		auto &viewBase = pair.second;
+		auto viewName = UString::format("BUTTON_BASE_%d", ++b);
+		auto view = this->uiTabs[0]->FindControlTyped<GraphicButton>(viewName);
+		if (!view)
+		{
+			LogError("Failed to find UI control matching \"%s\"", viewName.c_str());
+		}
+		view->SetData(viewBase);
+		auto viewImage = BaseGraphics::drawMiniBase(viewBase);
+		view->SetImage(viewImage);
+		view->SetDepressedImage(viewImage);
+		view->addCallback(FormEventType::ButtonClick, [this](Event *e) {
+			this->base = {this->state.get(), e->Forms().RaisedBy->GetData<Base>()};
+		});
+		miniViews.push_back(view);
+	}
+}
+
 void CityView::Render()
 {
 	TileView::Render();
@@ -387,6 +408,21 @@ void CityView::Render()
 	}
 	activeTab->Render();
 	baseForm->Render();
+	if (activeTab == uiTabs[0])
+	{
+		// Highlight selected base
+		for (auto &view : miniViews)
+		{
+			auto viewBase = view->GetData<Base>();
+			if (base == viewBase)
+			{
+				Vec2<int> pos = uiTabs[0]->Location + view->Location - 1;
+				Vec2<int> size = view->Size + 2;
+				fw().renderer->drawRect(pos, size, Colour{255, 0, 0});
+				break;
+			}
+		}
+	}
 }
 
 void CityView::Update(StageCmd *const cmd)
