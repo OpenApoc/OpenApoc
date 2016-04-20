@@ -65,7 +65,7 @@ void BaseBuyScreen::EventOccurred(Event *e)
 				base->building->owner = state->getPlayer();
 				base->name = "Base " + Strings::FromInteger(state->player_bases.size() + 1);
 				state->player_bases[Base::getPrefix() +
-					Strings::FromInteger(state->player_bases.size() + 1)] = base;
+				                    Strings::FromInteger(state->player_bases.size() + 1)] = base;
 
 				stageCmd.cmd = StageCmd::Command::POP;
 			}

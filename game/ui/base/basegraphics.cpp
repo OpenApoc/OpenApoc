@@ -132,7 +132,8 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 	}
 }
 
-sp<RGBImage> BaseGraphics::drawMiniBase(sp<Base> base, FacilityHighlight highlight, sp<Facility> selected)
+sp<RGBImage> BaseGraphics::drawMiniBase(sp<Base> base, FacilityHighlight highlight,
+                                        sp<Facility> selected)
 {
 	auto minibase = mksp<RGBImage>(Vec2<unsigned int>{32, 32});
 
@@ -167,12 +168,23 @@ sp<RGBImage> BaseGraphics::drawMiniBase(sp<Base> base, FacilityHighlight highlig
 		bool highlighted = false;
 		switch (highlight)
 		{
-		case FacilityHighlight::None: break;
-		case FacilityHighlight::Construction: highlighted = (facility->buildTime > 0); break;
-		case FacilityHighlight::Quarters: highlighted = (facility->type->capacityType == FacilityType::Capacity::Quarters); break;
-		case FacilityHighlight::Stores: highlighted = (facility->type->capacityType == FacilityType::Capacity::Stores); break;
-		case FacilityHighlight::Labs: highlighted = (facility->lab != nullptr); break;
-		case FacilityHighlight::Aliens: highlighted = (facility->type->capacityType == FacilityType::Capacity::Aliens); break;
+			case FacilityHighlight::None:
+				break;
+			case FacilityHighlight::Construction:
+				highlighted = (facility->buildTime > 0);
+				break;
+			case FacilityHighlight::Quarters:
+				highlighted = (facility->type->capacityType == FacilityType::Capacity::Quarters);
+				break;
+			case FacilityHighlight::Stores:
+				highlighted = (facility->type->capacityType == FacilityType::Capacity::Stores);
+				break;
+			case FacilityHighlight::Labs:
+				highlighted = (facility->lab != nullptr);
+				break;
+			case FacilityHighlight::Aliens:
+				highlighted = (facility->type->capacityType == FacilityType::Capacity::Aliens);
+				break;
 		}
 		sp<Image> sprite = spriteNormal;
 		if (facility == selected)

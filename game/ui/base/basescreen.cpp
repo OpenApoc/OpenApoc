@@ -70,7 +70,8 @@ void BaseScreen::Begin()
 			LogError("Failed to find UI control matching \"%s\"", viewName.c_str());
 		}
 		view->SetData(viewBase);
-		auto viewImage = BaseGraphics::drawMiniBase(viewBase, BaseGraphics::FacilityHighlight::Construction);
+		auto viewImage =
+		    BaseGraphics::drawMiniBase(viewBase, BaseGraphics::FacilityHighlight::Construction);
 		view->SetImage(viewImage);
 		view->SetDepressedImage(viewImage);
 		view->addCallback(FormEventType::ButtonClick, [this](Event *e) {
