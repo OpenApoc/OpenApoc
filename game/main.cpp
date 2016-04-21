@@ -2,12 +2,8 @@
 #include "framework/framework.h"
 #include "framework/trace.h"
 #include "game/ui/boot.h"
-#include <SDL_main.h>
-#ifdef _WIN32
-#define OPENAPOC_VERSION "UNKNOWN"
-#else
 #include "version.h"
-#endif
+#include <SDL_main.h>
 
 using namespace OpenApoc;
 

@@ -7,11 +7,7 @@
 #include "game/ui/general/difficultymenu.h"
 #include "game/ui/general/loadingscreen.h"
 #include "game/ui/general/optionsmenu.h"
-#ifdef _WIN32
-#define OPENAPOC_VERSION "UNKNOWN"
-#else
 #include "version.h"
-#endif
 
 namespace OpenApoc
 {
