@@ -13,6 +13,7 @@ MouseEvent::MouseEvent(EventTypes type) : Event(type) {}
 FingerEvent::FingerEvent(EventTypes type) : Event(type) {}
 TimerEvent::TimerEvent(EventTypes type) : Event(type) {}
 FormsEvent::FormsEvent() : Event(EVENT_FORM_INTERACTION) {}
+TextEvent::TextEvent() : Event(EVENT_TEXT_INPUT) {}
 
 EventTypes Event::Type() const { return this->eventType; }
 
@@ -59,6 +60,12 @@ FRAMEWORK_FORMS_EVENT &Event::Forms()
 	return ev->Data;
 }
 
+FRAMEWORK_TEXT_EVENT &Event::Text()
+{
+	auto *ev = static_cast<TextEvent *>(this);
+	return ev->Data;
+}
+
 const FRAMEWORK_DISPLAY_EVENT &Event::Display() const
 {
 	auto *ev = static_cast<const DisplayEvent *>(this);
@@ -98,6 +105,12 @@ const FRAMEWORK_TIMER_EVENT &Event::Timer() const
 const FRAMEWORK_FORMS_EVENT &Event::Forms() const
 {
 	auto *ev = static_cast<const FormsEvent *>(this);
+	return ev->Data;
+}
+
+const FRAMEWORK_TEXT_EVENT &Event::Text() const
+{
+	auto *ev = static_cast<const TextEvent *>(this);
 	return ev->Data;
 }
 

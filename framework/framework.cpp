@@ -524,7 +524,14 @@ void Framework::TranslateSDLEvents()
 				fwE->Keyboard().Modifiers = e.key.keysym.mod;
 				PushEvent(fwE);
 				break;
-			// FIXME: handle SDL_TEXTINPUT?
+			case SDL_TEXTINPUT:
+				fwE = new TextEvent();
+				fwE->Text().Input = e.text.text;
+				PushEvent(fwE);
+				break;
+			case SDL_TEXTEDITING:
+				// FIXME: Do nothing?
+				break;
 			case SDL_MOUSEMOTION:
 				fwE = new MouseEvent(EVENT_MOUSE_MOVE);
 				fwE->Mouse().X = e.motion.x;
@@ -951,5 +958,9 @@ sp<Stage> Framework::Stage_GetPrevious() { return p->ProgramStages.Previous(); }
 sp<Stage> Framework::Stage_GetPrevious(sp<Stage> From) { return p->ProgramStages.Previous(From); }
 
 Vec2<int> Framework::getCursorPosition() { return this->cursor->getPosition(); }
+
+void Framework::Text_StartInput() { SDL_StartTextInput(); }
+
+void Framework::Text_StopInput() { SDL_StopTextInput(); }
 
 }; // namespace OpenApoc

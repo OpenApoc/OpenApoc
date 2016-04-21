@@ -2,6 +2,7 @@
 
 #include "forms/forms_enums.h"
 #include "library/sp.h"
+#include "library/strings.h"
 // FIXME: Remove SDL headers - we currently use SDL types directly in input events
 #include <SDL_keyboard.h>
 #include <SDL_keycode.h>
@@ -37,6 +38,7 @@ enum EventTypes
 	EVENT_TIMER_TICK,
 	EVENT_AUDIO_STREAM_FINISHED,
 	EVENT_FORM_INTERACTION,
+	EVENT_TEXT_INPUT,
 	EVENT_USER,
 	EVENT_END_OF_FRAME,
 	EVENT_UNDEFINED
@@ -104,6 +106,11 @@ typedef struct FRAMEWORK_FORMS_EVENT
 	FRAMEWORK_KEYBOARD_EVENT KeyInfo;
 } FRAMEWORK_FORMS_EVENT;
 
+typedef struct FRAMEWORK_TEXT_EVENT
+{
+	UString Input;
+} FRAMEWORK_TEXT_EVENT;
+
 /*
      Class: Event
      Provides data regarding events that occur within the system
@@ -126,6 +133,7 @@ class Event
 	FRAMEWORK_FINGER_EVENT &Finger();
 	FRAMEWORK_TIMER_EVENT &Timer();
 	FRAMEWORK_FORMS_EVENT &Forms();
+	FRAMEWORK_TEXT_EVENT &Text();
 
 	const FRAMEWORK_DISPLAY_EVENT &Display() const;
 	const FRAMEWORK_JOYSTICK_EVENT &Joystick() const;
@@ -134,6 +142,7 @@ class Event
 	const FRAMEWORK_FINGER_EVENT &Finger() const;
 	const FRAMEWORK_TIMER_EVENT &Timer() const;
 	const FRAMEWORK_FORMS_EVENT &Forms() const;
+	const FRAMEWORK_TEXT_EVENT &Text() const;
 
 	virtual ~Event() = default;
 };
@@ -213,6 +222,17 @@ class FormsEvent : public Event
   public:
 	FormsEvent();
 	~FormsEvent() override = default;
+};
+
+class TextEvent : public Event
+{
+  private:
+	FRAMEWORK_TEXT_EVENT Data;
+	friend class Event;
+
+  public:
+	TextEvent();
+	~TextEvent() override = default;
 };
 
 }; // namespace OpenApoc

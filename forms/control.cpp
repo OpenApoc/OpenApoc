@@ -220,6 +220,16 @@ void Control::EventOccured(Event *e)
 			e->Handled = true;
 		}
 	}
+
+	if (e->Type() == EVENT_TEXT_INPUT)
+	{
+		if (IsFocused())
+		{
+			this->pushFormEvent(FormEventType::TextInput, e);
+
+			e->Handled = true;
+		}
+	}
 }
 
 void Control::Render()

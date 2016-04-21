@@ -22,6 +22,7 @@ enum class FormEventType
 	KeyDown,
 	KeyPress,
 	KeyUp,
+	TextInput,
 
 	ButtonClick,
 	CheckBoxChange,

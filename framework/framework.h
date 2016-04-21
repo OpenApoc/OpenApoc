@@ -72,6 +72,9 @@ class Framework
 	sp<Stage> Stage_GetPrevious(sp<Stage> From);
 
 	Vec2<int> getCursorPosition();
+
+	void Text_StartInput();
+	void Text_StopInput();
 };
 
 static inline Framework &fw() { return Framework::getInstance(); }

@@ -36,106 +36,108 @@ void TextEdit::EventOccured(Event *e)
 			    e->Forms().EventFlag == FormEventType::KeyDown)
 			{
 				editting = true;
+				fw().Text_StartInput();
 				// e->Handled = true;
 			}
-			if (e->Forms().EventFlag == FormEventType::LostFocus)
+		}
+		if (editting)
+		{
+			if (e->Forms().RaisedBy == shared_from_this())
+			{
+				if (e->Forms().EventFlag == FormEventType::LostFocus)
+				{
+					editting = false;
+					fw().Text_StopInput();
+					RaiseEvent(FormEventType::TextEditFinish);
+					// e->Handled = true;
+				}
+			}
+			else if (e->Forms().EventFlag == FormEventType::MouseClick)
 			{
 				editting = false;
+				fw().Text_StopInput();
 				RaiseEvent(FormEventType::TextEditFinish);
-				// e->Handled = true;
 			}
-		}
-		else if (e->Forms().EventFlag == FormEventType::MouseClick)
-		{
-			editting = false;
-			RaiseEvent(FormEventType::TextEditFinish);
-		}
-
-		if (e->Forms().EventFlag == FormEventType::KeyPress && editting)
-		{
-			switch (e->Forms().KeyInfo.KeyCode) // TODO: Check scancodes instead of keycodes?
+			if (e->Forms().EventFlag == FormEventType::KeyPress)
 			{
-				case SDLK_BACKSPACE:
-					if (SelectionStart > 0)
-					{
-						text.remove(SelectionStart - 1, 1);
-						SelectionStart--;
-						RaiseEvent(FormEventType::TextChanged);
-					}
-					e->Handled = true;
-					break;
-				case SDLK_DELETE:
-					if (SelectionStart < text.length())
-					{
-						text.remove(SelectionStart, 1);
-						RaiseEvent(FormEventType::TextChanged);
-					}
-					e->Handled = true;
-					break;
-				case SDLK_LEFT:
-					if (SelectionStart > 0)
-					{
-						SelectionStart--;
-					}
-					e->Handled = true;
-					break;
-				case SDLK_RIGHT:
-					if (SelectionStart < text.length())
-					{
-						SelectionStart++;
-					}
-					e->Handled = true;
-					break;
-				case SDLK_LSHIFT:
-				case SDLK_RSHIFT:
-					editShift = true;
-					break;
-				case SDLK_RALT:
-					editAltGr = true;
-					break;
+				switch (e->Forms().KeyInfo.KeyCode) // TODO: Check scancodes instead of keycodes?
+				{
+					case SDLK_BACKSPACE:
+						if (SelectionStart > 0)
+						{
+							text.remove(SelectionStart - 1, 1);
+							SelectionStart--;
+							RaiseEvent(FormEventType::TextChanged);
+						}
+						e->Handled = true;
+						break;
+					case SDLK_DELETE:
+						if (SelectionStart < text.length())
+						{
+							text.remove(SelectionStart, 1);
+							RaiseEvent(FormEventType::TextChanged);
+						}
+						e->Handled = true;
+						break;
+					case SDLK_LEFT:
+						if (SelectionStart > 0)
+						{
+							SelectionStart--;
+						}
+						e->Handled = true;
+						break;
+					case SDLK_RIGHT:
+						if (SelectionStart < text.length())
+						{
+							SelectionStart++;
+						}
+						e->Handled = true;
+						break;
+					case SDLK_LSHIFT:
+					case SDLK_RSHIFT:
+						editShift = true;
+						break;
+					case SDLK_RALT:
+						editAltGr = true;
+						break;
 
-				case SDLK_HOME:
-					SelectionStart = 0;
-					e->Handled = true;
-					break;
-				case SDLK_END:
-					SelectionStart = text.length();
-					e->Handled = true;
-					break;
+					case SDLK_HOME:
+						SelectionStart = 0;
+						e->Handled = true;
+						break;
+					case SDLK_END:
+						SelectionStart = text.length();
+						e->Handled = true;
+						break;
 
-				case SDLK_RETURN:
-					editting = false;
-					RaiseEvent(FormEventType::TextEditFinish);
-					break;
-
-				default:
-					// FIXME: This should use SDL Text Input API!
-					UString convert(SDL_GetKeyName(
-					    e->Keyboard()
-					        .KeyCode)); // SDLK* are based on Unicode, if I read the docs right
-					if (convert.length() == 1 && convert.c_str()[0] != 0)
-					{
-						text.insert(SelectionStart, convert.c_str());
-						SelectionStart++;
-						RaiseEvent(FormEventType::TextChanged);
-					}
+					case SDLK_RETURN:
+						editting = false;
+						fw().Text_StopInput();
+						RaiseEvent(FormEventType::TextEditFinish);
+						break;
+				}
 			}
-		}
-
-		if (e->Forms().EventFlag == FormEventType::KeyUp && editting)
-		{
-
-			switch (e->Forms().KeyInfo.KeyCode)
+			else if (e->Forms().EventFlag == FormEventType::KeyUp)
 			{
-				case SDLK_LSHIFT:
-				case SDLK_RSHIFT:
-					editShift = false;
-					e->Handled = true;
-					break;
-				case SDLK_RALT:
-					editAltGr = false;
-					e->Handled = true;
-					break;
+
+				switch (e->Forms().KeyInfo.KeyCode)
+				{
+					case SDLK_LSHIFT:
+					case SDLK_RSHIFT:
+						editShift = false;
+						e->Handled = true;
+						break;
+					case SDLK_RALT:
+						editAltGr = false;
+						e->Handled = true;
+						break;
+				}
+			}
+			else if (e->Forms().EventFlag == FormEventType::TextInput)
+			{
+				text.insert(SelectionStart, e->Text().Input);
+				SelectionStart += e->Text().Input.length();
+				RaiseEvent(FormEventType::TextChanged);
 			}
 		}
 	}
