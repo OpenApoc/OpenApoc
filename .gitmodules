@@ -14,3 +14,6 @@
 [submodule "dependencies/pugixml"]
 	path = dependencies/pugixml
 	url = https://github.com/zeux/pugixml.git
+[submodule "dependencies/libsmacker"]
+	path = dependencies/libsmacker
+	url = https://github.com/JonnyH/libsmacker.git

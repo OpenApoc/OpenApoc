@@ -11,10 +11,7 @@ class Image;
 class BootUp : public Stage
 {
   private:
-	sp<Image> loadingimage;
-	sp<Image> logoimage;
-	int loadtime;
-	float loadingimageangle;
+	StageCmd stageCmd;
 
   public:
 	BootUp() : Stage() {}

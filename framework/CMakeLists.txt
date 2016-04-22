@@ -22,7 +22,8 @@ set (FRAMEWORK_SOURCE_FILES
 	serialize.cpp
 	sound.cpp
 	stagestack.cpp
-	trace.cpp)
+	trace.cpp
+	video/smk.cpp)
 
 source_group(framework\\sources FILES ${FRAMEWORK_SOURCE_FILES})
 list(APPEND ALL_SOURCE_FILES ${FRAMEWORK_SOURCE_FILES})
@@ -49,7 +50,8 @@ set (FRAMEWORK_HEADER_FILES
 	stage.h
 	stagestack.h
 	trace.h
-	ThreadPool/ThreadPool.h)
+	ThreadPool/ThreadPool.h
+	video.h)
 
 source_group(framework\\headers FILES ${FRAMEWORK_HEADER_FILES})
 list(APPEND ALL_HEADER_FILES ${FRAMEWORK_HEADER_FILES})
@@ -246,6 +248,7 @@ else()
 	target_include_directories(OpenApoc_Framework PUBLIC ${OPENGL_INCLUDE_DIR})
 endif()
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_Library)
+target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibSmacker)
 
 # Physfs provides .iso reader & overlays etc.
 pkg_check_modules(PC_PHYSFS REQUIRED physfs>=2.0.0)

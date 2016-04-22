@@ -6,6 +6,7 @@
 #include "framework/logger.h"
 #include "framework/palette.h"
 #include "framework/trace.h"
+#include "framework/video.h"
 #include "game/state/rules/resource_aliases.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -557,6 +558,29 @@ sp<Palette> Data::load_palette(const UString &path)
 		return pal;
 	}
 	LogError("Failed to open palette \"%s\"", path.c_str());
+	return nullptr;
+}
+
+sp<Video> Data::load_video(const UString &path)
+{
+
+	if (path.substr(0, 4) == "SMK:")
+	{
+		auto splitString = path.split(':');
+		if (splitString.size() != 2)
+		{
+			LogError("Invalid SMK string: \"%s\"", path.c_str());
+			return nullptr;
+		}
+		auto file = this->fs.open(splitString[1]);
+		if (!file)
+		{
+			LogWarning("Failed to open SMK file \"%s\"", splitString[1].c_str());
+			return nullptr;
+		}
+		return loadSMKVideo(file);
+	}
+	LogError("Unknown video string \"%s\"", path.c_str());
 	return nullptr;
 }
 
