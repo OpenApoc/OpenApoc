@@ -12,7 +12,6 @@
 #include "game/ui/base/basegraphics.h"
 #include "game/ui/base/basescreen.h"
 #include "game/ui/base/vequipscreen.h"
-#include "game/ui/city/basebuyscreen.h"
 #include "game/ui/city/baseselectscreen.h"
 #include "game/ui/city/buildingscreen.h"
 #include "game/ui/city/cityview.h"
@@ -229,21 +228,11 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    this->stageCmd.nextStage = mksp<BaseScreen>(this->state, this->base);
 		});
-	// FIX ME: Figure out how to use a separate Stage for base selection
 	baseManagementForm->FindControl("BUTTON_BUILD_BASE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
-		    // this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    // this->stageCmd.nextStage = mksp<BaseSelectScreen>();
-		    if (this->selectionState == SelectionState::BuildBase)
-		    {
-			    this->selectionState = SelectionState::Normal;
-			    this->viewMode = TileViewMode::Isometric;
-		    }
-		    else
-		    {
-			    this->selectionState = SelectionState::BuildBase;
-			    this->viewMode = TileViewMode::Strategy;
-		    }
+		    this->stageCmd.cmd = StageCmd::Command::PUSH;
+		    this->stageCmd.nextStage =
+		        mksp<BaseSelectScreen>(this->state, this->city, this->centerPos);
 		});
 	auto vehicleForm = this->uiTabs[1];
 	vehicleForm->FindControl("BUTTON_EQUIP_VEHICLE")
@@ -381,31 +370,6 @@ void CityView::Render()
 				fw().renderer->drawLine(screenPosA, screenPosB, Colour{255, 0, 0, 128});
 
 				prevPos = pos;
-			}
-		}
-	}
-	if (selectionState == SelectionState::BuildBase && viewMode == TileViewMode::Strategy)
-	{
-		for (auto b : state->current_city->buildings)
-		{
-			auto building = b.second;
-			if (building->base_layout)
-			{
-				Vec3<float> posA = {building->bounds.p0.x, building->bounds.p0.y, 0};
-				Vec2<float> screenPosA = this->tileToOffsetScreenCoords(posA);
-				Vec3<float> posB = {building->bounds.p1.x, building->bounds.p1.y, 0};
-				Vec2<float> screenPosB = this->tileToOffsetScreenCoords(posB);
-
-				Colour borderColour;
-				if (building->owner == state->getPlayer())
-				{
-					borderColour = {188, 212, 88};
-				}
-				else if (building->owner.id == "ORG_GOVERNMENT")
-				{
-					borderColour = {160, 236, 252};
-				}
-				fw().renderer->drawRect(screenPosA, screenPosB - screenPosA, borderColour, 2.0f);
 			}
 		}
 	}
@@ -682,14 +646,6 @@ void CityView::EventOccurred(Event *e)
 								           building->name.c_str());
 							}
 							this->selectionState = SelectionState::Normal;
-						}
-						else if (this->selectionState == SelectionState::BuildBase)
-						{
-							if (building->base_layout && building->owner.id == "ORG_GOVERNMENT")
-							{
-								stageCmd.cmd = StageCmd::Command::PUSH;
-								stageCmd.nextStage = mksp<BaseBuyScreen>(state, building);
-							}
 						}
 						else if (this->selectionState == SelectionState::Normal)
 						{

@@ -12,10 +12,16 @@
         <image>xcom3/UFODATA/BUYBASE2.PCX</image>
       </graphic>
       <label text="BUY NEW BASE">
-        <position x="20" y="0"/>
+        <position x="20" y="2"/>
         <size width="600" height="36"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>BIGFONT</font>
+      </label>
+	  <label id="TEXT_FUNDS">
+        <position x="572" y="14"/>
+        <size width="60" height="10"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>SMALFONT</font>
       </label>
       <label text="Click on building to buy">
         <position x="20" y="74"/>
