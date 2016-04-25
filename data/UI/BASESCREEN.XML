@@ -134,12 +134,6 @@
         <alignment horizontal="right" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-      <label id="TEXT_BUILD_TIME" visible="N">
-        <position x="0" y="0"/>
-        <size width="64" height="64"/>
-        <alignment horizontal="centre" vertical="centre"/>
-        <font>SMALFONT</font>
-      </label>
       <scroll id="LISTBOX_SCROLL">
         <position x="30" y="452"/>
         <size width="536" height="15"/>

@@ -37,7 +37,6 @@ void BaseScreen::Begin()
 
 	form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
 
-	buildTime = form->FindControlTyped<Label>("TEXT_BUILD_TIME");
 	baseView = form->FindControlTyped<Graphic>("GRAPHIC_BASE_VIEW");
 	selText = form->FindControlTyped<Label>("TEXT_SELECTED_FACILITY");
 	selGraphic = form->FindControlTyped<Graphic>("GRAPHIC_SELECTED_FACILITY");

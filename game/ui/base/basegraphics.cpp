@@ -1,4 +1,5 @@
 #include "game/ui/base/basegraphics.h"
+#include "forms/ui.h"
 #include "framework/framework.h"
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
@@ -55,7 +56,7 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 	{
 		for (i.y = 0; i.y < Base::SIZE; i.y++)
 		{
-			int sprite = BaseGraphics::getCorridorSprite(base, i);
+			int sprite = getCorridorSprite(base, i);
 			if (sprite != 0)
 			{
 				Vec2<int> pos = renderPos + i * TILE_SIZE;
@@ -72,7 +73,7 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:25:xcom3/UFODATA/BASE.PCX");
 	sp<Image> circleL = fw().data->load_image(
 	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:26:xcom3/UFODATA/BASE.PCX");
-	// buildTime->Visible = true;
+	auto font = ui().GetFont("SMALFONT");
 	for (auto &facility : base->getFacilities())
 	{
 		sp<Image> sprite = facility->type->sprite;
@@ -95,14 +96,14 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 				fw().renderer->draw(circleL, pos);
 			}
 			// Draw time remaining
-			// buildTime->Size = { TILE_SIZE, TILE_SIZE };
-			// buildTime->Size *= facility->type->size;
-			// buildTime->Location = pos;
-			// buildTime->SetText(Strings::FromInteger(facility->buildTime));
-			// buildTime->Render();
+			auto textImage = font->getString(Strings::FromInteger(facility->buildTime));
+			Vec2<int> textPos = {TILE_SIZE, TILE_SIZE};
+			textPos *= facility->type->size;
+			textPos -= textImage->size;
+			textPos /= 2;
+			fw().renderer->draw(textImage, pos + textPos);
 		}
 	}
-	// buildTime->Visible = false;
 
 	// Draw doors
 	sp<Image> doorLeft = fw().data->load_image(
@@ -114,7 +115,7 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 		for (int y = 0; y < facility->type->size; y++)
 		{
 			Vec2<int> tile = facility->pos + Vec2<int>{-1, y};
-			if (BaseGraphics::getCorridorSprite(base, tile) != 0)
+			if (getCorridorSprite(base, tile) != 0)
 			{
 				Vec2<int> pos = renderPos + tile * TILE_SIZE;
 				fw().renderer->draw(doorLeft, pos + Vec2<int>{TILE_SIZE / 2, 0});
@@ -123,7 +124,7 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 		for (int x = 0; x < facility->type->size; x++)
 		{
 			Vec2<int> tile = facility->pos + Vec2<int>{x, facility->type->size};
-			if (BaseGraphics::getCorridorSprite(base, tile) != 0)
+			if (getCorridorSprite(base, tile) != 0)
 			{
 				Vec2<int> pos = renderPos + tile * TILE_SIZE;
 				fw().renderer->draw(doorBottom, pos - Vec2<int>{0, TILE_SIZE / 2});
@@ -143,7 +144,7 @@ sp<RGBImage> BaseGraphics::drawMiniBase(sp<Base> base, FacilityHighlight highlig
 	{
 		for (i.y = 0; i.y < Base::SIZE; i.y++)
 		{
-			int sprite = BaseGraphics::getCorridorSprite(base, i);
+			int sprite = getCorridorSprite(base, i);
 			if (sprite != 0)
 			{
 				sprite -= 3;

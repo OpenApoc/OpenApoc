@@ -27,7 +27,7 @@ class BaseScreen : public Stage
 	bool drag;
 
 	sp<Graphic> baseView, selGraphic;
-	sp<Label> selText, buildTime;
+	sp<Label> selText;
 	std::vector<sp<Label>> statsLabels;
 	std::vector<sp<Label>> statsValues;
 	std::vector<sp<GraphicButton>> miniViews;
