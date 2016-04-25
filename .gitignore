@@ -51,6 +51,9 @@ Icon
 *.opendb
 *.log
 [Pp]ackages/
+[Ii]pch/
+.vs/
+*.VC.*
 #Dependencies build information
 [Dd]ependencies/x64/
 
@@ -86,3 +89,4 @@ build/
 [Tt]emp/
 
 openapoc_log.txt
+version.h

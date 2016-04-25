@@ -62,7 +62,8 @@ void BaseSelectScreen::EventOccurred(Event *e)
 		}
 		else if (e->Mouse().Button == 1)
 		{
-			// If a click has not been handled by a form it's in the map. See if we intersect with anything
+			// If a click has not been handled by a form it's in the map. See if we intersect with
+			// anything
 			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
 			auto clickTop = this->screenToTileCoords(
 			    Vec2<float>{e->Mouse().X, e->Mouse().Y} - screenOffset, 9.99f);
