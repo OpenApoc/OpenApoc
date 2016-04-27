@@ -8,6 +8,7 @@ namespace OpenApoc
 class Form;
 class GameState;
 class GraphicButton;
+class Control;
 
 enum class UpdateSpeed
 {

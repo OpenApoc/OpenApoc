@@ -327,14 +327,14 @@ Framework &Framework::getInstance()
 	return *instance;
 }
 
-void Framework::Run(sp<Stage> initialStage)
+void Framework::Run(sp<Stage> initialStage, size_t frameCount)
 {
 	if (!createWindow)
 	{
 		LogError("Trying to run framework without window");
 		return;
 	}
-	int frame = 0;
+	size_t frame = 0;
 	TRACE_FN;
 	LogInfo("Program loop started");
 
@@ -407,6 +407,11 @@ void Framework::Run(sp<Stage> initialStage)
 #endif
 #endif
 			}
+		}
+		if (frameCount && frame == frameCount)
+		{
+			LogWarning("Quitting hitting frame count limit of %llu", (unsigned long long)frame);
+			p->quitProgram = true;
 		}
 	}
 }
