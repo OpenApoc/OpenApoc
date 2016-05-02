@@ -154,8 +154,10 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 		{
 			if (currentPlannedPath.empty())
 				return false;
-			auto pos = currentPlannedPath.front();
 			currentPlannedPath.pop_front();
+			if (currentPlannedPath.empty())
+				return false;
+			auto pos = currentPlannedPath.front();
 			dest = Vec3<float>{pos.x, pos.y, pos.z}
 			       // Add {0.5,0.5,0.5} to make it route to the center of the tile
 			       + Vec3<float>{0.5, 0.5, 0.5};
@@ -370,6 +372,8 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				auto path = map.findShortestPath(vehicleTile->getOwningTile()->position,
 				                                 this->targetLocation, 500,
 				                                 FlyingVehicleCanEnterTileHelper{map, v});
+				// Always start with the current position
+				this->currentPlannedPath.push_back(vehicleTile->getOwningTile()->position);
 				for (auto *t : path)
 				{
 					this->currentPlannedPath.push_back(t->position);
