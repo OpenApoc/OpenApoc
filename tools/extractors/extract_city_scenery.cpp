@@ -149,6 +149,10 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 			tile->minimap_colour = minimap_palette->GetColour(palette_index);
 		}
 
+		// FIXME: I /think/ all scenery tiles have an offset of {32,32} to the center {0.5, 0.5, 0}
+		// point
+		tile->imageOffset = {32, 32};
+
 		city->tile_types[id] = tile;
 	}
 }
