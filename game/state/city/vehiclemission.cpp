@@ -426,75 +426,34 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			 * (if no successfull paths then choose the incomplete path with the lowest (cost +
 			 * distance
 			 * to goal)*/
-			Vec3<int> shortestPathPad;
+			Vec3<int> shortestPathPad = {0, 0, 0};
 			float shortestPathCost = std::numeric_limits<float>::max();
-			Vec3<int> closestIncompletePathPad;
-			float closestIncompletePathCost = std::numeric_limits<float>::max();
 
 			auto &map = vehicleTile->map;
 
 			for (auto dest : b->landingPadLocations)
 			{
-				dest.z += 1; // we want to route to the tile above the pad
-				auto currentPath = map.findShortestPath(position, dest, 500,
-				                                        FlyingVehicleCanEnterTileHelper{map, v});
+				// Simply find the nearest landing pad to the current location and route to that
+				// Don't pay attention to stuff that blocks us, as things will likely move anyway...
 
-				if (currentPath.size() == 0)
-				{
-					// If the routing failed to find even a single tile skip it
+				// We actually want the tile above the pad itself
+				dest.z = dest.z + 1;
+				if (position == dest)
 					continue;
-				}
-				Vec3<int> pathEnd = currentPath.back()->position;
-				if (pathEnd == dest)
-				{
-					// complete path
-					float pathCost = currentPath.size();
-					if (shortestPathCost > pathCost)
-					{
-						shortestPathCost = pathCost;
-						shortestPathPad = pathEnd;
-					}
-				}
-				else
-				{
-					// partial path
-					float pathCost = currentPath.size();
-					pathCost +=
-					    glm::length(Vec3<float>{currentPath.back()->position} - Vec3<float>{dest});
-					if (closestIncompletePathCost > pathCost)
-					{
-						closestIncompletePathCost = pathCost;
-						closestIncompletePathPad = pathEnd;
-					}
-				}
+				Vec3<float> currentPosition = position;
+				Vec3<float> landingPadPosition = dest;
+
+				float distance = glm::length(currentPosition - landingPadPosition);
+
+				if (distance < shortestPathCost)
+					shortestPathPad = dest;
 			}
 
-			if (shortestPathCost != std::numeric_limits<float>::max())
-			{
-				LogInfo("Vehicle mission %s: Found direct path to {%d,%d,%d}", name.c_str(),
-				        shortestPathPad.x, shortestPathPad.y, shortestPathPad.z);
-				auto *gotoMission = VehicleMission::gotoLocation(v, shortestPathPad);
-				v.missions.emplace_front(gotoMission);
-				gotoMission->start(state, v);
-			}
-			else if (closestIncompletePathCost != std::numeric_limits<float>::max())
-			{
-				LogInfo("Vehicle mission %s: Found no direct path - closest {%d,%d,%d}",
-				        name.c_str(), closestIncompletePathPad.x, closestIncompletePathPad.y,
-				        closestIncompletePathPad.z);
-				auto *gotoMission = VehicleMission::gotoLocation(v, closestIncompletePathPad);
-				v.missions.emplace_front(gotoMission);
-				gotoMission->start(state, v);
-			}
-			else
-			{
-				unsigned int snoozeTime = 10;
-				LogWarning("Vehicle mission %s: No partial paths found, snoozing for %u",
-				           name.c_str(), snoozeTime);
-				auto *snoozeMission = VehicleMission::snooze(v, snoozeTime);
-				v.missions.emplace_front(snoozeMission);
-				snoozeMission->start(state, v);
-			}
+			LogInfo("Vehicle mission %s: Pathing to pad at {%d,%d,%d}", name.c_str(),
+			        shortestPathPad.x, shortestPathPad.y, shortestPathPad.z);
+			auto *gotoMission = VehicleMission::gotoLocation(v, shortestPathPad);
+			v.missions.emplace_front(gotoMission);
+			gotoMission->start(state, v);
 			return;
 		}
 		default:
