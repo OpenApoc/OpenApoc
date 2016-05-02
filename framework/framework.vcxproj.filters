@@ -129,6 +129,12 @@
     <ClCompile Include="..\dependencies\pugixml\src\pugixml.cpp">
       <Filter>pugixml</Filter>
     </ClCompile>
+    <ClCompile Include="render\gles30_v2\gleswrap_gles3.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
+    <ClCompile Include="render\gles30_v2\ogles_3_0_renderer_v2.cpp">
+      <Filter>Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="configfile.h">
@@ -235,6 +241,15 @@
     </ClInclude>
     <ClInclude Include="..\dependencies\pugixml\src\pugixml.hpp">
       <Filter>pugixml</Filter>
+    </ClInclude>
+    <ClInclude Include="render\gles30_v2\gleswrap.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\gles30_v2\gleswrap_gles3.h">
+      <Filter>Render</Filter>
+    </ClInclude>
+    <ClInclude Include="render\gles30_v2\stb_rect_pack.h">
+      <Filter>Render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

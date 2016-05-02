@@ -11,7 +11,7 @@ class Palette
 {
   public:
 	std::vector<Colour> colours;
-	std::unique_ptr<RendererImageData> rendererPrivateData;
+	sp<RendererImageData> rendererPrivateData;
 
 	Palette(unsigned int size = 256, Colour initialColour = {0, 0, 0, 0});
 	~Palette();

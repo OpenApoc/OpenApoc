@@ -29,7 +29,7 @@ class Image : public ResObject
 	virtual ~Image();
 	Vec2<unsigned int> size;
 
-	std::unique_ptr<RendererImageData> rendererPrivateData;
+	sp<RendererImageData> rendererPrivateData;
 	bool dirty;
 	Rect<unsigned int> bounds;
 

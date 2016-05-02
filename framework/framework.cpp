@@ -46,7 +46,7 @@ namespace
 #else
 #warning RENDERERS not set - using default list
 #endif
-#define RENDERERS "GL_3_0:GL_2_0"
+#define RENDERERS "GLES_3_0:GL_3_0:GL_2_0"
 #endif
 
 static std::map<UString, UString> defaultConfig = {
@@ -397,6 +397,7 @@ void Framework::Run(sp<Stage> initialStage, size_t frameCount)
 			}
 			{
 				TraceObj flipObj("Flip");
+				this->renderer->flush();
 #ifndef OPENAPOC_GLES
 				SDL_GL_SwapWindow(p->window);
 #else
@@ -794,6 +795,7 @@ void Framework::Display_Initialise()
 	SDL_GL_MakeCurrent(p->window, p->context); // for good measure?
 	SDL_ShowCursor(SDL_DISABLE);
 
+	p->registeredRenderers["GLES_3_0"].reset(getGLES30RendererFactory());
 	p->registeredRenderers["GL_3_0"].reset(getGL30RendererFactory());
 	p->registeredRenderers["GL_2_0"].reset(getGL20RendererFactory());
 

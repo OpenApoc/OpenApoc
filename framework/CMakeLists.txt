@@ -140,7 +140,9 @@ list(APPEND ALL_HEADER_FILES ${SOUND_HEADER_FILES})
 
 set (RENDERER_SOURCE_FILES
 	render/gl20/ogl_2_0_renderer.cpp
-	render/gl30/ogl_3_0_renderer.cpp)
+	render/gl30/ogl_3_0_renderer.cpp
+	render/gles30_v2/ogles_3_0_renderer_v2.cpp
+	render/gles30_v2/gleswrap_gles3.cpp)
 
 source_group(framework\\renderer\\sources FILES
 	${RENDERER_SOURCE_FILES})
@@ -151,6 +153,9 @@ set (RENDERER_HEADER_FILES
 	render/gl20/gl_2_0.inl
 	render/gl30/gl_3_0.hpp
 	render/gl30/gl_3_0.inl
+	render/gles30_v2/gleswrap_gles3.h
+	render/gles30_v2/gleswrap.h
+	render/gles30_v2/stb_rect_pack.h
 	)
 
 source_group(framework\\renderer\\headers FILES
@@ -170,7 +175,8 @@ set_property(TARGET OpenApoc_Framework PROPERTY CXX_STANDARD 11)
 set_property(TARGET OpenApoc_Framework PROPERTY CXX_STANDARD_REQUIRED ON)
 
 target_compile_definitions(OpenApoc_Framework PUBLIC
-		"-DRENDERERS=\"GL_3_0:GL_2_0\"")
+		"-DRENDERERS=\"GLES_3_0:GL_3_0:GL_2_0\""
+		"-DGLESWRAP_PLATFORM_GLX")
 
 # We use boost::locale for utf conversions and boost::filesystem for
 # serialization
