@@ -156,15 +156,6 @@ void City::update(GameState &state, unsigned int ticks)
 		}
 	}
 	Trace::end("City::update::buildings->landed_vehicles");
-	Trace::start("City::update::vehices->update");
-	for (auto pair : state.vehicles)
-	{
-		auto v = pair.second;
-		if (v->city != this)
-			continue;
-		v->update(state, ticks);
-	}
-	Trace::end("City::update::vehices->update");
 	Trace::start("City::update::projectiles->update");
 	std::list<std::future<Collision>> collisions;
 	for (auto it = this->projectiles.begin(); it != this->projectiles.end();)

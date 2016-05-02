@@ -1,4 +1,5 @@
 #include "game/state/gamestate.h"
+#include "framework/trace.h"
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
 #include "game/state/city/building.h"
@@ -251,14 +252,18 @@ bool GameState::canTurbo() const
 
 void GameState::update(unsigned int ticks)
 {
+	Trace::start("GameState::update::cities");
 	for (auto &c : this->cities)
 	{
 		c.second->update(*this, ticks);
 	}
+	Trace::end("GameState::update::cities");
+	Trace::start("GameState::update::vehicles");
 	for (auto &v : this->vehicles)
 	{
 		v.second->update(*this, ticks);
 	}
+	Trace::end("GameState::update::vehicles");
 	this->time += ticks;
 }
 
