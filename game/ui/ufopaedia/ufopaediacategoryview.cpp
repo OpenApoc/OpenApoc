@@ -251,13 +251,13 @@ void UfopaediaCategoryView::setFormData()
 	{
 		title = category->title;
 		description = category->description;
-		background = category->background;
+		background = category->background->getRealImage();
 	}
 	else
 	{
 		title = this->position_iterator->second->title;
 		description = this->position_iterator->second->description;
-		background = this->position_iterator->second->background;
+		background = this->position_iterator->second->background->getRealImage();
 	}
 	menuform->FindControlTyped<Graphic>("BACKGROUND_PICTURE")->SetImage(background);
 	auto tr_description = tr(description);

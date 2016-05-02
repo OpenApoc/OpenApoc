@@ -251,7 +251,7 @@ sp<MusicTrack> Data::load_music(const UString &path)
 	return nullptr;
 }
 
-sp<Image> Data::load_image(const UString &path)
+sp<Image> Data::load_image(const UString &path, bool lazy)
 {
 	std::lock_guard<std::recursive_mutex> l(this->imageCacheLock);
 	if (path == "")
@@ -260,7 +260,14 @@ sp<Image> Data::load_image(const UString &path)
 	}
 	// Use an uppercase version of the path for the cache key
 	UString cacheKey = path.toUpper();
-	sp<Image> img = this->imageCache[cacheKey].lock();
+	sp<Image> img;
+	// Don't cache lazy loading image wrappers, the image data when really loaded will go through
+	// the cache as normal, but we don't want to think we've loaded an image when it's just a lazy
+	// wrapper
+	if (!lazy)
+	{
+		img = this->imageCache[cacheKey].lock();
+	}
 	if (img)
 	{
 		return img;
@@ -268,7 +275,12 @@ sp<Image> Data::load_image(const UString &path)
 
 	// Only trace stuff that misses the cache
 	TRACE_FN_ARGS1("path", path);
-	if (path.substr(0, 4) == "RAW:")
+
+	if (lazy)
+	{
+		img = mksp<LazyImage>();
+	}
+	else if (path.substr(0, 4) == "RAW:")
 	{
 		auto splitString = path.split(':');
 		// Raw resources come in the format:
@@ -465,7 +477,10 @@ sp<Image> Data::load_image(const UString &path)
 	this->pinnedImages.push(img);
 	this->pinnedImages.pop();
 
-	this->imageCache[cacheKey] = img;
+	if (!lazy)
+	{
+		this->imageCache[cacheKey] = img;
+	}
 	img->path = path;
 	return img;
 }

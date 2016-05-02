@@ -115,6 +115,14 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, sp<T> &ptr)
 }
 
 template <>
+void serializeIn<LazyImage>(const GameState *state, sp<SerializationNode> node, sp<LazyImage> &ptr)
+{
+	if (!node)
+		return;
+	ptr = std::static_pointer_cast<LazyImage>(fw().data->load_image(node->getValue(), true));
+}
+
+template <>
 void serializeIn<Image>(const GameState *state, sp<SerializationNode> node, sp<Image> &ptr)
 {
 	if (!node)
@@ -881,6 +889,14 @@ template <typename T> void serializeOut(sp<SerializationNode> node, const sp<T> 
 	if (ptr)
 	{
 		serializeOut(node->addNode("sp"), *ptr);
+	}
+}
+
+template <> void serializeOut<LazyImage>(sp<SerializationNode> node, const sp<LazyImage> &ptr)
+{
+	if (ptr != nullptr)
+	{
+		node->setValue(ptr->path);
 	}
 }
 

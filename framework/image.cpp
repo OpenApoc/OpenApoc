@@ -1,4 +1,5 @@
 #include "framework/image.h"
+#include "framework/framework.h"
 #include "framework/logger.h"
 #include "framework/palette.h"
 #include "library/sp.h"
@@ -205,6 +206,18 @@ void PaletteImage::CalculateBounds()
 		}
 	}
 	this->bounds = {minX, minY, maxX, maxY};
+}
+
+LazyImage::LazyImage() : Image({0, 0}) {}
+
+sp<Image> &LazyImage::getRealImage()
+{
+	if (!this->realImage)
+	{
+		this->realImage = fw().data->load_image(this->path);
+		this->size = this->realImage->size;
+	}
+	return this->realImage;
 }
 
 }; // namespace OpenApoc

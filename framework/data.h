@@ -32,6 +32,7 @@ class Data
 
   private:
 	std::map<UString, std::weak_ptr<Image>> imageCache;
+	std::map<UString, std::weak_ptr<Image>> imageCacheLazy;
 	std::recursive_mutex imageCacheLock;
 	std::map<UString, std::weak_ptr<ImageSet>> imageSetCache;
 	std::recursive_mutex imageSetCacheLock;
@@ -68,7 +69,7 @@ class Data
 
 	sp<Sample> load_sample(UString path);
 	sp<MusicTrack> load_music(const UString &path);
-	sp<Image> load_image(const UString &path);
+	sp<Image> load_image(const UString &path, bool lazy = false);
 	sp<ImageSet> load_image_set(const UString &path);
 	sp<Palette> load_palette(const UString &path);
 	sp<VoxelSlice> load_voxel_slice(const UString &path);

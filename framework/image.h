@@ -37,6 +37,17 @@ class Image : public ResObject
 	unsigned indexInSet;
 };
 
+class LazyImage : public Image
+{
+  private:
+	sp<Image> realImage;
+
+  public:
+	LazyImage();
+	virtual ~LazyImage() = default;
+	sp<Image> &getRealImage();
+};
+
 // A surface is an image you can render to. No SW locking is allowed!
 class Surface : public Image
 {

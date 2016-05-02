@@ -29,7 +29,7 @@ class UfopaediaEntry : public StateObject<UfopaediaEntry>
 	UfopaediaEntry();
 	UString title;
 	UString description;
-	sp<Image> background;
+	sp<LazyImage> background;
 	// The ID of the 'dynamic' data shown with this entry (income/balance for organisations, stats
 	// for weapons etc.)
 	UString data_id;
@@ -43,7 +43,7 @@ class UfopaediaCategory
   public:
 	UString title;
 	UString description;
-	sp<Image> background;
+	sp<LazyImage> background;
 	std::map<UString, sp<UfopaediaEntry>> entries;
 };
 
