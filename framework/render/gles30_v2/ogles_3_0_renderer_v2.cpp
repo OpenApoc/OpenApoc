@@ -1178,14 +1178,14 @@ class OGLES30Renderer final : public Renderer
 		gl->Viewport(0, 0, s->size.x, s->size.y);
 	}
 	sp<Surface> getSurface() override { return this->current_surface; }
-	const Vec2<int> spritesheetPageSize = {4096, 4096};
-	const Vec2<int> maxSpriteSizeToPack{256, 256};
-	const int spriteBufferSize = 4096;
-	const int spriteBufferCount = 2;
+	Vec2<int> spritesheetPageSize = {4096, 4096};
+	Vec2<int> maxSpriteSizeToPack{256, 256};
+	int spriteBufferSize = 4096;
+	int spriteBufferCount = 2;
 
-	const int texturedBufferCount = 1;
+	int texturedBufferCount = 1;
 
-	const int quadBufferCount = 1;
+	int quadBufferCount = 1;
 
 	up<SpriteDrawMachine> spriteMachine;
 	up<TexturedDrawMachine> texturedMachine;
@@ -1485,6 +1485,17 @@ OGLES30Renderer::OGLES30Renderer() : state(State::Idle)
 	gl->Enable(GL::BLEND);
 	gl->BlendFunc(GL::SRC_ALPHA, GL::ONE_MINUS_SRC_ALPHA);
 	gl->PixelStorei(GL::UNPACK_ALIGNMENT, 1);
+
+	GL::GLint max_texture_size;
+	gl->GetIntegerv(GL::MAX_TEXTURE_SIZE, &max_texture_size);
+	if (spritesheetPageSize.x > max_texture_size || spritesheetPageSize.y > max_texture_size)
+	{
+		LogWarning("Default spritesheet size {%d,%d} larger than HW limit %d - clamping...",
+		           spritesheetPageSize.x, spritesheetPageSize.y, max_texture_size);
+		spritesheetPageSize.x = std::min(spritesheetPageSize.x, max_texture_size);
+		spritesheetPageSize.y = std::min(spritesheetPageSize.y, max_texture_size);
+	}
+	LogInfo("Set spritesheet size to {%d,%d}", spritesheetPageSize.x, spritesheetPageSize.y);
 }
 
 class OGLES30RendererFactory : public RendererFactory
