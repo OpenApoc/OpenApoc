@@ -22,9 +22,11 @@ class City;
 class Base;
 
 static const unsigned TICKS_PER_SECOND = 60;
+static const unsigned TICKS_PER_MINUTE = TICKS_PER_SECOND * 60;
+static const unsigned TICKS_PER_HOUR = TICKS_PER_MINUTE * 60;
 static const unsigned TURBO_TICKS = 5 * 60 * TICKS_PER_SECOND;
 
-class GameState
+class GameState : public std::enable_shared_from_this<GameState>
 {
   private:
 	void update(unsigned int ticks);

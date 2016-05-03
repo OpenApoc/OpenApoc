@@ -94,6 +94,8 @@ class Lab : public StateObject<Lab>
 
 	static void setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic);
 
+	static void updateOneHour(StateRef<Lab> lab, sp<GameState> state);
+
 	int getTotalSkill() const;
 };
 

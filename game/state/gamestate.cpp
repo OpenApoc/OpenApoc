@@ -264,7 +264,18 @@ void GameState::update(unsigned int ticks)
 		v.second->update(*this, ticks);
 	}
 	Trace::end("GameState::update::vehicles");
+	unsigned hour_start = this->time / TICKS_PER_HOUR;
 	this->time += ticks;
+	unsigned hour_end = this->time / TICKS_PER_HOUR;
+
+	// FIXME: We can never update more than one hour at a time... right?
+	if (hour_start != hour_end)
+	{
+		for (auto &lab : this->research.labs)
+		{
+			Lab::updateOneHour({this, lab.second}, shared_from_this());
+		}
+	}
 }
 
 void GameState::update() { this->update(1); }

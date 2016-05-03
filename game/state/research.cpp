@@ -199,4 +199,18 @@ int Lab::getTotalSkill() const
 	return totalLabSkill;
 }
 
+void Lab::updateOneHour(StateRef<Lab> lab, sp<GameState> state)
+{
+	if (lab->current_project)
+	{
+		lab->current_project->man_hours_progress += lab->getTotalSkill();
+		if (lab->current_project->isComplete())
+		{
+			// FIXME: Show 'research complete' screen
+			// Possibly assign 'extra' skill to the beginning of the next project?
+			Lab::setResearch(lab, {state.get(), ""});
+		}
+	}
+}
+
 } // namespace OpenApoc
