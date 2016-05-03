@@ -179,7 +179,7 @@ bool gles3::supported(bool desktop_extension, std::string lib_name)
 		// Remove the 'OpenGL ES ' prefix - 10 chars
 		version_string = version_string.substr(10, version_string.npos);
 		// Then check the version in 'x.y' format
-		auto major_version = version_string.substr(1, 1);
+		auto major_version = version_string.substr(0, 1);
 		int major_version_int = stoi(major_version);
 		// We don't actually care about the minor version here
 		if (major_version_int >= 3)
