@@ -17,8 +17,8 @@ class gles3
 	// If 'desktop_extension' is true that means we're on a 'desktop' GL context
 	// with GL_ARB_ES3_compatibility, thus should GetProcAddress instead of dlsym
 	// for symbol resolution
-	static bool supported(bool desktop_extension, std::string lib_name = "GLESv3");
-	gles3(bool desktop_extension, std::string lib_name = "GLESv3");
+	static bool supported(bool desktop_extension, std::string lib_name = "libGLESv2.so");
+	gles3(bool desktop_extension, std::string lib_name = "libGLESv2.so");
 	~gles3();
 
 	std::string VersionString;

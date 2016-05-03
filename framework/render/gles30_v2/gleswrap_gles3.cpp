@@ -75,7 +75,11 @@ class gles3::gles3_loader
 		else
 		{
 #if defined(GLESWRAP_PLATFORM_DLFCN)
-			this->dlfcn_handle = dlopen(lib_name.c_str(), RTLD_LOCAL);
+			this->dlfcn_handle = dlopen(lib_name.c_str(), RTLD_NOW | RTLD_LOCAL);
+			if (!this->dlfcn_handle)
+			{
+				LogInfo("Failed to load library \"%s\" : \"%s\"", lib_name.c_str(), dlerror());
+			}
 #elif defined(GLESWRAP_PLATFORM_WGL)
 			this->win32_handle = LoadLibraryA("opengl32.dll");
 #endif
