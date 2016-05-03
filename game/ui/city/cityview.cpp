@@ -349,6 +349,7 @@ void CityView::Resume()
 
 void CityView::Render()
 {
+	TRACE_FN;
 	TileView::Render();
 	if (state->showVehiclePath)
 	{

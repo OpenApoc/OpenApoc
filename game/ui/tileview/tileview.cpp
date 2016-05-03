@@ -138,6 +138,7 @@ void TileView::EventOccurred(Event *e)
 
 void TileView::Render()
 {
+	TRACE_FN;
 	Renderer &r = *fw().renderer;
 	r.clear();
 	r.setPalette(this->pal);
