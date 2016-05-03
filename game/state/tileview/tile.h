@@ -77,10 +77,23 @@ class TileMap
 	std::vector<std::set<TileObject::Type>> layerMap;
 
   public:
-	Tile *getTile(int x, int y, int z);
-	Tile *getTile(Vec3<int> pos);
+	Tile *getTile(int x, int y, int z)
+	{
+		assert(x > 0);
+		assert(x <= size.x);
+		assert(y > 0);
+		assert(y <= size.x);
+		assert(z > 0);
+		assert(z <= size.x);
+		return &this->tiles[z * size.x * size.y + y * size.x + x];
+	}
+	Tile *getTile(Vec3<int> pos) { return this->getTile(pos.x, pos.y, pos.z); }
 	// Returns the tile this point is 'within'
-	Tile *getTile(Vec3<float> pos);
+	Tile *getTile(Vec3<float> pos)
+	{
+		return this->getTile(static_cast<int>(pos.x), static_cast<int>(pos.y),
+		                     static_cast<int>(pos.z));
+	}
 	Vec3<int> size;
 
 	TileMap(Vec3<int> size, std::vector<std::set<TileObject::Type>> layerMap);

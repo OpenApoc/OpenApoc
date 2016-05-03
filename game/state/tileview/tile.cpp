@@ -45,27 +45,6 @@ TileMap::TileMap(Vec3<int> size, std::vector<std::set<TileObject::Type>> layerMa
 	}
 }
 
-Tile *TileMap::getTile(int x, int y, int z)
-{
-	if (x >= size.x || y >= size.y || z >= size.z)
-	{
-		LogError("Requesting tile {%d,%d,%d} in map of size {%d,%d,%d}", x, y, z, size.x, size.y,
-		         size.z);
-		return nullptr;
-	}
-	return &this->tiles[z * size.x * size.y + y * size.x + x];
-}
-
-Tile *TileMap::getTile(Vec3<int> pos)
-{
-	return getTile(static_cast<int>(pos.x), static_cast<int>(pos.y), static_cast<int>(pos.z));
-}
-
-Tile *TileMap::getTile(Vec3<float> pos)
-{
-	return getTile(static_cast<int>(pos.x), static_cast<int>(pos.y), static_cast<int>(pos.z));
-}
-
 TileMap::~TileMap() {}
 
 Tile::Tile(TileMap &map, Vec3<int> position, int layerCount)
