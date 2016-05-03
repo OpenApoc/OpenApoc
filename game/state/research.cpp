@@ -117,6 +117,8 @@ const UString &StateObject<ResearchTopic>::getId(const GameState &state,
 	return emptyString;
 }
 
+Lab::Lab() : ticks_since_last_progress(0) {}
+
 template <> sp<Lab> StateObject<Lab>::get(const GameState &state, const UString &id)
 {
 	auto it = state.research.labs.find(id);
@@ -199,15 +201,29 @@ int Lab::getTotalSkill() const
 	return totalLabSkill;
 }
 
-void Lab::updateOneHour(StateRef<Lab> lab, sp<GameState> state)
+void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 {
-	if (lab->current_project)
+	if (lab->current_project && lab->getTotalSkill() > 0)
 	{
-		lab->current_project->man_hours_progress += lab->getTotalSkill();
+		// A little complication as we want to be correctly calculating progress in an integer when
+		// working with sub-single progress 'unit' time units.
+		// This also leaves any remaining ticks in the lab's ticks_since_last_progress, so they will
+		// get added onto the next project that lab undertakes at the first update.
+		unsigned ticks_per_progress_point = TICKS_PER_HOUR / lab->getTotalSkill();
+		unsigned ticks_remaining_to_progress = ticks + lab->ticks_since_last_progress;
+
+		unsigned progress_points =
+		    std::min(ticks_remaining_to_progress / ticks_per_progress_point,
+		             lab->current_project->man_hours - lab->current_project->man_hours_progress);
+		unsigned ticks_left = progress_points * ticks_per_progress_point;
+
+		lab->ticks_since_last_progress = ticks_left;
+
+		lab->current_project->man_hours_progress += progress_points;
 		if (lab->current_project->isComplete())
 		{
 			// FIXME: Show 'research complete' screen
-			// Possibly assign 'extra' skill to the beginning of the next project?
+			LogWarning("Completed research %s", lab->current_project->name.c_str());
 			Lab::setResearch(lab, {state.get(), ""});
 		}
 	}

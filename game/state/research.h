@@ -87,6 +87,7 @@ class ItemDependency
 class Lab : public StateObject<Lab>
 {
   public:
+	Lab();
 	ResearchTopic::LabSize size;
 	ResearchTopic::Type type;
 	StateRef<ResearchTopic> current_project;
@@ -94,9 +95,15 @@ class Lab : public StateObject<Lab>
 
 	static void setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic);
 
-	static void updateOneHour(StateRef<Lab> lab, sp<GameState> state);
+	static void update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state);
 
 	int getTotalSkill() const;
+
+	// We keep a count of ticks since the last point of progress to accurately accumulate over
+	// periods of ticks smaller than what is required to progress a single 'progress' point.
+	// This is also used to 'store' the remaining time if the update granularity is such that is
+	// overshoots a project's completion.
+	unsigned int ticks_since_last_progress;
 };
 
 class ResearchState

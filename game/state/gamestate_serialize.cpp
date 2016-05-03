@@ -582,6 +582,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("type"), lab.type);
 	serializeIn(state, node->getNode("current_project"), lab.current_project);
 	serializeIn(state, node->getNode("assigned_agents"), lab.assigned_agents);
+	serializeIn(state, node->getNode("ticks_since_last_progress"), lab.ticks_since_last_progress);
 }
 
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Facility &facility)
@@ -1198,6 +1199,7 @@ template <> void serializeOut(sp<SerializationNode> node, const Lab &lab)
 	serializeOut(node->addNode("type"), lab.type);
 	serializeOut(node->addNode("current_project"), lab.current_project);
 	serializeOut(node->addNode("assigned_agents"), lab.assigned_agents);
+	serializeOut(node->addNode("ticks_since_last_progress"), lab.ticks_since_last_progress);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const Facility &facility)
