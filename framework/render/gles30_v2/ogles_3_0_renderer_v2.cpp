@@ -1487,6 +1487,26 @@ class OGLES30Renderer final : public Renderer
 	sp<Surface> getDefaultSurface() override { return this->default_surface; }
 };
 
+void debug_message_proc(GL::KHR_debug::GLenum source, GL::KHR_debug::GLenum type, GL::GLuint id,
+                        GL::KHR_debug::GLenum severity, GL::GLsizei length,
+                        const GL::GLchar *message, const void *userParam)
+{
+	switch (severity)
+	{
+		case GL::KHR_debug::DEBUG_SEVERITY_HIGH:
+		case GL::KHR_debug::DEBUG_SEVERITY_MEDIUM:
+		{
+			LogWarning("Debug message: \"%s\"", message);
+			break;
+		}
+		default:
+		{
+			LogInfo("Debug message: \"%s\"", message);
+			break;
+		}
+	}
+}
+
 OGLES30Renderer::OGLES30Renderer() : state(State::Idle)
 {
 	TRACE_FN;
@@ -1515,6 +1535,14 @@ OGLES30Renderer::OGLES30Renderer() : state(State::Idle)
 		spritesheetPageSize.y = std::min(spritesheetPageSize.y, max_texture_size);
 	}
 	LogInfo("Set spritesheet size to {%d,%d}", spritesheetPageSize.x, spritesheetPageSize.y);
+
+	if (gl->KHR_debug.supported)
+	{
+		LogInfo("Enabling KHR_debug output");
+		gl->Enable(static_cast<GL::GLenum>(GL::KHR_debug::DEBUG_OUTPUT_SYNCHRONOUS));
+		gl->Enable(static_cast<GL::GLenum>(GL::KHR_debug::DEBUG_OUTPUT));
+		gl->KHR_debug.DebugMessageCallback(debug_message_proc, NULL);
+	}
 }
 
 class OGLES30RendererFactory : public RendererFactory

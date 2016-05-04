@@ -2,6 +2,7 @@
 #define GLESWRAP_H
 
 #include <cstdint>
+#include <set>
 #include <string>
 
 #if defined(_WIN32)

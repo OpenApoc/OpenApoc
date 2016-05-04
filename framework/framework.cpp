@@ -710,6 +710,9 @@ void Framework::Display_Initialise()
 #endif
 
 #endif
+#ifdef DEBUG_RENDERER
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_DEBUG_FLAG);
+#endif
 	// Request context version 3.0
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 0);

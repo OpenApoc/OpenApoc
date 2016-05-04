@@ -95,7 +95,7 @@ class gles3::gles3_loader
 			FreeLibrary(this->win32_handle);
 #endif
 	}
-	template <typename T> bool Load(T &func_pointer, const std::string &proc_name)
+	template <typename T> bool Load(T &func_pointer, const std::string &proc_name) const
 	{
 		auto full_proc_name = FUNCTION_PREFIX + proc_name;
 		if (desktop_extension)
@@ -195,7 +195,7 @@ bool gles3::supported(bool desktop_extension, std::string lib_name)
 }
 
 gles3::gles3(bool desktop_extension, std::string lib_name)
-    : loader(new gles3_loader(desktop_extension, lib_name))
+    : loader(new gles3_loader(desktop_extension, lib_name)), desktop_extension(desktop_extension)
 {
 	assert(this->supported(desktop_extension, lib_name));
 	loader->Load(ActiveTexture, "ActiveTexture");
@@ -446,8 +446,61 @@ gles3::gles3(bool desktop_extension, std::string lib_name)
 	loader->Load(TexStorage2D, "TexStorage2D");
 	loader->Load(TexStorage3D, "TexStorage3D");
 	loader->Load(GetInternalformativ, "GetInternalformativ");
+
+	this->VersionString = reinterpret_cast<const char *>(this->GetString(VERSION));
+	this->VendorString = reinterpret_cast<const char *>(this->GetString(VENDOR));
+	this->RendererString = reinterpret_cast<const char *>(this->GetString(RENDERER));
+	this->ExtensionString = reinterpret_cast<const char *>(this->GetString(EXTENSIONS));
+
+	GLint extension_count = 0;
+	this->GetIntegerv(NUM_EXTENSIONS, &extension_count);
+
+	for (int i = 0; i < extension_count; i++)
+	{
+		this->Extensions.insert(reinterpret_cast<const char *>(this->GetStringi(EXTENSIONS, i)));
+	}
+
+	this->KHR_debug = {this};
 }
 
 gles3::~gles3() { delete this->loader; }
+
+gles3::KHR_debug::KHR_debug(const gles3 *parent) : supported(false), name("GL_KHR_debug")
+{
+	if (!parent)
+		return;
+	if (parent->Extensions.count(name))
+	{
+		LogInfo("Extension %s supported", name.c_str());
+		this->supported = true;
+	}
+	else
+	{
+		LogInfo("Extension %s not supported", name.c_str());
+		return;
+	}
+	std::string func_suffix;
+
+	// According to the KHR_debug spec:
+	//"""
+	//    NOTE: when implemented in an OpenGL ES context, all entry points defined
+	//    by this extension must have a "KHR" suffix. When implemented in an
+	//    OpenGL context, all entry points must have NO suffix, as shown below.
+	//"""
+	if (parent->desktop_extension == false)
+	{
+		func_suffix = "KHR";
+	}
+	parent->loader->Load(DebugMessageControl, "DebugMessageControl" + func_suffix);
+	parent->loader->Load(DebugMessageInsert, "DebugMessageInsert" + func_suffix);
+	parent->loader->Load(DebugMessageCallback, "DebugMessageCallback" + func_suffix);
+	parent->loader->Load(GetDebugMessageLog, "GetDebugMessageLog" + func_suffix);
+	parent->loader->Load(GetPointerv, "GetPointerv" + func_suffix);
+	parent->loader->Load(PushDebugGroup, "PushDebugGroup" + func_suffix);
+	parent->loader->Load(ObjectLabel, "ObjectLabel" + func_suffix);
+	parent->loader->Load(GetObjectLabel, "GetObjectLabel" + func_suffix);
+	parent->loader->Load(ObjectPtrLabel, "ObjectPtrLabel" + func_suffix);
+	parent->loader->Load(GetObjectPtrLabel, "GetObjectPtrLabel" + func_suffix);
+}
 
 } // namespace gles_wrap

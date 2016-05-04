@@ -12,6 +12,7 @@ class gles3
   private:
 	class gles3_loader;
 	gles3_loader *loader;
+	bool desktop_extension;
 
   public:
 	// If 'desktop_extension' is true that means we're on a 'desktop' GL context
@@ -25,6 +26,7 @@ class gles3
 	std::string VendorString;
 	std::string RendererString;
 	std::string ExtensionString;
+	std::set<std::string> Extensions;
 
 	// GLES2 types
 	typedef int8_t GLbyte;
@@ -1016,6 +1018,88 @@ class gles3
 	                                      GLsizei width, GLsizei height, GLsizei depth);
 	void(GLESWRAP_APIENTRY *GetInternalformativ)(GLenum target, GLenum internalformat, GLenum pname,
 	                                             GLsizei bufSize, GLint *params);
+
+	class KHR_debug
+	{
+	  private:
+		friend class gles3;
+		KHR_debug(const gles3 *parent = nullptr);
+
+	  public:
+		bool supported;
+		std::string name;
+		enum GLenum : unsigned int
+		{
+			DEBUG_OUTPUT = 0x92E0,
+			DEBUG_OUTPUT_SYNCHRONOUS = 0x8242,
+			CONTEXT_FLAG_DEBUG_BIT = 0x00000002,
+			MAX_DEBUG_MESSAGE_LENGTH = 0x9143,
+			MAX_DEBUG_LOGGED_MESSAGES = 0x9144,
+			DEBUG_LOGGED_MESSAGES = 0x9145,
+			DEBUG_NEXT_LOGGED_MESSAGE_LENGTH = 0x8243,
+			MAX_DEBUG_GROUP_STACK_DEPTH = 0x826C,
+			DEBUG_GROUP_STACK_DEPTH = 0x826D,
+			MAX_LABEL_LENGTH = 0x82E8,
+			DEBUG_CALLBACK_FUNCTION = 0x8244,
+			DEBUG_CALLBACK_USER_PARAM = 0x8245,
+			DEBUG_SOURCE_API = 0x8246,
+			DEBUG_SOURCE_WINDOW_SYSTEM = 0x8247,
+			DEBUG_SOURCE_SHADER_COMPILER = 0x8248,
+			DEBUG_SOURCE_THIRD_PARTY = 0x8249,
+			DEBUG_SOURCE_APPLICATION = 0x824A,
+			DEBUG_SOURCE_OTHER = 0x824B,
+			DEBUG_TYPE_ERROR = 0x824C,
+			DEBUG_TYPE_DEPRECATED_BEHAVIOR = 0x824D,
+			DEBUG_TYPE_UNDEFINED_BEHAVIOR = 0x824E,
+			DEBUG_TYPE_PORTABILITY = 0x824F,
+			DEBUG_TYPE_PERFORMANCE = 0x8250,
+			DEBUG_TYPE_OTHER = 0x8251,
+			DEBUG_TYPE_MARKER = 0x8268,
+			DEBUG_TYPE_PUSH_GROUP = 0x8269,
+			DEBUG_TYPE_POP_GROUP = 0x826A,
+			DEBUG_SEVERITY_HIGH = 0x9146,
+			DEBUG_SEVERITY_MEDIUM = 0x9147,
+			DEBUG_SEVERITY_LOW = 0x9148,
+			DEBUG_SEVERITY_NOTIFICATION = 0x826B,
+			STACK_UNDERFLOW = 0x0504,
+			STACK_OVERFLOW = 0x0503,
+			BUFFER = 0x82E0,
+			SHADER = 0x82E1,
+			PROGRAM = 0x82E2,
+			QUERY = 0x82E3,
+			PROGRAM_PIPELINE = 0x82E4,
+			SAMPLER = 0x82E6,
+
+		};
+
+		typedef void(GLESWRAP_APIENTRY *GLDEBUGPROC)(GLenum source, GLenum type, GLuint id,
+		                                             GLenum severity, GLsizei length,
+		                                             const GLchar *message, const void *userParam);
+
+		void(GLESWRAP_APIENTRY *DebugMessageControl)(GLenum source, GLenum type, GLenum severity,
+		                                             GLsizei count, const GLuint *ids,
+		                                             GLboolean enabled);
+		void(GLESWRAP_APIENTRY *DebugMessageInsert)(GLenum source, GLenum type, GLuint id,
+		                                            GLenum severity, GLsizei length,
+		                                            const GLchar *buf);
+		void(GLESWRAP_APIENTRY *DebugMessageCallback)(GLDEBUGPROC callback,
+		                                              const GLvoid *userParam);
+		GLuint(GLESWRAP_APIENTRY *GetDebugMessageLog)(GLuint count, GLsizei bufSize,
+		                                              GLenum *sources, GLenum *types, GLuint *ids,
+		                                              GLenum *severities, GLsizei *lengths,
+		                                              GLchar *messageLog);
+		void(GLESWRAP_APIENTRY *GetPointerv)(GLenum pname, GLvoid **params);
+		void(GLESWRAP_APIENTRY *PushDebugGroup)(GLenum source, GLuint id, GLsizei length,
+		                                        const GLchar *message);
+		void(GLESWRAP_APIENTRY *PopDebugGroup)(GLvoid);
+		void(GLESWRAP_APIENTRY *ObjectLabel)(GLenum identifier, GLuint name, GLsizei length,
+		                                     const GLchar *label);
+		void(GLESWRAP_APIENTRY *GetObjectLabel)(GLenum identifier, GLuint name, GLsizei bufSize,
+		                                        GLsizei *length, GLchar *label);
+		void(GLESWRAP_APIENTRY *ObjectPtrLabel)(GLvoid *ptr, GLsizei length, const GLchar *label);
+		void(GLESWRAP_APIENTRY *GetObjectPtrLabel)(GLvoid *ptr, GLsizei bufSize, GLsizei *length,
+		                                           GLchar *label);
+	} KHR_debug;
 };
 } // namespace gles_wrap
 
