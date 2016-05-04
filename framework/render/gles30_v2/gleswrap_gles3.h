@@ -1091,7 +1091,7 @@ class gles3
 		void(GLESWRAP_APIENTRY *GetPointerv)(GLenum pname, GLvoid **params);
 		void(GLESWRAP_APIENTRY *PushDebugGroup)(GLenum source, GLuint id, GLsizei length,
 		                                        const GLchar *message);
-		void(GLESWRAP_APIENTRY *PopDebugGroup)(GLvoid);
+		void(GLESWRAP_APIENTRY *PopDebugGroup)(void);
 		void(GLESWRAP_APIENTRY *ObjectLabel)(GLenum identifier, GLuint name, GLsizei length,
 		                                     const GLchar *label);
 		void(GLESWRAP_APIENTRY *GetObjectLabel)(GLenum identifier, GLuint name, GLsizei bufSize,
