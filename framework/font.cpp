@@ -17,8 +17,13 @@ sp<PaletteImage> BitmapFont::getString(const UString &Text)
 {
 	int height = this->GetFontHeight();
 	int width = this->GetFontWidth(Text);
-	auto img = mksp<PaletteImage>(Vec2<int>{width, height});
 	int pos = 0;
+
+	auto img = fw().data->get_font_string_cache_entry(this->name, Text);
+	if (img)
+		return img;
+
+	img = mksp<PaletteImage>(Vec2<int>{width, height});
 
 	auto u8Str = Text.str();
 	auto pointString = boost::locale::conv::utf_to_utf<UniChar>(u8Str);
@@ -30,6 +35,8 @@ sp<PaletteImage> BitmapFont::getString(const UString &Text)
 		PaletteImage::blit(glyph, img, {0, 0}, {pos, 0});
 		pos += glyph->size.x;
 	}
+
+	fw().data->put_font_string_cache_entry(this->name, Text, img);
 
 	return img;
 }

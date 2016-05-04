@@ -44,11 +44,16 @@ class Data
 	std::map<UString, std::weak_ptr<LOFTemps>> LOFVoxelCache;
 	std::recursive_mutex voxelCacheLock;
 
+	// The cache is organised in <font name , <text, image>>
+	std::map<UString, std::map<UString, std::weak_ptr<PaletteImage>>> fontStringCache;
+	std::recursive_mutex fontStringCacheLock;
+
 	// Pin open 'imageCacheSize' images
 	std::queue<sp<Image>> pinnedImages;
 	// Pin open 'imageSetCacheSize' image sets
 	std::queue<sp<ImageSet>> pinnedImageSets;
 	std::queue<sp<LOFTemps>> pinnedLOFVoxels;
+	std::queue<sp<PaletteImage>> pinnedFontStrings;
 	std::list<std::unique_ptr<ImageLoader>> imageLoaders;
 	std::list<std::unique_ptr<SampleLoader>> sampleLoaders;
 	std::list<std::unique_ptr<MusicLoader>> musicLoaders;
@@ -64,7 +69,7 @@ class Data
 	FileSystem fs;
 
 	Data(std::vector<UString> paths, int imageCacheSize = 100, int imageSetCacheSize = 10,
-	     int voxelCacheSize = 1);
+	     int voxelCacheSize = 1, int fontStringCacheSize = 100);
 	~Data();
 
 	sp<Sample> load_sample(UString path);
@@ -73,6 +78,11 @@ class Data
 	sp<ImageSet> load_image_set(const UString &path);
 	sp<Palette> load_palette(const UString &path);
 	sp<VoxelSlice> load_voxel_slice(const UString &path);
+
+	sp<PaletteImage> get_font_string_cache_entry(const UString &font_name, const UString &text);
+	void put_font_string_cache_entry(const UString &font_name, const UString &text,
+	                                 sp<PaletteImage> &img);
+
 	bool write_image(UString systemPath, sp<Image> image, sp<Palette> palette = nullptr);
 };
 

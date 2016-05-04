@@ -22,7 +22,7 @@ namespace OpenApoc
 {
 
 Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize,
-           int voxelCacheSize)
+           int voxelCacheSize, int fontStringCacheSize)
     : fs(paths)
 {
 	registeredImageBackends["lodepng"].reset(getLodePNGImageLoaderFactory());
@@ -88,6 +88,8 @@ Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize
 		pinnedImageSets.push(nullptr);
 	for (int i = 0; i < voxelCacheSize; i++)
 		pinnedLOFVoxels.push(nullptr);
+	for (int i = 0; i < fontStringCacheSize; i++)
+		pinnedFontStrings.push(nullptr);
 }
 
 Data::~Data() {}
@@ -593,6 +595,42 @@ bool Data::write_image(UString systemPath, sp<Image> image, sp<Palette> palette)
 
 	LogWarning("No writes succeeded for image \"%s\"", systemPath.c_str());
 	return false;
+}
+
+sp<PaletteImage> Data::get_font_string_cache_entry(const UString &font_name, const UString &string)
+{
+	std::lock_guard<std::recursive_mutex> l(this->fontStringCacheLock);
+	if (font_name == "")
+	{
+		LogError("invalid font_name");
+		return nullptr;
+	}
+	if (string == "")
+	{
+		LogWarning("Empty string");
+		return nullptr;
+	}
+	auto img = this->fontStringCache[font_name][string].lock();
+	return img;
+}
+
+void Data::put_font_string_cache_entry(const UString &font_name, const UString &string,
+                                       sp<PaletteImage> &img)
+{
+	std::lock_guard<std::recursive_mutex> l(this->fontStringCacheLock);
+	if (font_name == "")
+	{
+		LogError("invalid font_name");
+		return;
+	}
+	if (string == "")
+	{
+		LogWarning("Empty string");
+		return;
+	}
+	this->fontStringCache[font_name][string] = img;
+	this->pinnedFontStrings.push(img);
+	this->pinnedFontStrings.pop();
 }
 
 }; // namespace OpenApoc
