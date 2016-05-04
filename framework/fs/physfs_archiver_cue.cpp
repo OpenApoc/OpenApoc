@@ -20,6 +20,7 @@
 #include <inttypes.h>
 // endianness check
 #include <SDL_endian.h>
+#include <map>
 
 using namespace OpenApoc;
 
