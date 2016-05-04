@@ -9,8 +9,6 @@
 #include "library/strings.h"
 #include <regex>
 #include <boost/filesystem.hpp>
-//#include <boost/endian/endian.hpp>
-#include <boost/endian/arithmetic.hpp>
 
 #include <physfs.h>
 #include <fstream>
@@ -20,6 +18,8 @@
 #include <cstddef>
 #include <library/sp.h>
 #include <inttypes.h>
+// endianness check
+#include <SDL_endian.h>
 
 using namespace OpenApoc;
 
@@ -251,7 +251,7 @@ std::regex CueParser::indexArgRegex = std::regex("(\\d{1,2})\\s+(\\d{2}):(\\d{2}
 
 struct int16_lsb_msb
 {
-#ifdef BOOST_LITTLE_ENDIAN
+#ifdef SDL_LIL_ENDIAN
     uint16_t val;        // lsb
     uint16_t __padding;  // msb
 #else
@@ -262,7 +262,7 @@ struct int16_lsb_msb
 
 struct sint16_lsb_msb
 {
-#ifdef BOOST_LITTLE_ENDIAN
+#ifdef SDL_LIL_ENDIAN
     int16_t val;
     int16_t __padding;
 #else
