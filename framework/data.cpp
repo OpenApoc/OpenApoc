@@ -22,7 +22,7 @@ namespace OpenApoc
 {
 
 Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize,
-           int voxelCacheSize, int fontStringCacheSize)
+           int voxelCacheSize, int fontStringCacheSize, int paletteCacheSize)
     : fs(paths)
 {
 	registeredImageBackends["lodepng"].reset(getLodePNGImageLoaderFactory());
@@ -90,6 +90,8 @@ Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize
 		pinnedLOFVoxels.push(nullptr);
 	for (int i = 0; i < fontStringCacheSize; i++)
 		pinnedFontStrings.push(nullptr);
+	for (int i = 0; i < paletteCacheSize; i++)
+		pinnedPalettes.push(nullptr);
 }
 
 Data::~Data() {}
@@ -489,16 +491,37 @@ sp<Image> Data::load_image(const UString &path, bool lazy)
 
 sp<Palette> Data::load_palette(const UString &path)
 {
-	auto pal = loadPCXPalette(*this, path);
+	std::lock_guard<std::recursive_mutex> l(this->paletteCacheLock);
+	if (path == "")
+	{
+		LogWarning("Invalid palette path");
+		return nullptr;
+	}
+	// Use an uppercase version of the path for the cache key
+	UString cacheKey = path.toUpper();
+
+	auto pal = this->paletteCache[cacheKey].lock();
+	if (pal)
+	{
+		return pal;
+	}
+
+	pal = loadPCXPalette(*this, path);
 	if (pal)
 	{
 		LogInfo("Read \"%s\" as PCX palette", path.c_str());
+		this->paletteCache[cacheKey] = pal;
+		this->pinnedPalettes.push(pal);
+		this->pinnedPalettes.pop();
 		return pal;
 	}
 	pal = loadPNGPalette(*this, path);
 	if (pal)
 	{
 		LogInfo("Read \"%s\" as PNG palette", path.c_str());
+		this->paletteCache[cacheKey] = pal;
+		this->pinnedPalettes.push(pal);
+		this->pinnedPalettes.pop();
 		return pal;
 	}
 
@@ -518,6 +541,9 @@ sp<Palette> Data::load_palette(const UString &path)
 			}
 		}
 		LogInfo("Read \"%s\" as Image palette", path.c_str());
+		this->paletteCache[cacheKey] = pal;
+		this->pinnedPalettes.push(pal);
+		this->pinnedPalettes.pop();
 		return p;
 	}
 
@@ -525,6 +551,9 @@ sp<Palette> Data::load_palette(const UString &path)
 	if (pal)
 	{
 		LogInfo("Read \"%s\" as RAW palette", path.c_str());
+		this->paletteCache[cacheKey] = pal;
+		this->pinnedPalettes.push(pal);
+		this->pinnedPalettes.pop();
 		return pal;
 	}
 	LogError("Failed to open palette \"%s\"", path.c_str());
