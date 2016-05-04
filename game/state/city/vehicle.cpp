@@ -192,6 +192,7 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	auto vehicleTile = this->tileObject;
 	if (vehicleTile)
 	{
+		bool has_active_weapon = false;
 		for (auto &equipment : this->equipment)
 		{
 			if (equipment->type->type != VEquipmentType::Type::Weapon)
@@ -199,51 +200,62 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 			equipment->update(ticks);
 			if (equipment->canFire())
 			{
-				// Find something to shoot at!
-				// FIXME: Only run on 'aggressive'? And not already a manually-selected target?
-				float range = equipment->getRange();
-				// Find the closest enemy within the firing arc
-				float closestEnemyRange = std::numeric_limits<float>::max();
-				sp<TileObjectVehicle> closestEnemy;
-				for (auto pair : state.vehicles)
+				has_active_weapon = true;
+			}
+		}
+		if (has_active_weapon)
+		{
+
+			// Find something to shoot at!
+			// FIXME: Only run on 'aggressive'? And not already a manually-selected target?
+			// Find the closest enemy within the firing arc
+			float closestEnemyRange = std::numeric_limits<float>::max();
+			sp<TileObjectVehicle> closestEnemy;
+			for (auto pair : state.vehicles)
+			{
+				auto otherVehicle = pair.second;
+				if (otherVehicle.get() == this)
 				{
-					auto otherVehicle = pair.second;
-					if (otherVehicle.get() == this)
-					{
-						/* Can't fire at yourself */
-						continue;
-					}
-					if (otherVehicle->city != this->city)
-					{
-						/* Can't fire on things a world away */
-						continue;
-					}
-					if (this->owner->isRelatedTo(otherVehicle->owner) !=
-					    Organisation::Relation::Hostile)
-					{
-						/* Not hostile, skip */
-						continue;
-					}
-					auto myPosition = vehicleTile->getPosition();
-					auto otherVehicleTile = otherVehicle->tileObject;
-					if (!otherVehicleTile)
-					{
-						/* Not in the map, ignore */
-						continue;
-					}
-					auto enemyPosition = otherVehicleTile->getPosition();
-					// FIXME: Check weapon arc against otherVehicle
-					auto offset = enemyPosition - myPosition;
-					float distance = glm::length(offset);
-
-					if (distance < closestEnemyRange)
-					{
-						closestEnemyRange = distance;
-						closestEnemy = otherVehicleTile;
-					}
+					/* Can't fire at yourself */
+					continue;
 				}
+				if (otherVehicle->city != this->city)
+				{
+					/* Can't fire on things a world away */
+					continue;
+				}
+				if (this->owner->isRelatedTo(otherVehicle->owner) !=
+				    Organisation::Relation::Hostile)
+				{
+					/* Not hostile, skip */
+					continue;
+				}
+				auto myPosition = vehicleTile->getPosition();
+				auto otherVehicleTile = otherVehicle->tileObject;
+				if (!otherVehicleTile)
+				{
+					/* Not in the map, ignore */
+					continue;
+				}
+				auto enemyPosition = otherVehicleTile->getPosition();
+				// FIXME: Check weapon arc against otherVehicle
+				auto offset = enemyPosition - myPosition;
+				float distance = glm::length(offset);
 
-				if (closestEnemyRange <= range)
+				if (distance < closestEnemyRange)
+				{
+					closestEnemyRange = distance;
+					closestEnemy = otherVehicleTile;
+				}
+			}
+			for (auto &equipment : this->equipment)
+			{
+				if (equipment->type->type != VEquipmentType::Type::Weapon)
+					continue;
+				if (equipment->canFire() == false)
+					continue;
+
+				if (closestEnemyRange <= equipment->getRange())
 				{
 					// Only fire if we're in range
 					// and fire at the center of the tile
