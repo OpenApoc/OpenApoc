@@ -79,12 +79,12 @@ class TileMap
   public:
 	Tile *getTile(int x, int y, int z)
 	{
-		assert(x > 0);
-		assert(x <= size.x);
-		assert(y > 0);
-		assert(y <= size.x);
-		assert(z > 0);
-		assert(z <= size.x);
+		assert(x >= 0);
+		assert(x < size.x);
+		assert(y >= 0);
+		assert(y < size.x);
+		assert(z >= 0);
+		assert(z < size.x);
 		return &this->tiles[z * size.x * size.y + y * size.x + x];
 	}
 	Tile *getTile(Vec3<int> pos) { return this->getTile(pos.x, pos.y, pos.z); }
