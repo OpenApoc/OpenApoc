@@ -34,6 +34,9 @@
     <Filter Include="pugixml">
       <UniqueIdentifier>{36c7254c-3cb2-4a2d-aa9f-29da07505423}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FS">
+      <UniqueIdentifier>{5a04f3bd-24ab-47de-bd14-aed467ad0012}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="configfile.cpp">
@@ -134,6 +137,9 @@
     </ClCompile>
     <ClCompile Include="video\smk.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fs\physfs_archiver_cue.cpp">
+      <Filter>FS</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +256,9 @@
     </ClInclude>
     <ClInclude Include="video.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fs\physfs_archiver_cue.h">
+      <Filter>FS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

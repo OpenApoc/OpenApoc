@@ -25,6 +25,8 @@ static inline uint16_t le16toh(uint16_t val) { return val; }
 static inline uint32_t le32toh(uint32_t val) { return val; }
 #endif
 
+#include "fs/physfs_archiver_cue.h"
+
 namespace
 {
 
@@ -216,6 +218,9 @@ IFile::~IFile() {}
 
 FileSystem::FileSystem(std::vector<UString> paths)
 {
+	// FIXME: Is this the right thing to do that?
+	LogInfo("Registering external archivers...");
+	PHYSFS_registerArchiver(getCueArchiver());
 	// Paths are supplied in inverse-search order (IE the last in 'paths' should be the first
 	// searched)
 	for (auto &p : paths)
