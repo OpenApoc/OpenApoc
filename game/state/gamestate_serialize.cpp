@@ -2,6 +2,7 @@
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "framework/serialize.h"
+#include "framework/trace.h"
 #include "game/state/base/facility.h"
 #include "game/state/city/baselayout.h"
 #include "game/state/city/building.h"
@@ -1434,6 +1435,7 @@ void serializeOut(sp<SerializationNode> node, const GameState &state)
 
 bool GameState::saveGame(const UString &path, bool pack)
 {
+	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
 	try
 	{
@@ -1451,6 +1453,7 @@ bool GameState::saveGame(const UString &path, bool pack)
 bool GameState::loadGame(const UString &path)
 {
 
+	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::readArchive(path);
 	if (!archive)
 	{
