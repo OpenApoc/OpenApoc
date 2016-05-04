@@ -66,6 +66,7 @@ class UString
 	std::list<UString> splitlist(const UString &delims) const;
 
 	size_t length() const;
+	bool empty() const { return this->u8Str.empty(); }
 	UString substr(size_t offset, size_t length = npos) const;
 
 	static const size_t npos = static_cast<size_t>(-1);

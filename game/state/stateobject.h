@@ -35,23 +35,10 @@ template <typename T> class StateRef
 
 	void resolve() const
 	{
-		if (obj)
+		if (id.empty())
 			return;
-		if (id == "")
-			return;
-		if (!state)
-		{
-			LogError("Trying to resolve \"%s\" with invalid state", id.c_str());
-
-			throw std::runtime_error(
-			    UString::format("Trying to resolve \"%s\" with invalid state", id.c_str()).str());
-		}
-		if (obj)
-		{
-			LogError("Already resolved %s with ID \"%s\"", T::getTypeName().c_str(), id.c_str());
-			return;
-		}
 		auto &prefix = T::getPrefix();
+#ifndef NDEBUG
 		auto idPrefix = id.substr(0, prefix.length());
 		if (prefix != idPrefix)
 		{
@@ -62,7 +49,9 @@ template <typename T> class StateRef
 			                    T::getTypeName().c_str(), T::getPrefix().c_str(), id.c_str())
 			        .str());
 		}
+#endif
 		obj = T::get(*state, id);
+#ifndef NDEBUG
 		if (!obj)
 		{
 			LogError("No %s object matching ID \"%s\" found", T::getTypeName().c_str(), id.c_str());
@@ -70,6 +59,7 @@ template <typename T> class StateRef
 			                                         T::getTypeName().c_str(), id.c_str())
 			                             .str());
 		}
+#endif
 	}
 
   public:
@@ -87,69 +77,84 @@ template <typename T> class StateRef
 
 	T &operator*()
 	{
-		resolve();
+		if (!obj)
+			resolve();
 		return *obj;
 	}
 	const T &operator*() const
 	{
-		resolve();
+		if (!obj)
+			resolve();
 		return *obj;
 	}
 	T *operator->()
 	{
-		resolve();
+		if (!obj)
+			resolve();
 		return obj.get();
 	}
 	const T *operator->() const
 	{
-		resolve();
+		if (!obj)
+			resolve();
 		return obj.get();
 	}
 	operator sp<T>()
 	{
-		resolve();
+		if (!obj)
+			resolve();
 		return obj;
 	}
 	operator const sp<T>() const
 	{
-		resolve();
+		if (!obj)
+			resolve();
 		return obj;
 	}
 	explicit operator const bool() const
 	{
-		resolve();
+		if (!obj)
+			resolve();
 		return !!obj;
 	}
 	bool operator==(const StateRef<T> other) const
 	{
-		resolve();
-		other.resolve();
+		if (!obj)
+			resolve();
+		if (!other.obj)
+			other.resolve();
 		return obj == other.obj;
 	}
 	bool operator!=(const StateRef<T> other) const
 	{
-		resolve();
-		other.resolve();
+		if (!obj)
+			resolve();
+		if (!other.obj)
+			other.resolve();
 		return obj != other.obj;
 	}
 	bool operator==(const sp<T> other) const
 	{
-		resolve();
+		if (!obj)
+			resolve();
 		return obj == other;
 	}
 	bool operator!=(const sp<T> other) const
 	{
-		resolve();
+		if (!obj)
+			resolve();
 		return obj != other;
 	}
 	bool operator==(const T *other) const
 	{
-		resolve();
+		if (!obj)
+			resolve();
 		return obj.get() == other;
 	}
 	bool operator!=(const T *other) const
 	{
-		resolve();
+		if (!obj)
+			resolve();
 		return obj.get() != other;
 	}
 	StateRef<T> &operator=(const StateRef<T> &other)
@@ -167,7 +172,8 @@ template <typename T> class StateRef
 	}
 	sp<T> getSp() const
 	{
-		resolve();
+		if (!obj)
+			resolve();
 		return obj;
 	}
 	bool operator<(const StateRef<T> other) const { return this->id < other.id; }
