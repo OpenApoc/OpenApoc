@@ -51,9 +51,6 @@
     <ClCompile Include="framework.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ignorecase.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="image.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -153,9 +150,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="fs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ignorecase.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="image.h">

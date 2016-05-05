@@ -22,8 +22,7 @@ set (FRAMEWORK_SOURCE_FILES
 	serialize.cpp
 	sound.cpp
 	stagestack.cpp
-	trace.cpp
-	ignorecase.c)
+	trace.cpp)
 
 source_group(framework\\sources FILES ${FRAMEWORK_SOURCE_FILES})
 list(APPEND ALL_SOURCE_FILES ${FRAMEWORK_SOURCE_FILES})
@@ -35,7 +34,6 @@ set (FRAMEWORK_HEADER_FILES
 	font.h
 	framework.h
 	fs.h
-	ignorecase.h
 	image.h
 	imageloader_interface.h
 	includes.h
