@@ -10,7 +10,9 @@ namespace
 
 using OpenApoc::UString;
 
-enum class EventType
+const unsigned int TRACE_CHUNK_SIZE = 100000;
+
+enum class EventType : unsigned char
 {
 	Begin,
 	End,
@@ -20,21 +22,42 @@ class TraceEvent
 {
   public:
 	EventType type;
+	uint64_t timeNS : 48; // (2^48) nanoseconds = 3.25781223 days
 	UString name;
 	std::vector<std::pair<UString, UString>> args;
-	uint64_t timeNS;
 	TraceEvent(EventType type, const UString &name,
 	           const std::vector<std::pair<UString, UString>> &args, uint64_t timeNS)
 	    : type(type), name(name), args(args), timeNS(timeNS)
 	{
 	}
+	TraceEvent() = default;
 };
 
 class EventList
 {
   public:
 	UString tid;
-	std::vector<TraceEvent> events;
+	std::vector<TraceEvent> *current_buffer;
+	void pushEvent(const EventType &type, const UString &name,
+	               const std::vector<std::pair<UString, UString>> &args, uint64_t &timeNS)
+	{
+		if (this->current_buffer->size() == TRACE_CHUNK_SIZE)
+		{
+			this->buffer_list.emplace_back();
+			this->current_buffer = &this->buffer_list.back();
+			this->current_buffer->reserve(TRACE_CHUNK_SIZE);
+			OpenApoc::TraceObj("Trace::EventList::newbuffer");
+		}
+		this->current_buffer->emplace_back(type, name, args, timeNS);
+	}
+	std::list<std::vector<TraceEvent>> buffer_list;
+
+	EventList()
+	{
+		this->buffer_list.emplace_back();
+		this->current_buffer = &buffer_list.back();
+		this->current_buffer->reserve(TRACE_CHUNK_SIZE);
+	}
 };
 
 class TraceManager
@@ -104,49 +127,52 @@ void TraceManager::write()
 	listMutex.lock();
 	for (auto &eventList : lists)
 	{
-		for (auto &event : eventList->events)
+		for (auto &buffer : eventList->buffer_list)
 		{
-			if (!firstEvent)
-				outFile << ",\n";
-
-			firstEvent = false;
-
-			outFile << "{"
-			        << "\"pid\":1,"
-			        << "\"tid\":\"" << eventList->tid.str() << "\","
-			        // Time is in microseconds, not nanoseconds
-			        << "\"ts\":" << event.timeNS / 1000 << ","
-			        << "\"name\":\"" << event.name.str() << "\",";
-
-			switch (event.type)
+			for (auto &event : buffer)
 			{
-				case EventType::Begin:
+				if (!firstEvent)
+					outFile << ",\n";
+
+				firstEvent = false;
+
+				outFile << "{"
+				        << "\"pid\":1,"
+				        << "\"tid\":\"" << eventList->tid.str() << "\","
+				        // Time is in microseconds, not nanoseconds
+				        << "\"ts\":" << event.timeNS / 1000 << ","
+				        << "\"name\":\"" << event.name.str() << "\",";
+
+				switch (event.type)
 				{
-					outFile << "\"ph\":\"B\"";
-
-					if (!event.args.empty())
+					case EventType::Begin:
 					{
-						outFile << ",\"args\":{";
+						outFile << "\"ph\":\"B\"";
 
-						bool firstArg = true;
-
-						for (auto &arg : event.args)
+						if (!event.args.empty())
 						{
-							if (!firstArg)
-								outFile << ",";
-							firstArg = false;
-							outFile << "\"" << arg.first.str() << "\":\"" << arg.second.str()
-							        << "\"";
+							outFile << ",\"args\":{";
+
+							bool firstArg = true;
+
+							for (auto &arg : event.args)
+							{
+								if (!firstArg)
+									outFile << ",";
+								firstArg = false;
+								outFile << "\"" << arg.first.str() << "\":\"" << arg.second.str()
+								        << "\"";
+							}
+							outFile << "}";
 						}
-						outFile << "}";
+						break;
 					}
-					break;
+					case EventType::End:
+						outFile << "\"ph\":\"E\"";
+						break;
 				}
-				case EventType::End:
-					outFile << "\"ph\":\"E\"";
-					break;
+				outFile << "}";
 			}
-			outFile << "}";
 		}
 	}
 	listMutex.unlock();
@@ -161,6 +187,7 @@ bool Trace::enabled = false;
 
 void Trace::enable()
 {
+	LogWarning("Enabling tracing - sizeof(TraceEvent) = %u", (unsigned)sizeof(TraceEvent));
 	assert(!trace_manager);
 	trace_manager.reset(new TraceManager);
 #if defined(BROKEN_THREAD_LOCAL)
@@ -222,7 +249,7 @@ void Trace::start(const UString &name, const std::vector<std::pair<UString, UStr
 
 	auto timeNow = std::chrono::high_resolution_clock::now();
 	uint64_t timeNS = std::chrono::duration<uint64_t, std::nano>(timeNow - traceStartTime).count();
-	events->events.emplace_back(EventType::Begin, name, args, timeNS);
+	events->pushEvent(EventType::Begin, name, args, timeNS);
 }
 void Trace::end(const UString &name)
 {
@@ -241,8 +268,7 @@ void Trace::end(const UString &name)
 #endif
 	auto timeNow = std::chrono::high_resolution_clock::now();
 	uint64_t timeNS = std::chrono::duration<uint64_t, std::nano>(timeNow - traceStartTime).count();
-	events->events.emplace_back(EventType::End, name, std::vector<std::pair<UString, UString>>{},
-	                            timeNS);
+	events->pushEvent(EventType::End, name, std::vector<std::pair<UString, UString>>{}, timeNS);
 }
 
 } // namespace OpenApoc
