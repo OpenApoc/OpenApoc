@@ -3,8 +3,8 @@
 #endif
 
 #include "framework/fs.h"
-#include "framework/ignorecase.h"
 #include "framework/logger.h"
+#include "framework/trace.h"
 
 #include <physfs.h>
 
@@ -29,20 +29,6 @@ namespace
 {
 
 using namespace OpenApoc;
-
-static UString GetCorrectCaseFilename(const UString &Filename)
-{
-	std::string u8Filename = Filename.str();
-	std::unique_ptr<char[]> buf(new char[u8Filename.length() + 1]);
-	strncpy(buf.get(), u8Filename.c_str(), u8Filename.length());
-	buf[Filename.length()] = '\0';
-	if (PHYSFSEXT_locateCorrectCase(buf.get()))
-	{
-		LogInfo("Failed to find file \"%s\"", Filename.c_str());
-		return "";
-	}
-	return buf.get();
-}
 
 class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 {
@@ -252,15 +238,80 @@ FileSystem::FileSystem(std::vector<UString> paths)
 
 FileSystem::~FileSystem() {}
 
+static bool CaseInsensitiveCompare(const UString &a, const UString &b)
+{
+	return a.toUpper() == b.toUpper();
+}
+
+static UString FindFile(const UString &basePath, std::list<UString> pathElements,
+                        std::map<UString, UString> &expandedFiles)
+{
+	if (pathElements.empty())
+	{
+		return basePath;
+	}
+	UString currentPath = basePath;
+	if (!currentPath.empty())
+		currentPath += "/";
+	UString currentElement = pathElements.front();
+	pathElements.pop_front();
+
+	UString foundPath;
+
+	char **elements = PHYSFS_enumerateFiles(currentPath.c_str());
+
+	for (char **element = elements; *element != NULL; element++)
+	{
+		auto elementPath = currentPath + *element;
+		// Don't add directories to the expandedFiles map
+		if (PHYSFS_exists(elementPath.c_str()))
+		{
+			expandedFiles[elementPath.toUpper()] = elementPath;
+		}
+		if (CaseInsensitiveCompare(currentElement, *element))
+		{
+			// We don't directly return here as we want to add the rest of the dir to cache, and
+			// check for overlapping entries
+			if (!foundPath.empty())
+			{
+				LogWarning("Multiple elements that match \"%s\"", currentPath.c_str());
+			}
+			foundPath = currentPath + *element;
+		}
+	}
+	PHYSFS_freeList(elements);
+	if (!foundPath.empty())
+	{
+		return FindFile(foundPath, pathElements, expandedFiles);
+	}
+	else
+	{
+		// Not found
+		return "";
+	}
+}
+
 UString FileSystem::getCorrectCaseFilename(const UString &path)
 {
-	return GetCorrectCaseFilename(path);
+	TRACE_FN;
+	std::lock_guard<std::recursive_mutex> l(this->pathCacheLock);
+
+	UString cacheKey = path.toUpper();
+
+	auto it = this->pathCache.find(cacheKey);
+	if (it != this->pathCache.end())
+	{
+		return it->second;
+	}
+
+	return FindFile("", path.splitlist('/'), this->pathCache);
 }
 
 IFile FileSystem::open(const UString &path)
 {
+	TRACE_FN_ARGS1("PATH", path);
 	IFile f;
-	UString foundPath = GetCorrectCaseFilename(path);
+	UString foundPath = this->getCorrectCaseFilename(path);
 	if (foundPath == "")
 	{
 		LogInfo("Failed to find \"%s\"", path.c_str());

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <cstdint>
+#include <map>
+#include <mutex>
 
 #include "library/sp.h"
 #include "library/strings.h"
@@ -39,6 +41,17 @@ class FileSystem
 {
   private:
 	UString writeDir;
+
+	// Some operating systems (windows, android) seem to have be somewhat inefficient stat() or
+	// similay, so the current implementation of getCorrectCaseFilename can take a surprisingly
+	// large amount of the startup time.
+	//
+	// So, for now keep a massive map of < toupper(path), systemPath > for things we've already
+	// enumerated
+	// FIXME: When we allow adding/removing paths from the search path list, this cache will likely
+	// have to be invalidated
+	std::map<UString, UString> pathCache;
+	std::recursive_mutex pathCacheLock;
 
   public:
 	FileSystem(std::vector<UString> paths);
