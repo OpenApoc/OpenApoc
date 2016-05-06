@@ -322,10 +322,6 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 			LogWarning("Error enabling audio track 0 for \"%s\"", video_path.c_str());
 		}
 
-		// FIXME: For some reason the first audio frame has a different size and causes everything
-		// to get screwed up?
-		this->popAudio();
-
 		// Everything looks  good
 		return true;
 	}
@@ -369,42 +365,37 @@ MusicTrack::MusicCallbackReturn SMKMusicTrack::fillData(unsigned int maxSamples,
                                                         unsigned int *returnedSamples)
 {
 	TRACE_FN;
-	unsigned read_samples = 0;
 	char *sample_buffer_position = (char *)sampleBuffer;
-	if (!current_frame)
+	if (!this->current_frame)
 	{
 		LogWarning("Playing beyond end of video");
 		*returnedSamples = 0;
 		return MusicCallbackReturn::End;
 	}
-	LogInfo("Playing frame %u, read samples %u, max %u", this->current_frame->frame, read_samples,
-	        maxSamples);
-	while (this->current_frame && read_samples < maxSamples)
+
+	unsigned int samples_in_this_frame = std::min(
+	    maxSamples, this->current_frame->sample_count - this->current_frame_sample_position);
+
+	unsigned int audio_size_bytes = samples_in_this_frame *
+	                                this->current_frame->format.getSampleSize() *
+	                                this->current_frame->format.channels;
+
+	unsigned int audio_offset_bytes = this->current_frame_sample_position *
+	                                  this->current_frame->format.getSampleSize() *
+	                                  this->current_frame->format.channels;
+
+	memcpy(sampleBuffer, this->current_frame->samples.get() + audio_offset_bytes, audio_size_bytes);
+
+	*returnedSamples = samples_in_this_frame;
+
+	this->current_frame_sample_position += samples_in_this_frame;
+	assert(this->current_frame_sample_position <= this->current_frame->sample_count);
+
+	if (this->current_frame_sample_position == this->current_frame->sample_count)
 	{
-		TraceObj t("SMKMusicTrack::FillData::frame",
-		           {{"Frame", Strings::FromInteger(this->current_frame->frame)}});
-		unsigned int samples_in_this_frame =
-		    std::min(maxSamples - read_samples,
-		             current_frame->sample_count - this->current_frame_sample_position);
-		unsigned int byte_offset =
-		    this->current_frame_sample_position * this->video->audio_bytes_per_sample;
-		unsigned int byte_count = samples_in_this_frame * this->video->audio_bytes_per_sample * this->video->audio_format.channels;
-
-		memcpy(sample_buffer_position, &this->current_frame->samples[byte_offset], byte_count);
-		sample_buffer_position += byte_count;
-
-		read_samples += samples_in_this_frame;
-		this->current_frame_sample_position += samples_in_this_frame;
-
-		if (this->current_frame_sample_position == this->current_frame->sample_count)
-		{
-			this->current_frame_sample_position = 0;
-			this->current_frame = this->video->popAudio();
-		}
+		this->current_frame = video->popAudio();
+		this->current_frame_sample_position = 0;
 	}
-
-	assert(read_samples <= maxSamples);
-	*returnedSamples = read_samples;
 
 	if (this->current_frame)
 	{

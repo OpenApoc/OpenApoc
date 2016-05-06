@@ -27,6 +27,20 @@ class AudioFormat
 		        this->format == other.format);
 	}
 	bool operator!=(const AudioFormat &other) const { return !(*this == other); }
+
+	int getSampleSize() const
+	{
+		switch (format)
+		{
+			case SampleFormat::PCM_SINT16:
+				return 2;
+			case SampleFormat::PCM_UINT8:
+				return 1;
+			default:
+				// Invalid sample format
+				return 0;
+		}
+	}
 };
 
 class BackendSampleData
@@ -41,7 +55,7 @@ class Sample : public ResObject
 	AudioFormat format;
 	unsigned int sampleCount;
 	std::unique_ptr<uint8_t[]> data;
-	std::unique_ptr<BackendSampleData> backendData;
+	sp<BackendSampleData> backendData;
 
 	virtual ~Sample() {}
 };
