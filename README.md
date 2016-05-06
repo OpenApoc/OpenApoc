@@ -30,7 +30,7 @@ Requirements:
 - This assumes that you have the file 'cd.iso' - a copy of the original X-Com Apocalypse CD (This can be got from steam for a pittance http://store.steampowered.com/app/7660/ - this is _required_ to run)
 
 Building on Windows:
-(Tested with Visual Studio 2013 community edition)
+(Tested with Visual Studio 2015 community edition - Visual Studio 2013 is known to fail to build)
 - Checkout OpenApoc from github
 All the required dependencies (SDL2, tinyxml2, physfs, ICU) are packaged as submodules. These submodules are fetched automatically if using the github for windows app, so if you are please skip the next step
 - From a Git command line, run the following to fetch the dependency packages

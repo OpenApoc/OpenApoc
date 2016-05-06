@@ -36,6 +36,7 @@ add_subdirectory(forms)
 add_subdirectory(game/state)
 add_subdirectory(game/ui)
 add_subdirectory(tools)
+add_subdirectory(dependencies)
 
 ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} game/main.cpp ${sources}
 		${FRAMEWORK_SOURCES})

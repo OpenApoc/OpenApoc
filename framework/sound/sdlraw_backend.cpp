@@ -1,202 +1,270 @@
+#include "framework/framework.h"
 #include "framework/logger.h"
 #include "framework/sound_interface.h"
+#include "framework/trace.h"
 #include "library/sp.h"
+#include "library/vec.h"
 #include <SDL.h>
 #include <SDL_audio.h>
-
 #include <list>
+#include <mutex>
+#include <queue>
 
 namespace
 {
-
-SDL_AudioSpec outputFormat;
 
 using namespace OpenApoc;
 
 struct SampleData
 {
-	unsigned char *samplePos;
+	sp<Sample> sample;
 	float gain;
-	SampleData(unsigned char *samplePos, float gain) : samplePos(samplePos), gain(gain) {}
+	int sample_position; // in bytes
+	SampleData(sp<Sample> sample, float gain) : sample(sample), gain(gain), sample_position(0) {}
 };
+
+struct MusicData
+{
+	MusicData() : sample_position(0) {}
+	std::vector<unsigned char> samples;
+	int sample_position; // in bytes
+};
+
+// 'samples' must already be large enough to contain the full output size
+static bool ConvertAudio(AudioFormat input_format, SDL_AudioSpec &output_spec, int input_size_bytes,
+                         std::vector<unsigned char> &samples)
+{
+	SDL_AudioCVT cvt;
+	SDL_AudioFormat sdl_input_format;
+	switch (input_format.format)
+	{
+		case AudioFormat::SampleFormat::PCM_SINT16:
+			sdl_input_format = AUDIO_S16LSB;
+			break;
+		case AudioFormat::SampleFormat::PCM_UINT8:
+			sdl_input_format = AUDIO_U8;
+			break;
+		default:
+			LogWarning("Unknown input sample format");
+			return false;
+	}
+
+	int ret =
+	    SDL_BuildAudioCVT(&cvt, sdl_input_format, input_format.channels, input_format.frequency,
+	                      output_spec.format, output_spec.channels, output_spec.freq);
+	if (ret < 0)
+	{
+		LogWarning("Failed to build AudioCVT");
+		return false;
+	}
+	else if (ret == 0)
+	{
+		// No conversion needed
+		return true;
+	}
+	else
+	{
+		cvt.len = input_size_bytes;
+		cvt.buf = (Uint8 *)samples.data();
+		SDL_ConvertAudio(&cvt);
+		return true;
+	}
+}
 
 class SDLSampleData : public BackendSampleData
 {
   public:
-	std::list<SampleData> playingInfo;
-	unsigned char *sampleStart;
-	int sampleLen;
-	bool isFinished;
-
-	SDL_AudioCVT cvt;
-
-	SDLSampleData(sp<Sample> sample) : sampleStart(0), sampleLen(0), isFinished(false)
+	SDLSampleData(sp<Sample> sample, SDL_AudioSpec &output_spec)
 	{
-		SDL_AudioFormat sdlFormat;
-		int smplSize;
-		switch (sample->format.format)
+		unsigned int input_size =
+		    sample->format.getSampleSize() * sample->format.channels * sample->sampleCount;
+		unsigned int output_size = (SDL_AUDIO_BITSIZE(output_spec.format) / 8) *
+		                           output_spec.channels * sample->sampleCount;
+		this->samples.resize(std::max(input_size, output_size));
+		memcpy(this->samples.data(), sample->data.get(), input_size);
+		if (!ConvertAudio(sample->format, output_spec, input_size, this->samples))
 		{
-			case AudioFormat::SampleFormat::PCM_SINT16:
-				sdlFormat = AUDIO_S16LSB;
-				smplSize = 2;
-				break;
-			case AudioFormat::SampleFormat::PCM_UINT8:
-				sdlFormat = AUDIO_U8;
-				smplSize = 1;
-				break;
-			default:
-				LogWarning("Unknown sample format: %d", sample->format.format);
-				return;
+			LogWarning("Failed to convert sample data");
 		}
-		Uint8 srcChannels = sample->format.channels;
-		SDL_BuildAudioCVT(&cvt, sdlFormat, srcChannels, sample->format.frequency,
-		                  outputFormat.format, outputFormat.channels, outputFormat.freq);
-
-		cvt.len = smplSize * srcChannels * sample->sampleCount;
-
-		cvt.buf = (Uint8 *)SDL_malloc(cvt.len * cvt.len_mult);
-		SDL_memcpy(cvt.buf, sample->data.get(), cvt.len);
-		SDL_ConvertAudio(&cvt);
-		sampleStart = cvt.buf;
-		sampleLen = cvt.len_cvt;
+		this->samples.resize(output_size);
 	}
-
-	virtual ~SDLSampleData() { SDL_free(cvt.buf); }
+	~SDLSampleData() override = default;
+	std::vector<unsigned char> samples;
 };
+
+static void unwrap_callback(void *userdata, Uint8 *stream, int len);
 
 class SDLRawBackend : public SoundBackend
 {
-	AudioFormat preferredFormat;
+	std::recursive_mutex audio_lock;
 
-	struct
-	{
-		float overallVolume;
-		float musicVolume;
-		float soundVolume;
-	} mixVolumes;
+	float overall_volume;
+	float music_volume;
+	float sound_volume;
 
 	sp<MusicTrack> track;
-	sp<Sample> musicSample;
+	bool music_playing;
 
-	std::list<sp<Sample>> sampleQueue;
+	std::function<void(void *)> music_finished_callback;
+	void *music_callback_data;
+
+	std::list<SampleData> live_samples;
+
 	SDL_AudioDeviceID devID;
+	SDL_AudioSpec output_spec;
+	AudioFormat preferred_format;
 
-	std::function<void(void *)> musicFinishedCallback;
-	void *musicCallbackData;
+	sp<MusicData> current_music_data;
+	std::queue<sp<MusicData>> music_queue;
 
-	bool musicPaused;
+	int music_queue_size;
 
-	static void mixingCallback(void *userdata, Uint8 *stream, int len)
+	void get_more_music()
 	{
-		// pass "this" pointer as a user data pointer - might be useful?
-		SDLRawBackend *_this = reinterpret_cast<SDLRawBackend *>(userdata);
-		// initialize stream buffer
-		SDL_memset(stream, 0, len); // FIXME: Calculate silence value for current output format?
-		MusicTrack::MusicCallbackReturn musReturn = MusicTrack::MusicCallbackReturn::Continue;
-
-		// SDL_MixAudioFormat takes a volume integer from 0-128
-		int musicVolume =
-		    lrint(_this->mixVolumes.musicVolume * _this->mixVolumes.overallVolume * 128.0f);
-		// globalSampleVolume needs to be attenuated by the per-sample gain before being scaled to
-		// 0..128
-		float globalSampleVolume = _this->mixVolumes.soundVolume * _this->mixVolumes.overallVolume;
-
-		if (!_this->musicPaused)
+		TRACE_FN;
+		std::lock_guard<std::recursive_mutex> lock(this->audio_lock);
+		if (!this->music_playing)
 		{
-			// mix music first
-			if (!_this->musicSample.get())
-			{
-				int sampleSize;
-				switch (_this->track->format.format)
-				{
-					case AudioFormat::SampleFormat::PCM_SINT16:
-						sampleSize = 2;
-						break;
-					default:
-						LogWarning("Unknown sample format! Treating as UINT8");
-					case AudioFormat::SampleFormat::PCM_UINT8:
-						sampleSize = 1;
-						break;
-				}
-				sampleSize *= _this->track->format.channels;
-				_this->musicSample.reset(new Sample());
-				_this->musicSample->format = _this->track->format;
-				_this->musicSample->sampleCount = _this->track->sampleCount;
-				_this->musicSample->data.reset(
-				    new unsigned char[_this->musicSample->sampleCount * sampleSize]);
-				musReturn = _this->track->callback(_this->track, _this->musicSample->sampleCount,
-				                                   _this->musicSample->data.get(),
-				                                   &(_this->musicSample->sampleCount));
-				_this->musicSample->backendData.reset(new SDLSampleData(_this->musicSample));
-				SDLSampleData *musicData =
-				    static_cast<SDLSampleData *>(_this->musicSample->backendData.get());
-				musicData->playingInfo.push_back(SampleData{musicData->sampleStart, 1.0f});
-			}
-
-			SDLSampleData *musicData =
-			    static_cast<SDLSampleData *>(_this->musicSample->backendData.get());
-			int smplLen = (musicData->sampleStart + musicData->sampleLen) -
-			              musicData->playingInfo.front().samplePos;
-			int musLen = std::min(len, smplLen);
-
-			SDL_MixAudioFormat(stream, (Uint8 *)musicData->playingInfo.front().samplePos,
-			                   musicData->cvt.dst_format, musLen, musicVolume);
-			musicData->playingInfo.front().samplePos += musLen;
-
-			if (musicData->playingInfo.front().samplePos ==
-			    (musicData->sampleStart + musicData->sampleLen))
-			{
-				if (musReturn == MusicTrack::MusicCallbackReturn::End)
-				{
-					_this->musicFinishedCallback(_this->musicCallbackData);
-				}
-				_this->musicSample.reset();
-			}
+			// Music probably disabled in the time it took us to be scheduled?
+			return;
 		}
-
-		// mix pending samples
-		auto sndIt = _this->sampleQueue.begin();
-		while (sndIt != _this->sampleQueue.end())
+		if (!this->track)
 		{
-			SDLSampleData *smplData = static_cast<SDLSampleData *>((*sndIt)->backendData.get());
-			auto smplIt = smplData->playingInfo.begin();
-			while (smplIt != smplData->playingInfo.end())
+			LogWarning("Music playing but no track?");
+			return;
+		}
+		while (this->music_queue.size() < this->music_queue_size)
+		{
+			auto data = mksp<MusicData>();
+
+			unsigned int input_size = this->track->format.getSampleSize() *
+			                          this->track->format.channels *
+			                          this->track->requestedSampleBufferSize;
+			unsigned int output_size = (SDL_AUDIO_BITSIZE(this->output_spec.format) / 8) *
+			                           this->output_spec.channels *
+			                           this->track->requestedSampleBufferSize;
+
+			data->samples.resize(std::max(input_size, output_size));
+
+			unsigned int returned_samples;
+
+			auto ret = this->track->callback(this->track, this->track->requestedSampleBufferSize,
+			                                 (void *)data->samples.data(), &returned_samples);
+
+			// Reset the sizes, as we may have fewer returned_samples than asked for
+			input_size = this->track->format.getSampleSize() * this->track->format.channels *
+			             returned_samples;
+			output_size = (SDL_AUDIO_BITSIZE(this->output_spec.format) / 8) *
+			              this->output_spec.channels * returned_samples;
+
+			bool convert_ret =
+			    ConvertAudio(this->track->format, this->output_spec, input_size, data->samples);
+			if (!convert_ret)
 			{
-				int smplLen = (smplData->sampleStart + smplData->sampleLen) -
-				              smplIt->samplePos; // Remaining length of sample
-				int mixLen = std::min(len, smplLen);
-				int sampleVolume = lrint(globalSampleVolume * smplIt->gain * 128.0f);
-				SDL_MixAudioFormat(stream, (Uint8 *)smplIt->samplePos, smplData->cvt.dst_format,
-				                   mixLen, sampleVolume);
-				smplIt->samplePos += mixLen;
-				if (smplIt->samplePos == (smplData->sampleStart + smplData->sampleLen))
-				{
-					smplIt = smplData->playingInfo.erase(smplIt);
-				}
-				else
-				{
-					++smplIt;
-				}
+				LogWarning("Failed to convert music data");
 			}
 
-			if (smplData->playingInfo.size() == 0) // Remove played sound
+			data->samples.resize(output_size);
+
+			if (ret == MusicTrack::MusicCallbackReturn::End)
 			{
-				sndIt = _this->sampleQueue.erase(sndIt);
+				this->track = nullptr;
+				if (this->music_finished_callback)
+				{
+					this->music_finished_callback(music_callback_data);
+				}
 			}
-			else
-			{
-				++sndIt;
-			}
+			this->music_queue.push(data);
 		}
 	}
 
   public:
-	SDLRawBackend() : musicPaused(true)
+	void mixingCallback(Uint8 *stream, int len)
+	{
+		TRACE_FN;
+		// initialize stream buffer
+		memset(stream, 0, len);
+		std::lock_guard<std::recursive_mutex> lock(this->audio_lock);
+
+		if (this->current_music_data || !this->music_queue.empty())
+		{
+			int int_music_volume =
+			    clamp(0, 128, (int)lrint(this->overall_volume * this->music_volume * 128.0f));
+			int music_bytes = 0;
+			while (music_bytes < len)
+			{
+				if (!this->current_music_data)
+				{
+					fw().threadPool->enqueue(std::mem_fn(&SDLRawBackend::get_more_music), this);
+					if (this->music_queue.empty())
+					{
+						LogWarning("Music underrun!");
+						break;
+					}
+					this->current_music_data = this->music_queue.front();
+					this->music_queue.pop();
+				}
+				int bytes_from_this_chunk =
+				    std::min(len - music_bytes, (int)(this->current_music_data->samples.size() -
+				                                      this->current_music_data->sample_position));
+				SDL_MixAudioFormat(
+				    stream + music_bytes, this->current_music_data->samples.data() +
+				                              this->current_music_data->sample_position,
+				    this->output_spec.format, bytes_from_this_chunk, int_music_volume);
+				music_bytes += bytes_from_this_chunk;
+				this->current_music_data->sample_position += bytes_from_this_chunk;
+				assert(this->current_music_data->sample_position <=
+				       this->current_music_data->samples.size());
+				if (this->current_music_data->sample_position ==
+				    this->current_music_data->samples.size())
+				{
+					this->current_music_data = nullptr;
+				}
+			}
+		}
+
+		auto sampleIt = this->live_samples.begin();
+		while (sampleIt != this->live_samples.end())
+		{
+			int int_sample_volume =
+			    clamp(0, 128, (int)lrint(this->overall_volume * this->sound_volume *
+			                             sampleIt->gain * 128.0f));
+			auto sampleData =
+			    std::dynamic_pointer_cast<SDLSampleData>(sampleIt->sample->backendData);
+			if (!sampleData)
+			{
+				LogWarning("Sample with invalid sample data");
+				// Clear it in case we've changed drivers or something
+				sampleIt->sample->backendData = nullptr;
+				sampleIt = this->live_samples.erase(sampleIt);
+				continue;
+			}
+			if (sampleIt->sample_position == sampleData->samples.size())
+			{
+				// Reached the end of the sample
+				sampleIt = this->live_samples.erase(sampleIt);
+				continue;
+			}
+
+			unsigned bytes_to_mix =
+			    std::min(len, (int)(sampleData->samples.size() - sampleIt->sample_position));
+			SDL_MixAudioFormat(stream, sampleData->samples.data() + sampleIt->sample_position,
+			                   this->output_spec.format, bytes_to_mix, int_sample_volume);
+			sampleIt->sample_position += bytes_to_mix;
+			assert(sampleIt->sample_position <= sampleData->samples.size());
+
+			sampleIt++;
+		}
+	}
+
+	SDLRawBackend()
+	    : overall_volume(1.0f), music_volume(1.0f), sound_volume(1.0f),
+	      music_callback_data(nullptr), music_playing(false), music_queue_size(2)
 	{
 		SDL_Init(SDL_INIT_AUDIO);
-		preferredFormat.channels = 2;
-		preferredFormat.format = AudioFormat::SampleFormat::PCM_SINT16;
-		preferredFormat.frequency = 22050;
+		preferred_format.channels = 2;
+		preferred_format.format = AudioFormat::SampleFormat::PCM_SINT16;
+		preferred_format.frequency = 22050;
 		LogInfo("Current audio driver: %s", SDL_GetCurrentAudioDriver());
 		LogWarning("Changing audio drivers is not currently implemented!");
 		int numDevices = SDL_GetNumAudioDevices(0); // Request playback devices only
@@ -213,52 +281,63 @@ class SDLRawBackend : public SoundBackend
 		wantFormat.format = AUDIO_S16LSB;
 		wantFormat.freq = 22050;
 		wantFormat.samples = 512;
-		wantFormat.callback = mixingCallback;
+		wantFormat.callback = unwrap_callback;
 		wantFormat.userdata = this;
 		devID = SDL_OpenAudioDevice(
 		    nullptr, // "NULL" here is a 'reasonable default', which uses the platform default when
 		             // available
 		    0,       // capturing is not supported
-		    &wantFormat, &outputFormat,
+		    &wantFormat, &output_spec,
 		    SDL_AUDIO_ALLOW_ANY_CHANGE); // hopefully we'll get a sane output format
-		mixVolumes.musicVolume = 1.0f;
-		mixVolumes.soundVolume = 1.0f;
-		mixVolumes.overallVolume = 1.0f;
-		SDL_PauseAudioDevice(devID, 0); // Run at once?
+		SDL_PauseAudioDevice(devID, 0);  // Run at once?
+		LogInfo("Audio output format: Channels %d, format %d, freq %d, samples %d",
+		        (int)output_spec.channels, (int)output_spec.format, (int)output_spec.freq,
+		        (int)output_spec.samples);
 	}
 	void playSample(sp<Sample> sample, float gain) override
 	{
 		// Clamp to 0..1
 		gain = std::min(1.0f, std::max(0.0f, gain));
-		SDL_LockAudioDevice(devID);
 		if (!sample->backendData)
 		{
-			sample->backendData.reset(new SDLSampleData(sample));
+			sample->backendData.reset(new SDLSampleData(sample, this->output_spec));
 		}
-		SDLSampleData *data = static_cast<SDLSampleData *>(sample->backendData.get());
-		data->playingInfo.push_back(SampleData{data->sampleStart, gain});
-		sampleQueue.push_back(sample);
+		{
+			std::lock_guard<std::recursive_mutex> l(this->audio_lock);
+			this->live_samples.emplace_back(sample, gain);
+		}
 		LogInfo("Placed sound %p on queue", sample.get());
-		SDL_UnlockAudioDevice(devID);
 	}
 
 	void playMusic(std::function<void(void *)> finishedCallback, void *callbackData) override
 	{
-		musicFinishedCallback = finishedCallback;
-		musicCallbackData = callbackData;
-		musicPaused = false;
+		std::lock_guard<std::recursive_mutex> l(this->audio_lock);
+		while (!music_queue.empty())
+			music_queue.pop();
+		music_finished_callback = finishedCallback;
+		music_callback_data = callbackData;
+		music_playing = true;
+		fw().threadPool->enqueue(std::mem_fn(&SDLRawBackend::get_more_music), this);
 		LogInfo("Playing music on SDL backend");
 	}
 
 	void setTrack(sp<MusicTrack> track) override
 	{
-		SDL_LockAudioDevice(devID);
+		std::lock_guard<std::recursive_mutex> l(this->audio_lock);
 		LogInfo("Setting track to %p", track.get());
 		this->track = track;
-		SDL_UnlockAudioDevice(devID);
+		while (!music_queue.empty())
+			music_queue.pop();
 	}
 
-	void stopMusic() override { musicPaused = true; }
+	void stopMusic() override
+	{
+		std::lock_guard<std::recursive_mutex> l(this->audio_lock);
+		this->music_playing = false;
+		this->track = nullptr;
+		while (!music_queue.empty())
+			music_queue.pop();
+	}
 
 	virtual ~SDLRawBackend()
 	{
@@ -267,7 +346,7 @@ class SDLRawBackend : public SoundBackend
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
 	}
 
-	virtual const AudioFormat &getPreferredFormat() { return preferredFormat; }
+	virtual const AudioFormat &getPreferredFormat() { return preferred_format; }
 
 	float getGain(Gain g) override
 	{
@@ -275,13 +354,13 @@ class SDLRawBackend : public SoundBackend
 		switch (g)
 		{
 			case Gain::Global:
-				reqGain = mixVolumes.overallVolume;
+				reqGain = overall_volume;
 				break;
 			case Gain::Sample:
-				reqGain = mixVolumes.soundVolume;
+				reqGain = sound_volume;
 				break;
 			case Gain::Music:
-				reqGain = mixVolumes.musicVolume;
+				reqGain = music_volume;
 				break;
 		}
 		return reqGain;
@@ -293,17 +372,23 @@ class SDLRawBackend : public SoundBackend
 		switch (g)
 		{
 			case Gain::Global:
-				mixVolumes.overallVolume = f;
+				overall_volume = f;
 				break;
 			case Gain::Sample:
-				mixVolumes.soundVolume = f;
+				sound_volume = f;
 				break;
 			case Gain::Music:
-				mixVolumes.musicVolume = f;
+				music_volume = f;
 				break;
 		}
 	}
 };
+
+void unwrap_callback(void *userdata, Uint8 *stream, int len)
+{
+	auto backend = reinterpret_cast<SDLRawBackend *>(userdata);
+	backend->mixingCallback(stream, len);
+}
 
 class SDLRawBackendFactory : public SoundBackendFactory
 {

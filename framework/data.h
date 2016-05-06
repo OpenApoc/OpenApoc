@@ -21,6 +21,7 @@ class ImageWriter;
 class VoxelSlice;
 class LOFTemps;
 class ResourceAliases;
+class Video;
 
 class ImageLoaderFactory;
 class ImageWriterFactory;
@@ -82,6 +83,7 @@ class Data
 	sp<ImageSet> load_image_set(const UString &path);
 	sp<Palette> load_palette(const UString &path);
 	sp<VoxelSlice> load_voxel_slice(const UString &path);
+	sp<Video> load_video(const UString &path);
 
 	sp<PaletteImage> get_font_string_cache_entry(const UString &font_name, const UString &text);
 	void put_font_string_cache_entry(const UString &font_name, const UString &text,
