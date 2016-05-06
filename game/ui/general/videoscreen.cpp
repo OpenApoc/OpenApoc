@@ -24,7 +24,14 @@ VideoScreen::VideoScreen(const UString &videoPath, std::future<void> task,
 		}
 		else
 		{
-			this->frame_size = this->video->getVideoSize();
+			// Scale keeping aspect ratio to the max of the screen size
+			Vec2<float> unscaled_frame_size = this->video->getVideoSize();
+			Vec2<float> display_size = fw().Display_GetSize();
+			Vec2<float> scale_factors = display_size / unscaled_frame_size;
+			float scale = std::min(scale_factors.x, scale_factors.y);
+			this->frame_size = unscaled_frame_size * scale;
+			LogInfo("Scaling video from {%d,%d} to {%d,%d}", this->video->getVideoSize().x,
+			        this->video->getVideoSize().y, this->frame_size.x, this->frame_size.y);
 			this->frame_position = (fw().Display_GetSize() / 2) - (this->frame_size / 2);
 		}
 	}
