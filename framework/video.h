@@ -40,6 +40,7 @@ class Video
 	virtual sp<FrameAudio> popAudio() = 0;
 	virtual ~Video() = default;
 	virtual void stop() = 0;
+	virtual sp<MusicTrack> getMusicTrack() = 0;
 };
 
 sp<Video> loadSMKVideo(IFile &file);

@@ -46,6 +46,9 @@ void VideoScreen::Begin()
 	loadingimageangle = 0;
 	last_frame_time = std::chrono::high_resolution_clock::now();
 	this->current_frame = this->video->popImage();
+
+	fw().soundBackend->setTrack(video->getMusicTrack());
+	fw().soundBackend->playMusic([](void *) {}, nullptr);
 }
 
 void VideoScreen::Pause() {}

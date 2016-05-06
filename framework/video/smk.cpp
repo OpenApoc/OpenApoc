@@ -5,6 +5,8 @@
 #include "framework/sound.h"
 #include "framework/trace.h"
 #include "framework/video.h"
+#include <mutex>
+#include <queue>
 
 // libsmacker.h doesn't set C abi by default, so wrap
 extern "C" {
@@ -14,13 +16,35 @@ extern "C" {
 namespace OpenApoc
 {
 
-class SMKVideo : public Video
+class SMKVideo;
+MusicTrack::MusicCallbackReturn fillSMKMusicData(sp<MusicTrack> thisTrack, unsigned int maxSamples,
+                                                 void *sampleBuffer, unsigned int *returnedSamples);
+
+class SMKMusicTrack : public MusicTrack
+{
+  private:
+	sp<SMKVideo> video;
+	sp<FrameAudio> current_frame;
+	unsigned current_frame_sample_position;
+
+  public:
+	SMKMusicTrack(sp<SMKVideo> video);
+	const UString &getName() const override;
+	MusicCallbackReturn fillData(unsigned int maxSamples, void *sampleBuffer,
+	                             unsigned int *returnedSamples);
+};
+
+class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 {
   public:
 	smk smk_ctx;
 	std::chrono::duration<unsigned int, std::nano> frame_time;
 	unsigned long frame_count;
-	unsigned int current_frame;
+	unsigned int current_frame_video;
+	unsigned int current_frame_audio;
+
+	unsigned current_frame_read;
+
 	Vec2<int> frame_size;
 
 	size_t video_data_size;
@@ -28,9 +52,20 @@ class SMKVideo : public Video
 
 	bool stopped;
 
+	std::recursive_mutex frame_queue_lock;
+	std::queue<sp<FrameImage>> image_queue;
+	std::queue<sp<FrameAudio>> audio_queue;
+
+	AudioFormat audio_format;
+	unsigned audio_bytes_per_sample;
+	UString file_path;
+
+	wp<SMKMusicTrack> music_track;
+
 	SMKVideo()
-	    : smk_ctx(nullptr), frame_time(0), frame_count(0), current_frame(0), frame_size(0, 0),
-	      video_data_size(0), stopped(false)
+	    : smk_ctx(nullptr), frame_time(0), frame_count(0), current_frame_video(0),
+	      current_frame_audio(0), current_frame_read(0), frame_size(0, 0), video_data_size(0),
+	      stopped(false)
 	{
 	}
 
@@ -43,41 +78,78 @@ class SMKVideo : public Video
 
 	sp<FrameImage> popImage() override
 	{
+		TRACE_FN_ARGS1("Frame", Strings::FromInteger(this->current_frame_video));
+		std::lock_guard<std::recursive_mutex> l(this->frame_queue_lock);
+		if (this->image_queue.empty())
+		{
+			if (this->readNextFrame() == false)
+			{
+				return nullptr;
+			}
+		}
+		auto frame = this->image_queue.front();
+		this->image_queue.pop();
+		this->current_frame_video++;
+		return frame;
+	}
+
+	sp<FrameAudio> popAudio() override
+	{
+		TRACE_FN_ARGS1("Frame", Strings::FromInteger(this->current_frame_audio));
+		std::lock_guard<std::recursive_mutex> l(this->frame_queue_lock);
+		if (this->audio_queue.empty())
+		{
+			if (this->readNextFrame() == false)
+			{
+				return nullptr;
+			}
+		}
+		auto frame = this->audio_queue.front();
+		this->audio_queue.pop();
+		this->current_frame_audio++;
+		return frame;
+	}
+
+	bool readNextFrame()
+	{
 		TRACE_FN;
-		char ret;
+		std::lock_guard<std::recursive_mutex> l(this->frame_queue_lock);
 		if (this->stopped)
-			return nullptr;
-		if (this->current_frame == 0)
+			return false;
+
+		char ret;
+		if (this->current_frame_read == 0)
 			ret = smk_first(this->smk_ctx);
 		else
 			ret = smk_next(this->smk_ctx);
 
 		if (ret == SMK_ERROR)
 		{
-			LogWarning("Error decoding frame %u", this->current_frame);
-			return nullptr;
+			LogWarning("Error decoding frame %u", this->current_frame_read);
+			return false;
 		}
 
 		if (ret == SMK_LAST)
 		{
-			LogInfo("Last frame %u", this->current_frame);
+			LogInfo("Last frame %u", this->current_frame_read);
 			this->stopped = true;
 		}
 
 		unsigned char *palette_data = smk_get_palette(this->smk_ctx);
 		if (!palette_data)
 		{
-			LogWarning("Failed to get palette data for frame %u", this->current_frame);
-			return nullptr;
+			LogWarning("Failed to get palette data for frame %u", this->current_frame_read);
+			return false;
 		}
 		unsigned char *image_data = smk_get_video(this->smk_ctx);
 		if (!image_data)
 		{
-			LogWarning("Failed to get image data for frame %u", this->current_frame);
-			return nullptr;
+			LogWarning("Failed to get image data for frame %u", this->current_frame_read);
+			return false;
 		}
 
 		auto frame = mksp<FrameImage>();
+		frame->frame = this->current_frame_read;
 
 		auto img = mksp<PaletteImage>(this->frame_size);
 		frame->image = img;
@@ -94,12 +166,38 @@ class SMKVideo : public Video
 			frame->palette->SetColour(i, {red, green, blue});
 		}
 
-		LogInfo("Popping frame %u", this->current_frame);
-		this->current_frame++;
-		return frame;
+		auto audio_frame = mksp<FrameAudio>();
+		audio_frame->frame = current_frame_read;
+		audio_frame->format = this->audio_format;
+		unsigned long audio_bytes = smk_get_audio_size(this->smk_ctx, 0);
+		if (audio_bytes == 0)
+		{
+			LogWarning("Error reading audio size for frame %u", this->current_frame_read);
+			return false;
+		}
+
+		auto sample_count =
+		    audio_bytes / (this->audio_bytes_per_sample * this->audio_format.channels);
+		audio_frame->samples.reset(new char[audio_bytes]);
+		audio_frame->sample_count = sample_count;
+		auto sample_pointer = smk_get_audio(this->smk_ctx, 0);
+		if (!sample_pointer)
+		{
+			LogWarning("Error reading audio data for frame %u", this->current_frame_read);
+			return false;
+		}
+		memcpy(audio_frame->samples.get(), sample_pointer, audio_bytes);
+
+		LogInfo("Read %lu samples bytes, %u samples", audio_bytes, audio_frame->sample_count);
+
+		this->image_queue.push(frame);
+		this->audio_queue.push(audio_frame);
+
+		LogInfo("read frame %u", this->current_frame_read);
+		this->current_frame_read++;
+		return true;
 	}
-	// FIXME: implement audio
-	sp<FrameAudio> popAudio() override { return nullptr; }
+
 	void stop() override { this->stopped = true; }
 
 	bool load(IFile &file)
@@ -109,7 +207,8 @@ class SMKVideo : public Video
 		this->video_data = file.readAll();
 		this->video_data_size = file.size();
 
-		auto videoPath = file.systemPath();
+		auto video_path = file.systemPath();
+		this->file_path = video_path;
 
 		LogInfo("Read %llu bytes from video",
 		        static_cast<unsigned long long>(this->video_data_size));
@@ -118,7 +217,7 @@ class SMKVideo : public Video
 		                                static_cast<unsigned long>(this->video_data_size));
 		if (!this->smk_ctx)
 		{
-			LogWarning("Failed to read SMK file \"%s\"", videoPath.c_str());
+			LogWarning("Failed to read SMK file \"%s\"", video_path.c_str());
 			this->video_data.reset();
 			return false;
 		}
@@ -127,7 +226,7 @@ class SMKVideo : public Video
 
 		if (smk_info_all(this->smk_ctx, nullptr, &this->frame_count, &usf))
 		{
-			LogWarning("Failed to read SMK file info from \"%s\"", videoPath.c_str());
+			LogWarning("Failed to read SMK file info from \"%s\"", video_path.c_str());
 			this->video_data.reset();
 			smk_close(this->smk_ctx);
 			this->smk_ctx = nullptr;
@@ -142,7 +241,7 @@ class SMKVideo : public Video
 		unsigned long height, width;
 		if (smk_info_video(this->smk_ctx, &width, &height, nullptr))
 		{
-			LogWarning("Failed to read SMK video info from \"%s\"", videoPath.c_str());
+			LogWarning("Failed to read SMK video info from \"%s\"", video_path.c_str());
 			this->video_data.reset();
 			smk_close(this->smk_ctx);
 			this->smk_ctx = nullptr;
@@ -155,12 +254,91 @@ class SMKVideo : public Video
 		auto ret = smk_enable_video(this->smk_ctx, 1);
 		if (ret == SMK_ERROR)
 		{
-			LogWarning("Error enabling video for \"%s\"", videoPath.c_str());
+			LogWarning("Error enabling video for \"%s\"", video_path.c_str());
 			return false;
 		}
 
+		unsigned char audio_track_mask;
+		unsigned char channels[7];
+		unsigned char bitdepth[7];
+		unsigned long audio_rate[7];
+
+		ret = smk_info_audio(this->smk_ctx, &audio_track_mask, channels, bitdepth, audio_rate);
+		if (ret == SMK_ERROR)
+		{
+			LogWarning("Error reading audio info for \"%s\"", video_path.c_str());
+			return false;
+		}
+
+		if (audio_track_mask & SMK_AUDIO_TRACK_0)
+		{
+			// WE only support a single track
+			LogWarning("Audio track: channels %u depth %u rate %lu", (unsigned)channels[0],
+			           (unsigned)bitdepth[0], audio_rate[0]);
+		}
+		else
+		{
+			LogWarning("Unsupported audio track mask 0x%02x for \"%s\"", (unsigned)audio_track_mask,
+			           video_path.c_str());
+			return false;
+		}
+		switch (channels[0])
+		{
+			case 1:
+				// Mono
+				this->audio_format.channels = 1;
+				break;
+
+			case 2:
+				// Stereo
+				this->audio_format.channels = 2;
+				break;
+			default:
+				LogWarning("Unsupported audio channel count %u for \"%s\"", (unsigned)channels[0],
+				           video_path.c_str());
+				return false;
+		}
+		switch (bitdepth[0])
+		{
+			case 8:
+				this->audio_format.format = AudioFormat::SampleFormat::PCM_UINT8;
+				this->audio_bytes_per_sample = 1;
+				break;
+			case 16:
+				this->audio_format.format = AudioFormat::SampleFormat::PCM_SINT16;
+				this->audio_bytes_per_sample = 2;
+				break;
+			default:
+				LogWarning("Unsupported audio bit depth %u for \"%s\"", (unsigned)bitdepth[0],
+				           video_path.c_str());
+				return false;
+		}
+		this->audio_format.frequency = audio_rate[0];
+
+		ret = smk_enable_audio(this->smk_ctx, 0, 1);
+
+		if (ret == SMK_ERROR)
+		{
+			LogWarning("Error enabling audio track 0 for \"%s\"", video_path.c_str());
+		}
+
+		// FIXME: For some reason the first audio frame has a different size and causes everything
+		// to get screwed up?
+		this->popAudio();
+
 		// Everything looks  good
 		return true;
+	}
+
+	sp<MusicTrack> getMusicTrack() override
+	{
+		auto ptr = this->music_track.lock();
+		if (!ptr)
+		{
+			ptr = mksp<SMKMusicTrack>(shared_from_this());
+			this->music_track = ptr;
+		}
+		return ptr;
 	}
 
 	~SMKVideo() override
@@ -170,6 +348,73 @@ class SMKVideo : public Video
 	}
 };
 
+MusicTrack::MusicCallbackReturn fillSMKMusicData(sp<MusicTrack> thisTrack, unsigned int maxSamples,
+                                                 void *sampleBuffer, unsigned int *returnedSamples)
+{
+	auto track = std::dynamic_pointer_cast<SMKMusicTrack>(thisTrack);
+	assert(track);
+	return track->fillData(maxSamples, sampleBuffer, returnedSamples);
+}
+SMKMusicTrack::SMKMusicTrack(sp<SMKVideo> video)
+    : video(video), current_frame(video->popAudio()), current_frame_sample_position(0)
+{
+	this->format = video->audio_format;
+	this->requestedSampleBufferSize = this->format.frequency / 10;
+	this->callback = fillSMKMusicData;
+}
+
+const UString &SMKMusicTrack::getName() const { return this->video->file_path; }
+
+MusicTrack::MusicCallbackReturn SMKMusicTrack::fillData(unsigned int maxSamples, void *sampleBuffer,
+                                                        unsigned int *returnedSamples)
+{
+	TRACE_FN;
+	unsigned read_samples = 0;
+	char *sample_buffer_position = (char *)sampleBuffer;
+	if (!current_frame)
+	{
+		LogWarning("Playing beyond end of video");
+		*returnedSamples = 0;
+		return MusicCallbackReturn::End;
+	}
+	LogInfo("Playing frame %u, read samples %u, max %u", this->current_frame->frame, read_samples,
+	        maxSamples);
+	while (this->current_frame && read_samples < maxSamples)
+	{
+		TraceObj t("SMKMusicTrack::FillData::frame",
+		           {{"Frame", Strings::FromInteger(this->current_frame->frame)}});
+		unsigned int samples_in_this_frame =
+		    std::min(maxSamples - read_samples,
+		             current_frame->sample_count - this->current_frame_sample_position);
+		unsigned int byte_offset =
+		    this->current_frame_sample_position * this->video->audio_bytes_per_sample;
+		unsigned int byte_count = samples_in_this_frame * this->video->audio_bytes_per_sample * this->video->audio_format.channels;
+
+		memcpy(sample_buffer_position, &this->current_frame->samples[byte_offset], byte_count);
+		sample_buffer_position += byte_count;
+
+		read_samples += samples_in_this_frame;
+		this->current_frame_sample_position += samples_in_this_frame;
+
+		if (this->current_frame_sample_position == this->current_frame->sample_count)
+		{
+			this->current_frame_sample_position = 0;
+			this->current_frame = this->video->popAudio();
+		}
+	}
+
+	assert(read_samples <= maxSamples);
+	*returnedSamples = read_samples;
+
+	if (this->current_frame)
+	{
+		return MusicCallbackReturn::Continue;
+	}
+	else
+	{
+		return MusicCallbackReturn::End;
+	}
+}
 sp<Video> loadSMKVideo(IFile &file)
 {
 	auto vid = mksp<SMKVideo>();

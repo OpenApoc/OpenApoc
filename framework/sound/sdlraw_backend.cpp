@@ -1,5 +1,6 @@
 #include "framework/logger.h"
 #include "framework/sound_interface.h"
+#include "framework/tracing.h"
 #include "library/sp.h"
 #include <SDL.h>
 #include <SDL_audio.h>
@@ -88,6 +89,7 @@ class SDLRawBackend : public SoundBackend
 
 	static void mixingCallback(void *userdata, Uint8 *stream, int len)
 	{
+		TRACE_FN;
 		// pass "this" pointer as a user data pointer - might be useful?
 		SDLRawBackend *_this = reinterpret_cast<SDLRawBackend *>(userdata);
 		// initialize stream buffer
@@ -121,7 +123,7 @@ class SDLRawBackend : public SoundBackend
 				sampleSize *= _this->track->format.channels;
 				_this->musicSample.reset(new Sample());
 				_this->musicSample->format = _this->track->format;
-				_this->musicSample->sampleCount = _this->track->sampleCount;
+				_this->musicSample->sampleCount = _this->track->requestedSampleBufferSize;
 				_this->musicSample->data.reset(
 				    new unsigned char[_this->musicSample->sampleCount * sampleSize]);
 				musReturn = _this->track->callback(_this->track, _this->musicSample->sampleCount,
