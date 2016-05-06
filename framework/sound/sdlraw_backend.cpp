@@ -117,6 +117,8 @@ class SDLRawBackend : public SoundBackend
 	sp<MusicData> current_music_data;
 	std::queue<sp<MusicData>> music_queue;
 
+	std::future<void> get_music_future;
+
 	int music_queue_size;
 
 	void get_more_music()
@@ -195,7 +197,8 @@ class SDLRawBackend : public SoundBackend
 			{
 				if (!this->current_music_data)
 				{
-					fw().threadPool->enqueue(std::mem_fn(&SDLRawBackend::get_more_music), this);
+					this->get_music_future =
+					    fw().threadPool->enqueue(std::mem_fn(&SDLRawBackend::get_more_music), this);
 					if (this->music_queue.empty())
 					{
 						LogWarning("Music underrun!");
@@ -317,7 +320,8 @@ class SDLRawBackend : public SoundBackend
 		music_finished_callback = finishedCallback;
 		music_callback_data = callbackData;
 		music_playing = true;
-		fw().threadPool->enqueue(std::mem_fn(&SDLRawBackend::get_more_music), this);
+		this->get_music_future =
+		    fw().threadPool->enqueue(std::mem_fn(&SDLRawBackend::get_more_music), this);
 		LogInfo("Playing music on SDL backend");
 	}
 
@@ -332,16 +336,28 @@ class SDLRawBackend : public SoundBackend
 
 	void stopMusic() override
 	{
-		std::lock_guard<std::recursive_mutex> l(this->audio_lock);
-		this->music_playing = false;
-		this->track = nullptr;
-		while (!music_queue.empty())
-			music_queue.pop();
+		std::future<void> outstanding_get_music;
+		{
+			std::lock_guard<std::recursive_mutex> l(this->audio_lock);
+			this->music_playing = false;
+			this->track = nullptr;
+			if (this->get_music_future.valid())
+				outstanding_get_music = std::move(this->get_music_future);
+			while (!music_queue.empty())
+				music_queue.pop();
+		}
+		if (outstanding_get_music.valid())
+			outstanding_get_music.wait();
 	}
 
 	virtual ~SDLRawBackend()
 	{
+		// Lock the device and stop any outstanding music threads to ensure everything is dead
+		// before destroying the device
+		SDL_LockAudioDevice(devID);
+		SDL_PauseAudioDevice(devID, 1);
 		this->stopMusic();
+		SDL_UnlockAudioDevice(devID);
 		SDL_CloseAudioDevice(devID);
 		SDL_QuitSubSystem(SDL_INIT_AUDIO);
 	}
