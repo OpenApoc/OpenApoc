@@ -59,7 +59,8 @@ void VideoScreen::Finish() {}
 
 void VideoScreen::EventOccurred(Event *e)
 {
-	if (e->Type() == EVENT_KEY_DOWN && e->Keyboard().KeyCode == SDLK_ESCAPE)
+	if ((e->Type() == EVENT_KEY_DOWN && e->Keyboard().KeyCode == SDLK_ESCAPE) ||
+	    (e->Type() == EVENT_MOUSE_DOWN || e->Type() == EVENT_FINGER_DOWN))
 	{
 		// Magically skip the rest of the video
 		if (this->video)
