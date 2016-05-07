@@ -660,7 +660,7 @@ sp<PaletteImage> Data::get_font_string_cache_entry(const UString &font_name, con
 	}
 	if (string == "")
 	{
-		LogWarning("Empty string");
+		// LogWarning("Empty string");
 		return nullptr;
 	}
 	auto img = this->fontStringCache[font_name][string].lock();
@@ -678,7 +678,7 @@ void Data::put_font_string_cache_entry(const UString &font_name, const UString &
 	}
 	if (string == "")
 	{
-		LogWarning("Empty string");
+		// LogWarning("Empty string");
 		return;
 	}
 	this->fontStringCache[font_name][string] = img;
