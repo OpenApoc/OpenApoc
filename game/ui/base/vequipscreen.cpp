@@ -45,6 +45,7 @@ VEquipScreen::~VEquipScreen() {}
 
 void VEquipScreen::Begin()
 {
+	form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
 
 	auto list = form->FindControlTyped<ListBox>("VEHICLE_SELECT_BOX");
 	for (auto &v : state->vehicles)
