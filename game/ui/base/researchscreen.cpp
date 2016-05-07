@@ -9,9 +9,8 @@
 namespace OpenApoc
 {
 
-ResearchScreen::ResearchScreen(sp<GameState> state, StateRef<Base> base, sp<Facility> selected_lab)
-    : Stage(), form(ui().GetForm("FORM_RESEARCHSCREEN")), base(base), selected_lab(selected_lab),
-      state(state)
+ResearchScreen::ResearchScreen(sp<GameState> state, sp<Facility> selected_lab)
+    : Stage(), form(ui().GetForm("FORM_RESEARCHSCREEN")), selected_lab(selected_lab), state(state)
 {
 }
 
@@ -21,7 +20,7 @@ void ResearchScreen::Begin()
 {
 	form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
 
-	for (auto &facility : this->base->facilities)
+	for (auto &facility : this->state->current_base->facilities)
 	{
 		if (facility->type->capacityType == FacilityType::Capacity::Chemistry ||
 		    facility->type->capacityType == FacilityType::Capacity::Physics ||
@@ -141,8 +140,7 @@ void ResearchScreen::EventOccurred(Event *e)
 					return;
 				}
 				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage =
-				    mksp<ResearchSelect>(this->state, this->base, this->selected_lab->lab);
+				stageCmd.nextStage = mksp<ResearchSelect>(this->state, this->selected_lab->lab);
 				return;
 			}
 			else if (e->Forms().RaisedBy->Name == "BUTTON_RESEARCH_CANCELPROJECT")
@@ -235,7 +233,7 @@ void ResearchScreen::setCurrentLabInfo()
 	for (auto &agent : state->agents)
 	{
 		bool assigned_to_current_lab = false;
-		if (agent.second->home_base != this->base)
+		if (agent.second->home_base != this->state->current_base)
 			continue;
 
 		if (agent.second->type != listedAgentType)

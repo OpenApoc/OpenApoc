@@ -21,7 +21,6 @@ class ResearchScreen : public Stage
   private:
 	sp<Form> form;
 	StageCmd stageCmd;
-	StateRef<Base> base;
 	sp<Facility> selected_lab;
 	StateRef<ResearchTopic> current_topic;
 	std::list<sp<Facility>> labs;
@@ -36,7 +35,7 @@ class ResearchScreen : public Stage
 	int assigned_agent_count;
 
   public:
-	ResearchScreen(sp<GameState> state, StateRef<Base> base, sp<Facility> selected_lab = nullptr);
+	ResearchScreen(sp<GameState> state, sp<Facility> selected_lab = nullptr);
 	~ResearchScreen();
 	// Stage control
 	void Begin() override;

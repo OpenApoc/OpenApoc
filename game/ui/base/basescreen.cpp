@@ -15,9 +15,9 @@ namespace OpenApoc
 
 const Vec2<int> BaseScreen::NO_SELECTION = {-1, -1};
 
-BaseScreen::BaseScreen(sp<GameState> state, StateRef<Base> base)
-    : Stage(), form(ui().GetForm("FORM_BASESCREEN")), base(base), selection(NO_SELECTION),
-      drag(false), state(state)
+BaseScreen::BaseScreen(sp<GameState> state)
+    : Stage(), form(ui().GetForm("FORM_BASESCREEN")), selection(NO_SELECTION), drag(false),
+      state(state)
 {
 }
 
@@ -25,15 +25,15 @@ BaseScreen::~BaseScreen() {}
 
 void BaseScreen::ChangeBase(sp<Base> newBase)
 {
-	base = {state.get(), newBase};
-	form->FindControlTyped<TextEdit>("TEXT_BASE_NAME")->SetText(base->name);
+	state->current_base = {state.get(), newBase};
+	form->FindControlTyped<TextEdit>("TEXT_BASE_NAME")->SetText(state->current_base->name);
 	form->FindControlTyped<Graphic>("GRAPHIC_MINIMAP")
-	    ->SetImage(BaseGraphics::drawMinimap(state, base->building));
+	    ->SetImage(BaseGraphics::drawMinimap(state, state->current_base->building));
 }
 
 void BaseScreen::Begin()
 {
-	ChangeBase(base);
+	ChangeBase(state->current_base);
 
 	form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
 
@@ -106,11 +106,12 @@ void BaseScreen::Begin()
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		    // FIXME: If you don't have any facilities this button should do nothing
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<ResearchScreen>(state, this->base);
+		    this->stageCmd.nextStage = mksp<ResearchScreen>(state);
 		});
 	form->FindControlTyped<TextEdit>("TEXT_BASE_NAME")
 	    ->addCallback(FormEventType::TextEditFinish, [this](Event *e) {
-		    this->base->name = std::dynamic_pointer_cast<TextEdit>(e->Forms().RaisedBy)->GetText();
+		    this->state->current_base->name =
+		        std::dynamic_pointer_cast<TextEdit>(e->Forms().RaisedBy)->GetText();
 		});
 }
 
@@ -148,7 +149,7 @@ void BaseScreen::EventOccurred(Event *e)
 				selection /= BaseGraphics::TILE_SIZE;
 				if (!drag)
 				{
-					selFacility = base->getFacility(selection);
+					selFacility = state->current_base->getFacility(selection);
 				}
 				return;
 			}
@@ -200,11 +201,12 @@ void BaseScreen::EventOccurred(Event *e)
 			{
 				if (selection != NO_SELECTION)
 				{
-					Base::BuildError error = base->canBuildFacility(dragFacility, selection);
+					Base::BuildError error =
+					    state->current_base->canBuildFacility(dragFacility, selection);
 					switch (error)
 					{
 						case Base::BuildError::NoError:
-							base->buildFacility(*state, dragFacility, selection);
+							state->current_base->buildFacility(*state, dragFacility, selection);
 							form->FindControlTyped<Label>("TEXT_FUNDS")
 							    ->SetText(state->getPlayerBalance());
 							break;
@@ -243,17 +245,18 @@ void BaseScreen::EventOccurred(Event *e)
 			{
 				if (selection != NO_SELECTION)
 				{
-					Base::BuildError error = base->canDestroyFacility(selection);
+					Base::BuildError error = state->current_base->canDestroyFacility(selection);
 					switch (error)
 					{
 						case Base::BuildError::NoError:
 							stageCmd.cmd = StageCmd::Command::PUSH;
-							stageCmd.nextStage = mksp<MessageBox>(
-							    tr("Destroy facility"), tr("Are you sure?"),
-							    MessageBox::ButtonOptions::YesNo, [this] {
-								    this->base->destroyFacility(*this->state, this->selection);
-								    this->selFacility = nullptr;
-								});
+							stageCmd.nextStage =
+							    mksp<MessageBox>(tr("Destroy facility"), tr("Are you sure?"),
+							                     MessageBox::ButtonOptions::YesNo, [this] {
+								                     this->state->current_base->destroyFacility(
+								                         *this->state, this->selection);
+								                     this->selFacility = nullptr;
+								                 });
 							break;
 						case Base::BuildError::Occupied:
 							stageCmd.cmd = StageCmd::Command::PUSH;
@@ -302,7 +305,7 @@ void BaseScreen::EventOccurred(Event *e)
 	}
 	else if (selection != NO_SELECTION)
 	{
-		int sprite = BaseGraphics::getCorridorSprite(base, selection);
+		int sprite = BaseGraphics::getCorridorSprite(state->current_base, selection);
 		auto image = UString::format(
 		    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:%d:xcom3/UFODATA/BASE.PCX", sprite);
 		if (sprite != 0)
@@ -335,7 +338,7 @@ void BaseScreen::Render()
 	for (auto &view : miniViews)
 	{
 		auto viewBase = view->GetData<Base>();
-		if (base == viewBase)
+		if (state->current_base == viewBase)
 		{
 			Vec2<int> pos = form->Location + view->Location - 2;
 			Vec2<int> size = view->Size + 4;
@@ -351,7 +354,7 @@ void BaseScreen::RenderBase()
 {
 	const Vec2<int> BASE_POS = form->Location + baseView->Location;
 
-	BaseGraphics::renderBase(BASE_POS, base);
+	BaseGraphics::renderBase(BASE_POS, state->current_base);
 
 	// Draw selection
 	if (selection != NO_SELECTION)

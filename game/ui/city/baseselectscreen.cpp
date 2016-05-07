@@ -12,10 +12,10 @@ namespace OpenApoc
 static const Colour PLAYER_BASE_OWNED{188, 212, 88};
 static const Colour PLAYER_BASE_AVAILABLE{160, 236, 252};
 
-BaseSelectScreen::BaseSelectScreen(sp<GameState> state, StateRef<City> city, Vec3<float> centerPos)
-    : TileView(*city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
+BaseSelectScreen::BaseSelectScreen(sp<GameState> state, Vec3<float> centerPos)
+    : TileView(*state->current_city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
                Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Strategy),
-      menuform(ui().GetForm("FORM_SELECT_BASE_SCREEN")), state(state), city(city)
+      menuform(ui().GetForm("FORM_SELECT_BASE_SCREEN")), state(state)
 {
 	this->centerPos = centerPos;
 	this->menuform->FindControl("BUTTON_OK")
@@ -69,7 +69,7 @@ void BaseSelectScreen::EventOccurred(Event *e)
 			    Vec2<float>{e->Mouse().X, e->Mouse().Y} - screenOffset, 9.99f);
 			auto clickBottom = this->screenToTileCoords(
 			    Vec2<float>{e->Mouse().X, e->Mouse().Y} - screenOffset, 0.0f);
-			auto collision = this->city->map->findCollision(clickTop, clickBottom);
+			auto collision = state->current_city->map->findCollision(clickTop, clickBottom);
 			if (collision)
 			{
 				if (collision.obj->getType() == TileObject::Type::Scenery)

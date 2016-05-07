@@ -53,6 +53,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRef<Organisation> player;
 
 	StateRef<City> current_city;
+	StateRef<Base> current_base;
 
 	GameState();
 	~GameState();

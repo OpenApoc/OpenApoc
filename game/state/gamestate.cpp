@@ -192,6 +192,7 @@ void GameState::startGame()
 	this->player_bases[Base::getPrefix() + Strings::FromInteger(this->player_bases.size() + 1)] =
 	    base;
 	bld->owner = this->getPlayer();
+	this->current_base = {this, base};
 
 	// Give the player one of each equipable vehicle
 	for (auto &it : this->vehicle_types)

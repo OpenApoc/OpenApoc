@@ -9,8 +9,8 @@
 namespace OpenApoc
 {
 
-ResearchSelect::ResearchSelect(sp<GameState> state, StateRef<Base> base, sp<Lab> lab)
-    : Stage(), form(ui().GetForm("FORM_RESEARCHSELECT")), state(state), base(base), lab(lab)
+ResearchSelect::ResearchSelect(sp<GameState> state, sp<Lab> lab)
+    : Stage(), form(ui().GetForm("FORM_RESEARCHSELECT")), state(state), lab(lab)
 {
 }
 
@@ -86,7 +86,7 @@ void ResearchSelect::redrawResearchList()
 		{
 			continue;
 		}
-		if (!r.second->dependencies.satisfied(base) && r.second->started == false)
+		if (!r.second->dependencies.satisfied(state->current_base) && r.second->started == false)
 		{
 			continue;
 		}

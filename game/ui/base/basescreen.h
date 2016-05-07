@@ -20,7 +20,6 @@ class BaseScreen : public Stage
 
 	sp<Form> form;
 	StageCmd stageCmd;
-	StateRef<Base> base;
 	Vec2<int> selection, mousePos;
 	sp<Facility> selFacility;
 	StateRef<FacilityType> dragFacility;
@@ -37,7 +36,7 @@ class BaseScreen : public Stage
 	void RenderBase();
 
   public:
-	BaseScreen(sp<GameState> state, StateRef<Base> base);
+	BaseScreen(sp<GameState> state);
 	~BaseScreen();
 	// Stage control
 	void Begin() override;

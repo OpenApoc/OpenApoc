@@ -68,11 +68,11 @@ static const std::vector<UString> CITY_ICON_VEHICLE_PASSENGER_COUNT_RESOURCES = 
 
 } // anonymous namespace
 
-CityView::CityView(sp<GameState> state, StateRef<City> city)
-    : TileView(*city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
+CityView::CityView(sp<GameState> state)
+    : TileView(*state->current_city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
                Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Isometric),
       baseForm(ui().GetForm("FORM_CITY_UI")), updateSpeed(UpdateSpeed::Speed1), state(state),
-      city(city), followVehicle(false), selectionState(SelectionState::Normal),
+      followVehicle(false), selectionState(SelectionState::Normal),
       day_palette(fw().data->load_palette("xcom3/ufodata/PAL_01.DAT")),
       twilight_palette(fw().data->load_palette("xcom3/ufodata/PAL_02.DAT")),
       night_palette(fw().data->load_palette("xcom3/ufodata/PAL_03.DAT"))
@@ -94,8 +94,7 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 	// Refresh base views
 	Resume();
 
-	this->base = {this->state.get(), this->state->player_bases.begin()->second};
-	auto bld = this->base->building;
+	auto bld = state->current_base->building;
 	if (!bld)
 	{
 		LogError("Base with invalid bld");
@@ -105,7 +104,7 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 	Vec2<int> buildingCenter = (bldBounds.p0 + bldBounds.p1) / 2;
 	this->setScreenCenterTile(buildingCenter);
 
-	this->uiTabs[0]->FindControlTyped<Label>("TEXT_BASE_NAME")->SetText(this->base->name);
+	this->uiTabs[0]->FindControlTyped<Label>("TEXT_BASE_NAME")->SetText(state->current_base->name);
 
 	for (auto &iconResource : CITY_ICON_RESOURCES)
 	{
@@ -229,13 +228,12 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
 	baseManagementForm->FindControl("BUTTON_SHOW_BASE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<BaseScreen>(this->state, this->base);
+		    this->stageCmd.nextStage = mksp<BaseScreen>(this->state);
 		});
 	baseManagementForm->FindControl("BUTTON_BUILD_BASE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage =
-		        mksp<BaseSelectScreen>(this->state, this->city, this->centerPos);
+		    this->stageCmd.nextStage = mksp<BaseSelectScreen>(this->state, this->centerPos);
 		});
 	auto vehicleForm = this->uiTabs[1];
 	vehicleForm->FindControl("BUTTON_EQUIP_VEHICLE")
@@ -343,8 +341,10 @@ void CityView::Resume()
 		view->SetImage(viewImage);
 		view->SetDepressedImage(viewImage);
 		view->addCallback(FormEventType::ButtonClick, [this](Event *e) {
-			this->base = {this->state.get(), e->Forms().RaisedBy->GetData<Base>()};
-			this->uiTabs[0]->FindControlTyped<Label>("TEXT_BASE_NAME")->SetText(this->base->name);
+			this->state->current_base = {this->state.get(), e->Forms().RaisedBy->GetData<Base>()};
+			this->uiTabs[0]
+			    ->FindControlTyped<Label>("TEXT_BASE_NAME")
+			    ->SetText(this->state->current_base->name);
 		});
 		miniViews.push_back(view);
 	}
@@ -360,7 +360,7 @@ void CityView::Render()
 		for (auto pair : state->vehicles)
 		{
 			auto v = pair.second;
-			if (v->city != this->city)
+			if (v->city != state->current_city)
 				continue;
 			auto vTile = v->tileObject;
 			if (!vTile)
@@ -386,7 +386,7 @@ void CityView::Render()
 		for (auto &view : miniViews)
 		{
 			auto viewBase = view->GetData<Base>();
-			if (base == viewBase)
+			if (state->current_base == viewBase)
 			{
 				Vec2<int> pos = uiTabs[0]->Location + view->Location - 1;
 				Vec2<int> size = view->Size + 2;
@@ -631,7 +631,7 @@ void CityView::EventOccurred(Event *e)
 	{
 		LogInfo("Repairing...");
 		std::set<sp<Scenery>> stuffToRepair;
-		for (auto &s : this->city->scenery)
+		for (auto &s : state->current_city->scenery)
 		{
 			if (s->canRepair())
 			{
@@ -639,7 +639,7 @@ void CityView::EventOccurred(Event *e)
 			}
 		}
 		LogInfo("Repairing %u tiles out of %u", static_cast<unsigned>(stuffToRepair.size()),
-		        static_cast<unsigned>(this->city->scenery.size()));
+		        static_cast<unsigned>(state->current_city->scenery.size()));
 
 		for (auto &s : stuffToRepair)
 		{
@@ -666,7 +666,7 @@ void CityView::EventOccurred(Event *e)
 			    Vec2<float>{e->Mouse().X, e->Mouse().Y} - screenOffset, 9.99f);
 			auto clickBottom = this->screenToTileCoords(
 			    Vec2<float>{e->Mouse().X, e->Mouse().Y} - screenOffset, 0.0f);
-			auto collision = this->city->map->findCollision(clickTop, clickBottom);
+			auto collision = state->current_city->map->findCollision(clickTop, clickBottom);
 			if (collision)
 			{
 				if (collision.obj->getType() == TileObject::Type::Scenery)
@@ -683,7 +683,7 @@ void CityView::EventOccurred(Event *e)
 						{
 							Vec3<int> targetPos{scenery->currentPosition.x,
 							                    scenery->currentPosition.y,
-							                    this->city->map->size.z - 1};
+							                    state->current_city->map->size.z - 1};
 							// FIXME: Use vehicle 'height' hint to select target height?
 							// FIXME: Don't clear missions if not replacing current mission
 							v->missions.clear();

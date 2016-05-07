@@ -16,10 +16,9 @@ class BaseSelectScreen : public TileView
 	StageCmd stageCmd;
 
 	sp<GameState> state;
-	StateRef<City> city;
 
   public:
-	BaseSelectScreen(sp<GameState> state, StateRef<City> city, Vec3<float> centerPos);
+	BaseSelectScreen(sp<GameState> state, Vec3<float> centerPos);
 	~BaseSelectScreen();
 	// Stage control
 	void Begin() override;

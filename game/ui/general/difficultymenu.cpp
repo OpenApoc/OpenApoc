@@ -83,9 +83,8 @@ void DifficultyMenu::EventOccurred(Event *e)
 		});
 
 		stageCmd.cmd = StageCmd::Command::REPLACE;
-		stageCmd.nextStage = mksp<LoadingScreen>(std::move(loadTask), [state]() -> sp<Stage> {
-			return mksp<CityView>(state, StateRef<City>{state.get(), "CITYMAP_HUMAN"});
-		});
+		stageCmd.nextStage = mksp<LoadingScreen>(
+		    std::move(loadTask), [state]() -> sp<Stage> { return mksp<CityView>(state); });
 		return;
 	}
 }

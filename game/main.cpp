@@ -83,8 +83,7 @@ int main(int argc, char *argv[])
 				return EXIT_FAILURE;
 			}
 			state->initState();
-			fw->Run(mksp<CityView>(state, StateRef<City>{state.get(), "CITYMAP_HUMAN"}),
-			        frameLimit);
+			fw->Run(mksp<CityView>(state), frameLimit);
 		}
 
 		UI::unload();

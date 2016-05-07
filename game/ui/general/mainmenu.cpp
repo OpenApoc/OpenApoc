@@ -82,9 +82,8 @@ void MainMenu::EventOccurred(Event *e)
 				state->initState();
 			});
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<LoadingScreen>(std::move(loadTask), [state]() -> sp<Stage> {
-				return mksp<CityView>(state, StateRef<City>{state.get(), "CITYMAP_HUMAN"});
-			});
+			stageCmd.nextStage = mksp<LoadingScreen>(
+			    std::move(loadTask), [state]() -> sp<Stage> { return mksp<CityView>(state); });
 		}
 	}
 }
