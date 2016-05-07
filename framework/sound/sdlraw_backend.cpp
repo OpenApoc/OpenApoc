@@ -191,7 +191,7 @@ class SDLRawBackend : public SoundBackend
 		if (this->current_music_data || !this->music_queue.empty())
 		{
 			int int_music_volume =
-			    clamp(0, 128, (int)lrint(this->overall_volume * this->music_volume * 128.0f));
+			    clamp((int)lrint(this->overall_volume * this->music_volume * 128.0f), 0, 128);
 			int music_bytes = 0;
 			while (music_bytes < len)
 			{
@@ -229,9 +229,9 @@ class SDLRawBackend : public SoundBackend
 		auto sampleIt = this->live_samples.begin();
 		while (sampleIt != this->live_samples.end())
 		{
-			int int_sample_volume =
-			    clamp(0, 128, (int)lrint(this->overall_volume * this->sound_volume *
-			                             sampleIt->gain * 128.0f));
+			int int_sample_volume = clamp(
+			    (int)lrint(this->overall_volume * this->sound_volume * sampleIt->gain * 128.0f), 0,
+			    128);
 			auto sampleData =
 			    std::dynamic_pointer_cast<SDLSampleData>(sampleIt->sample->backendData);
 			if (!sampleData)
