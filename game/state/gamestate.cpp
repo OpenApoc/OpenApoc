@@ -231,6 +231,8 @@ void GameState::startGame()
 			count--;
 		}
 	}
+	// Start the game at midday
+	this->time = TICKS_PER_HOUR * 12;
 }
 
 bool GameState::canTurbo() const
