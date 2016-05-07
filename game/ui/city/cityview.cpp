@@ -72,7 +72,10 @@ CityView::CityView(sp<GameState> state, StateRef<City> city)
     : TileView(*city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
                Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Isometric),
       baseForm(ui().GetForm("FORM_CITY_UI")), updateSpeed(UpdateSpeed::Speed1), state(state),
-      city(city), followVehicle(false), selectionState(SelectionState::Normal)
+      city(city), followVehicle(false), selectionState(SelectionState::Normal),
+      day_palette(fw().data->load_palette("xcom3/ufodata/PAL_01.DAT")),
+      twilight_palette(fw().data->load_palette("xcom3/ufodata/PAL_02.DAT")),
+      night_palette(fw().data->load_palette("xcom3/ufodata/PAL_03.DAT"))
 {
 	baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED1")->SetChecked(true);
 	for (auto &formName : TAB_FORM_NAMES)
@@ -350,6 +353,7 @@ void CityView::Resume()
 void CityView::Render()
 {
 	TRACE_FN;
+
 	TileView::Render();
 	if (state->showVehiclePath)
 	{
@@ -461,6 +465,78 @@ void CityView::Update(StageCmd *const cmd)
 	auto timeString =
 	    UString::format("%02u:%02u:%02u", hoursClamped, minutesClamped, secondsClamped);
 	clockControl->SetText(timeString);
+
+	// The palette fades from pal_03 at 3am to pal_02 at 6am then pal_01 at 9am
+	// The reverse for 3pm, 6pm & 9pm
+
+	sp<Palette> interpolated_palette;
+
+	if (hoursClamped < 3 || hoursClamped >= 21)
+	{
+		interpolated_palette = this->night_palette;
+	}
+	else if (hoursClamped >= 9 && hoursClamped < 15)
+	{
+		interpolated_palette = this->day_palette;
+	}
+	else
+	{
+		sp<Palette> palette1;
+		sp<Palette> palette2;
+		float factor;
+
+		float hours_float = hoursClamped + (float)minutesClamped / 60.0f;
+
+		if (hoursClamped >= 3 && hoursClamped < 6)
+		{
+			palette1 = this->night_palette;
+			palette2 = this->twilight_palette;
+			factor = clamp((hours_float - 3.0f) / 3.0f, 0.0f, 1.0f);
+		}
+		else if (hoursClamped >= 6 && hoursClamped < 9)
+		{
+			palette1 = this->twilight_palette;
+			palette2 = this->day_palette;
+			factor = clamp((hours_float - 6.0f) / 3.0f, 0.0f, 1.0f);
+		}
+		else if (hoursClamped >= 15 && hoursClamped < 18)
+		{
+			palette1 = this->day_palette;
+			palette2 = this->twilight_palette;
+			factor = clamp((hours_float - 15.0f) / 3.0f, 0.0f, 1.0f);
+		}
+		else if (hoursClamped >= 18 && hoursClamped < 21)
+		{
+			palette1 = this->twilight_palette;
+			palette2 = this->night_palette;
+			factor = clamp((hours_float - 18.0f) / 3.0f, 0.0f, 1.0f);
+		}
+		else
+		{
+			LogError("Unhandled hoursClamped %d", hoursClamped);
+		}
+
+		interpolated_palette = mksp<Palette>();
+		for (int i = 0; i < 256; i++)
+		{
+			auto &colour1 = palette1->GetColour(i);
+			auto &colour2 = palette2->GetColour(i);
+			Colour interpolated_colour;
+
+			interpolated_colour.r = (int)mix((float)colour1.r, (float)colour2.r, factor);
+			interpolated_colour.g = (int)mix((float)colour1.g, (float)colour2.g, factor);
+			interpolated_colour.b = (int)mix((float)colour1.b, (float)colour2.b, factor);
+			interpolated_colour.a = (int)mix((float)colour1.a, (float)colour2.a, factor);
+			interpolated_palette->SetColour(i, interpolated_colour);
+		}
+	}
+
+	this->pal = interpolated_palette;
+
+	float hours_float = (float)minutes / 60.0f;
+	sp<Palette> pal_1;
+	sp<Palette> pal_2;
+	float factor_1, factor_2;
 
 	// FIXME: Possibly more efficient ways than re-generating all controls every frame?
 

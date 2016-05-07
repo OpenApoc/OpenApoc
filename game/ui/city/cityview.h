@@ -95,6 +95,10 @@ class CityView : public TileView
 
 	SelectionState selectionState;
 
+	sp<Palette> day_palette;
+	sp<Palette> twilight_palette;
+	sp<Palette> night_palette;
+
   public:
 	CityView(sp<GameState> state, StateRef<City> city);
 	virtual ~CityView();
