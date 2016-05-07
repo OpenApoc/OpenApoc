@@ -1487,9 +1487,10 @@ class OGLES30Renderer final : public Renderer
 	sp<Surface> getDefaultSurface() override { return this->default_surface; }
 };
 
-void debug_message_proc(GL::KHR_debug::GLenum source, GL::KHR_debug::GLenum type, GL::GLuint id,
-                        GL::KHR_debug::GLenum severity, GL::GLsizei length,
-                        const GL::GLchar *message, const void *userParam)
+void GLESWRAP_APIENTRY debug_message_proc(GL::KHR_debug::GLenum source, GL::KHR_debug::GLenum type,
+                                          GL::GLuint id, GL::KHR_debug::GLenum severity,
+                                          GL::GLsizei length, const GL::GLchar *message,
+                                          const void *userParam)
 {
 	switch (severity)
 	{
