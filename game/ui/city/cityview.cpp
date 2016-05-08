@@ -533,11 +533,6 @@ void CityView::Update(StageCmd *const cmd)
 
 	this->pal = interpolated_palette;
 
-	float hours_float = (float)minutes / 60.0f;
-	sp<Palette> pal_1;
-	sp<Palette> pal_2;
-	float factor_1, factor_2;
-
 	// FIXME: Possibly more efficient ways than re-generating all controls every frame?
 
 	// Setup owned vehicle list controls
