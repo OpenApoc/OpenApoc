@@ -215,7 +215,8 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 		unsigned progress_points =
 		    std::min(ticks_remaining_to_progress / ticks_per_progress_point,
 		             lab->current_project->man_hours - lab->current_project->man_hours_progress);
-		unsigned ticks_left = progress_points * ticks_per_progress_point;
+		unsigned ticks_left =
+		    ticks_remaining_to_progress - progress_points * ticks_per_progress_point;
 
 		lab->ticks_since_last_progress = ticks_left;
 
