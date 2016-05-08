@@ -252,45 +252,53 @@ std::regex CueParser::indexArgRegex = std::regex("(\\d{1,2})\\s+(\\d{2}):(\\d{2}
 
 struct int16_lsb_msb
 {
-#ifdef SDL_LIL_ENDIAN
+#if defined(SDL_LIL_ENDIAN)
     uint16_t val;        // lsb
     uint16_t __padding;  // msb
-#else
+#elif defined(SDL_BIG_ENDIAN)
     uint16_t __padding;
     uint16_t val;
+#else
+#error Unknown endianness!
 #endif
 };
 
 struct sint16_lsb_msb
 {
-#ifdef SDL_LIL_ENDIAN
+#if defined(SDL_LIL_ENDIAN)
     int16_t val;
     int16_t __padding;
+#elif defined(SDL_BIG_ENDIAN)
+    int16_t __padding;
+    int16_t val;
 #else
-    int16_t __padding;
-    int16_t val;
+#error Unknown endianness!
 #endif
 };
 
 struct int32_lsb_msb
 {
-#ifdef BOOST_LITTLE_ENDIAN
+#if defined(SDL_LIL_ENDIAN)
     uint32_t val;
     uint32_t __padding;
+#elif defined(SDL_BIG_ENDIAN)
+    uint32_t __padding;
+    uint32_t val;
 #else
-    uint32_t __padding;
-    uint32_t val;
+#error Unknown endianness!
 #endif
 };
 
 struct sint32_lsb_msb
 {
-#ifdef BOOST_LITTLE_ENDIAN
+#if defined(SDL_LIL_ENDIAN)
     int32_t val;
     int32_t __padding;
+#elif defined(SDL_BIG_ENDIAN)
+    int32_t __padding;
+    int32_t val;
 #else
-    int32_t __padding;
-    int32_t val;
+#error Unknown endianness!
 #endif
 };
 
