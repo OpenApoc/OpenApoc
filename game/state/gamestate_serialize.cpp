@@ -340,6 +340,33 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, std::set<T>
 	}
 }
 
+template <>
+void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchDependency::Type &t)
+{
+	serializeIn(state, node, t, ResearchDependency::TypeMap);
+}
+
+template <>
+void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchDependency &d)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("type"), d.type);
+	serializeIn(state, node->getNode("topics"), d.topics);
+}
+
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, UfopaediaEntry &e)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("title"), e.title);
+	serializeIn(state, node->getNode("description"), e.description);
+	serializeIn(state, node->getNode("background"), e.background);
+	serializeIn(state, node->getNode("data_id"), e.data_id);
+	serializeIn(state, node->getNode("data_type"), e.data_type, UfopaediaEntry::DataMap);
+	serializeIn(state, node->getNode("dependency"), e.dependency);
+}
+
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, VehicleType &type)
 {
 	if (!node)
@@ -400,6 +427,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("capacityAmount"), f.capacityAmount);
 	serializeIn(state, node->getNode("size"), f.size);
 	serializeIn(state, node->getNode("sprite"), f.sprite);
+	serializeIn(state, node->getNode("dependency"), f.dependency);
 }
 
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, DoodadFrame &f)
@@ -648,33 +676,6 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("shield"), v.shield);
 	serializeIn(state, node->getNode("homeBuilding"), v.homeBuilding);
 	serializeIn(state, node->getNode("currentlyLandedBuilding"), v.currentlyLandedBuilding);
-}
-
-template <>
-void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchDependency::Type &t)
-{
-	serializeIn(state, node, t, ResearchDependency::TypeMap);
-}
-
-template <>
-void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchDependency &d)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("type"), d.type);
-	serializeIn(state, node->getNode("topics"), d.topics);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, UfopaediaEntry &e)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("title"), e.title);
-	serializeIn(state, node->getNode("description"), e.description);
-	serializeIn(state, node->getNode("background"), e.background);
-	serializeIn(state, node->getNode("data_id"), e.data_id);
-	serializeIn(state, node->getNode("data_type"), e.data_type, UfopaediaEntry::DataMap);
-	serializeIn(state, node->getNode("dependency"), e.dependency);
 }
 
 template <>
@@ -1014,6 +1015,17 @@ template <> void serializeOut(sp<SerializationNode> node, const VoxelMap &map)
 	serializeOut(node->addNode("slices"), map.slices);
 }
 
+template <> void serializeOut(sp<SerializationNode> node, const ResearchDependency::Type &t)
+{
+	serializeOut(node, t, ResearchDependency::TypeMap);
+}
+
+template <> void serializeOut(sp<SerializationNode> node, const ResearchDependency &d)
+{
+	serializeOut(node->addNode("type"), d.type);
+	serializeOut(node->addNode("topics"), d.topics);
+}
+
 template <> void serializeOut(sp<SerializationNode> node, const VehicleType &type)
 {
 	serializeOut(node->addNode("numCreated"), type.numCreated);
@@ -1065,6 +1077,7 @@ template <> void serializeOut(sp<SerializationNode> node, const FacilityType &f)
 	serializeOut(node->addNode("capacityAmount"), f.capacityAmount);
 	serializeOut(node->addNode("size"), f.size);
 	serializeOut(node->addNode("sprite"), f.sprite);
+	serializeOut(node->addNode("dependency"), f.dependency);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const DoodadFrame &f)
@@ -1281,17 +1294,6 @@ template <> void serializeOut(sp<SerializationNode> node, const Vehicle &v)
 	serializeOut(node->addNode("shield"), v.shield);
 	serializeOut(node->addNode("homeBuilding"), v.homeBuilding);
 	serializeOut(node->addNode("currentlyLandedBuilding"), v.currentlyLandedBuilding);
-}
-
-template <> void serializeOut(sp<SerializationNode> node, const ResearchDependency::Type &t)
-{
-	serializeOut(node, t, ResearchDependency::TypeMap);
-}
-
-template <> void serializeOut(sp<SerializationNode> node, const ResearchDependency &d)
-{
-	serializeOut(node->addNode("type"), d.type);
-	serializeOut(node->addNode("topics"), d.topics);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const UfopaediaEntry &e)

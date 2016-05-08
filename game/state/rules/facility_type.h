@@ -1,5 +1,6 @@
 #pragma once
 #include "framework/image.h"
+#include "game/state/research.h"
 #include "game/state/stateobject.h"
 #include "library/strings.h"
 #include <map>
@@ -34,5 +35,7 @@ class FacilityType : public StateObject<FacilityType>
 	int capacityAmount;
 	int size;
 	sp<Image> sprite;
+	ResearchDependency dependency;
+	bool isVisible() const;
 };
 };

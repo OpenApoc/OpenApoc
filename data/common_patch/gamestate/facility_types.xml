@@ -13,6 +13,12 @@
     <value>
       <sp>
         <capacityType>aliens</capacityType>
+        <dependency>
+          <type>any</type>
+          <topics>
+            <entry>RESEARCH_ADVANCED_ALIEN_CONTAINMENT</entry>
+          </topics>
+        </dependency>
       </sp>
     </value>
   </entry>
@@ -21,6 +27,12 @@
     <value>
       <sp>
         <capacityType>chemistry</capacityType>
+        <dependency>
+          <type>any</type>
+          <topics>
+            <entry>RESEARCH_ADVANCED_BIOCHEMISTRY_LAB</entry>
+          </topics>
+        </dependency>
       </sp>
     </value>
   </entry>
@@ -29,6 +41,25 @@
     <value>
       <sp>
         <capacityType>physics</capacityType>
+        <dependency>
+          <type>any</type>
+          <topics>
+            <entry>RESEARCH_ADVANCED_QUANTUM_PHYSICS_LAB</entry>
+          </topics>
+        </dependency>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>FACILITYTYPE_ADVANCED_SECURITY_STATION</key>
+    <value>
+      <sp>
+        <dependency>
+          <type>any</type>
+          <topics>
+            <entry>RESEARCH_ADVANCED_SECURITY_STATION</entry>
+          </topics>
+        </dependency>
       </sp>
     </value>
   </entry>
@@ -37,6 +68,12 @@
     <value>
       <sp>
         <capacityType>workshop</capacityType>
+        <dependency>
+          <type>any</type>
+          <topics>
+            <entry>RESEARCH_ADVANCED_WORKSHOP</entry>
+          </topics>
+        </dependency>
       </sp>
     </value>
   </entry>

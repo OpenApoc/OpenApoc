@@ -61,7 +61,7 @@ void BaseScreen::Begin()
 	for (auto &i : state->facility_types)
 	{
 		auto &facility = i.second;
-		if (facility->fixed)
+		if (!facility->isVisible())
 			continue;
 
 		auto graphic = mksp<Graphic>(facility->sprite);

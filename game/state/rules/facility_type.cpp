@@ -21,6 +21,8 @@ FacilityType::FacilityType()
 {
 }
 
+bool FacilityType::isVisible() const { return !this->fixed && this->dependency.satisfied(); }
+
 template <>
 sp<FacilityType> StateObject<FacilityType>::get(const GameState &state, const UString &id)
 {
@@ -38,6 +40,7 @@ template <> const UString &StateObject<FacilityType>::getPrefix()
 	static UString prefix = "FACILITYTYPE_";
 	return prefix;
 }
+
 template <> const UString &StateObject<FacilityType>::getTypeName()
 {
 	static UString name = "FacilityType";

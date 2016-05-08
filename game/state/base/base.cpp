@@ -203,6 +203,11 @@ Base::BuildError Base::canDestroyFacility(Vec2<int> pos) const
 	{
 		return BuildError::Occupied;
 	}
+	if (facility->buildTime > 0)
+	{
+		return BuildError::NoError;
+	}
+	// TODO: Check if other facility types are in use
 	if (facility->lab)
 	{
 		if (facility->lab->current_project)
@@ -214,7 +219,6 @@ Base::BuildError Base::canDestroyFacility(Vec2<int> pos) const
 			return BuildError::Occupied;
 		}
 	}
-	// TODO: Check if facility is in use
 	return BuildError::NoError;
 }
 

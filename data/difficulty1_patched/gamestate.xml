@@ -74,6 +74,7 @@
     </entry>
   </initial_facilities>
   <current_city />
+  <current_base />
   <player>ORG_X-COM</player>
   <time>0</time>
 </gamestate>
