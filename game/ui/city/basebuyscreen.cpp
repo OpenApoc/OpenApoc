@@ -5,6 +5,7 @@
 #include "game/state/city/building.h"
 #include "game/state/gamestate.h"
 #include "game/ui/base/basegraphics.h"
+#include "game/ui/city/cityview.h"
 #include "game/ui/general/messagebox.h"
 
 namespace OpenApoc
@@ -13,6 +14,7 @@ namespace OpenApoc
 BaseBuyScreen::BaseBuyScreen(sp<GameState> state, sp<Building> building)
     : Stage(), form(ui().GetForm("FORM_BUY_BASE_SCREEN")), state(state)
 {
+	// FIXME: Formula not accurate, seems to vary by building type
 	price = building->bounds.size().x * building->bounds.size().y * 2000;
 	base = mksp<Base>(*state, StateRef<Building>{state.get(), building});
 }
@@ -67,7 +69,8 @@ void BaseBuyScreen::EventOccurred(Event *e)
 				state->player_bases[Base::getPrefix() +
 				                    Strings::FromInteger(state->player_bases.size() + 1)] = base;
 
-				stageCmd.cmd = StageCmd::Command::POP;
+				stageCmd.cmd = StageCmd::Command::REPLACE;
+				stageCmd.nextStage = mksp<CityView>(state);
 			}
 			else
 			{

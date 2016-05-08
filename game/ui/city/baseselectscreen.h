@@ -12,10 +12,13 @@ namespace OpenApoc
 class BaseSelectScreen : public TileView
 {
   private:
+	static const int COUNTER_MAX = 90;
+
 	sp<Form> menuform;
 	StageCmd stageCmd;
 
 	sp<GameState> state;
+	int counter;
 
   public:
 	BaseSelectScreen(sp<GameState> state, Vec3<float> centerPos);

@@ -15,25 +15,24 @@ static const Colour PLAYER_BASE_AVAILABLE{160, 236, 252};
 BaseSelectScreen::BaseSelectScreen(sp<GameState> state, Vec3<float> centerPos)
     : TileView(*state->current_city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
                Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Strategy),
-      menuform(ui().GetForm("FORM_SELECT_BASE_SCREEN")), state(state)
+      menuform(ui().GetForm("FORM_SELECT_BASE_SCREEN")), state(state), counter(0)
 {
 	this->centerPos = centerPos;
 	this->menuform->FindControl("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *e) { this->stageCmd.cmd = StageCmd::Command::POP; });
-	Resume();
 }
 
 BaseSelectScreen::~BaseSelectScreen() {}
 
-void BaseSelectScreen::Begin() {}
-
-void BaseSelectScreen::Pause() {}
-
-void BaseSelectScreen::Resume()
+void BaseSelectScreen::Begin()
 {
 	menuform->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
 }
+
+void BaseSelectScreen::Pause() {}
+
+void BaseSelectScreen::Resume() {}
 
 void BaseSelectScreen::Finish() {}
 
@@ -101,6 +100,7 @@ void BaseSelectScreen::Update(StageCmd *const cmd)
 	*cmd = this->stageCmd;
 	// Reset the command to default
 	this->stageCmd = StageCmd();
+	counter = (counter + 1) % COUNTER_MAX;
 }
 
 void BaseSelectScreen::Render()
@@ -115,6 +115,13 @@ void BaseSelectScreen::Render()
 			Vec2<float> screenPosA = this->tileToOffsetScreenCoords(posA);
 			Vec3<float> posB = {building->bounds.p1.x, building->bounds.p1.y, 0};
 			Vec2<float> screenPosB = this->tileToOffsetScreenCoords(posB);
+
+			// Apply offset to borders every half-second
+			if (counter >= COUNTER_MAX / 2)
+			{
+				screenPosA -= Vec2<float>{2.0f, 2.0f};
+				screenPosB += Vec2<float>{2.0f, 2.0f};
+			}
 
 			Colour borderColour;
 			if (building->owner == state->getPlayer())
