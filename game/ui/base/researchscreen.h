@@ -1,8 +1,8 @@
 #pragma once
 
 #include "forms/forms.h"
-#include "framework/stage.h"
 #include "game/state/stateobject.h"
+#include "game/ui/base/basestage.h"
 #include "library/sp.h"
 #include "library/vec.h"
 #include <list>
@@ -16,16 +16,13 @@ class GameState;
 class ResearchTopic;
 class Agent;
 
-class ResearchScreen : public Stage
+class ResearchScreen : public BaseStage
 {
   private:
-	sp<Form> form;
 	StageCmd stageCmd;
 	sp<Facility> selected_lab;
 	StateRef<ResearchTopic> current_topic;
 	std::list<sp<Facility>> labs;
-
-	sp<GameState> state;
 
 	void setCurrentLabInfo();
 	sp<Control> createAgentControl(Vec2<int> size, StateRef<Agent> agent);
@@ -33,6 +30,8 @@ class ResearchScreen : public Stage
 	sp<Image> healthImage;
 
 	int assigned_agent_count;
+
+	void ChangeBase(sp<Base> newBase) override;
 
   public:
 	ResearchScreen(sp<GameState> state, sp<Facility> selected_lab = nullptr);

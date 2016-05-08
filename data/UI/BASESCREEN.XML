@@ -86,6 +86,12 @@
         <image/>
         <imagedepressed/>
       </graphicbutton>
+	  <label id="TEXT_BUTTON_BASE">
+        <position x="15" y="124"/>
+        <size width="157" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
       <graphic id="GRAPHIC_SELECTED_FACILITY">
         <position x="62" y="186"/>
         <size width="64" height="64"/>

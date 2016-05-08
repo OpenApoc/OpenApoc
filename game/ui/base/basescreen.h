@@ -1,6 +1,6 @@
 #pragma once
 #include "forms/forms.h"
-#include "framework/stage.h"
+#include "game/ui/base/basestage.h"
 #include "library/sp.h"
 #include "library/vec.h"
 #include <vector>
@@ -13,13 +13,13 @@ class Facility;
 class GameState;
 class FacilityType;
 
-class BaseScreen : public Stage
+class BaseScreen : public BaseStage
 {
   private:
 	static const Vec2<int> NO_SELECTION;
 
-	sp<Form> form;
 	StageCmd stageCmd;
+
 	Vec2<int> selection, mousePos;
 	sp<Facility> selFacility;
 	StateRef<FacilityType> dragFacility;
@@ -29,10 +29,8 @@ class BaseScreen : public Stage
 	sp<Label> selText;
 	std::vector<sp<Label>> statsLabels;
 	std::vector<sp<Label>> statsValues;
-	std::vector<sp<GraphicButton>> miniViews;
 
-	sp<GameState> state;
-	void ChangeBase(sp<Base> newBase);
+	void ChangeBase(sp<Base> newBase) override;
 	void RenderBase();
 
   public:

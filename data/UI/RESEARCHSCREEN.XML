@@ -21,6 +21,60 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
+	  <graphicbutton id="BUTTON_BASE_1">
+        <position x="24" y="53"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_2">
+        <position x="60" y="53"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_3">
+        <position x="96" y="53"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_4">
+        <position x="132" y="53"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_5">
+        <position x="24" y="89"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_6">
+        <position x="60" y="89"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_7">
+        <position x="96" y="89"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+      <graphicbutton id="BUTTON_BASE_8">
+        <position x="132" y="89"/>
+        <size width="32" height="32"/>
+        <image/>
+        <imagedepressed/>
+      </graphicbutton>
+	  <label id="TEXT_BUTTON_BASE">
+        <position x="15" y="124"/>
+        <size width="157" height="15"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
       <label id="TEXT_LAB_TYPE" text="Lab Type">
         <position x="277" y="166"/>
         <size width="264" height="14"/>

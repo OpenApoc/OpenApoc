@@ -15,17 +15,17 @@ namespace OpenApoc
 
 const Vec2<int> BaseScreen::NO_SELECTION = {-1, -1};
 
-BaseScreen::BaseScreen(sp<GameState> state)
-    : Stage(), form(ui().GetForm("FORM_BASESCREEN")), selection(NO_SELECTION), drag(false),
-      state(state)
+BaseScreen::BaseScreen(sp<GameState> state) : BaseStage(state), selection(NO_SELECTION), drag(false)
 {
+	form = ui().GetForm("FORM_BASESCREEN");
+	viewHighlight = BaseGraphics::FacilityHighlight::Construction;
 }
 
 BaseScreen::~BaseScreen() {}
 
 void BaseScreen::ChangeBase(sp<Base> newBase)
 {
-	state->current_base = {state.get(), newBase};
+	BaseStage::ChangeBase(newBase);
 	form->FindControlTyped<TextEdit>("TEXT_BASE_NAME")->SetText(state->current_base->name);
 	form->FindControlTyped<Graphic>("GRAPHIC_MINIMAP")
 	    ->SetImage(BaseGraphics::drawMinimap(state, state->current_base->building));
@@ -33,9 +33,7 @@ void BaseScreen::ChangeBase(sp<Base> newBase)
 
 void BaseScreen::Begin()
 {
-	ChangeBase(state->current_base);
-
-	form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
+	BaseStage::Begin();
 
 	baseView = form->FindControlTyped<Graphic>("GRAPHIC_BASE_VIEW");
 	selText = form->FindControlTyped<Label>("TEXT_SELECTED_FACILITY");
@@ -57,26 +55,6 @@ void BaseScreen::Begin()
 			LogError("Failed to find UI control matching \"%s\"", valueName.c_str());
 		}
 		statsValues.push_back(value);
-	}
-	int b = 0;
-	for (auto &pair : state->player_bases)
-	{
-		auto &viewBase = pair.second;
-		auto viewName = UString::format("BUTTON_BASE_%d", ++b);
-		auto view = form->FindControlTyped<GraphicButton>(viewName);
-		if (!view)
-		{
-			LogError("Failed to find UI control matching \"%s\"", viewName.c_str());
-		}
-		view->SetData(viewBase);
-		auto viewImage =
-		    BaseGraphics::drawMiniBase(viewBase, BaseGraphics::FacilityHighlight::Construction);
-		view->SetImage(viewImage);
-		view->SetDepressedImage(viewImage);
-		view->addCallback(FormEventType::ButtonClick, [this](Event *e) {
-			this->ChangeBase(e->Forms().RaisedBy->GetData<Base>());
-		});
-		miniViews.push_back(view);
 	}
 
 	auto facilities = form->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
@@ -117,7 +95,7 @@ void BaseScreen::Begin()
 
 void BaseScreen::Pause() {}
 
-void BaseScreen::Resume() {}
+void BaseScreen::Resume() { textFunds->SetText(state->getPlayerBalance()); }
 
 void BaseScreen::Finish() {}
 
@@ -207,8 +185,8 @@ void BaseScreen::EventOccurred(Event *e)
 					{
 						case Base::BuildError::NoError:
 							state->current_base->buildFacility(*state, dragFacility, selection);
-							form->FindControlTyped<Label>("TEXT_FUNDS")
-							    ->SetText(state->getPlayerBalance());
+							textFunds->SetText(state->getPlayerBalance());
+							RefreshView();
 							break;
 						case Base::BuildError::Occupied:
 							stageCmd.cmd = StageCmd::Command::PUSH;
@@ -256,6 +234,7 @@ void BaseScreen::EventOccurred(Event *e)
 								                     this->state->current_base->destroyFacility(
 								                         *this->state, this->selection);
 								                     this->selFacility = nullptr;
+								                     this->RefreshView();
 								                 });
 							break;
 						case Base::BuildError::Occupied:
@@ -333,19 +312,7 @@ void BaseScreen::Render()
 	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
 	form->Render();
 	RenderBase();
-
-	// Highlight selected base
-	for (auto &view : miniViews)
-	{
-		auto viewBase = view->GetData<Base>();
-		if (state->current_base == viewBase)
-		{
-			Vec2<int> pos = form->Location + view->Location - 2;
-			Vec2<int> size = view->Size + 4;
-			fw().renderer->drawRect(pos, size, Colour{255, 0, 0});
-			break;
-		}
-	}
+	BaseStage::Render();
 }
 
 bool BaseScreen::IsTransition() { return false; }

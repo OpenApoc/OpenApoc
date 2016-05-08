@@ -10,16 +10,22 @@ namespace OpenApoc
 {
 
 ResearchScreen::ResearchScreen(sp<GameState> state, sp<Facility> selected_lab)
-    : Stage(), form(ui().GetForm("FORM_RESEARCHSCREEN")), selected_lab(selected_lab), state(state)
+    : BaseStage(state), selected_lab(selected_lab)
 {
+	form = ui().GetForm("FORM_RESEARCHSCREEN");
+	viewHighlight = BaseGraphics::FacilityHighlight::Labs;
+	viewFacility = selected_lab;
 }
 
 ResearchScreen::~ResearchScreen() {}
 
-void ResearchScreen::Begin()
+void ResearchScreen::ChangeBase(sp<Base> newBase)
 {
-	form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
+	BaseStage::ChangeBase(newBase);
 
+	// FIXME: Should only reset if selected_lab doesn't belong to current base
+	this->selected_lab = nullptr;
+	this->labs.clear();
 	for (auto &facility : this->state->current_base->facilities)
 	{
 		if (facility->type->capacityType == FacilityType::Capacity::Chemistry ||
@@ -28,12 +34,15 @@ void ResearchScreen::Begin()
 		{
 			this->labs.push_back(facility);
 			if (!this->selected_lab)
+			{
 				this->selected_lab = facility;
+				this->viewFacility = this->selected_lab;
+			}
 		}
 	}
 
 	auto labList = form->FindControlTyped<ListBox>("LIST_LABS");
-
+	labList->Clear();
 	for (auto &facility : this->labs)
 	{
 		auto graphic = mksp<Graphic>(facility->type->sprite);
@@ -41,6 +50,12 @@ void ResearchScreen::Begin()
 		graphic->SetData(facility);
 		labList->AddItem(graphic);
 	}
+
+	setCurrentLabInfo();
+}
+
+void ResearchScreen::Begin()
+{
 	auto img = mksp<RGBImage>(Vec2<int>{1, 2});
 	{
 		RGBImageLock l(img);
@@ -48,6 +63,9 @@ void ResearchScreen::Begin()
 		l.set({0, 1}, Colour{215, 0, 0});
 	}
 	this->healthImage = img;
+
+	BaseStage::Begin();
+
 	auto unassignedAgentList = form->FindControlTyped<ListBox>("LIST_UNASSIGNED");
 	unassignedAgentList->addCallback(FormEventType::ListBoxChangeSelected, [this](Event *e) {
 		LogWarning("unassigned agent selected");
@@ -100,8 +118,6 @@ void ResearchScreen::Begin()
 	assignedAgentListCol1->AlwaysEmitSelectionEvents = true;
 	assignedAgentListCol2->AlwaysEmitSelectionEvents = true;
 	unassignedAgentList->AlwaysEmitSelectionEvents = true;
-
-	setCurrentLabInfo();
 }
 
 void ResearchScreen::Pause() {}
@@ -169,12 +185,15 @@ void ResearchScreen::Render()
 	    (this->selected_lab && this->selected_lab->lab->current_project != this->current_topic))
 	{
 		this->selected_lab = labList->GetSelectedData<Facility>();
+		this->viewFacility = this->selected_lab;
 		this->current_topic = this->selected_lab->lab->current_project;
 		this->setCurrentLabInfo();
+		this->RefreshView();
 	}
 	fw().Stage_GetPrevious(this->shared_from_this())->Render();
 	// fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
 	form->Render();
+	BaseStage::Render();
 }
 
 bool ResearchScreen::IsTransition() { return false; }

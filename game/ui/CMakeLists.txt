@@ -7,6 +7,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 set (GAMEUI_SOURCE_FILES
 	base/basegraphics.cpp
 	base/basescreen.cpp
+	base/basestage.cpp
 	base/researchscreen.cpp
 	base/researchselect.cpp
 	base/vequipscreen.cpp
@@ -33,6 +34,7 @@ source_group(gamestate\\sources FILES ${GAMEUI_SOURCE_FILES})
 set (GAMEUI_HEADER_FILES
 	base/basegraphics.h
 	base/basescreen.h
+	base/basestage.h
 	base/researchscreen.h
 	base/researchselect.h
 	base/vequipscreen.h
