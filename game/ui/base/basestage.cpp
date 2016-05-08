@@ -56,8 +56,11 @@ void BaseStage::Begin()
 		view->SetDepressedImage(viewImage);
 		view->addCallback(FormEventType::ButtonClick, [this, view](Event *e) {
 			auto base = e->Forms().RaisedBy->GetData<Base>();
-			this->ChangeBase(base);
-			this->currentView = view;
+			if (this->state->current_base != base)
+			{
+				this->ChangeBase(base);
+				this->currentView = view;
+			}
 		});
 		view->addCallback(FormEventType::MouseEnter, [this](Event *e) {
 			auto base = e->Forms().RaisedBy->GetData<Base>();
