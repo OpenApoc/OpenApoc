@@ -286,7 +286,8 @@ static bool readDir(const UString &name, std::map<UString, std::string> &content
 
 static bool writePack(const UString &name, const std::map<UString, std::string> &contents)
 {
-	mz_zip_archive archive = {0};
+	mz_zip_archive archive;
+	memset(&archive, 0, sizeof(archive));
 
 	auto path = name + ".zip";
 
@@ -323,7 +324,8 @@ err:
 
 static bool readPack(const UString &name, std::map<UString, std::string> &contents)
 {
-	mz_zip_archive archive = {0};
+	mz_zip_archive archive;
+	memset(&archive, 0, sizeof(archive));
 
 	auto path = name + ".zip";
 
@@ -345,7 +347,8 @@ static bool readPack(const UString &name, std::map<UString, std::string> &conten
 		mz_zip_reader_get_filename(&archive, idx, data.get(), filenameLength);
 		std::string filename(data.get());
 
-		mz_zip_archive_file_stat stat = {0};
+		mz_zip_archive_file_stat stat;
+		memset(&stat, 0, sizeof(stat));
 
 		if (!mz_zip_reader_file_stat(&archive, idx, &stat))
 		{

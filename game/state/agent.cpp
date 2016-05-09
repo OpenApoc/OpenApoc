@@ -67,6 +67,10 @@ AgentGenerator::AgentGenerator() : num_created(0) {}
 template <typename T, typename Generator>
 T probabilityMapRandomizer(Generator &g, const std::map<T, float> &probabilityMap)
 {
+	if (probabilityMap.empty())
+	{
+		LogError("Called with empty probabilityMap");
+	}
 	float total = 0.0f;
 	for (auto &p : probabilityMap)
 	{
@@ -76,7 +80,9 @@ T probabilityMapRandomizer(Generator &g, const std::map<T, float> &probabilityMa
 
 	float val = dist(g);
 
-	T fallback;
+	// Due to fp precision there's a small chance the total will be slightly more than the max,
+	// so have a fallback just in case?
+	T fallback = probabilityMap.begin()->first;
 	total = 0.0f;
 
 	for (auto &p : probabilityMap)
@@ -86,9 +92,6 @@ T probabilityMapRandomizer(Generator &g, const std::map<T, float> &probabilityMa
 			return p.first;
 		}
 		total += p.second;
-		// Due to fp precision there's a small chance the total will be slightly more than the max,
-		// so have a fallback just in case?
-		fallback = p.first;
 	}
 	return fallback;
 }

@@ -37,8 +37,8 @@ template <typename T> class StateRef
 	{
 		if (id.empty())
 			return;
-		auto &prefix = T::getPrefix();
 #ifndef NDEBUG
+		auto &prefix = T::getPrefix();
 		auto idPrefix = id.substr(0, prefix.length());
 		if (prefix != idPrefix)
 		{
@@ -111,7 +111,7 @@ template <typename T> class StateRef
 			resolve();
 		return obj;
 	}
-	explicit operator const bool() const
+	explicit operator bool() const
 	{
 		if (!obj)
 			resolve();

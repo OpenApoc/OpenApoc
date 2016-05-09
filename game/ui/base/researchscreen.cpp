@@ -216,7 +216,7 @@ void ResearchScreen::setCurrentLabInfo()
 	this->assigned_agent_count = 0;
 	auto labType = this->selected_lab->type->capacityType;
 	UString labTypeName = "UNKNOWN";
-	Agent::Type listedAgentType;
+	Agent::Type listedAgentType = Agent::Type::BioChemist;
 
 	if (labType == FacilityType::Capacity::Chemistry)
 	{

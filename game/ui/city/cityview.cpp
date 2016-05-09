@@ -483,7 +483,7 @@ void CityView::Update(StageCmd *const cmd)
 	{
 		sp<Palette> palette1;
 		sp<Palette> palette2;
-		float factor;
+		float factor = 0;
 
 		float hours_float = hoursClamped + (float)minutesClamped / 60.0f;
 

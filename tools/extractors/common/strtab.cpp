@@ -44,7 +44,7 @@ StrTab::StrTab(std::istream &file, off_t start_offset, off_t end_offset, bool ma
 
 std::string StrTab::get(int offset)
 {
-	if (offset >= readStrings.size())
+	if (offset >= (int)readStrings.size())
 	{
 		LogError("Trying to read string table entry %d - table size %d", offset,
 		         readStrings.size());

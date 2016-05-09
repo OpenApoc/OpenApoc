@@ -220,7 +220,7 @@ class Spritesheet
 		gl->TexParameteri(GL::TEXTURE_2D_ARRAY, GL::TEXTURE_WRAP_S, GL::CLAMP_TO_EDGE);
 		gl->TexParameteri(GL::TEXTURE_2D_ARRAY, GL::TEXTURE_WRAP_T, GL::CLAMP_TO_EDGE);
 
-		GL::GLenum data_format;
+		GL::GLenum data_format = GL::RGBA;
 		if (format == GL::RGBA8)
 			data_format = GL::RGBA;
 		else if (format == GL::R8UI)
@@ -1042,8 +1042,8 @@ class ColouredDrawMachine
 
 	GL::GLuint colour_program_id;
 
-	GL::GLuint flip_y_location;
-	GL::GLuint viewport_size_location;
+	GL::GLint flip_y_location;
+	GL::GLint viewport_size_location;
 
   public:
 	ColouredDrawMachine(int bufferCount, GL::GLuint position_attr = 0, GL::GLuint colour_attr = 1)
