@@ -252,10 +252,10 @@ std::regex CueParser::indexArgRegex = std::regex("(\\d{1,2})\\s+(\\d{2}):(\\d{2}
 
 struct int16_lsb_msb
 {
-#if defined(SDL_LIL_ENDIAN)
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
     uint16_t val;        // lsb
     uint16_t __padding;  // msb
-#elif defined(SDL_BIG_ENDIAN)
+#elif SDL_BYTEORDER == SDL_BIG_ENDIAN
     uint16_t __padding;
     uint16_t val;
 #else
@@ -265,10 +265,10 @@ struct int16_lsb_msb
 
 struct sint16_lsb_msb
 {
-#if defined(SDL_LIL_ENDIAN)
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
     int16_t val;
     int16_t __padding;
-#elif defined(SDL_BIG_ENDIAN)
+#elif SDL_BYTEORDER == SDL_BIG_ENDIAN
     int16_t __padding;
     int16_t val;
 #else
@@ -278,10 +278,10 @@ struct sint16_lsb_msb
 
 struct int32_lsb_msb
 {
-#if defined(SDL_LIL_ENDIAN)
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
     uint32_t val;
     uint32_t __padding;
-#elif defined(SDL_BIG_ENDIAN)
+#elif SDL_BYTEORDER == SDL_BIG_ENDIAN
     uint32_t __padding;
     uint32_t val;
 #else
@@ -291,10 +291,10 @@ struct int32_lsb_msb
 
 struct sint32_lsb_msb
 {
-#if defined(SDL_LIL_ENDIAN)
+#if SDL_BYTEORDER == SDL_LIL_ENDIAN
     int32_t val;
     int32_t __padding;
-#elif defined(SDL_BIG_ENDIAN)
+#elif SDL_BYTEORDER == SDL_BIG_ENDIAN
     int32_t __padding;
     int32_t val;
 #else
@@ -397,9 +397,9 @@ private:
     friend class CueArchiver;
 
     UString imageFile; // For stream duplication
-    uint32_t lbaStart; // Starting LBA for this stream
-    uint32_t lbaCurrent; // Current block for this stream
-    uint32_t posInLba; // Current position in lba
+    int32_t lbaStart; // Starting LBA for this stream
+    int32_t lbaCurrent; // Current block for this stream
+    int32_t posInLba; // Current position in lba
     int64_t length; // Allowed length of the stream
     CUE_FileType fileType;
     CUE_TrackMode trackMode;
@@ -506,7 +506,7 @@ private:
         return -1;
     }
 
-    int64_t read(void *buf, uint64_t len) {
+    int64_t read(void *buf, int64_t len) {
         // Ignore size 0 reads
         if (!len) return 0;
         // Since we probably will have to read in parts,
@@ -536,7 +536,7 @@ private:
         }
         int64_t totalRead = 0;
         do {
-            int64_t readSize = std::min(len - totalRead, (uint64_t)(blockSize() - posInLba));
+            int64_t readSize = std::min(len - totalRead, int64_t(blockSize() - posInLba));
             fileStream.read(bufWrite + totalRead, readSize);
             totalRead += fileStream.gcount();
             if (fileStream.gcount() != readSize)
@@ -556,7 +556,7 @@ private:
         return totalRead;
     }
 
-    int seek(uint64_t offset)
+    int seek(int64_t offset)
     {
         if (offset > length)
         {
@@ -1033,8 +1033,27 @@ public:
 
         if (!boost::filesystem::exists(dataFilePath))
         {
-            LogError("Binary file does not exist: \"%s\"", dataFilePath.c_str());
-            return nullptr;
+            LogWarning("Could not find binary file \"%s\" referenced in the cuesheet", parser.getDataFileName().c_str());
+            LogWarning("Trying case-insensitive search...");
+            UString ucBin(parser.getDataFileName().c_str());
+            ucBin = ucBin.toUpper();
+            for (boost::filesystem::directory_entry &dirent : boost::filesystem::directory_iterator(cueFilePath.parent_path()))
+            {
+                LogInfo("Trying %s", dirent.path().c_str());
+                UString ucDirent(dirent.path().filename().string());
+                ucDirent = ucDirent.toUpper();
+                if (ucDirent == ucBin)
+                {
+                    dataFilePath = cueFilePath.parent_path();
+                    dataFilePath /= dirent.path().filename();
+                }
+            }
+            if (!boost::filesystem::exists(dataFilePath))
+            {
+                LogError("Binary file does not exist: \"%s\"", dataFilePath.c_str());
+                return nullptr;
+            }
+            LogWarning("Using \"%s\" as a binary file source", dataFilePath.c_str());
         }
 
         return new CueArchiver(dataFilePath.string(), parser.getDataFileType(), parser.getTrackMode());
