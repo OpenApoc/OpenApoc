@@ -29,7 +29,8 @@ class UfopaediaCategoryView : public Stage
 	void setFormStats();
 
   public:
-	UfopaediaCategoryView(sp<GameState> state, sp<UfopaediaCategory> cat);
+	UfopaediaCategoryView(sp<GameState> state, sp<UfopaediaCategory> cat,
+	                      sp<UfopaediaEntry> entry = nullptr);
 	~UfopaediaCategoryView();
 
 	// Stage control

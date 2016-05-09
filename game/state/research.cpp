@@ -1,4 +1,7 @@
 #include "game/state/research.h"
+#include "framework/event.h"
+#include "framework/framework.h"
+#include "game/state/base/facility.h"
 #include "game/state/gamestate.h"
 
 namespace OpenApoc
@@ -198,7 +201,7 @@ int Lab::getTotalSkill() const
 				LogError("Unexpected lab type");
 		}
 	}
-	return totalLabSkill;
+	return totalLabSkill * 100;
 }
 
 void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
@@ -225,6 +228,31 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 		{
 			// FIXME: Show 'research complete' screen
 			LogWarning("Completed research %s", lab->current_project->name.c_str());
+			sp<Facility> lab_facility;
+
+			for (auto &base : state->player_bases)
+			{
+				for (auto &facility : base.second->facilities)
+				{
+					if (facility->lab == lab)
+					{
+						lab_facility = facility;
+						break;
+					}
+				}
+				if (lab_facility)
+					break;
+			}
+			if (!lab_facility)
+			{
+				LogError("No facility owns the current lab");
+			}
+
+			auto complete_data = mksp<ResearchCompleteData>();
+			complete_data->topic = lab->current_project;
+			complete_data->lab = lab;
+			auto event = new UserEvent("RESEARCH_COMPLETE", complete_data);
+			fw().PushEvent(event);
 			Lab::setResearch(lab, {state.get(), ""});
 		}
 	}

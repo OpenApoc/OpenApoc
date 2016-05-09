@@ -111,6 +111,13 @@ typedef struct FRAMEWORK_TEXT_EVENT
 	UString Input;
 } FRAMEWORK_TEXT_EVENT;
 
+struct FRAMEWORK_USER_EVENT
+{
+	UString ID;
+	sp<void> data;
+	template <typename T> sp<T> dataAs() { return std::static_pointer_cast<T>(this->data); }
+};
+
 /*
      Class: Event
      Provides data regarding events that occur within the system
@@ -134,6 +141,7 @@ class Event
 	FRAMEWORK_TIMER_EVENT &Timer();
 	FRAMEWORK_FORMS_EVENT &Forms();
 	FRAMEWORK_TEXT_EVENT &Text();
+	FRAMEWORK_USER_EVENT &User();
 
 	const FRAMEWORK_DISPLAY_EVENT &Display() const;
 	const FRAMEWORK_JOYSTICK_EVENT &Joystick() const;
@@ -143,6 +151,7 @@ class Event
 	const FRAMEWORK_TIMER_EVENT &Timer() const;
 	const FRAMEWORK_FORMS_EVENT &Forms() const;
 	const FRAMEWORK_TEXT_EVENT &Text() const;
+	const FRAMEWORK_USER_EVENT &User() const;
 
 	virtual ~Event() = default;
 };
@@ -233,6 +242,17 @@ class TextEvent : public Event
   public:
 	TextEvent();
 	~TextEvent() override = default;
+};
+
+class UserEvent : public Event
+{
+  private:
+	FRAMEWORK_USER_EVENT Data;
+	friend class Event;
+
+  public:
+	UserEvent(const UString &id, sp<void> data = nullptr);
+	~UserEvent() override = default;
 };
 
 }; // namespace OpenApoc

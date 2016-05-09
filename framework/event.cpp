@@ -14,6 +14,11 @@ FingerEvent::FingerEvent(EventTypes type) : Event(type) {}
 TimerEvent::TimerEvent(EventTypes type) : Event(type) {}
 FormsEvent::FormsEvent() : Event(EVENT_FORM_INTERACTION) {}
 TextEvent::TextEvent() : Event(EVENT_TEXT_INPUT) {}
+UserEvent::UserEvent(const UString &id, sp<void> data) : Event(EVENT_USER)
+{
+	Data.ID = id;
+	Data.data = data;
+}
 
 EventTypes Event::Type() const { return this->eventType; }
 
@@ -66,6 +71,12 @@ FRAMEWORK_TEXT_EVENT &Event::Text()
 	return ev->Data;
 }
 
+FRAMEWORK_USER_EVENT &Event::User()
+{
+	auto *ev = static_cast<UserEvent *>(this);
+	return ev->Data;
+}
+
 const FRAMEWORK_DISPLAY_EVENT &Event::Display() const
 {
 	auto *ev = static_cast<const DisplayEvent *>(this);
@@ -111,6 +122,11 @@ const FRAMEWORK_FORMS_EVENT &Event::Forms() const
 const FRAMEWORK_TEXT_EVENT &Event::Text() const
 {
 	auto *ev = static_cast<const TextEvent *>(this);
+	return ev->Data;
+}
+const FRAMEWORK_USER_EVENT &Event::User() const
+{
+	auto *ev = static_cast<const UserEvent *>(this);
 	return ev->Data;
 }
 

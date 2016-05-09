@@ -9,9 +9,30 @@
 namespace OpenApoc
 {
 
-UfopaediaCategoryView::UfopaediaCategoryView(sp<GameState> state, sp<UfopaediaCategory> cat)
+UfopaediaCategoryView::UfopaediaCategoryView(sp<GameState> state, sp<UfopaediaCategory> cat,
+                                             sp<UfopaediaEntry> entry)
     : Stage(), menuform(ui().GetForm("FORM_UFOPAEDIA_BASE")), state(state), category(cat)
 {
+	// Start with the intro page
+	this->position_iterator = this->category->entries.end();
+	if (entry)
+	{
+		auto it = cat->entries.begin();
+		while (it != cat->entries.end())
+		{
+			if (it->second == entry)
+			{
+				position_iterator = it;
+				break;
+			}
+			it++;
+		}
+		if (it == cat->entries.end())
+		{
+			LogError("Failed to find UFOpaedia entry %s in category %s", entry->title.c_str(),
+			         cat->title.c_str());
+		}
+	}
 }
 
 UfopaediaCategoryView::~UfopaediaCategoryView() {}
@@ -80,8 +101,6 @@ void UfopaediaCategoryView::Begin()
 		value->SetText("");
 		orgValues.push_back(value);
 	}
-	// Start with the intro page
-	this->position_iterator = this->category->entries.end();
 	this->setFormData();
 }
 

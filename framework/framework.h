@@ -73,6 +73,8 @@ class Framework
 	sp<Stage> Stage_GetPrevious();
 	sp<Stage> Stage_GetPrevious(sp<Stage> From);
 
+	void Stage_Push(sp<Stage> stage);
+
 	Vec2<int> getCursorPosition();
 
 	void Text_StartInput();
