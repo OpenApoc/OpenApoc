@@ -42,6 +42,7 @@ class ResearchTopic : public StateObject<ResearchTopic>
 	static const std::map<LabSize, UString> LabSizeMap;
 	UString name;
 	UString description;
+	// FIXME: Some research topics enable multiple ufopaedia entries?
 	StateRef<UfopaediaEntry> ufopaedia_entry;
 	unsigned man_hours;
 	unsigned man_hours_progress;
@@ -104,6 +105,14 @@ class Lab : public StateObject<Lab>
 	// This is also used to 'store' the remaining time if the update granularity is such that is
 	// overshoots a project's completion.
 	unsigned int ticks_since_last_progress;
+};
+
+class ResearchCompleteData
+{
+  public:
+	StateRef<ResearchTopic> topic;
+	StateRef<Lab> lab;
+	std::list<StateRef<UfopaediaEntry>> ufopaedia_entries;
 };
 
 class ResearchState

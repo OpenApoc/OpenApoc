@@ -2,15 +2,18 @@
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "game/state/base/facility.h"
 #include "game/state/city/building.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
+#include "game/state/research.h"
 #include "game/state/tileview/tileobject_scenery.h"
 #include "game/state/tileview/tileobject_vehicle.h"
 #include "game/state/tileview/voxel.h"
 #include "game/ui/base/basegraphics.h"
 #include "game/ui/base/basescreen.h"
+#include "game/ui/base/researchscreen.h"
 #include "game/ui/base/vequipscreen.h"
 #include "game/ui/city/baseselectscreen.h"
 #include "game/ui/city/buildingscreen.h"
@@ -18,6 +21,8 @@
 #include "game/ui/city/infiltrationscreen.h"
 #include "game/ui/city/scorescreen.h"
 #include "game/ui/general/ingameoptions.h"
+#include "game/ui/general/messagebox.h"
+#include "game/ui/ufopaedia/ufopaediacategoryview.h"
 #include "game/ui/ufopaedia/ufopaediaview.h"
 #include "library/sp.h"
 
@@ -734,6 +739,82 @@ void CityView::EventOccurred(Event *e)
 					    std::dynamic_pointer_cast<TileObjectVehicle>(collision.obj)->getVehicle();
 					LogWarning("Clicked on vehicle \"%s\"", vehicle->name.c_str());
 				}
+			}
+		}
+	}
+	else if (e->Type() == EVENT_USER)
+	{
+		auto &userEvent = e->User();
+		if (userEvent.ID == "RESEARCH_COMPLETE")
+		{
+			sp<ResearchCompleteData> research_data = userEvent.dataAs<ResearchCompleteData>();
+			if (!research_data)
+			{
+				LogError("RESEARCH_COMPLETE event with no data");
+			}
+			else
+			{
+				sp<Facility> lab_facility;
+				for (auto &base : state->player_bases)
+				{
+					for (auto &facility : base.second->facilities)
+					{
+						if (research_data->lab == facility->lab)
+						{
+							lab_facility = facility;
+							break;
+						}
+					}
+					if (lab_facility)
+						break;
+				}
+				if (!lab_facility)
+				{
+					LogError("No facilities matching lab");
+				}
+				auto game_state = this->state;
+				auto ufopaedia_entry = research_data->topic->ufopaedia_entry;
+				sp<UfopaediaCategory> ufopaedia_category;
+				if (ufopaedia_entry)
+				{
+					for (auto &cat : this->state->ufopaedia)
+					{
+						for (auto &entry : cat.second->entries)
+						{
+							if (ufopaedia_entry == entry.second)
+							{
+								ufopaedia_category = cat.second;
+								break;
+							}
+						}
+						if (ufopaedia_category)
+							break;
+					}
+					if (!ufopaedia_category)
+					{
+						LogError("No UFOPaedia category found for entry %s",
+						         ufopaedia_entry->title.c_str());
+					}
+				}
+				auto message_box = mksp<MessageBox>(
+				    tr("RESEARCH COMPLETE"),
+				    UString::format(tr("Research project completed:\n%s\nDo you "
+				                       "with to view the UFOpaedia report?"),
+				                    research_data->topic->name.c_str()),
+				    MessageBox::ButtonOptions::YesNo,
+				    // Yes callback
+				    [game_state, lab_facility, ufopaedia_category, ufopaedia_entry]() {
+					    fw().Stage_Push(mksp<ResearchScreen>(game_state, lab_facility));
+					    if (ufopaedia_entry)
+						    fw().Stage_Push(mksp<UfopaediaCategoryView>(
+						        game_state, ufopaedia_category, ufopaedia_entry));
+					},
+				    // No callback
+				    [game_state, lab_facility]() {
+					    fw().Stage_Push(mksp<ResearchScreen>(game_state, lab_facility));
+					});
+				stageCmd.cmd = StageCmd::Command::PUSH;
+				stageCmd.nextStage = message_box;
 			}
 		}
 	}

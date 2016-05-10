@@ -38,7 +38,7 @@ class UfopaediaEntry : public StateObject<UfopaediaEntry>
 	bool isVisible() const;
 };
 
-class UfopaediaCategory
+class UfopaediaCategory : public StateObject<UfopaediaCategory>
 {
   public:
 	UString title;

@@ -739,8 +739,7 @@ void Framework::Display_Initialise()
 		display_flags |= SDL_WINDOW_FULLSCREEN;
 	}
 
-	p->window = SDL_CreateWindow("OpenApoc", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, scrW,
-	                             scrH, display_flags);
+	p->window = SDL_CreateWindow("OpenApoc", 0, 0, scrW, scrH, display_flags);
 
 	if (!p->window)
 	{
@@ -966,6 +965,12 @@ void Framework::Audio_Shutdown()
 sp<Stage> Framework::Stage_GetPrevious() { return p->ProgramStages.Previous(); }
 
 sp<Stage> Framework::Stage_GetPrevious(sp<Stage> From) { return p->ProgramStages.Previous(From); }
+
+void Framework::Stage_Push(sp<Stage> stage)
+{
+	assert(stage);
+	p->ProgramStages.Push(stage);
+}
 
 Vec2<int> Framework::getCursorPosition() { return this->cursor->getPosition(); }
 
