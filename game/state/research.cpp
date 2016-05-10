@@ -201,7 +201,7 @@ int Lab::getTotalSkill() const
 				LogError("Unexpected lab type");
 		}
 	}
-	return totalLabSkill * 100;
+	return totalLabSkill;
 }
 
 void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
