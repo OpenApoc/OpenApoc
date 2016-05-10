@@ -24,6 +24,7 @@ class Base;
 static const unsigned TICKS_PER_SECOND = 60;
 static const unsigned TICKS_PER_MINUTE = TICKS_PER_SECOND * 60;
 static const unsigned TICKS_PER_HOUR = TICKS_PER_MINUTE * 60;
+static const unsigned TICKS_PER_DAY = TICKS_PER_HOUR * 24;
 static const unsigned TURBO_TICKS = 5 * 60 * TICKS_PER_SECOND;
 
 class GameState : public std::enable_shared_from_this<GameState>
@@ -69,9 +70,9 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRef<Organisation> getPlayer() const;
 
 	// The time from game start in ticks
-	// FIXME: Is a 32bit val enough?
-	// That should be 60ticks/sec 60secs/min 60mins/hour 24hours/day 7days/week = 118 weeks?
+	// 'time' is the number of ticks in the day, 'days' is number of days since game start
 	unsigned int time;
+	unsigned int day;
 
 	bool loadGame(const UString &path);
 	bool saveGame(const UString &path, bool pack = true);
@@ -97,6 +98,9 @@ class GameState : public std::enable_shared_from_this<GameState>
 	// canTurbo() must be re-tested after each call to see if we should drop down to normal speed
 	// (e.g. enemy appeared, other user action required)
 	void updateTurbo();
+
+	void updateEndOfDay();
+	void updateEndOfWeek();
 };
 
 }; // namespace OpenApoc

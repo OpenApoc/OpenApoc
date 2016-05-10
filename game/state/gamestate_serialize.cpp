@@ -826,6 +826,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &
 	serializeIn(state, node->getNode("current_city"), s.current_city);
 	serializeIn(state, node->getNode("current_base"), s.current_base);
 	serializeIn(state, node->getNode("time"), s.time);
+	serializeIn(state, node->getNode("day"), s.day);
 }
 
 void serializeOut(sp<SerializationNode> node, const UString &string) { node->setValue(string); }
@@ -1433,6 +1434,7 @@ void serializeOut(sp<SerializationNode> node, const GameState &state)
 	serializeOut(node->addNode("current_base"), state.current_base);
 	serializeOut(node->addNode("player"), state.player);
 	serializeOut(node->addNode("time"), state.time);
+	serializeOut(node->addNode("day"), state.day);
 }
 
 } // anonymous namespace

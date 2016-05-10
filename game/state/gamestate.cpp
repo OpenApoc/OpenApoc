@@ -16,7 +16,7 @@ namespace OpenApoc
 
 GameState::GameState()
     : player(this), showTileOrigin(false), showVehiclePath(false), showSelectableBounds(false),
-      time(0)
+      time(0), day(0)
 {
 }
 
@@ -274,7 +274,22 @@ void GameState::update(unsigned int ticks)
 	}
 	Trace::end("GameState::update::labs");
 	this->time += ticks;
+
+	if (this->time >= TICKS_PER_DAY)
+	{
+		this->time -= TICKS_PER_DAY;
+		this->day++;
+		this->updateEndOfDay();
+		if ((this->day % 7) == 0)
+		{
+			this->updateEndOfWeek();
+		}
+	}
 }
+
+void GameState::updateEndOfDay() {}
+
+void GameState::updateEndOfWeek() {}
 
 void GameState::update() { this->update(1); }
 
