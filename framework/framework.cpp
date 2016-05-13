@@ -739,7 +739,8 @@ void Framework::Display_Initialise()
 		display_flags |= SDL_WINDOW_FULLSCREEN;
 	}
 
-	p->window = SDL_CreateWindow("OpenApoc", 0, 0, scrW, scrH, display_flags);
+	p->window = SDL_CreateWindow("OpenApoc", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, scrW,
+	                             scrH, display_flags);
 
 	if (!p->window)
 	{
