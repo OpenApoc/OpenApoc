@@ -6,6 +6,7 @@
 #include "game/state/rules/vequipment.h"
 #include "tools/extractors/common/audio.h"
 #include "tools/extractors/common/baselayout.h"
+#include "tools/extractors/common/bulletsprite.h"
 #include "tools/extractors/common/canonstring.h"
 #include "tools/extractors/common/datachunk.h"
 #include "tools/extractors/common/facilities.h"
