@@ -36,6 +36,9 @@
     <ClInclude Include="voxel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="line.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="strings.cpp">

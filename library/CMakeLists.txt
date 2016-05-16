@@ -20,7 +20,8 @@ set (LIBRARY_HEADER_FILES
 	strings.h
 	vec.h
 	resource.h
-	voxel.h)
+	voxel.h
+	line.h)
 source_group(library\\headers FILES ${LIBRARY_HEADER_FILES})
 
 list(APPEND ALL_SOURCE_FILES ${LIBRARY_SOURCE_FILES})
