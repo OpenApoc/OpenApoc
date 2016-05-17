@@ -221,6 +221,7 @@ class LodepngImageWriter : public OpenApoc::ImageWriter
 
 		state.info_raw.colortype = LCT_PALETTE;
 		state.info_raw.bitdepth = 8;
+		state.encoder.auto_convert = 0;
 
 		lodepng_palette_clear(&state.info_raw);
 
