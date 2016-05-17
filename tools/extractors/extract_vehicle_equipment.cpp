@@ -78,7 +78,6 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state, Diffic
 				auto wData = data.vehicle_weapons->get(edata.data_idx);
 				e->type = VEquipmentType::Type::Weapon;
 				e->speed = wData.speed;
-				e->projectile_image = wData.projectile_image;
 				e->damage = wData.damage;
 				e->accuracy = wData.accuracy;
 				e->fire_delay = wData.fire_delay;
@@ -94,6 +93,22 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state, Diffic
 				e->explosion_graphic = wData.explosion_graphic;
 				e->icon = fw().data->load_image(UString::format(
 				    "PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:%d", weapon_count));
+
+				auto projectile_sprites = data.projectile_sprites->get(wData.projectile_image);
+				for (int i = 0; i < e->tail_size; i++)
+				{
+					UString sprite_path = "";
+					if (projectile_sprites.sprites[i] != 255)
+					{
+						sprite_path = UString::format("bulletsprites/city/%02u.png",
+						                              (unsigned)projectile_sprites.sprites[i]);
+					}
+					else
+					{
+						sprite_path = ""; // a 'gap' in the projectile trail
+					}
+					e->projectile_sprites.push_back(fw().data->load_image(sprite_path));
+				}
 				weapon_count++;
 				break;
 			}

@@ -1,6 +1,7 @@
 #include "game/state/tileview/tileobject_projectile.h"
 #include "framework/renderer.h"
 #include "game/state/tileview/tile.h"
+#include "library/line.h"
 
 namespace OpenApoc
 {
@@ -16,22 +17,35 @@ void TileObjectProjectile::draw(Renderer &r, TileTransform &transform, Vec2<floa
 		LogError("Called with no owning projectile object");
 		return;
 	}
-	switch (projectile->type)
+
+	Vec2<float> headScreenCoords = screenPosition;
+	Vec3<float> tailPosition =
+	    ((float)projectile->tail_length * (-glm::normalize(projectile->velocity)));
+	tailPosition /= VELOCITY_SCALE;
+
+	Vec2<float> tailScreenCoords = transform.tileToScreenCoords(tailPosition);
+	tailScreenCoords += screenPosition;
+
+	Vec3<int> projectile_line_start(lrint(headScreenCoords.x), lrint(headScreenCoords.y), 0);
+	Vec3<int> projectile_line_end(lrint(tailScreenCoords.x), lrint(tailScreenCoords.y), 0);
+
+	LineSegment<int, false> line{projectile_line_start, projectile_line_end};
+	auto sprite_it = projectile->projectile_sprites.begin();
+
+	for (auto &point : line)
 	{
-		case Projectile::Type::Beam:
+		if (sprite_it == projectile->projectile_sprites.end())
 		{
-			Vec2<float> headScreenCoords = screenPosition;
-			Vec3<float> tailPosition =
-			    (projectile->beamLength * (glm::normalize(projectile->velocity)));
-			tailPosition /= VELOCITY_SCALE;
-			Vec2<float> tailScreenCoords = transform.tileToScreenCoords(tailPosition);
-			tailScreenCoords += screenPosition;
-			r.drawLine(headScreenCoords, tailScreenCoords, projectile->colour,
-			           projectile->beamWidth);
+			// We've reached the end of the sprite trail
 			break;
 		}
-		default:
-			LogError("Unknown projectile type");
+		if (*sprite_it == nullptr)
+		{
+			// A 'gap' in the sprite train
+			continue;
+		}
+		r.draw(*sprite_it, Vec2<float>{point.x, point.y});
+		sprite_it++;
 	}
 }
 

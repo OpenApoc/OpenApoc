@@ -12,17 +12,17 @@ const std::map<Projectile::Type, UString> Projectile::TypeMap = {
 };
 
 Projectile::Projectile(StateRef<Vehicle> firer, Vec3<float> position, Vec3<float> velocity,
-                       unsigned int lifetime, const Colour &colour, float beamLength,
-                       float beamWidth)
+                       unsigned int lifetime, unsigned int tail_length,
+                       std::list<sp<Image>> projectile_sprites)
     : type(Type::Beam), position(position), velocity(velocity), age(0), lifetime(lifetime),
-      firer(firer), previousPosition(position), colour(colour), beamLength(beamLength),
-      beamWidth(beamWidth)
+      firer(firer), previousPosition(position), tail_length(tail_length),
+      projectile_sprites(projectile_sprites)
 {
 }
 
 Projectile::Projectile()
     : type(Type::Beam), position(0, 0, 0), velocity(0, 0, 0), age(0), lifetime(0),
-      previousPosition(0, 0, 0), colour(0, 0, 0), beamLength(0), beamWidth(0)
+      previousPosition(0, 0, 0), tail_length(0)
 {
 }
 

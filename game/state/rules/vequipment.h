@@ -49,7 +49,8 @@ class VEquipmentType : public StateObject<VEquipmentType>
 
 	// Weapons
 	int speed;
-	int projectile_image; // FIXME: What is this?
+	std::list<sp<Image>> projectile_sprites; // A list of sprites forming the projectile
+	                                         // 'bullet'/'beam' - 'nullptr' gaps are expected
 	int damage;
 	int accuracy;
 	int fire_delay;

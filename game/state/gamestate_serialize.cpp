@@ -464,7 +464,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("users"), e.users);
 	// Weapons
 	serializeIn(state, node->getNode("speed"), e.speed);
-	serializeIn(state, node->getNode("projectile_image"), e.projectile_image);
+	serializeIn(state, node->getNode("projectile_sprites"), e.projectile_sprites);
 	serializeIn(state, node->getNode("damage"), e.damage);
 	serializeIn(state, node->getNode("accuracy"), e.accuracy);
 	serializeIn(state, node->getNode("fire_delay"), e.fire_delay);
@@ -573,9 +573,8 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("lifetime"), p.lifetime);
 	serializeIn(state, node->getNode("firer"), p.firer);
 	serializeIn(state, node->getNode("previousPosition"), p.previousPosition);
-	serializeIn(state, node->getNode("colour"), p.colour);
-	serializeIn(state, node->getNode("beamLength"), p.beamLength);
-	serializeIn(state, node->getNode("beamWidth"), p.beamWidth);
+	serializeIn(state, node->getNode("tail_length"), p.tail_length);
+	serializeIn(state, node->getNode("projectile_sprites"), p.projectile_sprites);
 }
 
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, City &city)
@@ -1114,7 +1113,7 @@ template <> void serializeOut(sp<SerializationNode> node, const VEquipmentType &
 	serializeOut(node->addNode("users"), e.users);
 	// WeaponOut
 	serializeOut(node->addNode("speed"), e.speed);
-	serializeOut(node->addNode("projectile_image"), e.projectile_image);
+	serializeOut(node->addNode("projectile_sprites"), e.projectile_sprites);
 	serializeOut(node->addNode("damage"), e.damage);
 	serializeOut(node->addNode("accuracy"), e.accuracy);
 	serializeOut(node->addNode("fire_delay"), e.fire_delay);
@@ -1244,9 +1243,8 @@ template <> void serializeOut(sp<SerializationNode> node, const Projectile &p)
 	serializeOut(node->addNode("lifetime"), p.lifetime);
 	serializeOut(node->addNode("firer"), p.firer);
 	serializeOut(node->addNode("previousPosition"), p.previousPosition);
-	serializeOut(node->addNode("colour"), p.colour);
-	serializeOut(node->addNode("beamLength"), p.beamLength);
-	serializeOut(node->addNode("beamWidth"), p.beamWidth);
+	serializeOut(node->addNode("tail_length"), p.tail_length);
+	serializeOut(node->addNode("projectile_sprites"), p.projectile_sprites);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const City &city)

@@ -21,7 +21,15 @@
           <entry>air</entry>
         </users>
         <speed>20</speed>
-        <projectile_image>2</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/07.png</entry>
+          <entry>bulletsprites/city/09.png</entry>
+          <entry>bulletsprites/city/02.png</entry>
+          <entry>bulletsprites/city/03.png</entry>
+          <entry>bulletsprites/city/04.png</entry>
+          <entry>bulletsprites/city/05.png</entry>
+          <entry />
+        </projectile_sprites>
         <damage>10</damage>
         <accuracy>30</accuracy>
         <fire_delay>6</fire_delay>
@@ -69,7 +77,15 @@
           <entry>ground</entry>
         </users>
         <speed>20</speed>
-        <projectile_image>2</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/07.png</entry>
+          <entry>bulletsprites/city/09.png</entry>
+          <entry>bulletsprites/city/02.png</entry>
+          <entry>bulletsprites/city/03.png</entry>
+          <entry>bulletsprites/city/04.png</entry>
+          <entry>bulletsprites/city/05.png</entry>
+          <entry />
+        </projectile_sprites>
         <damage>14</damage>
         <accuracy>30</accuracy>
         <fire_delay>6</fire_delay>
@@ -118,7 +134,7 @@
           <entry>air</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -166,7 +182,15 @@
           <entry>ground</entry>
         </users>
         <speed>15</speed>
-        <projectile_image>2</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/07.png</entry>
+          <entry>bulletsprites/city/09.png</entry>
+          <entry>bulletsprites/city/02.png</entry>
+          <entry>bulletsprites/city/03.png</entry>
+          <entry>bulletsprites/city/04.png</entry>
+          <entry>bulletsprites/city/05.png</entry>
+          <entry />
+        </projectile_sprites>
         <damage>16</damage>
         <accuracy>28</accuracy>
         <fire_delay>18</fire_delay>
@@ -215,7 +239,7 @@
           <entry>air</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -263,7 +287,30 @@
           <entry>air</entry>
         </users>
         <speed>38</speed>
-        <projectile_image>4</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/22.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/01.png</entry>
+          <entry>bulletsprites/city/01.png</entry>
+          <entry>bulletsprites/city/01.png</entry>
+          <entry>bulletsprites/city/02.png</entry>
+          <entry>bulletsprites/city/02.png</entry>
+          <entry>bulletsprites/city/02.png</entry>
+          <entry>bulletsprites/city/03.png</entry>
+          <entry>bulletsprites/city/03.png</entry>
+          <entry>bulletsprites/city/03.png</entry>
+          <entry>bulletsprites/city/04.png</entry>
+          <entry>bulletsprites/city/04.png</entry>
+        </projectile_sprites>
         <damage>12</damage>
         <accuracy>45</accuracy>
         <fire_delay>12</fire_delay>
@@ -312,7 +359,7 @@
           <entry>air</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -361,7 +408,7 @@
           <entry>air</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -409,7 +456,28 @@
           <entry>air</entry>
         </users>
         <speed>16</speed>
-        <projectile_image>12</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/20.png</entry>
+          <entry>bulletsprites/city/33.png</entry>
+          <entry>bulletsprites/city/33.png</entry>
+          <entry>bulletsprites/city/33.png</entry>
+          <entry>bulletsprites/city/34.png</entry>
+          <entry />
+          <entry>bulletsprites/city/34.png</entry>
+          <entry />
+          <entry>bulletsprites/city/35.png</entry>
+          <entry />
+          <entry>bulletsprites/city/35.png</entry>
+          <entry>bulletsprites/city/32.png</entry>
+          <entry>bulletsprites/city/32.png</entry>
+          <entry>bulletsprites/city/32.png</entry>
+          <entry />
+          <entry>bulletsprites/city/32.png</entry>
+          <entry />
+          <entry>bulletsprites/city/32.png</entry>
+          <entry />
+          <entry />
+        </projectile_sprites>
         <damage>94</damage>
         <accuracy>18</accuracy>
         <fire_delay>90</fire_delay>
@@ -457,7 +525,43 @@
           <entry>air</entry>
         </users>
         <speed>12</speed>
-        <projectile_image>14</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/35.png</entry>
+          <entry>bulletsprites/city/33.png</entry>
+          <entry>bulletsprites/city/33.png</entry>
+          <entry>bulletsprites/city/33.png</entry>
+          <entry>bulletsprites/city/33.png</entry>
+          <entry>bulletsprites/city/33.png</entry>
+          <entry>bulletsprites/city/33.png</entry>
+          <entry>bulletsprites/city/33.png</entry>
+          <entry>bulletsprites/city/33.png</entry>
+          <entry>bulletsprites/city/33.png</entry>
+          <entry>bulletsprites/city/33.png</entry>
+          <entry>bulletsprites/city/34.png</entry>
+          <entry />
+          <entry>bulletsprites/city/34.png</entry>
+          <entry />
+          <entry>bulletsprites/city/34.png</entry>
+          <entry />
+          <entry>bulletsprites/city/34.png</entry>
+          <entry />
+          <entry>bulletsprites/city/35.png</entry>
+          <entry />
+          <entry>bulletsprites/city/35.png</entry>
+          <entry />
+          <entry>bulletsprites/city/35.png</entry>
+          <entry />
+          <entry>bulletsprites/city/32.png</entry>
+          <entry />
+          <entry>bulletsprites/city/32.png</entry>
+          <entry />
+          <entry>bulletsprites/city/32.png</entry>
+          <entry />
+          <entry />
+          <entry>bulletsprites/city/32.png</entry>
+          <entry />
+          <entry />
+        </projectile_sprites>
         <damage>98</damage>
         <accuracy>16</accuracy>
         <fire_delay>120</fire_delay>
@@ -505,7 +609,43 @@
           <entry>ground</entry>
         </users>
         <speed>18</speed>
-        <projectile_image>1</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/35.png</entry>
+          <entry>bulletsprites/city/10.png</entry>
+          <entry>bulletsprites/city/10.png</entry>
+          <entry>bulletsprites/city/10.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/13.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/14.png</entry>
+          <entry>bulletsprites/city/15.png</entry>
+          <entry>bulletsprites/city/16.png</entry>
+          <entry>bulletsprites/city/17.png</entry>
+          <entry>bulletsprites/city/18.png</entry>
+          <entry />
+          <entry>bulletsprites/city/19.png</entry>
+          <entry />
+          <entry>bulletsprites/city/20.png</entry>
+          <entry />
+          <entry>bulletsprites/city/21.png</entry>
+          <entry />
+          <entry>bulletsprites/city/22.png</entry>
+          <entry />
+          <entry>bulletsprites/city/22.png</entry>
+          <entry />
+          <entry>bulletsprites/city/23.png</entry>
+          <entry />
+          <entry />
+          <entry>bulletsprites/city/24.png</entry>
+          <entry />
+          <entry />
+          <entry />
+        </projectile_sprites>
         <damage>28</damage>
         <accuracy>25</accuracy>
         <fire_delay>34</fire_delay>
@@ -553,7 +693,27 @@
           <entry>ground</entry>
         </users>
         <speed>17</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/19.png</entry>
+          <entry>bulletsprites/city/10.png</entry>
+          <entry>bulletsprites/city/10.png</entry>
+          <entry>bulletsprites/city/10.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/12.png</entry>
+          <entry>bulletsprites/city/12.png</entry>
+          <entry>bulletsprites/city/13.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/14.png</entry>
+          <entry>bulletsprites/city/15.png</entry>
+          <entry>bulletsprites/city/16.png</entry>
+          <entry>bulletsprites/city/17.png</entry>
+          <entry>bulletsprites/city/18.png</entry>
+          <entry />
+          <entry>bulletsprites/city/19.png</entry>
+          <entry />
+          <entry>bulletsprites/city/20.png</entry>
+          <entry />
+        </projectile_sprites>
         <damage>26</damage>
         <accuracy>24</accuracy>
         <fire_delay>24</fire_delay>
@@ -601,7 +761,43 @@
           <entry>air</entry>
         </users>
         <speed>32</speed>
-        <projectile_image>11</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/35.png</entry>
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+        </projectile_sprites>
         <damage>80</damage>
         <accuracy>30</accuracy>
         <fire_delay>20</fire_delay>
@@ -650,7 +846,7 @@
           <entry>air</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -698,7 +894,27 @@
           <entry>air</entry>
         </users>
         <speed>16</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/19.png</entry>
+          <entry>bulletsprites/city/10.png</entry>
+          <entry>bulletsprites/city/10.png</entry>
+          <entry>bulletsprites/city/10.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/12.png</entry>
+          <entry>bulletsprites/city/12.png</entry>
+          <entry>bulletsprites/city/13.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/14.png</entry>
+          <entry>bulletsprites/city/15.png</entry>
+          <entry>bulletsprites/city/16.png</entry>
+          <entry>bulletsprites/city/17.png</entry>
+          <entry>bulletsprites/city/18.png</entry>
+          <entry />
+          <entry>bulletsprites/city/19.png</entry>
+          <entry />
+          <entry>bulletsprites/city/20.png</entry>
+          <entry />
+        </projectile_sprites>
         <damage>22</damage>
         <accuracy>24</accuracy>
         <fire_delay>36</fire_delay>
@@ -746,7 +962,43 @@
           <entry>air</entry>
         </users>
         <speed>10</speed>
-        <projectile_image>1</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/35.png</entry>
+          <entry>bulletsprites/city/10.png</entry>
+          <entry>bulletsprites/city/10.png</entry>
+          <entry>bulletsprites/city/10.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/13.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/14.png</entry>
+          <entry>bulletsprites/city/15.png</entry>
+          <entry>bulletsprites/city/16.png</entry>
+          <entry>bulletsprites/city/17.png</entry>
+          <entry>bulletsprites/city/18.png</entry>
+          <entry />
+          <entry>bulletsprites/city/19.png</entry>
+          <entry />
+          <entry>bulletsprites/city/20.png</entry>
+          <entry />
+          <entry>bulletsprites/city/21.png</entry>
+          <entry />
+          <entry>bulletsprites/city/22.png</entry>
+          <entry />
+          <entry>bulletsprites/city/22.png</entry>
+          <entry />
+          <entry>bulletsprites/city/23.png</entry>
+          <entry />
+          <entry />
+          <entry>bulletsprites/city/24.png</entry>
+          <entry />
+          <entry />
+          <entry />
+        </projectile_sprites>
         <damage>50</damage>
         <accuracy>26</accuracy>
         <fire_delay>70</fire_delay>
@@ -794,7 +1046,33 @@
           <entry>air</entry>
         </users>
         <speed>38</speed>
-        <projectile_image>5</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/35.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/01.png</entry>
+          <entry>bulletsprites/city/01.png</entry>
+          <entry>bulletsprites/city/01.png</entry>
+          <entry>bulletsprites/city/01.png</entry>
+          <entry>bulletsprites/city/01.png</entry>
+          <entry>bulletsprites/city/02.png</entry>
+          <entry>bulletsprites/city/02.png</entry>
+          <entry>bulletsprites/city/02.png</entry>
+          <entry>bulletsprites/city/02.png</entry>
+        </projectile_sprites>
         <damage>16</damage>
         <accuracy>40</accuracy>
         <fire_delay>12</fire_delay>
@@ -843,7 +1121,7 @@
           <entry>air</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -891,7 +1169,18 @@
           <entry>air</entry>
         </users>
         <speed>38</speed>
-        <projectile_image>3</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/10.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/01.png</entry>
+          <entry>bulletsprites/city/01.png</entry>
+          <entry>bulletsprites/city/02.png</entry>
+          <entry>bulletsprites/city/02.png</entry>
+          <entry>bulletsprites/city/03.png</entry>
+          <entry>bulletsprites/city/03.png</entry>
+          <entry>bulletsprites/city/04.png</entry>
+        </projectile_sprites>
         <damage>8</damage>
         <accuracy>12</accuracy>
         <fire_delay>4</fire_delay>
@@ -939,7 +1228,23 @@
           <entry>air</entry>
         </users>
         <speed>28</speed>
-        <projectile_image>9</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/15.png</entry>
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+        </projectile_sprites>
         <damage>20</damage>
         <accuracy>50</accuracy>
         <fire_delay>15</fire_delay>
@@ -988,7 +1293,7 @@
           <entry>air</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -1036,7 +1341,43 @@
           <entry>air</entry>
         </users>
         <speed>38</speed>
-        <projectile_image>8</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/35.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/29.png</entry>
+          <entry />
+          <entry>bulletsprites/city/29.png</entry>
+          <entry />
+          <entry>bulletsprites/city/29.png</entry>
+          <entry />
+          <entry>bulletsprites/city/29.png</entry>
+          <entry />
+          <entry>bulletsprites/city/29.png</entry>
+          <entry />
+          <entry>bulletsprites/city/30.png</entry>
+          <entry />
+          <entry>bulletsprites/city/30.png</entry>
+          <entry />
+          <entry>bulletsprites/city/30.png</entry>
+          <entry />
+          <entry>bulletsprites/city/30.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+        </projectile_sprites>
         <damage>25</damage>
         <accuracy>34</accuracy>
         <fire_delay>12</fire_delay>
@@ -1084,7 +1425,33 @@
           <entry>air</entry>
         </users>
         <speed>30</speed>
-        <projectile_image>10</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/25.png</entry>
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+          <entry>bulletsprites/city/31.png</entry>
+          <entry />
+        </projectile_sprites>
         <damage>40</damage>
         <accuracy>40</accuracy>
         <fire_delay>17</fire_delay>
@@ -1133,7 +1500,7 @@
           <entry>air</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -1181,7 +1548,7 @@
           <entry>ground</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -1229,7 +1596,7 @@
           <entry>ground</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -1277,7 +1644,7 @@
           <entry>ground</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -1325,7 +1692,7 @@
           <entry>ground</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -1373,7 +1740,7 @@
           <entry>ground</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -1422,7 +1789,7 @@
           <entry>air</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -1471,7 +1838,7 @@
           <entry>air</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -1519,7 +1886,20 @@
           <entry>air</entry>
         </users>
         <speed>38</speed>
-        <projectile_image>6</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/12.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+        </projectile_sprites>
         <damage>12</damage>
         <accuracy>8</accuracy>
         <fire_delay>4</fire_delay>
@@ -1567,7 +1947,30 @@
           <entry>air</entry>
         </users>
         <speed>38</speed>
-        <projectile_image>7</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/22.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+        </projectile_sprites>
         <damage>14</damage>
         <accuracy>38</accuracy>
         <fire_delay>6</fire_delay>
@@ -1615,7 +2018,43 @@
           <entry>ground</entry>
         </users>
         <speed>38</speed>
-        <projectile_image>8</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/35.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/28.png</entry>
+          <entry>bulletsprites/city/29.png</entry>
+          <entry />
+          <entry>bulletsprites/city/29.png</entry>
+          <entry />
+          <entry>bulletsprites/city/29.png</entry>
+          <entry />
+          <entry>bulletsprites/city/29.png</entry>
+          <entry />
+          <entry>bulletsprites/city/29.png</entry>
+          <entry />
+          <entry>bulletsprites/city/30.png</entry>
+          <entry />
+          <entry>bulletsprites/city/30.png</entry>
+          <entry />
+          <entry>bulletsprites/city/30.png</entry>
+          <entry />
+          <entry>bulletsprites/city/30.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+        </projectile_sprites>
         <damage>30</damage>
         <accuracy>15</accuracy>
         <fire_delay>8</fire_delay>
@@ -1663,7 +2102,27 @@
           <entry>air</entry>
         </users>
         <speed>18</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/19.png</entry>
+          <entry>bulletsprites/city/10.png</entry>
+          <entry>bulletsprites/city/10.png</entry>
+          <entry>bulletsprites/city/10.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/12.png</entry>
+          <entry>bulletsprites/city/12.png</entry>
+          <entry>bulletsprites/city/13.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/14.png</entry>
+          <entry>bulletsprites/city/15.png</entry>
+          <entry>bulletsprites/city/16.png</entry>
+          <entry>bulletsprites/city/17.png</entry>
+          <entry>bulletsprites/city/18.png</entry>
+          <entry />
+          <entry>bulletsprites/city/19.png</entry>
+          <entry />
+          <entry>bulletsprites/city/20.png</entry>
+          <entry />
+        </projectile_sprites>
         <damage>26</damage>
         <accuracy>24</accuracy>
         <fire_delay>42</fire_delay>
@@ -1711,7 +2170,30 @@
           <entry>air</entry>
         </users>
         <speed>38</speed>
-        <projectile_image>7</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/22.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/26.png</entry>
+          <entry>bulletsprites/city/27.png</entry>
+        </projectile_sprites>
         <damage>20</damage>
         <accuracy>36</accuracy>
         <fire_delay>12</fire_delay>
@@ -1759,7 +2241,43 @@
           <entry>air</entry>
         </users>
         <speed>10</speed>
-        <projectile_image>1</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/35.png</entry>
+          <entry>bulletsprites/city/10.png</entry>
+          <entry>bulletsprites/city/10.png</entry>
+          <entry>bulletsprites/city/10.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/11.png</entry>
+          <entry>bulletsprites/city/13.png</entry>
+          <entry>bulletsprites/city/00.png</entry>
+          <entry>bulletsprites/city/14.png</entry>
+          <entry>bulletsprites/city/15.png</entry>
+          <entry>bulletsprites/city/16.png</entry>
+          <entry>bulletsprites/city/17.png</entry>
+          <entry>bulletsprites/city/18.png</entry>
+          <entry />
+          <entry>bulletsprites/city/19.png</entry>
+          <entry />
+          <entry>bulletsprites/city/20.png</entry>
+          <entry />
+          <entry>bulletsprites/city/21.png</entry>
+          <entry />
+          <entry>bulletsprites/city/22.png</entry>
+          <entry />
+          <entry>bulletsprites/city/22.png</entry>
+          <entry />
+          <entry>bulletsprites/city/23.png</entry>
+          <entry />
+          <entry />
+          <entry>bulletsprites/city/24.png</entry>
+          <entry />
+          <entry />
+          <entry />
+        </projectile_sprites>
         <damage>68</damage>
         <accuracy>22</accuracy>
         <fire_delay>90</fire_delay>
@@ -1807,7 +2325,15 @@
           <entry>ground</entry>
         </users>
         <speed>20</speed>
-        <projectile_image>2</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/07.png</entry>
+          <entry>bulletsprites/city/09.png</entry>
+          <entry>bulletsprites/city/02.png</entry>
+          <entry>bulletsprites/city/03.png</entry>
+          <entry>bulletsprites/city/04.png</entry>
+          <entry>bulletsprites/city/05.png</entry>
+          <entry />
+        </projectile_sprites>
         <damage>34</damage>
         <accuracy>25</accuracy>
         <fire_delay>7</fire_delay>
@@ -1855,7 +2381,7 @@
           <entry>air</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -1903,7 +2429,7 @@
           <entry>air</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -1951,7 +2477,7 @@
           <entry>air</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -1999,7 +2525,7 @@
           <entry>air</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -2047,7 +2573,7 @@
           <entry>air</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -2095,7 +2621,7 @@
           <entry>air</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -2144,7 +2670,7 @@
           <entry>air</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
@@ -2192,7 +2718,32 @@
           <entry>air</entry>
         </users>
         <speed>24</speed>
-        <projectile_image>13</projectile_image>
+        <projectile_sprites>
+          <entry>bulletsprites/city/24.png</entry>
+          <entry>bulletsprites/city/33.png</entry>
+          <entry>bulletsprites/city/33.png</entry>
+          <entry>bulletsprites/city/33.png</entry>
+          <entry>bulletsprites/city/33.png</entry>
+          <entry>bulletsprites/city/33.png</entry>
+          <entry>bulletsprites/city/33.png</entry>
+          <entry>bulletsprites/city/34.png</entry>
+          <entry />
+          <entry>bulletsprites/city/34.png</entry>
+          <entry />
+          <entry>bulletsprites/city/34.png</entry>
+          <entry />
+          <entry>bulletsprites/city/35.png</entry>
+          <entry />
+          <entry>bulletsprites/city/35.png</entry>
+          <entry />
+          <entry>bulletsprites/city/32.png</entry>
+          <entry />
+          <entry>bulletsprites/city/32.png</entry>
+          <entry />
+          <entry>bulletsprites/city/32.png</entry>
+          <entry />
+          <entry />
+        </projectile_sprites>
         <damage>0</damage>
         <accuracy>20</accuracy>
         <fire_delay>90</fire_delay>
@@ -2240,7 +2791,7 @@
           <entry>air</entry>
         </users>
         <speed>0</speed>
-        <projectile_image>0</projectile_image>
+        <projectile_sprites />
         <damage>0</damage>
         <accuracy>0</accuracy>
         <fire_delay>0</fire_delay>
