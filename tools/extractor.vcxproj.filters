@@ -54,6 +54,9 @@
     <ClCompile Include="extractors\common\ufo2p.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="extractors\extract_bulletsprites.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="extractors\extractors.h">

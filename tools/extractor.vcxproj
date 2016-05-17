@@ -24,6 +24,7 @@
     <ClCompile Include="extractors\extractors.cpp" />
     <ClCompile Include="extractors\extract_base_layouts.cpp" />
     <ClCompile Include="extractors\extract_buildings.cpp" />
+    <ClCompile Include="extractors\extract_bulletsprites.cpp" />
     <ClCompile Include="extractors\extract_city_map.cpp" />
     <ClCompile Include="extractors\extract_city_scenery.cpp" />
     <ClCompile Include="extractors\extract_facilities.cpp" />
