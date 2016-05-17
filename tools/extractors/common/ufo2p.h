@@ -65,6 +65,9 @@ class UFO2P
 
 	std::unique_ptr<DataChunk<scenery_minimap_colour_t>> scenery_minimap_colour;
 
+	std::unique_ptr<DataChunk<bullet_sprite_t>> bullet_sprites;
+	std::unique_ptr<DataChunk<projectile_sprites_t>> projectile_sprites;
+
 	UString get_org_id(int idx)
 	{
 		return Organisation::getPrefix() + canon_string(this->organisation_names->get(idx));

@@ -89,6 +89,11 @@ UFO2P::UFO2P(std::string file_name)
 
 	this->scenery_minimap_colour.reset(new DataChunk<scenery_minimap_colour_t>(
 	    file, SCENERY_MINIMAP_COLOUR_DATA_OFFSET_START, SCENERY_MINIMAP_COLOUR_DATA_OFFSET_END));
+
+	this->bullet_sprites.reset(new DataChunk<bullet_sprite_t>(file, BULLETSPRITE_DATA_OFFSET_START,
+	                                                          BULLETSPRITE_DATA_OFFSET_END));
+	this->projectile_sprites.reset(new DataChunk<projectile_sprites_t>(
+	    file, PROJECTILESPRITES_DATA_OFFSET_START, PROJECTILESPRITES_DATA_OFFSET_END));
 }
 
 } // namespace OpenApoc

@@ -40,6 +40,15 @@ int main(int argc, char *argv[])
 
 		TraceObj obj("main");
 		Framework *fw = new Framework(UString(argv[0]), cmdline, false);
+		InitialGameStateExtractor e;
+
+		auto bullet_sprites = e.extractBulletSprites();
+
+		for (auto &sprite_pair : bullet_sprites)
+		{
+			auto path = "data/" + sprite_pair.first;
+			fw->data->write_image(path, sprite_pair.second);
+		}
 
 		std::map<UString, InitialGameStateExtractor::Difficulty> difficultyOutputFiles = {
 		    {"data/difficulty1", InitialGameStateExtractor::Difficulty::DIFFICULTY_1},
@@ -53,9 +62,8 @@ int main(int argc, char *argv[])
 
 		for (auto &dpair : difficultyOutputFiles)
 		{
-			auto future = fw->threadPool->enqueue([dpair]() {
+			auto future = fw->threadPool->enqueue([dpair, &e]() {
 				GameState s;
-				InitialGameStateExtractor e;
 				LogWarning("Extracting initial game state for \"%s\"", dpair.first.c_str());
 				e.extract(s, dpair.second);
 				LogWarning("Finished extracting initial game state for \"%s\"",

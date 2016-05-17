@@ -15,6 +15,7 @@ set (DATAEXTRACTOR_SOURCE_FILES
 	extract_vehicles.cpp
 	extract_city_scenery.cpp
 	extract_base_layouts.cpp
+	extract_bulletsprites.cpp
 	extractors.cpp
 	extract_research.cpp
 	main.cpp)

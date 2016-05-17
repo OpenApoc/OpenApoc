@@ -22,6 +22,8 @@ class InitialGameStateExtractor
 	};
 	InitialGameStateExtractor() = default;
 	void extract(GameState &state, Difficulty difficulty);
+	/* extractBulletSprites() returns a list of images, so doesn't affect a GameState */
+	std::map<UString, sp<Image>> extractBulletSprites();
 
   private:
 	void extractVehicles(GameState &state, Difficulty difficulty);
