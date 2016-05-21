@@ -7,6 +7,8 @@ clone of the original X-COM: Apocalypse strategy game.
 OpenApoc is in early development - it is not yet 'playable' as a game.
 All help is appreciated, but there's little point trying to 'play' is as yes
 
+[See the BIG TODO LIST for more info](TODO.md)
+
 # Current build status:
 Linux: [![Linux Build Status](https://travis-ci.org/JonnyH/OpenApoc.svg?branch=master)](https://travis-ci.org/JonnyH/OpenApoc)
 Windows: [![Windows Build Status](https://ci.appveyor.com/api/projects/status/07ndsvrbyct924a1)](https://ci.appveyor.com/project/JonnyH/openapoc)
