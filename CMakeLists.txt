@@ -124,7 +124,8 @@ else()
 endif()
 
 set(CLANG_TIDY clang-tidy CACHE STRING "clang-tidy executable name in PATH")
-set(CLANG_TIDY_FIX OFF tidy CACHE BOOL "Pass -fix to clang-tidy (DANGEROUS)")
+set(CLANG_TIDY_FIXES_FILE clang-tidy-fixes.yaml CACHE STRING "clang-tidy
+exported fixes file")
 
 find_package(Git)
 execute_process(COMMAND ${GIT_EXECUTABLE} -C ${CMAKE_SOURCE_DIR} describe
@@ -139,28 +140,13 @@ string(MAKE_C_IDENTIFIER "${OPENAPOC_VERSION_STRING_RAW}" OPENAPOC_VERSION_STRIN
 
 configure_file(version.h.in version.h)
 
-list(APPEND CLANG_TIDY_OPTIONS -header-filter=.*)
+list(APPEND CLANG_TIDY_OPTIONS
+		-export-fixes=${CLANG_TIDY_FIXES_FILE})
 
-add_custom_target(tidy)
-add_custom_target(tidy-fix)
 
-foreach(TIDY_SOURCE ${FORMAT_SOURCES})
-		string(MAKE_C_IDENTIFIER ${TIDY_SOURCE} TIDY_SOURCE_STRIPPED)
-		add_custom_target(tidy-${TIDY_SOURCE_STRIPPED} ${CLANG_TIDY}
-				${TIDY_SOURCE} -p ${CMAKE_BINARY_DIR} ${CLANG_TIDY_OPTIONS}
-				DEPENDS ${FORMAT_SOURCES} ${CMAKE_BINARY_DIR}/compile_commands.json)
-		add_dependencies(tidy tidy-${TIDY_SOURCE_STRIPPED})
-endforeach()
-
-foreach(TIDY_SOURCE ${FORMAT_SOURCES})
-		string(MAKE_C_IDENTIFIER ${TIDY_SOURCE} TIDY_SOURCE_STRIPPED)
-		add_custom_target(tidy-fix-${TIDY_SOURCE_STRIPPED} ${CLANG_TIDY}
-				${TIDY_SOURCE} -p ${CMAKE_BINARY_DIR} ${CLANG_TIDY_OPTIONS}
-				-fix -fix-errors
-				DEPENDS ${FORMAT_SOURCES} ${CMAKE_BINARY_DIR}/compile_commands.json)
-		add_dependencies(tidy-fix tidy-fix-${TIDY_SOURCE_STRIPPED})
-endforeach()
-
+add_custom_target(tidy ${CLANG_TIDY}
+		${FORMAT_SOURCES} -p ${CMAKE_BINARY_DIR} ${CLANG_TIDY_OPTIONS}
+		DEPENDS ${FORMAT_SOURCES} ${CMAKE_BINARY_DIR}/compile_commands.json)
 
 # Localisation
 
