@@ -342,7 +342,7 @@ void VEquipScreen::Render()
 				{
 					statsLabels[statsCount]->SetText(tr("Accuracy"));
 					statsValues[statsCount]->SetText(
-					    UString::format("%d", generalType.accuracy_modifier));
+					    UString::format("%d%%", 100 - generalType.accuracy_modifier));
 					statsCount++;
 				}
 				if (generalType.cargo_space)
@@ -418,7 +418,7 @@ void VEquipScreen::Render()
 
 		// FIXME: This value doesn't seem to be the same as the %age shown in the ui?
 		statsLabels[2]->SetText(tr("Accuracy"));
-		statsValues[2]->SetText(UString::format("%d", vehicle->getAccuracy()));
+		statsValues[2]->SetText(UString::format("%d%%", vehicle->getAccuracy()));
 
 		statsLabels[3]->SetText(tr("Top Speed"));
 		statsValues[3]->SetText(UString::format("%d", vehicle->getTopSpeed()));

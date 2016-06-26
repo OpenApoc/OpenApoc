@@ -29,6 +29,7 @@ class VehicleMission
 	// Methods to create new missions
 	static VehicleMission *gotoLocation(Vehicle &v, Vec3<int> target);
 	static VehicleMission *gotoBuilding(Vehicle &v, StateRef<Building> target);
+	static VehicleMission *attackVehicle(Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission *snooze(Vehicle &v, unsigned int ticks);
 
 	// INTERNAL: Not to be used directly (Only works when in building)

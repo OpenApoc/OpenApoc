@@ -114,6 +114,14 @@ VehicleMission *VehicleMission::gotoBuilding(Vehicle &v, StateRef<Building> targ
 	return mission;
 }
 
+VehicleMission *VehicleMission::attackVehicle(Vehicle &v, StateRef<Vehicle> target)
+{
+	auto *mission = new VehicleMission();
+	mission->type = MissionType::AttackVehicle;
+	mission->targetVehicle = target;
+	return mission;
+}
+
 VehicleMission *VehicleMission::snooze(Vehicle &v, unsigned int snoozeTicks)
 {
 	auto *mission = new VehicleMission();
@@ -151,6 +159,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 		case MissionType::TakeOff:      // Fall-through
 		case MissionType::GotoLocation: // Fall-through
 		case MissionType::Land:
+		case MissionType::AttackVehicle:
 		{
 			if (currentPlannedPath.empty())
 				return false;
@@ -253,6 +262,8 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks)
 			return;
 		case MissionType::GotoLocation:
 			return;
+		case MissionType::AttackVehicle:
+			return;
 		case MissionType::Snooze:
 		{
 			if (ticks >= this->timeToSnooze)
@@ -295,6 +306,8 @@ bool VehicleMission::isFinished(GameState &state, Vehicle &v)
 			return this->currentPlannedPath.empty();
 		case MissionType::GotoBuilding:
 			return this->targetBuilding == v.currentlyLandedBuilding;
+		case MissionType::AttackVehicle:
+			return this->targetVehicle->health == 0;
 		case MissionType::Snooze:
 			return this->timeToSnooze == 0;
 		default:
@@ -378,6 +391,45 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				{
 					this->currentPlannedPath.push_back(t->position);
 				}
+			}
+			return;
+		}
+		case MissionType::AttackVehicle:
+		{
+			auto name = this->getName();
+			LogInfo("Vehicle mission %s checking state", name.c_str());
+			auto t = this->targetVehicle;
+			if (!t)
+			{
+				LogError("Target disappeared");
+				return;
+			}
+			auto targetTile = t->tileObject;
+			if (!targetTile)
+			{
+				LogInfo("Vehicle mission %s: Target not on the map", name.c_str());
+				return;
+			}
+			auto vehicleTile = v.tileObject;
+			if (!vehicleTile)
+			{
+				LogInfo("Mission %s: Taking off first", name.c_str());
+				auto *takeoffMission = VehicleMission::takeOff(v);
+				v.missions.emplace_front(takeoffMission);
+				takeoffMission->start(state, v);
+				return;
+			}
+
+			auto &map = vehicleTile->map;
+			// FIXME: Change findShortestPath to return Vec3<int> positions?
+			auto path = map.findShortestPath(vehicleTile->getOwningTile()->position,
+				targetTile->getOwningTile()->position, 500,
+				FlyingVehicleCanEnterTileHelper{ map, v });
+			// Always start with the current position
+			this->currentPlannedPath.push_back(vehicleTile->getOwningTile()->position);
+			for (auto *t : path)
+			{
+				this->currentPlannedPath.push_back(t->position);
 			}
 			return;
 		}

@@ -310,7 +310,7 @@ CityView::CityView(sp<GameState> state)
 		    if (v && v->owner == this->state->getPlayer())
 		    {
 			    LogInfo("Select target for vehicle \"%s\"", v->name.c_str());
-			    this->selectionState = SelectionState::VehicleGotoLocation;
+			    this->selectionState = SelectionState::VehicleAttackVehicle;
 		    }
 
 		});
@@ -738,6 +738,22 @@ void CityView::EventOccurred(Event *e)
 					auto vehicle =
 					    std::dynamic_pointer_cast<TileObjectVehicle>(collision.obj)->getVehicle();
 					LogWarning("Clicked on vehicle \"%s\"", vehicle->name.c_str());
+
+					if (this->selectionState == SelectionState::VehicleAttackVehicle)
+					{
+						auto v = this->selectedVehicle.lock();
+						StateRef<Vehicle> vehicleRef(state.get(), vehicle);
+
+						if (v && v->owner == state->getPlayer())
+						{
+							// FIXME: Don't clear missions if not replacing current mission
+							v->missions.clear();
+							v->missions.emplace_back(
+								VehicleMission::attackVehicle(*v, vehicleRef));
+							v->missions.front()->start(*this->state, *v);
+						}
+						this->selectionState = SelectionState::Normal;
+					}
 				}
 			}
 		}

@@ -70,6 +70,11 @@ class Vehicle : public StateObject<Vehicle>, public std::enable_shared_from_this
 	void addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentType> type);
 	void removeEquipment(sp<VEquipment> object);
 
+	void handleCollision(GameState &state, Collision &c);
+	sp<TileObjectVehicle> findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile);
+	void attackTarget(sp<TileObjectVehicle> vehicleTile, sp<TileObjectVehicle> enemyTile);
+	float getFiringRange() const;
+
 	const Vec3<float> &getPosition() const { return this->position; }
 	const Vec3<float> &getDirection() const;
 
