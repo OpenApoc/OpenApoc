@@ -176,7 +176,8 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 			// follow logic
 			auto vTile = v.tileObject;
 			auto targetTile = this->targetVehicle->tileObject;
-			if (vTile && targetTile)
+			if (vTile && targetTile && !currentPlannedPath.empty() && 
+				targetTile->getOwningTile()->position != currentPlannedPath.back())
 			{
 				auto &map = vTile->map;
 
@@ -327,6 +328,18 @@ bool VehicleMission::isFinished(GameState &state, Vehicle &v)
 		case MissionType::GotoBuilding:
 			return this->targetBuilding == v.currentlyLandedBuilding;
 		case MissionType::AttackVehicle:
+			auto t = this->targetVehicle;
+			if (!t)
+			{
+				LogError("Target disappeared");
+				return true;
+			}
+			auto targetTile = t->tileObject;
+			if (!targetTile)
+			{
+				LogInfo("Vehicle attack mission: Target not on the map");
+				return true;
+			}
 			return this->targetVehicle->health == 0;
 		case MissionType::Snooze:
 			return this->timeToSnooze == 0;
