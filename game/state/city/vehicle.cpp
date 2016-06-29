@@ -13,8 +13,8 @@
 #include "game/state/tileview/voxel.h"
 #include "library/sp.h"
 #include <limits>
-#include <random>
 #include <queue>
+#include <random>
 
 namespace OpenApoc
 {
@@ -213,7 +213,8 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 			// FIXME: Only run on 'aggressive'? And not already a manually-selected target?
 
 			sp<TileObjectVehicle> enemy;
-			if (!missions.empty() && missions.front()->type == VehicleMission::MissionType::AttackVehicle)
+			if (!missions.empty() &&
+			    missions.front()->type == VehicleMission::MissionType::AttackVehicle)
 			{
 				enemy = missions.front()->targetVehicle->tileObject;
 			}
@@ -226,7 +227,6 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 			{
 				attackTarget(vehicleTile, enemy);
 			}
-
 		}
 	}
 	// FIXME: Make shield recharge rate variable?
@@ -237,16 +237,16 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	}
 }
 
-void Vehicle::handleCollision(GameState & state, Collision & c)
+void Vehicle::handleCollision(GameState &state, Collision &c)
 {
 	if (!this->tileObject)
 	{
 		// It's possible multiple projectiles hit the same tile in the same tick (?)
 		return;
 	}
-	
+
 	auto projectile = c.projectile.get();
-	if (projectile) 
+	if (projectile)
 	{
 		projectile->tileObject;
 	}
@@ -270,8 +270,7 @@ sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectV
 			/* Can't fire on things a world away */
 			continue;
 		}
-		if (this->owner->isRelatedTo(otherVehicle->owner) !=
-			Organisation::Relation::Hostile)
+		if (this->owner->isRelatedTo(otherVehicle->owner) != Organisation::Relation::Hostile)
 		{
 			/* Not hostile, skip */
 			continue;
@@ -314,7 +313,7 @@ void Vehicle::attackTarget(sp<TileObjectVehicle> vehicleTile, sp<TileObjectVehic
 		{
 			// Only fire if we're in range
 			// and fire at the center of the tile
-			//target += Vec3<float>{0.5, 0.5, 0.5};
+			// target += Vec3<float>{0.5, 0.5, 0.5};
 			auto projectile = equipment->fire(target);
 			if (projectile)
 			{
@@ -444,7 +443,8 @@ int Vehicle::getAccuracy() const
 	}
 
 	double moduleEfficiency = 1.0;
-	while (!accModifiers.empty()) {
+	while (!accModifiers.empty())
+	{
 		accuracy += accModifiers.top() * moduleEfficiency;
 		moduleEfficiency /= 2;
 		accModifiers.pop();

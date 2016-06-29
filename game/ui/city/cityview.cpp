@@ -1,9 +1,10 @@
-#include "game/state/city/city.h"
+#include "game/ui/city/cityview.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "game/state/base/facility.h"
 #include "game/state/city/building.h"
+#include "game/state/city/city.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
@@ -17,7 +18,6 @@
 #include "game/ui/base/vequipscreen.h"
 #include "game/ui/city/baseselectscreen.h"
 #include "game/ui/city/buildingscreen.h"
-#include "game/ui/city/cityview.h"
 #include "game/ui/city/infiltrationscreen.h"
 #include "game/ui/city/scorescreen.h"
 #include "game/ui/general/ingameoptions.h"
@@ -748,8 +748,7 @@ void CityView::EventOccurred(Event *e)
 						{
 							// FIXME: Don't clear missions if not replacing current mission
 							v->missions.clear();
-							v->missions.emplace_back(
-								VehicleMission::attackVehicle(*v, vehicleRef));
+							v->missions.emplace_back(VehicleMission::attackVehicle(*v, vehicleRef));
 							v->missions.front()->start(*this->state, *v);
 						}
 						this->selectionState = SelectionState::Normal;
