@@ -326,68 +326,68 @@ CityView::CityView(sp<GameState> state)
 		});
 
 	vehicleForm->FindControl("BUTTON_ATTACK_MODE_AGGRESSIVE")
-		->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
 		    auto v = this->selectedVehicle.lock();
-			if (v && v->owner == this->state->getPlayer())
-			{
-				v->attackMode = Vehicle::AttackMode::Aggressive;
-			}
-	    });
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    v->attackMode = Vehicle::AttackMode::Aggressive;
+		    }
+		});
 	vehicleForm->FindControl("BUTTON_ATTACK_MODE_STANDARD")
-		->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
-			auto v = this->selectedVehicle.lock();
-			if (v && v->owner == this->state->getPlayer())
-			{
-				v->attackMode = Vehicle::AttackMode::Standard;
-			}
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    v->attackMode = Vehicle::AttackMode::Standard;
+		    }
 		});
 	vehicleForm->FindControl("BUTTON_ATTACK_MODE_DEFENSIVE")
-		->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
-			auto v = this->selectedVehicle.lock();
-			if (v && v->owner == this->state->getPlayer())
-			{
-				v->attackMode = Vehicle::AttackMode::Defensive;
-			}
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    v->attackMode = Vehicle::AttackMode::Defensive;
+		    }
 		});
 	vehicleForm->FindControl("BUTTON_ATTACK_MODE_EVASIVE")
-		->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
-			auto v = this->selectedVehicle.lock();
-			if (v && v->owner == this->state->getPlayer())
-			{
-				v->attackMode = Vehicle::AttackMode::Evasive;
-			}
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    v->attackMode = Vehicle::AttackMode::Evasive;
+		    }
 		});
 	vehicleForm->FindControl("BUTTON_ALTITUDE_HIGHEST")
-		->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
-			auto v = this->selectedVehicle.lock();
-			if (v && v->owner == this->state->getPlayer())
-			{
-				v->altitude = Vehicle::Altitude::Highest;
-			}
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    v->altitude = Vehicle::Altitude::Highest;
+		    }
 		});
 	vehicleForm->FindControl("BUTTON_ALTITUDE_HIGH")
-		->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
-			auto v = this->selectedVehicle.lock();
-			if (v && v->owner == this->state->getPlayer())
-			{
-				v->altitude = Vehicle::Altitude::High;
-			}
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    v->altitude = Vehicle::Altitude::High;
+		    }
 		});
 	vehicleForm->FindControl("BUTTON_ALTITUDE_STANDARD")
-		->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
-			auto v = this->selectedVehicle.lock();
-			if (v && v->owner == this->state->getPlayer())
-			{
-				v->altitude = Vehicle::Altitude::Standard;
-			}
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    v->altitude = Vehicle::Altitude::Standard;
+		    }
 		});
 	vehicleForm->FindControl("BUTTON_ALTITUDE_LOW")
-		->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
-			auto v = this->selectedVehicle.lock();
-			if (v && v->owner == this->state->getPlayer())
-			{
-				v->altitude = Vehicle::Altitude::Low;
-			}
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    v->altitude = Vehicle::Altitude::Low;
+		    }
 		});
 }
 
@@ -644,8 +644,50 @@ void CityView::Update(StageCmd *const cmd)
 			newVehicleListControls[vehicle] = std::make_pair(info, control);
 			ownedVehicleList->AddItem(control);
 
-			control->addCallback(FormEventType::MouseDown,
-			                     [this, vehicle](Event *e) { this->selectedVehicle = vehicle; });
+			control->addCallback(FormEventType::MouseDown, [this, vehicle](Event *e) {
+				this->selectedVehicle = vehicle;
+				auto vehicleForm = this->uiTabs[1];
+
+				switch (vehicle->altitude)
+				{
+					case Vehicle::Altitude::Highest:
+						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGHEST")
+						    ->SetChecked(true);
+						break;
+					case Vehicle::Altitude::High:
+						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGH")
+						    ->SetChecked(true);
+						break;
+					case Vehicle::Altitude::Standard:
+						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ALTITUDE_STANDARD")
+						    ->SetChecked(true);
+						break;
+					case Vehicle::Altitude::Low:
+						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ALTITUDE_LOW")
+						    ->SetChecked(true);
+						break;
+				}
+
+				switch (vehicle->attackMode)
+				{
+					case Vehicle::AttackMode::Aggressive:
+						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ATTACK_MODE_AGGRESSIVE")
+						    ->SetChecked(true);
+						break;
+					case Vehicle::AttackMode::Standard:
+						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ATTACK_MODE_STANDARD")
+						    ->SetChecked(true);
+						break;
+					case Vehicle::AttackMode::Defensive:
+						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ATTACK_MODE_DEFENSIVE")
+						    ->SetChecked(true);
+						break;
+					case Vehicle::AttackMode::Evasive:
+						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ATTACK_MODE_EVASIVE")
+						    ->SetChecked(true);
+						break;
+				}
+			});
 		}
 	}
 

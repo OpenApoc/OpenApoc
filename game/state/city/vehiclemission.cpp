@@ -181,10 +181,9 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 			{
 				auto &map = vTile->map;
 
-				auto path = map.findShortestPath(vTile->getOwningTile()->position,
-				                                 targetTile->getOwningTile()->position, 500,
-				                                 FlyingVehicleCanEnterTileHelper{map, v},
-				                                 (float) v.altitude);
+				auto path = map.findShortestPath(
+				    vTile->getOwningTile()->position, targetTile->getOwningTile()->position, 500,
+				    FlyingVehicleCanEnterTileHelper{map, v}, (float)v.altitude);
 
 				auto pos = (*std::next(path.begin(), 1))->position;
 				dest = Vec3<float>{pos.x, pos.y, pos.z}
@@ -418,10 +417,9 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			{
 				auto &map = vehicleTile->map;
 				// FIXME: Change findShortestPath to return Vec3<int> positions?
-				auto path = map.findShortestPath(vehicleTile->getOwningTile()->position,
-				                                 this->targetLocation, 500,
-				                                 FlyingVehicleCanEnterTileHelper{map, v},
-				                                 (float) v.altitude);
+				auto path = map.findShortestPath(
+				    vehicleTile->getOwningTile()->position, this->targetLocation, 500,
+				    FlyingVehicleCanEnterTileHelper{map, v}, (float)v.altitude);
 				// Always start with the current position
 				this->currentPlannedPath.push_back(vehicleTile->getOwningTile()->position);
 				for (auto *t : path)
@@ -460,10 +458,9 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			auto &map = vehicleTile->map;
 			// FIXME: Change findShortestPath to return Vec3<int> positions?
 			// 4 height settings: 2, 5, 8, 11
-			auto path = map.findShortestPath(vehicleTile->getOwningTile()->position,
-			                                 targetTile->getOwningTile()->position, 500,
-			                                 FlyingVehicleCanEnterTileHelper{map, v},
-				                             (float) v.altitude);
+			auto path = map.findShortestPath(
+			    vehicleTile->getOwningTile()->position, targetTile->getOwningTile()->position, 500,
+			    FlyingVehicleCanEnterTileHelper{map, v}, (float)v.altitude);
 			// Always start with the current position
 			this->currentPlannedPath.push_back(vehicleTile->getOwningTile()->position);
 			for (auto *t : path)
