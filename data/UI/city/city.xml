@@ -244,6 +244,54 @@
         <orientation>horizontal</orientation>
         <item size="0"/>
       </listbox>
+      <radiobutton id="BUTTON_ATTACK_MODE_AGGRESSIVE" groupid="ATTACK_MODE">
+        <position x="245" y="72"/>
+        <size width="13" height="13"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_ATTACK_MODE_STANDARD" groupid="ATTACK_MODE">
+        <position x="245" y="85"/>
+        <size width="13" height="13"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_ATTACK_MODE_DEFENSIVE" groupid="ATTACK_MODE">
+        <position x="245" y="98"/>
+        <size width="13" height="13"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_ATTACK_MODE_EVASIVE" groupid="ATTACK_MODE">
+        <position x="245" y="111"/>
+        <size width="13" height="13"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_ALTITUDE_HIGHEST" groupid="ALTITUDE">
+        <position x="275" y="72"/>
+        <size width="13" height="13"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_ALTITUDE_HIGH" groupid="ALTITUDE">
+        <position x="275" y="85"/>
+        <size width="13" height="13"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_ALTITUDE_STANDARD" groupid="ALTITUDE">
+        <position x="275" y="98"/>
+        <size width="13" height="13"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
+      <radiobutton id="BUTTON_ALTITUDE_LOW" groupid="ALTITUDE">
+        <position x="275" y="111"/>
+        <size width="13" height="13"/>
+        <image/>
+        <imagechecked>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:14:xcom3/ufodata/pal_01.dat</imagechecked>
+      </radiobutton>
       <graphicbutton id="BUTTON_GOTO_BUILDING">
         <size width="27" height="46"/>
         <position x="299" y="75"/>

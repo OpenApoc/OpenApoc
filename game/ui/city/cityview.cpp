@@ -324,6 +324,71 @@ CityView::CityView(sp<GameState> state)
 		    }
 
 		});
+
+	vehicleForm->FindControl("BUTTON_ATTACK_MODE_AGGRESSIVE")
+		->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+		    auto v = this->selectedVehicle.lock();
+			if (v && v->owner == this->state->getPlayer())
+			{
+				v->attackMode = Vehicle::AttackMode::Aggressive;
+			}
+	    });
+	vehicleForm->FindControl("BUTTON_ATTACK_MODE_STANDARD")
+		->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+			auto v = this->selectedVehicle.lock();
+			if (v && v->owner == this->state->getPlayer())
+			{
+				v->attackMode = Vehicle::AttackMode::Standard;
+			}
+		});
+	vehicleForm->FindControl("BUTTON_ATTACK_MODE_DEFENSIVE")
+		->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+			auto v = this->selectedVehicle.lock();
+			if (v && v->owner == this->state->getPlayer())
+			{
+				v->attackMode = Vehicle::AttackMode::Defensive;
+			}
+		});
+	vehicleForm->FindControl("BUTTON_ATTACK_MODE_EVASIVE")
+		->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+			auto v = this->selectedVehicle.lock();
+			if (v && v->owner == this->state->getPlayer())
+			{
+				v->attackMode = Vehicle::AttackMode::Evasive;
+			}
+		});
+	vehicleForm->FindControl("BUTTON_ALTITUDE_HIGHEST")
+		->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+			auto v = this->selectedVehicle.lock();
+			if (v && v->owner == this->state->getPlayer())
+			{
+				v->altitude = Vehicle::Altitude::Highest;
+			}
+		});
+	vehicleForm->FindControl("BUTTON_ALTITUDE_HIGH")
+		->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+			auto v = this->selectedVehicle.lock();
+			if (v && v->owner == this->state->getPlayer())
+			{
+				v->altitude = Vehicle::Altitude::High;
+			}
+		});
+	vehicleForm->FindControl("BUTTON_ALTITUDE_STANDARD")
+		->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+			auto v = this->selectedVehicle.lock();
+			if (v && v->owner == this->state->getPlayer())
+			{
+				v->altitude = Vehicle::Altitude::Standard;
+			}
+		});
+	vehicleForm->FindControl("BUTTON_ALTITUDE_LOW")
+		->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+			auto v = this->selectedVehicle.lock();
+			if (v && v->owner == this->state->getPlayer())
+			{
+				v->altitude = Vehicle::Altitude::Low;
+			}
+		});
 }
 
 CityView::~CityView() {}
