@@ -46,17 +46,18 @@ Note, this is not a complete list, expect items to grow and spawn sub-items as t
   - Vehicle damage
   - Vehicle AI:
     - ~~AI Vehicles fire at enemies~~
-	- ~~AI Vehicles move between buildings~~
-	- AI vehicles patrol
-	- User-controllable vehicle commands:
-	  - ~~Goto Building~~
-	  - ~~Goto Location~~
-	  - Attack Building
-	  - Attack Vehicle
-	  - Goto crashed UFO
-	  - Goto alien dimension portal
-	  - Different 'aggressiveness'
-	  - Different 'height'
+  - ~~AI Vehicles move between buildings~~
+  - AI vehicles patrol
+  - User-controllable vehicle commands:
+    - ~~Goto Building~~
+    - ~~Goto Location~~
+    - Attack Building
+    - ~~Attack Vehicle~~
+      - Prefer shooting at 'current target'
+    - Goto crashed UFO
+    - Goto alien dimension portal
+    - Different 'aggressiveness'
+    - ~~Different 'height'~~
 - Building destruction
   - Decide how building tiles are 'supported'
   - ~~Collapse tiles when support is lost~~
