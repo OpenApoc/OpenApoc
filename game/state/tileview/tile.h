@@ -101,7 +101,8 @@ class TileMap
 
 	std::list<Tile *> findShortestPath(Vec3<int> origin, Vec3<int> destination,
 	                                   unsigned int iterationLimit,
-	                                   const CanEnterTileHelper &canEnterTile);
+	                                   const CanEnterTileHelper &canEnterTile,
+	                                   float altitude = 5.0f);
 
 	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd);
 

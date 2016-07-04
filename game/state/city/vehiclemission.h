@@ -17,6 +17,12 @@ class UString;
 
 class VehicleMission
 {
+  private:
+	// INTERNAL: Not to be used directly (Only works when in building)
+	static VehicleMission *takeOff(Vehicle &v);
+	// INTERNAL: Not to be used directly (Only works if directly above a pad)
+	static VehicleMission *land(Vehicle &v, StateRef<Building> b);
+
   public:
 	VehicleMission();
 
@@ -29,12 +35,8 @@ class VehicleMission
 	// Methods to create new missions
 	static VehicleMission *gotoLocation(Vehicle &v, Vec3<int> target);
 	static VehicleMission *gotoBuilding(Vehicle &v, StateRef<Building> target);
+	static VehicleMission *attackVehicle(Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission *snooze(Vehicle &v, unsigned int ticks);
-
-	// INTERNAL: Not to be used directly (Only works when in building)
-	static VehicleMission *takeOff(Vehicle &v);
-	// INTERNAL: Not to be used directly (Only works if directly above a pad)
-	static VehicleMission *land(Vehicle &v, StateRef<Building> b);
 
 	UString getName();
 

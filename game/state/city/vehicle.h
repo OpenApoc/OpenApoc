@@ -38,6 +38,24 @@ class Vehicle : public StateObject<Vehicle>, public std::enable_shared_from_this
 	virtual ~Vehicle();
 	Vehicle();
 
+	enum class AttackMode
+	{
+		Aggressive,
+		Standard,
+		Defensive,
+		Evasive
+	};
+	AttackMode attackMode;
+
+	enum class Altitude
+	{
+		Highest = 11,
+		High = 8,
+		Standard = 5,
+		Low = 2
+	};
+	Altitude altitude;
+
 	void equipDefaultEquipment(GameState &state);
 
 	StateRef<VehicleType> type;
@@ -69,6 +87,11 @@ class Vehicle : public StateObject<Vehicle>, public std::enable_shared_from_this
 	bool canAddEquipment(Vec2<int> pos, StateRef<VEquipmentType> type) const;
 	void addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentType> type);
 	void removeEquipment(sp<VEquipment> object);
+
+	void handleCollision(GameState &state, Collision &c);
+	sp<TileObjectVehicle> findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile);
+	void attackTarget(sp<TileObjectVehicle> vehicleTile, sp<TileObjectVehicle> enemyTile);
+	float getFiringRange() const;
 
 	const Vec3<float> &getPosition() const { return this->position; }
 	const Vec3<float> &getDirection() const;

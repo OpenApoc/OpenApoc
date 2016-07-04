@@ -1,9 +1,10 @@
-#include "game/state/city/city.h"
+#include "game/ui/city/cityview.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "game/state/base/facility.h"
 #include "game/state/city/building.h"
+#include "game/state/city/city.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
@@ -17,7 +18,6 @@
 #include "game/ui/base/vequipscreen.h"
 #include "game/ui/city/baseselectscreen.h"
 #include "game/ui/city/buildingscreen.h"
-#include "game/ui/city/cityview.h"
 #include "game/ui/city/infiltrationscreen.h"
 #include "game/ui/city/scorescreen.h"
 #include "game/ui/general/ingameoptions.h"
@@ -310,7 +310,7 @@ CityView::CityView(sp<GameState> state)
 		    if (v && v->owner == this->state->getPlayer())
 		    {
 			    LogInfo("Select target for vehicle \"%s\"", v->name.c_str());
-			    this->selectionState = SelectionState::VehicleGotoLocation;
+			    this->selectionState = SelectionState::VehicleAttackVehicle;
 		    }
 
 		});
@@ -323,6 +323,71 @@ CityView::CityView(sp<GameState> state)
 			    this->selectionState = SelectionState::VehicleGotoLocation;
 		    }
 
+		});
+
+	vehicleForm->FindControl("BUTTON_ATTACK_MODE_AGGRESSIVE")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    v->attackMode = Vehicle::AttackMode::Aggressive;
+		    }
+		});
+	vehicleForm->FindControl("BUTTON_ATTACK_MODE_STANDARD")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    v->attackMode = Vehicle::AttackMode::Standard;
+		    }
+		});
+	vehicleForm->FindControl("BUTTON_ATTACK_MODE_DEFENSIVE")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    v->attackMode = Vehicle::AttackMode::Defensive;
+		    }
+		});
+	vehicleForm->FindControl("BUTTON_ATTACK_MODE_EVASIVE")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    v->attackMode = Vehicle::AttackMode::Evasive;
+		    }
+		});
+	vehicleForm->FindControl("BUTTON_ALTITUDE_HIGHEST")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    v->altitude = Vehicle::Altitude::Highest;
+		    }
+		});
+	vehicleForm->FindControl("BUTTON_ALTITUDE_HIGH")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    v->altitude = Vehicle::Altitude::High;
+		    }
+		});
+	vehicleForm->FindControl("BUTTON_ALTITUDE_STANDARD")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    v->altitude = Vehicle::Altitude::Standard;
+		    }
+		});
+	vehicleForm->FindControl("BUTTON_ALTITUDE_LOW")
+	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *e) {
+		    auto v = this->selectedVehicle.lock();
+		    if (v && v->owner == this->state->getPlayer())
+		    {
+			    v->altitude = Vehicle::Altitude::Low;
+		    }
 		});
 }
 
@@ -579,8 +644,50 @@ void CityView::Update(StageCmd *const cmd)
 			newVehicleListControls[vehicle] = std::make_pair(info, control);
 			ownedVehicleList->AddItem(control);
 
-			control->addCallback(FormEventType::MouseDown,
-			                     [this, vehicle](Event *e) { this->selectedVehicle = vehicle; });
+			control->addCallback(FormEventType::MouseDown, [this, vehicle](Event *e) {
+				this->selectedVehicle = vehicle;
+				auto vehicleForm = this->uiTabs[1];
+
+				switch (vehicle->altitude)
+				{
+					case Vehicle::Altitude::Highest:
+						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGHEST")
+						    ->SetChecked(true);
+						break;
+					case Vehicle::Altitude::High:
+						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGH")
+						    ->SetChecked(true);
+						break;
+					case Vehicle::Altitude::Standard:
+						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ALTITUDE_STANDARD")
+						    ->SetChecked(true);
+						break;
+					case Vehicle::Altitude::Low:
+						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ALTITUDE_LOW")
+						    ->SetChecked(true);
+						break;
+				}
+
+				switch (vehicle->attackMode)
+				{
+					case Vehicle::AttackMode::Aggressive:
+						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ATTACK_MODE_AGGRESSIVE")
+						    ->SetChecked(true);
+						break;
+					case Vehicle::AttackMode::Standard:
+						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ATTACK_MODE_STANDARD")
+						    ->SetChecked(true);
+						break;
+					case Vehicle::AttackMode::Defensive:
+						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ATTACK_MODE_DEFENSIVE")
+						    ->SetChecked(true);
+						break;
+					case Vehicle::AttackMode::Evasive:
+						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ATTACK_MODE_EVASIVE")
+						    ->SetChecked(true);
+						break;
+				}
+			});
 		}
 	}
 
@@ -738,6 +845,21 @@ void CityView::EventOccurred(Event *e)
 					auto vehicle =
 					    std::dynamic_pointer_cast<TileObjectVehicle>(collision.obj)->getVehicle();
 					LogWarning("Clicked on vehicle \"%s\"", vehicle->name.c_str());
+
+					if (this->selectionState == SelectionState::VehicleAttackVehicle)
+					{
+						auto v = this->selectedVehicle.lock();
+						StateRef<Vehicle> vehicleRef(state.get(), vehicle);
+
+						if (v && v->owner == state->getPlayer())
+						{
+							// FIXME: Don't clear missions if not replacing current mission
+							v->missions.clear();
+							v->missions.emplace_back(VehicleMission::attackVehicle(*v, vehicleRef));
+							v->missions.front()->start(*this->state, *v);
+						}
+						this->selectionState = SelectionState::Normal;
+					}
 				}
 			}
 		}

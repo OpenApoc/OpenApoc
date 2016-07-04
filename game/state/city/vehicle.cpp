@@ -2,6 +2,7 @@
 #include "framework/logger.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
+#include "game/state/city/projectile.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/city/vequipment.h"
 #include "game/state/gamestate.h"
@@ -9,8 +10,10 @@
 #include "game/state/rules/vequipment.h"
 #include "game/state/tileview/tileobject_shadow.h"
 #include "game/state/tileview/tileobject_vehicle.h"
+#include "game/state/tileview/voxel.h"
 #include "library/sp.h"
 #include <limits>
+#include <queue>
 #include <random>
 
 namespace OpenApoc
@@ -107,7 +110,11 @@ VehicleMover::VehicleMover(Vehicle &v) : vehicle(v) {}
 
 VehicleMover::~VehicleMover() {}
 
-Vehicle::Vehicle() : position(0, 0, 0), velocity(0, 0, 0), facing(1, 0, 0), health(0), shield(0) {}
+Vehicle::Vehicle()
+    : position(0, 0, 0), velocity(0, 0, 0), facing(1, 0, 0), health(0), shield(0),
+      attackMode(AttackMode::Standard), altitude(Altitude::Standard)
+{
+}
 
 Vehicle::~Vehicle() {}
 
@@ -208,70 +215,21 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 
 			// Find something to shoot at!
 			// FIXME: Only run on 'aggressive'? And not already a manually-selected target?
-			// Find the closest enemy within the firing arc
-			float closestEnemyRange = std::numeric_limits<float>::max();
-			sp<TileObjectVehicle> closestEnemy;
-			for (auto pair : state.vehicles)
-			{
-				auto otherVehicle = pair.second;
-				if (otherVehicle.get() == this)
-				{
-					/* Can't fire at yourself */
-					continue;
-				}
-				if (otherVehicle->city != this->city)
-				{
-					/* Can't fire on things a world away */
-					continue;
-				}
-				if (this->owner->isRelatedTo(otherVehicle->owner) !=
-				    Organisation::Relation::Hostile)
-				{
-					/* Not hostile, skip */
-					continue;
-				}
-				auto myPosition = vehicleTile->getPosition();
-				auto otherVehicleTile = otherVehicle->tileObject;
-				if (!otherVehicleTile)
-				{
-					/* Not in the map, ignore */
-					continue;
-				}
-				auto enemyPosition = otherVehicleTile->getPosition();
-				// FIXME: Check weapon arc against otherVehicle
-				auto offset = enemyPosition - myPosition;
-				float distance = glm::length(offset);
 
-				if (distance < closestEnemyRange)
-				{
-					closestEnemyRange = distance;
-					closestEnemy = otherVehicleTile;
-				}
+			sp<TileObjectVehicle> enemy;
+			if (!missions.empty() &&
+			    missions.front()->type == VehicleMission::MissionType::AttackVehicle)
+			{
+				enemy = missions.front()->targetVehicle->tileObject;
 			}
-			for (auto &equipment : this->equipment)
+			else
 			{
-				if (equipment->type->type != VEquipmentType::Type::Weapon)
-					continue;
-				if (equipment->canFire() == false)
-					continue;
+				enemy = findClosestEnemy(state, vehicleTile);
+			}
 
-				if (closestEnemyRange <= equipment->getRange())
-				{
-					// Only fire if we're in range
-					// and fire at the center of the tile
-					auto target = closestEnemy->getPosition();
-					target += Vec3<float>{0.5, 0.5, 0.5};
-					auto projectile = equipment->fire(target);
-					if (projectile)
-					{
-						vehicleTile->map.addObjectToMap(projectile);
-						this->city->projectiles.insert(projectile);
-					}
-					else
-					{
-						LogWarning("Fire() produced no object");
-					}
-				}
+			if (enemy)
+			{
+				attackTarget(vehicleTile, enemy);
 			}
 		}
 	}
@@ -281,6 +239,115 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	{
 		this->shield = this->getMaxShield();
 	}
+}
+
+void Vehicle::handleCollision(GameState &state, Collision &c)
+{
+	if (!this->tileObject)
+	{
+		// It's possible multiple projectiles hit the same tile in the same tick (?)
+		return;
+	}
+
+	auto projectile = c.projectile.get();
+	if (projectile)
+	{
+		projectile->tileObject;
+	}
+}
+
+sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile)
+{
+	// Find the closest enemy within the firing arc
+	float closestEnemyRange = std::numeric_limits<float>::max();
+	sp<TileObjectVehicle> closestEnemy;
+	for (auto pair : state.vehicles)
+	{
+		auto otherVehicle = pair.second;
+		if (otherVehicle.get() == this)
+		{
+			/* Can't fire at yourself */
+			continue;
+		}
+		if (otherVehicle->city != this->city)
+		{
+			/* Can't fire on things a world away */
+			continue;
+		}
+		if (this->owner->isRelatedTo(otherVehicle->owner) != Organisation::Relation::Hostile)
+		{
+			/* Not hostile, skip */
+			continue;
+		}
+		auto myPosition = vehicleTile->getPosition();
+		auto otherVehicleTile = otherVehicle->tileObject;
+		if (!otherVehicleTile)
+		{
+			/* Not in the map, ignore */
+			continue;
+		}
+		auto enemyPosition = otherVehicleTile->getPosition();
+		// FIXME: Check weapon arc against otherVehicle
+		auto offset = enemyPosition - myPosition;
+		float distance = glm::length(offset);
+
+		if (distance < closestEnemyRange)
+		{
+			closestEnemyRange = distance;
+			closestEnemy = otherVehicleTile;
+		}
+	}
+	return closestEnemy;
+}
+
+void Vehicle::attackTarget(sp<TileObjectVehicle> vehicleTile, sp<TileObjectVehicle> enemyTile)
+{
+	auto target = enemyTile->getPosition();
+	auto source = vehicleTile->getPosition();
+	float distance = glm::length(target - source);
+
+	for (auto &equipment : this->equipment)
+	{
+		if (equipment->type->type != VEquipmentType::Type::Weapon)
+			continue;
+		if (equipment->canFire() == false)
+			continue;
+
+		if (distance <= equipment->getRange())
+		{
+			// Only fire if we're in range
+			// and fire at the center of the tile
+			// target += Vec3<float>{0.5, 0.5, 0.5};
+			auto projectile = equipment->fire(target);
+			if (projectile)
+			{
+				vehicleTile->map.addObjectToMap(projectile);
+				this->city->projectiles.insert(projectile);
+			}
+			else
+			{
+				LogWarning("Fire() produced no object");
+			}
+		}
+	}
+}
+
+float Vehicle::getFiringRange() const
+{
+	float range = 0;
+	for (auto &equipment : this->equipment)
+	{
+		if (equipment->type->type != VEquipmentType::Type::Weapon)
+			continue;
+		if (equipment->canFire() == false)
+			continue;
+
+		if (range == 0 || range > equipment->getRange())
+		{
+			range = equipment->getRange();
+		}
+	}
+	return range;
 }
 
 const Vec3<float> &Vehicle::getDirection() const
@@ -369,12 +436,22 @@ int Vehicle::getArmor() const
 int Vehicle::getAccuracy() const
 {
 	int accuracy = 0;
+	std::priority_queue<int> accModifiers;
 
 	for (auto &e : this->equipment)
 	{
-		if (e->type->type != VEquipmentType::Type::General)
+		if (e->type->type != VEquipmentType::Type::General && e->type->accuracy_modifier <= 0)
 			continue;
-		accuracy += e->type->accuracy_modifier;
+		// accuracy percentages are inverted in the data (e.g. 10% module gives 90)
+		accModifiers.push(100 - e->type->accuracy_modifier);
+	}
+
+	double moduleEfficiency = 1.0;
+	while (!accModifiers.empty())
+	{
+		accuracy += accModifiers.top() * moduleEfficiency;
+		moduleEfficiency /= 2;
+		accModifiers.pop();
 	}
 	return accuracy;
 }

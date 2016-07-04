@@ -57,6 +57,12 @@ namespace
 class PathNode
 {
   public:
+	PathNode(float costToGetHere, float distanceToGoal, Tile *parentTile, Tile *thisTile)
+	    : costToGetHere(costToGetHere), parentTile(parentTile), thisTile(thisTile),
+	      distanceToGoal(distanceToGoal)
+	{
+	}
+
 	PathNode(float costToGetHere, Tile *parentTile, Tile *thisTile, const Vec3<float> &goal)
 	    : costToGetHere(costToGetHere), parentTile(parentTile), thisTile(thisTile)
 	{
@@ -112,7 +118,7 @@ static std::list<Tile *> getPathToNode(std::unordered_map<Tile *, PathNode> node
 
 std::list<Tile *> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination,
                                             unsigned int iterationLimit,
-                                            const CanEnterTileHelper &canEnterTile)
+                                            const CanEnterTileHelper &canEnterTile, float altitude)
 {
 	TRACE_FN;
 	PathNodeComparer c;
@@ -222,6 +228,11 @@ std::list<Tile *> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destinat
 
 					newNodeCost +=
 					    glm::length(Vec3<float>{nextPosition} - Vec3<float>{currentPosition});
+
+					// make pathfinder biased towards vehicle's altitude preference
+					if ((nextPosition.z < altitude && z == 1) ||
+					    (nextPosition.z > altitude && z == -1) || nextPosition.z == altitude)
+						newNodeCost -= 0.5f;
 
 					PathNode newNode(newNodeCost, nodeToExpand.thisTile, tile, goalPosition);
 					visitedTiles.emplace(tile, newNode);
