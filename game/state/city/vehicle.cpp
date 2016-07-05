@@ -241,18 +241,91 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	}
 }
 
+bool Vehicle::applyDamage(int damage, float armour)
+{
+	if (this->shield < damage)
+	{
+		damage -= this->shield;
+		this->shield = 0;
+
+		damage -= armour;
+		if (damage > 0)
+		{
+			this->health -= damage;
+			if (this->health <= 0)
+			{
+				this->health = 0;
+				return true;
+			}
+		}
+	}
+	else
+	{
+		this->shield -= damage;
+	}
+	return false;
+}
+
 void Vehicle::handleCollision(GameState &state, Collision &c)
 {
 	if (!this->tileObject)
 	{
-		// It's possible multiple projectiles hit the same tile in the same tick (?)
+		LogError("It's possible multiple projectiles hit the same tile in the same tick (?)");
 		return;
 	}
 
 	auto projectile = c.projectile.get();
 	if (projectile)
 	{
-		projectile->tileObject;
+		auto vehicleDir = glm::round(this->facing);
+		LogInfo("Collision: vehicleDir %f, %f, %f", vehicleDir.x, vehicleDir.y, vehicleDir.z);
+		auto projectileDir = glm::normalize(projectile->getVelocity());
+		LogInfo("Collision: projectileDir %f, %f, %f", projectileDir.x, projectileDir.y, projectileDir.z);
+		auto dir = vehicleDir + projectileDir;
+		LogInfo("Collision: dir %f, %f, %f", dir.x, dir.y, dir.z);
+		dir = glm::round(dir);
+		LogInfo("Collision: result %f, %f, %f", dir.x, dir.y, dir.z);
+
+		auto armourDirection = VehicleType::ArmourDirection::Right;
+		if (dir.x == 0 && dir.y == 0 && dir.z == 0)
+		{
+			armourDirection = VehicleType::ArmourDirection::Front;
+			LogInfo("Front Hit!");
+		}
+		else if (dir * 0.5f == vehicleDir)
+		{
+			armourDirection = VehicleType::ArmourDirection::Rear;
+			LogInfo("Rear Hit!");
+		}
+		// FIXME: vehicle Z != 0
+		else if (dir.z < 0)
+		{
+			armourDirection = VehicleType::ArmourDirection::Top;
+			LogInfo("Top Hit!");
+		}
+		else if (dir.z > 0)
+		{
+			armourDirection = VehicleType::ArmourDirection::Bottom;
+			LogInfo("Bottom Hit!");
+		}
+		else if ((vehicleDir.x == 0 && dir.x != dir.y) || (vehicleDir.y == 0 && dir.x == dir.y))
+		{
+			armourDirection = VehicleType::ArmourDirection::Left;
+			LogInfo("Left Hit!");
+		}
+		else
+		{
+			LogInfo("Right Hit!");
+		}
+
+		float armourValue = 0.0f;
+		auto armour = this->type->armour.find(armourDirection);
+		if (armour != this->type->armour.end())
+		{
+			armourValue = armour->second;
+		}
+
+		applyDamage(projectile->damage, armourValue);
 	}
 }
 

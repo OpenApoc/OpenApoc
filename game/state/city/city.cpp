@@ -13,6 +13,7 @@
 #include "game/state/rules/vequipment.h"
 #include "game/state/tileview/tileobject_projectile.h"
 #include "game/state/tileview/tileobject_scenery.h"
+#include "game/state/tileview/tileobject_vehicle.h"
 #include "game/state/tileview/voxel.h"
 
 #include <functional>
@@ -139,6 +140,7 @@ void City::update(GameState &state, unsigned int ticks)
 			}
 			if (v->owner == state.getPlayer())
 				continue;
+			/*
 			if (v->missions.empty())
 			{
 				auto bldIt = this->buildings.begin();
@@ -153,6 +155,7 @@ void City::update(GameState &state, unsigned int ticks)
 				std::uniform_int_distribution<unsigned int> snoozeTimeDist(10, 10000);
 				v->missions.emplace_back(VehicleMission::snooze(*v, snoozeTimeDist(state.rng)));
 			}
+			*/
 		}
 	}
 	Trace::end("City::update::buildings->landed_vehicles");
@@ -189,6 +192,8 @@ void City::update(GameState &state, unsigned int ticks)
 			{
 				case TileObject::Type::Vehicle:
 				{
+					auto vehicle = std::static_pointer_cast<TileObjectVehicle>(c.obj)->getVehicle();
+					vehicle->handleCollision(state, c);
 					LogWarning("Vehicle collision");
 					break;
 				}

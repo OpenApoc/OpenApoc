@@ -69,7 +69,7 @@ sp<Projectile> VEquipment::fire(Vec3<float> target)
 
 	return mksp<Projectile>(owner, vehicleTile->getPosition(), velocity,
 	                        static_cast<int>(this->getRange() / type->speed * TICK_SCALE),
-	                        type->tail_size, type->projectile_sprites);
+	                        type->damage, type->tail_size, type->projectile_sprites);
 }
 
 void VEquipment::update(int ticks)
