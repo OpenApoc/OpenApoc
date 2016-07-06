@@ -118,6 +118,20 @@ Vehicle::Vehicle()
 
 Vehicle::~Vehicle() {}
 
+const std::map<Vehicle::AttackMode, UString> Vehicle::AttackModeMap = {
+	{ Vehicle::AttackMode::Aggressive, "aggressive" },
+	{ Vehicle::AttackMode::Standard, "standard" },
+	{ Vehicle::AttackMode::Defensive, "defensive" },
+	{ Vehicle::AttackMode::Evasive, "evasive" },
+};
+
+const std::map<Vehicle::Altitude, UString> Vehicle::AltitudeMap = {
+	{ Vehicle::Altitude::Highest, "highest" },
+	{ Vehicle::Altitude::High, "high" },
+	{ Vehicle::Altitude::Standard, "standard" },
+	{ Vehicle::Altitude::Low, "low" },
+};
+
 void Vehicle::launch(TileMap &map, GameState &state, Vec3<float> initialPosition)
 {
 	LogWarning("Launching");
@@ -278,44 +292,31 @@ void Vehicle::handleCollision(GameState &state, Collision &c)
 	if (projectile)
 	{
 		auto vehicleDir = glm::round(this->facing);
-		LogInfo("Collision: vehicleDir %f, %f, %f", vehicleDir.x, vehicleDir.y, vehicleDir.z);
 		auto projectileDir = glm::normalize(projectile->getVelocity());
-		LogInfo("Collision: projectileDir %f, %f, %f", projectileDir.x, projectileDir.y, projectileDir.z);
 		auto dir = vehicleDir + projectileDir;
-		LogInfo("Collision: dir %f, %f, %f", dir.x, dir.y, dir.z);
 		dir = glm::round(dir);
-		LogInfo("Collision: result %f, %f, %f", dir.x, dir.y, dir.z);
 
 		auto armourDirection = VehicleType::ArmourDirection::Right;
 		if (dir.x == 0 && dir.y == 0 && dir.z == 0)
 		{
 			armourDirection = VehicleType::ArmourDirection::Front;
-			LogInfo("Front Hit!");
 		}
 		else if (dir * 0.5f == vehicleDir)
 		{
 			armourDirection = VehicleType::ArmourDirection::Rear;
-			LogInfo("Rear Hit!");
 		}
 		// FIXME: vehicle Z != 0
 		else if (dir.z < 0)
 		{
 			armourDirection = VehicleType::ArmourDirection::Top;
-			LogInfo("Top Hit!");
 		}
 		else if (dir.z > 0)
 		{
 			armourDirection = VehicleType::ArmourDirection::Bottom;
-			LogInfo("Bottom Hit!");
 		}
 		else if ((vehicleDir.x == 0 && dir.x != dir.y) || (vehicleDir.y == 0 && dir.x == dir.y))
 		{
 			armourDirection = VehicleType::ArmourDirection::Left;
-			LogInfo("Left Hit!");
-		}
-		else
-		{
-			LogInfo("Right Hit!");
 		}
 
 		float armourValue = 0.0f;
@@ -325,7 +326,18 @@ void Vehicle::handleCollision(GameState &state, Collision &c)
 			armourValue = armour->second;
 		}
 
-		applyDamage(projectile->damage, armourValue);
+		if (applyDamage(projectile->damage, armourValue))
+		{
+			auto doodad = city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_EXPLOSION_2"},
+				this->tileObject->getPosition());
+
+			this->shadowObject->removeFromMap();
+			this->tileObject->removeFromMap();
+			this->shadowObject.reset();
+			this->tileObject.reset();
+			state.vehicles.erase(this->getId(state, this->shared_from_this()));
+			return;
+		}
 	}
 }
 

@@ -570,6 +570,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("position"), p.position);
 	serializeIn(state, node->getNode("velocity"), p.velocity);
 	serializeIn(state, node->getNode("age"), p.age);
+	serializeIn(state, node->getNode("damage"), p.damage);
 	serializeIn(state, node->getNode("lifetime"), p.lifetime);
 	serializeIn(state, node->getNode("firer"), p.firer);
 	serializeIn(state, node->getNode("previousPosition"), p.previousPosition);
@@ -665,6 +666,8 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("type"), v.type);
 	serializeIn(state, node->getNode("owner"), v.owner);
 	serializeIn(state, node->getNode("name"), v.name);
+	serializeIn(state, node->getNode("attackMode"), v.attackMode, Vehicle::AttackModeMap);
+	serializeIn(state, node->getNode("altitude"), v.altitude, Vehicle::AltitudeMap);
 	serializeIn(state, node->getNode("missions"), v.missions);
 	serializeIn(state, node->getNode("equipment"), v.equipment);
 	serializeIn(state, node->getNode("position"), v.position);
@@ -1240,6 +1243,7 @@ template <> void serializeOut(sp<SerializationNode> node, const Projectile &p)
 	serializeOut(node->addNode("position"), p.position);
 	serializeOut(node->addNode("velocity"), p.velocity);
 	serializeOut(node->addNode("age"), p.age);
+	serializeOut(node->addNode("damage"), p.damage);
 	serializeOut(node->addNode("lifetime"), p.lifetime);
 	serializeOut(node->addNode("firer"), p.firer);
 	serializeOut(node->addNode("previousPosition"), p.previousPosition);
@@ -1283,6 +1287,8 @@ template <> void serializeOut(sp<SerializationNode> node, const Vehicle &v)
 	serializeOut(node->addNode("type"), v.type);
 	serializeOut(node->addNode("owner"), v.owner);
 	serializeOut(node->addNode("name"), v.name);
+	serializeOut(node->addNode("attackMode"), v.attackMode, Vehicle::AttackModeMap);
+	serializeOut(node->addNode("altitude"), v.altitude, Vehicle::AltitudeMap);
 	serializeOut(node->addNode("missions"), v.missions);
 	serializeOut(node->addNode("equipment"), v.equipment);
 	serializeOut(node->addNode("position"), v.position);

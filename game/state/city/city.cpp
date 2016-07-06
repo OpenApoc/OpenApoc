@@ -140,7 +140,7 @@ void City::update(GameState &state, unsigned int ticks)
 			}
 			if (v->owner == state.getPlayer())
 				continue;
-			/*
+
 			if (v->missions.empty())
 			{
 				auto bldIt = this->buildings.begin();
@@ -155,7 +155,6 @@ void City::update(GameState &state, unsigned int ticks)
 				std::uniform_int_distribution<unsigned int> snoozeTimeDist(10, 10000);
 				v->missions.emplace_back(VehicleMission::snooze(*v, snoozeTimeDist(state.rng)));
 			}
-			*/
 		}
 	}
 	Trace::end("City::update::buildings->landed_vehicles");
