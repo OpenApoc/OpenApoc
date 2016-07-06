@@ -319,10 +319,10 @@ void VEquipScreen::Render()
 				statsValues[statsCount]->SetText(UString::format("%d", weaponType.damage));
 				statsCount++;
 				statsLabels[statsCount]->SetText(tr("Range"));
-				statsValues[statsCount]->SetText(UString::format("%d", weaponType.range));
+				statsValues[statsCount]->SetText(UString::format("%dm", weaponType.range / 2));
 				statsCount++;
 				statsLabels[statsCount]->SetText(tr("Accuracy"));
-				statsValues[statsCount]->SetText(UString::format("%d", weaponType.accuracy));
+				statsValues[statsCount]->SetText(UString::format("%d%%", 100 - weaponType.accuracy));
 				statsCount++;
 
 				// Only show rounds if non-zero (IE not infinite ammo)

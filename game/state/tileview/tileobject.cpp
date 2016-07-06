@@ -64,6 +64,12 @@ class TileObjectZComparer
 };
 } // anonymous namespace
 
+float TileObject::getDistanceTo(sp<TileObject> target)
+{
+	// FIXME: convert tiles into 'Apoc meters'
+	return glm::length((target->getPosition() - this->getPosition()) * VELOCITY_SCALE);
+}
+
 void TileObject::setPosition(Vec3<float> newPosition)
 {
 	auto thisPtr = shared_from_this();

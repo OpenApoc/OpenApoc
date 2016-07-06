@@ -1,4 +1,4 @@
-#include "game/state/rules/vequipment.h"
+#include "game/state/rules/vequipment_type.h"
 #include "game/state/gamestate.h"
 
 namespace OpenApoc

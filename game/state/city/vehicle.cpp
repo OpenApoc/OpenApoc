@@ -7,7 +7,7 @@
 #include "game/state/city/vequipment.h"
 #include "game/state/gamestate.h"
 #include "game/state/organisation.h"
-#include "game/state/rules/vequipment.h"
+#include "game/state/rules/vequipment_type.h"
 #include "game/state/tileview/tileobject_shadow.h"
 #include "game/state/tileview/tileobject_vehicle.h"
 #include "game/state/tileview/voxel.h"
@@ -226,13 +226,11 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 		}
 		if (has_active_weapon)
 		{
-
 			// Find something to shoot at!
-			// FIXME: Only run on 'aggressive'? And not already a manually-selected target?
-
 			sp<TileObjectVehicle> enemy;
 			if (!missions.empty() &&
-			    missions.front()->type == VehicleMission::MissionType::AttackVehicle)
+			    missions.front()->type == VehicleMission::MissionType::AttackVehicle &&
+				vehicleTile->getDistanceTo(missions.front()->targetVehicle->tileObject) <= getFiringRange())
 			{
 				enemy = missions.front()->targetVehicle->tileObject;
 			}
@@ -364,18 +362,15 @@ sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectV
 			/* Not hostile, skip */
 			continue;
 		}
-		auto myPosition = vehicleTile->getPosition();
 		auto otherVehicleTile = otherVehicle->tileObject;
 		if (!otherVehicleTile)
 		{
 			/* Not in the map, ignore */
 			continue;
 		}
-		auto enemyPosition = otherVehicleTile->getPosition();
-		// FIXME: Check weapon arc against otherVehicle
-		auto offset = enemyPosition - myPosition;
-		float distance = glm::length(offset);
+		float distance = vehicleTile->getDistanceTo(otherVehicleTile);
 
+		// FIXME: Check weapon arc against otherVehicle
 		if (distance < closestEnemyRange)
 		{
 			closestEnemyRange = distance;
@@ -388,8 +383,7 @@ sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectV
 void Vehicle::attackTarget(sp<TileObjectVehicle> vehicleTile, sp<TileObjectVehicle> enemyTile)
 {
 	auto target = enemyTile->getPosition();
-	auto source = vehicleTile->getPosition();
-	float distance = glm::length(target - source);
+	float distance = this->tileObject->getDistanceTo(enemyTile);
 
 	for (auto &equipment : this->equipment)
 	{
@@ -400,9 +394,7 @@ void Vehicle::attackTarget(sp<TileObjectVehicle> vehicleTile, sp<TileObjectVehic
 
 		if (distance <= equipment->getRange())
 		{
-			// Only fire if we're in range
-			// and fire at the center of the tile
-			// target += Vec3<float>{0.5, 0.5, 0.5};
+			// FIXME: fire at the 'center of mass'
 			auto projectile = equipment->fire(target);
 			if (projectile)
 			{

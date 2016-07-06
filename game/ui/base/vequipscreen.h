@@ -1,7 +1,7 @@
 #pragma once
 
 #include "framework/stage.h"
-#include "game/state/rules/vequipment.h"
+#include "game/state/rules/vequipment_type.h"
 #include "library/colour.h"
 #include "library/rect.h"
 #include "library/sp.h"

@@ -1,5 +1,5 @@
 #pragma once
-#include "game/state/rules/vequipment.h"
+#include "game/state/rules/vequipment_type.h"
 #include "game/state/stateobject.h"
 #include "library/rect.h"
 #include "library/sp.h"

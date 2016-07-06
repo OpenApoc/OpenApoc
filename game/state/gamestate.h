@@ -9,7 +9,7 @@
 #include "game/state/rules/doodad_type.h"
 #include "game/state/rules/facility_type.h"
 #include "game/state/rules/vehicle_type.h"
-#include "game/state/rules/vequipment.h"
+#include "game/state/rules/vequipment_type.h"
 #include "game/state/stateobject.h"
 #include "game/state/ufopaedia.h"
 #include "library/strings.h"

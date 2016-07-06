@@ -71,7 +71,7 @@
     <ClInclude Include="rules\resource_aliases.h" />
     <ClInclude Include="rules\scenery_tile_type.h" />
     <ClInclude Include="rules\vehicle_type.h" />
-    <ClInclude Include="rules\vequipment.h" />
+    <ClInclude Include="rules\vequipment_type.h" />
     <ClInclude Include="stateobject.h" />
     <ClInclude Include="tileview\tile.h" />
     <ClInclude Include="tileview\tileobject.h" />

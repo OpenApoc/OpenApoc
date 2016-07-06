@@ -1,5 +1,5 @@
 #include "framework/framework.h"
-#include "game/state/rules/vequipment.h"
+#include "game/state/rules/vequipment_type.h"
 #include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
 

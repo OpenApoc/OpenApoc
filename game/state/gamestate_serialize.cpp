@@ -14,7 +14,7 @@
 #include "game/state/city/vehiclemission.h"
 #include "game/state/city/vequipment.h"
 #include "game/state/rules/scenery_tile_type.h"
-#include "game/state/rules/vequipment.h"
+#include "game/state/rules/vequipment_type.h"
 #include "library/voxel.h"
 
 namespace OpenApoc

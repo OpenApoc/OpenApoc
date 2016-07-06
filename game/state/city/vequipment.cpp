@@ -3,7 +3,7 @@
 #include "framework/logger.h"
 #include "game/state/city/projectile.h"
 #include "game/state/city/vehicle.h"
-#include "game/state/rules/vequipment.h"
+#include "game/state/rules/vequipment_type.h"
 #include "game/state/tileview/tileobject_vehicle.h"
 #include "library/sp.h"
 
@@ -122,7 +122,7 @@ float VEquipment::getRange() const
 		return 0;
 	}
 	auto &type = this->type;
-	return type->range;
+	return type->range / 2;
 }
 
 void VEquipment::setReloadTime(int ticks)
