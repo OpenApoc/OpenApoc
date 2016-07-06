@@ -330,7 +330,8 @@ sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &
 	auto img = mksp<RGBImage>(viewRect.size());
 	std::map<sp<TileObject>, Colour> objectColours;
 	std::default_random_engine colourRNG;
-	std::uniform_int_distribution<uint8_t> colourDist;
+	// MSVC doesn't like uint8_t being the type for uniform_int_distribution?
+	std::uniform_int_distribution<int> colourDist(0, 255);
 
 	RGBImageLock lock(img);
 	int h = viewRect.p1.y - viewRect.p0.y;
@@ -354,8 +355,9 @@ sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &
 			{
 				if (objectColours.find(collision.obj) == objectColours.end())
 				{
-					Colour c = {colourDist(colourRNG), colourDist(colourRNG), colourDist(colourRNG),
-					            255};
+					Colour c = {static_cast<uint8_t>(colourDist(colourRNG)),
+					            static_cast<uint8_t>(colourDist(colourRNG)),
+					            static_cast<uint8_t>(colourDist(colourRNG)), 255};
 					objectColours[collision.obj] = c;
 				}
 				lock.set({x, y}, objectColours[collision.obj]);
