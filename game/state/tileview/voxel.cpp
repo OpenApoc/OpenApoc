@@ -9,7 +9,7 @@
 namespace OpenApoc
 {
 
-Collision Tile::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd)
+Collision Tile::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd) const
 {
 	Collision c;
 	c.obj = nullptr;
@@ -55,7 +55,7 @@ Collision Tile::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegm
 	return c;
 }
 
-Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd)
+Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd) const
 {
 	Collision c;
 	c.obj = nullptr;
@@ -69,7 +69,7 @@ Collision TileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineS
 			return c;
 		}
 
-		Tile *t = this->getTile(point);
+		const Tile *t = this->getTile(point);
 		c = t->findCollision(lineSegmentStart, lineSegmentEnd);
 		if (c)
 			return c;

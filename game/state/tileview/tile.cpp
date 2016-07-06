@@ -1,4 +1,5 @@
 #include "game/state/tileview/tile.h"
+#include "framework/image.h"
 #include "framework/trace.h"
 #include "game/state/city/doodad.h"
 #include "game/state/city/projectile.h"
@@ -9,7 +10,9 @@
 #include "game/state/tileview/tileobject_scenery.h"
 #include "game/state/tileview/tileobject_shadow.h"
 #include "game/state/tileview/tileobject_vehicle.h"
+#include "game/state/tileview/voxel.h"
 #include "library/sp.h"
+#include <random>
 #include <unordered_map>
 
 namespace OpenApoc
@@ -321,5 +324,46 @@ int TileMap::getLayer(TileObject::Type type) const
 }
 
 int TileMap::getLayerCount() const { return this->layerMap.size(); }
+
+sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &transform) const
+{
+	auto img = mksp<RGBImage>(viewRect.size());
+	std::map<sp<TileObject>, Colour> objectColours;
+	std::default_random_engine colourRNG;
+	std::uniform_int_distribution<uint8_t> colourDist;
+
+	RGBImageLock lock(img);
+	int h = viewRect.p1.y - viewRect.p0.y;
+	int w = viewRect.p1.x - viewRect.p0.x;
+	Vec2<float> offset = {viewRect.p0.x, viewRect.p0.y};
+
+	LogWarning("ViewRect {%d,%d},{%d,%d}", viewRect.p0.x, viewRect.p0.y, viewRect.p1.x,
+	           viewRect.p1.y);
+
+	LogWarning("Dumping voxels {%d,%d} voxels w/offset {%f,%f}", w, h, offset.x, offset.y);
+
+	for (int y = 0; y < h; y++)
+	{
+		for (int x = 0; x < w; x++)
+		{
+			auto topPos = transform.screenToTileCoords(Vec2<float>{x, y} + offset, 9.99f);
+			auto bottomPos = transform.screenToTileCoords(Vec2<float>{x, y} + offset, 0.0f);
+
+			auto collision = this->findCollision(topPos, bottomPos);
+			if (collision)
+			{
+				if (objectColours.find(collision.obj) == objectColours.end())
+				{
+					Colour c = {colourDist(colourRNG), colourDist(colourRNG), colourDist(colourRNG),
+					            255};
+					objectColours[collision.obj] = c;
+				}
+				lock.set({x, y}, objectColours[collision.obj]);
+			}
+		}
+	}
+
+	return img;
+}
 
 }; // namespace OpenApoc
