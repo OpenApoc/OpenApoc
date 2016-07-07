@@ -57,7 +57,7 @@ set (GAMESTATE_HEADER_FILES
 	rules/resource_aliases.h
 	rules/scenery_tile_type.h
 	rules/vehicle_type.h
-	rules/vequipment.h
+	rules/vequipment_type.h
 	stateobject.h
 	tileview/tile.h
 	tileview/tileobject.h

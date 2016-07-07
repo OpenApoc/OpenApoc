@@ -19,6 +19,29 @@
 namespace OpenApoc
 {
 
+template <> const UString &StateObject<Vehicle>::getPrefix()
+{
+	static UString prefix = "VEHICLE_";
+	return prefix;
+}
+template <> const UString &StateObject<Vehicle>::getTypeName()
+{
+	static UString name = "Vehicle";
+	return name;
+}
+template <>
+const UString &StateObject<Vehicle>::getId(const GameState &state, const sp<Vehicle> ptr)
+{
+	static const UString emptyString = "";
+	for (auto &v : state.vehicles)
+	{
+		if (v.second == ptr)
+			return v.first;
+	}
+	LogError("No vehicle matching pointer %p", ptr.get());
+	return emptyString;
+}
+
 class FlyingVehicleMover : public VehicleMover
 {
   public:
@@ -798,26 +821,4 @@ template <> sp<Vehicle> StateObject<Vehicle>::get(const GameState &state, const 
 	return it->second;
 }
 
-template <> const UString &StateObject<Vehicle>::getPrefix()
-{
-	static UString prefix = "VEHICLE_";
-	return prefix;
-}
-template <> const UString &StateObject<Vehicle>::getTypeName()
-{
-	static UString name = "Vehicle";
-	return name;
-}
-template <>
-const UString &StateObject<Vehicle>::getId(const GameState &state, const sp<Vehicle> ptr)
-{
-	static const UString emptyString = "";
-	for (auto &v : state.vehicles)
-	{
-		if (v.second == ptr)
-			return v.first;
-	}
-	LogError("No vehicle matching pointer %p", ptr.get());
-	return emptyString;
-}
 }; // namespace OpenApoc
