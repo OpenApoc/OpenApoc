@@ -173,6 +173,24 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 		}
 		case MissionType::AttackVehicle:
 		{
+			// follow logic
+			auto vTile = v.tileObject;
+			auto targetTile = this->targetVehicle->tileObject;
+			if (vTile && targetTile && !currentPlannedPath.empty() &&
+			    targetTile->getOwningTile()->position != currentPlannedPath.back())
+			{
+				auto &map = vTile->map;
+
+				auto path = map.findShortestPath(
+				    vTile->getOwningTile()->position, targetTile->getOwningTile()->position, 100,
+				    FlyingVehicleCanEnterTileHelper{map, v}, (float)v.altitude);
+
+				auto pos = (*std::next(path.begin(), 1))->position;
+				dest = Vec3<float>{pos.x, pos.y, pos.z}
+				       // Add {0.5,0.5,0.5} to make it route to the center of the tile
+				       + Vec3<float>{0.5, 0.5, 0.5};
+				return true;
+			}
 			return false;
 		}
 		case MissionType::GotoBuilding:
@@ -397,17 +415,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			else
 			{
-				auto &map = vehicleTile->map;
-				// FIXME: Change findShortestPath to return Vec3<int> positions?
-				auto path = map.findShortestPath(
-				    vehicleTile->getOwningTile()->position, this->targetLocation, 500,
-				    FlyingVehicleCanEnterTileHelper{map, v}, (float)v.altitude);
-				// Always start with the current position
-				this->currentPlannedPath.push_back(vehicleTile->getOwningTile()->position);
-				for (auto *t : path)
-				{
-					this->currentPlannedPath.push_back(t->position);
-				}
+				this->setPathTo(v, this->targetLocation);
 			}
 			return;
 		}
@@ -436,7 +444,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				takeoffMission->start(state, v);
 				return;
 			}
-
+			this->setPathTo(v, targetTile->getOwningTile()->position);
 			return;
 		}
 		case MissionType::GotoBuilding:
@@ -517,6 +525,30 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 		default:
 			LogWarning("TODO: Implement");
 			return;
+	}
+}
+
+void VehicleMission::setPathTo(Vehicle &v, Vec3<int> target, int maxIterations)
+{
+	auto vehicleTile = v.tileObject;
+	if (vehicleTile)
+	{
+		auto &map = vehicleTile->map;
+		// FIXME: Change findShortestPath to return Vec3<int> positions?
+		auto path =
+		    map.findShortestPath(vehicleTile->getOwningTile()->position, target, maxIterations,
+		                         FlyingVehicleCanEnterTileHelper{map, v}, (float)v.altitude);
+
+		// Always start with the current position
+		this->currentPlannedPath.push_back(vehicleTile->getOwningTile()->position);
+		for (auto *t : path)
+		{
+			this->currentPlannedPath.push_back(t->position);
+		}
+	}
+	else
+	{
+		LogError("Mission %s: Take off before pathfinding!", this->getName().c_str());
 	}
 }
 

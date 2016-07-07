@@ -21,8 +21,8 @@ Projectile::Projectile(StateRef<Vehicle> firer, Vec3<float> position, Vec3<float
 }
 
 Projectile::Projectile()
-    : type(Type::Beam), position(0, 0, 0), velocity(0, 0, 0), age(0), lifetime(0),
-      damage(0), previousPosition(0, 0, 0), tail_length(0)
+    : type(Type::Beam), position(0, 0, 0), velocity(0, 0, 0), age(0), lifetime(0), damage(0),
+      previousPosition(0, 0, 0), tail_length(0)
 {
 }
 

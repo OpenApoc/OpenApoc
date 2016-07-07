@@ -14,7 +14,6 @@
 #define TICK_SCALE (30)
 #define VELOCITY_SCALE (Vec3<float>{16, 16, 8})
 
-
 namespace OpenApoc
 {
 

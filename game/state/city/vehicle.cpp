@@ -119,17 +119,17 @@ Vehicle::Vehicle()
 Vehicle::~Vehicle() {}
 
 const std::map<Vehicle::AttackMode, UString> Vehicle::AttackModeMap = {
-	{ Vehicle::AttackMode::Aggressive, "aggressive" },
-	{ Vehicle::AttackMode::Standard, "standard" },
-	{ Vehicle::AttackMode::Defensive, "defensive" },
-	{ Vehicle::AttackMode::Evasive, "evasive" },
+    {Vehicle::AttackMode::Aggressive, "aggressive"},
+    {Vehicle::AttackMode::Standard, "standard"},
+    {Vehicle::AttackMode::Defensive, "defensive"},
+    {Vehicle::AttackMode::Evasive, "evasive"},
 };
 
 const std::map<Vehicle::Altitude, UString> Vehicle::AltitudeMap = {
-	{ Vehicle::Altitude::Highest, "highest" },
-	{ Vehicle::Altitude::High, "high" },
-	{ Vehicle::Altitude::Standard, "standard" },
-	{ Vehicle::Altitude::Low, "low" },
+    {Vehicle::Altitude::Highest, "highest"},
+    {Vehicle::Altitude::High, "high"},
+    {Vehicle::Altitude::Standard, "standard"},
+    {Vehicle::Altitude::Low, "low"},
 };
 
 void Vehicle::launch(TileMap &map, GameState &state, Vec3<float> initialPosition)
@@ -230,7 +230,8 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 			sp<TileObjectVehicle> enemy;
 			if (!missions.empty() &&
 			    missions.front()->type == VehicleMission::MissionType::AttackVehicle &&
-				vehicleTile->getDistanceTo(missions.front()->targetVehicle->tileObject) <= getFiringRange())
+			    vehicleTile->getDistanceTo(missions.front()->targetVehicle->tileObject) <=
+			        getFiringRange())
 			{
 				enemy = missions.front()->targetVehicle->tileObject;
 			}
@@ -327,7 +328,7 @@ void Vehicle::handleCollision(GameState &state, Collision &c)
 		if (applyDamage(projectile->damage, armourValue))
 		{
 			auto doodad = city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_EXPLOSION_2"},
-				this->tileObject->getPosition());
+			                                this->tileObject->getPosition());
 
 			this->shadowObject->removeFromMap();
 			this->tileObject->removeFromMap();
@@ -419,7 +420,7 @@ float Vehicle::getFiringRange() const
 		if (equipment->canFire() == false)
 			continue;
 
-		if (range == 0 || range > equipment->getRange())
+		if (range < equipment->getRange())
 		{
 			range = equipment->getRange();
 		}

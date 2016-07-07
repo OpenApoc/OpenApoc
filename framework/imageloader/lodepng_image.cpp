@@ -2,9 +2,9 @@
 // Created by Alexey on 20.11.2015.
 //
 
-#include "framework/imageloader/lodepng.h"
 #include "framework/apocresources/apocpalette.h"
 #include "framework/data.h"
+#include "framework/imageloader/lodepng.h"
 #include "framework/imageloader_interface.h"
 #include "framework/logger.h"
 #include "framework/palette.h"

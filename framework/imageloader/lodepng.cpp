@@ -38,8 +38,8 @@ Rename this file to lodepng.cpp to use it for C++, or to lodepng.c to use it for
 #endif /*LODEPNG_COMPILE_CPP*/
 
 #if defined(_MSC_VER) &&                                                                           \
-    (_MSC_VER >= 1310)          /*Visual Studio: A few warning types are not desired here.*/
-#pragma warning(disable : 4244) /*implicit conversions: not warned by gcc -Wall -Wextra and        \
+    (_MSC_VER >= 1310) /*Visual Studio: A few warning types are not desired here.*/
+#pragma warning(disable : 4244) /*implicit conversions: not warned by gcc -Wall -Wextra and \                                                                                                 \
                                    requires too much casts*/
 #pragma warning(                                                                                   \
     disable : 4996) /*VS does not like fopen, but fopen_s is not standard C so unusable here*/

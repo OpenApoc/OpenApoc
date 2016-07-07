@@ -31,6 +31,7 @@ class VehicleMission
 	void update(GameState &state, Vehicle &v, unsigned int ticks);
 	bool isFinished(GameState &state, Vehicle &v);
 	void start(GameState &state, Vehicle &v);
+	void setPathTo(Vehicle &v, Vec3<int> target, int maxIterations = 500);
 
 	// Methods to create new missions
 	static VehicleMission *gotoLocation(Vehicle &v, Vec3<int> target);

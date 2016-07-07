@@ -788,12 +788,13 @@ void CityView::EventOccurred(Event *e)
 						auto v = this->selectedVehicle.lock();
 						if (v && v->owner == state->getPlayer())
 						{
-							// Use vehicle altitude preference to select target height, clamp by map size
-							int altitude = glm::min((int)v->altitude, state->current_city->map->size.z - 1);
+							// Use vehicle altitude preference to select target height, clamp by map
+							// size
+							int altitude =
+							    glm::min((int)v->altitude, state->current_city->map->size.z - 1);
 
 							Vec3<int> targetPos{scenery->currentPosition.x,
-							                    scenery->currentPosition.y,
-							                    altitude};
+							                    scenery->currentPosition.y, altitude};
 							// FIXME: Don't clear missions if not replacing current mission
 							v->missions.clear();
 							v->missions.emplace_back(VehicleMission::gotoLocation(*v, targetPos));
