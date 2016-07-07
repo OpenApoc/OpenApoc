@@ -43,17 +43,23 @@ Note, this is not a complete list, expect items to grow and spawn sub-items as t
   - Animated UFO drawing
   - 'crashed' UFOs
   - UFO 'beamdown' mechanic
-  - Vehicle damage
+  - ~~Vehicle damage~~
   - Vehicle AI:
     - ~~AI Vehicles fire at enemies~~
+    - Vehicle retaliation fire
   - ~~AI Vehicles move between buildings~~
   - AI vehicles patrol
+  - UFO AI Missions
+    - Infiltration
+    - Subversion
+    - Escort
+    - Return to portal when done
   - User-controllable vehicle commands:
     - ~~Goto Building~~
     - ~~Goto Location~~
     - Attack Building
     - ~~Attack Vehicle~~
-      - Prefer shooting at 'current target'
+      - ~~Prefer shooting at 'current target'~~
     - Goto crashed UFO
     - Goto alien dimension portal
     - Different 'aggressiveness'
@@ -63,14 +69,22 @@ Note, this is not a complete list, expect items to grow and spawn sub-items as t
   - ~~Collapse tiles when support is lost~~
 - ~~Building selection~~
 - Vehicle selection
+  - Outline selected or target vehicles
 - ~~Player Vehicle status in UI~~
 - Enemy vehicle status in UI
 - Agent status in UI
+- Organization status in UI
+  - Loop through buildings when clicked
 - ~~Mini base view~~
 - ~~Purchase new base~~
 - Show message history
 - Show alien dimension
 - Agent/people-tube pathfinding
+- Organisation relationships
+  - Relationship drop when under attack (separate attack mission from random hit)
+  - Relationship drop/boost when attacking others
+  - Relationship modifiers for allies
+  - Organisations relation recovery
 
 ## City MiniMap
 - ~~Show building tiles~~
@@ -78,6 +92,9 @@ Note, this is not a complete list, expect items to grow and spawn sub-items as t
 - Show weapon paths
 - Show vehicle mission targets
 - Show recent alien alert circles
+- Highlight selected vehicle
+- Highlight selected organization's buildings
+- Show organization relations in colour
 
 ## BaseScape
 - ~~Draw current base~~
@@ -112,9 +129,12 @@ Note, this is not a complete list, expect items to grow and spawn sub-items as t
   - Generate initial available items
   - Re-stock at the end of each week
   - Restrict items not yet available
-  - Item price changes based on number xcom sold?
-  - Item price changes based on xcom-manufacturer relationship?
+  - Restrict items from hostile organizations
+  - Item price changes based on next week stock
+  - Item stock/price changes for xcom/alien items
 - Inventory
+  - Organisation-wide storage for AI (on the market)
+  - Base storage for X-Com
   - Stores limit
 - Alien containment
   - Current state tracking
@@ -168,9 +188,8 @@ Note, this is not a complete list, expect items to grow and spawn sub-items as t
 - Agent health/medbay use
 - Agent experience
 - Alien UFO production
-- Alien UFO AI
+- Alien Overspawn missions
 - Alien progression
-- Organisation relationships
 - Organisation funds simulation
 - Organisation 'attack player base when hostile'
 - Organisation 'raids/illegal flyer' attacks
