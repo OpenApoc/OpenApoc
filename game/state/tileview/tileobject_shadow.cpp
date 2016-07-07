@@ -59,7 +59,7 @@ void TileObjectShadow::setPosition(Vec3<float> newPosition)
 	// This projects a line downwards and draws places the shadow at the z of the first thing hit
 
 	auto shadowPosition = newPosition;
-	auto c = map.findCollision(newPosition, Vec3<float>{newPosition.x, newPosition.y, 0});
+	auto c = map.findCollision(newPosition, Vec3<float>{newPosition.x, newPosition.y, -1});
 	if (c)
 	{
 		shadowPosition.z = c.position.z;
