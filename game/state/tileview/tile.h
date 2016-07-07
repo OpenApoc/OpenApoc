@@ -60,7 +60,7 @@ class Tile
 
 	Tile(TileMap &map, Vec3<int> position, int layerCount);
 
-	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd);
+	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd) const;
 };
 
 class CanEnterTileHelper
@@ -78,6 +78,16 @@ class TileMap
 	std::vector<std::set<TileObject::Type>> layerMap;
 
   public:
+	const Tile *getTile(int x, int y, int z) const
+	{
+		assert(x >= 0);
+		assert(x < size.x);
+		assert(y >= 0);
+		assert(y < size.x);
+		assert(z >= 0);
+		assert(z < size.x);
+		return &this->tiles[z * size.x * size.y + y * size.x + x];
+	}
 	Tile *getTile(int x, int y, int z)
 	{
 		assert(x >= 0);
@@ -89,8 +99,14 @@ class TileMap
 		return &this->tiles[z * size.x * size.y + y * size.x + x];
 	}
 	Tile *getTile(Vec3<int> pos) { return this->getTile(pos.x, pos.y, pos.z); }
+	const Tile *getTile(Vec3<int> pos) const { return this->getTile(pos.x, pos.y, pos.z); }
 	// Returns the tile this point is 'within'
 	Tile *getTile(Vec3<float> pos)
+	{
+		return this->getTile(static_cast<int>(pos.x), static_cast<int>(pos.y),
+		                     static_cast<int>(pos.z));
+	}
+	const Tile *getTile(Vec3<float> pos) const
 	{
 		return this->getTile(static_cast<int>(pos.x), static_cast<int>(pos.y),
 		                     static_cast<int>(pos.z));
@@ -105,7 +121,7 @@ class TileMap
 	                                   const CanEnterTileHelper &canEnterTile,
 	                                   float altitude = 5.0f);
 
-	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd);
+	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd) const;
 
 	void addObjectToMap(sp<Projectile>);
 	void addObjectToMap(sp<Vehicle>);
@@ -114,5 +130,7 @@ class TileMap
 
 	int getLayer(TileObject::Type type) const;
 	int getLayerCount() const;
+
+	sp<Image> dumpVoxelView(const Rect<int> viewRect, const TileTransform &transform) const;
 };
 }; // namespace OpenApoc

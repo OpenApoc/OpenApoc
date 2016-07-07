@@ -92,6 +92,14 @@ void TileView::EventOccurred(Event *e)
 			case SDLK_3:
 				pal = fw().data->load_palette("xcom3/ufodata/PAL_03.DAT");
 				break;
+			case SDLK_F6:
+			{
+				LogWarning("Writing voxel view to tileviewvoxels.png");
+				auto imageOffset = -this->getScreenOffset();
+				auto img = std::dynamic_pointer_cast<RGBImage>(
+				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this));
+				fw().data->write_image("tileviewvoxels.png", img);
+			}
 		}
 	}
 	else if (e->Type() == EVENT_KEY_UP)
