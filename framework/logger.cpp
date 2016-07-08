@@ -157,7 +157,7 @@ static std::mutex logMutex;
 static std::chrono::time_point<std::chrono::high_resolution_clock> timeInit =
     std::chrono::high_resolution_clock::now();
 
-void Log(LogLevel level, UString prefix, UString format, ...)
+void Log(LogLevel level, UString prefix, const char *format, ...)
 {
 	bool exit_app = false;
 	const char *level_prefix;
@@ -201,11 +201,11 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 	va_start(arglist, format);
 #ifdef ANDROID
 	LOGD("%s %llu %s: ", level_prefix, clockns, prefix.c_str());
-	LOGDV(format.c_str(), arglist);
+	LOGDV(format, arglist);
 	va_end(arglist);
 #else
 	fprintf(outFile, "%s %llu %s: ", level_prefix, clockns, prefix.c_str());
-	vfprintf(outFile, format.c_str(), arglist);
+	vfprintf(outFile, format, arglist);
 
 	// On error print a backtrace to the log file
 	if (level == LogLevel::Error)
@@ -220,7 +220,7 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 		fflush(outFile);
 		va_start(arglist, format);
 		fprintf(stderr, "%s %llu %s: ", level_prefix, clockns, prefix.c_str());
-		vfprintf(stderr, format.c_str(), arglist);
+		vfprintf(stderr, format, arglist);
 		fprintf(stderr, "\n");
 		va_end(arglist);
 	}
@@ -230,14 +230,14 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 	{
 		/* How big should the string be? */
 		va_start(arglist, format);
-		auto strSize = vsnprintf(NULL, 0, format.c_str(), arglist);
+		auto strSize = vsnprintf(NULL, 0, format, arglist);
 		strSize += 1; // NULL terminator
 		std::unique_ptr<char[]> string(new char[strSize]);
 		va_end(arglist);
 
 		/* Now format the string */
 		va_start(arglist, format);
-		vsnprintf(string.get(), strSize, format.c_str(), arglist);
+		vsnprintf(string.get(), strSize, format, arglist);
 		va_end(arglist);
 
 		SDL_MessageBoxData mBoxData;
