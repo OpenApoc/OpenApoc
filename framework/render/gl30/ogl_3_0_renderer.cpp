@@ -336,14 +336,14 @@ class PaletteSetProgram : public Program
 	Colour currentTint;
 
   public:
-	GLuint posLoc;
-	GLuint texcoordLoc;
-	GLuint spriteLoc;
-	GLuint screenSizeLoc;
-	GLuint texLoc;
-	GLuint palLoc;
-	GLuint flipYLoc;
-	GLuint tintLoc;
+	GLint posLoc;
+	GLint texcoordLoc;
+	GLint spriteLoc;
+	GLint screenSizeLoc;
+	GLint texLoc;
+	GLint palLoc;
+	GLint flipYLoc;
+	GLint tintLoc;
 	PaletteSetProgram()
 	    : Program(PaletteSetProgram_vertexSource, PaletteSetProgram_fragmentSource),
 	      currentScreenSize(0, 0), currentFlipY(false), currentTexUnit(0), currentPalUnit(0),
