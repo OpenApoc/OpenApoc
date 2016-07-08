@@ -13,7 +13,7 @@ class TileObjectVehicle : public TileObject
 	          TileViewMode mode) override;
 	virtual ~TileObjectVehicle();
 
-	sp<Vehicle> getVehicle();
+	sp<Vehicle> getVehicle() const;
 	const Vec3<float> &getDirection() { return this->getVehicle()->velocity; }
 	void setDirection(const Vec3<float> &dir)
 	{
@@ -21,12 +21,17 @@ class TileObjectVehicle : public TileObject
 		this->getVehicle()->velocity = dir;
 	}
 
+	Vec3<float> getVoxelCenter();
 	sp<VoxelMap> getVoxelMap() override;
 	Vec3<float> getPosition() const override;
+	void nextFrame(int ticks);
 
   private:
 	friend class TileMap;
 	std::weak_ptr<Vehicle> vehicle;
+	std::list<sp<Image>>::iterator animationFrame;
+	int animationDelay;
+
 	TileObjectVehicle(TileMap &map, sp<Vehicle> vehicle);
 };
 

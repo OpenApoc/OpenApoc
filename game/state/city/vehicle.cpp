@@ -210,9 +210,16 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	}
 	if (this->mover)
 		this->mover->update(state, ticks);
+
+
 	auto vehicleTile = this->tileObject;
 	if (vehicleTile)
 	{
+		if (!this->type->animation_sprites.empty())
+		{
+			vehicleTile->nextFrame(ticks);
+		}
+
 		bool has_active_weapon = false;
 		for (auto &equipment : this->equipment)
 		{
@@ -254,12 +261,33 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	}
 }
 
+bool Vehicle::isCrashed() const
+{
+	return this->health < this->type->crash_health;
+}
+
 bool Vehicle::applyDamage(int damage, float armour)
 {
-	if (this->shield < damage)
+	if (this->shield <= damage)
 	{
-		damage -= this->shield;
-		this->shield = 0;
+		if (this->shield > 0) 
+		{
+			damage -= this->shield;
+			this->shield = 0;
+			
+			// destroy the shield modules
+			for (auto it = this->equipment.begin(); it != this->equipment.end();)
+			{
+				if ((*it)->type->type == VEquipmentType::Type::General && (*it)->type->shielding > 0)
+				{
+					it = this->equipment.erase(it);
+				}
+				else
+				{
+					++it;
+				}
+			}
+		}
 
 		damage -= armour;
 		if (damage > 0)
@@ -269,6 +297,11 @@ bool Vehicle::applyDamage(int damage, float armour)
 			{
 				this->health = 0;
 				return true;
+			}
+			else if (isCrashed())
+			{
+				// FIXME: mission
+				return false;
 			}
 		}
 	}
@@ -518,7 +551,7 @@ int Vehicle::getAccuracy() const
 
 	for (auto &e : this->equipment)
 	{
-		if (e->type->type != VEquipmentType::Type::General && e->type->accuracy_modifier <= 0)
+		if (e->type->type != VEquipmentType::Type::General || e->type->accuracy_modifier <= 0)
 			continue;
 		// accuracy percentages are inverted in the data (e.g. 10% module gives 90)
 		accModifiers.push(100 - e->type->accuracy_modifier);

@@ -341,6 +341,10 @@ bool VehicleMission::isFinished(GameState &state, Vehicle &v)
 				LogInfo("Vehicle attack mission: Target not on the map");
 				return true;
 			}
+			if (t->type->type == VehicleType::Type::UFO) 
+			{
+				return t->isCrashed();
+			}
 			return this->targetVehicle->health == 0;
 		}
 		case MissionType::Snooze:

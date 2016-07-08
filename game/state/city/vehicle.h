@@ -90,6 +90,7 @@ class Vehicle : public StateObject<Vehicle>, public std::enable_shared_from_this
 	void addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentType> type);
 	void removeEquipment(sp<VEquipment> object);
 
+	bool isCrashed() const;
 	bool applyDamage(int damage, float armour);
 	void handleCollision(GameState &state, Collision &c);
 	sp<TileObjectVehicle> findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile);

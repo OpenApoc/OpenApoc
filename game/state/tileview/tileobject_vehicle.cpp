@@ -1,6 +1,7 @@
 #include "game/state/tileview/tileobject_vehicle.h"
 #include "framework/renderer.h"
 #include "game/state/tileview/tile.h"
+#include "library/voxel.h"
 
 namespace OpenApoc
 {
@@ -21,31 +22,47 @@ void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 		{
 			float closestAngle = FLT_MAX;
 			sp<Image> closestImage;
-			auto bank = VehicleType::Banking::Flat;
-			if (this->getDirection().z >= 0.1f)
-				bank = VehicleType::Banking::Ascending;
-			else if (this->getDirection().z <= -0.1f)
-				bank = VehicleType::Banking::Descending;
-			auto it = vehicle->type->directional_sprites.find(bank);
-			if (it == vehicle->type->directional_sprites.end())
+
+			if (vehicle->type->type == VehicleType::Type::UFO)
 			{
-				// If missing the requested banking try flat
-				it = vehicle->type->directional_sprites.find(VehicleType::Banking::Flat);
+				if (vehicle->isCrashed()) 
+				{
+					closestImage = vehicle->type->crashed_sprite;
+				}
+				else
+				{
+					closestImage = *animationFrame;
+				}
+			}
+			else
+			{
+				auto bank = VehicleType::Banking::Flat;
+				if (this->getDirection().z >= 0.1f)
+					bank = VehicleType::Banking::Ascending;
+				else if (this->getDirection().z <= -0.1f)
+					bank = VehicleType::Banking::Descending;
+				auto it = vehicle->type->directional_sprites.find(bank);
 				if (it == vehicle->type->directional_sprites.end())
 				{
-					LogError("Vehicle type missing 'Flat' banking");
+					// If missing the requested banking try flat
+					it = vehicle->type->directional_sprites.find(VehicleType::Banking::Flat);
+					if (it == vehicle->type->directional_sprites.end())
+					{
+						LogError("Vehicle type missing 'Flat' banking");
+					}
 				}
-			}
-			for (auto &p : it->second)
-			{
-				float angle =
-				    glm::angle(glm::normalize(p.first), glm::normalize(this->getDirection()));
-				if (angle < closestAngle)
+				for (auto &p : it->second)
 				{
-					closestAngle = angle;
-					closestImage = p.second;
+					float angle =
+						glm::angle(glm::normalize(p.first), glm::normalize(this->getDirection()));
+					if (angle < closestAngle)
+					{
+						closestAngle = angle;
+						closestImage = p.second;
+					}
 				}
 			}
+
 			if (!closestImage)
 			{
 				LogError("No image found for vehicle");
@@ -86,13 +103,24 @@ void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 TileObjectVehicle::~TileObjectVehicle() {}
 
 TileObjectVehicle::TileObjectVehicle(TileMap &map, sp<Vehicle> vehicle)
-    : TileObject(map, Type::Vehicle, Vec3<float>{0, 0, 0}), vehicle(vehicle)
+    : TileObject(map, Type::Vehicle, Vec3<float>{0, 0, 0}), vehicle(vehicle), animationDelay(0)
 {
+	animationFrame = vehicle->type->animation_sprites.begin();
+}
+
+Vec3<float> TileObjectVehicle::getVoxelCenter()
+{
+	Vec3<int> tileSize = { 32, 32, 16 };
+	auto objPos = this->getPosition();
+	auto offset = this->getVoxelOffset();
+	objPos -= offset;
+	auto voxelSize = this->getVoxelMap()->getSize();
+	return Vec3<float>();
 }
 
 sp<VoxelMap> TileObjectVehicle::getVoxelMap() { return this->getVehicle()->type->voxelMap; }
 
-sp<Vehicle> TileObjectVehicle::getVehicle() { return this->vehicle.lock(); }
+sp<Vehicle> TileObjectVehicle::getVehicle() const { return this->vehicle.lock(); }
 
 Vec3<float> TileObjectVehicle::getPosition() const
 {
@@ -103,6 +131,21 @@ Vec3<float> TileObjectVehicle::getPosition() const
 		return {0, 0, 0};
 	}
 	return v->getPosition();
+}
+
+void TileObjectVehicle::nextFrame(int ticks)
+{
+	auto v = this->vehicle.lock();
+	animationDelay += ticks;
+	if (v  && animationDelay > 10)
+	{
+		animationDelay = 0;
+		animationFrame++;
+		if (animationFrame == v->type->animation_sprites.end())
+		{
+			animationFrame = v->type->animation_sprites.begin();
+		}
+	}
 }
 
 } // namespace OpenApoc

@@ -40,13 +40,13 @@ Note, this is not a complete list, expect items to grow and spawn sub-items as t
 - Vehicles
   - ~~Flying vehicle pathfinding~~
   - Ground vehicle pathfinding
-  - Animated UFO drawing
+  - ~~Animated UFO drawing~~
   - 'crashed' UFOs
-  - UFO 'beamdown' mechanic
   - ~~Vehicle damage~~
   - Vehicle AI:
     - ~~AI Vehicles fire at enemies~~
     - Vehicle retaliation fire
+	- Guided missiles
   - ~~AI Vehicles move between buildings~~
   - AI vehicles patrol
   - UFO AI Missions
