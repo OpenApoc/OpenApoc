@@ -694,6 +694,31 @@ class GLPaletteTexture final : public RendererImageData
 	~GLPaletteTexture() override { gl->DeleteTextures(1, &this->tex_id); }
 };
 
+class BindFramebuffer
+{
+	BindFramebuffer(const BindFramebuffer &) = delete;
+	GL::GLuint prevID;
+	GL::GLuint id;
+
+  public:
+	BindFramebuffer(GL::GLuint id) : id(id)
+	{
+		gl->GetIntegerv(GL::DRAW_FRAMEBUFFER_BINDING, reinterpret_cast<GL::GLint *>(&prevID));
+		if (prevID == id)
+		{
+			return;
+		}
+		gl->BindFramebuffer(GL::DRAW_FRAMEBUFFER, id);
+	}
+	~BindFramebuffer()
+	{
+		if (prevID != id)
+		{
+			gl->BindFramebuffer(GL::DRAW_FRAMEBUFFER, prevID);
+		}
+	}
+};
+
 class GLSurface final : public RendererImageData
 {
   public:
@@ -703,6 +728,7 @@ class GLSurface final : public RendererImageData
 	GLSurface(GL::GLuint fbo, Vec2<int> size) : fbo_id(fbo), tex_id(0), size(size) {}
 	GLSurface(Vec2<int> size)
 	{
+		assert(size.x > 0 && size.y > 0);
 		TRACE_FN;
 		gl->GenTextures(1, &this->tex_id);
 		gl->ActiveTexture(SCRATCH_TEX_SLOT);
@@ -729,6 +755,36 @@ class GLSurface final : public RendererImageData
 			gl->DeleteFramebuffers(1, &this->fbo_id);
 		if (this->tex_id)
 			gl->DeleteTextures(1, &this->tex_id);
+	}
+	sp<Image> readBack() override
+	{
+		BindFramebuffer b(this->fbo_id);
+		auto img = mksp<RGBImage>(this->size);
+
+		// Reset and pixelStorei args to zero padding to match RGBImage.
+		// The assumption here is this is a 'slow path' anyway, so doesn't really matter if there
+		// are unnecessary state changes.
+		// Also, I suspect many of these values will never change from their default during the
+		// lifetime of this context, but better safe than sorry.
+		gl->PixelStorei(GL::PACK_ROW_LENGTH, 0);
+		gl->PixelStorei(GL::PACK_SKIP_PIXELS, 0);
+		gl->PixelStorei(GL::PACK_SKIP_ROWS, 0);
+		gl->PixelStorei(GL::PACK_ALIGNMENT, 1);
+
+		RGBImageLock l(img);
+
+		// Copy the image a row at a time, as OpenGL specifies framebuffer coords to start at the
+		// bottom, but RGBImage assumes it starts at the top
+		for (int y = 0; y < this->size.y; y++)
+		{
+			int row = this->size.y - y - 1;
+			// Assume 4bpp RGBA8888
+			int stride = this->size.x * 4;
+			char *linePtr = reinterpret_cast<char *>(l.getData());
+			linePtr += (y * stride);
+			gl->ReadPixels(0, row, size.x, row + 1, GL::RGBA, GL::UNSIGNED_BYTE, linePtr);
+		}
+		return img;
 	}
 };
 
