@@ -100,7 +100,6 @@ class FlyingVehicleMover : public VehicleMover
 					    vehicle.missions.front()->getNextDestination(state, this->vehicle,
 					                                                 goalPosition) == false)
 					{
-						distanceLeft = 0;
 						break;
 					}
 				}
@@ -121,7 +120,6 @@ class FlyingVehicleMover : public VehicleMover
 					newPosition /= VELOCITY_SCALE;
 					newPosition += vehicleTile->getPosition();
 					vehicle.setPosition(newPosition);
-					distanceLeft = 0;
 					break;
 				}
 			}
