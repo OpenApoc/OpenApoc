@@ -279,6 +279,7 @@ class SDLRawBackend : public SoundBackend
 		LogWarning(
 		    "Selecting audio devices not currently implemented! Selecting first available device.");
 		const char *deviceName = SDL_GetAudioDeviceName(0, 0);
+		LogInfo("Using audio device: %s", deviceName);
 		SDL_AudioSpec wantFormat;
 		wantFormat.channels = 2;
 		wantFormat.format = AUDIO_S16LSB;
