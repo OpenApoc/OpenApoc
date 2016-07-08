@@ -581,6 +581,9 @@ UString VehicleMission::getName()
 		case MissionType::Land:
 			name += " in " + this->targetBuilding.id;
 			break;
+		case MissionType::AttackVehicle:
+			name += UString::format(" target \"%s\"", this->targetVehicle.id.c_str());
+			break;
 	}
 	return name;
 }
