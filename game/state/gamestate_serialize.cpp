@@ -1,3 +1,4 @@
+#include "game/state/gamestate.h"
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "framework/serialize.h"
@@ -12,7 +13,6 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/city/vequipment.h"
-#include "game/state/gamestate.h"
 #include "game/state/rules/scenery_tile_type.h"
 #include "game/state/rules/vequipment_type.h"
 #include "library/voxel.h"
