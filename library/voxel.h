@@ -25,10 +25,12 @@ class VoxelMap
 {
   public:
 	Vec3<int> size;
+	Vec3<int> centre;
 	std::vector<sp<VoxelSlice>> slices;
 
 	bool getBit(Vec3<int> pos) const;
 	void setSlice(int z, sp<VoxelSlice> slice);
+	void calculateCentre();
 
 	const Vec3<int> &getSize() const { return this->size; }
 

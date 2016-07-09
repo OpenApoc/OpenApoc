@@ -55,4 +55,38 @@ void VoxelMap::setSlice(int z, sp<VoxelSlice> slice)
 	this->slices[z] = slice;
 }
 
+void VoxelMap::calculateCentre()
+{
+	// This calcualtes the 'centre' of the voxel map by finding the average position of all 'filled'
+	// voxels
+	// An 'int' should be more than enough to keep the sum of even the largest completely filled
+	// voxel map
+	Vec3<int> sum = {0, 0, 0};
+	int numFilled = 0;
+
+	for (int z = 0; z < this->size.z; z++)
+	{
+		for (int y = 0; y < this->size.y; y++)
+		{
+			for (int x = 0; x < this->size.x; x++)
+			{
+				if (this->getBit({x, y, z}))
+				{
+					sum += Vec3<int>{x, y, z};
+					numFilled++;
+				}
+			}
+		}
+	}
+	if (numFilled == 0)
+	{
+		// Special case 'empty' voxel maps to be the middle of the bounds?
+		this->centre = this->size / 2;
+	}
+	else
+	{
+		this->centre = sum / numFilled;
+	}
+}
+
 } // namesapce OpenApoc
