@@ -142,7 +142,7 @@ void PCK::LoadVersion1Format(IFile &pck, IFile &tab, int Index)
 
 		if (!pck.seekg(offset, std::ios::beg))
 		{
-			LogError("Failed to seek to offset %u for PCK \"%s\" id %s", offset,
+			LogError("Failed to seek to offset %u for PCK \"%s\" id %d", offset,
 			         pck.fileName().c_str(), i);
 			return;
 		}
@@ -245,7 +245,7 @@ void PCK::LoadVersion2Format(IFile &pck, IFile &tab, int Index)
 
 		if (!pck.seekg(offset, std::ios::beg))
 		{
-			LogError("Failed to seek to offset %u for PCK \"%s\" id %s", offset,
+			LogError("Failed to seek to offset %u for PCK \"%s\" id %d", offset,
 			         pck.fileName().c_str(), i);
 			return;
 		}

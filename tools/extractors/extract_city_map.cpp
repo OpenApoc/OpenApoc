@@ -27,7 +27,7 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 
 	if (fileSize != expectedFileSize)
 	{
-		LogError("Unexpected filesize %zu - expected %zu", fileSize, expectedFileSize);
+		LogError("Unexpected filesize %zu - expected %u", fileSize, expectedFileSize);
 	}
 
 	city->size = {sizeX, sizeY, sizeZ};

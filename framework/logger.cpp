@@ -80,7 +80,7 @@ static void print_backtrace(FILE *f)
 		dladdr(reinterpret_cast<void *>(ip), &info);
 		if (info.dli_sname)
 		{
-			fprintf(f, "  0x%lx %s+0x%lx (%s)\n", static_cast<uintptr_t>(ip), info.dli_sname,
+			fprintf(f, "  0x%zx %s+0x%zx (%s)\n", static_cast<uintptr_t>(ip), info.dli_sname,
 			        static_cast<uintptr_t>(ip) - reinterpret_cast<uintptr_t>(info.dli_saddr),
 			        info.dli_fname);
 			continue;
@@ -90,12 +90,12 @@ static void print_backtrace(FILE *f)
 		char fnName[MAX_SYMBOL_LENGTH];
 		if (!unw_get_proc_name(&cursor, fnName, MAX_SYMBOL_LENGTH, &offsetInFn))
 		{
-			fprintf(f, "  0x%lx %s+0x%lx (%s)\n", static_cast<uintptr_t>(ip), fnName, offsetInFn,
+			fprintf(f, "  0x%zx %s+0x%zx (%s)\n", static_cast<uintptr_t>(ip), fnName, offsetInFn,
 			        info.dli_fname);
 			continue;
 		}
 		else
-			fprintf(f, "  0x%lx\n", static_cast<uintptr_t>(ip));
+			fprintf(f, "  0x%zx\n", static_cast<uintptr_t>(ip));
 	}
 }
 #elif defined(BACKTRACE_WINDOWS)
@@ -137,7 +137,7 @@ static void print_backtrace(FILE *f)
 	for (unsigned int frame = 0; frame < frames; frame++)
 	{
 		SymFromAddr(process, (DWORD64)(ip[frame]), 0, sym);
-		fprintf(f, "  0x%p %s+0x%lx\n", ip[frame], sym->Name,
+		fprintf(f, "  0x%p %s+0x%Ix\n", ip[frame], sym->Name,
 		        (uintptr_t)ip[frame] - (uintptr_t)sym->Address);
 	}
 

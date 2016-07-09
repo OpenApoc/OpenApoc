@@ -838,7 +838,7 @@ class GLPaletteSpritesheet : public RendererImageData
 			gl::TexSubImage3D(gl::TEXTURE_2D_ARRAY, 0, 0, 0, i, img->size.x, img->size.y, 1,
 			                  gl::RED_INTEGER, gl::UNSIGNED_BYTE, l.getData());
 		}
-		LogInfo("Uploading spritesheet complete", numSprites);
+		LogInfo("Uploading spritesheet complete");
 	}
 	virtual ~GLPaletteSpritesheet() { gl::DeleteTextures(1, &this->texID); }
 };
@@ -1346,7 +1346,7 @@ void OGL30Renderer::draw(sp<Image> image, Vec2<float> position)
 			if (!warnonce)
 			{
 				warnonce = true;
-				LogWarning("Spritesheet size %d would be over max array size %d - falling back to "
+				LogWarning("Spritesheet size %zu would be over max array size %d - falling back to "
 				           "'slow' path",
 				           owningSet->images.size(), maxSpritesheetSize);
 			}

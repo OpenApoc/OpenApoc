@@ -51,7 +51,7 @@ class RawMusicTrack : public MusicTrack
 		}
 		if (file.size() < fileOffset + (numSamples * MusicChannels * MusicBytesPerSample))
 		{
-			LogError("File \"%s\" insufficient size for offset %u + size %zu - returned size %zu",
+			LogError("File \"%s\" insufficient size for offset %u + size %u - returned size %zu",
 			         fileName.c_str(), fileOffset, numSamples * MusicChannels * MusicBytesPerSample,
 			         file.size());
 			return;

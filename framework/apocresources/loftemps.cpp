@@ -85,7 +85,7 @@ sp<VoxelSlice> LOFTemps::getSlice(unsigned int idx)
 {
 	if (idx >= this->slices.size())
 	{
-		LogError("Requested slice %d - only %u in file", idx, this->slices.size());
+		LogError("Requested slice %d - only %zu in file", idx, this->slices.size());
 		return nullptr;
 	}
 	return this->slices[idx];

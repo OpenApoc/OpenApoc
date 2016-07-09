@@ -89,7 +89,7 @@ sp<ImageSet> RawImage::load_set(Data &data, const UString &filename, const Vec2<
 				uint8_t idx;
 				if (!infile.read(reinterpret_cast<char *>(&idx), 1))
 				{
-					LogError("Unexpected EOF in file \"%s\" at {%d:%d,%d}", filename.c_str(), i, x,
+					LogError("Unexpected EOF in file \"%s\" at {%zu:%d,%d}", filename.c_str(), i, x,
 					         y);
 					return nullptr;
 				}

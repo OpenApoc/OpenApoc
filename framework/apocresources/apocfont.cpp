@@ -68,7 +68,7 @@ sp<BitmapFont> ApocalypseFont::loadFont(tinyxml2::XMLElement *fontElement)
 
 		if (pointString.length() != 1)
 		{
-			LogError("apocfont \"%s\" glyph \"%s\" has %d codepoints, expected one - skipping "
+			LogError("apocfont \"%s\" glyph \"%s\" has %lu codepoints, expected one - skipping "
 			         "glyph",
 			         fontName.c_str(), glyphString, pointString.length());
 			continue;

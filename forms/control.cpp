@@ -526,7 +526,7 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 			}
 		}
 	}
-	LogInfo("Control \"%s\" has %d subcontrols (%d, %d, %d, %d)", this->Name.c_str(),
+	LogInfo("Control \"%s\" has %zu subcontrols (%d, %d, %d, %d)", this->Name.c_str(),
 	        Controls.size(), Location.x, Location.y, Size.x, Size.y);
 }
 

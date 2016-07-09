@@ -232,7 +232,6 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	if (this->mover)
 		this->mover->update(state, ticks);
 
-
 	auto vehicleTile = this->tileObject;
 	if (vehicleTile)
 	{
@@ -282,24 +281,22 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 	}
 }
 
-bool Vehicle::isCrashed() const
-{
-	return this->health < this->type->crash_health;
-}
+bool Vehicle::isCrashed() const { return this->health < this->type->crash_health; }
 
 bool Vehicle::applyDamage(int damage, float armour)
 {
 	if (this->shield <= damage)
 	{
-		if (this->shield > 0) 
+		if (this->shield > 0)
 		{
 			damage -= this->shield;
 			this->shield = 0;
-			
+
 			// destroy the shield modules
 			for (auto it = this->equipment.begin(); it != this->equipment.end();)
 			{
-				if ((*it)->type->type == VEquipmentType::Type::General && (*it)->type->shielding > 0)
+				if ((*it)->type->type == VEquipmentType::Type::General &&
+				    (*it)->type->shielding > 0)
 				{
 					it = this->equipment.erase(it);
 				}
