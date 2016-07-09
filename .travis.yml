@@ -38,12 +38,12 @@ install:
   - pushd ./dependencies/physfs && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make -j2 && make install && popd;
 
 before_script:
-  - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCLANG_TIDY=clang-tidy-3.8 -DCLANG_FORMAT=clang-format-3.8
+  - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCLANG_TIDY=clang-tidy-3.8 -DCLANG_FORMAT=clang-format-3.8 -DENABLE_TESTS=ON
 # Do the format before the script so the output is cleaner - just showing the diff (if any) and the tidy results
   - if [ "${TIDY}" = "true" ]; then make format -j2; fi
 
 script:
-  - if [ "${TIDY}" != "true" ]; then make -j2; fi
+  - if [ "${TIDY}" != "true" ]; then make -j2 && make test; fi
   - if [ "${TIDY}" = "true" ]; then git --no-pager diff --ignore-submodules && make tidy; fi
 
 os:
