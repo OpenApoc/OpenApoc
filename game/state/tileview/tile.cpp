@@ -211,10 +211,9 @@ std::list<Tile *> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destinat
 					nextPosition.x += x;
 					nextPosition.y += y;
 					nextPosition.z += z;
-					if (nextPosition.z < 0 || nextPosition.z >= this->size.z ||
-					    nextPosition.y < 0 || nextPosition.y >= this->size.y ||
-					    nextPosition.x < 0 || nextPosition.x >= this->size.x)
+					if (!tileIsValid(nextPosition))
 						continue;
+
 					Tile *tile = this->getTile(nextPosition);
 					// If Skip if we've already expanded this, as in a 3d-grid we know the first
 					// expansion will be the shortest route
@@ -233,9 +232,7 @@ std::list<Tile *> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destinat
 					    glm::length(Vec3<float>{nextPosition} - Vec3<float>{currentPosition});
 
 					// make pathfinder biased towards vehicle's altitude preference
-					if ((nextPosition.z < altitude && z == 1) ||
-					    (nextPosition.z > altitude && z == -1) || nextPosition.z == altitude)
-						newNodeCost -= 0.5f;
+					newNodeCost += canEnterTile.adjustCost(nextPosition, z);
 
 					PathNode newNode(newNodeCost, nodeToExpand.thisTile, tile, goalPosition);
 					visitedTiles.emplace(tile, newNode);
@@ -324,6 +321,15 @@ int TileMap::getLayer(TileObject::Type type) const
 }
 
 int TileMap::getLayerCount() const { return this->layerMap.size(); }
+
+bool TileMap::tileIsValid(Vec3<int> tile) const
+{
+	if (tile.z < 0 || tile.z >= this->size.z ||
+		tile.y < 0 || tile.y >= this->size.y ||
+		tile.x < 0 || tile.x >= this->size.x)
+		return false;
+	return true;
+}
 
 sp<Image> TileMap::dumpVoxelView(const Rect<int> viewRect, const TileTransform &transform) const
 {

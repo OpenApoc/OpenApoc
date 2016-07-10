@@ -351,6 +351,7 @@ void Vehicle::handleCollision(GameState &state, Collision &c)
 		auto dir = vehicleDir + projectileDir;
 		dir = glm::round(dir);
 
+
 		auto armourDirection = VehicleType::ArmourDirection::Right;
 		if (dir.x == 0 && dir.y == 0 && dir.z == 0)
 		{
@@ -472,8 +473,6 @@ float Vehicle::getFiringRange() const
 	for (auto &equipment : this->equipment)
 	{
 		if (equipment->type->type != VEquipmentType::Type::Weapon)
-			continue;
-		if (equipment->canFire() == false)
 			continue;
 
 		if (range < equipment->getRange())

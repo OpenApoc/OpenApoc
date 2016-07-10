@@ -33,6 +33,7 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	virtual Vec3<float> getPosition() const = 0;
 
 	virtual float getDistanceTo(sp<TileObject> target);
+	virtual float getDistanceTo(Vec3<float> target);
 	virtual void setPosition(Vec3<float> newPosition);
 	virtual void removeFromMap();
 

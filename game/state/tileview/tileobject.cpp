@@ -66,8 +66,12 @@ class TileObjectZComparer
 
 float TileObject::getDistanceTo(sp<TileObject> target)
 {
-	// FIXME: convert tiles into 'Apoc meters'
-	return glm::length((target->getPosition() - this->getPosition()) * VELOCITY_SCALE);
+	return getDistanceTo(target->getPosition());
+}
+
+float TileObject::getDistanceTo(Vec3<float> target)
+{
+	return glm::length((target - this->getPosition()) * VELOCITY_SCALE);
 }
 
 void TileObject::setPosition(Vec3<float> newPosition)

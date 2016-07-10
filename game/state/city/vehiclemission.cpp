@@ -31,7 +31,7 @@ class FlyingVehicleCanEnterTileHelper : public CanEnterTileHelper
 		}
 		if (!to)
 		{
-			LogError("To 'to' position supplied");
+			LogError("No 'to' position supplied");
 			return false;
 		}
 		Vec3<int> toPos = to->position;
@@ -40,6 +40,12 @@ class FlyingVehicleCanEnterTileHelper : public CanEnterTileHelper
 			LogError("FromPos == ToPos {%d,%d,%d}", toPos.x, toPos.y, toPos.z);
 			return false;
 		}
+		if (!map.tileIsValid(toPos))
+		{
+			LogError("ToPos {%d,%d,%d} is not on the map", toPos.x, toPos.y, toPos.z);
+			return false;
+		}
+
 		for (auto obj : to->ownedObjects)
 		{
 			if (obj->getType() == TileObject::Type::Vehicle)
@@ -76,6 +82,54 @@ class FlyingVehicleCanEnterTileHelper : public CanEnterTileHelper
 		// FIXME: Handle 'large' vehicles interacting more than with just the 'owned' objects of a
 		// single tile?
 		return true;
+	}
+
+	float adjustCost(Vec3<int> nextPosition, int z) const override
+	{
+		if ((nextPosition.z < (int)v.altitude && z == 1) ||
+			(nextPosition.z > (int)v.altitude && z == -1) || nextPosition.z == (int)v.altitude)
+		{
+			return -0.5f;
+		}
+		return 0;
+	}
+
+	Vec3<float> findSidestep(GameState &state, sp<TileObjectVehicle> vTile, sp<TileObjectVehicle> targetTile, float distancePref) const
+	{
+		const int maxIterations = 6;
+		auto bestPosition = vTile->getPosition();
+		float closest = std::numeric_limits<float>::max();
+
+		for(int i = 0; i < maxIterations; i++)
+		{
+			float xOffset = (state.rng() % 20) / 10.0f - 1;
+			float yOffset = (state.rng() % 20) / 10.0f - 1;
+			auto newPosition = vTile->getPosition();
+			newPosition.x += xOffset;
+			newPosition.y += yOffset;
+
+			if (static_cast<int>(newPosition.z) < static_cast<int>(v.altitude))
+			{
+				newPosition.z += 1;
+			}
+			else if (static_cast<int>(newPosition.z) > static_cast<int>(v.altitude))
+			{
+				newPosition.z -= 1;
+			}
+			newPosition.z = glm::clamp(newPosition.z, 0.0f, map.size.z - 0.1f);
+
+			if (static_cast<Vec3<int>>(newPosition) != vTile->getOwningTile()->position &&
+				canEnterTile(vTile->getOwningTile(), map.getTile(newPosition)))
+			{
+				float currentDist = glm::abs(distancePref - targetTile->getDistanceTo(newPosition));
+				if (currentDist < closest)
+				{
+					closest = currentDist;
+					bestPosition = newPosition;
+				}
+			}
+		}
+		return bestPosition;
 	}
 };
 
@@ -173,23 +227,63 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 		}
 		case MissionType::AttackVehicle:
 		{
-			// follow logic
 			auto vTile = v.tileObject;
 			auto targetTile = this->targetVehicle->tileObject;
-			if (vTile && targetTile && !currentPlannedPath.empty() &&
-			    targetTile->getOwningTile()->position != currentPlannedPath.back())
+
+			if (vTile && targetTile)
 			{
 				auto &map = vTile->map;
+				FlyingVehicleCanEnterTileHelper tileHelper(map, v);
 
-				auto path = map.findShortestPath(
-				    vTile->getOwningTile()->position, targetTile->getOwningTile()->position, 100,
-				    FlyingVehicleCanEnterTileHelper{map, v}, (float)v.altitude);
+				// Evasive - default (max range)
+				float distancePreference = v.getFiringRange();
+				switch (v.attackMode)
+				{
+				case Vehicle::AttackMode::Aggressive:
+					distancePreference /= 4;
+					break;
+				case Vehicle::AttackMode::Standard:
+					distancePreference /= 2;
+					break;
+				case Vehicle::AttackMode::Defensive:
+					distancePreference /= 1.5f;
+					break;
+				}
 
-				auto pos = (*std::next(path.begin(), 1))->position;
-				dest = Vec3<float>{pos.x, pos.y, pos.z}
-				       // Add {0.5,0.5,0.5} to make it route to the center of the tile
-				       + Vec3<float>{0.5, 0.5, 0.5};
-				return true;
+				if (vTile->getDistanceTo(targetTile) < distancePreference)
+				{
+					// target is in range, we're done with pathing and start maneuvering
+					if (!currentPlannedPath.empty()) currentPlannedPath.clear();
+
+					auto newPosition = tileHelper.findSidestep(state, vTile, targetTile, distancePreference);
+					if (newPosition != vTile->getPosition())
+					{
+						dest = newPosition;
+						return true;
+					}
+					return false;
+				}
+				else if (targetTile->getOwningTile()->position != this->targetLocation || currentPlannedPath.empty())
+				{
+					// adjust the path if target moved
+					currentPlannedPath.clear();
+					this->targetLocation = targetTile->getOwningTile()->position;
+					setPathTo(v, this->targetLocation, 100);
+				}
+
+				// continue
+				if (!currentPlannedPath.empty())
+				{
+					currentPlannedPath.pop_front();
+					if (currentPlannedPath.empty())
+						return false;
+					auto pos = currentPlannedPath.front();
+					dest = Vec3<float>{ pos.x, pos.y, pos.z }
+						// Add {0.5,0.5,0.5} to make it route to the center of the tile
+					+Vec3<float>{0.5, 0.5, 0.5};
+					return true;
+
+				}
 			}
 			return false;
 		}
@@ -448,7 +542,8 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				takeoffMission->start(state, v);
 				return;
 			}
-			this->setPathTo(v, targetTile->getOwningTile()->position);
+			this->targetLocation = targetTile->getOwningTile()->position;
+			this->setPathTo(v, this->targetLocation);
 			return;
 		}
 		case MissionType::GotoBuilding:
