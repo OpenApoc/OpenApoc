@@ -241,16 +241,20 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 		}
 
 		bool has_active_weapon = false;
-		for (auto &equipment : this->equipment)
+		if (!this->isCrashed() && this->attackMode != Vehicle::AttackMode::Evasive)
 		{
-			if (equipment->type->type != VEquipmentType::Type::Weapon)
-				continue;
-			equipment->update(ticks);
-			if (equipment->canFire())
+			for (auto &equipment : this->equipment)
 			{
-				has_active_weapon = true;
+				if (equipment->type->type != VEquipmentType::Type::Weapon)
+					continue;
+				equipment->update(ticks);
+				if (equipment->canFire())
+				{
+					has_active_weapon = true;
+				}
 			}
 		}
+
 		if (has_active_weapon)
 		{
 			// Find something to shoot at!
