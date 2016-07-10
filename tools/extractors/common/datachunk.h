@@ -17,7 +17,7 @@ template <typename T> class DataChunk
 	DataChunk(std::istream &file, off_t start_offset, off_t end_offset)
 	{
 		int count = (end_offset - start_offset) / sizeof(T);
-		LogInfo("Reading %zu units of %zu bytes from offset 0x%08x", count, sizeof(T),
+		LogInfo("Reading %d units of %zu bytes from offset 0x%08lx", count, sizeof(T),
 		        start_offset);
 		file.seekg(start_offset, file.beg);
 		for (int i = 0; i < count; i++)

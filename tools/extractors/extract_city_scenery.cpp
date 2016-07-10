@@ -71,7 +71,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 	auto inFile = fw().data->fs.open("xcom3/ufodata/" + datFile + ".dat");
 	if (!inFile)
 	{
-		LogError("Failed to open \"" + datFile + ".dat\"");
+		LogError("Failed to open \"%s.dat\"", datFile.c_str());
 	}
 
 	auto fileSize = inFile.size();

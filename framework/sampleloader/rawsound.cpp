@@ -29,7 +29,7 @@ class RawSampleLoader : public SampleLoader
 		auto splitString = path.split(':');
 		if (splitString.size() != 3)
 		{
-			LogInfo("String \"%s\" doesn't look like a rawsample - need 3 elements (got %d)",
+			LogInfo("String \"%s\" doesn't look like a rawsample - need 3 elements (got %zu)",
 			        path.c_str(), splitString.size());
 			return nullptr;
 		}

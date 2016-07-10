@@ -25,7 +25,7 @@ void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 
 			if (vehicle->type->type == VehicleType::Type::UFO)
 			{
-				if (vehicle->isCrashed()) 
+				if (vehicle->isCrashed())
 				{
 					closestImage = vehicle->type->crashed_sprite;
 				}
@@ -54,7 +54,7 @@ void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 				for (auto &p : it->second)
 				{
 					float angle =
-						glm::angle(glm::normalize(p.first), glm::normalize(this->getDirection()));
+					    glm::angle(glm::normalize(p.first), glm::normalize(this->getDirection()));
 					if (angle < closestAngle)
 					{
 						closestAngle = angle;
@@ -110,7 +110,7 @@ TileObjectVehicle::TileObjectVehicle(TileMap &map, sp<Vehicle> vehicle)
 
 Vec3<float> TileObjectVehicle::getVoxelCenter()
 {
-	Vec3<int> tileSize = { 32, 32, 16 };
+	Vec3<int> tileSize = {32, 32, 16};
 	auto objPos = this->getPosition();
 	auto offset = this->getVoxelOffset();
 	objPos -= offset;
@@ -137,7 +137,7 @@ void TileObjectVehicle::nextFrame(int ticks)
 {
 	auto v = this->vehicle.lock();
 	animationDelay += ticks;
-	if (v  && animationDelay > 10)
+	if (v && animationDelay > 10)
 	{
 		animationDelay = 0;
 		animationFrame++;

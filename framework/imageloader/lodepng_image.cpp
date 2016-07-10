@@ -45,7 +45,7 @@ sp<Palette> OpenApoc::loadPNGPalette(Data &d, const UString fileName)
 		}
 		if (png_state.info_png.color.palettesize != 256)
 		{
-			LogWarning("PNG \"%s\" has unsupported palette size %u (expected '256')",
+			LogWarning("PNG \"%s\" has unsupported palette size %zu (expected '256')",
 			           f.systemPath().c_str(), png_state.info_png.color.palettesize);
 			return nullptr;
 		}
@@ -142,7 +142,7 @@ class LodepngImageLoader : public OpenApoc::ImageLoader
 			}
 			if (pixels.size() < width * height)
 			{
-				LogWarning("PNG \"%s\" has insufficient size %u for {%u,%u} image",
+				LogWarning("PNG \"%s\" has insufficient size %zu for {%u,%u} image",
 				           file.systemPath().c_str(), pixels.size(), width, height);
 				return nullptr;
 			}
@@ -249,7 +249,7 @@ class LodepngImageWriter : public OpenApoc::ImageWriter
 		outStream.write(reinterpret_cast<char *>(outBuf.data()), outBuf.size());
 		if (!outStream)
 		{
-			LogWarning("Failed to write %u bytes to stream", outBuf.size());
+			LogWarning("Failed to write %zu bytes to stream", outBuf.size());
 			return false;
 		}
 
@@ -272,7 +272,7 @@ class LodepngImageWriter : public OpenApoc::ImageWriter
 		outStream.write(reinterpret_cast<char *>(outBuf.data()), outBuf.size());
 		if (!outStream)
 		{
-			LogWarning("Failed to write %u bytes to stream", outBuf.size());
+			LogWarning("Failed to write %zu bytes to stream", outBuf.size());
 			return false;
 		}
 		LogInfo("Successfully wrote RGB PNG image");

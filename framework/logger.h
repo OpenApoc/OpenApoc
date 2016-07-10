@@ -15,8 +15,11 @@ namespace OpenApoc
 // FIXME: !__GNUC__ isn't the same as MSVC
 #ifndef __GNUC__
 #define LOGGER_PREFIX __FUNCSIG__
+#define PRINTF_ATTR(fmt_string_no, vararg_start_no)
 #else
 #define LOGGER_PREFIX __PRETTY_FUNCTION__
+#define PRINTF_ATTR(fmt_string_no, vararg_start_no)                                                \
+	__attribute__((format(printf, fmt_string_no, vararg_start_no)))
 #endif
 
 enum class LogLevel
@@ -26,7 +29,7 @@ enum class LogLevel
 	Error,
 };
 // All format strings (%s) are expected to be UTF8
-void Log(LogLevel level, UString prefix, UString format, ...);
+void Log(LogLevel level, UString prefix, const char *format, ...) PRINTF_ATTR(3, 4);
 // All logger output will be UTF8
 }; // namespace OpenApoc
 

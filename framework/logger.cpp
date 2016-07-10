@@ -80,7 +80,7 @@ static void print_backtrace(FILE *f)
 		dladdr(reinterpret_cast<void *>(ip), &info);
 		if (info.dli_sname)
 		{
-			fprintf(f, "  0x%lx %s+0x%lx (%s)\n", static_cast<uintptr_t>(ip), info.dli_sname,
+			fprintf(f, "  0x%zx %s+0x%zx (%s)\n", static_cast<uintptr_t>(ip), info.dli_sname,
 			        static_cast<uintptr_t>(ip) - reinterpret_cast<uintptr_t>(info.dli_saddr),
 			        info.dli_fname);
 			continue;
@@ -90,12 +90,12 @@ static void print_backtrace(FILE *f)
 		char fnName[MAX_SYMBOL_LENGTH];
 		if (!unw_get_proc_name(&cursor, fnName, MAX_SYMBOL_LENGTH, &offsetInFn))
 		{
-			fprintf(f, "  0x%lx %s+0x%lx (%s)\n", static_cast<uintptr_t>(ip), fnName, offsetInFn,
+			fprintf(f, "  0x%zx %s+0x%zx (%s)\n", static_cast<uintptr_t>(ip), fnName, offsetInFn,
 			        info.dli_fname);
 			continue;
 		}
 		else
-			fprintf(f, "  0x%lx\n", static_cast<uintptr_t>(ip));
+			fprintf(f, "  0x%zx\n", static_cast<uintptr_t>(ip));
 	}
 }
 #elif defined(BACKTRACE_WINDOWS)
@@ -137,7 +137,7 @@ static void print_backtrace(FILE *f)
 	for (unsigned int frame = 0; frame < frames; frame++)
 	{
 		SymFromAddr(process, (DWORD64)(ip[frame]), 0, sym);
-		fprintf(f, "  0x%p %s+0x%lx\n", ip[frame], sym->Name,
+		fprintf(f, "  0x%p %s+0x%Ix\n", ip[frame], sym->Name,
 		        (uintptr_t)ip[frame] - (uintptr_t)sym->Address);
 	}
 
@@ -157,7 +157,7 @@ static std::mutex logMutex;
 static std::chrono::time_point<std::chrono::high_resolution_clock> timeInit =
     std::chrono::high_resolution_clock::now();
 
-void Log(LogLevel level, UString prefix, UString format, ...)
+void Log(LogLevel level, UString prefix, const char *format, ...)
 {
 	bool exit_app = false;
 	const char *level_prefix;
@@ -201,11 +201,11 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 	va_start(arglist, format);
 #ifdef ANDROID
 	LOGD("%s %llu %s: ", level_prefix, clockns, prefix.c_str());
-	LOGDV(format.c_str(), arglist);
+	LOGDV(format, arglist);
 	va_end(arglist);
 #else
 	fprintf(outFile, "%s %llu %s: ", level_prefix, clockns, prefix.c_str());
-	vfprintf(outFile, format.c_str(), arglist);
+	vfprintf(outFile, format, arglist);
 
 	// On error print a backtrace to the log file
 	if (level == LogLevel::Error)
@@ -220,7 +220,7 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 		fflush(outFile);
 		va_start(arglist, format);
 		fprintf(stderr, "%s %llu %s: ", level_prefix, clockns, prefix.c_str());
-		vfprintf(stderr, format.c_str(), arglist);
+		vfprintf(stderr, format, arglist);
 		fprintf(stderr, "\n");
 		va_end(arglist);
 	}
@@ -230,14 +230,14 @@ void Log(LogLevel level, UString prefix, UString format, ...)
 	{
 		/* How big should the string be? */
 		va_start(arglist, format);
-		auto strSize = vsnprintf(NULL, 0, format.c_str(), arglist);
+		auto strSize = vsnprintf(NULL, 0, format, arglist);
 		strSize += 1; // NULL terminator
 		std::unique_ptr<char[]> string(new char[strSize]);
 		va_end(arglist);
 
 		/* Now format the string */
 		va_start(arglist, format);
-		vsnprintf(string.get(), strSize, format.c_str(), arglist);
+		vsnprintf(string.get(), strSize, format, arglist);
 		va_end(arglist);
 
 		SDL_MessageBoxData mBoxData;

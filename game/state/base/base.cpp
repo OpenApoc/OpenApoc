@@ -185,8 +185,9 @@ void Base::buildFacility(GameState &state, StateRef<FacilityType> type, Vec2<int
 					facility->lab = {&state, id};
 					break;
 				}
-				// TODO: Engineering 'labs'
-				break;
+				default:
+					// Non-lab modules don't need special handling
+					break;
 			}
 		}
 	}

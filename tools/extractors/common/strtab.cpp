@@ -13,7 +13,7 @@ StrTab::StrTab(std::istream &file, off_t start_offset, off_t end_offset, bool ma
 	assert(end_offset > start_offset);
 	file.seekg(start_offset, file.beg);
 	assert(file);
-	char c;
+	char c = '\0';
 	std::map<std::string, int> unique_id;
 	while (file && file.tellg() <= end_offset)
 	{
@@ -46,7 +46,7 @@ std::string StrTab::get(int offset)
 {
 	if (offset >= (int)readStrings.size())
 	{
-		LogError("Trying to read string table entry %d - table size %d", offset,
+		LogError("Trying to read string table entry %d - table size %zu", offset,
 		         readStrings.size());
 	}
 	return readStrings[offset];

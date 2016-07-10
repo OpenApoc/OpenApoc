@@ -35,7 +35,6 @@ void TileView::Finish() {}
 
 void TileView::EventOccurred(Event *e)
 {
-	bool selectionChanged = false;
 
 	if (e->Type() == EVENT_KEY_DOWN)
 	{
@@ -54,32 +53,26 @@ void TileView::EventOccurred(Event *e)
 				scrollRight = true;
 				break;
 			case SDLK_s:
-				selectionChanged = true;
 				if (selectedTilePosition.y < (map.size.y - 1))
 					selectedTilePosition.y++;
 				break;
 			case SDLK_w:
-				selectionChanged = true;
 				if (selectedTilePosition.y > 0)
 					selectedTilePosition.y--;
 				break;
 			case SDLK_a:
-				selectionChanged = true;
 				if (selectedTilePosition.x > 0)
 					selectedTilePosition.x--;
 				break;
 			case SDLK_d:
-				selectionChanged = true;
 				if (selectedTilePosition.x < (map.size.x - 1))
 					selectedTilePosition.x++;
 				break;
 			case SDLK_r:
-				selectionChanged = true;
 				if (selectedTilePosition.z < (map.size.z - 1))
 					selectedTilePosition.z++;
 				break;
 			case SDLK_f:
-				selectionChanged = true;
 				if (selectedTilePosition.z > 0)
 					selectedTilePosition.z--;
 				break;

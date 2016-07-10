@@ -135,7 +135,7 @@ void DebugMenu::BulkExportPCKs()
 		UString pckloadstr = UString("PCK:") + pckname + UString(":") +
 		                     pckname.substr(0, pckname.length() - 3) + UString("TAB");
 
-		LogInfo(UString("Processing ") + pckloadstr);
+		LogInfo("Processing %s", pckloadstr.c_str());
 
 		sp<ImageSet> pckset = fw().data->load_image_set(pckloadstr);
 
@@ -152,7 +152,7 @@ void DebugMenu::BulkExportPCKs()
 				if (RGBImage *bi = dynamic_cast<RGBImage *>(curimg.get()))
 				{
 
-					LogInfo(UString("Saving ") + outputname);
+					LogInfo("Saving %s", outputname.c_str());
 					bi->saveBitmap(outputname);
 				}
 				else if (PaletteImage *pi = dynamic_cast<PaletteImage *>(curimg.get()))
@@ -163,7 +163,7 @@ void DebugMenu::BulkExportPCKs()
 						outputname = UString("Extracted/") + pckname + UString("/") +
 						             Strings::FromInteger(idx) + UString(".#") +
 						             Strings::FromInteger(palidx) + UString(".PNG");
-						LogInfo(UString("Saving ") + outputname);
+						LogInfo("Saving %s", outputname.c_str());
 						pi->toRGBImage(PaletteList.at(palidx))->saveBitmap(outputname);
 					}
 				}

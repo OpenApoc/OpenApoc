@@ -221,8 +221,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 			this->video_data.reset();
 			return false;
 		}
-		LogInfo("Successfully created SMK context",
-		        static_cast<unsigned long long>(this->video_data_size));
+		LogInfo("Successfully created SMK context");
 
 		if (smk_info_all(this->smk_ctx, nullptr, &this->frame_count, &usf))
 		{
