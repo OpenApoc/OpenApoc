@@ -350,7 +350,6 @@ void Vehicle::handleCollision(GameState &state, Collision &c)
 		auto dir = vehicleDir + projectileDir;
 		dir = glm::round(dir);
 
-
 		auto armourDirection = VehicleType::ArmourDirection::Right;
 		if (dir.x == 0 && dir.y == 0 && dir.z == 0)
 		{

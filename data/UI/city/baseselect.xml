@@ -17,7 +17,7 @@
         <alignment horizontal="centre" vertical="centre"/>
         <font>BIGFONT</font>
       </label>
-	  <label id="TEXT_FUNDS">
+      <label id="TEXT_FUNDS">
         <position x="572" y="14"/>
         <size width="60" height="10"/>
         <alignment horizontal="left" vertical="centre"/>

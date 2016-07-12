@@ -202,7 +202,7 @@
         <size width="32" height="32"/>
         <image/>
         <imagedepressed/>
-      </graphicbutton>	  
+      </graphicbutton>
       <label id="TEXT_BASE_NAME">
         <position x="95" y="95"/>
         <size width="275" height="15"/>

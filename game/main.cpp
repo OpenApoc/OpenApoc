@@ -68,7 +68,7 @@ int main(int argc, char *argv[])
 		Trace::setThreadName("main");
 
 		TraceObj obj("main");
-		up<Framework> fw (new Framework(UString(argv[0]), cmdline, true));
+		up<Framework> fw(new Framework(UString(argv[0]), cmdline, true));
 
 		if (saveFile == "")
 		{

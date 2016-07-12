@@ -324,9 +324,8 @@ int TileMap::getLayerCount() const { return this->layerMap.size(); }
 
 bool TileMap::tileIsValid(Vec3<int> tile) const
 {
-	if (tile.z < 0 || tile.z >= this->size.z ||
-		tile.y < 0 || tile.y >= this->size.y ||
-		tile.x < 0 || tile.x >= this->size.x)
+	if (tile.z < 0 || tile.z >= this->size.z || tile.y < 0 || tile.y >= this->size.y ||
+	    tile.x < 0 || tile.x >= this->size.x)
 		return false;
 	return true;
 }

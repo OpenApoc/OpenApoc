@@ -86,7 +86,7 @@
         <image/>
         <imagedepressed/>
       </graphicbutton>
-	  <label id="TEXT_BUTTON_BASE">
+      <label id="TEXT_BUTTON_BASE">
         <position x="15" y="124"/>
         <size width="157" height="15"/>
         <alignment horizontal="centre" vertical="centre"/>
