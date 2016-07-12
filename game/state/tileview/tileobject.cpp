@@ -8,7 +8,7 @@ namespace OpenApoc
 {
 
 TileObject::TileObject(TileMap &map, Type type, Vec3<float> bounds)
-    : map(map), type(type), owningTile(nullptr), bounds(bounds)
+    : map(map), type(type), owningTile(nullptr), bounds(bounds), name("UNKNOWN_OBJECT")
 {
 }
 

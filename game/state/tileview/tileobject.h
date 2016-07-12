@@ -1,6 +1,7 @@
 #pragma once
 
 #include "library/sp.h"
+#include "library/strings.h"
 #include "library/vec.h"
 #include <vector>
 
@@ -42,6 +43,8 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 	virtual sp<VoxelMap> getVoxelMap() { return nullptr; }
 	virtual Vec3<float> getVoxelOffset() const { return bounds / 2.0f; }
 
+	virtual const UString &getName() { return this->name; }
+
 	virtual ~TileObject();
 
 	TileMap &map;
@@ -58,6 +61,7 @@ class TileObject : public std::enable_shared_from_this<TileObject>
 
 	// The bounds is a cube centered around the 'position' used for stuff like collision detection
 	Vec3<float> bounds;
+	UString name;
 };
 
 } // namespace OpenApoc
