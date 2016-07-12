@@ -43,7 +43,7 @@ before_script:
   - if [ "${TIDY}" = "true" ]; then make format -j2; fi
 
 script:
-  - if [ "${TIDY}" != "true" ]; then make -j2 && make test; fi
+  - if [ "${TIDY}" != "true" ]; then make -j2 && ctest -V; fi
   - if [ "${TIDY}" = "true" ]; then git --no-pager diff --ignore-submodules && make tidy; fi
 
 os:
