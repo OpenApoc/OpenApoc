@@ -1,11 +1,15 @@
 PROJECT (OpenApoc_Tests CXX C)
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
-add_executable(test_rect test_rect.cpp)
-target_link_libraries(test_rect OpenApoc_Library OpenApoc_Framework)
-target_compile_definitions(test_rect PRIVATE -DUNIT_TEST)
-add_test(NAME test_rect COMMAND ${EXECUTABLE_OUTPUT_PATH}/test_rect)
+set (TEST_LIST test_rect)
 
-
-set_property(TARGET test_rect PROPERTY CXX_STANDARD 11)
-set_property(TARGET test_rect PROPERTY CXX_STANDARD_REQUIRED ON)
+foreach(TEST ${TEST_LIST})
+		add_executable(${TEST} ${TEST}.cpp)
+		# Just add all libs?
+		target_link_libraries(${TEST} OpenApoc_Library OpenApoc_Framework
+				OpenApoc_Forms OpenApoc_GameState OpenApoc_GameUI)
+		target_compile_definitions(${TEST} PRIVATE -DUNIT_TEST)
+		add_test(NAME ${TEST} COMMAND ${EXECUTABLE_OUTPUT_PATH}/${TEST})
+		set_property(TARGET ${TEST} PROPERTY CXX_STANDARD 11)
+		set_property(TARGET ${TEST} PROPERTY CXX_STANDARD_REQUIRED ON)
+endforeach()

@@ -157,7 +157,7 @@ static std::mutex logMutex;
 static std::chrono::time_point<std::chrono::high_resolution_clock> timeInit =
     std::chrono::high_resolution_clock::now();
 
-void Log(LogLevel level, UString prefix, const char *format, ...)
+void Log(bool show_dialog, LogLevel level, UString prefix, const char *format, ...)
 {
 	bool exit_app = false;
 	const char *level_prefix;
@@ -168,9 +168,6 @@ void Log(LogLevel level, UString prefix, const char *format, ...)
 	logMutex.lock();
 	if (!outFile)
 	{
-#ifdef UNIT_TEST
-		outFile = stderr;
-#else
 #ifndef ANDROID
 		outFile = fopen(LOG_PATH LOGFILE, "w");
 		if (!outFile)
@@ -180,7 +177,6 @@ void Log(LogLevel level, UString prefix, const char *format, ...)
 			LOGE("Failed to open logfile \"%s\"\n", LOGFILE);
 			return;
 		}
-#endif
 #endif
 	}
 
@@ -226,7 +222,7 @@ void Log(LogLevel level, UString prefix, const char *format, ...)
 	}
 #endif
 #if defined(ERROR_DIALOG)
-	if (level == LogLevel::Error)
+	if (show_dialog && level == LogLevel::Error)
 	{
 		/* How big should the string be? */
 		va_start(arglist, format);
