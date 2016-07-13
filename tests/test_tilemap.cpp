@@ -72,8 +72,8 @@ int main(int, char **)
 	std::vector<std::pair<Vec3<float>, sp<TileObject>>> objects = {
 	    {Vec3<float>{2.5, 2.5, 2.5},
 	     mksp<FakeSceneryTileObject>(map, Vec3<float>{1, 1, 1}, filled_tilemap_32_32_16)},
-		 {Vec3<float>{99.5, 99.5, 9.5},
-		  mksp<FakeSceneryTileObject>(map, Vec3<float>{1, 1, 1}, filled_tilemap_32_32_16)},
+	    {Vec3<float>{99.5, 99.5, 9.5},
+	     mksp<FakeSceneryTileObject>(map, Vec3<float>{1, 1, 1}, filled_tilemap_32_32_16)},
 	};
 
 	for (auto &object : objects)
@@ -96,6 +96,16 @@ int main(int, char **)
 	    {{Vec3<float>{0, 0, 0}, Vec3<float>{1, 1, 1}}, nullptr},
 	    {{Vec3<float>{2.1, 2.1, 0}, Vec3<float>{2.1, 2.1, 4}}, objects[0].second},
 	    {{Vec3<float>{2.6, 2.6, 0}, Vec3<float>{2.6, 2.6, 4}}, objects[0].second},
+	    {{Vec3<float>{2.6, 0, 2.1}, Vec3<float>{2.6, 4, 2.1}}, objects[0].second},
+	    {{Vec3<float>{2.6, 0, 2.6}, Vec3<float>{2.6, 4, 2.6}}, objects[0].second},
+	    {{Vec3<float>{0, 2.1, 2.1}, Vec3<float>{4, 2.1, 2.1}}, objects[0].second},
+	    {{Vec3<float>{0, 2.6, 2.6}, Vec3<float>{4, 2.6, 2.6}}, objects[0].second},
+	    {{Vec3<float>{2.1, 2.1, 0}, Vec3<float>{2.1, 2.6, 4}}, objects[0].second},
+	    {{Vec3<float>{2.6, 2.6, 0}, Vec3<float>{2.1, 2.6, 4}}, objects[0].second},
+	    {{Vec3<float>{2.6, 0, 2.1}, Vec3<float>{2.1, 4, 2.1}}, objects[0].second},
+	    {{Vec3<float>{2.1, 0, 2.6}, Vec3<float>{2.6, 4, 2.6}}, objects[0].second},
+	    {{Vec3<float>{0, 2.6, 2.6}, Vec3<float>{4, 2.1, 2.6}}, objects[0].second},
+	    {{Vec3<float>{0, 2.1, 2.6}, Vec3<float>{4, 2.6, 2.6}}, objects[0].second},
 	};
 
 	for (auto &collision : collisions)
