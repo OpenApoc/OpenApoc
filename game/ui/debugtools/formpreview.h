@@ -17,6 +17,7 @@ class FormPreview : public Stage
 	sp<Form> previewselector;
 	sp<Form> propertyeditor;
 	sp<Form> displayform;
+	sp<TextButton> reloadButton;
 
 	int glowindex;
 

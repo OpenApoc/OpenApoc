@@ -41,7 +41,7 @@ FormPreview::FormPreview() : Stage()
 	        "PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:64:UI/menuopt.pal"));
 	interactWithDisplay->Size = {19, 16};
 	interactWithDisplay->Location.x = 0;
-	interactWithDisplay->Location.y = c->Size.y - interactWithDisplay->Size.y;
+	interactWithDisplay->Location.y = c->Size.y - interactWithDisplay->Size.y * 2;
 	interactWithDisplay->BackgroundColour = {80, 80, 80, 255};
 	interactWithDisplay->SetChecked(true);
 
@@ -51,6 +51,12 @@ FormPreview::FormPreview() : Stage()
 	l->Size.x = c->Size.x - l->Location.x;
 	l->Size.y = interactWithDisplay->Size.y;
 	l->BackgroundColour = {80, 80, 80, 255};
+
+	reloadButton = c->createChild<TextButton>("Reload xml forms", ui().GetFont("SMALFONT"));
+	reloadButton->Location = {0, interactWithDisplay->Location.y + interactWithDisplay->Size.y};
+	reloadButton->Name = "FORM_RELOAD";
+	reloadButton->Size = {c->Size.x, interactWithDisplay->Size.y};
+	reloadButton->BackgroundColour = {80, 80, 80, 255};
 
 	auto lb = c->createChild<ListBox>();
 	lb->Location.x = 0;
@@ -137,6 +143,11 @@ void FormPreview::EventOccurred(Event *e)
 			displayform = ui().GetForm(currentSelected->Name);
 
 			return;
+		}
+		else if (e->Forms().RaisedBy->Name == "FORM_RELOAD")
+		{
+			ui().reloadFormsXml();
+			displayform = ui().GetForm(currentSelected->Name);
 		}
 	}
 }

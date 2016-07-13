@@ -68,51 +68,63 @@ void UI::ParseXMLDoc(UString XMLFilename)
 		return;
 	}
 
-	UString nodename = node->Name();
+	UString nodeName = node->Name();
 
-	if (nodename == "openapoc")
+	if (nodeName == "openapoc")
 	{
 		for (node = node->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
 		{
 			ApplyAliases(node);
-			nodename = node->Name();
-			if (nodename == "game")
+			nodeName = node->Name();
+
+			if (nodeName == "game")
 			{
 				ParseGameXML(node);
 			}
-			else if (nodename == "form")
-			{
-				ParseFormXML(node);
-			}
-			else if (nodename == "apocfont")
-			{
-				UString fontName = node->Attribute("name");
-				if (fontName == "")
-				{
-					LogError("apocfont element with no name");
-					continue;
-				}
-				auto font = ApocalypseFont::loadFont(node);
-				if (!font)
-				{
-					LogError("apocfont element \"%s\" failed to load", fontName.c_str());
-					continue;
-				}
-
-				if (this->fonts.find(fontName) != this->fonts.end())
-				{
-					LogError("multiple fonts with name \"%s\"", fontName.c_str());
-					continue;
-				}
-				this->fonts[fontName] = font;
-			}
-			else if (nodename == "alias")
-			{
-				aliases[UString(node->Attribute("id"))] = UString(node->GetText());
-			}
 			else
 			{
-				LogError("Unknown XML element \"%s\"", nodename.c_str());
+				if (!resourceNodeNameFilter.empty())
+				{ // skip other nodes if limited to certain resource types
+					if (nodeName != resourceNodeNameFilter)
+					{
+						continue;
+					}
+				}
+
+				if (nodeName == "form")
+				{
+					ParseFormXML(node);
+				}
+				else if (nodeName == "apocfont")
+				{
+					UString fontName = node->Attribute("name");
+					if (fontName == "")
+					{
+						LogError("apocfont element with no name");
+						continue;
+					}
+					auto font = ApocalypseFont::loadFont(node);
+					if (!font)
+					{
+						LogError("apocfont element \"%s\" failed to load", fontName.c_str());
+						continue;
+					}
+
+					if (this->fonts.find(fontName) != this->fonts.end())
+					{
+						LogError("multiple fonts with name \"%s\"", fontName.c_str());
+						continue;
+					}
+					this->fonts[fontName] = font;
+				}
+				else if (nodeName == "alias")
+				{
+					aliases[UString(node->Attribute("id"))] = UString(node->GetText());
+				}
+				else
+				{
+					LogError("Unknown XML element \"%s\"", nodeName.c_str());
+				}
 			}
 		}
 	}
@@ -196,6 +208,14 @@ void UI::ApplyAliases(tinyxml2::XMLElement *Source)
 		ApplyAliases(child);
 		child = child->NextSiblingElement();
 	}
+}
+
+void UI::reloadFormsXml()
+{
+	forms.clear();
+	resourceNodeNameFilter = "form";
+	instance->Load(fw().Settings->getString("GameRules"));
+	resourceNodeNameFilter = "";
 }
 
 std::vector<UString> UI::GetFormIDs()
