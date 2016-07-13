@@ -59,8 +59,6 @@ class Tile
 	std::vector<std::vector<sp<TileObject>>> drawnObjects;
 
 	Tile(TileMap &map, Vec3<int> position, int layerCount);
-
-	Collision findCollision(Vec3<float> lineSegmentStart, Vec3<float> lineSegmentEnd) const;
 };
 
 class CanEnterTileHelper
