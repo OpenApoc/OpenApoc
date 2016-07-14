@@ -266,9 +266,9 @@ sp<Control> TextEdit::CopyTo(sp<Control> CopyParent)
 	return copy;
 }
 
-void TextEdit::ConfigureFromXML(tinyxml2::XMLElement *Element)
+void TextEdit::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 {
-	Control::ConfigureFromXML(Element);
+	Control::ConfigureSelfFromXML(Element);
 	tinyxml2::XMLElement *subnode;
 	UString attribvalue;
 
