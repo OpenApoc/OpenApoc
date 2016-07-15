@@ -19,6 +19,7 @@ class UI
 	std::map<UString, sp<BitmapFont>> fonts;
 	std::map<UString, sp<Form>> forms;
 	std::map<UString, UString> aliases;
+	UString resourceNodeNameFilter;
 
 	void ApplyAliases(tinyxml2::XMLElement *Source);
 	void ParseXMLDoc(UString XMLFilename);
@@ -45,6 +46,8 @@ class UI
 
 	static void unload();
 	static UI &getInstance();
+
+	void reloadFormsXml();
 };
 
 UI &ui();
