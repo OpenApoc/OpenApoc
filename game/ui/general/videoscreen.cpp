@@ -127,7 +127,7 @@ void VideoScreen::Render()
 		if (this->current_frame->palette)
 			fw().renderer->setPalette(this->current_frame->palette);
 		fw().renderer->drawScaled(this->current_frame->image, this->frame_position,
-		                          this->frame_size);
+		                          this->frame_size, Renderer::Scaler::Nearest);
 	}
 	else
 	{
