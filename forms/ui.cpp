@@ -4,6 +4,7 @@
 #include "framework/framework.h"
 #include "framework/trace.h"
 #include "library/sp.h"
+#include <stdexcept>
 #include <tinyxml2.h>
 
 namespace OpenApoc
@@ -158,7 +159,15 @@ void UI::ParseFormXML(tinyxml2::XMLElement *Source)
 
 sp<Form> UI::GetForm(UString ID)
 {
-	return std::dynamic_pointer_cast<Form>(forms[ID]->CopyTo(nullptr));
+	try
+	{
+		return std::dynamic_pointer_cast<Form>(forms.at(ID)->CopyTo(nullptr));
+	}
+	catch (const std::out_of_range)
+	{
+		LogError("Missing form \"%s\"", ID.c_str());
+		return nullptr;
+	}
 }
 
 sp<BitmapFont> UI::GetFont(UString FontData)

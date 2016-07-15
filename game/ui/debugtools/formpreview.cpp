@@ -146,8 +146,11 @@ void FormPreview::EventOccurred(Event *e)
 		}
 		else if (e->Forms().RaisedBy->Name == "FORM_RELOAD")
 		{
-			ui().reloadFormsXml();
-			displayform = ui().GetForm(currentSelected->Name);
+			if (currentSelected != nullptr)
+			{
+				ui().reloadFormsXml();
+				displayform = ui().GetForm(currentSelected->Name);
+			}
 		}
 	}
 }
