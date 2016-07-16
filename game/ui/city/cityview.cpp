@@ -854,7 +854,7 @@ void CityView::EventOccurred(Event *e)
 						auto v = this->selectedVehicle.lock();
 						StateRef<Vehicle> vehicleRef(state.get(), vehicle);
 
-						if (v && v->owner == state->getPlayer())
+						if (v && v->owner == state->getPlayer() && v != vehicle)
 						{
 							// FIXME: Don't clear missions if not replacing current mission
 							v->missions.clear();

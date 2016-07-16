@@ -3,8 +3,8 @@
 #include "library/colour.h"
 #include "library/sp.h"
 #include "library/vec.h"
-#include <memory>
 #include <map>
+#include <memory>
 
 namespace OpenApoc
 {

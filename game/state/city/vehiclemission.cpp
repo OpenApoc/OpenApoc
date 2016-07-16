@@ -530,6 +530,11 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				LogError("Target disappeared");
 				return;
 			}
+			if (v.shared_from_this() == t.getSp())
+			{
+				LogError("Vehicle mission %s: Attacking itself");
+				return;
+			}
 			auto targetTile = t->tileObject;
 			if (!targetTile)
 			{
