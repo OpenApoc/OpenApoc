@@ -4,6 +4,27 @@
 namespace OpenApoc
 {
 
+const std::map<SceneryTileType::TileType, UString> SceneryTileType::TileTypeMap = {
+	{ SceneryTileType::TileType::General, "general" },{ SceneryTileType::TileType::Road, "road" },
+	{ SceneryTileType::TileType::PeopleTubeJunction, "people_tube_junction" },{ SceneryTileType::TileType::PeopleTube, "people_tube" },
+	{ SceneryTileType::TileType::CityWall, "city_wall" }
+};
+
+const std::map<SceneryTileType::RoadType, UString> SceneryTileType::RoadTypeMap = {
+	{ SceneryTileType::RoadType::StraightBend, "straight_bend" },{ SceneryTileType::RoadType::Junction, "junction" },
+	{ SceneryTileType::RoadType::Terminal, "terminal" }
+};
+
+const std::map<SceneryTileType::WalkMode, UString> SceneryTileType::WalkModeMap = {
+	{ SceneryTileType::WalkMode::None, "none" },{ SceneryTileType::WalkMode::Into, "into" },
+	{ SceneryTileType::WalkMode::Onto, "onto" }
+};
+
+
+SceneryTileType::SceneryTileType()
+    : tile_type(TileType::General), road_type(RoadType::StraightBend), walk_mode(WalkMode::None),
+      constitution(0), value(0), mass(false), strength(0), isHill(false), isLandingPad(false){};
+
 template <>
 sp<SceneryTileType> StateObject<SceneryTileType>::get(const GameState &state, const UString &id)
 {

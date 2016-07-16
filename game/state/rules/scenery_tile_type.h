@@ -4,6 +4,7 @@
 #include "library/sp.h"
 #include "library/vec.h"
 #include <memory>
+#include <map>
 
 namespace OpenApoc
 {
@@ -12,7 +13,34 @@ class VoxelMap;
 class SceneryTileType : public StateObject<SceneryTileType>
 {
   public:
-	SceneryTileType() : isLandingPad(false) {}
+	SceneryTileType();
+
+	enum class TileType
+	{
+		General,
+		Road,
+		PeopleTubeJunction,
+		PeopleTube,
+		CityWall,
+	};
+	static const std::map<TileType, UString> TileTypeMap;
+
+	enum class RoadType
+	{
+		StraightBend,
+		Junction,
+		Terminal,
+	};
+	static const std::map<RoadType, UString> RoadTypeMap;
+
+	enum class WalkMode
+	{
+		None,
+		Into,
+		Onto
+	};
+	static const std::map<WalkMode, UString> WalkModeMap;
+
 	sp<Image> sprite;
 	sp<Image> strategySprite;
 	sp<Image> overlaySprite;
@@ -22,5 +50,16 @@ class SceneryTileType : public StateObject<SceneryTileType>
 	Vec2<float> imageOffset;
 	bool isLandingPad;
 	Colour minimap_colour;
+
+	TileType tile_type;
+	RoadType road_type;
+	WalkMode walk_mode;
+	int constitution;
+	int value;
+	int mass;
+	int strength;
+
+	// instead of road_level_change; should be enough for now
+	bool isHill;
 };
 }; // namespace OpenApoc

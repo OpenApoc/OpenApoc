@@ -506,6 +506,9 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 {
 	if (!node)
 		return;
+	serializeIn(state, node->getNode("tile_type"), t.tile_type, SceneryTileType::TileTypeMap);
+	serializeIn(state, node->getNode("road_type"), t.road_type, SceneryTileType::RoadTypeMap);
+	serializeIn(state, node->getNode("walk_mode"), t.walk_mode, SceneryTileType::WalkModeMap);
 	serializeIn(state, node->getNode("sprite"), t.sprite);
 	serializeIn(state, node->getNode("strategySprite"), t.strategySprite);
 	serializeIn(state, node->getNode("overlaySprite"), t.overlaySprite);
@@ -514,6 +517,11 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("imageOffset"), t.imageOffset);
 	serializeIn(state, node->getNode("isLandingPad"), t.isLandingPad);
 	serializeIn(state, node->getNode("minimap_colour"), t.minimap_colour);
+	serializeIn(state, node->getNode("constitution"), t.constitution);
+	serializeIn(state, node->getNode("value"), t.value);
+	serializeIn(state, node->getNode("mass"), t.mass);
+	serializeIn(state, node->getNode("strength"), t.strength);
+	serializeIn(state, node->getNode("isHill"), t.isHill);
 }
 
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, BaseLayout &l)
@@ -1154,6 +1162,9 @@ template <> void serializeOut(sp<SerializationNode> node, const Colour &c)
 
 template <> void serializeOut(sp<SerializationNode> node, const SceneryTileType &t)
 {
+	serializeOut(node->addNode("tile_type"), t.tile_type, SceneryTileType::TileTypeMap);
+	serializeOut(node->addNode("road_type"), t.road_type, SceneryTileType::RoadTypeMap);
+	serializeOut(node->addNode("walk_mode"), t.walk_mode, SceneryTileType::WalkModeMap);
 	serializeOut(node->addNode("sprite"), t.sprite);
 	serializeOut(node->addNode("strategySprite"), t.strategySprite);
 	serializeOut(node->addNode("overlaySprite"), t.overlaySprite);
@@ -1162,6 +1173,11 @@ template <> void serializeOut(sp<SerializationNode> node, const SceneryTileType 
 	serializeOut(node->addNode("imageOffset"), t.imageOffset);
 	serializeOut(node->addNode("isLandingPad"), t.isLandingPad);
 	serializeOut(node->addNode("minimap_colour"), t.minimap_colour);
+	serializeOut(node->addNode("constitution"), t.constitution);
+	serializeOut(node->addNode("value"), t.value);
+	serializeOut(node->addNode("mass"), t.mass);
+	serializeOut(node->addNode("strength"), t.strength);
+	serializeOut(node->addNode("isHill"), t.isHill);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const BaseLayout &l)

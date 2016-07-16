@@ -89,9 +89,74 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		inFile.read((char *)&entry, sizeof(entry));
 
 		UString id =
-		    UString::format("%s%s%u", SceneryTileType::getPrefix().c_str(), tilePrefix.c_str(), i);
+			UString::format("%s%s%u", SceneryTileType::getPrefix().c_str(), tilePrefix.c_str(), i);
 
 		auto tile = mksp<SceneryTileType>();
+
+		switch (entry.tile_type)
+		{
+			case TILE_TYPE_GENERAL:
+				tile->tile_type = SceneryTileType::TileType::General;
+				break;
+			case TILE_TYPE_ROAD:
+				tile->tile_type = SceneryTileType::TileType::Road;
+				break;
+			case TILE_TYPE_PEOPLE_TUBE_JUNCTION:
+				tile->tile_type = SceneryTileType::TileType::PeopleTubeJunction;
+				break;
+			case TILE_TYPE_PEOPLE_TUBE:
+				tile->tile_type = SceneryTileType::TileType::PeopleTube;
+				break;
+			case TILE_TYPE_CITY_WALL:
+				tile->tile_type = SceneryTileType::TileType::CityWall;
+				break;
+			default:
+				LogError("Unexpected scenery tile type %d for ID %s", (int)entry.tile_type, id.c_str());
+		}
+
+		switch (entry.road_type)
+		{
+			case ROAD_TYPE_STRAIGHT_BEND:
+				tile->road_type = SceneryTileType::RoadType::StraightBend;
+				break;
+			case ROAD_TYPE_JUNCTION:
+				tile->road_type = SceneryTileType::RoadType::Junction;
+				break;
+			case ROAD_TYPE_TERMINAL:
+				tile->road_type = SceneryTileType::RoadType::Terminal;
+				break;
+			default:
+				LogError("Unexpected scenery road type %d for ID %s", (int)entry.road_type, id.c_str());
+		}
+
+		switch (entry.walk_type)
+		{
+			case WALK_TYPE_NONE:
+				tile->walk_mode = SceneryTileType::WalkMode::None;
+				break;
+			case WALK_TYPE_INTO:
+				tile->walk_mode = SceneryTileType::WalkMode::Into;
+				break;
+			case WALK_TYPE_ONTO:
+				tile->walk_mode = SceneryTileType::WalkMode::Onto;
+				break;
+			default:
+				LogError("Unexpected scenery walk type %d for ID %s", (int)entry.walk_type, id.c_str());
+		}
+
+		tile->constitution = entry.constitution;
+		tile->strength = entry.strength;
+		tile->mass = entry.mass;
+		tile->value = entry.value;
+
+		for (unsigned i = 0; i < 4; i++)
+		{
+			if (entry.road_level_change[i] != 0)
+			{
+				tile->isHill = true;
+				break;
+			}
+		}
 
 		if (entry.damagedtile_idx)
 		{

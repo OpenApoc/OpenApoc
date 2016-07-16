@@ -18,7 +18,7 @@
   <gamestate_xml SHA1="876b32f10e0bfb52fb657fdafaf6b1450519f9dc">gamestate/cities/CITYMAP_HUMAN/initial_tiles.xml</gamestate_xml>
   <gamestate_xml SHA1="52fe14d9a8805ae6a71aac2cbc44de80a1e9d1da">gamestate/cities/CITYMAP_HUMAN/projectiles.xml</gamestate_xml>
   <gamestate_xml SHA1="a82a57e7e51ae6bdb07ce31bfc996432e7b93ab2">gamestate/cities/CITYMAP_HUMAN/scenery.xml</gamestate_xml>
-  <gamestate_xml SHA1="668bcd2e1041dacf472ed5731031b2545526c3b6">gamestate/cities/CITYMAP_HUMAN/tile_types.xml</gamestate_xml>
+  <gamestate_xml SHA1="660365805080e6df65b5eb419ec3bef49d49a71b">gamestate/cities/CITYMAP_HUMAN/tile_types.xml</gamestate_xml>
   <gamestate_xml SHA1="87876067ff641a2ed28c2263dedf4a023d284169">gamestate/doodad_types.xml</gamestate_xml>
   <gamestate_xml SHA1="90255b57783da811170510c98da3fa2b93dbce19">gamestate/facility_types.xml</gamestate_xml>
   <gamestate_xml SHA1="418982266672055365ccce0f3080db17c4473e9f">gamestate/organisations.xml</gamestate_xml>
