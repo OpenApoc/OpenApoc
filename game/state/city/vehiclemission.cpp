@@ -117,16 +117,15 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 					{
 						auto scenery =
 						    std::static_pointer_cast<TileObjectScenery>(obj)->scenery.lock();
-						if (scenery->type->tile_type == SceneryTileType::TileType::General &&
-						    (scenery->type->walk_mode == SceneryTileType::WalkMode::Into ||
-						     scenery->type->walk_mode == SceneryTileType::WalkMode::Onto) &&
-						    !scenery->type->isLandingPad && !scenery->type->isHill)
-							return true;
+						if (scenery->type->tile_type != SceneryTileType::TileType::General ||
+						    scenery->type->walk_mode == SceneryTileType::WalkMode::None ||
+						    scenery->type->isLandingPad || scenery->type->isHill)
+							return false;
 					}
 				}
 			}
 		}
-		return false;
+		return true;
 	}
 
 	Vec3<int> findTileToLandOn(GameState &state, sp<TileObjectVehicle> vTile) const
