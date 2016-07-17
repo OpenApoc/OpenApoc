@@ -684,6 +684,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("city"), v.city);
 	serializeIn(state, node->getNode("health"), v.health);
 	serializeIn(state, node->getNode("shield"), v.shield);
+	serializeIn(state, node->getNode("shieldRecharge"), v.shieldRecharge);
 	serializeIn(state, node->getNode("homeBuilding"), v.homeBuilding);
 	serializeIn(state, node->getNode("currentlyLandedBuilding"), v.currentlyLandedBuilding);
 }
@@ -1313,6 +1314,7 @@ template <> void serializeOut(sp<SerializationNode> node, const Vehicle &v)
 	serializeOut(node->addNode("city"), v.city);
 	serializeOut(node->addNode("health"), v.health);
 	serializeOut(node->addNode("shield"), v.shield);
+	serializeOut(node->addNode("shieldRecharge"), v.shieldRecharge);
 	serializeOut(node->addNode("homeBuilding"), v.homeBuilding);
 	serializeOut(node->addNode("currentlyLandedBuilding"), v.currentlyLandedBuilding);
 }

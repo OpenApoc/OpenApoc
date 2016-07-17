@@ -1,6 +1,7 @@
 #pragma once
 
 #include "framework/includes.h"
+#include "game/state/gamestate.h"
 #include "game/state/organisation.h"
 #include "game/state/rules/vehicle_type.h"
 #include "game/state/tileview/tile.h"
@@ -38,6 +39,8 @@ class Vehicle : public StateObject<Vehicle>, public std::enable_shared_from_this
 	virtual ~Vehicle();
 	Vehicle();
 
+	static const unsigned SHIELD_RECHARGE_TIME = TICKS_PER_SECOND * 200;
+
 	enum class AttackMode
 	{
 		Aggressive,
@@ -71,6 +74,7 @@ class Vehicle : public StateObject<Vehicle>, public std::enable_shared_from_this
 	StateRef<City> city;
 	int health;
 	int shield;
+	int shieldRecharge;
 	StateRef<Building> homeBuilding;
 	StateRef<Building> currentlyLandedBuilding;
 
@@ -91,7 +95,7 @@ class Vehicle : public StateObject<Vehicle>, public std::enable_shared_from_this
 	void removeEquipment(sp<VEquipment> object);
 
 	bool isCrashed() const;
-	bool applyDamage(int damage, float armour);
+	bool applyDamage(GameState &state, int damage, float armour);
 	void handleCollision(GameState &state, Collision &c);
 	sp<TileObjectVehicle> findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile);
 	void attackTarget(sp<TileObjectVehicle> vehicleTile, sp<TileObjectVehicle> enemyTile);

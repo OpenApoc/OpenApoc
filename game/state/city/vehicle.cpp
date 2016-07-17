@@ -5,7 +5,6 @@
 #include "game/state/city/projectile.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/city/vequipment.h"
-#include "game/state/gamestate.h"
 #include "game/state/organisation.h"
 #include "game/state/rules/vequipment_type.h"
 #include "game/state/tileview/tileobject_shadow.h"
@@ -133,7 +132,7 @@ VehicleMover::~VehicleMover() {}
 
 Vehicle::Vehicle()
     : position(0, 0, 0), velocity(0, 0, 0), facing(1, 0, 0), health(0), shield(0),
-      attackMode(AttackMode::Standard), altitude(Altitude::Standard)
+      shieldRecharge(0), attackMode(AttackMode::Standard), altitude(Altitude::Standard)
 {
 }
 
@@ -277,17 +276,27 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 			}
 		}
 	}
-	// FIXME: Make shield recharge rate variable?
-	this->shield += ticks;
-	if (this->shield > this->getMaxShield())
+
+	int maxShield = this->getMaxShield();
+	if (maxShield)
 	{
-		this->shield = this->getMaxShield();
+		int threshold = SHIELD_RECHARGE_TIME / maxShield;
+		this->shieldRecharge += ticks;
+		if (this->shieldRecharge > threshold)
+		{
+			this->shield += this->shieldRecharge / threshold;
+			this->shieldRecharge %= threshold;
+			if (this->shield > maxShield)
+			{
+				this->shield = maxShield;
+			}
+		}
 	}
 }
 
 bool Vehicle::isCrashed() const { return this->health < this->type->crash_health; }
 
-bool Vehicle::applyDamage(int damage, float armour)
+bool Vehicle::applyDamage(GameState &state, int damage, float armour)
 {
 	if (this->shield <= damage)
 	{
@@ -322,7 +331,9 @@ bool Vehicle::applyDamage(int damage, float armour)
 			}
 			else if (isCrashed())
 			{
-				// FIXME: mission
+				this->missions.clear();
+				this->missions.emplace_back(VehicleMission::crashLand(*this));
+				this->missions.front()->start(state, *this);
 				return false;
 			}
 		}
@@ -380,7 +391,7 @@ void Vehicle::handleCollision(GameState &state, Collision &c)
 			armourValue = armour->second;
 		}
 
-		if (applyDamage(projectile->damage, armourValue))
+		if (applyDamage(state, projectile->damage, armourValue))
 		{
 			auto doodad = city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_EXPLOSION_2"},
 			                                this->tileObject->getPosition());
