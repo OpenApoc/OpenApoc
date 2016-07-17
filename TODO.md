@@ -41,7 +41,7 @@ Note, this is not a complete list, expect items to grow and spawn sub-items as t
   - ~~Flying vehicle pathfinding~~
   - Ground vehicle pathfinding
   - ~~Animated UFO drawing~~
-  - 'crashed' UFOs
+  - ~~'crashed' UFOs~~
   - ~~Vehicle damage~~
   - Vehicle AI:
     - ~~AI Vehicles fire at enemies~~
@@ -62,7 +62,7 @@ Note, this is not a complete list, expect items to grow and spawn sub-items as t
       - ~~Prefer shooting at 'current target'~~
     - Goto crashed UFO
     - Goto alien dimension portal
-    - Different 'aggressiveness'
+    - ~~Different 'aggressiveness'~~
     - ~~Different 'height'~~
 - Building destruction
   - Decide how building tiles are 'supported'

@@ -782,6 +782,8 @@ void CityView::EventOccurred(Event *e)
 					    std::dynamic_pointer_cast<TileObjectScenery>(collision.obj)->getOwner();
 					LogInfo("Clicked on scenery at {%f,%f,%f}", scenery->currentPosition.x,
 					        scenery->currentPosition.y, scenery->currentPosition.z);
+
+					auto building = scenery->building;
 					if (this->selectionState == SelectionState::VehicleGotoLocation)
 					{
 
@@ -804,8 +806,7 @@ void CityView::EventOccurred(Event *e)
 						}
 						this->selectionState = SelectionState::Normal;
 					}
-					auto building = scenery->building;
-					if (building)
+					else if (building)
 					{
 						LogInfo("Scenery owned by building \"%s\"", building->name.c_str());
 						if (this->selectionState == SelectionState::VehicleGotoBuilding)

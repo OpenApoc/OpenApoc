@@ -131,7 +131,7 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 
 	Vec3<int> findTileToLandOn(GameState &state, sp<TileObjectVehicle> vTile) const
 	{
-		const int lookupRaduis = 5;
+		const int lookupRaduis = 10;
 		auto startPos = vTile->getOwningTile()->position;
 
 		for (int r = 0; r < lookupRaduis; r++)
@@ -154,18 +154,11 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 							}
 						}
 
-						if (hasScenery)
+						if (hasScenery && canLandOnTile(tile))
 						{
-							bool result = canLandOnTile(tile);
-							LogWarning("Find tile to land on: %d %d %d, result %d", x, y, z,
-							           result);
-
-							if (result)
-							{
-								auto crashTile = tile->position;
-								crashTile.z++;
-								return crashTile;
-							}
+							auto crashTile = tile->position;
+							crashTile.z++;
+							return crashTile;
 						}
 					}
 					if (middle && x == startPos.x - r)
@@ -309,7 +302,6 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 		case MissionType::TakeOff:      // Fall-through
 		case MissionType::GotoLocation: // Fall-through
 		case MissionType::Land:
-		case MissionType::Crash:
 		{
 			if (currentPlannedPath.empty())
 				return false;
@@ -320,6 +312,19 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 			dest = Vec3<float>{pos.x, pos.y, pos.z}
 			       // Add {0.5,0.5,0.5} to make it route to the center of the tile
 			       + Vec3<float>{0.5, 0.5, 0.5};
+			return true;
+		}
+		case MissionType::Crash:
+		{
+			if (currentPlannedPath.empty())
+				return false;
+			currentPlannedPath.pop_front();
+			if (currentPlannedPath.empty())
+				return false;
+			auto pos = currentPlannedPath.front();
+			dest = Vec3<float>{ pos.x, pos.y, pos.z };
+				// Add {0.5,0.5,0.5} to make it route to the center of the tile
+				+Vec3<float>{0.5, 0.5, 0.0};
 			return true;
 		}
 		case MissionType::AttackVehicle:
