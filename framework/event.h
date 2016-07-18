@@ -98,18 +98,19 @@ typedef struct FRAMEWORK_TIMER_EVENT
 	void *TimerObject;
 } FRAMEWORK_TIMER_EVENT;
 
+typedef struct FRAMEWORK_TEXT_EVENT
+{
+	UString Input;
+} FRAMEWORK_TEXT_EVENT;
+
 typedef struct FRAMEWORK_FORMS_EVENT
 {
 	sp<Control> RaisedBy;
 	FormEventType EventFlag;
 	FRAMEWORK_MOUSE_EVENT MouseInfo;
 	FRAMEWORK_KEYBOARD_EVENT KeyInfo;
+	FRAMEWORK_TEXT_EVENT Input;
 } FRAMEWORK_FORMS_EVENT;
-
-typedef struct FRAMEWORK_TEXT_EVENT
-{
-	UString Input;
-} FRAMEWORK_TEXT_EVENT;
 
 struct FRAMEWORK_USER_EVENT
 {

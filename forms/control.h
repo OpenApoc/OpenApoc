@@ -44,7 +44,7 @@ class Control : public std::enable_shared_from_this<Control>
 	virtual void PostRender();
 	virtual void OnRender();
 
-	bool IsFocused() const;
+	virtual bool IsFocused() const;
 
 	void ResolveLocation();
 	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element);

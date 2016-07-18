@@ -21,6 +21,11 @@ TextEdit::TextEdit(const UString &Text, sp<BitmapFont> font)
 
 TextEdit::~TextEdit() {}
 
+bool TextEdit::IsFocused() const
+{
+	return editting;
+}
+
 void TextEdit::EventOccured(Event *e)
 {
 	UString keyname;
@@ -36,14 +41,17 @@ void TextEdit::EventOccured(Event *e)
 			    e->Forms().EventFlag == FormEventType::KeyDown)
 			{
 				editting = true;
+
 				fw().Text_StartInput();
 				// e->Handled = true;
+				// FIXME: Should we really fall through here?
 			}
 		}
 		if (editting)
 		{
 			if (e->Forms().RaisedBy == shared_from_this())
 			{
+
 				if (e->Forms().EventFlag == FormEventType::LostFocus)
 				{
 					editting = false;
@@ -54,12 +62,14 @@ void TextEdit::EventOccured(Event *e)
 			}
 			else if (e->Forms().EventFlag == FormEventType::MouseClick)
 			{
-				editting = false;
-				fw().Text_StopInput();
-				RaiseEvent(FormEventType::TextEditFinish);
+				// FIXME: Due to event duplication (?), this code won't work. Can only stop editing text by pressing enter.
+				//editting = false;
+				//fw().Text_StopInput();
+				//RaiseEvent(FormEventType::TextEditFinish);
 			}
-			if (e->Forms().EventFlag == FormEventType::KeyPress)
+			if (e->Forms().EventFlag == FormEventType::KeyDown)
 			{
+				LogInfo("Key pressed: %d", e->Forms().KeyInfo.KeyCode);
 				switch (e->Forms().KeyInfo.KeyCode) // TODO: Check scancodes instead of keycodes?
 				{
 					case SDLK_BACKSPACE:
@@ -135,8 +145,8 @@ void TextEdit::EventOccured(Event *e)
 			}
 			else if (e->Forms().EventFlag == FormEventType::TextInput)
 			{
-				text.insert(SelectionStart, e->Text().Input);
-				SelectionStart += e->Text().Input.length();
+				text.insert(SelectionStart, e->Forms().Input.Input);
+				SelectionStart += e->Forms().Input.Input.length();
 				RaiseEvent(FormEventType::TextChanged);
 			}
 		}
@@ -232,8 +242,9 @@ void TextEdit::SetText(const UString &Text)
 
 void TextEdit::RaiseEvent(FormEventType Type)
 {
-	std::ignore = Type;
-	this->pushFormEvent(FormEventType::TextChanged, nullptr);
+//	std::ignore = Type;
+	pushFormEvent(Type, nullptr);
+	//this->pushFormEvent(FormEventType::TextChanged, nullptr);
 }
 
 sp<BitmapFont> TextEdit::GetFont() const { return font; }

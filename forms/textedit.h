@@ -29,6 +29,8 @@ class TextEdit : public Control
   protected:
 	void OnRender() override;
 
+	bool IsFocused() const override;
+
   public:
 	unsigned int SelectionStart;
 	HorizontalAlignment TextHAlign;
