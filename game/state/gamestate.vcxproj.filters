@@ -105,6 +105,9 @@
     <ClCompile Include="tileview\voxel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="savemanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="gametime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -201,6 +204,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="rules\vequipment_type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="savemanager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gametime.h">

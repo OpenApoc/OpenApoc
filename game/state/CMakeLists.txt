@@ -27,6 +27,7 @@ set (GAMESTATE_SOURCE_FILES
 	rules/scenery_tile_type.cpp
 	rules/vehicle_type_rules.cpp
 	rules/vequipment_rules.cpp
+	savemanager.cpp
 	tileview/tile.cpp
 	tileview/tileobject.cpp
 	tileview/tileobject_doodad.cpp
@@ -60,6 +61,7 @@ set (GAMESTATE_HEADER_FILES
 	rules/scenery_tile_type.h
 	rules/vehicle_type.h
 	rules/vequipment_type.h
+	savemanager.h
 	stateobject.h
 	tileview/tile.h
 	tileview/tileobject.h
