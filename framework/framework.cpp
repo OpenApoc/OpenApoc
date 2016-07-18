@@ -65,6 +65,8 @@ static std::map<UString, UString> defaultConfig = {
     {"Resource.SystemDataDir", DATA_DIRECTORY},
     {"Resource.LocalCDPath", "./data/cd.iso"},
     {"Resource.SystemCDPath", DATA_DIRECTORY "/cd.iso"},
+    {"Resource.SaveDataDir", "./saves"},
+    {"Resource.SaveSkipPacking", "0"},
     {"Visual.Renderers", RENDERERS},
     {"Audio.Backends", "SDLRaw:null"},
     {"Audio.GlobalGain", "20"},
@@ -223,6 +225,7 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 	resourcePaths.push_back(Settings->getString("Resource.LocalCDPath"));
 	resourcePaths.push_back(Settings->getString("Resource.SystemDataDir"));
 	resourcePaths.push_back(Settings->getString("Resource.LocalDataDir"));
+	resourcePaths.push_back(Settings->getString("Resource.SaveDataDir"));
 
 	for (auto &path : resourcePaths)
 	{

@@ -76,8 +76,18 @@ class GameState : public std::enable_shared_from_this<GameState>
 	unsigned int time;
 	unsigned int day;
 
+	// high level api for loading game
 	bool loadGame(const UString &path);
+
+	// high level api for saving game
+	// WARNING! Does not save metadata
 	bool saveGame(const UString &path, bool pack = true);
+
+	// serializes gamestate to archive
+	bool serialize(sp<SerializationArchive> archive) const;
+
+	// deserializes gamestate from archive
+	bool deserialize(const sp<SerializationArchive> archive);
 
 	// Called on a newly started Game to setup initial state that isn't serialized in (random
 	// vehicle positions etc.) - it is not called

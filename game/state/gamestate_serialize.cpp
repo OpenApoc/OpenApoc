@@ -1469,17 +1469,12 @@ bool GameState::saveGame(const UString &path, bool pack)
 {
 	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
-	try
+	if (serialize(archive))
 	{
-
-		serializeOut(archive->newRoot("", "gamestate"), *this);
+		archive->write(path, pack);
+		return true;
 	}
-	catch (SerializationException &e)
-	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().c_str());
-	}
-	archive->write(path, pack);
-	return true;
+	return false;
 }
 
 bool GameState::loadGame(const UString &path)
@@ -1493,6 +1488,25 @@ bool GameState::loadGame(const UString &path)
 		return false;
 	}
 
+	return deserialize(archive);
+}
+
+bool GameState::serialize(sp<SerializationArchive> archive) const
+{
+	try
+	{
+		serializeOut(archive->newRoot("", "gamestate"), *this);
+	}
+	catch (SerializationException &e)
+	{
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().c_str());
+		return false;
+	}
+	return true;
+}
+
+bool GameState::deserialize(const sp<SerializationArchive> archive)
+{
 	try
 	{
 		serializeIn(this, archive->getRoot("", "gamestate"), *this);

@@ -138,6 +138,15 @@ static std::map<UString, UString> readManifest(const std::string &manifestData)
 
 static bool writeDir(const UString &name, const std::map<UString, std::string> &contents)
 {
+	if (!boost::filesystem::exists(name.str()))
+	{
+		if (!boost::filesystem::create_directories(name.str()))
+		{
+			LogError("Failed to create directory \"%s\"", name.c_str());
+			return false;
+		}
+	}
+
 	auto manifestData = writeManifest(contents);
 	auto manifestPathStr = name + "/openapoc_manifest.xml";
 	boost::filesystem::path manifestPath(manifestPathStr.str());
@@ -219,7 +228,7 @@ static bool readDir(const UString &name, std::map<UString, std::string> &content
 	LogInfo("Reading %llu bytes from manifest \"%s\"", (unsigned long long)manifestSize,
 	        manifestPath.string().c_str());
 
-	up<char[]> manifestData(new char[manifestSize]);
+	up<char[]> manifestData(new char[(unsigned int)manifestSize]);
 	manifestInStream.read(manifestData.get(), manifestSize);
 
 	if (!manifestInStream)
@@ -229,7 +238,8 @@ static bool readDir(const UString &name, std::map<UString, std::string> &content
 		return false;
 	}
 
-	auto manifestContents = readManifest(std::string(manifestData.get(), manifestSize));
+	auto manifestContents =
+	    readManifest(std::string(manifestData.get(), (unsigned int)manifestSize));
 
 	if (manifestContents.empty())
 	{
@@ -250,7 +260,7 @@ static bool readDir(const UString &name, std::map<UString, std::string> &content
 		auto size = boost::filesystem::file_size(fullPath);
 		LogInfo("Reading %llu bytes from \"%s\"", (unsigned long long)size,
 		        fullPath.string().c_str());
-		up<char[]> data(new char[size]);
+		up<char[]> data(new char[(unsigned int)size]);
 
 		inStream.read(data.get(), size);
 
@@ -261,7 +271,7 @@ static bool readDir(const UString &name, std::map<UString, std::string> &content
 			return false;
 		}
 
-		std::string fileContents(data.get(), size);
+		std::string fileContents(data.get(), (unsigned int)size);
 
 		auto sha1Sum = calculate_checksum(fileContents);
 		auto expectedSha1Sum = p.second;
@@ -284,12 +294,10 @@ static bool readDir(const UString &name, std::map<UString, std::string> &content
 	return true;
 }
 
-static bool writePack(const UString &name, const std::map<UString, std::string> &contents)
+static bool writePack(const UString &path, const std::map<UString, std::string> &contents)
 {
 	mz_zip_archive archive;
 	memset(&archive, 0, sizeof(archive));
-
-	auto path = name + ".zip";
 
 	bool ret = false;
 
@@ -322,12 +330,10 @@ err:
 	return ret;
 }
 
-static bool readPack(const UString &name, std::map<UString, std::string> &contents)
+static bool readPack(const UString &path, std::map<UString, std::string> &contents)
 {
 	mz_zip_archive archive;
 	memset(&archive, 0, sizeof(archive));
-
-	auto path = name + ".zip";
 
 	bool ret = false;
 
@@ -364,15 +370,15 @@ static bool readPack(const UString &name, std::map<UString, std::string> &conten
 		LogInfo("Reading %lu bytes for file \"%s\" in zip \"%s\"",
 		        (unsigned long)stat.m_uncomp_size, filename.c_str(), path.c_str());
 
-		data.reset(new char[stat.m_uncomp_size]);
+		data.reset(new char[(unsigned int)stat.m_uncomp_size]);
 
-		if (!mz_zip_reader_extract_to_mem(&archive, idx, data.get(), stat.m_uncomp_size, 0))
+		if (!mz_zip_reader_extract_to_mem(&archive, idx, data.get(), (size_t)stat.m_uncomp_size, 0))
 		{
 			LogError("Failed to extract file \"%s\" in zip \"%s\"", filename.c_str(), path.c_str());
 			goto err;
 		}
 
-		std::string filecontents(data.get(), stat.m_uncomp_size);
+		std::string filecontents(data.get(), (unsigned int)stat.m_uncomp_size);
 
 		contents[filename] = std::move(filecontents);
 	}
@@ -391,6 +397,7 @@ class XMLSerializationArchive : public SerializationArchive,
 {
   private:
 	std::map<UString, xml_document> docRoots;
+	std::map<UString, std::string> rawContents;
 	friend class SerializationArchive;
 
   public:
@@ -469,12 +476,12 @@ sp<SerializationArchive> SerializationArchive::createArchive()
 
 sp<SerializationArchive> SerializationArchive::readArchive(const UString &name)
 {
-	std::map<UString, std::string> contents;
-	if (readDir(name, contents))
+	auto archive = std::make_shared<XMLSerializationArchive>();
+	if (readDir(name, archive->rawContents))
 	{
 		LogInfo("Reading directory \"%s\"", name.c_str());
 	}
-	else if (readPack(name, contents))
+	else if (readPack(name, archive->rawContents))
 	{
 		LogInfo("Reading pack \"%s\"", name.c_str());
 	}
@@ -484,20 +491,6 @@ sp<SerializationArchive> SerializationArchive::readArchive(const UString &name)
 		return nullptr;
 	}
 
-	auto archive = std::make_shared<XMLSerializationArchive>();
-	for (auto &pair : contents)
-	{
-		// FIXME: Make this actually read from the root and load the xinclude tags properly?
-		auto &doc = archive->docRoots[pair.first];
-		auto parse_result = doc.load_string(pair.second.c_str());
-		if (!parse_result)
-		{
-			LogError("Failed to parse \"%s\" : \"%s\" at \"%llu\"", pair.first.c_str(),
-			         parse_result.description(), (unsigned long long)parse_result.offset);
-			return nullptr;
-		}
-		LogInfo("Parsed \"%s\"", pair.first.c_str());
-	}
 	return archive;
 }
 
@@ -518,8 +511,25 @@ sp<SerializationNode> XMLSerializationArchive::getRoot(const UString &prefix, co
 	auto it = this->docRoots.find(path);
 	if (it == this->docRoots.end())
 	{
-		LogInfo("No root file named \"%s\"", path.c_str());
-		return nullptr;
+		if (rawContents.find(path) != rawContents.end())
+		{
+			// FIXME: Make this actually read from the root and load the xinclude tags properly?
+			auto &doc = this->docRoots[path];
+			auto parse_result = doc.load_string(rawContents[path].c_str());
+			if (!parse_result)
+			{
+				LogError("Failed to parse \"%s\" : \"%s\" at \"%llu\"", path.c_str(),
+				         parse_result.description(), (unsigned long long)parse_result.offset);
+				return nullptr;
+			}
+			it = this->docRoots.find(path);
+			LogInfo("Parsed \"%s\"", path.c_str());
+		}
+		else
+		{
+			LogInfo("No root file named \"%s\"", path.c_str());
+			return nullptr;
+		}
 	}
 	auto root = it->second.child(name.c_str());
 	if (!root)
