@@ -22,6 +22,8 @@ Note, this is not a complete list, expect items to grow and spawn sub-items as t
 - ~~Generate initial gamestate from Apoc files~~
 - ~~Allow 'patching' gamestate~~
 - ~~Save games~~
+  - Set save name
+  - Speedup loading of save list
 - ~~Load games~~
 - Saved games can 'depend' on other GameState packages (e.g. Mods)
 - Save GameState minimiser (IE only save the things that 'changed')
