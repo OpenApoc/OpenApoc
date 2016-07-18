@@ -19,6 +19,11 @@
           <size width="260" height="28"/>
           <font>SMALFONT</font>
         </textbutton>
+        <textbutton id="BUTTON_LOADGAME" text="Load Game">
+          <position x="18" y="76"/>
+          <size width="260" height="28"/>
+          <font>SMALFONT</font>
+        </textbutton>
         <textbutton id="BUTTON_ABANDONGAME" text="Abandon and Restart Game">
           <position x="18" y="167"/>
           <size width="260" height="28"/>

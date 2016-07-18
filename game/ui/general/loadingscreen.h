@@ -8,19 +8,18 @@ namespace OpenApoc
 {
 
 class Image;
+class GameState;
 
 class LoadingScreen : public Stage
 {
   private:
-	std::future<void> loading_task;
+	std::future<sp<GameState>> loading_task;
 	sp<Image> loadingimage;
-	std::function<sp<Stage>()> nextScreenFn;
 	sp<Image> backgroundimage;
 	float loadingimageangle;
 
   public:
-	LoadingScreen(std::future<void> task, std::function<sp<Stage>()> nextScreenFn,
-	              sp<Image> background = nullptr);
+	LoadingScreen(std::future<sp<GameState>> gameStateTask, sp<Image> background = nullptr);
 	// Stage control
 	void Begin() override;
 	void Pause() override;
