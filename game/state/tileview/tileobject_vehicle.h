@@ -21,7 +21,7 @@ class TileObjectVehicle : public TileObject
 		this->getVehicle()->velocity = dir;
 	}
 
-	Vec3<float> getVoxelCenter();
+	Vec3<float> getCentrePosition();
 	sp<VoxelMap> getVoxelMap() override;
 	Vec3<float> getPosition() const override;
 	void nextFrame(int ticks);

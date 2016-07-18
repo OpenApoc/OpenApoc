@@ -108,14 +108,15 @@ TileObjectVehicle::TileObjectVehicle(TileMap &map, sp<Vehicle> vehicle)
 	animationFrame = vehicle->type->animation_sprites.begin();
 }
 
-Vec3<float> TileObjectVehicle::getVoxelCenter()
+Vec3<float> TileObjectVehicle::getCentrePosition()
 {
-	Vec3<int> tileSize = {32, 32, 16};
+	Vec3<float> tileSize = {32, 32, 16};
+	this->getVoxelMap()->calculateCentre();
+	auto voxelCentre = this->getVoxelMap()->centre;
 	auto objPos = this->getPosition();
-	auto offset = this->getVoxelOffset();
-	objPos -= offset;
-	auto voxelSize = this->getVoxelMap()->getSize();
-	return Vec3<float>();
+	objPos -= this->getVoxelOffset();
+	return Vec3<float>(objPos.x + voxelCentre.x / tileSize.x, objPos.y + voxelCentre.y / tileSize.y,
+	                   objPos.z + voxelCentre.z / tileSize.z);
 }
 
 sp<VoxelMap> TileObjectVehicle::getVoxelMap() { return this->getVehicle()->type->voxelMap; }

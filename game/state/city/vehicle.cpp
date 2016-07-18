@@ -449,7 +449,7 @@ sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectV
 
 void Vehicle::attackTarget(sp<TileObjectVehicle> vehicleTile, sp<TileObjectVehicle> enemyTile)
 {
-	auto target = enemyTile->getPosition();
+	auto target = enemyTile->getCentrePosition();
 	float distance = this->tileObject->getDistanceTo(enemyTile);
 
 	for (auto &equipment : this->equipment)
@@ -461,7 +461,6 @@ void Vehicle::attackTarget(sp<TileObjectVehicle> vehicleTile, sp<TileObjectVehic
 
 		if (distance <= equipment->getRange())
 		{
-			// FIXME: fire at the 'center of mass'
 			auto projectile = equipment->fire(target);
 			if (projectile)
 			{

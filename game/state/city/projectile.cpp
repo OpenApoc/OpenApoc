@@ -2,6 +2,7 @@
 #include "game/state/city/city.h"
 #include "game/state/gamestate.h"
 #include "game/state/tileview/tileobject_projectile.h"
+#include "game/state/tileview/tileobject_vehicle.h"
 #include "game/state/tileview/voxel.h"
 
 namespace OpenApoc
@@ -61,7 +62,14 @@ Collision Projectile::checkProjectileCollision(TileMap &map)
 		// so ignore stuff without a tile
 		return {};
 	}
+
 	Collision c = map.findCollision(this->previousPosition, this->position);
+	if (c && c.obj->getType() == TileObject::Type::Vehicle &&
+	    this->firer == std::static_pointer_cast<TileObjectVehicle>(c.obj)->getVehicle())
+	{
+		return {};
+	}
+
 	c.projectile = shared_from_this();
 	return c;
 }
