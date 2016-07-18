@@ -19,6 +19,7 @@ set (GAMESTATE_SOURCE_FILES
 	city/vequipment.cpp
 	gamestate.cpp
 	gamestate_serialize.cpp
+	gametime.cpp
 	organisation.cpp
 	research.cpp
 	rules/doodad_type.cpp
@@ -50,6 +51,7 @@ set (GAMESTATE_HEADER_FILES
 	city/vehiclemission.h
 	city/vequipment.h
 	gamestate.h
+	gametime.h
 	organisation.h
 	research.h
 	rules/doodad_type.h

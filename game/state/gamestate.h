@@ -4,6 +4,7 @@
 #include "game/state/agent.h"
 #include "game/state/base/base.h"
 #include "game/state/city/city.h"
+#include "game/state/gametime.h"
 #include "game/state/organisation.h"
 #include "game/state/research.h"
 #include "game/state/rules/doodad_type.h"
@@ -18,16 +19,11 @@
 namespace OpenApoc
 {
 
+class SerializationArchive;
 class City;
 class Base;
 
-static const unsigned TICKS_PER_SECOND = 60;
-static const unsigned TICKS_PER_MINUTE = TICKS_PER_SECOND * 60;
-static const unsigned TICKS_PER_HOUR = TICKS_PER_MINUTE * 60;
-static const unsigned TICKS_PER_DAY = TICKS_PER_HOUR * 24;
-static const unsigned TURBO_TICKS = 5 * 60 * TICKS_PER_SECOND;
 static const unsigned ORIGINAL_TICKS = 36;
-
 class GameState : public std::enable_shared_from_this<GameState>
 {
   private:
@@ -73,8 +69,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	// The time from game start in ticks
 	// 'time' is the number of ticks in the day, 'days' is number of days since game start
-	unsigned int time;
-	unsigned int day;
+	GameTime gameTime;
 
 	// high level api for loading game
 	bool loadGame(const UString &path);

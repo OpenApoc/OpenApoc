@@ -33,6 +33,7 @@
     <ClCompile Include="city\vequipment.cpp" />
     <ClCompile Include="gamestate.cpp" />
     <ClCompile Include="gamestate_serialize.cpp" />
+    <ClCompile Include="gametime.cpp" />
     <ClCompile Include="organisation.cpp" />
     <ClCompile Include="research.cpp" />
     <ClCompile Include="rules\doodad_type.cpp" />
@@ -64,6 +65,7 @@
     <ClInclude Include="city\vehiclemission.h" />
     <ClInclude Include="city\vequipment.h" />
     <ClInclude Include="gamestate.h" />
+    <ClInclude Include="gametime.h" />
     <ClInclude Include="organisation.h" />
     <ClInclude Include="research.h" />
     <ClInclude Include="rules\doodad_type.h" />

@@ -16,7 +16,7 @@ namespace OpenApoc
 
 GameState::GameState()
     : player(this), showTileOrigin(false), showVehiclePath(false), showSelectableBounds(false),
-      time(0), day(0)
+      gameTime(0)
 {
 }
 
@@ -239,8 +239,8 @@ void GameState::startGame()
 			count--;
 		}
 	}
-	// Start the game at midday
-	this->time = TICKS_PER_HOUR * 12;
+
+	gameTime = GameTime::midday();
 }
 
 bool GameState::canTurbo() const
@@ -280,18 +280,17 @@ void GameState::update(unsigned int ticks)
 		Lab::update(ticks, {this, lab.second}, shared_from_this());
 	}
 	Trace::end("GameState::update::labs");
-	this->time += ticks;
 
-	if (this->time >= TICKS_PER_DAY)
+	gameTime.addTicks(ticks);
+	if (gameTime.dayPassed())
 	{
-		this->time -= TICKS_PER_DAY;
-		this->day++;
 		this->updateEndOfDay();
-		if ((this->day % 7) == 0)
-		{
-			this->updateEndOfWeek();
-		}
 	}
+	if (gameTime.weekPassed())
+	{
+		this->updateEndOfWeek();
+	}
+	gameTime.clearFlags();
 }
 
 void GameState::updateEndOfDay()
@@ -316,9 +315,10 @@ void GameState::updateTurbo()
 	}
 	unsigned ticksToUpdate = TURBO_TICKS;
 	// Turbo always re-aligns to TURBO_TICKS (5 minutes)
-	if (this->time % TURBO_TICKS)
+	unsigned int align = this->gameTime.getTicks() % TURBO_TICKS;
+	if (align != 0)
 	{
-		ticksToUpdate -= ticksToUpdate % TURBO_TICKS;
+		ticksToUpdate -= align;
 	}
 	this->update(ticksToUpdate);
 }
