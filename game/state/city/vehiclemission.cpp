@@ -321,9 +321,9 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 			if (currentPlannedPath.empty())
 				return false;
 			auto pos = currentPlannedPath.front();
-			dest = Vec3<float>{pos.x, pos.y, pos.z};
-			// Add {0.5,0.5,0.5} to make it route to the center of the tile
-			+Vec3<float>{0.5, 0.5, 0.0};
+			dest = Vec3<float>{pos.x, pos.y, pos.z}
+				   // Add {0.5,0.5,0.5} to make it route to the center of the tile
+				   + Vec3<float>{0.5, 0.5, 0.0};
 			return true;
 		}
 		case MissionType::AttackVehicle:
