@@ -89,7 +89,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		inFile.read((char *)&entry, sizeof(entry));
 
 		UString id =
-			UString::format("%s%s%u", SceneryTileType::getPrefix().c_str(), tilePrefix.c_str(), i);
+		    UString::format("%s%s%u", SceneryTileType::getPrefix().c_str(), tilePrefix.c_str(), i);
 
 		auto tile = mksp<SceneryTileType>();
 
@@ -111,7 +111,8 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 				tile->tile_type = SceneryTileType::TileType::CityWall;
 				break;
 			default:
-				LogError("Unexpected scenery tile type %d for ID %s", (int)entry.tile_type, id.c_str());
+				LogError("Unexpected scenery tile type %d for ID %s", (int)entry.tile_type,
+				         id.c_str());
 		}
 
 		switch (entry.road_type)
@@ -126,7 +127,8 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 				tile->road_type = SceneryTileType::RoadType::Terminal;
 				break;
 			default:
-				LogError("Unexpected scenery road type %d for ID %s", (int)entry.road_type, id.c_str());
+				LogError("Unexpected scenery road type %d for ID %s", (int)entry.road_type,
+				         id.c_str());
 		}
 
 		switch (entry.walk_type)
@@ -141,7 +143,8 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 				tile->walk_mode = SceneryTileType::WalkMode::Onto;
 				break;
 			default:
-				LogError("Unexpected scenery walk type %d for ID %s", (int)entry.walk_type, id.c_str());
+				LogError("Unexpected scenery walk type %d for ID %s", (int)entry.walk_type,
+				         id.c_str());
 		}
 
 		tile->constitution = entry.constitution;

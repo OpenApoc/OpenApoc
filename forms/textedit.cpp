@@ -21,10 +21,7 @@ TextEdit::TextEdit(const UString &Text, sp<BitmapFont> font)
 
 TextEdit::~TextEdit() {}
 
-bool TextEdit::IsFocused() const
-{
-	return editting;
-}
+bool TextEdit::IsFocused() const { return editting; }
 
 void TextEdit::EventOccured(Event *e)
 {
@@ -62,10 +59,11 @@ void TextEdit::EventOccured(Event *e)
 			}
 			else if (e->Forms().EventFlag == FormEventType::MouseClick)
 			{
-				// FIXME: Due to event duplication (?), this code won't work. Can only stop editing text by pressing enter.
-				//editting = false;
-				//fw().Text_StopInput();
-				//RaiseEvent(FormEventType::TextEditFinish);
+				// FIXME: Due to event duplication (?), this code won't work. Can only stop editing
+				// text by pressing enter.
+				// editting = false;
+				// fw().Text_StopInput();
+				// RaiseEvent(FormEventType::TextEditFinish);
 			}
 			if (e->Forms().EventFlag == FormEventType::KeyDown)
 			{
@@ -242,9 +240,9 @@ void TextEdit::SetText(const UString &Text)
 
 void TextEdit::RaiseEvent(FormEventType Type)
 {
-//	std::ignore = Type;
+	//	std::ignore = Type;
 	pushFormEvent(Type, nullptr);
-	//this->pushFormEvent(FormEventType::TextChanged, nullptr);
+	// this->pushFormEvent(FormEventType::TextChanged, nullptr);
 }
 
 sp<BitmapFont> TextEdit::GetFont() const { return font; }
