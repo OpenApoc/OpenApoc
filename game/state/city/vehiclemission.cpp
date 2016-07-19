@@ -654,7 +654,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			if (v.shared_from_this() == t.getSp())
 			{
-				LogError("Vehicle mission %s: Attacking itself");
+				LogError("Vehicle mission %s: Attacking itself", name.c_str());
 				return;
 			}
 			auto targetTile = t->tileObject;
