@@ -83,7 +83,7 @@ bool writeArchiveWithBackup(const sp<SerializationArchive> archive, const UStrin
 {
 	fs::path savePath = path.str();
 	fs::path tempPath;
-	bool shouldCleanup;
+	bool shouldCleanup = false;
 	try
 	{
 		if (!fs::exists(savePath))
@@ -244,6 +244,11 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 		for (auto i = fs::directory_iterator(currentPath / saveDirectory);
 		     i != fs::directory_iterator(); i++)
 		{
+			if (i->path().extension().string() != saveFileExtension.str())
+			{
+				continue;
+			}
+
 			std::string saveFileName = i->path().filename().string();
 			// miniz can't read paths not starting with dor or with windows slashes
 			UString savePath = saveDirectory.string() + "/" + saveFileName;

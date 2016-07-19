@@ -1,5 +1,5 @@
 #pragma once
-#include "framework/serialize.h"
+#include "framework/serialization/serialize.h"
 #include "game/state/gamestate.h"
 #include <future>
 #include <tuple>

@@ -52,7 +52,10 @@
     <ClCompile Include="render\gles30_v2\gleswrap_gles3.cpp" />
     <ClCompile Include="render\gles30_v2\ogles_3_0_renderer_v2.cpp" />
     <ClCompile Include="sampleloader\rawsound.cpp" />
-    <ClCompile Include="serialize.cpp" />
+    <ClCompile Include="serialization\providers\filedataprovider.cpp" />
+    <ClCompile Include="serialization\providers\providerwithchecksum.cpp" />
+    <ClCompile Include="serialization\providers\zipdataprovider.cpp" />
+    <ClCompile Include="serialization\serialize.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="sound\null_backend.cpp" />
     <ClCompile Include="sound\sdlraw_backend.cpp" />
@@ -92,7 +95,11 @@
     <ClInclude Include="render\gles30_v2\gleswrap_gles3.h" />
     <ClInclude Include="render\gles30_v2\stb_rect_pack.h" />
     <ClInclude Include="sampleloader_interface.h" />
-    <ClInclude Include="serialize.h" />
+    <ClInclude Include="serialization\providers\filedataprovider.h" />
+    <ClInclude Include="serialization\providers\providerwithchecksum.h" />
+    <ClInclude Include="serialization\providers\serializationdataprovider.h" />
+    <ClInclude Include="serialization\providers\zipdataprovider.h" />
+    <ClInclude Include="serialization\serialize.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="sound_interface.h" />
     <ClInclude Include="stage.h" />

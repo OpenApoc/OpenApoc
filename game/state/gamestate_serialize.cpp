@@ -1,6 +1,6 @@
 #include "framework/framework.h"
 #include "framework/image.h"
-#include "framework/serialize.h"
+#include "framework/serialization/serialize.h"
 #include "framework/trace.h"
 #include "game/state/base/facility.h"
 #include "game/state/city/baselayout.h"

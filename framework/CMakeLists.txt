@@ -19,7 +19,10 @@ set (FRAMEWORK_SOURCE_FILES
 	palette.cpp
 	physfs_fs.cpp
 	renderer.cpp
-	serialize.cpp
+	serialization/serialize.cpp
+	serialization/providers/filedataprovider.cpp
+	serialization/providers/providerwithchecksum.cpp
+	serialization/providers/zipdataprovider.cpp
 	sound.cpp
 	stagestack.cpp
 	trace.cpp
@@ -44,7 +47,11 @@ set (FRAMEWORK_HEADER_FILES
 	renderer.h
 	renderer_interface.h
 	sampleloader_interface.h
-	serialize.h
+	serialization/serialize.h
+	serialization/providers/filedataprovider.h
+	serialization/providers/providerwithchecksum.h
+	serialization/providers/zipdataprovider.h
+	serialization/providers/serializationdataprovider.h
 	sound.h
 	sound_interface.h
 	stage.h
