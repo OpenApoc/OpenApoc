@@ -725,7 +725,7 @@ private:
         uint8_t type;
         uint8_t identifier[5];
         uint8_t version;
-        uint8_t ___padding; // This field is here to avoid alignment issues.
+        uint8_t _padding;   // This field is here to avoid alignment issues.
                             // It's only used in the boot volume descriptor, and
                             // therefore not interesting to us.
         union
@@ -742,9 +742,9 @@ private:
                 //uint8_t __unused; // Disabled due to ___padding being there
                 char sysIdentifier[32];
                 char volIdentifier[32];
-                uint8_t __unused_8[8];
+                uint8_t _unused_8[8];
                 int32_lsb_msb volSpaceSize;
-                uint8_t __unused_32[32];
+                uint8_t _unused_32[32];
                 int16_lsb_msb volSetSz;
                 int16_lsb_msb volSeqNr;
                 int16_lsb_msb lbs;
@@ -766,14 +766,14 @@ private:
                 dec_datetime volExpirationTime;
                 dec_datetime volEffectiveTime;
                 uint8_t fileStructureVersion;
-                uint8_t __unused1;
-                uint8_t __app_defined__unused[512];
-                uint8_t __reserved[653];
+                uint8_t _unused1;
+                uint8_t _app_defined__unused[512];
+                uint8_t _reserved[653];
             } primary;
             // Supplementary volume descriptor is ignored completely
             struct
             {
-                uint8_t __padding[2040];
+                uint8_t _padding[2040];
             } terminator;
         };
     };
