@@ -26,9 +26,10 @@ class Organisation : public StateObject<Organisation>
 	int income;
 
 	Organisation(const UString &name = "", int balance = 0, int income = 0);
-	Relation isRelatedTo(StateRef<Organisation> other);
-	bool isPositiveTo(StateRef<Organisation> other);
-	bool isNegativeTo(StateRef<Organisation> other);
+	Relation isRelatedTo(const StateRef<Organisation> &other) const;
+	bool isPositiveTo(const StateRef<Organisation> &other) const;
+	bool isNegativeTo(const StateRef<Organisation> &other) const;
+	float getRelationTo(const StateRef<Organisation> &other) const;
 	std::map<StateRef<Organisation>, float> current_relations;
 };
 

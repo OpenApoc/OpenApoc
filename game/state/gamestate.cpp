@@ -67,7 +67,8 @@ StateRef<Organisation> GameState::getOrganisation(const UString &orgID)
 	return StateRef<Organisation>(this, orgID);
 }
 
-StateRef<Organisation> GameState::getPlayer() const { return this->player; }
+const StateRef<Organisation> &GameState::getPlayer() const { return this->player; }
+StateRef<Organisation> GameState::getPlayer() { return this->player; }
 
 void GameState::initState()
 {

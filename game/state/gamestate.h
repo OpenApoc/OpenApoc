@@ -67,7 +67,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	UString getPlayerBalance() const;
 	StateRef<Organisation> getOrganisation(const UString &orgID);
-	StateRef<Organisation> getPlayer() const;
+	const StateRef<Organisation> &getPlayer() const;
+	StateRef<Organisation> getPlayer();
 
 	// The time from game start in ticks
 	// 'time' is the number of ticks in the day, 'days' is number of days since game start

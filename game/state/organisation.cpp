@@ -10,15 +10,30 @@ Organisation::Organisation(const UString &name, int balance, int income)
 {
 }
 
-Organisation::Relation Organisation::isRelatedTo(StateRef<Organisation> other)
+float Organisation::getRelationTo(const StateRef<Organisation> &other) const
 {
 	if (other == this)
 	{
 		// Assume maximum relations
-		return Relation::Allied;
+		return 100.0f;
 	}
+	float x;
 
-	float x = this->current_relations[other];
+	auto it = this->current_relations.find(other);
+	if (it == this->current_relations.end())
+	{
+		x = 0;
+	}
+	else
+	{
+		x = it->second;
+	}
+	return x;
+}
+
+Organisation::Relation Organisation::isRelatedTo(const StateRef<Organisation> &other) const
+{
+	float x = this->getRelationTo(other);
 	// FIXME: Make the thresholds read from serialized GameState?
 	if (x <= -50)
 	{
@@ -39,26 +54,16 @@ Organisation::Relation Organisation::isRelatedTo(StateRef<Organisation> other)
 	return Relation::Neutral;
 }
 
-bool Organisation::isPositiveTo(StateRef<Organisation> other)
+bool Organisation::isPositiveTo(const StateRef<Organisation> &other) const
 {
-	if (other == this)
-	{
-		// No pessimism
-		return true;
-	}
-
-	return this->current_relations[other] >= 0;
+	float x = this->getRelationTo(other);
+	return x >= 0;
 }
 
-bool Organisation::isNegativeTo(StateRef<Organisation> other)
+bool Organisation::isNegativeTo(const StateRef<Organisation> &other) const
 {
-	if (other == this)
-	{
-		// No pessimism
-		return false;
-	}
-
-	return this->current_relations[other] < 0;
+	float x = this->getRelationTo(other);
+	return x < 0;
 }
 
 template <>
