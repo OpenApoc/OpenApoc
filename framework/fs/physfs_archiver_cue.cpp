@@ -1060,8 +1060,10 @@ public:
             LogWarning("Trying case-insensitive search...");
             UString ucBin(parser.getDataFileName().c_str());
             ucBin = ucBin.toUpper();
-            for (boost::filesystem::directory_entry &dirent : boost::filesystem::directory_iterator(cueFilePath.parent_path()))
+            //for (boost::filesystem::directory_entry &dirent : boost::filesystem::directory_iterator(cueFilePath.parent_path()))
+            for (auto dirent_it = boost::filesystem::directory_iterator(cueFilePath.parent_path()); dirent_it != boost::filesystem::directory_iterator(); dirent_it++)
             {
+                auto dirent = *dirent_it;
                 LogInfo("Trying %s", dirent.path().c_str());
                 UString ucDirent(dirent.path().filename().string());
                 ucDirent = ucDirent.toUpper();
