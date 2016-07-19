@@ -891,7 +891,7 @@ private:
                 continue;
             }
             // Each (?) directory on a CD has a "this directory" and "parent directory" entries, we just ignore them
-            if (!std::isalnum(childDirRecord.fileName[0]))
+            if (!isalnum(childDirRecord.fileName[0]))
             {
                 continue;
             }

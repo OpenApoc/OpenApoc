@@ -37,6 +37,7 @@
     <ClCompile Include="event.cpp" />
     <ClCompile Include="font.cpp" />
     <ClCompile Include="framework.cpp" />
+    <ClCompile Include="fs\physfs_archiver_cue.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageloader\lodepng.cpp" />
     <ClCompile Include="imageloader\lodepng_image.cpp" />
@@ -75,6 +76,7 @@
     <ClInclude Include="font.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="fs.h" />
+    <ClInclude Include="fs\physfs_archiver_cue.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageloader\lodepng.h" />
     <ClInclude Include="imageloader_interface.h" />
