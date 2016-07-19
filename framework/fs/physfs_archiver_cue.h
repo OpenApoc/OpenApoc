@@ -3,11 +3,11 @@
 //
 #pragma once
 
-#include <physfs.h>
 #include "library/strings.h"
+#include <physfs.h>
 
 namespace OpenApoc
 {
-    void parseCueFile(UString fileName);
-    PHYSFS_Archiver *getCueArchiver();
+void parseCueFile(UString fileName);
+PHYSFS_Archiver *getCueArchiver();
 }
