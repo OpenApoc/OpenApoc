@@ -2,12 +2,10 @@
 // Created by sf on 4/15/16.
 //
 
-//#include "framework/archivers/physfs_archiver.cue.h"
 #include "physfs_archiver_cue.h"
 #include "framework/logger.h"
 
 #include "library/strings.h"
-#include <regex>
 #include <boost/filesystem.hpp>
 
 #include <physfs.h>
@@ -60,10 +58,10 @@ class CueParser
         PARSER_ERROR
     } parserState;
 
-    static std::regex commandRegex ;
+/*    static std::regex commandRegex ;
     static std::regex fileArgRegex ;
     static std::regex trackArgRegex;
-    static std::regex indexArgRegex;
+    static std::regex indexArgRegex;*/
 
     UString dataFileName;
     CUE_FileType fileType;
@@ -79,16 +77,53 @@ class CueParser
             LogInfo("Encountered unexpected command: \"%s\", ignoring", cmd.c_str());
             return false;
         }
-        auto matchIter = std::sregex_iterator(arg.begin(), arg.end(), fileArgRegex);
-        if (matchIter == std::sregex_iterator())
+        //auto matchIter = std::sregex_iterator(arg.begin(), arg.end(), fileArgRegex);
+        // FILE argument might be in quotation marks - better handle that
+
+        size_t first_char = 0, last_char = arg.size() - 1;
+        if (arg[first_char] == '"')
         {
-            LogError("Malformed arguments for FILE command: \"%s\"", arg.c_str());
-            parserState = PARSER_ERROR;
+            while((last_char > 0) && (arg[last_char] != '"')) {last_char--;}
+            // Trim quotation marks
+            last_char -= 1;
+            first_char += 1;
+        }
+        else
+        {
+            // Just find the last non-whitespace character
+            last_char = first_char + 1;
+            while((last_char < arg.size()) && !isspace(arg[last_char])) {last_char++;}
+            if (last_char == arg.size())
+            {
+                LogError("Malformed argument for FILE command (arguments are: \"%s\")", arg.c_str());
+                return false;
+            }
+            last_char -= 1;
+        }
+        if (last_char >= first_char)
+        {
+            dataFileName = arg.substr(first_char, last_char - first_char + 1);
+            LogInfo("Reading from \"%s\"", dataFileName.c_str());
+        }
+        else
+        {
+            LogError("Bad file name for FILE command (arguments are: \"%s\")", arg.c_str());
             return false;
         }
-        auto match = *matchIter;
-        dataFileName = UString(match[2]);
-        UString fileTypeStr(match[3]);
+
+        // Find the file type string
+        first_char = last_char + 1;
+        while((first_char < arg.size()) && !isalnum(arg[first_char])) { first_char++; }
+        if (first_char == arg.size())
+        {
+            LogError("File type not specified for \"%s\" (arguments are: \"%s\")", dataFileName.c_str(), arg.c_str());
+            return false;
+        }
+        last_char = arg.size() - 1;
+        while((last_char > first_char) && isspace(arg[last_char])) { last_char--; }
+
+        UString fileTypeStr(std::string(arg, first_char, last_char - first_char + 1));
+
         if (fileTypeStr.toUpper() != "BINARY")
         {
             LogError("Unsupported file type: \"%s\"", fileTypeStr.c_str());
@@ -113,21 +148,25 @@ class CueParser
             fileType = CUE_FileType::FT_UNDEFINED;
             return false;
         }
-        auto matchIter = std::sregex_iterator(arg.begin(), arg.end(), trackArgRegex);
-        if (matchIter == std::sregex_iterator())
-        {
-            LogError("Malformed arguments for TRACK command: \"%s\"", arg.c_str());
-            parserState = PARSER_ERROR;
-            fileType = CUE_FileType::FT_UNDEFINED;
-        }
-        auto match = *matchIter;
-        int trackNumber = std::stoi(match[1]);
-        UString modeStr(match[2]);
+
+        // Read track number
+        size_t first_char = 0;
+        while((first_char < arg.size()) && isspace(arg[first_char])) { first_char++; }
+        size_t last_char = first_char;
+        while((last_char < arg.size()) && isdigit(arg[last_char])) { last_char++; }
+        int trackNumber = std::stoi(arg.substr(first_char, last_char - first_char + 1));
 
         if (trackNumber > 1)
         {
             LogWarning("First track is not numbered 1 (actual number is %d)", trackNumber);
         }
+
+        // Read track mode
+        first_char = last_char + 1;
+        last_char = arg.size() - 1;
+        while((first_char <= last_char) && isspace(arg[first_char])) { first_char++; }
+        while((last_char >= first_char) && isspace(arg[last_char])) { last_char--; }
+        UString modeStr(std::string(arg, first_char, last_char - first_char + 1));
         trackMode = CUE_TrackMode::MODE_UNDEFINED;
         modeStr = modeStr.toUpper();
         if (modeStr == "MODE1/2048")
@@ -162,12 +201,6 @@ class CueParser
             return false;
         }
         // FIXME: I seriously could not make heads or tails of these indices.
-        auto matchIter = std::sregex_iterator(arg.begin(), arg.end(), indexArgRegex);
-        if (matchIter == std::sregex_iterator())
-        {
-            LogError("Malformed arguments for INDEX command: \"%s\"", arg.c_str());
-            return false;
-        }
         return true;
     }
 
@@ -187,13 +220,16 @@ class CueParser
             std::string cueLine;
             std::getline(cueFile, cueLine);
 
-            auto matchIter = std::sregex_iterator(cueLine.begin(), cueLine.end(), commandRegex);
-            if (matchIter == std::sregex_iterator()) { continue; }
-
-            auto match = *matchIter;
-            std::string command = match[1];
-            std::string arg = match[2];
-
+            // Cut the leading whitespaces
+            size_t lead_whitespace = 0;
+            while((lead_whitespace < cueLine.size()) && isspace(cueLine[lead_whitespace])) {lead_whitespace++;}
+            if (lead_whitespace == cueLine.size()) { continue; }
+            auto first_whitespace = cueLine.find(" ", lead_whitespace);
+            if (first_whitespace == std::string::npos) { continue; }
+            std::string command(cueLine, lead_whitespace, first_whitespace - lead_whitespace);
+            auto last_whitespace = first_whitespace;
+            while((last_whitespace < cueLine.size()) && isspace(cueLine[last_whitespace])) { last_whitespace++; }
+            std::string arg(cueLine, last_whitespace);
             switch(parserState)
             {
                 case PARSER_START:
@@ -236,15 +272,6 @@ class CueParser
     CUE_FileType getDataFileType() { return fileType; }
     CUE_TrackMode getTrackMode() { return trackMode; }
 };
-
-// Command regex: first group is a "command", then a whitespace and a number of arguments (till line end)
-std::regex CueParser::commandRegex = std::regex("(\\w+)\\s+(.*)");
-// File argument regex: optionally quoted filename (could be anything, really), a whitespace and a type
-std::regex CueParser::fileArgRegex = std::regex("(\\\"?)(.+)(?:\\1)\\s+(\\w+)");
-// Track argument regex: one/two digits for track identifier, a space, then a mode specifier
-std::regex CueParser::trackArgRegex = std::regex("(\\d{1,2})\\s+([\\w/]+)");
-// Index argument regex: number, whitespace and track time in mm:ss:ff format
-std::regex CueParser::indexArgRegex = std::regex("(\\d{1,2})\\s+(\\d{2}):(\\d{2}):(\\d{2})");
 
 // --- iso9660 reader follows
 
@@ -312,7 +339,6 @@ struct dec_datetime
     char second[2];
     char hndSecond[2]; // hundredth of a second
     uint8_t gmtOff;
-    // FIXME: This will correct to the WRONG unix time, the only thing that the
     // return value will be good for is checking whether two files on the same disk
     // were created at the same moment!
     PHYSFS_sint64 toUnixTime() // Convert to a saner (?) time representation
@@ -338,21 +364,16 @@ struct dec_datetime
         int gmtCorrection = 15 * (gmtOff - 48); // in minutes
         // The resulting number is very obviously erroneous, because I don't
         // account for leap years/seconds correctly
-        // FIXME: Account for negative values?
-        int yearsSinceEpoch = year_int - 1970;
-        if (yearsSinceEpoch < 0) {yearsSinceEpoch = 0;}
-        PHYSFS_sint64 unixSeconds = yearsSinceEpoch * 365 * 24 * 60 * 60;
-        // account for leap years with our *best effort*
-        unixSeconds += (yearsSinceEpoch / 4) * 24 * 60 * 60;
-        // This is extremely wrong, but I stopped caring
-        unixSeconds += (month_int - 1) * 30 * 24 * 60 * 60;
-        unixSeconds += (day_int - 1) * 24 * 60 * 60;
-        unixSeconds += hour_int * 60 * 60;
-        unixSeconds += (minute_int + gmtCorrection) * 60;
-        unixSeconds += second_int * 60;
-        // Still don't know how to deal with missing timestamps...
-        if (unixSeconds < 0)
-            return -1;
+        tm time_struct;
+        time_struct.tm_sec = second_int;
+        time_struct.tm_min = minute_int;
+        time_struct.tm_hour = hour_int;
+        time_struct.tm_mday = day_int;
+        time_struct.tm_mon = month_int;
+        time_struct.tm_year = year_int - 1900;
+        time_struct.tm_isdst = 0;
+
+        PHYSFS_sint64 unixSeconds = mktime(&time_struct);
         return unixSeconds;
     }
 };
@@ -367,19 +388,19 @@ struct dir_datetime
     uint8_t minute;
     uint8_t second;
     uint8_t gmtOffset;
-    // FIXME: Same warnings as with dec_datetime apply
     PHYSFS_sint64 toUnixTime()
     {
-        PHYSFS_sint64 unixSeconds = (year - 70) * 365 * 24 * 60 * 60;
-        int gmtCorrection = 15 * (gmtOffset - 48);
-        unixSeconds += ((year - 70) / 4) * 24 * 60 * 60;
-        unixSeconds += (month - 1) * 30 * 24 * 60 * 60;
-        unixSeconds += (day - 1) * 24 * 60 * 60;
-        unixSeconds += hour * 60 * 60;
-        unixSeconds += (minute + gmtCorrection) * 60;
-        unixSeconds += second;
-        if (unixSeconds < 0)
-            return -1;
+        tm time_struct;
+        time_struct.tm_sec = second;
+        time_struct.tm_min = minute;
+        time_struct.tm_hour = hour;
+        time_struct.tm_mday = day;
+        time_struct.tm_mon = month;
+        time_struct.tm_year = year;
+        time_struct.tm_isdst = 0;
+
+        PHYSFS_sint64 unixSeconds = mktime(&time_struct);
+
         return unixSeconds;
     }
 };
@@ -512,6 +533,7 @@ private:
         // Since we probably will have to read in parts,
         // we have to make the buffer seekable
         char *bufWrite = (char *) buf;
+#if 0 // FIXME: This code won't work, actually.
         // If the data is "cooked", just read it.
         if (trackMode == CUE_TrackMode::MODE1_2048 ||
             trackMode == CUE_TrackMode::MODE2_2048)
@@ -522,6 +544,7 @@ private:
             fileStream.read(bufWrite, len);
             return fileStream.tellg() - start;
         }
+#endif
         int64_t remainLength = length - (lbaCurrent - lbaStart) * blockSize() - posInLba;
         if (remainLength < 0)
         {
