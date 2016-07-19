@@ -1593,7 +1593,13 @@ OGLES30Renderer::OGLES30Renderer() : state(State::Idle)
 	}
 	LogInfo("Set spritesheet size to {%d,%d}", spritesheetPageSize.x, spritesheetPageSize.y);
 
-	if (gl->KHR_debug.supported)
+	bool use_debug = false;
+
+#ifndef NDEBUG
+	use_debug = gl->KHR_debug.supported;
+#endif
+
+	if (use_debug)
 	{
 		LogInfo("Enabling KHR_debug output");
 		gl->Enable(static_cast<GL::GLenum>(GL::KHR_debug::DEBUG_OUTPUT_SYNCHRONOUS));
