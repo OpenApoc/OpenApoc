@@ -281,8 +281,7 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 
 	this->threadPool.reset(new ThreadPool(threadPoolSize));
 
-	LogWarning(
-	    ("Current working directory: " + boost::filesystem::current_path().string()).c_str());
+	LogInfo("Current working directory: \"%s\"", boost::filesystem::current_path().c_str());
 	this->data.reset(new Data(resourcePaths));
 
 	auto testFile = this->data->fs.open("MUSIC");

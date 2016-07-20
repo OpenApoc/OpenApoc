@@ -9,8 +9,8 @@ namespace OpenApoc
 {
 
 TextEdit::TextEdit(const UString &Text, sp<BitmapFont> font)
-    : Control(), caretDraw(false), caretTimer(0), text(Text), font(font), editting(false),
-      editShift(false), editAltGr(false), SelectionStart(Text.length()),
+    : Control(), caretDraw(false), caretTimer(0), text(Text), cursor("*"), font(font),
+      editting(false), editShift(false), editAltGr(false), SelectionStart(Text.length()),
       TextHAlign(HorizontalAlignment::Left), TextVAlign(VerticalAlignment::Centre)
 {
 	if (font)
@@ -143,9 +143,19 @@ void TextEdit::EventOccured(Event *e)
 			}
 			else if (e->Forms().EventFlag == FormEventType::TextInput)
 			{
-				text.insert(SelectionStart, e->Forms().Input.Input);
-				SelectionStart += e->Forms().Input.Input.length();
-				RaiseEvent(FormEventType::TextChanged);
+				if (text.length() >= this->textMaxLength)
+				{
+					return;
+				}
+
+				UString inputCharacter = e->Forms().Input.Input;
+				if (allowedCharacters.empty() ||
+				    allowedCharacters.str().find(inputCharacter.str()) != std::string::npos)
+				{
+					text.insert(SelectionStart, inputCharacter);
+					SelectionStart += e->Forms().Input.Input.length();
+					RaiseEvent(FormEventType::TextChanged);
+				}
 			}
 		}
 	}
@@ -205,9 +215,8 @@ void TextEdit::OnRender()
 
 		if (caretDraw)
 		{
-			fw().renderer->drawLine(Vec2<float>{cxpos, ypos},
-			                        Vec2<float>{cxpos, ypos + font->GetFontHeight()},
-			                        Colour{255, 255, 255});
+			auto textImage = font->getString(cursor);
+			fw().renderer->draw(textImage, Vec2<float>{cxpos, ypos});
 		}
 	}
 
@@ -236,6 +245,15 @@ void TextEdit::SetText(const UString &Text)
 	text = Text;
 	SelectionStart = text.length();
 	RaiseEvent(FormEventType::TextChanged);
+}
+
+void TextEdit::SetCursor(const UString &cursor) { this->cursor = cursor; }
+
+void TextEdit::SetTextMaxSize(size_t length) { this->textMaxLength = length; }
+
+void TextEdit::SetAllowedCharacters(const UString &allowedCharacters)
+{
+	this->allowedCharacters = allowedCharacters;
 }
 
 void TextEdit::RaiseEvent(FormEventType Type)

@@ -1,14 +1,9 @@
-#pragma once
-
 #include "framework/serialization/providers/providerwithchecksum.h"
 #include "framework/logger.h"
 #include "library/strings.h"
 #include <boost/filesystem.hpp>
-#include <iostream>
 namespace fs = boost::filesystem;
 
-#define PUGIXML_NO_XPATH
-#define PUGIXML_HEADER_ONLY
 #include "dependencies/pugixml/src/pugixml.hpp"
 
 #include <boost/uuid/sha1.hpp>

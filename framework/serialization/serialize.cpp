@@ -1,5 +1,3 @@
-#define PUGIXML_NO_XPATH
-#define PUGIXML_HEADER_ONLY
 #include "dependencies/pugixml/src/pugixml.hpp"
 
 #include "framework/logger.h"
@@ -15,7 +13,6 @@
 // symbols as part of the module that uses it
 #define BOOST_ALL_NO_LIB
 #include <boost/filesystem.hpp>
-#include <boost/filesystem/fstream.hpp>
 #include <map>
 namespace OpenApoc
 {
@@ -64,7 +61,7 @@ class XMLSerializationArchive : public SerializationArchive,
 	sp<SerializationNode> newRoot(const UString &prefix, const UString &name) override;
 	sp<SerializationNode> getRoot(const UString &prefix, const UString &name) override;
 	bool write(const UString &path, bool pack) override;
-	XMLSerializationArchive(){};
+	XMLSerializationArchive() : dataProvider(nullptr), docRoots(){};
 	XMLSerializationArchive(const sp<SerializationDataProvider> dataProvider)
 	    : dataProvider(dataProvider){};
 	~XMLSerializationArchive() override = default;
@@ -199,8 +196,8 @@ sp<SerializationNode> XMLSerializationArchive::getRoot(const UString &prefix, co
 			auto parse_result = doc.load_string(content.c_str());
 			if (!parse_result)
 			{
-				LogError("Failed to parse \"%s\" : \"%s\" at \"%llu\"", path.c_str(),
-				         parse_result.description(), (unsigned long long)parse_result.offset);
+				LogInfo("Failed to parse \"%s\" : \"%s\" at \"%llu\"", path.c_str(),
+				        parse_result.description(), (unsigned long long)parse_result.offset);
 				return nullptr;
 			}
 			it = this->docRoots.find(path);

@@ -1,13 +1,9 @@
 ﻿#include "game/state/savemanager.h"
-#include "dependencies/tinyxml2/tinyxml2.h"
 #include "framework/framework.h"
-#include "framework/fs.h"
 #include <algorithm>
 #include <boost/filesystem.hpp>
-#include <iomanip>
 
 // boost uuid for generating temporary identifier for new save
-#include <boost/uuid/uuid.hpp>            // uuid class
 #include <boost/uuid/uuid_generators.hpp> // generators
 #include <boost/uuid/uuid_io.hpp>         // conversion to string
 
@@ -31,8 +27,9 @@ UString SaveManager::createSavePath(const UString &name) const
 	return result;
 }
 
-static std::map<SaveType, UString> saveTypeNames{
-    {Manual, "New saved game"}, {Quick, "Quicksave"}, {Auto, "Autosave"}};
+static std::map<SaveType, UString> saveTypeNames{{SaveType::Manual, "New saved game"},
+                                                 {SaveType::Quick, "Quicksave"},
+                                                 {SaveType::Auto, "Autosave"}};
 
 std::future<sp<GameState>> SaveManager::loadGame(const SaveMetadata &metadata) const
 {
@@ -58,9 +55,9 @@ std::future<sp<GameState>> SaveManager::loadGame(const UString &savePath) const
 
 std::future<sp<GameState>> SaveManager::loadSpecialSave(const SaveType type) const
 {
-	if (type == Manual)
+	if (type == SaveType::Manual)
 	{
-		LogError("Cannot load automatic save for type %i", (int)type);
+		LogError("Cannot load automatic save for type %i", static_cast<int>(type));
 		return std::async(std::launch::deferred, []() -> sp<GameState> { return nullptr; });
 	}
 
@@ -72,7 +69,7 @@ std::future<sp<GameState>> SaveManager::loadSpecialSave(const SaveType type) con
 	}
 	catch (std::out_of_range)
 	{
-		LogError("Cannot find name of save type %i", (int)type);
+		LogError("Cannot find name of save type %i", static_cast<int>(type));
 		return std::async(std::launch::deferred, []() -> sp<GameState> { return nullptr; });
 	}
 
@@ -90,18 +87,18 @@ bool writeArchiveWithBackup(const sp<SerializationArchive> archive, const UStrin
 		{
 			return archive->write(path, pack);
 		}
-		else
+
+		// WARNING! Dragons live here! Specifically dragon named miniz who hates windows paths
+		// (or paths not starting with dot)
+		// therefore I'm doing gymnasitcs here to backup and still pass original path string to
+		// archive write
+		// that is really bad, because if user clicks exit, save will be renamed to some random
+		// junk
+		// however it will still function as regular save file, so maybe not that bad?
+		fs::path saveDirectory = savePath.parent_path();
+		bool haveNewName = false;
+		for (int retries = 5; retries > 0; retries--)
 		{
-			// WARNING! Dragons live here! Specifically dragon named miniz who hates windows paths
-			// (or paths not starting with dot)
-			// therefore I'm doing gymnasitcs here to backup and still pass original path string to
-			// archive write
-			// that is really bad, because if user clicks exit, save will be renamed to some random
-			// junk
-			// however it will still function as regular save file, so maybe not that bad?
-			fs::path saveDirectory = savePath.parent_path();
-			bool haveNewName = false;
-			for (int retries = 5; retries > 0; retries--)
 			{
 				tempPath = saveDirectory /
 				           (boost::uuids::to_string(uuids::random_generator()()) + ".save");
@@ -111,24 +108,26 @@ bool writeArchiveWithBackup(const sp<SerializationArchive> archive, const UStrin
 					break;
 				}
 			}
+		}
 
-			if (!haveNewName)
-			{
-				LogError("Unable to create temporary file at \"%s\"", tempPath.string().c_str());
-				return false;
-			}
+		if (!haveNewName)
+		{
+			LogError("Unable to create temporary file at \"%s\"", tempPath.string().c_str());
+			return false;
+		}
 
-			fs::rename(savePath, tempPath);
-			shouldCleanup = true;
-			bool saveSuccess = archive->write(path, pack);
-			shouldCleanup = false;
+		fs::rename(savePath, tempPath);
+		shouldCleanup = true;
+		bool saveSuccess = archive->write(path, pack);
+		shouldCleanup = false;
 
-			if (saveSuccess)
-			{
-				fs::remove_all(tempPath);
-				return true;
-			}
-			else
+		if (saveSuccess)
+		{
+			fs::remove_all(tempPath);
+			return true;
+		}
+		else
+		{
 			{
 				if (fs::exists(savePath))
 				{
@@ -136,6 +135,7 @@ bool writeArchiveWithBackup(const sp<SerializationArchive> archive, const UStrin
 				}
 				fs::rename(tempPath, savePath);
 			}
+			fs::rename(tempPath, savePath);
 		}
 	}
 	catch (fs::filesystem_error exception)
@@ -155,39 +155,63 @@ bool writeArchiveWithBackup(const sp<SerializationArchive> archive, const UStrin
 	return false;
 }
 
-bool SaveManager::newSaveGame(const UString &name, const sp<GameState> gameState) const
+bool SaveManager::findFreePath(UString &path, const UString &name) const
 {
-	bool pack = Strings::ToInteger(fw().Settings->getString("Resource.SaveSkipPacking")) == 0;
-
-	UString path = createSavePath("save_" + name).str();
+	path = createSavePath("save_" + name);
 	if (fs::exists(path.str()))
 	{
-		bool foundFreePath = false;
 		for (int retries = 5; retries > 0; retries--)
 		{
 			path = createSavePath("save_" + name + std::to_string(rand()));
 			if (!fs::exists(path.str()))
 			{
-				foundFreePath = true;
-				break;
+				return true;
 			}
 		}
 
-		if (!foundFreePath)
-		{
-			LogError("Unable to generate filename for save %s", name.c_str());
-			return false;
-		}
+		LogError("Unable to generate filename for save %s", name.c_str());
+		return false;
 	}
 
-	SaveMetadata manifest(name, path, time(0), Manual, gameState);
+	return true;
+}
+
+bool SaveManager::newSaveGame(const UString &name, const sp<GameState> gameState) const
+{
+	UString path;
+	if (!findFreePath(path, name))
+	{
+		return false;
+	}
+
+	SaveMetadata manifest(name, path, time(nullptr), SaveType::Manual, gameState);
 	return saveGame(manifest, gameState);
 }
 
-bool SaveManager::overrideGame(const SaveMetadata &metadata, const sp<GameState> gameState) const
+bool SaveManager::overrideGame(const SaveMetadata &metadata, const UString &newName,
+                               const sp<GameState> gameState) const
 {
-	SaveMetadata updatedMetadata(metadata, time(0), gameState);
-	return saveGame(updatedMetadata, gameState);
+	SaveMetadata updatedMetadata(newName, metadata.getFile(), time(nullptr), metadata.getType(),
+	                             gameState);
+	bool result = saveGame(updatedMetadata, gameState);
+	if (result && newName != metadata.getName().str())
+	{
+		// if renamed file move to path with new name
+		UString newFile;
+		if (findFreePath(newFile, newName))
+		{
+			try
+			{
+				fs::rename(metadata.getFile().str(), newFile.str());
+			}
+			catch (fs::filesystem_error error)
+			{
+				LogWarning("Error while removing renamed save: \"%s\"", error.what());
+			}
+		}
+	}
+
+	return result;
 }
 
 bool SaveManager::saveGame(const SaveMetadata &metadata, const sp<GameState> gameState) const
@@ -206,25 +230,24 @@ bool SaveManager::saveGame(const SaveMetadata &metadata, const sp<GameState> gam
 
 bool SaveManager::specialSaveGame(SaveType type, const sp<GameState> gameState) const
 {
-	if (type == Manual)
+	if (type == SaveType::Manual)
 	{
-		LogError("Cannot create automatic save for type %i", (int)type);
+		LogError("Cannot create automatic save for type %i", static_cast<int>(type));
 		return false;
 	}
 
 	UString saveName;
-
 	try
 	{
 		saveName = saveTypeNames.at(type);
 	}
 	catch (std::out_of_range)
 	{
-		LogError("Cannot find name of save type %i", (int)type);
+		LogError("Cannot find name of save type %i", static_cast<int>(type));
 		return false;
 	}
 
-	SaveMetadata manifest(saveName, createSavePath(saveName), time(0), type, gameState);
+	SaveMetadata manifest(saveName, createSavePath(saveName), time(nullptr), type, gameState);
 	return saveGame(manifest, gameState);
 }
 
@@ -235,14 +258,15 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 	try
 	{
 		fs::path currentPath = fs::current_path().string();
-		if (!fs::exists(saveDirectory))
+		if (!fs::exists(saveDirectory) && !fs::create_directories(saveDirectory))
 		{
-			LogError("Save directory \"%s\" not found ", saveDirectory.c_str());
+			LogWarning("Save directory \"%s\" not found, and could not be created!",
+			           saveDirectory.c_str());
 			return saveList;
 		}
 
 		for (auto i = fs::directory_iterator(currentPath / saveDirectory);
-		     i != fs::directory_iterator(); i++)
+		     i != fs::directory_iterator(); ++i)
 		{
 			if (i->path().extension().string() != saveFileExtension.str())
 			{
@@ -319,11 +343,11 @@ bool SaveMetadata::deserializeManifest(const sp<SerializationArchive> archive,
 	auto typeNode = root->getNodeOpt("type");
 	if (typeNode)
 	{
-		this->type = (SaveType)Strings::ToInteger(typeNode->getValue());
+		this->type = static_cast<SaveType>(Strings::ToInteger(typeNode->getValue()));
 	}
 	else
 	{
-		this->type = Manual;
+		this->type = SaveType::Manual;
 	}
 
 	this->file = saveFileName;
@@ -344,27 +368,27 @@ bool SaveMetadata::serializeManifest(const sp<SerializationArchive> archive) con
 	difficultyNode->setValue(this->getDifficulty());
 
 	auto savedateNode = root->addNode("save_date");
-	savedateNode->setValue(std::to_string(time(0)));
+	savedateNode->setValue(std::to_string(time(nullptr)));
 
 	auto gameTicksNode = root->addNode("game_ticks");
 	gameTicksNode->setValue(std::to_string(getGameTicks()));
 
-	if (this->type != Manual)
+	if (this->type != SaveType::Manual)
 	{
 		auto typeNode = root->addNode("type");
-		typeNode->setValue(Strings::FromInteger(this->type));
+		typeNode->setValue(Strings::FromInteger(static_cast<unsigned>(this->type)));
 	}
 
 	return true;
 }
 
-const time_t SaveMetadata::getCreationDate() const { return creationDate; }
+time_t SaveMetadata::getCreationDate() const { return creationDate; }
 
-SaveMetadata::SaveMetadata(){};
+SaveMetadata::SaveMetadata() : creationDate(0), type(), gameTicks(0){};
 SaveMetadata::~SaveMetadata(){};
 SaveMetadata::SaveMetadata(UString name, UString file, time_t creationDate, SaveType type,
                            const sp<GameState> gameState)
-    : name(name), file(file), type(type), creationDate(creationDate)
+    : name(name), file(file), creationDate(creationDate), type(type)
 {
 	if (gameState)
 	{
@@ -374,7 +398,7 @@ SaveMetadata::SaveMetadata(UString name, UString file, time_t creationDate, Save
 }
 SaveMetadata::SaveMetadata(const SaveMetadata &metdata, time_t creationDate,
                            const sp<GameState> gameState)
-    : name(metdata.name), file(metdata.file), type(metdata.type), creationDate(creationDate)
+    : name(metdata.name), file(metdata.file), creationDate(creationDate), type(metdata.type)
 {
 	if (gameState)
 	{
@@ -386,5 +410,5 @@ const UString &SaveMetadata::getName() const { return name; }
 const UString &SaveMetadata::getFile() const { return file; }
 const UString &SaveMetadata::getDifficulty() const { return difficulty; }
 const SaveType &SaveMetadata::getType() const { return type; }
-const unsigned int SaveMetadata::getGameTicks() const { return gameTicks; }
+unsigned int SaveMetadata::getGameTicks() const { return gameTicks; }
 }

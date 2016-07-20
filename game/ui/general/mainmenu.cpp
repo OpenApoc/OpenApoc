@@ -72,7 +72,7 @@ void MainMenu::EventOccurred(Event *e)
 		if (e->Forms().RaisedBy->Name == "BUTTON_LOADGAME")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<SaveMenu>(SaveMenuAction::Load, nullptr);
+			stageCmd.nextStage = mksp<SaveMenu>(SaveMenuAction::LoadNewGame, nullptr);
 			return;
 		}
 	}

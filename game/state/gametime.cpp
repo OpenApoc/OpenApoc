@@ -15,13 +15,16 @@ UString GameTime::getTimeString() const
 	return UString::format("%02u:%02u:%02u", hoursClamped, minutesClamped, secondsClamped);
 }
 
-unsigned int GameTime::getDay() const { return (unsigned int)(ticks / TICKS_PER_DAY); }
+unsigned int GameTime::getDay() const { return static_cast<unsigned int>(ticks / TICKS_PER_DAY); }
 
 unsigned int GameTime::getHours() const { return getDayTime() / TICKS_PER_HOUR; }
 
 unsigned int GameTime::getMinutes() const { return getHours() / TICKS_PER_MINUTE; }
 
-unsigned int GameTime::getDayTime() const { return (unsigned int)(ticks % TICKS_PER_DAY); }
+unsigned int GameTime::getDayTime() const
+{
+	return static_cast<unsigned int>(ticks % TICKS_PER_DAY);
+}
 
 unsigned int GameTime::getTicks() const { return ticks; }
 

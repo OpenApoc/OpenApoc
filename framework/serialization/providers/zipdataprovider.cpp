@@ -1,5 +1,3 @@
-#pragma once
-
 #include "framework/serialization/providers/zipdataprovider.h"
 #include "framework/logger.h"
 #include "library/sp.h"
@@ -14,7 +12,8 @@ namespace fs = boost::filesystem;
 
 namespace OpenApoc
 {
-ZipDataProvider::ZipDataProvider() { memset(&archive, 0, sizeof(archive)); }
+ZipDataProvider::ZipDataProvider() : writing(false) { memset(&archive, 0, sizeof(archive)); }
+
 ZipDataProvider::~ZipDataProvider()
 {
 	if (writing)

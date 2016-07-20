@@ -18,7 +18,7 @@ class GameTime
 	bool weekPassedFlag;
 
   public:
-	GameTime(unsigned long ticks) : ticks(ticks){};
+	GameTime(unsigned long ticks) : ticks(ticks), dayPassedFlag(false), weekPassedFlag(false){};
 
 	void addTicks(unsigned int ticks);
 

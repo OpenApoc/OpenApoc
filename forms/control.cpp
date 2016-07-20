@@ -425,10 +425,9 @@ void Control::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 		this->Visible = (vistxt == "Y" || vistxt == "T");
 	}
 
-	if (Element->Attribute("showbounds") != nullptr &&
-	    UString(Element->Attribute("showbounds")) != "")
+	if (Element->Attribute("border") != nullptr && UString(Element->Attribute("border")) != "")
 	{
-		UString vistxt = Element->Attribute("showbounds");
+		UString vistxt = Element->Attribute("border");
 		vistxt = vistxt.substr(0, 1).toUpper();
 		this->showBounds = (vistxt == "Y" || vistxt == "T");
 	}

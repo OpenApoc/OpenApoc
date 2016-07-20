@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "framework/stage.h"
@@ -9,20 +8,28 @@
 
 namespace OpenApoc
 {
-enum SaveMenuAction
+enum class SaveMenuAction : unsigned
 {
-	Load = 0,
-	Save = 1
+	LoadNewGame = 0,
+	Load = 1,
+	Save = 2
 };
 
 class SaveMenu : public Stage
 {
   private:
+	sp<TextEdit> activeTextEdit;
 	sp<Form> menuform;
 	sp<GameState> currentState;
 	StageCmd stageCmd;
 	SaveMenuAction currentAction;
 	SaveManager saveManager;
+
+	void ClearTextEdit(sp<TextEdit> textEdit);
+	void BeginEditing(sp<TextEdit> textEdit, sp<TextEdit> activeTextEdit);
+	void TryToLoadWithWarning(sp<Control> parent);
+	void TryToLoadGame(sp<Control> slotControl);
+	void TryToSaveGame(const UString &textEdit, sp<Control> parent);
 
   public:
 	SaveMenu(SaveMenuAction saveMenuAction, sp<GameState> gameState);

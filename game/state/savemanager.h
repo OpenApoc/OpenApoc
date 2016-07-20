@@ -2,14 +2,13 @@
 #include "framework/serialization/serialize.h"
 #include "game/state/gamestate.h"
 #include <future>
-#include <tuple>
 
 class SerializationNode;
 class GameState;
 namespace OpenApoc
 {
 
-enum SaveType
+enum class SaveType : unsigned
 {
 	Manual = 0,
 	Auto = 1,
@@ -40,7 +39,7 @@ class SaveMetadata
 	bool serializeManifest(const sp<SerializationArchive> archive) const;
 
 	/* Creation date of save file (unix epoch)	*/
-	const time_t getCreationDate() const;
+	time_t getCreationDate() const;
 
 	/* Name of save game	*/
 	const UString &getName() const;
@@ -54,7 +53,7 @@ class SaveMetadata
 	/* What kind of save is it */
 	const SaveType &getType() const;
 
-	const unsigned int getGameTicks() const;
+	unsigned int getGameTicks() const;
 };
 
 /* high level api for managing saved games */
@@ -63,6 +62,7 @@ class SaveManager
   private:
 	UString saveDirectory;
 	UString createSavePath(const UString &name) const;
+	bool findFreePath(UString &path, const UString &name) const;
 
 	bool saveGame(const SaveMetadata &metadata, const sp<GameState> gameState) const;
 
@@ -83,7 +83,8 @@ class SaveManager
 	bool newSaveGame(const UString &name, const sp<GameState> gameState) const;
 
 	// saves game to location pointed by metadata, also updates metadata from gamestate
-	bool overrideGame(const SaveMetadata &metadata, const sp<GameState> gameState) const;
+	bool overrideGame(const SaveMetadata &metadata, const UString &newFile,
+	                  const sp<GameState> gameState) const;
 
 	// can be used for autosaves, quicksaves etc.
 	bool specialSaveGame(SaveType type, const sp<GameState> gameState) const;

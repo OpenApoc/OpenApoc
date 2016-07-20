@@ -821,7 +821,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	if (!node)
 		return;
 
-	unsigned int ticks;
+	unsigned int ticks = 0;
 	serializeIn(state, node->getNode("ticks"), ticks);
 	t = GameTime(ticks);
 }
@@ -848,7 +848,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &
 	serializeIn(state, node->getNode("player"), s.player);
 	serializeIn(state, node->getNode("current_city"), s.current_city);
 	serializeIn(state, node->getNode("current_base"), s.current_base);
-	serializeIn(state, node->getNode("time"), s.gameTime);
+	serializeIn(state, node->getNodeOpt("time"), s.gameTime);
 }
 
 void serializeOut(sp<SerializationNode> node, const UString &string) { node->setValue(string); }
