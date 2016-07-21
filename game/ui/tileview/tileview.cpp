@@ -208,8 +208,10 @@ void TileView::Render()
 				for (int x = minX; x < maxX; x++)
 				{
 					auto tile = map.getTile(x, y, z);
-					for (auto &obj : tile->drawnObjects[layer])
+					auto object_count = tile->drawnObjects[layer].size();
+					for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 					{
+						auto &obj = tile->drawnObjects[layer][obj_id];
 						Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
 						obj->draw(r, *this, pos, this->viewMode);
 					}
