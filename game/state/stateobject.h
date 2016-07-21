@@ -117,7 +117,7 @@ template <typename T> class StateRef
 			resolve();
 		return !!obj;
 	}
-	bool operator==(const StateRef<T> other) const
+	bool operator==(const StateRef<T> &other) const
 	{
 		if (!obj)
 			resolve();
@@ -125,7 +125,7 @@ template <typename T> class StateRef
 			other.resolve();
 		return obj == other.obj;
 	}
-	bool operator!=(const StateRef<T> other) const
+	bool operator!=(const StateRef<T> &other) const
 	{
 		if (!obj)
 			resolve();
@@ -133,13 +133,13 @@ template <typename T> class StateRef
 			other.resolve();
 		return obj != other.obj;
 	}
-	bool operator==(const sp<T> other) const
+	bool operator==(const sp<T> &other) const
 	{
 		if (!obj)
 			resolve();
 		return obj == other;
 	}
-	bool operator!=(const sp<T> other) const
+	bool operator!=(const sp<T> &other) const
 	{
 		if (!obj)
 			resolve();
@@ -176,7 +176,7 @@ template <typename T> class StateRef
 			resolve();
 		return obj;
 	}
-	bool operator<(const StateRef<T> other) const { return this->id < other.id; }
+	bool operator<(const StateRef<T> &other) const { return this->id < other.id; }
 	void clear()
 	{
 		this->obj = nullptr;
