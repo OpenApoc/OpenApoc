@@ -411,7 +411,7 @@ sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectV
 	// Find the closest enemy within the firing arc
 	float closestEnemyRange = std::numeric_limits<float>::max();
 	sp<TileObjectVehicle> closestEnemy;
-	for (auto pair : state.vehicles)
+	for (auto &pair : state.vehicles)
 	{
 		auto otherVehicle = pair.second;
 		if (otherVehicle.get() == this)
