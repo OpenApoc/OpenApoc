@@ -72,6 +72,8 @@ StateRef<Organisation> GameState::getPlayer() { return this->player; }
 
 void GameState::initState()
 {
+	// FIXME: reseed rng when game starts
+
 	for (auto &c : this->cities)
 	{
 		auto &city = c.second;

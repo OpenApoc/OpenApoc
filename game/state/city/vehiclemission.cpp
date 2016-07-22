@@ -180,11 +180,12 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 		const int maxIterations = 6;
 		auto bestPosition = vTile->getPosition();
 		float closest = std::numeric_limits<float>::max();
+		std::uniform_real_distribution<float> offset(-1.0f, 1.0f);
 
 		for (int i = 0; i < maxIterations; i++)
 		{
-			float xOffset = (state.rng() % 20) / 10.0f - 1;
-			float yOffset = (state.rng() % 20) / 10.0f - 1;
+			float xOffset = offset(state.rng);
+			float yOffset = offset(state.rng);
 			auto newPosition = vTile->getPosition();
 			newPosition.x += xOffset;
 			newPosition.y += yOffset;

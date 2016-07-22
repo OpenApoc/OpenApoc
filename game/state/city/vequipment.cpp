@@ -122,7 +122,7 @@ float VEquipment::getRange() const
 		return 0;
 	}
 	auto &type = this->type;
-	return type->range / 2;
+	return type->range;
 }
 
 void VEquipment::setReloadTime(int ticks)

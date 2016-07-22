@@ -26,6 +26,7 @@ static const unsigned TICKS_PER_MINUTE = TICKS_PER_SECOND * 60;
 static const unsigned TICKS_PER_HOUR = TICKS_PER_MINUTE * 60;
 static const unsigned TICKS_PER_DAY = TICKS_PER_HOUR * 24;
 static const unsigned TURBO_TICKS = 5 * 60 * TICKS_PER_SECOND;
+static const unsigned ORIGINAL_TICKS = 36;
 
 class GameState : public std::enable_shared_from_this<GameState>
 {

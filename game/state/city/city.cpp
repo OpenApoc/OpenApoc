@@ -254,11 +254,13 @@ void City::generatePortals(GameState &state)
 	}
 	this->portals.clear();
 
+	std::uniform_int_distribution<int> xyPos(0, 100);
+	std::uniform_int_distribution<int> zPos(2, 8);
 	for (int p = 0; p < 3; p++)
 	{
 		for (int i = 0; i < iterLimit; i++)
 		{
-			Vec3<float> pos(state.rng() % 100, state.rng() % 100, state.rng() % 6 + 2);
+			Vec3<float> pos(xyPos(state.rng), xyPos(state.rng), zPos(state.rng));
 
 			if (map->tileIsValid(pos) && map->getTile(pos)->ownedObjects.empty())
 			{
