@@ -443,6 +443,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	if (!node)
 		return;
 	serializeIn(state, node->getNode("lifetime"), d.lifetime);
+	serializeIn(state, node->getNode("repeatable"), d.repeatable);
 	serializeIn(state, node->getNode("imageOffset"), d.imageOffset);
 	serializeIn(state, node->getNode("frames"), d.frames);
 }
@@ -596,6 +597,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getSection("buildings"), city.buildings);
 	serializeIn(state, node->getSection("scenery"), city.scenery);
 	serializeIn(state, node->getSection("doodads"), city.doodads);
+	serializeIn(state, node->getSection("portals"), city.portals);
 	serializeIn(state, node->getSection("projectiles"), city.projectiles);
 }
 
@@ -1101,6 +1103,7 @@ template <> void serializeOut(sp<SerializationNode> node, const DoodadFrame &f)
 template <> void serializeOut(sp<SerializationNode> node, const DoodadType &d)
 {
 	serializeOut(node->addNode("lifetime"), d.lifetime);
+	serializeOut(node->addNode("repeatable"), d.repeatable);
 	serializeOut(node->addNode("imageOffset"), d.imageOffset);
 	serializeOut(node->addNode("frames"), d.frames);
 }
@@ -1276,6 +1279,7 @@ template <> void serializeOut(sp<SerializationNode> node, const City &city)
 	serializeOut(node->addSection("buildings"), city.buildings);
 	serializeOut(node->addSection("scenery"), city.scenery);
 	serializeOut(node->addSection("doodads"), city.doodads);
+	serializeOut(node->addSection("portals"), city.portals);
 	serializeOut(node->addSection("projectiles"), city.projectiles);
 }
 

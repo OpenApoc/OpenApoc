@@ -112,6 +112,10 @@ void City::initMap()
 	{
 		this->map->addObjectToMap(d);
 	}
+	for (auto &p : this->portals)
+	{
+		this->map->addObjectToMap(p);
+	}
 }
 
 void City::update(GameState &state, unsigned int ticks)
@@ -225,7 +229,47 @@ void City::update(GameState &state, unsigned int ticks)
 		auto d = *it++;
 		d->update(state, ticks);
 	}
+
+	for (auto it = this->portals.begin(); it != this->portals.end();)
+	{
+		auto p = *it++;
+		p->update(state, ticks);
+	}
 	Trace::end("City::update::doodads->update");
+}
+
+void City::dailyLoop(GameState &state)
+{
+	// FIXME: Repair buildings, update stocks
+
+	generatePortals(state);
+}
+
+void City::generatePortals(GameState &state)
+{
+	static const int iterLimit = 1000;
+	for (auto &p : portals)
+	{
+		p->remove(state);
+	}
+	this->portals.clear();
+
+	for (int p = 0; p < 3; p++)
+	{
+		for (int i = 0; i < iterLimit; i++)
+		{
+			Vec3<float> pos(state.rng() % 100, state.rng() % 100, state.rng() % 6 + 2);
+
+			if (map->tileIsValid(pos) && map->getTile(pos)->ownedObjects.empty())
+			{
+				auto doodad =
+				    mksp<Doodad>(pos, StateRef<DoodadType>{&state, "DOODAD_DIMENSION_GATE"});
+				map->addObjectToMap(doodad);
+				this->portals.insert(doodad);
+				break;
+			}
+		}
+	}
 }
 
 sp<Doodad> City::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)

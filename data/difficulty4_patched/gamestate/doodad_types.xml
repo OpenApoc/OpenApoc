@@ -1,10 +1,154 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <doodad_types>
   <entry>
+    <key>DOODAD_DIMENSION_GATE</key>
+    <value>
+      <sp>
+        <lifetime>160</lifetime>
+        <repeatable>true</repeatable>
+        <imageOffset>
+          <x>31</x>
+          <y>25</y>
+        </imageOffset>
+        <frames>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:42</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:43</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:44</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:45</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:46</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:47</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:48</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:49</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:50</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:51</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:52</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:53</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:54</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:55</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:56</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:57</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:58</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:59</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:60</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:61</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:62</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:63</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:64</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:65</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:66</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:67</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:68</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:69</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:70</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:71</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:72</image>
+            <time>5</time>
+          </entry>
+          <entry>
+            <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:73</image>
+            <time>5</time>
+          </entry>
+        </frames>
+      </sp>
+    </value>
+  </entry>
+  <entry>
     <key>DOODAD_EXPLOSION_0</key>
     <value>
       <sp>
         <lifetime>35</lifetime>
+        <repeatable>false</repeatable>
         <imageOffset>
           <x>31</x>
           <y>25</y>
@@ -47,6 +191,7 @@
     <value>
       <sp>
         <lifetime>95</lifetime>
+        <repeatable>false</repeatable>
         <imageOffset>
           <x>31</x>
           <y>25</y>
@@ -141,6 +286,7 @@
     <value>
       <sp>
         <lifetime>65</lifetime>
+        <repeatable>false</repeatable>
         <imageOffset>
           <x>31</x>
           <y>25</y>

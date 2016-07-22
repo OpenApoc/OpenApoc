@@ -21,7 +21,7 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
   public:
 	FlyingVehicleTileHelper(TileMap &map, Vehicle &v) : map(map), v(v) {}
 	// Support 'from' being nullptr for if a vehicle is being spawned in the map
-	bool canEnterTile(Tile *from, Tile *to) const
+	bool canEnterTile(Tile *from, Tile *to) const override
 	{
 
 		Vec3<int> fromPos = {0, 0, 0};
@@ -322,8 +322,8 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 				return false;
 			auto pos = currentPlannedPath.front();
 			dest = Vec3<float>{pos.x, pos.y, pos.z}
-				   // Add {0.5,0.5,0.5} to make it route to the center of the tile
-				   + Vec3<float>{0.5, 0.5, 0.0};
+			       // Add {0.5,0.5,0.5} to make it route to the center of the tile
+			       + Vec3<float>{0.5, 0.5, 0.0};
 			return true;
 		}
 		case MissionType::AttackVehicle:

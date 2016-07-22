@@ -72,16 +72,22 @@ StateRef<Organisation> GameState::getPlayer() { return this->player; }
 
 void GameState::initState()
 {
-	for (auto &city : this->cities)
+	for (auto &c : this->cities)
 	{
-		city.second->initMap();
+		auto &city = c.second;
+		city->initMap();
 		for (auto &v : this->vehicles)
 		{
 			auto vehicle = v.second;
-			if (vehicle->city == city.second && !vehicle->currentlyLandedBuilding)
+			if (vehicle->city == city && !vehicle->currentlyLandedBuilding)
 			{
-				city.second->map->addObjectToMap(vehicle);
+				city->map->addObjectToMap(vehicle);
 			}
+		}
+
+		if (city->portals.empty())
+		{
+			city->generatePortals(*this);
 		}
 	}
 	for (auto &v : this->vehicles)
@@ -286,7 +292,15 @@ void GameState::update(unsigned int ticks)
 	}
 }
 
-void GameState::updateEndOfDay() {}
+void GameState::updateEndOfDay()
+{
+	Trace::start("GameState::updateEndOfDay::cities");
+	for (auto &c : this->cities)
+	{
+		c.second->dailyLoop(*this);
+	}
+	Trace::end("GameState::updateEndOfDay::cities");
+}
 
 void GameState::updateEndOfWeek() {}
 

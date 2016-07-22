@@ -28,6 +28,11 @@ void Doodad::update(GameState &state, int ticks)
 	age += ticks;
 	if (age >= lifetime)
 	{
+		if (this->type->repeatable)
+		{
+			age = 0;
+			return;
+		}
 		this->remove(state);
 		return;
 	}

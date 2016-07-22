@@ -22,6 +22,7 @@ class DoodadType : public StateObject<DoodadType>
   public:
 	DoodadType() = default;
 	int lifetime;
+	bool repeatable;
 	Vec2<int> imageOffset;
 	std::vector<DoodadFrame> frames;
 };

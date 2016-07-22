@@ -41,13 +41,16 @@ class City : public StateObject<City>
 	std::map<UString, sp<Building>> buildings;
 	std::set<sp<Scenery>> scenery;
 	std::set<sp<Doodad>> doodads;
+	std::set<sp<Doodad>> portals;
 
 	std::set<sp<Projectile>> projectiles;
 
 	up<TileMap> map;
 
 	void update(GameState &state, unsigned int ticks);
+	void dailyLoop(GameState &state);
 
+	void generatePortals(GameState &state);
 	sp<Doodad> placeDoodad(StateRef<DoodadType> type, Vec3<float> position);
 };
 
