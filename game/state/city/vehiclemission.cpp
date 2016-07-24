@@ -258,6 +258,14 @@ VehicleMission *VehicleMission::attackVehicle(Vehicle &v, StateRef<Vehicle> targ
 	return mission;
 }
 
+VehicleMission * VehicleMission::followVehicle(Vehicle & v, StateRef<Vehicle> target)
+{
+	auto *mission = new VehicleMission();
+	mission->type = MissionType::FollowVehicle;
+	mission->targetVehicle = target;
+	return mission;
+}
+
 VehicleMission *VehicleMission::snooze(Vehicle &v, unsigned int snoozeTicks)
 {
 	auto *mission = new VehicleMission();
@@ -270,6 +278,13 @@ VehicleMission *VehicleMission::crashLand(Vehicle &v)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::Crash;
+	return mission;
+}
+
+VehicleMission * VehicleMission::patrol(Vehicle & v)
+{
+	auto *mission = new VehicleMission();
+	mission->type = MissionType::Patrol;
 	return mission;
 }
 
@@ -328,6 +343,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 			return true;
 		}
 		case MissionType::AttackVehicle:
+		case MissionType::FollowVehicle:
 		{
 			auto vTile = v.tileObject;
 			auto targetTile = this->targetVehicle->tileObject;
@@ -337,19 +353,27 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 				auto &map = vTile->map;
 				FlyingVehicleTileHelper tileHelper(map, v);
 
-				// Evasive - default (max range)
-				float distancePreference = v.getFiringRange();
-				switch (v.attackMode)
+				
+				float distancePreference = 5 * VELOCITY_SCALE.x;
+				if (this->type == MissionType::AttackVehicle && v.getFiringRange())
 				{
+					distancePreference = v.getFiringRange();
+
+					switch (v.attackMode)
+					{
 					case Vehicle::AttackMode::Aggressive:
 						distancePreference /= 4;
 						break;
 					case Vehicle::AttackMode::Standard:
-						distancePreference /= 2;
+						distancePreference /= 3;
 						break;
 					case Vehicle::AttackMode::Defensive:
+						distancePreference /= 2;
+						break;
+					case Vehicle::AttackMode::Evasive:
 						distancePreference /= 1.5f;
 						break;
+					}
 				}
 
 				if (vTile->getDistanceTo(targetTile) < distancePreference)
@@ -480,6 +504,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks)
 		case MissionType::GotoBuilding:
 		case MissionType::GotoLocation:
 		case MissionType::AttackVehicle:
+		case MissionType::FollowVehicle:
 			return;
 		case MissionType::Snooze:
 		{
@@ -536,6 +561,26 @@ bool VehicleMission::isFinished(GameState &state, Vehicle &v)
 			if (!targetTile)
 			{
 				LogInfo("Vehicle attack mission: Target not on the map");
+				return true;
+			}
+			if (t->type->type == VehicleType::Type::UFO)
+			{
+				return t->isCrashed();
+			}
+			return this->targetVehicle->health == 0;
+		}
+		case MissionType::FollowVehicle:
+		{
+			auto t = this->targetVehicle;
+			if (!t)
+			{
+				// Target was destroyed
+				return true;
+			}
+			auto targetTile = t->tileObject;
+			if (!targetTile)
+			{
+				// Target not on the map anymore
 				return true;
 			}
 			if (t->type->type == VehicleType::Type::UFO)
@@ -643,6 +688,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			setPathTo(v, tile);
 			return;
 		}
+		case MissionType::FollowVehicle:
 		case MissionType::AttackVehicle:
 		{
 			auto name = this->getName();
@@ -655,7 +701,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			if (v.shared_from_this() == t.getSp())
 			{
-				LogError("Vehicle mission %s: Attacking itself", name.c_str());
+				LogError("Vehicle mission %s: Targeting itself", name.c_str());
 				return;
 			}
 			auto targetTile = t->tileObject;

@@ -37,8 +37,10 @@ class VehicleMission
 	static VehicleMission *gotoLocation(Vehicle &v, Vec3<int> target);
 	static VehicleMission *gotoBuilding(Vehicle &v, StateRef<Building> target);
 	static VehicleMission *attackVehicle(Vehicle &v, StateRef<Vehicle> target);
+	static VehicleMission *followVehicle(Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission *snooze(Vehicle &v, unsigned int ticks);
 	static VehicleMission *crashLand(Vehicle &v);
+	static VehicleMission *patrol(Vehicle &v);
 
 	UString getName();
 
@@ -53,6 +55,10 @@ class VehicleMission
 		TakeOff,
 		Land,
 		Crash,
+		Patrol,
+		GotoPortal,
+		Infiltrate,
+		Subvert
 	};
 	static const std::map<MissionType, UString> TypeMap;
 
