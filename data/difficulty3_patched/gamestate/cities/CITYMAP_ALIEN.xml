@@ -2,15 +2,16 @@
 <CITYMAP_ALIEN>
   <sp>
     <size>
-      <x>100</x>
-      <y>100</y>
-      <z>10</z>
+      <x>140</x>
+      <y>140</y>
+      <z>11</z>
     </size>
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="tile_types.xml" />
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="initial_tiles.xml" />
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="buildings.xml" />
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="scenery.xml" />
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="doodads.xml" />
+    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="portals.xml" />
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="projectiles.xml" />
   </sp>
 </CITYMAP_ALIEN>

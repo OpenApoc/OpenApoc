@@ -57,7 +57,8 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 		}
 		b->owner = {&state, data.get_org_id(entry.owner_idx)};
 		// Our rects are exclusive of p2
-		b->bounds = {entry.x0, entry.y0, entry.x1 + 1, entry.y1 + 1};
+		// Shift position by 20 tiles
+		b->bounds = {entry.x0 + 20, entry.y0 + 20, entry.x1 + 21, entry.y1 + 21};
 		auto id =
 		    UString::format("%s%s", Building::getPrefix().c_str(), canon_string(b->name).c_str());
 

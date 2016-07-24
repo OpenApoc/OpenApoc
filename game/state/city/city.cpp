@@ -254,7 +254,7 @@ void City::generatePortals(GameState &state)
 	}
 	this->portals.clear();
 
-	std::uniform_int_distribution<int> xyPos(0, 100);
+	std::uniform_int_distribution<int> xyPos(10, 130);
 	std::uniform_int_distribution<int> zPos(2, 8);
 	for (int p = 0; p < 3; p++)
 	{

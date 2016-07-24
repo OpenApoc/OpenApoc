@@ -8,12 +8,12 @@
         <owner>ORG_TRANSTELLAR</owner>
         <bounds>
           <p0>
-            <x>23</x>
-            <y>82</y>
+            <x>43</x>
+            <y>102</y>
           </p0>
           <p1>
-            <x>30</x>
-            <y>90</y>
+            <x>50</x>
+            <y>110</y>
           </p1>
         </bounds>
         <base_layout />
@@ -30,12 +30,12 @@
         <owner>ORG_NUTRIVEND</owner>
         <bounds>
           <p0>
-            <x>52</x>
-            <y>60</y>
+            <x>72</x>
+            <y>80</y>
           </p0>
           <p1>
-            <x>62</x>
-            <y>69</y>
+            <x>82</x>
+            <y>89</y>
           </p1>
         </bounds>
         <base_layout />
@@ -52,12 +52,12 @@
         <owner>ORG_NANOTECH</owner>
         <bounds>
           <p0>
-            <x>55</x>
-            <y>18</y>
+            <x>75</x>
+            <y>38</y>
           </p0>
           <p1>
-            <x>62</x>
-            <y>22</y>
+            <x>82</x>
+            <y>42</y>
           </p1>
         </bounds>
         <base_layout />
@@ -74,12 +74,12 @@
         <owner>ORG_NANOTECH</owner>
         <bounds>
           <p0>
-            <x>76</x>
-            <y>33</y>
+            <x>96</x>
+            <y>53</y>
           </p0>
           <p1>
-            <x>81</x>
-            <y>38</y>
+            <x>101</x>
+            <y>58</y>
           </p1>
         </bounds>
         <base_layout />
@@ -96,12 +96,12 @@
         <owner>ORG_MARSEC</owner>
         <bounds>
           <p0>
-            <x>55</x>
-            <y>13</y>
+            <x>75</x>
+            <y>33</y>
           </p0>
           <p1>
-            <x>62</x>
-            <y>17</y>
+            <x>82</x>
+            <y>37</y>
           </p1>
         </bounds>
         <base_layout />
@@ -118,12 +118,12 @@
         <owner>ORG_MEGAPOL</owner>
         <bounds>
           <p0>
-            <x>82</x>
-            <y>21</y>
+            <x>102</x>
+            <y>41</y>
           </p0>
           <p1>
-            <x>85</x>
-            <y>26</y>
+            <x>105</x>
+            <y>46</y>
           </p1>
         </bounds>
         <base_layout />
@@ -140,12 +140,12 @@
         <owner>ORG_SANCTUARY_CLINIC</owner>
         <bounds>
           <p0>
-            <x>23</x>
-            <y>73</y>
+            <x>43</x>
+            <y>93</y>
           </p0>
           <p1>
-            <x>28</x>
-            <y>81</y>
+            <x>48</x>
+            <y>101</y>
           </p1>
         </bounds>
         <base_layout />
@@ -162,12 +162,12 @@
         <owner>ORG_GOVERNMENT</owner>
         <bounds>
           <p0>
-            <x>34</x>
-            <y>57</y>
+            <x>54</x>
+            <y>77</y>
           </p0>
           <p1>
-            <x>40</x>
-            <y>63</y>
+            <x>60</x>
+            <y>83</y>
           </p1>
         </bounds>
         <base_layout />
@@ -184,12 +184,12 @@
         <owner>ORG_PSYKE</owner>
         <bounds>
           <p0>
-            <x>81</x>
-            <y>69</y>
+            <x>101</x>
+            <y>89</y>
           </p0>
           <p1>
-            <x>85</x>
-            <y>74</y>
+            <x>105</x>
+            <y>94</y>
           </p1>
         </bounds>
         <base_layout />
@@ -206,12 +206,12 @@
         <owner>ORG_LIFETREE</owner>
         <bounds>
           <p0>
-            <x>33</x>
-            <y>64</y>
+            <x>53</x>
+            <y>84</y>
           </p0>
           <p1>
-            <x>41</x>
-            <y>72</y>
+            <x>61</x>
+            <y>92</y>
           </p1>
         </bounds>
         <base_layout />
@@ -228,12 +228,12 @@
         <owner>ORG_DIABLO</owner>
         <bounds>
           <p0>
-            <x>25</x>
-            <y>92</y>
+            <x>45</x>
+            <y>112</y>
           </p0>
           <p1>
-            <x>36</x>
-            <y>100</y>
+            <x>56</x>
+            <y>120</y>
           </p1>
         </bounds>
         <base_layout />
@@ -250,12 +250,12 @@
         <owner>ORG_GENERAL_METRO</owner>
         <bounds>
           <p0>
-            <x>76</x>
-            <y>26</y>
+            <x>96</x>
+            <y>46</y>
           </p0>
           <p1>
-            <x>81</x>
-            <y>32</y>
+            <x>101</x>
+            <y>52</y>
           </p1>
         </bounds>
         <base_layout />
@@ -272,12 +272,12 @@
         <owner>ORG_OSIRON</owner>
         <bounds>
           <p0>
-            <x>27</x>
-            <y>57</y>
+            <x>47</x>
+            <y>77</y>
           </p0>
           <p1>
-            <x>32</x>
-            <y>62</y>
+            <x>52</x>
+            <y>82</y>
           </p1>
         </bounds>
         <base_layout />
@@ -294,12 +294,12 @@
         <owner>ORG_EVONET</owner>
         <bounds>
           <p0>
-            <x>55</x>
-            <y>6</y>
+            <x>75</x>
+            <y>26</y>
           </p0>
           <p1>
-            <x>67</x>
-            <y>12</y>
+            <x>87</x>
+            <y>32</y>
           </p1>
         </bounds>
         <base_layout />
@@ -316,12 +316,12 @@
         <owner>ORG_OSIRON</owner>
         <bounds>
           <p0>
-            <x>29</x>
-            <y>48</y>
+            <x>49</x>
+            <y>68</y>
           </p0>
           <p1>
-            <x>39</x>
-            <y>54</y>
+            <x>59</x>
+            <y>74</y>
           </p1>
         </bounds>
         <base_layout />
@@ -338,12 +338,12 @@
         <owner>ORG_SYNTHEMESH</owner>
         <bounds>
           <p0>
-            <x>68</x>
-            <y>13</y>
+            <x>88</x>
+            <y>33</y>
           </p0>
           <p1>
-            <x>71</x>
-            <y>18</y>
+            <x>91</x>
+            <y>38</y>
           </p1>
         </bounds>
         <base_layout />
@@ -360,12 +360,12 @@
         <owner>ORG_NUTRIVEND</owner>
         <bounds>
           <p0>
-            <x>73</x>
-            <y>56</y>
+            <x>93</x>
+            <y>76</y>
           </p0>
           <p1>
-            <x>82</x>
-            <y>61</y>
+            <x>102</x>
+            <y>81</y>
           </p1>
         </bounds>
         <base_layout />
@@ -382,12 +382,12 @@
         <owner>ORG_GOVERNMENT</owner>
         <bounds>
           <p0>
-            <x>36</x>
-            <y>7</y>
+            <x>56</x>
+            <y>27</y>
           </p0>
           <p1>
-            <x>43</x>
-            <y>18</y>
+            <x>63</x>
+            <y>38</y>
           </p1>
         </bounds>
         <base_layout>BASELAYOUT_5</base_layout>
@@ -404,12 +404,12 @@
         <owner>ORG_GOVERNMENT</owner>
         <bounds>
           <p0>
-            <x>30</x>
-            <y>76</y>
+            <x>50</x>
+            <y>96</y>
           </p0>
           <p1>
-            <x>39</x>
-            <y>84</y>
+            <x>59</x>
+            <y>104</y>
           </p1>
         </bounds>
         <base_layout />
@@ -426,12 +426,12 @@
         <owner>ORG_SYNTHEMESH</owner>
         <bounds>
           <p0>
-            <x>55</x>
-            <y>70</y>
+            <x>75</x>
+            <y>90</y>
           </p0>
           <p1>
-            <x>62</x>
-            <y>78</y>
+            <x>82</x>
+            <y>98</y>
           </p1>
         </bounds>
         <base_layout />
@@ -448,12 +448,12 @@
         <owner>ORG_ENERGEN</owner>
         <bounds>
           <p0>
-            <x>79</x>
-            <y>10</y>
+            <x>99</x>
+            <y>30</y>
           </p0>
           <p1>
-            <x>84</x>
-            <y>20</y>
+            <x>104</x>
+            <y>40</y>
           </p1>
         </bounds>
         <base_layout />
@@ -470,12 +470,12 @@
         <owner>ORG_MEGAPOL</owner>
         <bounds>
           <p0>
-            <x>42</x>
-            <y>67</y>
+            <x>62</x>
+            <y>87</y>
           </p0>
           <p1>
-            <x>49</x>
-            <y>72</y>
+            <x>69</x>
+            <y>92</y>
           </p1>
         </bounds>
         <base_layout />
@@ -492,12 +492,12 @@
         <owner>ORG_SUPERDYNAMICS</owner>
         <bounds>
           <p0>
-            <x>47</x>
-            <y>18</y>
+            <x>67</x>
+            <y>38</y>
           </p0>
           <p1>
-            <x>54</x>
-            <y>22</y>
+            <x>74</x>
+            <y>42</y>
           </p1>
         </bounds>
         <base_layout />
@@ -514,12 +514,12 @@
         <owner>ORG_MEGAPOL</owner>
         <bounds>
           <p0>
-            <x>72</x>
-            <y>10</y>
+            <x>92</x>
+            <y>30</y>
           </p0>
           <p1>
-            <x>78</x>
-            <y>18</y>
+            <x>98</x>
+            <y>38</y>
           </p1>
         </bounds>
         <base_layout />
@@ -536,12 +536,12 @@
         <owner>ORG_ENERGEN</owner>
         <bounds>
           <p0>
-            <x>53</x>
-            <y>82</y>
+            <x>73</x>
+            <y>102</y>
           </p0>
           <p1>
-            <x>62</x>
-            <y>89</y>
+            <x>82</x>
+            <y>109</y>
           </p1>
         </bounds>
         <base_layout />
@@ -558,12 +558,12 @@
         <owner>ORG_SANCTUARY_CLINIC</owner>
         <bounds>
           <p0>
-            <x>67</x>
-            <y>56</y>
+            <x>87</x>
+            <y>76</y>
           </p0>
           <p1>
-            <x>72</x>
-            <y>61</y>
+            <x>92</x>
+            <y>81</y>
           </p1>
         </bounds>
         <base_layout />
@@ -580,12 +580,12 @@
         <owner>ORG_S_E_L_F_</owner>
         <bounds>
           <p0>
-            <x>25</x>
-            <y>3</y>
+            <x>45</x>
+            <y>23</y>
           </p0>
           <p1>
-            <x>31</x>
-            <y>8</y>
+            <x>51</x>
+            <y>28</y>
           </p1>
         </bounds>
         <base_layout />
@@ -602,12 +602,12 @@
         <owner>ORG_MUTANT_ALLIANCE</owner>
         <bounds>
           <p0>
-            <x>21</x>
-            <y>64</y>
+            <x>41</x>
+            <y>84</y>
           </p0>
           <p1>
-            <x>29</x>
-            <y>71</y>
+            <x>49</x>
+            <y>91</y>
           </p1>
         </bounds>
         <base_layout />
@@ -624,12 +624,12 @@
         <owner>ORG_SOLMINE</owner>
         <bounds>
           <p0>
-            <x>42</x>
-            <y>33</y>
+            <x>62</x>
+            <y>53</y>
           </p0>
           <p1>
-            <x>49</x>
-            <y>41</y>
+            <x>69</x>
+            <y>61</y>
           </p1>
         </bounds>
         <base_layout />
@@ -646,12 +646,12 @@
         <owner>ORG_GOVERNMENT</owner>
         <bounds>
           <p0>
-            <x>68</x>
-            <y>64</y>
+            <x>88</x>
+            <y>84</y>
           </p0>
           <p1>
-            <x>77</x>
-            <y>70</y>
+            <x>97</x>
+            <y>90</y>
           </p1>
         </bounds>
         <base_layout>BASELAYOUT_12</base_layout>
@@ -668,12 +668,12 @@
         <owner>ORG_EVONET</owner>
         <bounds>
           <p0>
-            <x>48</x>
-            <y>13</y>
+            <x>68</x>
+            <y>33</y>
           </p0>
           <p1>
-            <x>54</x>
-            <y>17</y>
+            <x>74</x>
+            <y>37</y>
           </p1>
         </bounds>
         <base_layout />
@@ -690,12 +690,12 @@
         <owner>ORG_LIFETREE</owner>
         <bounds>
           <p0>
-            <x>37</x>
-            <y>20</y>
+            <x>57</x>
+            <y>40</y>
           </p0>
           <p1>
-            <x>47</x>
-            <y>26</y>
+            <x>67</x>
+            <y>46</y>
           </p1>
         </bounds>
         <base_layout />
@@ -712,12 +712,12 @@
         <owner>ORG_MEGAPOL</owner>
         <bounds>
           <p0>
-            <x>30</x>
-            <y>22</y>
+            <x>50</x>
+            <y>42</y>
           </p0>
           <p1>
-            <x>36</x>
-            <y>26</y>
+            <x>56</x>
+            <y>46</y>
           </p1>
         </bounds>
         <base_layout />
@@ -734,12 +734,12 @@
         <owner>ORG_MEGAPOL</owner>
         <bounds>
           <p0>
-            <x>72</x>
-            <y>39</y>
+            <x>92</x>
+            <y>59</y>
           </p0>
           <p1>
-            <x>82</x>
-            <y>50</y>
+            <x>102</x>
+            <y>70</y>
           </p1>
         </bounds>
         <base_layout />
@@ -756,12 +756,12 @@
         <owner>ORG_MARSEC</owner>
         <bounds>
           <p0>
-            <x>76</x>
-            <y>21</y>
+            <x>96</x>
+            <y>41</y>
           </p0>
           <p1>
-            <x>81</x>
-            <y>25</y>
+            <x>101</x>
+            <y>45</y>
           </p1>
         </bounds>
         <base_layout />
@@ -778,12 +778,12 @@
         <owner>ORG_SUPERDYNAMICS</owner>
         <bounds>
           <p0>
-            <x>91</x>
-            <y>14</y>
+            <x>111</x>
+            <y>34</y>
           </p0>
           <p1>
-            <x>96</x>
-            <y>20</y>
+            <x>116</x>
+            <y>40</y>
           </p1>
         </bounds>
         <base_layout />
@@ -800,12 +800,12 @@
         <owner>ORG_GRAVBALL_LEAGUE</owner>
         <bounds>
           <p0>
-            <x>63</x>
-            <y>49</y>
+            <x>83</x>
+            <y>69</y>
           </p0>
           <p1>
-            <x>71</x>
-            <y>55</y>
+            <x>91</x>
+            <y>75</y>
           </p1>
         </bounds>
         <base_layout />
@@ -822,12 +822,12 @@
         <owner>ORG_SENSOVISION</owner>
         <bounds>
           <p0>
-            <x>72</x>
-            <y>51</y>
+            <x>92</x>
+            <y>71</y>
           </p0>
           <p1>
-            <x>82</x>
-            <y>55</y>
+            <x>102</x>
+            <y>75</y>
           </p1>
         </bounds>
         <base_layout />
@@ -844,12 +844,12 @@
         <owner>ORG_SENSOVISION</owner>
         <bounds>
           <p0>
-            <x>49</x>
-            <y>33</y>
+            <x>69</x>
+            <y>53</y>
           </p0>
           <p1>
-            <x>55</x>
-            <y>39</y>
+            <x>75</x>
+            <y>59</y>
           </p1>
         </bounds>
         <base_layout />
@@ -866,12 +866,12 @@
         <owner>ORG_GRAVBALL_LEAGUE</owner>
         <bounds>
           <p0>
-            <x>41</x>
-            <y>27</y>
+            <x>61</x>
+            <y>47</y>
           </p0>
           <p1>
-            <x>47</x>
-            <y>32</y>
+            <x>67</x>
+            <y>52</y>
           </p1>
         </bounds>
         <base_layout />
@@ -888,12 +888,12 @@
         <owner>ORG_NANOTECH</owner>
         <bounds>
           <p0>
-            <x>23</x>
-            <y>23</y>
+            <x>43</x>
+            <y>43</y>
           </p0>
           <p1>
-            <x>29</x>
-            <y>30</y>
+            <x>49</x>
+            <y>50</y>
           </p1>
         </bounds>
         <base_layout />
@@ -910,12 +910,12 @@
         <owner>ORG_SANCTUARY_CLINIC</owner>
         <bounds>
           <p0>
-            <x>67</x>
-            <y>73</y>
+            <x>87</x>
+            <y>93</y>
           </p0>
           <p1>
-            <x>74</x>
-            <y>78</y>
+            <x>94</x>
+            <y>98</y>
           </p1>
         </bounds>
         <base_layout />
@@ -932,12 +932,12 @@
         <owner>ORG_OSIRON</owner>
         <bounds>
           <p0>
-            <x>27</x>
-            <y>33</y>
+            <x>47</x>
+            <y>53</y>
           </p0>
           <p1>
-            <x>39</x>
-            <y>38</y>
+            <x>59</x>
+            <y>58</y>
           </p1>
         </bounds>
         <base_layout />
@@ -954,12 +954,12 @@
         <owner>ORG_GOVERNMENT</owner>
         <bounds>
           <p0>
-            <x>48</x>
-            <y>23</y>
+            <x>68</x>
+            <y>43</y>
           </p0>
           <p1>
-            <x>56</x>
-            <y>32</y>
+            <x>76</x>
+            <y>52</y>
           </p1>
         </bounds>
         <base_layout />
@@ -976,12 +976,12 @@
         <owner>ORG_SANCTUARY_CLINIC</owner>
         <bounds>
           <p0>
-            <x>43</x>
-            <y>58</y>
+            <x>63</x>
+            <y>78</y>
           </p0>
           <p1>
-            <x>48</x>
-            <y>63</y>
+            <x>68</x>
+            <y>83</y>
           </p1>
         </bounds>
         <base_layout />
@@ -998,12 +998,12 @@
         <owner>ORG_NUTRIVEND</owner>
         <bounds>
           <p0>
-            <x>63</x>
-            <y>40</y>
+            <x>83</x>
+            <y>60</y>
           </p0>
           <p1>
-            <x>71</x>
-            <y>48</y>
+            <x>91</x>
+            <y>68</y>
           </p1>
         </bounds>
         <base_layout />
@@ -1020,12 +1020,12 @@
         <owner>ORG_EVONET</owner>
         <bounds>
           <p0>
-            <x>68</x>
-            <y>7</y>
+            <x>88</x>
+            <y>27</y>
           </p0>
           <p1>
-            <x>71</x>
-            <y>13</y>
+            <x>91</x>
+            <y>33</y>
           </p1>
         </bounds>
         <base_layout />
@@ -1042,12 +1042,12 @@
         <owner>ORG_MEGAPOL</owner>
         <bounds>
           <p0>
-            <x>56</x>
-            <y>37</y>
+            <x>76</x>
+            <y>57</y>
           </p0>
           <p1>
-            <x>62</x>
-            <y>39</y>
+            <x>82</x>
+            <y>59</y>
           </p1>
         </bounds>
         <base_layout />
@@ -1064,12 +1064,12 @@
         <owner>ORG_CYBERWEB</owner>
         <bounds>
           <p0>
-            <x>48</x>
-            <y>7</y>
+            <x>68</x>
+            <y>27</y>
           </p0>
           <p1>
-            <x>54</x>
-            <y>12</y>
+            <x>74</x>
+            <y>32</y>
           </p1>
         </bounds>
         <base_layout />
@@ -1086,12 +1086,12 @@
         <owner>ORG_DIABLO</owner>
         <bounds>
           <p0>
-            <x>42</x>
-            <y>86</y>
+            <x>62</x>
+            <y>106</y>
           </p0>
           <p1>
-            <x>49</x>
-            <y>90</y>
+            <x>69</x>
+            <y>110</y>
           </p1>
         </bounds>
         <base_layout />
@@ -1108,12 +1108,12 @@
         <owner>ORG_CULT_OF_SIRIUS</owner>
         <bounds>
           <p0>
-            <x>63</x>
-            <y>67</y>
+            <x>83</x>
+            <y>87</y>
           </p0>
           <p1>
-            <x>66</x>
-            <y>71</y>
+            <x>86</x>
+            <y>91</y>
           </p1>
         </bounds>
         <base_layout />
@@ -1130,12 +1130,12 @@
         <owner>ORG_CULT_OF_SIRIUS</owner>
         <bounds>
           <p0>
-            <x>57</x>
-            <y>23</y>
+            <x>77</x>
+            <y>43</y>
           </p0>
           <p1>
-            <x>62</x>
-            <y>27</y>
+            <x>82</x>
+            <y>47</y>
           </p1>
         </bounds>
         <base_layout />
@@ -1152,12 +1152,12 @@
         <owner>ORG_CYBERWEB</owner>
         <bounds>
           <p0>
-            <x>6</x>
-            <y>19</y>
+            <x>26</x>
+            <y>39</y>
           </p0>
           <p1>
-            <x>12</x>
-            <y>25</y>
+            <x>32</x>
+            <y>45</y>
           </p1>
         </bounds>
         <base_layout />
@@ -1174,12 +1174,12 @@
         <owner>ORG_EXTROPIANS</owner>
         <bounds>
           <p0>
-            <x>42</x>
-            <y>76</y>
+            <x>62</x>
+            <y>96</y>
           </p0>
           <p1>
-            <x>50</x>
-            <y>82</y>
+            <x>70</x>
+            <y>102</y>
           </p1>
         </bounds>
         <base_layout />
@@ -1196,12 +1196,12 @@
         <owner>ORG_GOVERNMENT</owner>
         <bounds>
           <p0>
-            <x>12</x>
-            <y>13</y>
+            <x>32</x>
+            <y>33</y>
           </p0>
           <p1>
-            <x>22</x>
-            <y>20</y>
+            <x>42</x>
+            <y>40</y>
           </p1>
         </bounds>
         <base_layout />
@@ -1218,12 +1218,12 @@
         <owner>ORG_S_E_L_F_</owner>
         <bounds>
           <p0>
-            <x>25</x>
-            <y>11</y>
+            <x>45</x>
+            <y>31</y>
           </p0>
           <p1>
-            <x>33</x>
-            <y>19</y>
+            <x>53</x>
+            <y>39</y>
           </p1>
         </bounds>
         <base_layout />
@@ -1240,12 +1240,12 @@
         <owner>ORG_TRANSTELLAR</owner>
         <bounds>
           <p0>
-            <x>43</x>
-            <y>42</y>
+            <x>63</x>
+            <y>62</y>
           </p0>
           <p1>
-            <x>59</x>
-            <y>56</y>
+            <x>79</x>
+            <y>76</y>
           </p1>
         </bounds>
         <base_layout />
@@ -1262,12 +1262,12 @@
         <owner>ORG_TECHNOCRATS</owner>
         <bounds>
           <p0>
-            <x>6</x>
-            <y>7</y>
+            <x>26</x>
+            <y>27</y>
           </p0>
           <p1>
-            <x>11</x>
-            <y>14</y>
+            <x>31</x>
+            <y>34</y>
           </p1>
         </bounds>
         <base_layout />
@@ -1284,12 +1284,12 @@
         <owner>ORG_LIFETREE</owner>
         <bounds>
           <p0>
-            <x>65</x>
-            <y>80</y>
+            <x>85</x>
+            <y>100</y>
           </p0>
           <p1>
-            <x>77</x>
-            <y>90</y>
+            <x>97</x>
+            <y>110</y>
           </p1>
         </bounds>
         <base_layout />
@@ -1306,12 +1306,12 @@
         <owner>ORG_SUPERDYNAMICS</owner>
         <bounds>
           <p0>
-            <x>82</x>
-            <y>27</y>
+            <x>102</x>
+            <y>47</y>
           </p0>
           <p1>
-            <x>86</x>
-            <y>32</y>
+            <x>106</x>
+            <y>52</y>
           </p1>
         </bounds>
         <base_layout />
@@ -1328,12 +1328,12 @@
         <owner>ORG_SOLMINE</owner>
         <bounds>
           <p0>
-            <x>68</x>
-            <y>19</y>
+            <x>88</x>
+            <y>39</y>
           </p0>
           <p1>
-            <x>71</x>
-            <y>25</y>
+            <x>91</x>
+            <y>45</y>
           </p1>
         </bounds>
         <base_layout />
@@ -1350,12 +1350,12 @@
         <owner>ORG_GOVERNMENT</owner>
         <bounds>
           <p0>
-            <x>63</x>
-            <y>13</y>
+            <x>83</x>
+            <y>33</y>
           </p0>
           <p1>
-            <x>67</x>
-            <y>19</y>
+            <x>87</x>
+            <y>39</y>
           </p1>
         </bounds>
         <base_layout>BASELAYOUT_3</base_layout>
@@ -1372,12 +1372,12 @@
         <owner>ORG_GOVERNMENT</owner>
         <bounds>
           <p0>
-            <x>85</x>
-            <y>14</y>
+            <x>105</x>
+            <y>34</y>
           </p0>
           <p1>
-            <x>90</x>
-            <y>19</y>
+            <x>110</x>
+            <y>39</y>
           </p1>
         </bounds>
         <base_layout>BASELAYOUT_0</base_layout>
@@ -1394,12 +1394,12 @@
         <owner>ORG_OSIRON</owner>
         <bounds>
           <p0>
-            <x>34</x>
-            <y>44</y>
+            <x>54</x>
+            <y>64</y>
           </p0>
           <p1>
-            <x>40</x>
-            <y>48</y>
+            <x>60</x>
+            <y>68</y>
           </p1>
         </bounds>
         <base_layout />
@@ -1416,12 +1416,12 @@
         <owner>ORG_GOVERNMENT</owner>
         <bounds>
           <p0>
-            <x>82</x>
-            <y>33</y>
+            <x>102</x>
+            <y>53</y>
           </p0>
           <p1>
-            <x>86</x>
-            <y>38</y>
+            <x>106</x>
+            <y>58</y>
           </p1>
         </bounds>
         <base_layout>BASELAYOUT_12</base_layout>
@@ -1438,12 +1438,12 @@
         <owner>ORG_SOLMINE</owner>
         <bounds>
           <p0>
-            <x>72</x>
-            <y>19</y>
+            <x>92</x>
+            <y>39</y>
           </p0>
           <p1>
-            <x>75</x>
-            <y>25</y>
+            <x>95</x>
+            <y>45</y>
           </p1>
         </bounds>
         <base_layout />
@@ -1460,12 +1460,12 @@
         <owner>ORG_GOVERNMENT</owner>
         <bounds>
           <p0>
-            <x>63</x>
-            <y>56</y>
+            <x>83</x>
+            <y>76</y>
           </p0>
           <p1>
-            <x>66</x>
-            <y>61</y>
+            <x>86</x>
+            <y>81</y>
           </p1>
         </bounds>
         <base_layout>BASELAYOUT_2</base_layout>
@@ -1482,12 +1482,12 @@
         <owner>ORG_MARSEC</owner>
         <bounds>
           <p0>
-            <x>34</x>
-            <y>39</y>
+            <x>54</x>
+            <y>59</y>
           </p0>
           <p1>
-            <x>40</x>
-            <y>44</y>
+            <x>60</x>
+            <y>64</y>
           </p1>
         </bounds>
         <base_layout />
