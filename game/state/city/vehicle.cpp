@@ -272,7 +272,7 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 
 			if (enemy)
 			{
-				attackTarget(vehicleTile, enemy);
+				attackTarget(state, vehicleTile, enemy);
 			}
 		}
 	}
@@ -447,7 +447,7 @@ sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectV
 	return closestEnemy;
 }
 
-void Vehicle::attackTarget(sp<TileObjectVehicle> vehicleTile, sp<TileObjectVehicle> enemyTile)
+void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile, sp<TileObjectVehicle> enemyTile)
 {
 	auto target = enemyTile->getCentrePosition();
 	float distance = this->tileObject->getDistanceTo(enemyTile);
@@ -461,6 +461,19 @@ void Vehicle::attackTarget(sp<TileObjectVehicle> vehicleTile, sp<TileObjectVehic
 
 		if (distance <= equipment->getRange())
 		{
+			std::uniform_int_distribution<int> toHit(1, 99);
+			int accuracy = 100 - equipment->type->accuracy + this->getAccuracy();
+			int shotDiff = toHit(state.rng);
+
+			if (shotDiff > accuracy)
+			{
+				float offset = (shotDiff - accuracy) / 25.0f;
+				std::uniform_real_distribution<float> offsetRng(-offset, offset);
+				target.x += offsetRng(state.rng);
+				target.y += offsetRng(state.rng);
+				target.z += offsetRng(state.rng) / 2;
+			}
+
 			auto projectile = equipment->fire(target);
 			if (projectile)
 			{
