@@ -32,10 +32,13 @@ class VehicleMission
 	bool isFinished(GameState &state, Vehicle &v);
 	void start(GameState &state, Vehicle &v);
 	void setPathTo(Vehicle &v, Vec3<int> target, int maxIterations = 500);
+	bool advanceAlongPath(Vec3<float> &dest);
 
 	// Methods to create new missions
 	static VehicleMission *gotoLocation(Vehicle &v, Vec3<int> target);
+	static VehicleMission *gotoPortal(Vehicle &v, Vec3<int> target);
 	static VehicleMission *gotoBuilding(Vehicle &v, StateRef<Building> target);
+	static VehicleMission *infiltrateBuilding(Vehicle &v, StateRef<Building> target);
 	static VehicleMission *attackVehicle(Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission *followVehicle(Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission *snooze(Vehicle &v, unsigned int ticks);
@@ -64,14 +67,17 @@ class VehicleMission
 
 	MissionType type;
 
-	// GotoLocation TakeOff
+	// GotoLocation TakeOff GotoPortal Patrol
 	Vec3<int> targetLocation;
-	// GotoBuilding AttackBuilding Land
+	// GotoBuilding AttackBuilding Land Infiltrate
 	StateRef<Building> targetBuilding;
 	// FollowVehicle AttackVehicle
 	StateRef<Vehicle> targetVehicle;
 	// Snooze
 	unsigned int timeToSnooze;
+	// Patrol: waypoints
+	unsigned int missionCounter;
+
 
 	std::list<Vec3<int>> currentPlannedPath;
 };

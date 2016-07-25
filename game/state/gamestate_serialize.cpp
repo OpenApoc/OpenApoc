@@ -654,6 +654,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("target_building"), m.targetBuilding);
 	serializeIn(state, node->getNode("target_vehicle"), m.targetVehicle);
 	serializeIn(state, node->getNode("time_to_snooze"), m.timeToSnooze);
+	serializeIn(state, node->getNode("mission_counter"), m.missionCounter);
 	serializeIn(state, node->getNode("current_planned_path"), m.currentPlannedPath);
 }
 
@@ -1290,6 +1291,7 @@ template <> void serializeOut(sp<SerializationNode> node, const VehicleMission &
 	serializeOut(node->addNode("target_building"), m.targetBuilding);
 	serializeOut(node->addNode("target_vehicle"), m.targetVehicle);
 	serializeOut(node->addNode("time_to_snooze"), m.timeToSnooze);
+	serializeOut(node->addNode("mission_counter"), m.missionCounter);
 	serializeOut(node->addNode("current_planned_path"), m.currentPlannedPath);
 }
 

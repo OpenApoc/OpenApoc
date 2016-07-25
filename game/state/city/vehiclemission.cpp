@@ -228,6 +228,14 @@ VehicleMission *VehicleMission::gotoLocation(Vehicle &v, Vec3<int> target)
 	return mission;
 }
 
+VehicleMission * VehicleMission::gotoPortal(Vehicle & v, Vec3<int> target)
+{
+	auto *mission = new VehicleMission();
+	mission->type = MissionType::GotoPortal;
+	mission->targetLocation = target;
+	return mission;
+}
+
 VehicleMission *VehicleMission::gotoBuilding(Vehicle &v, StateRef<Building> target)
 {
 	// TODO
@@ -246,6 +254,14 @@ VehicleMission *VehicleMission::gotoBuilding(Vehicle &v, StateRef<Building> targ
 	//  queue(Land)
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::GotoBuilding;
+	mission->targetBuilding = target;
+	return mission;
+}
+
+VehicleMission * VehicleMission::infiltrateBuilding(Vehicle & v, StateRef<Building> target)
+{
+	auto *mission = new VehicleMission();
+	mission->type = MissionType::Infiltrate;
 	mission->targetBuilding = target;
 	return mission;
 }
@@ -285,6 +301,7 @@ VehicleMission * VehicleMission::patrol(Vehicle & v)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::Patrol;
+	mission->missionCounter = 5;
 	return mission;
 }
 
@@ -318,16 +335,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 		case MissionType::GotoLocation: // Fall-through
 		case MissionType::Land:
 		{
-			if (currentPlannedPath.empty())
-				return false;
-			currentPlannedPath.pop_front();
-			if (currentPlannedPath.empty())
-				return false;
-			auto pos = currentPlannedPath.front();
-			dest = Vec3<float>{pos.x, pos.y, pos.z}
-			       // Add {0.5,0.5,0.5} to make it route to the center of the tile
-			       + Vec3<float>{0.5, 0.5, 0.5};
-			return true;
+			return advanceAlongPath(dest);
 		}
 		case MissionType::Crash:
 		{
@@ -342,6 +350,17 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 			       + Vec3<float>{0.5, 0.5, 0.0};
 			return true;
 		}
+		case MissionType::Patrol:
+			if (!advanceAlongPath(dest))
+			{
+				if (missionCounter == 0)
+					return false;
+
+				missionCounter--;
+				std::uniform_int_distribution<int> xyPos(25, 115);
+				setPathTo(v, { xyPos(state.rng), xyPos(state.rng), v.altitude });
+			}
+			break;
 		case MissionType::AttackVehicle:
 		case MissionType::FollowVehicle:
 		{
@@ -501,6 +520,7 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks)
 		}
 		case MissionType::Land:
 		case MissionType::Crash:
+		case MissionType::Patrol:
 		case MissionType::GotoBuilding:
 		case MissionType::GotoLocation:
 		case MissionType::AttackVehicle:
@@ -547,6 +567,8 @@ bool VehicleMission::isFinished(GameState &state, Vehicle &v)
 		case MissionType::GotoLocation:
 		case MissionType::Crash:
 			return this->currentPlannedPath.empty();
+		case MissionType::Patrol:
+			return this->missionCounter == 0 && this->currentPlannedPath.empty();
 		case MissionType::GotoBuilding:
 			return this->targetBuilding == v.currentlyLandedBuilding;
 		case MissionType::AttackVehicle:
@@ -649,7 +671,6 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 		}
 		case MissionType::GotoLocation:
 		{
-
 			auto vehicleTile = v.tileObject;
 			if (!vehicleTile)
 			{
@@ -687,6 +708,20 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			this->targetLocation = tile;
 			setPathTo(v, tile);
 			return;
+		}
+		case MissionType::Patrol:
+		{
+			auto vehicleTile = v.tileObject;
+			if (!vehicleTile)
+			{
+				auto name = this->getName();
+				LogInfo("Mission %s: Taking off first", name.c_str());
+				auto *takeoffMission = VehicleMission::takeOff(v);
+				v.missions.emplace_front(takeoffMission);
+				takeoffMission->start(state, v);
+			}
+			return;
+
 		}
 		case MissionType::FollowVehicle:
 		case MissionType::AttackVehicle:
@@ -826,6 +861,21 @@ void VehicleMission::setPathTo(Vehicle &v, Vec3<int> target, int maxIterations)
 	{
 		LogError("Mission %s: Take off before pathfinding!", this->getName().c_str());
 	}
+}
+
+bool VehicleMission::advanceAlongPath(Vec3<float>& dest)
+{
+	// Add {0.5,0.5,0.5} to make it route to the center of the tile
+	static const Vec3<float> offset{0.5, 0.5, 0.5};
+
+	if (currentPlannedPath.empty())
+		return false;
+	currentPlannedPath.pop_front();
+	if (currentPlannedPath.empty())
+		return false;
+	auto pos = currentPlannedPath.front();
+	dest = Vec3<float>{ pos.x, pos.y, pos.z } + offset;
+	return true;
 }
 
 UString VehicleMission::getName()
