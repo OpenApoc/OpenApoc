@@ -37,6 +37,10 @@ before_script:
   - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCLANG_TIDY=clang-tidy-3.8 -DCLANG_FORMAT=clang-format-3.8 -DENABLE_TESTS=ON -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}"
 # Do the format before the script so the output is cleaner - just showing the diff (if any) and the tidy results
   - if [ "${TIDY}" = "true" ]; then make format -j2; fi
+# Start an X server to run tests on
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
 
 script:
   - make -j2 && ctest -V
