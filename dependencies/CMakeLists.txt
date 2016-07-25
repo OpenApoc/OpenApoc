@@ -1,5 +1,5 @@
 # project name, and type
-PROJECT(OpenApoc_LibSmacker C)
+PROJECT(OpenApoc_Dependencies C CXX)
 
 # check cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
@@ -30,3 +30,23 @@ target_include_directories(OpenApoc_Library PRIVATE
 		${CMAKE_SOURCE_DIR}/dependencies/libsmacker)
 
 target_compile_definitions(OpenApoc_Library PUBLIC PTHREADS_AVAILABLE)
+
+
+set (LIBPUGIXML_SOURCE_FILES
+		pugixml/src/pugixml.cpp)
+
+source_group(libpugixml\\sources FILES ${LIBPUGIXML_SOURCE_FILES})
+
+set (LIBPUGIXML_HEADER_FILES
+		pugixml/src/pugixml.hpp
+		pugixml/src/pugiconfig.hpp)
+
+source_group(libpugixml\\headers FILES ${LIBPUGIXML_HEADER_FILES})
+
+list(APPEND ALL_SOURCE_FILES ${LIBPUGIXML_SOURCE_FILES})
+list(APPEND ALL_HEADER_FILES ${LIBPUGIXML_HEADER_FILES})
+
+add_library(OpenApoc_LibPugixml STATIC ${LIBPUGIXML_SOURCE_FILES}
+		${LIBPUGIXML_HEADER_FILES})
+
+target_compile_definitions(OpenApoc_LibPugixml PUBLIC PTHREADS_AVAILABLE)
