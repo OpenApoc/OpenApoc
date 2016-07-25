@@ -5,6 +5,7 @@
 #endif
 
 #include "framework/logger.h"
+#include "framework/framework.h"
 #include <chrono>
 #include <cstdarg>
 #include <mutex>
@@ -197,6 +198,7 @@ void Log(bool show_dialog, LogLevel level, UString prefix, const char *format, .
 			break;
 		default:
 			level_prefix = "E";
+			exit_app = true;
 			break;
 	}
 
@@ -231,41 +233,57 @@ void Log(bool show_dialog, LogLevel level, UString prefix, const char *format, .
 #if defined(ERROR_DIALOG)
 	if (show_dialog && level == LogLevel::Error)
 	{
-		/* How big should the string be? */
-		va_start(arglist, format);
-		auto strSize = vsnprintf(NULL, 0, format, arglist);
-		strSize += 1; // NULL terminator
-		std::unique_ptr<char[]> string(new char[strSize]);
-		va_end(arglist);
-
-		/* Now format the string */
-		va_start(arglist, format);
-		vsnprintf(string.get(), strSize, format, arglist);
-		va_end(arglist);
-
-		SDL_MessageBoxData mBoxData;
-		mBoxData.flags = SDL_MESSAGEBOX_ERROR;
-		mBoxData.window = NULL; // Might happen before we get our window?
-		mBoxData.title = "OpenApoc ERROR";
-		mBoxData.message = string.get();
-		mBoxData.numbuttons = 2;
-		SDL_MessageBoxButtonData buttons[2];
-		buttons[0].flags = SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT;
-		buttons[0].buttonid = 1;
-		buttons[0].text = "Exit";
-		buttons[1].flags = SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT;
-		buttons[1].buttonid = 2;
-		buttons[1].text = "try to limp along";
-		mBoxData.buttons = buttons;
-		mBoxData.colorScheme = NULL; // Use system settings
-
-		int but;
-		SDL_ShowMessageBox(&mBoxData, &but);
-
-		/* button 1 = "exit", button 2 = "try to limp along" */
-		if (but == 1)
+		if (!Framework::tryGetInstance())
 		{
-			exit_app = true;
+			// No framework to have created a window, so don't try to show a dialog
+		}
+		else if (!fw().Display_HasWindow())
+		{
+			// Framework created but without window, so don't try to show a dialog
+		}
+		else
+		{
+			// Show dialog
+			/* How big should the string be? */
+			va_start(arglist, format);
+			auto strSize = vsnprintf(NULL, 0, format, arglist);
+			strSize += 1; // NULL terminator
+			std::unique_ptr<char[]> string(new char[strSize]);
+			va_end(arglist);
+
+			/* Now format the string */
+			va_start(arglist, format);
+			vsnprintf(string.get(), strSize, format, arglist);
+			va_end(arglist);
+
+			SDL_MessageBoxData mBoxData;
+			mBoxData.flags = SDL_MESSAGEBOX_ERROR;
+			mBoxData.window = NULL; // Might happen before we get our window?
+			mBoxData.title = "OpenApoc ERROR";
+			mBoxData.message = string.get();
+			mBoxData.numbuttons = 2;
+			SDL_MessageBoxButtonData buttons[2];
+			buttons[0].flags = SDL_MESSAGEBOX_BUTTON_RETURNKEY_DEFAULT;
+			buttons[0].buttonid = 1;
+			buttons[0].text = "Exit";
+			buttons[1].flags = SDL_MESSAGEBOX_BUTTON_ESCAPEKEY_DEFAULT;
+			buttons[1].buttonid = 2;
+			buttons[1].text = "try to limp along";
+			mBoxData.buttons = buttons;
+			mBoxData.colorScheme = NULL; // Use system settings
+
+			int but;
+			SDL_ShowMessageBox(&mBoxData, &but);
+
+			/* button 1 = "exit", button 2 = "try to limp along" */
+			if (but == 1)
+			{
+				exit_app = true;
+			}
+			else
+			{
+				exit_app = false;
+			}
 		}
 	}
 #endif

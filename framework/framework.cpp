@@ -334,6 +334,7 @@ Framework &Framework::getInstance()
 	}
 	return *instance;
 }
+Framework *Framework::tryGetInstance() { return instance; }
 
 void Framework::Run(sp<Stage> initialStage, size_t frameCount)
 {
@@ -907,6 +908,15 @@ int Framework::Display_GetWidth() { return p->displaySize.x; }
 int Framework::Display_GetHeight() { return p->displaySize.y; }
 
 Vec2<int> Framework::Display_GetSize() { return p->displaySize; }
+
+bool Framework::Display_HasWindow() const
+{
+	if (createWindow == false)
+		return false;
+	if (!p->window)
+		return false;
+	return true;
+}
 
 void Framework::Display_SetTitle(UString NewTitle)
 {

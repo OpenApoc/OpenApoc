@@ -47,6 +47,7 @@ class Framework
 	~Framework();
 
 	static Framework &getInstance();
+	static Framework *tryGetInstance();
 
 	// If frameCount != 0, it'll quit after that many frames. If it is zero, it'll run forever (Or
 	// until a user quit event)
@@ -69,6 +70,7 @@ class Framework
 	Vec2<int> Display_GetSize();
 	void Display_SetTitle(UString NewTitle);
 	void Display_SetIcon();
+	bool Display_HasWindow() const;
 
 	bool IsSlowMode();
 	void SetSlowMode(bool SlowEnabled);
