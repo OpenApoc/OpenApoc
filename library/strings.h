@@ -85,6 +85,8 @@ class UString
 
 	int compare(const UString &str) const;
 
+	bool endsWith(const UString &suffix) const;
+
 	bool operator==(const UString &other) const;
 	bool operator!=(const UString &other) const;
 	bool operator<(const UString &other) const;

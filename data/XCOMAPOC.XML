@@ -10,6 +10,7 @@
     <include>UI/VEQUIPSCREEN.XML</include>
     <include>UI/UFOPAEDIA.XML</include>
     <include>UI/DIFFICULTYMENU.XML</include>
+    <include>UI/SAVEMENU.XML</include>
     <include>UI/DEBUGMENU.XML</include>
     <include>UI/INGAMEOPTIONS.XML</include>
     <include>UI/RESEARCHSCREEN.XML</include>

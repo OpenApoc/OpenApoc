@@ -1,15 +1,14 @@
 #define _USE_MATH_DEFINES
 #include "game/ui/general/loadingscreen.h"
 #include "framework/framework.h"
+#include "game/ui/city/cityview.h"
 #include <cmath>
 
 namespace OpenApoc
 {
 
-LoadingScreen::LoadingScreen(std::future<void> task, std::function<sp<Stage>()> nextScreenFn,
-                             sp<Image> background)
-    : Stage(), loading_task(std::move(task)), nextScreenFn(nextScreenFn),
-      backgroundimage(background)
+LoadingScreen::LoadingScreen(std::future<sp<GameState>> gameStateTask, sp<Image> background)
+    : Stage(), loading_task(std::move(gameStateTask)), backgroundimage(background)
 {
 }
 
@@ -33,18 +32,34 @@ void LoadingScreen::Finish() {}
 
 void LoadingScreen::EventOccurred(Event *e) { std::ignore = e; }
 
+sp<Stage> CreateUiForGame(sp<GameState> gameState)
+{
+	// FIXME load to correct screen based on loaded game state
+	return mksp<CityView>(gameState);
+}
+
 void LoadingScreen::Update(StageCmd *const cmd)
 {
-	loadingimageangle += (M_PI + 0.05f);
-	if (loadingimageangle >= M_PI * 2.0f)
-		loadingimageangle -= M_PI * 2.0f;
+	loadingimageangle += (float)(M_PI + 0.05f);
+	if (loadingimageangle >= (float)(M_PI * 2.0f))
+		loadingimageangle -= (float)(M_PI * 2.0f);
 
 	auto status = this->loading_task.wait_for(std::chrono::seconds(0));
 	switch (status)
 	{
 		case std::future_status::ready:
-			cmd->cmd = StageCmd::Command::REPLACE;
-			cmd->nextStage = this->nextScreenFn();
+		{
+			auto gameState = loading_task.get();
+			if (gameState != nullptr)
+			{
+				cmd->cmd = StageCmd::Command::REPLACE;
+				cmd->nextStage = mksp<CityView>(gameState);
+			}
+			else
+			{
+				cmd->cmd = StageCmd::Command::POP;
+			}
+		}
 			return;
 		default:
 			// Not yet finished

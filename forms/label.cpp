@@ -102,9 +102,9 @@ sp<Control> Label::CopyTo(sp<Control> CopyParent)
 	return copy;
 }
 
-void Label::ConfigureFromXML(tinyxml2::XMLElement *Element)
+void Label::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 {
-	Control::ConfigureFromXML(Element);
+	Control::ConfigureSelfFromXML(Element);
 	tinyxml2::XMLElement *subnode;
 	UString attribvalue;
 

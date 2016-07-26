@@ -33,6 +33,7 @@
     <ClCompile Include="city\vequipment.cpp" />
     <ClCompile Include="gamestate.cpp" />
     <ClCompile Include="gamestate_serialize.cpp" />
+    <ClCompile Include="gametime.cpp" />
     <ClCompile Include="organisation.cpp" />
     <ClCompile Include="research.cpp" />
     <ClCompile Include="rules\doodad_type.cpp" />
@@ -40,6 +41,7 @@
     <ClCompile Include="rules\scenery_tile_type.cpp" />
     <ClCompile Include="rules\vehicle_type_rules.cpp" />
     <ClCompile Include="rules\vequipment_rules.cpp" />
+    <ClCompile Include="savemanager.cpp" />
     <ClCompile Include="tileview\tile.cpp" />
     <ClCompile Include="tileview\tileobject.cpp" />
     <ClCompile Include="tileview\tileobject_doodad.cpp" />
@@ -64,6 +66,7 @@
     <ClInclude Include="city\vehiclemission.h" />
     <ClInclude Include="city\vequipment.h" />
     <ClInclude Include="gamestate.h" />
+    <ClInclude Include="gametime.h" />
     <ClInclude Include="organisation.h" />
     <ClInclude Include="research.h" />
     <ClInclude Include="rules\doodad_type.h" />
@@ -72,6 +75,7 @@
     <ClInclude Include="rules\scenery_tile_type.h" />
     <ClInclude Include="rules\vehicle_type.h" />
     <ClInclude Include="rules\vequipment_type.h" />
+    <ClInclude Include="savemanager.h" />
     <ClInclude Include="stateobject.h" />
     <ClInclude Include="tileview\tile.h" />
     <ClInclude Include="tileview\tileobject.h" />

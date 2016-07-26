@@ -23,6 +23,7 @@
 // Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
 // symbols as part of the module that uses it
 #define BOOST_ALL_NO_LIB
+#include <boost/filesystem.hpp>
 #include <boost/locale.hpp>
 
 #ifdef OPENAPOC_GLES
@@ -65,6 +66,8 @@ static std::map<UString, UString> defaultConfig = {
     {"Resource.SystemDataDir", DATA_DIRECTORY},
     {"Resource.LocalCDPath", "./data/cd.iso"},
     {"Resource.SystemCDPath", DATA_DIRECTORY "/cd.iso"},
+    {"Resource.SaveDataDir", "./saves"},
+    {"Resource.SaveSkipPacking", "0"},
     {"Visual.Renderers", RENDERERS},
     {"Audio.Backends", "SDLRaw:null"},
     {"Audio.GlobalGain", "20"},
@@ -176,7 +179,11 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 
 	this->instance = this;
 
-	PHYSFS_init(programName.c_str());
+	if (PHYSFS_init(programName.c_str()) == 0)
+	{
+		PHYSFS_ErrorCode error = PHYSFS_getLastErrorCode();
+		LogError("Failed to init code %i PHYSFS: %s", (int)error, PHYSFS_getErrorByCode(error));
+	}
 #ifdef ANDROID
 	SDL_SetHint(SDL_HINT_ANDROID_SEPARATE_MOUSE_AND_TOUCH, "1");
 #endif
@@ -274,6 +281,7 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 
 	this->threadPool.reset(new ThreadPool(threadPoolSize));
 
+	LogInfo("Current working directory: \"%s\"", boost::filesystem::current_path().c_str());
 	this->data.reset(new Data(resourcePaths));
 
 	auto testFile = this->data->fs.open("MUSIC");

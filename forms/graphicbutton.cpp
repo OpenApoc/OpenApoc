@@ -132,9 +132,9 @@ sp<Control> GraphicButton::CopyTo(sp<Control> CopyParent)
 	return copy;
 }
 
-void GraphicButton::ConfigureFromXML(tinyxml2::XMLElement *Element)
+void GraphicButton::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 {
-	Control::ConfigureFromXML(Element);
+	Control::ConfigureSelfFromXML(Element);
 	if (Element->FirstChildElement("image") != nullptr)
 	{
 		image = fw().data->load_image(Element->FirstChildElement("image")->GetText());

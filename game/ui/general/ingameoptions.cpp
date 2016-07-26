@@ -4,6 +4,7 @@
 #include "framework/framework.h"
 #include "game/state/gamestate.h"
 #include "game/ui/general/mainmenu.h"
+#include "game/ui/general/savemenu.h"
 
 namespace OpenApoc
 {
@@ -82,8 +83,14 @@ void InGameOptions::EventOccurred(Event *e)
 		}
 		else if (e->Forms().RaisedBy->Name == "BUTTON_SAVEGAME")
 		{
-			// FIXME: Save game selector
-			this->state->saveGame("save");
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = mksp<SaveMenu>(SaveMenuAction::Save, state);
+			return;
+		}
+		else if (e->Forms().RaisedBy->Name == "BUTTON_LOADGAME")
+		{
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = mksp<SaveMenu>(SaveMenuAction::Load, state);
 			return;
 		}
 		else if (e->Forms().RaisedBy->Name == "BUTTON_GIVE_ALL_RESEARCH")

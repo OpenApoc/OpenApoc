@@ -524,28 +524,18 @@ void CityView::Update(StageCmd *const cmd)
 	}
 	auto clockControl = baseForm->FindControlTyped<Label>("CLOCK");
 
-	auto seconds = state->time / TICKS_PER_SECOND;
-	auto minutes = seconds / 60;
-	auto hours = minutes / 60;
-
-	unsigned secondsClamped = seconds % 60;
-	unsigned minutesClamped = minutes % 60;
-	unsigned hoursClamped = hours % 24;
-
-	auto timeString =
-	    UString::format("%02u:%02u:%02u", hoursClamped, minutesClamped, secondsClamped);
-	clockControl->SetText(timeString);
+	clockControl->SetText(state->gameTime.getTimeString());
 
 	// The palette fades from pal_03 at 3am to pal_02 at 6am then pal_01 at 9am
 	// The reverse for 3pm, 6pm & 9pm
 
+	auto hour = state->gameTime.getHours();
 	sp<Palette> interpolated_palette;
-
-	if (hoursClamped < 3 || hoursClamped >= 21)
+	if (hour < 3 || hour >= 21)
 	{
 		interpolated_palette = this->night_palette;
 	}
-	else if (hoursClamped >= 9 && hoursClamped < 15)
+	else if (hour >= 9 && hour < 15)
 	{
 		interpolated_palette = this->day_palette;
 	}
@@ -555,27 +545,27 @@ void CityView::Update(StageCmd *const cmd)
 		sp<Palette> palette2;
 		float factor = 0;
 
-		float hours_float = hoursClamped + (float)minutesClamped / 60.0f;
+		float hours_float = hour + (float)state->gameTime.getMinutes() / 60.0f;
 
-		if (hoursClamped >= 3 && hoursClamped < 6)
+		if (hour >= 3 && hour < 6)
 		{
 			palette1 = this->night_palette;
 			palette2 = this->twilight_palette;
 			factor = clamp((hours_float - 3.0f) / 3.0f, 0.0f, 1.0f);
 		}
-		else if (hoursClamped >= 6 && hoursClamped < 9)
+		else if (hour >= 6 && hour < 9)
 		{
 			palette1 = this->twilight_palette;
 			palette2 = this->day_palette;
 			factor = clamp((hours_float - 6.0f) / 3.0f, 0.0f, 1.0f);
 		}
-		else if (hoursClamped >= 15 && hoursClamped < 18)
+		else if (hour >= 15 && hour < 18)
 		{
 			palette1 = this->day_palette;
 			palette2 = this->twilight_palette;
 			factor = clamp((hours_float - 15.0f) / 3.0f, 0.0f, 1.0f);
 		}
-		else if (hoursClamped >= 18 && hoursClamped < 21)
+		else if (hour >= 18 && hour < 21)
 		{
 			palette1 = this->twilight_palette;
 			palette2 = this->night_palette;
@@ -583,7 +573,7 @@ void CityView::Update(StageCmd *const cmd)
 		}
 		else
 		{
-			LogError("Unhandled hoursClamped %d", hoursClamped);
+			LogError("Unhandled hoursClamped %d", hour);
 		}
 
 		interpolated_palette = mksp<Palette>();

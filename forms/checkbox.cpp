@@ -95,9 +95,9 @@ sp<Control> CheckBox::CopyTo(sp<Control> CopyParent)
 	return copy;
 }
 
-void CheckBox::ConfigureFromXML(tinyxml2::XMLElement *Element)
+void CheckBox::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 {
-	Control::ConfigureFromXML(Element);
+	Control::ConfigureSelfFromXML(Element);
 	if (Element->FirstChildElement("image") != nullptr)
 	{
 		imageunchecked = fw().data->load_image(Element->FirstChildElement("image")->GetText());

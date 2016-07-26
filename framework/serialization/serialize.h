@@ -2,15 +2,11 @@
 
 #include "library/sp.h"
 #include "library/strings.h"
-
-#include <exception>
 #include <iterator>
-#include <list>
 #include <vector>
 
 namespace OpenApoc
 {
-
 class SerializationNode : public std::enable_shared_from_this<SerializationNode>
 {
   public:
