@@ -10,6 +10,10 @@ matrix:
   exclude:
     - compiler: gcc
       env: TIDY="true"
+        BUILD_TYPE="Release"
+    - compiler: clang
+      env: TIDY="false"
+        BUILD_TYPE="Release"
 
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
@@ -29,8 +33,10 @@ before_install:
   - export PKG_CONFIG_PATH=~/dependency-prefix/lib/pkgconfig
 
 env:
-  - BUILD_TYPE="Release"
   - TIDY="true"
+    BUILD_TYPE="Release"
+  - TIDY="false"
+    BUILD_TYPE="Release"
 
 install:
   - pushd ./dependencies/tinyxml2 && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make -j2 && make install && popd;
