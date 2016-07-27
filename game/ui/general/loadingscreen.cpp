@@ -52,7 +52,7 @@ void LoadingScreen::Update(StageCmd *const cmd)
 			auto gameState = loading_task.get();
 			if (gameState != nullptr)
 			{
-				cmd->cmd = StageCmd::Command::REPLACE;
+				cmd->cmd = StageCmd::Command::REPLACEALL;
 				cmd->nextStage = mksp<CityView>(gameState);
 			}
 			else

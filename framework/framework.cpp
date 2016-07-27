@@ -374,6 +374,10 @@ void Framework::Run(sp<Stage> initialStage, size_t frameCount)
 				p->ProgramStages.Pop();
 				p->ProgramStages.Push(cmd.nextStage);
 				break;
+			case StageCmd::Command::REPLACEALL:
+				p->ProgramStages.Clear();
+				p->ProgramStages.Push(cmd.nextStage);
+				break;
 			case StageCmd::Command::PUSH:
 				p->ProgramStages.Push(cmd.nextStage);
 				break;

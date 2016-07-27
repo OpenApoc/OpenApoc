@@ -14,11 +14,12 @@ class StageCmd
   public:
 	enum class Command
 	{
-		CONTINUE, // Continue as normal
-		REPLACE,  // Remove the current head and replace with nextStage
-		POP,      // Remove the current head
-		PUSH,     // Push nextStage onto the top of the stack
-		QUIT,     // Clear the stage stack, exiting the program
+		CONTINUE,   // Continue as normal
+		REPLACE,    // Remove the current head and replace with nextStage
+		REPLACEALL, // Remove all current Stages and then push nextStage as the new head
+		POP,        // Remove the current head
+		PUSH,       // Push nextStage onto the top of the stack
+		QUIT,       // Clear the stage stack, exiting the program
 	};
 
 	Command cmd;

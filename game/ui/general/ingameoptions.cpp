@@ -72,7 +72,7 @@ void InGameOptions::EventOccurred(Event *e)
 		}
 		else if (e->Forms().RaisedBy->Name == "BUTTON_ABANDONGAME")
 		{
-			stageCmd.cmd = StageCmd::Command::REPLACE;
+			stageCmd.cmd = StageCmd::Command::REPLACEALL;
 			stageCmd.nextStage = mksp<MainMenu>();
 			return;
 		}
