@@ -150,6 +150,7 @@ class FrameworkPrivate
 
 	// FIXME: Wrap eventQueue in mutex if handing events with multiple threads
 	std::list<Event *> eventQueue;
+	std::mutex eventQueueLock;
 
 	StageStack ProgramStages;
 	sp<Surface> defaultSurface;
@@ -444,8 +445,11 @@ void Framework::ProcessEvents()
 	while (p->eventQueue.size() > 0 && !p->ProgramStages.IsEmpty())
 	{
 		Event *e;
-		e = p->eventQueue.front();
-		p->eventQueue.pop_front();
+		{
+			std::lock_guard<std::mutex> l(p->eventQueueLock);
+			e = p->eventQueue.front();
+			p->eventQueue.pop_front();
+		}
 		if (!e)
 		{
 			LogError("Invalid event on queue");
@@ -498,7 +502,12 @@ void Framework::ProcessEvents()
 	}
 }
 
-void Framework::PushEvent(Event *e) { p->eventQueue.push_back(e); }
+void Framework::PushEvent(Event *e)
+{
+
+	std::lock_guard<std::mutex> l(p->eventQueueLock);
+	p->eventQueue.push_back(e);
+}
 
 void Framework::TranslateSDLEvents()
 {
