@@ -135,13 +135,13 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 			this->stopped = true;
 		}
 
-		unsigned char *palette_data = smk_get_palette(this->smk_ctx);
+		const unsigned char *palette_data = smk_get_palette(this->smk_ctx);
 		if (!palette_data)
 		{
 			LogWarning("Failed to get palette data for frame %u", this->current_frame_read);
 			return false;
 		}
-		unsigned char *image_data = smk_get_video(this->smk_ctx);
+		const unsigned char *image_data = smk_get_video(this->smk_ctx);
 		if (!image_data)
 		{
 			LogWarning("Failed to get image data for frame %u", this->current_frame_read);
