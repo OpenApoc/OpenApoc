@@ -78,7 +78,6 @@ class VehicleMission
 	// Patrol: waypoints
 	unsigned int missionCounter;
 
-
 	std::list<Vec3<int>> currentPlannedPath;
 };
 } // namespace OpenApoc

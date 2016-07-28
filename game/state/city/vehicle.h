@@ -98,7 +98,8 @@ class Vehicle : public StateObject<Vehicle>, public std::enable_shared_from_this
 	bool applyDamage(GameState &state, int damage, float armour);
 	void handleCollision(GameState &state, Collision &c);
 	sp<TileObjectVehicle> findClosestEnemy(GameState &state, sp<TileObjectVehicle> vehicleTile);
-	void attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile, sp<TileObjectVehicle> enemyTile);
+	void attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
+	                  sp<TileObjectVehicle> enemyTile);
 	float getFiringRange() const;
 
 	const Vec3<float> &getPosition() const { return this->position; }

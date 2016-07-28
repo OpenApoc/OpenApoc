@@ -240,17 +240,15 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 		}
 
 		bool has_active_weapon = false;
-		if (!this->isCrashed() && this->attackMode != Vehicle::AttackMode::Evasive)
+		for (auto &equipment : this->equipment)
 		{
-			for (auto &equipment : this->equipment)
+			if (equipment->type->type != VEquipmentType::Type::Weapon)
+				continue;
+			equipment->update(ticks);
+			if (!this->isCrashed() && this->attackMode != Vehicle::AttackMode::Evasive &&
+			    equipment->canFire())
 			{
-				if (equipment->type->type != VEquipmentType::Type::Weapon)
-					continue;
-				equipment->update(ticks);
-				if (equipment->canFire())
-				{
-					has_active_weapon = true;
-				}
+				has_active_weapon = true;
 			}
 		}
 
@@ -447,7 +445,8 @@ sp<TileObjectVehicle> Vehicle::findClosestEnemy(GameState &state, sp<TileObjectV
 	return closestEnemy;
 }
 
-void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile, sp<TileObjectVehicle> enemyTile)
+void Vehicle::attackTarget(GameState &state, sp<TileObjectVehicle> vehicleTile,
+                           sp<TileObjectVehicle> enemyTile)
 {
 	auto target = enemyTile->getCentrePosition();
 	float distance = this->tileObject->getDistanceTo(enemyTile);

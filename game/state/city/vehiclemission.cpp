@@ -228,7 +228,7 @@ VehicleMission *VehicleMission::gotoLocation(Vehicle &v, Vec3<int> target)
 	return mission;
 }
 
-VehicleMission * VehicleMission::gotoPortal(Vehicle & v, Vec3<int> target)
+VehicleMission *VehicleMission::gotoPortal(Vehicle &v, Vec3<int> target)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::GotoPortal;
@@ -258,7 +258,7 @@ VehicleMission *VehicleMission::gotoBuilding(Vehicle &v, StateRef<Building> targ
 	return mission;
 }
 
-VehicleMission * VehicleMission::infiltrateBuilding(Vehicle & v, StateRef<Building> target)
+VehicleMission *VehicleMission::infiltrateBuilding(Vehicle &v, StateRef<Building> target)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::Infiltrate;
@@ -274,7 +274,7 @@ VehicleMission *VehicleMission::attackVehicle(Vehicle &v, StateRef<Vehicle> targ
 	return mission;
 }
 
-VehicleMission * VehicleMission::followVehicle(Vehicle & v, StateRef<Vehicle> target)
+VehicleMission *VehicleMission::followVehicle(Vehicle &v, StateRef<Vehicle> target)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::FollowVehicle;
@@ -297,7 +297,7 @@ VehicleMission *VehicleMission::crashLand(Vehicle &v)
 	return mission;
 }
 
-VehicleMission * VehicleMission::patrol(Vehicle & v)
+VehicleMission *VehicleMission::patrol(Vehicle &v)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::Patrol;
@@ -334,6 +334,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 		case MissionType::TakeOff:      // Fall-through
 		case MissionType::GotoLocation: // Fall-through
 		case MissionType::Land:
+		case MissionType::Infiltrate:
 		{
 			return advanceAlongPath(dest);
 		}
@@ -358,7 +359,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 
 				missionCounter--;
 				std::uniform_int_distribution<int> xyPos(25, 115);
-				setPathTo(v, { xyPos(state.rng), xyPos(state.rng), v.altitude });
+				setPathTo(v, {xyPos(state.rng), xyPos(state.rng), v.altitude});
 			}
 			break;
 		case MissionType::AttackVehicle:
@@ -372,7 +373,6 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 				auto &map = vTile->map;
 				FlyingVehicleTileHelper tileHelper(map, v);
 
-				
 				float distancePreference = 5 * VELOCITY_SCALE.x;
 				if (this->type == MissionType::AttackVehicle && v.getFiringRange())
 				{
@@ -380,18 +380,18 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 
 					switch (v.attackMode)
 					{
-					case Vehicle::AttackMode::Aggressive:
-						distancePreference /= 4;
-						break;
-					case Vehicle::AttackMode::Standard:
-						distancePreference /= 3;
-						break;
-					case Vehicle::AttackMode::Defensive:
-						distancePreference /= 2;
-						break;
-					case Vehicle::AttackMode::Evasive:
-						distancePreference /= 1.5f;
-						break;
+						case Vehicle::AttackMode::Aggressive:
+							distancePreference /= 4;
+							break;
+						case Vehicle::AttackMode::Standard:
+							distancePreference /= 3;
+							break;
+						case Vehicle::AttackMode::Defensive:
+							distancePreference /= 2;
+							break;
+						case Vehicle::AttackMode::Evasive:
+							distancePreference /= 1.5f;
+							break;
 					}
 				}
 
@@ -518,9 +518,35 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks)
 			LogInfo("No pad in building \"%s\" free - waiting", b.id.c_str());
 			return;
 		}
+		case MissionType::Patrol:
+		{
+			float range = v.getFiringRange();
+			if (v.tileObject && range > 0)
+			{
+				auto enemy = v.findClosestEnemy(state, v.tileObject);
+				if (enemy)
+				{
+					StateRef<Vehicle> vehicleRef(&state, enemy->getVehicle());
+					auto attackMission = VehicleMission::attackVehicle(v, vehicleRef);
+					v.missions.emplace_front(attackMission);
+					attackMission->start(state, v);
+				}
+			}
+			return;
+		}
+		case MissionType::Infiltrate:
+		{
+			// this should run before mission is checked and destroyed
+			if (this->isFinished(state, v))
+			{
+				auto doodad =
+				    v.city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_INFILTRATION_RAY"},
+				                        v.tileObject->getPosition() - Vec3<float>{0, 0, 1});
+			}
+			return;
+		}
 		case MissionType::Land:
 		case MissionType::Crash:
-		case MissionType::Patrol:
 		case MissionType::GotoBuilding:
 		case MissionType::GotoLocation:
 		case MissionType::AttackVehicle:
@@ -566,6 +592,7 @@ bool VehicleMission::isFinished(GameState &state, Vehicle &v)
 		}
 		case MissionType::GotoLocation:
 		case MissionType::Crash:
+		case MissionType::Infiltrate:
 			return this->currentPlannedPath.empty();
 		case MissionType::Patrol:
 			return this->missionCounter == 0 && this->currentPlannedPath.empty();
@@ -721,7 +748,6 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				takeoffMission->start(state, v);
 			}
 			return;
-
 		}
 		case MissionType::FollowVehicle:
 		case MissionType::AttackVehicle:
@@ -833,6 +859,45 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			gotoMission->start(state, v);
 			return;
 		}
+		case MissionType::Infiltrate:
+		{
+			auto name = this->getName();
+			auto b = this->targetBuilding;
+			if (!b)
+			{
+				LogError("Building disappeared");
+				return;
+			}
+			auto vehicleTile = v.tileObject;
+			if (!vehicleTile)
+			{
+				LogInfo("Mission %s: Taking off first", name.c_str());
+				auto *takeoffMission = VehicleMission::takeOff(v);
+				v.missions.emplace_front(takeoffMission);
+				takeoffMission->start(state, v);
+				return;
+			}
+
+			auto &map = vehicleTile->map;
+			Vec3<int> goodPos{0, 0, 0};
+			int xPos = (b->bounds.p0.x + b->bounds.p1.x) / 2;
+			int yPos = (b->bounds.p0.y + b->bounds.p1.y) / 2;
+			for (int z = map.size.z - 1; z > 0; z--)
+			{
+				auto t = map.getTile(xPos, yPos, z);
+				if (t->ownedObjects.empty())
+				{
+					goodPos = t->position;
+				}
+				else
+				{
+					break;
+				}
+			}
+			if (goodPos.z != 0)
+				setPathTo(v, goodPos);
+			return;
+		}
 		default:
 			LogWarning("TODO: Implement");
 			return;
@@ -863,7 +928,7 @@ void VehicleMission::setPathTo(Vehicle &v, Vec3<int> target, int maxIterations)
 	}
 }
 
-bool VehicleMission::advanceAlongPath(Vec3<float>& dest)
+bool VehicleMission::advanceAlongPath(Vec3<float> &dest)
 {
 	// Add {0.5,0.5,0.5} to make it route to the center of the tile
 	static const Vec3<float> offset{0.5, 0.5, 0.5};
@@ -874,7 +939,7 @@ bool VehicleMission::advanceAlongPath(Vec3<float>& dest)
 	if (currentPlannedPath.empty())
 		return false;
 	auto pos = currentPlannedPath.front();
-	dest = Vec3<float>{ pos.x, pos.y, pos.z } + offset;
+	dest = Vec3<float>{pos.x, pos.y, pos.z} + offset;
 	return true;
 }
 
