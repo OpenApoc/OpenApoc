@@ -207,7 +207,7 @@
     <value>
       <sp>
         <lifetime>160</lifetime>
-		<repeatable>true</repeatable>
+        <repeatable>true</repeatable>
         <imageOffset>
           <x>31</x>
           <y>25</y>
