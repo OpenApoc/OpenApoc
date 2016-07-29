@@ -207,7 +207,7 @@
     <value>
       <sp>
         <lifetime>160</lifetime>
-		<repeatable>true</repeatable>
+        <repeatable>true</repeatable>
         <imageOffset>
           <x>31</x>
           <y>25</y>
@@ -349,8 +349,8 @@
     <key>DOODAD_INFILTRATION_RAY</key>
     <value>
       <sp>
-        <lifetime>170</lifetime>
-		<repeatable>false</repeatable>
+        <lifetime>85</lifetime>
+        <repeatable>false</repeatable>
         <imageOffset>
           <x>31</x>
           <y>25</y>
@@ -424,6 +424,21 @@
             <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:142</image>
             <time>5</time>
           </entry>
+        </frames>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>DOODAD_INFILTRATION_RAY_SMALL</key>
+    <value>
+      <sp>
+        <lifetime>85</lifetime>
+        <repeatable>false</repeatable>
+        <imageOffset>
+          <x>31</x>
+          <y>25</y>
+        </imageOffset>
+        <frames>
           <entry>
             <image>PCK:xcom3/UFODATA/PTANG.PCK:xcom3/UFODATA/PTANG.TAB:143</image>
             <time>5</time>

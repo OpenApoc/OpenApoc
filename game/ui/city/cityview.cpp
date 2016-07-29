@@ -290,11 +290,15 @@ CityView::CityView(sp<GameState> state)
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
 		    {
+			    v->missions.clear();
+			    v->missions.emplace_back(VehicleMission::gotoPortal(*v));
+			    v->missions.front()->start(*this->state, *v);
+			    /*
 			    LogWarning("Goto base for vehicle \"%s\"", v->name.c_str());
 			    auto bld = v->homeBuilding;
 			    if (!bld)
 			    {
-				    LogError("Vehicle \"%s\" has no building", v->name.c_str());
+			        LogError("Vehicle \"%s\" has no building", v->name.c_str());
 			    }
 			    LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name.c_str(),
 			               bld->name.c_str());
@@ -302,6 +306,7 @@ CityView::CityView(sp<GameState> state)
 			    v->missions.clear();
 			    v->missions.emplace_back(VehicleMission::gotoBuilding(*v, bld));
 			    v->missions.front()->start(*this->state, *v);
+			    */
 		    }
 		});
 	vehicleForm->FindControl("BUTTON_VEHICLE_ATTACK")
@@ -799,7 +804,9 @@ void CityView::EventOccurred(Event *e)
 							                    scenery->currentPosition.y, altitude};
 							// FIXME: Don't clear missions if not replacing current mission
 							v->missions.clear();
-							v->missions.emplace_back(VehicleMission::gotoLocation(*v, targetPos));
+							// v->missions.emplace_back(VehicleMission::gotoLocation(*v,
+							// targetPos));
+							v->missions.emplace_back(VehicleMission::patrol(*v));
 							v->missions.front()->start(*this->state, *v);
 							LogWarning("Vehicle \"%s\" going to location {%d,%d,%d}",
 							           v->name.c_str(), targetPos.x, targetPos.y, targetPos.z);
@@ -819,7 +826,7 @@ void CityView::EventOccurred(Event *e)
 								// FIXME: Don't clear missions if not replacing current mission
 								v->missions.clear();
 								v->missions.emplace_back(
-								    VehicleMission::gotoBuilding(*v, building));
+								    VehicleMission::infiltrateBuilding(*v, building));
 								v->missions.front()->start(*this->state, *v);
 							}
 							this->selectionState = SelectionState::Normal;
@@ -859,7 +866,7 @@ void CityView::EventOccurred(Event *e)
 						{
 							// FIXME: Don't clear missions if not replacing current mission
 							v->missions.clear();
-							v->missions.emplace_back(VehicleMission::attackVehicle(*v, vehicleRef));
+							v->missions.emplace_back(VehicleMission::patrol(*v));
 							v->missions.front()->start(*this->state, *v);
 						}
 						this->selectionState = SelectionState::Normal;

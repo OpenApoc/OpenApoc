@@ -1,12 +1,15 @@
 #include "game/state/city/vehiclemission.h"
 #include "framework/logger.h"
 #include "game/state/city/building.h"
+#include "game/state/city/doodad.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "game/state/rules/scenery_tile_type.h"
 #include "game/state/tileview/tile.h"
+#include "game/state/tileview/tileobject_doodad.h"
 #include "game/state/tileview/tileobject_scenery.h"
+#include "game/state/tileview/tileobject_shadow.h"
 #include "game/state/tileview/tileobject_vehicle.h"
 
 namespace OpenApoc
@@ -228,6 +231,28 @@ VehicleMission *VehicleMission::gotoLocation(Vehicle &v, Vec3<int> target)
 	return mission;
 }
 
+VehicleMission *VehicleMission::gotoPortal(Vehicle &v)
+{
+	auto *mission = new VehicleMission();
+	mission->type = MissionType::GotoPortal;
+
+	auto vTile = v.tileObject;
+	if (vTile)
+	{
+		float closestPortalRange = std::numeric_limits<float>::max();
+		for (auto p : v.city->portals)
+		{
+			float distance = vTile->getDistanceTo(p->tileObject);
+			if (distance < closestPortalRange)
+			{
+				closestPortalRange = distance;
+				mission->targetLocation = p->tileObject->getOwningTile()->position;
+			}
+		}
+	}
+	return mission;
+}
+
 VehicleMission *VehicleMission::gotoPortal(Vehicle &v, Vec3<int> target)
 {
 	auto *mission = new VehicleMission();
@@ -325,6 +350,28 @@ VehicleMission *VehicleMission::land(Vehicle &v, StateRef<Building> b)
 	return mission;
 }
 
+bool VehicleMission::takeOffCheck(GameState &state, Vehicle &v, UString &mission)
+{
+	if (!v.tileObject)
+	{
+		if (v.currentlyLandedBuilding)
+		{
+			LogInfo("Mission %s: Taking off first", mission.c_str());
+			auto *takeoffMission = VehicleMission::takeOff(v);
+			v.missions.emplace_front(takeoffMission);
+			takeoffMission->start(state, v);
+			return true;
+		}
+		else
+		{
+			LogError("Mission %s: Vehicle not in the city and shouldn't recieve orders",
+			         mission.c_str());
+			return false;
+		}
+	}
+	return false;
+}
+
 VehicleMission::VehicleMission() : targetLocation(0, 0, 0), timeToSnooze(0) {}
 
 bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float> &dest)
@@ -333,6 +380,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 	{
 		case MissionType::TakeOff:      // Fall-through
 		case MissionType::GotoLocation: // Fall-through
+		case MissionType::GotoPortal:
 		case MissionType::Land:
 		case MissionType::Infiltrate:
 		{
@@ -448,7 +496,6 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 		}
 		case MissionType::Snooze:
 		{
-			dest = {0, 0, 9};
 			return false;
 		}
 		default:
@@ -541,7 +588,31 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks)
 			{
 				auto doodad =
 				    v.city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_INFILTRATION_RAY"},
-				                        v.tileObject->getPosition() - Vec3<float>{0, 0, 1});
+				                        v.tileObject->getPosition() - Vec3<float>{0, 0, 0.5f});
+
+				v.missions.emplace_back(VehicleMission::snooze(v, doodad->lifetime));
+			}
+			return;
+		}
+		case MissionType::GotoPortal:
+		{
+			auto vTile = v.tileObject;
+			if (vTile && this->isFinished(state, v) &&
+			    vTile->getOwningTile()->position == this->targetLocation)
+			{
+				for (auto city : state.cities)
+				{
+					if (city.second != v.city.getSp())
+					{
+						v.shadowObject->removeFromMap();
+						v.tileObject->removeFromMap();
+						v.shadowObject.reset();
+						v.tileObject.reset();
+						v.city = {&state, city.second};
+						// FIXME: add GotoBase mission
+						return;
+					}
+				}
 			}
 			return;
 		}
@@ -591,6 +662,7 @@ bool VehicleMission::isFinished(GameState &state, Vehicle &v)
 			return false;
 		}
 		case MissionType::GotoLocation:
+		case MissionType::GotoPortal:
 		case MissionType::Crash:
 		case MissionType::Infiltrate:
 			return this->currentPlannedPath.empty();
@@ -696,16 +768,13 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			this->currentPlannedPath = {padPosition};
 			return;
 		}
+		case MissionType::GotoPortal:
 		case MissionType::GotoLocation:
 		{
 			auto vehicleTile = v.tileObject;
-			if (!vehicleTile)
+			if (takeOffCheck(state, v, this->getName()))
 			{
-				auto name = this->getName();
-				LogInfo("Mission %s: Taking off first", name.c_str());
-				auto *takeoffMission = VehicleMission::takeOff(v);
-				v.missions.emplace_front(takeoffMission);
-				takeoffMission->start(state, v);
+				return;
 			}
 			else
 			{
@@ -738,15 +807,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 		}
 		case MissionType::Patrol:
 		{
-			auto vehicleTile = v.tileObject;
-			if (!vehicleTile)
-			{
-				auto name = this->getName();
-				LogInfo("Mission %s: Taking off first", name.c_str());
-				auto *takeoffMission = VehicleMission::takeOff(v);
-				v.missions.emplace_front(takeoffMission);
-				takeoffMission->start(state, v);
-			}
+			takeOffCheck(state, v, this->getName());
 			return;
 		}
 		case MissionType::FollowVehicle:
@@ -772,12 +833,8 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				return;
 			}
 			auto vehicleTile = v.tileObject;
-			if (!vehicleTile)
+			if (takeOffCheck(state, v, name))
 			{
-				LogInfo("Mission %s: Taking off first", name.c_str());
-				auto *takeoffMission = VehicleMission::takeOff(v);
-				v.missions.emplace_front(takeoffMission);
-				takeoffMission->start(state, v);
 				return;
 			}
 			this->targetLocation = targetTile->getOwningTile()->position;
@@ -800,12 +857,8 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				return;
 			}
 			auto vehicleTile = v.tileObject;
-			if (!vehicleTile)
+			if (takeOffCheck(state, v, name))
 			{
-				LogInfo("Mission %s: Taking off first", name.c_str());
-				auto *takeoffMission = VehicleMission::takeOff(v);
-				v.missions.emplace_front(takeoffMission);
-				takeoffMission->start(state, v);
 				return;
 			}
 			/* Am I already above a landing pad? If so land */
@@ -869,12 +922,8 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				return;
 			}
 			auto vehicleTile = v.tileObject;
-			if (!vehicleTile)
+			if (takeOffCheck(state, v, name))
 			{
-				LogInfo("Mission %s: Taking off first", name.c_str());
-				auto *takeoffMission = VehicleMission::takeOff(v);
-				v.missions.emplace_front(takeoffMission);
-				takeoffMission->start(state, v);
 				return;
 			}
 
@@ -895,7 +944,14 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 				}
 			}
 			if (goodPos.z != 0)
+			{
+				goodPos.z = glm::min(goodPos.z + 1, map.size.z - 1);
 				setPathTo(v, goodPos);
+			}
+			else
+			{
+				LogError("Mission %s: Can't find a spot to land", name.c_str());
+			}
 			return;
 		}
 		default:

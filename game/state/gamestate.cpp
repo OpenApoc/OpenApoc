@@ -207,6 +207,8 @@ void GameState::startGame()
 	for (auto &it : this->vehicle_types)
 	{
 		auto &type = it.second;
+		if (!type->equipment_screen)
+			continue;
 		auto v = mksp<Vehicle>();
 		v->type = {this, type};
 		v->name = type->name;
