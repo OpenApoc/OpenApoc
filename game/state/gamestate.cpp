@@ -4,6 +4,7 @@
 #include "game/state/base/facility.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
+#include "game/state/city/doodad.h"
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
@@ -304,6 +305,39 @@ void GameState::updateEndOfDay()
 		c.second->dailyLoop(*this);
 	}
 	Trace::end("GameState::updateEndOfDay::cities");
+
+
+	for (int i = 0; i < 5; i++)
+	{
+		StateRef<City> city = { this, "CITYMAP_HUMAN" };
+		auto portal = city->portals.begin();
+		StateRef<Building> bld = { this, (*city->buildings.begin()).second };
+
+		auto vehicleType = this->vehicle_types.find("VEHICLETYPE_ALIEN_ASSAULT_SHIP");
+		if (vehicleType != this->vehicle_types.end())
+		{
+			auto &type = (*vehicleType).second;
+
+			auto v = mksp<Vehicle>();
+			v->type = { this, (*vehicleType).first };
+			v->name = type->name;
+			v->city = city;
+			v->owner = type->manufacturer;
+			v->health = type->health;
+			auto vID = UString::format("%s%d", Vehicle::getPrefix().c_str(), i);
+
+			// Vehicle::equipDefaultEquipment uses the state reference from itself, so make sure the
+			// vehicle table has the entry before calling it
+			this->vehicles[vID] = v;
+
+			v->equipDefaultEquipment(*this);
+			v->launch(*city->map, *this, (*portal)->getPosition());
+
+			v->missions.emplace_front(VehicleMission::infiltrateBuilding(*v, bld));
+			v->missions.emplace_front(VehicleMission::gotoPortal(*v));
+			v->missions.front()->start(*this, *v);
+		}
+	}
 }
 
 void GameState::updateEndOfWeek() {}

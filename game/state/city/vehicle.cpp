@@ -161,14 +161,12 @@ void Vehicle::launch(TileMap &map, GameState &state, Vec3<float> initialPosition
 		return;
 	}
 	auto bld = this->currentlyLandedBuilding;
-	if (!bld)
+	if (bld)
 	{
-		LogError("Vehicle not in a building?");
-		return;
+		bld->landed_vehicles.erase({ &state, shared_from_this() });
+		this->currentlyLandedBuilding = "";
 	}
 	this->position = initialPosition;
-	bld->landed_vehicles.erase({&state, shared_from_this()});
-	this->currentlyLandedBuilding = "";
 	this->mover.reset(new FlyingVehicleMover(*this, initialPosition));
 	map.addObjectToMap(shared_from_this());
 }

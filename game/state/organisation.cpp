@@ -17,6 +17,11 @@ float Organisation::getRelationTo(const StateRef<Organisation> &other) const
 		// Assume maximum relations
 		return 100.0f;
 	}
+	if (other->name == "Alien")
+	{
+		// Everybody hates Aliens
+		return -100.0f;
+	}
 	float x;
 
 	auto it = this->current_relations.find(other);
