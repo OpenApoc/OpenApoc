@@ -128,13 +128,11 @@ bool writeArchiveWithBackup(const sp<SerializationArchive> archive, const UStrin
 		}
 		else
 		{
+			if (fs::exists(savePath))
 			{
-				if (fs::exists(savePath))
-				{
-					fs::remove_all(savePath);
-				}
-				fs::rename(tempPath, savePath);
+				fs::remove_all(savePath);
 			}
+
 			fs::rename(tempPath, savePath);
 		}
 	}
@@ -301,6 +299,26 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 	});
 
 	return saveList;
+}
+
+bool SaveManager::deleteGame(const sp<SaveMetadata>& slot) const
+{
+	try
+	{
+		if (!fs::exists(slot->getFile().str()))
+		{
+			LogWarning("Attempt to delete not existing file");
+			return false;
+		}
+
+		fs::remove_all(slot->getFile().str());
+		return true;
+	}
+	catch (fs::filesystem_error exception)
+	{
+		LogError("Unable to delete saved gane: \"%s\"", exception.what());
+		return false;
+	}
 }
 
 bool SaveMetadata::deserializeManifest(const sp<SerializationArchive> archive,

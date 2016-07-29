@@ -13,302 +13,359 @@
 
 namespace OpenApoc
 {
-const UString existingSaveItemId = "EXISTING_SAVE_SLOT";
-const UString newSaveItemId = "NEW_SAVE_SLOT";
+	const UString existingSaveItemId = "EXISTING_SAVE_SLOT";
+	const UString newSaveItemId = "NEW_SAVE_SLOT";
 
-SaveMenu::SaveMenu(SaveMenuAction saveMenuAction, sp<GameState> state)
-    : Stage(), menuform(ui().GetForm("FORM_SAVEMENU")), currentState(state),
-      currentAction(saveMenuAction)
-{
-	activeTextEdit = nullptr;
-}
-
-SaveMenu::~SaveMenu() {}
-
-void SaveMenu::Begin()
-{
-	auto saveListBox = menuform->FindControlTyped<ListBox>("LISTBOX_OPTIONS");
-	auto newItemSlot = saveListBox->FindControl(newSaveItemId);
-
-	// hide ui based on action
-	sp<Label> labelToHide;
-	if (currentAction != SaveMenuAction::Save)
+	SaveMenu::SaveMenu(SaveMenuAction saveMenuAction, sp<GameState> state)
+		: Stage(), menuform(ui().GetForm("FORM_SAVEMENU")), currentState(state),
+		  currentAction(saveMenuAction)
 	{
-		labelToHide = menuform->FindControlTyped<Label>("LABEL_SAVEGAME");
-		if (saveListBox != nullptr)
+		activeTextEdit = nullptr;
+	}
+
+	SaveMenu::~SaveMenu()
+	{
+	}
+
+	void SaveMenu::Begin()
+	{
+		auto saveListBox = menuform->FindControlTyped<ListBox>("LISTBOX_OPTIONS");
+
+
+		UString titleLabelName;
+		bool newItemSlotVisible = false;
+		bool showAutoSaves = false;
+		switch (currentAction)
 		{
+		case SaveMenuAction::LoadNewGame:
+		case SaveMenuAction::Load:
+			titleLabelName = "LABEL_LOADGAME";
+			showAutoSaves = true;
+			break;
+		case SaveMenuAction::Save:
+			titleLabelName = "LABEL_SAVEGAME";
+			newItemSlotVisible = true;
+			break;
+		case SaveMenuAction::Delete:
+			titleLabelName = "LABEL_DELETEGAME";
+			break;
+		}
+
+		if (!titleLabelName.empty())
+		{
+			auto label = menuform->FindControlTyped<Label>(titleLabelName);
+			if (label)
+			{
+				label->Visible = true;
+			}
+		}
+
+		if (newItemSlotVisible == true)
+		{
+			auto newItemSlot = saveListBox->FindControl(newSaveItemId);
 			if (newItemSlot != nullptr)
 			{
-				newItemSlot->Visible = false;
+				newItemSlot->Visible = true;
 			}
 		}
-	}
-	else
-	{
-		labelToHide = menuform->FindControlTyped<Label>("LABEL_LOADGAME");
-	}
 
-	if (labelToHide != nullptr)
-	{
-		labelToHide->Visible = false;
-	}
-
-	// load menu items
-	auto saves = saveManager.getSaveList();
-	auto existingSlotControl = saveListBox->FindControl(existingSaveItemId);
-	if (existingSlotControl != nullptr)
-	{
-		for (auto it = saves.begin(); it != saves.end(); ++it)
+		// load menu items
+		auto saves = saveManager.getSaveList();
+		auto existingSlotControl = saveListBox->FindControl(existingSaveItemId);
+		if (existingSlotControl != nullptr)
 		{
-			if (it->getType() != SaveType::Manual && currentAction == SaveMenuAction::Save)
-			{ // skip quicksave and autosave on save screen
-				continue;
-			}
-
-			auto newControl = existingSlotControl->CopyTo(saveListBox);
-			newControl->SetData(mksp<SaveMetadata>(*it));
-			auto nameLabel = newControl->FindControlTyped<Label>("LABEL_NAME");
-			if (nameLabel != nullptr)
+			for (auto it = saves.begin(); it != saves.end(); ++it)
 			{
-				nameLabel->SetText(it->getName());
-			}
-
-			auto saveTimeLabel = newControl->FindControlTyped<Label>("LABEL_TIME");
-			if (saveTimeLabel != nullptr)
-			{
-				std::time_t timestamp = it->getCreationDate();
-				struct tm *tminfo = std::localtime(&timestamp);
-				std::stringstream ss;
-				if (timestamp != 0 && tminfo != nullptr)
-				{
-					ss << std::put_time(tminfo, "%d/%m/%y %T");
+				if (it->getType() != SaveType::Manual && !showAutoSaves)
+				{ // skip quicksave and autosave on save screen
+					continue;
 				}
-				saveTimeLabel->SetText(ss.str());
-			}
 
-			GameTime gameTime(it->getGameTicks());
-			auto gameDayLabel = newControl->FindControlTyped<Label>("LABEL_INGAME_DAY");
-			if (gameDayLabel != nullptr)
-			{
-				if (it->getGameTicks() == 0 && gameTime.getDay() == 0)
+				auto newControl = existingSlotControl->CopyTo(saveListBox);
+				newControl->SetData(mksp<SaveMetadata>(*it));
+				auto nameLabel = newControl->FindControlTyped<Label>("LABEL_NAME");
+				if (nameLabel != nullptr)
 				{
-					gameDayLabel->SetText("");
+					nameLabel->SetText(it->getName());
+				}
+
+				auto saveTimeLabel = newControl->FindControlTyped<Label>("LABEL_TIME");
+				if (saveTimeLabel != nullptr)
+				{
+					std::time_t timestamp = it->getCreationDate();
+					struct tm* tminfo = std::localtime(&timestamp);
+					std::stringstream ss;
+					if (timestamp != 0 && tminfo != nullptr)
+					{
+						ss << std::put_time(tminfo, "%d/%m/%y %T");
+					}
+					saveTimeLabel->SetText(ss.str());
+				}
+
+				GameTime gameTime(it->getGameTicks());
+				auto gameDayLabel = newControl->FindControlTyped<Label>("LABEL_INGAME_DAY");
+				if (gameDayLabel != nullptr)
+				{
+					if (it->getGameTicks() == 0 && gameTime.getDay() == 0)
+					{
+						gameDayLabel->SetText("");
+					}
+					else
+					{
+						gameDayLabel->SetText("Day " + std::to_string(gameTime.getDay()));
+					}
+				}
+				auto gameTimeLabel = newControl->FindControlTyped<Label>("LABEL_INGAME_TIME");
+				if (gameTimeLabel != nullptr)
+				{
+					if (it->getGameTicks() == 0 && gameTime.getDay() == 0)
+					{
+						gameTimeLabel->SetText("");
+					}
+					else
+					{
+						gameTimeLabel->SetText(gameTime.getTimeString());
+					}
+				}
+
+				auto difficultyLabel = newControl->FindControlTyped<Label>("LABEL_DIFFICULTY");
+				if (difficultyLabel != nullptr)
+				{
+					difficultyLabel->SetText(it->getDifficulty());
+				}
+
+				auto saveNameTextEdit = newControl->FindControlTyped<TextEdit>("TEXTEDIT_SAVE_NAME");
+				if (currentAction != SaveMenuAction::Save && saveNameTextEdit != nullptr)
+				{
+					saveNameTextEdit->Visible = false;
+				}
+			}
+			existingSlotControl->Visible = false;
+		}
+	}
+
+	void SaveMenu::Pause()
+	{
+	}
+
+	void SaveMenu::Resume()
+	{
+	}
+
+	void SaveMenu::Finish()
+	{
+	}
+
+	void SaveMenu::clearTextEdit(sp<TextEdit> textEdit)
+	{
+		auto e = OpenApoc::FormsEvent();
+		e.Forms().RaisedBy = textEdit->shared_from_this();
+		e.Forms().EventFlag = FormEventType::LostFocus;
+		textEdit->EventOccured(&e);
+
+		// reset text
+		textEdit->Visible = false;
+		auto listItem = textEdit->GetParent();
+		if (listItem)
+		{
+			auto nameLabel = listItem->FindControlTyped<Label>("LABEL_NAME");
+			if (nameLabel)
+			{
+				nameLabel->Visible = true;
+			}
+		}
+		activeTextEdit = nullptr;
+	}
+
+	void SaveMenu::beginEditing(sp<TextEdit> textEdit, sp<TextEdit> activeTextEdit)
+	{
+		if (activeTextEdit != nullptr)
+		{
+			clearTextEdit(activeTextEdit);
+		}
+
+		auto e = OpenApoc::FormsEvent();
+		e.Forms().RaisedBy = textEdit->shared_from_this();
+		e.Forms().EventFlag = FormEventType::MouseClick;
+		textEdit->EventOccured(&e);
+		textEdit->Visible = true;
+		textEdit->SetAllowedCharacters(
+			"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,. -_");
+		textEdit->SetTextMaxSize(32);
+		auto listItem = textEdit->GetParent();
+		if (listItem)
+		{
+			auto nameLabel = listItem->FindControlTyped<Label>("LABEL_NAME");
+			if (nameLabel)
+			{
+				nameLabel->Visible = false;
+				if (nameLabel->GetParent() && nameLabel->GetParent()->Name != "NEW_SAVE_SLOT")
+				{
+					textEdit->SetText(nameLabel->GetText());
 				}
 				else
 				{
-					gameDayLabel->SetText("Day " + std::to_string(gameTime.getDay()));
+					textEdit->SetText("");
 				}
-			}
-			auto gameTimeLabel = newControl->FindControlTyped<Label>("LABEL_INGAME_TIME");
-			if (gameTimeLabel != nullptr)
-			{
-				if (it->getGameTicks() == 0 && gameTime.getDay() == 0)
-				{
-					gameTimeLabel->SetText("");
-				}
-				else
-				{
-					gameTimeLabel->SetText(gameTime.getTimeString());
-				}
-			}
-
-			auto difficultyLabel = newControl->FindControlTyped<Label>("LABEL_DIFFICULTY");
-			if (difficultyLabel != nullptr)
-			{
-				difficultyLabel->SetText(it->getDifficulty());
-			}
-
-			auto saveNameTextEdit = newControl->FindControlTyped<TextEdit>("TEXTEDIT_SAVE_NAME");
-			if (currentAction != SaveMenuAction::Save && saveNameTextEdit != nullptr)
-			{
-				saveNameTextEdit->Visible = false;
-			}
-		}
-		existingSlotControl->Visible = false;
-	}
-}
-
-void SaveMenu::Pause() {}
-
-void SaveMenu::Resume() {}
-
-void SaveMenu::Finish() {}
-
-void SaveMenu::ClearTextEdit(sp<TextEdit> textEdit)
-{
-	auto e = OpenApoc::FormsEvent();
-	e.Forms().RaisedBy = textEdit->shared_from_this();
-	e.Forms().EventFlag = FormEventType::LostFocus;
-	textEdit->EventOccured(&e);
-
-	// reset text
-	textEdit->Visible = false;
-	auto listItem = textEdit->GetParent();
-	if (listItem)
-	{
-		auto nameLabel = listItem->FindControlTyped<Label>("LABEL_NAME");
-		if (nameLabel)
-		{
-			nameLabel->Visible = true;
-		}
-	}
-	activeTextEdit = nullptr;
-}
-
-void SaveMenu::BeginEditing(sp<TextEdit> textEdit, sp<TextEdit> activeTextEdit)
-{
-	if (activeTextEdit != nullptr)
-	{
-		ClearTextEdit(activeTextEdit);
-	}
-
-	auto e = OpenApoc::FormsEvent();
-	e.Forms().RaisedBy = textEdit->shared_from_this();
-	e.Forms().EventFlag = FormEventType::MouseClick;
-	textEdit->EventOccured(&e);
-	textEdit->Visible = true;
-	textEdit->SetAllowedCharacters(
-	    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,. -_");
-	textEdit->SetTextMaxSize(32);
-	auto listItem = textEdit->GetParent();
-	if (listItem)
-	{
-		auto nameLabel = listItem->FindControlTyped<Label>("LABEL_NAME");
-		if (nameLabel)
-		{
-			nameLabel->Visible = false;
-			if (nameLabel->GetParent() && nameLabel->GetParent()->Name != "NEW_SAVE_SLOT")
-			{
-				textEdit->SetText(nameLabel->GetText());
-			}
-			else
-			{
-				textEdit->SetText("");
 			}
 		}
 	}
-}
 
-void SaveMenu::TryToLoadWithWarning(sp<Control> parent)
-{
-	if (parent->Name == existingSaveItemId)
+	void SaveMenu::loadWithWarning(sp<Control> parent)
 	{
-		sp<SaveMetadata> slot = parent->GetData<SaveMetadata>();
-		if (slot != nullptr)
+		if (parent->Name == existingSaveItemId)
 		{
-			std::function<void()> onSuccess = std::function<void()>([this, slot] {
+			sp<SaveMetadata> slot = parent->GetData<SaveMetadata>();
+			if (slot != nullptr)
+			{
+				std::function<void()> onSuccess = std::function<void()>([this, slot]
+					{
+						stageCmd.nextStage = mksp<LoadingScreen>(std::move(saveManager.loadGame(*slot)));
+						stageCmd.cmd = StageCmd::Command::PUSH;
+					});
+				sp<MessageBox> messageBox = mksp<MessageBox>(
+					MessageBox("Load game", "Unsaved progress will be lost. Continue?",
+					           MessageBox::ButtonOptions::YesNo, std::move(onSuccess), nullptr));
+
+				stageCmd.nextStage = messageBox;
+				stageCmd.cmd = StageCmd::Command::PUSH;
+			}
+		}
+	}
+
+	void SaveMenu::tryToLoadGame(sp<Control> slotControl)
+	{
+		if (slotControl->Name == existingSaveItemId)
+		{
+			sp<SaveMetadata> slot = slotControl->GetData<SaveMetadata>();
+			if (slot != nullptr)
+			{
 				stageCmd.nextStage = mksp<LoadingScreen>(std::move(saveManager.loadGame(*slot)));
 				stageCmd.cmd = StageCmd::Command::PUSH;
-			});
-			sp<MessageBox> messageBox = mksp<MessageBox>(
-			    MessageBox("Load game", "Unsaved progress will be lost. Continue?",
-			               MessageBox::ButtonOptions::YesNo, std::move(onSuccess), nullptr));
-
-			stageCmd.nextStage = messageBox;
-			stageCmd.cmd = StageCmd::Command::PUSH;
+			}
 		}
 	}
-}
 
-void SaveMenu::TryToLoadGame(sp<Control> slotControl)
-{
-	if (slotControl->Name == existingSaveItemId)
+	void SaveMenu::tryToSaveGame(const UString& saveName, sp<Control> parent)
 	{
-		sp<SaveMetadata> slot = slotControl->GetData<SaveMetadata>();
-		if (slot != nullptr)
+		if (parent->Name == newSaveItemId)
 		{
-			stageCmd.nextStage = mksp<LoadingScreen>(std::move(saveManager.loadGame(*slot)));
-			stageCmd.cmd = StageCmd::Command::PUSH;
-		}
-	}
-}
-
-void SaveMenu::TryToSaveGame(const UString &saveName, sp<Control> parent)
-{
-	if (parent->Name == newSaveItemId)
-	{
-		if (saveManager.newSaveGame(saveName, currentState))
-		{
-			stageCmd.cmd = StageCmd::Command::POP;
-		}
-		else
-		{
-			ClearTextEdit(activeTextEdit);
-		}
-	}
-	else
-	{
-		sp<SaveMetadata> slot = parent->GetData<SaveMetadata>();
-		std::function<void()> onSuccess = std::function<void()>([this, slot, saveName] {
-			if (saveManager.overrideGame(*slot, saveName, currentState))
+			if (saveManager.newSaveGame(saveName, currentState))
 			{
 				stageCmd.cmd = StageCmd::Command::POP;
 			}
 			else
 			{
-				ClearTextEdit(activeTextEdit);
+				clearTextEdit(activeTextEdit);
 			}
-		});
-		std::function<void()> onCancel =
-		    std::function<void()>([this] { ClearTextEdit(activeTextEdit); });
+		}
+		else
+		{
+			sp<SaveMetadata> slot = parent->GetData<SaveMetadata>();
+			std::function<void()> onSuccess = std::function<void()>([this, slot, saveName]
+				{
+					if (saveManager.overrideGame(*slot, saveName, currentState))
+					{
+						stageCmd.cmd = StageCmd::Command::POP;
+					}
+					else
+					{
+						clearTextEdit(activeTextEdit);
+					}
+				});
+			std::function<void()> onCancel =
+				std::function<void()>([this]
+					{
+						clearTextEdit(activeTextEdit);
+					});
+			sp<MessageBox> messageBox = mksp<MessageBox>(MessageBox(
+				"Override saved game", "Do you really want to override " + slot->getName() + "?",
+				MessageBox::ButtonOptions::YesNo, std::move(onSuccess), std::move(onCancel)));
+
+			stageCmd.nextStage = messageBox;
+			stageCmd.cmd = StageCmd::Command::PUSH;
+		}
+	}
+
+	void SaveMenu::tryToDeleteSavedGame(sp<Control>& slotControl)
+	{
+		sp<SaveMetadata> slot = slotControl->GetData<SaveMetadata>();
+		std::function<void()> onSuccess = std::function<void()>([this, slotControl, slot]
+			{
+				if (saveManager.deleteGame(slot))
+				{
+					// no way to pop
+					slotControl->Visible = false;
+				}
+			});
 		sp<MessageBox> messageBox = mksp<MessageBox>(MessageBox(
-		    "Override saved game", "Do you really want to override " + slot->getName() + "?",
-		    MessageBox::ButtonOptions::YesNo, std::move(onSuccess), std::move(onCancel)));
+			"Delete saved game", "Do you really want to delete " + slot->getName() + "?",
+			MessageBox::ButtonOptions::YesNo, std::move(onSuccess), nullptr));
 
 		stageCmd.nextStage = messageBox;
 		stageCmd.cmd = StageCmd::Command::PUSH;
 	}
-}
 
-void SaveMenu::EventOccurred(Event *e)
-{
-	menuform->EventOccured(e);
-
-	if (e->Type() == EVENT_KEY_DOWN)
+	void SaveMenu::EventOccurred(Event* e)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		menuform->EventOccured(e);
+
+		if (e->Type() == EVENT_KEY_DOWN)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
-			return;
+			if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+			{
+				stageCmd.cmd = StageCmd::Command::POP;
+				return;
+			}
 		}
-	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION)
-	{
-		switch (e->Forms().EventFlag)
+		if (e->Type() == EVENT_FORM_INTERACTION)
 		{
+			switch (e->Forms().EventFlag)
+			{
 			case FormEventType::ButtonClick:
 				if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
 				{
 					stageCmd.cmd = StageCmd::Command::POP;
 				}
-				else if (currentAction == SaveMenuAction::LoadNewGame)
-				{
-					auto slotControl = e->Forms().RaisedBy->GetParent();
-					if (slotControl)
-					{
-						TryToLoadGame(slotControl);
-					}
-				}
-				else if (currentAction == SaveMenuAction::Load)
-				{
-					auto slotControl = e->Forms().RaisedBy->GetParent();
-					if (slotControl)
-					{
-						TryToLoadWithWarning(slotControl);
-					}
-				}
 				else
 				{
-					auto parent = e->Forms().RaisedBy->GetParent();
-					if (parent)
+					sp<Control> slotControl;
+					switch (currentAction)
 					{
-						auto nameEdit = parent->FindControlTyped<TextEdit>("TEXTEDIT_SAVE_NAME");
-						if (nameEdit && nameEdit != activeTextEdit)
+					case SaveMenuAction::LoadNewGame:
+						slotControl = e->Forms().RaisedBy->GetParent();
+						if (slotControl)
 						{
-							BeginEditing(nameEdit, activeTextEdit);
-							activeTextEdit = nameEdit;
+							tryToLoadGame(slotControl);
 						}
+						break;
+					case SaveMenuAction::Load:
+						slotControl = e->Forms().RaisedBy->GetParent();
+						if (slotControl)
+						{
+							loadWithWarning(slotControl);
+						}
+						break;
+					case SaveMenuAction::Save:
+						slotControl = e->Forms().RaisedBy->GetParent();
+						if (slotControl)
+						{
+							auto nameEdit = slotControl->FindControlTyped<TextEdit>("TEXTEDIT_SAVE_NAME");
+							if (nameEdit && nameEdit != activeTextEdit)
+							{
+								beginEditing(nameEdit, activeTextEdit);
+								activeTextEdit = nameEdit;
+							}
+						}
+						break;
+					case SaveMenuAction::Delete:
+						slotControl = e->Forms().RaisedBy->GetParent();
+						if (slotControl)
+						{
+							tryToDeleteSavedGame(slotControl);
+						}
+						break;
 					}
 				}
 				break;
@@ -320,28 +377,31 @@ void SaveMenu::EventOccurred(Event *e)
 					return;
 				}
 
-				TryToSaveGame(textEdit->GetText(), slotControl);
+				tryToSaveGame(textEdit->GetText(), slotControl);
 				break;
+			}
 		}
 	}
-}
 
-void SaveMenu::Update(StageCmd *const cmd)
-{
-	menuform->Update();
-	*cmd = this->stageCmd;
-	// Reset the command to default
-	this->stageCmd = StageCmd();
-}
+	void SaveMenu::Update(StageCmd*const cmd)
+	{
+		menuform->Update();
+		*cmd = this->stageCmd;
+		// Reset the command to default
+		this->stageCmd = StageCmd();
+	}
 
-void SaveMenu::Render()
-{
-	fw().Stage_GetPrevious(this->shared_from_this())->Render();
-	fw().renderer->drawFilledRect(Vec2<float>(0, 0),
-	                              Vec2<float>(fw().Display_GetWidth(), fw().Display_GetHeight()),
-	                              Colour(0, 0, 0, 128));
-	menuform->Render();
-}
+	void SaveMenu::Render()
+	{
+		fw().Stage_GetPrevious(this->shared_from_this())->Render();
+		fw().renderer->drawFilledRect(Vec2<float>(0, 0),
+		                              Vec2<float>(fw().Display_GetWidth(), fw().Display_GetHeight()),
+		                              Colour(0, 0, 0, 128));
+		menuform->Render();
+	}
 
-bool SaveMenu::IsTransition() { return false; }
+	bool SaveMenu::IsTransition()
+	{
+		return false;
+	}
 }; // namespace OpenApoc

@@ -24,6 +24,11 @@
           <size width="260" height="28"/>
           <font>SMALFONT</font>
         </textbutton>
+        <textbutton id="BUTTON_DELETESAVEDGAME" text="Delete saved game">
+          <position x="18" y="113"/>
+          <size width="260" height="28"/>
+          <font>SMALFONT</font>
+        </textbutton>
         <textbutton id="BUTTON_ABANDONGAME" text="Abandon and Restart Game">
           <position x="18" y="167"/>
           <size width="260" height="28"/>

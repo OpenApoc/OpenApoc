@@ -10,9 +10,11 @@ namespace OpenApoc
 {
 enum class SaveMenuAction : unsigned
 {
+	// load without prompt to leave game
 	LoadNewGame = 0,
-	Load = 1,
-	Save = 2
+	Load = 100,
+	Save = 200,
+	Delete = 300
 };
 
 class SaveMenu : public Stage
@@ -25,11 +27,15 @@ class SaveMenu : public Stage
 	SaveMenuAction currentAction;
 	SaveManager saveManager;
 
-	void ClearTextEdit(sp<TextEdit> textEdit);
-	void BeginEditing(sp<TextEdit> textEdit, sp<TextEdit> activeTextEdit);
-	void TryToLoadWithWarning(sp<Control> parent);
-	void TryToLoadGame(sp<Control> slotControl);
-	void TryToSaveGame(const UString &textEdit, sp<Control> parent);
+	void clearTextEdit(sp<TextEdit> textEdit);
+	void beginEditing(sp<TextEdit> textEdit, sp<TextEdit> activeTextEdit);
+
+	
+	void loadWithWarning(sp<Control> parent);
+	// these functions will display prompt to execute action
+	void tryToLoadGame(sp<Control> slotControl);
+	void tryToSaveGame(const UString &textEdit, sp<Control> parent);
+	void tryToDeleteSavedGame(sp<Control>& control);
 
   public:
 	SaveMenu(SaveMenuAction saveMenuAction, sp<GameState> gameState);

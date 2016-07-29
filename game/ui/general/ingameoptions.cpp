@@ -87,6 +87,12 @@ void InGameOptions::EventOccurred(Event *e)
 			stageCmd.nextStage = mksp<SaveMenu>(SaveMenuAction::Save, state);
 			return;
 		}
+		else if (e->Forms().RaisedBy->Name == "BUTTON_DELETESAVEDGAME")
+		{
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = mksp<SaveMenu>(SaveMenuAction::Delete, state);
+			return;
+		}
 		else if (e->Forms().RaisedBy->Name == "BUTTON_LOADGAME")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;

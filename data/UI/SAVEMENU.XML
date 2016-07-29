@@ -14,7 +14,7 @@
           <position x="550" y="90"/>
           <size width="16" height="330"/>
         </scroll>
-        <listbox id="LISTBOX_OPTIONS" scrollbarid="SCROLL_LISTPOSITION">
+        <listbox id="LISTBOX_OPTIONS" scrollbarid="SCROLL_LISTPOSITION" >
           <position x="40" y="100"/>
           <size width="505" height="310"/>
           <item size="30" spacing="5"/>
@@ -61,7 +61,7 @@
               <font>SMALFONT</font>
             </label>
           </control>
-          <control id="NEW_SAVE_SLOT">
+          <control id="NEW_SAVE_SLOT" visible="N">
             <size width="100%" height="item"/>
             <textbutton>
               <size width="100%" height="item"/>
@@ -89,13 +89,19 @@
         <!-- FIXME: PAL_01 doesn't seem correct for all newbut.tab images? -->
         <imagedepressed>PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:5:XCOM3/UFODATA/PAL_01.DAT</imagedepressed>
       </graphicbutton>
-      <label id="LABEL_SAVEGAME" text="SAVE GAME">
+      <label id="LABEL_SAVEGAME" text="SAVE GAME" visible="N">
         <position x="20" y="10"/>
         <size width="600" height="36"/>
         <alignment horizontal="centre" vertical="top"/>
         <font>BIGFONT</font>
       </label>
-      <label id="LABEL_LOADGAME" text="LOAD GAME">
+      <label id="LABEL_LOADGAME" text="LOAD GAME" visible="N">
+        <position x="20" y="10"/>
+        <size width="600" height="36"/>
+        <alignment horizontal="centre" vertical="top"/>
+        <font>BIGFONT</font>
+      </label>
+      <label id="LABEL_DELETEGAME" text="DELETE GAME" visible="N">
         <position x="20" y="10"/>
         <size width="600" height="36"/>
         <alignment horizontal="centre" vertical="top"/>
