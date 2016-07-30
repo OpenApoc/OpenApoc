@@ -23,7 +23,7 @@ class VehicleMission
 	// INTERNAL: Not to be used directly (Only works if directly above a pad)
 	static VehicleMission *land(Vehicle &v, StateRef<Building> b);
 
-	bool takeOffCheck(GameState &state, Vehicle &v, UString &mission);
+	bool takeOffCheck(GameState &state, Vehicle &v, UString mission);
 
   public:
 	VehicleMission();

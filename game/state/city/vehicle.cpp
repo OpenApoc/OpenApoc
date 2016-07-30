@@ -163,7 +163,7 @@ void Vehicle::launch(TileMap &map, GameState &state, Vec3<float> initialPosition
 	auto bld = this->currentlyLandedBuilding;
 	if (bld)
 	{
-		bld->landed_vehicles.erase({ &state, shared_from_this() });
+		bld->landed_vehicles.erase({&state, shared_from_this()});
 		this->currentlyLandedBuilding = "";
 	}
 	this->position = initialPosition;

@@ -136,9 +136,6 @@ void GameState::startGame()
 		}
 	}
 
-	// FIXME: How to create vehicles with unique name?
-	int vehicle_count = 0;
-
 	auto buildingIt = this->cities["CITYMAP_HUMAN"]->buildings.begin();
 
 	// Create some random vehicles
@@ -154,12 +151,11 @@ void GameState::startGame()
 
 			auto v = mksp<Vehicle>();
 			v->type = {this, vehicleType.first};
-			v->name = type->name;
+			v->name = UString::format("%s %d", type->name.c_str(), type->numCreated++);
 			v->city = {this, "CITYMAP_HUMAN"};
 			v->currentlyLandedBuilding = {this, buildingIt->first};
 			v->owner = type->manufacturer;
 			v->health = type->health;
-			auto vID = UString::format("%s%d", Vehicle::getPrefix().c_str(), vehicle_count++);
 
 			buildingIt++;
 			if (buildingIt == this->cities["CITYMAP_HUMAN"]->buildings.end())
@@ -167,9 +163,9 @@ void GameState::startGame()
 
 			// Vehicle::equipDefaultEquipment uses the state reference from itself, so make sure the
 			// vehicle table has the entry before calling it
-			this->vehicles[vID] = v;
+			this->vehicles[v->name] = v;
 
-			v->currentlyLandedBuilding->landed_vehicles.insert({this, vID});
+			v->currentlyLandedBuilding->landed_vehicles.insert({this, v->name});
 
 			v->equipDefaultEquipment(*this);
 		}
@@ -212,15 +208,14 @@ void GameState::startGame()
 			continue;
 		auto v = mksp<Vehicle>();
 		v->type = {this, type};
-		v->name = type->name;
+		v->name = UString::format("%s %d", type->name.c_str(), type->numCreated++);
 		v->city = {this, "CITYMAP_HUMAN"};
 		v->currentlyLandedBuilding = {this, bld};
 		v->homeBuilding = {this, bld};
 		v->owner = this->getPlayer();
 		v->health = type->health;
-		auto vID = UString::format("%s%d", Vehicle::getPrefix().c_str(), vehicle_count++);
-		this->vehicles[vID] = v;
-		v->currentlyLandedBuilding->landed_vehicles.insert({this, vID});
+		this->vehicles[v->name] = v;
+		v->currentlyLandedBuilding->landed_vehicles.insert({this, v->name});
 		v->equipDefaultEquipment(*this);
 	}
 	// Give that base some inventory
@@ -306,12 +301,11 @@ void GameState::updateEndOfDay()
 	}
 	Trace::end("GameState::updateEndOfDay::cities");
 
-
 	for (int i = 0; i < 5; i++)
 	{
-		StateRef<City> city = { this, "CITYMAP_HUMAN" };
+		StateRef<City> city = {this, "CITYMAP_HUMAN"};
 		auto portal = city->portals.begin();
-		StateRef<Building> bld = { this, (*city->buildings.begin()).second };
+		StateRef<Building> bld = {this, (*city->buildings.begin()).second};
 
 		auto vehicleType = this->vehicle_types.find("VEHICLETYPE_ALIEN_ASSAULT_SHIP");
 		if (vehicleType != this->vehicle_types.end())
@@ -319,22 +313,21 @@ void GameState::updateEndOfDay()
 			auto &type = (*vehicleType).second;
 
 			auto v = mksp<Vehicle>();
-			v->type = { this, (*vehicleType).first };
-			v->name = type->name;
+			v->type = {this, (*vehicleType).first};
+			v->name = UString::format("%s %d", type->name.c_str(), type->numCreated++);
 			v->city = city;
 			v->owner = type->manufacturer;
 			v->health = type->health;
-			auto vID = UString::format("%s%d", Vehicle::getPrefix().c_str(), i);
 
 			// Vehicle::equipDefaultEquipment uses the state reference from itself, so make sure the
 			// vehicle table has the entry before calling it
-			this->vehicles[vID] = v;
+			this->vehicles[v->name] = v;
 
 			v->equipDefaultEquipment(*this);
 			v->launch(*city->map, *this, (*portal)->getPosition());
 
-			v->missions.emplace_front(VehicleMission::infiltrateBuilding(*v, bld));
-			v->missions.emplace_front(VehicleMission::gotoPortal(*v));
+			v->missions.emplace_back(VehicleMission::infiltrateBuilding(*v, bld));
+			v->missions.emplace_back(VehicleMission::gotoPortal(*v));
 			v->missions.front()->start(*this, *v);
 		}
 	}

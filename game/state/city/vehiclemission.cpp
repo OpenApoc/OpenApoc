@@ -350,7 +350,7 @@ VehicleMission *VehicleMission::land(Vehicle &v, StateRef<Building> b)
 	return mission;
 }
 
-bool VehicleMission::takeOffCheck(GameState &state, Vehicle &v, UString &mission)
+bool VehicleMission::takeOffCheck(GameState &state, Vehicle &v, UString mission)
 {
 	if (!v.tileObject)
 	{
@@ -1038,6 +1038,7 @@ UString VehicleMission::getName()
 const std::map<VehicleMission::MissionType, UString> VehicleMission::TypeMap = {
     {MissionType::GotoLocation, "GotoLocation"},
     {MissionType::GotoBuilding, "GotoBuilding"},
+    {MissionType::GotoPortal, "GotoBuilding"},
     {MissionType::FollowVehicle, "FollowVehicle"},
     {MissionType::AttackVehicle, "AttackVehicle"},
     {MissionType::AttackBuilding, "AttackBuilding"},
@@ -1045,6 +1046,9 @@ const std::map<VehicleMission::MissionType, UString> VehicleMission::TypeMap = {
     {MissionType::TakeOff, "TakeOff"},
     {MissionType::Land, "Land"},
     {MissionType::Crash, "Crash"},
+    {MissionType::Patrol, "Patrol"},
+    {MissionType::Infiltrate, "Infiltrate"},
+    {MissionType::Subvert, "Subvert"},
 };
 
 } // namespace OpenApoc
