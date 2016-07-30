@@ -1,4 +1,3 @@
-#include "game/state/gamestate.h"
 #include "framework/framework.h"
 #include "framework/image.h"
 #include "framework/serialization/serialize.h"
@@ -13,6 +12,7 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/city/vequipment.h"
+#include "game/state/gamestate.h"
 #include "game/state/rules/scenery_tile_type.h"
 #include "game/state/rules/vequipment_type.h"
 #include "library/voxel.h"
@@ -66,6 +66,20 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, int &val)
 	if (!node)
 		return;
 	val = node->getValueInt();
+}
+
+void serializeIn(const GameState *state, sp<SerializationNode> node, unsigned long long &val)
+{
+	if (!node)
+		return;
+	val = node->getValueUInt64();
+}
+
+void serializeIn(const GameState *state, sp<SerializationNode> node, long long &val)
+{
+	if (!node)
+		return;
+	val = node->getValueInt64();
 }
 
 void serializeIn(const GameState *state, sp<SerializationNode> node, bool &val)
@@ -863,6 +877,13 @@ void serializeOut(sp<SerializationNode> node, const unsigned char &val)
 void serializeOut(sp<SerializationNode> node, const float &val) { node->setValueFloat(val); }
 
 void serializeOut(sp<SerializationNode> node, const int &val) { node->setValueInt(val); }
+
+void serializeOut(sp<SerializationNode> node, const unsigned long long &val)
+{
+	node->setValueUInt64(val);
+}
+
+void serializeOut(sp<SerializationNode> node, const long long &val) { node->setValueInt64(val); }
 
 void serializeOut(sp<SerializationNode> node, const bool &val) { node->setValueBool(val); }
 

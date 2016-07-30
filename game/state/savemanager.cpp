@@ -428,5 +428,5 @@ const UString &SaveMetadata::getName() const { return name; }
 const UString &SaveMetadata::getFile() const { return file; }
 const UString &SaveMetadata::getDifficulty() const { return difficulty; }
 const SaveType &SaveMetadata::getType() const { return type; }
-unsigned int SaveMetadata::getGameTicks() const { return gameTicks; }
+uint64_t SaveMetadata::getGameTicks() const { return gameTicks; }
 }

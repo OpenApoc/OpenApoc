@@ -1,4 +1,6 @@
 #include "library/strings.h"
+#include <boost/date_time.hpp>
+#include <locale>
 
 namespace OpenApoc
 {
@@ -12,17 +14,20 @@ static const unsigned TURBO_TICKS = 5 * 60 * TICKS_PER_SECOND;
 class GameTime
 {
   private:
-	unsigned long ticks;
+	static const boost::posix_time::ptime GAME_START;
+	static const std::locale TIME_FORMAT, DATE_FORMAT;
+
+	uint64_t ticks;
 
 	bool dayPassedFlag;
 	bool weekPassedFlag;
 
+	boost::posix_time::ptime posixTime() const;
+
   public:
-	GameTime(unsigned long ticks) : ticks(ticks), dayPassedFlag(false), weekPassedFlag(false){};
+	GameTime(uint64_t ticks) : ticks(ticks), dayPassedFlag(false), weekPassedFlag(false) {}
 
-	void addTicks(unsigned int ticks);
-
-	unsigned int getDayTime() const;
+	void addTicks(uint64_t ticks);
 
 	unsigned int getHours() const;
 
@@ -30,10 +35,15 @@ class GameTime
 
 	unsigned int getDay() const;
 
-	unsigned int getTicks() const;
+	unsigned int getWeek() const;
 
-	// returns formatted time in format hh::mm::ss
+	uint64_t getTicks() const;
+
+	// returns formatted time in format hh:mm:ss
 	UString getTimeString() const;
+
+	// returns formatted date in format a, d m, y
+	UString getDateString() const;
 
 	// set at midnight
 	bool dayPassed() const;

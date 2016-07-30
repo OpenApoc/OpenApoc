@@ -109,6 +109,12 @@ class XMLSerializationNode : public SerializationNode
 	int getValueInt() override;
 	void setValueInt(int i) override;
 
+	unsigned long long getValueUInt64() override;
+	void setValueUInt64(unsigned long long i) override;
+
+	long long getValueInt64() override;
+	void setValueInt64(long long i) override;
+
 	float getValueFloat() override;
 	void setValueFloat(float f) override;
 
@@ -318,6 +324,14 @@ void XMLSerializationNode::setValueUChar(unsigned char c) { node.text().set((uns
 int XMLSerializationNode::getValueInt() { return node.text().as_int(); }
 
 void XMLSerializationNode::setValueInt(int i) { node.text().set(i); }
+
+unsigned long long XMLSerializationNode::getValueUInt64() { return node.text().as_ullong(); }
+
+void XMLSerializationNode::setValueUInt64(unsigned long long i) { node.text().set(i); }
+
+long long XMLSerializationNode::getValueInt64() { return node.text().as_llong(); }
+
+void XMLSerializationNode::setValueInt64(long long i) { node.text().set(i); }
 
 float XMLSerializationNode::getValueFloat() { return node.text().as_float(); }
 

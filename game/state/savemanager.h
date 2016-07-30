@@ -24,7 +24,7 @@ class SaveMetadata
 	UString difficulty;
 	time_t creationDate;
 	SaveType type;
-	unsigned long gameTicks;
+	uint64_t gameTicks;
 
   public:
 	SaveMetadata();
@@ -53,7 +53,7 @@ class SaveMetadata
 	/* What kind of save is it */
 	const SaveType &getType() const;
 
-	unsigned int getGameTicks() const;
+	uint64_t getGameTicks() const;
 };
 
 /* high level api for managing saved games */

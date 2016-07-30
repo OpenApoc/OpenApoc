@@ -68,7 +68,6 @@ class GameState : public std::enable_shared_from_this<GameState>
 	StateRef<Organisation> getPlayer();
 
 	// The time from game start in ticks
-	// 'time' is the number of ticks in the day, 'days' is number of days since game start
 	GameTime gameTime;
 
 	// high level api for loading game
