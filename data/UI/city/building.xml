@@ -15,6 +15,12 @@
         <alignment horizontal="centre" vertical="centre"/>
         <font>BIGFONT</font>
       </label>
+      <label id="TEXT_FUNDS">
+        <position x="572" y="11"/>
+        <size width="60" height="10"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
       <graphicbutton id="BUTTON_QUIT">
         <position x="602" y="443"/>
         <size width="40" height="40"/>

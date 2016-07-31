@@ -10,6 +10,12 @@
         <image>xcom3/UFODATA/SAVEGAME.PCX</image>
         <position x="2" y="2"/>
         <size width="640" height="480"/>
+        <label id="TEXT_FUNDS">
+          <position x="572" y="11"/>
+          <size width="60" height="10"/>
+          <alignment horizontal="left" vertical="centre"/>
+          <font>SMALFONT</font>
+        </label>
         <scroll id="SCROLL_LISTPOSITION">
           <position x="550" y="90"/>
           <size width="16" height="330"/>
@@ -86,25 +92,24 @@
         <position x="604" y="446"/>
         <size width="35" height="34"/>
         <image/>
-        <!-- FIXME: PAL_01 doesn't seem correct for all newbut.tab images? -->
-        <imagedepressed>PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:5:XCOM3/UFODATA/PAL_01.DAT</imagedepressed>
+        <imagedepressed>BUTTON_OK_DEPRESSED</imagedepressed>
       </graphicbutton>
       <label id="LABEL_SAVEGAME" text="SAVE GAME" visible="N">
-        <position x="20" y="10"/>
+        <position x="20" y="0"/>
         <size width="600" height="36"/>
-        <alignment horizontal="centre" vertical="top"/>
+        <alignment horizontal="centre" vertical="centre"/>
         <font>BIGFONT</font>
       </label>
       <label id="LABEL_LOADGAME" text="LOAD GAME" visible="N">
-        <position x="20" y="10"/>
+        <position x="20" y="0"/>
         <size width="600" height="36"/>
-        <alignment horizontal="centre" vertical="top"/>
+        <alignment horizontal="centre" vertical="centre"/>
         <font>BIGFONT</font>
       </label>
-      <label id="LABEL_DELETEGAME" text="DELETE GAME" visible="N">
-        <position x="20" y="10"/>
+      <label id="LABEL_DELETEGAME" text="DELETE OLD SAVED GAME" visible="N">
+        <position x="20" y="0"/>
         <size width="600" height="36"/>
-        <alignment horizontal="centre" vertical="top"/>
+        <alignment horizontal="centre" vertical="centre"/>
         <font>BIGFONT</font>
       </label>
     </style>
