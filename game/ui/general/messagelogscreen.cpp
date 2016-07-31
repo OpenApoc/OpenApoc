@@ -1,4 +1,4 @@
-#include "game/ui/city/infiltrationscreen.h"
+#include "game/ui/general/messagelogscreen.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
@@ -7,25 +7,25 @@
 namespace OpenApoc
 {
 
-InfiltrationScreen::InfiltrationScreen(sp<GameState> state)
-    : Stage(), menuform(ui().GetForm("FORM_INFILTRATION_SCREEN")), state(state)
+MessageLogScreen::MessageLogScreen(sp<GameState> state)
+    : Stage(), menuform(ui().GetForm("FORM_MESSAGE_LOG_SCREEN")), state(state)
 {
 }
 
-InfiltrationScreen::~InfiltrationScreen() {}
+MessageLogScreen::~MessageLogScreen() {}
 
-void InfiltrationScreen::Begin()
+void MessageLogScreen::Begin()
 {
 	menuform->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
 }
 
-void InfiltrationScreen::Pause() {}
+void MessageLogScreen::Pause() {}
 
-void InfiltrationScreen::Resume() {}
+void MessageLogScreen::Resume() {}
 
-void InfiltrationScreen::Finish() {}
+void MessageLogScreen::Finish() {}
 
-void InfiltrationScreen::EventOccurred(Event *e)
+void MessageLogScreen::EventOccurred(Event *e)
 {
 	menuform->EventOccured(e);
 
@@ -40,7 +40,7 @@ void InfiltrationScreen::EventOccurred(Event *e)
 
 	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
 	{
-		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
+		if (e->Forms().RaisedBy->Name == "BUTTON_OK")
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
@@ -48,7 +48,7 @@ void InfiltrationScreen::EventOccurred(Event *e)
 	}
 }
 
-void InfiltrationScreen::Update(StageCmd *const cmd)
+void MessageLogScreen::Update(StageCmd *const cmd)
 {
 	menuform->Update();
 	*cmd = this->stageCmd;
@@ -56,13 +56,13 @@ void InfiltrationScreen::Update(StageCmd *const cmd)
 	this->stageCmd = StageCmd();
 }
 
-void InfiltrationScreen::Render()
+void MessageLogScreen::Render()
 {
 	fw().Stage_GetPrevious(this->shared_from_this())->Render();
 	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
 	menuform->Render();
 }
 
-bool InfiltrationScreen::IsTransition() { return false; }
+bool MessageLogScreen::IsTransition() { return false; }
 
 }; // namespace OpenApoc

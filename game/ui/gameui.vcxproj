@@ -34,6 +34,7 @@
     <ClCompile Include="city\scorescreen.cpp" />
     <ClCompile Include="debugtools\debugmenu.cpp" />
     <ClCompile Include="debugtools\formpreview.cpp" />
+    <ClCompile Include="general\messagelogscreen.cpp" />
     <ClCompile Include="general\savemenu.cpp" />
     <ClCompile Include="general\difficultymenu.cpp" />
     <ClCompile Include="general\ingameoptions.cpp" />
@@ -62,6 +63,7 @@
     <ClInclude Include="city\scorescreen.h" />
     <ClInclude Include="debugtools\debugmenu.h" />
     <ClInclude Include="debugtools\formpreview.h" />
+    <ClInclude Include="general\messagelogscreen.h" />
     <ClInclude Include="general\savemenu.h" />
     <ClInclude Include="general\difficultymenu.h" />
     <ClInclude Include="general\ingameoptions.h" />

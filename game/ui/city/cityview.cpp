@@ -22,6 +22,7 @@
 #include "game/ui/city/scorescreen.h"
 #include "game/ui/general/ingameoptions.h"
 #include "game/ui/general/messagebox.h"
+#include "game/ui/general/messagelogscreen.h"
 #include "game/ui/ufopaedia/ufopaediacategoryview.h"
 #include "game/ui/ufopaedia/ufopaediaview.h"
 #include "library/sp.h"
@@ -204,12 +205,12 @@ CityView::CityView(sp<GameState> state)
 	this->baseForm->FindControl("BUTTON_SHOW_ALIEN_INFILTRATION")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<InfiltrationScreen>();
+		    this->stageCmd.nextStage = mksp<InfiltrationScreen>(this->state);
 		});
 	this->baseForm->FindControl("BUTTON_SHOW_SCORE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<ScoreScreen>();
+		    this->stageCmd.nextStage = mksp<ScoreScreen>(this->state);
 		});
 	this->baseForm->FindControl("BUTTON_SHOW_UFOPAEDIA")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
@@ -222,7 +223,10 @@ CityView::CityView(sp<GameState> state)
 		    this->stageCmd.nextStage = mksp<InGameOptions>(this->state);
 		});
 	this->baseForm->FindControl("BUTTON_SHOW_LOG")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) { LogWarning("Show log"); });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
+		    this->stageCmd.cmd = StageCmd::Command::PUSH;
+		    this->stageCmd.nextStage = mksp<MessageLogScreen>(this->state);
+		});
 	this->baseForm->FindControl("BUTTON_ZOOM_EVENT")
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *e) { LogWarning("Zoom to event"); });

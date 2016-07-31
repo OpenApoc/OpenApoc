@@ -27,6 +27,8 @@ SaveMenu::~SaveMenu() {}
 
 void SaveMenu::Begin()
 {
+	menuform->FindControlTyped<Label>("TEXT_FUNDS")->SetText(currentState->getPlayerBalance());
+
 	auto saveListBox = menuform->FindControlTyped<ListBox>("LISTBOX_OPTIONS");
 
 	UString titleLabelName;

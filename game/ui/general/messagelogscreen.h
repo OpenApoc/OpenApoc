@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "framework/stage.h"
@@ -10,7 +9,7 @@ namespace OpenApoc
 
 class GameState;
 
-class ScoreScreen : public Stage
+class MessageLogScreen : public Stage
 {
   private:
 	sp<Form> menuform;
@@ -19,8 +18,8 @@ class ScoreScreen : public Stage
 	sp<GameState> state;
 
   public:
-	ScoreScreen(sp<GameState> state);
-	~ScoreScreen();
+	MessageLogScreen(sp<GameState> state);
+	~MessageLogScreen();
 	// Stage control
 	void Begin() override;
 	void Pause() override;

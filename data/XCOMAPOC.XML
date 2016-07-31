@@ -15,6 +15,7 @@
     <include>UI/INGAMEOPTIONS.XML</include>
     <include>UI/RESEARCHSCREEN.XML</include>
     <include>UI/RESEARCHSELECT.XML</include>
+	<include>UI/MESSAGELOG.XML</include>
     <include>UI/CITY/city.xml</include>
     <include>UI/CITY/infiltration.xml</include>
     <include>UI/CITY/score.xml</include>

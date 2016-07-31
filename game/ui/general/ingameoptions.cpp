@@ -42,7 +42,10 @@ InGameOptions::~InGameOptions()
 	                   menuform->FindControlTyped<ScrollBar>("SAMPLE_GAIN_SLIDER")->GetValue());
 }
 
-void InGameOptions::Begin() {}
+void InGameOptions::Begin()
+{
+	menuform->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
+}
 
 void InGameOptions::Pause() {}
 
