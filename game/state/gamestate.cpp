@@ -295,6 +295,18 @@ void GameState::update(unsigned int ticks)
 
 void GameState::updateEndOfDay()
 {
+	for (auto &b : this->player_bases)
+	{
+		for (auto &f : b.second->facilities)
+		{
+			if (f->buildTime > 0)
+			{
+				f->buildTime--;
+				// FIXME: Notify the player
+			}
+		}
+	}
+
 	Trace::start("GameState::updateEndOfDay::cities");
 	for (auto &c : this->cities)
 	{

@@ -109,8 +109,6 @@ CityView::CityView(sp<GameState> state)
 	Vec2<int> buildingCenter = (bldBounds.p0 + bldBounds.p1) / 2;
 	this->setScreenCenterTile(buildingCenter);
 
-	this->uiTabs[0]->FindControlTyped<Label>("TEXT_BASE_NAME")->SetText(state->current_base->name);
-
 	for (auto &iconResource : CITY_ICON_RESOURCES)
 	{
 		auto &type = iconResource.first;
@@ -395,6 +393,7 @@ CityView::~CityView() {}
 
 void CityView::Resume()
 {
+	this->uiTabs[0]->FindControlTyped<Label>("TEXT_BASE_NAME")->SetText(state->current_base->name);
 	miniViews.clear();
 	int b = 0;
 	for (auto &pair : state->player_bases)

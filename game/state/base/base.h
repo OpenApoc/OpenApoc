@@ -39,9 +39,6 @@ class Base : public StateObject<Base>
 	Base(GameState &state, StateRef<Building> building);
 
 	sp<Facility> getFacility(Vec2<int> pos) const;
-	const std::vector<std::vector<bool>> &getCorridors() const { return corridors; }
-	const std::vector<sp<Facility>> &getFacilities() const { return facilities; }
-
 	void startingBase(GameState &state);
 	BuildError canBuildFacility(StateRef<FacilityType> type, Vec2<int> pos,
 	                            bool free = false) const;
