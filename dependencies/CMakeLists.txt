@@ -50,3 +50,6 @@ add_library(OpenApoc_LibPugixml STATIC ${LIBPUGIXML_SOURCE_FILES}
 		${LIBPUGIXML_HEADER_FILES})
 
 target_compile_definitions(OpenApoc_LibPugixml PUBLIC PTHREADS_AVAILABLE)
+
+set_property(TARGET OpenApoc_LibPugixml PROPERTY CXX_STANDARD 11)
+set_property(TARGET OpenApoc_LibPugixml PROPERTY CXX_STANDARD_REQUIRED ON)
