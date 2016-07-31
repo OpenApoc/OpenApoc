@@ -91,7 +91,7 @@ class SaveManager
 
 	// list all reachable saved games
 	std::vector<SaveMetadata> getSaveList() const;
-	
-	bool deleteGame(const sp<SaveMetadata>& slot) const;
+
+	bool deleteGame(const sp<SaveMetadata> &slot) const;
 };
 }

@@ -301,7 +301,7 @@ std::vector<SaveMetadata> SaveManager::getSaveList() const
 	return saveList;
 }
 
-bool SaveManager::deleteGame(const sp<SaveMetadata>& slot) const
+bool SaveManager::deleteGame(const sp<SaveMetadata> &slot) const
 {
 	try
 	{
