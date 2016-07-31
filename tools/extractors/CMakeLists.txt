@@ -38,6 +38,7 @@ set (DATAEXTRACTOR_HEADER_FILES
 	common/vehicle.h
 	common/research.h
 	common/bulletsprite.h
+	common/building.h
 	extractors.h)
 
 source_group(dataextractor\\headers FILES ${DATAEXTRACTOR_HEADER_FILES})

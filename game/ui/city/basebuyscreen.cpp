@@ -12,10 +12,18 @@ namespace OpenApoc
 {
 
 BaseBuyScreen::BaseBuyScreen(sp<GameState> state, sp<Building> building)
-    : Stage(), form(ui().GetForm("FORM_BUY_BASE_SCREEN")), state(state)
+    : Stage(), form(ui().GetForm("FORM_BUY_BASE_SCREEN")), price(0), state(state)
 {
-	// FIXME: Formula not accurate, seems to vary by building type
-	price = building->bounds.size().x * building->bounds.size().y * 2000;
+	// FIXME: Figure out where these are stored
+	if (building->function == "Slums")
+	{
+		price = 1400;
+	}
+	else if (building->function == "Warehouse")
+	{
+		price = 2000;
+	}
+	price *= building->bounds.size().x * building->bounds.size().y;
 	base = mksp<Base>(*state, StateRef<Building>{state.get(), building});
 }
 

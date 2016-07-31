@@ -8,6 +8,7 @@
 namespace OpenApoc
 {
 
+class GameState;
 class Building;
 
 class BuildingScreen : public Stage
@@ -15,10 +16,11 @@ class BuildingScreen : public Stage
   private:
 	sp<Form> menuform;
 	StageCmd stageCmd;
+	sp<GameState> state;
 	sp<Building> building;
 
   public:
-	BuildingScreen(sp<Building> building);
+	BuildingScreen(sp<GameState> state, sp<Building> building);
 	~BuildingScreen();
 	// Stage control
 	void Begin() override;

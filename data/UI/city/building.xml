@@ -9,7 +9,7 @@
         <position x="0" y="0"/>
         <size width="640" height="480"/>
       </graphic>
-      <label id="LABEL_BUILDING_NAME">
+      <label id="TEXT_BUILDING_NAME">
         <position x="113" y="0"/>
         <size width="420" height="32"/>
         <alignment horizontal="centre" vertical="centre"/>
@@ -18,6 +18,30 @@
       <label id="TEXT_FUNDS">
         <position x="572" y="11"/>
         <size width="60" height="10"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+	  <label text="Owner&gt;">
+        <position x="97" y="54"/>
+        <size width="60" height="23"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+	  <label id="TEXT_OWNER_NAME">
+        <position x="147" y="54"/>
+        <size width="140" height="23"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+	  <label text="Function&gt;">
+        <position x="302" y="54"/>
+        <size width="60" height="23"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
+	  <label id="TEXT_BUILDING_FUNCTION">
+        <position x="358" y="54"/>
+        <size width="140" height="23"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>

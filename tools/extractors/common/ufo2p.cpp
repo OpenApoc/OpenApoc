@@ -58,6 +58,9 @@ UFO2P::UFO2P(std::string file_name)
 	this->building_names.reset(
 	    new StrTab(file, BUILDING_NAME_STRTAB_OFFSET_START, BUILDING_NAME_STRTAB_OFFSET_END));
 
+	this->building_functions.reset(new StrTab(file, BUILDING_FUNCTION_STRTAB_OFFSET_START,
+	                                          BUILDING_FUNCTION_STRTAB_OFFSET_END));
+
 	this->alien_building_names.reset(new StrTab(file, ALIEN_BUILDING_NAME_STRTAB_OFFSET_START,
 	                                            ALIEN_BUILDING_NAME_STRTAB_OFFSET_END));
 

@@ -5,6 +5,7 @@
     <value>
       <sp>
         <name>Alien Farm</name>
+        <function>Alien Farm</function>
         <owner>ORG_ALIEN</owner>
         <bounds>
           <p0>
@@ -27,6 +28,7 @@
     <value>
       <sp>
         <name>Control Chamber</name>
+        <function>Control Chamber</function>
         <owner>ORG_ALIEN</owner>
         <bounds>
           <p0>
@@ -49,6 +51,7 @@
     <value>
       <sp>
         <name>Dimension Gate Generator</name>
+        <function>Dimension Gate Generator</function>
         <owner>ORG_ALIEN</owner>
         <bounds>
           <p0>
@@ -71,6 +74,7 @@
     <value>
       <sp>
         <name>Food Chamber</name>
+        <function>Food Chamber</function>
         <owner>ORG_ALIEN</owner>
         <bounds>
           <p0>
@@ -93,6 +97,7 @@
     <value>
       <sp>
         <name>Incubator Chamber</name>
+        <function>Incubator Chamber</function>
         <owner>ORG_ALIEN</owner>
         <bounds>
           <p0>
@@ -115,6 +120,7 @@
     <value>
       <sp>
         <name>Maintenance Factory</name>
+        <function>Maintenance Factory</function>
         <owner>ORG_ALIEN</owner>
         <bounds>
           <p0>
@@ -137,6 +143,7 @@
     <value>
       <sp>
         <name>Megapod Chamber</name>
+        <function>Megapod Chamber</function>
         <owner>ORG_ALIEN</owner>
         <bounds>
           <p0>
@@ -159,6 +166,7 @@
     <value>
       <sp>
         <name>Organic Factory</name>
+        <function>Organic Factory</function>
         <owner>ORG_ALIEN</owner>
         <bounds>
           <p0>
@@ -181,6 +189,7 @@
     <value>
       <sp>
         <name>Sleeping Chamber</name>
+        <function>Sleeping Chamber</function>
         <owner>ORG_ALIEN</owner>
         <bounds>
           <p0>
@@ -203,6 +212,7 @@
     <value>
       <sp>
         <name>Spawning Chamber</name>
+        <function>Spawning Chamber</function>
         <owner>ORG_ALIEN</owner>
         <bounds>
           <p0>

@@ -263,7 +263,7 @@ CityView::CityView(sp<GameState> state)
 			    if (b)
 			    {
 				    this->stageCmd.cmd = StageCmd::Command::PUSH;
-				    this->stageCmd.nextStage = mksp<BuildingScreen>(b);
+				    this->stageCmd.nextStage = mksp<BuildingScreen>(this->state, b);
 			    }
 		    }
 		});
@@ -831,7 +831,7 @@ void CityView::EventOccurred(Event *e)
 						else if (this->selectionState == SelectionState::Normal)
 						{
 							stageCmd.cmd = StageCmd::Command::PUSH;
-							stageCmd.nextStage = mksp<BuildingScreen>(building);
+							stageCmd.nextStage = mksp<BuildingScreen>(this->state, building);
 						}
 
 						return;

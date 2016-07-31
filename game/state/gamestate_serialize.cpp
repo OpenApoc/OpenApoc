@@ -552,6 +552,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	if (!node)
 		return;
 	serializeIn(state, node->getNode("name"), b.name);
+	serializeIn(state, node->getNode("function"), b.function);
 	serializeIn(state, node->getNode("owner"), b.owner);
 	serializeIn(state, node->getNode("bounds"), b.bounds);
 	serializeIn(state, node->getNode("base_layout"), b.base_layout);
@@ -1220,6 +1221,7 @@ template <> void serializeOut(sp<SerializationNode> node, const BaseLayout &l)
 template <> void serializeOut(sp<SerializationNode> node, const Building &b)
 {
 	serializeOut(node->addNode("name"), b.name);
+	serializeOut(node->addNode("function"), b.function);
 	serializeOut(node->addNode("owner"), b.owner);
 	serializeOut(node->addNode("bounds"), b.bounds);
 	serializeOut(node->addNode("base_layout"), b.base_layout);
