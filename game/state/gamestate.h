@@ -46,6 +46,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	std::map<UString, sp<UfopaediaCategory>> ufopaedia;
 	ResearchState research;
 
+	mutable unsigned lastVehicle;
+
 	std::map<UString, sp<Agent>> agents;
 	AgentGenerator agent_generator;
 

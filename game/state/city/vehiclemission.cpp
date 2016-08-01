@@ -590,7 +590,8 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks)
 				    v.city->placeDoodad(StateRef<DoodadType>{&state, "DOODAD_INFILTRATION_RAY"},
 				                        v.tileObject->getPosition() - Vec3<float>{0, 0, 0.5f});
 
-				v.missions.emplace_back(VehicleMission::snooze(v, doodad->lifetime));
+				v.missions.emplace_back(VehicleMission::snooze(v, doodad->lifetime * 2));
+				v.missions.emplace_back(VehicleMission::gotoPortal(v));
 			}
 			return;
 		}

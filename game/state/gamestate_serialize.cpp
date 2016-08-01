@@ -821,6 +821,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &
 {
 	if (!node)
 		return;
+	serializeIn(state, node->getNode("lastVehicle"), s.lastVehicle);
 	serializeIn(state, node->getSection("vehicle_types"), s.vehicle_types);
 	serializeIn(state, node->getSection("organisations"), s.organisations);
 	serializeIn(state, node->getSection("facility_types"), s.facility_types);
@@ -1443,6 +1444,7 @@ template <> void serializeOut(sp<SerializationNode> node, const ResearchState &r
 
 void serializeOut(sp<SerializationNode> node, const GameState &state)
 {
+	serializeOut(node->addNode("lastVehicle"), state.lastVehicle);
 	serializeOut(node->addSection("vehicle_types"), state.vehicle_types);
 	serializeOut(node->addSection("organisations"), state.organisations);
 	serializeOut(node->addSection("facility_types"), state.facility_types);
