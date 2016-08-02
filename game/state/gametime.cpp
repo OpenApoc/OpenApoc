@@ -18,7 +18,7 @@ const std::locale GameTime::DATE_FORMAT =
 // FIXME: Refactor to always use ptime instead of ticks?
 ptime GameTime::posixTime() const
 {
-	int64_t tickTotal = ticks * (time_duration::ticks_per_second() / TICKS_PER_SECOND);
+	int64_t tickTotal = (double)(ticks / TICKS_PER_SECOND) * time_duration::ticks_per_second();
 	return GAME_START + time_duration(0, 0, 0, tickTotal);
 }
 
@@ -41,7 +41,7 @@ UString GameTime::getDateString() const
 unsigned int GameTime::getWeek() const
 {
 	date_duration duration = posixTime().date() - GAME_START.date();
-	return duration.days() / 7;
+	return duration.days() / 7 + 1;
 }
 
 unsigned int GameTime::getDay() const { return posixTime().date().day(); }

@@ -17,7 +17,7 @@ namespace OpenApoc
 
 GameState::GameState()
     : player(this), showTileOrigin(false), showVehiclePath(false), showSelectableBounds(false),
-	  gameTime(0), lastVehicle(0)
+      gameTime(0), lastVehicle(0)
 {
 }
 
