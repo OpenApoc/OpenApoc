@@ -8,14 +8,18 @@
 namespace OpenApoc
 {
 
+class GameState;
+
 class InfiltrationScreen : public Stage
 {
   private:
 	sp<Form> menuform;
 	StageCmd stageCmd;
 
+	sp<GameState> state;
+
   public:
-	InfiltrationScreen();
+	InfiltrationScreen(sp<GameState> state);
 	~InfiltrationScreen();
 	// Stage control
 	void Begin() override;

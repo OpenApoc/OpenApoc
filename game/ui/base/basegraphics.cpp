@@ -25,14 +25,14 @@ const std::unordered_map<std::vector<bool>, int> TILE_CORRIDORS = {
 int BaseGraphics::getCorridorSprite(sp<Base> base, Vec2<int> pos)
 {
 	if (pos.x < 0 || pos.y < 0 || pos.x >= Base::SIZE || pos.y >= Base::SIZE ||
-	    !base->getCorridors()[pos.x][pos.y])
+	    !base->corridors[pos.x][pos.y])
 	{
 		return 0;
 	}
-	bool north = pos.y > 0 && base->getCorridors()[pos.x][pos.y - 1];
-	bool south = pos.y < Base::SIZE - 1 && base->getCorridors()[pos.x][pos.y + 1];
-	bool west = pos.x > 0 && base->getCorridors()[pos.x - 1][pos.y];
-	bool east = pos.x < Base::SIZE - 1 && base->getCorridors()[pos.x + 1][pos.y];
+	bool north = pos.y > 0 && base->corridors[pos.x][pos.y - 1];
+	bool south = pos.y < Base::SIZE - 1 && base->corridors[pos.x][pos.y + 1];
+	bool west = pos.x > 0 && base->corridors[pos.x - 1][pos.y];
+	bool east = pos.x < Base::SIZE - 1 && base->corridors[pos.x + 1][pos.y];
 	return TILE_CORRIDORS.at({north, south, west, east});
 }
 
@@ -74,7 +74,7 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 	sp<Image> circleL = fw().data->load_image(
 	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:26:xcom3/UFODATA/BASE.PCX");
 	auto font = ui().GetFont("SMALFONT");
-	for (auto &facility : base->getFacilities())
+	for (auto &facility : base->facilities)
 	{
 		sp<Image> sprite = facility->type->sprite;
 		Vec2<int> pos = renderPos + facility->pos * TILE_SIZE;
@@ -110,7 +110,7 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:2:xcom3/UFODATA/BASE.PCX");
 	sp<Image> doorBottom = fw().data->load_image(
 	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:3:xcom3/UFODATA/BASE.PCX");
-	for (auto &facility : base->getFacilities())
+	for (auto &facility : base->facilities)
 	{
 		for (int y = 0; y < facility->type->size; y++)
 		{
@@ -164,7 +164,7 @@ sp<RGBImage> BaseGraphics::drawMiniBase(sp<Base> base, FacilityHighlight highlig
 	    fw().data->load_image("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:17:xcom3/UFODATA/BASE.PCX");
 	sp<Image> spriteSelected =
 	    fw().data->load_image("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:18:xcom3/UFODATA/BASE.PCX");
-	for (auto &facility : base->getFacilities())
+	for (auto &facility : base->facilities)
 	{
 		bool highlighted = false;
 		switch (highlight)

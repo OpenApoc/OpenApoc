@@ -15,6 +15,8 @@ class GameState;
 class BaseBuyScreen : public Stage
 {
   private:
+	static const int COST_PER_TILE = 2000;
+
 	sp<Form> form;
 	sp<Graphic> baseView;
 	StageCmd stageCmd;

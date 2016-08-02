@@ -51,7 +51,7 @@ void ListBox::OnRender()
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
 		auto ctrl = *c;
-		if (ctrl != scroller)
+		if (ctrl != scroller && ctrl->Visible)
 		{
 			switch (ListOrientation)
 			{
@@ -98,7 +98,7 @@ void ListBox::PostRender()
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
 		auto ctrl = *c;
-		if (ctrl != scroller)
+		if (ctrl != scroller && ctrl->Visible)
 		{
 			if (ctrl == hovered)
 			{
@@ -270,9 +270,9 @@ sp<Control> ListBox::CopyTo(sp<Control> CopyParent)
 	return copy;
 }
 
-void ListBox::ConfigureFromXML(tinyxml2::XMLElement *Element)
+void ListBox::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 {
-	Control::ConfigureFromXML(Element);
+	Control::ConfigureSelfFromXML(Element);
 	tinyxml2::XMLElement *subnode;
 	UString attribvalue;
 

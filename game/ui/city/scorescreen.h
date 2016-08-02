@@ -8,14 +8,18 @@
 namespace OpenApoc
 {
 
+class GameState;
+
 class ScoreScreen : public Stage
 {
   private:
 	sp<Form> menuform;
 	StageCmd stageCmd;
 
+	sp<GameState> state;
+
   public:
-	ScoreScreen();
+	ScoreScreen(sp<GameState> state);
 	~ScoreScreen();
 	// Stage control
 	void Begin() override;

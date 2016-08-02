@@ -4,6 +4,7 @@
 #include "framework/framework.h"
 #include "game/state/gamestate.h"
 #include "game/ui/general/mainmenu.h"
+#include "game/ui/general/savemenu.h"
 
 namespace OpenApoc
 {
@@ -41,7 +42,10 @@ InGameOptions::~InGameOptions()
 	                   menuform->FindControlTyped<ScrollBar>("SAMPLE_GAIN_SLIDER")->GetValue());
 }
 
-void InGameOptions::Begin() {}
+void InGameOptions::Begin()
+{
+	menuform->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
+}
 
 void InGameOptions::Pause() {}
 
@@ -71,7 +75,7 @@ void InGameOptions::EventOccurred(Event *e)
 		}
 		else if (e->Forms().RaisedBy->Name == "BUTTON_ABANDONGAME")
 		{
-			stageCmd.cmd = StageCmd::Command::REPLACE;
+			stageCmd.cmd = StageCmd::Command::REPLACEALL;
 			stageCmd.nextStage = mksp<MainMenu>();
 			return;
 		}
@@ -82,8 +86,20 @@ void InGameOptions::EventOccurred(Event *e)
 		}
 		else if (e->Forms().RaisedBy->Name == "BUTTON_SAVEGAME")
 		{
-			// FIXME: Save game selector
-			this->state->saveGame("save");
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = mksp<SaveMenu>(SaveMenuAction::Save, state);
+			return;
+		}
+		else if (e->Forms().RaisedBy->Name == "BUTTON_DELETESAVEDGAME")
+		{
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = mksp<SaveMenu>(SaveMenuAction::Delete, state);
+			return;
+		}
+		else if (e->Forms().RaisedBy->Name == "BUTTON_LOADGAME")
+		{
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = mksp<SaveMenu>(SaveMenuAction::Load, state);
 			return;
 		}
 		else if (e->Forms().RaisedBy->Name == "BUTTON_GIVE_ALL_RESEARCH")

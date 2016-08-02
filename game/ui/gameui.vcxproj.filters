@@ -90,6 +90,12 @@
     <ClCompile Include="base\basestage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="general\savemenu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="general\messagelogscreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boot.h">
@@ -165,6 +171,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="base\basestage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="general\savemenu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="general\messagelogscreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

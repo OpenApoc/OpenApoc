@@ -9,6 +9,18 @@
         <position x="0" y="0"/>
         <size width="640" height="480"/>
       </graphic>
+      <label text="ALIEN INFILTRATION">
+        <position x="113" y="0"/>
+        <size width="420" height="32"/>
+        <alignment horizontal="centre" vertical="centre"/>
+        <font>BIGFONT</font>
+      </label>
+      <label id="TEXT_FUNDS">
+        <position x="572" y="11"/>
+        <size width="60" height="10"/>
+        <alignment horizontal="left" vertical="centre"/>
+        <font>SMALFONT</font>
+      </label>
       <graphicbutton id="BUTTON_QUIT">
         <position x="602" y="443"/>
         <size width="40" height="40"/>

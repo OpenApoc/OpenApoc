@@ -37,6 +37,7 @@
   <ItemGroup>
     <ClInclude Include="extractors\common\audio.h" />
     <ClInclude Include="extractors\common\baselayout.h" />
+    <ClInclude Include="extractors\common\building.h" />
     <ClInclude Include="extractors\common\bulletsprite.h" />
     <ClInclude Include="extractors\common\canonstring.h" />
     <ClInclude Include="extractors\common\crc32.h" />

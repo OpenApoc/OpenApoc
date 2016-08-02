@@ -5,6 +5,7 @@
     <value>
       <sp>
         <name>Acropolis Apartments</name>
+        <function>Apartments</function>
         <owner>ORG_SANCTUARY_CLINIC</owner>
         <bounds>
           <p0>
@@ -27,6 +28,7 @@
     <value>
       <sp>
         <name>Aldous Huxley Emporium</name>
+        <function>Shopping Mall</function>
         <owner>ORG_NUTRIVEND</owner>
         <bounds>
           <p0>
@@ -49,6 +51,7 @@
     <value>
       <sp>
         <name>Angel Heart Heights</name>
+        <function>Slums</function>
         <owner>ORG_MUTANT_ALLIANCE</owner>
         <bounds>
           <p0>
@@ -71,6 +74,7 @@
     <value>
       <sp>
         <name>Appliances One</name>
+        <function>Appliances Factory</function>
         <owner>ORG_NANOTECH</owner>
         <bounds>
           <p0>
@@ -93,6 +97,7 @@
     <value>
       <sp>
         <name>Appliances Two</name>
+        <function>Appliances Factory</function>
         <owner>ORG_SUPERDYNAMICS</owner>
         <bounds>
           <p0>
@@ -115,6 +120,7 @@
     <value>
       <sp>
         <name>Arms One</name>
+        <function>Arms Factory</function>
         <owner>ORG_MARSEC</owner>
         <bounds>
           <p0>
@@ -137,6 +143,7 @@
     <value>
       <sp>
         <name>Arms Two</name>
+        <function>Arms Factory</function>
         <owner>ORG_MEGAPOL</owner>
         <bounds>
           <p0>
@@ -159,6 +166,7 @@
     <value>
       <sp>
         <name>Atlantis Apartments</name>
+        <function>Apartments</function>
         <owner>ORG_TRANSTELLAR</owner>
         <bounds>
           <p0>
@@ -181,6 +189,7 @@
     <value>
       <sp>
         <name>Babylon Apartments</name>
+        <function>Apartments</function>
         <owner>ORG_SENSOVISION</owner>
         <bounds>
           <p0>
@@ -203,6 +212,7 @@
     <value>
       <sp>
         <name>Bakunin Block</name>
+        <function>Slums</function>
         <owner>ORG_GOVERNMENT</owner>
         <bounds>
           <p0>
@@ -225,6 +235,7 @@
     <value>
       <sp>
         <name>Borstal Block</name>
+        <function>Slums</function>
         <owner>ORG_OSIRON</owner>
         <bounds>
           <p0>
@@ -247,6 +258,7 @@
     <value>
       <sp>
         <name>Bosch Institute</name>
+        <function>School</function>
         <owner>ORG_LIFETREE</owner>
         <bounds>
           <p0>
@@ -269,6 +281,7 @@
     <value>
       <sp>
         <name>Campesino Apartments</name>
+        <function>Slums</function>
         <owner>ORG_S_E_L_F_</owner>
         <bounds>
           <p0>
@@ -291,6 +304,7 @@
     <value>
       <sp>
         <name>Car One</name>
+        <function>Car Factory</function>
         <owner>ORG_GENERAL_METRO</owner>
         <bounds>
           <p0>
@@ -313,6 +327,7 @@
     <value>
       <sp>
         <name>Car Two</name>
+        <function>Car Factory</function>
         <owner>ORG_GENERAL_METRO</owner>
         <bounds>
           <p0>
@@ -335,6 +350,7 @@
     <value>
       <sp>
         <name>Chronos Block</name>
+        <function>Slums</function>
         <owner>ORG_S_E_L_F_</owner>
         <bounds>
           <p0>
@@ -357,6 +373,7 @@
     <value>
       <sp>
         <name>Cityclean One</name>
+        <function>Sewage Works</function>
         <owner>ORG_EVONET</owner>
         <bounds>
           <p0>
@@ -379,6 +396,7 @@
     <value>
       <sp>
         <name>Cityclean Two</name>
+        <function>Sewage Works</function>
         <owner>ORG_EVONET</owner>
         <bounds>
           <p0>
@@ -401,6 +419,7 @@
     <value>
       <sp>
         <name>Civic Project</name>
+        <function>Slums</function>
         <owner>ORG_PSYKE</owner>
         <bounds>
           <p0>
@@ -423,6 +442,7 @@
     <value>
       <sp>
         <name>Construction One</name>
+        <function>Construction Factory</function>
         <owner>ORG_SYNTHEMESH</owner>
         <bounds>
           <p0>
@@ -445,6 +465,7 @@
     <value>
       <sp>
         <name>Cultivator One</name>
+        <function>Hydro-Farm</function>
         <owner>ORG_NUTRIVEND</owner>
         <bounds>
           <p0>
@@ -467,6 +488,7 @@
     <value>
       <sp>
         <name>Cultivator Two</name>
+        <function>Hydro-Farm</function>
         <owner>ORG_NUTRIVEND</owner>
         <bounds>
           <p0>
@@ -489,6 +511,7 @@
     <value>
       <sp>
         <name>Dickens Estate</name>
+        <function>Slums</function>
         <owner>ORG_OSIRON</owner>
         <bounds>
           <p0>
@@ -511,6 +534,7 @@
     <value>
       <sp>
         <name>Eden Mansions</name>
+        <function>Luxury Apartments</function>
         <owner>ORG_SANCTUARY_CLINIC</owner>
         <bounds>
           <p0>
@@ -533,6 +557,7 @@
     <value>
       <sp>
         <name>Edifice Tower</name>
+        <function>Corporate HQ</function>
         <owner>ORG_NANOTECH</owner>
         <bounds>
           <p0>
@@ -555,6 +580,7 @@
     <value>
       <sp>
         <name>Energen Building</name>
+        <function>Power Station</function>
         <owner>ORG_ENERGEN</owner>
         <bounds>
           <p0>
@@ -577,6 +603,7 @@
     <value>
       <sp>
         <name>Enforcer Academy</name>
+        <function>Police Station</function>
         <owner>ORG_MEGAPOL</owner>
         <bounds>
           <p0>
@@ -599,6 +626,7 @@
     <value>
       <sp>
         <name>Flyer One</name>
+        <function>Flyer Factory</function>
         <owner>ORG_SUPERDYNAMICS</owner>
         <bounds>
           <p0>
@@ -621,6 +649,7 @@
     <value>
       <sp>
         <name>Flyer Two</name>
+        <function>Flyer Factory</function>
         <owner>ORG_MEGAPOL</owner>
         <bounds>
           <p0>
@@ -643,6 +672,7 @@
     <value>
       <sp>
         <name>Foucault Tower</name>
+        <function>Corporate HQ</function>
         <owner>ORG_ENERGEN</owner>
         <bounds>
           <p0>
@@ -665,6 +695,7 @@
     <value>
       <sp>
         <name>Garden of Delights</name>
+        <function>Procreation Park</function>
         <owner>ORG_SANCTUARY_CLINIC</owner>
         <bounds>
           <p0>
@@ -687,6 +718,7 @@
     <value>
       <sp>
         <name>George Orwell Block</name>
+        <function>Slums</function>
         <owner>ORG_DIABLO</owner>
         <bounds>
           <p0>
@@ -709,6 +741,7 @@
     <value>
       <sp>
         <name>Grey Visitor Towers</name>
+        <function>Slums</function>
         <owner>ORG_DIABLO</owner>
         <bounds>
           <p0>
@@ -731,6 +764,7 @@
     <value>
       <sp>
         <name>Gygax Memorial Building</name>
+        <function>Offices</function>
         <owner>ORG_SOLMINE</owner>
         <bounds>
           <p0>
@@ -753,6 +787,7 @@
     <value>
       <sp>
         <name>Heavenly Towers</name>
+        <function>Slums</function>
         <owner>ORG_GOVERNMENT</owner>
         <bounds>
           <p0>
@@ -775,6 +810,7 @@
     <value>
       <sp>
         <name>Hydrozone One</name>
+        <function>Water Purifier</function>
         <owner>ORG_EVONET</owner>
         <bounds>
           <p0>
@@ -797,6 +833,7 @@
     <value>
       <sp>
         <name>Hypermart Zone</name>
+        <function>Shopping Mall</function>
         <owner>ORG_NUTRIVEND</owner>
         <bounds>
           <p0>
@@ -819,6 +856,7 @@
     <value>
       <sp>
         <name>Iliad Institute</name>
+        <function>School</function>
         <owner>ORG_LIFETREE</owner>
         <bounds>
           <p0>
@@ -841,6 +879,7 @@
     <value>
       <sp>
         <name>Judgment Central</name>
+        <function>Police Station</function>
         <owner>ORG_MEGAPOL</owner>
         <bounds>
           <p0>
@@ -863,6 +902,7 @@
     <value>
       <sp>
         <name>Law Control Station</name>
+        <function>Police Station</function>
         <owner>ORG_MEGAPOL</owner>
         <bounds>
           <p0>
@@ -885,6 +925,7 @@
     <value>
       <sp>
         <name>Lovecraft Block</name>
+        <function>Slums</function>
         <owner>ORG_MUTANT_ALLIANCE</owner>
         <bounds>
           <p0>
@@ -907,6 +948,7 @@
     <value>
       <sp>
         <name>Megaflyer One</name>
+        <function>Large Flyer Factory</function>
         <owner>ORG_MARSEC</owner>
         <bounds>
           <p0>
@@ -929,6 +971,7 @@
     <value>
       <sp>
         <name>Megaflyer Two</name>
+        <function>Large Flyer Factory</function>
         <owner>ORG_SUPERDYNAMICS</owner>
         <bounds>
           <p0>
@@ -951,6 +994,7 @@
     <value>
       <sp>
         <name>Megatribe Warriors</name>
+        <function>Astrodome</function>
         <owner>ORG_GRAVBALL_LEAGUE</owner>
         <bounds>
           <p0>
@@ -973,6 +1017,7 @@
     <value>
       <sp>
         <name>Megavision One</name>
+        <function>Sensodrome</function>
         <owner>ORG_SENSOVISION</owner>
         <bounds>
           <p0>
@@ -995,6 +1040,7 @@
     <value>
       <sp>
         <name>Megavision Two</name>
+        <function>Sensodrome</function>
         <owner>ORG_SENSOVISION</owner>
         <bounds>
           <p0>
@@ -1017,6 +1063,7 @@
     <value>
       <sp>
         <name>Meteor Kings</name>
+        <function>Astrodome</function>
         <owner>ORG_GRAVBALL_LEAGUE</owner>
         <bounds>
           <p0>
@@ -1039,6 +1086,7 @@
     <value>
       <sp>
         <name>Necronomicon Mansions</name>
+        <function>Slums</function>
         <owner>ORG_PSYKE</owner>
         <bounds>
           <p0>
@@ -1061,6 +1109,7 @@
     <value>
       <sp>
         <name>Nietzsche Institute</name>
+        <function>Corporate HQ</function>
         <owner>ORG_TECHNOCRATS</owner>
         <bounds>
           <p0>
@@ -1083,6 +1132,7 @@
     <value>
       <sp>
         <name>Nirvana Mansions</name>
+        <function>Luxury Apartments</function>
         <owner>ORG_GOVERNMENT</owner>
         <bounds>
           <p0>
@@ -1105,6 +1155,7 @@
     <value>
       <sp>
         <name>Oliver Twist Block</name>
+        <function>Slums</function>
         <owner>ORG_OSIRON</owner>
         <bounds>
           <p0>
@@ -1127,6 +1178,7 @@
     <value>
       <sp>
         <name>Parallax Tower</name>
+        <function>Offices</function>
         <owner>ORG_GOVERNMENT</owner>
         <bounds>
           <p0>
@@ -1149,6 +1201,7 @@
     <value>
       <sp>
         <name>Phoenix Sanatorium</name>
+        <function>Hospital</function>
         <owner>ORG_SANCTUARY_CLINIC</owner>
         <bounds>
           <p0>
@@ -1171,6 +1224,7 @@
     <value>
       <sp>
         <name>Ptolemy Apartments</name>
+        <function>Apartments</function>
         <owner>ORG_SENSOVISION</owner>
         <bounds>
           <p0>
@@ -1193,6 +1247,7 @@
     <value>
       <sp>
         <name>Quadrax Tower</name>
+        <function>Offices</function>
         <owner>ORG_NUTRIVEND</owner>
         <bounds>
           <p0>
@@ -1215,6 +1270,7 @@
     <value>
       <sp>
         <name>Recyclotorium One</name>
+        <function>Recyclotorium</function>
         <owner>ORG_EVONET</owner>
         <bounds>
           <p0>
@@ -1237,6 +1293,7 @@
     <value>
       <sp>
         <name>Rescue One</name>
+        <function>Rescue Station</function>
         <owner>ORG_MEGAPOL</owner>
         <bounds>
           <p0>
@@ -1259,6 +1316,7 @@
     <value>
       <sp>
         <name>Robot One</name>
+        <function>Robot Factory</function>
         <owner>ORG_CYBERWEB</owner>
         <bounds>
           <p0>
@@ -1281,6 +1339,7 @@
     <value>
       <sp>
         <name>Scrooge Mansions</name>
+        <function>Slums</function>
         <owner>ORG_DIABLO</owner>
         <bounds>
           <p0>
@@ -1303,6 +1362,7 @@
     <value>
       <sp>
         <name>Temple of the Apocalypse</name>
+        <function>Temple of Sirius</function>
         <owner>ORG_CULT_OF_SIRIUS</owner>
         <bounds>
           <p0>
@@ -1325,6 +1385,7 @@
     <value>
       <sp>
         <name>Temple of the Millenium</name>
+        <function>Temple of Sirius</function>
         <owner>ORG_CULT_OF_SIRIUS</owner>
         <bounds>
           <p0>
@@ -1347,6 +1408,7 @@
     <value>
       <sp>
         <name>Temple of the Visitors</name>
+        <function>Temple of Sirius</function>
         <owner>ORG_CULT_OF_SIRIUS</owner>
         <bounds>
           <p0>
@@ -1369,6 +1431,7 @@
     <value>
       <sp>
         <name>The Karpov Building</name>
+        <function>Corporate HQ</function>
         <owner>ORG_EXTROPIANS</owner>
         <bounds>
           <p0>
@@ -1391,6 +1454,7 @@
     <value>
       <sp>
         <name>The Ozone Building</name>
+        <function>Corporate HQ</function>
         <owner>ORG_CYBERWEB</owner>
         <bounds>
           <p0>
@@ -1413,6 +1477,7 @@
     <value>
       <sp>
         <name>The Senate</name>
+        <function>Senate</function>
         <owner>ORG_GOVERNMENT</owner>
         <bounds>
           <p0>
@@ -1435,6 +1500,7 @@
     <value>
       <sp>
         <name>Thomas More Tower</name>
+        <function>Slums</function>
         <owner>ORG_OSIRON</owner>
         <bounds>
           <p0>
@@ -1457,6 +1523,7 @@
     <value>
       <sp>
         <name>Transtellar Spacelines</name>
+        <function>Space Port</function>
         <owner>ORG_TRANSTELLAR</owner>
         <bounds>
           <p0>
@@ -1479,6 +1546,7 @@
     <value>
       <sp>
         <name>Uhuru Tower</name>
+        <function>Corporate HQ</function>
         <owner>ORG_SYNTHEMESH</owner>
         <bounds>
           <p0>
@@ -1501,6 +1569,7 @@
     <value>
       <sp>
         <name>Utopia Mansions</name>
+        <function>Luxury Apartments</function>
         <owner>ORG_LIFETREE</owner>
         <bounds>
           <p0>
@@ -1523,6 +1592,7 @@
     <value>
       <sp>
         <name>Warehouse Eight</name>
+        <function>Warehouse</function>
         <owner>ORG_SOLMINE</owner>
         <bounds>
           <p0>
@@ -1545,6 +1615,7 @@
     <value>
       <sp>
         <name>Warehouse Five</name>
+        <function>Warehouse</function>
         <owner>ORG_MARSEC</owner>
         <bounds>
           <p0>
@@ -1567,6 +1638,7 @@
     <value>
       <sp>
         <name>Warehouse Four</name>
+        <function>Warehouse</function>
         <owner>ORG_SOLMINE</owner>
         <bounds>
           <p0>
@@ -1589,6 +1661,7 @@
     <value>
       <sp>
         <name>Warehouse Nine</name>
+        <function>Warehouse</function>
         <owner>ORG_GOVERNMENT</owner>
         <bounds>
           <p0>
@@ -1611,6 +1684,7 @@
     <value>
       <sp>
         <name>Warehouse One</name>
+        <function>Warehouse</function>
         <owner>ORG_GOVERNMENT</owner>
         <bounds>
           <p0>
@@ -1633,6 +1707,7 @@
     <value>
       <sp>
         <name>Warehouse Seven</name>
+        <function>Warehouse</function>
         <owner>ORG_SUPERDYNAMICS</owner>
         <bounds>
           <p0>
@@ -1655,6 +1730,7 @@
     <value>
       <sp>
         <name>Warehouse Six</name>
+        <function>Warehouse</function>
         <owner>ORG_GOVERNMENT</owner>
         <bounds>
           <p0>
@@ -1677,6 +1753,7 @@
     <value>
       <sp>
         <name>Warehouse Three</name>
+        <function>Warehouse</function>
         <owner>ORG_OSIRON</owner>
         <bounds>
           <p0>
@@ -1699,6 +1776,7 @@
     <value>
       <sp>
         <name>Warehouse Two</name>
+        <function>Warehouse</function>
         <owner>ORG_GOVERNMENT</owner>
         <bounds>
           <p0>

@@ -138,9 +138,9 @@ sp<Control> TextButton::CopyTo(sp<Control> CopyParent)
 	return copy;
 }
 
-void TextButton::ConfigureFromXML(tinyxml2::XMLElement *Element)
+void TextButton::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 {
-	Control::ConfigureFromXML(Element);
+	Control::ConfigureSelfFromXML(Element);
 
 	if (Element->Attribute("text") != nullptr)
 	{

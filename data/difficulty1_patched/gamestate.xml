@@ -79,6 +79,7 @@
   <current_city />
   <current_base />
   <player>ORG_X-COM</player>
-  <time>0</time>
-  <day>0</day>
+  <time>
+    <ticks>0</ticks>
+  </time>
 </gamestate>

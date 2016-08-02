@@ -1,29 +1,14 @@
 #include "framework/data.h"
 #include "framework/framework.h"
 #include "game/state/city/building.h"
+#include "tools/extractors/common/ufo2p.h"
 #include "tools/extractors/extractors.h"
 
 namespace OpenApoc
 {
 
-#pragma pack(push, 1)
-struct bld_file_entry
-{
-	uint16_t name_idx;
-	uint16_t x0;
-	uint16_t x1;
-	uint16_t y0;
-	uint16_t y1;
-	uint16_t unknown1[95];
-	uint16_t owner_idx;
-	uint16_t unknown2[12];
-};
-#pragma pack(pop)
-
-static_assert(sizeof(struct bld_file_entry) == 226, "Unexpected bld_file_entry size");
-
 void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFileName,
-                                                 sp<City> city, bool useAlienNames)
+                                                 sp<City> city, bool alienBuilding)
 {
 	auto &data = this->ufo2p;
 
@@ -45,15 +30,17 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 		inFile.read((char *)&entry, sizeof(entry));
 
 		auto b = mksp<Building>();
-		if (useAlienNames)
+		if (alienBuilding)
 		{
-			LogWarning("Alien bld %d", entry.name_idx);
-			// FIXME: albld.bld seems to have unexpected name_idx?
+			LogWarning("Alien bld %d func %d", entry.name_idx, entry.function_idx);
+			// FIXME: albld.bld seems to have unexpected name_idx and function_idx?
 			b->name = data.alien_building_names->get(i);
+			b->function = b->name;
 		}
 		else
 		{
 			b->name = data.building_names->get(entry.name_idx);
+			b->function = data.building_functions->get(entry.function_idx);
 		}
 		b->owner = {&state, data.get_org_id(entry.owner_idx)};
 		// Our rects are exclusive of p2

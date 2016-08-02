@@ -25,7 +25,9 @@ set (GAMEUI_SOURCE_FILES
 	general/mainmenu.cpp
 	general/messagebox.cpp
 	general/optionsmenu.cpp
+	general/savemenu.cpp
 	general/videoscreen.cpp
+	general/messagelogscreen.cpp
 	tileview/tileview.cpp
 	ufopaedia/ufopaediacategoryview.cpp
 	ufopaedia/ufopaediaview.cpp
@@ -52,7 +54,9 @@ set (GAMEUI_HEADER_FILES
 	general/mainmenu.h
 	general/messagebox.h
 	general/optionsmenu.h
+	general/savemenu.h
 	general/videoscreen.h
+	general/messagelogscreen.h
 	tileview/tileview.h
 	ufopaedia/ufopaediacategoryview.h
 	ufopaedia/ufopaediaview.h

@@ -18,6 +18,7 @@ class Building : public StateObject<Building>
 {
   public:
 	UString name;
+	UString function;
 	StateRef<Organisation> owner;
 	Rect<int> bounds;
 	StateRef<BaseLayout> base_layout;

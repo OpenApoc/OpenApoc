@@ -227,7 +227,8 @@ FileSystem::FileSystem(std::vector<UString> paths)
 	{
 		if (!PHYSFS_mount(p.c_str(), "/", 0))
 		{
-			LogWarning("Failed to add resource dir \"%s\"", p.c_str());
+			LogWarning("Failed to add resource dir \"%s\", error: %s", p.c_str(),
+			           PHYSFS_getLastError());
 			continue;
 		}
 		else
@@ -246,6 +247,11 @@ FileSystem::~FileSystem() {}
 static bool CaseInsensitiveCompare(const UString &a, const UString &b)
 {
 	return a.toUpper() == b.toUpper();
+}
+
+static bool CaseInsensitiveCompareExtension(const UString &value, const UString &extension)
+{
+	return value.toUpper().endsWith(extension.toUpper());
 }
 
 static UString FindFile(const UString &basePath, std::list<UString> pathElements,
@@ -327,6 +333,34 @@ IFile FileSystem::open(const UString &path)
 	f.rdbuf(dynamic_cast<PhysfsIFileImpl *>(f.f.get()));
 	LogInfo("Loading \"%s\" from \"%s\"", path.c_str(), f.systemPath().c_str());
 	return f;
+}
+
+std::list<UString> FileSystem::enumerateDirectory(const UString &basePath,
+                                                  const UString &extension) const
+{
+
+	std::list<UString> result;
+	bool filterByExtension = !extension.empty();
+	UString uppercaseExtension = extension.toUpper();
+
+	char **elements = PHYSFS_enumerateFiles(basePath.c_str());
+	for (char **element = elements; *element != NULL; element++)
+	{
+		if (!filterByExtension)
+		{
+			result.push_back(*element);
+		}
+		else
+		{
+			const UString elementString = (*element);
+			if (elementString.toUpper().endsWith(uppercaseExtension))
+			{
+				result.push_back(elementString);
+			}
+		}
+	}
+	PHYSFS_freeList(elements);
+	return result;
 }
 
 } // namespace OpenApoc

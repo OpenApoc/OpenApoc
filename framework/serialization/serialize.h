@@ -2,15 +2,11 @@
 
 #include "library/sp.h"
 #include "library/strings.h"
-
-#include <exception>
 #include <iterator>
-#include <list>
 #include <vector>
 
 namespace OpenApoc
 {
-
 class SerializationNode : public std::enable_shared_from_this<SerializationNode>
 {
   public:
@@ -46,6 +42,12 @@ class SerializationNode : public std::enable_shared_from_this<SerializationNode>
 
 	virtual int getValueInt() = 0;
 	virtual void setValueInt(int i) = 0;
+
+	virtual unsigned long long getValueUInt64() = 0;
+	virtual void setValueUInt64(unsigned long long i) = 0;
+
+	virtual long long getValueInt64() = 0;
+	virtual void setValueInt64(long long i) = 0;
 
 	virtual float getValueFloat() = 0;
 	virtual void setValueFloat(float f) = 0;

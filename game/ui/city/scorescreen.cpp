@@ -2,15 +2,22 @@
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "game/state/gamestate.h"
 
 namespace OpenApoc
 {
 
-ScoreScreen::ScoreScreen() : Stage(), menuform(ui().GetForm("FORM_SCORE_SCREEN")) {}
+ScoreScreen::ScoreScreen(sp<GameState> state)
+    : Stage(), menuform(ui().GetForm("FORM_SCORE_SCREEN")), state(state)
+{
+}
 
 ScoreScreen::~ScoreScreen() {}
 
-void ScoreScreen::Begin() {}
+void ScoreScreen::Begin()
+{
+	menuform->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
+}
 
 void ScoreScreen::Pause() {}
 

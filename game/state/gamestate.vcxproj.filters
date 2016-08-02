@@ -111,6 +111,12 @@
     <ClCompile Include="rules\ufo_growth.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="savemanager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gametime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agent.h">
@@ -210,6 +216,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="rules\ufo_incursion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="savemanager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gametime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

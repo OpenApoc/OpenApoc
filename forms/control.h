@@ -33,6 +33,9 @@ class Control : public std::enable_shared_from_this<Control>
 
 	std::map<FormEventType, std::list<std::function<void(FormsEvent *e)>>> callbacks;
 
+	// Configures children of element after it was configured, see ConfigureFromXML
+	void ConfigureChildrenFromXml(tinyxml2::XMLElement *Element);
+
   protected:
 	sp<Palette> palette;
 	wp<Control> owningControl;
@@ -47,7 +50,11 @@ class Control : public std::enable_shared_from_this<Control>
 	virtual bool IsFocused() const;
 
 	void ResolveLocation();
-	virtual void ConfigureFromXML(tinyxml2::XMLElement *Element);
+
+	// Loads control and all subcontrols from xml
+	void ConfigureFromXML(tinyxml2::XMLElement *Element);
+	// configures current element from xml element (without children)
+	virtual void ConfigureSelfFromXML(tinyxml2::XMLElement *Element);
 
 	sp<Control> GetRootControl();
 
@@ -110,6 +117,9 @@ class Control : public std::enable_shared_from_this<Control>
 	sp<Control> GetAncestor(sp<Control> Parent);
 
 	Vec2<int> GetLocationOnScreen() const;
+
+	void setRelativeWidth(float widthPercent);
+	void setRelativeHeight(float widthPercent);
 
 	virtual sp<Control> CopyTo(sp<Control> CopyParent);
 

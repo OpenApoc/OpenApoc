@@ -125,9 +125,9 @@ sp<Control> Graphic::CopyTo(sp<Control> CopyParent)
 	return copy;
 }
 
-void Graphic::ConfigureFromXML(tinyxml2::XMLElement *Element)
+void Graphic::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 {
-	Control::ConfigureFromXML(Element);
+	Control::ConfigureSelfFromXML(Element);
 	tinyxml2::XMLElement *subnode;
 	UString attribvalue;
 

@@ -7,6 +7,7 @@
 #include "game/ui/general/difficultymenu.h"
 #include "game/ui/general/loadingscreen.h"
 #include "game/ui/general/optionsmenu.h"
+#include "game/ui/general/savemenu.h"
 #include "version.h"
 
 namespace OpenApoc
@@ -70,20 +71,9 @@ void MainMenu::EventOccurred(Event *e)
 		}
 		if (e->Forms().RaisedBy->Name == "BUTTON_LOADGAME")
 		{
-			// FIXME: Save game selector
-			auto state = mksp<GameState>();
-			UString savePath = "save";
-			auto loadTask = fw().threadPool->enqueue([state, savePath]() {
-				if (state->loadGame(savePath) == false)
-				{
-					LogError("Failed to load '%s'", savePath.c_str());
-					return;
-				}
-				state->initState();
-			});
 			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<LoadingScreen>(
-			    std::move(loadTask), [state]() -> sp<Stage> { return mksp<CityView>(state); });
+			stageCmd.nextStage = mksp<SaveMenu>(SaveMenuAction::LoadNewGame, nullptr);
+			return;
 		}
 	}
 }

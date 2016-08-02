@@ -2,6 +2,7 @@
 // Disable automatic #pragma linking for boost - only enabled in msvc and that should provide boost
 // symbols as part of the module that uses it
 #define BOOST_ALL_NO_LIB
+#include <boost/algorithm/string/predicate.hpp>
 #include <boost/locale.hpp>
 
 #ifdef DUMP_TRANSLATION_STRINGS
@@ -177,6 +178,11 @@ UniChar UString::u8Char(char c)
 }
 
 int UString::compare(const UString &other) const { return this->u8Str.compare(other.u8Str); }
+
+bool UString::endsWith(const UString &suffix) const
+{
+	return boost::ends_with(str(), suffix.str());
+}
 
 UString::const_iterator UString::begin() const { return UString::const_iterator(*this, 0); }
 

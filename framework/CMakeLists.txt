@@ -19,7 +19,10 @@ set (FRAMEWORK_SOURCE_FILES
 	palette.cpp
 	physfs_fs.cpp
 	renderer.cpp
-	serialize.cpp
+	serialization/serialize.cpp
+	serialization/providers/filedataprovider.cpp
+	serialization/providers/providerwithchecksum.cpp
+	serialization/providers/zipdataprovider.cpp
 	sound.cpp
 	stagestack.cpp
 	trace.cpp
@@ -44,7 +47,11 @@ set (FRAMEWORK_HEADER_FILES
 	renderer.h
 	renderer_interface.h
 	sampleloader_interface.h
-	serialize.h
+	serialization/serialize.h
+	serialization/providers/filedataprovider.h
+	serialization/providers/providerwithchecksum.h
+	serialization/providers/zipdataprovider.h
+	serialization/providers/serializationdataprovider.h
 	sound.h
 	sound_interface.h
 	stage.h
@@ -262,6 +269,7 @@ else()
 endif()
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_Library)
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibSmacker)
+target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibPugixml)
 
 # Physfs provides .iso reader & overlays etc.
 pkg_check_modules(PC_PHYSFS REQUIRED physfs>=2.0.0)

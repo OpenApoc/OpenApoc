@@ -25,12 +25,22 @@ void DifficultyMenu::Resume() {}
 
 void DifficultyMenu::Finish() {}
 
-static void loadGame(sp<GameState> state, UString initialStatePath)
+std::future<sp<GameState>> loadGame(const UString &path)
 {
-	state->loadGame(initialStatePath);
-	state->startGame();
-	state->initState();
-	return;
+	auto loadTask = fw().threadPool->enqueue([path]() -> sp<GameState> {
+
+		auto state = mksp<GameState>();
+		if (!state->loadGame(path))
+		{
+			LogError("Failed to load '%s'", path.c_str());
+			return nullptr;
+		}
+		state->startGame();
+		state->initState();
+		return state;
+	});
+
+	return loadTask;
 }
 
 void DifficultyMenu::EventOccurred(Event *e)
@@ -75,16 +85,8 @@ void DifficultyMenu::EventOccurred(Event *e)
 			return;
 		}
 
-		auto state = mksp<GameState>();
-		auto loadTask = fw().threadPool->enqueue([state, initialStatePath]() {
-			state->loadGame(initialStatePath);
-			state->startGame();
-			state->initState();
-		});
-
-		stageCmd.cmd = StageCmd::Command::REPLACE;
-		stageCmd.nextStage = mksp<LoadingScreen>(
-		    std::move(loadTask), [state]() -> sp<Stage> { return mksp<CityView>(state); });
+		stageCmd.cmd = StageCmd::Command::PUSH;
+		stageCmd.nextStage = mksp<LoadingScreen>(loadGame(initialStatePath));
 		return;
 	}
 }

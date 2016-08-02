@@ -298,82 +298,21 @@ void Control::Update()
 
 void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 {
+	ConfigureSelfFromXML(Element);
+	ConfigureChildrenFromXml(Element);
+}
+
+void Control::ConfigureChildrenFromXml(tinyxml2::XMLElement *Element)
+{
 	UString nodename;
-	UString specialpositionx = "";
-	UString specialpositiony = "";
 	UString attribvalue;
-
-	if (Element->Attribute("id") != nullptr && UString(Element->Attribute("id")) != "")
-	{
-		nodename = Element->Attribute("id");
-		this->Name = nodename;
-	}
-
-	if (Element->Attribute("visible") != nullptr && UString(Element->Attribute("visible")) != "")
-	{
-		UString vistxt = Element->Attribute("visible");
-		vistxt = vistxt.substr(0, 1).toUpper();
-		this->Visible = (vistxt == "Y" || vistxt == "T");
-	}
-
 	tinyxml2::XMLElement *node;
 	for (node = Element->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
 	{
 		nodename = node->Name();
 
-		if (nodename == "palette")
-		{
-			auto pal = fw().data->load_palette(node->GetText());
-			if (!pal)
-			{
-				LogError("Control referenced palette \"%s\" that cannot be loaded",
-				         node->GetText());
-			}
-			this->palette = pal;
-		}
-
-		else if (nodename == "backcolour")
-		{
-			if (node->Attribute("a") != nullptr && UString(node->Attribute("a")) != "")
-			{
-				this->BackgroundColour = Colour{
-				    Strings::ToU8(node->Attribute("r")), Strings::ToU8(node->Attribute("g")),
-				    Strings::ToU8(node->Attribute("b")), Strings::ToU8(node->Attribute("a"))};
-			}
-			else
-			{
-				this->BackgroundColour =
-				    Colour{Strings::ToU8(node->Attribute("r")), Strings::ToU8(node->Attribute("g")),
-				           Strings::ToU8(node->Attribute("b"))};
-			}
-		}
-		else if (nodename == "position")
-		{
-			if (Strings::IsInteger(node->Attribute("x")))
-			{
-				Location.x = Strings::ToInteger(node->Attribute("x"));
-			}
-			else
-			{
-				specialpositionx = node->Attribute("x");
-			}
-			if (Strings::IsInteger(node->Attribute("y")))
-			{
-				Location.y = Strings::ToInteger(node->Attribute("y"));
-			}
-			else
-			{
-				specialpositiony = node->Attribute("y");
-			}
-		}
-		else if (nodename == "size")
-		{
-			Size.x = Strings::ToInteger(node->Attribute("width"));
-			Size.y = Strings::ToInteger(node->Attribute("height"));
-		}
-
 		// Child controls
-		else if (nodename == "control")
+		if (nodename == "control")
 		{
 			auto c = this->createChild<Control>();
 			c->ConfigureFromXML(node);
@@ -464,8 +403,163 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 			te->ConfigureFromXML(node);
 		}
 	}
+}
+
+void Control::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
+{
+	UString nodename;
+	UString attribvalue;
+	UString specialpositionx = "";
+	UString specialpositiony = "";
+
+	if (Element->Attribute("id") != nullptr && UString(Element->Attribute("id")) != "")
+	{
+		nodename = Element->Attribute("id");
+		this->Name = nodename;
+	}
+
+	if (Element->Attribute("visible") != nullptr && UString(Element->Attribute("visible")) != "")
+	{
+		UString vistxt = Element->Attribute("visible");
+		vistxt = vistxt.substr(0, 1).toUpper();
+		this->Visible = (vistxt == "Y" || vistxt == "T");
+	}
+
+	if (Element->Attribute("border") != nullptr && UString(Element->Attribute("border")) != "")
+	{
+		UString vistxt = Element->Attribute("border");
+		vistxt = vistxt.substr(0, 1).toUpper();
+		this->showBounds = (vistxt == "Y" || vistxt == "T");
+	}
 
 	auto parentControl = this->GetParent();
+	tinyxml2::XMLElement *node;
+	for (node = Element->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
+	{
+		nodename = node->Name();
+
+		if (nodename == "palette")
+		{
+			auto pal = fw().data->load_palette(node->GetText());
+			if (!pal)
+			{
+				LogError("Control referenced palette \"%s\" that cannot be loaded",
+				         node->GetText());
+			}
+			this->palette = pal;
+		}
+
+		else if (nodename == "backcolour")
+		{
+			if (node->Attribute("a") != nullptr && UString(node->Attribute("a")) != "")
+			{
+				this->BackgroundColour = Colour{
+				    Strings::ToU8(node->Attribute("r")), Strings::ToU8(node->Attribute("g")),
+				    Strings::ToU8(node->Attribute("b")), Strings::ToU8(node->Attribute("a"))};
+			}
+			else
+			{
+				this->BackgroundColour =
+				    Colour{Strings::ToU8(node->Attribute("r")), Strings::ToU8(node->Attribute("g")),
+				           Strings::ToU8(node->Attribute("b"))};
+			}
+		}
+		else if (nodename == "position")
+		{
+			if (Strings::IsInteger(node->Attribute("x")))
+			{
+				Location.x = Strings::ToInteger(node->Attribute("x"));
+			}
+			else
+			{
+				specialpositionx = node->Attribute("x");
+			}
+			if (Strings::IsInteger(node->Attribute("y")))
+			{
+				Location.y = Strings::ToInteger(node->Attribute("y"));
+			}
+			else
+			{
+				specialpositiony = node->Attribute("y");
+			}
+		}
+		else if (nodename == "size")
+		{
+			UString specialsizex = "";
+			UString specialsizey = "";
+
+			// if size ends with % this means that it is special (percentage) size
+			UString width = node->Attribute("width");
+			if (Strings::IsInteger(width) && !(width.str().back() == '%'))
+			{
+				Size.x = Strings::ToInteger(width);
+			}
+			else
+			{
+				specialsizex = width;
+			}
+
+			UString height = node->Attribute("height");
+			if (Strings::IsInteger(height) && !(height.str().back() == '%'))
+			{
+				Size.y = Strings::ToInteger(height);
+			}
+			else
+			{
+				specialsizey = height;
+			}
+
+			if (specialsizex != "")
+			{
+				if (specialsizex.str().back() == '%')
+				{
+					// Skip % sign at the end
+					auto sizeRatio = Strings::ToFloat(specialsizex) / 100.0f;
+					setRelativeWidth(sizeRatio);
+				}
+				else
+				{
+					LogWarning("Control \"%s\" has not supported size x value \"%s\"",
+					           this->Name.c_str(), specialsizex.c_str());
+				}
+			}
+
+			if (specialsizey != "")
+			{
+				if (specialsizey.str().back() == '%')
+				{
+					auto sizeRatio = Strings::ToFloat(specialsizey) / 100.0f;
+					setRelativeHeight(sizeRatio);
+				}
+				else if (specialsizey == "item")
+				{
+					// get size y for parent control
+					sp<Control> parent = parentControl;
+					sp<ListBox> listBox;
+					while (parent != nullptr &&
+					       !(listBox = std::dynamic_pointer_cast<ListBox>(parent)))
+					{
+						parent = parent->GetParent();
+					}
+					if (listBox != nullptr)
+					{
+						Size.y = listBox->ItemSize;
+					}
+					else
+					{
+						LogWarning(
+						    "Control \"%s\" with \"item\" size.y does not have ListBox parent ",
+						    this->Name.c_str());
+					}
+				}
+				else
+				{
+					LogWarning("Control \"%s\" has not supported size y value \"%s\"",
+					           this->Name.c_str(), specialsizey.c_str());
+				}
+			}
+		}
+	}
 
 	if (specialpositionx != "")
 	{
@@ -526,6 +620,7 @@ void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
 			}
 		}
 	}
+
 	LogInfo("Control \"%s\" has %zu subcontrols (%d, %d, %d, %d)", this->Name.c_str(),
 	        Controls.size(), Location.x, Location.y, Size.x, Size.y);
 }
@@ -606,6 +701,40 @@ Vec2<int> Control::GetLocationOnScreen() const
 {
 	Vec2<int> r(resolvedLocation.x, resolvedLocation.y);
 	return r;
+}
+
+void Control::setRelativeWidth(float widthFactor)
+{
+	if (widthFactor == 0)
+	{
+		Size.x = 0;
+	}
+	auto parent = GetParent();
+	if (parent != nullptr)
+	{
+		Size.x = (int)(parent->Size.x * widthFactor);
+	}
+	else
+	{
+		Size.x = (int)(fw().Display_GetWidth() * widthFactor);
+	}
+}
+
+void Control::setRelativeHeight(float heightFactor)
+{
+	if (heightFactor == 0)
+	{
+		Size.y = 0;
+	}
+	auto parent = GetParent();
+	if (parent != nullptr)
+	{
+		Size.y = (int)(parent->Size.y * heightFactor);
+	}
+	else
+	{
+		Size.y = (int)(fw().Display_GetHeight() * heightFactor);
+	}
 }
 
 sp<Control> Control::CopyTo(sp<Control> CopyParent)

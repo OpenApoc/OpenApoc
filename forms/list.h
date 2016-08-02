@@ -45,7 +45,7 @@ class ListBox : public Control
 	sp<Control> operator[](int Index);
 
 	sp<Control> CopyTo(sp<Control> CopyParent) override;
-	void ConfigureFromXML(tinyxml2::XMLElement *Element) override;
+	void ConfigureSelfFromXML(tinyxml2::XMLElement *Element) override;
 
 	template <typename T> sp<T> GetHoveredData() const
 	{

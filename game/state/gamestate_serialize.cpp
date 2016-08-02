@@ -1,7 +1,7 @@
 #include "game/state/gamestate.h"
 #include "framework/framework.h"
 #include "framework/image.h"
-#include "framework/serialize.h"
+#include "framework/serialization/serialize.h"
 #include "framework/trace.h"
 #include "game/state/base/facility.h"
 #include "game/state/city/baselayout.h"
@@ -66,6 +66,20 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, int &val)
 	if (!node)
 		return;
 	val = node->getValueInt();
+}
+
+void serializeIn(const GameState *state, sp<SerializationNode> node, uint64_t &val)
+{
+	if (!node)
+		return;
+	val = node->getValueUInt64();
+}
+
+void serializeIn(const GameState *state, sp<SerializationNode> node, int64_t &val)
+{
+	if (!node)
+		return;
+	val = node->getValueInt64();
 }
 
 void serializeIn(const GameState *state, sp<SerializationNode> node, bool &val)
@@ -558,6 +572,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	if (!node)
 		return;
 	serializeIn(state, node->getNode("name"), b.name);
+	serializeIn(state, node->getNode("function"), b.function);
 	serializeIn(state, node->getNode("owner"), b.owner);
 	serializeIn(state, node->getNode("bounds"), b.bounds);
 	serializeIn(state, node->getNode("base_layout"), b.base_layout);
@@ -837,6 +852,16 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("num_labs_created"), r.num_labs_created);
 }
 
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, GameTime &t)
+{
+	if (!node)
+		return;
+
+	unsigned int ticks = 0;
+	serializeIn(state, node->getNode("ticks"), ticks);
+	t = GameTime(ticks);
+}
+
 void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &s)
 {
 	if (!node)
@@ -862,8 +887,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &
 	serializeIn(state, node->getNode("player"), s.player);
 	serializeIn(state, node->getNode("current_city"), s.current_city);
 	serializeIn(state, node->getNode("current_base"), s.current_base);
-	serializeIn(state, node->getNode("time"), s.time);
-	serializeIn(state, node->getNode("day"), s.day);
+	serializeIn(state, node->getNodeOpt("time"), s.gameTime);
 }
 
 void serializeOut(sp<SerializationNode> node, const UString &string) { node->setValue(string); }
@@ -878,6 +902,10 @@ void serializeOut(sp<SerializationNode> node, const unsigned char &val)
 void serializeOut(sp<SerializationNode> node, const float &val) { node->setValueFloat(val); }
 
 void serializeOut(sp<SerializationNode> node, const int &val) { node->setValueInt(val); }
+
+void serializeOut(sp<SerializationNode> node, const uint64_t &val) { node->setValueUInt64(val); }
+
+void serializeOut(sp<SerializationNode> node, const int64_t &val) { node->setValueInt64(val); }
 
 void serializeOut(sp<SerializationNode> node, const bool &val) { node->setValueBool(val); }
 
@@ -1217,6 +1245,7 @@ template <> void serializeOut(sp<SerializationNode> node, const BaseLayout &l)
 template <> void serializeOut(sp<SerializationNode> node, const Building &b)
 {
 	serializeOut(node->addNode("name"), b.name);
+	serializeOut(node->addNode("function"), b.function);
 	serializeOut(node->addNode("owner"), b.owner);
 	serializeOut(node->addNode("bounds"), b.bounds);
 	serializeOut(node->addNode("base_layout"), b.base_layout);
@@ -1480,6 +1509,11 @@ template <> void serializeOut(sp<SerializationNode> node, const ResearchState &r
 	serializeOut(node->addNode("num_labs_created"), r.num_labs_created);
 }
 
+void serializeOut(sp<SerializationNode> node, const GameTime &time)
+{
+	serializeOut(node->addNode("ticks"), time.getTicks());
+}
+
 void serializeOut(sp<SerializationNode> node, const GameState &state)
 {
 	serializeOut(node->addNode("lastVehicle"), state.lastVehicle);
@@ -1503,8 +1537,7 @@ void serializeOut(sp<SerializationNode> node, const GameState &state)
 	serializeOut(node->addNode("current_city"), state.current_city);
 	serializeOut(node->addNode("current_base"), state.current_base);
 	serializeOut(node->addNode("player"), state.player);
-	serializeOut(node->addNode("time"), state.time);
-	serializeOut(node->addNode("day"), state.day);
+	serializeOut(node->addNode("time"), state.gameTime);
 }
 
 } // anonymous namespace
@@ -1513,17 +1546,12 @@ bool GameState::saveGame(const UString &path, bool pack)
 {
 	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
-	try
+	if (serialize(archive))
 	{
-
-		serializeOut(archive->newRoot("", "gamestate"), *this);
+		archive->write(path, pack);
+		return true;
 	}
-	catch (SerializationException &e)
-	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().c_str());
-	}
-	archive->write(path, pack);
-	return true;
+	return false;
 }
 
 bool GameState::loadGame(const UString &path)
@@ -1537,6 +1565,25 @@ bool GameState::loadGame(const UString &path)
 		return false;
 	}
 
+	return deserialize(archive);
+}
+
+bool GameState::serialize(sp<SerializationArchive> archive) const
+{
+	try
+	{
+		serializeOut(archive->newRoot("", "gamestate"), *this);
+	}
+	catch (SerializationException &e)
+	{
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().c_str());
+		return false;
+	}
+	return true;
+}
+
+bool GameState::deserialize(const sp<SerializationArchive> archive)
+{
 	try
 	{
 		serializeIn(this, archive->getRoot("", "gamestate"), *this);

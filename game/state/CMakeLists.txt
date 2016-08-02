@@ -19,6 +19,7 @@ set (GAMESTATE_SOURCE_FILES
 	city/vequipment.cpp
 	gamestate.cpp
 	gamestate_serialize.cpp
+	gametime.cpp
 	organisation.cpp
 	research.cpp
 	rules/doodad_type.cpp
@@ -28,6 +29,7 @@ set (GAMESTATE_SOURCE_FILES
 	rules/ufo_incursion.cpp
 	rules/vehicle_type_rules.cpp
 	rules/vequipment_rules.cpp
+	savemanager.cpp
 	tileview/tile.cpp
 	tileview/tileobject.cpp
 	tileview/tileobject_doodad.cpp
@@ -52,6 +54,7 @@ set (GAMESTATE_HEADER_FILES
 	city/vehiclemission.h
 	city/vequipment.h
 	gamestate.h
+	gametime.h
 	organisation.h
 	research.h
 	rules/doodad_type.h
@@ -62,6 +65,7 @@ set (GAMESTATE_HEADER_FILES
 	rules/ufo_incursion.h
 	rules/vehicle_type.h
 	rules/vequipment_type.h
+	savemanager.h
 	stateobject.h
 	tileview/tile.h
 	tileview/tileobject.h

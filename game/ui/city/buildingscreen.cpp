@@ -3,15 +3,18 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "game/state/city/building.h"
+#include "game/state/gamestate.h"
 
 namespace OpenApoc
 {
 
-BuildingScreen::BuildingScreen(sp<Building> building)
-    : Stage(), menuform(ui().GetForm("FORM_BUILDING_SCREEN")), building(building)
+BuildingScreen::BuildingScreen(sp<GameState> state, sp<Building> building)
+    : Stage(), menuform(ui().GetForm("FORM_BUILDING_SCREEN")), state(state), building(building)
 {
-	auto nameLabel = menuform->FindControlTyped<Label>("LABEL_BUILDING_NAME");
-	nameLabel->SetText(tr(building->name));
+	menuform->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
+	menuform->FindControlTyped<Label>("TEXT_BUILDING_NAME")->SetText(tr(building->name));
+	menuform->FindControlTyped<Label>("TEXT_OWNER_NAME")->SetText(tr(building->owner->name));
+	menuform->FindControlTyped<Label>("TEXT_BUILDING_FUNCTION")->SetText(tr(building->function));
 }
 
 BuildingScreen::~BuildingScreen() {}

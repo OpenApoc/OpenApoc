@@ -2,18 +2,22 @@
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
+#include "game/state/gamestate.h"
 
 namespace OpenApoc
 {
 
-InfiltrationScreen::InfiltrationScreen()
-    : Stage(), menuform(ui().GetForm("FORM_INFILTRATION_SCREEN"))
+InfiltrationScreen::InfiltrationScreen(sp<GameState> state)
+    : Stage(), menuform(ui().GetForm("FORM_INFILTRATION_SCREEN")), state(state)
 {
 }
 
 InfiltrationScreen::~InfiltrationScreen() {}
 
-void InfiltrationScreen::Begin() {}
+void InfiltrationScreen::Begin()
+{
+	menuform->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
+}
 
 void InfiltrationScreen::Pause() {}
 
