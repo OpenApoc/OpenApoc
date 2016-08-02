@@ -409,7 +409,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 				std::uniform_int_distribution<int> xyPos(25, 115);
 				setPathTo(v, {xyPos(state.rng), xyPos(state.rng), v.altitude});
 			}
-			break;
+			return false;
 		case MissionType::AttackVehicle:
 		case MissionType::FollowVehicle:
 		{
@@ -502,6 +502,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 			LogWarning("TODO: Implement");
 			return false;
 	}
+	return false;
 }
 
 void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks)

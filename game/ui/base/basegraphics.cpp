@@ -211,16 +211,25 @@ sp<RGBImage> BaseGraphics::drawMiniBase(sp<Base> base, FacilityHighlight highlig
 
 sp<RGBImage> BaseGraphics::drawMinimap(sp<GameState> state, sp<Building> selected)
 {
+	// FIXME: add city ref to building
+	auto city = state->cities["CITYMAP_HUMAN"];
 	auto minimap = mksp<RGBImage>(Vec2<unsigned int>{100, 100});
 	RGBImageLock l(minimap);
 
+	// Offset for 'endless grass' outside of city borders
+	static Vec2<int> offset(20, 20);
+
 	// Draw the city tiles
 	std::map<Vec2<int>, int> minimap_z;
-	for (auto &pair : state->cities["CITYMAP_HUMAN"]->initial_tiles)
+	for (auto &pair : city->initial_tiles)
 	{
 		auto &pos = pair.first;
-		Vec2<int> pos2d = {pos.x, pos.y};
 		auto &tile = pair.second;
+		if (pos.x < offset.x || pos.x > city->map->size.x - offset.x || pos.y < offset.y ||
+		    pos.y > city->map->size.y - offset.y)
+			continue;
+
+		Vec2<int> pos2d = {pos.x - offset.x, pos.y - offset.y};
 		auto it = minimap_z.find(pos2d);
 		if (it == minimap_z.end() || it->second < pos.z)
 		{
@@ -239,7 +248,7 @@ sp<RGBImage> BaseGraphics::drawMinimap(sp<GameState> state, sp<Building> selecte
 		{
 			for (int x = base->building->bounds.p0.x; x < base->building->bounds.p1.x; x++)
 			{
-				l.set({x, y}, {255, 255, 0, 255});
+				l.set({x - offset.x, y - offset.y}, {255, 255, 0, 255});
 			}
 		}
 	}
@@ -249,7 +258,7 @@ sp<RGBImage> BaseGraphics::drawMinimap(sp<GameState> state, sp<Building> selecte
 	{
 		for (int x = selected->bounds.p0.x; x < selected->bounds.p1.x; x++)
 		{
-			l.set({x, y}, {255, 0, 0, 255});
+			l.set({x - offset.x, y - offset.y}, {255, 0, 0, 255});
 		}
 	}
 
