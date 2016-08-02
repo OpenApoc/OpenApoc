@@ -38,6 +38,8 @@
     <ClCompile Include="rules\doodad_type.cpp" />
     <ClCompile Include="rules\facility_type.cpp" />
     <ClCompile Include="rules\scenery_tile_type.cpp" />
+    <ClCompile Include="rules\ufo_growth.cpp" />
+    <ClCompile Include="rules\ufo_incursion.cpp" />
     <ClCompile Include="rules\vehicle_type_rules.cpp" />
     <ClCompile Include="rules\vequipment_rules.cpp" />
     <ClCompile Include="tileview\tile.cpp" />
@@ -70,6 +72,8 @@
     <ClInclude Include="rules\facility_type.h" />
     <ClInclude Include="rules\resource_aliases.h" />
     <ClInclude Include="rules\scenery_tile_type.h" />
+    <ClInclude Include="rules\ufo_growth.h" />
+    <ClInclude Include="rules\ufo_incursion.h" />
     <ClInclude Include="rules\vehicle_type.h" />
     <ClInclude Include="rules\vequipment_type.h" />
     <ClInclude Include="stateobject.h" />

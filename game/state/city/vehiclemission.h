@@ -46,7 +46,7 @@ class VehicleMission
 	static VehicleMission *followVehicle(Vehicle &v, StateRef<Vehicle> target);
 	static VehicleMission *snooze(Vehicle &v, unsigned int ticks);
 	static VehicleMission *crashLand(Vehicle &v);
-	static VehicleMission *patrol(Vehicle &v);
+	static VehicleMission *patrol(Vehicle &v, unsigned int counter = 10);
 
 	UString getName();
 

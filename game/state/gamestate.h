@@ -8,6 +8,8 @@
 #include "game/state/research.h"
 #include "game/state/rules/doodad_type.h"
 #include "game/state/rules/facility_type.h"
+#include "game/state/rules/ufo_growth.h"
+#include "game/state/rules/ufo_incursion.h"
 #include "game/state/rules/vehicle_type.h"
 #include "game/state/rules/vequipment_type.h"
 #include "game/state/stateobject.h"
@@ -40,6 +42,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	std::map<UString, sp<DoodadType>> doodad_types;
 	std::map<UString, sp<VEquipmentType>> vehicle_equipment;
 	std::map<UString, sp<BaseLayout>> base_layouts;
+	std::map<UString, sp<UFOGrowth>> ufo_growth_lists;
+	std::map<UString, sp<UFOIncursion>> ufo_incursions;
 	std::map<UString, sp<Base>> player_bases;
 	std::map<UString, sp<City>> cities;
 	std::map<UString, sp<Vehicle>> vehicles;

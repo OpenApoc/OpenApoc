@@ -533,6 +533,26 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("baseLift"), l.baseLift);
 }
 
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, UFOGrowth &g)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("week"), g.week);
+	serializeIn(state, node->getNode("vehicleTypeList"), g.vehicleTypeList);
+}
+
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, UFOIncursion &i)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("primaryMission"), i.primaryMission,
+	            UFOIncursion::primaryMissionMap);
+	serializeIn(state, node->getNode("primaryList"), i.primaryList);
+	serializeIn(state, node->getNode("escortList"), i.escortList);
+	serializeIn(state, node->getNode("attackList"), i.attackList);
+	serializeIn(state, node->getNode("priority"), i.priority);
+}
+
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Building &b)
 {
 	if (!node)
@@ -828,6 +848,8 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &
 	serializeIn(state, node->getSection("doodad_types"), s.doodad_types);
 	serializeIn(state, node->getSection("vehicle_equipment"), s.vehicle_equipment);
 	serializeInSectionMap(state, node->getSection("cities"), s.cities);
+	serializeIn(state, node->getSection("ufo_growth_lists"), s.ufo_growth_lists);
+	serializeIn(state, node->getSection("ufo_incursions"), s.ufo_incursions);
 	serializeIn(state, node->getSection("base_layouts"), s.base_layouts);
 	serializeIn(state, node->getSection("player_bases"), s.player_bases);
 	serializeIn(state, node->getSection("vehicles"), s.vehicles);
@@ -1203,6 +1225,22 @@ template <> void serializeOut(sp<SerializationNode> node, const Building &b)
 	serializeOut(node->addNode("landed_vehicles"), b.landed_vehicles);
 }
 
+template <> void serializeOut(sp<SerializationNode> node, const UFOGrowth &g)
+{
+	serializeOut(node->addNode("week"), g.week);
+	serializeOut(node->addNode("vehicleTypeList"), g.vehicleTypeList);
+}
+
+template <> void serializeOut(sp<SerializationNode> node, const UFOIncursion &i)
+{
+	serializeOut(node->addNode("primaryMission"), i.primaryMission,
+	             UFOIncursion::primaryMissionMap);
+	serializeOut(node->addNode("primaryList"), i.primaryList);
+	serializeOut(node->addNode("escortList"), i.escortList);
+	serializeOut(node->addNode("attackList"), i.attackList);
+	serializeOut(node->addNode("priority"), i.priority);
+}
+
 template <> void serializeOut(sp<SerializationNode> node, const Scenery &s)
 {
 	serializeOut(node->addNode("type"), s.type);
@@ -1451,6 +1489,8 @@ void serializeOut(sp<SerializationNode> node, const GameState &state)
 	serializeOut(node->addSection("doodad_types"), state.doodad_types);
 	serializeOut(node->addSection("vehicle_equipment"), state.vehicle_equipment);
 	serializeOutSectionMap(node->addSection("cities"), state.cities);
+	serializeOut(node->addSection("ufo_growth_lists"), state.ufo_growth_lists);
+	serializeOut(node->addSection("ufo_incursions"), state.ufo_incursions);
 	serializeOut(node->addSection("base_layouts"), state.base_layouts);
 	serializeOut(node->addSection("player_bases"), state.player_bases);
 	serializeOut(node->addSection("vehicles"), state.vehicles);

@@ -4,6 +4,8 @@
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="doodad_types.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ufopaedia.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_generator.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ufo_growth_lists.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ufo_incursions.xml"/>
   <initial_agents>
     <entry>
       <key>soldier</key>

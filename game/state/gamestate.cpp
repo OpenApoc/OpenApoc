@@ -139,7 +139,7 @@ void GameState::startGame()
 	auto buildingIt = this->cities["CITYMAP_HUMAN"]->buildings.begin();
 
 	// Create some random vehicles
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		for (auto vehicleType : this->vehicle_types)
 		{
@@ -309,11 +309,11 @@ void GameState::updateEndOfDay()
 		StateRef<City> city = {this, "CITYMAP_HUMAN"};
 
 		auto portal = city->portals.begin();
-		std::uniform_int_distribution<int> portal_rng(0, city->portals.size());
+		std::uniform_int_distribution<int> portal_rng(0, city->portals.size() - 1);
 		std::advance(portal, portal_rng(this->rng));
 
 		auto bld_iter = city->buildings.begin();
-		std::uniform_int_distribution<int> bld_rng(0, city->buildings.size());
+		std::uniform_int_distribution<int> bld_rng(0, city->buildings.size() - 1);
 		std::advance(bld_iter, bld_rng(this->rng));
 		StateRef<Building> bld = {this, (*bld_iter).second};
 
@@ -343,7 +343,54 @@ void GameState::updateEndOfDay()
 	}
 }
 
-void GameState::updateEndOfWeek() {}
+void GameState::updateEndOfWeek()
+{
+	int week = this->day / 7 + 1;
+	auto growth =
+	    this->ufo_growth_lists.find(UString::format("%s%d", UFOGrowth::getPrefix().c_str(), week));
+	if (growth == this->ufo_growth_lists.end())
+	{
+		growth = this->ufo_growth_lists.find(
+		    UString::format("%s%s", UFOGrowth::getPrefix().c_str(), "DEFAULT"));
+	}
+
+	if (growth != this->ufo_growth_lists.end())
+	{
+		StateRef<City> city = {this, "CITYMAP_ALIEN"};
+		StateRef<Organisation> alienOrg = {this, "ORG_ALIEN"};
+		std::uniform_int_distribution<int> xyPos(20, 120);
+
+		for (auto vehicleEntry : growth->second->vehicleTypeList)
+		{
+			auto vehicleType = this->vehicle_types.find(vehicleEntry.first);
+			if (vehicleType != this->vehicle_types.end())
+			{
+				for (int i = 0; i < vehicleEntry.second; i++)
+				{
+					auto &type = (*vehicleType).second;
+
+					auto v = mksp<Vehicle>();
+					v->type = {this, (*vehicleType).first};
+					v->name = UString::format("%s %d", type->name.c_str(), ++type->numCreated);
+					v->city = city;
+					v->owner = alienOrg;
+					v->health = type->health;
+
+					// Vehicle::equipDefaultEquipment uses the state reference from itself, so make
+					// sure the
+					// vehicle table has the entry before calling it
+					UString vID =
+					    UString::format("%s%d", Vehicle::getPrefix().c_str(), lastVehicle++);
+					this->vehicles[vID] = v;
+
+					v->equipDefaultEquipment(*this);
+					v->launch(*city->map, *this, {xyPos(rng), xyPos(rng), v->altitude});
+					v->missions.emplace_front(VehicleMission::patrol(*v));
+				}
+			}
+		}
+	}
+}
 
 void GameState::update() { this->update(1); }
 

@@ -48,12 +48,12 @@ Note, this is not a complete list, expect items to grow and spawn sub-items as t
     - Vehicle retaliation fire
 	- Guided missiles
   - ~~AI Vehicles move between buildings~~
-  - AI vehicles patrol
+  - ~~AI vehicles patrol~~
   - UFO AI Missions
-    - Infiltration
+    - ~~Infiltration~~
     - Subversion
-    - Escort
-    - Return to portal when done
+    - ~~Escort~~
+    - ~~Return to portal when done~~
   - User-controllable vehicle commands:
     - ~~Goto Building~~
     - ~~Goto Location~~

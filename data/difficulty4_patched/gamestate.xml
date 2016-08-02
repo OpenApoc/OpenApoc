@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gamestate>
+  <lastVehicle>0</lastVehicle>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vehicle_types.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="organisations.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="facility_types.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="doodad_types.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vehicle_equipment.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="cities.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ufo_growth_lists.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ufo_incursions.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="base_layouts.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="player_bases.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vehicles.xml" />

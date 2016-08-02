@@ -322,11 +322,11 @@ VehicleMission *VehicleMission::crashLand(Vehicle &v)
 	return mission;
 }
 
-VehicleMission *VehicleMission::patrol(Vehicle &v)
+VehicleMission *VehicleMission::patrol(Vehicle &v, unsigned int counter)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::Patrol;
-	mission->missionCounter = 5;
+	mission->missionCounter = counter;
 	return mission;
 }
 

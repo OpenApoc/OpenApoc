@@ -5,4 +5,6 @@
   <gamestate_xml SHA1="">gamestate/facility_types.xml</gamestate_xml>
   <gamestate_xml SHA1="">gamestate/ufopaedia.xml</gamestate_xml>
   <gamestate_xml SHA1="">gamestate/agent_generator.xml</gamestate_xml>
+  <gamestate_xml SHA1="">gamestate/ufo_growth_lists.xml</gamestate_xml>
+  <gamestate_xml SHA1="">gamestate/ufo_incursions.xml</gamestate_xml>
 </openapoc_manifest>

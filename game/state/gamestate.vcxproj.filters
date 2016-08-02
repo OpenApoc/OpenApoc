@@ -105,6 +105,12 @@
     <ClCompile Include="tileview\voxel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="rules\ufo_incursion.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rules\ufo_growth.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agent.h">
@@ -198,6 +204,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="rules\vequipment_type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\ufo_growth.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rules\ufo_incursion.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

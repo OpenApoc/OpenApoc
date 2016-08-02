@@ -226,6 +226,17 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 			break;
 		}
 	}
+
+	if (this->type->type == VehicleType::Type::UFO && this->missions.empty())
+	{
+		auto alien_city = state.cities["CITYMAP_ALIEN"];
+		// Make UFOs patrol their city if we're looking at it
+		if (this->city.getSp() == alien_city && state.current_city == this->city)
+		{
+			this->missions.emplace_back(VehicleMission::patrol(*this));
+		}
+	}
+
 	if (this->mover)
 		this->mover->update(state, ticks);
 
