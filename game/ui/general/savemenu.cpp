@@ -99,7 +99,9 @@ void SaveMenu::Begin()
 				std::stringstream ss;
 				if (timestamp != 0 && tminfo != nullptr)
 				{
-					ss << std::put_time(tminfo, "%d/%m/%y %T");
+					char temp_time[1024];
+					strftime(temp_time, sizeof(temp_time), "%d/%m/%y %T", tminfo);
+					ss << temp_time;
 				}
 				saveTimeLabel->SetText(ss.str());
 			}
