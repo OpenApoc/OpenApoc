@@ -6,15 +6,6 @@ compiler:
   - gcc
   - clang
 
-matrix:
-  exclude:
-    - compiler: gcc
-      env: TIDY="true"
-        BUILD_TYPE="Release"
-    - compiler: clang
-      env: TIDY="false"
-        BUILD_TYPE="Release"
-
 before_install:
   - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
   - sudo add-apt-repository "deb http://llvm.org/apt/trusty/ llvm-toolchain-trusty-3.8 main" -y
@@ -24,7 +15,7 @@ before_install:
   - if [ "$CXX" = "g++" ]; then sudo apt-get install g++-5 -y; fi
   - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
   - if [ "$CXX" = "clang++" ]; then sudo apt-get install clang-3.8 --force-yes -y; fi
-  - if [ "$CXX" = "clang++" ]; then export CXX="clang++-3.8" CC="clang-3.8"; fi
+  - if [ "$CXX" = "clang++" ]; then export TIDY="true" CXX="clang++-3.8" CC="clang-3.8"; fi
   - if [ "${TIDY}" = "true" ]; then sudo apt-get install clang-tidy-3.8 clang-format-3.8 --force-yes -y; fi
   - sudo apt-get install libunwind8-dev libsdl2-dev libboost-locale-dev libboost-filesystem-dev -y
   - ${CXX} --version
@@ -33,10 +24,8 @@ before_install:
   - export PKG_CONFIG_PATH=~/dependency-prefix/lib/pkgconfig
 
 env:
-  - TIDY="true"
-    BUILD_TYPE="Release"
-  - TIDY="false"
-    BUILD_TYPE="Release"
+  - BUILD_TYPE="Release"
+  - BUILD_TYPE="Debug"
 
 install:
   - pushd ./dependencies/tinyxml2 && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . && make -j2 && make install && popd;
@@ -49,7 +38,7 @@ before_script:
   - if [ "${TIDY}" = "true" ]; then make format -j2; fi
 
 script:
-  - if [ "${TIDY}" != "true" ]; then make -j2 && ctest -V; fi
+  - make -j2 && ctest -V
   - if [ "${TIDY}" = "true" ]; then git --no-pager diff --ignore-submodules && make tidy; fi
 
 os:
