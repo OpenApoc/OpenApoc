@@ -21,25 +21,25 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-	  <label text="Owner&gt;">
+      <label text="Owner&gt;">
         <position x="97" y="54"/>
         <size width="60" height="23"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-	  <label id="TEXT_OWNER_NAME">
+      <label id="TEXT_OWNER_NAME">
         <position x="147" y="54"/>
         <size width="140" height="23"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-	  <label text="Function&gt;">
+      <label text="Function&gt;">
         <position x="302" y="54"/>
         <size width="60" height="23"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-	  <label id="TEXT_BUILDING_FUNCTION">
+      <label id="TEXT_BUILDING_FUNCTION">
         <position x="358" y="54"/>
         <size width="140" height="23"/>
         <alignment horizontal="left" vertical="centre"/>

@@ -31,7 +31,7 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 		LogError("Unexpected filesize %zu - expected %u", fileSize, expectedFileSize);
 	}
 
-	city->size = { fullSize.x, fullSize.y, fullSize.z };
+	city->size = {fullSize.x, fullSize.y, fullSize.z};
 
 	int tileIndex = 0;
 
@@ -48,11 +48,11 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 			{
 				idx = std::uniform_int_distribution<int>{169, 172}(state.rng);
 			}
-			
-			auto tileName = UString::format("%s%s%u", SceneryTileType::getPrefix().c_str(),
-				tilePrefix.c_str(), (unsigned)idx);
 
-			city->initial_tiles[Vec3<int>{x, y, 0}] = { &state, tileName };
+			auto tileName = UString::format("%s%s%u", SceneryTileType::getPrefix().c_str(),
+			                                tilePrefix.c_str(), (unsigned)idx);
+
+			city->initial_tiles[Vec3<int>{x, y, 0}] = {&state, tileName};
 		}
 	}
 
@@ -68,9 +68,9 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 				if (idx != 0)
 				{
 					auto tileName = UString::format("%s%s%u", SceneryTileType::getPrefix().c_str(),
-						tilePrefix.c_str(), (unsigned)idx);
+					                                tilePrefix.c_str(), (unsigned)idx);
 
-					city->initial_tiles[Vec3<int>{x+20, y+20, z}] = { &state, tileName };
+					city->initial_tiles[Vec3<int>{x + 20, y + 20, z}] = {&state, tileName};
 				}
 				tileIndex++;
 			}

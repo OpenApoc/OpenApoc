@@ -20,7 +20,7 @@
           <position x="550" y="90"/>
           <size width="16" height="330"/>
         </scroll>
-        <listbox id="LISTBOX_OPTIONS" scrollbarid="SCROLL_LISTPOSITION" >
+        <listbox id="LISTBOX_OPTIONS" scrollbarid="SCROLL_LISTPOSITION">
           <position x="40" y="100"/>
           <size width="505" height="310"/>
           <item size="30" spacing="5"/>
