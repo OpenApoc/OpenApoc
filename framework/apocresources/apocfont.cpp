@@ -27,13 +27,13 @@ sp<BitmapFont> ApocalypseFont::loadFont(tinyxml2::XMLElement *fontElement)
 	fontName = attr;
 
 	auto err = fontElement->QueryIntAttribute("height", &height);
-	if (err != tinyxml2::XML_NO_ERROR || height <= 0)
+	if (err != tinyxml2::XML_SUCCESS || height <= 0)
 	{
 		LogError("apocfont \"%s\" with invalid \"height\" attribute", fontName.c_str());
 		return nullptr;
 	}
 	err = fontElement->QueryIntAttribute("spacewidth", &spacewidth);
-	if (err != tinyxml2::XML_NO_ERROR || spacewidth <= 0)
+	if (err != tinyxml2::XML_SUCCESS || spacewidth <= 0)
 	{
 		LogError("apocfont \"%s\" with invalid \"spacewidth\" attribute", fontName.c_str());
 		return nullptr;
