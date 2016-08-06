@@ -15,17 +15,19 @@ class GameTime
 {
   private:
 	static const boost::posix_time::ptime GAME_START;
-	static const std::locale TIME_FORMAT, DATE_FORMAT;
+	// needs some fancy initialization
+	static /*const*/ std::locale *TIME_FORMAT, *DATE_FORMAT;
 
 	uint64_t ticks;
+	boost::posix_time::ptime datetime;
 
 	bool dayPassedFlag;
 	bool weekPassedFlag;
 
-	boost::posix_time::ptime posixTime() const;
+	static boost::posix_time::time_duration ticksToPosix(int64_t ticks);
 
   public:
-	GameTime(uint64_t ticks) : ticks(ticks), dayPassedFlag(false), weekPassedFlag(false) {}
+	GameTime(uint64_t ticks);
 
 	void addTicks(uint64_t ticks);
 
@@ -38,6 +40,9 @@ class GameTime
 	unsigned int getWeek() const;
 
 	uint64_t getTicks() const;
+
+	// returns week with prefix
+	UString getWeekString() const;
 
 	// returns formatted time in format hh:mm:ss
 	UString getTimeString() const;
