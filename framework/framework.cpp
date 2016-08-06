@@ -661,6 +661,7 @@ void Framework::TranslateSDLEvents()
 						fwE->Display().Width = e.window.data1;
 						fwE->Display().Height = e.window.data2;
 						fwE->Display().Active = true;
+						PushEvent(up<Event>(fwE));
 						break;
 					case SDL_WINDOWEVENT_HIDDEN:
 					case SDL_WINDOWEVENT_MINIMIZED:
