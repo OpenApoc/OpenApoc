@@ -37,7 +37,7 @@ class ThreadPool
 inline ThreadPool::ThreadPool(size_t threads) : stop(false)
 {
 	// Having a zero-sized threadpool really doesn't make sense
-	assert(threads > 0);
+	LogAssert(threads > 0);
 	for (size_t i = 0; i < threads; ++i)
 		workers.emplace_back([this, i] {
 			OpenApoc::Trace::setThreadName("ThreadPool " +

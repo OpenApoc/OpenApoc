@@ -39,7 +39,7 @@ static std::array<std::uint_fast32_t, 256> generate_crc_lookup_table()
 }
 
 // Calculates the CRC for any sequence of values. (You could use type traits and a
-// static assert to ensure the values can be converted to 8 bits.)
+// static LogAssert to ensure the values can be converted to 8 bits.)
 template <typename InputIterator> std::uint_fast32_t crc(InputIterator first, InputIterator last)
 {
 	// Generate lookup table only on first use then cache it - this is thread-safe.

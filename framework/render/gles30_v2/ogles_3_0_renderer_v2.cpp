@@ -10,6 +10,7 @@
 
 #define STBRP_STATIC
 #define STB_RECT_PACK_IMPLEMENTATION
+#define STBRP_ASSERT LogAssert
 #include "framework/render/gles30_v2/stb_rect_pack.h"
 
 namespace OpenApoc
@@ -134,9 +135,9 @@ class SpritesheetPage
   public:
 	SpritesheetPage(int page_no, Vec2<int> size, int node_count) : page_no(page_no), size(size)
 	{
-		assert(node_count > 0);
-		assert(size.x > 0);
-		assert(size.y > 0);
+		LogAssert(node_count > 0);
+		LogAssert(size.x > 0);
+		LogAssert(size.y > 0);
 		pack_nodes.reset(new stbrp_node[node_count]);
 		stbrp_init_target(&pack_context, size.x, size.y, pack_nodes.get(), node_count);
 	}
@@ -146,7 +147,7 @@ class SpritesheetPage
 		up<stbrp_rect[]> rects(new stbrp_rect[entries.size()]);
 		for (int i = 0; i < entries.size(); i++)
 		{
-			assert(entries[i]->page == -1);
+			LogAssert(entries[i]->page == -1);
 			rects[i].id = i;
 			rects[i].w = entries[i]->size.x;
 			rects[i].h = entries[i]->size.y;
@@ -169,7 +170,7 @@ class SpritesheetPage
 
 	bool addEntry(sp<SpritesheetEntry> entry)
 	{
-		assert(entry->page == -1);
+		LogAssert(entry->page == -1);
 		stbrp_rect r;
 		r.w = entry->size.x;
 		r.h = entry->size.y;
@@ -249,8 +250,8 @@ class Spritesheet
 	void upload(sp<SpritesheetEntry> entry)
 	{
 		TRACE_FN;
-		assert(entry->page >= 0);
-		assert(entry->page < this->pages.size());
+		LogAssert(entry->page >= 0);
+		LogAssert(entry->page < this->pages.size());
 		auto image = entry->parent.lock();
 		if (!image)
 		{
@@ -259,7 +260,7 @@ class Spritesheet
 		auto rgbImage = std::dynamic_pointer_cast<RGBImage>(image);
 		if (rgbImage)
 		{
-			assert(format == GL::RGBA8);
+			LogAssert(format == GL::RGBA8);
 			RGBImageLock l(rgbImage);
 			gl->ActiveTexture(SCRATCH_TEX_SLOT);
 			gl->BindTexture(GL::TEXTURE_2D_ARRAY, this->tex_id);
@@ -271,7 +272,7 @@ class Spritesheet
 		auto palImage = std::dynamic_pointer_cast<PaletteImage>(image);
 		if (palImage)
 		{
-			assert(format == GL::R8UI);
+			LogAssert(format == GL::R8UI);
 			PaletteImageLock l(palImage);
 			gl->ActiveTexture(SCRATCH_TEX_SLOT);
 			gl->BindTexture(GL::TEXTURE_2D_ARRAY, this->tex_id);
@@ -322,9 +323,9 @@ class Spritesheet
 	void addSprite(sp<SpritesheetEntry> entry)
 	{
 		TRACE_FN;
-		assert(entry->page == -1);
-		assert(entry->size.x < page_size.x);
-		assert(entry->size.y < page_size.y);
+		LogAssert(entry->page == -1);
+		LogAssert(entry->size.x < page_size.x);
+		LogAssert(entry->size.y < page_size.y);
 		for (auto &page : this->pages)
 		{
 			if (page->addEntry(entry))
@@ -368,7 +369,7 @@ class SpriteBuffer
 	      buffer_contents(0)
 	{
 		TRACE_FN;
-		assert(buffer_size > 0);
+		LogAssert(buffer_size > 0);
 		gl->GenVertexArrays(1, &this->vao_id);
 		gl->BindVertexArray(vao_id);
 		gl->GenBuffers(1, &this->sprite_buffer_id);
@@ -439,8 +440,8 @@ class SpriteBuffer
 	void reset() { this->buffer_contents = 0; }
 	void pushRGB(sp<SpritesheetEntry> e, Vec2<float> screenPos, Vec2<float> screenSize)
 	{
-		assert(!this->isFull());
-		assert(e->page != -1);
+		LogAssert(!this->isFull());
+		LogAssert(e->page != -1);
 
 		auto &d = this->buffer[this->buffer_contents];
 		this->buffer_contents++;
@@ -454,8 +455,8 @@ class SpriteBuffer
 	}
 	void pushPalette(sp<SpritesheetEntry> e, Vec2<float> screenPos, Vec2<float> screenSize)
 	{
-		assert(!this->isFull());
-		assert(e->page != -1);
+		LogAssert(!this->isFull());
+		LogAssert(e->page != -1);
 
 		auto &d = this->buffer[this->buffer_contents];
 		this->buffer_contents++;
@@ -568,8 +569,8 @@ class SpriteDrawMachine
 	      rgb_spritesheet(spritesheet_page_size, GL::RGBA8)
 	{
 		TRACE_FN;
-		assert(bufferSize > 0);
-		assert(bufferCount > 0);
+		LogAssert(bufferSize > 0);
+		LogAssert(bufferCount > 0);
 		this->sprite_program_id =
 		    CompileProgram(SpriteProgram_vertexSource, SpriteProgram_fragmentSource);
 
@@ -577,19 +578,19 @@ class SpriteDrawMachine
 
 		this->viewport_size_location =
 		    gl->GetUniformLocation(this->sprite_program_id, "viewport_size");
-		assert(this->viewport_size_location >= 0);
+		LogAssert(this->viewport_size_location >= 0);
 		this->flip_y_location = gl->GetUniformLocation(this->sprite_program_id, "flipY");
-		assert(this->flip_y_location >= 0);
+		LogAssert(this->flip_y_location >= 0);
 		this->paletted_spritesheets_location =
 		    gl->GetUniformLocation(this->sprite_program_id, "paletted_spritesheets");
-		assert(this->paletted_spritesheets_location >= 0);
+		LogAssert(this->paletted_spritesheets_location >= 0);
 		gl->Uniform1i(this->paletted_spritesheets_location, PALETTE_IMAGE_TEX_IDX);
 		this->rgb_spritesheets_location =
 		    gl->GetUniformLocation(this->sprite_program_id, "rgb_spritesheets");
-		assert(this->rgb_spritesheets_location >= 0);
+		LogAssert(this->rgb_spritesheets_location >= 0);
 		gl->Uniform1i(this->rgb_spritesheets_location, RGB_IMAGE_TEX_IDX);
 		this->palette_location = gl->GetUniformLocation(this->sprite_program_id, "palette");
-		assert(this->palette_location >= 0);
+		LogAssert(this->palette_location >= 0);
 		gl->Uniform1i(this->palette_location, PALETTE_TEX_IDX);
 
 		for (int i = 0; i < bufferCount; i++)
@@ -728,7 +729,7 @@ class GLSurface final : public RendererImageData
 	GLSurface(GL::GLuint fbo, Vec2<int> size) : fbo_id(fbo), tex_id(0), size(size) {}
 	GLSurface(Vec2<int> size)
 	{
-		assert(size.x > 0 && size.y > 0);
+		LogAssert(size.x > 0 && size.y > 0);
 		TRACE_FN;
 		gl->GenTextures(1, &this->tex_id);
 		gl->ActiveTexture(SCRATCH_TEX_SLOT);
@@ -866,33 +867,33 @@ class TexturedDrawMachine
 	    : current_buffer(0), tex_program_id(0)
 	{
 		TRACE_FN;
-		assert(bufferCount > 0);
+		LogAssert(bufferCount > 0);
 		this->tex_program_id = CompileProgram(TexProgram_vertexSource, TexProgram_fragmentSource);
 
 		gl->UseProgram(this->tex_program_id);
 
 		this->flip_y_location = gl->GetUniformLocation(this->tex_program_id, "flipY");
-		assert(this->flip_y_location >= 0);
+		LogAssert(this->flip_y_location >= 0);
 
 		this->palette_texture_location =
 		    gl->GetUniformLocation(this->tex_program_id, "palette_texture");
-		assert(this->palette_texture_location >= 0);
+		LogAssert(this->palette_texture_location >= 0);
 
 		gl->Uniform1i(this->palette_texture_location, PALETTE_IMAGE_TEX_IDX);
 		this->rgb_texture_location = gl->GetUniformLocation(this->tex_program_id, "rgb_texture");
-		assert(this->rgb_texture_location >= 0);
+		LogAssert(this->rgb_texture_location >= 0);
 
 		gl->Uniform1i(this->rgb_texture_location, RGB_IMAGE_TEX_IDX);
 		this->palette_location = gl->GetUniformLocation(this->tex_program_id, "palette");
-		assert(this->palette_location >= 0);
+		LogAssert(this->palette_location >= 0);
 
 		gl->Uniform1i(this->palette_location, PALETTE_TEX_IDX);
 
 		this->tex_size_location = gl->GetUniformLocation(this->tex_program_id, "tex_size");
-		assert(this->tex_size_location >= 0);
+		LogAssert(this->tex_size_location >= 0);
 
 		this->uses_palette_location = gl->GetUniformLocation(this->tex_program_id, "uses_palette");
-		assert(this->uses_palette_location >= 0);
+		LogAssert(this->uses_palette_location >= 0);
 
 		for (int i = 0; i < bufferCount; i++)
 		{
@@ -1105,7 +1106,7 @@ class ColouredDrawMachine
 	ColouredDrawMachine(int bufferCount, GL::GLuint position_attr = 0, GL::GLuint colour_attr = 1)
 	    : current_buffer(0), colour_program_id(0)
 	{
-		assert(bufferCount > 0);
+		LogAssert(bufferCount > 0);
 
 		this->colour_program_id =
 		    CompileProgram(ColourProgram_vertexSource, ColourProgram_fragmentSource);
@@ -1113,11 +1114,11 @@ class ColouredDrawMachine
 		gl->UseProgram(this->colour_program_id);
 
 		this->flip_y_location = gl->GetUniformLocation(this->colour_program_id, "flipY");
-		assert(this->flip_y_location >= 0);
+		LogAssert(this->flip_y_location >= 0);
 
 		this->viewport_size_location =
 		    gl->GetUniformLocation(this->colour_program_id, "viewport_size");
-		assert(this->viewport_size_location >= 0);
+		LogAssert(this->viewport_size_location >= 0);
 
 		for (int i = 0; i < bufferCount; i++)
 		{
@@ -1619,7 +1620,7 @@ class OGLES30RendererFactory : public RendererFactory
 	{
 		if (!alreadyInitialised)
 		{
-			assert(gl == nullptr);
+			LogAssert(gl == nullptr);
 			alreadyInitialised = true;
 			// First see if we're a direct OpenGL|ES context
 			if (GL::supported(true))

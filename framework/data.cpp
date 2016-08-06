@@ -368,9 +368,9 @@ sp<Image> Data::load_image(const UString &path, bool lazy)
 			{
 				sp<PaletteImage> pImg = std::dynamic_pointer_cast<PaletteImage>(this->load_image(
 				    "PCK:" + splitString[1] + ":" + splitString[2] + ":" + splitString[3]));
-				assert(pImg);
+				LogAssert(pImg);
 				auto pal = this->load_palette(splitString[4]);
-				assert(pal);
+				LogAssert(pal);
 				img = pImg->toRGBImage(pal);
 				break;
 			}
@@ -408,9 +408,9 @@ sp<Image> Data::load_image(const UString &path, bool lazy)
 			{
 				sp<PaletteImage> pImg = std::dynamic_pointer_cast<PaletteImage>(this->load_image(
 				    "PCKSTRAT:" + splitString[1] + ":" + splitString[2] + ":" + splitString[3]));
-				assert(pImg);
+				LogAssert(pImg);
 				auto pal = this->load_palette(splitString[4]);
-				assert(pal);
+				LogAssert(pal);
 				img = pImg->toRGBImage(pal);
 				break;
 			}
@@ -448,9 +448,9 @@ sp<Image> Data::load_image(const UString &path, bool lazy)
 			{
 				sp<PaletteImage> pImg = std::dynamic_pointer_cast<PaletteImage>(this->load_image(
 				    "PCKSHADOW:" + splitString[1] + ":" + splitString[2] + ":" + splitString[3]));
-				assert(pImg);
+				LogAssert(pImg);
 				auto pal = this->load_palette(splitString[4]);
-				assert(pal);
+				LogAssert(pal);
 				img = pImg->toRGBImage(pal);
 				break;
 			}

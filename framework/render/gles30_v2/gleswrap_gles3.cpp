@@ -36,7 +36,6 @@
 #include <dlfcn.h>
 #endif
 
-#include <cassert>
 #include <cstring>
 #include <string>
 
@@ -197,7 +196,7 @@ bool gles3::supported(bool desktop_extension, std::string lib_name)
 gles3::gles3(bool desktop_extension, std::string lib_name)
     : loader(new gles3_loader(desktop_extension, lib_name)), desktop_extension(desktop_extension)
 {
-	assert(this->supported(desktop_extension, lib_name));
+	LogAssert(this->supported(desktop_extension, lib_name));
 	loader->Load(ActiveTexture, "ActiveTexture");
 	loader->Load(AttachShader, "AttachShader");
 	loader->Load(BindAttribLocation, "BindAttribLocation");

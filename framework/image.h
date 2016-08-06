@@ -1,4 +1,5 @@
 #pragma once
+#include "framework/logger.h"
 #include "library/colour.h"
 #include "library/rect.h"
 #include "library/resource.h"
@@ -86,13 +87,13 @@ class PaletteImageLock
 	uint8_t get(const Vec2<unsigned int> &pos) const
 	{
 		unsigned offset = pos.y * this->img->size.x + pos.x;
-		assert(offset < this->img->size.x * this->img->size.y);
+		LogAssert(offset < this->img->size.x * this->img->size.y);
 		return this->img->indices[offset];
 	}
 	void set(const Vec2<unsigned int> &pos, const uint8_t idx)
 	{
 		unsigned offset = pos.y * this->img->size.x + pos.x;
-		assert(offset < this->img->size.x * this->img->size.y);
+		LogAssert(offset < this->img->size.x * this->img->size.y);
 		this->img->indices[offset] = idx;
 	}
 
@@ -128,13 +129,13 @@ class RGBImageLock
 	Colour get(const Vec2<unsigned int> &pos) const
 	{
 		unsigned offset = pos.y * this->img->size.x + pos.x;
-		assert(offset < this->img->size.x * this->img->size.y);
+		LogAssert(offset < this->img->size.x * this->img->size.y);
 		return this->img->pixels[offset];
 	}
 	void set(const Vec2<unsigned int> &pos, const Colour &c)
 	{
 		unsigned offset = pos.y * this->img->size.x + pos.x;
-		assert(offset < this->img->size.x * this->img->size.y);
+		LogAssert(offset < this->img->size.x * this->img->size.y);
 		this->img->pixels[offset] = c;
 	}
 

@@ -12,7 +12,7 @@ namespace OpenApoc
 
 DifficultyMenu::DifficultyMenu() : Stage(), difficultymenuform(ui().GetForm("FORM_DIFFICULTYMENU"))
 {
-	assert(difficultymenuform);
+	LogAssert(difficultymenuform);
 }
 
 DifficultyMenu::~DifficultyMenu() {}

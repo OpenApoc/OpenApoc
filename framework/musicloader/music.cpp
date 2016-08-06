@@ -116,7 +116,7 @@ MusicTrack::MusicCallbackReturn fillMusicData(sp<MusicTrack> thisTrack, unsigned
                                               void *sampleBuffer, unsigned int *returnedSamples)
 {
 	auto track = std::dynamic_pointer_cast<RawMusicTrack>(thisTrack);
-	assert(track);
+	LogAssert(track);
 	return track->fillData(maxSamples, sampleBuffer, returnedSamples);
 }
 

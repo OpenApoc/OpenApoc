@@ -668,7 +668,7 @@ class FBOData : public RendererImageData
 		                       0);
 		glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER,
 		                          depthBuffer);
-		assert(glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
+		LogAssert(glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE);
 	}
 	virtual ~FBOData()
 	{
@@ -1192,7 +1192,7 @@ OGL30Renderer::OGL30Renderer()
 	GLint viewport[4];
 	glGetIntegerv(GL_VIEWPORT, viewport);
 	LogInfo("Viewport {%d,%d,%d,%d}", viewport[0], viewport[1], viewport[2], viewport[3]);
-	assert(viewport[0] == 0 && viewport[1] == 0);
+	LogAssert(viewport[0] == 0 && viewport[1] == 0);
 	this->defaultSurface = mksp<Surface>(Vec2<int>{viewport[2], viewport[3]});
 	this->defaultSurface->rendererPrivateData.reset(new FBOData(0));
 	this->currentSurface = this->defaultSurface;

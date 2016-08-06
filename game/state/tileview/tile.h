@@ -1,5 +1,6 @@
 #pragma once
 #include "framework/includes.h"
+#include "framework/logger.h"
 #include "game/state/tileview/tileobject.h"
 #include "library/sp.h"
 #include <functional>
@@ -78,22 +79,22 @@ class TileMap
   public:
 	const Tile *getTile(int x, int y, int z) const
 	{
-		assert(x >= 0);
-		assert(x < size.x);
-		assert(y >= 0);
-		assert(y < size.y);
-		assert(z >= 0);
-		assert(z < size.z);
+		LogAssert(x >= 0);
+		LogAssert(x < size.x);
+		LogAssert(y >= 0);
+		LogAssert(y < size.y);
+		LogAssert(z >= 0);
+		LogAssert(z < size.z);
 		return &this->tiles[z * size.x * size.y + y * size.x + x];
 	}
 	Tile *getTile(int x, int y, int z)
 	{
-		assert(x >= 0);
-		assert(x < size.x);
-		assert(y >= 0);
-		assert(y < size.y);
-		assert(z >= 0);
-		assert(z < size.z);
+		LogAssert(x >= 0);
+		LogAssert(x < size.x);
+		LogAssert(y >= 0);
+		LogAssert(y < size.y);
+		LogAssert(z >= 0);
+		LogAssert(z < size.z);
 		return &this->tiles[z * size.x * size.y + y * size.x + x];
 	}
 	Tile *getTile(Vec3<int> pos) { return this->getTile(pos.x, pos.y, pos.z); }

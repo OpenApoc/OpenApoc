@@ -2,6 +2,7 @@
 #pragma once
 
 #include "framework/includes.h"
+#include "framework/logger.h"
 #include "renderer.h"
 
 namespace OpenApoc
@@ -18,12 +19,12 @@ class Palette
 
 	const Colour &GetColour(unsigned int idx) const
 	{
-		assert(idx < colours.size());
+		LogAssert(idx < colours.size());
 		return colours[idx];
 	}
 	void SetColour(unsigned int idx, Colour c)
 	{
-		assert(idx < colours.size());
+		LogAssert(idx < colours.size());
 		colours[idx] = std::move(c);
 	}
 

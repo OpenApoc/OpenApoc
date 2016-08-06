@@ -113,7 +113,7 @@ TraceManager::~TraceManager()
 
 void TraceManager::write()
 {
-	assert(OpenApoc::Trace::enabled);
+	LogAssert(OpenApoc::Trace::enabled);
 	OpenApoc::Trace::enabled = false;
 
 	std::ofstream outFile("openapoc_trace.json");
@@ -188,7 +188,7 @@ bool Trace::enabled = false;
 void Trace::enable()
 {
 	LogWarning("Enabling tracing - sizeof(TraceEvent) = %u", (unsigned)sizeof(TraceEvent));
-	assert(!trace_manager);
+	LogAssert(!trace_manager);
 	trace_manager.reset(new TraceManager);
 #if defined(BROKEN_THREAD_LOCAL)
 	pthread_key_create(&eventListKey, NULL);
@@ -199,7 +199,7 @@ void Trace::enable()
 
 void Trace::disable()
 {
-	assert(trace_manager);
+	LogAssert(trace_manager);
 	trace_manager->write();
 	trace_manager.reset(nullptr);
 #if defined(BROKEN_THREAD_LOCAL)

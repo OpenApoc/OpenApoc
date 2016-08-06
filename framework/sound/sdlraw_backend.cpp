@@ -216,8 +216,8 @@ class SDLRawBackend : public SoundBackend
 				    this->output_spec.format, bytes_from_this_chunk, int_music_volume);
 				music_bytes += bytes_from_this_chunk;
 				this->current_music_data->sample_position += bytes_from_this_chunk;
-				assert(this->current_music_data->sample_position <=
-				       this->current_music_data->samples.size());
+				LogAssert(this->current_music_data->sample_position <=
+				          this->current_music_data->samples.size());
 				if (this->current_music_data->sample_position ==
 				    this->current_music_data->samples.size())
 				{
@@ -254,7 +254,7 @@ class SDLRawBackend : public SoundBackend
 			SDL_MixAudioFormat(stream, sampleData->samples.data() + sampleIt->sample_position,
 			                   this->output_spec.format, bytes_to_mix, int_sample_volume);
 			sampleIt->sample_position += bytes_to_mix;
-			assert(sampleIt->sample_position <= sampleData->samples.size());
+			LogAssert(sampleIt->sample_position <= sampleData->samples.size());
 
 			sampleIt++;
 		}

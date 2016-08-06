@@ -92,7 +92,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 				break;
 			default:
 				LogError("Unknown direction in seekoff (%d)", dir);
-				assert(0);
+				LogAssert(0);
 		}
 
 		if (mode & std::ios_base::in)
@@ -103,7 +103,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 		if (mode & std::ios_base::out)
 		{
 			LogError("ios::out set on read-only IFile \"%s\"", this->suppliedPath.c_str());
-			assert(0);
+			LogAssert(0);
 			setp(buffer.get(), buffer.get());
 		}
 
@@ -121,7 +121,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 		if (mode & std::ios_base::out)
 		{
 			LogError("ios::out set on read-only IFile \"%s\"", this->suppliedPath.c_str());
-			assert(0);
+			LogAssert(0);
 			setp(buffer.get(), buffer.get());
 		}
 
@@ -131,7 +131,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 	int_type overflow(int_type c = traits_type::eof()) override
 	{
 		LogError("overflow called on read-only IFile \"%s\"", this->suppliedPath.c_str());
-		assert(0);
+		LogAssert(0);
 		std::ignore = c;
 		return 0;
 	}
@@ -326,7 +326,7 @@ IFile FileSystem::open(const UString &path)
 	if (foundPath == "")
 	{
 		LogInfo("Failed to find \"%s\"", path.c_str());
-		assert(!f);
+		LogAssert(!f);
 		return f;
 	}
 	f.f.reset(new PhysfsIFileImpl(foundPath, path));

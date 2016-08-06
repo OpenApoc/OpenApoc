@@ -532,7 +532,7 @@ static sp<PaletteImage> loadShadow(IFile &file, uint8_t shadedIdx)
 			pos += count * 4;
 		else
 		{
-			assert(idx < 7);
+			LogAssert(idx < 7);
 
 			while (count--)
 			{

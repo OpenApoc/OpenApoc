@@ -347,7 +347,7 @@ MusicTrack::MusicCallbackReturn fillSMKMusicData(sp<MusicTrack> thisTrack, unsig
                                                  void *sampleBuffer, unsigned int *returnedSamples)
 {
 	auto track = std::dynamic_pointer_cast<SMKMusicTrack>(thisTrack);
-	assert(track);
+	LogAssert(track);
 	return track->fillData(maxSamples, sampleBuffer, returnedSamples);
 }
 SMKMusicTrack::SMKMusicTrack(sp<SMKVideo> video)
@@ -388,7 +388,7 @@ MusicTrack::MusicCallbackReturn SMKMusicTrack::fillData(unsigned int maxSamples,
 	*returnedSamples = samples_in_this_frame;
 
 	this->current_frame_sample_position += samples_in_this_frame;
-	assert(this->current_frame_sample_position <= this->current_frame->sample_count);
+	LogAssert(this->current_frame_sample_position <= this->current_frame->sample_count);
 
 	if (this->current_frame_sample_position == this->current_frame->sample_count)
 	{

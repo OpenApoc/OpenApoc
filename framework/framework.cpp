@@ -990,7 +990,7 @@ sp<Stage> Framework::Stage_GetPrevious(sp<Stage> From) { return p->ProgramStages
 
 void Framework::Stage_Push(sp<Stage> stage)
 {
-	assert(stage);
+	LogAssert(stage);
 	p->ProgramStages.Push(stage);
 }
 

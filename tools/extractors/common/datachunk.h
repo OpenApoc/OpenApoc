@@ -2,7 +2,6 @@
 
 #include "framework/logger.h"
 
-#include <cassert>
 #include <cstdlib>
 #include <fstream>
 #include <vector>
@@ -22,7 +21,7 @@ template <typename T> class DataChunk
 		file.seekg(start_offset, file.beg);
 		for (int i = 0; i < count; i++)
 		{
-			assert(file);
+			LogAssert(file);
 			T data;
 			file.read((char *)&data, sizeof(data));
 			readData.push_back(data);
@@ -31,7 +30,7 @@ template <typename T> class DataChunk
 
 	T get(int offset)
 	{
-		assert(offset < readData.size());
+		LogAssert(offset < readData.size());
 		return readData[offset];
 	}
 

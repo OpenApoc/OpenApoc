@@ -164,7 +164,7 @@ void Lab::setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic)
 	{
 		if (topic->current_lab)
 		{
-			assert(topic->current_lab->current_project == topic);
+			LogAssert(topic->current_lab->current_project == topic);
 			topic->current_lab->current_project = "";
 			topic->current_lab = "";
 		}
