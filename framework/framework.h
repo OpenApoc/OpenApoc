@@ -52,7 +52,10 @@ class Framework
 	// until a user quit event)
 	void Run(sp<Stage> initialStage, size_t frameCount = 0);
 	void ProcessEvents();
+	/* PushEvent() take ownership of the Event, and will delete it after use*/
+	void PushEvent(up<Event> e);
 	void PushEvent(Event *e);
+
 	void TranslateSDLEvents();
 	void ShutdownFramework();
 	bool IsShuttingDown();

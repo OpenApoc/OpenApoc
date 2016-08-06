@@ -148,8 +148,7 @@ class FrameworkPrivate
 	std::map<UString, std::unique_ptr<RendererFactory>> registeredRenderers;
 	std::map<UString, std::unique_ptr<SoundBackendFactory>> registeredSoundBackends;
 
-	// FIXME: Wrap eventQueue in mutex if handing events with multiple threads
-	std::list<Event *> eventQueue;
+	std::list<up<Event>> eventQueue;
 	std::mutex eventQueueLock;
 
 	StageStack ProgramStages;
@@ -444,10 +443,10 @@ void Framework::ProcessEvents()
 
 	while (p->eventQueue.size() > 0 && !p->ProgramStages.IsEmpty())
 	{
-		Event *e;
+		up<Event> e;
 		{
 			std::lock_guard<std::mutex> l(p->eventQueueLock);
-			e = p->eventQueue.front();
+			e = std::move(p->eventQueue.front());
 			p->eventQueue.pop_front();
 		}
 		if (!e)
@@ -455,7 +454,7 @@ void Framework::ProcessEvents()
 			LogError("Invalid event on queue");
 			continue;
 		}
-		this->cursor->EventOccured(e);
+		this->cursor->EventOccured(e.get());
 		if (e->Type() == EVENT_KEY_DOWN)
 		{
 			if (e->Keyboard().KeyCode == SDLK_F5)
@@ -491,23 +490,28 @@ void Framework::ProcessEvents()
 		switch (e->Type())
 		{
 			case EVENT_WINDOW_CLOSED:
-				delete e;
 				ShutdownFramework();
 				return;
 			default:
-				p->ProgramStages.Current()->EventOccurred(e);
+				p->ProgramStages.Current()->EventOccurred(e.get());
 				break;
 		}
-		delete e;
+	}
+	/* Drop any events left in the list, as it's possible an event caused the last stage to pop with
+	 * events outstanding, but they can safely be ignored as we're quitting anyway */
+	{
+		std::lock_guard<std::mutex> l(p->eventQueueLock);
+		p->eventQueue.clear();
 	}
 }
 
-void Framework::PushEvent(Event *e)
+void Framework::PushEvent(up<Event> e)
 {
-
 	std::lock_guard<std::mutex> l(p->eventQueueLock);
-	p->eventQueue.push_back(e);
+	p->eventQueue.push_back(std::move(e));
 }
+
+void Framework::PushEvent(Event *e) { this->PushEvent(up<Event>(e)); }
 
 void Framework::TranslateSDLEvents()
 {
@@ -531,7 +535,7 @@ void Framework::TranslateSDLEvents()
 		{
 			case SDL_QUIT:
 				fwE = new DisplayEvent(EVENT_WINDOW_CLOSED);
-				PushEvent(fwE);
+				PushEvent(up<Event>(fwE));
 				break;
 			case SDL_JOYDEVICEADDED:
 			case SDL_JOYDEVICEREMOVED:
@@ -542,19 +546,19 @@ void Framework::TranslateSDLEvents()
 				fwE->Keyboard().KeyCode = e.key.keysym.sym;
 				fwE->Keyboard().UniChar = e.key.keysym.sym;
 				fwE->Keyboard().Modifiers = e.key.keysym.mod;
-				PushEvent(fwE);
+				PushEvent(up<Event>(fwE));
 				break;
 			case SDL_KEYUP:
 				fwE = new KeyboardEvent(EVENT_KEY_UP);
 				fwE->Keyboard().KeyCode = e.key.keysym.sym;
 				fwE->Keyboard().UniChar = e.key.keysym.sym;
 				fwE->Keyboard().Modifiers = e.key.keysym.mod;
-				PushEvent(fwE);
+				PushEvent(up<Event>(fwE));
 				break;
 			case SDL_TEXTINPUT:
 				fwE = new TextEvent();
 				fwE->Text().Input = e.text.text;
-				PushEvent(fwE);
+				PushEvent(up<Event>(fwE));
 				break;
 			case SDL_TEXTEDITING:
 				// FIXME: Do nothing?
@@ -568,7 +572,7 @@ void Framework::TranslateSDLEvents()
 				fwE->Mouse().WheelVertical = 0;   // These should be handled
 				fwE->Mouse().WheelHorizontal = 0; // in a separate event
 				fwE->Mouse().Button = e.motion.state;
-				PushEvent(fwE);
+				PushEvent(up<Event>(fwE));
 				break;
 			case SDL_MOUSEWHEEL:
 				// FIXME: Check these values for sanity
@@ -585,7 +589,7 @@ void Framework::TranslateSDLEvents()
 					fwE->Mouse().WheelVertical = e.wheel.y;
 					fwE->Mouse().WheelHorizontal = e.wheel.x;
 				}
-				PushEvent(fwE);
+				PushEvent(up<Event>(fwE));
 				break;
 			case SDL_MOUSEBUTTONDOWN:
 				fwE = new MouseEvent(EVENT_MOUSE_DOWN);
@@ -596,7 +600,7 @@ void Framework::TranslateSDLEvents()
 				fwE->Mouse().WheelVertical = 0;
 				fwE->Mouse().WheelHorizontal = 0;
 				fwE->Mouse().Button = SDL_BUTTON(e.button.button);
-				PushEvent(fwE);
+				PushEvent(up<Event>(fwE));
 				break;
 			case SDL_MOUSEBUTTONUP:
 				fwE = new MouseEvent(EVENT_MOUSE_UP);
@@ -607,7 +611,7 @@ void Framework::TranslateSDLEvents()
 				fwE->Mouse().WheelVertical = 0;
 				fwE->Mouse().WheelHorizontal = 0;
 				fwE->Mouse().Button = SDL_BUTTON(e.button.button);
-				PushEvent(fwE);
+				PushEvent(up<Event>(fwE));
 				break;
 			case SDL_FINGERDOWN:
 				fwE = new FingerEvent(EVENT_FINGER_DOWN);
@@ -619,7 +623,7 @@ void Framework::TranslateSDLEvents()
 				fwE->Finger().IsPrimary =
 				    e.tfinger.fingerId ==
 				    primaryFingerID; // FIXME: Try to remember the ID of the first touching finger!
-				PushEvent(fwE);
+				PushEvent(up<Event>(fwE));
 				break;
 			case SDL_FINGERUP:
 				fwE = new FingerEvent(EVENT_FINGER_UP);
@@ -631,7 +635,7 @@ void Framework::TranslateSDLEvents()
 				fwE->Finger().IsPrimary =
 				    e.tfinger.fingerId ==
 				    primaryFingerID; // FIXME: Try to remember the ID of the first touching finger!
-				PushEvent(fwE);
+				PushEvent(up<Event>(fwE));
 				break;
 			case SDL_FINGERMOTION:
 				fwE = new FingerEvent(EVENT_FINGER_MOVE);
@@ -643,7 +647,7 @@ void Framework::TranslateSDLEvents()
 				fwE->Finger().IsPrimary =
 				    e.tfinger.fingerId ==
 				    primaryFingerID; // FIXME: Try to remember the ID of the first touching finger!
-				PushEvent(fwE);
+				PushEvent(up<Event>(fwE));
 				break;
 			case SDL_WINDOWEVENT:
 				// Window events get special treatment
@@ -670,7 +674,7 @@ void Framework::TranslateSDLEvents()
 						SDL_GetWindowSize(p->window, &(fwE->Display().Width),
 						                  &(fwE->Display().Height));
 						fwE->Display().Active = false;
-						PushEvent(fwE);
+						PushEvent(up<Event>(fwE));
 						break;
 					case SDL_WINDOWEVENT_SHOWN:
 					case SDL_WINDOWEVENT_EXPOSED:
@@ -684,7 +688,7 @@ void Framework::TranslateSDLEvents()
 						SDL_GetWindowSize(p->window, &(fwE->Display().Width),
 						                  &(fwE->Display().Height));
 						fwE->Display().Active = false;
-						PushEvent(fwE);
+						PushEvent(up<Event>(fwE));
 						break;
 					case SDL_WINDOWEVENT_CLOSE:
 						// Closing a window will be a "quit" event.
