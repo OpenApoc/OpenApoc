@@ -6,12 +6,21 @@
 #include <sal.h>
 #endif
 
+#define XSTR(s) STR(s)
+#define STR(s) #s
+
 /* If UNIT_TEST is defined don't try to pop up a dialog */
 
 #ifdef UNIT_TEST
 #define LOGGER_SHOW_DIALOG false
 #else
 #define LOGGER_SHOW_DIALOG true
+#endif
+
+#if defined(_MSC_VER)
+#define NORETURN_FUNCTION __declspec(noreturn)
+#else
+#define NORETURN_FUNCTION __attribute__((noreturn))
 #endif
 
 /* The logger is global state as we want it to be available even if the framework hasn't been
@@ -39,8 +48,19 @@ enum class LogLevel
 // All format strings (%s) are expected to be UTF8
 void Log(bool show_dialog, LogLevel level, UString prefix, const char *format, ...)
     PRINTF_ATTR(4, 5);
+
+NORETURN_FUNCTION void _logAssert(bool show_dialog, UString prefix, UString string, int line,
+                                  UString file);
+
 // All logger output will be UTF8
 }; // namespace OpenApoc
+
+#define LogAssert(X)                                                                               \
+	do                                                                                             \
+	{                                                                                              \
+		if (!(X))                                                                                  \
+			OpenApoc::_logAssert(LOGGER_SHOW_DIALOG, LOGGER_PREFIX, STR(X), __LINE__, __FILE__);   \
+	} while (0)
 
 //#ifndef __ANDROID__
 #if defined(__GNUC__)

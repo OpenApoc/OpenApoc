@@ -157,6 +157,13 @@ static std::mutex logMutex;
 static std::chrono::time_point<std::chrono::high_resolution_clock> timeInit =
     std::chrono::high_resolution_clock::now();
 
+void _logAssert(bool show_dialog, UString prefix, UString string, int line, UString file)
+{
+	Log(show_dialog, LogLevel::Error, prefix, "Assertion \"%s\" failed at %s:%d", string.c_str(),
+	    file.c_str(), line);
+	exit(EXIT_FAILURE);
+}
+
 void Log(bool show_dialog, LogLevel level, UString prefix, const char *format, ...)
 {
 	bool exit_app = false;
