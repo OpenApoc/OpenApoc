@@ -88,14 +88,6 @@ VehicleType::VehicleType()
 {
 }
 
-static Vec3<float> getDirectionVector(VehicleType::Direction dir,
-                                      VehicleType::Banking bank = VehicleType::Banking::Flat)
-{
-	Vec3<float> v = direction_vectors[dir];
-	v += banking_vectors[bank];
-	return glm::normalize(v);
-}
-
 template <> sp<VehicleType> StateObject<VehicleType>::get(const GameState &state, const UString &id)
 {
 	auto it = state.vehicle_types.find(id);

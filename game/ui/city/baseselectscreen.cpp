@@ -20,7 +20,7 @@ BaseSelectScreen::BaseSelectScreen(sp<GameState> state, Vec3<float> centerPos)
 	this->centerPos = centerPos;
 	this->menuform->FindControl("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *e) { this->stageCmd.cmd = StageCmd::Command::POP; });
+	                  [this](Event *) { this->stageCmd.cmd = StageCmd::Command::POP; });
 }
 
 BaseSelectScreen::~BaseSelectScreen() {}

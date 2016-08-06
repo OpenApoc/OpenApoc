@@ -113,7 +113,7 @@ sp<BitmapFont> BitmapFont::loadFont(const std::map<UniChar, UString> &glyphMap, 
 			LogError("Glyph image \"%s\" doesn't look like a PaletteImage", p.second.c_str());
 			continue;
 		}
-		int maxWidth = 0;
+		unsigned int maxWidth = 0;
 
 		// FIXME: Proper kerning
 		// First find the widest non-transparent part of the glyph

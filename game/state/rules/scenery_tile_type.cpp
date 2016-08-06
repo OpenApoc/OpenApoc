@@ -21,10 +21,6 @@ const std::map<SceneryTileType::WalkMode, UString> SceneryTileType::WalkModeMap 
     {SceneryTileType::WalkMode::Into, "into"},
     {SceneryTileType::WalkMode::Onto, "onto"}};
 
-SceneryTileType::SceneryTileType()
-    : tile_type(TileType::General), road_type(RoadType::StraightBend), walk_mode(WalkMode::None),
-      constitution(0), value(0), mass(false), strength(0), isHill(false), isLandingPad(false){};
-
 template <>
 sp<SceneryTileType> StateObject<SceneryTileType>::get(const GameState &state, const UString &id)
 {

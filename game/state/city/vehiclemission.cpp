@@ -131,7 +131,7 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 		return true;
 	}
 
-	Vec3<int> findTileToLandOn(GameState &state, sp<TileObjectVehicle> vTile) const
+	Vec3<int> findTileToLandOn(GameState &, sp<TileObjectVehicle> vTile) const
 	{
 		const int lookupRaduis = 10;
 		auto startPos = vTile->getOwningTile()->position;
@@ -218,7 +218,7 @@ class FlyingVehicleTileHelper : public CanEnterTileHelper
 	}
 };
 
-VehicleMission *VehicleMission::gotoLocation(Vehicle &v, Vec3<int> target)
+VehicleMission *VehicleMission::gotoLocation(Vehicle &, Vec3<int> target)
 {
 	// TODO
 	// Pseudocode:
@@ -253,7 +253,7 @@ VehicleMission *VehicleMission::gotoPortal(Vehicle &v)
 	return mission;
 }
 
-VehicleMission *VehicleMission::gotoPortal(Vehicle &v, Vec3<int> target)
+VehicleMission *VehicleMission::gotoPortal(Vehicle &, Vec3<int> target)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::GotoPortal;
@@ -261,7 +261,7 @@ VehicleMission *VehicleMission::gotoPortal(Vehicle &v, Vec3<int> target)
 	return mission;
 }
 
-VehicleMission *VehicleMission::gotoBuilding(Vehicle &v, StateRef<Building> target)
+VehicleMission *VehicleMission::gotoBuilding(Vehicle &, StateRef<Building> target)
 {
 	// TODO
 	// Pseudocode:
@@ -283,7 +283,7 @@ VehicleMission *VehicleMission::gotoBuilding(Vehicle &v, StateRef<Building> targ
 	return mission;
 }
 
-VehicleMission *VehicleMission::infiltrateBuilding(Vehicle &v, StateRef<Building> target)
+VehicleMission *VehicleMission::infiltrateBuilding(Vehicle &, StateRef<Building> target)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::Infiltrate;
@@ -291,7 +291,7 @@ VehicleMission *VehicleMission::infiltrateBuilding(Vehicle &v, StateRef<Building
 	return mission;
 }
 
-VehicleMission *VehicleMission::attackVehicle(Vehicle &v, StateRef<Vehicle> target)
+VehicleMission *VehicleMission::attackVehicle(Vehicle &, StateRef<Vehicle> target)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::AttackVehicle;
@@ -299,7 +299,7 @@ VehicleMission *VehicleMission::attackVehicle(Vehicle &v, StateRef<Vehicle> targ
 	return mission;
 }
 
-VehicleMission *VehicleMission::followVehicle(Vehicle &v, StateRef<Vehicle> target)
+VehicleMission *VehicleMission::followVehicle(Vehicle &, StateRef<Vehicle> target)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::FollowVehicle;
@@ -307,7 +307,7 @@ VehicleMission *VehicleMission::followVehicle(Vehicle &v, StateRef<Vehicle> targ
 	return mission;
 }
 
-VehicleMission *VehicleMission::snooze(Vehicle &v, unsigned int snoozeTicks)
+VehicleMission *VehicleMission::snooze(Vehicle &, unsigned int snoozeTicks)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::Snooze;
@@ -315,14 +315,14 @@ VehicleMission *VehicleMission::snooze(Vehicle &v, unsigned int snoozeTicks)
 	return mission;
 }
 
-VehicleMission *VehicleMission::crashLand(Vehicle &v)
+VehicleMission *VehicleMission::crashLand(Vehicle &)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::Crash;
 	return mission;
 }
 
-VehicleMission *VehicleMission::patrol(Vehicle &v, unsigned int counter)
+VehicleMission *VehicleMission::patrol(Vehicle &, unsigned int counter)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::Patrol;
@@ -342,7 +342,7 @@ VehicleMission *VehicleMission::takeOff(Vehicle &v)
 	return mission;
 }
 
-VehicleMission *VehicleMission::land(Vehicle &v, StateRef<Building> b)
+VehicleMission *VehicleMission::land(Vehicle &, StateRef<Building> b)
 {
 	auto *mission = new VehicleMission();
 	mission->type = MissionType::Land;
@@ -887,8 +887,6 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			Vec3<int> shortestPathPad = {0, 0, 0};
 			float shortestPathCost = std::numeric_limits<float>::max();
 
-			auto &map = vehicleTile->map;
-
 			for (auto dest : b->landingPadLocations)
 			{
 				// Simply find the nearest landing pad to the current location and route to that
@@ -1014,14 +1012,19 @@ UString VehicleMission::getName()
 			                        this->targetLocation.z);
 			break;
 		case MissionType::GotoBuilding:
+			name += " " + this->targetBuilding.id;
 			break;
 		case MissionType::FollowVehicle:
+			name += " " + this->targetVehicle.id;
 			break;
 		case MissionType::AttackBuilding:
+			name += " " + this->targetBuilding.id;
 			break;
 		case MissionType::Snooze:
+			name += UString::format(" for %u ticks", this->timeToSnooze);
 			break;
 		case MissionType::TakeOff:
+			name += " from " + this->targetBuilding.id;
 			break;
 		case MissionType::Land:
 			name += " in " + this->targetBuilding.id;
@@ -1032,6 +1035,19 @@ UString VehicleMission::getName()
 			break;
 		case MissionType::AttackVehicle:
 			name += UString::format(" target \"%s\"", this->targetVehicle.id.c_str());
+			break;
+		case MissionType::Patrol:
+			name += UString::format(" {%d,%d,%d}", this->targetLocation.x, this->targetLocation.y,
+			                        this->targetLocation.z);
+			break;
+		case MissionType::GotoPortal:
+			name += UString::format(" {%d,%d,%d}", this->targetLocation.x, this->targetLocation.y,
+			                        this->targetLocation.z);
+			break;
+		case MissionType::Infiltrate:
+			name += " " + this->targetBuilding.id;
+			break;
+		case MissionType::Subvert:
 			break;
 	}
 	return name;

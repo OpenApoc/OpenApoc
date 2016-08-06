@@ -15,7 +15,7 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 	unsigned int sizeX = 100;
 	unsigned int sizeY = 100;
 	unsigned int sizeZ = 10;
-	Vec3<int> fullSize(140, 140, 11);
+	Vec3<unsigned int> fullSize(140, 140, 11);
 
 	auto inFile = fw().data->fs.open(map_prefix + fileName);
 	if (!inFile)

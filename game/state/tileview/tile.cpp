@@ -121,7 +121,7 @@ static std::list<Tile *> getPathToNode(std::unordered_map<Tile *, PathNode> node
 
 std::list<Tile *> TileMap::findShortestPath(Vec3<int> origin, Vec3<int> destination,
                                             unsigned int iterationLimit,
-                                            const CanEnterTileHelper &canEnterTile, float altitude)
+                                            const CanEnterTileHelper &canEnterTile, float)
 {
 	TRACE_FN;
 	PathNodeComparer c;

@@ -13,7 +13,7 @@ class VoxelMap;
 class SceneryTileType : public StateObject<SceneryTileType>
 {
   public:
-	SceneryTileType();
+	SceneryTileType() = default;
 
 	enum class TileType
 	{
@@ -48,18 +48,18 @@ class SceneryTileType : public StateObject<SceneryTileType>
 	// FIXME: If the damaged tile links form a loop this will leak?
 	StateRef<SceneryTileType> damagedTile;
 	Vec2<float> imageOffset;
-	bool isLandingPad;
+	bool isLandingPad = false;
 	Colour minimap_colour;
 
-	TileType tile_type;
-	RoadType road_type;
-	WalkMode walk_mode;
-	int constitution;
-	int value;
-	int mass;
-	int strength;
+	TileType tile_type = TileType::General;
+	RoadType road_type = RoadType::StraightBend;
+	WalkMode walk_mode = WalkMode::None;
+	int constitution = 0;
+	int value = 0;
+	int mass = 0;
+	int strength = 0;
 
 	// instead of road_level_change; should be enough for now
-	bool isHill;
+	bool isHill = false;
 };
 }; // namespace OpenApoc

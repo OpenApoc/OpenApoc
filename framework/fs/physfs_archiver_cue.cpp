@@ -221,7 +221,7 @@ class CueParser
 	}
 
 	// Parse command while being in a TRACK context
-	bool parseTrack(std::string command, std::string arg)
+	bool parseTrack(std::string command, std::string)
 	{
 		UString cmd(command);
 		// TODO: check for possible commands, put parser into an "error" state if command is not
@@ -395,7 +395,6 @@ struct dec_datetime
 		int second_int = (second[0] - '0') * 10 + (second[1] - '0');
 		// int hndsec_int = (hndSecond[0] - '0') * 10 +
 		//                 (hndSecond[1] - '0');
-		int gmtCorrection = 15 * (gmtOff - 48); // in minutes
 		// The resulting number is very obviously erroneous, because I don't
 		// account for leap years/seconds correctly
 		tm time_struct;
@@ -1063,7 +1062,7 @@ class CueArchiver
 	}
 
   public:
-	static void *Cue_OpenArchive(PHYSFS_Io *io, const char *filename, int forWriting)
+	static void *Cue_OpenArchive(PHYSFS_Io *, const char *filename, int forWriting)
 	{
 		// FIXME: Here we assume the filename actually points to the actual .cue file,
 		// ignoring the PHYSFS_Io (though how would we even read the accompanying file?)
@@ -1214,8 +1213,8 @@ void parseCueFile(UString fileName)
 	CueParser parser(fileName);
 	LogInfo("Parser status: %d", parser.isValid());
 	LogInfo("Data file: %s", parser.getDataFileName().c_str());
-	LogInfo("Track mode: %d", parser.getTrackMode());
-	LogInfo("File mode: %d", parser.getDataFileType());
+	LogInfo("Track mode: %d", (int)parser.getTrackMode());
+	LogInfo("File mode: %d", (int)parser.getDataFileType());
 }
 
 PHYSFS_Archiver *getCueArchiver() { return CueArchiver::createArchiver(); }

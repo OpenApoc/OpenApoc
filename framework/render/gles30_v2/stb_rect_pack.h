@@ -271,7 +271,7 @@ STBRP_DEF void stbrp_init_target(stbrp_context *context, int width, int height, 
 }
 
 // find minimum y position if it starts at x1
-static int stbrp__skyline_find_min_y(stbrp_context *c, stbrp_node *first, int x0, int width,
+static int stbrp__skyline_find_min_y(stbrp_context *, stbrp_node *first, int x0, int width,
                                      int *pwaste)
 {
 	stbrp_node *node = first;
@@ -539,17 +539,6 @@ static int rect_height_compare(const void *a, const void *b)
 	return (p->w > q->w) ? -1 : (p->w < q->w);
 }
 
-static int rect_width_compare(const void *a, const void *b)
-{
-	stbrp_rect *p = (stbrp_rect *)a;
-	stbrp_rect *q = (stbrp_rect *)b;
-	if (p->w > q->w)
-		return -1;
-	if (p->w < q->w)
-		return 1;
-	return (p->h > q->h) ? -1 : (p->h < q->h);
-}
-
 static int rect_original_order(const void *a, const void *b)
 {
 	stbrp_rect *p = (stbrp_rect *)a;
@@ -572,7 +561,8 @@ STBRP_DEF void stbrp_pack_rects(stbrp_context *context, stbrp_rect *rects, int n
 	{
 		rects[i].was_packed = i;
 #ifndef STBRP_LARGE_RECTS
-		STBRP_ASSERT(rects[i].w <= 0xffff && rects[i].h <= 0xffff);
+// FIXME: This is always true if rects[i].w is a uint16_t
+// STBRP_ASSERT(rects[i].w <= 0xffff && rects[i].h <= 0xffff);
 #endif
 	}
 

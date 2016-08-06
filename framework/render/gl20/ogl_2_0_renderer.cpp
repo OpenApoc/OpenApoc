@@ -6,13 +6,10 @@
 #include <array>
 #include <memory>
 
-namespace
-{
 /* Workaround MSVC not liking int64_t being defined here and in allegro */
 #define GLEXT_64_TYPES_DEFINED
 #include "framework/render/gl20/gl_2_0.hpp"
 #include "framework/render/gl20/gl_2_0.inl"
-} // anonymous namespace
 
 namespace
 {
@@ -25,91 +22,91 @@ class Program
 	GLuint prog;
 	static GLuint CreateShader(GLenum type, const UString source)
 	{
-		GLuint shader = gl::CreateShader(type);
+		GLuint shader = gl20::CreateShader(type);
 		auto sourceString = source.str();
 		const GLchar *string = sourceString.c_str();
 		GLint stringLength = sourceString.length();
-		gl::ShaderSource(shader, 1, &string, &stringLength);
-		gl::CompileShader(shader);
+		gl20::ShaderSource(shader, 1, &string, &stringLength);
+		gl20::CompileShader(shader);
 		GLint compileStatus;
-		gl::GetShaderiv(shader, gl::COMPILE_STATUS, &compileStatus);
-		if (compileStatus == gl::TRUE_)
+		gl20::GetShaderiv(shader, gl20::COMPILE_STATUS, &compileStatus);
+		if (compileStatus == gl20::TRUE_)
 			return shader;
 
 		GLint logLength;
-		gl::GetShaderiv(shader, gl::INFO_LOG_LENGTH, &logLength);
+		gl20::GetShaderiv(shader, gl20::INFO_LOG_LENGTH, &logLength);
 
 		std::unique_ptr<char[]> log(new char[logLength]);
-		gl::GetShaderInfoLog(shader, logLength, NULL, log.get());
+		gl20::GetShaderInfoLog(shader, logLength, NULL, log.get());
 
 		LogError("Shader compile error: %s", log.get());
 
-		gl::DeleteShader(shader);
+		gl20::DeleteShader(shader);
 		return 0;
 	}
 	Program(const UString vertexSource, const UString fragmentSource) : prog(0)
 	{
-		GLuint vShader = CreateShader(gl::VERTEX_SHADER, vertexSource);
+		GLuint vShader = CreateShader(gl20::VERTEX_SHADER, vertexSource);
 		if (!vShader)
 		{
 			LogError("Failed to compile vertex shader");
 			return;
 		}
-		GLuint fShader = CreateShader(gl::FRAGMENT_SHADER, fragmentSource);
+		GLuint fShader = CreateShader(gl20::FRAGMENT_SHADER, fragmentSource);
 		if (!fShader)
 		{
 			LogError("Failed to compile fragment shader");
-			gl::DeleteShader(vShader);
+			gl20::DeleteShader(vShader);
 			return;
 		}
 
-		prog = gl::CreateProgram();
-		gl::AttachShader(prog, vShader);
-		gl::AttachShader(prog, fShader);
+		prog = gl20::CreateProgram();
+		gl20::AttachShader(prog, vShader);
+		gl20::AttachShader(prog, fShader);
 
-		gl::DeleteShader(vShader);
-		gl::DeleteShader(fShader);
+		gl20::DeleteShader(vShader);
+		gl20::DeleteShader(fShader);
 
-		gl::LinkProgram(prog);
+		gl20::LinkProgram(prog);
 
 		GLint linkStatus;
-		gl::GetProgramiv(prog, gl::LINK_STATUS, &linkStatus);
-		if (linkStatus == gl::TRUE_)
+		gl20::GetProgramiv(prog, gl20::LINK_STATUS, &linkStatus);
+		if (linkStatus == gl20::TRUE_)
 			return;
 
 		GLint logLength;
-		gl::GetProgramiv(prog, gl::INFO_LOG_LENGTH, &logLength);
+		gl20::GetProgramiv(prog, gl20::INFO_LOG_LENGTH, &logLength);
 
 		std::unique_ptr<char[]> log(new char[logLength]);
-		gl::GetProgramInfoLog(prog, logLength, NULL, log.get());
+		gl20::GetProgramInfoLog(prog, logLength, NULL, log.get());
 
 		LogError("Program link error: %s", log.get());
 
-		gl::DeleteProgram(prog);
+		gl20::DeleteProgram(prog);
 		prog = 0;
 		return;
 	}
 
 	void Uniform(GLuint loc, Colour c)
 	{
-		gl::Uniform4f(loc, c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, c.a / 255.0f);
+		gl20::Uniform4f(loc, c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, c.a / 255.0f);
 	}
 
-	void Uniform(GLuint loc, Vec2<float> v) { gl::Uniform2f(loc, v.x, v.y); }
+	void Uniform(GLuint loc, Vec2<float> v) { gl20::Uniform2f(loc, v.x, v.y); }
 	void Uniform(GLuint loc, Vec2<int> v)
 	{
 		// FIXME: Float conversion
-		gl::Uniform2f(loc, v.x, v.y);
+		gl20::Uniform2f(loc, v.x, v.y);
 	}
-	void Uniform(GLuint loc, float v) { gl::Uniform1f(loc, v); }
-	void Uniform(GLuint loc, int v) { gl::Uniform1i(loc, v); }
+	void Uniform(GLuint loc, float v) { gl20::Uniform1f(loc, v); }
+	void Uniform(GLuint loc, int v) { gl20::Uniform1i(loc, v); }
 
-	void Uniform(GLuint loc, bool v) { gl::Uniform1f(loc, (v ? 1.0f : 0.0f)); }
+	void Uniform(GLuint loc, bool v) { gl20::Uniform1f(loc, (v ? 1.0f : 0.0f)); }
 
 	virtual ~Program()
 	{
 		if (prog)
-			gl::DeleteProgram(prog);
+			gl20::DeleteProgram(prog);
 	}
 };
 
@@ -161,19 +158,19 @@ class RGBProgram : public SpriteProgram
 	    : SpriteProgram(RGBProgram_vertexSource, RGBProgram_fragmentSource),
 	      currentScreenSize(0, 0), currentFlipY(0), currentTexUnit(0)
 	{
-		this->posLoc = gl::GetAttribLocation(this->prog, "position");
+		this->posLoc = gl20::GetAttribLocation(this->prog, "position");
 		if (this->posLoc < 0)
 			LogError("\"position\" attribute not found in shader");
-		this->texcoordLoc = gl::GetAttribLocation(this->prog, "texcoord_in");
+		this->texcoordLoc = gl20::GetAttribLocation(this->prog, "texcoord_in");
 		if (this->texcoordLoc < 0)
 			LogError("\"texcoord_in\" attribute not found in shader");
-		this->screenSizeLoc = gl::GetUniformLocation(this->prog, "screenSize");
+		this->screenSizeLoc = gl20::GetUniformLocation(this->prog, "screenSize");
 		if (this->screenSizeLoc < 0)
 			LogError("\"screenSize\" uniform not found in shader");
-		this->texLoc = gl::GetUniformLocation(this->prog, "tex");
+		this->texLoc = gl20::GetUniformLocation(this->prog, "tex");
 		if (this->texLoc < 0)
 			LogError("\"tex\" uniform not found in shader");
-		this->flipYLoc = gl::GetUniformLocation(this->prog, "flipY");
+		this->flipYLoc = gl20::GetUniformLocation(this->prog, "flipY");
 		if (this->flipYLoc < 0)
 			LogError("\"flipY\" uniform not found in shader");
 	}
@@ -233,12 +230,12 @@ class PaletteProgram : public SpriteProgram
 	    : SpriteProgram(PaletteProgram_vertexSource, PaletteProgram_fragmentSource),
 	      currentScreenSize(0, 0), currentFlipY(false), currentTexUnit(0), currentPalUnit(0)
 	{
-		this->posLoc = gl::GetAttribLocation(this->prog, "position");
-		this->texcoordLoc = gl::GetAttribLocation(this->prog, "texcoord_in");
-		this->screenSizeLoc = gl::GetUniformLocation(this->prog, "screenSize");
-		this->texLoc = gl::GetUniformLocation(this->prog, "tex");
-		this->palLoc = gl::GetUniformLocation(this->prog, "pal");
-		this->flipYLoc = gl::GetUniformLocation(this->prog, "flipY");
+		this->posLoc = gl20::GetAttribLocation(this->prog, "position");
+		this->texcoordLoc = gl20::GetAttribLocation(this->prog, "texcoord_in");
+		this->screenSizeLoc = gl20::GetUniformLocation(this->prog, "screenSize");
+		this->texLoc = gl20::GetUniformLocation(this->prog, "tex");
+		this->palLoc = gl20::GetUniformLocation(this->prog, "pal");
+		this->flipYLoc = gl20::GetUniformLocation(this->prog, "flipY");
 	}
 	void setUniforms(Vec2<int> screenSize, bool flipY, GLint texUnit = 0, GLint palUnit = 1)
 	{
@@ -298,10 +295,10 @@ class SolidColourProgram : public Program
 	    : Program(SolidColourProgram_vertexSource, SolidColourProgram_fragmentSource),
 	      currentScreenSize(0, 0), currentFlipY(false), currentColour(0, 0, 0, 0)
 	{
-		this->posLoc = gl::GetAttribLocation(this->prog, "position");
-		this->screenSizeLoc = gl::GetUniformLocation(this->prog, "screenSize");
-		this->colourLoc = gl::GetUniformLocation(this->prog, "colour");
-		this->flipYLoc = gl::GetUniformLocation(this->prog, "flipY");
+		this->posLoc = gl20::GetAttribLocation(this->prog, "position");
+		this->screenSizeLoc = gl20::GetUniformLocation(this->prog, "screenSize");
+		this->colourLoc = gl20::GetUniformLocation(this->prog, "colour");
+		this->flipYLoc = gl20::GetUniformLocation(this->prog, "flipY");
 	}
 	void setUniforms(Vec2<int> screenSize, bool flipY, Colour colour)
 	{
@@ -363,17 +360,17 @@ class Quad
 	}
 	void draw(GLuint vertexAttribPos, GLuint texcoordAttribPos)
 	{
-		gl::EnableVertexAttribArray(vertexAttribPos);
-		gl::VertexAttribPointer(vertexAttribPos, 2, gl::FLOAT, gl::FALSE_, 0, &vertices);
-		gl::EnableVertexAttribArray(texcoordAttribPos);
-		gl::VertexAttribPointer(texcoordAttribPos, 2, gl::FLOAT, gl::FALSE_, 0, &texcoords);
-		gl::DrawArrays(gl::TRIANGLE_STRIP, 0, 4);
+		gl20::EnableVertexAttribArray(vertexAttribPos);
+		gl20::VertexAttribPointer(vertexAttribPos, 2, gl20::FLOAT, gl20::FALSE_, 0, &vertices);
+		gl20::EnableVertexAttribArray(texcoordAttribPos);
+		gl20::VertexAttribPointer(texcoordAttribPos, 2, gl20::FLOAT, gl20::FALSE_, 0, &texcoords);
+		gl20::DrawArrays(gl20::TRIANGLE_STRIP, 0, 4);
 	}
 	void draw(GLuint vertexAttribPos)
 	{
-		gl::EnableVertexAttribArray(vertexAttribPos);
-		gl::VertexAttribPointer(vertexAttribPos, 2, gl::FLOAT, gl::FALSE_, 0, &vertices);
-		gl::DrawArrays(gl::TRIANGLE_STRIP, 0, 4);
+		gl20::EnableVertexAttribArray(vertexAttribPos);
+		gl20::VertexAttribPointer(vertexAttribPos, 2, gl20::FLOAT, gl20::FALSE_, 0, &vertices);
+		gl20::DrawArrays(gl20::TRIANGLE_STRIP, 0, 4);
 	}
 };
 class Line
@@ -387,10 +384,10 @@ class Line
 	}
 	void draw(GLuint vertexAttribPos)
 	{
-		gl::LineWidth(thickness);
-		gl::EnableVertexAttribArray(vertexAttribPos);
-		gl::VertexAttribPointer(vertexAttribPos, 2, gl::FLOAT, gl::FALSE_, 0, &vertices);
-		gl::DrawArrays(gl::LINES, 0, 2);
+		gl20::LineWidth(thickness);
+		gl20::EnableVertexAttribArray(vertexAttribPos);
+		gl20::VertexAttribPointer(vertexAttribPos, 2, gl20::FLOAT, gl20::FALSE_, 0, &vertices);
+		gl20::DrawArrays(gl20::LINES, 0, 2);
 	}
 };
 class ActiveTexture
@@ -398,17 +395,17 @@ class ActiveTexture
 	ActiveTexture(const ActiveTexture &) = delete;
 
   public:
-	static GLenum getUnitEnum(int unit) { return gl::TEXTURE0 + unit; }
+	static GLenum getUnitEnum(int unit) { return gl20::TEXTURE0 + unit; }
 
 	ActiveTexture(int unit)
 	{
 		GLenum prevUnit;
-		gl::GetIntegerv(gl::ACTIVE_TEXTURE, reinterpret_cast<GLint *>(&prevUnit));
+		gl20::GetIntegerv(gl20::ACTIVE_TEXTURE, reinterpret_cast<GLint *>(&prevUnit));
 		if (prevUnit == getUnitEnum(unit))
 		{
 			return;
 		}
-		gl::ActiveTexture(getUnitEnum(unit));
+		gl20::ActiveTexture(getUnitEnum(unit));
 	}
 };
 
@@ -420,12 +417,12 @@ class UnpackAlignment
 	UnpackAlignment(int align)
 	{
 		GLint prevAlign;
-		gl::GetIntegerv(gl::UNPACK_ALIGNMENT, &prevAlign);
+		gl20::GetIntegerv(gl20::UNPACK_ALIGNMENT, &prevAlign);
 		if (prevAlign == align)
 		{
 			return;
 		}
-		gl::PixelStorei(gl::UNPACK_ALIGNMENT, align);
+		gl20::PixelStorei(gl20::UNPACK_ALIGNMENT, align);
 	}
 };
 
@@ -441,27 +438,27 @@ class BindTexture
 	{
 		switch (e)
 		{
-			case gl::TEXTURE_1D:
-				return gl::TEXTURE_BINDING_1D;
-			case gl::TEXTURE_2D:
-				return gl::TEXTURE_BINDING_2D;
-			case gl::TEXTURE_3D:
-				return gl::TEXTURE_BINDING_3D;
+			case gl20::TEXTURE_1D:
+				return gl20::TEXTURE_BINDING_1D;
+			case gl20::TEXTURE_2D:
+				return gl20::TEXTURE_BINDING_2D;
+			case gl20::TEXTURE_3D:
+				return gl20::TEXTURE_BINDING_3D;
 			default:
 				LogError("Unknown texture enum %d", static_cast<int>(e));
-				return gl::TEXTURE_BINDING_2D;
+				return gl20::TEXTURE_BINDING_2D;
 		}
 	}
-	BindTexture(GLuint id, GLint unit = 0, GLenum bind = gl::TEXTURE_2D) : bind(bind), unit(unit)
+	BindTexture(GLuint id, GLint unit = 0, GLenum bind = gl20::TEXTURE_2D) : bind(bind), unit(unit)
 	{
 		ActiveTexture a(unit);
 		GLuint prevID;
-		gl::GetIntegerv(getBindEnum(bind), reinterpret_cast<GLint *>(&prevID));
+		gl20::GetIntegerv(getBindEnum(bind), reinterpret_cast<GLint *>(&prevID));
 		if (prevID == id)
 		{
 			return;
 		}
-		gl::BindTexture(bind, id);
+		gl20::BindTexture(bind, id);
 	}
 };
 
@@ -474,16 +471,16 @@ template <GLenum param> class TexParam
 	GLenum type;
 	bool nop;
 
-	TexParam(GLuint id, GLint value, GLenum type = gl::TEXTURE_2D) : id(id), type(type)
+	TexParam(GLuint id, GLint value, GLenum type = gl20::TEXTURE_2D) : id(id), type(type)
 	{
 		GLint prevValue;
 		BindTexture b(id, 0, type);
-		gl::GetTexParameteriv(type, param, &prevValue);
+		gl20::GetTexParameteriv(type, param, &prevValue);
 		if (prevValue == value)
 		{
 			return;
 		}
-		gl::TexParameteri(type, param, value);
+		gl20::TexParameteri(type, param, value);
 	}
 };
 
@@ -495,12 +492,12 @@ class BindFramebuffer
 	BindFramebuffer(GLuint id)
 	{
 		GLuint prevID;
-		gl::GetIntegerv(gl::FRAMEBUFFER_BINDING_EXT, reinterpret_cast<GLint *>(&prevID));
+		gl20::GetIntegerv(gl20::FRAMEBUFFER_BINDING_EXT, reinterpret_cast<GLint *>(&prevID));
 		if (prevID == id)
 		{
 			return;
 		}
-		gl::BindFramebufferEXT(gl::FRAMEBUFFER_EXT, id);
+		gl20::BindFramebufferEXT(gl20::FRAMEBUFFER_EXT, id);
 	}
 };
 
@@ -532,8 +529,8 @@ class FBOData : public RendererImageData
 		unsigned imgStride = size.x * 4;
 		for (int y = 0; y < size.y; y++)
 		{
-			gl::ReadPixels(0, size.y - 1 - y, size.x, size.y - y, gl::RGBA, gl::UNSIGNED_BYTE,
-			               imgPos);
+			gl20::ReadPixels(0, size.y - 1 - y, size.x, size.y - y, gl20::RGBA, gl20::UNSIGNED_BYTE,
+			                 imgPos);
 			imgPos += imgStride;
 		}
 
@@ -542,29 +539,29 @@ class FBOData : public RendererImageData
 
 	FBOData(Vec2<int> size) : size(size.x, size.y)
 	{
-		gl::GenTextures(1, &this->tex);
+		gl20::GenTextures(1, &this->tex);
 		BindTexture b(this->tex);
-		gl::TexImage2D(gl::TEXTURE_2D, 0, gl::RGBA8, size.x, size.y, 0, gl::RGBA, gl::UNSIGNED_BYTE,
-		               NULL);
-		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::NEAREST);
-		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::NEAREST);
-		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_S, gl::CLAMP_TO_EDGE);
-		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_T, gl::CLAMP_TO_EDGE);
+		gl20::TexImage2D(gl20::TEXTURE_2D, 0, gl20::RGBA8, size.x, size.y, 0, gl20::RGBA,
+		                 gl20::UNSIGNED_BYTE, NULL);
+		gl20::TexParameteri(gl20::TEXTURE_2D, gl20::TEXTURE_MIN_FILTER, gl20::NEAREST);
+		gl20::TexParameteri(gl20::TEXTURE_2D, gl20::TEXTURE_MAG_FILTER, gl20::NEAREST);
+		gl20::TexParameteri(gl20::TEXTURE_2D, gl20::TEXTURE_WRAP_S, gl20::CLAMP_TO_EDGE);
+		gl20::TexParameteri(gl20::TEXTURE_2D, gl20::TEXTURE_WRAP_T, gl20::CLAMP_TO_EDGE);
 
-		gl::GenFramebuffersEXT(1, &this->fbo);
+		gl20::GenFramebuffersEXT(1, &this->fbo);
 		BindFramebuffer f(this->fbo);
 
-		gl::FramebufferTexture2DEXT(gl::FRAMEBUFFER_EXT, gl::COLOR_ATTACHMENT0_EXT, gl::TEXTURE_2D,
-		                            this->tex, 0);
-		LogAssert(gl::CheckFramebufferStatusEXT(gl::FRAMEBUFFER_EXT) ==
-		          gl::FRAMEBUFFER_COMPLETE_EXT);
+		gl20::FramebufferTexture2DEXT(gl20::FRAMEBUFFER_EXT, gl20::COLOR_ATTACHMENT0_EXT,
+		                              gl20::TEXTURE_2D, this->tex, 0);
+		LogAssert(gl20::CheckFramebufferStatusEXT(gl20::FRAMEBUFFER_EXT) ==
+		          gl20::FRAMEBUFFER_COMPLETE_EXT);
 	}
 	virtual ~FBOData()
 	{
 		if (tex)
-			gl::DeleteTextures(1, &tex);
+			gl20::DeleteTextures(1, &tex);
 		if (fbo)
-			gl::DeleteFramebuffersEXT(1, &fbo);
+			gl20::DeleteFramebuffersEXT(1, &fbo);
 	}
 };
 
@@ -577,16 +574,16 @@ class GLRGBImage : public RendererImageData
 	GLRGBImage(sp<RGBImage> parent) : size(parent->size), parent(parent)
 	{
 		RGBImageLock l(parent, ImageLockUse::Read);
-		gl::GenTextures(1, &this->texID);
+		gl20::GenTextures(1, &this->texID);
 		BindTexture b(this->texID);
-		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::NEAREST);
-		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::NEAREST);
-		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_S, gl::CLAMP_TO_EDGE);
-		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_T, gl::CLAMP_TO_EDGE);
-		gl::TexImage2D(gl::TEXTURE_2D, 0, gl::RGBA, parent->size.x, parent->size.y, 0, gl::RGBA,
-		               gl::UNSIGNED_BYTE, l.getData());
+		gl20::TexParameteri(gl20::TEXTURE_2D, gl20::TEXTURE_MIN_FILTER, gl20::NEAREST);
+		gl20::TexParameteri(gl20::TEXTURE_2D, gl20::TEXTURE_MAG_FILTER, gl20::NEAREST);
+		gl20::TexParameteri(gl20::TEXTURE_2D, gl20::TEXTURE_WRAP_S, gl20::CLAMP_TO_EDGE);
+		gl20::TexParameteri(gl20::TEXTURE_2D, gl20::TEXTURE_WRAP_T, gl20::CLAMP_TO_EDGE);
+		gl20::TexImage2D(gl20::TEXTURE_2D, 0, gl20::RGBA, parent->size.x, parent->size.y, 0,
+		                 gl20::RGBA, gl20::UNSIGNED_BYTE, l.getData());
 	}
-	virtual ~GLRGBImage() { gl::DeleteTextures(1, &this->texID); }
+	virtual ~GLRGBImage() { gl20::DeleteTextures(1, &this->texID); }
 };
 
 class GLPalette : public RendererImageData
@@ -597,16 +594,16 @@ class GLPalette : public RendererImageData
 	std::weak_ptr<Palette> parent;
 	GLPalette(sp<Palette> parent) : size(Vec2<float>(parent->colours.size(), 1)), parent(parent)
 	{
-		gl::GenTextures(1, &this->texID);
+		gl20::GenTextures(1, &this->texID);
 		BindTexture b(this->texID);
-		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::NEAREST);
-		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::NEAREST);
-		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_S, gl::CLAMP_TO_EDGE);
-		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_T, gl::CLAMP_TO_EDGE);
-		gl::TexImage2D(gl::TEXTURE_2D, 0, gl::RGBA, parent->colours.size(), 1, 0, gl::RGBA,
-		               gl::UNSIGNED_BYTE, parent->colours.data());
+		gl20::TexParameteri(gl20::TEXTURE_2D, gl20::TEXTURE_MIN_FILTER, gl20::NEAREST);
+		gl20::TexParameteri(gl20::TEXTURE_2D, gl20::TEXTURE_MAG_FILTER, gl20::NEAREST);
+		gl20::TexParameteri(gl20::TEXTURE_2D, gl20::TEXTURE_WRAP_S, gl20::CLAMP_TO_EDGE);
+		gl20::TexParameteri(gl20::TEXTURE_2D, gl20::TEXTURE_WRAP_T, gl20::CLAMP_TO_EDGE);
+		gl20::TexImage2D(gl20::TEXTURE_2D, 0, gl20::RGBA, parent->colours.size(), 1, 0, gl20::RGBA,
+		                 gl20::UNSIGNED_BYTE, parent->colours.data());
 	}
-	virtual ~GLPalette() { gl::DeleteTextures(1, &this->texID); }
+	virtual ~GLPalette() { gl20::DeleteTextures(1, &this->texID); }
 };
 
 class GLPaletteImage : public RendererImageData
@@ -618,17 +615,17 @@ class GLPaletteImage : public RendererImageData
 	GLPaletteImage(sp<PaletteImage> parent) : size(parent->size), parent(parent)
 	{
 		PaletteImageLock l(parent, ImageLockUse::Read);
-		gl::GenTextures(1, &this->texID);
+		gl20::GenTextures(1, &this->texID);
 		BindTexture b(this->texID);
 		UnpackAlignment align(1);
-		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MIN_FILTER, gl::NEAREST);
-		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_MAG_FILTER, gl::NEAREST);
-		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_S, gl::CLAMP_TO_EDGE);
-		gl::TexParameteri(gl::TEXTURE_2D, gl::TEXTURE_WRAP_T, gl::CLAMP_TO_EDGE);
-		gl::TexImage2D(gl::TEXTURE_2D, 0, 1, parent->size.x, parent->size.y, 0, gl::RED,
-		               gl::UNSIGNED_BYTE, l.getData());
+		gl20::TexParameteri(gl20::TEXTURE_2D, gl20::TEXTURE_MIN_FILTER, gl20::NEAREST);
+		gl20::TexParameteri(gl20::TEXTURE_2D, gl20::TEXTURE_MAG_FILTER, gl20::NEAREST);
+		gl20::TexParameteri(gl20::TEXTURE_2D, gl20::TEXTURE_WRAP_S, gl20::CLAMP_TO_EDGE);
+		gl20::TexParameteri(gl20::TEXTURE_2D, gl20::TEXTURE_WRAP_T, gl20::CLAMP_TO_EDGE);
+		gl20::TexImage2D(gl20::TEXTURE_2D, 0, 1, parent->size.x, parent->size.y, 0, gl20::RED,
+		                 gl20::UNSIGNED_BYTE, l.getData());
 	}
-	virtual ~GLPaletteImage() { gl::DeleteTextures(1, &this->texID); }
+	virtual ~GLPaletteImage() { gl20::DeleteTextures(1, &this->texID); }
 };
 
 class OGL20Renderer : public Renderer
@@ -656,9 +653,9 @@ class OGL20Renderer : public Renderer
 			s->rendererPrivateData.reset(new FBOData(s->size));
 
 		FBOData *fbo = static_cast<FBOData *>(s->rendererPrivateData.get());
-		gl::BindFramebufferEXT(gl::FRAMEBUFFER_EXT, fbo->fbo);
+		gl20::BindFramebufferEXT(gl20::FRAMEBUFFER_EXT, fbo->fbo);
 		this->currentBoundFBO = fbo->fbo;
-		gl::Viewport(0, 0, s->size.x, s->size.y);
+		gl20::Viewport(0, 0, s->size.x, s->size.y);
 	}
 	sp<Surface> getSurface() override { return currentSurface; }
 	sp<Surface> defaultSurface;
@@ -669,7 +666,7 @@ class OGL20Renderer : public Renderer
 	      paletteProgram(new PaletteProgram()), currentBoundProgram(0), currentBoundFBO(0)
 	{
 		GLint viewport[4];
-		gl::GetIntegerv(gl::VIEWPORT, viewport);
+		gl20::GetIntegerv(gl20::VIEWPORT, viewport);
 		LogInfo("Viewport {%d,%d,%d,%d}", viewport[0], viewport[1], viewport[2], viewport[3]);
 		LogAssert(viewport[0] == 0 && viewport[1] == 0);
 		this->defaultSurface = mksp<Surface>(Vec2<int>{viewport[2], viewport[3]});
@@ -677,17 +674,17 @@ class OGL20Renderer : public Renderer
 		this->currentSurface = this->defaultSurface;
 
 		GLint maxTexUnits;
-		gl::GetIntegerv(gl::MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTexUnits);
+		gl20::GetIntegerv(gl20::MAX_COMBINED_TEXTURE_IMAGE_UNITS, &maxTexUnits);
 		LogInfo("MAX_COMBINED_TEXTURE_IMAGE_UNITS: %d", maxTexUnits);
-		gl::Enable(gl::BLEND);
-		gl::BlendFunc(gl::SRC_ALPHA, gl::ONE_MINUS_SRC_ALPHA);
+		gl20::Enable(gl20::BLEND);
+		gl20::BlendFunc(gl20::SRC_ALPHA, gl20::ONE_MINUS_SRC_ALPHA);
 	}
 	virtual ~OGL20Renderer(){};
 	void clear(Colour c = Colour{0, 0, 0, 0}) override
 	{
 		this->flush();
-		gl::ClearColor(c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, c.a / 255.0f);
-		gl::Clear(gl::COLOR_BUFFER_BIT);
+		gl20::ClearColor(c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, c.a / 255.0f);
+		gl20::Clear(gl20::COLOR_BUFFER_BIT);
 	}
 	void setPalette(sp<Palette> p) override
 	{
@@ -867,7 +864,7 @@ class OGL20Renderer : public Renderer
 	{
 		if (this->currentBoundProgram == p->prog)
 			return;
-		gl::UseProgram(p->prog);
+		gl20::UseProgram(p->prog);
 		this->currentBoundProgram = p->prog;
 	}
 	void DrawRGB(GLRGBImage &img, Vec2<float> offset, Vec2<float> size, Scaler scaler,
@@ -878,14 +875,14 @@ class OGL20Renderer : public Renderer
 		switch (scaler)
 		{
 			case Scaler::Linear:
-				filter = gl::LINEAR;
+				filter = gl20::LINEAR;
 				break;
 			case Scaler::Nearest:
-				filter = gl::NEAREST;
+				filter = gl20::NEAREST;
 				break;
 			default:
 				LogError("Unknown scaler requested");
-				filter = gl::NEAREST;
+				filter = gl20::NEAREST;
 				break;
 		}
 		BindProgram(rgbProgram);
@@ -894,8 +891,8 @@ class OGL20Renderer : public Renderer
 			flipY = true;
 		rgbProgram->setUniforms(this->currentSurface->size, flipY);
 		BindTexture t(img.texID);
-		TexParam<gl::TEXTURE_MAG_FILTER> mag(img.texID, filter);
-		TexParam<gl::TEXTURE_MIN_FILTER> min(img.texID, filter);
+		TexParam<gl20::TEXTURE_MAG_FILTER> mag(img.texID, filter);
+		TexParam<gl20::TEXTURE_MIN_FILTER> min(img.texID, filter);
 		Quad q(pos, Rect<float>{{0, 0}, {1, 1}}, rotationCenter, rotationAngleRadians);
 		q.draw(rgbProgram->posLoc, rgbProgram->texcoordLoc);
 	}
@@ -922,14 +919,14 @@ class OGL20Renderer : public Renderer
 		switch (scaler)
 		{
 			case Scaler::Linear:
-				filter = gl::LINEAR;
+				filter = gl20::LINEAR;
 				break;
 			case Scaler::Nearest:
-				filter = gl::NEAREST;
+				filter = gl20::NEAREST;
 				break;
 			default:
 				LogError("Unknown scaler requested");
-				filter = gl::NEAREST;
+				filter = gl20::NEAREST;
 				break;
 		}
 		BindProgram(rgbProgram);
@@ -938,8 +935,8 @@ class OGL20Renderer : public Renderer
 			flipY = true;
 		rgbProgram->setUniforms(this->currentSurface->size, flipY);
 		BindTexture t(fbo.tex);
-		TexParam<gl::TEXTURE_MAG_FILTER> mag(fbo.tex, filter);
-		TexParam<gl::TEXTURE_MIN_FILTER> min(fbo.tex, filter);
+		TexParam<gl20::TEXTURE_MAG_FILTER> mag(fbo.tex, filter);
+		TexParam<gl20::TEXTURE_MIN_FILTER> min(fbo.tex, filter);
 		Quad q(pos, Rect<float>{{0, 0}, {1, 1}});
 		q.draw(rgbProgram->posLoc, rgbProgram->texcoordLoc);
 	}
@@ -980,7 +977,7 @@ class OGL20RendererFactory : public OpenApoc::RendererFactory
 		if (!alreadyInitialised)
 		{
 			alreadyInitialised = true;
-			auto success = gl::sys::LoadFunctions();
+			auto success = gl20::sys::LoadFunctions();
 			if (!success)
 			{
 				LogInfo("failed to load GL implementation functions");
@@ -991,9 +988,10 @@ class OGL20RendererFactory : public OpenApoc::RendererFactory
 				LogInfo("GL implementation missing %d functions", success.GetNumMissing());
 				return nullptr;
 			}
-			if (!gl::sys::IsVersionGEQ(2, 0))
+			if (!gl20::sys::IsVersionGEQ(2, 0))
 			{
-				LogInfo("GL version not at least 2.0");
+				LogInfo("GL version not at least 2.0, got %d.%d", gl20::sys::GetMajorVersion(),
+				        gl20::sys::GetMinorVersion());
 				return nullptr;
 			}
 			functionLoadSuccess = true;

@@ -8,8 +8,10 @@
 #include "library/sp.h"
 #include <iomanip>
 
+#ifdef _MSC_VER
 // msvs reports level 3 warning 4996 - std::localtime is unsafe
 #pragma warning(disable : 4996)
+#endif
 
 namespace OpenApoc
 {
@@ -217,7 +219,7 @@ void SaveMenu::loadWithWarning(sp<Control> parent)
 		if (slot != nullptr)
 		{
 			std::function<void()> onSuccess = std::function<void()>([this, slot] {
-				stageCmd.nextStage = mksp<LoadingScreen>(std::move(saveManager.loadGame(*slot)));
+				stageCmd.nextStage = mksp<LoadingScreen>(saveManager.loadGame(*slot));
 				stageCmd.cmd = StageCmd::Command::PUSH;
 			});
 			sp<MessageBox> messageBox = mksp<MessageBox>(
@@ -237,7 +239,7 @@ void SaveMenu::tryToLoadGame(sp<Control> slotControl)
 		sp<SaveMetadata> slot = slotControl->GetData<SaveMetadata>();
 		if (slot != nullptr)
 		{
-			stageCmd.nextStage = mksp<LoadingScreen>(std::move(saveManager.loadGame(*slot)));
+			stageCmd.nextStage = mksp<LoadingScreen>(saveManager.loadGame(*slot));
 			stageCmd.cmd = StageCmd::Command::PUSH;
 		}
 	}
@@ -363,6 +365,7 @@ void SaveMenu::EventOccurred(Event *e)
 				}
 				break;
 			case FormEventType::TextEditFinish:
+			{
 				sp<TextEdit> textEdit = std::static_pointer_cast<TextEdit>(e->Forms().RaisedBy);
 				auto slotControl = e->Forms().RaisedBy->GetParent();
 				if (!slotControl || !textEdit || (textEdit != activeTextEdit))
@@ -371,6 +374,9 @@ void SaveMenu::EventOccurred(Event *e)
 				}
 
 				tryToSaveGame(textEdit->GetText(), slotControl);
+				break;
+			}
+			default:
 				break;
 		}
 	}

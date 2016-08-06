@@ -73,15 +73,15 @@ void BaseScreen::Begin()
 
 	form->FindControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *e) { this->stageCmd.cmd = StageCmd::Command::POP; });
+	                  [this](Event *) { this->stageCmd.cmd = StageCmd::Command::POP; });
 	form->FindControlTyped<GraphicButton>("BUTTON_BASE_EQUIPVEHICLE")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    // FIXME: If you don't have any vehicles this button should do nothing
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    this->stageCmd.nextStage = mksp<VEquipScreen>(state);
 		});
 	form->FindControlTyped<GraphicButton>("BUTTON_BASE_RES_AND_MANUF")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *e) {
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    // FIXME: If you don't have any facilities this button should do nothing
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    this->stageCmd.nextStage = mksp<ResearchScreen>(state);

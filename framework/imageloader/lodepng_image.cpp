@@ -54,7 +54,11 @@ sp<Palette> OpenApoc::loadPNGPalette(Data &d, const UString fileName)
 		uint8_t *palPos = png_state.info_png.color.palette;
 		for (unsigned int i = 0; i < 256; i++)
 		{
-			pal->SetColour(i, Colour{*palPos++, *palPos++, *palPos++, *palPos++});
+			auto r = *palPos++;
+			auto g = *palPos++;
+			auto b = *palPos++;
+			auto a = *palPos++;
+			pal->SetColour(i, Colour{r, g, b, a});
 		}
 		return pal;
 	}

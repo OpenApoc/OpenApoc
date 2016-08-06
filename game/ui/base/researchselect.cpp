@@ -10,7 +10,7 @@ namespace OpenApoc
 {
 
 ResearchSelect::ResearchSelect(sp<GameState> state, sp<Lab> lab)
-    : Stage(), form(ui().GetForm("FORM_RESEARCHSELECT")), state(state), lab(lab)
+    : Stage(), form(ui().GetForm("FORM_RESEARCHSELECT")), lab(lab), state(state)
 {
 }
 

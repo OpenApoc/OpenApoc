@@ -364,7 +364,6 @@ MusicTrack::MusicCallbackReturn SMKMusicTrack::fillData(unsigned int maxSamples,
                                                         unsigned int *returnedSamples)
 {
 	TRACE_FN;
-	char *sample_buffer_position = (char *)sampleBuffer;
 	if (!this->current_frame)
 	{
 		LogWarning("Playing beyond end of video");

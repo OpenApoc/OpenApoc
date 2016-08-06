@@ -148,7 +148,7 @@ typedef unsigned int GLhandleARB;
 		typedef unsigned short GLhalfNV;
 		typedef GLintptr GLvdpauSurfaceNV;
 
-namespace gl
+namespace gl30
 {
 	namespace exts
 	{

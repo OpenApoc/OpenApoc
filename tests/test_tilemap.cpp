@@ -93,19 +93,19 @@ int main(int, char **)
 	// Compare some expected collisions
 	//{{line_start,line_end},expected_object}
 	std::vector<std::pair<std::array<Vec3<float>, 2>, sp<TileObject>>> collisions = {
-	    {{Vec3<float>{0, 0, 0}, Vec3<float>{1, 1, 1}}, nullptr},
-	    {{Vec3<float>{2.1, 2.1, 0}, Vec3<float>{2.1, 2.1, 4}}, objects[0].second},
-	    {{Vec3<float>{2.6, 2.6, 0}, Vec3<float>{2.6, 2.6, 4}}, objects[0].second},
-	    {{Vec3<float>{2.6, 0, 2.1}, Vec3<float>{2.6, 4, 2.1}}, objects[0].second},
-	    {{Vec3<float>{2.6, 0, 2.6}, Vec3<float>{2.6, 4, 2.6}}, objects[0].second},
-	    {{Vec3<float>{0, 2.1, 2.1}, Vec3<float>{4, 2.1, 2.1}}, objects[0].second},
-	    {{Vec3<float>{0, 2.6, 2.6}, Vec3<float>{4, 2.6, 2.6}}, objects[0].second},
-	    {{Vec3<float>{2.1, 2.1, 0}, Vec3<float>{2.1, 2.6, 4}}, objects[0].second},
-	    {{Vec3<float>{2.6, 2.6, 0}, Vec3<float>{2.1, 2.6, 4}}, objects[0].second},
-	    {{Vec3<float>{2.6, 0, 2.1}, Vec3<float>{2.1, 4, 2.1}}, objects[0].second},
-	    {{Vec3<float>{2.1, 0, 2.6}, Vec3<float>{2.6, 4, 2.6}}, objects[0].second},
-	    {{Vec3<float>{0, 2.6, 2.6}, Vec3<float>{4, 2.1, 2.6}}, objects[0].second},
-	    {{Vec3<float>{0, 2.1, 2.6}, Vec3<float>{4, 2.6, 2.6}}, objects[0].second},
+	    {{{Vec3<float>{0, 0, 0}, Vec3<float>{1, 1, 1}}}, nullptr},
+	    {{{Vec3<float>{2.1, 2.1, 0}, Vec3<float>{2.1, 2.1, 4}}}, objects[0].second},
+	    {{{Vec3<float>{2.6, 2.6, 0}, Vec3<float>{2.6, 2.6, 4}}}, objects[0].second},
+	    {{{Vec3<float>{2.6, 0, 2.1}, Vec3<float>{2.6, 4, 2.1}}}, objects[0].second},
+	    {{{Vec3<float>{2.6, 0, 2.6}, Vec3<float>{2.6, 4, 2.6}}}, objects[0].second},
+	    {{{Vec3<float>{0, 2.1, 2.1}, Vec3<float>{4, 2.1, 2.1}}}, objects[0].second},
+	    {{{Vec3<float>{0, 2.6, 2.6}, Vec3<float>{4, 2.6, 2.6}}}, objects[0].second},
+	    {{{Vec3<float>{2.1, 2.1, 0}, Vec3<float>{2.1, 2.6, 4}}}, objects[0].second},
+	    {{{Vec3<float>{2.6, 2.6, 0}, Vec3<float>{2.1, 2.6, 4}}}, objects[0].second},
+	    {{{Vec3<float>{2.6, 0, 2.1}, Vec3<float>{2.1, 4, 2.1}}}, objects[0].second},
+	    {{{Vec3<float>{2.1, 0, 2.6}, Vec3<float>{2.6, 4, 2.6}}}, objects[0].second},
+	    {{{Vec3<float>{0, 2.6, 2.6}, Vec3<float>{4, 2.1, 2.6}}}, objects[0].second},
+	    {{{Vec3<float>{0, 2.1, 2.6}, Vec3<float>{4, 2.6, 2.6}}}, objects[0].second},
 	};
 
 	for (auto &collision : collisions)

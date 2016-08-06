@@ -27,7 +27,7 @@ class TraceEvent
 	std::vector<std::pair<UString, UString>> args;
 	TraceEvent(EventType type, const UString &name,
 	           const std::vector<std::pair<UString, UString>> &args, uint64_t timeNS)
-	    : type(type), name(name), args(args), timeNS(timeNS)
+	    : type(type), timeNS(timeNS), name(name), args(args)
 	{
 	}
 	TraceEvent() = default;

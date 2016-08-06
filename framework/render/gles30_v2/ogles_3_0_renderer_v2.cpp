@@ -113,7 +113,7 @@ class SpritesheetEntry final : public RendererImageData
 {
   public:
 	SpritesheetEntry(Vec2<int> size, sp<Image> parent)
-	    : position({-1, -1}), size(size), page(-1), parent(parent)
+	    : parent(parent), position({-1, -1}), size(size), page(-1)
 	{
 	}
 	wp<Image> parent;
@@ -133,19 +133,20 @@ class SpritesheetPage
 	int page_no;
 
   public:
-	SpritesheetPage(int page_no, Vec2<int> size, int node_count) : page_no(page_no), size(size)
+	SpritesheetPage(int page_no, Vec2<int> size, int node_count) : size(size), page_no(page_no)
 	{
 		LogAssert(node_count > 0);
 		LogAssert(size.x > 0);
 		LogAssert(size.y > 0);
 		pack_nodes.reset(new stbrp_node[node_count]);
 		stbrp_init_target(&pack_context, size.x, size.y, pack_nodes.get(), node_count);
+		stbrp_setup_heuristic(&pack_context, STBRP__INIT_skyline);
 	}
 
 	void addMultiple(std::vector<sp<SpritesheetEntry>> &entries)
 	{
 		up<stbrp_rect[]> rects(new stbrp_rect[entries.size()]);
-		for (int i = 0; i < entries.size(); i++)
+		for (unsigned int i = 0; i < entries.size(); i++)
 		{
 			LogAssert(entries[i]->page == -1);
 			rects[i].id = i;
@@ -155,7 +156,7 @@ class SpritesheetPage
 
 		stbrp_pack_rects(&pack_context, rects.get(), entries.size());
 
-		for (int i = 0; i < entries.size(); i++)
+		for (unsigned int i = 0; i < entries.size(); i++)
 		{
 			if (rects[i].was_packed)
 			{
@@ -251,7 +252,7 @@ class Spritesheet
 	{
 		TRACE_FN;
 		LogAssert(entry->page >= 0);
-		LogAssert(entry->page < this->pages.size());
+		LogAssert(entry->page < (int)this->pages.size());
 		auto image = entry->parent.lock();
 		if (!image)
 		{
@@ -357,7 +358,7 @@ class SpriteBuffer
 	GL::GLuint vertex_buffer_id;
 	GL::GLuint vao_id;
 
-	int buffer_contents;
+	unsigned int buffer_contents;
 	std::vector<SpriteDescription> buffer;
 
   public:
@@ -365,8 +366,8 @@ class SpriteBuffer
 	             GL::GLuint page_attr = 2, GL::GLuint spritesheet_position_attr = 3,
 	             GL::GLuint spritesheet_size_attr = 4, GL::GLuint screen_position_attr = 5,
 	             GL::GLuint screen_size_attr = 6)
-	    : sprite_buffer_id(0), vertex_buffer_id(0), vao_id(0), buffer(buffer_size),
-	      buffer_contents(0)
+	    : sprite_buffer_id(0), vertex_buffer_id(0), vao_id(0), buffer_contents(0),
+	      buffer(buffer_size)
 	{
 		TRACE_FN;
 		LogAssert(buffer_size > 0);
@@ -537,7 +538,7 @@ class SpriteDrawMachine
 	    "  }\n"
 	    "}\n"};
 	std::vector<up<SpriteBuffer>> buffers;
-	int current_buffer;
+	unsigned int current_buffer;
 
 	GL::GLuint sprite_program_id;
 	Spritesheet palette_spritesheet;
@@ -564,7 +565,8 @@ class SpriteDrawMachine
 	}
 
   public:
-	SpriteDrawMachine(int bufferSize, int bufferCount, Vec2<int> spritesheet_page_size)
+	SpriteDrawMachine(unsigned int bufferSize, unsigned int bufferCount,
+	                  Vec2<unsigned int> spritesheet_page_size)
 	    : current_buffer(0), palette_spritesheet(spritesheet_page_size, GL::R8UI),
 	      rgb_spritesheet(spritesheet_page_size, GL::RGBA8)
 	{
@@ -593,7 +595,7 @@ class SpriteDrawMachine
 		LogAssert(this->palette_location >= 0);
 		gl->Uniform1i(this->palette_location, PALETTE_TEX_IDX);
 
-		for (int i = 0; i < bufferCount; i++)
+		for (unsigned int i = 0; i < bufferCount; i++)
 			this->buffers.emplace_back(new SpriteBuffer(bufferSize));
 	}
 	~SpriteDrawMachine()
@@ -601,7 +603,7 @@ class SpriteDrawMachine
 		if (sprite_program_id)
 			gl->DeleteProgram(sprite_program_id);
 	}
-	void flush(Vec2<int> viewport_size, bool flip_y)
+	void flush(Vec2<unsigned int> viewport_size, bool flip_y)
 	{
 		if (this->buffers[this->current_buffer]->isEmpty())
 			return;
@@ -620,7 +622,7 @@ class SpriteDrawMachine
 		this->current_buffer = (this->current_buffer + 1) % this->buffers.size();
 	}
 	void draw(sp<RGBImage> i, Vec2<float> screenPos, Vec2<float> screenSize,
-	          Vec2<int> viewport_size, bool flip_y)
+	          Vec2<unsigned int> viewport_size, bool flip_y)
 	{
 		auto sprite = std::dynamic_pointer_cast<SpritesheetEntry>(i->rendererPrivateData);
 		if (!sprite)
@@ -635,7 +637,7 @@ class SpriteDrawMachine
 		this->buffers[this->current_buffer]->pushRGB(sprite, screenPos, screenSize);
 	}
 	void draw(sp<PaletteImage> i, Vec2<float> screenPos, Vec2<float> screenSize,
-	          Vec2<int> viewport_size, bool flip_y)
+	          Vec2<unsigned int> viewport_size, bool flip_y)
 	{
 		auto sprite = std::dynamic_pointer_cast<SpritesheetEntry>(i->rendererPrivateData);
 		if (!sprite)
@@ -655,7 +657,7 @@ class GLRGBTexture final : public RendererImageData
 {
   public:
 	GL::GLuint tex_id;
-	Vec2<int> size;
+	Vec2<unsigned int> size;
 	GLRGBTexture(sp<RGBImage> i)
 	{
 		TRACE_FN;
@@ -677,7 +679,7 @@ class GLPaletteTexture final : public RendererImageData
 {
   public:
 	GL::GLuint tex_id;
-	Vec2<int> size;
+	Vec2<unsigned int> size;
 	GLPaletteTexture(sp<PaletteImage> i)
 	{
 		TRACE_FN;
@@ -725,9 +727,9 @@ class GLSurface final : public RendererImageData
   public:
 	GL::GLuint fbo_id;
 	GL::GLuint tex_id;
-	Vec2<int> size;
-	GLSurface(GL::GLuint fbo, Vec2<int> size) : fbo_id(fbo), tex_id(0), size(size) {}
-	GLSurface(Vec2<int> size)
+	Vec2<unsigned int> size;
+	GLSurface(GL::GLuint fbo, Vec2<unsigned int> size) : fbo_id(fbo), tex_id(0), size(size) {}
+	GLSurface(Vec2<unsigned int> size)
 	{
 		LogAssert(size.x > 0 && size.y > 0);
 		TRACE_FN;
@@ -776,11 +778,11 @@ class GLSurface final : public RendererImageData
 
 		// Copy the image a row at a time, as OpenGL specifies framebuffer coords to start at the
 		// bottom, but RGBImage assumes it starts at the top
-		for (int y = 0; y < this->size.y; y++)
+		for (unsigned int y = 0; y < this->size.y; y++)
 		{
-			int row = this->size.y - y - 1;
+			unsigned int row = this->size.y - y - 1;
 			// Assume 4bpp RGBA8888
-			int stride = this->size.x * 4;
+			unsigned int stride = this->size.x * 4;
 			char *linePtr = reinterpret_cast<char *>(l.getData());
 			linePtr += (y * stride);
 			gl->ReadPixels(0, row, size.x, row + 1, GL::RGBA, GL::UNSIGNED_BYTE, linePtr);
@@ -838,7 +840,7 @@ class TexturedDrawMachine
 		GL::GLuint vao_id;
 	};
 	std::vector<TexturedQuadBuffers> buffers;
-	int current_buffer;
+	unsigned int current_buffer;
 
 	GL::GLuint tex_program_id;
 
@@ -862,8 +864,8 @@ class TexturedDrawMachine
 	};
 
   public:
-	TexturedDrawMachine(int bufferCount, GL::GLuint position_attr = 0, GL::GLuint texcoord_attr = 1,
-	                    GL::GLuint tint_attr = 2)
+	TexturedDrawMachine(unsigned int bufferCount, GL::GLuint position_attr = 0,
+	                    GL::GLuint texcoord_attr = 1, GL::GLuint tint_attr = 2)
 	    : current_buffer(0), tex_program_id(0)
 	{
 		TRACE_FN;
@@ -895,7 +897,7 @@ class TexturedDrawMachine
 		this->uses_palette_location = gl->GetUniformLocation(this->tex_program_id, "uses_palette");
 		LogAssert(this->uses_palette_location >= 0);
 
-		for (int i = 0; i < bufferCount; i++)
+		for (unsigned int i = 0; i < bufferCount; i++)
 		{
 			TexturedQuadBuffers b;
 
@@ -932,8 +934,8 @@ class TexturedDrawMachine
 	}
 
 	void draw(bool paletted, Vec2<float> tex_size, Vec2<float> screenPos, Vec2<float> screenSize,
-	          Vec2<float> rotationCenter, float rotationAngleRadians, Vec2<int> viewport_size,
-	          bool flip_y, Colour tint)
+	          Vec2<float> rotationCenter, float rotationAngleRadians,
+	          Vec2<unsigned int> viewport_size, bool flip_y, Colour tint)
 	{
 		TRACE_FN;
 		static const Vec2<float> identity_quad[4] = {{0, 0}, {0, 1}, {1, 0}, {1, 1}};
@@ -942,7 +944,7 @@ class TexturedDrawMachine
 
 		auto rotMatrix = glm::rotate(rotationAngleRadians, Vec3<float>{0.0f, 0.0f, 1.0f});
 
-		for (int i = 0; i < 4; i++)
+		for (unsigned int i = 0; i < 4; i++)
 		{
 			auto p = identity_quad[i];
 			p *= screenSize;
@@ -980,8 +982,9 @@ class TexturedDrawMachine
 	}
 
 	void draw(sp<RGBImage> i, Vec2<float> screenPos, Vec2<float> screenSize,
-	          Vec2<float> rotationCenter, float rotationAngleRadians, Vec2<int> viewport_size,
-	          bool flip_y, Renderer::Scaler scaler, Colour tint = {255, 255, 255, 255})
+	          Vec2<float> rotationCenter, float rotationAngleRadians,
+	          Vec2<unsigned int> viewport_size, bool flip_y, Renderer::Scaler scaler,
+	          Colour tint = {255, 255, 255, 255})
 	{
 		auto tex = std::dynamic_pointer_cast<GLRGBTexture>(i->rendererPrivateData);
 		if (!tex)
@@ -1006,8 +1009,9 @@ class TexturedDrawMachine
 	}
 
 	void draw(sp<Surface> i, Vec2<float> screenPos, Vec2<float> screenSize,
-	          Vec2<float> rotationCenter, float rotationAngleRadians, Vec2<int> viewport_size,
-	          bool flip_y, Renderer::Scaler scaler, Colour tint = {255, 255, 255, 255})
+	          Vec2<float> rotationCenter, float rotationAngleRadians,
+	          Vec2<unsigned int> viewport_size, bool flip_y, Renderer::Scaler scaler,
+	          Colour tint = {255, 255, 255, 255})
 	{
 		auto tex = std::dynamic_pointer_cast<GLSurface>(i->rendererPrivateData);
 		if (!tex)
@@ -1033,8 +1037,8 @@ class TexturedDrawMachine
 	}
 
 	void draw(sp<PaletteImage> i, Vec2<float> screenPos, Vec2<float> screenSize,
-	          Vec2<float> rotationCenter, float rotationAngleRadians, Vec2<int> viewport_size,
-	          bool flip_y, Colour tint = {255, 255, 255, 255})
+	          Vec2<float> rotationCenter, float rotationAngleRadians,
+	          Vec2<unsigned int> viewport_size, bool flip_y, Colour tint = {255, 255, 255, 255})
 	{
 		auto tex = std::dynamic_pointer_cast<GLPaletteTexture>(i->rendererPrivateData);
 		if (!tex)
@@ -1095,7 +1099,7 @@ class ColouredDrawMachine
 		ColouredDescription data;
 	};
 	std::vector<ColouredColouredBuffer> buffers;
-	int current_buffer;
+	unsigned int current_buffer;
 
 	GL::GLuint colour_program_id;
 
@@ -1103,7 +1107,8 @@ class ColouredDrawMachine
 	GL::GLint viewport_size_location;
 
   public:
-	ColouredDrawMachine(int bufferCount, GL::GLuint position_attr = 0, GL::GLuint colour_attr = 1)
+	ColouredDrawMachine(unsigned int bufferCount, GL::GLuint position_attr = 0,
+	                    GL::GLuint colour_attr = 1)
 	    : current_buffer(0), colour_program_id(0)
 	{
 		LogAssert(bufferCount > 0);
@@ -1120,7 +1125,7 @@ class ColouredDrawMachine
 		    gl->GetUniformLocation(this->colour_program_id, "viewport_size");
 		LogAssert(this->viewport_size_location >= 0);
 
-		for (int i = 0; i < bufferCount; i++)
+		for (unsigned int i = 0; i < bufferCount; i++)
 		{
 			ColouredColouredBuffer b;
 
@@ -1145,7 +1150,7 @@ class ColouredDrawMachine
 	}
 
 	// This expects screen coordinates as position values
-	void drawQuad(Vec2<float> positions[4], Colour colours[4], Vec2<float> viewport_size,
+	void drawQuad(Vec2<float> positions[4], Colour colours[4], Vec2<unsigned int> viewport_size,
 	              bool flip_y)
 	{
 		TRACE_FN;
@@ -1179,7 +1184,7 @@ class ColouredDrawMachine
 
 		ColouredDescription d;
 
-		for (int i = 0; i < 2; i++)
+		for (unsigned int i = 0; i < 2; i++)
 		{
 			buf.data.vertices[i].position = positions[i];
 			buf.data.vertices[i].colour = colours[i];
@@ -1251,14 +1256,14 @@ class OGLES30Renderer final : public Renderer
 		gl->Viewport(0, 0, s->size.x, s->size.y);
 	}
 	sp<Surface> getSurface() override { return this->current_surface; }
-	Vec2<int> spritesheetPageSize = {4096, 4096};
-	Vec2<int> maxSpriteSizeToPack{256, 256};
-	int spriteBufferSize = 16384;
-	int spriteBufferCount = 2;
+	Vec2<unsigned int> spritesheetPageSize = {4096, 4096};
+	Vec2<unsigned int> maxSpriteSizeToPack{256, 256};
+	unsigned int spriteBufferSize = 16384;
+	unsigned int spriteBufferCount = 2;
 
-	int texturedBufferCount = 1;
+	unsigned int texturedBufferCount = 1;
 
-	int quadBufferCount = 1;
+	unsigned int quadBufferCount = 1;
 
 	up<SpriteDrawMachine> spriteMachine;
 	up<TexturedDrawMachine> texturedMachine;
@@ -1544,10 +1549,9 @@ class OGLES30Renderer final : public Renderer
 	sp<Surface> getDefaultSurface() override { return this->default_surface; }
 };
 
-void GLESWRAP_APIENTRY debug_message_proc(GL::KHR_debug::GLenum source, GL::KHR_debug::GLenum type,
-                                          GL::GLuint id, GL::KHR_debug::GLenum severity,
-                                          GL::GLsizei length, const GL::GLchar *message,
-                                          const void *userParam)
+void GLESWRAP_APIENTRY debug_message_proc(GL::KHR_debug::GLenum, GL::KHR_debug::GLenum, GL::GLuint,
+                                          GL::KHR_debug::GLenum severity, GL::GLsizei,
+                                          const GL::GLchar *message, const void *)
 {
 	switch (severity)
 	{
@@ -1585,12 +1589,14 @@ OGLES30Renderer::OGLES30Renderer() : state(State::Idle)
 
 	GL::GLint max_texture_size;
 	gl->GetIntegerv(GL::MAX_TEXTURE_SIZE, &max_texture_size);
-	if (spritesheetPageSize.x > max_texture_size || spritesheetPageSize.y > max_texture_size)
+	LogAssert(max_texture_size > 0);
+	if (spritesheetPageSize.x > (unsigned int)max_texture_size ||
+	    spritesheetPageSize.y > (unsigned int)max_texture_size)
 	{
 		LogWarning("Default spritesheet size {%d,%d} larger than HW limit %d - clamping...",
 		           spritesheetPageSize.x, spritesheetPageSize.y, max_texture_size);
-		spritesheetPageSize.x = std::min(spritesheetPageSize.x, max_texture_size);
-		spritesheetPageSize.y = std::min(spritesheetPageSize.y, max_texture_size);
+		spritesheetPageSize.x = std::min(spritesheetPageSize.x, (unsigned int)max_texture_size);
+		spritesheetPageSize.y = std::min(spritesheetPageSize.y, (unsigned int)max_texture_size);
 	}
 	LogInfo("Set spritesheet size to {%d,%d}", spritesheetPageSize.x, spritesheetPageSize.y);
 

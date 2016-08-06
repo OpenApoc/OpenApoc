@@ -6,7 +6,7 @@
 namespace OpenApoc
 {
 
-void InitialGameStateExtractor::extractBaseLayouts(GameState &state, Difficulty difficulty)
+void InitialGameStateExtractor::extractBaseLayouts(GameState &state, Difficulty)
 {
 	auto &data = this->ufo2p;
 	for (unsigned i = 0; i < data.baselayouts->count(); i++)

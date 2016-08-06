@@ -249,11 +249,6 @@ static bool CaseInsensitiveCompare(const UString &a, const UString &b)
 	return a.toUpper() == b.toUpper();
 }
 
-static bool CaseInsensitiveCompareExtension(const UString &value, const UString &extension)
-{
-	return value.toUpper().endsWith(extension.toUpper());
-}
-
 static UString FindFile(const UString &basePath, std::list<UString> pathElements,
                         std::map<UString, UString> &expandedFiles)
 {

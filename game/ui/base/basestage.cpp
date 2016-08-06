@@ -67,7 +67,7 @@ void BaseStage::Begin()
 			this->textViewBase->SetText(base->name);
 		});
 		view->addCallback(FormEventType::MouseLeave,
-		                  [this](Event *e) { this->textViewBase->SetText(""); });
+		                  [this](Event *) { this->textViewBase->SetText(""); });
 		miniViews.push_back(view);
 	}
 	textViewBase = form->FindControlTyped<Label>("TEXT_BUTTON_BASE");

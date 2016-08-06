@@ -62,7 +62,7 @@ bool ResearchDependency::satisfied() const
 	}
 }
 
-bool ItemDependency::satisfied(StateRef<Base> base) const
+bool ItemDependency::satisfied(StateRef<Base>) const
 {
 	// FIXME: Add item tracking
 	return true;

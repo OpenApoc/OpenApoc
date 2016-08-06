@@ -5,7 +5,7 @@
 namespace OpenApoc
 {
 
-void InitialGameStateExtractor::extractFacilities(GameState &state, Difficulty difficulty)
+void InitialGameStateExtractor::extractFacilities(GameState &state, Difficulty)
 {
 	auto &data = this->ufo2p;
 	LogInfo("Number of facility strings: %d", data.facility_names->count());

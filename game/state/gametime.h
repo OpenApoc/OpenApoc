@@ -27,7 +27,7 @@ class GameTime
 	static boost::posix_time::time_duration ticksToPosix(int64_t ticks);
 
   public:
-	GameTime(uint64_t ticks);
+	GameTime(uint64_t ticks = 0);
 
 	void addTicks(uint64_t ticks);
 

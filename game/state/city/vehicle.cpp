@@ -131,8 +131,8 @@ VehicleMover::VehicleMover(Vehicle &v) : vehicle(v) {}
 VehicleMover::~VehicleMover() {}
 
 Vehicle::Vehicle()
-    : position(0, 0, 0), velocity(0, 0, 0), facing(1, 0, 0), health(0), shield(0),
-      shieldRecharge(0), attackMode(AttackMode::Standard), altitude(Altitude::Standard)
+    : attackMode(AttackMode::Standard), altitude(Altitude::Standard), position(0, 0, 0),
+      velocity(0, 0, 0), facing(1, 0, 0), health(0), shield(0), shieldRecharge(0)
 {
 }
 

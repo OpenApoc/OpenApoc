@@ -28,7 +28,7 @@ template <typename T> class DataChunk
 		}
 	}
 
-	T get(int offset)
+	T get(unsigned int offset)
 	{
 		LogAssert(offset < readData.size());
 		return readData[offset];

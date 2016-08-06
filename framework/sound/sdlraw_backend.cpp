@@ -19,7 +19,7 @@ struct SampleData
 {
 	sp<Sample> sample;
 	float gain;
-	int sample_position; // in bytes
+	unsigned int sample_position; // in bytes
 	SampleData(sp<Sample> sample, float gain) : sample(sample), gain(gain), sample_position(0) {}
 };
 
@@ -27,7 +27,7 @@ struct MusicData
 {
 	MusicData() : sample_position(0) {}
 	std::vector<unsigned char> samples;
-	int sample_position; // in bytes
+	unsigned int sample_position; // in bytes
 };
 
 // 'samples' must already be large enough to contain the full output size
@@ -119,7 +119,7 @@ class SDLRawBackend : public SoundBackend
 
 	std::future<void> get_music_future;
 
-	int music_queue_size;
+	unsigned int music_queue_size;
 
 	void get_more_music()
 	{
@@ -261,8 +261,8 @@ class SDLRawBackend : public SoundBackend
 	}
 
 	SDLRawBackend()
-	    : overall_volume(1.0f), music_volume(1.0f), sound_volume(1.0f),
-	      music_callback_data(nullptr), music_playing(false), music_queue_size(2)
+	    : overall_volume(1.0f), music_volume(1.0f), sound_volume(1.0f), music_playing(false),
+	      music_callback_data(nullptr), music_queue_size(2)
 	{
 		SDL_Init(SDL_INIT_AUDIO);
 		preferred_format.channels = 2;

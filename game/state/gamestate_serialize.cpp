@@ -33,56 +33,49 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, T &val,
 template <typename T>
 void serializeOut(sp<SerializationNode> node, const T &val, const std::map<T, UString> &valueMap);
 
-void serializeIn(const GameState *state, sp<SerializationNode> node, UString &str)
+void serializeIn(const GameState *, sp<SerializationNode> node, UString &str)
 {
 	if (!node)
 		return;
 	str = node->getValue();
 }
 
-void serializeIn(const GameState *state, sp<SerializationNode> node, unsigned int &val)
+void serializeIn(const GameState *, sp<SerializationNode> node, unsigned int &val)
 {
 	if (!node)
 		return;
 	val = node->getValueUInt();
 }
 
-void serializeIn(const GameState *state, sp<SerializationNode> node, unsigned char &val)
+void serializeIn(const GameState *, sp<SerializationNode> node, unsigned char &val)
 {
 	if (!node)
 		return;
 	val = node->getValueUChar();
 }
 
-void serializeIn(const GameState *state, sp<SerializationNode> node, float &val)
+void serializeIn(const GameState *, sp<SerializationNode> node, float &val)
 {
 	if (!node)
 		return;
 	val = node->getValueFloat();
 }
 
-void serializeIn(const GameState *state, sp<SerializationNode> node, int &val)
+void serializeIn(const GameState *, sp<SerializationNode> node, int &val)
 {
 	if (!node)
 		return;
 	val = node->getValueInt();
 }
 
-void serializeIn(const GameState *state, sp<SerializationNode> node, uint64_t &val)
+void serializeIn(const GameState *, sp<SerializationNode> node, uint64_t &val)
 {
 	if (!node)
 		return;
 	val = node->getValueUInt64();
 }
 
-void serializeIn(const GameState *state, sp<SerializationNode> node, int64_t &val)
-{
-	if (!node)
-		return;
-	val = node->getValueInt64();
-}
-
-void serializeIn(const GameState *state, sp<SerializationNode> node, bool &val)
+void serializeIn(const GameState *, sp<SerializationNode> node, bool &val)
 {
 	if (!node)
 		return;
@@ -130,15 +123,14 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, sp<T> &ptr)
 }
 
 template <>
-void serializeIn<LazyImage>(const GameState *state, sp<SerializationNode> node, sp<LazyImage> &ptr)
+void serializeIn<LazyImage>(const GameState *, sp<SerializationNode> node, sp<LazyImage> &ptr)
 {
 	if (!node)
 		return;
 	ptr = std::static_pointer_cast<LazyImage>(fw().data->load_image(node->getValue(), true));
 }
 
-template <>
-void serializeIn<Image>(const GameState *state, sp<SerializationNode> node, sp<Image> &ptr)
+template <> void serializeIn<Image>(const GameState *, sp<SerializationNode> node, sp<Image> &ptr)
 {
 	if (!node)
 		return;
@@ -174,7 +166,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, Rect<T> &va
 }
 
 template <typename T>
-void serializeIn(const GameState *state, sp<SerializationNode> node, T &val,
+void serializeIn(const GameState *, sp<SerializationNode> node, T &val,
                  const std::map<T, UString> &valueMap)
 {
 	if (!node)
@@ -239,7 +231,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, std::map<Ke
 	auto entry = node->getNodeOpt("entry");
 	while (entry)
 	{
-		Key key;
+		Key key = {};
 		serializeIn(state, entry->getNodeReq("key"), key, keyMap);
 		auto &value = map[key];
 		serializeIn(state, entry->getNodeReq("value"), value);
@@ -287,7 +279,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, std::vector
 }
 // std::vector<bool> is special
 template <>
-void serializeIn(const GameState *state, sp<SerializationNode> node, std::vector<bool> &vector)
+void serializeIn(const GameState *, sp<SerializationNode> node, std::vector<bool> &vector)
 {
 	if (!node)
 		return;
@@ -307,16 +299,14 @@ void serializeIn(const GameState *state, sp<SerializationNode> node,
 }
 
 template <>
-void serializeIn<VoxelSlice>(const GameState *state, sp<SerializationNode> node,
-                             sp<VoxelSlice> &ptr)
+void serializeIn<VoxelSlice>(const GameState *, sp<SerializationNode> node, sp<VoxelSlice> &ptr)
 {
 	if (!node)
 		return;
 	ptr = fw().data->load_voxel_slice(node->getValue());
 }
 
-template <>
-void serializeIn<Sample>(const GameState *state, sp<SerializationNode> node, sp<Sample> &ptr)
+template <> void serializeIn<Sample>(const GameState *, sp<SerializationNode> node, sp<Sample> &ptr)
 {
 	if (!node)
 		return;
@@ -347,7 +337,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, std::set<T>
 	auto entry = node->getNodeOpt("entry");
 	while (entry)
 	{
-		T type;
+		T type = {};
 		serializeIn(state, entry, type);
 		set.insert(type);
 		entry = entry->getNextSiblingOpt("entry");
@@ -857,7 +847,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	if (!node)
 		return;
 
-	unsigned int ticks = 0;
+	uint64_t ticks = 0;
 	serializeIn(state, node->getNode("ticks"), ticks);
 	t = GameTime(ticks);
 }
@@ -904,8 +894,6 @@ void serializeOut(sp<SerializationNode> node, const float &val) { node->setValue
 void serializeOut(sp<SerializationNode> node, const int &val) { node->setValueInt(val); }
 
 void serializeOut(sp<SerializationNode> node, const uint64_t &val) { node->setValueUInt64(val); }
-
-void serializeOut(sp<SerializationNode> node, const int64_t &val) { node->setValueInt64(val); }
 
 void serializeOut(sp<SerializationNode> node, const bool &val) { node->setValueBool(val); }
 

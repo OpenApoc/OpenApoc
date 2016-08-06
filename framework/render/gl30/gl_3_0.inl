@@ -105,7 +105,7 @@ static PROC WinGetProcAddress(const char *name)
 #endif
 #endif
 
-namespace gl
+namespace gl30
 {
 namespace exts
 {
@@ -3540,12 +3540,12 @@ static void ProcExtsFromExtList(std::vector<MapEntry> &table)
 {
 	GLint iLoop;
 	GLint iNumExtensions = 0;
-	gl::GetIntegerv(gl::NUM_EXTENSIONS, &iNumExtensions);
+	gl30::GetIntegerv(gl30::NUM_EXTENSIONS, &iNumExtensions);
 
 	for (iLoop = 0; iLoop < iNumExtensions; iLoop++)
 	{
 		const char *strExtensionName =
-		    reinterpret_cast<const char *>(gl::GetStringi(gl::EXTENSIONS, iLoop));
+		    reinterpret_cast<const char *>(gl30::GetStringi(gl30::EXTENSIONS, iLoop));
 		LoadExtByName(table, strExtensionName);
 	}
 }

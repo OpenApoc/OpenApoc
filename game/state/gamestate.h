@@ -46,7 +46,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	std::map<UString, sp<UfopaediaCategory>> ufopaedia;
 	ResearchState research;
 
-	mutable unsigned lastVehicle;
+	mutable unsigned lastVehicle = 0;
 
 	std::map<UString, sp<Agent>> agents;
 	AgentGenerator agent_generator;
@@ -62,9 +62,9 @@ class GameState : public std::enable_shared_from_this<GameState>
 	GameState();
 	~GameState();
 
-	bool showTileOrigin;
-	bool showVehiclePath;
-	bool showSelectableBounds;
+	bool showTileOrigin = false;
+	bool showVehiclePath = false;
+	bool showSelectableBounds = false;
 
 	std::default_random_engine rng;
 

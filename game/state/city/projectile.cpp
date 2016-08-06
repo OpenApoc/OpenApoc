@@ -16,7 +16,7 @@ Projectile::Projectile(StateRef<Vehicle> firer, Vec3<float> position, Vec3<float
                        unsigned int lifetime, int damage, unsigned int tail_length,
                        std::list<sp<Image>> projectile_sprites)
     : type(Type::Beam), position(position), velocity(velocity), age(0), lifetime(lifetime),
-      firer(firer), previousPosition(position), damage(damage), tail_length(tail_length),
+      damage(damage), firer(firer), previousPosition(position), tail_length(tail_length),
       projectile_sprites(projectile_sprites)
 {
 }

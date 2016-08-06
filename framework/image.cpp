@@ -11,16 +11,6 @@
 namespace OpenApoc
 {
 
-static bool ReadUse(ImageLockUse use)
-{
-	return (use == ImageLockUse::Read || use == ImageLockUse::ReadWrite);
-}
-
-static bool WriteUse(ImageLockUse use)
-{
-	return (use == ImageLockUse::Write || use == ImageLockUse::ReadWrite);
-}
-
 Image::~Image() {}
 
 Image::Image(Vec2<unsigned int> size)
