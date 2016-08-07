@@ -8,6 +8,7 @@
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
+#include "game/state/gameevent.h"
 #include "game/state/research.h"
 #include "game/state/tileview/tileobject_scenery.h"
 #include "game/state/tileview/tileobject_vehicle.h"
@@ -198,10 +199,8 @@ CityView::CityView(sp<GameState> state)
 	    ->addCallback(FormEventType::CheckBoxSelected,
 	                  [this](Event *) { this->updateSpeed = UpdateSpeed::Speed4; });
 	this->baseForm->FindControl("BUTTON_SPEED5")
-	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
-		    if (this->state->canTurbo())
-			    this->updateSpeed = UpdateSpeed::Speed5;
-		});
+	    ->addCallback(FormEventType::CheckBoxSelected,
+	                  [this](Event *) { this->updateSpeed = UpdateSpeed::Speed5; });
 	this->baseForm->FindControl("BUTTON_SHOW_ALIEN_INFILTRATION")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
@@ -469,6 +468,31 @@ void CityView::Render()
 	}
 }
 
+void CityView::setUpdateSpeed(UpdateSpeed updateSpeed)
+{
+	switch (updateSpeed)
+	{
+		case UpdateSpeed::Pause:
+			baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED0")->SetChecked(true);
+			break;
+		case UpdateSpeed::Speed1:
+			baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED1")->SetChecked(true);
+			break;
+		case UpdateSpeed::Speed2:
+			baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED2")->SetChecked(true);
+			break;
+		case UpdateSpeed::Speed3:
+			baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED3")->SetChecked(true);
+			break;
+		case UpdateSpeed::Speed4:
+			baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED4")->SetChecked(true);
+			break;
+		case UpdateSpeed::Speed5:
+			baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED5")->SetChecked(true);
+			break;
+	}
+}
+
 void CityView::Update(StageCmd *const cmd)
 {
 	unsigned int ticks = 0;
@@ -498,7 +522,7 @@ void CityView::Update(StageCmd *const cmd)
 		case UpdateSpeed::Speed5:
 			if (!this->state->canTurbo())
 			{
-				this->updateSpeed = UpdateSpeed::Speed1;
+				setUpdateSpeed(UpdateSpeed::Speed1);
 				ticks = 1;
 			}
 			else
@@ -507,13 +531,14 @@ void CityView::Update(StageCmd *const cmd)
 			}
 			break;
 	}
+	baseForm->FindControl("BUTTON_SPEED5")->Enabled = this->state->canTurbo();
 
 	if (turbo)
 	{
 		this->state->updateTurbo();
 		if (!this->state->canTurbo())
 		{
-			this->updateSpeed = UpdateSpeed::Speed1;
+			setUpdateSpeed(UpdateSpeed::Speed1);
 		}
 	}
 	else
@@ -860,24 +885,28 @@ void CityView::EventOccurred(Event *e)
 			}
 		}
 	}
-	else if (e->Type() == EVENT_USER)
+	else if (e->Type() == EVENT_GAME_STATE)
 	{
-		auto &userEvent = e->User();
-		if (userEvent.ID == "RESEARCH_COMPLETE")
+		auto gameEvent = dynamic_cast<GameEvent *>(e);
+		if (!gameEvent)
 		{
-			sp<ResearchCompleteData> research_data = userEvent.dataAs<ResearchCompleteData>();
-			if (!research_data)
+			LogError("Invalid game state event");
+		}
+		switch (gameEvent->type)
+		{
+			case GameEventType::ResearchCompleted:
 			{
-				LogError("RESEARCH_COMPLETE event with no data");
-			}
-			else
-			{
+				auto ev = dynamic_cast<GameResearchEvent *>(e);
+				if (!ev)
+				{
+					LogError("Invalid research event");
+				}
 				sp<Facility> lab_facility;
 				for (auto &base : state->player_bases)
 				{
 					for (auto &facility : base.second->facilities)
 					{
-						if (research_data->lab == facility->lab)
+						if (ev->lab == facility->lab)
 						{
 							lab_facility = facility;
 							break;
@@ -891,7 +920,7 @@ void CityView::EventOccurred(Event *e)
 					LogError("No facilities matching lab");
 				}
 				auto game_state = this->state;
-				auto ufopaedia_entry = research_data->topic->ufopaedia_entry;
+				auto ufopaedia_entry = ev->topic->ufopaedia_entry;
 				sp<UfopaediaCategory> ufopaedia_category;
 				if (ufopaedia_entry)
 				{
@@ -916,9 +945,9 @@ void CityView::EventOccurred(Event *e)
 				}
 				auto message_box = mksp<MessageBox>(
 				    tr("RESEARCH COMPLETE"),
-				    UString::format(tr("Research project completed:\n%s\nDo you "
-				                       "with to view the UFOpaedia report?"),
-				                    research_data->topic->name.c_str()),
+				    UString::format("%s\n%s\n%s", tr("Research project completed:").str(),
+				                    ev->topic->name.str(),
+				                    tr("Do you wish to view the UFOpaedia report?").str()),
 				    MessageBox::ButtonOptions::YesNo,
 				    // Yes callback
 				    [game_state, lab_facility, ufopaedia_category, ufopaedia_entry]() {
@@ -934,6 +963,9 @@ void CityView::EventOccurred(Event *e)
 				stageCmd.cmd = StageCmd::Command::PUSH;
 				stageCmd.nextStage = message_box;
 			}
+			break;
+			default:
+				break;
 		}
 	}
 	else
@@ -1061,5 +1093,4 @@ bool VehicleTileInfo::operator==(const VehicleTileInfo &other) const
 	        this->healthProportion == other.healthProportion && this->shield == other.shield &&
 	        this->passengers == other.passengers && this->state == other.state);
 }
-
 }; // namespace OpenApoc

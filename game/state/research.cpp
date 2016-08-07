@@ -3,6 +3,7 @@
 #include "framework/framework.h"
 #include "game/state/base/facility.h"
 #include "game/state/gamestate.h"
+#include "gameevent.h"
 
 namespace OpenApoc
 {
@@ -226,32 +227,8 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 		lab->current_project->man_hours_progress += progress_points;
 		if (lab->current_project->isComplete())
 		{
-			// FIXME: Show 'research complete' screen
-			LogWarning("Completed research %s", lab->current_project->name.c_str());
-			sp<Facility> lab_facility;
-
-			for (auto &base : state->player_bases)
-			{
-				for (auto &facility : base.second->facilities)
-				{
-					if (facility->lab == lab)
-					{
-						lab_facility = facility;
-						break;
-					}
-				}
-				if (lab_facility)
-					break;
-			}
-			if (!lab_facility)
-			{
-				LogError("No facility owns the current lab");
-			}
-
-			auto complete_data = mksp<ResearchCompleteData>();
-			complete_data->topic = lab->current_project;
-			complete_data->lab = lab;
-			auto event = new UserEvent("RESEARCH_COMPLETE", complete_data);
+			auto event =
+			    new GameResearchEvent(GameEventType::ResearchCompleted, lab->current_project, lab);
 			fw().PushEvent(event);
 			Lab::setResearch(lab, {state.get(), ""});
 		}
