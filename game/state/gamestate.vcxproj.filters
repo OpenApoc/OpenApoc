@@ -224,6 +224,12 @@
     <ClInclude Include="gametime.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="gameevent_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gameevent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

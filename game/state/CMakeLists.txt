@@ -53,6 +53,8 @@ set (GAMESTATE_HEADER_FILES
 	city/vehicle.h
 	city/vehiclemission.h
 	city/vequipment.h
+	gameevent.h
+	gameevent_types.h
 	gamestate.h
 	gametime.h
 	organisation.h

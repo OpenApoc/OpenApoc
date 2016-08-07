@@ -67,6 +67,8 @@
     <ClInclude Include="city\vehicle.h" />
     <ClInclude Include="city\vehiclemission.h" />
     <ClInclude Include="city\vequipment.h" />
+    <ClInclude Include="gameevent.h" />
+    <ClInclude Include="gameevent_types.h" />
     <ClInclude Include="gamestate.h" />
     <ClInclude Include="gametime.h" />
     <ClInclude Include="organisation.h" />
