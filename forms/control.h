@@ -72,6 +72,7 @@ class Control : public std::enable_shared_from_this<Control>
 	bool takesFocus;
 	bool showBounds;
 	bool Visible;
+	bool Enabled;
 
 	bool canCopy;
 	wp<Control> lastCopiedTo;

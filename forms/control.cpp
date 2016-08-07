@@ -11,7 +11,7 @@ namespace OpenApoc
 Control::Control(bool takesFocus)
     : mouseInside(false), mouseDepressed(false), resolvedLocation(0, 0), Name("Control"),
       Location(0, 0), Size(0, 0), BackgroundColour(0, 0, 0, 0), takesFocus(takesFocus),
-      showBounds(false), Visible(true), canCopy(true)
+      showBounds(false), Visible(true), Enabled(true), canCopy(true)
 {
 }
 
@@ -58,7 +58,7 @@ void Control::EventOccured(Event *e)
 	for (auto ctrlidx = Controls.rbegin(); ctrlidx != Controls.rend(); ctrlidx++)
 	{
 		auto c = *ctrlidx;
-		if (c->Visible)
+		if (c->Visible && c->Enabled)
 		{
 			c->EventOccured(e);
 			if (e->Handled)
@@ -261,7 +261,14 @@ void Control::Render()
 		}
 	}
 
-	fw().renderer->draw(controlArea, Location);
+	if (Enabled)
+	{
+		fw().renderer->draw(controlArea, Location);
+	}
+	else
+	{
+		fw().renderer->drawTinted(controlArea, Location, Colour(255, 255, 255, 128));
+	}
 }
 
 void Control::PreRender() { fw().renderer->clear(BackgroundColour); }
