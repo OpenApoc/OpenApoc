@@ -152,58 +152,61 @@ sp<BitmapFont> BitmapFont::loadFont(const std::map<UniChar, UString> &glyphMap, 
 std::list<UString> BitmapFont::WordWrapText(const UString &Text, int MaxWidth)
 {
 	int txtwidth;
-	std::list<UString> lines;
+	std::list<UString> lines = Text.splitlist("\n");
+	std::list<UString> wrappedLines;
 
-	txtwidth = GetFontWidth(Text);
-
-	if (txtwidth > MaxWidth)
+	for (UString str : lines)
 	{
-		// TODO: Need to implement a list of line break characters
-		auto remainingChunks = Text.splitlist(" ");
-		UString currentLine;
+		txtwidth = GetFontWidth(str);
 
-		while (!remainingChunks.empty())
+		if (txtwidth > MaxWidth)
 		{
-			UString currentTestLine;
-			if (currentLine != "")
-				currentTestLine = currentLine + " ";
+			auto remainingChunks = str.splitlist(" ");
+			UString currentLine;
 
-			auto &currentChunk = remainingChunks.front();
-			currentTestLine += currentChunk;
-
-			auto estimatedLength = GetFontWidth(currentTestLine);
-
-			if (estimatedLength < MaxWidth)
+			while (!remainingChunks.empty())
 			{
-				currentLine = currentTestLine;
-				remainingChunks.pop_front();
-			}
-			else
-			{
-				if (currentLine == "")
+				UString currentTestLine;
+				if (currentLine != "")
+					currentTestLine = currentLine + " ";
+
+				auto &currentChunk = remainingChunks.front();
+				currentTestLine += currentChunk;
+
+				auto estimatedLength = GetFontWidth(currentTestLine);
+
+				if (estimatedLength < MaxWidth)
 				{
-					LogWarning(
-					    "No break in line \"%s\" found - this will probably overflow the control",
-					    currentTestLine.c_str());
 					currentLine = currentTestLine;
 					remainingChunks.pop_front();
 				}
 				else
 				{
-					lines.push_back(currentLine);
-					currentLine = "";
+					if (currentLine == "")
+					{
+						LogWarning("No break in line \"%s\" found - this will probably overflow "
+						           "the control",
+						           currentTestLine.c_str());
+						currentLine = currentTestLine;
+						remainingChunks.pop_front();
+					}
+					else
+					{
+						wrappedLines.push_back(currentLine);
+						currentLine = "";
+					}
 				}
 			}
+			if (currentLine != "")
+				wrappedLines.push_back(currentLine);
 		}
-		if (currentLine != "")
-			lines.push_back(currentLine);
-	}
-	else
-	{
-		lines.push_back(Text);
+		else
+		{
+			wrappedLines.push_back(str);
+		}
 	}
 
-	return lines;
+	return wrappedLines;
 }
 
 }; // namespace OpenApoc

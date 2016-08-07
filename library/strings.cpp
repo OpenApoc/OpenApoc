@@ -136,39 +136,23 @@ UString operator+(const UString &lhs, const UString &rhs)
 std::vector<UString> UString::split(const UString &delims) const
 {
 	// FIXME: Probably won't work if any of 'delims' is outside the ASCII range
-	// FIXME: Doesn't work for more than 1 character in delims
 	std::vector<UString> strings;
-	std::stringstream ss(this->u8Str);
-	std::string tok;
-	if (delims.length() != 1)
+	size_t pos = 0;
+	size_t prev = pos;
+	while ((pos = this->u8Str.find_first_of(delims.str(), prev)) != std::string::npos)
 	{
-		// Invalid delim length
-		return strings;
+		if (pos > prev)
+			strings.push_back(this->u8Str.substr(prev, pos - prev));
+		prev = pos + 1;
 	}
-	while (std::getline(ss, tok, delims.u8Str[0]))
-	{
-		strings.push_back(tok);
-	}
+	strings.push_back(this->u8Str.substr(prev, pos));
 	return strings;
 }
 
 std::list<UString> UString::splitlist(const UString &delims) const
 {
-	// FIXME: Probably won't work if any of 'delims' is outside the ASCII range
-	// FIXME: Doesn't work for more than 1 character in delims
-	std::list<UString> strings;
-	std::stringstream ss(this->u8Str);
-	std::string tok;
-	if (delims.length() != 1)
-	{
-		// Invalid delim length
-		return strings;
-	}
-	while (std::getline(ss, tok, delims.u8Str[0]))
-	{
-		strings.push_back(tok);
-	}
-	return strings;
+	std::vector<UString> strings = split(delims);
+	return std::list<UString>(strings.begin(), strings.end());
 }
 
 UniChar UString::u8Char(char c)
