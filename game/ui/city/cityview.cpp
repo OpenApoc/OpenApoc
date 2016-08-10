@@ -98,6 +98,16 @@ CityView::CityView(sp<GameState> state)
 	}
 	this->activeTab = this->uiTabs[0];
 
+	// Test news ticker
+	baseForm->FindControlTyped<Ticker>("NEWS_TICKER")->AddMessage("Welcome");
+	baseForm->FindControlTyped<Ticker>("NEWS_TICKER")->AddMessage("to");
+	baseForm->FindControlTyped<Ticker>("NEWS_TICKER")->AddMessage("OpenApoc,");
+	baseForm->FindControlTyped<Ticker>("NEWS_TICKER")->AddMessage("home");
+	baseForm->FindControlTyped<Ticker>("NEWS_TICKER")->AddMessage("of");
+	baseForm->FindControlTyped<Ticker>("NEWS_TICKER")->AddMessage("fine");
+	baseForm->FindControlTyped<Ticker>("NEWS_TICKER")->AddMessage("alien");
+	baseForm->FindControlTyped<Ticker>("NEWS_TICKER")->AddMessage("cuisine.");
+
 	// Refresh base views
 	Resume();
 

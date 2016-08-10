@@ -16,6 +16,7 @@ set (FORMS_SOURCE_FILES
 	scrollbar.cpp
 	textbutton.cpp
 	textedit.cpp
+	ticker.cpp
 	ui.cpp)
 source_group(forms\\sources FILES ${LIBRARY_SOURCE_FILES})
 
@@ -33,6 +34,7 @@ set (FORMS_HEADER_FILES
 	scrollbar.h
 	textbutton.h
 	textedit.h
+	ticker.h
 	ui.h)
 
 source_group(forms\\headers FILES ${LIBRARY_HEADER_FILES})

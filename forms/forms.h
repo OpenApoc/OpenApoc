@@ -13,3 +13,4 @@
 #include "scrollbar.h"
 #include "textbutton.h"
 #include "textedit.h"
+#include "ticker.h"

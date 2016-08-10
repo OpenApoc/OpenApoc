@@ -409,6 +409,12 @@ void Control::ConfigureChildrenFromXml(tinyxml2::XMLElement *Element)
 			auto te = this->createChild<TextEdit>();
 			te->ConfigureFromXML(node);
 		}
+
+		else if (nodename == "ticker")
+		{
+			auto tk = this->createChild<Ticker>();
+			tk->ConfigureFromXML(node);
+		}
 	}
 }
 
