@@ -27,39 +27,11 @@ void Label::OnRender()
 	int ypos;
 	std::list<UString> lines = font->WordWrapText(text, Size.x);
 
-	switch (TextVAlign)
-	{
-		case VerticalAlignment::Top:
-			ypos = 0;
-			break;
-		case VerticalAlignment::Centre:
-			ypos = (Size.y / 2) - (font->GetFontHeight(text, Size.x) / 2);
-			break;
-		case VerticalAlignment::Bottom:
-			ypos = Size.y - font->GetFontHeight(text, Size.x);
-			break;
-		default:
-			LogError("Unknown TextVAlign");
-			return;
-	}
+	ypos = Align(TextVAlign, Size.y, font->GetFontHeight(text, Size.x));
 
 	while (lines.size() > 0)
 	{
-		switch (TextHAlign)
-		{
-			case HorizontalAlignment::Left:
-				xpos = 0;
-				break;
-			case HorizontalAlignment::Centre:
-				xpos = (Size.x / 2) - (font->GetFontWidth(lines.front()) / 2);
-				break;
-			case HorizontalAlignment::Right:
-				xpos = Size.x - font->GetFontWidth(lines.front());
-				break;
-			default:
-				LogError("Unknown TextHAlign");
-				return;
-		}
+		xpos = Align(TextHAlign, Size.x, font->GetFontWidth(lines.front()));
 
 		auto textImage = font->getString(lines.front());
 		fw().renderer->draw(textImage, Vec2<float>{xpos, ypos});

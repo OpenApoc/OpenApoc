@@ -15,6 +15,7 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 	form->BackgroundColour = {148, 148, 148, 255};
 
 	const int MARGIN = 8;
+	const Vec2<int> BUTTON_SIZE = {100, 28};
 
 	auto lTitle = form->createChild<Label>(title.toUpper(), ui().GetFont("SMALFONT"));
 	lTitle->Size.x = form->Size.x - MARGIN * 2;
@@ -33,7 +34,7 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 	{
 		auto bOk = form->createChild<TextButton>(tr("OK"), ui().GetFont("SMALLSET"));
 		bOk->Name = "BUTTON_OK";
-		bOk->Size = {100, 28};
+		bOk->Size = BUTTON_SIZE;
 		bOk->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
 		bOk->Location.x = (form->Size.x - bOk->Size.x) / 2;
 		bOk->Location.y = lText->Location.y + lText->Size.y + MARGIN;
@@ -44,14 +45,14 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 	{
 		auto bYes = form->createChild<TextButton>(tr("Yes"), ui().GetFont("SMALLSET"));
 		bYes->Name = "BUTTON_YES";
-		bYes->Size = {100, 28};
+		bYes->Size = BUTTON_SIZE;
 		bYes->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
 		bYes->Location.x = MARGIN;
 		bYes->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
 		auto bNo = form->createChild<TextButton>(tr("No"), ui().GetFont("SMALLSET"));
 		bNo->Name = "BUTTON_NO";
-		bNo->Size = {100, 28};
+		bNo->Size = BUTTON_SIZE;
 		bNo->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
 		bNo->Location.x = form->Size.x - bNo->Size.x - MARGIN;
 		bNo->Location.y = lText->Location.y + lText->Size.y + MARGIN;
@@ -59,8 +60,8 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 		form->Size.y = bYes->Location.y + bYes->Size.y + MARGIN;
 	}
 
-	form->Location.x = (fw().Display_GetWidth() / 2) - (form->Size.x / 2);
-	form->Location.y = (fw().Display_GetHeight() / 2) - (form->Size.y / 2);
+	form->Location = Control::Align(HorizontalAlignment::Centre, VerticalAlignment::Centre,
+	                                form->Size, form->GetParentSize());
 }
 
 MessageBox::~MessageBox() {}

@@ -20,7 +20,6 @@ class Form;
 class Event;
 class Surface;
 class Palette;
-class RadioButton;
 class Control;
 class RadioButtonGroup;
 class FormsEvent;
@@ -83,8 +82,6 @@ class Control : public std::enable_shared_from_this<Control>
 	Control(bool takesFocus = true);
 	virtual ~Control();
 
-	sp<Control> GetActiveControl() const;
-
 	virtual void EventOccured(Event *e);
 	void Render();
 	virtual void Update();
@@ -121,6 +118,12 @@ class Control : public std::enable_shared_from_this<Control>
 
 	void setRelativeWidth(float widthPercent);
 	void setRelativeHeight(float widthPercent);
+
+	Vec2<int> GetParentSize() const;
+	static int Align(HorizontalAlignment HAlign, int ParentWidth, int ChildWidth);
+	static int Align(VerticalAlignment VAlign, int ParentHeight, int ChildHeight);
+	static Vec2<int> Align(HorizontalAlignment HAlign, VerticalAlignment VAlign,
+	                       Vec2<int> ParentSize, Vec2<int> ChildSize);
 
 	virtual sp<Control> CopyTo(sp<Control> CopyParent);
 

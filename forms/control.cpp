@@ -568,33 +568,21 @@ void Control::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 		}
 	}
 
+	Vec2<int> parentSize = GetParentSize();
+
 	if (specialpositionx != "")
 	{
 		if (specialpositionx == "left")
 		{
-			Location.x = 0;
+			Location.x = Align(HorizontalAlignment::Left, parentSize.x, Size.x);
 		}
 		else if (specialpositionx == "centre")
 		{
-			if (parentControl == nullptr)
-			{
-				Location.x = (fw().Display_GetWidth() / 2) - (Size.x / 2);
-			}
-			else
-			{
-				Location.x = (parentControl->Size.x / 2) - (Size.x / 2);
-			}
+			Location.x = Align(HorizontalAlignment::Centre, parentSize.x, Size.x);
 		}
 		else if (specialpositionx == "right")
 		{
-			if (parentControl == nullptr)
-			{
-				Location.x = fw().Display_GetWidth() - Size.x;
-			}
-			else
-			{
-				Location.x = parentControl->Size.x - Size.x;
-			}
+			Location.x = Align(HorizontalAlignment::Right, parentSize.x, Size.x);
 		}
 	}
 
@@ -602,29 +590,15 @@ void Control::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 	{
 		if (specialpositiony == "top")
 		{
-			Location.y = 0;
+			Location.y = Align(VerticalAlignment::Top, parentSize.y, Size.y);
 		}
 		else if (specialpositiony == "centre")
 		{
-			if (parentControl == nullptr)
-			{
-				Location.y = (fw().Display_GetHeight() / 2) - (Size.y / 2);
-			}
-			else
-			{
-				Location.y = (parentControl->Size.y / 2) - (Size.y / 2);
-			}
+			Location.y = Align(VerticalAlignment::Centre, parentSize.y, Size.y);
 		}
 		else if (specialpositiony == "bottom")
 		{
-			if (parentControl == nullptr)
-			{
-				Location.y = fw().Display_GetHeight() - Size.y;
-			}
-			else
-			{
-				Location.y = parentControl->Size.y - Size.y;
-			}
+			Location.y = Align(VerticalAlignment::Bottom, parentSize.y, Size.y);
 		}
 	}
 
@@ -716,14 +690,10 @@ void Control::setRelativeWidth(float widthFactor)
 	{
 		Size.x = 0;
 	}
-	auto parent = GetParent();
-	if (parent != nullptr)
-	{
-		Size.x = (int)(parent->Size.x * widthFactor);
-	}
 	else
 	{
-		Size.x = (int)(fw().Display_GetWidth() * widthFactor);
+		Vec2<int> parentSize = GetParentSize();
+		Size.x = (int)(parentSize.x * widthFactor);
 	}
 }
 
@@ -733,15 +703,69 @@ void Control::setRelativeHeight(float heightFactor)
 	{
 		Size.y = 0;
 	}
+	else
+	{
+		Vec2<int> parentSize = GetParentSize();
+		Size.y = (int)(parentSize.y * heightFactor);
+	}
+}
+
+Vec2<int> Control::GetParentSize() const
+{
 	auto parent = GetParent();
 	if (parent != nullptr)
 	{
-		Size.y = (int)(parent->Size.y * heightFactor);
+		return parent->Size;
 	}
 	else
 	{
-		Size.y = (int)(fw().Display_GetHeight() * heightFactor);
+		return Vec2<int>{fw().Display_GetWidth(), fw().Display_GetHeight()};
 	}
+}
+
+int Control::Align(HorizontalAlignment HAlign, int ParentWidth, int ChildWidth)
+{
+	int x = 0;
+	switch (HAlign)
+	{
+		case HorizontalAlignment::Left:
+			x = 0;
+			break;
+		case HorizontalAlignment::Centre:
+			x = (ParentWidth / 2) - (ChildWidth / 2);
+			break;
+		case HorizontalAlignment::Right:
+			x = ParentWidth - ChildWidth;
+			break;
+	}
+	return x;
+}
+
+int Control::Align(VerticalAlignment VAlign, int ParentHeight, int ChildHeight)
+{
+	int y = 0;
+	switch (VAlign)
+	{
+		case VerticalAlignment::Top:
+			y = 0;
+			break;
+		case VerticalAlignment::Centre:
+			y = (ParentHeight / 2) - (ChildHeight / 2);
+			break;
+		case VerticalAlignment::Bottom:
+			y = ParentHeight - ChildHeight;
+			break;
+	}
+	return y;
+}
+
+Vec2<int> Control::Align(HorizontalAlignment HAlign, VerticalAlignment VAlign, Vec2<int> ParentSize,
+                         Vec2<int> ChildSize)
+{
+	Vec2<int> pos;
+	pos.x = Align(HAlign, ParentSize.x, ChildSize.x);
+	pos.y = Align(VAlign, ParentSize.y, ChildSize.y);
+	return pos;
 }
 
 sp<Control> Control::CopyTo(sp<Control> CopyParent)
