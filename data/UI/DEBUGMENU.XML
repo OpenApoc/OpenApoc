@@ -19,6 +19,11 @@
           <size width="300" height="32"/>
           <font>SMALFONT</font>
         </textbutton>
+		<textbutton id="BUTTON_IMAGEPREVIEW" text="Image Preview">
+          <position x="centre" y="104"/>
+          <size width="300" height="32"/>
+          <font>SMALFONT</font>
+        </textbutton>
         <textbutton id="BUTTON_QUIT" text="Quit">
           <position x="centre" y="440"/>
           <size width="300" height="32"/>

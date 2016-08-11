@@ -96,6 +96,9 @@
     <ClCompile Include="general\messagelogscreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="debugtools\imagepreview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boot.h">
@@ -177,6 +180,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="general\messagelogscreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="debugtools\imagepreview.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

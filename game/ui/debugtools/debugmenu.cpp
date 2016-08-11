@@ -4,6 +4,7 @@
 #include "framework/framework.h"
 #include "game/ui/debugtools/formpreview.h"
 #include "library/sp.h"
+#include "game/ui/debugtools/imagepreview.h"
 
 namespace OpenApoc
 {
@@ -49,6 +50,11 @@ void DebugMenu::EventOccurred(Event *e)
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = mksp<FormPreview>();
+		}
+		else if (e->Forms().RaisedBy->Name == "BUTTON_IMAGEPREVIEW")
+		{
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = mksp<ImagePreview>();
 		}
 	}
 }

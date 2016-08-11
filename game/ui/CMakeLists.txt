@@ -19,6 +19,7 @@ set (GAMEUI_SOURCE_FILES
 	city/cityview.cpp
 	debugtools/debugmenu.cpp
 	debugtools/formpreview.cpp
+	debugtools/imagepreview.cpp
 	general/difficultymenu.cpp
 	general/ingameoptions.cpp
 	general/loadingscreen.cpp
@@ -48,6 +49,7 @@ set (GAMEUI_HEADER_FILES
 	city/cityview.h
 	debugtools/debugmenu.h
 	debugtools/formpreview.h
+	debugtools/imagepreview.h
 	general/difficultymenu.h
 	general/ingameoptions.h
 	general/loadingscreen.h
