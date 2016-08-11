@@ -8,12 +8,12 @@
 [submodule "dependencies/physfs"]
 	path = dependencies/physfs
 	url = https://github.com/JonnyH/physfs-hg-import.git
-[submodule "dependencies/miniz"]
-	path = dependencies/miniz
-	url = https://github.com/tessel/miniz.git
 [submodule "dependencies/pugixml"]
 	path = dependencies/pugixml
 	url = https://github.com/zeux/pugixml.git
 [submodule "dependencies/libsmacker"]
 	path = dependencies/libsmacker
 	url = https://github.com/JonnyH/libsmacker.git
+[submodule "dependencies/miniz"]
+	path = dependencies/miniz
+	url = https://github.com/JonnyH/miniz.git
