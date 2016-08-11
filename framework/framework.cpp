@@ -544,14 +544,14 @@ void Framework::TranslateSDLEvents()
 			case SDL_KEYDOWN:
 				fwE = new KeyboardEvent(EVENT_KEY_DOWN);
 				fwE->Keyboard().KeyCode = e.key.keysym.sym;
-				fwE->Keyboard().UniChar = e.key.keysym.sym;
+				fwE->Keyboard().ScanCode = e.key.keysym.scancode;
 				fwE->Keyboard().Modifiers = e.key.keysym.mod;
 				PushEvent(up<Event>(fwE));
 				break;
 			case SDL_KEYUP:
 				fwE = new KeyboardEvent(EVENT_KEY_UP);
 				fwE->Keyboard().KeyCode = e.key.keysym.sym;
-				fwE->Keyboard().UniChar = e.key.keysym.sym;
+				fwE->Keyboard().ScanCode = e.key.keysym.scancode;
 				fwE->Keyboard().Modifiers = e.key.keysym.mod;
 				PushEvent(up<Event>(fwE));
 				break;
@@ -1004,5 +1004,17 @@ Vec2<int> Framework::getCursorPosition() { return this->cursor->getPosition(); }
 void Framework::Text_StartInput() { SDL_StartTextInput(); }
 
 void Framework::Text_StopInput() { SDL_StopTextInput(); }
+
+UString Framework::Text_GetClipboard()
+{
+	UString str;
+	char *text = SDL_GetClipboardText();
+	if (text != nullptr)
+	{
+		str = text;
+		SDL_free(text);
+	}
+	return str;
+}
 
 }; // namespace OpenApoc

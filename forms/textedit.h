@@ -21,9 +21,7 @@ class TextEdit : public Control
 	UString text;
 	UString cursor;
 	sp<BitmapFont> font;
-	bool editting;
-	bool editShift;
-	bool editAltGr;
+	bool editing;
 	UString allowedCharacters;
 	size_t textMaxLength = std::string::npos;
 	void RaiseEvent(FormEventType Type);

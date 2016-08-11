@@ -82,6 +82,7 @@ class Framework
 
 	void Text_StartInput();
 	void Text_StopInput();
+	UString Text_GetClipboard();
 };
 
 static inline Framework &fw() { return Framework::getInstance(); }

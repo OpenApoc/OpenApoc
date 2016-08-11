@@ -10,8 +10,8 @@ namespace OpenApoc
 
 TextEdit::TextEdit(const UString &Text, sp<BitmapFont> font)
     : Control(), caretDraw(false), caretTimer(0), text(Text), cursor("*"), font(font),
-      editting(false), editShift(false), editAltGr(false), SelectionStart(Text.length()),
-      TextHAlign(HorizontalAlignment::Left), TextVAlign(VerticalAlignment::Centre)
+      editing(false), SelectionStart(Text.length()), TextHAlign(HorizontalAlignment::Left),
+      TextVAlign(VerticalAlignment::Centre)
 {
 	if (font)
 	{
@@ -21,7 +21,7 @@ TextEdit::TextEdit(const UString &Text, sp<BitmapFont> font)
 
 TextEdit::~TextEdit() {}
 
-bool TextEdit::IsFocused() const { return editting; }
+bool TextEdit::IsFocused() const { return editing; }
 
 void TextEdit::EventOccured(Event *e)
 {
@@ -37,21 +37,21 @@ void TextEdit::EventOccured(Event *e)
 			    e->Forms().EventFlag == FormEventType::MouseClick ||
 			    e->Forms().EventFlag == FormEventType::KeyDown)
 			{
-				editting = true;
+				editing = true;
 
 				fw().Text_StartInput();
 				// e->Handled = true;
 				// FIXME: Should we really fall through here?
 			}
 		}
-		if (editting)
+		if (editing)
 		{
 			if (e->Forms().RaisedBy == shared_from_this())
 			{
 
 				if (e->Forms().EventFlag == FormEventType::LostFocus)
 				{
-					editting = false;
+					editing = false;
 					fw().Text_StopInput();
 					RaiseEvent(FormEventType::TextEditFinish);
 					// e->Handled = true;
@@ -68,7 +68,7 @@ void TextEdit::EventOccured(Event *e)
 			if (e->Forms().EventFlag == FormEventType::KeyDown)
 			{
 				LogInfo("Key pressed: %d", e->Forms().KeyInfo.KeyCode);
-				switch (e->Forms().KeyInfo.KeyCode) // TODO: Check scancodes instead of keycodes?
+				switch (e->Forms().KeyInfo.KeyCode)
 				{
 					case SDLK_BACKSPACE:
 						if (SelectionStart > 0)
@@ -101,14 +101,6 @@ void TextEdit::EventOccured(Event *e)
 						}
 						e->Handled = true;
 						break;
-					case SDLK_LSHIFT:
-					case SDLK_RSHIFT:
-						editShift = true;
-						break;
-					case SDLK_RALT:
-						editAltGr = true;
-						break;
-
 					case SDLK_HOME:
 						SelectionStart = 0;
 						e->Handled = true;
@@ -117,27 +109,27 @@ void TextEdit::EventOccured(Event *e)
 						SelectionStart = text.length();
 						e->Handled = true;
 						break;
-
 					case SDLK_RETURN:
-						editting = false;
+						editing = false;
 						fw().Text_StopInput();
 						RaiseEvent(FormEventType::TextEditFinish);
 						break;
-				}
-			}
-			else if (e->Forms().EventFlag == FormEventType::KeyUp)
-			{
+					case SDLK_v: // CTRL+V
+						if (e->Forms().KeyInfo.Modifiers & KMOD_CTRL)
+						{
+							UString clipboard = fw().Text_GetClipboard();
 
-				switch (e->Forms().KeyInfo.KeyCode)
-				{
-					case SDLK_LSHIFT:
-					case SDLK_RSHIFT:
-						editShift = false;
-						e->Handled = true;
-						break;
-					case SDLK_RALT:
-						editAltGr = false;
-						e->Handled = true;
+							if (text.length() + clipboard.length() >= this->textMaxLength)
+							{
+								return;
+							}
+							if (!clipboard.empty())
+							{
+								text.insert(SelectionStart, clipboard);
+								SelectionStart += clipboard.length();
+								RaiseEvent(FormEventType::TextChanged);
+							}
+						}
 						break;
 				}
 			}
@@ -153,7 +145,7 @@ void TextEdit::EventOccured(Event *e)
 				    allowedCharacters.str().find(inputCharacter.str()) != std::string::npos)
 				{
 					text.insert(SelectionStart, inputCharacter);
-					SelectionStart += e->Forms().Input.Input.length();
+					SelectionStart += inputCharacter.length();
 					RaiseEvent(FormEventType::TextChanged);
 				}
 			}
@@ -166,7 +158,7 @@ void TextEdit::OnRender()
 	int xpos = Align(TextHAlign, Size.x, font->GetFontWidth(text));
 	int ypos = Align(TextVAlign, Size.y, font->GetFontHeight());
 
-	if (editting)
+	if (editing)
 	{
 		int cxpos = xpos + font->GetFontWidth(text.substr(0, SelectionStart)) + 1;
 
@@ -194,7 +186,7 @@ void TextEdit::OnRender()
 
 void TextEdit::Update()
 {
-	if (editting)
+	if (editing)
 	{
 		caretTimer = (caretTimer + 1) % TEXTEDITOR_CARET_TOGGLE_TIME;
 		if (caretTimer == 0)

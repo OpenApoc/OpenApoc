@@ -90,7 +90,7 @@ typedef struct FRAMEWORK_FINGER_EVENT
 typedef struct FRAMEWORK_KEYBOARD_EVENT
 {
 	int KeyCode;
-	int UniChar;
+	int ScanCode;
 	unsigned int Modifiers;
 } FRAMEWORK_KEYBOARD_EVENT;
 
