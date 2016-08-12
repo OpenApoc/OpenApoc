@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tinyxml2", "dependencies\tinyxml2.vcxproj", "{D1C528B6-AA02-4D29-9D61-DC08E317A70D}"
 EndProject
@@ -24,6 +24,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "extractor", "tools\extractor.vcxproj", "{6B9315DD-3720-4FA4-8906-03DBAC1CEF49}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libsmacker", "dependencies\libsmacker.vcxproj", "{AD0D21F5-3471-42B7-9AA6-6089B3AF0436}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imagedump", "tools\imagedump\imagedump.vcxproj", "{D55FAC51-0E70-4E56-9EAE-69522E7CC980}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -121,6 +123,14 @@ Global
 		{AD0D21F5-3471-42B7-9AA6-6089B3AF0436}.Release|Win32.Build.0 = Release|Win32
 		{AD0D21F5-3471-42B7-9AA6-6089B3AF0436}.Release|x64.ActiveCfg = Release|x64
 		{AD0D21F5-3471-42B7-9AA6-6089B3AF0436}.Release|x64.Build.0 = Release|x64
+		{D55FAC51-0E70-4E56-9EAE-69522E7CC980}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D55FAC51-0E70-4E56-9EAE-69522E7CC980}.Debug|Win32.Build.0 = Debug|Win32
+		{D55FAC51-0E70-4E56-9EAE-69522E7CC980}.Debug|x64.ActiveCfg = Debug|x64
+		{D55FAC51-0E70-4E56-9EAE-69522E7CC980}.Debug|x64.Build.0 = Debug|x64
+		{D55FAC51-0E70-4E56-9EAE-69522E7CC980}.Release|Win32.ActiveCfg = Release|Win32
+		{D55FAC51-0E70-4E56-9EAE-69522E7CC980}.Release|Win32.Build.0 = Release|Win32
+		{D55FAC51-0E70-4E56-9EAE-69522E7CC980}.Release|x64.ActiveCfg = Release|x64
+		{D55FAC51-0E70-4E56-9EAE-69522E7CC980}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
