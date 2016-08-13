@@ -122,8 +122,10 @@ class Control : public std::enable_shared_from_this<Control>
 	Vec2<int> GetParentSize() const;
 	static int Align(HorizontalAlignment HAlign, int ParentWidth, int ChildWidth);
 	static int Align(VerticalAlignment VAlign, int ParentHeight, int ChildHeight);
-	static Vec2<int> Align(HorizontalAlignment HAlign, VerticalAlignment VAlign,
-	                       Vec2<int> ParentSize, Vec2<int> ChildSize);
+
+	void Align(HorizontalAlignment HAlign);
+	void Align(VerticalAlignment VAlign);
+	void Align(HorizontalAlignment HAlign, VerticalAlignment VAlign);
 
 	virtual sp<Control> CopyTo(sp<Control> CopyParent);
 

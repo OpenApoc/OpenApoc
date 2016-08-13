@@ -69,8 +69,7 @@ void ImagePreview::updateImage()
 	auto image = fw().data->load_image(imageFilename->GetText());
 	imageView->Size = image->size;
 	imageView->SetImage(image);
-	imageView->Location = Control::Align(HorizontalAlignment::Centre, VerticalAlignment::Centre,
-	                                     imageView->GetParentSize(), imageView->Size);
+	imageView->Align(HorizontalAlignment::Centre, VerticalAlignment::Centre);
 }
 
 }; // namespace OpenApoc

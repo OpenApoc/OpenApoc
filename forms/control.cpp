@@ -580,15 +580,15 @@ void Control::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 	{
 		if (specialpositionx == "left")
 		{
-			Location.x = Align(HorizontalAlignment::Left, parentSize.x, Size.x);
+			Align(HorizontalAlignment::Left);
 		}
 		else if (specialpositionx == "centre")
 		{
-			Location.x = Align(HorizontalAlignment::Centre, parentSize.x, Size.x);
+			Align(HorizontalAlignment::Centre);
 		}
 		else if (specialpositionx == "right")
 		{
-			Location.x = Align(HorizontalAlignment::Right, parentSize.x, Size.x);
+			Align(HorizontalAlignment::Right);
 		}
 	}
 
@@ -596,15 +596,15 @@ void Control::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 	{
 		if (specialpositiony == "top")
 		{
-			Location.y = Align(VerticalAlignment::Top, parentSize.y, Size.y);
+			Align(VerticalAlignment::Top);
 		}
 		else if (specialpositiony == "centre")
 		{
-			Location.y = Align(VerticalAlignment::Centre, parentSize.y, Size.y);
+			Align(VerticalAlignment::Centre);
 		}
 		else if (specialpositiony == "bottom")
 		{
-			Location.y = Align(VerticalAlignment::Bottom, parentSize.y, Size.y);
+			Align(VerticalAlignment::Bottom);
 		}
 	}
 
@@ -765,13 +765,20 @@ int Control::Align(VerticalAlignment VAlign, int ParentHeight, int ChildHeight)
 	return y;
 }
 
-Vec2<int> Control::Align(HorizontalAlignment HAlign, VerticalAlignment VAlign, Vec2<int> ParentSize,
-                         Vec2<int> ChildSize)
+void Control::Align(HorizontalAlignment HAlign)
 {
-	Vec2<int> pos;
-	pos.x = Align(HAlign, ParentSize.x, ChildSize.x);
-	pos.y = Align(VAlign, ParentSize.y, ChildSize.y);
-	return pos;
+	Location.x = Align(HAlign, GetParentSize().x, Size.x);
+}
+
+void Control::Align(VerticalAlignment VAlign)
+{
+	Location.y = Align(VAlign, GetParentSize().y, Size.y);
+}
+
+void Control::Align(HorizontalAlignment HAlign, VerticalAlignment VAlign)
+{
+	Align(HAlign);
+	Align(VAlign);
 }
 
 sp<Control> Control::CopyTo(sp<Control> CopyParent)

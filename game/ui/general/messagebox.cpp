@@ -60,8 +60,7 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 		form->Size.y = bYes->Location.y + bYes->Size.y + MARGIN;
 	}
 
-	form->Location = Control::Align(HorizontalAlignment::Centre, VerticalAlignment::Centre,
-	                                form->Size, form->GetParentSize());
+	form->Align(HorizontalAlignment::Centre, VerticalAlignment::Centre);
 }
 
 MessageBox::~MessageBox() {}
