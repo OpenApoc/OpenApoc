@@ -89,4 +89,17 @@ class GameResearchEvent : public GameEvent
 	}
 	~GameResearchEvent() override = default;
 };
+
+class GameFacilityEvent : public GameEvent
+{
+  public:
+	sp<Base> base;
+	sp<Facility> facility;
+
+	GameFacilityEvent(GameEventType type, sp<Base> base, sp<Facility> facility)
+	    : GameEvent(type), base(base), facility(facility)
+	{
+	}
+	~GameFacilityEvent() override = default;
+};
 }

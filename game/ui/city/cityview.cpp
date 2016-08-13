@@ -974,8 +974,21 @@ void CityView::EventOccurred(Event *e)
 				stageCmd.nextStage = message_box;
 			}
 			break;
-			default:
-				break;
+			case GameEventType::FacilityCompleted:
+			{
+				auto ev = dynamic_cast<GameFacilityEvent *>(e);
+				if (!ev)
+				{
+					LogError("Invalid facility event");
+				}
+				auto message_box = mksp<MessageBox>(
+				    tr("FACILITY COMPLETED"), UString::format("%s\n%s", ev->base->name.str(),
+				                                              tr(ev->facility->type->name).str()),
+				    MessageBox::ButtonOptions::Ok);
+				stageCmd.cmd = StageCmd::Command::PUSH;
+				stageCmd.nextStage = message_box;
+			}
+			break;
 		}
 	}
 	else

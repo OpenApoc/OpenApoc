@@ -1,4 +1,5 @@
 #include "game/state/gamestate.h"
+#include "framework/framework.h"
 #include "framework/trace.h"
 #include "game/state/base/base.h"
 #include "game/state/base/facility.h"
@@ -8,6 +9,7 @@
 #include "game/state/city/scenery.h"
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
+#include "game/state/gameevent.h"
 #include "game/state/organisation.h"
 #include "game/state/tileview/tileobject_vehicle.h"
 #include <random>
@@ -299,7 +301,11 @@ void GameState::updateEndOfDay()
 			if (f->buildTime > 0)
 			{
 				f->buildTime--;
-				// FIXME: Notify the player
+				if (f->buildTime == 0)
+				{
+					fw().PushEvent(
+					    new GameFacilityEvent(GameEventType::FacilityCompleted, b.second, f));
+				}
 			}
 		}
 	}
