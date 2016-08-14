@@ -208,17 +208,31 @@ Base::BuildError Base::canDestroyFacility(Vec2<int> pos) const
 	{
 		return BuildError::NoError;
 	}
-	// TODO: Check if other facility types are in use
-	if (facility->lab)
+
+	switch (facility->type->capacityType)
 	{
-		if (facility->lab->current_project)
-		{
-			return BuildError::Occupied;
-		}
-		if (!facility->lab->assigned_agents.empty())
-		{
-			return BuildError::Occupied;
-		}
+		case FacilityType::Capacity::Quarters:
+		case FacilityType::Capacity::Stores:
+		case FacilityType::Capacity::Aliens:
+			if (getCapacityUsed(facility->type->capacityType) >
+			    getCapacityTotal(facility->type->capacityType) - facility->type->capacityAmount)
+			{
+				return BuildError::Occupied;
+			}
+			break;
+		case FacilityType::Capacity::Physics:
+		case FacilityType::Capacity::Chemistry:
+		case FacilityType::Capacity::Workshop:
+			if (facility->lab)
+			{
+				if (facility->lab->current_project)
+				{
+					return BuildError::Occupied;
+				}
+			}
+			break;
+		default:
+			return BuildError::NoError;
 	}
 	return BuildError::NoError;
 }
@@ -248,6 +262,58 @@ void Base::destroyFacility(GameState &state, Vec2<int> pos)
 			}
 		}
 	}
+}
+
+int Base::getCapacityUsed(FacilityType::Capacity type) const
+{
+	int total = 0;
+	for (auto f = facilities.begin(); f != facilities.end(); ++f)
+	{
+		if ((*f)->type->capacityType == type)
+		{
+			if ((*f)->lab)
+			{
+				total += (*f)->lab->assigned_agents.size();
+			}
+			else
+			{
+				// TODO: Calculate usage of other facilities
+			}
+		}
+	}
+	return total;
+}
+
+int Base::getCapacityTotal(FacilityType::Capacity type) const
+{
+	int total = 0;
+	for (auto f = facilities.begin(); f != facilities.end(); ++f)
+	{
+		if ((*f)->type->capacityType == type)
+		{
+			total += (*f)->type->capacityAmount;
+		}
+	}
+	return total;
+}
+
+int Base::getUsage(sp<Facility> facility) const
+{
+	float usage = 0.0f;
+	if (facility->lab)
+	{
+		if (facility->lab->current_project)
+		{
+			usage = facility->lab->assigned_agents.size();
+			usage /= facility->type->capacityAmount;
+		}
+	}
+	else
+	{
+		usage = getCapacityUsed(facility->type->capacityType);
+		usage /= getCapacityTotal(facility->type->capacityType);
+	}
+	return static_cast<int>(usage * 100);
 }
 
 template <> sp<Base> StateObject<Base>::get(const GameState &state, const UString &id)

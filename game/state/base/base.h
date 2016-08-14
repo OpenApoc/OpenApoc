@@ -2,6 +2,7 @@
 
 #include "game/state/city/building.h"
 #include "game/state/gamestate.h"
+#include "game/state/rules/facility_type.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/strings.h"
@@ -13,8 +14,6 @@ namespace OpenApoc
 
 class Building;
 class Facility;
-class GameState;
-class FacilityType;
 
 class Base : public StateObject<Base>
 {
@@ -46,6 +45,9 @@ class Base : public StateObject<Base>
 	                   bool free = false);
 	BuildError canDestroyFacility(Vec2<int> pos) const;
 	void destroyFacility(GameState &state, Vec2<int> pos);
+	int getCapacityUsed(FacilityType::Capacity type) const;
+	int getCapacityTotal(FacilityType::Capacity type) const;
+	int getUsage(sp<Facility> facility) const;
 };
 
 }; // namespace OpenApoc

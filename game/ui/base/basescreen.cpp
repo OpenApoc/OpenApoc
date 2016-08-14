@@ -1,11 +1,11 @@
-#include "game/state/base/base.h"
+#include "game/ui/base/basescreen.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "framework/image.h"
+#include "game/state/base/base.h"
 #include "game/state/base/facility.h"
 #include "game/ui/base/basegraphics.h"
-#include "game/ui/base/basescreen.h"
 #include "game/ui/base/researchscreen.h"
 #include "game/ui/base/vequipscreen.h"
 #include "game/ui/general/messagebox.h"
@@ -279,7 +279,8 @@ void BaseScreen::EventOccurred(Event *e)
 			statsLabels[0]->SetText(tr("Capacity"));
 			statsValues[0]->SetText(UString::format("%d", selFacility->type->capacityAmount));
 			statsLabels[1]->SetText(tr("Usage"));
-			statsValues[1]->SetText(UString::format("%d%%", 0));
+			statsValues[1]->SetText(
+			    UString::format("%d%%", state->current_base->getUsage(selFacility)));
 		}
 	}
 	else if (selection != NO_SELECTION)
