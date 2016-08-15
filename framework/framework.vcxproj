@@ -33,7 +33,6 @@
     <ClCompile Include="framework.cpp" />
     <ClCompile Include="fs\physfs_archiver_cue.cpp" />
     <ClCompile Include="image.cpp" />
-    <ClCompile Include="imageloader\lodepng.cpp" />
     <ClCompile Include="imageloader\lodepng_image.cpp" />
     <ClCompile Include="imageloader\pcx.cpp" />
     <ClCompile Include="logger.cpp" />
@@ -75,7 +74,6 @@
     <ClInclude Include="fs.h" />
     <ClInclude Include="fs\physfs_archiver_cue.h" />
     <ClInclude Include="image.h" />
-    <ClInclude Include="imageloader\lodepng.h" />
     <ClInclude Include="imageloader_interface.h" />
     <ClInclude Include="includes.h" />
     <ClInclude Include="logger.h" />
@@ -105,6 +103,9 @@
   <ItemGroup>
     <ProjectReference Include="..\dependencies\libsmacker.vcxproj">
       <Project>{ad0d21f5-3471-42b7-9aa6-6089b3af0436}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\dependencies\lodepng.vcxproj">
+      <Project>{83ccc3a3-e802-4bf7-86c9-3fbc1a8803d4}</Project>
     </ProjectReference>
     <ProjectReference Include="..\dependencies\physfs.vcxproj">
       <Project>{5a1d2ec4-525e-49b6-9398-be359e71cb35}</Project>

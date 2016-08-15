@@ -96,9 +96,6 @@
     <ClCompile Include="apocresources\rawimage.cpp">
       <Filter>ApocResources</Filter>
     </ClCompile>
-    <ClCompile Include="imageloader\lodepng.cpp">
-      <Filter>ImageLoader</Filter>
-    </ClCompile>
     <ClCompile Include="imageloader\lodepng_image.cpp">
       <Filter>ImageLoader</Filter>
     </ClCompile>
@@ -232,9 +229,6 @@
     </ClInclude>
     <ClInclude Include="apocresources\rawimage.h">
       <Filter>ApocResources</Filter>
-    </ClInclude>
-    <ClInclude Include="imageloader\lodepng.h">
-      <Filter>ImageLoader</Filter>
     </ClInclude>
     <ClInclude Include="ThreadPool\ThreadPool.h">
       <Filter>Header Files</Filter>
