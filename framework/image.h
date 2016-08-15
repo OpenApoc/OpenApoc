@@ -86,12 +86,14 @@ class PaletteImageLock
 	~PaletteImageLock();
 	uint8_t get(const Vec2<unsigned int> &pos) const
 	{
+		LogAssert(this->use == ImageLockUse::Read || this->use == ImageLockUse::ReadWrite);
 		unsigned offset = pos.y * this->img->size.x + pos.x;
 		LogAssert(offset < this->img->size.x * this->img->size.y);
 		return this->img->indices[offset];
 	}
 	void set(const Vec2<unsigned int> &pos, const uint8_t idx)
 	{
+		LogAssert(this->use == ImageLockUse::Write || this->use == ImageLockUse::ReadWrite);
 		unsigned offset = pos.y * this->img->size.x + pos.x;
 		LogAssert(offset < this->img->size.x * this->img->size.y);
 		this->img->indices[offset] = idx;
@@ -128,12 +130,14 @@ class RGBImageLock
 	~RGBImageLock();
 	Colour get(const Vec2<unsigned int> &pos) const
 	{
+		LogAssert(this->use == ImageLockUse::Read || this->use == ImageLockUse::ReadWrite);
 		unsigned offset = pos.y * this->img->size.x + pos.x;
 		LogAssert(offset < this->img->size.x * this->img->size.y);
 		return this->img->pixels[offset];
 	}
 	void set(const Vec2<unsigned int> &pos, const Colour &c)
 	{
+		LogAssert(this->use == ImageLockUse::Write || this->use == ImageLockUse::ReadWrite);
 		unsigned offset = pos.y * this->img->size.x + pos.x;
 		LogAssert(offset < this->img->size.x * this->img->size.y);
 		this->img->pixels[offset] = c;

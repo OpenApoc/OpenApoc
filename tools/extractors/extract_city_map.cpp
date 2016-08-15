@@ -49,8 +49,8 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 				idx = std::uniform_int_distribution<int>{169, 172}(state.rng);
 			}
 
-			auto tileName = UString::format("%s%s%u", SceneryTileType::getPrefix(),
-			                                tilePrefix, (unsigned)idx);
+			auto tileName =
+			    UString::format("%s%s%u", SceneryTileType::getPrefix(), tilePrefix, (unsigned)idx);
 
 			city->initial_tiles[Vec3<int>{x, y, 0}] = {&state, tileName};
 		}

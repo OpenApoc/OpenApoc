@@ -1618,10 +1618,9 @@ OGLES30Renderer::OGLES30Renderer() : state(State::Idle)
 class OGLES30RendererFactory : public RendererFactory
 {
 	bool alreadyInitialised;
-	bool functionLoadSuccess;
 
   public:
-	OGLES30RendererFactory() : alreadyInitialised(false), functionLoadSuccess(false) {}
+	OGLES30RendererFactory() : alreadyInitialised(false) {}
 	virtual OpenApoc::Renderer *create() override
 	{
 		if (!alreadyInitialised)

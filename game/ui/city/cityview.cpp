@@ -904,6 +904,8 @@ void CityView::EventOccurred(Event *e)
 		}
 		switch (gameEvent->type)
 		{
+			default:
+				break;
 			case GameEventType::ResearchCompleted:
 			{
 				auto ev = dynamic_cast<GameResearchEvent *>(e);

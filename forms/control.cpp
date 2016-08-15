@@ -574,8 +574,6 @@ void Control::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 		}
 	}
 
-	Vec2<int> parentSize = GetParentSize();
-
 	if (specialpositionx != "")
 	{
 		if (specialpositionx == "left")

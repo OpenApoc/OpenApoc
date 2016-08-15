@@ -753,7 +753,6 @@ class CueArchiver
 	CUE_TrackMode trackMode;
 
 	CueIO *cio;
-	const PHYSFS_Archiver *isoArchiver;
 
 	struct IsoVolumeDescriptor
 	{

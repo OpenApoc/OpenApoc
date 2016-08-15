@@ -46,8 +46,7 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 		// Our rects are exclusive of p2
 		// Shift position by 20 tiles
 		b->bounds = {entry.x0 + 20, entry.y0 + 20, entry.x1 + 21, entry.y1 + 21};
-		auto id =
-		    UString::format("%s%s", Building::getPrefix(), canon_string(b->name));
+		auto id = UString::format("%s%s", Building::getPrefix(), canon_string(b->name));
 
 		city->buildings[id] = b;
 	}
