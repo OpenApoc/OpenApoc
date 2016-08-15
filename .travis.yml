@@ -49,10 +49,7 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
 script:
-  - make -j2 && ctest -V
-# The dataextractor expects to be run from the root directory (so data/* is in the right place)
-  - ./bin/OpenApoc_DataExtractor
-  - if [ "${TIDY}" = "true" ]; then git --no-pager diff --ignore-submodules --stat && make tidy; fi
+  - make -j2 && ctest -V && ./bin/OpenApoc_DataExtractor &&  if [ "${TIDY}" = "true" ]; then git --no-pager diff --ignore-submodules --stat && make tidy; fi
 
 os:
   - linux
