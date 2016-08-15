@@ -23,6 +23,8 @@ before_install:
   - ${CC} --version
   - mkdir ~/dependency-prefix
   - export PKG_CONFIG_PATH=~/dependency-prefix/lib/pkgconfig
+  - wget http://s2.jonnyh.net/pub/cd_minimal.iso.xz -O data/cd.iso.xz
+  - xz -d data/cd.iso.xz
 
 env:
   - BUILD_TYPE="Release"
