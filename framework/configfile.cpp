@@ -53,7 +53,7 @@ void ConfigFile::save(const UString fileName)
 		// If the value is the default, print it commented out
 		if (pair.second == defaults[pair.first])
 			outFile << "#";
-		outFile << pair.first.str() << "=" << pair.second.str() << "\n";
+		outFile << pair.first << "=" << pair.second << "\n";
 	}
 }
 
@@ -117,11 +117,6 @@ void ConfigFile::set(const UString key, bool value)
 		this->set(key, falseValues[0]);
 }
 
-void ConfigFile::set(const UString key, int value)
-{
-	std::ostringstream ss;
-	ss << std::dec << value;
-	this->set(key, ss.str());
-}
+void ConfigFile::set(const UString key, int value) { this->set(key, Strings::FromInteger(value)); }
 
 }; // namespace OpenApoc

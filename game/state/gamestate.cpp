@@ -149,7 +149,7 @@ void GameState::startGame()
 
 			auto v = mksp<Vehicle>();
 			v->type = {this, vehicleType.first};
-			v->name = UString::format("%s %d", type->name.c_str(), ++type->numCreated);
+			v->name = UString::format("%s %d", type->name, ++type->numCreated);
 			v->city = {this, "CITYMAP_HUMAN"};
 			v->currentlyLandedBuilding = {this, buildingIt->first};
 			v->owner = type->manufacturer;
@@ -161,7 +161,7 @@ void GameState::startGame()
 
 			// Vehicle::equipDefaultEquipment uses the state reference from itself, so make sure the
 			// vehicle table has the entry before calling it
-			UString vID = UString::format("%s%d", Vehicle::getPrefix().c_str(), lastVehicle++);
+			UString vID = UString::format("%s%d", Vehicle::getPrefix(), lastVehicle++);
 			this->vehicles[vID] = v;
 
 			v->currentlyLandedBuilding->landed_vehicles.insert({this, vID});
@@ -207,13 +207,13 @@ void GameState::startGame()
 			continue;
 		auto v = mksp<Vehicle>();
 		v->type = {this, type};
-		v->name = UString::format("%s %d", type->name.c_str(), ++type->numCreated);
+		v->name = UString::format("%s %d", type->name, ++type->numCreated);
 		v->city = {this, "CITYMAP_HUMAN"};
 		v->currentlyLandedBuilding = {this, bld};
 		v->homeBuilding = {this, bld};
 		v->owner = this->getPlayer();
 		v->health = type->health;
-		UString vID = UString::format("%s%d", Vehicle::getPrefix().c_str(), lastVehicle++);
+		UString vID = UString::format("%s%d", Vehicle::getPrefix(), lastVehicle++);
 		this->vehicles[vID] = v;
 		v->currentlyLandedBuilding->landed_vehicles.insert({this, vID});
 		v->equipDefaultEquipment(*this);
@@ -337,14 +337,14 @@ void GameState::updateEndOfDay()
 
 			auto v = mksp<Vehicle>();
 			v->type = {this, (*vehicleType).first};
-			v->name = UString::format("%s %d", type->name.c_str(), ++type->numCreated);
+			v->name = UString::format("%s %d", type->name, ++type->numCreated);
 			v->city = city;
 			v->owner = type->manufacturer;
 			v->health = type->health;
 
 			// Vehicle::equipDefaultEquipment uses the state reference from itself, so make sure the
 			// vehicle table has the entry before calling it
-			UString vID = UString::format("%s%d", Vehicle::getPrefix().c_str(), lastVehicle++);
+			UString vID = UString::format("%s%d", Vehicle::getPrefix(), lastVehicle++);
 			this->vehicles[vID] = v;
 
 			v->equipDefaultEquipment(*this);
@@ -360,11 +360,11 @@ void GameState::updateEndOfWeek()
 {
 	int week = this->gameTime.getWeek();
 	auto growth =
-	    this->ufo_growth_lists.find(UString::format("%s%d", UFOGrowth::getPrefix().c_str(), week));
+	    this->ufo_growth_lists.find(UString::format("%s%d", UFOGrowth::getPrefix(), week));
 	if (growth == this->ufo_growth_lists.end())
 	{
-		growth = this->ufo_growth_lists.find(
-		    UString::format("%s%s", UFOGrowth::getPrefix().c_str(), "DEFAULT"));
+		growth =
+		    this->ufo_growth_lists.find(UString::format("%s%s", UFOGrowth::getPrefix(), "DEFAULT"));
 	}
 
 	if (growth != this->ufo_growth_lists.end())
@@ -384,7 +384,7 @@ void GameState::updateEndOfWeek()
 
 					auto v = mksp<Vehicle>();
 					v->type = {this, (*vehicleType).first};
-					v->name = UString::format("%s %d", type->name.c_str(), ++type->numCreated);
+					v->name = UString::format("%s %d", type->name, ++type->numCreated);
 					v->city = city;
 					v->owner = alienOrg;
 					v->health = type->health;
@@ -392,8 +392,7 @@ void GameState::updateEndOfWeek()
 					// Vehicle::equipDefaultEquipment uses the state reference from itself, so make
 					// sure the
 					// vehicle table has the entry before calling it
-					UString vID =
-					    UString::format("%s%d", Vehicle::getPrefix().c_str(), lastVehicle++);
+					UString vID = UString::format("%s%d", Vehicle::getPrefix(), lastVehicle++);
 					this->vehicles[vID] = v;
 
 					v->equipDefaultEquipment(*this);

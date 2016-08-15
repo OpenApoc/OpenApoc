@@ -22,8 +22,8 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state, Diffic
 		auto edata = data.vehicle_equipment->get(i);
 
 		e->name = data.vehicle_equipment_names->get(i);
-		UString id = UString::format("%s%s", VEquipmentType::getPrefix().c_str(),
-		                             canon_string(e->name).c_str());
+		UString id = UString::format("%s%s", VEquipmentType::getPrefix(),
+		                             canon_string(e->name));
 
 		e->id = id;
 

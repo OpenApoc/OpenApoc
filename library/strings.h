@@ -121,6 +121,7 @@ class UString
 };
 
 UString operator+(const UString &lhs, const UString &rhs);
+std::ostream &operator<<(std::ostream &lhs, const UString &rhs);
 
 class Strings
 {

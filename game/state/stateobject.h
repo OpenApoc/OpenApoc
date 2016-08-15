@@ -46,7 +46,7 @@ template <typename T> class StateRef
 			         T::getTypeName().c_str(), T::getPrefix().c_str(), id.c_str());
 			throw std::runtime_error(
 			    UString::format("%s object has invalid prefix - expected \"%s\" ID \"%s\"",
-			                    T::getTypeName().c_str(), T::getPrefix().c_str(), id.c_str())
+			                    T::getTypeName(), T::getPrefix(), id)
 			        .str());
 		}
 #endif
@@ -55,9 +55,8 @@ template <typename T> class StateRef
 		if (!obj)
 		{
 			LogError("No %s object matching ID \"%s\" found", T::getTypeName().c_str(), id.c_str());
-			throw std::runtime_error(UString::format("No %s object matching ID \"%s\"",
-			                                         T::getTypeName().c_str(), id.c_str())
-			                             .str());
+			throw std::runtime_error(
+			    UString::format("No %s object matching ID \"%s\"", T::getTypeName(), id).str());
 		}
 #endif
 	}

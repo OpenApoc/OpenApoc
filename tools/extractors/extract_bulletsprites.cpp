@@ -15,7 +15,7 @@ std::map<UString, sp<Image>> InitialGameStateExtractor::extractBulletSprites()
 
 	for (unsigned i = 0; i < data.bullet_sprites->count(); i++)
 	{
-		UString path = UString::format("%s%02u.png", path_prefix.c_str(), i);
+		UString path = UString::format("%s%02u.png", path_prefix, i);
 		auto sprite = data.bullet_sprites->get(i);
 		auto img = mksp<PaletteImage>(Vec2<unsigned int>{3, 3});
 		PaletteImageLock l(img);

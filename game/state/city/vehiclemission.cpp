@@ -1034,7 +1034,7 @@ UString VehicleMission::getName()
 			                        this->targetLocation.y, this->targetLocation.z);
 			break;
 		case MissionType::AttackVehicle:
-			name += UString::format(" target \"%s\"", this->targetVehicle.id.c_str());
+			name += UString::format(" target \"%s\"", this->targetVehicle.id);
 			break;
 		case MissionType::Patrol:
 			name += UString::format(" {%d,%d,%d}", this->targetLocation.x, this->targetLocation.y,

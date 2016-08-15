@@ -138,10 +138,10 @@ void TraceManager::write()
 
 				outFile << "{"
 				        << "\"pid\":1,"
-				        << "\"tid\":\"" << eventList->tid.str() << "\","
+				        << "\"tid\":\"" << eventList->tid << "\","
 				        // Time is in microseconds, not nanoseconds
 				        << "\"ts\":" << event.timeNS / 1000 << ","
-				        << "\"name\":\"" << event.name.str() << "\",";
+				        << "\"name\":\"" << event.name << "\",";
 
 				switch (event.type)
 				{
@@ -160,8 +160,7 @@ void TraceManager::write()
 								if (!firstArg)
 									outFile << ",";
 								firstArg = false;
-								outFile << "\"" << arg.first.str() << "\":\"" << arg.second.str()
-								        << "\"";
+								outFile << "\"" << arg.first << "\":\"" << arg.second << "\"";
 							}
 							outFile << "}";
 						}

@@ -154,7 +154,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state, Agent::Type type) 
 
 	auto firstName = listRandomiser(state.rng, firstNameList->second);
 	auto secondName = listRandomiser(state.rng, this->second_names);
-	agent->name = UString::format("%s %s", firstName.c_str(), secondName.c_str());
+	agent->name = UString::format("%s %s", firstName, secondName);
 
 	auto speciesPortraitMapIt = this->portraits.find(agent->species);
 	if (speciesPortraitMapIt == this->portraits.end())

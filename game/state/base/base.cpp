@@ -157,7 +157,7 @@ void Base::buildFacility(GameState &state, StateRef<FacilityType> type, Vec2<int
 					auto lab = mksp<Lab>();
 					lab->size = size;
 					lab->type = ResearchTopic::Type::BioChem;
-					auto id = UString::format("%s%u", Lab::getPrefix().c_str(),
+					auto id = UString::format("%s%u", Lab::getPrefix(),
 					                          state.research.num_labs_created++);
 					state.research.labs[id] = lab;
 					facility->lab = {&state, id};
@@ -168,7 +168,7 @@ void Base::buildFacility(GameState &state, StateRef<FacilityType> type, Vec2<int
 					auto lab = mksp<Lab>();
 					lab->size = size;
 					lab->type = ResearchTopic::Type::Physics;
-					auto id = UString::format("%s%u", Lab::getPrefix().c_str(),
+					auto id = UString::format("%s%u", Lab::getPrefix(),
 					                          state.research.num_labs_created++);
 					state.research.labs[id] = lab;
 					facility->lab = {&state, id};
@@ -179,7 +179,7 @@ void Base::buildFacility(GameState &state, StateRef<FacilityType> type, Vec2<int
 					auto lab = mksp<Lab>();
 					lab->size = size;
 					lab->type = ResearchTopic::Type::Engineering;
-					auto id = UString::format("%s%u", Lab::getPrefix().c_str(),
+					auto id = UString::format("%s%u", Lab::getPrefix(),
 					                          state.research.num_labs_created++);
 					state.research.labs[id] = lab;
 					facility->lab = {&state, id};

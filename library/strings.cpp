@@ -36,8 +36,8 @@ void dumpStrings()
 		for (auto &str : p.second)
 		{
 			auto escapedStr = str;
-			outFile << "msgid \"" << str.str() << "\"\n";
-			outFile << "msgstr \"" << str.str() << "\"\n\n";
+			outFile << "msgid \"" << str << "\"\n";
+			outFile << "msgstr \"" << str << "\"\n\n";
 		}
 	}
 }
@@ -131,6 +131,12 @@ UString operator+(const UString &lhs, const UString &rhs)
 	s += lhs;
 	s += rhs;
 	return s;
+}
+
+std::ostream &operator<<(std::ostream &lhs, const UString &rhs)
+{
+	lhs << rhs.str();
+	return lhs;
 }
 
 std::vector<UString> UString::split(const UString &delims) const

@@ -39,7 +39,7 @@ bool FileDataProvider::saveDocument(const UString &path, UString contents)
 		}
 	}
 	std::ofstream out(documentPath.string(), std::ios::binary | std::ios::trunc);
-	out << contents.str();
+	out << contents;
 	return !out.bad();
 }
 bool FileDataProvider::finalizeSave() { return true; }

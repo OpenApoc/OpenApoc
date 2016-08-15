@@ -3,8 +3,8 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "game/ui/debugtools/formpreview.h"
-#include "library/sp.h"
 #include "game/ui/debugtools/imagepreview.h"
+#include "library/sp.h"
 
 namespace OpenApoc
 {

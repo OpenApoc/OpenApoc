@@ -89,7 +89,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		inFile.read((char *)&entry, sizeof(entry));
 
 		UString id =
-		    UString::format("%s%s%u", SceneryTileType::getPrefix().c_str(), tilePrefix.c_str(), i);
+		    UString::format("%s%s%u", SceneryTileType::getPrefix(), tilePrefix, i);
 
 		auto tile = mksp<SceneryTileType>();
 
@@ -164,8 +164,8 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		if (entry.damagedtile_idx)
 		{
 			tile->damagedTile = {&state,
-			                     UString::format("%s%s%u", SceneryTileType::getPrefix().c_str(),
-			                                     tilePrefix.c_str(), entry.damagedtile_idx)};
+			                     UString::format("%s%s%u", SceneryTileType::getPrefix(),
+			                                     tilePrefix, entry.damagedtile_idx)};
 		}
 
 		auto imageString = UString::format(

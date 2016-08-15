@@ -181,7 +181,7 @@ void serializeIn(const GameState *, sp<SerializationNode> node, T &val,
 		}
 	}
 	throw SerializationException(
-	    UString::format("Invalid enum value for %s: \"%s\"", typeid(T).name(), str.c_str()), node);
+	    UString::format("Invalid enum value for %s: \"%s\"", typeid(T).name(), str), node);
 }
 
 template <typename T>
