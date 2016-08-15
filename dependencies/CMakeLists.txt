@@ -53,3 +53,24 @@ target_compile_definitions(OpenApoc_LibPugixml PUBLIC PTHREADS_AVAILABLE)
 
 set_property(TARGET OpenApoc_LibPugixml PROPERTY CXX_STANDARD 11)
 set_property(TARGET OpenApoc_LibPugixml PROPERTY CXX_STANDARD_REQUIRED ON)
+
+set (LIBLODEPNG_SOURCE_FILES
+		lodepng/lodepng.cpp)
+
+source_group(libpugixml\\sources FILES ${LIBLODEPNG_SOURCE_FILES})
+
+set (LIBLODEPNG_HEADER_FILES
+		lodepng/lodepng.h)
+
+source_group(libpugixml\\headers FILES ${LIBLODEPNG_HEADER_FILES})
+
+list(APPEND ALL_SOURCE_FILES ${LIBLODEPNG_SOURCE_FILES})
+list(APPEND ALL_HEADER_FILES ${LIBLODEPNG_HEADER_FILES})
+
+add_library(OpenApoc_LibLodepng STATIC ${LIBLODEPNG_SOURCE_FILES}
+		${LIBLODEPNG_HEADER_FILES})
+
+target_compile_definitions(OpenApoc_LibLodepng PUBLIC PTHREADS_AVAILABLE)
+
+set_property(TARGET OpenApoc_LibLodepng PROPERTY CXX_STANDARD 11)
+set_property(TARGET OpenApoc_LibLodepng PROPERTY CXX_STANDARD_REQUIRED ON)

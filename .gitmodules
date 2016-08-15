@@ -17,3 +17,6 @@
 [submodule "dependencies/miniz"]
 	path = dependencies/miniz
 	url = https://github.com/JonnyH/miniz.git
+[submodule "dependencies/lodepng"]
+	path = dependencies/lodepng
+	url = https://github.com/lvandeve/lodepng.git

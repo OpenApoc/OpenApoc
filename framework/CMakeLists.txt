@@ -90,7 +90,6 @@ list(APPEND ALL_HEADER_FILES ${APOCRESOURCES_HEADER_FILES})
 
 
 set (IMAGELOADER_SOURCE_FILES
-	imageloader/lodepng.cpp
 	imageloader/lodepng_image.cpp
 	imageloader/pcx.cpp)
 
@@ -99,7 +98,7 @@ source_group(framework\\imageloader\\sources FILES
 list(APPEND ALL_SOURCE_FILES ${IMAGELOADER_SOURCE_FILES})
 
 set (IMAGELOADER_HEADER_FILES
-	imageloader/lodepng.h)
+	)
 
 source_group(framework\\imageloader\\headers FILES
 	${IMAGELOADER_HEADER_FILES})
@@ -270,6 +269,7 @@ endif()
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_Library)
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibSmacker)
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibPugixml)
+target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibLodepng)
 
 # Physfs provides .iso reader & overlays etc.
 pkg_check_modules(PC_PHYSFS REQUIRED physfs>=2.0.0)
