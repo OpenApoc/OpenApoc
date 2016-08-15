@@ -46,6 +46,8 @@ before_script:
 
 script:
   - make -j2 && ctest -V
+# The dataextractor expects to be run from the root directory (so data/* is in the right place)
+  - pushd .. && ./build/bin/OpenApoc_DataExtractor && popd
   - if [ "${TIDY}" = "true" ]; then git --no-pager diff --ignore-submodules && make tidy; fi
 
 os:
