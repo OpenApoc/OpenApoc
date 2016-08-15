@@ -18,6 +18,26 @@ template <class date_type, class CharT,
 class apoc_date_facet : public date_facet<date_type, CharT, OutItrT>
 {
   public:
+	typedef typename date_type::duration_type duration_type;
+	// greg_weekday is gregorian_calendar::day_of_week_type
+	typedef typename date_type::day_of_week_type day_of_week_type;
+	typedef typename date_type::day_type day_type;
+	typedef typename date_type::month_type month_type;
+	typedef boost::date_time::period<date_type, duration_type> period_type;
+	typedef std::basic_string<CharT> string_type;
+	typedef CharT char_type;
+	typedef boost::date_time::period_formatter<CharT> period_formatter_type;
+	typedef boost::date_time::special_values_formatter<CharT> special_values_formatter_type;
+	typedef std::vector<std::basic_string<CharT>> input_collection_type;
+	// used for the output of the date_generators
+	typedef date_generator_formatter<date_type, CharT> date_gen_formatter_type;
+	typedef partial_date<date_type> partial_date_type;
+	typedef nth_kday_of_month<date_type> nth_kday_type;
+	typedef first_kday_of_month<date_type> first_kday_type;
+	typedef last_kday_of_month<date_type> last_kday_type;
+	typedef first_kday_after<date_type> kday_after_type;
+	typedef first_kday_before<date_type> kday_before_type;
+
 	explicit apoc_date_facet(::size_t a_ref = 0) : date_facet<date_type, CharT, OutItrT>(a_ref) {}
 
 	explicit apoc_date_facet(const char_type *format_str, const input_collection_type &short_names,
