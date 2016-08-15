@@ -1,4 +1,5 @@
 #include "game/state/gametime.h"
+#include "game/state/gametime_facet.h"
 #include <sstream>
 
 // for my sake
@@ -44,7 +45,7 @@ UString GameTime::getDateString() const
 	std::stringstream ss;
 	if (DATE_FORMAT == nullptr)
 	{
-		date_facet *dateFacet = new date_facet("%A, %d %B, %Y");
+		apoc_date_facet *dateFacet = new apoc_date_facet("%A, %E %B, %Y");
 		DATE_FORMAT = new std::locale(std::locale::classic(), dateFacet);
 
 		std::vector<std::string> months = {
@@ -58,6 +59,17 @@ UString GameTime::getDateString() const
 		    tr("Sunday").str(),   tr("Monday").str(), tr("Tuesday").str(), tr("Wednesday").str(),
 		    tr("Thursday").str(), tr("Friday").str(), tr("Saturday").str()};
 		dateFacet->long_weekday_names(weekdays);
+
+		std::vector<std::string> days = {
+		    tr("1st").str(),  tr("2nd").str(),  tr("3rd").str(),  tr("4th").str(),
+		    tr("5th").str(),  tr("6th").str(),  tr("7th").str(),  tr("8th").str(),
+		    tr("9th").str(),  tr("10th").str(), tr("11th").str(), tr("12th").str(),
+		    tr("13th").str(), tr("14th").str(), tr("15th").str(), tr("16th").str(),
+		    tr("17th").str(), tr("18th").str(), tr("19th").str(), tr("20th").str(),
+		    tr("21st").str(), tr("22nd").str(), tr("23rd").str(), tr("24th").str(),
+		    tr("25th").str(), tr("26th").str(), tr("27th").str(), tr("28th").str(),
+		    tr("29th").str(), tr("30th").str(), tr("31st").str()};
+		dateFacet->long_day_names(days);
 	}
 	ss.imbue(*DATE_FORMAT);
 	ss << datetime.date();

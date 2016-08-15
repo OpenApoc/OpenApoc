@@ -98,16 +98,6 @@ CityView::CityView(sp<GameState> state)
 	}
 	this->activeTab = this->uiTabs[0];
 
-	// Test news ticker
-	baseForm->FindControlTyped<Ticker>("NEWS_TICKER")->AddMessage("Welcome");
-	baseForm->FindControlTyped<Ticker>("NEWS_TICKER")->AddMessage("to");
-	baseForm->FindControlTyped<Ticker>("NEWS_TICKER")->AddMessage("OpenApoc,");
-	baseForm->FindControlTyped<Ticker>("NEWS_TICKER")->AddMessage("home");
-	baseForm->FindControlTyped<Ticker>("NEWS_TICKER")->AddMessage("of");
-	baseForm->FindControlTyped<Ticker>("NEWS_TICKER")->AddMessage("fine");
-	baseForm->FindControlTyped<Ticker>("NEWS_TICKER")->AddMessage("alien");
-	baseForm->FindControlTyped<Ticker>("NEWS_TICKER")->AddMessage("cuisine.");
-
 	// Refresh base views
 	Resume();
 
@@ -402,6 +392,12 @@ CityView::CityView(sp<GameState> state)
 }
 
 CityView::~CityView() {}
+
+void CityView::Begin()
+{
+	baseForm->FindControlTyped<Ticker>("NEWS_TICKER")
+	    ->AddMessage(tr("Welcome to X-COM Apocalypse"));
+}
 
 void CityView::Resume()
 {
@@ -957,9 +953,9 @@ void CityView::EventOccurred(Event *e)
 				}
 				auto message_box = mksp<MessageBox>(
 				    tr("RESEARCH COMPLETE"),
-				    UString::format("%s\n%s\n%s", tr("Research project completed:").str(),
-				                    ev->topic->name.str(),
-				                    tr("Do you wish to view the UFOpaedia report?").str()),
+				    UString::format("%s\n%s\n%s", tr("Research project completed:"),
+				                    ev->topic->name,
+				                    tr("Do you wish to view the UFOpaedia report?")),
 				    MessageBox::ButtonOptions::YesNo,
 				    // Yes callback
 				    [game_state, lab_facility, ufopaedia_category, ufopaedia_entry]() {
@@ -984,8 +980,8 @@ void CityView::EventOccurred(Event *e)
 					LogError("Invalid facility event");
 				}
 				auto message_box = mksp<MessageBox>(
-				    tr("FACILITY COMPLETED"), UString::format("%s\n%s", ev->base->name.str(),
-				                                              tr(ev->facility->type->name).str()),
+				    tr("FACILITY COMPLETED"),
+				    UString::format("%s\n%s", ev->base->name, tr(ev->facility->type->name)),
 				    MessageBox::ButtonOptions::Ok);
 				stageCmd.cmd = StageCmd::Command::PUSH;
 				stageCmd.nextStage = message_box;

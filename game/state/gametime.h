@@ -1,3 +1,5 @@
+#pragma once
+
 #include "library/strings.h"
 #include <boost/date_time.hpp>
 #include <locale>

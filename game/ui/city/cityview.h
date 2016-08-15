@@ -102,6 +102,7 @@ class CityView : public TileView
   public:
 	CityView(sp<GameState> state);
 	virtual ~CityView();
+	void Begin() override;
 	void Resume() override;
 	void Update(StageCmd *const cmd) override;
 	void Render() override;

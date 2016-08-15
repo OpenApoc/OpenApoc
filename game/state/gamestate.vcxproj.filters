@@ -117,6 +117,9 @@
     <ClCompile Include="gametime.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gameevent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agent.h">
@@ -228,6 +231,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="gameevent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gametime_facet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
