@@ -4,7 +4,7 @@
 
 using namespace OpenApoc;
 
-bool test_gamestate_serialization_roundtrip(sp<GameState> state, bool packed, UString save_name)
+bool test_gamestate_serialization_roundtrip(sp<GameState> state, UString save_name)
 {
 	if (!state->saveGame(save_name))
 	{
@@ -26,19 +26,12 @@ bool test_gamestate_serialization_roundtrip(sp<GameState> state, bool packed, US
 
 bool test_gamestate_serialization(sp<GameState> state)
 {
-	LogWarning("Testing packed save");
-	if (!test_gamestate_serialization_roundtrip(state, true, "test_packed_state"))
+	if (!test_gamestate_serialization_roundtrip(state, "test_packed_state"))
 	{
 		LogError("Packed save test failed");
 		return false;
 	}
 
-	LogWarning("Testing non-packed save");
-	if (!test_gamestate_serialization_roundtrip(state, false, "test_nonpacked_state"))
-	{
-		LogError("Non-packed save test failed");
-		return false;
-	}
 	return true;
 }
 
