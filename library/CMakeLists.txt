@@ -21,7 +21,8 @@ set (LIBRARY_HEADER_FILES
 	vec.h
 	resource.h
 	voxel.h
-	line.h)
+	line.h
+	xorshift.h)
 source_group(library\\headers FILES ${LIBRARY_HEADER_FILES})
 
 list(APPEND ALL_SOURCE_FILES ${LIBRARY_SOURCE_FILES})
