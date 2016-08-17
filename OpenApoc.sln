@@ -29,6 +29,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "imagedump", "tools\imagedum
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lodepng", "dependencies\lodepng.vcxproj", "{83CCC3A3-E802-4BF7-86C9-3FBC1A8803D4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{8EAE9E1C-DF71-4144-88F4-5F4C8FD8968F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_rng", "tests\test_rng.vcxproj", "{657FEC45-218E-416F-B048-0BE062CF9368}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -141,8 +145,19 @@ Global
 		{83CCC3A3-E802-4BF7-86C9-3FBC1A8803D4}.Release|Win32.Build.0 = Release|Win32
 		{83CCC3A3-E802-4BF7-86C9-3FBC1A8803D4}.Release|x64.ActiveCfg = Release|x64
 		{83CCC3A3-E802-4BF7-86C9-3FBC1A8803D4}.Release|x64.Build.0 = Release|x64
+		{657FEC45-218E-416F-B048-0BE062CF9368}.Debug|Win32.ActiveCfg = Debug|Win32
+		{657FEC45-218E-416F-B048-0BE062CF9368}.Debug|Win32.Build.0 = Debug|Win32
+		{657FEC45-218E-416F-B048-0BE062CF9368}.Debug|x64.ActiveCfg = Debug|x64
+		{657FEC45-218E-416F-B048-0BE062CF9368}.Debug|x64.Build.0 = Debug|x64
+		{657FEC45-218E-416F-B048-0BE062CF9368}.Release|Win32.ActiveCfg = Release|Win32
+		{657FEC45-218E-416F-B048-0BE062CF9368}.Release|Win32.Build.0 = Release|Win32
+		{657FEC45-218E-416F-B048-0BE062CF9368}.Release|x64.ActiveCfg = Release|x64
+		{657FEC45-218E-416F-B048-0BE062CF9368}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{657FEC45-218E-416F-B048-0BE062CF9368} = {8EAE9E1C-DF71-4144-88F4-5F4C8FD8968F}
 	EndGlobalSection
 EndGlobal
