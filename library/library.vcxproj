@@ -27,6 +27,7 @@
     <ClInclude Include="strings.h" />
     <ClInclude Include="vec.h" />
     <ClInclude Include="voxel.h" />
+    <ClInclude Include="xorshift.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="strings.cpp" />
