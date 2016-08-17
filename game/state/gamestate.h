@@ -16,6 +16,7 @@
 #include "game/state/stateobject.h"
 #include "game/state/ufopaedia.h"
 #include "library/strings.h"
+#include "library/xorshift.h"
 #include <random>
 
 namespace OpenApoc
@@ -66,7 +67,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	bool showVehiclePath = false;
 	bool showSelectableBounds = false;
 
-	std::default_random_engine rng;
+	xorshift_128_plus<uint32_t> rng;
 
 	UString getPlayerBalance() const;
 	StateRef<Organisation> getOrganisation(const UString &orgID);

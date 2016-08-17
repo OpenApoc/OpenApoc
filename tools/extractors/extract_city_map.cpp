@@ -17,6 +17,9 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 	unsigned int sizeZ = 10;
 	Vec3<unsigned int> fullSize(140, 140, 11);
 
+	// We want a predictable RNG state to generate the 'same' random grass each time
+	xorshift_128_plus<uint32_t> rng{};
+
 	auto inFile = fw().data->fs.open(map_prefix + fileName);
 	if (!inFile)
 	{
@@ -46,7 +49,7 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 			}
 			else
 			{
-				idx = std::uniform_int_distribution<int>{169, 172}(state.rng);
+				idx = std::uniform_int_distribution<int>{169, 172}(rng);
 			}
 
 			auto tileName =

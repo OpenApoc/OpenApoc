@@ -852,6 +852,18 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	t = GameTime(ticks);
 }
 
+template <>
+void serializeIn(const GameState *state, sp<SerializationNode> node, xorshift_128_plus<uint32_t> &t)
+{
+	if (!node)
+		return;
+
+	uint32_t s[2] = {0, 0};
+	serializeIn(state, node->getNode("s0"), s[0]);
+	serializeIn(state, node->getNode("s1"), s[1]);
+	t.set_state(s);
+}
+
 void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &s)
 {
 	if (!node)
@@ -877,6 +889,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &
 	serializeIn(state, node->getNode("player"), s.player);
 	serializeIn(state, node->getNode("current_city"), s.current_city);
 	serializeIn(state, node->getNode("current_base"), s.current_base);
+	serializeIn(state, node->getNode("rng"), s.rng);
 	serializeIn(state, node->getNodeOpt("time"), s.gameTime);
 }
 
@@ -1502,6 +1515,17 @@ void serializeOut(sp<SerializationNode> node, const GameTime &time)
 	serializeOut(node->addNode("ticks"), time.getTicks());
 }
 
+template <> void serializeOut(sp<SerializationNode> node, const xorshift_128_plus<uint32_t> &t)
+{
+	if (!node)
+		return;
+
+	uint32_t s[2] = {0, 0};
+	t.get_state(s);
+	serializeOut(node->addNode("s0"), s[0]);
+	serializeOut(node->addNode("s1"), s[1]);
+}
+
 void serializeOut(sp<SerializationNode> node, const GameState &state)
 {
 	serializeOut(node->addNode("lastVehicle"), state.lastVehicle);
@@ -1525,6 +1549,7 @@ void serializeOut(sp<SerializationNode> node, const GameState &state)
 	serializeOut(node->addNode("current_city"), state.current_city);
 	serializeOut(node->addNode("current_base"), state.current_base);
 	serializeOut(node->addNode("player"), state.player);
+	serializeOut(node->addNode("rng"), state.rng);
 	serializeOut(node->addNode("time"), state.gameTime);
 }
 

@@ -79,6 +79,10 @@
   <current_city />
   <current_base />
   <player>ORG_X-COM</player>
+  <rng>
+    <s0>2065550767</s0>
+    <s1>1653378023</s1>
+  </rng>
   <time>
     <ticks>0</ticks>
   </time>
