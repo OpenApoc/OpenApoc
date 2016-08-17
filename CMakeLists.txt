@@ -11,7 +11,7 @@ INCLUDE(CheckCXXCompilerFlag)
 INCLUDE(CheckCCompilerFlag)
 
 option(LTO "Build using link-time-optimisations" OFF)
-option(ENABLE_TESTS "Build some unit tests" OFF)
+option(ENABLE_TESTS "Build some unit tests" ON)
 
 CHECK_CXX_COMPILER_FLAG("-flto"
 	COMPILER_SUPPORTS_LTO)
