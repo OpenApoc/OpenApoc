@@ -4,8 +4,12 @@ branches:
   - master
 skip_tags: true
 os: Visual Studio 2015
-configuration: Release
-platform: x64
+configuration:
+  - Release
+  - Debug
+platform:
+  - x64
+  - Win32
 clone_depth: 10
 before_build:
 - git submodule init
@@ -18,8 +22,9 @@ after_build:
 - mkdir OpenApoc-%APPVEYOR_BUILD_VERSION%
 - echo %APPVEYOR_REPO_COMMIT% > OpenApoc-%APPVEYOR_BUILD_VERSION%\git-commit
 - echo %APPVEYOR_BUILD_VERSION% > OpenApoc-%APPVEYOR_BUILD_VERSION%\build-id
-- copy x64\Release\*.dll OpenApoc-%APPVEYOR_BUILD_VERSION%\
-- copy x64\Release\*.exe OpenApoc-%APPVEYOR_BUILD_VERSION%\
+- copy bin\%PLATFORM%\%CONFIGURATION%\*.dll OpenApoc-%APPVEYOR_BUILD_VERSION%\
+- copy bin\%PLATFORM%\%CONFIGURATION%\*.exe OpenApoc-%APPVEYOR_BUILD_VERSION%\
+- copy bin\%PLATFORM%\%CONFIGURATION%\*.pdb OpenApoc-%APPVEYOR_BUILD_VERSION%\
 - xcopy /E data OpenApoc-%APPVEYOR_BUILD_VERSION%\data\
 - 7z a OpenApoc-msvc.zip OpenApoc-%APPVEYOR_BUILD_VERSION%
 artifacts:
