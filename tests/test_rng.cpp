@@ -3,7 +3,7 @@
 
 using namespace OpenApoc;
 
-int main(int argc, char **argv)
+int main(int, char **)
 {
 	xorshift_128_plus<uint32_t> rng{};
 
