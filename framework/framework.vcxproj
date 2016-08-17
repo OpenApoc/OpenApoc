@@ -126,6 +126,7 @@
     <ProjectGuid>{A61CE9B3-B257-4978-9E8B-CABB592EC2CE}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>framework</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -172,15 +173,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IncludePath>$(SolutionDir)\dependencies\tinyxml2;$(SolutionDir)\dependencies\physfs\src;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(SolutionDir)\dependencies\tinyxml2;$(SolutionDir)\dependencies\physfs\src;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(SolutionDir)\dependencies\tinyxml2;$(SolutionDir)\dependencies\physfs\src;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)\dependencies\tinyxml2;$(SolutionDir)\dependencies\physfs\src;$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
+    <OutDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
+    <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
