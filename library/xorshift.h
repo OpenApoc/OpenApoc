@@ -1,9 +1,9 @@
 #pragma once
 
 #include <cstdint>
+#include <istream>
 #include <limits>
 #include <ostream>
-#include <istream>
 
 namespace OpenApoc
 {
@@ -57,7 +57,7 @@ template <class T, T A = 23, T B = 18, T C = 5> class xorshift_128_plus
 #endif
   private:
 	result_type s[2];
-	static const uint64_t splitmix_64(uint64_t x)
+	static uint64_t splitmix_64(uint64_t x)
 	{
 		uint64_t z = (x += static_cast<uint64_t>(0x9E3779B97F4A7C15));
 		z = (z ^ (z >> 30)) * static_cast<uint64_t>(0xBF58476D1CE4E5B9);
