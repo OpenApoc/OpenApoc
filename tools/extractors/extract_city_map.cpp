@@ -49,7 +49,12 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 			}
 			else
 			{
-				idx = std::uniform_int_distribution<int>{169, 172}(rng);
+				// NOTE: uniform_int_distribution would give a 'better' distribution here, but
+				// doesn't give the same result over different platforms (tested: x86_64 gcc 5.4.0
+				// and x64 msvc 2015u3)
+				// range {169,172}
+				auto off = rng() % 4;
+				idx = 169 + off;
 			}
 
 			auto tileName =
