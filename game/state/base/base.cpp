@@ -45,36 +45,84 @@ sp<Facility> Base::getFacility(Vec2<int> pos) const
 	return nullptr;
 }
 
-static void randomlyPlaceFacility(GameState &state, Base &base, StateRef<FacilityType> facility)
+static bool randomlyPlaceFacility(GameState &state, Base &base, StateRef<FacilityType> facility)
 {
-	auto positionDistribution = std::uniform_int_distribution<int>(0, base.SIZE);
-	while (true)
+
+	std::vector<Vec2<int>> possible_positions;
+	for (int y = 0; y < base.SIZE; y++)
 	{
-		auto position = Vec2<int>{positionDistribution(state.rng), positionDistribution(state.rng)};
-		if (base.canBuildFacility(facility, position, true) == Base::BuildError::NoError)
+		for (int x = 0; x < base.SIZE; x++)
 		{
-			base.buildFacility(state, facility, position, true);
-			return;
+			Vec2<int> position{x, y};
+			if (base.canBuildFacility(facility, position, true) == Base::BuildError::NoError)
+			{
+				possible_positions.push_back(position);
+			}
 		}
 	}
+	if (possible_positions.empty())
+	{
+		return false;
+	}
+	std::uniform_int_distribution<int> positionDistribution(0, possible_positions.size() - 1);
+	auto position = possible_positions[positionDistribution(state.rng)];
+	if (base.canBuildFacility(facility, position, true) == Base::BuildError::NoError)
+	{
+		base.buildFacility(state, facility, position, true);
+		return true;
+	}
+	else
+	{
+		LogError("Position {%d,%d} in base in possible list but failed to build", position.x,
+		         position.y);
+		return false;
+	}
+}
+
+static bool tryToPlaceInitialFacilities(GameState &state, Base &base)
+{
+	for (auto &facilityTypePair : state.initial_facilities)
+	{
+		StateRef<FacilityType> facilityType{&state, facilityTypePair.first};
+		auto count = facilityTypePair.second;
+		for (int i = 0; i < count; i++)
+		{
+			if (!randomlyPlaceFacility(state, base, facilityType))
+			{
+				return false;
+			}
+		}
+	}
+	return true;
 }
 
 void Base::startingBase(GameState &state)
 {
-	// Place large facilites first, as they're more likely to not fit...
-	for (auto &facilityTypePair : state.initial_facilities)
+	while (!tryToPlaceInitialFacilities(state, *this))
 	{
-		StateRef<FacilityType> facility = {&state, facilityTypePair.first};
-		if (facility->size < 2)
-			continue;
-		randomlyPlaceFacility(state, *this, facility);
-	}
-	for (auto &facilityTypePair : state.initial_facilities)
-	{
-		StateRef<FacilityType> facility = {&state, facilityTypePair.first};
-		if (facility->size > 1)
-			continue;
-		randomlyPlaceFacility(state, *this, facility);
+		LogInfo("Failed to place facilities, trying again");
+		// Cleanup the partially-placed base
+		for (int y = 0; y < this->SIZE; y++)
+		{
+			for (int x = 0; x < this->SIZE; x++)
+			{
+				this->destroyFacility(state, {x, y});
+			}
+		}
+		// There always must be a single 'access lift' base module even if everything else has been
+		// removed
+		if (this->facilities.size() > 1)
+		{
+			LogError("Failed to cleanup facilities after unsuccessful random place");
+		}
+		if (this->facilities.empty())
+		{
+			LogError("No access lift after facility cleanup after unsuccessful random place");
+		}
+		if (this->facilities[0]->type->fixed != true)
+		{
+			LogError("Remaining facility after cleanup not an access lift?");
+		}
 	}
 }
 
@@ -202,7 +250,7 @@ Base::BuildError Base::canDestroyFacility(Vec2<int> pos) const
 	}
 	if (facility->type->fixed)
 	{
-		return BuildError::Occupied;
+		return BuildError::Indestructible;
 	}
 	if (facility->buildTime > 0)
 	{

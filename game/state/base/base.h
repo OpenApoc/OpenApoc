@@ -32,7 +32,8 @@ class Base : public StateObject<Base>
 		NoError,
 		Occupied,
 		OutOfBounds,
-		NoMoney
+		NoMoney,
+		Indestructible,
 	};
 
 	Base(GameState &state, StateRef<Building> building);
