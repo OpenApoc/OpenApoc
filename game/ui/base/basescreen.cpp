@@ -213,6 +213,10 @@ void BaseScreen::EventOccurred(Event *e)
 							                             "possible with your available funds."),
 							    MessageBox::ButtonOptions::Ok);
 							break;
+						case Base::BuildError::Indestructible:
+							// Indestrictible facilities (IE the access lift) are just silently
+							// ignored
+							break;
 					}
 				}
 				drag = false;
