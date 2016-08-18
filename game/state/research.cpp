@@ -207,13 +207,19 @@ int Lab::getTotalSkill() const
 
 void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 {
-	if (lab->current_project && lab->getTotalSkill() > 0)
+	if (lab->current_project)
 	{
+		auto skill = lab->getTotalSkill();
+		if (skill <= 0)
+		{
+			// If there's nobody assigned projects obviously don't progress
+			return;
+		}
 		// A little complication as we want to be correctly calculating progress in an integer when
 		// working with sub-single progress 'unit' time units.
 		// This also leaves any remaining ticks in the lab's ticks_since_last_progress, so they will
 		// get added onto the next project that lab undertakes at the first update.
-		unsigned ticks_per_progress_point = TICKS_PER_HOUR / lab->getTotalSkill();
+		unsigned ticks_per_progress_point = TICKS_PER_HOUR / skill;
 		unsigned ticks_remaining_to_progress = ticks + lab->ticks_since_last_progress;
 
 		unsigned progress_points =

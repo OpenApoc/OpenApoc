@@ -978,6 +978,7 @@ void CityView::EventOccurred(Event *e)
 				if (!ev)
 				{
 					LogError("Invalid facility event");
+					return;
 				}
 				auto message_box = mksp<MessageBox>(
 				    tr("FACILITY COMPLETED"),
