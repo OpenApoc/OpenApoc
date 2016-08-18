@@ -21,7 +21,16 @@ add_executable(${TEST} ${TEST}.cpp)
 target_link_libraries(${TEST} OpenApoc_Library OpenApoc_Framework
 		OpenApoc_GameState)
 target_compile_definitions(${TEST} PRIVATE -DUNIT_TEST)
-add_test(NAME ${TEST} COMMAND ${EXECUTABLE_OUTPUT_PATH}/${TEST}
+add_test(NAME ${TEST}_difficulty1 COMMAND ${EXECUTABLE_OUTPUT_PATH}/${TEST}
 		${CMAKE_SOURCE_DIR}/data/difficulty1_patched)
+add_test(NAME ${TEST}_difficulty2 COMMAND ${EXECUTABLE_OUTPUT_PATH}/${TEST}
+		${CMAKE_SOURCE_DIR}/data/difficulty2_patched)
+add_test(NAME ${TEST}_difficulty3 COMMAND ${EXECUTABLE_OUTPUT_PATH}/${TEST}
+		${CMAKE_SOURCE_DIR}/data/difficulty3_patched)
+add_test(NAME ${TEST}_difficulty4 COMMAND ${EXECUTABLE_OUTPUT_PATH}/${TEST}
+		${CMAKE_SOURCE_DIR}/data/difficulty4_patched)
+add_test(NAME ${TEST}_difficulty5 COMMAND ${EXECUTABLE_OUTPUT_PATH}/${TEST}
+		${CMAKE_SOURCE_DIR}/data/difficulty5_patched)
+
 set_property(TARGET ${TEST} PROPERTY CXX_STANDARD 11)
 set_property(TARGET ${TEST} PROPERTY CXX_STANDARD_REQUIRED ON)
