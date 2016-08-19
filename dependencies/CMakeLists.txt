@@ -25,11 +25,11 @@ list(APPEND ALL_HEADER_FILES ${LIBSMACKER_HEADER_FILES})
 add_library(OpenApoc_LibSmacker STATIC ${LIBSMACKER_SOURCE_FILES}
 		${LIBSMACKER_HEADER_FILES})
 
-target_include_directories(OpenApoc_Library PUBLIC ${CMAKE_SOURCE_DIR})
-target_include_directories(OpenApoc_Library PRIVATE
+target_include_directories(OpenApoc_LibSmacker PUBLIC ${CMAKE_SOURCE_DIR})
+target_include_directories(OpenApoc_LibSmacker PRIVATE
 		${CMAKE_SOURCE_DIR}/dependencies/libsmacker)
 
-target_compile_definitions(OpenApoc_Library PUBLIC PTHREADS_AVAILABLE)
+target_compile_definitions(OpenApoc_LibSmacker PUBLIC PTHREADS_AVAILABLE)
 
 
 set (LIBPUGIXML_SOURCE_FILES
