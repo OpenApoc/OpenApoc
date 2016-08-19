@@ -56,7 +56,7 @@ class ResearchTopic : public StateObject<ResearchTopic>
 	Type type;
 	LabSize required_lab_size;
 	ProjectDependencies dependencies;
-	
+
 	// Research only
 	// FIXME: Some research topics enable multiple ufopaedia entries?
 	// FIXME: Is this deprecated?
@@ -125,7 +125,6 @@ class Lab : public StateObject<Lab>
 	unsigned manufacture_goal;
 	unsigned manufacture_done;
 	unsigned int manufacture_man_hours_invested;
-
 };
 
 class ResearchCompleteData

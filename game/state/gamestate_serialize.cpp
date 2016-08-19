@@ -13,10 +13,10 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/city/vequipment.h"
-#include "game/state/rules/scenery_tile_type.h"
-#include "game/state/rules/vequipment_type.h"
-#include "game/state/rules/vammo_type.h"
 #include "game/state/rules/aequipment_type.h"
+#include "game/state/rules/scenery_tile_type.h"
+#include "game/state/rules/vammo_type.h"
+#include "game/state/rules/vequipment_type.h"
 #include "library/voxel.h"
 
 namespace OpenApoc
@@ -506,13 +506,12 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 
 	serializeIn(state, node->getNode("id"), e.id);
 	serializeIn(state, node->getNode("name"), e.name);
-	
+
 	serializeIn(state, node->getNode("equipscreen_sprite"), e.equipscreen_sprite);
 	serializeIn(state, node->getNode("equipscreen_size"), e.equipscreen_size);
 	serializeIn(state, node->getNode("manufacturer"), e.manufacturer);
 	serializeIn(state, node->getNode("store_space"), e.store_space);
 }
-
 
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, VAmmoType &e)
 {
@@ -683,7 +682,8 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("ticks_since_last_progress"), lab.ticks_since_last_progress);
 	serializeIn(state, node->getNode("manufacture_goal"), lab.manufacture_goal);
 	serializeIn(state, node->getNode("manufacture_done"), lab.manufacture_done);
-	serializeIn(state, node->getNode("manufacture_man_hours_invested"), lab.manufacture_man_hours_invested);
+	serializeIn(state, node->getNode("manufacture_man_hours_invested"),
+	            lab.manufacture_man_hours_invested);
 }
 
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Facility &facility)
@@ -802,7 +802,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 		serializeIn(state, node->getNode("score"), r.score);
 		serializeIn(state, node->getNode("started"), r.started);
 	}
-	//Manufacture Only
+	// Manufacture Only
 	if (r.type == ResearchTopic::Type::Engineering)
 	{
 		serializeIn(state, node->getNode("cost"), r.cost);
@@ -1272,7 +1272,6 @@ template <> void serializeOut(sp<SerializationNode> node, const AEquipmentType &
 	serializeOut(node->addNode("store_space"), e.store_space);
 }
 
-
 template <> void serializeOut(sp<SerializationNode> node, const VAmmoType &e)
 {
 	serializeOut(node->addNode("id"), e.id);
@@ -1389,7 +1388,8 @@ template <> void serializeOut(sp<SerializationNode> node, const Lab &lab)
 	serializeOut(node->addNode("ticks_since_last_progress"), lab.ticks_since_last_progress);
 	serializeOut(node->addNode("manufacture_done"), lab.manufacture_done);
 	serializeOut(node->addNode("manufacture_goal"), lab.manufacture_goal);
-	serializeOut(node->addNode("manufacture_man_hours_invested"), lab.manufacture_man_hours_invested);
+	serializeOut(node->addNode("manufacture_man_hours_invested"),
+	             lab.manufacture_man_hours_invested);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const Facility &facility)
@@ -1509,7 +1509,7 @@ template <> void serializeOut(sp<SerializationNode> node, const ItemDependency &
 
 template <> void serializeOut(sp<SerializationNode> node, const ResearchTopic &r)
 {
-	LogWarning("outputting topic %s",r.name.c_str());
+	LogWarning("outputting topic %s", r.name.c_str());
 	// Shared Research & Manufacture
 	serializeOut(node->addNode("name"), r.name);
 	serializeOut(node->addNode("description"), r.description);

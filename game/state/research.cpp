@@ -17,7 +17,10 @@ const std::map<ResearchTopic::LabSize, UString> ResearchTopic::LabSizeMap = {
 };
 
 const std::map<ResearchTopic::ItemType, UString> ResearchTopic::ItemTypeMap = {
-	{ ItemType::VehicleEquipment, "vehicleequipment" },{ ItemType::AgentEquipment, "agentequipment" },{ ItemType::VehicleEquipmentAmmo, "vehicleequipmentammo" },{ ItemType::Craft, "craft" },
+    {ItemType::VehicleEquipment, "vehicleequipment"},
+    {ItemType::AgentEquipment, "agentequipment"},
+    {ItemType::VehicleEquipmentAmmo, "vehicleequipmentammo"},
+    {ItemType::Craft, "craft"},
 };
 
 const std::map<ResearchDependency::Type, UString> ResearchDependency::TypeMap = {
@@ -25,12 +28,16 @@ const std::map<ResearchDependency::Type, UString> ResearchDependency::TypeMap = 
 };
 
 ResearchTopic::ResearchTopic()
-    : man_hours(0), man_hours_progress(0), type(Type::BioChem), required_lab_size(LabSize::Small), item_type(ItemType::VehicleEquipment),
-      score(0), started(false), cost(0)
+    : man_hours(0), man_hours_progress(0), type(Type::BioChem), required_lab_size(LabSize::Small),
+      item_type(ItemType::VehicleEquipment), score(0), started(false), cost(0)
 {
 }
 
-bool ResearchTopic::isComplete() const { return this->type != ResearchTopic::Type::Engineering && this->man_hours_progress >= this->man_hours; }
+bool ResearchTopic::isComplete() const
+{
+	return this->type != ResearchTopic::Type::Engineering &&
+	       this->man_hours_progress >= this->man_hours;
+}
 
 ResearchDependency::ResearchDependency() : type(Type::Any){};
 
@@ -125,7 +132,11 @@ const UString &StateObject<ResearchTopic>::getId(const GameState &state,
 	return emptyString;
 }
 
-Lab::Lab() : ticks_since_last_progress(0),manufacture_goal(0),manufacture_done(0),manufacture_man_hours_invested(0){}
+Lab::Lab()
+    : ticks_since_last_progress(0), manufacture_goal(0), manufacture_done(0),
+      manufacture_man_hours_invested(0)
+{
+}
 
 template <> sp<Lab> StateObject<Lab>::get(const GameState &state, const UString &id)
 {
@@ -170,8 +181,9 @@ void Lab::setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic, sp<GameS
 		if (topic->current_lab)
 		{
 			LogAssert(topic->current_lab->current_project == topic);
-			// FIXME: What was the purpose of this? There should be no way to cancel research by selecting it! Commenting for now
-			/* 
+			// FIXME: What was the purpose of this? There should be no way to cancel research by
+			// selecting it! Commenting for now
+			/*
 			topic->current_lab->current_project = "";
 			topic->current_lab = "";
 			*/
@@ -183,7 +195,8 @@ void Lab::setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic, sp<GameS
 	if (lab->current_project)
 	{
 		// Refund if haven't started working on the manufacturing topic
-		if (lab->type == ResearchTopic::Type::Engineering && lab->manufacture_man_hours_invested == 0)
+		if (lab->type == ResearchTopic::Type::Engineering &&
+		    lab->manufacture_man_hours_invested == 0)
 			state->player->balance += lab->current_project->cost;
 		lab->current_project->current_lab = "";
 		lab->manufacture_man_hours_invested = 0;
@@ -214,11 +227,10 @@ void Lab::setGoal(StateRef<Lab> lab, unsigned goal)
 {
 	if (lab->type != ResearchTopic::Type::Engineering)
 		LogError("Cannot set goal for a research lab");
+	else if (lab->manufacture_goal <= goal)
+		LogError("Manufacturing goal must be at least 1 ahead of the amount already done");
 	else
-		if (lab->manufacture_goal <= goal)
-			LogError("Manufacturing goal must be at least 1 ahead of the amount already done");
-		else
-			lab->manufacture_goal = goal;
+		lab->manufacture_goal = goal;
 }
 
 int Lab::getTotalSkill() const
@@ -259,32 +271,29 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 		// working with sub-single progress 'unit' time units.
 		// This also leaves any remaining ticks in the lab's ticks_since_last_progress, so they will
 		// get added onto the next project that lab undertakes at the first update.
-<<<<<<< HEAD
-		unsigned ticks_per_progress_point = TICKS_PER_HOUR / skill;
-=======
 		unsigned ticks_per_progress_hour = TICKS_PER_HOUR / lab->getTotalSkill();
->>>>>>> refs/remotes/origin/master
 		unsigned ticks_remaining_to_progress = ticks + lab->ticks_since_last_progress;
 
 		unsigned progress_hours;
-		
+
 		switch (lab->current_project->type)
 		{
 			case ResearchTopic::Type::Physics:
 			case ResearchTopic::Type::BioChem:
-				progress_hours =
-					std::min(ticks_remaining_to_progress / ticks_per_progress_hour,
-						lab->current_project->man_hours - lab->current_project->man_hours_progress);
+				progress_hours = std::min(ticks_remaining_to_progress / ticks_per_progress_hour,
+				                          lab->current_project->man_hours -
+				                              lab->current_project->man_hours_progress);
 				break;
 			case ResearchTopic::Type::Engineering:
-				progress_hours =
-					std::min(ticks_remaining_to_progress / ticks_per_progress_hour,
-						lab->current_project->man_hours*(lab->manufacture_goal- lab->manufacture_done) - lab->manufacture_man_hours_invested);
+				progress_hours = std::min(ticks_remaining_to_progress / ticks_per_progress_hour,
+				                          lab->current_project->man_hours *
+				                                  (lab->manufacture_goal - lab->manufacture_done) -
+				                              lab->manufacture_man_hours_invested);
 				break;
 			default:
 				LogError("Unexpected lab type");
 		}
-		
+
 		unsigned ticks_left =
 		    ticks_remaining_to_progress - progress_hours * ticks_per_progress_hour;
 		lab->ticks_since_last_progress = ticks_left;
@@ -296,12 +305,12 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 				lab->current_project->man_hours_progress += progress_hours;
 				if (lab->current_project->isComplete())
 				{
-					auto event =
-						new GameResearchEvent(GameEventType::ResearchCompleted, lab->current_project, lab);
+					auto event = new GameResearchEvent(GameEventType::ResearchCompleted,
+					                                   lab->current_project, lab);
 					fw().PushEvent(event);
-					Lab::setResearch(lab, { state.get(), "" }, state);
+					Lab::setResearch(lab, {state.get(), ""}, state);
 				}
-				break;				
+				break;
 			case ResearchTopic::Type::Engineering:
 				lab->manufacture_man_hours_invested += progress_hours;
 				if (lab->manufacture_man_hours_invested >= lab->current_project->man_hours)
@@ -313,37 +322,45 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 					{
 						for (auto &facility : base.second->facilities)
 						{
-							if (facility->type->capacityType == FacilityType::Capacity::Workshop && facility->lab == lab)
+							if (facility->type->capacityType == FacilityType::Capacity::Workshop &&
+							    facility->lab == lab)
 							{
 								switch (lab->current_project->item_type)
 								{
 									case ResearchTopic::ItemType::VehicleEquipment:
 									{
-										auto item = base.second->inventoryVehicleEquipment.find(lab->current_project->item_produced);
+										auto item = base.second->inventoryVehicleEquipment.find(
+										    lab->current_project->item_produced);
 										if (item != base.second->inventoryVehicleEquipment.end())
 											item->second++;
 										else
-											base.second->inventoryVehicleEquipment[lab->current_project->item_produced] = 1;
+											base.second->inventoryVehicleEquipment
+											    [lab->current_project->item_produced] = 1;
 									}
-										break;
+									break;
 									case ResearchTopic::ItemType::VehicleEquipmentAmmo:
 									{
-										auto item = base.second->inventoryVehicleAmmo.find(lab->current_project->item_produced);
+										auto item = base.second->inventoryVehicleAmmo.find(
+										    lab->current_project->item_produced);
 										if (item != base.second->inventoryVehicleAmmo.end())
 											item->second++;
 										else
-											base.second->inventoryVehicleAmmo[lab->current_project->item_produced] = 1;
+											base.second->inventoryVehicleAmmo[lab->current_project
+											                                      ->item_produced] =
+											    1;
 									}
-										break;
+									break;
 									case ResearchTopic::ItemType::AgentEquipment:
 									{
-										auto item = base.second->inventoryAgentEquipment.find(lab->current_project->item_produced);
+										auto item = base.second->inventoryAgentEquipment.find(
+										    lab->current_project->item_produced);
 										if (item != base.second->inventoryAgentEquipment.end())
 											item->second++;
 										else
-											base.second->inventoryAgentEquipment[lab->current_project->item_produced] = 1;
+											base.second->inventoryAgentEquipment
+											    [lab->current_project->item_produced] = 1;
 									}
-										break;
+									break;
 									case ResearchTopic::ItemType::Craft:
 										LogError("Not Yet Implemented: Manufacturing Crafts");
 										break;
@@ -356,15 +373,16 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 						if (found)
 							break;
 					}
-					
+
 					lab->manufacture_done++;
 
 					if (lab->manufacture_done >= lab->manufacture_goal)
 					{
-						auto event =
-							new GameManufactureEvent(GameEventType::ManufactureCompleted, lab->current_project, lab->manufacture_done, lab->manufacture_goal, lab);
+						auto event = new GameManufactureEvent(
+						    GameEventType::ManufactureCompleted, lab->current_project,
+						    lab->manufacture_done, lab->manufacture_goal, lab);
 						fw().PushEvent(event);
-						Lab::setResearch(lab, { state.get(), "" }, state);
+						Lab::setResearch(lab, {state.get(), ""}, state);
 					}
 					else
 					{
@@ -375,10 +393,11 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 						}
 						else
 						{
-							auto event =
-								new GameManufactureEvent(GameEventType::ManufactureHalted, lab->current_project, lab->manufacture_done, lab->manufacture_goal, lab);
+							auto event = new GameManufactureEvent(
+							    GameEventType::ManufactureHalted, lab->current_project,
+							    lab->manufacture_done, lab->manufacture_goal, lab);
 							fw().PushEvent(event);
-							Lab::setResearch(lab, { state.get(), "" }, state);
+							Lab::setResearch(lab, {state.get(), ""}, state);
 						}
 					}
 				}
@@ -386,7 +405,6 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 			default:
 				LogError("Unexpected lab type");
 		}
-		
 	}
 }
 

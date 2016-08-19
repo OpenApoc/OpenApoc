@@ -83,13 +83,14 @@ class GameResearchEvent : public GameEvent
 
 class GameManufactureEvent : public GameEvent
 {
-public:
+  public:
 	StateRef<ResearchTopic> topic;
 	StateRef<Lab> lab;
 	unsigned done;
 	unsigned goal;
 
-	GameManufactureEvent(GameEventType type, StateRef<ResearchTopic> topic, unsigned done, unsigned goal, StateRef<Lab> lab);
+	GameManufactureEvent(GameEventType type, StateRef<ResearchTopic> topic, unsigned done,
+	                     unsigned goal, StateRef<Lab> lab);
 	~GameManufactureEvent() override = default;
 };
 

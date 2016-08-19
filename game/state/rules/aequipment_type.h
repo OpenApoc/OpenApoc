@@ -8,24 +8,24 @@
 
 namespace OpenApoc
 {
-	class Rules;
-	class Image;
-	class Sample;
-	class AEquipmentType : public StateObject<AEquipmentType>
-	{
-	public:
-		AEquipmentType();
-		
-		virtual ~AEquipmentType() = default;
+class Rules;
+class Image;
+class Sample;
+class AEquipmentType : public StateObject<AEquipmentType>
+{
+  public:
+	AEquipmentType();
 
-		UString id;
-		UString name;
+	virtual ~AEquipmentType() = default;
 
-		sp<Image> equipscreen_sprite;
-		Vec2<int> equipscreen_size;
-		
-		int store_space;
-		StateRef<Organisation> manufacturer;
-	};
+	UString id;
+	UString name;
+
+	sp<Image> equipscreen_sprite;
+	Vec2<int> equipscreen_size;
+
+	int store_space;
+	StateRef<Organisation> manufacturer;
+};
 
 } // namespace OpenApoc

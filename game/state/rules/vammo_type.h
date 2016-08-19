@@ -9,25 +9,25 @@
 namespace OpenApoc
 {
 
-	class Rules;
-	class Image;
-	class Sample;
-	class VAmmoType : public StateObject<VAmmoType>
-	{
-	public:
-		VAmmoType();
+class Rules;
+class Image;
+class Sample;
+class VAmmoType : public StateObject<VAmmoType>
+{
+  public:
+	VAmmoType();
 
-		virtual ~VAmmoType() = default;
+	virtual ~VAmmoType() = default;
 
-		UString id;
-		UString name;
+	UString id;
+	UString name;
 
-		// FIXME: Vanilla has no sprites for vehicle ammunition, should we introduce it?
-		sp<Image> equipscreen_sprite;
+	// FIXME: Vanilla has no sprites for vehicle ammunition, should we introduce it?
+	sp<Image> equipscreen_sprite;
 
-		int weight;
-		int store_space;
-		StateRef<Organisation> manufacturer;
-	};
+	int weight;
+	int store_space;
+	StateRef<Organisation> manufacturer;
+};
 
 } // namespace OpenApoc

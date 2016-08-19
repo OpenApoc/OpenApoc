@@ -90,9 +90,9 @@ GameResearchEvent::GameResearchEvent(GameEventType type, StateRef<ResearchTopic>
 {
 }
 
-GameManufactureEvent::GameManufactureEvent(GameEventType type, StateRef<ResearchTopic> topic, unsigned done, unsigned goal,
-	StateRef<Lab> lab)
-	: GameEvent(type), topic(topic), lab(lab), done(done),goal(goal)
+GameManufactureEvent::GameManufactureEvent(GameEventType type, StateRef<ResearchTopic> topic,
+                                           unsigned done, unsigned goal, StateRef<Lab> lab)
+    : GameEvent(type), topic(topic), lab(lab), done(done), goal(goal)
 {
 }
 
