@@ -12,7 +12,6 @@ before_install:
   - wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|sudo apt-key add - > /dev/null
   - wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key|sudo apt-key add - > /dev/null
   - sudo apt-get update > /dev/null
-  - export CFLAGS="-Wall -Wextra" CXXFLAGS="-Wall -Wextra"
   - if [ "$CXX" = "g++" ]; then sudo apt-get install g++-5 -y > /dev/null; fi
   - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
   - if [ "$CXX" = "clang++" ]; then sudo apt-get install clang-3.8 --force-yes -y > /dev/null; fi
@@ -40,6 +39,7 @@ install:
   - pushd ./dependencies/physfs && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . > /dev/null && make -j2 > /dev/null && make install > /dev/null && popd;
 
 before_script:
+  - export CFLAGS="-Wall -Wextra" CXXFLAGS="-Wall -Wextra"
   - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCLANG_TIDY=clang-tidy-3.8 -DCLANG_FORMAT=clang-format-3.8 -DENABLE_TESTS=ON -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}"
 # Do the format before the script so the output is cleaner - just showing the diff (if any) and the tidy results
   - if [ "${TIDY}" = "true" ]; then make format -j2 > /dev/null; fi
