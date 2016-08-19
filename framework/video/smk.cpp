@@ -272,8 +272,8 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 		if (audio_track_mask & SMK_AUDIO_TRACK_0)
 		{
 			// WE only support a single track
-			LogWarning("Audio track: channels %u depth %u rate %lu", (unsigned)channels[0],
-			           (unsigned)bitdepth[0], audio_rate[0]);
+			LogInfo("Audio track: channels %u depth %u rate %lu", (unsigned)channels[0],
+			        (unsigned)bitdepth[0], audio_rate[0]);
 		}
 		else
 		{

@@ -47,7 +47,7 @@ int main(int argc, char **argv)
 
 	UString gamestate_name = argv[1];
 
-	LogWarning("Loading \"%s\"", gamestate_name.c_str());
+	LogInfo("Loading \"%s\"", gamestate_name.c_str());
 
 	auto state = mksp<GameState>();
 	if (!state->loadGame(gamestate_name))
@@ -55,14 +55,14 @@ int main(int argc, char **argv)
 		LogError("Failed to load difficulty1_patched");
 		return EXIT_FAILURE;
 	}
-	LogWarning("Testing non-started non-inited state");
+	LogInfo("Testing non-started non-inited state");
 	if (!test_gamestate_serialization(state))
 	{
 		LogError("Serialization test failed for non-started non-inited game");
 		return EXIT_FAILURE;
 	}
 
-	LogWarning("Testing started non-inited state");
+	LogInfo("Testing started non-inited state");
 	state->startGame();
 
 	if (!test_gamestate_serialization(state))
@@ -71,7 +71,7 @@ int main(int argc, char **argv)
 		return EXIT_FAILURE;
 	}
 
-	LogWarning("Testing started nited state");
+	LogInfo("Testing started nited state");
 	state->initState();
 
 	if (!test_gamestate_serialization(state))

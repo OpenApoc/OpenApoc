@@ -20,7 +20,7 @@ TileView::TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
       selectedTileImageFront(fw().data->load_image("CITY/SELECTED-CITYTILE-FRONT.PNG")),
       pal(fw().data->load_palette("xcom3/ufodata/PAL_01.DAT"))
 {
-	LogWarning("dpySize: {%d,%d}", dpySize.x, dpySize.y);
+	LogInfo("dpySize: {%d,%d}", dpySize.x, dpySize.y);
 }
 
 TileView::~TileView() {}

@@ -154,7 +154,7 @@ const std::map<Vehicle::Altitude, UString> Vehicle::AltitudeMap = {
 
 void Vehicle::launch(TileMap &map, GameState &state, Vec3<float> initialPosition)
 {
-	LogWarning("Launching");
+	LogInfo("Launching %s", this->name.c_str());
 	if (this->tileObject)
 	{
 		LogError("Trying to launch already-launched vehicle");

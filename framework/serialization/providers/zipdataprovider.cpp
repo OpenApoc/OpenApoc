@@ -65,7 +65,7 @@ bool ZipDataProvider::readDocument(const UString &filename, UString &result)
 	auto it = fileLookup.find(filename.str());
 	if (it == fileLookup.end())
 	{
-		LogWarning("File \"%s\" not found in zip in zip \"%s\"", filename.c_str(), zipPath.c_str());
+		LogInfo("File \"%s\" not found in zip in zip \"%s\"", filename.c_str(), zipPath.c_str());
 		return false;
 	}
 	unsigned int fileId = it->second;

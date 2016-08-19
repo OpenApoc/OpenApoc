@@ -304,7 +304,7 @@ class Spritesheet
 		pages.clear();
 		while (!validEntries.empty())
 		{
-			LogWarning("Repack: creating sheet %d", (int)pages.size());
+			LogInfo("Repack: creating sheet %d", (int)pages.size());
 			auto page = mksp<SpritesheetPage>(pages.size(), page_size, node_count);
 			pages.push_back(page);
 			page->addMultiple(validEntries);
@@ -336,7 +336,7 @@ class Spritesheet
 			}
 		}
 		// Required a new page
-		LogWarning("Creating spritesheet page %d", (int)pages.size());
+		LogInfo("Creating spritesheet page %d", (int)pages.size());
 		auto page = mksp<SpritesheetPage>(pages.size(), page_size, node_count);
 		auto ret = page->addEntry(entry);
 		if (!ret)
@@ -1630,18 +1630,18 @@ class OGLES30RendererFactory : public RendererFactory
 			// First see if we're a direct OpenGL|ES context
 			if (GL::supported(true))
 			{
-				LogWarning("Using OpenGL ES3 compatibility");
+				LogInfo("Using OpenGL ES3 compatibility");
 				gl.reset(new GL(true));
 			}
 			// Then check for ES3 compatibilty extension on desktop OpenGL
 			else if (GL::supported(false))
 			{
-				LogWarning("Using OpenGL|ES context");
+				LogInfo("Using OpenGL|ES context");
 				gl.reset(new GL(false));
 			}
 			else
 			{
-				LogWarning("Failed to find ES3-compatible device");
+				LogInfo("Failed to find ES3-compatible device");
 				return nullptr;
 			}
 			return new OGLES30Renderer();

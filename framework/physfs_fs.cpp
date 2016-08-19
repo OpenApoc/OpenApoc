@@ -227,8 +227,8 @@ FileSystem::FileSystem(std::vector<UString> paths)
 	{
 		if (!PHYSFS_mount(p.c_str(), "/", 0))
 		{
-			LogWarning("Failed to add resource dir \"%s\", error: %s", p.c_str(),
-			           PHYSFS_getLastError());
+			LogInfo("Failed to add resource dir \"%s\", error: %s", p.c_str(),
+			        PHYSFS_getLastError());
 			continue;
 		}
 		else
