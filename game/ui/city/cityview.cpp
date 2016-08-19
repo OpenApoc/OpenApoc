@@ -972,6 +972,134 @@ void CityView::EventOccurred(Event *e)
 				stageCmd.nextStage = message_box;
 			}
 			break;
+			case GameEventType::ManufactureCompleted:
+			{
+				auto ev = dynamic_cast<GameManufactureEvent *>(e);
+				if (!ev)
+				{
+					LogError("Invalid manufacture event");
+				}
+				sp<Facility> lab_facility;
+				sp<Base> lab_base;
+				for (auto &base : state->player_bases)
+				{
+					for (auto &facility : base.second->facilities)
+					{
+						if (ev->lab == facility->lab)
+						{
+							lab_facility = facility;
+							lab_base = base.second;
+							break;
+						}
+					}
+					if (lab_facility)
+						break;
+				}
+				if (!lab_facility)
+				{
+					LogError("No facilities matching lab");
+				}
+				auto game_state = this->state;
+				
+				UString item_name;
+				switch (ev->topic->item_type)
+				{
+					case ResearchTopic::ItemType::VehicleEquipment:
+						item_name = game_state->vehicle_equipment[ev->topic->item_produced]->name;
+						break;
+					case ResearchTopic::ItemType::VehicleEquipmentAmmo:
+						item_name = game_state->vehicle_ammo[ev->topic->item_produced]->name;
+						break;
+					case ResearchTopic::ItemType::AgentEquipment:
+						item_name = game_state->agent_equipment[ev->topic->item_produced]->name;
+						break;
+					case ResearchTopic::ItemType::Craft:
+						item_name = game_state->vehicles[ev->topic->item_produced]->name;
+						break;
+				}
+
+				auto message_box = mksp<MessageBox>(
+					tr("MANUFACTURE COMPLETED"),
+					UString::format("%s\n%s\n%s %d\n%d", 
+						lab_base->name,
+						tr(item_name.c_str()),
+						tr("Quantity:"),
+						ev->goal,
+						tr("Do you wish to reasign the Workshop?")),
+					MessageBox::ButtonOptions::YesNo,
+					// Yes callback
+					[game_state, lab_facility]() {
+					fw().Stage_Push(mksp<ResearchScreen>(game_state, lab_facility));
+				},
+					// No callback
+					[]() {
+					
+				});
+				stageCmd.cmd = StageCmd::Command::PUSH;
+				stageCmd.nextStage = message_box;
+			}
+			break;
+			case GameEventType::ManufactureHalted:
+			{
+				auto ev = dynamic_cast<GameManufactureEvent *>(e);
+				if (!ev)
+				{
+					LogError("Invalid manufacture event");
+				}
+				sp<Facility> lab_facility;
+				sp<Base> lab_base;
+				for (auto &base : state->player_bases)
+				{
+					for (auto &facility : base.second->facilities)
+					{
+						if (ev->lab == facility->lab)
+						{
+							lab_facility = facility;
+							lab_base = base.second;
+							break;
+						}
+					}
+					if (lab_facility)
+						break;
+				}
+				if (!lab_facility)
+				{
+					LogError("No facilities matching lab");
+				}
+				auto game_state = this->state;
+
+				UString item_name;
+				switch (ev->topic->item_type)
+				{
+				case ResearchTopic::ItemType::VehicleEquipment:
+					item_name = game_state->vehicle_equipment[ev->topic->item_produced]->name;
+					break;
+				case ResearchTopic::ItemType::VehicleEquipmentAmmo:
+					item_name = game_state->vehicle_ammo[ev->topic->item_produced]->name;
+					break;
+				case ResearchTopic::ItemType::AgentEquipment:
+					item_name = game_state->agent_equipment[ev->topic->item_produced]->name;
+					break;
+				case ResearchTopic::ItemType::Craft:
+					item_name = game_state->vehicles[ev->topic->item_produced]->name;
+					break;
+				}
+
+				auto message_box = mksp<MessageBox>(
+					tr("MANUFACTURING HALTED"),
+					UString::format("%s\n%s\n%s %d/%d\n%d",
+						lab_base->name,
+						tr(item_name.c_str()),
+						tr("Completion status:"),
+						ev->done,
+						ev->goal,
+						tr("Production costs exceed your available funds.")),
+					MessageBox::ButtonOptions::Ok
+				);
+				stageCmd.cmd = StageCmd::Command::PUSH;
+				stageCmd.nextStage = message_box;
+			}
+			break;
 			case GameEventType::FacilityCompleted:
 			{
 				auto ev = dynamic_cast<GameFacilityEvent *>(e);
