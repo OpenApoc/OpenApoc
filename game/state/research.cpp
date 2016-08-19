@@ -2,6 +2,7 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "game/state/base/facility.h"
+#include "game/state/city/vehicle.h"
 #include "game/state/gamestate.h"
 #include "gameevent.h"
 
@@ -206,6 +207,9 @@ void Lab::setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic, sp<GameS
 	lab->current_project = topic;
 	if (topic)
 	{
+		LogAssert(!(topic->required_lab_size == ResearchTopic::LabSize::Large &&
+		            lab->size == ResearchTopic::LabSize::Small));
+
 		switch (lab->type)
 		{
 			case ResearchTopic::Type::BioChem:
@@ -362,8 +366,28 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 									}
 									break;
 									case ResearchTopic::ItemType::Craft:
-										LogError("Not Yet Implemented: Manufacturing Crafts");
-										break;
+									{
+										auto type = state->vehicle_types[lab->current_project
+										                                     ->item_produced];
+
+										auto v = mksp<Vehicle>();
+										v->type = {state.get(), type};
+										v->name = UString::format("%s %d", type->name,
+										                          ++type->numCreated);
+										v->city = {state.get(), "CITYMAP_HUMAN"};
+										v->currentlyLandedBuilding = {state.get(),
+										                              base.second->building};
+										v->homeBuilding = {state.get(), base.second->building};
+										v->owner = state->getPlayer();
+										v->health = type->health;
+										UString vID = UString::format("%s%d", Vehicle::getPrefix(),
+										                              state->lastVehicle++);
+										state->vehicles[vID] = v;
+										v->currentlyLandedBuilding->landed_vehicles.insert(
+										    {state.get(), vID});
+										v->equipDefaultEquipment(*state);
+									}
+									break;
 								}
 								found = true;
 							}

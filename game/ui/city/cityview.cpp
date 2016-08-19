@@ -1014,7 +1014,7 @@ void CityView::EventOccurred(Event *e)
 						item_name = game_state->agent_equipment[ev->topic->item_produced]->name;
 						break;
 					case ResearchTopic::ItemType::Craft:
-						item_name = game_state->vehicles[ev->topic->item_produced]->name;
+						item_name = game_state->vehicle_types[ev->topic->item_produced]->name;
 						break;
 				}
 

@@ -28,9 +28,10 @@ void ResearchScreen::ChangeBase(sp<Base> newBase)
 	this->labs.clear();
 	for (auto &facility : this->state->current_base->facilities)
 	{
-		if (facility->type->capacityType == FacilityType::Capacity::Chemistry ||
-		    facility->type->capacityType == FacilityType::Capacity::Physics ||
-		    facility->type->capacityType == FacilityType::Capacity::Workshop)
+		if (facility->buildTime == 0 &&
+		    (facility->type->capacityType == FacilityType::Capacity::Chemistry ||
+		     facility->type->capacityType == FacilityType::Capacity::Physics ||
+		     facility->type->capacityType == FacilityType::Capacity::Workshop))
 		{
 			this->labs.push_back(facility);
 			if (!this->selected_lab)

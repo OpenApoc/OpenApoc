@@ -29,13 +29,6 @@
           <entry>bulletsprites/city/04.png</entry>
           <entry>bulletsprites/city/05.png</entry>
           <entry />
-          <entry>bulletsprites/city/07.png</entry>
-          <entry>bulletsprites/city/09.png</entry>
-          <entry>bulletsprites/city/02.png</entry>
-          <entry>bulletsprites/city/03.png</entry>
-          <entry>bulletsprites/city/04.png</entry>
-          <entry>bulletsprites/city/05.png</entry>
-          <entry />
         </projectile_sprites>
         <damage>10</damage>
         <accuracy>30</accuracy>
@@ -85,13 +78,6 @@
         </users>
         <speed>20</speed>
         <projectile_sprites>
-          <entry>bulletsprites/city/07.png</entry>
-          <entry>bulletsprites/city/09.png</entry>
-          <entry>bulletsprites/city/02.png</entry>
-          <entry>bulletsprites/city/03.png</entry>
-          <entry>bulletsprites/city/04.png</entry>
-          <entry>bulletsprites/city/05.png</entry>
-          <entry />
           <entry>bulletsprites/city/07.png</entry>
           <entry>bulletsprites/city/09.png</entry>
           <entry>bulletsprites/city/02.png</entry>
@@ -204,13 +190,6 @@
           <entry>bulletsprites/city/04.png</entry>
           <entry>bulletsprites/city/05.png</entry>
           <entry />
-          <entry>bulletsprites/city/07.png</entry>
-          <entry>bulletsprites/city/09.png</entry>
-          <entry>bulletsprites/city/02.png</entry>
-          <entry>bulletsprites/city/03.png</entry>
-          <entry>bulletsprites/city/04.png</entry>
-          <entry>bulletsprites/city/05.png</entry>
-          <entry />
         </projectile_sprites>
         <damage>16</damage>
         <accuracy>28</accuracy>
@@ -309,28 +288,6 @@
         </users>
         <speed>38</speed>
         <projectile_sprites>
-          <entry>bulletsprites/city/22.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/01.png</entry>
-          <entry>bulletsprites/city/01.png</entry>
-          <entry>bulletsprites/city/01.png</entry>
-          <entry>bulletsprites/city/02.png</entry>
-          <entry>bulletsprites/city/02.png</entry>
-          <entry>bulletsprites/city/02.png</entry>
-          <entry>bulletsprites/city/03.png</entry>
-          <entry>bulletsprites/city/03.png</entry>
-          <entry>bulletsprites/city/03.png</entry>
-          <entry>bulletsprites/city/04.png</entry>
-          <entry>bulletsprites/city/04.png</entry>
           <entry>bulletsprites/city/22.png</entry>
           <entry>bulletsprites/city/00.png</entry>
           <entry>bulletsprites/city/00.png</entry>
@@ -520,26 +477,6 @@
           <entry>bulletsprites/city/32.png</entry>
           <entry />
           <entry />
-          <entry>bulletsprites/city/20.png</entry>
-          <entry>bulletsprites/city/33.png</entry>
-          <entry>bulletsprites/city/33.png</entry>
-          <entry>bulletsprites/city/33.png</entry>
-          <entry>bulletsprites/city/34.png</entry>
-          <entry />
-          <entry>bulletsprites/city/34.png</entry>
-          <entry />
-          <entry>bulletsprites/city/35.png</entry>
-          <entry />
-          <entry>bulletsprites/city/35.png</entry>
-          <entry>bulletsprites/city/32.png</entry>
-          <entry>bulletsprites/city/32.png</entry>
-          <entry>bulletsprites/city/32.png</entry>
-          <entry />
-          <entry>bulletsprites/city/32.png</entry>
-          <entry />
-          <entry>bulletsprites/city/32.png</entry>
-          <entry />
-          <entry />
         </projectile_sprites>
         <damage>94</damage>
         <accuracy>18</accuracy>
@@ -589,41 +526,6 @@
         </users>
         <speed>12</speed>
         <projectile_sprites>
-          <entry>bulletsprites/city/35.png</entry>
-          <entry>bulletsprites/city/33.png</entry>
-          <entry>bulletsprites/city/33.png</entry>
-          <entry>bulletsprites/city/33.png</entry>
-          <entry>bulletsprites/city/33.png</entry>
-          <entry>bulletsprites/city/33.png</entry>
-          <entry>bulletsprites/city/33.png</entry>
-          <entry>bulletsprites/city/33.png</entry>
-          <entry>bulletsprites/city/33.png</entry>
-          <entry>bulletsprites/city/33.png</entry>
-          <entry>bulletsprites/city/33.png</entry>
-          <entry>bulletsprites/city/34.png</entry>
-          <entry />
-          <entry>bulletsprites/city/34.png</entry>
-          <entry />
-          <entry>bulletsprites/city/34.png</entry>
-          <entry />
-          <entry>bulletsprites/city/34.png</entry>
-          <entry />
-          <entry>bulletsprites/city/35.png</entry>
-          <entry />
-          <entry>bulletsprites/city/35.png</entry>
-          <entry />
-          <entry>bulletsprites/city/35.png</entry>
-          <entry />
-          <entry>bulletsprites/city/32.png</entry>
-          <entry />
-          <entry>bulletsprites/city/32.png</entry>
-          <entry />
-          <entry>bulletsprites/city/32.png</entry>
-          <entry />
-          <entry />
-          <entry>bulletsprites/city/32.png</entry>
-          <entry />
-          <entry />
           <entry>bulletsprites/city/35.png</entry>
           <entry>bulletsprites/city/33.png</entry>
           <entry>bulletsprites/city/33.png</entry>
@@ -743,41 +645,6 @@
           <entry />
           <entry />
           <entry />
-          <entry>bulletsprites/city/35.png</entry>
-          <entry>bulletsprites/city/10.png</entry>
-          <entry>bulletsprites/city/10.png</entry>
-          <entry>bulletsprites/city/10.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/13.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/14.png</entry>
-          <entry>bulletsprites/city/15.png</entry>
-          <entry>bulletsprites/city/16.png</entry>
-          <entry>bulletsprites/city/17.png</entry>
-          <entry>bulletsprites/city/18.png</entry>
-          <entry />
-          <entry>bulletsprites/city/19.png</entry>
-          <entry />
-          <entry>bulletsprites/city/20.png</entry>
-          <entry />
-          <entry>bulletsprites/city/21.png</entry>
-          <entry />
-          <entry>bulletsprites/city/22.png</entry>
-          <entry />
-          <entry>bulletsprites/city/22.png</entry>
-          <entry />
-          <entry>bulletsprites/city/23.png</entry>
-          <entry />
-          <entry />
-          <entry>bulletsprites/city/24.png</entry>
-          <entry />
-          <entry />
-          <entry />
         </projectile_sprites>
         <damage>28</damage>
         <accuracy>25</accuracy>
@@ -846,25 +713,6 @@
           <entry />
           <entry>bulletsprites/city/20.png</entry>
           <entry />
-          <entry>bulletsprites/city/19.png</entry>
-          <entry>bulletsprites/city/10.png</entry>
-          <entry>bulletsprites/city/10.png</entry>
-          <entry>bulletsprites/city/10.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/12.png</entry>
-          <entry>bulletsprites/city/12.png</entry>
-          <entry>bulletsprites/city/13.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/14.png</entry>
-          <entry>bulletsprites/city/15.png</entry>
-          <entry>bulletsprites/city/16.png</entry>
-          <entry>bulletsprites/city/17.png</entry>
-          <entry>bulletsprites/city/18.png</entry>
-          <entry />
-          <entry>bulletsprites/city/19.png</entry>
-          <entry />
-          <entry>bulletsprites/city/20.png</entry>
-          <entry />
         </projectile_sprites>
         <damage>26</damage>
         <accuracy>24</accuracy>
@@ -914,41 +762,6 @@
         </users>
         <speed>32</speed>
         <projectile_sprites>
-          <entry>bulletsprites/city/35.png</entry>
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
           <entry>bulletsprites/city/35.png</entry>
           <entry>bulletsprites/city/31.png</entry>
           <entry />
@@ -1101,25 +914,6 @@
           <entry />
           <entry>bulletsprites/city/20.png</entry>
           <entry />
-          <entry>bulletsprites/city/19.png</entry>
-          <entry>bulletsprites/city/10.png</entry>
-          <entry>bulletsprites/city/10.png</entry>
-          <entry>bulletsprites/city/10.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/12.png</entry>
-          <entry>bulletsprites/city/12.png</entry>
-          <entry>bulletsprites/city/13.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/14.png</entry>
-          <entry>bulletsprites/city/15.png</entry>
-          <entry>bulletsprites/city/16.png</entry>
-          <entry>bulletsprites/city/17.png</entry>
-          <entry>bulletsprites/city/18.png</entry>
-          <entry />
-          <entry>bulletsprites/city/19.png</entry>
-          <entry />
-          <entry>bulletsprites/city/20.png</entry>
-          <entry />
         </projectile_sprites>
         <damage>22</damage>
         <accuracy>24</accuracy>
@@ -1204,41 +998,6 @@
           <entry />
           <entry />
           <entry />
-          <entry>bulletsprites/city/35.png</entry>
-          <entry>bulletsprites/city/10.png</entry>
-          <entry>bulletsprites/city/10.png</entry>
-          <entry>bulletsprites/city/10.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/13.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/14.png</entry>
-          <entry>bulletsprites/city/15.png</entry>
-          <entry>bulletsprites/city/16.png</entry>
-          <entry>bulletsprites/city/17.png</entry>
-          <entry>bulletsprites/city/18.png</entry>
-          <entry />
-          <entry>bulletsprites/city/19.png</entry>
-          <entry />
-          <entry>bulletsprites/city/20.png</entry>
-          <entry />
-          <entry>bulletsprites/city/21.png</entry>
-          <entry />
-          <entry>bulletsprites/city/22.png</entry>
-          <entry />
-          <entry>bulletsprites/city/22.png</entry>
-          <entry />
-          <entry>bulletsprites/city/23.png</entry>
-          <entry />
-          <entry />
-          <entry>bulletsprites/city/24.png</entry>
-          <entry />
-          <entry />
-          <entry />
         </projectile_sprites>
         <damage>50</damage>
         <accuracy>26</accuracy>
@@ -1288,31 +1047,6 @@
         </users>
         <speed>38</speed>
         <projectile_sprites>
-          <entry>bulletsprites/city/35.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/01.png</entry>
-          <entry>bulletsprites/city/01.png</entry>
-          <entry>bulletsprites/city/01.png</entry>
-          <entry>bulletsprites/city/01.png</entry>
-          <entry>bulletsprites/city/01.png</entry>
-          <entry>bulletsprites/city/02.png</entry>
-          <entry>bulletsprites/city/02.png</entry>
-          <entry>bulletsprites/city/02.png</entry>
-          <entry>bulletsprites/city/02.png</entry>
           <entry>bulletsprites/city/35.png</entry>
           <entry>bulletsprites/city/00.png</entry>
           <entry>bulletsprites/city/00.png</entry>
@@ -1446,16 +1180,6 @@
           <entry>bulletsprites/city/03.png</entry>
           <entry>bulletsprites/city/03.png</entry>
           <entry>bulletsprites/city/04.png</entry>
-          <entry>bulletsprites/city/10.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/01.png</entry>
-          <entry>bulletsprites/city/01.png</entry>
-          <entry>bulletsprites/city/02.png</entry>
-          <entry>bulletsprites/city/02.png</entry>
-          <entry>bulletsprites/city/03.png</entry>
-          <entry>bulletsprites/city/03.png</entry>
-          <entry>bulletsprites/city/04.png</entry>
         </projectile_sprites>
         <damage>8</damage>
         <accuracy>12</accuracy>
@@ -1505,21 +1229,6 @@
         </users>
         <speed>28</speed>
         <projectile_sprites>
-          <entry>bulletsprites/city/15.png</entry>
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
           <entry>bulletsprites/city/15.png</entry>
           <entry>bulletsprites/city/31.png</entry>
           <entry />
@@ -1668,41 +1377,6 @@
           <entry>bulletsprites/city/27.png</entry>
           <entry>bulletsprites/city/27.png</entry>
           <entry>bulletsprites/city/27.png</entry>
-          <entry>bulletsprites/city/35.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/29.png</entry>
-          <entry />
-          <entry>bulletsprites/city/29.png</entry>
-          <entry />
-          <entry>bulletsprites/city/29.png</entry>
-          <entry />
-          <entry>bulletsprites/city/29.png</entry>
-          <entry />
-          <entry>bulletsprites/city/29.png</entry>
-          <entry />
-          <entry>bulletsprites/city/30.png</entry>
-          <entry />
-          <entry>bulletsprites/city/30.png</entry>
-          <entry />
-          <entry>bulletsprites/city/30.png</entry>
-          <entry />
-          <entry>bulletsprites/city/30.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
         </projectile_sprites>
         <damage>25</damage>
         <accuracy>34</accuracy>
@@ -1752,31 +1426,6 @@
         </users>
         <speed>30</speed>
         <projectile_sprites>
-          <entry>bulletsprites/city/25.png</entry>
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
-          <entry>bulletsprites/city/31.png</entry>
-          <entry />
           <entry>bulletsprites/city/25.png</entry>
           <entry>bulletsprites/city/31.png</entry>
           <entry />
@@ -2250,18 +1899,6 @@
           <entry>bulletsprites/city/27.png</entry>
           <entry>bulletsprites/city/27.png</entry>
           <entry>bulletsprites/city/27.png</entry>
-          <entry>bulletsprites/city/12.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
         </projectile_sprites>
         <damage>12</damage>
         <accuracy>8</accuracy>
@@ -2311,28 +1948,6 @@
         </users>
         <speed>38</speed>
         <projectile_sprites>
-          <entry>bulletsprites/city/22.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
           <entry>bulletsprites/city/22.png</entry>
           <entry>bulletsprites/city/26.png</entry>
           <entry>bulletsprites/city/26.png</entry>
@@ -2439,41 +2054,6 @@
           <entry>bulletsprites/city/27.png</entry>
           <entry>bulletsprites/city/27.png</entry>
           <entry>bulletsprites/city/27.png</entry>
-          <entry>bulletsprites/city/35.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/28.png</entry>
-          <entry>bulletsprites/city/29.png</entry>
-          <entry />
-          <entry>bulletsprites/city/29.png</entry>
-          <entry />
-          <entry>bulletsprites/city/29.png</entry>
-          <entry />
-          <entry>bulletsprites/city/29.png</entry>
-          <entry />
-          <entry>bulletsprites/city/29.png</entry>
-          <entry />
-          <entry>bulletsprites/city/30.png</entry>
-          <entry />
-          <entry>bulletsprites/city/30.png</entry>
-          <entry />
-          <entry>bulletsprites/city/30.png</entry>
-          <entry />
-          <entry>bulletsprites/city/30.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
         </projectile_sprites>
         <damage>30</damage>
         <accuracy>15</accuracy>
@@ -2542,25 +2122,6 @@
           <entry />
           <entry>bulletsprites/city/20.png</entry>
           <entry />
-          <entry>bulletsprites/city/19.png</entry>
-          <entry>bulletsprites/city/10.png</entry>
-          <entry>bulletsprites/city/10.png</entry>
-          <entry>bulletsprites/city/10.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/12.png</entry>
-          <entry>bulletsprites/city/12.png</entry>
-          <entry>bulletsprites/city/13.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/14.png</entry>
-          <entry>bulletsprites/city/15.png</entry>
-          <entry>bulletsprites/city/16.png</entry>
-          <entry>bulletsprites/city/17.png</entry>
-          <entry>bulletsprites/city/18.png</entry>
-          <entry />
-          <entry>bulletsprites/city/19.png</entry>
-          <entry />
-          <entry>bulletsprites/city/20.png</entry>
-          <entry />
         </projectile_sprites>
         <damage>26</damage>
         <accuracy>24</accuracy>
@@ -2610,28 +2171,6 @@
         </users>
         <speed>38</speed>
         <projectile_sprites>
-          <entry>bulletsprites/city/22.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/26.png</entry>
-          <entry>bulletsprites/city/27.png</entry>
           <entry>bulletsprites/city/22.png</entry>
           <entry>bulletsprites/city/26.png</entry>
           <entry>bulletsprites/city/26.png</entry>
@@ -2738,41 +2277,6 @@
           <entry />
           <entry />
           <entry />
-          <entry>bulletsprites/city/35.png</entry>
-          <entry>bulletsprites/city/10.png</entry>
-          <entry>bulletsprites/city/10.png</entry>
-          <entry>bulletsprites/city/10.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/11.png</entry>
-          <entry>bulletsprites/city/13.png</entry>
-          <entry>bulletsprites/city/00.png</entry>
-          <entry>bulletsprites/city/14.png</entry>
-          <entry>bulletsprites/city/15.png</entry>
-          <entry>bulletsprites/city/16.png</entry>
-          <entry>bulletsprites/city/17.png</entry>
-          <entry>bulletsprites/city/18.png</entry>
-          <entry />
-          <entry>bulletsprites/city/19.png</entry>
-          <entry />
-          <entry>bulletsprites/city/20.png</entry>
-          <entry />
-          <entry>bulletsprites/city/21.png</entry>
-          <entry />
-          <entry>bulletsprites/city/22.png</entry>
-          <entry />
-          <entry>bulletsprites/city/22.png</entry>
-          <entry />
-          <entry>bulletsprites/city/23.png</entry>
-          <entry />
-          <entry />
-          <entry>bulletsprites/city/24.png</entry>
-          <entry />
-          <entry />
-          <entry />
         </projectile_sprites>
         <damage>68</damage>
         <accuracy>22</accuracy>
@@ -2822,13 +2326,6 @@
         </users>
         <speed>20</speed>
         <projectile_sprites>
-          <entry>bulletsprites/city/07.png</entry>
-          <entry>bulletsprites/city/09.png</entry>
-          <entry>bulletsprites/city/02.png</entry>
-          <entry>bulletsprites/city/03.png</entry>
-          <entry>bulletsprites/city/04.png</entry>
-          <entry>bulletsprites/city/05.png</entry>
-          <entry />
           <entry>bulletsprites/city/07.png</entry>
           <entry>bulletsprites/city/09.png</entry>
           <entry>bulletsprites/city/02.png</entry>
@@ -3222,30 +2719,6 @@
         </users>
         <speed>24</speed>
         <projectile_sprites>
-          <entry>bulletsprites/city/24.png</entry>
-          <entry>bulletsprites/city/33.png</entry>
-          <entry>bulletsprites/city/33.png</entry>
-          <entry>bulletsprites/city/33.png</entry>
-          <entry>bulletsprites/city/33.png</entry>
-          <entry>bulletsprites/city/33.png</entry>
-          <entry>bulletsprites/city/33.png</entry>
-          <entry>bulletsprites/city/34.png</entry>
-          <entry />
-          <entry>bulletsprites/city/34.png</entry>
-          <entry />
-          <entry>bulletsprites/city/34.png</entry>
-          <entry />
-          <entry>bulletsprites/city/35.png</entry>
-          <entry />
-          <entry>bulletsprites/city/35.png</entry>
-          <entry />
-          <entry>bulletsprites/city/32.png</entry>
-          <entry />
-          <entry>bulletsprites/city/32.png</entry>
-          <entry />
-          <entry>bulletsprites/city/32.png</entry>
-          <entry />
-          <entry />
           <entry>bulletsprites/city/24.png</entry>
           <entry>bulletsprites/city/33.png</entry>
           <entry>bulletsprites/city/33.png</entry>

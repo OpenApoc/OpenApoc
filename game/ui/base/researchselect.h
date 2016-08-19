@@ -24,7 +24,10 @@ class ResearchSelect : public Stage
 	sp<GameState> state;
 	sp<ResearchTopic> current_topic;
 
+	std::map<sp<ResearchTopic>, sp<Control>> control_map;
+
 	void redrawResearchList();
+	void populateResearchList();
 
   public:
 	ResearchSelect(sp<GameState> state, sp<Lab> lab);

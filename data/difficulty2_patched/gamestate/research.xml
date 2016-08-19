@@ -2,6 +2,32 @@
 <research>
   <topics>
     <entry>
+      <key>MANUFACTURE_ANNIHILATOR</key>
+      <value>
+        <sp>
+          <name>Annihilator</name>
+          <description></description>
+          <man_hours>75000</man_hours>
+          <type>engineering</type>
+          <required_lab_size>large</required_lab_size>
+          <dependencies>
+            <research>
+              <entry>
+                <type>all</type>
+                <topics>
+                  <entry>RESEARCH_ANNIHILATOR</entry>
+                </topics>
+              </entry>
+            </research>
+            <items />
+          </dependencies>
+          <cost>50000</cost>
+          <item_type>craft</item_type>
+          <item_produced>VEHICLETYPE_ANNIHILATOR</item_produced>
+        </sp>
+      </value>
+    </entry>
+    <entry>
       <key>MANUFACTURE_BIO-TRANSPORT_MODULE</key>
       <value>
         <sp>
@@ -44,12 +70,6 @@
                   <entry>RESEARCH_ADVANCED_QUANTUM_PHYSICS_LAB</entry>
                 </topics>
               </entry>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_ADVANCED_QUANTUM_PHYSICS_LAB</entry>
-                </topics>
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -76,10 +96,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -102,14 +118,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_ALIEN_CONTROL_SYSTEM</entry>
-                  <entry>RESEARCH_ALIEN_ENERGY_SOURCE</entry>
-                  <entry>RESEARCH_ALIEN_PROPULSION_SYSTEM</entry>
-                </topics>
-              </entry>
               <entry>
                 <type>all</type>
                 <topics>
@@ -148,14 +156,6 @@
                   <entry>RESEARCH_MEDIUM_DISRUPTOR_BEAM</entry>
                 </topics>
               </entry>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_DISRUPTOR_INVERSION_BOMB</entry>
-                  <entry>RESEARCH_LIGHT_DISRUPTOR_BEAM</entry>
-                  <entry>RESEARCH_MEDIUM_DISRUPTOR_BEAM</entry>
-                </topics>
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -178,12 +178,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_DIMENSION_PROBE</entry>
-                </topics>
-              </entry>
               <entry>
                 <type>all</type>
                 <topics>
@@ -216,10 +210,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -242,10 +232,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -276,10 +262,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -302,10 +284,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -338,12 +316,6 @@
                   <entry>RESEARCH_THE_ALIEN_DIMENSION</entry>
                 </topics>
               </entry>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_THE_ALIEN_DIMENSION</entry>
-                </topics>
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -366,10 +338,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -400,10 +368,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -426,10 +390,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -460,10 +420,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -486,10 +442,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -520,10 +472,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -546,10 +494,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -584,14 +528,6 @@
                   <entry>RESEARCH_TOXIN_TYPE_C</entry>
                 </topics>
               </entry>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_QUEENSPAWN</entry>
-                  <entry>RESEARCH_QUEENSPAWN_AUTOPSY</entry>
-                  <entry>RESEARCH_TOXIN_TYPE_C</entry>
-                </topics>
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -614,10 +550,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -651,13 +583,6 @@
                   <entry>RESEARCH_UFO_TYPE_9</entry>
                 </topics>
               </entry>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_RETALIATOR</entry>
-                  <entry>RESEARCH_UFO_TYPE_9</entry>
-                </topics>
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -684,10 +609,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -710,10 +631,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -747,13 +664,6 @@
                   <entry>RESEARCH_UFO_TYPE_3</entry>
                 </topics>
               </entry>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_DIMENSION_PROBE</entry>
-                  <entry>RESEARCH_UFO_TYPE_3</entry>
-                </topics>
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -776,10 +686,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -812,12 +718,6 @@
                   <entry>RESEARCH_THE_ALIEN_GENETIC_STRUCTURE</entry>
                 </topics>
               </entry>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_THE_ALIEN_GENETIC_STRUCTURE</entry>
-                </topics>
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -840,10 +740,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -874,10 +770,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -900,10 +792,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -934,10 +822,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -960,10 +844,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -994,10 +874,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -1024,10 +900,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -1050,12 +922,6 @@
           <required_lab_size>large</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_LARGE_DISRUPTION_SHIELD</entry>
-                </topics>
-              </entry>
               <entry>
                 <type>all</type>
                 <topics>
@@ -1090,12 +956,6 @@
                   <entry>RESEARCH_DISRUPTOR_GUN</entry>
                 </topics>
               </entry>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_DISRUPTOR_GUN</entry>
-                </topics>
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -1118,10 +978,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -1152,10 +1008,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -1178,10 +1030,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -1212,10 +1060,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -1238,14 +1082,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_ALIEN_CONTROL_SYSTEM</entry>
-                  <entry>RESEARCH_ALIEN_ENERGY_SOURCE</entry>
-                  <entry>RESEARCH_ALIEN_PROPULSION_SYSTEM</entry>
-                </topics>
-              </entry>
               <entry>
                 <type>all</type>
                 <topics>
@@ -1282,12 +1118,6 @@
                   <entry>RESEARCH_TELEPORTER</entry>
                 </topics>
               </entry>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_TELEPORTER</entry>
-                </topics>
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -1310,14 +1140,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_DISRUPTOR_GUN</entry>
-                  <entry>RESEARCH_PERSONAL_DISRUPTOR_SHIELD</entry>
-                  <entry>RESEARCH_SMALL_DISRUPTION_SHIELD</entry>
-                </topics>
-              </entry>
               <entry>
                 <type>all</type>
                 <topics>
@@ -1352,10 +1174,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -1378,12 +1196,6 @@
           <required_lab_size>large</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_LIGHT_DISRUPTOR_BEAM</entry>
-                </topics>
-              </entry>
               <entry>
                 <type>all</type>
                 <topics>
@@ -1418,12 +1230,6 @@
                   <entry>RESEARCH_LIGHT_DISRUPTOR_BEAM</entry>
                 </topics>
               </entry>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_LIGHT_DISRUPTOR_BEAM</entry>
-                </topics>
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -1446,10 +1252,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -1480,10 +1282,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -1506,13 +1304,6 @@
           <required_lab_size>large</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_BIO-TRANSPORT</entry>
-                  <entry>RESEARCH_UFO_TYPE_5</entry>
-                </topics>
-              </entry>
               <entry>
                 <type>all</type>
                 <topics>
@@ -1548,12 +1339,6 @@
                   <entry>RESEARCH_MEDIUM_DISRUPTOR_BEAM</entry>
                 </topics>
               </entry>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_MEDIUM_DISRUPTOR_BEAM</entry>
-                </topics>
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -1580,10 +1365,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -1606,10 +1387,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -1642,12 +1419,6 @@
                   <entry>RESEARCH_HEAVY_DISRUPTOR_BEAM</entry>
                 </topics>
               </entry>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_HEAVY_DISRUPTOR_BEAM</entry>
-                </topics>
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -1670,10 +1441,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -1706,12 +1473,6 @@
                   <entry>RESEARCH_LIGHT_DISRUPTOR_BEAM</entry>
                 </topics>
               </entry>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_LIGHT_DISRUPTOR_BEAM</entry>
-                </topics>
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -1734,10 +1495,6 @@
           <required_lab_size>large</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -1768,10 +1525,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -1794,10 +1547,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -1828,10 +1577,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -1854,10 +1599,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -1888,10 +1629,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -1914,10 +1651,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -1948,10 +1681,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -1974,10 +1703,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -2008,10 +1733,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -2034,10 +1755,6 @@
           <required_lab_size>large</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -2068,10 +1785,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -2094,10 +1807,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -2128,10 +1837,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -2154,10 +1859,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -2188,10 +1889,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -2214,10 +1911,6 @@
           <required_lab_size>large</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -2248,10 +1941,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -2278,10 +1967,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -2304,10 +1989,6 @@
           <required_lab_size>large</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -2341,13 +2022,6 @@
                   <entry>RESEARCH_UFO_TYPE_6</entry>
                 </topics>
               </entry>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_EXPLORER</entry>
-                  <entry>RESEARCH_UFO_TYPE_6</entry>
-                </topics>
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -2374,10 +2048,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -2400,10 +2070,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -2436,12 +2102,6 @@
                   <entry>RESEARCH_MEDIUM_DISRUPTOR_BEAM</entry>
                 </topics>
               </entry>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_MEDIUM_DISRUPTOR_BEAM</entry>
-                </topics>
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -2464,10 +2124,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -2498,10 +2154,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -2524,12 +2176,6 @@
           <required_lab_size>large</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_LIGHT_DISRUPTOR_BEAM</entry>
-                </topics>
-              </entry>
               <entry>
                 <type>all</type>
                 <topics>
@@ -2564,12 +2210,6 @@
                   <entry>RESEARCH_LIGHT_DISRUPTOR_BEAM</entry>
                 </topics>
               </entry>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_LIGHT_DISRUPTOR_BEAM</entry>
-                </topics>
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -2592,10 +2232,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -2630,14 +2266,6 @@
                   <entry>RESEARCH_MULTIWORM_EGG_AUTOPSY</entry>
                 </topics>
               </entry>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_HYPERWORM_AUTOPSY</entry>
-                  <entry>RESEARCH_MULTIWORM_AUTOPSY</entry>
-                  <entry>RESEARCH_MULTIWORM_EGG_AUTOPSY</entry>
-                </topics>
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -2660,10 +2288,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -2694,10 +2318,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -2720,13 +2340,6 @@
           <required_lab_size>large</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_BIOLOGICAL_WARFARE</entry>
-                  <entry>RESEARCH_THE_ALIEN_LIFE_CYCLE</entry>
-                </topics>
-              </entry>
               <entry>
                 <type>all</type>
                 <topics>
@@ -2763,13 +2376,6 @@
                   <entry>RESEARCH_TOXIN_TYPE_B</entry>
                 </topics>
               </entry>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_THE_REAL_ALIEN_THREAT</entry>
-                  <entry>RESEARCH_TOXIN_TYPE_B</entry>
-                </topics>
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -2792,10 +2398,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -2826,10 +2428,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -2852,10 +2450,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -2886,10 +2480,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -2912,10 +2502,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -2946,10 +2532,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -2972,10 +2554,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -3006,10 +2584,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -3032,10 +2606,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
               <entry>
                 <type>all</type>
                 <topics />
@@ -3066,10 +2636,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -3096,10 +2662,6 @@
                 <type>all</type>
                 <topics />
               </entry>
-              <entry>
-                <type>all</type>
-                <topics />
-              </entry>
             </research>
             <items />
           </dependencies>
@@ -3122,14 +2684,6 @@
           <required_lab_size>small</required_lab_size>
           <dependencies>
             <research>
-              <entry>
-                <type>all</type>
-                <topics>
-                  <entry>RESEARCH_ALIEN_CONTROL_SYSTEM</entry>
-                  <entry>RESEARCH_DISRUPTOR_INVERSION_BOMB</entry>
-                  <entry>RESEARCH_LIGHT_DISRUPTOR_BEAM</entry>
-                </topics>
-              </entry>
               <entry>
                 <type>all</type>
                 <topics>

@@ -46,6 +46,7 @@ void ResearchSelect::Begin()
 			title->SetText(tr("Select Unknown Project"));
 			break;
 	}
+	this->populateResearchList();
 	this->redrawResearchList();
 
 	auto research_list = form->FindControlTyped<ListBox>("LIST");
@@ -66,6 +67,17 @@ void ResearchSelect::Begin()
 			auto message_box =
 			    mksp<MessageBox>(tr("PROJECT COMPLETE"), tr("This project is already complete."),
 			                     MessageBox::ButtonOptions::Ok);
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = message_box;
+			return;
+		}
+		if (topic->required_lab_size == ResearchTopic::LabSize::Large &&
+		    this->lab->size == ResearchTopic::LabSize::Small)
+		{
+			LogInfo("Topic is large and lab is small");
+			auto message_box = mksp<MessageBox>(
+			    tr("PROJECT TOO LARGE"), tr("This project requires an advanced lab or workshop."),
+			    MessageBox::ButtonOptions::Ok);
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = message_box;
 			return;
@@ -112,7 +124,21 @@ void ResearchSelect::Begin()
 
 void ResearchSelect::redrawResearchList()
 {
-	// FIXME: Do not re-create the list every time, it cannot ever change while on this screen!
+	for (auto &pair : control_map)
+	{
+		if (current_topic == pair.first)
+		{
+			pair.second->BackgroundColour = {127, 0, 0, 255};
+		}
+		else
+		{
+			pair.second->BackgroundColour = {0, 0, 0, 0};
+		}
+	}
+}
+
+void ResearchSelect::populateResearchList()
+{
 	auto research_list = form->FindControlTyped<ListBox>("LIST");
 	research_list->Clear();
 	research_list->ItemSize = 20;
@@ -128,17 +154,12 @@ void ResearchSelect::redrawResearchList()
 		{
 			continue;
 		}
+		// FIXME: When we get font coloring, set light blue color for topics too large a size
+		bool too_large = (r.second->required_lab_size == ResearchTopic::LabSize::Large &&
+		                  this->lab->size == ResearchTopic::LabSize::Small);
 
 		auto control = mksp<Control>();
 		control->Size = {544, 20};
-		if (current_topic == r.second)
-		{
-			control->BackgroundColour = {127, 0, 0, 255};
-		}
-		else
-		{
-			control->BackgroundColour = {0, 0, 0, 0};
-		}
 
 		auto topic_name = control->createChild<Label>((r.second->name), ui().GetFont("SMALFONT"));
 		topic_name->Size = {200, 20};
@@ -240,6 +261,7 @@ void ResearchSelect::redrawResearchList()
 		control->SetData(r.second);
 
 		research_list->AddItem(control);
+		control_map[r.second] = control;
 	}
 }
 
