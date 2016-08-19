@@ -5,6 +5,7 @@
 #include "game/state/base/base.h"
 #include "game/state/gamestate.h"
 #include "game/state/research.h"
+#include "game/ui/general/messagebox.h"
 
 namespace OpenApoc
 {
@@ -18,20 +19,34 @@ ResearchSelect::~ResearchSelect() {}
 
 void ResearchSelect::Begin()
 {
+	current_topic = this->lab->current_project;
+
 	form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
 	auto title = form->FindControlTyped<Label>("TEXT_TITLE");
+	auto progress = form->FindControlTyped<Label>("TEXT_PROGRESS");
+	auto skill = form->FindControlTyped<Label>("TEXT_SKILL");
 	switch (this->lab->type)
 	{
 		case ResearchTopic::Type::BioChem:
 			title->SetText(tr("Select Biochemistry Project"));
+			progress->SetText(tr("Progress"));
+			skill->SetText(tr("Skill"));
 			break;
 		case ResearchTopic::Type::Physics:
-			title->SetText(tr("Select Biochemistry Project"));
+			title->SetText(tr("Select Physics Project"));
+			progress->SetText(tr("Progress"));
+			skill->SetText(tr("Skill"));
+			break;
+		case ResearchTopic::Type::Engineering:
+			title->SetText(tr("Select Manufacturing Project"));
+			progress->SetText(tr("Unit Cost"));
+			skill->SetText(tr("Skill Hours"));
 			break;
 		default:
 			title->SetText(tr("Select Unknown Project"));
 			break;
 	}
+	this->populateResearchList();
 	this->redrawResearchList();
 
 	auto research_list = form->FindControlTyped<ListBox>("LIST");
@@ -46,7 +61,39 @@ void ResearchSelect::Begin()
 			LogInfo("Topic already in progress");
 			return;
 		}
-		Lab::setResearch({state.get(), this->lab}, {state.get(), topic});
+		if (topic->isComplete())
+		{
+			LogInfo("Topic already complete");
+			auto message_box =
+			    mksp<MessageBox>(tr("PROJECT COMPLETE"), tr("This project is already complete."),
+			                     MessageBox::ButtonOptions::Ok);
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = message_box;
+			return;
+		}
+		if (topic->required_lab_size == ResearchTopic::LabSize::Large &&
+		    this->lab->size == ResearchTopic::LabSize::Small)
+		{
+			LogInfo("Topic is large and lab is small");
+			auto message_box = mksp<MessageBox>(
+			    tr("PROJECT TOO LARGE"), tr("This project requires an advanced lab or workshop."),
+			    MessageBox::ButtonOptions::Ok);
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = message_box;
+			return;
+		}
+		if (this->lab->type == ResearchTopic::Type::Engineering &&
+		    topic->cost > state->player->balance)
+		{
+			LogInfo("Cannot afford to manufacture");
+			auto message_box = mksp<MessageBox>(tr("FUNDS EXCEEDED"),
+			                                    tr("Production costs exceed your available funds."),
+			                                    MessageBox::ButtonOptions::Ok);
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = message_box;
+			return;
+		}
+		current_topic = topic;
 		this->redrawResearchList();
 	});
 
@@ -67,9 +114,30 @@ void ResearchSelect::Begin()
 			description->SetText("");
 		}
 	});
+
+	auto ok_button = form->FindControlTyped<GraphicButton>("BUTTON_OK");
+	ok_button->addCallback(FormEventType::ButtonClick, [this](Event *e) {
+		LogInfo("Research selection OK pressed, applying selection");
+		Lab::setResearch({state.get(), this->lab}, {state.get(), current_topic}, state);
+	});
 }
 
 void ResearchSelect::redrawResearchList()
+{
+	for (auto &pair : control_map)
+	{
+		if (current_topic == pair.first)
+		{
+			pair.second->BackgroundColour = {127, 0, 0, 255};
+		}
+		else
+		{
+			pair.second->BackgroundColour = {0, 0, 0, 0};
+		}
+	}
+}
+
+void ResearchSelect::populateResearchList()
 {
 	auto research_list = form->FindControlTyped<ListBox>("LIST");
 	research_list->Clear();
@@ -82,35 +150,90 @@ void ResearchSelect::redrawResearchList()
 		{
 			continue;
 		}
-		if (r.second->isComplete())
-		{
-			continue;
-		}
 		if (!r.second->dependencies.satisfied(state->current_base) && r.second->started == false)
 		{
 			continue;
 		}
+		// FIXME: When we get font coloring, set light blue color for topics too large a size
+		bool too_large = (r.second->required_lab_size == ResearchTopic::LabSize::Large &&
+		                  this->lab->size == ResearchTopic::LabSize::Small);
 
 		auto control = mksp<Control>();
 		control->Size = {544, 20};
-		if (this->lab->current_project == r.second)
-		{
-			control->BackgroundColour = {127, 0, 0, 255};
-		}
-		else
-		{
-			control->BackgroundColour = {0, 0, 0, 0};
-		}
 
 		auto topic_name = control->createChild<Label>((r.second->name), ui().GetFont("SMALFONT"));
 		topic_name->Size = {200, 20};
 		topic_name->Location = {6, 0};
 
-		int skill_total = 0;
-		if (r.second->current_lab)
+		if (this->lab->type == ResearchTopic::Type::Engineering ||
+		    ((this->lab->type == ResearchTopic::Type::BioChem ||
+		      this->lab->type == ResearchTopic::Type::Physics) &&
+		     r.second->isComplete()))
 		{
-			skill_total = r.second->current_lab->getTotalSkill();
+			UString progress_text;
+			if (this->lab->type == ResearchTopic::Type::Engineering)
+				progress_text = UString::format("$%d", r.second->cost);
+			else
+				progress_text = tr("Complete");
+			auto progress_label =
+			    control->createChild<Label>(progress_text, ui().GetFont("SMALFONT"));
+			progress_label->Size = {100, 20};
+			progress_label->Location = {234, 0};
 		}
+		else
+		{
+			float projectProgress =
+			    clamp((float)r.second->man_hours_progress / (float)r.second->man_hours, 0.0f, 1.0f);
+
+			auto progressBar = control->createChild<Graphic>();
+			progressBar->Size = {101, 6};
+			progressBar->Location = {234, 4};
+
+			auto progressImage = mksp<RGBImage>(progressBar->Size);
+			int redWidth = progressBar->Size.x * projectProgress;
+			{
+				// FIXME: For some reason, there's no border here like in the research sceen, so we
+				// have to make one manually, probably there's a better way
+				RGBImageLock l(progressImage);
+				for (int y = 0; y < 2; y++)
+				{
+					for (int x = 0; x < progressBar->Size.x; x++)
+					{
+						if (x < redWidth)
+							l.set({x, y}, {255, 0, 0, 255});
+						else
+							l.set({x, y}, {77, 77, 77, 255});
+					}
+				}
+				l.set({0, 2}, {77, 77, 77, 255});
+				l.set({progressBar->Size.x - 1, 2}, {77, 77, 77, 255});
+				l.set({0, 3}, {130, 130, 130, 255});
+				l.set({progressBar->Size.x - 1, 3}, {130, 130, 130, 255});
+				l.set({0, 4}, {140, 140, 140, 255});
+				l.set({progressBar->Size.x - 1, 4}, {140, 140, 140, 255});
+				for (int x = 0; x < progressBar->Size.x; x++)
+				{
+					l.set({x, 5}, {205, 205, 205, 255});
+				}
+			}
+			progressBar->SetImage(progressImage);
+		}
+
+		int skill_total = 0;
+		switch (this->lab->type)
+		{
+			case ResearchTopic::Type::BioChem:
+			case ResearchTopic::Type::Physics:
+				if (r.second->current_lab)
+					skill_total = r.second->current_lab->getTotalSkill();
+				break;
+			case ResearchTopic::Type::Engineering:
+				skill_total = r.second->man_hours;
+				break;
+			default:
+				break;
+		}
+
 		auto skill_total_label = control->createChild<Label>(UString::format("%d", skill_total),
 		                                                     ui().GetFont("SMALFONT"));
 		skill_total_label->Size = {50, 20};
@@ -138,6 +261,7 @@ void ResearchSelect::redrawResearchList()
 		control->SetData(r.second);
 
 		research_list->AddItem(control);
+		control_map[r.second] = control;
 	}
 }
 

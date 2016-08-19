@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<research>
+  <topics>
+    <!-- Research Topics Begin -->
+	<!-- Research Topics be here when we transition to xml files completely -->
+	<!-- Research Topics End -->
+	<!-- Manufacture Topics Begin -->
+	<entry>
+      <key>MANUFACTURE_BIO-TRANSPORT_MODULE</key>
+      <value>
+        <sp>
+          <name>Bio-Transport Module</name>
+          <description>For transporting Alien life forms.</description>
+          <man_hours>4000</man_hours>
+          <type>engineering</type>
+          <required_lab_size>small</required_lab_size>
+          <dependencies>
+            <research>
+              <entry>
+                <type>all</type>
+                <topics>
+					<entry>RESEARCH_BIO-TRANSPORT_MODULE</entry>
+				</topics>
+              </entry>
+            </research>
+            <items />
+          </dependencies>
+		  <cost>700</cost>
+		  <item_type>vehicleequipment</item_type>
+		  <item_produced>VEQUIPMENTTYPE_BIO-TRANSPORT_MODULE</item_produced>
+        </sp>
+      </value>
+    </entry>
+	<entry>
+      <key>MANUFACTURE_ANNIHILATOR</key>
+      <value>
+        <sp>
+          <name>Annihilator</name>
+          <description></description>
+          <ufopaedia_entry />
+          <man_hours>75000</man_hours>
+          <type>engineering</type>
+          <required_lab_size>large</required_lab_size>
+          <dependencies>
+            <research>
+              <entry>
+                <type>all</type>
+                <topics>
+                  <entry>RESEARCH_ANNIHILATOR</entry>
+                </topics>
+              </entry>
+            </research>
+            <items />
+          </dependencies>
+		  <cost>50000</cost>
+		  <item_type>craft</item_type>
+		  <item_produced>VEHICLETYPE_ANNIHILATOR</item_produced>
+        </sp>
+      </value>
+    </entry>
+	<!-- Manufacture Topics End -->
+  </topics>
+  <labs />
+  <num_labs_created>0</num_labs_created>
+</research>

@@ -6,6 +6,10 @@
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_generator.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ufo_growth_lists.xml"/>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ufo_incursions.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_equipment.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vehicle_equipment.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vehicle_ammo.xml"/>
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="research.xml"/>
   <initial_agents>
     <entry>
       <key>soldier</key>

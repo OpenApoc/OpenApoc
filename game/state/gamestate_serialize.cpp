@@ -13,7 +13,9 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/city/vequipment.h"
+#include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/scenery_tile_type.h"
+#include "game/state/rules/vammo_type.h"
 #include "game/state/rules/vequipment_type.h"
 #include "library/voxel.h"
 
@@ -497,6 +499,31 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("teleporting"), e.teleporting);
 }
 
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, AEquipmentType &e)
+{
+	if (!node)
+		return;
+
+	serializeIn(state, node->getNode("id"), e.id);
+	serializeIn(state, node->getNode("name"), e.name);
+
+	serializeIn(state, node->getNode("equipscreen_sprite"), e.equipscreen_sprite);
+	serializeIn(state, node->getNode("equipscreen_size"), e.equipscreen_size);
+	serializeIn(state, node->getNode("manufacturer"), e.manufacturer);
+	serializeIn(state, node->getNode("store_space"), e.store_space);
+}
+
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, VAmmoType &e)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("id"), e.id);
+	serializeIn(state, node->getNode("name"), e.name);
+	serializeIn(state, node->getNode("weight"), e.weight);
+	serializeIn(state, node->getNode("manufacturer"), e.manufacturer);
+	serializeIn(state, node->getNode("store_space"), e.store_space);
+}
+
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Colour &c)
 {
 	if (!node)
@@ -638,6 +665,12 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchTop
 	serializeIn(state, node, s, ResearchTopic::LabSizeMap);
 }
 
+template <>
+void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchTopic::ItemType &s)
+{
+	serializeIn(state, node, s, ResearchTopic::ItemTypeMap);
+}
+
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Lab &lab)
 {
 	if (!node)
@@ -647,6 +680,10 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("current_project"), lab.current_project);
 	serializeIn(state, node->getNode("assigned_agents"), lab.assigned_agents);
 	serializeIn(state, node->getNode("ticks_since_last_progress"), lab.ticks_since_last_progress);
+	serializeIn(state, node->getNode("manufacture_goal"), lab.manufacture_goal);
+	serializeIn(state, node->getNode("manufacture_done"), lab.manufacture_done);
+	serializeIn(state, node->getNode("manufacture_man_hours_invested"),
+	            lab.manufacture_man_hours_invested);
 }
 
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Facility &facility)
@@ -665,7 +702,9 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 		return;
 	serializeIn(state, node->getNode("corridors"), base.corridors);
 	serializeIn(state, node->getNode("facilities"), base.facilities);
-	serializeIn(state, node->getNode("inventory"), base.inventory);
+	serializeIn(state, node->getNode("inventoryAgentEquipment"), base.inventoryAgentEquipment);
+	serializeIn(state, node->getNode("inventoryVehicleEquipment"), base.inventoryVehicleEquipment);
+	serializeIn(state, node->getNode("inventoryVehicleAmmo"), base.inventoryVehicleAmmo);
 	serializeIn(state, node->getNode("name"), base.name);
 	serializeIn(state, node->getNode("building"), base.building);
 }
@@ -747,17 +786,29 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 {
 	if (!node)
 		return;
+	// Shared Research & Manufacture
 	serializeIn(state, node->getNode("name"), r.name);
 	serializeIn(state, node->getNode("description"), r.description);
-	serializeIn(state, node->getNode("ufopaedia_entry"), r.ufopaedia_entry);
 	serializeIn(state, node->getNode("man_hours"), r.man_hours);
-	serializeIn(state, node->getNode("man_hours_progress"), r.man_hours_progress);
 	serializeIn(state, node->getNode("type"), r.type);
 	serializeIn(state, node->getNode("required_lab_size"), r.required_lab_size);
-	serializeIn(state, node->getNode("current_lab"), r.current_lab);
-	serializeIn(state, node->getNode("score"), r.score);
-	serializeIn(state, node->getNode("started"), r.started);
 	serializeIn(state, node->getNode("dependencies"), r.dependencies);
+	// Research only
+	if (r.type == ResearchTopic::Type::BioChem || r.type == ResearchTopic::Type::Physics)
+	{
+		serializeIn(state, node->getNode("ufopaedia_entry"), r.ufopaedia_entry);
+		serializeIn(state, node->getNode("man_hours_progress"), r.man_hours_progress);
+		serializeIn(state, node->getNode("current_lab"), r.current_lab);
+		serializeIn(state, node->getNode("score"), r.score);
+		serializeIn(state, node->getNode("started"), r.started);
+	}
+	// Manufacture Only
+	if (r.type == ResearchTopic::Type::Engineering)
+	{
+		serializeIn(state, node->getNode("cost"), r.cost);
+		serializeIn(state, node->getNode("item_type"), r.item_type);
+		serializeIn(state, node->getNode("item_produced"), r.item_produced);
+	}
 }
 
 // FIXME: These enums don't quite work the same way as the other map style - maybe a common way
@@ -874,6 +925,8 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &
 	serializeIn(state, node->getSection("facility_types"), s.facility_types);
 	serializeIn(state, node->getSection("doodad_types"), s.doodad_types);
 	serializeIn(state, node->getSection("vehicle_equipment"), s.vehicle_equipment);
+	serializeIn(state, node->getSection("vehicle_ammo"), s.vehicle_ammo);
+	serializeIn(state, node->getSection("agent_equipment"), s.agent_equipment);
 	serializeInSectionMap(state, node->getSection("cities"), s.cities);
 	serializeIn(state, node->getSection("ufo_growth_lists"), s.ufo_growth_lists);
 	serializeIn(state, node->getSection("ufo_incursions"), s.ufo_incursions);
@@ -1209,6 +1262,25 @@ template <> void serializeOut(sp<SerializationNode> node, const VEquipmentType &
 	serializeOut(node->addNode("teleporting"), e.teleporting);
 }
 
+template <> void serializeOut(sp<SerializationNode> node, const AEquipmentType &e)
+{
+	serializeOut(node->addNode("id"), e.id);
+	serializeOut(node->addNode("name"), e.name);
+	serializeOut(node->addNode("equipscreen_sprite"), e.equipscreen_sprite);
+	serializeOut(node->addNode("equipscreen_size"), e.equipscreen_size);
+	serializeOut(node->addNode("manufacturer"), e.manufacturer);
+	serializeOut(node->addNode("store_space"), e.store_space);
+}
+
+template <> void serializeOut(sp<SerializationNode> node, const VAmmoType &e)
+{
+	serializeOut(node->addNode("id"), e.id);
+	serializeOut(node->addNode("name"), e.name);
+	serializeOut(node->addNode("weight"), e.weight);
+	serializeOut(node->addNode("manufacturer"), e.manufacturer);
+	serializeOut(node->addNode("store_space"), e.store_space);
+}
+
 template <> void serializeOut(sp<SerializationNode> node, const Colour &c)
 {
 	serializeOut(node->addNode("r"), c.r);
@@ -1296,9 +1368,15 @@ template <> void serializeOut(sp<SerializationNode> node, const ResearchTopic::T
 {
 	serializeOut(node, t, ResearchTopic::TypeMap);
 }
+
 template <> void serializeOut(sp<SerializationNode> node, const ResearchTopic::LabSize &s)
 {
 	serializeOut(node, s, ResearchTopic::LabSizeMap);
+}
+
+template <> void serializeOut(sp<SerializationNode> node, const ResearchTopic::ItemType &s)
+{
+	serializeOut(node, s, ResearchTopic::ItemTypeMap);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const Lab &lab)
@@ -1308,6 +1386,10 @@ template <> void serializeOut(sp<SerializationNode> node, const Lab &lab)
 	serializeOut(node->addNode("current_project"), lab.current_project);
 	serializeOut(node->addNode("assigned_agents"), lab.assigned_agents);
 	serializeOut(node->addNode("ticks_since_last_progress"), lab.ticks_since_last_progress);
+	serializeOut(node->addNode("manufacture_done"), lab.manufacture_done);
+	serializeOut(node->addNode("manufacture_goal"), lab.manufacture_goal);
+	serializeOut(node->addNode("manufacture_man_hours_invested"),
+	             lab.manufacture_man_hours_invested);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const Facility &facility)
@@ -1322,7 +1404,9 @@ template <> void serializeOut(sp<SerializationNode> node, const Base &base)
 {
 	serializeOut(node->addNode("corridors"), base.corridors);
 	serializeOut(node->addNode("facilities"), base.facilities);
-	serializeOut(node->addNode("inventory"), base.inventory);
+	serializeOut(node->addNode("inventoryAgentEquipment"), base.inventoryAgentEquipment);
+	serializeOut(node->addNode("inventoryVehicleEquipment"), base.inventoryVehicleEquipment);
+	serializeOut(node->addNode("inventoryVehicleAmmo"), base.inventoryVehicleAmmo);
 	serializeOut(node->addNode("name"), base.name);
 	serializeOut(node->addNode("building"), base.building);
 }
@@ -1425,17 +1509,30 @@ template <> void serializeOut(sp<SerializationNode> node, const ItemDependency &
 
 template <> void serializeOut(sp<SerializationNode> node, const ResearchTopic &r)
 {
+	LogWarning("outputting topic %s", r.name.c_str());
+	// Shared Research & Manufacture
 	serializeOut(node->addNode("name"), r.name);
 	serializeOut(node->addNode("description"), r.description);
-	serializeOut(node->addNode("ufopaedia_entry"), r.ufopaedia_entry);
 	serializeOut(node->addNode("man_hours"), r.man_hours);
-	serializeOut(node->addNode("man_hours_progress"), r.man_hours_progress);
 	serializeOut(node->addNode("type"), r.type);
 	serializeOut(node->addNode("required_lab_size"), r.required_lab_size);
-	serializeOut(node->addNode("current_lab"), r.current_lab);
-	serializeOut(node->addNode("score"), r.score);
-	serializeOut(node->addNode("started"), r.started);
 	serializeOut(node->addNode("dependencies"), r.dependencies);
+	// Research only
+	if (r.type == ResearchTopic::Type::BioChem || r.type == ResearchTopic::Type::Physics)
+	{
+		serializeOut(node->addNode("ufopaedia_entry"), r.ufopaedia_entry);
+		serializeOut(node->addNode("man_hours_progress"), r.man_hours_progress);
+		serializeOut(node->addNode("current_lab"), r.current_lab);
+		serializeOut(node->addNode("score"), r.score);
+		serializeOut(node->addNode("started"), r.started);
+	}
+	// Manufacture only
+	if (r.type == ResearchTopic::Type::Engineering)
+	{
+		serializeOut(node->addNode("cost"), r.cost);
+		serializeOut(node->addNode("item_type"), r.item_type);
+		serializeOut(node->addNode("item_produced"), r.item_produced);
+	}
 }
 
 // FIXME: These enums don't quite work the same way as the other map style - maybe a common way
@@ -1534,6 +1631,8 @@ void serializeOut(sp<SerializationNode> node, const GameState &state)
 	serializeOut(node->addSection("facility_types"), state.facility_types);
 	serializeOut(node->addSection("doodad_types"), state.doodad_types);
 	serializeOut(node->addSection("vehicle_equipment"), state.vehicle_equipment);
+	serializeOut(node->addSection("agent_equipment"), state.agent_equipment);
+	serializeOut(node->addSection("vehicle_ammo"), state.vehicle_ammo);
 	serializeOutSectionMap(node->addSection("cities"), state.cities);
 	serializeOut(node->addSection("ufo_growth_lists"), state.ufo_growth_lists);
 	serializeOut(node->addSection("ufo_incursions"), state.ufo_incursions);

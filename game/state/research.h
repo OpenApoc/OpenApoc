@@ -40,22 +40,37 @@ class ResearchTopic : public StateObject<ResearchTopic>
 		Large,
 	};
 	static const std::map<LabSize, UString> LabSizeMap;
+	enum class ItemType
+	{
+		VehicleEquipment,
+		AgentEquipment,
+		VehicleEquipmentAmmo,
+		Craft,
+	};
+	static const std::map<ItemType, UString> ItemTypeMap;
+
+	// Shared Research & Manufacture
 	UString name;
 	UString description;
-	// FIXME: Some research topics enable multiple ufopaedia entries?
-	StateRef<UfopaediaEntry> ufopaedia_entry;
 	unsigned man_hours;
-	unsigned man_hours_progress;
 	Type type;
 	LabSize required_lab_size;
-	StateRef<Lab> current_lab;
-
-	unsigned score;
-	bool started;
-
 	ProjectDependencies dependencies;
 
+	// Research only
+	// FIXME: Some research topics enable multiple ufopaedia entries?
+	// FIXME: Is this deprecated?
+	StateRef<UfopaediaEntry> ufopaedia_entry;
+	unsigned man_hours_progress;
+	StateRef<Lab> current_lab;
+	unsigned score;
+	bool started;
 	bool isComplete() const;
+
+	// Manufacture only
+	unsigned cost;
+	ItemType item_type;
+	UString item_produced;
 };
 
 class ResearchDependency
@@ -94,7 +109,8 @@ class Lab : public StateObject<Lab>
 	StateRef<ResearchTopic> current_project;
 	std::list<StateRef<Agent>> assigned_agents;
 
-	static void setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic);
+	static void setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic, sp<GameState> state);
+	static void setGoal(StateRef<Lab> lab, unsigned goal);
 
 	static void update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state);
 
@@ -105,6 +121,10 @@ class Lab : public StateObject<Lab>
 	// This is also used to 'store' the remaining time if the update granularity is such that is
 	// overshoots a project's completion.
 	unsigned int ticks_since_last_progress;
+
+	unsigned manufacture_goal;
+	unsigned manufacture_done;
+	unsigned int manufacture_man_hours_invested;
 };
 
 class ResearchCompleteData

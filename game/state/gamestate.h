@@ -7,10 +7,12 @@
 #include "game/state/gametime.h"
 #include "game/state/organisation.h"
 #include "game/state/research.h"
+#include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/doodad_type.h"
 #include "game/state/rules/facility_type.h"
 #include "game/state/rules/ufo_growth.h"
 #include "game/state/rules/ufo_incursion.h"
+#include "game/state/rules/vammo_type.h"
 #include "game/state/rules/vehicle_type.h"
 #include "game/state/rules/vequipment_type.h"
 #include "game/state/stateobject.h"
@@ -38,6 +40,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	std::map<UString, sp<FacilityType>> facility_types;
 	std::map<UString, sp<DoodadType>> doodad_types;
 	std::map<UString, sp<VEquipmentType>> vehicle_equipment;
+	std::map<UString, sp<VAmmoType>> vehicle_ammo;
+	std::map<UString, sp<AEquipmentType>> agent_equipment;
 	std::map<UString, sp<BaseLayout>> base_layouts;
 	std::map<UString, sp<UFOGrowth>> ufo_growth_lists;
 	std::map<UString, sp<UFOIncursion>> ufo_incursions;
