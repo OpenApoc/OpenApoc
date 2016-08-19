@@ -26,7 +26,7 @@ namespace
 {
 
 // We actually only use BINARY here, but just for the sake of completion
-enum class CUE_FileType
+enum class CueFileType
 {
 	FT_UNDEFINED, // Should only be set if parsing failed
 	FT_BINARY,
@@ -37,7 +37,7 @@ enum class CUE_FileType
 };
 
 // FIXME: Add more (all?) supported formats?
-enum class CUE_TrackMode
+enum class CueTrackMode
 {
 	MODE_UNDEFINED, // Should only be set if parsing failed
 	MODE1_2048,
@@ -67,8 +67,8 @@ class CueParser
 	    static std::regex indexArgRegex;*/
 
 	UString dataFileName;
-	CUE_FileType fileType;
-	CUE_TrackMode trackMode;
+	CueFileType fileType;
+	CueTrackMode trackMode;
 
 	// Parse command while not being in a specific context
 	bool parseStart(std::string command, std::string arg)
@@ -145,10 +145,10 @@ class CueParser
 		{
 			LogError("Unsupported file type: \"%s\"", fileTypeStr.c_str());
 			parserState = PARSER_ERROR;
-			fileType = CUE_FileType::FT_UNDEFINED;
+			fileType = CueFileType::FT_UNDEFINED;
 			return false;
 		}
-		fileType = CUE_FileType::FT_BINARY;
+		fileType = CueFileType::FT_BINARY;
 		return true;
 	}
 	// Parse command while being in a FILE context
@@ -163,7 +163,7 @@ class CueParser
 			// only TRACK is allowed after FILE
 			LogError("Encountered unexpected command: \"%s\" (only TRACK is allowed)", cmd.c_str());
 			parserState = PARSER_ERROR;
-			fileType = CUE_FileType::FT_UNDEFINED;
+			fileType = CueFileType::FT_UNDEFINED;
 			return false;
 		}
 
@@ -197,21 +197,21 @@ class CueParser
 			last_char--;
 		}
 		UString modeStr(std::string(arg, first_char, last_char - first_char + 1));
-		trackMode = CUE_TrackMode::MODE_UNDEFINED;
+		trackMode = CueTrackMode::MODE_UNDEFINED;
 		modeStr = modeStr.toUpper();
 		if (modeStr == "MODE1/2048")
-			trackMode = CUE_TrackMode::MODE1_2048;
+			trackMode = CueTrackMode::MODE1_2048;
 		else if (modeStr == "MODE1/2352")
-			trackMode = CUE_TrackMode::MODE1_2352;
+			trackMode = CueTrackMode::MODE1_2352;
 		else if (modeStr == "MODE2/2048")
-			trackMode = CUE_TrackMode::MODE2_2048;
+			trackMode = CueTrackMode::MODE2_2048;
 		else if (modeStr == "MODE2/2324")
-			trackMode = CUE_TrackMode::MODE2_2324;
+			trackMode = CueTrackMode::MODE2_2324;
 		else if (modeStr == "MODE2/2336")
-			trackMode = CUE_TrackMode::MODE2_2336;
+			trackMode = CueTrackMode::MODE2_2336;
 		else if (modeStr == "MODE2/2352")
-			trackMode = CUE_TrackMode::MODE2_2352;
-		if (trackMode == CUE_TrackMode::MODE_UNDEFINED)
+			trackMode = CueTrackMode::MODE2_2352;
+		if (trackMode == CueTrackMode::MODE_UNDEFINED)
 		{
 			LogError("Unknown/unimplemented mode \"%s\"", modeStr.c_str());
 			parserState = PARSER_ERROR;
@@ -303,22 +303,22 @@ class CueParser
 
   public:
 	CueParser(UString cueFile)
-	    : parserState(PARSER_START), fileType(CUE_FileType::FT_UNDEFINED),
-	      trackMode(CUE_TrackMode::MODE_UNDEFINED)
+	    : parserState(PARSER_START), fileType(CueFileType::FT_UNDEFINED),
+	      trackMode(CueTrackMode::MODE_UNDEFINED)
 	{
 		parse(cueFile);
 	}
 	bool isValid() { return parserState == PARSER_FINISH; }
 	UString getDataFileName() { return dataFileName; }
-	CUE_FileType getDataFileType() { return fileType; }
-	CUE_TrackMode getTrackMode() { return trackMode; }
+	CueFileType getDataFileType() { return fileType; }
+	CueTrackMode getTrackMode() { return trackMode; }
 };
 
 // --- iso9660 reader follows
 
 // lsb-msb type as defined by iso9660
 
-struct int16_lsb_msb
+struct Int16LsbMsb
 {
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
 	uint16_t val;       // lsb
@@ -331,7 +331,7 @@ struct int16_lsb_msb
 #endif
 };
 
-struct sint16_lsb_msb
+struct Sint16LsbMsb
 {
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
 	int16_t val;
@@ -344,7 +344,7 @@ struct sint16_lsb_msb
 #endif
 };
 
-struct int32_lsb_msb
+struct Int32LsbMsb
 {
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
 	uint32_t val;
@@ -357,7 +357,7 @@ struct int32_lsb_msb
 #endif
 };
 
-struct sint32_lsb_msb
+struct Sint32LsbMsb
 {
 #if SDL_BYTEORDER == SDL_LIL_ENDIAN
 	int32_t val;
@@ -370,7 +370,7 @@ struct sint32_lsb_msb
 #endif
 };
 
-struct dec_datetime
+struct DecDatetime
 {
 	char year[4];
 	char month[2];
@@ -412,7 +412,7 @@ struct dec_datetime
 };
 
 // Okay, TWO different datetime formats?
-struct dir_datetime
+struct DirDatetime
 {
 	uint8_t year;
 	uint8_t month;
@@ -438,12 +438,12 @@ struct dir_datetime
 	}
 };
 
-static_assert(sizeof(int16_lsb_msb) == 4, "Unexpedted int16_lsb_msb_size!");
-static_assert(sizeof(sint16_lsb_msb) == 4, "Unexpedted int16_lsb_msb_size!");
-static_assert(sizeof(int32_lsb_msb) == 8, "Unexpedted int16_lsb_msb_size!");
-static_assert(sizeof(sint32_lsb_msb) == 8, "Unexpedted int16_lsb_msb_size!");
-static_assert(sizeof(dec_datetime) == 17, "Unexpected dec_datetime size!");
-static_assert(sizeof(dir_datetime) == 7, "Unexpected dir_datetime size!");
+static_assert(sizeof(Int16LsbMsb) == 4, "Unexpedted int16_lsb_msb_size!");
+static_assert(sizeof(Sint16LsbMsb) == 4, "Unexpedted int16_lsb_msb_size!");
+static_assert(sizeof(Int32LsbMsb) == 8, "Unexpedted int16_lsb_msb_size!");
+static_assert(sizeof(Sint32LsbMsb) == 8, "Unexpedted int16_lsb_msb_size!");
+static_assert(sizeof(DecDatetime) == 17, "Unexpected dec_datetime size!");
+static_assert(sizeof(DirDatetime) == 7, "Unexpected dir_datetime size!");
 
 class CueIO
 {
@@ -455,13 +455,13 @@ class CueIO
 	int32_t lbaCurrent; // Current block for this stream
 	int32_t posInLba;   // Current position in lba
 	int64_t length;     // Allowed length of the stream
-	CUE_FileType fileType;
-	CUE_TrackMode trackMode;
+	CueFileType fileType;
+	CueTrackMode trackMode;
 	std::ifstream fileStream;
 
 	CueIO(const UString &fileName, uint32_t lbaStart, int64_t length,
-	      CUE_FileType fileType = CUE_FileType::FT_BINARY,
-	      CUE_TrackMode trackMode = CUE_TrackMode::MODE1_2048)
+	      CueFileType fileType = CueFileType::FT_BINARY,
+	      CueTrackMode trackMode = CueTrackMode::MODE1_2048)
 	    : imageFile(fileName), lbaStart(lbaStart), lbaCurrent(lbaStart), posInLba(0),
 	      length(length), fileType(fileType), trackMode(trackMode)
 	{
@@ -475,22 +475,22 @@ class CueIO
 		switch (trackMode)
 		{
 			// Each block is 2048 bytes, translation is trivial
-			case CUE_TrackMode::MODE1_2048:
-			case CUE_TrackMode::MODE2_2048:
+			case CueTrackMode::MODE1_2048:
+			case CueTrackMode::MODE2_2048:
 				return lba * 2048;
 			// Each block is 2048 bytes, but there's a prefix and
 			// a postfix area for each sector
-			case CUE_TrackMode::MODE1_2352:
+			case CueTrackMode::MODE1_2352:
 				return lba * 2352 + 12 + 4; // 12 sync bytes, 4 header bytes
 			// FIXME: Reality check?
 			// For mode2, each block might be slightly larger than for mode1
 			// These cases are dealing with "cooked" data
-			case CUE_TrackMode::MODE2_2324:
+			case CueTrackMode::MODE2_2324:
 				return lba * 2324; // Each sector is 2324 bytes
 			// Strangely enough, mode2/2336 is the same as mode2/2352 without header?
-			case CUE_TrackMode::MODE2_2336:
+			case CueTrackMode::MODE2_2336:
 				return lba * 2336 + 8;
-			case CUE_TrackMode::MODE2_2352:
+			case CueTrackMode::MODE2_2352:
 				return lba * 2048 + 12 + 4 + 8;
 			default:
 				LogError("Unknown track mode set!");
@@ -505,15 +505,15 @@ class CueIO
 		// FIXME: Reality check?
 		switch (trackMode)
 		{
-			case CUE_TrackMode::MODE1_2048:
-			case CUE_TrackMode::MODE2_2048:
-			case CUE_TrackMode::MODE1_2352:
-			case CUE_TrackMode::MODE2_2352:
+			case CueTrackMode::MODE1_2048:
+			case CueTrackMode::MODE2_2048:
+			case CueTrackMode::MODE1_2352:
+			case CueTrackMode::MODE2_2352:
 			// Some docs say mode2 contains 2336 bytes of user data per block,
 			// others insist on 2048 bytes...
-			case CUE_TrackMode::MODE2_2336:
+			case CueTrackMode::MODE2_2336:
 				return 2048;
-			case CUE_TrackMode::MODE2_2324:
+			case CueTrackMode::MODE2_2324:
 				return 2324;
 			default:
 				LogError("Bad track mode!");
@@ -527,15 +527,15 @@ class CueIO
 	{
 		switch (trackMode)
 		{
-			case CUE_TrackMode::MODE1_2048:
-			case CUE_TrackMode::MODE2_2048:
+			case CueTrackMode::MODE1_2048:
+			case CueTrackMode::MODE2_2048:
 				return 2048;
-			case CUE_TrackMode::MODE1_2352:
-			case CUE_TrackMode::MODE2_2352:
+			case CueTrackMode::MODE1_2352:
+			case CueTrackMode::MODE2_2352:
 				return 2352;
-			case CUE_TrackMode::MODE2_2336:
+			case CueTrackMode::MODE2_2336:
 				return 2336;
-			case CUE_TrackMode::MODE2_2324:
+			case CueTrackMode::MODE2_2324:
 				return 2324;
 			default:
 				LogError("Bad track mode!");
@@ -550,16 +550,16 @@ class CueIO
 		switch (trackMode)
 		{
 			// FIXME: Check mode2 correctness??
-			case CUE_TrackMode::MODE1_2048:
-			case CUE_TrackMode::MODE2_2048:
+			case CueTrackMode::MODE1_2048:
+			case CueTrackMode::MODE2_2048:
 				return 0; // Only user data is present here
-			case CUE_TrackMode::MODE2_2324:
+			case CueTrackMode::MODE2_2324:
 				return 0;
-			case CUE_TrackMode::MODE1_2352:
+			case CueTrackMode::MODE1_2352:
 				return 12 + 4; // 12 bytes sync, 4 bytes header
-			case CUE_TrackMode::MODE2_2352:
+			case CueTrackMode::MODE2_2352:
 				return 12 + 4 + 8; // 12 bytes sync, 4 bytes header, 8 bytes subheader
-			case CUE_TrackMode::MODE2_2336:
+			case CueTrackMode::MODE2_2336:
 				return 8; // 8 bytes subheader (?)
 			default:
 				LogError("Bad track mode!");
@@ -729,8 +729,8 @@ class CueIO
 		delete io;
 	}
 
-	static PHYSFS_Io *getIo(UString fileName, uint32_t lba, int64_t length, CUE_FileType ftype,
-	                        CUE_TrackMode tmode)
+	static PHYSFS_Io *getIo(UString fileName, uint32_t lba, int64_t length, CueFileType ftype,
+	                        CueTrackMode tmode)
 	{
 		auto cio = new CueIO(fileName, lba, length, ftype, tmode);
 		if (!cio->fileStream)
@@ -749,8 +749,8 @@ class CueArchiver
 {
   private:
 	UString imageFile;
-	CUE_FileType fileType;
-	CUE_TrackMode trackMode;
+	CueFileType fileType;
+	CueTrackMode trackMode;
 
 	CueIO *cio;
 
@@ -776,12 +776,12 @@ class CueArchiver
 				char sysIdentifier[32];
 				char volIdentifier[32];
 				uint8_t _unused_8[8];
-				int32_lsb_msb volSpaceSize;
+				Int32LsbMsb volSpaceSize;
 				uint8_t _unused_32[32];
-				int16_lsb_msb volSetSz;
-				int16_lsb_msb volSeqNr;
-				int16_lsb_msb lbs;
-				int32_lsb_msb pathTblSz;
+				Int16LsbMsb volSetSz;
+				Int16LsbMsb volSeqNr;
+				Int16LsbMsb lbs;
+				Int32LsbMsb pathTblSz;
 				uint32_t pathTblLLoc;
 				uint32_t optPathTblLLoc;
 				uint32_t pathTblMLoc;
@@ -794,10 +794,10 @@ class CueArchiver
 				char copyrightIdentifier[38];
 				char abstractFileId[36];
 				char biblioFileId[37];
-				dec_datetime volCreationTime;
-				dec_datetime volModificationTime;
-				dec_datetime volExpirationTime;
-				dec_datetime volEffectiveTime;
+				DecDatetime volCreationTime;
+				DecDatetime volModificationTime;
+				DecDatetime volExpirationTime;
+				DecDatetime volEffectiveTime;
 				uint8_t fileStructureVersion;
 				uint8_t _unused1;
 				uint8_t _app_defined__unused[512];
@@ -818,7 +818,7 @@ class CueArchiver
 		uint8_t xarLength;
 		uint8_t extentLoc[8];    // cast to int32_lsb_msb
 		uint8_t extentLength[8]; // cast to int32_lsb_msb
-		dir_datetime recTime;
+		DirDatetime recTime;
 		uint8_t flags;
 		uint8_t fuSize;
 		uint8_t gapSize;
@@ -856,12 +856,12 @@ class CueArchiver
 
 	void readDir(const IsoDirRecord_hdr &dirRecord, FSEntry &parent)
 	{
-		int32_lsb_msb lm_location;
-		int32_lsb_msb lm_length;
-		dir_datetime d_datetime;
-		std::memcpy(&lm_location, dirRecord.extentLoc, sizeof(int32_lsb_msb));
-		std::memcpy(&lm_length, dirRecord.extentLength, sizeof(int32_lsb_msb));
-		std::memcpy(&d_datetime, &dirRecord.recTime, sizeof(dir_datetime));
+		Int32LsbMsb lm_location;
+		Int32LsbMsb lm_length;
+		DirDatetime d_datetime;
+		std::memcpy(&lm_location, dirRecord.extentLoc, sizeof(Int32LsbMsb));
+		std::memcpy(&lm_length, dirRecord.extentLength, sizeof(Int32LsbMsb));
+		std::memcpy(&d_datetime, &dirRecord.recTime, sizeof(DirDatetime));
 		uint32_t location = lm_location.val;
 		int32_t length = lm_length.val;
 		int32_t readpos = 0;
@@ -949,7 +949,7 @@ class CueArchiver
 	static_assert(sizeof(IsoVolumeDescriptor) == 2048, "Unexpected volume size!");
 	static_assert(sizeof(IsoDirRecord_hdr) == 255, "Unexpected direntry size!");
 	static_assert(offsetof(IsoDirRecord_hdr, fnLength) == 32, "Unexpected filename offset!");
-	CueArchiver(UString fileName, CUE_FileType ftype, CUE_TrackMode tmode)
+	CueArchiver(UString fileName, CueFileType ftype, CueTrackMode tmode)
 	    : imageFile(fileName), fileType(ftype), trackMode(tmode)
 	{
 		// "Hey, a .cue-.bin file pair should be really easy to read!" - sfalexrog, 15.04.2016

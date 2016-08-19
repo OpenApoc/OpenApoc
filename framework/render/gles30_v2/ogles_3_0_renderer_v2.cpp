@@ -18,7 +18,7 @@ namespace OpenApoc
 namespace
 {
 
-using GL = gles_wrap::gles3;
+using GL = gles_wrap::Gles3;
 
 static up<GL> gl;
 
@@ -1550,14 +1550,14 @@ class OGLES30Renderer final : public Renderer
 	sp<Surface> getDefaultSurface() override { return this->default_surface; }
 };
 
-void GLESWRAP_APIENTRY debug_message_proc(GL::KHR_debug::GLenum, GL::KHR_debug::GLenum, GL::GLuint,
-                                          GL::KHR_debug::GLenum severity, GL::GLsizei,
+void GLESWRAP_APIENTRY debug_message_proc(GL::KhrDebug::GLenum, GL::KhrDebug::GLenum, GL::GLuint,
+                                          GL::KhrDebug::GLenum severity, GL::GLsizei,
                                           const GL::GLchar *message, const void *)
 {
 	switch (severity)
 	{
-		case GL::KHR_debug::DEBUG_SEVERITY_HIGH:
-		case GL::KHR_debug::DEBUG_SEVERITY_MEDIUM:
+		case GL::KhrDebug::DEBUG_SEVERITY_HIGH:
+		case GL::KhrDebug::DEBUG_SEVERITY_MEDIUM:
 		{
 			LogWarning("Debug message: \"%s\"", message);
 			break;
@@ -1610,8 +1610,8 @@ OGLES30Renderer::OGLES30Renderer() : state(State::Idle)
 	if (use_debug)
 	{
 		LogInfo("Enabling KHR_debug output");
-		gl->Enable(static_cast<GL::GLenum>(GL::KHR_debug::DEBUG_OUTPUT_SYNCHRONOUS));
-		gl->Enable(static_cast<GL::GLenum>(GL::KHR_debug::DEBUG_OUTPUT));
+		gl->Enable(static_cast<GL::GLenum>(GL::KhrDebug::DEBUG_OUTPUT_SYNCHRONOUS));
+		gl->Enable(static_cast<GL::GLenum>(GL::KhrDebug::DEBUG_OUTPUT));
 		gl->KHR_debug.DebugMessageCallback(debug_message_proc, NULL);
 	}
 }

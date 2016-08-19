@@ -25,13 +25,13 @@ CheckOptions:
   - key:             modernize-use-nullptr.NullMacros
     value:           'NULL'
   - key:             readability-identifier-naming.AbstractClassCase
-    value:           aNy_CasE
+    value:           CamelCase
   - key:             readability-identifier-naming.AbstractClassPrefix
     value:           ''
   - key:             readability-identifier-naming.AbstractClassSuffix
     value:           ''
   - key:             readability-identifier-naming.ClassCase
-    value:           aNy_CasE
+    value:           CamelCase
   - key:             readability-identifier-naming.ClassConstantCase
     value:           aNy_CasE
   - key:             readability-identifier-naming.ClassConstantPrefix
@@ -91,7 +91,7 @@ CheckOptions:
   - key:             readability-identifier-naming.ConstexprVariableSuffix
     value:           ''
   - key:             readability-identifier-naming.EnumCase
-    value:           aNy_CasE
+    value:           CamelCase
   - key:             readability-identifier-naming.EnumConstantCase
     value:           aNy_CasE
   - key:             readability-identifier-naming.EnumConstantPrefix
@@ -225,7 +225,7 @@ CheckOptions:
   - key:             readability-identifier-naming.StaticVariableSuffix
     value:           ''
   - key:             readability-identifier-naming.StructCase
-    value:           aNy_CasE
+    value:           CamelCase
   - key:             readability-identifier-naming.StructPrefix
     value:           ''
   - key:             readability-identifier-naming.StructSuffix
@@ -255,7 +255,7 @@ CheckOptions:
   - key:             readability-identifier-naming.TypedefSuffix
     value:           ''
   - key:             readability-identifier-naming.UnionCase
-    value:           aNy_CasE
+    value:           CamelCase
   - key:             readability-identifier-naming.UnionPrefix
     value:           ''
   - key:             readability-identifier-naming.UnionSuffix

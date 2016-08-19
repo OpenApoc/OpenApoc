@@ -4,7 +4,7 @@
 // FIXME: It's possible this entire struct should be shifted 2/4 bytes up (IE one/both of
 // unknown3/4 actually belong to the 'next' struct)
 
-struct facility_data_t
+struct FacilityData
 {
 	uint16_t cost;
 	uint16_t zero; // Always zero? Possibly cost is actually a uint32_t?
@@ -17,7 +17,7 @@ struct facility_data_t
 	uint16_t unknown2;
 };
 
-static_assert(sizeof(struct facility_data_t) == 16, "Invalid facility_data size");
+static_assert(sizeof(struct FacilityData) == 16, "Invalid facility_data size");
 
 #define FACILITY_DATA_OFFSET_START 0x13D794
 #define FACILITY_DATA_OFFSET_END 0x13D8D4

@@ -170,25 +170,25 @@ bool UString::endsWith(const UString &suffix) const
 	return boost::ends_with(str(), suffix.str());
 }
 
-UString::const_iterator UString::begin() const { return UString::const_iterator(*this, 0); }
+UString::ConstIterator UString::begin() const { return UString::ConstIterator(*this, 0); }
 
-UString::const_iterator UString::end() const
+UString::ConstIterator UString::end() const
 {
-	return UString::const_iterator(*this, this->length());
+	return UString::ConstIterator(*this, this->length());
 }
 
-UString::const_iterator UString::const_iterator::operator++()
+UString::ConstIterator UString::ConstIterator::operator++()
 {
 	this->offset++;
 	return *this;
 }
 
-bool UString::const_iterator::operator!=(const UString::const_iterator &other) const
+bool UString::ConstIterator::operator!=(const UString::ConstIterator &other) const
 {
 	return (this->offset != other.offset || this->s != other.s);
 }
 
-UniChar UString::const_iterator::operator*() const
+UniChar UString::ConstIterator::operator*() const
 {
 	auto pointString = boost::locale::conv::utf_to_utf<int>(this->s.str());
 	return pointString[this->offset];

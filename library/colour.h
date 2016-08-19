@@ -21,7 +21,7 @@ class Colour
 
 static_assert(sizeof(Colour) == 4, "Colour should be 4 bytes");
 
-struct Colour_ARGB8888LE
+struct ColourArgB8888Le
 {
 	uint8_t r;
 	uint8_t g;

@@ -392,20 +392,20 @@ sp<ImageSet> PCKLoader::load(Data &data, UString PckFilename, UString TabFilenam
 	return imageSet;
 }
 
-struct strat_header
+struct StratHeader
 {
 	uint16_t pixel_skip; // if 0xffff end-of-sprite
 	uint16_t count;      // The number of indices following this
 };
 
-static_assert(sizeof(struct strat_header) == 4, "Invalid strat_header size");
+static_assert(sizeof(struct StratHeader) == 4, "Invalid strat_header size");
 
 static sp<PaletteImage> loadStrategy(IFile &file)
 {
 	auto img = mksp<PaletteImage>(Vec2<int>{8, 8}); // All strategy map tiles are 8x8
 	unsigned int offset = 0;
 
-	struct strat_header header;
+	struct StratHeader header;
 	file.read(reinterpret_cast<char *>(&header), sizeof(header));
 	PaletteImageLock region(img);
 	while (file && header.pixel_skip != 0xffff)
@@ -486,7 +486,7 @@ sp<ImageSet> PCKLoader::load_strat(Data &data, UString PckFilename, UString TabF
 	return imageSet;
 }
 
-struct shadow_header
+struct ShadowHeader
 {
 	uint8_t h1;
 	uint8_t h2;
@@ -495,7 +495,7 @@ struct shadow_header
 	uint16_t height;
 };
 
-static_assert(sizeof(struct shadow_header) == 8, "Invalid shadow_header size");
+static_assert(sizeof(struct ShadowHeader) == 8, "Invalid shadow_header size");
 
 static const std::vector<std::vector<int>> ditherLut = {
     {0, 0, 0, 0}, {1, 0, 1, 0}, {0, 1, 0, 1}, {1, 0, 0, 0},
@@ -504,7 +504,7 @@ static const std::vector<std::vector<int>> ditherLut = {
 
 static sp<PaletteImage> loadShadow(IFile &file, uint8_t shadedIdx)
 {
-	struct shadow_header header;
+	struct ShadowHeader header;
 	file.read(reinterpret_cast<char *>(&header), sizeof(header));
 	if (!file)
 	{

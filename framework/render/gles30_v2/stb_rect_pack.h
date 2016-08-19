@@ -65,9 +65,9 @@
 extern "C" {
 #endif
 
-typedef struct stbrp_context stbrp_context;
-typedef struct stbrp_node stbrp_node;
-typedef struct stbrp_rect stbrp_rect;
+typedef struct StbrpContext stbrp_context;
+typedef struct StbrpNode stbrp_node;
+typedef struct StbrpRect stbrp_rect;
 
 #ifdef STBRP_LARGE_RECTS
 typedef int stbrp_coord;
@@ -97,7 +97,7 @@ STBRP_DEF void stbrp_pack_rects(stbrp_context *context, stbrp_rect *rects, int n
 // a single time with the full rectangle array, but the option is
 // available.
 
-struct stbrp_rect
+struct StbrpRect
 {
 	// reserved for your use:
 	int id;
@@ -155,13 +155,13 @@ enum
 // the details of the following structures don't matter to you, but they must
 // be visible so you can handle the memory allocations for them
 
-struct stbrp_node
+struct StbrpNode
 {
 	stbrp_coord x, y;
-	stbrp_node *next;
+	StbrpNode *next;
 };
 
-struct stbrp_context
+struct StbrpContext
 {
 	int width;
 	int height;

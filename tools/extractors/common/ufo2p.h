@@ -33,7 +33,7 @@ class UFO2P
 	UFO2P(std::string fileName = "XCOM3/UFOEXE/UFO2P.EXE");
 	std::unique_ptr<StrTab> research_names;
 	std::unique_ptr<StrTab> research_descriptions;
-	std::unique_ptr<DataChunk<research_data_t>> research_data;
+	std::unique_ptr<DataChunk<ResearchData>> research_data;
 
 	std::unique_ptr<StrTab> vehicle_names;
 	std::unique_ptr<StrTab> organisation_names;
@@ -41,29 +41,29 @@ class UFO2P
 	std::unique_ptr<StrTab> building_functions;
 	std::unique_ptr<StrTab> alien_building_names;
 
-	std::unique_ptr<DataChunk<vehicle_data_t>> vehicle_data;
+	std::unique_ptr<DataChunk<VehicleData>> vehicle_data;
 
 	std::unique_ptr<StrTab> ufopaedia_group;
 
-	std::unique_ptr<DataChunk<rawsound_data_t>> rawsound;
-	std::unique_ptr<DataChunk<baselayout_data_t>> baselayouts;
+	std::unique_ptr<DataChunk<RawSoundData>> rawsound;
+	std::unique_ptr<DataChunk<BaseLayoutData>> baselayouts;
 
 	std::unique_ptr<StrTab> vehicle_equipment_names;
 
-	std::unique_ptr<DataChunk<vehicle_equipment_data_t>> vehicle_equipment;
-	std::unique_ptr<DataChunk<vehicle_weapon_data_t>> vehicle_weapons;
-	std::unique_ptr<DataChunk<vehicle_engine_data_t>> vehicle_engines;
-	std::unique_ptr<DataChunk<vehicle_general_equipment_data_t>> vehicle_general_equipment;
+	std::unique_ptr<DataChunk<VehicleEquipmentData>> vehicle_equipment;
+	std::unique_ptr<DataChunk<VehicleWeaponData>> vehicle_weapons;
+	std::unique_ptr<DataChunk<VehicleEngineData>> vehicle_engines;
+	std::unique_ptr<DataChunk<VehicleGeneralEquipmentData>> vehicle_general_equipment;
 
-	std::unique_ptr<DataChunk<vehicle_equipment_layout_t>> vehicle_equipment_layouts;
+	std::unique_ptr<DataChunk<VehicleEquipmentLayout>> vehicle_equipment_layouts;
 
 	std::unique_ptr<StrTab> facility_names;
-	std::unique_ptr<DataChunk<facility_data_t>> facility_data;
+	std::unique_ptr<DataChunk<FacilityData>> facility_data;
 
-	std::unique_ptr<DataChunk<scenery_minimap_colour_t>> scenery_minimap_colour;
+	std::unique_ptr<DataChunk<SceneryMinimapColour>> scenery_minimap_colour;
 
-	std::unique_ptr<DataChunk<bullet_sprite_t>> bullet_sprites;
-	std::unique_ptr<DataChunk<projectile_sprites_t>> projectile_sprites;
+	std::unique_ptr<DataChunk<BulletSprite>> bullet_sprites;
+	std::unique_ptr<DataChunk<ProjectileSprites>> projectile_sprites;
 
 	UString get_org_id(int idx)
 	{

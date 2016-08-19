@@ -7,11 +7,11 @@
 
 namespace gles_wrap
 {
-class gles3
+class Gles3
 {
   private:
-	class gles3_loader;
-	gles3_loader *loader;
+	class Gles3Loader;
+	Gles3Loader *loader;
 	bool desktop_extension;
 
   public:
@@ -19,8 +19,8 @@ class gles3
 	// with GL_ARB_ES3_compatibility, thus should GetProcAddress instead of dlsym
 	// for symbol resolution
 	static bool supported(bool desktop_extension, std::string lib_name = "libGLESv2.so");
-	gles3(bool desktop_extension, std::string lib_name = "libGLESv2.so");
-	~gles3();
+	Gles3(bool desktop_extension, std::string lib_name = "libGLESv2.so");
+	~Gles3();
 
 	std::string VersionString;
 	std::string VendorString;
@@ -35,7 +35,7 @@ class gles3
 	typedef short GLshort;
 	typedef unsigned short GLushort;
 	typedef void GLvoid;
-	typedef struct __GLsync *GLsync;
+	typedef struct GLsync *GLsync;
 	typedef int64_t GLint64;
 	typedef uint64_t GLuint64;
 	// typedef unsigned int GLenum;
@@ -1019,11 +1019,11 @@ class gles3
 	void(GLESWRAP_APIENTRY *GetInternalformativ)(GLenum target, GLenum internalformat, GLenum pname,
 	                                             GLsizei bufSize, GLint *params);
 
-	class KHR_debug
+	class KhrDebug
 	{
 	  private:
-		friend class gles3;
-		KHR_debug(const gles3 *parent = nullptr);
+		friend class Gles3;
+		KhrDebug(const Gles3 *parent = nullptr);
 
 	  public:
 		bool supported;

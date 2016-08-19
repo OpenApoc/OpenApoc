@@ -40,7 +40,7 @@ UFO2P::UFO2P(std::string file_name)
 	file.clear();
 
 	this->research_data.reset(
-	    new DataChunk<research_data_t>(file, RESEARCH_DATA_OFFSET_START, RESEARCH_DATA_OFFSET_END));
+	    new DataChunk<ResearchData>(file, RESEARCH_DATA_OFFSET_START, RESEARCH_DATA_OFFSET_END));
 	this->research_names.reset(
 	    new StrTab(file, RESEARCH_NAME_STRTAB_OFFSET_START, RESEARCH_NAME_STRTAB_OFFSET_END, true));
 	this->research_descriptions.reset(new StrTab(file, RESEARCH_DESCRIPTION_STRTAB_OFFSET_START,
@@ -49,7 +49,7 @@ UFO2P::UFO2P(std::string file_name)
 	    new StrTab(file, UFOPAEDIA_GROUP_STRTAB_OFFSET_START, UFOPAEDIA_GROUP_STRTAB_OFFSET_END));
 
 	this->vehicle_data.reset(
-	    new DataChunk<vehicle_data_t>(file, VEHICLE_DATA_OFFSET_START, VEHICLE_DATA_OFFSET_END));
+	    new DataChunk<VehicleData>(file, VEHICLE_DATA_OFFSET_START, VEHICLE_DATA_OFFSET_END));
 	this->vehicle_names.reset(
 	    new StrTab(file, VEHICLE_NAME_STRTAB_OFFSET_START, VEHICLE_NAME_STRTAB_OFFSET_END));
 
@@ -65,37 +65,37 @@ UFO2P::UFO2P(std::string file_name)
 	                                            ALIEN_BUILDING_NAME_STRTAB_OFFSET_END));
 
 	this->rawsound.reset(
-	    new DataChunk<rawsound_data_t>(file, RAWSOUND_OFFSET_START, RAWSOUND_OFFSET_END));
+	    new DataChunk<RawSoundData>(file, RAWSOUND_OFFSET_START, RAWSOUND_OFFSET_END));
 	this->baselayouts.reset(
-	    new DataChunk<baselayout_data_t>(file, BASELAYOUT_OFFSET_START, BASELAYOUT_OFFSET_END));
+	    new DataChunk<BaseLayoutData>(file, BASELAYOUT_OFFSET_START, BASELAYOUT_OFFSET_END));
 
 	this->vehicle_equipment_names.reset(
 	    new StrTab(file, VEHICLE_EQUIPMENT_NAMES_OFFSET_START, VEHICLE_EQUIPMENT_NAMES_OFFSET_END));
 
-	this->vehicle_equipment.reset(new DataChunk<vehicle_equipment_data_t>(
+	this->vehicle_equipment.reset(new DataChunk<VehicleEquipmentData>(
 	    file, VEHICLE_EQUIPMENT_DATA_OFFSET_START, VEHICLE_EQUIPMENT_DATA_OFFSET_END));
-	this->vehicle_weapons.reset(new DataChunk<vehicle_weapon_data_t>(
+	this->vehicle_weapons.reset(new DataChunk<VehicleWeaponData>(
 	    file, VEHICLE_WEAPON_DATA_OFFSET_START, VEHICLE_WEAPON_DATA_OFFSET_END));
-	this->vehicle_engines.reset(new DataChunk<vehicle_engine_data_t>(
+	this->vehicle_engines.reset(new DataChunk<VehicleEngineData>(
 	    file, VEHICLE_ENGINE_DATA_OFFSET_START, VEHICLE_ENGINE_DATA_OFFSET_END));
-	this->vehicle_general_equipment.reset(new DataChunk<vehicle_general_equipment_data_t>(
+	this->vehicle_general_equipment.reset(new DataChunk<VehicleGeneralEquipmentData>(
 	    file, VEHICLE_GENERAL_EQUIPMENT_DATA_OFFSET_START,
 	    VEHICLE_GENERAL_EQUIPMENT_DATA_OFFSET_END));
 
-	this->vehicle_equipment_layouts.reset(new DataChunk<vehicle_equipment_layout_t>(
+	this->vehicle_equipment_layouts.reset(new DataChunk<VehicleEquipmentLayout>(
 	    file, VEHICLE_EQUIPMENT_LAYOUT_OFFSET_START, VEHICLE_EQUIPMENT_LAYOUT_OFFSET_END));
 
 	this->facility_names.reset(
 	    new StrTab(file, FACILITY_STRTAB_OFFSET_START, FACILITY_STRTAB_OFFSET_END));
 	this->facility_data.reset(
-	    new DataChunk<facility_data_t>(file, FACILITY_DATA_OFFSET_START, FACILITY_DATA_OFFSET_END));
+	    new DataChunk<FacilityData>(file, FACILITY_DATA_OFFSET_START, FACILITY_DATA_OFFSET_END));
 
-	this->scenery_minimap_colour.reset(new DataChunk<scenery_minimap_colour_t>(
+	this->scenery_minimap_colour.reset(new DataChunk<SceneryMinimapColour>(
 	    file, SCENERY_MINIMAP_COLOUR_DATA_OFFSET_START, SCENERY_MINIMAP_COLOUR_DATA_OFFSET_END));
 
-	this->bullet_sprites.reset(new DataChunk<bullet_sprite_t>(file, BULLETSPRITE_DATA_OFFSET_START,
-	                                                          BULLETSPRITE_DATA_OFFSET_END));
-	this->projectile_sprites.reset(new DataChunk<projectile_sprites_t>(
+	this->bullet_sprites.reset(new DataChunk<BulletSprite>(file, BULLETSPRITE_DATA_OFFSET_START,
+	                                                       BULLETSPRITE_DATA_OFFSET_END));
+	this->projectile_sprites.reset(new DataChunk<ProjectileSprites>(
 	    file, PROJECTILESPRITES_DATA_OFFSET_START, PROJECTILESPRITES_DATA_OFFSET_END));
 }
 

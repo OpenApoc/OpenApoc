@@ -135,7 +135,7 @@ void Control::EventOccured(Event *e)
 		// FIXME: We're only doing event processing for the "primary" finger.
 		if (e->Finger().IsPrimary || 1)
 		{
-			FRAMEWORK_MOUSE_EVENT FakeMouseData;
+			FrameworkMouseEvent FakeMouseData;
 			FakeMouseData.X = e->Finger().X;
 			FakeMouseData.Y = e->Finger().Y;
 			FakeMouseData.DeltaX = e->Finger().DeltaX;

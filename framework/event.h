@@ -45,25 +45,25 @@ enum EventTypes
 	EVENT_UNDEFINED
 };
 
-typedef struct FRAMEWORK_DISPLAY_EVENT
+typedef struct FrameworkDisplayEvent
 {
 	bool Active;
 	int X;
 	int Y;
 	int Width;
 	int Height;
-} FRAMEWORK_DISPLAY_EVENT;
+} FrameworkDisplayEvent;
 
-typedef struct FRAMEWORK_JOYSTICK_EVENT
+typedef struct FrameworkJoystickEvent
 {
 	int ID;
 	int Stick;
 	int Axis;
 	float Position;
 	int Button;
-} FRAMEWORK_JOYSTICK_EVENT;
+} FrameworkJoystickEvent;
 
-typedef struct FRAMEWORK_MOUSE_EVENT
+typedef struct FrameworkMouseEvent
 {
 	int X;
 	int Y;
@@ -72,9 +72,9 @@ typedef struct FRAMEWORK_MOUSE_EVENT
 	int DeltaX;
 	int DeltaY;
 	int Button;
-} FRAMEWORK_MOUSE_EVENT;
+} FrameworkMouseEvent;
 
-typedef struct FRAMEWORK_FINGER_EVENT
+typedef struct FrameworkFingerEvent
 {
 	// Touch coordinates and deltas
 	int X;
@@ -85,35 +85,35 @@ typedef struct FRAMEWORK_FINGER_EVENT
 	int Id;
 	// Should this be considered a "primary" touch? (first finger?)
 	bool IsPrimary;
-} FRAMEWORK_FINGER_EVENT;
+} FrameworkFingerEvent;
 
-typedef struct FRAMEWORK_KEYBOARD_EVENT
+typedef struct FrameworkKeyboardEvent
 {
 	int KeyCode;
 	int ScanCode;
 	unsigned int Modifiers;
-} FRAMEWORK_KEYBOARD_EVENT;
+} FrameworkKeyboardEvent;
 
-typedef struct FRAMEWORK_TIMER_EVENT
+typedef struct FrameworkTimerEvent
 {
 	void *TimerObject;
-} FRAMEWORK_TIMER_EVENT;
+} FrameworkTimerEvent;
 
-typedef struct FRAMEWORK_TEXT_EVENT
+typedef struct FrameworkTextEvent
 {
 	UString Input;
-} FRAMEWORK_TEXT_EVENT;
+} FrameworkTextEvent;
 
-typedef struct FRAMEWORK_FORMS_EVENT
+typedef struct FrameworkFormsEvent
 {
 	sp<Control> RaisedBy;
 	FormEventType EventFlag;
-	FRAMEWORK_MOUSE_EVENT MouseInfo;
-	FRAMEWORK_KEYBOARD_EVENT KeyInfo;
-	FRAMEWORK_TEXT_EVENT Input;
-} FRAMEWORK_FORMS_EVENT;
+	FrameworkMouseEvent MouseInfo;
+	FrameworkKeyboardEvent KeyInfo;
+	FrameworkTextEvent Input;
+} FrameworkFormsEvent;
 
-struct FRAMEWORK_USER_EVENT
+struct FrameworkUserEvent
 {
 	UString ID;
 	sp<void> data;
@@ -135,25 +135,25 @@ class Event
 
 	EventTypes Type() const;
 
-	FRAMEWORK_DISPLAY_EVENT &Display();
-	FRAMEWORK_JOYSTICK_EVENT &Joystick();
-	FRAMEWORK_KEYBOARD_EVENT &Keyboard();
-	FRAMEWORK_MOUSE_EVENT &Mouse();
-	FRAMEWORK_FINGER_EVENT &Finger();
-	FRAMEWORK_TIMER_EVENT &Timer();
-	FRAMEWORK_FORMS_EVENT &Forms();
-	FRAMEWORK_TEXT_EVENT &Text();
-	FRAMEWORK_USER_EVENT &User();
+	FrameworkDisplayEvent &Display();
+	FrameworkJoystickEvent &Joystick();
+	FrameworkKeyboardEvent &Keyboard();
+	FrameworkMouseEvent &Mouse();
+	FrameworkFingerEvent &Finger();
+	FrameworkTimerEvent &Timer();
+	FrameworkFormsEvent &Forms();
+	FrameworkTextEvent &Text();
+	FrameworkUserEvent &User();
 
-	const FRAMEWORK_DISPLAY_EVENT &Display() const;
-	const FRAMEWORK_JOYSTICK_EVENT &Joystick() const;
-	const FRAMEWORK_KEYBOARD_EVENT &Keyboard() const;
-	const FRAMEWORK_MOUSE_EVENT &Mouse() const;
-	const FRAMEWORK_FINGER_EVENT &Finger() const;
-	const FRAMEWORK_TIMER_EVENT &Timer() const;
-	const FRAMEWORK_FORMS_EVENT &Forms() const;
-	const FRAMEWORK_TEXT_EVENT &Text() const;
-	const FRAMEWORK_USER_EVENT &User() const;
+	const FrameworkDisplayEvent &Display() const;
+	const FrameworkJoystickEvent &Joystick() const;
+	const FrameworkKeyboardEvent &Keyboard() const;
+	const FrameworkMouseEvent &Mouse() const;
+	const FrameworkFingerEvent &Finger() const;
+	const FrameworkTimerEvent &Timer() const;
+	const FrameworkFormsEvent &Forms() const;
+	const FrameworkTextEvent &Text() const;
+	const FrameworkUserEvent &User() const;
 
 	virtual ~Event() = default;
 };
@@ -161,7 +161,7 @@ class Event
 class DisplayEvent : public Event
 {
   private:
-	FRAMEWORK_DISPLAY_EVENT Data;
+	FrameworkDisplayEvent Data;
 	friend class Event;
 
   public:
@@ -172,7 +172,7 @@ class DisplayEvent : public Event
 class JoystickEvent : public Event
 {
   private:
-	FRAMEWORK_JOYSTICK_EVENT Data;
+	FrameworkJoystickEvent Data;
 	friend class Event;
 
   public:
@@ -183,7 +183,7 @@ class JoystickEvent : public Event
 class KeyboardEvent : public Event
 {
   private:
-	FRAMEWORK_KEYBOARD_EVENT Data;
+	FrameworkKeyboardEvent Data;
 	friend class Event;
 
   public:
@@ -194,7 +194,7 @@ class KeyboardEvent : public Event
 class MouseEvent : public Event
 {
   private:
-	FRAMEWORK_MOUSE_EVENT Data;
+	FrameworkMouseEvent Data;
 	friend class Event;
 
   public:
@@ -205,7 +205,7 @@ class MouseEvent : public Event
 class FingerEvent : public Event
 {
   private:
-	FRAMEWORK_FINGER_EVENT Data;
+	FrameworkFingerEvent Data;
 	friend class Event;
 
   public:
@@ -216,7 +216,7 @@ class FingerEvent : public Event
 class TimerEvent : public Event
 {
   private:
-	FRAMEWORK_TIMER_EVENT Data;
+	FrameworkTimerEvent Data;
 	friend class Event;
 
   public:
@@ -227,7 +227,7 @@ class TimerEvent : public Event
 class FormsEvent : public Event
 {
   private:
-	FRAMEWORK_FORMS_EVENT Data;
+	FrameworkFormsEvent Data;
 	friend class Event;
 
   public:
@@ -238,7 +238,7 @@ class FormsEvent : public Event
 class TextEvent : public Event
 {
   private:
-	FRAMEWORK_TEXT_EVENT Data;
+	FrameworkTextEvent Data;
 	friend class Event;
 
   public:
@@ -249,7 +249,7 @@ class TextEvent : public Event
 class UserEvent : public Event
 {
   private:
-	FRAMEWORK_USER_EVENT Data;
+	FrameworkUserEvent Data;
 	friend class Event;
 
   public:

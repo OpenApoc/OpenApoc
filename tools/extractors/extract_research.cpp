@@ -46,7 +46,7 @@ void InitialGameStateExtractor::extractResearch(GameState &state, Difficulty)
 				         id.c_str());
 		}
 		// FIXME: this assumed all listed techs are reqired, which is not true for some topics
-		// (It's possible that an unknown member in research_data_t marks this, or it's done
+		// (It's possible that an unknown member in ResearchData marks this, or it's done
 		// in-code)
 		// This should be fixed up in the patch.
 

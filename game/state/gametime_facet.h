@@ -15,7 +15,7 @@ namespace date_time
  */
 template <class date_type, class CharT,
           class OutItrT = std::ostreambuf_iterator<CharT, std::char_traits<CharT>>>
-class apoc_date_facet : public date_facet<date_type, CharT, OutItrT>
+class ApocDateFacet : public date_facet<date_type, CharT, OutItrT>
 {
   public:
 	typedef typename date_type::duration_type duration_type;
@@ -38,15 +38,15 @@ class apoc_date_facet : public date_facet<date_type, CharT, OutItrT>
 	typedef first_kday_after<date_type> kday_after_type;
 	typedef first_kday_before<date_type> kday_before_type;
 
-	explicit apoc_date_facet(::size_t a_ref = 0) : date_facet<date_type, CharT, OutItrT>(a_ref) {}
+	explicit ApocDateFacet(::size_t a_ref = 0) : date_facet<date_type, CharT, OutItrT>(a_ref) {}
 
-	explicit apoc_date_facet(const char_type *format_str, const input_collection_type &short_names,
-	                         ::size_t ref_count = 0)
+	explicit ApocDateFacet(const char_type *format_str, const input_collection_type &short_names,
+	                       ::size_t ref_count = 0)
 	    : date_facet<date_type, CharT, OutItrT>(format_str, short_names, ref_count)
 	{
 	}
 
-	explicit apoc_date_facet(
+	explicit ApocDateFacet(
 	    const char_type *format_str, period_formatter_type per_formatter = period_formatter_type(),
 	    special_values_formatter_type sv_formatter = special_values_formatter_type(),
 	    date_gen_formatter_type dg_formatter = date_gen_formatter_type(), ::size_t ref_count = 0)
@@ -75,12 +75,12 @@ class apoc_date_facet : public date_facet<date_type, CharT, OutItrT>
 };
 
 template <class date_type, class CharT, class OutItrT>
-const typename apoc_date_facet<date_type, CharT, OutItrT>::char_type
-    apoc_date_facet<date_type, CharT, OutItrT>::long_day_format[3] = {'%', 'E'};
+const typename ApocDateFacet<date_type, CharT, OutItrT>::char_type
+    ApocDateFacet<date_type, CharT, OutItrT>::long_day_format[3] = {'%', 'E'};
 }
 
 namespace gregorian
 {
-typedef boost::date_time::apoc_date_facet<date, char> apoc_date_facet;
+typedef boost::date_time::ApocDateFacet<date, char> apoc_date_facet;
 }
 }

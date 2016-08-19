@@ -91,22 +91,22 @@ class UString
 	bool operator!=(const UString &other) const;
 	bool operator<(const UString &other) const;
 
-	class const_iterator : public std::iterator<std::forward_iterator_tag, UniChar>
+	class ConstIterator : public std::iterator<std::forward_iterator_tag, UniChar>
 	{
 	  private:
 		const UString &s;
 		size_t offset;
 		friend class UString;
-		const_iterator(const UString &s, size_t initial_offset) : s(s), offset(initial_offset) {}
+		ConstIterator(const UString &s, size_t initial_offset) : s(s), offset(initial_offset) {}
 
 	  public:
 		// Just enough to struggle through a range-based for
-		bool operator!=(const const_iterator &other) const;
-		const_iterator operator++();
+		bool operator!=(const ConstIterator &other) const;
+		ConstIterator operator++();
 		UniChar operator*() const;
 	};
-	const_iterator begin() const;
-	const_iterator end() const;
+	ConstIterator begin() const;
+	ConstIterator end() const;
 
 	static UniChar u8Char(char c);
 

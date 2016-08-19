@@ -904,7 +904,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 }
 
 template <>
-void serializeIn(const GameState *state, sp<SerializationNode> node, xorshift_128_plus<uint32_t> &t)
+void serializeIn(const GameState *state, sp<SerializationNode> node, Xorshift128Plus<uint32_t> &t)
 {
 	if (!node)
 		return;
@@ -1611,7 +1611,7 @@ void serializeOut(sp<SerializationNode> node, const GameTime &time)
 	serializeOut(node->addNode("ticks"), time.getTicks());
 }
 
-template <> void serializeOut(sp<SerializationNode> node, const xorshift_128_plus<uint32_t> &t)
+template <> void serializeOut(sp<SerializationNode> node, const Xorshift128Plus<uint32_t> &t)
 {
 	if (!node)
 		return;

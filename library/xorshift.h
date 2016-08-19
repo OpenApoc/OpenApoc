@@ -8,20 +8,20 @@
 namespace OpenApoc
 {
 
-template <class T, T A = 23, T B = 18, T C = 5> class xorshift_128_plus
+template <class T, T A = 23, T B = 18, T C = 5> class Xorshift128Plus
 {
   public:
 	typedef T result_type;
 	static_assert(std::is_unsigned<result_type>::value == true,
-	              "xorshift_128_plus must have an unsigned type");
+	              "Xorshift128Plus must have an unsigned type");
 
-	xorshift_128_plus(result_type seed = 0)
+	Xorshift128Plus(result_type seed = 0)
 	{
 		// splitmix64 to initial seed to make sure there are some non-zero bits
 		s[0] = static_cast<result_type>(splitmix_64(seed));
 		s[1] = static_cast<result_type>(splitmix_64(seed | s[0]));
 	}
-	xorshift_128_plus(result_type state[2])
+	Xorshift128Plus(result_type state[2])
 	{
 		s[0] = state[0];
 		s[1] = state[1];
@@ -68,7 +68,7 @@ template <class T, T A = 23, T B = 18, T C = 5> class xorshift_128_plus
 
 template <class charT, class traits, class UIntType>
 std::basic_ostream<charT, traits> &operator<<(std::basic_ostream<charT, traits> &os,
-                                              const xorshift_128_plus<UIntType> &rng)
+                                              const Xorshift128Plus<UIntType> &rng)
 {
 	UIntType state[2];
 	rng.get_state(state);
@@ -77,7 +77,7 @@ std::basic_ostream<charT, traits> &operator<<(std::basic_ostream<charT, traits> 
 
 template <class charT, class traits, class UIntType>
 std::basic_istream<charT, traits> &operator>>(std::basic_istream<charT, traits> &is,
-                                              xorshift_128_plus<UIntType> &rng)
+                                              Xorshift128Plus<UIntType> &rng)
 {
 	UIntType state[2];
 	is >> state[0];
@@ -86,6 +86,6 @@ std::basic_istream<charT, traits> &operator>>(std::basic_istream<charT, traits> 
 	return is;
 }
 
-template <typename T> using xorshift = xorshift_128_plus<T>;
+template <typename T> using xorshift = Xorshift128Plus<T>;
 
 } // namespace OpenApoc

@@ -15,7 +15,7 @@ static std::array<std::uint_fast32_t, 256> generate_crc_lookup_table()
 
 	// This is a function object that calculates the checksum for a value,
 	// then increments the value, starting from zero.
-	struct byte_checksum
+	struct ByteChecksum
 	{
 		const std::uint_fast32_t reversed_polynomial = std::uint_fast32_t{0xEDB88320uL};
 
@@ -33,7 +33,7 @@ static std::array<std::uint_fast32_t, 256> generate_crc_lookup_table()
 	};
 
 	auto table = std::array<std::uint_fast32_t, 256>{};
-	std::generate(table.begin(), table.end(), byte_checksum{});
+	std::generate(table.begin(), table.end(), ByteChecksum{});
 
 	return table;
 }

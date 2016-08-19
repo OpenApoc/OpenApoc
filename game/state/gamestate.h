@@ -71,7 +71,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	bool showVehiclePath = false;
 	bool showSelectableBounds = false;
 
-	xorshift_128_plus<uint32_t> rng;
+	Xorshift128Plus<uint32_t> rng;
 
 	UString getPlayerBalance() const;
 	StateRef<Organisation> getOrganisation(const UString &orgID);

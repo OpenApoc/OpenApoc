@@ -20,13 +20,13 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 		LogError("Failed to open \"%s\"", fileName.c_str());
 	}
 	auto fileSize = inFile.size();
-	auto bldCount = fileSize / sizeof(struct bld_file_entry);
+	auto bldCount = fileSize / sizeof(struct BldFileEntry);
 
 	LogInfo("Loading %lu buildings from %s", (unsigned long)bldCount, fileName.c_str());
 
 	for (unsigned i = 0; i < bldCount; i++)
 	{
-		struct bld_file_entry entry;
+		struct BldFileEntry entry;
 		inFile.read((char *)&entry, sizeof(entry));
 
 		auto b = mksp<Building>();

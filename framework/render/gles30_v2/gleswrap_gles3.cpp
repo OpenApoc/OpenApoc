@@ -44,7 +44,7 @@ static const std::string FUNCTION_PREFIX = "gl";
 namespace gles_wrap
 {
 
-class gles3::gles3_loader
+class Gles3::Gles3Loader
 {
 
   private:
@@ -57,8 +57,7 @@ class gles3::gles3_loader
 	bool desktop_extension;
 
   public:
-	gles3_loader(bool desktop_extension, std::string lib_name)
-	    : desktop_extension(desktop_extension)
+	Gles3Loader(bool desktop_extension, std::string lib_name) : desktop_extension(desktop_extension)
 	{
 		if (desktop_extension)
 		{
@@ -84,7 +83,7 @@ class gles3::gles3_loader
 #endif
 		}
 	}
-	~gles3_loader()
+	~Gles3Loader()
 	{
 #if defined(GLESWRAP_PLATFORM_DLFCN)
 		if (this->dlfcn_handle)
@@ -150,9 +149,9 @@ class gles3::gles3_loader
 	}
 };
 
-bool gles3::supported(bool desktop_extension, std::string lib_name)
+bool Gles3::supported(bool desktop_extension, std::string lib_name)
 {
-	gles3_loader tmp_loader(desktop_extension, lib_name);
+	Gles3Loader tmp_loader(desktop_extension, lib_name);
 
 	const GLubyte *(GLESWRAP_APIENTRY * LocalGetString)(GLenum name) = nullptr;
 
@@ -193,8 +192,8 @@ bool gles3::supported(bool desktop_extension, std::string lib_name)
 	}
 }
 
-gles3::gles3(bool desktop_extension, std::string lib_name)
-    : loader(new gles3_loader(desktop_extension, lib_name)), desktop_extension(desktop_extension)
+Gles3::Gles3(bool desktop_extension, std::string lib_name)
+    : loader(new Gles3Loader(desktop_extension, lib_name)), desktop_extension(desktop_extension)
 {
 	LogAssert(this->supported(desktop_extension, lib_name));
 	loader->Load(ActiveTexture, "ActiveTexture");
@@ -462,9 +461,9 @@ gles3::gles3(bool desktop_extension, std::string lib_name)
 	this->KHR_debug = {this};
 }
 
-gles3::~gles3() { delete this->loader; }
+Gles3::~Gles3() { delete this->loader; }
 
-gles3::KHR_debug::KHR_debug(const gles3 *parent) : supported(false), name("GL_KHR_debug")
+Gles3::KhrDebug::KhrDebug(const Gles3 *parent) : supported(false), name("GL_KHR_debug")
 {
 	if (!parent)
 		return;

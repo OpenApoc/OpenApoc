@@ -18,7 +18,7 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 	Vec3<unsigned int> fullSize(140, 140, 11);
 
 	// We want a predictable RNG state to generate the 'same' random grass each time
-	xorshift_128_plus<uint32_t> rng{};
+	Xorshift128Plus<uint32_t> rng{};
 
 	auto inFile = fw().data->fs.open(map_prefix + fileName);
 	if (!inFile)

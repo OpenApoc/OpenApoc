@@ -5,7 +5,7 @@ using namespace OpenApoc;
 
 int main(int, char **)
 {
-	xorshift_128_plus<uint32_t> rng{};
+	Xorshift128Plus<uint32_t> rng{};
 
 	uint32_t r1 = rng();
 	uint32_t r2 = rng();
@@ -29,7 +29,7 @@ int main(int, char **)
 	// Save the state to another rng and check that result matches
 
 	uint32_t s[2];
-	xorshift_128_plus<uint32_t> rng2{};
+	Xorshift128Plus<uint32_t> rng2{};
 
 	rng.get_state(s);
 	rng2.set_state(s);

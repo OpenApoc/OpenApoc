@@ -2,7 +2,7 @@
 
 #include <cstdint>
 #pragma pack(push, 1)
-struct bld_file_entry
+struct BldFileEntry
 {
 	uint16_t name_idx;
 	uint16_t x0;
@@ -17,7 +17,7 @@ struct bld_file_entry
 };
 #pragma pack(pop)
 
-static_assert(sizeof(struct bld_file_entry) == 226, "Unexpected bld_file_entry size");
+static_assert(sizeof(struct BldFileEntry) == 226, "Unexpected bld_file_entry size");
 
 #define BUILDING_NAME_STRTAB_OFFSET_START 0x149DD2
 #define BUILDING_NAME_STRTAB_OFFSET_END 0x14A66A

@@ -36,7 +36,7 @@ std::map<UString, int> EquipscreenSprite = {{"VEHICLETYPE_ANNIHILATOR", 0},
                                             {"VEHICLETYPE_GRIFFON_AFV", 12}};
 
 static void extract_equipment_layout(GameState &state, sp<VehicleType> vehicle, UFO2P &data,
-                                     vehicle_equipment_layout_t layout,
+                                     VehicleEquipmentLayout layout,
                                      const uint8_t initial_equipment[45])
 {
 	if (layout.slot_count > 45)
