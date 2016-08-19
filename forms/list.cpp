@@ -16,7 +16,7 @@ ListBox::ListBox(sp<ScrollBar> ExternalScrollBar)
 {
 }
 
-ListBox::~ListBox() {}
+ListBox::~ListBox() = default;
 
 void ListBox::ConfigureInternalScrollBar()
 {

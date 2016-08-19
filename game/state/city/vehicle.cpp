@@ -128,7 +128,7 @@ class FlyingVehicleMover : public VehicleMover
 
 VehicleMover::VehicleMover(Vehicle &v) : vehicle(v) {}
 
-VehicleMover::~VehicleMover() {}
+VehicleMover::~VehicleMover() = default;
 
 Vehicle::Vehicle()
     : attackMode(AttackMode::Standard), altitude(Altitude::Standard), position(0, 0, 0),
@@ -136,7 +136,7 @@ Vehicle::Vehicle()
 {
 }
 
-Vehicle::~Vehicle() {}
+Vehicle::~Vehicle() = default;
 
 const std::map<Vehicle::AttackMode, UString> Vehicle::AttackModeMap = {
     {Vehicle::AttackMode::Aggressive, "aggressive"},

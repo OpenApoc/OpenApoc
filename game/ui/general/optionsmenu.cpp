@@ -9,7 +9,7 @@ namespace OpenApoc
 
 OptionsMenu::OptionsMenu() : Stage(), menuform(ui().GetForm("FORM_OPTIONSMENU")) {}
 
-OptionsMenu::~OptionsMenu() {}
+OptionsMenu::~OptionsMenu() = default;
 
 void OptionsMenu::Begin() {}
 

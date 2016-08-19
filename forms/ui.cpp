@@ -30,7 +30,7 @@ UI::UI() : fonts(), forms() {}
 
 void UI::Load(UString CoreXMLFilename) { ParseXMLDoc(CoreXMLFilename); }
 
-UI::~UI() {}
+UI::~UI() = default;
 
 void UI::ParseXMLDoc(UString XMLFilename)
 {

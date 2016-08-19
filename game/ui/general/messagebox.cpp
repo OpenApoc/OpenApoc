@@ -63,7 +63,7 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 	form->Align(HorizontalAlignment::Centre, VerticalAlignment::Centre);
 }
 
-MessageBox::~MessageBox() {}
+MessageBox::~MessageBox() = default;
 
 void MessageBox::Begin() {}
 

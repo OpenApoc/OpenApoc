@@ -68,7 +68,7 @@ class RawSampleLoader : public SampleLoader
 class RawSampleLoaderFactory : public SampleLoaderFactory
 {
   public:
-	virtual SampleLoader *create(Data &data) override { return new RawSampleLoader(data); }
+	SampleLoader *create(Data &data) override { return new RawSampleLoader(data); }
 };
 
 }; // anonymous namespace

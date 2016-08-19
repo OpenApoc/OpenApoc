@@ -40,7 +40,7 @@ class NullSoundBackend : public SoundBackend
 
 	void stopMusic() override { LogInfo("Called on NULL backend"); }
 
-	virtual ~NullSoundBackend() { this->stopMusic(); }
+	~NullSoundBackend() override { this->stopMusic(); }
 
 	virtual const AudioFormat &getPreferredFormat() { return preferredFormat; }
 
@@ -65,7 +65,7 @@ class NullSoundBackendFactory : public SoundBackendFactory
 		return new NullSoundBackend();
 	}
 
-	virtual ~NullSoundBackendFactory() {}
+	~NullSoundBackendFactory() override = default;
 };
 
 }; // anonymous namespace

@@ -95,7 +95,7 @@ Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize
 		pinnedPalettes.push(nullptr);
 }
 
-Data::~Data() {}
+Data::~Data() = default;
 
 sp<VoxelSlice> Data::load_voxel_slice(const UString &path)
 {

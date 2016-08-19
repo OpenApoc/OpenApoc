@@ -19,7 +19,7 @@ TextButton::TextButton(const UString &Text, sp<BitmapFont> font)
 	label = mksp<Label>(Text, font);
 }
 
-TextButton::~TextButton() {}
+TextButton::~TextButton() = default;
 
 void TextButton::EventOccured(Event *e)
 {

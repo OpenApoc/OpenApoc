@@ -121,7 +121,7 @@ class SpritesheetEntry final : public RendererImageData
 	Vec2<int> size;
 	// page == -1 means it's not yet packed into a spritesheet
 	int page;
-	~SpritesheetEntry() override {}
+	~SpritesheetEntry() override = default;
 };
 
 class SpritesheetPage
@@ -1283,7 +1283,8 @@ class OGLES30Renderer final : public Renderer
 
   public:
 	OGLES30Renderer();
-	~OGLES30Renderer() override{};
+	~OGLES30Renderer() override = default;
+	;
 	void clear(Colour c) override
 	{
 		TRACE_FN;
@@ -1621,7 +1622,7 @@ class OGLES30RendererFactory : public RendererFactory
 
   public:
 	OGLES30RendererFactory() : alreadyInitialised(false) {}
-	virtual OpenApoc::Renderer *create() override
+	OpenApoc::Renderer *create() override
 	{
 		if (!alreadyInitialised)
 		{

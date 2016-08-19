@@ -6,7 +6,7 @@ namespace OpenApoc
 
 Form::Form() : Control() {}
 
-Form::~Form() {}
+Form::~Form() = default;
 
 void Form::ReadFormStyle(tinyxml2::XMLElement *FormConfiguration)
 {

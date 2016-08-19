@@ -14,7 +14,7 @@ UfopaediaView::UfopaediaView(sp<GameState> state)
 {
 }
 
-UfopaediaView::~UfopaediaView() {}
+UfopaediaView::~UfopaediaView() = default;
 
 void UfopaediaView::Begin() {}
 

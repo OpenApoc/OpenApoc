@@ -100,7 +100,7 @@ void TileObjectVehicle::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 	}
 }
 
-TileObjectVehicle::~TileObjectVehicle() {}
+TileObjectVehicle::~TileObjectVehicle() = default;
 
 TileObjectVehicle::TileObjectVehicle(TileMap &map, sp<Vehicle> vehicle)
     : TileObject(map, Type::Vehicle, Vec3<float>{0, 0, 0}), vehicle(vehicle), animationDelay(0)

@@ -11,7 +11,7 @@ BaseStage::BaseStage(sp<GameState> state)
 {
 }
 
-BaseStage::~BaseStage() {}
+BaseStage::~BaseStage() = default;
 
 void BaseStage::ChangeBase(sp<Base> newBase)
 {

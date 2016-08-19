@@ -723,7 +723,7 @@ class FBOData : public RendererImageData
 		LogAssert(gl30::CheckFramebufferStatus(gl30::DRAW_FRAMEBUFFER) ==
 		          gl30::FRAMEBUFFER_COMPLETE);
 	}
-	virtual ~FBOData()
+	~FBOData() override
 	{
 		if (tex)
 			gl30::DeleteTextures(1, &tex);
@@ -753,7 +753,7 @@ class GLRGBImage : public RendererImageData
 		gl30::TexImage2D(gl30::TEXTURE_2D, 0, gl30::RGBA, parent->size.x, parent->size.y, 0,
 		                 gl30::RGBA, gl30::UNSIGNED_BYTE, l.getData());
 	}
-	virtual ~GLRGBImage() { gl30::DeleteTextures(1, &this->texID); }
+	~GLRGBImage() override { gl30::DeleteTextures(1, &this->texID); }
 };
 
 class GLPalette : public RendererImageData
@@ -774,7 +774,7 @@ class GLPalette : public RendererImageData
 		gl30::TexImage2D(gl30::TEXTURE_2D, 0, gl30::RGBA, parent->colours.size(), 1, 0, gl30::RGBA,
 		                 gl30::UNSIGNED_BYTE, parent->colours.data());
 	}
-	virtual ~GLPalette() { gl30::DeleteTextures(1, &this->texID); }
+	~GLPalette() override { gl30::DeleteTextures(1, &this->texID); }
 };
 
 class GLPaletteImage : public RendererImageData
@@ -797,7 +797,7 @@ class GLPaletteImage : public RendererImageData
 		gl30::TexImage2D(gl30::TEXTURE_2D, 0, gl30::R8UI, parent->size.x, parent->size.y, 0,
 		                 gl30::RED_INTEGER, gl30::UNSIGNED_BYTE, l.getData());
 	}
-	virtual ~GLPaletteImage() { gl30::DeleteTextures(1, &this->texID); }
+	~GLPaletteImage() override { gl30::DeleteTextures(1, &this->texID); }
 };
 
 class GLPaletteSpritesheet : public RendererImageData
@@ -838,7 +838,7 @@ class GLPaletteSpritesheet : public RendererImageData
 		}
 		LogInfo("Uploading spritesheet complete");
 	}
-	virtual ~GLPaletteSpritesheet() { gl30::DeleteTextures(1, &this->texID); }
+	~GLPaletteSpritesheet() override { gl30::DeleteTextures(1, &this->texID); }
 };
 
 class OGL30Renderer : public Renderer
@@ -882,7 +882,7 @@ class OGL30Renderer : public Renderer
 
   public:
 	OGL30Renderer();
-	virtual ~OGL30Renderer();
+	~OGL30Renderer() override;
 	void clear(Colour c = Colour{0, 0, 0, 0}) override;
 	void setPalette(sp<Palette> p) override
 	{
@@ -1325,7 +1325,7 @@ OGL30Renderer::OGL30Renderer()
 	gl30::BlendFunc(gl30::SRC_ALPHA, gl30::ONE_MINUS_SRC_ALPHA);
 }
 
-OGL30Renderer::~OGL30Renderer() {}
+OGL30Renderer::~OGL30Renderer() = default;
 
 void OGL30Renderer::clear(Colour c)
 {
@@ -1409,7 +1409,7 @@ class OGL30RendererFactory : public OpenApoc::RendererFactory
 
   public:
 	OGL30RendererFactory() : alreadyInitialised(false), functionLoadSuccess(false) {}
-	virtual OpenApoc::Renderer *create() override
+	OpenApoc::Renderer *create() override
 	{
 		if (!alreadyInitialised)
 		{

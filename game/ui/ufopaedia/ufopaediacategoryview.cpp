@@ -35,7 +35,7 @@ UfopaediaCategoryView::UfopaediaCategoryView(sp<GameState> state, sp<UfopaediaCa
 	}
 }
 
-UfopaediaCategoryView::~UfopaediaCategoryView() {}
+UfopaediaCategoryView::~UfopaediaCategoryView() = default;
 
 void UfopaediaCategoryView::Begin()
 {

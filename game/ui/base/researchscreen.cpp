@@ -17,7 +17,7 @@ ResearchScreen::ResearchScreen(sp<GameState> state, sp<Facility> selected_lab)
 	viewFacility = selected_lab;
 }
 
-ResearchScreen::~ResearchScreen() {}
+ResearchScreen::~ResearchScreen() = default;
 
 void ResearchScreen::ChangeBase(sp<Base> newBase)
 {

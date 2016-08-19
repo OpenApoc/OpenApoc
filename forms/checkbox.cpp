@@ -15,7 +15,7 @@ CheckBox::CheckBox(sp<Image> ImageChecked, sp<Image> ImageUnchecked)
 {
 }
 
-CheckBox::~CheckBox() {}
+CheckBox::~CheckBox() = default;
 
 void CheckBox::EventOccured(Event *e)
 {

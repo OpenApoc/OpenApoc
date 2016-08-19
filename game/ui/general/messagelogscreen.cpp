@@ -12,7 +12,7 @@ MessageLogScreen::MessageLogScreen(sp<GameState> state)
 {
 }
 
-MessageLogScreen::~MessageLogScreen() {}
+MessageLogScreen::~MessageLogScreen() = default;
 
 void MessageLogScreen::Begin()
 {

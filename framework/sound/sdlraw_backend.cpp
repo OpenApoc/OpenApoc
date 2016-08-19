@@ -351,7 +351,7 @@ class SDLRawBackend : public SoundBackend
 			outstanding_get_music.wait();
 	}
 
-	virtual ~SDLRawBackend()
+	~SDLRawBackend() override
 	{
 		// Lock the device and stop any outstanding music threads to ensure everything is dead
 		// before destroying the device
@@ -422,7 +422,7 @@ class SDLRawBackendFactory : public SoundBackendFactory
 		return new SDLRawBackend();
 	}
 
-	virtual ~SDLRawBackendFactory() {}
+	~SDLRawBackendFactory() override = default;
 };
 
 }; // anonymous namespace

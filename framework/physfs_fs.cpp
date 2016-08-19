@@ -55,7 +55,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 		systemPath = PHYSFS_getRealDir(path.c_str());
 		systemPath += "/" + path;
 	}
-	virtual ~PhysfsIFileImpl()
+	~PhysfsIFileImpl() override
 	{
 		if (file)
 			PHYSFS_close(file);
@@ -152,7 +152,7 @@ IFile::IFile(IFile &&other) : std::istream(std::move(other))
 }
 #endif
 
-IFileImpl::~IFileImpl() {}
+IFileImpl::~IFileImpl() = default;
 
 bool IFile::readule16(uint16_t &val)
 {
@@ -214,7 +214,7 @@ std::unique_ptr<char[]> IFile::readAll()
 	return mem;
 }
 
-IFile::~IFile() {}
+IFile::~IFile() = default;
 
 FileSystem::FileSystem(std::vector<UString> paths)
 {
@@ -242,7 +242,7 @@ FileSystem::FileSystem(std::vector<UString> paths)
 	PHYSFS_mount(this->writeDir.c_str(), "/", 0);
 }
 
-FileSystem::~FileSystem() {}
+FileSystem::~FileSystem() = default;
 
 static bool CaseInsensitiveCompare(const UString &a, const UString &b)
 {

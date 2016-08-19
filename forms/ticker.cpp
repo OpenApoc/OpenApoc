@@ -17,7 +17,7 @@ Ticker::Ticker(sp<BitmapFont> font)
 	}
 }
 
-Ticker::~Ticker() {}
+Ticker::~Ticker() = default;
 
 void Ticker::EventOccured(Event *e) { Control::EventOccured(e); }
 

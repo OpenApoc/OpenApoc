@@ -23,7 +23,7 @@ BaseSelectScreen::BaseSelectScreen(sp<GameState> state, Vec3<float> centerPos)
 	                  [this](Event *) { this->stageCmd.cmd = StageCmd::Command::POP; });
 }
 
-BaseSelectScreen::~BaseSelectScreen() {}
+BaseSelectScreen::~BaseSelectScreen() = default;
 
 void BaseSelectScreen::Begin()
 {

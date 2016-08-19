@@ -17,7 +17,7 @@ Label::Label(const UString &Text, sp<BitmapFont> font)
 	}
 }
 
-Label::~Label() {}
+Label::~Label() = default;
 
 void Label::EventOccured(Event *e) { Control::EventOccured(e); }
 

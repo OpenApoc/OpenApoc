@@ -37,7 +37,7 @@ ApocCursor::ApocCursor(sp<Palette> pal) : cursorPos{0, 0}
 	CurrentType = CursorType::Normal;
 }
 
-ApocCursor::~ApocCursor() {}
+ApocCursor::~ApocCursor() = default;
 
 void ApocCursor::EventOccured(Event *e)
 {

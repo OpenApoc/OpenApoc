@@ -13,7 +13,7 @@ Graphic::Graphic(sp<Image> Image)
 {
 }
 
-Graphic::~Graphic() {}
+Graphic::~Graphic() = default;
 
 void Graphic::EventOccured(Event *e) { Control::EventOccured(e); }
 

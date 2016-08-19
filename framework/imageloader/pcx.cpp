@@ -39,7 +39,7 @@ class PCXImageLoader : public OpenApoc::ImageLoader
 {
   public:
 	PCXImageLoader() {}
-	virtual ~PCXImageLoader() {}
+	~PCXImageLoader() override = default;
 
 	sp<OpenApoc::Image> loadImage(IFile &file) override
 	{
@@ -164,7 +164,7 @@ class PCXImageLoaderFactory : public OpenApoc::ImageLoaderFactory
 {
   public:
 	OpenApoc::ImageLoader *create() override { return new PCXImageLoader(); }
-	virtual ~PCXImageLoaderFactory() {}
+	~PCXImageLoaderFactory() override = default;
 };
 
 } // anonymous namespace

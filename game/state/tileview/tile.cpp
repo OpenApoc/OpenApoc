@@ -48,7 +48,7 @@ TileMap::TileMap(Vec3<int> size, std::vector<std::set<TileObject::Type>> layerMa
 	}
 }
 
-TileMap::~TileMap() {}
+TileMap::~TileMap() = default;
 
 Tile::Tile(TileMap &map, Vec3<int> position, int layerCount)
     : map(map), position(position), drawnObjects(layerCount)

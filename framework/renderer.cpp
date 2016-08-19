@@ -13,9 +13,9 @@ RendererSurfaceBinding::RendererSurfaceBinding(Renderer &r, sp<Surface> s)
 
 RendererSurfaceBinding::~RendererSurfaceBinding() { r.setSurface(prevBinding); }
 
-Renderer::~Renderer() {}
+Renderer::~Renderer() = default;
 
-RendererImageData::~RendererImageData() {}
+RendererImageData::~RendererImageData() = default;
 
 sp<Image> RendererImageData::readBack()
 {

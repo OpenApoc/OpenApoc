@@ -21,7 +21,7 @@ BaseScreen::BaseScreen(sp<GameState> state) : BaseStage(state), selection(NO_SEL
 	viewHighlight = BaseGraphics::FacilityHighlight::Construction;
 }
 
-BaseScreen::~BaseScreen() {}
+BaseScreen::~BaseScreen() = default;
 
 void BaseScreen::ChangeBase(sp<Base> newBase)
 {

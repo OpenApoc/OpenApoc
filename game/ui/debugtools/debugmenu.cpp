@@ -11,7 +11,7 @@ namespace OpenApoc
 
 DebugMenu::DebugMenu() : Stage(), menuform(ui().GetForm("FORM_DEBUG_MENU")) {}
 
-DebugMenu::~DebugMenu() {}
+DebugMenu::~DebugMenu() = default;
 
 void DebugMenu::Begin() {}
 

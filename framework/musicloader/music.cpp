@@ -109,7 +109,7 @@ class RawMusicTrack : public MusicTrack
 		return MusicCallbackReturn::Continue;
 	}
 
-	virtual ~RawMusicTrack() {}
+	~RawMusicTrack() override = default;
 };
 
 MusicTrack::MusicCallbackReturn fillMusicData(sp<MusicTrack> thisTrack, unsigned int maxSamples,
@@ -126,7 +126,7 @@ class RawMusicLoader : public MusicLoader
 
   public:
 	RawMusicLoader(Data &data) : data(data) {}
-	virtual ~RawMusicLoader() {}
+	~RawMusicLoader() override = default;
 
 	sp<MusicTrack> loadMusic(UString path) override
 	{

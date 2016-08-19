@@ -19,7 +19,7 @@ TextEdit::TextEdit(const UString &Text, sp<BitmapFont> font)
 	}
 }
 
-TextEdit::~TextEdit() {}
+TextEdit::~TextEdit() = default;
 
 bool TextEdit::IsFocused() const { return editing; }
 

@@ -97,7 +97,7 @@ class JukeBoxImpl : public JukeBox
 
   public:
 	JukeBoxImpl(Framework &fw) : fw(fw), mode(PlayMode::Loop) {}
-	virtual ~JukeBoxImpl() { this->stop(); }
+	~JukeBoxImpl() override { this->stop(); }
 
 	void play(std::vector<UString> tracks, PlayMode mode) override
 	{

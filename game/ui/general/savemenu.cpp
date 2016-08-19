@@ -25,7 +25,7 @@ SaveMenu::SaveMenu(SaveMenuAction saveMenuAction, sp<GameState> state)
 	activeTextEdit = nullptr;
 }
 
-SaveMenu::~SaveMenu() {}
+SaveMenu::~SaveMenu() = default;
 
 void SaveMenu::Begin()
 {

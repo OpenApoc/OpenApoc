@@ -21,7 +21,7 @@ MainMenu::MainMenu() : Stage(), mainmenuform(ui().GetForm("FORM_MAINMENU"))
 	versionLabel->SetText(OPENAPOC_VERSION);
 }
 
-MainMenu::~MainMenu() {}
+MainMenu::~MainMenu() = default;
 
 void MainMenu::Begin() { fw().jukebox->play(tracks); }
 

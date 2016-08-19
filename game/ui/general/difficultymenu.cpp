@@ -15,7 +15,7 @@ DifficultyMenu::DifficultyMenu() : Stage(), difficultymenuform(ui().GetForm("FOR
 	LogAssert(difficultymenuform);
 }
 
-DifficultyMenu::~DifficultyMenu() {}
+DifficultyMenu::~DifficultyMenu() = default;
 
 void DifficultyMenu::Begin() {}
 

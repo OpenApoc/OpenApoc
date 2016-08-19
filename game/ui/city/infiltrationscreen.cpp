@@ -12,7 +12,7 @@ InfiltrationScreen::InfiltrationScreen(sp<GameState> state)
 {
 }
 
-InfiltrationScreen::~InfiltrationScreen() {}
+InfiltrationScreen::~InfiltrationScreen() = default;
 
 void InfiltrationScreen::Begin()
 {

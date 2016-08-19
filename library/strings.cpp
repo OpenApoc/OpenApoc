@@ -55,7 +55,7 @@ UString tr(const UString &str, const UString domain)
 	return UString(boost::locale::translate(str.str()).str(domain.str()));
 }
 
-UString::~UString() {}
+UString::~UString() = default;
 
 UString::UString() : u8Str() {}
 
@@ -72,7 +72,7 @@ UString::UString(const char *cstr)
 	}
 }
 
-UString::UString(const UString &other) : u8Str(other.u8Str) {}
+UString::UString(const UString &) = default;
 
 UString::UString(UString &&other) { this->u8Str = std::move(other.u8Str); }
 
@@ -98,11 +98,7 @@ UString UString::toUpper() const { return boost::locale::to_upper(this->u8Str); 
 
 UString UString::toLower() const { return boost::locale::to_lower(this->u8Str); }
 
-UString &UString::operator=(const UString &other)
-{
-	this->u8Str = other.u8Str;
-	return *this;
-}
+UString &UString::operator=(const UString &other) = default;
 
 UString &UString::operator+=(const UString &other)
 {

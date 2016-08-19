@@ -71,7 +71,7 @@ class TraceManager
 	{
 		std::stringstream ss;
 		listMutex.lock();
-		EventList *list = new EventList;
+		auto list = new EventList;
 		ss << std::this_thread::get_id();
 		list->tid = ss.str();
 		lists.emplace_back(list);

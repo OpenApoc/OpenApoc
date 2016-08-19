@@ -15,7 +15,7 @@ GraphicButton::GraphicButton(sp<Image> image, sp<Image> imageDepressed, sp<Image
 {
 }
 
-GraphicButton::~GraphicButton() {}
+GraphicButton::~GraphicButton() = default;
 
 void GraphicButton::EventOccured(Event *e)
 {

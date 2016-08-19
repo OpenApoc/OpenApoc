@@ -11,7 +11,7 @@
 namespace OpenApoc
 {
 
-Image::~Image() {}
+Image::~Image() = default;
 
 Image::Image(Vec2<unsigned int> size)
     : size(size), dirty(true), bounds(0, 0, size.x, size.y), indexInSet(0)
@@ -20,7 +20,7 @@ Image::Image(Vec2<unsigned int> size)
 
 Surface::Surface(Vec2<unsigned int> size) : Image(size) {}
 
-Surface::~Surface() {}
+Surface::~Surface() = default;
 
 PaletteImage::PaletteImage(Vec2<unsigned int> size, uint8_t initialIndex)
     : Image(size), indices(new uint8_t[size.x * size.y])
@@ -29,7 +29,7 @@ PaletteImage::PaletteImage(Vec2<unsigned int> size, uint8_t initialIndex)
 		this->indices[i] = initialIndex;
 }
 
-PaletteImage::~PaletteImage() {}
+PaletteImage::~PaletteImage() = default;
 
 sp<RGBImage> PaletteImage::toRGBImage(sp<Palette> p)
 {
@@ -151,7 +151,7 @@ void RGBImage::saveBitmap(const UString &filename)
 	SDL_FreeSurface(bmp);
 }
 
-RGBImage::~RGBImage() {}
+RGBImage::~RGBImage() = default;
 
 RGBImageLock::RGBImageLock(sp<RGBImage> img, ImageLockUse use) : img(img), use(use)
 {
@@ -159,7 +159,7 @@ RGBImageLock::RGBImageLock(sp<RGBImage> img, ImageLockUse use) : img(img), use(u
 	// FIXME: Disallow multiple locks?
 }
 
-RGBImageLock::~RGBImageLock() {}
+RGBImageLock::~RGBImageLock() = default;
 
 void *RGBImageLock::getData() { return this->img->pixels.get(); }
 
@@ -169,7 +169,7 @@ PaletteImageLock::PaletteImageLock(sp<PaletteImage> img, ImageLockUse use) : img
 	// FIXME: Disallow multiple locks?
 }
 
-PaletteImageLock::~PaletteImageLock() {}
+PaletteImageLock::~PaletteImageLock() = default;
 
 void *PaletteImageLock::getData() { return this->img->indices.get(); }
 

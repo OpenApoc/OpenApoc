@@ -391,7 +391,7 @@ CityView::CityView(sp<GameState> state)
 		});
 }
 
-CityView::~CityView() {}
+CityView::~CityView() = default;
 
 void CityView::Begin()
 {

@@ -19,7 +19,7 @@ class FakeSceneryTileObject : public TileObject
 	{
 		this->name = "FAKE_SCENERY";
 	}
-	virtual ~FakeSceneryTileObject(){};
+	~FakeSceneryTileObject() override = default;
 
 	void setPosition(Vec3<float> newPosition) override
 	{

@@ -556,7 +556,7 @@ class FBOData : public RendererImageData
 		LogAssert(gl20::CheckFramebufferStatusEXT(gl20::FRAMEBUFFER_EXT) ==
 		          gl20::FRAMEBUFFER_COMPLETE_EXT);
 	}
-	virtual ~FBOData()
+	~FBOData() override
 	{
 		if (tex)
 			gl20::DeleteTextures(1, &tex);
@@ -583,7 +583,7 @@ class GLRGBImage : public RendererImageData
 		gl20::TexImage2D(gl20::TEXTURE_2D, 0, gl20::RGBA, parent->size.x, parent->size.y, 0,
 		                 gl20::RGBA, gl20::UNSIGNED_BYTE, l.getData());
 	}
-	virtual ~GLRGBImage() { gl20::DeleteTextures(1, &this->texID); }
+	~GLRGBImage() override { gl20::DeleteTextures(1, &this->texID); }
 };
 
 class GLPalette : public RendererImageData
@@ -603,7 +603,7 @@ class GLPalette : public RendererImageData
 		gl20::TexImage2D(gl20::TEXTURE_2D, 0, gl20::RGBA, parent->colours.size(), 1, 0, gl20::RGBA,
 		                 gl20::UNSIGNED_BYTE, parent->colours.data());
 	}
-	virtual ~GLPalette() { gl20::DeleteTextures(1, &this->texID); }
+	~GLPalette() override { gl20::DeleteTextures(1, &this->texID); }
 };
 
 class GLPaletteImage : public RendererImageData
@@ -625,7 +625,7 @@ class GLPaletteImage : public RendererImageData
 		gl20::TexImage2D(gl20::TEXTURE_2D, 0, 1, parent->size.x, parent->size.y, 0, gl20::RED,
 		                 gl20::UNSIGNED_BYTE, l.getData());
 	}
-	virtual ~GLPaletteImage() { gl20::DeleteTextures(1, &this->texID); }
+	~GLPaletteImage() override { gl20::DeleteTextures(1, &this->texID); }
 };
 
 class OGL20Renderer : public Renderer
@@ -679,7 +679,7 @@ class OGL20Renderer : public Renderer
 		gl20::Enable(gl20::BLEND);
 		gl20::BlendFunc(gl20::SRC_ALPHA, gl20::ONE_MINUS_SRC_ALPHA);
 	}
-	virtual ~OGL20Renderer(){};
+	~OGL20Renderer() override = default;
 	void clear(Colour c = Colour{0, 0, 0, 0}) override
 	{
 		this->flush();

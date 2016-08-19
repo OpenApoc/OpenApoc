@@ -21,7 +21,7 @@ ImagePreview::ImagePreview() : Stage()
 	updateImage();
 }
 
-ImagePreview::~ImagePreview() {}
+ImagePreview::~ImagePreview() = default;
 
 void ImagePreview::Begin() {}
 

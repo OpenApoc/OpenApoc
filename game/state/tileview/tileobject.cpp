@@ -12,7 +12,7 @@ TileObject::TileObject(TileMap &map, Type type, Vec3<float> bounds)
 {
 }
 
-TileObject::~TileObject() {}
+TileObject::~TileObject() = default;
 
 void TileObject::removeFromMap()
 {

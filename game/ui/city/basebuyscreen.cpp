@@ -19,7 +19,7 @@ BaseBuyScreen::BaseBuyScreen(sp<GameState> state, sp<Building> building)
 	base = mksp<Base>(*state, StateRef<Building>{state.get(), building});
 }
 
-BaseBuyScreen::~BaseBuyScreen() {}
+BaseBuyScreen::~BaseBuyScreen() = default;
 
 void BaseBuyScreen::Begin()
 {

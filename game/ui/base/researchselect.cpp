@@ -15,7 +15,7 @@ ResearchSelect::ResearchSelect(sp<GameState> state, sp<Lab> lab)
 {
 }
 
-ResearchSelect::~ResearchSelect() {}
+ResearchSelect::~ResearchSelect() = default;
 
 void ResearchSelect::Begin()
 {

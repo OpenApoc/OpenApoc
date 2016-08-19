@@ -33,7 +33,7 @@ void TileObjectDoodad::draw(Renderer &r, TileTransform &transform, Vec2<float> s
 	r.draw(sprite, transformedScreenPos);
 }
 
-TileObjectDoodad::~TileObjectDoodad() {}
+TileObjectDoodad::~TileObjectDoodad() = default;
 
 TileObjectDoodad::TileObjectDoodad(TileMap &map, sp<Doodad> doodad)
     : TileObject(map, Type::Doodad, Vec3<float>{0, 0, 0}), doodad(doodad)

@@ -49,7 +49,7 @@ PCK::PCK(Data &d, UString PckFilename, UString TabFilename)
 	ProcessFile(d, PckFilename, TabFilename, -1);
 }
 
-PCK::~PCK() {}
+PCK::~PCK() = default;
 
 void PCK::ProcessFile(Data &d, UString PckFilename, UString TabFilename, int Index)
 {

@@ -41,7 +41,7 @@ VEquipScreen::VEquipScreen(sp<GameState> state)
 	}
 }
 
-VEquipScreen::~VEquipScreen() {}
+VEquipScreen::~VEquipScreen() = default;
 
 void VEquipScreen::Begin()
 {

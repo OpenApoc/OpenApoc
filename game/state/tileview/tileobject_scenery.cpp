@@ -45,7 +45,7 @@ void TileObjectScenery::draw(Renderer &r, TileTransform &transform, Vec2<float> 
 		r.draw(overlaySprite, transformedScreenPos);
 }
 
-TileObjectScenery::~TileObjectScenery() {}
+TileObjectScenery::~TileObjectScenery() = default;
 
 TileObjectScenery::TileObjectScenery(TileMap &map, sp<Scenery> scenery)
     : TileObject(map, Type::Scenery, Vec3<float>{1, 1, 1}), scenery(scenery)

@@ -83,7 +83,7 @@ FormPreview::FormPreview() : Stage()
 	propertyeditor->BackgroundColour = {192, 192, 192, 255};
 }
 
-FormPreview::~FormPreview() {}
+FormPreview::~FormPreview() = default;
 
 void FormPreview::Begin() {}
 

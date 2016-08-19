@@ -17,7 +17,7 @@ BuildingScreen::BuildingScreen(sp<GameState> state, sp<Building> building)
 	menuform->FindControlTyped<Label>("TEXT_BUILDING_FUNCTION")->SetText(tr(building->function));
 }
 
-BuildingScreen::~BuildingScreen() {}
+BuildingScreen::~BuildingScreen() = default;
 
 void BuildingScreen::Begin() {}
 

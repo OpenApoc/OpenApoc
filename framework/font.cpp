@@ -11,7 +11,7 @@
 namespace OpenApoc
 {
 
-BitmapFont::~BitmapFont() {}
+BitmapFont::~BitmapFont() = default;
 
 sp<PaletteImage> BitmapFont::getString(const UString &Text)
 {

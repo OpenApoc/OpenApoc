@@ -205,7 +205,7 @@ class LodepngImageLoaderFactory : public OpenApoc::ImageLoaderFactory
 {
   public:
 	OpenApoc::ImageLoader *create() override { return new LodepngImageLoader(); }
-	virtual ~LodepngImageLoaderFactory() {}
+	~LodepngImageLoaderFactory() override = default;
 };
 
 class LodepngImageWriter : public OpenApoc::ImageWriter
@@ -290,7 +290,7 @@ class LodepngImageWriterFactory : public OpenApoc::ImageWriterFactory
 {
   public:
 	OpenApoc::ImageWriter *create() override { return new LodepngImageWriter(); }
-	virtual ~LodepngImageWriterFactory() {}
+	~LodepngImageWriterFactory() override = default;
 };
 
 } // anonymous namespace

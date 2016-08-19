@@ -732,7 +732,7 @@ class CueIO
 	static PHYSFS_Io *getIo(UString fileName, uint32_t lba, int64_t length, CUE_FileType ftype,
 	                        CUE_TrackMode tmode)
 	{
-		CueIO *cio = new CueIO(fileName, lba, length, ftype, tmode);
+		auto cio = new CueIO(fileName, lba, length, ftype, tmode);
 		if (!cio->fileStream)
 		{
 			delete cio;

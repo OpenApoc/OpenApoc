@@ -12,7 +12,7 @@ RadioButton::RadioButton(sp<RadioButtonGroup> Group, sp<Image> ImageChecked,
 {
 }
 
-RadioButton::~RadioButton() {}
+RadioButton::~RadioButton() = default;
 
 sp<Control> RadioButton::CopyTo(sp<Control> CopyParent)
 {

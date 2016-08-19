@@ -23,7 +23,7 @@ TileView::TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
 	LogInfo("dpySize: {%d,%d}", dpySize.x, dpySize.y);
 }
 
-TileView::~TileView() {}
+TileView::~TileView() = default;
 
 void TileView::Begin() {}
 

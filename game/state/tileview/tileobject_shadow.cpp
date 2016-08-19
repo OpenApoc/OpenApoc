@@ -80,7 +80,7 @@ void TileObjectShadow::setPosition(Vec3<float> newPosition)
 	TileObject::setPosition(shadowPosition);
 }
 
-TileObjectShadow::~TileObjectShadow() {}
+TileObjectShadow::~TileObjectShadow() = default;
 
 TileObjectShadow::TileObjectShadow(TileMap &map, sp<Vehicle> vehicle)
     : TileObject(map, Type::Vehicle, Vec3<float>{0, 0, 0}), owner(vehicle),

@@ -12,7 +12,7 @@ ScoreScreen::ScoreScreen(sp<GameState> state)
 {
 }
 
-ScoreScreen::~ScoreScreen() {}
+ScoreScreen::~ScoreScreen() = default;
 
 void ScoreScreen::Begin()
 {

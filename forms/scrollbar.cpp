@@ -18,7 +18,7 @@ ScrollBar::ScrollBar()
 	// LoadResources();
 }
 
-ScrollBar::~ScrollBar() {}
+ScrollBar::~ScrollBar() = default;
 
 void ScrollBar::LoadResources() {}
 
