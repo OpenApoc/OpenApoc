@@ -55,13 +55,13 @@
         <alignment horizontal="left" vertical="top"/>
         <font>SMALFONT</font>
       </label>
-      <label text="Progress">
+      <label text="Progress" id="TEXT_PROGRESS">
         <position x="251" y="63"/>
         <size height="15" width="80"/>
         <alignment horizontal="left" vertical="top"/>
         <font>SMALFONT</font>
       </label>
-      <label text="Skill">
+      <label text="Skill" id="TEXT_SKILL">
         <position x="345" y="63"/>
         <size height="15" width="50"/>
         <alignment horizontal="right" vertical="top"/>

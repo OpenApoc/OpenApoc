@@ -2,6 +2,7 @@
 
 #include "forms/forms.h"
 #include "framework/stage.h"
+#include "game/state/research.h"
 #include "game/state/stateobject.h"
 #include "library/sp.h"
 #include "library/vec.h"
@@ -21,8 +22,12 @@ class ResearchSelect : public Stage
 	sp<Lab> lab;
 
 	sp<GameState> state;
+	sp<ResearchTopic> current_topic;
+
+	std::map<sp<ResearchTopic>, sp<Control>> control_map;
 
 	void redrawResearchList();
+	void populateResearchList();
 
   public:
 	ResearchSelect(sp<GameState> state, sp<Lab> lab);

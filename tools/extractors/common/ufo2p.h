@@ -1,7 +1,9 @@
 #pragma once
 
 #include "game/state/organisation.h"
+#include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/facility_type.h"
+#include "game/state/rules/vammo_type.h"
 #include "game/state/rules/vehicle_type.h"
 #include "game/state/rules/vequipment_type.h"
 #include "tools/extractors/common/audio.h"

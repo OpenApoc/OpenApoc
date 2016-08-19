@@ -20,7 +20,9 @@ class Base : public StateObject<Base>
   public:
 	std::vector<std::vector<bool>> corridors;
 	std::vector<sp<Facility>> facilities;
-	std::map<UString, unsigned> inventory;
+	std::map<UString, unsigned> inventoryAgentEquipment;
+	std::map<UString, unsigned> inventoryVehicleEquipment;
+	std::map<UString, unsigned> inventoryVehicleAmmo;
 	UString name;
 	StateRef<Building> building;
 
