@@ -23,11 +23,13 @@ set (GAMESTATE_SOURCE_FILES
 	gametime.cpp
 	organisation.cpp
 	research.cpp
+	rules/aequipment_rules.cpp
 	rules/doodad_type.cpp
 	rules/facility_type.cpp
 	rules/scenery_tile_type.cpp
 	rules/ufo_growth.cpp
 	rules/ufo_incursion.cpp
+	rules/vammo_rules.cpp
 	rules/vehicle_type_rules.cpp
 	rules/vequipment_rules.cpp
 	savemanager.cpp
@@ -61,12 +63,14 @@ set (GAMESTATE_HEADER_FILES
 	gametime_facet.h
 	organisation.h
 	research.h
+	rules/aequipment_type.h
 	rules/doodad_type.h
 	rules/facility_type.h
 	rules/resource_aliases.h
 	rules/scenery_tile_type.h
 	rules/ufo_growth.h
 	rules/ufo_incursion.h
+	rules/vammo_type.h
 	rules/vehicle_type.h
 	rules/vequipment_type.h
 	savemanager.h
