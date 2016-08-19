@@ -123,7 +123,7 @@ bool ProviderWithChecksum::readDocument(const UString &path, UString &result)
 		}
 		else
 		{
-			LogWarning("Skipping missing checksum for file \"%s\"", path.c_str());
+			LogInfo("Skipping missing checksum for file \"%s\"", path.c_str());
 		}
 		return true;
 	}

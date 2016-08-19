@@ -32,7 +32,7 @@ void InitialGameStateExtractor::extractBuildings(GameState &state, UString bldFi
 		auto b = mksp<Building>();
 		if (alienBuilding)
 		{
-			LogWarning("Alien bld %d func %d", entry.name_idx, entry.function_idx);
+			LogInfo("Alien bld %d func %d", entry.name_idx, entry.function_idx);
 			// FIXME: albld.bld seems to have unexpected name_idx and function_idx?
 			b->name = data.alien_building_names->get(i);
 			b->function = b->name;
