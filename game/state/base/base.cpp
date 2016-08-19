@@ -85,7 +85,7 @@ static bool tryToPlaceInitialFacilities(GameState &state, Base &base)
 	{
 		StateRef<FacilityType> facilityType{&state, facilityTypePair.first};
 		auto count = facilityTypePair.second;
-		for (int i = 0; i < count; i++)
+		for (unsigned int i = 0; i < count; i++)
 		{
 			if (!randomlyPlaceFacility(state, base, facilityType))
 			{
