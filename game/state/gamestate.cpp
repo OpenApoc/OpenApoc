@@ -222,7 +222,7 @@ void GameState::startGame()
 	for (auto &pair : this->vehicle_equipment)
 	{
 		auto &equipmentID = pair.first;
-		base->inventory[equipmentID] = 10;
+		base->inventoryVehicleEquipment[equipmentID] = 10;
 	}
 
 	for (auto &agentTypePair : this->initial_agents)

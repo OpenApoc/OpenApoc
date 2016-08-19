@@ -184,7 +184,7 @@ void VEquipScreen::EventOccurred(Event *e)
 
 				// Return the equipment to the inventory
 				this->selected->removeEquipment(pair.second);
-				base->inventory[pair.second->type.id]++;
+				base->inventoryVehicleEquipment[pair.second->type.id]++;
 				// FIXME: Return ammo to inventory
 				// FIXME: what happens if we don't have the stores to return?
 				return;
@@ -217,12 +217,12 @@ void VEquipScreen::EventOccurred(Event *e)
 			equipmentGridPos /= EQUIP_GRID_SLOT_SIZE;
 			if (this->selected->canAddEquipment(equipmentGridPos, this->draggedEquipment))
 			{
-				if (base->inventory[draggedEquipment->id] <= 0)
+				if (base->inventoryVehicleEquipment[draggedEquipment->id] <= 0)
 				{
 					LogError("Trying to equip item \"%s\" with zero inventory",
 					         this->draggedEquipment->id.c_str());
 				}
-				base->inventory[draggedEquipment->id]--;
+				base->inventoryVehicleEquipment[draggedEquipment->id]--;
 				this->selected->addEquipment(*state, equipmentGridPos, this->draggedEquipment);
 				// FIXME: Add ammo to equipment
 			}
@@ -590,7 +590,7 @@ void VEquipScreen::Render()
 	{
 		auto inventoryControl = form->FindControlTyped<Graphic>("INVENTORY");
 		Vec2<int> inventoryPosition = inventoryControl->Location + form->Location;
-		for (auto &invPair : base->inventory)
+		for (auto &invPair : base->inventoryVehicleEquipment)
 		{
 			// The gap between the bottom of the inventory image and the count label
 			static const int INVENTORY_COUNT_Y_GAP = 4;

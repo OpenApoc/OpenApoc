@@ -122,7 +122,9 @@ void ResearchScreen::Begin()
 
 void ResearchScreen::Pause() {}
 
-void ResearchScreen::Resume() {}
+void ResearchScreen::Resume() {
+	form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
+}
 
 void ResearchScreen::Finish() {}
 
@@ -165,7 +167,8 @@ void ResearchScreen::EventOccurred(Event *e)
 				{
 					return;
 				}
-				Lab::setResearch(this->selected_lab->lab, {state.get(), ""});
+				Lab::setResearch(this->selected_lab->lab, {state.get(), ""}, state);
+				form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
 			}
 		}
 	}
@@ -308,8 +311,21 @@ void ResearchScreen::setCurrentLabInfo()
 		auto &topic = this->selected_lab->lab->current_project;
 		auto progressBar = form->FindControlTyped<Graphic>("GRAPHIC_PROGRESS_BAR");
 		auto progressImage = mksp<RGBImage>(progressBar->Size);
-		float projectProgress =
-		    clamp((float)topic->man_hours_progress / (float)topic->man_hours, 0.0f, 1.0f);
+		float projectProgress;
+		switch (this->selected_lab->lab->current_project->type)
+		{
+			case ResearchTopic::Type::BioChem:
+			case ResearchTopic::Type::Physics:
+				projectProgress = clamp((float)topic->man_hours_progress / (float)topic->man_hours, 0.0f, 1.0f);
+				break;
+			case ResearchTopic::Type::Engineering:
+				projectProgress = clamp((float)(topic->man_hours*this->selected_lab->lab->manufacture_done + this->selected_lab->lab->manufacture_man_hours_invested) / (float)(topic->man_hours * this->selected_lab->lab->manufacture_goal), 0.0f, 1.0f);
+				break;
+			default:
+				LogError("Unknown lab type");
+				break;
+
+		}
 		// This creates an image with the size of the PROGRESS_BAR control, then fills
 		// up a proportion of it with red pixels (starting from the left) corresponding
 		// to the progress of the project.
@@ -338,7 +354,7 @@ void ResearchScreen::setCurrentLabInfo()
 		auto topicTitle = form->FindControlTyped<Label>("TEXT_CURRENT_PROJECT");
 		topicTitle->SetText(tr("No Project"));
 		auto completionPercent = form->FindControlTyped<Label>("TEXT_PROJECT_COMPLETION");
-		topicTitle->SetText("");
+		completionPercent->SetText("");
 	}
 }
 // FIXME: Put this in the rules somewhere?

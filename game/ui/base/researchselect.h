@@ -3,6 +3,7 @@
 #include "forms/forms.h"
 #include "framework/stage.h"
 #include "game/state/stateobject.h"
+#include "game/state/research.h"
 #include "library/sp.h"
 #include "library/vec.h"
 
@@ -21,7 +22,8 @@ class ResearchSelect : public Stage
 	sp<Lab> lab;
 
 	sp<GameState> state;
-
+	sp<ResearchTopic> current_topic;
+	
 	void redrawResearchList();
 
   public:
