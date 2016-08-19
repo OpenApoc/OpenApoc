@@ -1509,7 +1509,6 @@ template <> void serializeOut(sp<SerializationNode> node, const ItemDependency &
 
 template <> void serializeOut(sp<SerializationNode> node, const ResearchTopic &r)
 {
-	LogWarning("outputting topic %s", r.name.c_str());
 	// Shared Research & Manufacture
 	serializeOut(node->addNode("name"), r.name);
 	serializeOut(node->addNode("description"), r.description);
