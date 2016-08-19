@@ -20,7 +20,7 @@ class ScoreScreen : public Stage
 
   public:
 	ScoreScreen(sp<GameState> state);
-	~ScoreScreen();
+	~ScoreScreen() override;
 	// Stage control
 	void Begin() override;
 	void Pause() override;

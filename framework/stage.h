@@ -99,7 +99,7 @@ class Stage : public std::enable_shared_from_this<Stage>
 	virtual bool IsTransition() = 0;
 
 	/* Need a virtual destructor to correctly call any subclass descructors */
-	virtual ~Stage() {}
+	virtual ~Stage() = default;
 };
 
 }; // namespace OpenApoc

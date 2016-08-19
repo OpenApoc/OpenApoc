@@ -16,7 +16,7 @@ class AEquipmentType : public StateObject<AEquipmentType>
   public:
 	AEquipmentType();
 
-	virtual ~AEquipmentType() = default;
+	~AEquipmentType() override = default;
 
 	UString id;
 	UString name;

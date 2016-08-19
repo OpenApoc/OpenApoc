@@ -11,7 +11,7 @@ class TileObjectVehicle : public TileObject
   public:
 	void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
 	          TileViewMode mode) override;
-	virtual ~TileObjectVehicle();
+	~TileObjectVehicle() override;
 
 	sp<Vehicle> getVehicle() const;
 	const Vec3<float> &getDirection() { return this->getVehicle()->velocity; }

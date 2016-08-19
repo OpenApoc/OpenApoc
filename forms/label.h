@@ -25,7 +25,7 @@ class Label : public Control
 	bool WordWrap;
 
 	Label(const UString &Text = "", sp<BitmapFont> font = nullptr);
-	virtual ~Label();
+	~Label() override;
 
 	void EventOccured(Event *e) override;
 	void Update() override;

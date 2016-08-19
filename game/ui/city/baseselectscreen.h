@@ -22,7 +22,7 @@ class BaseSelectScreen : public TileView
 
   public:
 	BaseSelectScreen(sp<GameState> state, Vec3<float> centerPos);
-	~BaseSelectScreen();
+	~BaseSelectScreen() override;
 	// Stage control
 	void Begin() override;
 	void Pause() override;

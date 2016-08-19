@@ -16,7 +16,7 @@ class DifficultyMenu : public Stage
 
   public:
 	DifficultyMenu();
-	~DifficultyMenu();
+	~DifficultyMenu() override;
 	// Stage control
 	void Begin() override;
 	void Pause() override;

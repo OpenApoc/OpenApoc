@@ -38,7 +38,7 @@ class SaveMenu : public Stage
 
   public:
 	SaveMenu(SaveMenuAction saveMenuAction, sp<GameState> gameState);
-	~SaveMenu();
+	~SaveMenu() override;
 	// Stage control
 	void Begin() override;
 	void Pause() override;

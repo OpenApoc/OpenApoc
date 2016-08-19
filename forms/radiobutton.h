@@ -25,7 +25,7 @@ class RadioButton : public CheckBox
   public:
 	RadioButton(sp<RadioButtonGroup> radioButtonGroup = nullptr, sp<Image> ImageChecked = nullptr,
 	            sp<Image> ImageUnchecked = nullptr);
-	virtual ~RadioButton();
+	~RadioButton() override;
 	void SetChecked(bool checked) override;
 
 	sp<Control> CopyTo(sp<Control> CopyParent) override;

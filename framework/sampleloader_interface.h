@@ -11,7 +11,7 @@ class Data;
 class SampleLoader
 {
   public:
-	virtual ~SampleLoader() {}
+	virtual ~SampleLoader() = default;
 	virtual sp<Sample> loadSample(UString path) = 0;
 };
 
@@ -19,7 +19,7 @@ class SampleLoaderFactory
 {
   public:
 	virtual SampleLoader *create(Data &data) = 0;
-	virtual ~SampleLoaderFactory() {}
+	virtual ~SampleLoaderFactory() = default;
 };
 
 SampleLoaderFactory *getRAWSampleLoaderFactory();

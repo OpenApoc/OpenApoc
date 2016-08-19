@@ -41,7 +41,7 @@ class ScrollBar : public Control
 	int LargeChange;
 
 	ScrollBar();
-	virtual ~ScrollBar();
+	~ScrollBar() override;
 
 	void EventOccured(Event *e) override;
 	void Update() override;

@@ -45,7 +45,7 @@ class LazyImage : public Image
 
   public:
 	LazyImage();
-	virtual ~LazyImage() = default;
+	~LazyImage() override = default;
 	sp<Image> &getRealImage();
 };
 
@@ -54,7 +54,7 @@ class Surface : public Image
 {
   public:
 	Surface(Vec2<unsigned int> size);
-	virtual ~Surface();
+	~Surface() override;
 };
 
 class PaletteImage : public Image
@@ -65,7 +65,7 @@ class PaletteImage : public Image
 
   public:
 	PaletteImage(Vec2<unsigned int> size, uint8_t initialIndex = 0);
-	~PaletteImage();
+	~PaletteImage() override;
 	sp<RGBImage> toRGBImage(sp<Palette> p);
 	static void blit(sp<PaletteImage> src, sp<PaletteImage> dst,
 	                 Vec2<unsigned int> srcOffset = {0, 0}, Vec2<unsigned int> dstOffset = {0, 0});
@@ -111,7 +111,7 @@ class RGBImage : public Image
 
   public:
 	RGBImage(Vec2<unsigned int> size, Colour initialColour = Colour(0, 0, 0, 0));
-	~RGBImage();
+	~RGBImage() override;
 	void saveBitmap(const UString &filename);
 	static void blit(sp<RGBImage> src, sp<RGBImage> dst, Vec2<unsigned int> srcOffset = {0, 0},
 	                 Vec2<unsigned int> dstOffset = {0, 0});

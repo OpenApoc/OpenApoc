@@ -25,7 +25,7 @@ class CheckBox : public Control
 
   public:
 	CheckBox(sp<Image> ImageChecked = nullptr, sp<Image> ImageUnchecked = nullptr);
-	virtual ~CheckBox();
+	~CheckBox() override;
 
 	void EventOccured(Event *e) override;
 	void Update() override;

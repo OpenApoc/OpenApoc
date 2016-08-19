@@ -30,7 +30,7 @@ class BaseStage : public Stage
 
   public:
 	BaseStage(sp<GameState> state);
-	~BaseStage();
+	~BaseStage() override;
 	// Stage control
 	void Begin() override;
 	void Render() override;

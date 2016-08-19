@@ -12,7 +12,7 @@ class TileObjectShadow : public TileObject
   public:
 	void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
 	          TileViewMode mode) override;
-	virtual ~TileObjectShadow();
+	~TileObjectShadow() override;
 	void setPosition(Vec3<float> newPosition) override;
 	Vec3<float> getPosition() const override;
 

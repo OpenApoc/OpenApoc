@@ -31,7 +31,7 @@ class ResearchSelect : public Stage
 
   public:
 	ResearchSelect(sp<GameState> state, sp<Lab> lab);
-	~ResearchSelect();
+	~ResearchSelect() override;
 	// Stage control
 	void Begin() override;
 	void Pause() override;

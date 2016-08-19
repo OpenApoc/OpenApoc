@@ -39,7 +39,7 @@ class TextButton : public Control
 	ButtonRenderStyle RenderStyle;
 
 	TextButton(const UString &Text = "", sp<BitmapFont> font = nullptr);
-	virtual ~TextButton();
+	~TextButton() override;
 
 	void EventOccured(Event *e) override;
 	void Update() override;

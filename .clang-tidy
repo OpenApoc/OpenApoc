@@ -1,6 +1,6 @@
 ---
 Checks:          'clang-diagnostic-*,clang-analyzer-*,-clang-analyzer-alpha*,misc-static-assert,modernize-use-auto,modernize-use-default,modernize-usenullptr,modernize-use-override,readability-identifier-naming'
-HeaderFilterRegex: ''
+HeaderFilterRegex: 'forms/.*|framework/.*|game/.*|library/.*|tests/.*|tools/.*'
 AnalyzeTemporaryDtors: false
 User:            jonny
 CheckOptions:    

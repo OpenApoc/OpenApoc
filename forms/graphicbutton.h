@@ -29,7 +29,7 @@ class GraphicButton : public Control
 
 	GraphicButton(sp<Image> image = nullptr, sp<Image> imageDepressed = nullptr,
 	              sp<Image> imageHover = nullptr);
-	virtual ~GraphicButton();
+	~GraphicButton() override;
 
 	void EventOccured(Event *e) override;
 	void Update() override;

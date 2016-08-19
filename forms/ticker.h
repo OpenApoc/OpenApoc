@@ -31,7 +31,7 @@ class Ticker : public Control
 	VerticalAlignment TextVAlign;
 
 	Ticker(sp<BitmapFont> font = nullptr);
-	virtual ~Ticker();
+	~Ticker() override;
 
 	void EventOccured(Event *e) override;
 	void Update() override;

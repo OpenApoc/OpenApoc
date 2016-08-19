@@ -18,7 +18,7 @@ class DebugMenu : public Stage
 
   public:
 	DebugMenu();
-	~DebugMenu();
+	~DebugMenu() override;
 	// Stage control
 	void Begin() override;
 	void Pause() override;

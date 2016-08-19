@@ -14,7 +14,7 @@ class Form : public Control
   public:
 	Form(tinyxml2::XMLElement *FormConfiguration);
 	Form();
-	virtual ~Form();
+	~Form() override;
 
 	virtual void ReadFormStyle(tinyxml2::XMLElement *FormConfiguration);
 

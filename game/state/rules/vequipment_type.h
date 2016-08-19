@@ -32,7 +32,7 @@ class VEquipmentType : public StateObject<VEquipmentType>
 	};
 	static const std::map<User, UString> UserMap;
 
-	virtual ~VEquipmentType() = default;
+	~VEquipmentType() override = default;
 
 	// Shared stuff
 	Type type;

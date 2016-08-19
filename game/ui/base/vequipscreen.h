@@ -54,7 +54,7 @@ class VEquipScreen : public Stage
 
   public:
 	VEquipScreen(sp<GameState> state);
-	virtual ~VEquipScreen();
+	~VEquipScreen() override;
 
 	void Begin() override;
 	void Pause() override;

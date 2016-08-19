@@ -17,7 +17,7 @@ class VAmmoType : public StateObject<VAmmoType>
   public:
 	VAmmoType();
 
-	virtual ~VAmmoType() = default;
+	~VAmmoType() override = default;
 
 	UString id;
 	UString name;

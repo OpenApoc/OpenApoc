@@ -18,7 +18,9 @@ class SerializationDataProvider
 	// should be called after all reads are finished
 	virtual bool finalizeSave() = 0;
 
-	SerializationDataProvider(){};
-	virtual ~SerializationDataProvider(){};
+	SerializationDataProvider() = default;
+	;
+	virtual ~SerializationDataProvider() = default;
+	;
 };
 }

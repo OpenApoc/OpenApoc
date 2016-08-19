@@ -20,7 +20,7 @@ class InfiltrationScreen : public Stage
 
   public:
 	InfiltrationScreen(sp<GameState> state);
-	~InfiltrationScreen();
+	~InfiltrationScreen() override;
 	// Stage control
 	void Begin() override;
 	void Pause() override;

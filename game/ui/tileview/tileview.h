@@ -44,7 +44,7 @@ class TileView : public Stage, public TileTransform
 
 	TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
 	         TileViewMode initialMode);
-	~TileView();
+	~TileView() override;
 
 	Vec2<int> getScreenOffset() const;
 	void setScreenCenterTile(Vec2<float> center);

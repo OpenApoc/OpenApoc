@@ -20,7 +20,7 @@ class ImagePreview : public Stage
 
   public:
 	ImagePreview();
-	~ImagePreview();
+	~ImagePreview() override;
 	// Stage control
 	void Begin() override;
 	void Pause() override;

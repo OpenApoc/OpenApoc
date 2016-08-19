@@ -10,7 +10,7 @@ class Data;
 class MusicLoader
 {
   public:
-	virtual ~MusicLoader() {}
+	virtual ~MusicLoader() = default;
 	virtual sp<MusicTrack> loadMusic(UString path) = 0;
 };
 
@@ -18,7 +18,7 @@ class MusicLoaderFactory
 {
   public:
 	virtual MusicLoader *create(Data &data) = 0;
-	virtual ~MusicLoaderFactory() {}
+	virtual ~MusicLoaderFactory() = default;
 };
 
 MusicLoaderFactory *getRAWMusicLoaderFactory();

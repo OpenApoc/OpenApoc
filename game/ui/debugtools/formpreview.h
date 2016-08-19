@@ -27,7 +27,7 @@ class FormPreview : public Stage
 
   public:
 	FormPreview();
-	~FormPreview();
+	~FormPreview() override;
 	// Stage control
 	void Begin() override;
 	void Pause() override;

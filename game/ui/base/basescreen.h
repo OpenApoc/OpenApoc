@@ -36,7 +36,7 @@ class BaseScreen : public BaseStage
 
   public:
 	BaseScreen(sp<GameState> state);
-	~BaseScreen();
+	~BaseScreen() override;
 	// Stage control
 	void Begin() override;
 	void Pause() override;

@@ -2402,7 +2402,7 @@ namespace gl20
 			
 			void LoadExtByName(std::vector<MapEntry> &table, const char *extensionName)
 			{
-				std::vector<MapEntry>::iterator entry = std::find_if(table.begin(), table.end(), MapCompare(extensionName));
+				auto entry = std::find_if(table.begin(), table.end(), MapCompare(extensionName));
 				
 				if(entry != table.end())
 				{

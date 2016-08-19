@@ -36,7 +36,7 @@ class VehicleMover
 class Vehicle : public StateObject<Vehicle>, public std::enable_shared_from_this<Vehicle>
 {
   public:
-	virtual ~Vehicle();
+	~Vehicle() override;
 	Vehicle();
 
 	static const unsigned SHIELD_RECHARGE_TIME = TICKS_PER_SECOND * 200;

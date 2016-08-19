@@ -30,7 +30,7 @@ class City : public StateObject<City>
 {
   public:
 	City() = default;
-	~City();
+	~City() override;
 
 	void initMap();
 

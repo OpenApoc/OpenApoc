@@ -19,7 +19,7 @@ class MessageLogScreen : public Stage
 
   public:
 	MessageLogScreen(sp<GameState> state);
-	~MessageLogScreen();
+	~MessageLogScreen() override;
 	// Stage control
 	void Begin() override;
 	void Pause() override;

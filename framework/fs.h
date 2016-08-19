@@ -27,7 +27,7 @@ class IFile : public std::istream
 	friend class FileSystem;
 
   public:
-	~IFile();
+	~IFile() override;
 	size_t size() const;
 	std::unique_ptr<char[]> readAll();
 	bool readule16(uint16_t &val);

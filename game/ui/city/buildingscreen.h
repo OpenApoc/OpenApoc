@@ -21,7 +21,7 @@ class BuildingScreen : public Stage
 
   public:
 	BuildingScreen(sp<GameState> state, sp<Building> building);
-	~BuildingScreen();
+	~BuildingScreen() override;
 	// Stage control
 	void Begin() override;
 	void Pause() override;

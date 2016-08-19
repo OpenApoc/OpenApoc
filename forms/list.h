@@ -30,7 +30,7 @@ class ListBox : public Control
 
 	ListBox();
 	ListBox(sp<ScrollBar> ExternalScrollBar);
-	virtual ~ListBox();
+	~ListBox() override;
 
 	void EventOccured(Event *e) override;
 	void Update() override;

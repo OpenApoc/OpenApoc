@@ -11,7 +11,7 @@ class TileObjectDoodad : public TileObject
   public:
 	void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
 	          TileViewMode mode) override;
-	virtual ~TileObjectDoodad();
+	~TileObjectDoodad() override;
 
 	std::weak_ptr<Doodad> doodad;
 

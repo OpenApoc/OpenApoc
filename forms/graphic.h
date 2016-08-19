@@ -25,7 +25,7 @@ class Graphic : public Control
 	bool AutoSize;
 
 	Graphic(sp<Image> Image = nullptr);
-	virtual ~Graphic();
+	~Graphic() override;
 
 	void EventOccured(Event *e) override;
 	void Update() override;

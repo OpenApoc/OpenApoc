@@ -11,7 +11,7 @@ class TileObjectScenery : public TileObject
   public:
 	void draw(Renderer &r, TileTransform &transform, Vec2<float> screenPosition,
 	          TileViewMode mode) override;
-	virtual ~TileObjectScenery();
+	~TileObjectScenery() override;
 
 	std::weak_ptr<Scenery> scenery;
 

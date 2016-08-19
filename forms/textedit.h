@@ -37,7 +37,7 @@ class TextEdit : public Control
 	VerticalAlignment TextVAlign;
 
 	TextEdit(const UString &Text = "", sp<BitmapFont> font = nullptr);
-	virtual ~TextEdit();
+	~TextEdit() override;
 
 	void EventOccured(Event *e) override;
 	void Update() override;

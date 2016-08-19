@@ -20,7 +20,7 @@ class InGameOptions : public Stage
 
   public:
 	InGameOptions(sp<GameState> state);
-	~InGameOptions();
+	~InGameOptions() override;
 	// Stage control
 	void Begin() override;
 	void Pause() override;

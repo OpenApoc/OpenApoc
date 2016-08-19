@@ -66,7 +66,7 @@ template <typename T> class StateRef
 	StateRef() : state(nullptr){};
 	StateRef(const GameState *state) : state(state) {}
 	StateRef(const GameState *state, const UString &id) : state(state), id(id) {}
-	StateRef(const StateRef<T> &other) : obj(other.obj), state(other.state), id(other.id) {}
+	StateRef(const StateRef<T> &other) = default;
 
 	StateRef(const GameState *state, sp<T> ptr) : obj(ptr), state(state)
 	{
@@ -156,13 +156,7 @@ template <typename T> class StateRef
 			resolve();
 		return obj.get() != other;
 	}
-	StateRef<T> &operator=(const StateRef<T> &other)
-	{
-		state = other.state;
-		obj = other.obj;
-		id = other.id;
-		return *this;
-	}
+	StateRef<T> &operator=(const StateRef<T> &other) = default;
 	StateRef<T> &operator=(const UString newId)
 	{
 		obj = nullptr;

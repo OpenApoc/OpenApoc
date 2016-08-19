@@ -31,7 +31,7 @@ class UfopaediaCategoryView : public Stage
   public:
 	UfopaediaCategoryView(sp<GameState> state, sp<UfopaediaCategory> cat,
 	                      sp<UfopaediaEntry> entry = nullptr);
-	~UfopaediaCategoryView();
+	~UfopaediaCategoryView() override;
 
 	// Stage control
 	void Begin() override;

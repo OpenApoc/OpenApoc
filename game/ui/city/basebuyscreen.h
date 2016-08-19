@@ -28,7 +28,7 @@ class BaseBuyScreen : public Stage
 
   public:
 	BaseBuyScreen(sp<GameState> state, sp<Building> building);
-	~BaseBuyScreen();
+	~BaseBuyScreen() override;
 	// Stage control
 	void Begin() override;
 	void Pause() override;

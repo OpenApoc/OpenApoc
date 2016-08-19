@@ -16,7 +16,7 @@ class OptionsMenu : public Stage
 
   public:
 	OptionsMenu();
-	~OptionsMenu();
+	~OptionsMenu() override;
 	// Stage control
 	void Begin() override;
 	void Pause() override;

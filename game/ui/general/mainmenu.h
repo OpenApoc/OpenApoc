@@ -15,7 +15,7 @@ class MainMenu : public Stage
 
   public:
 	MainMenu();
-	~MainMenu();
+	~MainMenu() override;
 	// Stage control
 	void Begin() override;
 	void Pause() override;

@@ -46,7 +46,7 @@ class AudioFormat
 class BackendSampleData
 {
   public:
-	virtual ~BackendSampleData() {}
+	virtual ~BackendSampleData() = default;
 };
 
 class Sample : public ResObject
@@ -57,7 +57,7 @@ class Sample : public ResObject
 	std::unique_ptr<uint8_t[]> data;
 	sp<BackendSampleData> backendData;
 
-	virtual ~Sample() {}
+	virtual ~Sample() = default;
 };
 
 class MusicTrack : public ResObject
@@ -77,13 +77,13 @@ class MusicTrack : public ResObject
 	                                  void *sampleBuffer, unsigned int *returnedSamples)>
 	    callback;
 	virtual const UString &getName() const = 0;
-	virtual ~MusicTrack() {}
+	virtual ~MusicTrack() = default;
 };
 
 class SoundBackend
 {
   public:
-	virtual ~SoundBackend() {}
+	virtual ~SoundBackend() = default;
 	virtual void playSample(sp<Sample> sample, float gain = 1.0f) = 0;
 	virtual void playMusic(std::function<void(void *)> finishedCallback,
 	                       void *callbackData = nullptr) = 0;
@@ -126,7 +126,7 @@ class JukeBox
 		Once,
 		Loop,
 	};
-	virtual ~JukeBox() {}
+	virtual ~JukeBox() = default;
 	virtual void play(std::vector<UString> tracks, PlayMode mode = PlayMode::Loop) = 0;
 	virtual void stop() = 0;
 };

@@ -28,7 +28,7 @@ class MessageBox : public Stage
 	MessageBox(const UString &title, const UString &text, ButtonOptions buttons,
 	           std::function<void()> callbackYes = std::function<void()>(),
 	           std::function<void()> callbackNo = std::function<void()>());
-	~MessageBox();
+	~MessageBox() override;
 	// Stage control
 	void Begin() override;
 	void Pause() override;

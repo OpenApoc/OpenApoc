@@ -18,7 +18,7 @@ class UfopaediaView : public Stage
 
   public:
 	UfopaediaView(sp<GameState> state);
-	~UfopaediaView();
+	~UfopaediaView() override;
 	// Stage control
 	void Begin() override;
 	void Pause() override;
