@@ -5,9 +5,6 @@
 #include <boost/filesystem.hpp>
 #include <iostream>
 
-#undef MINIZ_HEADER_FILE_ONLY
-#include "dependencies/miniz/miniz.c"
-
 namespace fs = boost::filesystem;
 
 namespace OpenApoc

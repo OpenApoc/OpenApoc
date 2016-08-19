@@ -270,6 +270,7 @@ target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_Library)
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibSmacker)
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibPugixml)
 target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_LibLodepng)
+target_link_libraries(OpenApoc_Framework PUBLIC OpenApoc_Miniz)
 
 # Physfs provides .iso reader & overlays etc.
 pkg_check_modules(PC_PHYSFS REQUIRED physfs>=2.0.0)

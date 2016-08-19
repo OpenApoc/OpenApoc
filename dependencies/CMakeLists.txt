@@ -31,6 +31,19 @@ target_include_directories(OpenApoc_LibSmacker PRIVATE
 
 target_compile_definitions(OpenApoc_LibSmacker PUBLIC PTHREADS_AVAILABLE)
 
+set (MINIZ_SOURCE_FILES
+	miniz/miniz.c)
+source_group(miniz\\sources FILES ${MINIZ_SOURCE_FILES})
+
+list(APPEND ALL_SOURCE_FILES ${MINIZ_SOURCE_FILES})
+
+add_library(OpenApoc_Miniz STATIC ${MINIZ_SOURCE_FILES})
+
+target_include_directories(OpenApoc_Miniz PUBLIC ${CMAKE_SOURCE_DIR})
+target_include_directories(OpenApoc_Miniz PRIVATE
+		${CMAKE_SOURCE_DIR}/dependencies/miniz)
+
+target_compile_definitions(OpenApoc_Miniz PUBLIC PTHREADS_AVAILABLE)
 
 set (LIBPUGIXML_SOURCE_FILES
 		pugixml/src/pugixml.cpp)
