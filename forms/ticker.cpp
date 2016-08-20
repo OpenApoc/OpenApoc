@@ -19,15 +19,15 @@ Ticker::Ticker(sp<BitmapFont> font)
 
 Ticker::~Ticker() = default;
 
-void Ticker::EventOccured(Event *e) { Control::EventOccured(e); }
+void Ticker::eventOccured(Event *e) { Control::eventOccured(e); }
 
-void Ticker::OnRender()
+void Ticker::onRender()
 {
 	int xpos;
 	int ypos;
 	if (!animating)
 	{
-		xpos = Align(TextHAlign, Size.x, font->GetFontWidth(text));
+		xpos = align(TextHAlign, Size.x, font->getFontWidth(text));
 		ypos = 0;
 
 		auto textImage = font->getString(text);
@@ -36,7 +36,7 @@ void Ticker::OnRender()
 	else
 	{
 		UString out = text;
-		xpos = Align(TextHAlign, Size.x, font->GetFontWidth(out));
+		xpos = align(TextHAlign, Size.x, font->getFontWidth(out));
 		ypos = 0 - animTimer / 4;
 		auto outImage = font->getString(out);
 		fw().renderer->draw(outImage, Vec2<float>{xpos, ypos});
@@ -44,7 +44,7 @@ void Ticker::OnRender()
 		if (!messages.empty())
 		{
 			UString in = messages.front();
-			xpos = Align(TextHAlign, Size.x, font->GetFontWidth(in));
+			xpos = align(TextHAlign, Size.x, font->getFontWidth(in));
 			ypos = 15 - animTimer / 4;
 			auto inImage = font->getString(in);
 			fw().renderer->draw(inImage, Vec2<float>{xpos, ypos});
@@ -52,7 +52,7 @@ void Ticker::OnRender()
 	}
 }
 
-void Ticker::Update()
+void Ticker::update()
 {
 	if (text.empty() && messages.empty())
 		return;
@@ -87,15 +87,15 @@ void Ticker::Update()
 	}
 }
 
-void Ticker::UnloadResources() {}
+void Ticker::unloadResources() {}
 
-void Ticker::AddMessage(const UString &Text) { messages.emplace(Text); }
+void Ticker::addMessage(const UString &Text) { messages.emplace(Text); }
 
-sp<BitmapFont> Ticker::GetFont() const { return font; }
+sp<BitmapFont> Ticker::getFont() const { return font; }
 
-void Ticker::SetFont(sp<BitmapFont> NewFont) { font = NewFont; }
+void Ticker::setFont(sp<BitmapFont> NewFont) { font = NewFont; }
 
-sp<Control> Ticker::CopyTo(sp<Control> CopyParent)
+sp<Control> Ticker::copyTo(sp<Control> CopyParent)
 {
 	sp<Ticker> copy;
 	if (CopyParent)
@@ -108,19 +108,19 @@ sp<Control> Ticker::CopyTo(sp<Control> CopyParent)
 	}
 	copy->TextHAlign = this->TextHAlign;
 	copy->TextVAlign = this->TextVAlign;
-	CopyControlData(copy);
+	copyControlData(copy);
 	return copy;
 }
 
-void Ticker::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
+void Ticker::configureSelfFromXml(tinyxml2::XMLElement *Element)
 {
-	Control::ConfigureSelfFromXML(Element);
+	Control::configureSelfFromXml(Element);
 	tinyxml2::XMLElement *subnode;
 	UString attribvalue;
 
 	if (Element->FirstChildElement("font") != nullptr)
 	{
-		font = ui().GetFont(Element->FirstChildElement("font")->GetText());
+		font = ui().getFont(Element->FirstChildElement("font")->GetText());
 	}
 	subnode = Element->FirstChildElement("alignment");
 	if (subnode != nullptr)

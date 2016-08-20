@@ -77,7 +77,7 @@ class CueParser
 		UString cmd(command);
 		if (cmd.toUpper() != "FILE")
 		{
-			LogInfo("Encountered unexpected command: \"%s\", ignoring", cmd.c_str());
+			LogInfo("Encountered unexpected command: \"%s\", ignoring", cmd.cStr());
 			return false;
 		}
 		// auto matchIter = std::sregex_iterator(arg.begin(), arg.end(), fileArgRegex);
@@ -113,7 +113,7 @@ class CueParser
 		if (last_char >= first_char)
 		{
 			dataFileName = arg.substr(first_char, last_char - first_char + 1);
-			LogInfo("Reading from \"%s\"", dataFileName.c_str());
+			LogInfo("Reading from \"%s\"", dataFileName.cStr());
 		}
 		else
 		{
@@ -130,7 +130,7 @@ class CueParser
 		if (first_char == arg.size())
 		{
 			LogError("File type not specified for \"%s\" (arguments are: \"%s\")",
-			         dataFileName.c_str(), arg.c_str());
+			         dataFileName.cStr(), arg.c_str());
 			return false;
 		}
 		last_char = arg.size() - 1;
@@ -143,7 +143,7 @@ class CueParser
 
 		if (fileTypeStr.toUpper() != "BINARY")
 		{
-			LogError("Unsupported file type: \"%s\"", fileTypeStr.c_str());
+			LogError("Unsupported file type: \"%s\"", fileTypeStr.cStr());
 			parserState = PARSER_ERROR;
 			fileType = CueFileType::FT_UNDEFINED;
 			return false;
@@ -161,7 +161,7 @@ class CueParser
 			// According to
 			// https://www.gnu.org/software/ccd2cue/manual/html_node/FILE-_0028CUE-Command_0029.html#FILE-_0028CUE-Command_0029
 			// only TRACK is allowed after FILE
-			LogError("Encountered unexpected command: \"%s\" (only TRACK is allowed)", cmd.c_str());
+			LogError("Encountered unexpected command: \"%s\" (only TRACK is allowed)", cmd.cStr());
 			parserState = PARSER_ERROR;
 			fileType = CueFileType::FT_UNDEFINED;
 			return false;
@@ -213,7 +213,7 @@ class CueParser
 			trackMode = CueTrackMode::MODE2_2352;
 		if (trackMode == CueTrackMode::MODE_UNDEFINED)
 		{
-			LogError("Unknown/unimplemented mode \"%s\"", modeStr.c_str());
+			LogError("Unknown/unimplemented mode \"%s\"", modeStr.cStr());
 			parserState = PARSER_ERROR;
 			return false;
 		}
@@ -228,7 +228,7 @@ class CueParser
 		// valid
 		if (cmd.toUpper() != "INDEX")
 		{
-			LogInfo("Encountered unexpected/unknown command: \"%s\", ignoring", cmd.c_str());
+			LogInfo("Encountered unexpected/unknown command: \"%s\", ignoring", cmd.cStr());
 			return false;
 		}
 		// FIXME: I seriously could not make heads or tails of these indices.
@@ -237,7 +237,7 @@ class CueParser
 
 	bool parse(UString cueFilename)
 	{
-		boost::filesystem::path cueFilePath(cueFilename.c_str());
+		boost::filesystem::path cueFilePath(cueFilename.cStr());
 
 		std::ifstream cueFile(cueFilename.str(), std::ios::in);
 		if (!cueFile)
@@ -662,19 +662,19 @@ class CueIO
 
 	static PHYSFS_Io *createIo()
 	{
-		return new PHYSFS_Io{0,          nullptr,      CueIO_read,      CueIO_write, CueIO_seek,
-		                     CueIO_tell, CueIO_length, CueIO_duplicate, CueIO_flush, CueIO_destroy};
+		return new PHYSFS_Io{0,         nullptr,     cueIoRead,      cueIoWrite, cueIoSeek,
+		                     cueIoTell, cueIoLength, cueIoDuplicate, cueIoFlush, cueIoDestroy};
 	}
 
   public:
-	static PHYSFS_sint64 CueIO_read(PHYSFS_Io *io, void *buffer, PHYSFS_uint64 len)
+	static PHYSFS_sint64 cueIoRead(PHYSFS_Io *io, void *buffer, PHYSFS_uint64 len)
 	{
 		CueIO *cio = (CueIO *)io->opaque;
 		return cio->read(buffer, len);
 	}
 
 	// We always ignore write requests
-	static PHYSFS_sint64 CueIO_write(PHYSFS_Io *io, const void *buffer, PHYSFS_uint64 len)
+	static PHYSFS_sint64 cueIoWrite(PHYSFS_Io *io, const void *buffer, PHYSFS_uint64 len)
 	{
 		std::ignore = io;
 		std::ignore = buffer;
@@ -682,19 +682,19 @@ class CueIO
 		return -1;
 	}
 
-	static int CueIO_seek(PHYSFS_Io *io, PHYSFS_uint64 offset)
+	static int cueIoSeek(PHYSFS_Io *io, PHYSFS_uint64 offset)
 	{
 		CueIO *cio = (CueIO *)io->opaque;
 		return cio->seek(offset);
 	}
 
-	static PHYSFS_sint64 CueIO_tell(PHYSFS_Io *io)
+	static PHYSFS_sint64 cueIoTell(PHYSFS_Io *io)
 	{
 		CueIO *cio = (CueIO *)io->opaque;
 		return cio->tell();
 	}
 
-	static PHYSFS_sint64 CueIO_length(PHYSFS_Io *io)
+	static PHYSFS_sint64 cueIoLength(PHYSFS_Io *io)
 	{
 		CueIO *cio = (CueIO *)io->opaque;
 		return cio->length;
@@ -706,7 +706,7 @@ class CueIO
 	// not true (according to implementations in the code).
 	// In fact you have to construct a new PHYSFS_Io object, with no
 	// dependencies on the old one.
-	static PHYSFS_Io *CueIO_duplicate(PHYSFS_Io *io)
+	static PHYSFS_Io *cueIoDuplicate(PHYSFS_Io *io)
 	{
 		CueIO *cio = (CueIO *)io->opaque;
 		// Just go ahead and construct a new file stream
@@ -716,13 +716,13 @@ class CueIO
 		return retval;
 	}
 
-	static int CueIO_flush(PHYSFS_Io *io)
+	static int cueIoFlush(PHYSFS_Io *io)
 	{
 		std::ignore = io;
 		return 1;
 	}
 
-	static void CueIO_destroy(PHYSFS_Io *io)
+	static void cueIoDestroy(PHYSFS_Io *io)
 	{
 		CueIO *cio = (CueIO *)io->opaque;
 		delete cio;
@@ -875,7 +875,7 @@ class CueArchiver
 		parent.offset = location;
 		parent.timestamp = d_datetime.toUnixTime();
 #if 0 // Stop archiver from being extremely chatty
-        LogInfo("Adding entry: %s", parent.name.c_str());
+        LogInfo("Adding entry: %s", parent.name.cStr());
         LogInfo("  Location %" PRIu64, parent.offset);
         LogInfo("  Length: %" PRIu64, parent.length);
 #endif
@@ -887,7 +887,7 @@ class CueArchiver
 		parent.type = FSEntry::FS_DIRECTORY;
 		IsoDirRecord_hdr childDirRecord;
 #if 0
-        LogInfo("Recursing into: %s (location: %d)", parent.name.c_str(), location);
+        LogInfo("Recursing into: %s (location: %d)", parent.name.cStr(), location);
 #endif
 		cio->seek(cio->blockSize() * location + readpos);
 		do
@@ -953,11 +953,11 @@ class CueArchiver
 	    : imageFile(fileName), fileType(ftype), trackMode(tmode)
 	{
 		// "Hey, a .cue-.bin file pair should be really easy to read!" - sfalexrog, 15.04.2016
-		boost::filesystem::path filePath(fileName.c_str());
+		boost::filesystem::path filePath(fileName.cStr());
 		// FIXME: This fsize is completely and utterly wrong - unless you're reading an actual iso
 		// (mode1_2048)
 		uint64_t fsize = boost::filesystem::file_size(filePath);
-		LogInfo("Opening file %s of size %" PRIu64, fileName.c_str(), fsize);
+		LogInfo("Opening file %s of size %" PRIu64, fileName.cStr(), fsize);
 		cio = new CueIO(fileName, 0, fsize, ftype, tmode);
 		if (!cio->fileStream)
 		{
@@ -1016,7 +1016,7 @@ class CueArchiver
 		{
 			for (auto entry = current->children.begin(); entry != current->children.end(); entry++)
 			{
-				cb(callbackdata, origdir, entry->first.c_str());
+				cb(callbackdata, origdir, entry->first.cStr());
 			}
 		}
 	}
@@ -1061,7 +1061,7 @@ class CueArchiver
 	}
 
   public:
-	static void *Cue_OpenArchive(PHYSFS_Io *, const char *filename, int forWriting)
+	static void *cueOpenArchive(PHYSFS_Io *, const char *filename, int forWriting)
 	{
 		// FIXME: Here we assume the filename actually points to the actual .cue file,
 		// ignoring the PHYSFS_Io (though how would we even read the accompanying file?)
@@ -1087,15 +1087,15 @@ class CueArchiver
 		boost::filesystem::path cueFilePath(filename);
 
 		boost::filesystem::path dataFilePath(
-		    cueFilePath.parent_path()); // parser.getDataFileName().c_str());
-		dataFilePath /= parser.getDataFileName().c_str();
+		    cueFilePath.parent_path()); // parser.getDataFileName().cStr());
+		dataFilePath /= parser.getDataFileName().cStr();
 
 		if (!boost::filesystem::exists(dataFilePath))
 		{
 			LogWarning("Could not find binary file \"%s\" referenced in the cuesheet",
-			           parser.getDataFileName().c_str());
+			           parser.getDataFileName().cStr());
 			LogWarning("Trying case-insensitive search...");
-			UString ucBin(parser.getDataFileName().c_str());
+			UString ucBin(parser.getDataFileName().cStr());
 			ucBin = ucBin.toUpper();
 			// for (boost::filesystem::directory_entry &dirent :
 			// boost::filesystem::directory_iterator(cueFilePath.parent_path()))
@@ -1124,20 +1124,20 @@ class CueArchiver
 		                       parser.getTrackMode());
 	}
 
-	static void Cue_EnumerateFiles(void *opaque, const char *dirname, PHYSFS_EnumFilesCallback cb,
-	                               const char *origdir, void *callbackdata)
+	static void cueEnumerateFiles(void *opaque, const char *dirname, PHYSFS_EnumFilesCallback cb,
+	                              const char *origdir, void *callbackdata)
 	{
 		CueArchiver *archiver = (CueArchiver *)opaque;
 		archiver->enumerateFiles(dirname, cb, origdir, callbackdata);
 	}
 
-	static PHYSFS_Io *Cue_OpenRead(void *opaque, const char *fnm)
+	static PHYSFS_Io *cueOpenRead(void *opaque, const char *fnm)
 	{
 		CueArchiver *archiver = (CueArchiver *)opaque;
 		return archiver->openRead(fnm);
 	}
 
-	static PHYSFS_Io *Cue_OpenWrite(void *opaque, const char *filename)
+	static PHYSFS_Io *cueOpenWrite(void *opaque, const char *filename)
 	{
 		std::ignore = opaque;
 		std::ignore = filename;
@@ -1145,7 +1145,7 @@ class CueArchiver
 		return nullptr;
 	}
 
-	static PHYSFS_Io *Cue_OpenAppend(void *opaque, const char *filename)
+	static PHYSFS_Io *cueOpenAppend(void *opaque, const char *filename)
 	{
 		std::ignore = opaque;
 		std::ignore = filename;
@@ -1153,7 +1153,7 @@ class CueArchiver
 		return nullptr;
 	}
 
-	static int Cue_Remove(void *opaque, const char *filename)
+	static int cueRemove(void *opaque, const char *filename)
 	{
 		std::ignore = opaque;
 		std::ignore = filename;
@@ -1161,7 +1161,7 @@ class CueArchiver
 		return 0;
 	}
 
-	static int Cue_Mkdir(void *opaque, const char *filename)
+	static int cueMkdir(void *opaque, const char *filename)
 	{
 		std::ignore = opaque;
 		std::ignore = filename;
@@ -1169,13 +1169,13 @@ class CueArchiver
 		return 0;
 	}
 
-	static int Cue_Stat(void *opaque, const char *fn, PHYSFS_Stat *stat)
+	static int cueStat(void *opaque, const char *fn, PHYSFS_Stat *stat)
 	{
 		CueArchiver *archiver = (CueArchiver *)opaque;
 		return archiver->stat(fn, stat);
 	}
 
-	static void Cue_CloseArchive(void *opaque)
+	static void cueCloseArchive(void *opaque)
 	{
 		CueArchiver *archiver = (CueArchiver *)opaque;
 		delete archiver;
@@ -1190,15 +1190,15 @@ class CueArchiver
 		                                          "https://github.com/sfalexeog",
 		                                          0 // supportsSymlinks
 		                                      },
-		                                      Cue_OpenArchive,
-		                                      Cue_EnumerateFiles,
-		                                      Cue_OpenRead,
-		                                      Cue_OpenWrite,
-		                                      Cue_OpenAppend,
-		                                      Cue_Remove,
-		                                      Cue_Mkdir,
-		                                      Cue_Stat,
-		                                      Cue_CloseArchive};
+		                                      cueOpenArchive,
+		                                      cueEnumerateFiles,
+		                                      cueOpenRead,
+		                                      cueOpenWrite,
+		                                      cueOpenAppend,
+		                                      cueRemove,
+		                                      cueMkdir,
+		                                      cueStat,
+		                                      cueCloseArchive};
 		return &cueArchiver;
 	}
 };
@@ -1211,7 +1211,7 @@ void parseCueFile(UString fileName)
 {
 	CueParser parser(fileName);
 	LogInfo("Parser status: %d", parser.isValid());
-	LogInfo("Data file: %s", parser.getDataFileName().c_str());
+	LogInfo("Data file: %s", parser.getDataFileName().cStr());
 	LogInfo("Track mode: %d", (int)parser.getTrackMode());
 	LogInfo("File mode: %d", (int)parser.getDataFileType());
 }

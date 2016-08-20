@@ -82,7 +82,7 @@ class SerializationException : public std::runtime_error
   public:
 	sp<SerializationNode> node;
 	SerializationException(const UString &description, sp<SerializationNode> node)
-	    : std::runtime_error(description.c_str()), node(node)
+	    : std::runtime_error(description.cStr()), node(node)
 	{
 	}
 };

@@ -17,7 +17,7 @@ UI &UI::getInstance()
 	if (!instance)
 	{
 		instance.reset(new UI);
-		instance->Load(fw().Settings->getString("GameRules"));
+		instance->load(fw().Settings->getString("GameRules"));
 	}
 	return *instance;
 }
@@ -28,11 +28,11 @@ void UI::unload() { instance.reset(nullptr); }
 
 UI::UI() : fonts(), forms() {}
 
-void UI::Load(UString CoreXMLFilename) { ParseXMLDoc(CoreXMLFilename); }
+void UI::load(UString CoreXMLFilename) { parseXmlDoc(CoreXMLFilename); }
 
 UI::~UI() = default;
 
-void UI::ParseXMLDoc(UString XMLFilename)
+void UI::parseXmlDoc(UString XMLFilename)
 {
 	TRACE_FN_ARGS1("XMLFilename", XMLFilename);
 	tinyxml2::XMLDocument doc;
@@ -40,23 +40,23 @@ void UI::ParseXMLDoc(UString XMLFilename)
 	auto file = fw().data->fs.open(XMLFilename);
 	if (!file)
 	{
-		LogError("Failed to open XML file \"%s\"", XMLFilename.c_str());
+		LogError("Failed to open XML file \"%s\"", XMLFilename.cStr());
 	}
 
-	LogInfo("Loading XML file \"%s\" - found at \"%s\"", XMLFilename.c_str(),
-	        file.systemPath().c_str());
+	LogInfo("Loading XML file \"%s\" - found at \"%s\"", XMLFilename.cStr(),
+	        file.systemPath().cStr());
 
 	auto xmlText = file.readAll();
 	if (!xmlText)
 	{
-		LogError("Failed to read in XML file \"%s\"", XMLFilename.c_str());
+		LogError("Failed to read in XML file \"%s\"", XMLFilename.cStr());
 	}
 
 	auto err = doc.Parse(xmlText.get(), file.size());
 
 	if (err != tinyxml2::XML_SUCCESS)
 	{
-		LogError("Failed to parse XML file \"%s\" - \"%s\" \"%s\"", XMLFilename.c_str(),
+		LogError("Failed to parse XML file \"%s\" - \"%s\" \"%s\"", XMLFilename.cStr(),
 		         doc.GetErrorStr1(), doc.GetErrorStr2());
 		return;
 	}
@@ -65,7 +65,7 @@ void UI::ParseXMLDoc(UString XMLFilename)
 
 	if (!node)
 	{
-		LogError("Failed to parse XML file \"%s\" - no root element", XMLFilename.c_str());
+		LogError("Failed to parse XML file \"%s\" - no root element", XMLFilename.cStr());
 		return;
 	}
 
@@ -75,12 +75,12 @@ void UI::ParseXMLDoc(UString XMLFilename)
 	{
 		for (node = node->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
 		{
-			ApplyAliases(node);
+			applyAliases(node);
 			nodeName = node->Name();
 
 			if (nodeName == "game")
 			{
-				ParseGameXML(node);
+				parseGameXml(node);
 			}
 			else
 			{
@@ -94,7 +94,7 @@ void UI::ParseXMLDoc(UString XMLFilename)
 
 				if (nodeName == "form")
 				{
-					ParseFormXML(node);
+					parseFormXml(node);
 				}
 				else if (nodeName == "apocfont")
 				{
@@ -107,13 +107,13 @@ void UI::ParseXMLDoc(UString XMLFilename)
 					auto font = ApocalypseFont::loadFont(node);
 					if (!font)
 					{
-						LogError("apocfont element \"%s\" failed to load", fontName.c_str());
+						LogError("apocfont element \"%s\" failed to load", fontName.cStr());
 						continue;
 					}
 
 					if (this->fonts.find(fontName) != this->fonts.end())
 					{
-						LogError("multiple fonts with name \"%s\"", fontName.c_str());
+						LogError("multiple fonts with name \"%s\"", fontName.cStr());
 						continue;
 					}
 					this->fonts[fontName] = font;
@@ -124,14 +124,14 @@ void UI::ParseXMLDoc(UString XMLFilename)
 				}
 				else
 				{
-					LogError("Unknown XML element \"%s\"", nodeName.c_str());
+					LogError("Unknown XML element \"%s\"", nodeName.cStr());
 				}
 			}
 		}
 	}
 }
 
-void UI::ParseGameXML(tinyxml2::XMLElement *Source)
+void UI::parseGameXml(tinyxml2::XMLElement *Source)
 {
 	tinyxml2::XMLElement *node;
 	UString nodename;
@@ -141,46 +141,46 @@ void UI::ParseGameXML(tinyxml2::XMLElement *Source)
 		nodename = node->Name();
 		if (nodename == "title")
 		{
-			fw().Display_SetTitle(node->GetText());
+			fw().displaySetTitle(node->GetText());
 		}
 		if (nodename == "include")
 		{
-			ParseXMLDoc(node->GetText());
+			parseXmlDoc(node->GetText());
 		}
 	}
 }
 
-void UI::ParseFormXML(tinyxml2::XMLElement *Source)
+void UI::parseFormXml(tinyxml2::XMLElement *Source)
 {
 	auto form = mksp<Form>();
-	form->ReadFormStyle(Source);
+	form->readFormStyle(Source);
 	forms[Source->Attribute("id")] = form;
 }
 
-sp<Form> UI::GetForm(UString ID)
+sp<Form> UI::getForm(UString ID)
 {
 	try
 	{
-		return std::dynamic_pointer_cast<Form>(forms.at(ID)->CopyTo(nullptr));
+		return std::dynamic_pointer_cast<Form>(forms.at(ID)->copyTo(nullptr));
 	}
 	catch (const std::out_of_range)
 	{
-		LogError("Missing form \"%s\"", ID.c_str());
+		LogError("Missing form \"%s\"", ID.cStr());
 		return nullptr;
 	}
 }
 
-sp<BitmapFont> UI::GetFont(UString FontData)
+sp<BitmapFont> UI::getFont(UString FontData)
 {
 	if (fonts.find(FontData) == fonts.end())
 	{
-		LogError("Missing font \"%s\"", FontData.c_str());
+		LogError("Missing font \"%s\"", FontData.cStr());
 		return nullptr;
 	}
 	return fonts[FontData];
 }
 
-void UI::ApplyAliases(tinyxml2::XMLElement *Source)
+void UI::applyAliases(tinyxml2::XMLElement *Source)
 {
 	if (aliases.empty())
 	{
@@ -195,8 +195,8 @@ void UI::ApplyAliases(tinyxml2::XMLElement *Source)
 		if (aliases.find(UString(attr->Value())) != aliases.end())
 		{
 			LogInfo("%s attribute \"%s\" value \"%s\" matches alias \"%s\"", Source->Name(),
-			        attr->Name(), attr->Value(), aliases[UString(attr->Value())].c_str());
-			Source->SetAttribute(attr->Name(), aliases[UString(attr->Value())].c_str());
+			        attr->Name(), attr->Value(), aliases[UString(attr->Value())].cStr());
+			Source->SetAttribute(attr->Name(), aliases[UString(attr->Value())].cStr());
 		}
 
 		attr = attr->Next();
@@ -206,15 +206,15 @@ void UI::ApplyAliases(tinyxml2::XMLElement *Source)
 	if (Source->GetText() != nullptr && aliases.find(UString(Source->GetText())) != aliases.end())
 	{
 		LogInfo("%s  value \"%s\" matches alias \"%s\"", Source->Name(), Source->GetText(),
-		        aliases[UString(Source->GetText())].c_str());
-		Source->SetText(aliases[UString(Source->GetText())].c_str());
+		        aliases[UString(Source->GetText())].cStr());
+		Source->SetText(aliases[UString(Source->GetText())].cStr());
 	}
 
 	// Recurse down tree
 	tinyxml2::XMLElement *child = Source->FirstChildElement();
 	while (child != nullptr)
 	{
-		ApplyAliases(child);
+		applyAliases(child);
 		child = child->NextSiblingElement();
 	}
 }
@@ -223,11 +223,11 @@ void UI::reloadFormsXml()
 {
 	forms.clear();
 	resourceNodeNameFilter = "form";
-	instance->Load(fw().Settings->getString("GameRules"));
+	instance->load(fw().Settings->getString("GameRules"));
 	resourceNodeNameFilter = "";
 }
 
-std::vector<UString> UI::GetFormIDs()
+std::vector<UString> UI::getFormIDs()
 {
 	std::vector<UString> result;
 

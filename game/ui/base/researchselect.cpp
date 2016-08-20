@@ -11,51 +11,51 @@ namespace OpenApoc
 {
 
 ResearchSelect::ResearchSelect(sp<GameState> state, sp<Lab> lab)
-    : Stage(), form(ui().GetForm("FORM_RESEARCHSELECT")), lab(lab), state(state)
+    : Stage(), form(ui().getForm("FORM_RESEARCHSELECT")), lab(lab), state(state)
 {
 }
 
 ResearchSelect::~ResearchSelect() = default;
 
-void ResearchSelect::Begin()
+void ResearchSelect::begin()
 {
 	current_topic = this->lab->current_project;
 
-	form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
-	auto title = form->FindControlTyped<Label>("TEXT_TITLE");
-	auto progress = form->FindControlTyped<Label>("TEXT_PROGRESS");
-	auto skill = form->FindControlTyped<Label>("TEXT_SKILL");
+	form->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
+	auto title = form->findControlTyped<Label>("TEXT_TITLE");
+	auto progress = form->findControlTyped<Label>("TEXT_PROGRESS");
+	auto skill = form->findControlTyped<Label>("TEXT_SKILL");
 	switch (this->lab->type)
 	{
 		case ResearchTopic::Type::BioChem:
-			title->SetText(tr("Select Biochemistry Project"));
-			progress->SetText(tr("Progress"));
-			skill->SetText(tr("Skill"));
+			title->setText(tr("Select Biochemistry Project"));
+			progress->setText(tr("Progress"));
+			skill->setText(tr("Skill"));
 			break;
 		case ResearchTopic::Type::Physics:
-			title->SetText(tr("Select Physics Project"));
-			progress->SetText(tr("Progress"));
-			skill->SetText(tr("Skill"));
+			title->setText(tr("Select Physics Project"));
+			progress->setText(tr("Progress"));
+			skill->setText(tr("Skill"));
 			break;
 		case ResearchTopic::Type::Engineering:
-			title->SetText(tr("Select Manufacturing Project"));
-			progress->SetText(tr("Unit Cost"));
-			skill->SetText(tr("Skill Hours"));
+			title->setText(tr("Select Manufacturing Project"));
+			progress->setText(tr("Unit Cost"));
+			skill->setText(tr("Skill Hours"));
 			break;
 		default:
-			title->SetText(tr("Select Unknown Project"));
+			title->setText(tr("Select Unknown Project"));
 			break;
 	}
 	this->populateResearchList();
 	this->redrawResearchList();
 
-	auto research_list = form->FindControlTyped<ListBox>("LIST");
+	auto research_list = form->findControlTyped<ListBox>("LIST");
 	research_list->AlwaysEmitSelectionEvents = true;
 
 	research_list->addCallback(FormEventType::ListBoxChangeSelected, [this](Event *e) {
 		LogInfo("Research selection change");
-		auto list = std::static_pointer_cast<ListBox>(e->Forms().RaisedBy);
-		auto topic = list->GetSelectedData<ResearchTopic>();
+		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
+		auto topic = list->getSelectedData<ResearchTopic>();
 		if (topic->current_lab)
 		{
 			LogInfo("Topic already in progress");
@@ -99,23 +99,23 @@ void ResearchSelect::Begin()
 
 	research_list->addCallback(FormEventType::ListBoxChangeHover, [this](Event *e) {
 		LogInfo("Research selection change");
-		auto list = std::static_pointer_cast<ListBox>(e->Forms().RaisedBy);
-		auto topic = list->GetHoveredData<ResearchTopic>();
-		auto title = this->form->FindControlTyped<Label>("TEXT_SELECTED_TITLE");
-		auto description = this->form->FindControlTyped<Label>("TEXT_SELECTED_DESCRIPTION");
+		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
+		auto topic = list->getHoveredData<ResearchTopic>();
+		auto title = this->form->findControlTyped<Label>("TEXT_SELECTED_TITLE");
+		auto description = this->form->findControlTyped<Label>("TEXT_SELECTED_DESCRIPTION");
 		if (topic)
 		{
-			title->SetText(tr(topic->name));
-			description->SetText(tr(topic->description));
+			title->setText(tr(topic->name));
+			description->setText(tr(topic->description));
 		}
 		else
 		{
-			title->SetText("");
-			description->SetText("");
+			title->setText("");
+			description->setText("");
 		}
 	});
 
-	auto ok_button = form->FindControlTyped<GraphicButton>("BUTTON_OK");
+	auto ok_button = form->findControlTyped<GraphicButton>("BUTTON_OK");
 	ok_button->addCallback(FormEventType::ButtonClick, [this](Event *e) {
 		LogInfo("Research selection OK pressed, applying selection");
 		Lab::setResearch({state.get(), this->lab}, {state.get(), current_topic}, state);
@@ -139,8 +139,8 @@ void ResearchSelect::redrawResearchList()
 
 void ResearchSelect::populateResearchList()
 {
-	auto research_list = form->FindControlTyped<ListBox>("LIST");
-	research_list->Clear();
+	auto research_list = form->findControlTyped<ListBox>("LIST");
+	research_list->clear();
 	research_list->ItemSize = 20;
 	research_list->ItemSpacing = 1;
 
@@ -161,7 +161,7 @@ void ResearchSelect::populateResearchList()
 		auto control = mksp<Control>();
 		control->Size = {544, 20};
 
-		auto topic_name = control->createChild<Label>((r.second->name), ui().GetFont("SMALFONT"));
+		auto topic_name = control->createChild<Label>((r.second->name), ui().getFont("SMALFONT"));
 		topic_name->Size = {200, 20};
 		topic_name->Location = {6, 0};
 
@@ -176,7 +176,7 @@ void ResearchSelect::populateResearchList()
 			else
 				progress_text = tr("Complete");
 			auto progress_label =
-			    control->createChild<Label>(progress_text, ui().GetFont("SMALFONT"));
+			    control->createChild<Label>(progress_text, ui().getFont("SMALFONT"));
 			progress_label->Size = {100, 20};
 			progress_label->Location = {234, 0};
 		}
@@ -216,7 +216,7 @@ void ResearchSelect::populateResearchList()
 					l.set({x, 5}, {205, 205, 205, 255});
 				}
 			}
-			progressBar->SetImage(progressImage);
+			progressBar->setImage(progressImage);
 		}
 
 		int skill_total = 0;
@@ -235,7 +235,7 @@ void ResearchSelect::populateResearchList()
 		}
 
 		auto skill_total_label = control->createChild<Label>(UString::format("%d", skill_total),
-		                                                     ui().GetFont("SMALFONT"));
+		                                                     ui().getFont("SMALFONT"));
 		skill_total_label->Size = {50, 20};
 		skill_total_label->Location = {328, 0};
 		skill_total_label->TextHAlign = HorizontalAlignment::Right;
@@ -254,41 +254,41 @@ void ResearchSelect::populateResearchList()
 				break;
 		}
 
-		auto lab_size_label = control->createChild<Label>(labSize, ui().GetFont("SMALFONT"));
+		auto lab_size_label = control->createChild<Label>(labSize, ui().getFont("SMALFONT"));
 		lab_size_label->Size = {100, 20};
 		lab_size_label->Location = {439, 0};
 
-		control->SetData(r.second);
+		control->setData(r.second);
 
-		research_list->AddItem(control);
+		research_list->addItem(control);
 		control_map[r.second] = control;
 	}
 }
 
-void ResearchSelect::Pause() {}
+void ResearchSelect::pause() {}
 
-void ResearchSelect::Resume() {}
+void ResearchSelect::resume() {}
 
-void ResearchSelect::Finish() {}
+void ResearchSelect::finish() {}
 
-void ResearchSelect::EventOccurred(Event *e)
+void ResearchSelect::eventOccurred(Event *e)
 {
-	form->EventOccured(e);
+	form->eventOccured(e);
 
-	if (e->Type() == EVENT_KEY_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION)
+	if (e->type() == EVENT_FORM_INTERACTION)
 	{
-		if (e->Forms().EventFlag == FormEventType::ButtonClick)
+		if (e->forms().EventFlag == FormEventType::ButtonClick)
 		{
-			if (e->Forms().RaisedBy->Name == "BUTTON_OK")
+			if (e->forms().RaisedBy->Name == "BUTTON_OK")
 			{
 				stageCmd.cmd = StageCmd::Command::POP;
 				return;
@@ -297,20 +297,20 @@ void ResearchSelect::EventOccurred(Event *e)
 	}
 }
 
-void ResearchSelect::Update(StageCmd *const cmd)
+void ResearchSelect::update(StageCmd *const cmd)
 {
-	form->Update();
+	form->update();
 	*cmd = stageCmd;
 	stageCmd = StageCmd();
 }
 
-void ResearchSelect::Render()
+void ResearchSelect::render()
 {
-	fw().Stage_GetPrevious(this->shared_from_this())->Render();
-	// fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
-	form->Render();
+	fw().stageGetPrevious(this->shared_from_this())->render();
+	// fw().renderer->drawFilledRect({0, 0}, fw().displayGetSize(), Colour{0, 0, 0, 128});
+	form->render();
 }
 
-bool ResearchSelect::IsTransition() { return false; }
+bool ResearchSelect::isTransition() { return false; }
 
 }; // namespace OpenApoc

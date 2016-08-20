@@ -18,7 +18,7 @@ ListBox::ListBox(sp<ScrollBar> ExternalScrollBar)
 
 ListBox::~ListBox() = default;
 
-void ListBox::ConfigureInternalScrollBar()
+void ListBox::configureInternalScrollBar()
 {
 	scroller = this->createChild<ScrollBar>();
 	scroller->Size.x = 16;
@@ -40,12 +40,12 @@ void ListBox::ConfigureInternalScrollBar()
 	scroller_is_internal = true;
 }
 
-void ListBox::OnRender()
+void ListBox::onRender()
 {
 	int offset = 0;
 	if (scroller == nullptr)
 	{
-		ConfigureInternalScrollBar();
+		configureInternalScrollBar();
 	}
 
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
@@ -57,7 +57,7 @@ void ListBox::OnRender()
 			{
 				case Orientation::Vertical:
 					ctrl->Location.x = 0;
-					ctrl->Location.y = offset - scroller->GetValue();
+					ctrl->Location.y = offset - scroller->getValue();
 					if (ItemSize != 0)
 					{
 						ctrl->Size.x = (scroller_is_internal ? scroller->Location.x : this->Size.x);
@@ -66,7 +66,7 @@ void ListBox::OnRender()
 					offset += ctrl->Size.y + ItemSpacing;
 					break;
 				case Orientation::Horizontal:
-					ctrl->Location.x = offset - scroller->GetValue();
+					ctrl->Location.x = offset - scroller->getValue();
 					ctrl->Location.y = 0;
 					if (ItemSize != 0)
 					{
@@ -78,7 +78,7 @@ void ListBox::OnRender()
 			}
 		}
 	}
-	ResolveLocation();
+	resolveLocation();
 	switch (ListOrientation)
 	{
 		case Orientation::Vertical:
@@ -92,9 +92,9 @@ void ListBox::OnRender()
 	    static_cast<int>(std::max((scroller->Maximum - scroller->Minimum + 2) / 10.0f, 4.0f));
 }
 
-void ListBox::PostRender()
+void ListBox::postRender()
 {
-	Control::PostRender();
+	Control::postRender();
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
 		auto ctrl = *c;
@@ -112,28 +112,28 @@ void ListBox::PostRender()
 	}
 }
 
-void ListBox::EventOccured(Event *e)
+void ListBox::eventOccured(Event *e)
 {
-	Control::EventOccured(e);
-	if (e->Type() == EVENT_FORM_INTERACTION)
+	Control::eventOccured(e);
+	if (e->type() == EVENT_FORM_INTERACTION)
 	{
-		sp<Control> ctrl = e->Forms().RaisedBy;
-		sp<Control> child = ctrl->GetAncestor(shared_from_this());
-		if (e->Forms().EventFlag == FormEventType::MouseMove)
+		sp<Control> ctrl = e->forms().RaisedBy;
+		sp<Control> child = ctrl->getAncestor(shared_from_this());
+		if (e->forms().EventFlag == FormEventType::MouseMove)
 		{
 			// FIXME: Scrolling amount should match wheel amount
 			// Should wheel orientation match as well? Who has horizontal scrolls??
 			if (ctrl == shared_from_this() || child != nullptr)
 			{
 				int wheelDelta =
-				    e->Forms().MouseInfo.WheelVertical + e->Forms().MouseInfo.WheelHorizontal;
+				    e->forms().MouseInfo.WheelVertical + e->forms().MouseInfo.WheelHorizontal;
 				if (wheelDelta > 0)
 				{
-					scroller->ScrollPrev();
+					scroller->scrollPrev();
 				}
 				else if (wheelDelta < 0)
 				{
-					scroller->ScrollNext();
+					scroller->scrollNext();
 				}
 			}
 
@@ -147,7 +147,7 @@ void ListBox::EventOccured(Event *e)
 				this->pushFormEvent(FormEventType::ListBoxChangeHover, e);
 			}
 		}
-		else if (e->Forms().EventFlag == FormEventType::MouseDown)
+		else if (e->forms().EventFlag == FormEventType::MouseDown)
 		{
 			if (ctrl == shared_from_this() || ctrl == scroller)
 			{
@@ -162,55 +162,55 @@ void ListBox::EventOccured(Event *e)
 	}
 }
 
-void ListBox::Update()
+void ListBox::update()
 {
-	Control::Update();
+	Control::update();
 	if (scroller == nullptr)
 	{
-		ConfigureInternalScrollBar();
+		configureInternalScrollBar();
 	}
 	if (scroller)
 	{
-		scroller->Update();
+		scroller->update();
 	}
 }
 
-void ListBox::UnloadResources() {}
+void ListBox::unloadResources() {}
 
-void ListBox::Clear()
+void ListBox::clear()
 {
 	for (auto &c : Controls)
 	{
-		c->SetParent(nullptr);
+		c->setParent(nullptr);
 	}
 	Controls.clear();
 	this->selected = nullptr;
 	this->hovered = nullptr;
 	if (scroller_is_internal)
 	{
-		ConfigureInternalScrollBar();
+		configureInternalScrollBar();
 	}
-	ResolveLocation();
+	resolveLocation();
 }
 
-void ListBox::AddItem(sp<Control> Item)
+void ListBox::addItem(sp<Control> Item)
 {
-	Item->SetParent(shared_from_this());
-	ResolveLocation();
+	Item->setParent(shared_from_this());
+	resolveLocation();
 	if (selected == nullptr)
 	{
 		selected = Item;
 	}
 }
 
-sp<Control> ListBox::RemoveItem(sp<Control> Item)
+sp<Control> ListBox::removeItem(sp<Control> Item)
 {
 	for (auto i = Controls.begin(); i != Controls.end(); i++)
 	{
 		if (*i == Item)
 		{
 			Controls.erase(i);
-			ResolveLocation();
+			resolveLocation();
 			return Item;
 		}
 	}
@@ -225,11 +225,11 @@ sp<Control> ListBox::RemoveItem(sp<Control> Item)
 	return nullptr;
 }
 
-sp<Control> ListBox::RemoveItem(int Index)
+sp<Control> ListBox::removeItem(int Index)
 {
 	auto c = Controls.at(Index);
 	Controls.erase(Controls.begin() + Index);
-	ResolveLocation();
+	resolveLocation();
 	if (c == this->selected)
 	{
 		this->selected = nullptr;
@@ -243,7 +243,7 @@ sp<Control> ListBox::RemoveItem(int Index)
 
 sp<Control> ListBox::operator[](int Index) { return Controls.at(Index); }
 
-sp<Control> ListBox::CopyTo(sp<Control> CopyParent)
+sp<Control> ListBox::copyTo(sp<Control> CopyParent)
 {
 	sp<ListBox> copy;
 	sp<ScrollBar> scrollCopy;
@@ -266,13 +266,13 @@ sp<Control> ListBox::CopyTo(sp<Control> CopyParent)
 	copy->ListOrientation = this->ListOrientation;
 	copy->HoverColour = this->HoverColour;
 	copy->SelectedColour = this->SelectedColour;
-	CopyControlData(copy);
+	copyControlData(copy);
 	return copy;
 }
 
-void ListBox::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
+void ListBox::configureSelfFromXml(tinyxml2::XMLElement *Element)
 {
-	Control::ConfigureSelfFromXML(Element);
+	Control::configureSelfFromXml(Element);
 	tinyxml2::XMLElement *subnode;
 	UString attribvalue;
 
@@ -281,12 +281,12 @@ void ListBox::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 	{
 		if (subnode->Attribute("size") != nullptr && UString(subnode->Attribute("size")) != "")
 		{
-			ItemSize = Strings::ToInteger(subnode->Attribute("size"));
+			ItemSize = Strings::toInteger(subnode->Attribute("size"));
 		}
 		if (subnode->Attribute("spacing") != nullptr &&
 		    UString(subnode->Attribute("spacing")) != "")
 		{
-			ItemSpacing = Strings::ToInteger(subnode->Attribute("spacing"));
+			ItemSpacing = Strings::toInteger(subnode->Attribute("spacing"));
 		}
 	}
 	subnode = Element->FirstChildElement("orientation");
@@ -308,14 +308,14 @@ void ListBox::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 		if (subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "")
 		{
 			HoverColour = Colour{
-			    Strings::ToU8(subnode->Attribute("r")), Strings::ToU8(subnode->Attribute("g")),
-			    Strings::ToU8(subnode->Attribute("b")), Strings::ToU8(subnode->Attribute("a"))};
+			    Strings::toU8(subnode->Attribute("r")), Strings::toU8(subnode->Attribute("g")),
+			    Strings::toU8(subnode->Attribute("b")), Strings::toU8(subnode->Attribute("a"))};
 		}
 		else
 		{
-			HoverColour = Colour{Strings::ToU8(subnode->Attribute("r")),
-			                     Strings::ToU8(subnode->Attribute("g")),
-			                     Strings::ToU8(subnode->Attribute("b"))};
+			HoverColour = Colour{Strings::toU8(subnode->Attribute("r")),
+			                     Strings::toU8(subnode->Attribute("g")),
+			                     Strings::toU8(subnode->Attribute("b"))};
 		}
 	}
 	subnode = Element->FirstChildElement("selcolour");
@@ -324,14 +324,14 @@ void ListBox::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 		if (subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "")
 		{
 			SelectedColour = Colour{
-			    Strings::ToU8(subnode->Attribute("r")), Strings::ToU8(subnode->Attribute("g")),
-			    Strings::ToU8(subnode->Attribute("b")), Strings::ToU8(subnode->Attribute("a"))};
+			    Strings::toU8(subnode->Attribute("r")), Strings::toU8(subnode->Attribute("g")),
+			    Strings::toU8(subnode->Attribute("b")), Strings::toU8(subnode->Attribute("a"))};
 		}
 		else
 		{
-			SelectedColour = Colour{Strings::ToU8(subnode->Attribute("r")),
-			                        Strings::ToU8(subnode->Attribute("g")),
-			                        Strings::ToU8(subnode->Attribute("b"))};
+			SelectedColour = Colour{Strings::toU8(subnode->Attribute("r")),
+			                        Strings::toU8(subnode->Attribute("g")),
+			                        Strings::toU8(subnode->Attribute("b"))};
 		}
 	}
 }

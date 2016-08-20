@@ -9,49 +9,49 @@
 namespace OpenApoc
 {
 
-DebugMenu::DebugMenu() : Stage(), menuform(ui().GetForm("FORM_DEBUG_MENU")) {}
+DebugMenu::DebugMenu() : Stage(), menuform(ui().getForm("FORM_DEBUG_MENU")) {}
 
 DebugMenu::~DebugMenu() = default;
 
-void DebugMenu::Begin() {}
+void DebugMenu::begin() {}
 
-void DebugMenu::Pause() {}
+void DebugMenu::pause() {}
 
-void DebugMenu::Resume() {}
+void DebugMenu::resume() {}
 
-void DebugMenu::Finish() {}
+void DebugMenu::finish() {}
 
-void DebugMenu::EventOccurred(Event *e)
+void DebugMenu::eventOccurred(Event *e)
 {
-	menuform->EventOccured(e);
+	menuform->eventOccured(e);
 
-	if (e->Type() == EVENT_KEY_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::ButtonClick)
 	{
-		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
+		if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
-		else if (e->Forms().RaisedBy->Name == "BUTTON_DUMPPCK")
+		else if (e->forms().RaisedBy->Name == "BUTTON_DUMPPCK")
 		{
-			BulkExportPCKs();
+			bulkExportPcks();
 			return;
 		}
-		else if (e->Forms().RaisedBy->Name == "BUTTON_FORMPREVIEW")
+		else if (e->forms().RaisedBy->Name == "BUTTON_FORMPREVIEW")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = mksp<FormPreview>();
 		}
-		else if (e->Forms().RaisedBy->Name == "BUTTON_IMAGEPREVIEW")
+		else if (e->forms().RaisedBy->Name == "BUTTON_IMAGEPREVIEW")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = mksp<ImagePreview>();
@@ -59,26 +59,26 @@ void DebugMenu::EventOccurred(Event *e)
 	}
 }
 
-void DebugMenu::Update(StageCmd *const cmd)
+void DebugMenu::update(StageCmd *const cmd)
 {
-	menuform->Update();
+	menuform->update();
 	*cmd = this->stageCmd;
 	// Reset the command to default
 	this->stageCmd = StageCmd();
 }
 
-void DebugMenu::Render()
+void DebugMenu::render()
 {
-	fw().Stage_GetPrevious(this->shared_from_this())->Render();
+	fw().stageGetPrevious(this->shared_from_this())->render();
 	fw().renderer->drawFilledRect(Vec2<float>(0, 0),
-	                              Vec2<float>(fw().Display_GetWidth(), fw().Display_GetHeight()),
+	                              Vec2<float>(fw().displayGetWidth(), fw().displayGetHeight()),
 	                              Colour(0, 0, 0, 128));
-	menuform->Render();
+	menuform->render();
 }
 
-bool DebugMenu::IsTransition() { return false; }
+bool DebugMenu::isTransition() { return false; }
 
-void DebugMenu::BulkExportPCKs()
+void DebugMenu::bulkExportPcks()
 {
 	std::vector<UString> PaletteNames;
 	std::vector<sp<Palette>> PaletteList;
@@ -100,7 +100,7 @@ void DebugMenu::BulkExportPCKs()
 	for (auto i = PaletteNames.begin(); i != PaletteNames.end(); i++)
 	{
 		UString palname = (*i);
-		PaletteList.push_back(fw().data->load_palette(palname));
+		PaletteList.push_back(fw().data->loadPalette(palname));
 	}
 
 	// All the PCKs
@@ -141,9 +141,9 @@ void DebugMenu::BulkExportPCKs()
 		UString pckloadstr = UString("PCK:") + pckname + UString(":") +
 		                     pckname.substr(0, pckname.length() - 3) + UString("TAB");
 
-		LogInfo("Processing %s", pckloadstr.c_str());
+		LogInfo("Processing %s", pckloadstr.cStr());
 
-		sp<ImageSet> pckset = fw().data->load_image_set(pckloadstr);
+		sp<ImageSet> pckset = fw().data->loadImageSet(pckloadstr);
 
 		if (pckset != nullptr)
 		{
@@ -152,13 +152,13 @@ void DebugMenu::BulkExportPCKs()
 			for (unsigned int idx = 0; idx < pckset->images.size(); idx++)
 			{
 				UString outputname = UString("Extracted/") + pckname + UString("/") +
-				                     Strings::FromInteger(idx) + UString(".PNG");
+				                     Strings::fromInteger(idx) + UString(".PNG");
 				sp<Image> curimg = pckset->images.at(idx);
 
 				if (RGBImage *bi = dynamic_cast<RGBImage *>(curimg.get()))
 				{
 
-					LogInfo("Saving %s", outputname.c_str());
+					LogInfo("Saving %s", outputname.cStr());
 					bi->saveBitmap(outputname);
 				}
 				else if (PaletteImage *pi = dynamic_cast<PaletteImage *>(curimg.get()))
@@ -167,9 +167,9 @@ void DebugMenu::BulkExportPCKs()
 					for (unsigned int palidx = 0; palidx < PaletteList.size(); palidx++)
 					{
 						outputname = UString("Extracted/") + pckname + UString("/") +
-						             Strings::FromInteger(idx) + UString(".#") +
-						             Strings::FromInteger(palidx) + UString(".PNG");
-						LogInfo("Saving %s", outputname.c_str());
+						             Strings::fromInteger(idx) + UString(".#") +
+						             Strings::fromInteger(palidx) + UString(".PNG");
+						LogInfo("Saving %s", outputname.cStr());
 						pi->toRGBImage(PaletteList.at(palidx))->saveBitmap(outputname);
 					}
 				}

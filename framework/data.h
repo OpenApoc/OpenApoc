@@ -77,19 +77,19 @@ class Data
 	     int voxelCacheSize = 1, int fontStringCacheSize = 100, int paletteCacheSize = 10);
 	~Data();
 
-	sp<Sample> load_sample(UString path);
-	sp<MusicTrack> load_music(const UString &path);
-	sp<Image> load_image(const UString &path, bool lazy = false);
-	sp<ImageSet> load_image_set(const UString &path);
-	sp<Palette> load_palette(const UString &path);
-	sp<VoxelSlice> load_voxel_slice(const UString &path);
-	sp<Video> load_video(const UString &path);
+	sp<Sample> loadSample(UString path);
+	sp<MusicTrack> loadMusic(const UString &path);
+	sp<Image> loadImage(const UString &path, bool lazy = false);
+	sp<ImageSet> loadImageSet(const UString &path);
+	sp<Palette> loadPalette(const UString &path);
+	sp<VoxelSlice> loadVoxelSlice(const UString &path);
+	sp<Video> loadVideo(const UString &path);
 
-	sp<PaletteImage> get_font_string_cache_entry(const UString &font_name, const UString &text);
-	void put_font_string_cache_entry(const UString &font_name, const UString &text,
-	                                 sp<PaletteImage> &img);
+	sp<PaletteImage> getFontStringCacheEntry(const UString &font_name, const UString &text);
+	void putFontStringCacheEntry(const UString &font_name, const UString &text,
+	                             sp<PaletteImage> &img);
 
-	bool write_image(UString systemPath, sp<Image> image, sp<Palette> palette = nullptr);
+	bool writeImage(UString systemPath, sp<Image> image, sp<Palette> palette = nullptr);
 };
 
 } // namespace OpenApoc

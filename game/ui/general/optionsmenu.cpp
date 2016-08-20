@@ -7,44 +7,44 @@
 namespace OpenApoc
 {
 
-OptionsMenu::OptionsMenu() : Stage(), menuform(ui().GetForm("FORM_OPTIONSMENU")) {}
+OptionsMenu::OptionsMenu() : Stage(), menuform(ui().getForm("FORM_OPTIONSMENU")) {}
 
 OptionsMenu::~OptionsMenu() = default;
 
-void OptionsMenu::Begin() {}
+void OptionsMenu::begin() {}
 
-void OptionsMenu::Pause() {}
+void OptionsMenu::pause() {}
 
-void OptionsMenu::Resume() {}
+void OptionsMenu::resume() {}
 
-void OptionsMenu::Finish() {}
+void OptionsMenu::finish() {}
 
-void OptionsMenu::EventOccurred(Event *e)
+void OptionsMenu::eventOccurred(Event *e)
 {
-	menuform->EventOccured(e);
+	menuform->eventOccured(e);
 
-	if (e->Type() == EVENT_KEY_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::ButtonClick)
 	{
-		if (e->Forms().RaisedBy->Name == "BUTTON_TEST_XCOMBASE")
+		if (e->forms().RaisedBy->Name == "BUTTON_TEST_XCOMBASE")
 		{
 			return;
 		}
-		if (e->Forms().RaisedBy->Name == "BUTTON_DEBUGGING")
+		if (e->forms().RaisedBy->Name == "BUTTON_DEBUGGING")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = mksp<DebugMenu>();
 			return;
 		}
-		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
+		if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
@@ -52,21 +52,21 @@ void OptionsMenu::EventOccurred(Event *e)
 	}
 }
 
-void OptionsMenu::Update(StageCmd *const cmd)
+void OptionsMenu::update(StageCmd *const cmd)
 {
-	menuform->Update();
+	menuform->update();
 	*cmd = this->stageCmd;
 	// Reset the command to default
 	this->stageCmd = StageCmd();
 }
 
-void OptionsMenu::Render()
+void OptionsMenu::render()
 {
-	fw().Stage_GetPrevious(this->shared_from_this())->Render();
-	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
-	menuform->Render();
+	fw().stageGetPrevious(this->shared_from_this())->render();
+	fw().renderer->drawFilledRect({0, 0}, fw().displayGetSize(), Colour{0, 0, 0, 128});
+	menuform->render();
 }
 
-bool OptionsMenu::IsTransition() { return false; }
+bool OptionsMenu::isTransition() { return false; }
 
 }; // namespace OpenApoc

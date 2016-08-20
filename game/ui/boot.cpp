@@ -9,17 +9,17 @@
 namespace OpenApoc
 {
 
-void BootUp::Begin() {}
+void BootUp::begin() {}
 
-void BootUp::Pause() {}
+void BootUp::pause() {}
 
-void BootUp::Resume() {}
+void BootUp::resume() {}
 
-void BootUp::Finish() {}
+void BootUp::finish() {}
 
-void BootUp::EventOccurred(Event *e) { std::ignore = e; }
+void BootUp::eventOccurred(Event *e) { std::ignore = e; }
 
-void BootUp::Update(StageCmd *const cmd)
+void BootUp::update(StageCmd *const cmd)
 {
 	// The first forms instance causes it to get loaded
 	auto loadTask = fw().threadPool->enqueue([]() {
@@ -34,8 +34,8 @@ void BootUp::Update(StageCmd *const cmd)
 	return;
 }
 
-void BootUp::Render() {}
+void BootUp::render() {}
 
-bool BootUp::IsTransition() { return false; }
+bool BootUp::isTransition() { return false; }
 
 }; // namespace OpenApoc

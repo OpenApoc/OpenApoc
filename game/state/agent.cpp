@@ -34,7 +34,7 @@ template <> sp<Agent> StateObject<Agent>::get(const GameState &state, const UStr
 	auto it = state.agents.find(id);
 	if (it == state.agents.end())
 	{
-		LogError("No agent matching ID \"%s\"", id.c_str());
+		LogError("No agent matching ID \"%s\"", id.cStr());
 		return nullptr;
 	}
 	return it->second;
@@ -137,7 +137,7 @@ StateRef<Agent> AgentGenerator::createAgent(GameState &state) const
 
 StateRef<Agent> AgentGenerator::createAgent(GameState &state, Agent::Type type) const
 {
-	UString ID = UString::format("%s%u", Agent::getPrefix().c_str(), this->num_created);
+	UString ID = UString::format("%s%u", Agent::getPrefix().cStr(), this->num_created);
 
 	auto agent = mksp<Agent>();
 

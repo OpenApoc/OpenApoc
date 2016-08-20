@@ -78,7 +78,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 
 	sp<FrameImage> popImage() override
 	{
-		TRACE_FN_ARGS1("Frame", Strings::FromInteger(this->current_frame_video));
+		TRACE_FN_ARGS1("Frame", Strings::fromInteger(this->current_frame_video));
 		std::lock_guard<std::recursive_mutex> l(this->frame_queue_lock);
 		if (this->image_queue.empty())
 		{
@@ -95,7 +95,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 
 	sp<FrameAudio> popAudio() override
 	{
-		TRACE_FN_ARGS1("Frame", Strings::FromInteger(this->current_frame_audio));
+		TRACE_FN_ARGS1("Frame", Strings::fromInteger(this->current_frame_audio));
 		std::lock_guard<std::recursive_mutex> l(this->frame_queue_lock);
 		if (this->audio_queue.empty())
 		{
@@ -163,7 +163,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 			auto red = *palette_data++;
 			auto green = *palette_data++;
 			auto blue = *palette_data++;
-			frame->palette->SetColour(i, {red, green, blue});
+			frame->palette->setColour(i, {red, green, blue});
 		}
 
 		auto audio_frame = mksp<FrameAudio>();
@@ -217,7 +217,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 		                                static_cast<unsigned long>(this->video_data_size));
 		if (!this->smk_ctx)
 		{
-			LogWarning("Failed to read SMK file \"%s\"", video_path.c_str());
+			LogWarning("Failed to read SMK file \"%s\"", video_path.cStr());
 			this->video_data.reset();
 			return false;
 		}
@@ -225,7 +225,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 
 		if (smk_info_all(this->smk_ctx, nullptr, &this->frame_count, &usf))
 		{
-			LogWarning("Failed to read SMK file info from \"%s\"", video_path.c_str());
+			LogWarning("Failed to read SMK file info from \"%s\"", video_path.cStr());
 			this->video_data.reset();
 			smk_close(this->smk_ctx);
 			this->smk_ctx = nullptr;
@@ -240,7 +240,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 		unsigned long height, width;
 		if (smk_info_video(this->smk_ctx, &width, &height, nullptr))
 		{
-			LogWarning("Failed to read SMK video info from \"%s\"", video_path.c_str());
+			LogWarning("Failed to read SMK video info from \"%s\"", video_path.cStr());
 			this->video_data.reset();
 			smk_close(this->smk_ctx);
 			this->smk_ctx = nullptr;
@@ -253,7 +253,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 		auto ret = smk_enable_video(this->smk_ctx, 1);
 		if (ret == SMK_ERROR)
 		{
-			LogWarning("Error enabling video for \"%s\"", video_path.c_str());
+			LogWarning("Error enabling video for \"%s\"", video_path.cStr());
 			return false;
 		}
 
@@ -265,7 +265,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 		ret = smk_info_audio(this->smk_ctx, &audio_track_mask, channels, bitdepth, audio_rate);
 		if (ret == SMK_ERROR)
 		{
-			LogWarning("Error reading audio info for \"%s\"", video_path.c_str());
+			LogWarning("Error reading audio info for \"%s\"", video_path.cStr());
 			return false;
 		}
 
@@ -278,7 +278,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 		else
 		{
 			LogWarning("Unsupported audio track mask 0x%02x for \"%s\"", (unsigned)audio_track_mask,
-			           video_path.c_str());
+			           video_path.cStr());
 			return false;
 		}
 		switch (channels[0])
@@ -294,7 +294,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 				break;
 			default:
 				LogWarning("Unsupported audio channel count %u for \"%s\"", (unsigned)channels[0],
-				           video_path.c_str());
+				           video_path.cStr());
 				return false;
 		}
 		switch (bitdepth[0])
@@ -309,7 +309,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 				break;
 			default:
 				LogWarning("Unsupported audio bit depth %u for \"%s\"", (unsigned)bitdepth[0],
-				           video_path.c_str());
+				           video_path.cStr());
 				return false;
 		}
 		this->audio_format.frequency = audio_rate[0];
@@ -318,7 +318,7 @@ class SMKVideo : public Video, public std::enable_shared_from_this<SMKVideo>
 
 		if (ret == SMK_ERROR)
 		{
-			LogWarning("Error enabling audio track 0 for \"%s\"", video_path.c_str());
+			LogWarning("Error enabling audio track 0 for \"%s\"", video_path.cStr());
 		}
 
 		// Everything looks  good

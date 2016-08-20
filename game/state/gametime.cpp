@@ -69,7 +69,7 @@ UString GameTime::getDateString() const
 		    tr("21st").str(), tr("22nd").str(), tr("23rd").str(), tr("24th").str(),
 		    tr("25th").str(), tr("26th").str(), tr("27th").str(), tr("28th").str(),
 		    tr("29th").str(), tr("30th").str(), tr("31st").str()};
-		dateFacet->long_day_names(days);
+		dateFacet->longDayNames(days);
 	}
 	ss.imbue(*DATE_FORMAT);
 	ss << datetime.date();

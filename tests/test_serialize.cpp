@@ -47,7 +47,7 @@ int main(int argc, char **argv)
 
 	UString gamestate_name = argv[1];
 
-	LogInfo("Loading \"%s\"", gamestate_name.c_str());
+	LogInfo("Loading \"%s\"", gamestate_name.cStr());
 
 	auto state = mksp<GameState>();
 	if (!state->loadGame(gamestate_name))

@@ -24,7 +24,7 @@ class TextButton : public Control
 	sp<Image> buttonbackground;
 
   protected:
-	void OnRender() override;
+	void onRender() override;
 
   public:
 	enum class ButtonRenderStyle
@@ -41,18 +41,18 @@ class TextButton : public Control
 	TextButton(const UString &Text = "", sp<BitmapFont> font = nullptr);
 	~TextButton() override;
 
-	void EventOccured(Event *e) override;
-	void Update() override;
-	void UnloadResources() override;
+	void eventOccured(Event *e) override;
+	void update() override;
+	void unloadResources() override;
 
-	UString GetText() const;
-	void SetText(const UString &Text);
+	UString getText() const;
+	void setText(const UString &Text);
 
-	sp<BitmapFont> GetFont() const;
-	void SetFont(sp<BitmapFont> NewFont);
+	sp<BitmapFont> getFont() const;
+	void setFont(sp<BitmapFont> NewFont);
 
-	sp<Control> CopyTo(sp<Control> CopyParent) override;
-	void ConfigureSelfFromXML(tinyxml2::XMLElement *Element) override;
+	sp<Control> copyTo(sp<Control> CopyParent) override;
+	void configureSelfFromXml(tinyxml2::XMLElement *Element) override;
 };
 
 }; // namespace OpenApoc

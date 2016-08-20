@@ -10,12 +10,12 @@ ImagePreview::ImagePreview() : Stage()
 {
 	menuform = mksp<Form>();
 	menuform->Location = {0, 0};
-	menuform->Size = {fw().Display_GetWidth(), fw().Display_GetHeight()};
+	menuform->Size = {fw().displayGetWidth(), fw().displayGetHeight()};
 
-	imageFilename = menuform->createChild<TextEdit>("", ui().GetFont("SMALFONT"));
+	imageFilename = menuform->createChild<TextEdit>("", ui().getFont("SMALFONT"));
 	imageFilename->Location = {5, 5};
-	imageFilename->Size = {fw().Display_GetWidth() - 10, 15};
-	imageFilename->SetText("RAW:xcom3/ufodata/isobord1.dat:640:128:xcom3/ufodata/pal_01.dat");
+	imageFilename->Size = {fw().displayGetWidth() - 10, 15};
+	imageFilename->setText("RAW:xcom3/ufodata/isobord1.dat:640:128:xcom3/ufodata/pal_01.dat");
 
 	imageView = menuform->createChild<Graphic>();
 	updateImage();
@@ -23,53 +23,53 @@ ImagePreview::ImagePreview() : Stage()
 
 ImagePreview::~ImagePreview() = default;
 
-void ImagePreview::Begin() {}
+void ImagePreview::begin() {}
 
-void ImagePreview::Pause() {}
+void ImagePreview::pause() {}
 
-void ImagePreview::Resume() {}
+void ImagePreview::resume() {}
 
-void ImagePreview::Finish() {}
+void ImagePreview::finish() {}
 
-void ImagePreview::EventOccurred(Event *e)
+void ImagePreview::eventOccurred(Event *e)
 {
-	menuform->EventOccured(e);
+	menuform->eventOccured(e);
 
-	if (e->Type() == EVENT_KEY_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION &&
-	    e->Forms().EventFlag == FormEventType::TextEditFinish)
+	if (e->type() == EVENT_FORM_INTERACTION &&
+	    e->forms().EventFlag == FormEventType::TextEditFinish)
 	{
 		updateImage();
 	}
 }
 
-void ImagePreview::Update(StageCmd *const cmd)
+void ImagePreview::update(StageCmd *const cmd)
 {
-	menuform->Update();
+	menuform->update();
 
 	*cmd = this->stageCmd;
 	// Reset the command to default
 	this->stageCmd = StageCmd();
 }
 
-void ImagePreview::Render() { menuform->Render(); }
+void ImagePreview::render() { menuform->render(); }
 
-bool ImagePreview::IsTransition() { return false; }
+bool ImagePreview::isTransition() { return false; }
 
 void ImagePreview::updateImage()
 {
-	auto image = fw().data->load_image(imageFilename->GetText());
+	auto image = fw().data->loadImage(imageFilename->getText());
 	imageView->Size = image->size;
-	imageView->SetImage(image);
-	imageView->Align(HorizontalAlignment::Centre, VerticalAlignment::Centre);
+	imageView->setImage(image);
+	imageView->align(HorizontalAlignment::Centre, VerticalAlignment::Centre);
 }
 
 }; // namespace OpenApoc

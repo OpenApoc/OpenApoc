@@ -83,7 +83,7 @@ UString::UString(UniChar uc) : u8Str()
 
 std::string UString::str() const { return this->u8Str; }
 
-const char *UString::c_str() const { return this->u8Str.c_str(); }
+const char *UString::cStr() const { return this->u8Str.c_str(); }
 
 bool UString::operator<(const UString &other) const { return (this->u8Str) < (other.u8Str); }
 
@@ -194,21 +194,21 @@ UniChar UString::ConstIterator::operator*() const
 	return pointString[this->offset];
 }
 
-int Strings::ToInteger(const UString &s)
+int Strings::toInteger(const UString &s)
 {
 	std::string u8str = s.str();
 	return static_cast<int>(strtol(u8str.c_str(), NULL, 0));
 }
 
-float Strings::ToFloat(const UString &s)
+float Strings::toFloat(const UString &s)
 {
 	std::string u8str = s.str();
 	return static_cast<float>(strtod(u8str.c_str(), NULL));
 }
 
-uint8_t Strings::ToU8(const UString &s) { return static_cast<uint8_t>(ToInteger(s)); }
+uint8_t Strings::toU8(const UString &s) { return static_cast<uint8_t>(toInteger(s)); }
 
-bool Strings::IsInteger(const UString &s)
+bool Strings::isInteger(const UString &s)
 {
 	std::string u8str = s.str();
 	char *endpos;
@@ -216,7 +216,7 @@ bool Strings::IsInteger(const UString &s)
 	return (endpos != u8str.c_str());
 }
 
-bool Strings::IsFloat(const UString &s)
+bool Strings::isFloat(const UString &s)
 {
 	std::string u8str = s.str();
 	char *endpos;
@@ -224,11 +224,11 @@ bool Strings::IsFloat(const UString &s)
 	return (endpos != u8str.c_str());
 }
 
-UString Strings::FromInteger(int i) { return UString::format("%d", i); }
+UString Strings::fromInteger(int i) { return UString::format("%d", i); }
 
-UString Strings::FromFloat(float f) { return UString::format("%f", f); }
+UString Strings::fromFloat(float f) { return UString::format("%f", f); }
 
-bool Strings::IsWhiteSpace(UniChar c)
+bool Strings::isWhiteSpace(UniChar c)
 {
 	// FIXME: Only works on ASCII whitespace
 	return isspace(c);

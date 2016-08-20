@@ -12,33 +12,33 @@ TileView::TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
                    TileViewMode initialMode)
     : Stage(), map(map), isoTileSize(isoTileSize), stratTileSize(stratTileSize),
       viewMode(initialMode), scrollUp(false), scrollDown(false), scrollLeft(false),
-      scrollRight(false), dpySize(fw().Display_GetWidth(), fw().Display_GetHeight()),
+      scrollRight(false), dpySize(fw().displayGetWidth(), fw().displayGetHeight()),
       strategyViewBoxColour(212, 176, 172, 255), strategyViewBoxThickness(2.0f),
       maxZDraw(map.size.z), centerPos(0, 0, 0), isoScrollSpeed(0.5, 0.5),
       stratScrollSpeed(2.0f, 2.0f), selectedTilePosition(0, 0, 0),
-      selectedTileImageBack(fw().data->load_image("CITY/SELECTED-CITYTILE-BACK.PNG")),
-      selectedTileImageFront(fw().data->load_image("CITY/SELECTED-CITYTILE-FRONT.PNG")),
-      pal(fw().data->load_palette("xcom3/ufodata/PAL_01.DAT"))
+      selectedTileImageBack(fw().data->loadImage("CITY/SELECTED-CITYTILE-BACK.PNG")),
+      selectedTileImageFront(fw().data->loadImage("CITY/SELECTED-CITYTILE-FRONT.PNG")),
+      pal(fw().data->loadPalette("xcom3/ufodata/PAL_01.DAT"))
 {
 	LogInfo("dpySize: {%d,%d}", dpySize.x, dpySize.y);
 }
 
 TileView::~TileView() = default;
 
-void TileView::Begin() {}
+void TileView::begin() {}
 
-void TileView::Pause() {}
+void TileView::pause() {}
 
-void TileView::Resume() {}
+void TileView::resume() {}
 
-void TileView::Finish() {}
+void TileView::finish() {}
 
-void TileView::EventOccurred(Event *e)
+void TileView::eventOccurred(Event *e)
 {
 
-	if (e->Type() == EVENT_KEY_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		switch (e->Keyboard().KeyCode)
+		switch (e->keyboard().KeyCode)
 		{
 			case SDLK_UP:
 				scrollUp = true;
@@ -77,13 +77,13 @@ void TileView::EventOccurred(Event *e)
 					selectedTilePosition.z--;
 				break;
 			case SDLK_1:
-				pal = fw().data->load_palette("xcom3/ufodata/PAL_01.DAT");
+				pal = fw().data->loadPalette("xcom3/ufodata/PAL_01.DAT");
 				break;
 			case SDLK_2:
-				pal = fw().data->load_palette("xcom3/ufodata/PAL_02.DAT");
+				pal = fw().data->loadPalette("xcom3/ufodata/PAL_02.DAT");
 				break;
 			case SDLK_3:
-				pal = fw().data->load_palette("xcom3/ufodata/PAL_03.DAT");
+				pal = fw().data->loadPalette("xcom3/ufodata/PAL_03.DAT");
 				break;
 			case SDLK_F6:
 			{
@@ -91,13 +91,13 @@ void TileView::EventOccurred(Event *e)
 				auto imageOffset = -this->getScreenOffset();
 				auto img = std::dynamic_pointer_cast<RGBImage>(
 				    this->map.dumpVoxelView({imageOffset, imageOffset + dpySize}, *this));
-				fw().data->write_image("tileviewvoxels.png", img);
+				fw().data->writeImage("tileviewvoxels.png", img);
 			}
 		}
 	}
-	else if (e->Type() == EVENT_KEY_UP)
+	else if (e->type() == EVENT_KEY_UP)
 	{
-		switch (e->Keyboard().KeyCode)
+		switch (e->keyboard().KeyCode)
 		{
 			case SDLK_UP:
 				scrollUp = false;
@@ -113,12 +113,12 @@ void TileView::EventOccurred(Event *e)
 				break;
 		}
 	}
-	else if (e->Type() == EVENT_FINGER_MOVE)
+	else if (e->type() == EVENT_FINGER_MOVE)
 	{
 		// FIXME: Review this code for sanity
-		if (e->Finger().IsPrimary)
+		if (e->finger().IsPrimary)
 		{
-			Vec3<float> deltaPos(e->Finger().DeltaX, e->Finger().DeltaY, 0);
+			Vec3<float> deltaPos(e->finger().DeltaX, e->finger().DeltaY, 0);
 			if (this->viewMode == TileViewMode::Isometric)
 			{
 				deltaPos.x /= isoTileSize.x;
@@ -137,7 +137,7 @@ void TileView::EventOccurred(Event *e)
 	}
 }
 
-void TileView::Render()
+void TileView::render()
 {
 	TRACE_FN;
 	Renderer &r = *fw().renderer;
@@ -268,7 +268,7 @@ void TileView::Render()
 	}
 }
 
-bool TileView::IsTransition() { return false; }
+bool TileView::isTransition() { return false; }
 
 void TileView::setViewMode(TileViewMode newMode) { this->viewMode = newMode; }
 

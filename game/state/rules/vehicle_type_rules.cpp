@@ -93,7 +93,7 @@ template <> sp<VehicleType> StateObject<VehicleType>::get(const GameState &state
 	auto it = state.vehicle_types.find(id);
 	if (it == state.vehicle_types.end())
 	{
-		LogError("No vehicle type matching ID \"%s\"", id.c_str());
+		LogError("No vehicle type matching ID \"%s\"", id.cStr());
 		return nullptr;
 	}
 	return it->second;

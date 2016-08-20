@@ -24,12 +24,12 @@ class TextEdit : public Control
 	bool editing;
 	UString allowedCharacters;
 	size_t textMaxLength = std::string::npos;
-	void RaiseEvent(FormEventType Type);
+	void raiseEvent(FormEventType Type);
 
   protected:
-	void OnRender() override;
+	void onRender() override;
 
-	bool IsFocused() const override;
+	bool isFocused() const override;
 
   public:
 	unsigned int SelectionStart;
@@ -39,22 +39,22 @@ class TextEdit : public Control
 	TextEdit(const UString &Text = "", sp<BitmapFont> font = nullptr);
 	~TextEdit() override;
 
-	void EventOccured(Event *e) override;
-	void Update() override;
-	void UnloadResources() override;
+	void eventOccured(Event *e) override;
+	void update() override;
+	void unloadResources() override;
 
-	UString GetText() const;
-	void SetText(const UString &Text);
-	void SetCursor(const UString &cursor);
-	void SetTextMaxSize(size_t length);
+	UString getText() const;
+	void setText(const UString &Text);
+	void setCursor(const UString &cursor);
+	void setTextMaxSize(size_t length);
 	// set to empty string to allow everything
-	void SetAllowedCharacters(const UString &allowedCharacters);
+	void setAllowedCharacters(const UString &allowedCharacters);
 
-	sp<BitmapFont> GetFont() const;
-	void SetFont(sp<BitmapFont> NewFont);
+	sp<BitmapFont> getFont() const;
+	void setFont(sp<BitmapFont> NewFont);
 
-	sp<Control> CopyTo(sp<Control> CopyParent) override;
-	void ConfigureSelfFromXML(tinyxml2::XMLElement *Element) override;
+	sp<Control> copyTo(sp<Control> CopyParent) override;
+	void configureSelfFromXml(tinyxml2::XMLElement *Element) override;
 };
 
 }; // namespace OpenApoc

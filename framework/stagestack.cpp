@@ -5,35 +5,35 @@
 namespace OpenApoc
 {
 
-void StageStack::Push(sp<Stage> newStage)
+void StageStack::push(sp<Stage> newStage)
 {
 
 	// Pause any current stage
-	if (this->Current())
-		this->Current()->Pause();
+	if (this->current())
+		this->current()->pause();
 
 	this->Stack.push_back(newStage);
-	newStage->Begin();
+	newStage->begin();
 }
 
-sp<Stage> StageStack::Pop()
+sp<Stage> StageStack::pop()
 {
-	sp<Stage> result = this->Current();
+	sp<Stage> result = this->current();
 
 	if (result)
 	{
-		result->Finish();
+		result->finish();
 		Stack.pop_back();
 	}
 
 	// If there's still an item on the stack, resume it
-	if (this->Current())
-		this->Current()->Resume();
+	if (this->current())
+		this->current()->resume();
 
 	return result;
 }
 
-sp<Stage> StageStack::Current()
+sp<Stage> StageStack::current()
 {
 	if (this->Stack.empty())
 		return nullptr;
@@ -41,9 +41,9 @@ sp<Stage> StageStack::Current()
 		return this->Stack.back();
 }
 
-sp<Stage> StageStack::Previous() { return Previous(Current()); }
+sp<Stage> StageStack::previous() { return previous(current()); }
 
-sp<Stage> StageStack::Previous(sp<Stage> From)
+sp<Stage> StageStack::previous(sp<Stage> From)
 {
 	if (!this->Stack.empty())
 	{
@@ -58,12 +58,12 @@ sp<Stage> StageStack::Previous(sp<Stage> From)
 	return nullptr;
 }
 
-bool StageStack::IsEmpty() { return this->Stack.empty(); }
+bool StageStack::isEmpty() { return this->Stack.empty(); }
 
-void StageStack::Clear()
+void StageStack::clear()
 {
-	while (!this->IsEmpty())
-		this->Pop();
+	while (!this->isEmpty())
+		this->pop();
 }
 
 }; // namespace OpenApoc

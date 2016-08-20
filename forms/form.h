@@ -9,20 +9,20 @@ class Form : public Control
 {
 
   protected:
-	void OnRender() override;
+	void onRender() override;
 
   public:
 	Form(tinyxml2::XMLElement *FormConfiguration);
 	Form();
 	~Form() override;
 
-	virtual void ReadFormStyle(tinyxml2::XMLElement *FormConfiguration);
+	virtual void readFormStyle(tinyxml2::XMLElement *FormConfiguration);
 
-	void EventOccured(Event *e) override;
-	void Update() override;
-	void UnloadResources() override;
+	void eventOccured(Event *e) override;
+	void update() override;
+	void unloadResources() override;
 
-	sp<Control> CopyTo(sp<Control> CopyParent) override;
+	sp<Control> copyTo(sp<Control> CopyParent) override;
 };
 
 }; // namespace OpenApoc

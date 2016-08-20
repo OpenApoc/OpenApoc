@@ -24,19 +24,19 @@ class BaseBuyScreen : public Stage
 
 	sp<GameState> state;
 	sp<Base> base;
-	void RenderBase();
+	void renderBase();
 
   public:
 	BaseBuyScreen(sp<GameState> state, sp<Building> building);
 	~BaseBuyScreen() override;
 	// Stage control
-	void Begin() override;
-	void Pause() override;
-	void Resume() override;
-	void Finish() override;
-	void EventOccurred(Event *e) override;
-	void Update(StageCmd *const cmd) override;
-	void Render() override;
-	bool IsTransition() override;
+	void begin() override;
+	void pause() override;
+	void resume() override;
+	void finish() override;
+	void eventOccurred(Event *e) override;
+	void update(StageCmd *const cmd) override;
+	void render() override;
+	bool isTransition() override;
 };
 }; // namespace OpenApoc

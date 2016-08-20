@@ -15,18 +15,18 @@ Control::Control(bool takesFocus)
 {
 }
 
-Control::~Control() { UnloadResources(); }
+Control::~Control() { unloadResources(); }
 
-bool Control::IsFocused() const
+bool Control::isFocused() const
 {
 	// FIXME: Need to think of a method of 'sharing' focus across multiple forms/non-form active
 	// areas
 	return false;
 }
 
-void Control::ResolveLocation()
+void Control::resolveLocation()
 {
-	auto parentControl = this->GetParent();
+	auto parentControl = this->getParent();
 	if (parentControl == nullptr)
 	{
 		resolvedLocation.x = Location.x;
@@ -49,18 +49,18 @@ void Control::ResolveLocation()
 	for (auto ctrlidx = Controls.rbegin(); ctrlidx != Controls.rend(); ctrlidx++)
 	{
 		auto c = *ctrlidx;
-		c->ResolveLocation();
+		c->resolveLocation();
 	}
 }
 
-void Control::EventOccured(Event *e)
+void Control::eventOccured(Event *e)
 {
 	for (auto ctrlidx = Controls.rbegin(); ctrlidx != Controls.rend(); ctrlidx++)
 	{
 		auto c = *ctrlidx;
 		if (c->Visible && c->Enabled)
 		{
-			c->EventOccured(e);
+			c->eventOccured(e);
 			if (e->Handled)
 			{
 				return;
@@ -68,14 +68,14 @@ void Control::EventOccured(Event *e)
 		}
 	}
 
-	if (e->Type() == EVENT_MOUSE_MOVE || e->Type() == EVENT_MOUSE_DOWN ||
-	    e->Type() == EVENT_MOUSE_UP)
+	if (e->type() == EVENT_MOUSE_MOVE || e->type() == EVENT_MOUSE_DOWN ||
+	    e->type() == EVENT_MOUSE_UP)
 	{
 		bool newInside =
-		    (e->Mouse().X >= resolvedLocation.x && e->Mouse().X < resolvedLocation.x + Size.x &&
-		     e->Mouse().Y >= resolvedLocation.y && e->Mouse().Y < resolvedLocation.y + Size.y);
+		    (e->mouse().X >= resolvedLocation.x && e->mouse().X < resolvedLocation.x + Size.x &&
+		     e->mouse().Y >= resolvedLocation.y && e->mouse().Y < resolvedLocation.y + Size.y);
 
-		if (e->Type() == EVENT_MOUSE_MOVE)
+		if (e->type() == EVENT_MOUSE_MOVE)
 		{
 			if (newInside)
 			{
@@ -95,7 +95,7 @@ void Control::EventOccured(Event *e)
 			}
 		}
 
-		if (e->Type() == EVENT_MOUSE_DOWN)
+		if (e->type() == EVENT_MOUSE_DOWN)
 		{
 			if (newInside)
 			{
@@ -104,7 +104,7 @@ void Control::EventOccured(Event *e)
 			}
 		}
 
-		if (e->Type() == EVENT_MOUSE_UP)
+		if (e->type() == EVENT_MOUSE_UP)
 		{
 			if (newInside)
 			{
@@ -120,34 +120,34 @@ void Control::EventOccured(Event *e)
 		mouseInside = newInside;
 	}
 
-	if (e->Type() == EVENT_FINGER_DOWN || e->Type() == EVENT_FINGER_UP ||
-	    e->Type() == EVENT_FINGER_MOVE)
+	if (e->type() == EVENT_FINGER_DOWN || e->type() == EVENT_FINGER_UP ||
+	    e->type() == EVENT_FINGER_MOVE)
 	{
 		// This right now is a carbon copy of mouse event-handling. Maybe we should do something
 		// else?
 		// FIXME: Use something other than mouseInside? fingerInside maybe?
 		bool newInside =
-		    (e->Finger().X >= resolvedLocation.x && e->Finger().X < resolvedLocation.x + Size.x &&
-		     e->Finger().Y >= resolvedLocation.y && e->Finger().Y < resolvedLocation.y + Size.y);
+		    (e->finger().X >= resolvedLocation.x && e->finger().X < resolvedLocation.x + Size.x &&
+		     e->finger().Y >= resolvedLocation.y && e->finger().Y < resolvedLocation.y + Size.y);
 
 		// FIXME: Right now we'll just copy touch data to the mouse location. That's... not exactly
 		// right.
 		// FIXME: We're only doing event processing for the "primary" finger.
-		if (e->Finger().IsPrimary || 1)
+		if (e->finger().IsPrimary || 1)
 		{
 			FrameworkMouseEvent FakeMouseData;
-			FakeMouseData.X = e->Finger().X;
-			FakeMouseData.Y = e->Finger().Y;
-			FakeMouseData.DeltaX = e->Finger().DeltaX;
-			FakeMouseData.DeltaY = e->Finger().DeltaY;
+			FakeMouseData.X = e->finger().X;
+			FakeMouseData.Y = e->finger().Y;
+			FakeMouseData.DeltaX = e->finger().DeltaX;
+			FakeMouseData.DeltaY = e->finger().DeltaY;
 			FakeMouseData.WheelHorizontal = 0;
 			FakeMouseData.WheelVertical = 0;
 			FakeMouseData.Button = 1; // Always left mouse button?
 
-			if (e->Type() == EVENT_FINGER_MOVE)
+			if (e->type() == EVENT_FINGER_MOVE)
 			{
 				MouseEvent fakeMouseEvent(EVENT_MOUSE_MOVE);
-				fakeMouseEvent.Mouse() = FakeMouseData;
+				fakeMouseEvent.mouse() = FakeMouseData;
 				if (newInside)
 				{
 					if (!mouseInside)
@@ -168,10 +168,10 @@ void Control::EventOccured(Event *e)
 				}
 			}
 
-			if (e->Type() == EVENT_FINGER_DOWN)
+			if (e->type() == EVENT_FINGER_DOWN)
 			{
 				MouseEvent fakeMouseEvent(EVENT_MOUSE_DOWN);
-				fakeMouseEvent.Mouse() = FakeMouseData;
+				fakeMouseEvent.mouse() = FakeMouseData;
 				if (newInside)
 				{
 					this->pushFormEvent(FormEventType::MouseDown, &fakeMouseEvent);
@@ -181,10 +181,10 @@ void Control::EventOccured(Event *e)
 				}
 			}
 
-			if (e->Type() == EVENT_FINGER_UP)
+			if (e->type() == EVENT_FINGER_UP)
 			{
 				MouseEvent fakeMouseEvent(EVENT_MOUSE_UP);
-				fakeMouseEvent.Mouse() = FakeMouseData;
+				fakeMouseEvent.mouse() = FakeMouseData;
 				if (newInside)
 				{
 					this->pushFormEvent(FormEventType::MouseUp, &fakeMouseEvent);
@@ -201,19 +201,19 @@ void Control::EventOccured(Event *e)
 		mouseInside = newInside;
 	}
 
-	if (e->Type() == EVENT_KEY_DOWN || e->Type() == EVENT_KEY_UP)
+	if (e->type() == EVENT_KEY_DOWN || e->type() == EVENT_KEY_UP)
 	{
-		if (IsFocused())
+		if (isFocused())
 		{
 			this->pushFormEvent(
-			    e->Type() == EVENT_KEY_DOWN ? FormEventType::KeyDown : FormEventType::KeyUp, e);
+			    e->type() == EVENT_KEY_DOWN ? FormEventType::KeyDown : FormEventType::KeyUp, e);
 
 			e->Handled = true;
 		}
 	}
-	if (e->Type() == EVENT_KEY_PRESS)
+	if (e->type() == EVENT_KEY_PRESS)
 	{
-		if (IsFocused())
+		if (isFocused())
 		{
 			this->pushFormEvent(FormEventType::KeyPress, e);
 
@@ -221,9 +221,9 @@ void Control::EventOccured(Event *e)
 		}
 	}
 
-	if (e->Type() == EVENT_TEXT_INPUT)
+	if (e->type() == EVENT_TEXT_INPUT)
 	{
-		if (IsFocused())
+		if (isFocused())
 		{
 			this->pushFormEvent(FormEventType::TextInput, e);
 
@@ -232,7 +232,7 @@ void Control::EventOccured(Event *e)
 	}
 }
 
-void Control::Render()
+void Control::render()
 {
 	if (!Visible || Size.x == 0 || Size.y == 0)
 	{
@@ -252,9 +252,9 @@ void Control::Render()
 		}
 
 		RendererSurfaceBinding b(*fw().renderer, controlArea);
-		PreRender();
-		OnRender();
-		PostRender();
+		preRender();
+		onRender();
+		postRender();
 		if (this->palette)
 		{
 			fw().renderer->setPalette(previousPalette);
@@ -271,21 +271,21 @@ void Control::Render()
 	}
 }
 
-void Control::PreRender() { fw().renderer->clear(BackgroundColour); }
+void Control::preRender() { fw().renderer->clear(BackgroundColour); }
 
-void Control::OnRender()
+void Control::onRender()
 {
 	// Nothing specifically for the base control
 }
 
-void Control::PostRender()
+void Control::postRender()
 {
 	for (auto ctrlidx = Controls.begin(); ctrlidx != Controls.end(); ctrlidx++)
 	{
 		auto c = *ctrlidx;
 		if (c->Visible)
 		{
-			c->Render();
+			c->render();
 		}
 	}
 	if (showBounds)
@@ -294,22 +294,22 @@ void Control::PostRender()
 	}
 }
 
-void Control::Update()
+void Control::update()
 {
 	for (auto ctrlidx = Controls.begin(); ctrlidx != Controls.end(); ctrlidx++)
 	{
 		auto c = *ctrlidx;
-		c->Update();
+		c->update();
 	}
 }
 
-void Control::ConfigureFromXML(tinyxml2::XMLElement *Element)
+void Control::configureFromXml(tinyxml2::XMLElement *Element)
 {
-	ConfigureSelfFromXML(Element);
-	ConfigureChildrenFromXml(Element);
+	configureSelfFromXml(Element);
+	configureChildrenFromXml(Element);
 }
 
-void Control::ConfigureChildrenFromXml(tinyxml2::XMLElement *Element)
+void Control::configureChildrenFromXml(tinyxml2::XMLElement *Element)
 {
 	UString nodename;
 	UString attribvalue;
@@ -322,44 +322,44 @@ void Control::ConfigureChildrenFromXml(tinyxml2::XMLElement *Element)
 		if (nodename == "control")
 		{
 			auto c = this->createChild<Control>();
-			c->ConfigureFromXML(node);
+			c->configureFromXml(node);
 		}
 		else if (nodename == "label")
 		{
 			auto l = this->createChild<Label>();
-			l->ConfigureFromXML(node);
+			l->configureFromXml(node);
 		}
 		else if (nodename == "graphic")
 		{
 			auto g = this->createChild<Graphic>();
-			g->ConfigureFromXML(node);
+			g->configureFromXml(node);
 		}
 		else if (nodename == "textbutton")
 		{
 			auto tb = this->createChild<TextButton>();
-			tb->ConfigureFromXML(node);
+			tb->configureFromXml(node);
 		}
 		else if (nodename == "graphicbutton")
 		{
 			auto gb = this->createChild<GraphicButton>();
-			gb->ConfigureFromXML(node);
+			gb->configureFromXml(node);
 			if (node->Attribute("scrollprev") != nullptr &&
 			    UString(node->Attribute("scrollprev")) != "")
 			{
 				attribvalue = node->Attribute("scrollprev");
-				gb->ScrollBarPrev = this->FindControlTyped<ScrollBar>(attribvalue);
+				gb->ScrollBarPrev = this->findControlTyped<ScrollBar>(attribvalue);
 			}
 			if (node->Attribute("scrollnext") != nullptr &&
 			    UString(node->Attribute("scrollnext")) != "")
 			{
 				attribvalue = node->Attribute("scrollnext");
-				gb->ScrollBarNext = this->FindControlTyped<ScrollBar>(attribvalue);
+				gb->ScrollBarNext = this->findControlTyped<ScrollBar>(attribvalue);
 			}
 		}
 		else if (nodename == "checkbox")
 		{
 			auto cb = this->createChild<CheckBox>();
-			cb->ConfigureFromXML(node);
+			cb->configureFromXml(node);
 		}
 		else if (nodename == "radiobutton")
 		{
@@ -378,7 +378,7 @@ void Control::ConfigureChildrenFromXml(tinyxml2::XMLElement *Element)
 				LogError("Radiobutton \"%s\" has no group", node->Attribute("id"));
 			}
 			auto rb = this->createChild<RadioButton>(group);
-			rb->ConfigureFromXML(node);
+			rb->configureFromXml(node);
 			if (group)
 			{
 				group->radioButtons.push_back(rb);
@@ -387,7 +387,7 @@ void Control::ConfigureChildrenFromXml(tinyxml2::XMLElement *Element)
 		else if (nodename == "scroll")
 		{
 			auto sb = this->createChild<ScrollBar>();
-			sb->ConfigureFromXML(node);
+			sb->configureFromXml(node);
 		}
 
 		else if (nodename == "listbox")
@@ -398,27 +398,27 @@ void Control::ConfigureChildrenFromXml(tinyxml2::XMLElement *Element)
 			    UString(node->Attribute("scrollbarid")) != "")
 			{
 				attribvalue = node->Attribute("scrollbarid");
-				sb = this->FindControlTyped<ScrollBar>(attribvalue);
+				sb = this->findControlTyped<ScrollBar>(attribvalue);
 			}
 			auto lb = this->createChild<ListBox>(sb);
-			lb->ConfigureFromXML(node);
+			lb->configureFromXml(node);
 		}
 
 		else if (nodename == "textedit")
 		{
 			auto te = this->createChild<TextEdit>();
-			te->ConfigureFromXML(node);
+			te->configureFromXml(node);
 		}
 
 		else if (nodename == "ticker")
 		{
 			auto tk = this->createChild<Ticker>();
-			tk->ConfigureFromXML(node);
+			tk->configureFromXml(node);
 		}
 	}
 }
 
-void Control::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
+void Control::configureSelfFromXml(tinyxml2::XMLElement *Element)
 {
 	UString nodename;
 	UString attribvalue;
@@ -445,7 +445,7 @@ void Control::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 		this->showBounds = (vistxt == "Y" || vistxt == "T");
 	}
 
-	auto parentControl = this->GetParent();
+	auto parentControl = this->getParent();
 	tinyxml2::XMLElement *node;
 	for (node = Element->FirstChildElement(); node != nullptr; node = node->NextSiblingElement())
 	{
@@ -453,7 +453,7 @@ void Control::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 
 		if (nodename == "palette")
 		{
-			auto pal = fw().data->load_palette(node->GetText());
+			auto pal = fw().data->loadPalette(node->GetText());
 			if (!pal)
 			{
 				LogError("Control referenced palette \"%s\" that cannot be loaded",
@@ -467,29 +467,29 @@ void Control::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 			if (node->Attribute("a") != nullptr && UString(node->Attribute("a")) != "")
 			{
 				this->BackgroundColour = Colour{
-				    Strings::ToU8(node->Attribute("r")), Strings::ToU8(node->Attribute("g")),
-				    Strings::ToU8(node->Attribute("b")), Strings::ToU8(node->Attribute("a"))};
+				    Strings::toU8(node->Attribute("r")), Strings::toU8(node->Attribute("g")),
+				    Strings::toU8(node->Attribute("b")), Strings::toU8(node->Attribute("a"))};
 			}
 			else
 			{
 				this->BackgroundColour =
-				    Colour{Strings::ToU8(node->Attribute("r")), Strings::ToU8(node->Attribute("g")),
-				           Strings::ToU8(node->Attribute("b"))};
+				    Colour{Strings::toU8(node->Attribute("r")), Strings::toU8(node->Attribute("g")),
+				           Strings::toU8(node->Attribute("b"))};
 			}
 		}
 		else if (nodename == "position")
 		{
-			if (Strings::IsInteger(node->Attribute("x")))
+			if (Strings::isInteger(node->Attribute("x")))
 			{
-				Location.x = Strings::ToInteger(node->Attribute("x"));
+				Location.x = Strings::toInteger(node->Attribute("x"));
 			}
 			else
 			{
 				specialpositionx = node->Attribute("x");
 			}
-			if (Strings::IsInteger(node->Attribute("y")))
+			if (Strings::isInteger(node->Attribute("y")))
 			{
-				Location.y = Strings::ToInteger(node->Attribute("y"));
+				Location.y = Strings::toInteger(node->Attribute("y"));
 			}
 			else
 			{
@@ -503,9 +503,9 @@ void Control::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 
 			// if size ends with % this means that it is special (percentage) size
 			UString width = node->Attribute("width");
-			if (Strings::IsInteger(width) && !(width.str().back() == '%'))
+			if (Strings::isInteger(width) && !(width.str().back() == '%'))
 			{
-				Size.x = Strings::ToInteger(width);
+				Size.x = Strings::toInteger(width);
 			}
 			else
 			{
@@ -513,9 +513,9 @@ void Control::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 			}
 
 			UString height = node->Attribute("height");
-			if (Strings::IsInteger(height) && !(height.str().back() == '%'))
+			if (Strings::isInteger(height) && !(height.str().back() == '%'))
 			{
-				Size.y = Strings::ToInteger(height);
+				Size.y = Strings::toInteger(height);
 			}
 			else
 			{
@@ -527,13 +527,13 @@ void Control::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 				if (specialsizex.str().back() == '%')
 				{
 					// Skip % sign at the end
-					auto sizeRatio = Strings::ToFloat(specialsizex) / 100.0f;
+					auto sizeRatio = Strings::toFloat(specialsizex) / 100.0f;
 					setRelativeWidth(sizeRatio);
 				}
 				else
 				{
 					LogWarning("Control \"%s\" has not supported size x value \"%s\"",
-					           this->Name.c_str(), specialsizex.c_str());
+					           this->Name.cStr(), specialsizex.cStr());
 				}
 			}
 
@@ -541,7 +541,7 @@ void Control::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 			{
 				if (specialsizey.str().back() == '%')
 				{
-					auto sizeRatio = Strings::ToFloat(specialsizey) / 100.0f;
+					auto sizeRatio = Strings::toFloat(specialsizey) / 100.0f;
 					setRelativeHeight(sizeRatio);
 				}
 				else if (specialsizey == "item")
@@ -552,7 +552,7 @@ void Control::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 					while (parent != nullptr &&
 					       !(listBox = std::dynamic_pointer_cast<ListBox>(parent)))
 					{
-						parent = parent->GetParent();
+						parent = parent->getParent();
 					}
 					if (listBox != nullptr)
 					{
@@ -562,13 +562,13 @@ void Control::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 					{
 						LogWarning(
 						    "Control \"%s\" with \"item\" size.y does not have ListBox parent ",
-						    this->Name.c_str());
+						    this->Name.cStr());
 					}
 				}
 				else
 				{
 					LogWarning("Control \"%s\" has not supported size y value \"%s\"",
-					           this->Name.c_str(), specialsizey.c_str());
+					           this->Name.cStr(), specialsizey.cStr());
 				}
 			}
 		}
@@ -578,15 +578,15 @@ void Control::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 	{
 		if (specialpositionx == "left")
 		{
-			Align(HorizontalAlignment::Left);
+			align(HorizontalAlignment::Left);
 		}
 		else if (specialpositionx == "centre")
 		{
-			Align(HorizontalAlignment::Centre);
+			align(HorizontalAlignment::Centre);
 		}
 		else if (specialpositionx == "right")
 		{
-			Align(HorizontalAlignment::Right);
+			align(HorizontalAlignment::Right);
 		}
 	}
 
@@ -594,27 +594,27 @@ void Control::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 	{
 		if (specialpositiony == "top")
 		{
-			Align(VerticalAlignment::Top);
+			align(VerticalAlignment::Top);
 		}
 		else if (specialpositiony == "centre")
 		{
-			Align(VerticalAlignment::Centre);
+			align(VerticalAlignment::Centre);
 		}
 		else if (specialpositiony == "bottom")
 		{
-			Align(VerticalAlignment::Bottom);
+			align(VerticalAlignment::Bottom);
 		}
 	}
 
-	LogInfo("Control \"%s\" has %zu subcontrols (%d, %d, %d, %d)", this->Name.c_str(),
+	LogInfo("Control \"%s\" has %zu subcontrols (%d, %d, %d, %d)", this->Name.cStr(),
 	        Controls.size(), Location.x, Location.y, Size.x, Size.y);
 }
 
-void Control::UnloadResources() {}
+void Control::unloadResources() {}
 
 sp<Control> Control::operator[](int Index) const { return Controls.at(Index); }
 
-sp<Control> Control::FindControl(UString ID) const
+sp<Control> Control::findControl(UString ID) const
 {
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
 	{
@@ -623,16 +623,16 @@ sp<Control> Control::FindControl(UString ID) const
 		{
 			return ctrl;
 		}
-		auto childControl = ctrl->FindControl(ID);
+		auto childControl = ctrl->findControl(ID);
 		if (childControl)
 			return childControl;
 	}
 	return nullptr;
 }
 
-sp<Control> Control::GetParent() const { return owningControl.lock(); }
+sp<Control> Control::getParent() const { return owningControl.lock(); }
 
-sp<Control> Control::GetRootControl()
+sp<Control> Control::getRootControl()
 {
 	auto parent = owningControl.lock();
 	if (parent == nullptr)
@@ -641,17 +641,17 @@ sp<Control> Control::GetRootControl()
 	}
 	else
 	{
-		return parent->GetRootControl();
+		return parent->getRootControl();
 	}
 }
 
-sp<Form> Control::GetForm()
+sp<Form> Control::getForm()
 {
-	auto c = GetRootControl();
+	auto c = getRootControl();
 	return std::dynamic_pointer_cast<Form>(c);
 }
 
-void Control::SetParent(sp<Control> Parent)
+void Control::setParent(sp<Control> Parent)
 {
 	if (Parent)
 	{
@@ -665,24 +665,24 @@ void Control::SetParent(sp<Control> Parent)
 	owningControl = Parent;
 }
 
-sp<Control> Control::GetAncestor(sp<Control> Parent)
+sp<Control> Control::getAncestor(sp<Control> Parent)
 {
 	sp<Control> ancestor = shared_from_this();
 	while (ancestor != nullptr)
 	{
-		if (ancestor->GetParent() == Parent)
+		if (ancestor->getParent() == Parent)
 		{
 			break;
 		}
 		else
 		{
-			ancestor = ancestor->GetParent();
+			ancestor = ancestor->getParent();
 		}
 	}
 	return ancestor;
 }
 
-Vec2<int> Control::GetLocationOnScreen() const
+Vec2<int> Control::getLocationOnScreen() const
 {
 	Vec2<int> r(resolvedLocation.x, resolvedLocation.y);
 	return r;
@@ -696,7 +696,7 @@ void Control::setRelativeWidth(float widthFactor)
 	}
 	else
 	{
-		Vec2<int> parentSize = GetParentSize();
+		Vec2<int> parentSize = getParentSize();
 		Size.x = (int)(parentSize.x * widthFactor);
 	}
 }
@@ -709,25 +709,25 @@ void Control::setRelativeHeight(float heightFactor)
 	}
 	else
 	{
-		Vec2<int> parentSize = GetParentSize();
+		Vec2<int> parentSize = getParentSize();
 		Size.y = (int)(parentSize.y * heightFactor);
 	}
 }
 
-Vec2<int> Control::GetParentSize() const
+Vec2<int> Control::getParentSize() const
 {
-	auto parent = GetParent();
+	auto parent = getParent();
 	if (parent != nullptr)
 	{
 		return parent->Size;
 	}
 	else
 	{
-		return Vec2<int>{fw().Display_GetWidth(), fw().Display_GetHeight()};
+		return Vec2<int>{fw().displayGetWidth(), fw().displayGetHeight()};
 	}
 }
 
-int Control::Align(HorizontalAlignment HAlign, int ParentWidth, int ChildWidth)
+int Control::align(HorizontalAlignment HAlign, int ParentWidth, int ChildWidth)
 {
 	int x = 0;
 	switch (HAlign)
@@ -745,7 +745,7 @@ int Control::Align(HorizontalAlignment HAlign, int ParentWidth, int ChildWidth)
 	return x;
 }
 
-int Control::Align(VerticalAlignment VAlign, int ParentHeight, int ChildHeight)
+int Control::align(VerticalAlignment VAlign, int ParentHeight, int ChildHeight)
 {
 	int y = 0;
 	switch (VAlign)
@@ -763,23 +763,23 @@ int Control::Align(VerticalAlignment VAlign, int ParentHeight, int ChildHeight)
 	return y;
 }
 
-void Control::Align(HorizontalAlignment HAlign)
+void Control::align(HorizontalAlignment HAlign)
 {
-	Location.x = Align(HAlign, GetParentSize().x, Size.x);
+	Location.x = align(HAlign, getParentSize().x, Size.x);
 }
 
-void Control::Align(VerticalAlignment VAlign)
+void Control::align(VerticalAlignment VAlign)
 {
-	Location.y = Align(VAlign, GetParentSize().y, Size.y);
+	Location.y = align(VAlign, getParentSize().y, Size.y);
 }
 
-void Control::Align(HorizontalAlignment HAlign, VerticalAlignment VAlign)
+void Control::align(HorizontalAlignment HAlign, VerticalAlignment VAlign)
 {
-	Align(HAlign);
-	Align(VAlign);
+	align(HAlign);
+	align(VAlign);
 }
 
-sp<Control> Control::CopyTo(sp<Control> CopyParent)
+sp<Control> Control::copyTo(sp<Control> CopyParent)
 {
 	sp<Control> copy;
 	if (CopyParent)
@@ -790,11 +790,11 @@ sp<Control> Control::CopyTo(sp<Control> CopyParent)
 	{
 		copy = mksp<Control>(takesFocus);
 	}
-	CopyControlData(copy);
+	copyControlData(copy);
 	return copy;
 }
 
-void Control::CopyControlData(sp<Control> CopyOf)
+void Control::copyControlData(sp<Control> CopyOf)
 {
 	lastCopiedTo = CopyOf;
 
@@ -811,25 +811,25 @@ void Control::CopyControlData(sp<Control> CopyOf)
 		auto ctrl = *c;
 		if (ctrl->canCopy)
 		{
-			ctrl->CopyTo(CopyOf);
+			ctrl->copyTo(CopyOf);
 		}
 	}
 }
 
 bool Control::eventIsWithin(const Event *e) const
 {
-	if (e->Type() == EVENT_MOUSE_MOVE || e->Type() == EVENT_MOUSE_DOWN ||
-	    e->Type() == EVENT_MOUSE_UP)
+	if (e->type() == EVENT_MOUSE_MOVE || e->type() == EVENT_MOUSE_DOWN ||
+	    e->type() == EVENT_MOUSE_UP)
 	{
-		return (e->Mouse().X >= resolvedLocation.x && e->Mouse().X < resolvedLocation.x + Size.x &&
-		        e->Mouse().Y >= resolvedLocation.y && e->Mouse().Y < resolvedLocation.y + Size.y);
+		return (e->mouse().X >= resolvedLocation.x && e->mouse().X < resolvedLocation.x + Size.x &&
+		        e->mouse().Y >= resolvedLocation.y && e->mouse().Y < resolvedLocation.y + Size.y);
 	}
-	else if (e->Type() == EVENT_FINGER_DOWN || e->Type() == EVENT_FINGER_UP ||
-	         e->Type() == EVENT_FINGER_MOVE)
+	else if (e->type() == EVENT_FINGER_DOWN || e->type() == EVENT_FINGER_UP ||
+	         e->type() == EVENT_FINGER_MOVE)
 	{
-		return (e->Finger().X >= resolvedLocation.x &&
-		        e->Finger().X < resolvedLocation.x + Size.x &&
-		        e->Finger().Y >= resolvedLocation.y && e->Finger().Y < resolvedLocation.y + Size.y);
+		return (e->finger().X >= resolvedLocation.x &&
+		        e->finger().X < resolvedLocation.x + Size.x &&
+		        e->finger().Y >= resolvedLocation.y && e->finger().Y < resolvedLocation.y + Size.y);
 	}
 	// Only mouse & finger events have a location to be within
 	return false;
@@ -849,12 +849,12 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 		case FormEventType::MouseClick:
 		{
 			event = new FormsEvent();
-			event->Forms().RaisedBy = shared_from_this();
-			event->Forms().EventFlag = type;
-			event->Forms().MouseInfo = parentEvent->Mouse();
-			event->Forms().MouseInfo.X -= resolvedLocation.x;
-			event->Forms().MouseInfo.Y -= resolvedLocation.y;
-			fw().PushEvent(event);
+			event->forms().RaisedBy = shared_from_this();
+			event->forms().EventFlag = type;
+			event->forms().MouseInfo = parentEvent->mouse();
+			event->forms().MouseInfo.X -= resolvedLocation.x;
+			event->forms().MouseInfo.Y -= resolvedLocation.y;
+			fw().pushEvent(event);
 			break;
 		}
 		// Keyboard events fall-through
@@ -863,20 +863,20 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 		case FormEventType::KeyPress:
 		{
 			event = new FormsEvent();
-			event->Forms().RaisedBy = shared_from_this();
-			event->Forms().EventFlag = type;
-			event->Forms().KeyInfo = parentEvent->Keyboard();
-			fw().PushEvent(event);
+			event->forms().RaisedBy = shared_from_this();
+			event->forms().EventFlag = type;
+			event->forms().KeyInfo = parentEvent->keyboard();
+			fw().pushEvent(event);
 			break;
 		}
 		// Input event special
 		case FormEventType::TextInput:
 		{
 			event = new FormsEvent();
-			event->Forms().RaisedBy = shared_from_this();
-			event->Forms().EventFlag = type;
-			event->Forms().Input = parentEvent->Text();
-			fw().PushEvent(event);
+			event->forms().RaisedBy = shared_from_this();
+			event->forms().EventFlag = type;
+			event->forms().Input = parentEvent->text();
+			fw().pushEvent(event);
 			break;
 		}
 		// Forms events fall-through
@@ -893,11 +893,11 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 			event = new FormsEvent();
 			if (parentEvent)
 			{
-				event->Forms() = parentEvent->Forms();
+				event->forms() = parentEvent->forms();
 			}
-			event->Forms().RaisedBy = shared_from_this();
-			event->Forms().EventFlag = type;
-			fw().PushEvent(event);
+			event->forms().RaisedBy = shared_from_this();
+			event->forms().EventFlag = type;
+			fw().pushEvent(event);
 			break;
 		}
 		default:
@@ -908,7 +908,7 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 
 void Control::triggerEventCallbacks(FormsEvent *e)
 {
-	for (auto &callback : this->callbacks[e->Forms().EventFlag])
+	for (auto &callback : this->callbacks[e->forms().EventFlag])
 	{
 		callback(e);
 	}

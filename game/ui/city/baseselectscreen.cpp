@@ -15,59 +15,59 @@ static const Colour PLAYER_BASE_AVAILABLE{160, 236, 252};
 BaseSelectScreen::BaseSelectScreen(sp<GameState> state, Vec3<float> centerPos)
     : TileView(*state->current_city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
                Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Strategy),
-      menuform(ui().GetForm("FORM_SELECT_BASE_SCREEN")), state(state), counter(0)
+      menuform(ui().getForm("FORM_SELECT_BASE_SCREEN")), state(state), counter(0)
 {
 	this->centerPos = centerPos;
-	this->menuform->FindControl("BUTTON_OK")
+	this->menuform->findControl("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *) { this->stageCmd.cmd = StageCmd::Command::POP; });
 }
 
 BaseSelectScreen::~BaseSelectScreen() = default;
 
-void BaseSelectScreen::Begin()
+void BaseSelectScreen::begin()
 {
-	menuform->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
+	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 }
 
-void BaseSelectScreen::Pause() {}
+void BaseSelectScreen::pause() {}
 
-void BaseSelectScreen::Resume() {}
+void BaseSelectScreen::resume() {}
 
-void BaseSelectScreen::Finish() {}
+void BaseSelectScreen::finish() {}
 
-void BaseSelectScreen::EventOccurred(Event *e)
+void BaseSelectScreen::eventOccurred(Event *e)
 {
-	menuform->EventOccured(e);
+	menuform->eventOccured(e);
 
 	if (menuform->eventIsWithin(e))
 	{
 		return;
 	}
 
-	if (e->Type() == EVENT_KEY_DOWN && e->Keyboard().KeyCode == SDLK_ESCAPE)
+	if (e->type() == EVENT_KEY_DOWN && e->keyboard().KeyCode == SDLK_ESCAPE)
 	{
 		stageCmd.cmd = StageCmd::Command::POP;
 	}
 	// Exclude mouse down events that are over the form
-	else if (e->Type() == EVENT_MOUSE_DOWN)
+	else if (e->type() == EVENT_MOUSE_DOWN)
 	{
-		if (e->Mouse().Button == 2)
+		if (e->mouse().Button == 2)
 		{
 			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
 			auto clickTile = this->screenToTileCoords(
-			    Vec2<float>{e->Mouse().X, e->Mouse().Y} - screenOffset, 0.0f);
+			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
 			this->setScreenCenterTile({clickTile.x, clickTile.y});
 		}
-		else if (e->Mouse().Button == 1)
+		else if (e->mouse().Button == 1)
 		{
 			// If a click has not been handled by a form it's in the map. See if we intersect with
 			// anything
 			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
 			auto clickTop = this->screenToTileCoords(
-			    Vec2<float>{e->Mouse().X, e->Mouse().Y} - screenOffset, 9.99f);
+			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 9.99f);
 			auto clickBottom = this->screenToTileCoords(
-			    Vec2<float>{e->Mouse().X, e->Mouse().Y} - screenOffset, 0.0f);
+			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
 			auto collision = state->current_city->map->findCollision(clickTop, clickBottom);
 			if (collision)
 			{
@@ -90,22 +90,22 @@ void BaseSelectScreen::EventOccurred(Event *e)
 	}
 	else
 	{
-		TileView::EventOccurred(e);
+		TileView::eventOccurred(e);
 	}
 }
 
-void BaseSelectScreen::Update(StageCmd *const cmd)
+void BaseSelectScreen::update(StageCmd *const cmd)
 {
-	menuform->Update();
+	menuform->update();
 	*cmd = this->stageCmd;
 	// Reset the command to default
 	this->stageCmd = StageCmd();
 	counter = (counter + 1) % COUNTER_MAX;
 }
 
-void BaseSelectScreen::Render()
+void BaseSelectScreen::render()
 {
-	TileView::Render();
+	TileView::render();
 	for (auto b : state->current_city->buildings)
 	{
 		auto building = b.second;
@@ -135,9 +135,9 @@ void BaseSelectScreen::Render()
 			fw().renderer->drawRect(screenPosA, screenPosB - screenPosA, borderColour, 2.0f);
 		}
 	}
-	menuform->Render();
+	menuform->render();
 }
 
-bool BaseSelectScreen::IsTransition() { return false; }
+bool BaseSelectScreen::isTransition() { return false; }
 
 }; // namespace OpenApoc

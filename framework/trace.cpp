@@ -210,7 +210,7 @@ void Trace::disable()
 void Trace::setThreadName(const UString &name)
 {
 #if defined(PTHREADS_AVAILABLE)
-	pthread_setname_np(pthread_self(), name.c_str());
+	pthread_setname_np(pthread_self(), name.cStr());
 #endif
 	if (!enabled)
 		return;

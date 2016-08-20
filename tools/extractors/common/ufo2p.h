@@ -65,19 +65,19 @@ class UFO2P
 	std::unique_ptr<DataChunk<BulletSprite>> bullet_sprites;
 	std::unique_ptr<DataChunk<ProjectileSprites>> projectile_sprites;
 
-	UString get_org_id(int idx)
+	UString getOrgId(int idx)
 	{
 		return Organisation::getPrefix() + canon_string(this->organisation_names->get(idx));
 	}
-	UString get_facility_id(int idx)
+	UString getFacilityId(int idx)
 	{
 		return FacilityType::getPrefix() + canon_string(this->facility_names->get(idx));
 	}
-	UString get_vequipment_id(int idx)
+	UString getVequipmentId(int idx)
 	{
 		return VEquipmentType::getPrefix() + canon_string(this->vehicle_equipment_names->get(idx));
 	}
-	UString get_vehicle_id(int idx)
+	UString getVehicleId(int idx)
 	{
 		return VehicleType::getPrefix() + canon_string(this->vehicle_names->get(idx));
 	}

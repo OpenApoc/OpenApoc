@@ -25,15 +25,15 @@ class BaseStage : public Stage
 	sp<Facility> viewFacility;
 
 	sp<GameState> state;
-	virtual void ChangeBase(sp<Base> newBase = nullptr);
-	void RefreshView();
+	virtual void changeBase(sp<Base> newBase = nullptr);
+	void refreshView();
 
   public:
 	BaseStage(sp<GameState> state);
 	~BaseStage() override;
 	// Stage control
-	void Begin() override;
-	void Render() override;
+	void begin() override;
+	void render() override;
 };
 
 }; // namespace OpenApoc

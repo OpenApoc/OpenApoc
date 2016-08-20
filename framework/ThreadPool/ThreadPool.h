@@ -41,7 +41,7 @@ inline ThreadPool::ThreadPool(size_t threads) : stop(false)
 	for (size_t i = 0; i < threads; ++i)
 		workers.emplace_back([this, i] {
 			OpenApoc::Trace::setThreadName("ThreadPool " +
-			                               OpenApoc::Strings::FromInteger(static_cast<int>(i)));
+			                               OpenApoc::Strings::fromInteger(static_cast<int>(i)));
 			for (;;)
 			{
 				std::function<void()> task;

@@ -28,31 +28,31 @@ FormPreview::FormPreview() : Stage()
 	c->Size = previewselector->Size - 4;
 	c->BackgroundColour = {80, 80, 80, 255};
 
-	auto l = c->createChild<Label>("Pick Form:", ui().GetFont("SMALFONT"));
+	auto l = c->createChild<Label>("Pick Form:", ui().getFont("SMALFONT"));
 	l->Location = {0, 0};
 	l->Size.x = c->Size.x;
-	l->Size.y = ui().GetFont("SMALFONT")->GetFontHeight();
+	l->Size.y = ui().getFont("SMALFONT")->getFontHeight();
 	l->BackgroundColour = {80, 80, 80, 255};
 
 	interactWithDisplay = c->createChild<CheckBox>(
-	    fw().data->load_image(
+	    fw().data->loadImage(
 	        "PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:65:UI/menuopt.pal"),
-	    fw().data->load_image(
+	    fw().data->loadImage(
 	        "PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:64:UI/menuopt.pal"));
 	interactWithDisplay->Size = {19, 16};
 	interactWithDisplay->Location.x = 0;
 	interactWithDisplay->Location.y = c->Size.y - interactWithDisplay->Size.y * 2;
 	interactWithDisplay->BackgroundColour = {80, 80, 80, 255};
-	interactWithDisplay->SetChecked(true);
+	interactWithDisplay->setChecked(true);
 
-	l = c->createChild<Label>("Interact?", ui().GetFont("SMALFONT"));
+	l = c->createChild<Label>("Interact?", ui().getFont("SMALFONT"));
 	l->Location.x = interactWithDisplay->Size.x + 2;
 	l->Location.y = interactWithDisplay->Location.y;
 	l->Size.x = c->Size.x - l->Location.x;
 	l->Size.y = interactWithDisplay->Size.y;
 	l->BackgroundColour = {80, 80, 80, 255};
 
-	reloadButton = c->createChild<TextButton>("Reload xml forms", ui().GetFont("SMALFONT"));
+	reloadButton = c->createChild<TextButton>("Reload xml forms", ui().getFont("SMALFONT"));
 	reloadButton->Location = {0, interactWithDisplay->Location.y + interactWithDisplay->Size.y};
 	reloadButton->Name = "FORM_RELOAD";
 	reloadButton->Size = {c->Size.x, interactWithDisplay->Size.y};
@@ -60,77 +60,77 @@ FormPreview::FormPreview() : Stage()
 
 	auto lb = c->createChild<ListBox>();
 	lb->Location.x = 0;
-	lb->Location.y = ui().GetFont("SMALFONT")->GetFontHeight();
+	lb->Location.y = ui().getFont("SMALFONT")->getFontHeight();
 	lb->Size.x = c->Size.x;
 	lb->Size.y = interactWithDisplay->Location.y - lb->Location.y;
 	lb->Name = "FORM_LIST";
 	lb->ItemSize = lb->Location.y;
 	lb->BackgroundColour = {24, 24, 24, 255};
 
-	std::vector<UString> idlist = ui().GetFormIDs();
+	std::vector<UString> idlist = ui().getFormIDs();
 	for (auto idx = idlist.begin(); idx != idlist.end(); idx++)
 	{
-		l = lb->createChild<Label>(*idx, ui().GetFont("SMALFONT"));
-		l->Name = l->GetText();
+		l = lb->createChild<Label>(*idx, ui().getFont("SMALFONT"));
+		l->Name = l->getText();
 		l->BackgroundColour = {192, 80, 80, 0};
-		// lb->AddItem( l );
+		// lb->addItem( l );
 	}
 
 	propertyeditor = mksp<Form>();
 	propertyeditor->Location = {2, 304};
 	propertyeditor->Size.x = 200;
-	propertyeditor->Size.y = fw().Display_GetHeight() - propertyeditor->Location.y - 2;
+	propertyeditor->Size.y = fw().displayGetHeight() - propertyeditor->Location.y - 2;
 	propertyeditor->BackgroundColour = {192, 192, 192, 255};
 }
 
 FormPreview::~FormPreview() = default;
 
-void FormPreview::Begin() {}
+void FormPreview::begin() {}
 
-void FormPreview::Pause() {}
+void FormPreview::pause() {}
 
-void FormPreview::Resume() {}
+void FormPreview::resume() {}
 
-void FormPreview::Finish() {}
+void FormPreview::finish() {}
 
-void FormPreview::EventOccurred(Event *e)
+void FormPreview::eventOccurred(Event *e)
 {
-	previewselector->EventOccured(e);
+	previewselector->eventOccured(e);
 	if (propertyeditor != nullptr)
 	{
-		propertyeditor->EventOccured(e);
+		propertyeditor->eventOccured(e);
 	}
-	if (displayform != nullptr && interactWithDisplay->IsChecked())
+	if (displayform != nullptr && interactWithDisplay->isChecked())
 	{
-		displayform->EventOccured(e);
+		displayform->eventOccured(e);
 	}
 
-	if (e->Type() == EVENT_KEY_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::MouseClick)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::MouseClick)
 	{
 
-		if (displayform != nullptr && e->Forms().RaisedBy->GetForm() == displayform)
+		if (displayform != nullptr && e->forms().RaisedBy->getForm() == displayform)
 		{
-			currentSelectedControl = e->Forms().RaisedBy;
-			ConfigureSelectedControlForm();
+			currentSelectedControl = e->forms().RaisedBy;
+			configureSelectedControlForm();
 		}
 		else
 		{
 			currentSelectedControl = nullptr;
-			ConfigureSelectedControlForm();
+			configureSelectedControlForm();
 		}
 
-		if (e->Forms().RaisedBy->GetForm() == previewselector &&
-		    e->Forms().RaisedBy->GetParent() != nullptr &&
-		    e->Forms().RaisedBy->GetParent()->Name == "FORM_LIST")
+		if (e->forms().RaisedBy->getForm() == previewselector &&
+		    e->forms().RaisedBy->getParent() != nullptr &&
+		    e->forms().RaisedBy->getParent()->Name == "FORM_LIST")
 		{
 
 			if (currentSelected != nullptr)
@@ -138,33 +138,33 @@ void FormPreview::EventOccurred(Event *e)
 				currentSelected->BackgroundColour.a = 0;
 			}
 
-			currentSelected = std::dynamic_pointer_cast<Label>(e->Forms().RaisedBy);
+			currentSelected = std::dynamic_pointer_cast<Label>(e->forms().RaisedBy);
 			currentSelected->BackgroundColour.a = 255;
-			displayform = ui().GetForm(currentSelected->Name);
+			displayform = ui().getForm(currentSelected->Name);
 
 			return;
 		}
-		else if (e->Forms().RaisedBy->Name == "FORM_RELOAD")
+		else if (e->forms().RaisedBy->Name == "FORM_RELOAD")
 		{
 			if (currentSelected != nullptr)
 			{
 				ui().reloadFormsXml();
-				displayform = ui().GetForm(currentSelected->Name);
+				displayform = ui().getForm(currentSelected->Name);
 			}
 		}
 	}
 }
 
-void FormPreview::Update(StageCmd *const cmd)
+void FormPreview::update(StageCmd *const cmd)
 {
-	previewselector->Update();
+	previewselector->update();
 	if (propertyeditor != nullptr)
 	{
-		propertyeditor->Update();
+		propertyeditor->update();
 	}
 	if (displayform != nullptr)
 	{
-		displayform->Update();
+		displayform->update();
 	}
 	*cmd = this->stageCmd;
 	// Reset the command to default
@@ -173,21 +173,21 @@ void FormPreview::Update(StageCmd *const cmd)
 	glowindex = (glowindex + 4) % 511;
 }
 
-void FormPreview::Render()
+void FormPreview::render()
 {
 	if (displayform != nullptr)
 	{
-		displayform->Render();
+		displayform->render();
 	}
-	previewselector->Render();
+	previewselector->render();
 	if (propertyeditor != nullptr)
 	{
-		propertyeditor->Render();
+		propertyeditor->render();
 	}
 
 	if (currentSelectedControl != nullptr)
 	{
-		Vec2<int> border = currentSelectedControl->GetLocationOnScreen();
+		Vec2<int> border = currentSelectedControl->getLocationOnScreen();
 		if (glowindex < 256)
 		{
 			fw().renderer->drawRect(border, currentSelectedControl->Size,
@@ -202,9 +202,9 @@ void FormPreview::Render()
 	}
 }
 
-bool FormPreview::IsTransition() { return false; }
+bool FormPreview::isTransition() { return false; }
 
-void FormPreview::ConfigureSelectedControlForm()
+void FormPreview::configureSelectedControlForm()
 {
 
 	if (currentSelectedControl == nullptr)

@@ -121,7 +121,7 @@ class SDLRawBackend : public SoundBackend
 
 	unsigned int music_queue_size;
 
-	void get_more_music()
+	void getMoreMusic()
 	{
 		TRACE_FN;
 		std::lock_guard<std::recursive_mutex> lock(this->audio_lock);
@@ -198,7 +198,7 @@ class SDLRawBackend : public SoundBackend
 				if (!this->current_music_data)
 				{
 					this->get_music_future =
-					    fw().threadPool->enqueue(std::mem_fn(&SDLRawBackend::get_more_music), this);
+					    fw().threadPool->enqueue(std::mem_fn(&SDLRawBackend::getMoreMusic), this);
 					if (this->music_queue.empty())
 					{
 						LogWarning("Music underrun!");
@@ -322,7 +322,7 @@ class SDLRawBackend : public SoundBackend
 		music_callback_data = callbackData;
 		music_playing = true;
 		this->get_music_future =
-		    fw().threadPool->enqueue(std::mem_fn(&SDLRawBackend::get_more_music), this);
+		    fw().threadPool->enqueue(std::mem_fn(&SDLRawBackend::getMoreMusic), this);
 		LogInfo("Playing music on SDL backend");
 	}
 

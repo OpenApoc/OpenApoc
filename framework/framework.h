@@ -26,8 +26,8 @@ class Framework
 	std::unique_ptr<FrameworkPrivate> p;
 	UString programName;
 	bool createWindow;
-	void Audio_Initialise();
-	void Audio_Shutdown();
+	void audioInitialise();
+	void audioShutdown();
 
 	static Framework *instance;
 
@@ -51,40 +51,40 @@ class Framework
 
 	// If frameCount != 0, it'll quit after that many frames. If it is zero, it'll run forever (Or
 	// until a user quit event)
-	void Run(sp<Stage> initialStage, size_t frameCount = 0);
-	void ProcessEvents();
+	void run(sp<Stage> initialStage, size_t frameCount = 0);
+	void processEvents();
 	/* PushEvent() take ownership of the Event, and will delete it after use*/
-	void PushEvent(up<Event> e);
-	void PushEvent(Event *e);
+	void pushEvent(up<Event> e);
+	void pushEvent(Event *e);
 
-	void TranslateSDLEvents();
-	void ShutdownFramework();
-	bool IsShuttingDown();
+	void translateSdlEvents();
+	void shutdownFramework();
+	bool isShuttingDown();
 
-	void SaveSettings();
+	void saveSettings();
 
-	void Display_Initialise();
-	void Display_Shutdown();
-	int Display_GetWidth();
-	int Display_GetHeight();
-	Vec2<int> Display_GetSize();
-	void Display_SetTitle(UString NewTitle);
-	void Display_SetIcon();
-	bool Display_HasWindow() const;
+	void displayInitialise();
+	void displayShutdown();
+	int displayGetWidth();
+	int displayGetHeight();
+	Vec2<int> displayGetSize();
+	void displaySetTitle(UString NewTitle);
+	void displaySetIcon();
+	bool displayHasWindow() const;
 
-	bool IsSlowMode();
-	void SetSlowMode(bool SlowEnabled);
+	bool isSlowMode();
+	void setSlowMode(bool SlowEnabled);
 
-	sp<Stage> Stage_GetPrevious();
-	sp<Stage> Stage_GetPrevious(sp<Stage> From);
+	sp<Stage> stageGetPrevious();
+	sp<Stage> stageGetPrevious(sp<Stage> From);
 
-	void Stage_Push(sp<Stage> stage);
+	void stagePush(sp<Stage> stage);
 
 	Vec2<int> getCursorPosition();
 
-	void Text_StartInput();
-	void Text_StopInput();
-	UString Text_GetClipboard();
+	void textStartInput();
+	void textStopInput();
+	UString textGetClipboard();
 };
 
 static inline Framework &fw() { return Framework::getInstance(); }

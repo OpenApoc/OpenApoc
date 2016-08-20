@@ -43,7 +43,7 @@ std::future<sp<GameState>> SaveManager::loadGame(const UString &savePath) const
 		auto state = mksp<GameState>();
 		if (!state->loadGame(saveArchiveLocation))
 		{
-			LogError("Failed to load '%s'", saveArchiveLocation.c_str());
+			LogError("Failed to load '%s'", saveArchiveLocation.cStr());
 			return nullptr;
 		}
 		state->initState();
@@ -167,7 +167,7 @@ bool SaveManager::findFreePath(UString &path, const UString &name) const
 			}
 		}
 
-		LogError("Unable to generate filename for save %s", name.c_str());
+		LogError("Unable to generate filename for save %s", name.cStr());
 		return false;
 	}
 
@@ -214,7 +214,7 @@ bool SaveManager::overrideGame(const SaveMetadata &metadata, const UString &newN
 
 bool SaveManager::saveGame(const SaveMetadata &metadata, const sp<GameState> gameState) const
 {
-	bool pack = Strings::ToInteger(fw().Settings->getString("Resource.SaveSkipPacking")) == 0;
+	bool pack = Strings::toInteger(fw().Settings->getString("Resource.SaveSkipPacking")) == 0;
 	const UString path = metadata.getFile();
 	TRACE_FN_ARGS1("path", path);
 	auto archive = SerializationArchive::createArchive();
@@ -361,7 +361,7 @@ bool SaveMetadata::deserializeManifest(const sp<SerializationArchive> archive,
 	auto typeNode = root->getNodeOpt("type");
 	if (typeNode)
 	{
-		this->type = static_cast<SaveType>(Strings::ToInteger(typeNode->getValue()));
+		this->type = static_cast<SaveType>(Strings::toInteger(typeNode->getValue()));
 	}
 	else
 	{
@@ -394,7 +394,7 @@ bool SaveMetadata::serializeManifest(const sp<SerializationArchive> archive) con
 	if (this->type != SaveType::Manual)
 	{
 		auto typeNode = root->addNode("type");
-		typeNode->setValue(Strings::FromInteger(static_cast<unsigned>(this->type)));
+		typeNode->setValue(Strings::fromInteger(static_cast<unsigned>(this->type)));
 	}
 
 	return true;

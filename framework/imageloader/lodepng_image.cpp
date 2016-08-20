@@ -19,7 +19,7 @@ sp<Palette> OpenApoc::loadPNGPalette(Data &d, const UString fileName)
 	auto f = d.fs.open(fileName);
 	if (!f)
 	{
-		LogInfo("Failed to open file \"%s\" - skipping", fileName.c_str());
+		LogInfo("Failed to open file \"%s\" - skipping", fileName.cStr());
 		return nullptr;
 	}
 	auto data = f.readAll();
@@ -31,7 +31,7 @@ sp<Palette> OpenApoc::loadPNGPalette(Data &d, const UString fileName)
 	if (err)
 	{
 		LogInfo("Failed to read PNG headers from \"%s\" (%u) : %s - skipping",
-		        f.systemPath().c_str(), err, lodepng_error_text(err));
+		        f.systemPath().cStr(), err, lodepng_error_text(err));
 		return nullptr;
 	}
 	// 2 possible types of PNG palette - either a PALETTE section, or a 256-pixel long image
@@ -40,13 +40,13 @@ sp<Palette> OpenApoc::loadPNGPalette(Data &d, const UString fileName)
 		if (png_state.info_png.color.bitdepth != 8)
 		{
 			LogWarning("PNG \"%s\" has unsupported palette bit depth %u (expected '8')",
-			           f.systemPath().c_str(), png_state.info_png.color.bitdepth);
+			           f.systemPath().cStr(), png_state.info_png.color.bitdepth);
 			return nullptr;
 		}
 		if (png_state.info_png.color.palettesize != 256)
 		{
 			LogWarning("PNG \"%s\" has unsupported palette size %zu (expected '256')",
-			           f.systemPath().c_str(), png_state.info_png.color.palettesize);
+			           f.systemPath().cStr(), png_state.info_png.color.palettesize);
 			return nullptr;
 		}
 		auto pal = mksp<Palette>();
@@ -58,7 +58,7 @@ sp<Palette> OpenApoc::loadPNGPalette(Data &d, const UString fileName)
 			auto g = *palPos++;
 			auto b = *palPos++;
 			auto a = *palPos++;
-			pal->SetColour(i, Colour{r, g, b, a});
+			pal->setColour(i, Colour{r, g, b, a});
 		}
 		return pal;
 	}
@@ -68,7 +68,7 @@ sp<Palette> OpenApoc::loadPNGPalette(Data &d, const UString fileName)
 		{
 
 			LogWarning("PNG \"%s\" size {%u,%u} too large for palette (must be 256 pixels total)",
-			           f.systemPath().c_str(), width, height);
+			           f.systemPath().cStr(), width, height);
 			return nullptr;
 		}
 		std::vector<unsigned char> pixels;
@@ -76,7 +76,7 @@ sp<Palette> OpenApoc::loadPNGPalette(Data &d, const UString fileName)
 		                             reinterpret_cast<unsigned char *>(data.get()), dataSize);
 		if (error)
 		{
-			LogInfo("Failed to read PNG \"%s\" (%u) : %s", f.systemPath().c_str(), err,
+			LogInfo("Failed to read PNG \"%s\" (%u) : %s", f.systemPath().cStr(), err,
 			        lodepng_error_text(err));
 			return nullptr;
 		}
@@ -89,7 +89,7 @@ sp<Palette> OpenApoc::loadPNGPalette(Data &d, const UString fileName)
 			uint8_t g = *palPos++;
 			uint8_t b = *palPos++;
 			uint8_t a = *palPos++;
-			pal->SetColour(i, Colour{r, g, b, a});
+			pal->setColour(i, Colour{r, g, b, a});
 		}
 		return pal;
 	}
@@ -117,13 +117,13 @@ class LodepngImageLoader : public OpenApoc::ImageLoader
 		                                   reinterpret_cast<unsigned char *>(data.get()), dataSize);
 		if (err)
 		{
-			LogInfo("Failed to read PNG headers from \"%s\" (%u) : %s", file.systemPath().c_str(),
+			LogInfo("Failed to read PNG headers from \"%s\" (%u) : %s", file.systemPath().cStr(),
 			        err, lodepng_error_text(err));
 			return nullptr;
 		}
 
 		LogInfo("Loading PNG \"%s\" size {%u,%d} - colour mode %d depth %u",
-		        file.systemPath().c_str(), width, height, png_state.info_png.color.colortype,
+		        file.systemPath().cStr(), width, height, png_state.info_png.color.colortype,
 		        png_state.info_png.color.bitdepth);
 
 		if (png_state.info_png.color.colortype == LCT_PALETTE)
@@ -131,7 +131,7 @@ class LodepngImageLoader : public OpenApoc::ImageLoader
 			if (png_state.info_png.color.bitdepth != 8)
 			{
 				LogWarning("PNG \"%s\" has unsupported palette bit depth %u (expected '8')",
-				           file.systemPath().c_str(), png_state.info_png.color.bitdepth);
+				           file.systemPath().cStr(), png_state.info_png.color.bitdepth);
 				return nullptr;
 			}
 			std::vector<unsigned char> pixels;
@@ -140,14 +140,14 @@ class LodepngImageLoader : public OpenApoc::ImageLoader
 			                      LCT_PALETTE, 8);
 			if (err)
 			{
-				LogInfo("Failed to read PNG \"%s\" (%u) : %s", file.systemPath().c_str(), err,
+				LogInfo("Failed to read PNG \"%s\" (%u) : %s", file.systemPath().cStr(), err,
 				        lodepng_error_text(err));
 				return nullptr;
 			}
 			if (pixels.size() < width * height)
 			{
 				LogWarning("PNG \"%s\" has insufficient size %zu for {%u,%u} image",
-				           file.systemPath().c_str(), pixels.size(), width, height);
+				           file.systemPath().cStr(), pixels.size(), width, height);
 				return nullptr;
 			}
 			auto img = mksp<PaletteImage>(Vec2<unsigned int>{width, height});
@@ -177,7 +177,7 @@ class LodepngImageLoader : public OpenApoc::ImageLoader
 		}
 		if (!image.size())
 		{
-			LogInfo("Failed to load image %s (not a PNG?)", file.systemPath().c_str());
+			LogInfo("Failed to load image %s (not a PNG?)", file.systemPath().cStr());
 			return nullptr;
 		}
 		OpenApoc::Vec2<int> size(width, height);
@@ -231,7 +231,7 @@ class LodepngImageWriter : public OpenApoc::ImageWriter
 
 		for (unsigned i = 0; i < 256; i++)
 		{
-			auto &c = pal->GetColour(i);
+			auto &c = pal->getColour(i);
 			auto err = lodepng_palette_add(&state.info_raw, c.r, c.g, c.b, c.a);
 			if (err)
 			{

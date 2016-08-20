@@ -22,10 +22,10 @@ class ScrollBar : public Control
 
 	int Value;
 	Orientation BarOrientation;
-	void LoadResources();
+	void loadResources();
 
   protected:
-	void OnRender() override;
+	void onRender() override;
 
   public:
 	enum class ScrollBarRenderStyle
@@ -43,16 +43,16 @@ class ScrollBar : public Control
 	ScrollBar();
 	~ScrollBar() override;
 
-	void EventOccured(Event *e) override;
-	void Update() override;
-	void UnloadResources() override;
-	virtual int GetValue() const { return Value; }
-	virtual bool SetValue(int newValue);
-	virtual void ScrollPrev();
-	virtual void ScrollNext();
+	void eventOccured(Event *e) override;
+	void update() override;
+	void unloadResources() override;
+	virtual int getValue() const { return Value; }
+	virtual bool setValue(int newValue);
+	virtual void scrollPrev();
+	virtual void scrollNext();
 
-	sp<Control> CopyTo(sp<Control> CopyParent) override;
-	void ConfigureSelfFromXML(tinyxml2::XMLElement *Element) override;
+	sp<Control> copyTo(sp<Control> CopyParent) override;
+	void configureSelfFromXml(tinyxml2::XMLElement *Element) override;
 };
 
 }; // namespace OpenApoc

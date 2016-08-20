@@ -14,7 +14,7 @@ namespace OpenApoc
 ConfigFile::ConfigFile(const UString fileName, std::map<UString, UString> defaults)
     : values(defaults), defaults(defaults)
 {
-	std::ifstream inFile{fileName.c_str(), std::ios::in};
+	std::ifstream inFile{fileName.cStr(), std::ios::in};
 	int lineNo = 0;
 	while (inFile)
 	{
@@ -28,7 +28,7 @@ ConfigFile::ConfigFile(const UString fileName, std::map<UString, UString> defaul
 		auto splitPos = line.find_first_of('=');
 		if (splitPos == line.npos)
 		{
-			LogError("Error reading config \"%s\" line %d", fileName.c_str(), lineNo);
+			LogError("Error reading config \"%s\" line %d", fileName.cStr(), lineNo);
 			continue;
 		}
 		UString key = line.substr(0, splitPos);
@@ -39,10 +39,10 @@ ConfigFile::ConfigFile(const UString fileName, std::map<UString, UString> defaul
 
 void ConfigFile::save(const UString fileName)
 {
-	std::ofstream outFile{fileName.c_str(), std::ios::out};
+	std::ofstream outFile{fileName.cStr(), std::ios::out};
 	if (!outFile)
 	{
-		LogError("Failed to open config file \"%s\"", fileName.c_str());
+		LogError("Failed to open config file \"%s\"", fileName.cStr());
 		return;
 	}
 
@@ -67,7 +67,7 @@ UString ConfigFile::getString(UString key)
 	if (it != this->defaults.end())
 		return it->second;
 
-	LogError("Config key \"%s\" not found", key.c_str());
+	LogError("Config key \"%s\" not found", key.cStr());
 	return "";
 }
 
@@ -78,7 +78,7 @@ int ConfigFile::getInt(UString key)
 	{
 		return 0;
 	}
-	int value = std::atoi(string.c_str());
+	int value = std::atoi(string.cStr());
 	return value;
 }
 
@@ -103,7 +103,7 @@ bool ConfigFile::getBool(UString key)
 		if (v == value)
 			return false;
 	}
-	LogError("Invalid boolean value of \"%s\" in key \"%s\"", value.c_str(), key.c_str());
+	LogError("Invalid boolean value of \"%s\" in key \"%s\"", value.cStr(), key.cStr());
 	return false;
 }
 
@@ -117,6 +117,6 @@ void ConfigFile::set(const UString key, bool value)
 		this->set(key, falseValues[0]);
 }
 
-void ConfigFile::set(const UString key, int value) { this->set(key, Strings::FromInteger(value)); }
+void ConfigFile::set(const UString key, int value) { this->set(key, Strings::fromInteger(value)); }
 
 }; // namespace OpenApoc

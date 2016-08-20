@@ -18,8 +18,8 @@ template <class T, T A = 23, T B = 18, T C = 5> class Xorshift128Plus
 	Xorshift128Plus(result_type seed = 0)
 	{
 		// splitmix64 to initial seed to make sure there are some non-zero bits
-		s[0] = static_cast<result_type>(splitmix_64(seed));
-		s[1] = static_cast<result_type>(splitmix_64(seed | s[0]));
+		s[0] = static_cast<result_type>(splitmix64(seed));
+		s[1] = static_cast<result_type>(splitmix64(seed | s[0]));
 	}
 	Xorshift128Plus(result_type state[2])
 	{
@@ -27,12 +27,12 @@ template <class T, T A = 23, T B = 18, T C = 5> class Xorshift128Plus
 		s[1] = state[1];
 	}
 
-	void get_state(result_type out[]) const
+	void getState(result_type out[]) const
 	{
 		out[0] = s[0];
 		out[1] = s[1];
 	}
-	void set_state(result_type in[])
+	void setState(result_type in[])
 	{
 		s[0] = in[0];
 		s[1] = in[1];
@@ -57,7 +57,7 @@ template <class T, T A = 23, T B = 18, T C = 5> class Xorshift128Plus
 #endif
   private:
 	result_type s[2];
-	static uint64_t splitmix_64(uint64_t x)
+	static uint64_t splitmix64(uint64_t x)
 	{
 		uint64_t z = (x += static_cast<uint64_t>(0x9E3779B97F4A7C15));
 		z = (z ^ (z >> 30)) * static_cast<uint64_t>(0xBF58476D1CE4E5B9);

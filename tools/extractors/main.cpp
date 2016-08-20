@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
 		for (auto &sprite_pair : bullet_sprites)
 		{
 			auto path = "data/" + sprite_pair.first;
-			fw->data->write_image(path, sprite_pair.second);
+			fw->data->writeImage(path, sprite_pair.second);
 		}
 
 		std::map<UString, InitialGameStateExtractor::Difficulty> difficultyOutputFiles = {
@@ -64,22 +64,21 @@ int main(int argc, char *argv[])
 		{
 			auto future = fw->threadPool->enqueue([dpair, &e]() {
 				GameState s;
-				LogWarning("Extracting initial game state for \"%s\"", dpair.first.c_str());
+				LogWarning("Extracting initial game state for \"%s\"", dpair.first.cStr());
 				e.extract(s, dpair.second);
-				LogWarning("Finished extracting initial game state for \"%s\"",
-				           dpair.first.c_str());
+				LogWarning("Finished extracting initial game state for \"%s\"", dpair.first.cStr());
 
 				LogWarning("Importing common patch");
 				s.loadGame("data/common_patch");
 				LogWarning("Done importing common patch");
 
 				UString patchName = dpair.first + "_patch";
-				LogWarning("Trying to import patch \"%s\"", patchName.c_str());
+				LogWarning("Trying to import patch \"%s\"", patchName.cStr());
 				s.loadGame(patchName);
 				LogWarning("Patching finished");
 
 				UString patchedOutputName = dpair.first + "_patched";
-				LogWarning("Saving patched state to \"%s\"", patchedOutputName.c_str());
+				LogWarning("Saving patched state to \"%s\"", patchedOutputName.cStr());
 				s.saveGame(patchedOutputName, false);
 				LogWarning("Done saving patched state");
 			});

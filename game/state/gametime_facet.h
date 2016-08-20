@@ -56,11 +56,12 @@ class ApocDateFacet : public date_facet<date_type, CharT, OutItrT>
 	}
 
 	static const char_type long_day_format[3];
-	void long_day_names(const input_collection_type &long_names) { m_day_long_names = long_names; }
+	void longDayNames(const input_collection_type &long_names) { m_day_long_names = long_names; }
   protected:
 	input_collection_type m_day_long_names;
 
 	OutItrT do_put_tm(OutItrT next, std::ios_base &a_ios, char_type fill_char, const tm &tm_value,
+
 	                  string_type a_format) const override
 	{
 		// update format string with custom names

@@ -30,7 +30,7 @@ sp<SceneryTileType> StateObject<SceneryTileType>::get(const GameState &state, co
 		if (it != pair.second->tile_types.end())
 			return it->second;
 	}
-	LogError("No scenery tile type matching ID \"%s\"", id.c_str());
+	LogError("No scenery tile type matching ID \"%s\"", id.cStr());
 	return nullptr;
 }
 

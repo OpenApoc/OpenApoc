@@ -27,7 +27,7 @@ class StageStack
 	    Returns:
 	        *Integer* Stack index of the stage
 	*/
-	void Push(sp<Stage> newStage);
+	void push(sp<Stage> newStage);
 
 	/*
 	    Function: Pop
@@ -37,7 +37,7 @@ class StageStack
 	    Example:
 	        > delete StageStack->Pop();
 	*/
-	sp<Stage> Pop();
+	sp<Stage> pop();
 
 	/*
 	    Function: Current
@@ -45,7 +45,7 @@ class StageStack
 	    Returns:
 	        *Stage Pointer* Current <Stage>
 	*/
-	sp<Stage> Current();
+	sp<Stage> current();
 
 	/*
 	    Function: Previous
@@ -53,7 +53,7 @@ class StageStack
 	    Returns:
 	        *Stage Pointer* Current <Stage>
 	*/
-	sp<Stage> Previous();
+	sp<Stage> previous();
 
 	/*
 	    Function: Previous
@@ -61,10 +61,10 @@ class StageStack
 	    Returns:
 	        *Stage Pointer* Current <Stage>
 	*/
-	sp<Stage> Previous(sp<Stage> From);
+	sp<Stage> previous(sp<Stage> From);
 
-	bool IsEmpty();
-	void Clear();
+	bool isEmpty();
+	void clear();
 };
 
 }; // namespace OpenApoc

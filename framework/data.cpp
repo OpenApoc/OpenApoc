@@ -35,10 +35,10 @@ Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize
 		if (l)
 		{
 			this->imageLoaders.emplace_back(l);
-			LogInfo("Initialised image loader %s", t.c_str());
+			LogInfo("Initialised image loader %s", t.cStr());
 		}
 		else
-			LogWarning("Failed to load image loader %s", t.c_str());
+			LogWarning("Failed to load image loader %s", t.cStr());
 	}
 
 	registeredImageWriters["lodepng"].reset(getLodePNGImageWriterFactory());
@@ -50,10 +50,10 @@ Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize
 		if (l)
 		{
 			this->imageWriters.emplace_back(l);
-			LogInfo("Initialised image writer %s", t.c_str());
+			LogInfo("Initialised image writer %s", t.cStr());
 		}
 		else
-			LogWarning("Failed to load image writer %s", t.c_str());
+			LogWarning("Failed to load image writer %s", t.cStr());
 	}
 
 	registeredSampleLoaders["raw"].reset(getRAWSampleLoaderFactory());
@@ -64,10 +64,10 @@ Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize
 		if (s)
 		{
 			this->sampleLoaders.emplace_back(s);
-			LogInfo("Initialised sample loader %s", t.c_str());
+			LogInfo("Initialised sample loader %s", t.cStr());
 		}
 		else
-			LogWarning("Failed to load sample loader %s", t.c_str());
+			LogWarning("Failed to load sample loader %s", t.cStr());
 	}
 
 	registeredMusicLoaders["raw"].reset(getRAWMusicLoaderFactory());
@@ -78,10 +78,10 @@ Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize
 		if (m)
 		{
 			this->musicLoaders.emplace_back(m);
-			LogInfo("Initialised music loader %s", t.c_str());
+			LogInfo("Initialised music loader %s", t.cStr());
 		}
 		else
-			LogWarning("Failed to load music loader %s", t.c_str());
+			LogWarning("Failed to load music loader %s", t.cStr());
 	}
 	for (int i = 0; i < imageCacheSize; i++)
 		pinnedImages.push(nullptr);
@@ -97,7 +97,7 @@ Data::Data(std::vector<UString> paths, int imageCacheSize, int imageSetCacheSize
 
 Data::~Data() = default;
 
-sp<VoxelSlice> Data::load_voxel_slice(const UString &path)
+sp<VoxelSlice> Data::loadVoxelSlice(const UString &path)
 {
 	std::lock_guard<std::recursive_mutex> l(this->voxelCacheLock);
 	if (path == "")
@@ -109,7 +109,7 @@ sp<VoxelSlice> Data::load_voxel_slice(const UString &path)
 		//"LOFTEMPS:DATFILE:TABFILE:INDEX"
 		if (splitString.size() != 4)
 		{
-			LogError("Invalid LOFTEMPS string \"%s\"", path.c_str());
+			LogError("Invalid LOFTEMPS string \"%s\"", path.cStr());
 			return nullptr;
 		}
 		// Cut off the index to get the LOFTemps file
@@ -122,13 +122,13 @@ sp<VoxelSlice> Data::load_voxel_slice(const UString &path)
 			auto datFile = this->fs.open(splitString[1]);
 			if (!datFile)
 			{
-				LogError("Failed to open LOFTemps dat file \"%s\"", splitString[1].c_str());
+				LogError("Failed to open LOFTemps dat file \"%s\"", splitString[1].cStr());
 				return nullptr;
 			}
 			auto tabFile = this->fs.open(splitString[2]);
 			if (!tabFile)
 			{
-				LogError("Failed to open LOFTemps tab file \"%s\"", splitString[2].c_str());
+				LogError("Failed to open LOFTemps tab file \"%s\"", splitString[2].cStr());
 				return nullptr;
 			}
 			lofTemps = mksp<LOFTemps>(datFile, tabFile);
@@ -136,7 +136,7 @@ sp<VoxelSlice> Data::load_voxel_slice(const UString &path)
 			this->pinnedLOFVoxels.push(lofTemps);
 			this->pinnedLOFVoxels.pop();
 		}
-		int idx = Strings::ToInteger(splitString[3]);
+		int idx = Strings::toInteger(splitString[3]);
 		slice = lofTemps->getSlice(idx);
 		if (!slice)
 		{
@@ -146,14 +146,14 @@ sp<VoxelSlice> Data::load_voxel_slice(const UString &path)
 
 	if (!slice)
 	{
-		LogError("Failed to load VoxelSlice \"%s\"", path.c_str());
+		LogError("Failed to load VoxelSlice \"%s\"", path.cStr());
 		return nullptr;
 	}
 	slice->path = path;
 	return slice;
 }
 
-sp<ImageSet> Data::load_image_set(const UString &path)
+sp<ImageSet> Data::loadImageSet(const UString &path)
 {
 	std::lock_guard<std::recursive_mutex> l(this->imageSetCacheLock);
 	UString cacheKey = path.toUpper();
@@ -168,9 +168,9 @@ sp<ImageSet> Data::load_image_set(const UString &path)
 	if (path.substr(0, 4) == "RAW:")
 	{
 		auto splitString = path.split(':');
-		imgSet = RawImage::load_set(
-		    *this, splitString[1],
-		    Vec2<int>{Strings::ToInteger(splitString[2]), Strings::ToInteger(splitString[3])});
+		imgSet =
+		    RawImage::loadSet(*this, splitString[1], Vec2<int>{Strings::toInteger(splitString[2]),
+		                                                       Strings::toInteger(splitString[3])});
 	}
 	// PCK resources come in the format:
 	//"PCK:PCKFILE:TABFILE[:optional/ignored]"
@@ -182,16 +182,16 @@ sp<ImageSet> Data::load_image_set(const UString &path)
 	else if (path.substr(0, 9) == "PCKSTRAT:")
 	{
 		auto splitString = path.split(':');
-		imgSet = PCKLoader::load_strat(*this, splitString[1], splitString[2]);
+		imgSet = PCKLoader::loadStrat(*this, splitString[1], splitString[2]);
 	}
 	else if (path.substr(0, 10) == "PCKSHADOW:")
 	{
 		auto splitString = path.split(':');
-		imgSet = PCKLoader::load_shadow(*this, splitString[1], splitString[2]);
+		imgSet = PCKLoader::loadShadow(*this, splitString[1], splitString[2]);
 	}
 	else
 	{
-		LogError("Unknown image set format \"%s\"", path.c_str());
+		LogError("Unknown image set format \"%s\"", path.cStr());
 		return nullptr;
 	}
 
@@ -203,7 +203,7 @@ sp<ImageSet> Data::load_image_set(const UString &path)
 	return imgSet;
 }
 
-sp<Sample> Data::load_sample(UString path)
+sp<Sample> Data::loadSample(UString path)
 {
 	std::lock_guard<std::recursive_mutex> l(this->sampleCacheLock);
 	auto aliasMap = this->aliases.lock();
@@ -212,7 +212,7 @@ sp<Sample> Data::load_sample(UString path)
 		auto aliasIt = aliasMap->sample.find(path);
 		if (aliasIt != aliasMap->sample.end())
 		{
-			LogInfo("Aliasing sample \"%s\" to \"%s\"", path.c_str(), aliasIt->second.c_str());
+			LogInfo("Aliasing sample \"%s\" to \"%s\"", path.cStr(), aliasIt->second.cStr());
 			path = aliasIt->second;
 		}
 	}
@@ -230,7 +230,7 @@ sp<Sample> Data::load_sample(UString path)
 	}
 	if (!sample)
 	{
-		LogInfo("Failed to load sample \"%s\"", path.c_str());
+		LogInfo("Failed to load sample \"%s\"", path.cStr());
 		return nullptr;
 	}
 	this->sampleCache[cacheKey] = sample;
@@ -238,7 +238,7 @@ sp<Sample> Data::load_sample(UString path)
 	return sample;
 }
 
-sp<MusicTrack> Data::load_music(const UString &path)
+sp<MusicTrack> Data::loadMusic(const UString &path)
 {
 	std::lock_guard<std::recursive_mutex> l(this->musicCacheLock);
 	TRACE_FN_ARGS1("path", path);
@@ -252,11 +252,11 @@ sp<MusicTrack> Data::load_music(const UString &path)
 			return track;
 		}
 	}
-	LogInfo("Failed to load music track \"%s\"", path.c_str());
+	LogInfo("Failed to load music track \"%s\"", path.cStr());
 	return nullptr;
 }
 
-sp<Image> Data::load_image(const UString &path, bool lazy)
+sp<Image> Data::loadImage(const UString &path, bool lazy)
 {
 	std::lock_guard<std::recursive_mutex> l(this->imageCacheLock);
 	if (path == "")
@@ -294,42 +294,42 @@ sp<Image> Data::load_image(const UString &path, bool lazy)
 		//"RAW:PATH:WIDTH:HEIGHT:INDEX[:PALETTE]" (for imagesets)
 		if (splitString.size() != 4 && splitString.size() != 5 && splitString.size() != 6)
 		{
-			LogError("Invalid RAW resource string: \"%s\"", path.c_str());
+			LogError("Invalid RAW resource string: \"%s\"", path.cStr());
 			return nullptr;
 		}
 
 		sp<PaletteImage> pImg;
 		size_t palettePos;
-		if (splitString.size() >= 5 && Strings::IsInteger(splitString[4]))
+		if (splitString.size() >= 5 && Strings::isInteger(splitString[4]))
 		{
-			auto imageSet = this->load_image_set(splitString[0] + ":" + splitString[1] + ":" +
-			                                     splitString[2] + ":" + splitString[3]);
+			auto imageSet = this->loadImageSet(splitString[0] + ":" + splitString[1] + ":" +
+			                                   splitString[2] + ":" + splitString[3]);
 			if (!imageSet)
 			{
 				return nullptr;
 			}
 			pImg = std::dynamic_pointer_cast<PaletteImage>(
-			    imageSet->images[Strings::ToInteger(splitString[4])]);
+			    imageSet->images[Strings::toInteger(splitString[4])]);
 			palettePos = 5;
 		}
 		else
 		{
 			pImg = RawImage::load(
 			    *this, splitString[1],
-			    Vec2<int>{Strings::ToInteger(splitString[2]), Strings::ToInteger(splitString[3])});
+			    Vec2<int>{Strings::toInteger(splitString[2]), Strings::toInteger(splitString[3])});
 			palettePos = 4;
 		}
 		if (!pImg)
 		{
-			LogError("Failed to load RAW image: \"%s\"", path.c_str());
+			LogError("Failed to load RAW image: \"%s\"", path.cStr());
 			return nullptr;
 		}
 		if (splitString.size() > palettePos)
 		{
-			auto pal = this->load_palette(splitString[palettePos]);
+			auto pal = this->loadPalette(splitString[palettePos]);
 			if (!pal)
 			{
-				LogError("Failed to load palette for RAW image: \"%s\"", path.c_str());
+				LogError("Failed to load palette for RAW image: \"%s\"", path.cStr());
 				return nullptr;
 			}
 			img = pImg->toRGBImage(pal);
@@ -344,11 +344,11 @@ sp<Image> Data::load_image(const UString &path, bool lazy)
 		auto splitString = path.split(':');
 		if (splitString.size() != 3 && splitString.size() != 4 && splitString.size() != 5)
 		{
-			LogError("Invalid PCK resource string: \"%s\"", path.c_str());
+			LogError("Invalid PCK resource string: \"%s\"", path.cStr());
 			return nullptr;
 		}
 		auto imageSet =
-		    this->load_image_set(splitString[0] + ":" + splitString[1] + ":" + splitString[2]);
+		    this->loadImageSet(splitString[0] + ":" + splitString[1] + ":" + splitString[2]);
 		if (!imageSet)
 		{
 			return nullptr;
@@ -361,21 +361,21 @@ sp<Image> Data::load_image(const UString &path, bool lazy)
 		{
 			case 4:
 			{
-				img = imageSet->images[Strings::ToInteger(splitString[3])];
+				img = imageSet->images[Strings::toInteger(splitString[3])];
 				break;
 			}
 			case 5:
 			{
-				sp<PaletteImage> pImg = std::dynamic_pointer_cast<PaletteImage>(this->load_image(
+				sp<PaletteImage> pImg = std::dynamic_pointer_cast<PaletteImage>(this->loadImage(
 				    "PCK:" + splitString[1] + ":" + splitString[2] + ":" + splitString[3]));
 				LogAssert(pImg);
-				auto pal = this->load_palette(splitString[4]);
+				auto pal = this->loadPalette(splitString[4]);
 				LogAssert(pal);
 				img = pImg->toRGBImage(pal);
 				break;
 			}
 			default:
-				LogError("Invalid PCK resource string \"%s\"", path.c_str());
+				LogError("Invalid PCK resource string \"%s\"", path.cStr());
 				return nullptr;
 		}
 	}
@@ -384,11 +384,11 @@ sp<Image> Data::load_image(const UString &path, bool lazy)
 		auto splitString = path.split(':');
 		if (splitString.size() != 3 && splitString.size() != 4 && splitString.size() != 5)
 		{
-			LogError("Invalid PCKSTRAT resource string: \"%s\"", path.c_str());
+			LogError("Invalid PCKSTRAT resource string: \"%s\"", path.cStr());
 			return nullptr;
 		}
 		auto imageSet =
-		    this->load_image_set(splitString[0] + ":" + splitString[1] + ":" + splitString[2]);
+		    this->loadImageSet(splitString[0] + ":" + splitString[1] + ":" + splitString[2]);
 		if (!imageSet)
 		{
 			return nullptr;
@@ -401,21 +401,21 @@ sp<Image> Data::load_image(const UString &path, bool lazy)
 		{
 			case 4:
 			{
-				img = imageSet->images[Strings::ToInteger(splitString[3])];
+				img = imageSet->images[Strings::toInteger(splitString[3])];
 				break;
 			}
 			case 5:
 			{
-				sp<PaletteImage> pImg = std::dynamic_pointer_cast<PaletteImage>(this->load_image(
+				sp<PaletteImage> pImg = std::dynamic_pointer_cast<PaletteImage>(this->loadImage(
 				    "PCKSTRAT:" + splitString[1] + ":" + splitString[2] + ":" + splitString[3]));
 				LogAssert(pImg);
-				auto pal = this->load_palette(splitString[4]);
+				auto pal = this->loadPalette(splitString[4]);
 				LogAssert(pal);
 				img = pImg->toRGBImage(pal);
 				break;
 			}
 			default:
-				LogError("Invalid PCKSTRAT resource string \"%s\"", path.c_str());
+				LogError("Invalid PCKSTRAT resource string \"%s\"", path.cStr());
 				return nullptr;
 		}
 	}
@@ -424,11 +424,11 @@ sp<Image> Data::load_image(const UString &path, bool lazy)
 		auto splitString = path.split(':');
 		if (splitString.size() != 3 && splitString.size() != 4 && splitString.size() != 5)
 		{
-			LogError("Invalid PCKSHADOW resource string: \"%s\"", path.c_str());
+			LogError("Invalid PCKSHADOW resource string: \"%s\"", path.cStr());
 			return nullptr;
 		}
 		auto imageSet =
-		    this->load_image_set(splitString[0] + ":" + splitString[1] + ":" + splitString[2]);
+		    this->loadImageSet(splitString[0] + ":" + splitString[1] + ":" + splitString[2]);
 		if (!imageSet)
 		{
 			return nullptr;
@@ -441,21 +441,21 @@ sp<Image> Data::load_image(const UString &path, bool lazy)
 		{
 			case 4:
 			{
-				img = imageSet->images[Strings::ToInteger(splitString[3])];
+				img = imageSet->images[Strings::toInteger(splitString[3])];
 				break;
 			}
 			case 5:
 			{
-				sp<PaletteImage> pImg = std::dynamic_pointer_cast<PaletteImage>(this->load_image(
+				sp<PaletteImage> pImg = std::dynamic_pointer_cast<PaletteImage>(this->loadImage(
 				    "PCKSHADOW:" + splitString[1] + ":" + splitString[2] + ":" + splitString[3]));
 				LogAssert(pImg);
-				auto pal = this->load_palette(splitString[4]);
+				auto pal = this->loadPalette(splitString[4]);
 				LogAssert(pal);
 				img = pImg->toRGBImage(pal);
 				break;
 			}
 			default:
-				LogError("Invalid PCKSHADOW resource string \"%s\"", path.c_str());
+				LogError("Invalid PCKSHADOW resource string \"%s\"", path.cStr());
 				return nullptr;
 		}
 	}
@@ -474,7 +474,7 @@ sp<Image> Data::load_image(const UString &path, bool lazy)
 		}
 		if (!img)
 		{
-			LogInfo("Failed to load image \"%s\"", path.c_str());
+			LogInfo("Failed to load image \"%s\"", path.cStr());
 			return nullptr;
 		}
 	}
@@ -490,7 +490,7 @@ sp<Image> Data::load_image(const UString &path, bool lazy)
 	return img;
 }
 
-sp<Palette> Data::load_palette(const UString &path)
+sp<Palette> Data::loadPalette(const UString &path)
 {
 	std::lock_guard<std::recursive_mutex> l(this->paletteCacheLock);
 	if (path == "")
@@ -510,7 +510,7 @@ sp<Palette> Data::load_palette(const UString &path)
 	pal = loadPCXPalette(*this, path);
 	if (pal)
 	{
-		LogInfo("Read \"%s\" as PCX palette", path.c_str());
+		LogInfo("Read \"%s\" as PCX palette", path.cStr());
 		this->paletteCache[cacheKey] = pal;
 		this->pinnedPalettes.push(pal);
 		this->pinnedPalettes.pop();
@@ -519,14 +519,14 @@ sp<Palette> Data::load_palette(const UString &path)
 	pal = loadPNGPalette(*this, path);
 	if (pal)
 	{
-		LogInfo("Read \"%s\" as PNG palette", path.c_str());
+		LogInfo("Read \"%s\" as PNG palette", path.cStr());
 		this->paletteCache[cacheKey] = pal;
 		this->pinnedPalettes.push(pal);
 		this->pinnedPalettes.pop();
 		return pal;
 	}
 
-	sp<RGBImage> img = std::dynamic_pointer_cast<RGBImage>(this->load_image(path));
+	sp<RGBImage> img = std::dynamic_pointer_cast<RGBImage>(this->loadImage(path));
 	if (img)
 	{
 		unsigned int idx = 0;
@@ -537,11 +537,11 @@ sp<Palette> Data::load_palette(const UString &path)
 			for (unsigned int x = 0; x < img->size.x; x++)
 			{
 				Colour c = src.get(Vec2<int>{x, y});
-				p->SetColour(idx, c);
+				p->setColour(idx, c);
 				idx++;
 			}
 		}
-		LogInfo("Read \"%s\" as Image palette", path.c_str());
+		LogInfo("Read \"%s\" as Image palette", path.cStr());
 		this->paletteCache[cacheKey] = pal;
 		this->pinnedPalettes.push(pal);
 		this->pinnedPalettes.pop();
@@ -551,17 +551,17 @@ sp<Palette> Data::load_palette(const UString &path)
 	pal = loadApocPalette(*this, path);
 	if (pal)
 	{
-		LogInfo("Read \"%s\" as RAW palette", path.c_str());
+		LogInfo("Read \"%s\" as RAW palette", path.cStr());
 		this->paletteCache[cacheKey] = pal;
 		this->pinnedPalettes.push(pal);
 		this->pinnedPalettes.pop();
 		return pal;
 	}
-	LogError("Failed to open palette \"%s\"", path.c_str());
+	LogError("Failed to open palette \"%s\"", path.cStr());
 	return nullptr;
 }
 
-sp<Video> Data::load_video(const UString &path)
+sp<Video> Data::loadVideo(const UString &path)
 {
 
 	if (path.substr(0, 4) == "SMK:")
@@ -569,27 +569,27 @@ sp<Video> Data::load_video(const UString &path)
 		auto splitString = path.split(':');
 		if (splitString.size() != 2)
 		{
-			LogError("Invalid SMK string: \"%s\"", path.c_str());
+			LogError("Invalid SMK string: \"%s\"", path.cStr());
 			return nullptr;
 		}
 		auto file = this->fs.open(splitString[1]);
 		if (!file)
 		{
-			LogWarning("Failed to open SMK file \"%s\"", splitString[1].c_str());
+			LogWarning("Failed to open SMK file \"%s\"", splitString[1].cStr());
 			return nullptr;
 		}
 		return loadSMKVideo(file);
 	}
-	LogError("Unknown video string \"%s\"", path.c_str());
+	LogError("Unknown video string \"%s\"", path.cStr());
 	return nullptr;
 }
 
-bool Data::write_image(UString systemPath, sp<Image> image, sp<Palette> palette)
+bool Data::writeImage(UString systemPath, sp<Image> image, sp<Palette> palette)
 {
 	std::ofstream outFile(systemPath.str(), std::ios::binary);
 	if (!outFile)
 	{
-		LogWarning("Failed to open \"%s\" for writing", systemPath.c_str());
+		LogWarning("Failed to open \"%s\" for writing", systemPath.cStr());
 		return false;
 	}
 
@@ -602,8 +602,8 @@ bool Data::write_image(UString systemPath, sp<Image> image, sp<Palette> palette)
 			if (!palette)
 			{
 				UString defaultPalettePath = "xcom3/ufodata/pal_01.dat";
-				LogInfo("Loading default palette \"%s\"", defaultPalettePath.c_str());
-				palette = this->load_palette(defaultPalettePath);
+				LogInfo("Loading default palette \"%s\"", defaultPalettePath.cStr());
+				palette = this->loadPalette(defaultPalettePath);
 				if (!palette)
 				{
 					LogWarning("Failed to write palette image - no palette supplied and failed to "
@@ -613,14 +613,14 @@ bool Data::write_image(UString systemPath, sp<Image> image, sp<Palette> palette)
 			}
 			if (writer->writeImage(palImg, outFile, palette))
 			{
-				LogInfo("Successfully wrote palette image \"%s\" using \"%s\"", systemPath.c_str(),
-				        writer->getName().c_str());
+				LogInfo("Successfully wrote palette image \"%s\" using \"%s\"", systemPath.cStr(),
+				        writer->getName().cStr());
 				return true;
 			}
 			else
 			{
-				LogWarning("Failed to write palette image \"%s\" using \"%s\"", systemPath.c_str(),
-				           writer->getName().c_str());
+				LogWarning("Failed to write palette image \"%s\" using \"%s\"", systemPath.cStr(),
+				           writer->getName().cStr());
 				continue;
 			}
 		}
@@ -628,14 +628,14 @@ bool Data::write_image(UString systemPath, sp<Image> image, sp<Palette> palette)
 		{
 			if (writer->writeImage(rgbImg, outFile))
 			{
-				LogInfo("Successfully wrote RGB image \"%s\" using \"%s\"", systemPath.c_str(),
-				        writer->getName().c_str());
+				LogInfo("Successfully wrote RGB image \"%s\" using \"%s\"", systemPath.cStr(),
+				        writer->getName().cStr());
 				return true;
 			}
 			else
 			{
-				LogWarning("Failed to write RGB image \"%s\" using \"%s\"", systemPath.c_str(),
-				           writer->getName().c_str());
+				LogWarning("Failed to write RGB image \"%s\" using \"%s\"", systemPath.cStr(),
+				           writer->getName().cStr());
 				continue;
 			}
 		}
@@ -646,11 +646,11 @@ bool Data::write_image(UString systemPath, sp<Image> image, sp<Palette> palette)
 		}
 	}
 
-	LogWarning("No writes succeeded for image \"%s\"", systemPath.c_str());
+	LogWarning("No writes succeeded for image \"%s\"", systemPath.cStr());
 	return false;
 }
 
-sp<PaletteImage> Data::get_font_string_cache_entry(const UString &font_name, const UString &string)
+sp<PaletteImage> Data::getFontStringCacheEntry(const UString &font_name, const UString &string)
 {
 	std::lock_guard<std::recursive_mutex> l(this->fontStringCacheLock);
 	if (font_name == "")
@@ -667,8 +667,8 @@ sp<PaletteImage> Data::get_font_string_cache_entry(const UString &font_name, con
 	return img;
 }
 
-void Data::put_font_string_cache_entry(const UString &font_name, const UString &string,
-                                       sp<PaletteImage> &img)
+void Data::putFontStringCacheEntry(const UString &font_name, const UString &string,
+                                   sp<PaletteImage> &img)
 {
 	std::lock_guard<std::recursive_mutex> l(this->fontStringCacheLock);
 	if (font_name == "")

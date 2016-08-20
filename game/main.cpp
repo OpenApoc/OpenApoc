@@ -38,7 +38,7 @@ int main(int argc, char *argv[])
 				LogWarning("Error reading argument \"%s\", skipping frame limit", argv[i]);
 				continue;
 			}
-			frameLimit = Strings::ToInteger(split[1]);
+			frameLimit = Strings::toInteger(split[1]);
 			LogWarning("Quitting after %llu frames", (unsigned long long)frameLimit);
 			continue;
 		}
@@ -50,9 +50,9 @@ int main(int argc, char *argv[])
 				LogWarning("Error reading argument \"%s\", skipping save", argv[i]);
 				continue;
 			}
-			frameLimit = Strings::ToInteger(split[1]);
+			frameLimit = Strings::toInteger(split[1]);
 			saveFile = split[1];
-			LogWarning("Loading save \"%s\" ", saveFile.c_str());
+			LogWarning("Loading save \"%s\" ", saveFile.cStr());
 			continue;
 		}
 		cmdline.emplace_back(UString(argv[i]));
@@ -72,18 +72,18 @@ int main(int argc, char *argv[])
 
 		if (saveFile == "")
 		{
-			fw->Run(mksp<BootUp>(), frameLimit);
+			fw->run(mksp<BootUp>(), frameLimit);
 		}
 		else
 		{
 			auto state = mksp<GameState>();
 			if (state->loadGame(saveFile) == false)
 			{
-				LogError("Failed to load '%s'", saveFile.c_str());
+				LogError("Failed to load '%s'", saveFile.cStr());
 				return EXIT_FAILURE;
 			}
 			state->initState();
-			fw->Run(mksp<CityView>(state), frameLimit);
+			fw->run(mksp<CityView>(state), frameLimit);
 		}
 
 		UI::unload();

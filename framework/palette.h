@@ -17,12 +17,12 @@ class Palette
 	Palette(unsigned int size = 256, Colour initialColour = {0, 0, 0, 0});
 	~Palette();
 
-	const Colour &GetColour(unsigned int idx) const
+	const Colour &getColour(unsigned int idx) const
 	{
 		LogAssert(idx < colours.size());
 		return colours[idx];
 	}
-	void SetColour(unsigned int idx, Colour c)
+	void setColour(unsigned int idx, Colour c)
 	{
 		LogAssert(idx < colours.size());
 		colours[idx] = std::move(c);

@@ -10,31 +10,31 @@ namespace OpenApoc
 CheckBox::CheckBox(sp<Image> ImageChecked, sp<Image> ImageUnchecked)
     : Control(), imagechecked(ImageChecked), imageunchecked(ImageUnchecked),
       buttonclick(
-          fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
+          fw().data->loadSample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
       Checked(false)
 {
 }
 
 CheckBox::~CheckBox() = default;
 
-void CheckBox::EventOccured(Event *e)
+void CheckBox::eventOccured(Event *e)
 {
-	Control::EventOccured(e);
+	Control::eventOccured(e);
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
-	    e->Forms().EventFlag == FormEventType::MouseDown)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
+	    e->forms().EventFlag == FormEventType::MouseDown)
 	{
 		fw().soundBackend->playSample(buttonclick);
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
-	    e->Forms().EventFlag == FormEventType::MouseClick)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
+	    e->forms().EventFlag == FormEventType::MouseClick)
 	{
-		SetChecked(!IsChecked());
+		setChecked(!isChecked());
 	}
 }
 
-void CheckBox::OnRender()
+void CheckBox::onRender()
 {
 	sp<Image> useimage;
 
@@ -54,16 +54,16 @@ void CheckBox::OnRender()
 	}
 }
 
-void CheckBox::Update() { Control::Update(); }
+void CheckBox::update() { Control::update(); }
 
-void CheckBox::UnloadResources()
+void CheckBox::unloadResources()
 {
 	imagechecked.reset();
 	imageunchecked.reset();
-	Control::UnloadResources();
+	Control::unloadResources();
 }
 
-void CheckBox::SetChecked(bool checked)
+void CheckBox::setChecked(bool checked)
 {
 	if (Checked == checked)
 		return;
@@ -79,7 +79,7 @@ void CheckBox::SetChecked(bool checked)
 	}
 }
 
-sp<Control> CheckBox::CopyTo(sp<Control> CopyParent)
+sp<Control> CheckBox::copyTo(sp<Control> CopyParent)
 {
 	sp<CheckBox> copy;
 	if (CopyParent)
@@ -91,20 +91,20 @@ sp<Control> CheckBox::CopyTo(sp<Control> CopyParent)
 		copy = mksp<CheckBox>(imagechecked, imageunchecked);
 	}
 	copy->Checked = this->Checked;
-	CopyControlData(copy);
+	copyControlData(copy);
 	return copy;
 }
 
-void CheckBox::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
+void CheckBox::configureSelfFromXml(tinyxml2::XMLElement *Element)
 {
-	Control::ConfigureSelfFromXML(Element);
+	Control::configureSelfFromXml(Element);
 	if (Element->FirstChildElement("image") != nullptr)
 	{
-		imageunchecked = fw().data->load_image(Element->FirstChildElement("image")->GetText());
+		imageunchecked = fw().data->loadImage(Element->FirstChildElement("image")->GetText());
 	}
 	if (Element->FirstChildElement("imagechecked") != nullptr)
 	{
-		imagechecked = fw().data->load_image(Element->FirstChildElement("imagechecked")->GetText());
+		imagechecked = fw().data->loadImage(Element->FirstChildElement("imagechecked")->GetText());
 	}
 }
 }; // namespace OpenApoc

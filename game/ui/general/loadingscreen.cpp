@@ -12,25 +12,25 @@ LoadingScreen::LoadingScreen(std::future<sp<GameState>> gameStateTask, sp<Image>
 {
 }
 
-void LoadingScreen::Begin()
+void LoadingScreen::begin()
 {
 	// FIXME: This is now useless, as it doesn't actually load anything interesting here
-	loadingimage = fw().data->load_image("UI/LOADING.PNG");
+	loadingimage = fw().data->loadImage("UI/LOADING.PNG");
 	if (!backgroundimage)
 	{
-		backgroundimage = fw().data->load_image("UI/LOGO.PNG");
+		backgroundimage = fw().data->loadImage("UI/LOGO.PNG");
 	}
-	fw().Display_SetIcon();
+	fw().displaySetIcon();
 	loadingimageangle = 0;
 }
 
-void LoadingScreen::Pause() {}
+void LoadingScreen::pause() {}
 
-void LoadingScreen::Resume() {}
+void LoadingScreen::resume() {}
 
-void LoadingScreen::Finish() {}
+void LoadingScreen::finish() {}
 
-void LoadingScreen::EventOccurred(Event *e) { std::ignore = e; }
+void LoadingScreen::eventOccurred(Event *e) { std::ignore = e; }
 
 sp<Stage> CreateUiForGame(sp<GameState> gameState)
 {
@@ -38,7 +38,7 @@ sp<Stage> CreateUiForGame(sp<GameState> gameState)
 	return mksp<CityView>(gameState);
 }
 
-void LoadingScreen::Update(StageCmd *const cmd)
+void LoadingScreen::update(StageCmd *const cmd)
 {
 	loadingimageangle += (float)(M_PI + 0.05f);
 	if (loadingimageangle >= (float)(M_PI * 2.0f))
@@ -67,23 +67,22 @@ void LoadingScreen::Update(StageCmd *const cmd)
 	}
 }
 
-void LoadingScreen::Render()
+void LoadingScreen::render()
 {
-	int logow = fw().Display_GetWidth() / 3;
+	int logow = fw().displayGetWidth() / 3;
 	float logosc = logow / static_cast<float>(backgroundimage->size.x);
 
-	Vec2<float> logoPosition{fw().Display_GetWidth() / 2 - (backgroundimage->size.x * logosc / 2),
-	                         fw().Display_GetHeight() / 2 - (backgroundimage->size.y * logosc / 2)};
+	Vec2<float> logoPosition{fw().displayGetWidth() / 2 - (backgroundimage->size.x * logosc / 2),
+	                         fw().displayGetHeight() / 2 - (backgroundimage->size.y * logosc / 2)};
 	Vec2<float> logoSize{backgroundimage->size.x * logosc, backgroundimage->size.y * logosc};
 
 	fw().renderer->drawScaled(backgroundimage, logoPosition, logoSize);
 
 	fw().renderer->drawRotated(
 	    loadingimage, Vec2<float>{24, 24},
-	    Vec2<float>{fw().Display_GetWidth() - 50, fw().Display_GetHeight() - 50},
-	    loadingimageangle);
+	    Vec2<float>{fw().displayGetWidth() - 50, fw().displayGetHeight() - 50}, loadingimageangle);
 }
 
-bool LoadingScreen::IsTransition() { return false; }
+bool LoadingScreen::isTransition() { return false; }
 
 }; // namespace OpenApoc

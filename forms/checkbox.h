@@ -21,20 +21,20 @@ class CheckBox : public Control
 
 	bool Checked;
 
-	void OnRender() override;
+	void onRender() override;
 
   public:
 	CheckBox(sp<Image> ImageChecked = nullptr, sp<Image> ImageUnchecked = nullptr);
 	~CheckBox() override;
 
-	void EventOccured(Event *e) override;
-	void Update() override;
-	void UnloadResources() override;
-	virtual bool IsChecked() const { return Checked; }
-	virtual void SetChecked(bool checked);
+	void eventOccured(Event *e) override;
+	void update() override;
+	void unloadResources() override;
+	virtual bool isChecked() const { return Checked; }
+	virtual void setChecked(bool checked);
 
-	sp<Control> CopyTo(sp<Control> CopyParent) override;
-	void ConfigureSelfFromXML(tinyxml2::XMLElement *Element) override;
+	sp<Control> copyTo(sp<Control> CopyParent) override;
+	void configureSelfFromXml(tinyxml2::XMLElement *Element) override;
 };
 
 }; // namespace OpenApoc

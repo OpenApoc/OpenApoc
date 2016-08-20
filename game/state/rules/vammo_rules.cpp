@@ -22,7 +22,7 @@ template <> sp<VAmmoType> StateObject<VAmmoType>::get(const GameState &state, co
 	auto it = state.vehicle_ammo.find(id);
 	if (it == state.vehicle_ammo.end())
 	{
-		LogError("No vammo type matching ID \"%s\"", id.c_str());
+		LogError("No vammo type matching ID \"%s\"", id.cStr());
 		return nullptr;
 	}
 	return it->second;

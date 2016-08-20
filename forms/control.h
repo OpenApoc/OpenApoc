@@ -33,7 +33,7 @@ class Control : public std::enable_shared_from_this<Control>
 	std::map<FormEventType, std::list<std::function<void(FormsEvent *e)>>> callbacks;
 
 	// Configures children of element after it was configured, see ConfigureFromXML
-	void ConfigureChildrenFromXml(tinyxml2::XMLElement *Element);
+	void configureChildrenFromXml(tinyxml2::XMLElement *Element);
 
   protected:
 	sp<Palette> palette;
@@ -42,22 +42,22 @@ class Control : public std::enable_shared_from_this<Control>
 	bool mouseDepressed;
 	Vec2<int> resolvedLocation;
 
-	virtual void PreRender();
-	virtual void PostRender();
-	virtual void OnRender();
+	virtual void preRender();
+	virtual void postRender();
+	virtual void onRender();
 
-	virtual bool IsFocused() const;
+	virtual bool isFocused() const;
 
-	void ResolveLocation();
+	void resolveLocation();
 
 	// Loads control and all subcontrols from xml
-	void ConfigureFromXML(tinyxml2::XMLElement *Element);
+	void configureFromXml(tinyxml2::XMLElement *Element);
 	// configures current element from xml element (without children)
-	virtual void ConfigureSelfFromXML(tinyxml2::XMLElement *Element);
+	virtual void configureSelfFromXml(tinyxml2::XMLElement *Element);
 
-	sp<Control> GetRootControl();
+	sp<Control> getRootControl();
 
-	void CopyControlData(sp<Control> CopyOf);
+	void copyControlData(sp<Control> CopyOf);
 
 	void pushFormEvent(FormEventType type, Event *parentEvent);
 
@@ -82,62 +82,62 @@ class Control : public std::enable_shared_from_this<Control>
 	Control(bool takesFocus = true);
 	virtual ~Control();
 
-	virtual void EventOccured(Event *e);
-	void Render();
-	virtual void Update();
-	virtual void UnloadResources();
+	virtual void eventOccured(Event *e);
+	void render();
+	virtual void update();
+	virtual void unloadResources();
 
 	sp<Control> operator[](int Index) const;
-	sp<Control> FindControl(UString ID) const;
+	sp<Control> findControl(UString ID) const;
 
-	template <typename T> sp<T> FindControlTyped(const UString &name) const
+	template <typename T> sp<T> findControlTyped(const UString &name) const
 	{
-		auto c = this->FindControl(name);
+		auto c = this->findControl(name);
 		if (!c)
 		{
-			LogError("Failed to find control \"%s\" within form \"%s\"", name.c_str(),
-			         this->Name.c_str());
+			LogError("Failed to find control \"%s\" within form \"%s\"", name.cStr(),
+			         this->Name.cStr());
 			return nullptr;
 		}
 		sp<T> typedControl = std::dynamic_pointer_cast<T>(c);
 		if (!typedControl)
 		{
-			LogError("Failed to cast control \"%s\" within form \"%s\" to type \"%s\"",
-			         name.c_str(), this->Name.c_str(), typeid(T).name());
+			LogError("Failed to cast control \"%s\" within form \"%s\" to type \"%s\"", name.cStr(),
+			         this->Name.cStr(), typeid(T).name());
 			return nullptr;
 		}
 		return typedControl;
 	}
 
-	sp<Control> GetParent() const;
-	sp<Form> GetForm();
-	void SetParent(sp<Control> Parent);
-	sp<Control> GetAncestor(sp<Control> Parent);
+	sp<Control> getParent() const;
+	sp<Form> getForm();
+	void setParent(sp<Control> Parent);
+	sp<Control> getAncestor(sp<Control> Parent);
 
-	Vec2<int> GetLocationOnScreen() const;
+	Vec2<int> getLocationOnScreen() const;
 
 	void setRelativeWidth(float widthPercent);
 	void setRelativeHeight(float widthPercent);
 
-	Vec2<int> GetParentSize() const;
-	static int Align(HorizontalAlignment HAlign, int ParentWidth, int ChildWidth);
-	static int Align(VerticalAlignment VAlign, int ParentHeight, int ChildHeight);
+	Vec2<int> getParentSize() const;
+	static int align(HorizontalAlignment HAlign, int ParentWidth, int ChildWidth);
+	static int align(VerticalAlignment VAlign, int ParentHeight, int ChildHeight);
 
-	void Align(HorizontalAlignment HAlign);
-	void Align(VerticalAlignment VAlign);
-	void Align(HorizontalAlignment HAlign, VerticalAlignment VAlign);
+	void align(HorizontalAlignment HAlign);
+	void align(VerticalAlignment VAlign);
+	void align(HorizontalAlignment HAlign, VerticalAlignment VAlign);
 
-	virtual sp<Control> CopyTo(sp<Control> CopyParent);
+	virtual sp<Control> copyTo(sp<Control> CopyParent);
 
-	template <typename T> sp<T> GetData() const { return std::static_pointer_cast<T>(data); }
-	void SetData(sp<void> Data) { data = Data; }
+	template <typename T> sp<T> getData() const { return std::static_pointer_cast<T>(data); }
+	void setData(sp<void> Data) { data = Data; }
 
 	bool eventIsWithin(const Event *e) const;
 
 	template <typename T, typename... Args> sp<T> createChild(Args &&... args)
 	{
 		sp<T> newControl = mksp<T>(std::forward<Args>(args)...);
-		newControl->SetParent(shared_from_this());
+		newControl->setParent(shared_from_this());
 		return newControl;
 	}
 

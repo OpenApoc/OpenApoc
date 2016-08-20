@@ -130,13 +130,13 @@ class TileView : public Stage, public TileTransform
 	}
 
 	// Stage control
-	void Begin() override;
-	void Pause() override;
-	void Resume() override;
-	void Finish() override;
-	void EventOccurred(Event *e) override;
-	void Render() override;
-	bool IsTransition() override;
+	void begin() override;
+	void pause() override;
+	void resume() override;
+	void finish() override;
+	void eventOccurred(Event *e) override;
+	void render() override;
+	bool isTransition() override;
 
 	virtual void setViewMode(TileViewMode newMode);
 	virtual TileViewMode getViewMode() const;

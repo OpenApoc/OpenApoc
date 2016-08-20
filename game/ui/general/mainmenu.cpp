@@ -15,61 +15,61 @@ namespace OpenApoc
 
 static std::vector<UString> tracks{"music:0", "music:1", "music:2"};
 
-MainMenu::MainMenu() : Stage(), mainmenuform(ui().GetForm("FORM_MAINMENU"))
+MainMenu::MainMenu() : Stage(), mainmenuform(ui().getForm("FORM_MAINMENU"))
 {
-	auto versionLabel = mainmenuform->FindControlTyped<Label>("VERSION_LABEL");
-	versionLabel->SetText(OPENAPOC_VERSION);
+	auto versionLabel = mainmenuform->findControlTyped<Label>("VERSION_LABEL");
+	versionLabel->setText(OPENAPOC_VERSION);
 }
 
 MainMenu::~MainMenu() = default;
 
-void MainMenu::Begin() { fw().jukebox->play(tracks); }
+void MainMenu::begin() { fw().jukebox->play(tracks); }
 
-void MainMenu::Pause() {}
+void MainMenu::pause() {}
 
-void MainMenu::Resume() {}
+void MainMenu::resume() {}
 
-void MainMenu::Finish() {}
+void MainMenu::finish() {}
 
-void MainMenu::EventOccurred(Event *e)
+void MainMenu::eventOccurred(Event *e)
 {
-	mainmenuform->EventOccured(e);
+	mainmenuform->eventOccured(e);
 
-	if (e->Type() == EVENT_KEY_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::QUIT;
 			return;
 		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::ButtonClick)
 	{
-		if (e->Forms().RaisedBy->Name == "BUTTON_OPTIONS")
+		if (e->forms().RaisedBy->Name == "BUTTON_OPTIONS")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = mksp<OptionsMenu>();
 			return;
 		}
-		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
+		if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
 			stageCmd.cmd = StageCmd::Command::QUIT;
 			return;
 		}
-		if (e->Forms().RaisedBy->Name == "BUTTON_NEWGAME")
+		if (e->forms().RaisedBy->Name == "BUTTON_NEWGAME")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = mksp<DifficultyMenu>();
 			return;
 		}
-		if (e->Forms().RaisedBy->Name == "BUTTON_DEBUG")
+		if (e->forms().RaisedBy->Name == "BUTTON_DEBUG")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = mksp<DebugMenu>();
 			return;
 		}
-		if (e->Forms().RaisedBy->Name == "BUTTON_LOADGAME")
+		if (e->forms().RaisedBy->Name == "BUTTON_LOADGAME")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = mksp<SaveMenu>(SaveMenuAction::LoadNewGame, nullptr);
@@ -78,14 +78,14 @@ void MainMenu::EventOccurred(Event *e)
 	}
 }
 
-void MainMenu::Update(StageCmd *const cmd)
+void MainMenu::update(StageCmd *const cmd)
 {
-	mainmenuform->Update();
+	mainmenuform->update();
 	*cmd = stageCmd;
 	stageCmd = StageCmd();
 }
 
-void MainMenu::Render() { mainmenuform->Render(); }
+void MainMenu::render() { mainmenuform->render(); }
 
-bool MainMenu::IsTransition() { return false; }
+bool MainMenu::isTransition() { return false; }
 }; // namespace OpenApoc

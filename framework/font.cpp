@@ -15,11 +15,11 @@ BitmapFont::~BitmapFont() = default;
 
 sp<PaletteImage> BitmapFont::getString(const UString &Text)
 {
-	int height = this->GetFontHeight();
-	int width = this->GetFontWidth(Text);
+	int height = this->getFontHeight();
+	int width = this->getFontWidth(Text);
 	int pos = 0;
 
-	auto img = fw().data->get_font_string_cache_entry(this->name, Text);
+	auto img = fw().data->getFontStringCacheEntry(this->name, Text);
 	if (img)
 		return img;
 
@@ -36,12 +36,12 @@ sp<PaletteImage> BitmapFont::getString(const UString &Text)
 		pos += glyph->size.x;
 	}
 
-	fw().data->put_font_string_cache_entry(this->name, Text, img);
+	fw().data->putFontStringCacheEntry(this->name, Text, img);
 
 	return img;
 }
 
-int BitmapFont::GetFontWidth(const UString &Text)
+int BitmapFont::getFontWidth(const UString &Text)
 {
 	int textlen = 0;
 	auto u8Str = Text.str();
@@ -55,17 +55,17 @@ int BitmapFont::GetFontWidth(const UString &Text)
 	return textlen;
 }
 
-int BitmapFont::GetFontHeight() const { return fontheight; }
+int BitmapFont::getFontHeight() const { return fontheight; }
 
-int BitmapFont::GetFontHeight(const UString &Text, int MaxWidth)
+int BitmapFont::getFontHeight(const UString &Text, int MaxWidth)
 {
-	std::list<UString> lines = WordWrapText(Text, MaxWidth);
+	std::list<UString> lines = wordWrapText(Text, MaxWidth);
 	return lines.size() * fontheight;
 }
 
 UString BitmapFont::getName() const { return this->name; }
 
-int BitmapFont::GetEstimateCharacters(int FitInWidth) const
+int BitmapFont::getEstimateCharacters(int FitInWidth) const
 {
 	return FitInWidth / averagecharacterwidth;
 }
@@ -77,7 +77,7 @@ sp<PaletteImage> BitmapFont::getGlyph(UniChar codepoint)
 		// FIXME: Hack - assume all missing glyphs are spaces
 		// TODO: Fallback fonts?
 		LogWarning("Font %s missing glyph for character \"%s\" (codepoint %u)",
-		           this->getName().c_str(), UString(codepoint).c_str(), codepoint);
+		           this->getName().cStr(), UString(codepoint).cStr(), codepoint);
 		auto missingGlyph = this->getGlyph(UString::u8Char(' '));
 		fontbitmaps.emplace(codepoint, missingGlyph);
 	}
@@ -101,16 +101,16 @@ sp<BitmapFont> BitmapFont::loadFont(const std::map<UniChar, UString> &glyphMap, 
 
 	for (auto &p : glyphMap)
 	{
-		auto fontImage = fw().data->load_image(p.second);
+		auto fontImage = fw().data->loadImage(p.second);
 		if (!fontImage)
 		{
-			LogError("Failed to read glyph image \"%s\"", p.second.c_str());
+			LogError("Failed to read glyph image \"%s\"", p.second.cStr());
 			continue;
 		}
 		auto paletteImage = std::dynamic_pointer_cast<PaletteImage>(fontImage);
 		if (!paletteImage)
 		{
-			LogError("Glyph image \"%s\" doesn't look like a PaletteImage", p.second.c_str());
+			LogError("Glyph image \"%s\" doesn't look like a PaletteImage", p.second.cStr());
 			continue;
 		}
 		unsigned int maxWidth = 0;
@@ -149,7 +149,7 @@ sp<BitmapFont> BitmapFont::loadFont(const std::map<UniChar, UString> &glyphMap, 
 	return font;
 }
 
-std::list<UString> BitmapFont::WordWrapText(const UString &Text, int MaxWidth)
+std::list<UString> BitmapFont::wordWrapText(const UString &Text, int MaxWidth)
 {
 	int txtwidth;
 	std::list<UString> lines = Text.splitlist("\n");
@@ -157,7 +157,7 @@ std::list<UString> BitmapFont::WordWrapText(const UString &Text, int MaxWidth)
 
 	for (UString str : lines)
 	{
-		txtwidth = GetFontWidth(str);
+		txtwidth = getFontWidth(str);
 
 		if (txtwidth > MaxWidth)
 		{
@@ -173,7 +173,7 @@ std::list<UString> BitmapFont::WordWrapText(const UString &Text, int MaxWidth)
 				auto &currentChunk = remainingChunks.front();
 				currentTestLine += currentChunk;
 
-				auto estimatedLength = GetFontWidth(currentTestLine);
+				auto estimatedLength = getFontWidth(currentTestLine);
 
 				if (estimatedLength < MaxWidth)
 				{
@@ -186,7 +186,7 @@ std::list<UString> BitmapFont::WordWrapText(const UString &Text, int MaxWidth)
 					{
 						LogWarning("No break in line \"%s\" found - this will probably overflow "
 						           "the control",
-						           currentTestLine.c_str());
+						           currentTestLine.cStr());
 						currentLine = currentTestLine;
 						remainingChunks.pop_front();
 					}

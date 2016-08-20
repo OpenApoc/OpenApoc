@@ -24,7 +24,7 @@ class Ticker : public Control
 	sp<BitmapFont> font;
 
   protected:
-	void OnRender() override;
+	void onRender() override;
 
   public:
 	HorizontalAlignment TextHAlign;
@@ -33,17 +33,17 @@ class Ticker : public Control
 	Ticker(sp<BitmapFont> font = nullptr);
 	~Ticker() override;
 
-	void EventOccured(Event *e) override;
-	void Update() override;
-	void UnloadResources() override;
+	void eventOccured(Event *e) override;
+	void update() override;
+	void unloadResources() override;
 
-	void AddMessage(const UString &Text);
+	void addMessage(const UString &Text);
 
-	sp<BitmapFont> GetFont() const;
-	void SetFont(sp<BitmapFont> NewFont);
+	sp<BitmapFont> getFont() const;
+	void setFont(sp<BitmapFont> NewFont);
 
-	sp<Control> CopyTo(sp<Control> CopyParent) override;
-	void ConfigureSelfFromXML(tinyxml2::XMLElement *Element) override;
+	sp<Control> copyTo(sp<Control> CopyParent) override;
+	void configureSelfFromXml(tinyxml2::XMLElement *Element) override;
 };
 
 }; // namespace OpenApoc

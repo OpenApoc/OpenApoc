@@ -17,47 +17,47 @@ const Vec2<int> BaseScreen::NO_SELECTION = {-1, -1};
 
 BaseScreen::BaseScreen(sp<GameState> state) : BaseStage(state), selection(NO_SELECTION), drag(false)
 {
-	form = ui().GetForm("FORM_BASESCREEN");
+	form = ui().getForm("FORM_BASESCREEN");
 	viewHighlight = BaseGraphics::FacilityHighlight::Construction;
 }
 
 BaseScreen::~BaseScreen() = default;
 
-void BaseScreen::ChangeBase(sp<Base> newBase)
+void BaseScreen::changeBase(sp<Base> newBase)
 {
-	BaseStage::ChangeBase(newBase);
-	form->FindControlTyped<TextEdit>("TEXT_BASE_NAME")->SetText(state->current_base->name);
-	form->FindControlTyped<Graphic>("GRAPHIC_MINIMAP")
-	    ->SetImage(BaseGraphics::drawMinimap(state, state->current_base->building));
+	BaseStage::changeBase(newBase);
+	form->findControlTyped<TextEdit>("TEXT_BASE_NAME")->setText(state->current_base->name);
+	form->findControlTyped<Graphic>("GRAPHIC_MINIMAP")
+	    ->setImage(BaseGraphics::drawMinimap(state, state->current_base->building));
 }
 
-void BaseScreen::Begin()
+void BaseScreen::begin()
 {
-	BaseStage::Begin();
+	BaseStage::begin();
 
-	baseView = form->FindControlTyped<Graphic>("GRAPHIC_BASE_VIEW");
-	selText = form->FindControlTyped<Label>("TEXT_SELECTED_FACILITY");
-	selGraphic = form->FindControlTyped<Graphic>("GRAPHIC_SELECTED_FACILITY");
+	baseView = form->findControlTyped<Graphic>("GRAPHIC_BASE_VIEW");
+	selText = form->findControlTyped<Label>("TEXT_SELECTED_FACILITY");
+	selGraphic = form->findControlTyped<Graphic>("GRAPHIC_SELECTED_FACILITY");
 	for (int i = 0; i < 3; i++)
 	{
 		auto labelName = UString::format("LABEL_%d", i + 1);
-		auto label = form->FindControlTyped<Label>(labelName);
+		auto label = form->findControlTyped<Label>(labelName);
 		if (!label)
 		{
-			LogError("Failed to find UI control matching \"%s\"", labelName.c_str());
+			LogError("Failed to find UI control matching \"%s\"", labelName.cStr());
 		}
 		statsLabels.push_back(label);
 
 		auto valueName = UString::format("VALUE_%d", i + 1);
-		auto value = form->FindControlTyped<Label>(valueName);
+		auto value = form->findControlTyped<Label>(valueName);
 		if (!value)
 		{
-			LogError("Failed to find UI control matching \"%s\"", valueName.c_str());
+			LogError("Failed to find UI control matching \"%s\"", valueName.cStr());
 		}
 		statsValues.push_back(value);
 	}
 
-	auto facilities = form->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
+	auto facilities = form->findControlTyped<ListBox>("LISTBOX_FACILITIES");
 	for (auto &i : state->facility_types)
 	{
 		auto &facility = i.second;
@@ -66,64 +66,64 @@ void BaseScreen::Begin()
 
 		auto graphic = mksp<Graphic>(facility->sprite);
 		graphic->AutoSize = true;
-		graphic->SetData(mksp<UString>(i.first));
+		graphic->setData(mksp<UString>(i.first));
 		graphic->Name = "FACILITY_BUILD_TILE";
-		facilities->AddItem(graphic);
+		facilities->addItem(graphic);
 	}
 
-	form->FindControlTyped<GraphicButton>("BUTTON_OK")
+	form->findControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *) { this->stageCmd.cmd = StageCmd::Command::POP; });
-	form->FindControlTyped<GraphicButton>("BUTTON_BASE_EQUIPVEHICLE")
+	form->findControlTyped<GraphicButton>("BUTTON_BASE_EQUIPVEHICLE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    // FIXME: If you don't have any vehicles this button should do nothing
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    this->stageCmd.nextStage = mksp<VEquipScreen>(state);
 		});
-	form->FindControlTyped<GraphicButton>("BUTTON_BASE_RES_AND_MANUF")
+	form->findControlTyped<GraphicButton>("BUTTON_BASE_RES_AND_MANUF")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    // FIXME: If you don't have any facilities this button should do nothing
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    this->stageCmd.nextStage = mksp<ResearchScreen>(state);
 		});
-	form->FindControlTyped<TextEdit>("TEXT_BASE_NAME")
+	form->findControlTyped<TextEdit>("TEXT_BASE_NAME")
 	    ->addCallback(FormEventType::TextEditFinish, [this](Event *e) {
 		    this->state->current_base->name =
-		        std::dynamic_pointer_cast<TextEdit>(e->Forms().RaisedBy)->GetText();
+		        std::dynamic_pointer_cast<TextEdit>(e->forms().RaisedBy)->getText();
 		});
 }
 
-void BaseScreen::Pause() {}
+void BaseScreen::pause() {}
 
-void BaseScreen::Resume() { textFunds->SetText(state->getPlayerBalance()); }
+void BaseScreen::resume() { textFunds->setText(state->getPlayerBalance()); }
 
-void BaseScreen::Finish() {}
+void BaseScreen::finish() {}
 
-void BaseScreen::EventOccurred(Event *e)
+void BaseScreen::eventOccurred(Event *e)
 {
-	form->EventOccured(e);
+	form->eventOccured(e);
 
-	if (e->Type() == EVENT_KEY_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
 
-	if (e->Type() == EVENT_MOUSE_MOVE)
+	if (e->type() == EVENT_MOUSE_MOVE)
 	{
-		mousePos = {e->Mouse().X, e->Mouse().Y};
+		mousePos = {e->mouse().X, e->mouse().Y};
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION)
+	if (e->type() == EVENT_FORM_INTERACTION)
 	{
-		if (e->Forms().RaisedBy == baseView)
+		if (e->forms().RaisedBy == baseView)
 		{
-			if (e->Forms().EventFlag == FormEventType::MouseMove)
+			if (e->forms().EventFlag == FormEventType::MouseMove)
 			{
-				selection = {e->Forms().MouseInfo.X, e->Forms().MouseInfo.Y};
+				selection = {e->forms().MouseInfo.X, e->forms().MouseInfo.Y};
 				selection /= BaseGraphics::TILE_SIZE;
 				if (!drag)
 				{
@@ -131,19 +131,19 @@ void BaseScreen::EventOccurred(Event *e)
 				}
 				return;
 			}
-			else if (e->Forms().EventFlag == FormEventType::MouseLeave)
+			else if (e->forms().EventFlag == FormEventType::MouseLeave)
 			{
 				selection = NO_SELECTION;
 				selFacility = nullptr;
 				return;
 			}
 		}
-		if (e->Forms().RaisedBy->Name == "LISTBOX_FACILITIES")
+		if (e->forms().RaisedBy->Name == "LISTBOX_FACILITIES")
 		{
-			if (!drag && e->Forms().EventFlag == FormEventType::ListBoxChangeHover)
+			if (!drag && e->forms().EventFlag == FormEventType::ListBoxChangeHover)
 			{
-				auto list = form->FindControlTyped<ListBox>("LISTBOX_FACILITIES");
-				auto dragFacilityName = list->GetHoveredData<UString>();
+				auto list = form->findControlTyped<ListBox>("LISTBOX_FACILITIES");
+				auto dragFacilityName = list->getHoveredData<UString>();
 				if (dragFacilityName)
 				{
 					dragFacility = StateRef<FacilityType>{state.get(), *dragFacilityName};
@@ -151,9 +151,9 @@ void BaseScreen::EventOccurred(Event *e)
 				}
 			}
 		}
-		if (e->Forms().RaisedBy->Name == "FACILITY_BUILD_TILE")
+		if (e->forms().RaisedBy->Name == "FACILITY_BUILD_TILE")
 		{
-			if (!drag && e->Forms().EventFlag == FormEventType::MouseLeave)
+			if (!drag && e->forms().EventFlag == FormEventType::MouseLeave)
 			{
 				selection = NO_SELECTION;
 				selFacility = nullptr;
@@ -161,18 +161,18 @@ void BaseScreen::EventOccurred(Event *e)
 			}
 		}
 
-		if (e->Forms().EventFlag == FormEventType::MouseDown)
+		if (e->forms().EventFlag == FormEventType::MouseDown)
 		{
 			if (!drag && dragFacility)
 			{
-				if (e->Forms().RaisedBy->Name == "LISTBOX_FACILITIES")
+				if (e->forms().RaisedBy->Name == "LISTBOX_FACILITIES")
 				{
 					drag = true;
 				}
 			}
 		}
 
-		if (e->Forms().EventFlag == FormEventType::MouseUp)
+		if (e->forms().EventFlag == FormEventType::MouseUp)
 		{
 			// Facility construction
 			if (drag && dragFacility)
@@ -185,8 +185,8 @@ void BaseScreen::EventOccurred(Event *e)
 					{
 						case Base::BuildError::NoError:
 							state->current_base->buildFacility(*state, dragFacility, selection);
-							textFunds->SetText(state->getPlayerBalance());
-							RefreshView();
+							textFunds->setText(state->getPlayerBalance());
+							refreshView();
 							break;
 						case Base::BuildError::Occupied:
 							stageCmd.cmd = StageCmd::Command::PUSH;
@@ -238,7 +238,7 @@ void BaseScreen::EventOccurred(Event *e)
 								                     this->state->current_base->destroyFacility(
 								                         *this->state, this->selection);
 								                     this->selFacility = nullptr;
-								                     this->RefreshView();
+								                     this->refreshView();
 								                 });
 							break;
 						case Base::BuildError::Occupied:
@@ -253,37 +253,37 @@ void BaseScreen::EventOccurred(Event *e)
 		}
 	}
 
-	selText->SetText("");
-	selGraphic->SetImage(nullptr);
+	selText->setText("");
+	selGraphic->setImage(nullptr);
 	for (auto label : statsLabels)
 	{
-		label->SetText("");
+		label->setText("");
 	}
 	for (auto value : statsValues)
 	{
-		value->SetText("");
+		value->setText("");
 	}
 	if (dragFacility)
 	{
-		selText->SetText(tr(dragFacility->name));
-		selGraphic->SetImage(dragFacility->sprite);
-		statsLabels[0]->SetText(tr("Cost to build"));
-		statsValues[0]->SetText(UString::format("$%d", dragFacility->buildCost));
-		statsLabels[1]->SetText(tr("Days to build"));
-		statsValues[1]->SetText(UString::format("%d", dragFacility->buildTime));
-		statsLabels[2]->SetText(tr("Maintenance cost"));
-		statsValues[2]->SetText(UString::format("$%d", dragFacility->weeklyCost));
+		selText->setText(tr(dragFacility->name));
+		selGraphic->setImage(dragFacility->sprite);
+		statsLabels[0]->setText(tr("Cost to build"));
+		statsValues[0]->setText(UString::format("$%d", dragFacility->buildCost));
+		statsLabels[1]->setText(tr("Days to build"));
+		statsValues[1]->setText(UString::format("%d", dragFacility->buildTime));
+		statsLabels[2]->setText(tr("Maintenance cost"));
+		statsValues[2]->setText(UString::format("$%d", dragFacility->weeklyCost));
 	}
 	else if (selFacility != nullptr)
 	{
-		selText->SetText(tr(selFacility->type->name));
-		selGraphic->SetImage(selFacility->type->sprite);
+		selText->setText(tr(selFacility->type->name));
+		selGraphic->setImage(selFacility->type->sprite);
 		if (selFacility->type->capacityAmount > 0)
 		{
-			statsLabels[0]->SetText(tr("Capacity"));
-			statsValues[0]->SetText(UString::format("%d", selFacility->type->capacityAmount));
-			statsLabels[1]->SetText(tr("Usage"));
-			statsValues[1]->SetText(
+			statsLabels[0]->setText(tr("Capacity"));
+			statsValues[0]->setText(UString::format("%d", selFacility->type->capacityAmount));
+			statsLabels[1]->setText(tr("Usage"));
+			statsValues[1]->setText(
 			    UString::format("%d%%", state->current_base->getUsage(selFacility)));
 		}
 	}
@@ -294,35 +294,35 @@ void BaseScreen::EventOccurred(Event *e)
 		    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:%d:xcom3/UFODATA/BASE.PCX", sprite);
 		if (sprite != 0)
 		{
-			selText->SetText(tr("Corridor"));
+			selText->setText(tr("Corridor"));
 		}
 		else
 		{
-			selText->SetText(tr("Earth"));
+			selText->setText(tr("Earth"));
 		}
-		selGraphic->SetImage(fw().data->load_image(image));
+		selGraphic->setImage(fw().data->loadImage(image));
 	}
 }
 
-void BaseScreen::Update(StageCmd *const cmd)
+void BaseScreen::update(StageCmd *const cmd)
 {
-	form->Update();
+	form->update();
 	*cmd = stageCmd;
 	stageCmd = StageCmd();
 }
 
-void BaseScreen::Render()
+void BaseScreen::render()
 {
-	fw().Stage_GetPrevious(this->shared_from_this())->Render();
-	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
-	form->Render();
-	RenderBase();
-	BaseStage::Render();
+	fw().stageGetPrevious(this->shared_from_this())->render();
+	fw().renderer->drawFilledRect({0, 0}, fw().displayGetSize(), Colour{0, 0, 0, 128});
+	form->render();
+	renderBase();
+	BaseStage::render();
 }
 
-bool BaseScreen::IsTransition() { return false; }
+bool BaseScreen::isTransition() { return false; }
 
-void BaseScreen::RenderBase()
+void BaseScreen::renderBase()
 {
 	const Vec2<int> BASE_POS = form->Location + baseView->Location;
 

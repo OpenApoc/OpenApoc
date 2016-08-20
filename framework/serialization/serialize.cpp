@@ -163,10 +163,10 @@ sp<SerializationArchive> SerializationArchive::readArchive(const UString &name)
 	    getProvider(!boost::filesystem::is_directory(name.str()));
 	if (!dataProvider->openArchive(name, false))
 	{
-		LogWarning("Failed to open archive at \"%s\"", name.c_str());
+		LogWarning("Failed to open archive at \"%s\"", name.cStr());
 		return nullptr;
 	}
-	LogInfo("Opened archive \"%s\"", name.c_str());
+	LogInfo("Opened archive \"%s\"", name.cStr());
 
 	return mksp<XMLSerializationArchive>(dataProvider);
 }
@@ -178,7 +178,7 @@ sp<SerializationNode> XMLSerializationArchive::newRoot(const UString &prefix, co
 	auto decl = this->docRoots[path].prepend_child(pugi::node_declaration);
 	decl.append_attribute("version") = "1.0";
 	decl.append_attribute("encoding") = "UTF-8";
-	root.set_name(name.c_str());
+	root.set_name(name.cStr());
 	return std::make_shared<XMLSerializationNode>(shared_from_this(), root, prefix + name + "/");
 }
 
@@ -187,7 +187,7 @@ sp<SerializationNode> XMLSerializationArchive::getRoot(const UString &prefix, co
 	auto path = prefix + name + ".xml";
 	if (dataProvider == nullptr)
 	{
-		LogWarning("Reading from not opened archive: %s!", path.c_str());
+		LogWarning("Reading from not opened archive: %s!", path.cStr());
 		return nullptr;
 	}
 
@@ -199,15 +199,15 @@ sp<SerializationNode> XMLSerializationArchive::getRoot(const UString &prefix, co
 		{
 			// FIXME: Make this actually read from the root and load the xinclude tags properly?
 			auto &doc = this->docRoots[path];
-			auto parse_result = doc.load_string(content.c_str());
+			auto parse_result = doc.load_string(content.cStr());
 			if (!parse_result)
 			{
-				LogInfo("Failed to parse \"%s\" : \"%s\" at \"%llu\"", path.c_str(),
+				LogInfo("Failed to parse \"%s\" : \"%s\" at \"%llu\"", path.cStr(),
 				        parse_result.description(), (unsigned long long)parse_result.offset);
 				return nullptr;
 			}
 			it = this->docRoots.find(path);
-			LogInfo("Parsed \"%s\"", path.c_str());
+			LogInfo("Parsed \"%s\"", path.cStr());
 		}
 	}
 	if (it == this->docRoots.end())
@@ -215,10 +215,10 @@ sp<SerializationNode> XMLSerializationArchive::getRoot(const UString &prefix, co
 		return nullptr;
 	}
 
-	auto root = it->second.child(name.c_str());
+	auto root = it->second.child(name.cStr());
 	if (!root)
 	{
-		LogWarning("Failed to find root with name \"%s\" in \"%s\"", name.c_str(), path.c_str());
+		LogWarning("Failed to find root with name \"%s\" in \"%s\"", name.cStr(), path.cStr());
 		return nullptr;
 	}
 	return std::make_shared<XMLSerializationNode>(shared_from_this(), root, prefix + name + "/");
@@ -231,7 +231,7 @@ bool XMLSerializationArchive::write(const UString &path, bool pack)
 	auto dataProvider = getProvider(pack);
 	if (!dataProvider->openArchive(path, true))
 	{
-		LogWarning("Failed to open archive at \"%s\"", path.c_str());
+		LogWarning("Failed to open archive at \"%s\"", path.cStr());
 		return false;
 	}
 
@@ -251,15 +251,15 @@ bool XMLSerializationArchive::write(const UString &path, bool pack)
 sp<SerializationNode> XMLSerializationNode::addNode(const UString &name, const UString &value)
 {
 	auto newNode = this->node.append_child();
-	newNode.set_name(name.c_str());
-	newNode.set_value(value.c_str());
+	newNode.set_name(name.cStr());
+	newNode.set_value(value.cStr());
 	return std::make_shared<XMLSerializationNode>(
 	    this->archive, newNode, std::static_pointer_cast<XMLSerializationNode>(shared_from_this()));
 }
 
 sp<SerializationNode> XMLSerializationNode::getNodeOpt(const UString &name)
 {
-	auto newNode = this->node.child(name.c_str());
+	auto newNode = this->node.child(name.cStr());
 	if (!newNode)
 	{
 		return nullptr;
@@ -270,7 +270,7 @@ sp<SerializationNode> XMLSerializationNode::getNodeOpt(const UString &name)
 
 sp<SerializationNode> XMLSerializationNode::getNextSiblingOpt(const UString &name)
 {
-	auto newNode = this->node.next_sibling(name.c_str());
+	auto newNode = this->node.next_sibling(name.cStr());
 	if (!newNode)
 	{
 		return nullptr;
@@ -286,7 +286,7 @@ sp<SerializationNode> XMLSerializationNode::addSection(const UString &name)
 	auto nsAttribute = includeNode->node.append_attribute("xmlns:xi");
 	nsAttribute.set_value("http://www.w3.org/2001/XInclude");
 	auto attribute = includeNode->node.append_attribute("href");
-	attribute.set_value(path.c_str());
+	attribute.set_value(path.cStr());
 	return this->archive->newRoot(this->getPrefix(), name);
 }
 
@@ -297,11 +297,11 @@ sp<SerializationNode> XMLSerializationNode::getSectionOpt(const UString &name)
 
 UString XMLSerializationNode::getName() { return node.name(); }
 
-void XMLSerializationNode::setName(const UString &str) { node.set_name(str.c_str()); }
+void XMLSerializationNode::setName(const UString &str) { node.set_name(str.cStr()); }
 
 UString XMLSerializationNode::getValue() { return node.text().get(); }
 
-void XMLSerializationNode::setValue(const UString &str) { node.text().set(str.c_str()); }
+void XMLSerializationNode::setValue(const UString &str) { node.text().set(str.cStr()); }
 
 unsigned int XMLSerializationNode::getValueUInt() { return node.text().as_uint(); }
 

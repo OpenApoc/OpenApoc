@@ -12,7 +12,7 @@ namespace OpenApoc
 {
 
 BaseBuyScreen::BaseBuyScreen(sp<GameState> state, sp<Building> building)
-    : Stage(), form(ui().GetForm("FORM_BUY_BASE_SCREEN")), state(state)
+    : Stage(), form(ui().getForm("FORM_BUY_BASE_SCREEN")), state(state)
 {
 	Vec2<int> size = building->bounds.size();
 	price = std::min(size.x, 8) * std::min(size.y, 8) * COST_PER_TILE;
@@ -21,53 +21,53 @@ BaseBuyScreen::BaseBuyScreen(sp<GameState> state, sp<Building> building)
 
 BaseBuyScreen::~BaseBuyScreen() = default;
 
-void BaseBuyScreen::Begin()
+void BaseBuyScreen::begin()
 {
-	baseView = form->FindControlTyped<Graphic>("GRAPHIC_BASE_VIEW");
+	baseView = form->findControlTyped<Graphic>("GRAPHIC_BASE_VIEW");
 
-	form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
+	form->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 
-	auto text = form->FindControlTyped<Label>("TEXT_PRICE");
-	text->SetText(UString::format(tr("This Building will cost $%d"), price));
+	auto text = form->findControlTyped<Label>("TEXT_PRICE");
+	text->setText(UString::format(tr("This Building will cost $%d"), price));
 
-	form->FindControlTyped<Graphic>("GRAPHIC_MINIMAP")
-	    ->SetImage(BaseGraphics::drawMinimap(state, base->building));
+	form->findControlTyped<Graphic>("GRAPHIC_MINIMAP")
+	    ->setImage(BaseGraphics::drawMinimap(state, base->building));
 }
 
-void BaseBuyScreen::Pause() {}
+void BaseBuyScreen::pause() {}
 
-void BaseBuyScreen::Resume() {}
+void BaseBuyScreen::resume() {}
 
-void BaseBuyScreen::Finish() {}
+void BaseBuyScreen::finish() {}
 
-void BaseBuyScreen::EventOccurred(Event *e)
+void BaseBuyScreen::eventOccurred(Event *e)
 {
-	form->EventOccured(e);
+	form->eventOccured(e);
 
-	if (e->Type() == EVENT_KEY_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 		}
 	}
 
-	else if (e->Type() == EVENT_FORM_INTERACTION &&
-	         e->Forms().EventFlag == FormEventType::ButtonClick)
+	else if (e->type() == EVENT_FORM_INTERACTION &&
+	         e->forms().EventFlag == FormEventType::ButtonClick)
 	{
-		if (e->Forms().RaisedBy->Name == "BUTTON_OK")
+		if (e->forms().RaisedBy->Name == "BUTTON_OK")
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 		}
-		else if (e->Forms().RaisedBy->Name == "BUTTON_BUY_BASE")
+		else if (e->forms().RaisedBy->Name == "BUTTON_BUY_BASE")
 		{
 			if (state->getPlayer()->balance >= price)
 			{
 				state->getPlayer()->balance -= price;
 				base->building->owner = state->getPlayer();
-				base->name = "Base " + Strings::FromInteger(state->player_bases.size() + 1);
+				base->name = "Base " + Strings::fromInteger(state->player_bases.size() + 1);
 				state->player_bases[Base::getPrefix() +
-				                    Strings::FromInteger(state->player_bases.size() + 1)] = base;
+				                    Strings::fromInteger(state->player_bases.size() + 1)] = base;
 
 				stageCmd.cmd = StageCmd::Command::REPLACE;
 				stageCmd.nextStage = mksp<CityView>(state);
@@ -83,25 +83,25 @@ void BaseBuyScreen::EventOccurred(Event *e)
 	}
 }
 
-void BaseBuyScreen::Update(StageCmd *const cmd)
+void BaseBuyScreen::update(StageCmd *const cmd)
 {
-	form->Update();
+	form->update();
 	*cmd = this->stageCmd;
 	// Reset the command to default
 	this->stageCmd = StageCmd();
 }
 
-void BaseBuyScreen::Render()
+void BaseBuyScreen::render()
 {
-	fw().Stage_GetPrevious(this->shared_from_this())->Render();
-	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
-	form->Render();
-	RenderBase();
+	fw().stageGetPrevious(this->shared_from_this())->render();
+	fw().renderer->drawFilledRect({0, 0}, fw().displayGetSize(), Colour{0, 0, 0, 128});
+	form->render();
+	renderBase();
 }
 
-bool BaseBuyScreen::IsTransition() { return false; }
+bool BaseBuyScreen::isTransition() { return false; }
 
-void BaseBuyScreen::RenderBase()
+void BaseBuyScreen::renderBase()
 {
 	const Vec2<int> BASE_POS = form->Location + baseView->Location;
 

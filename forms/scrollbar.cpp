@@ -9,9 +9,9 @@ namespace OpenApoc
 
 ScrollBar::ScrollBar()
     : Control(), capture(false), grippersize(1), segmentsize(1),
-      gripperbutton(fw().data->load_image(
+      gripperbutton(fw().data->loadImage(
           "PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:4:UI/menuopt.pal")),
-      buttonerror(fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/EXTRA/TEXTBEEP.RAW:22050")),
+      buttonerror(fw().data->loadSample("RAWSOUND:xcom3/RAWSOUND/EXTRA/TEXTBEEP.RAW:22050")),
       Value(0), BarOrientation(Orientation::Vertical), RenderStyle(ScrollBarRenderStyle::Menu),
       GripperColour(220, 192, 192), Minimum(0), Maximum(10), LargeChange(2)
 {
@@ -20,9 +20,9 @@ ScrollBar::ScrollBar()
 
 ScrollBar::~ScrollBar() = default;
 
-void ScrollBar::LoadResources() {}
+void ScrollBar::loadResources() {}
 
-bool ScrollBar::SetValue(int newValue)
+bool ScrollBar::setValue(int newValue)
 {
 	newValue = std::max(newValue, Minimum);
 	newValue = std::min(newValue, Maximum);
@@ -34,50 +34,50 @@ bool ScrollBar::SetValue(int newValue)
 	return true;
 }
 
-void ScrollBar::ScrollPrev()
+void ScrollBar::scrollPrev()
 {
-	if (!SetValue(Value - LargeChange))
+	if (!setValue(Value - LargeChange))
 	{
 		fw().soundBackend->playSample(buttonerror);
 	}
 }
 
-void ScrollBar::ScrollNext()
+void ScrollBar::scrollNext()
 {
-	if (!SetValue(Value + LargeChange))
+	if (!setValue(Value + LargeChange))
 	{
 		fw().soundBackend->playSample(buttonerror);
 	}
 }
 
-void ScrollBar::EventOccured(Event *e)
+void ScrollBar::eventOccured(Event *e)
 {
-	Control::EventOccured(e);
+	Control::eventOccured(e);
 
 	int mousePosition = 0;
-	if (e->Type() == EVENT_FORM_INTERACTION)
+	if (e->type() == EVENT_FORM_INTERACTION)
 	{
 		switch (BarOrientation)
 		{
 			case Orientation::Vertical:
-				mousePosition = e->Forms().MouseInfo.Y;
+				mousePosition = e->forms().MouseInfo.Y;
 				break;
 			case Orientation::Horizontal:
-				mousePosition = e->Forms().MouseInfo.X;
+				mousePosition = e->forms().MouseInfo.X;
 				break;
 		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
-	    e->Forms().EventFlag == FormEventType::MouseDown)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
+	    e->forms().EventFlag == FormEventType::MouseDown)
 	{
 		if (mousePosition >= (segmentsize * (Value - Minimum)) + grippersize)
 		{
-			ScrollNext();
+			scrollNext();
 		}
 		else if (mousePosition <= segmentsize * (Value - Minimum))
 		{
-			ScrollPrev();
+			scrollPrev();
 		}
 		else
 		{
@@ -85,21 +85,21 @@ void ScrollBar::EventOccured(Event *e)
 		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION &&
-	    (capture || e->Forms().RaisedBy == shared_from_this()) &&
-	    e->Forms().EventFlag == FormEventType::MouseUp)
+	if (e->type() == EVENT_FORM_INTERACTION &&
+	    (capture || e->forms().RaisedBy == shared_from_this()) &&
+	    e->forms().EventFlag == FormEventType::MouseUp)
 	{
 		capture = false;
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
-	    e->Forms().EventFlag == FormEventType::MouseMove && capture)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
+	    e->forms().EventFlag == FormEventType::MouseMove && capture)
 	{
-		this->SetValue(static_cast<int>(mousePosition / segmentsize));
+		this->setValue(static_cast<int>(mousePosition / segmentsize));
 	}
 }
 
-void ScrollBar::OnRender()
+void ScrollBar::onRender()
 {
 	// LoadResources();
 	if (Minimum == Maximum)
@@ -130,9 +130,9 @@ void ScrollBar::OnRender()
 	}
 }
 
-void ScrollBar::Update()
+void ScrollBar::update()
 {
-	Control::Update();
+	Control::update();
 
 	int size;
 	if (Size.x < Size.y)
@@ -161,9 +161,9 @@ void ScrollBar::Update()
 	}
 }
 
-void ScrollBar::UnloadResources() { Control::UnloadResources(); }
+void ScrollBar::unloadResources() { Control::unloadResources(); }
 
-sp<Control> ScrollBar::CopyTo(sp<Control> CopyParent)
+sp<Control> ScrollBar::copyTo(sp<Control> CopyParent)
 {
 	sp<ScrollBar> copy;
 	if (CopyParent)
@@ -180,13 +180,13 @@ sp<Control> ScrollBar::CopyTo(sp<Control> CopyParent)
 	copy->GripperColour = this->GripperColour;
 	copy->LargeChange = this->LargeChange;
 	copy->RenderStyle = this->RenderStyle;
-	CopyControlData(copy);
+	copyControlData(copy);
 	return copy;
 }
 
-void ScrollBar::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
+void ScrollBar::configureSelfFromXml(tinyxml2::XMLElement *Element)
 {
-	Control::ConfigureSelfFromXML(Element);
+	Control::configureSelfFromXml(Element);
 	tinyxml2::XMLElement *subnode;
 	UString attribvalue;
 
@@ -196,14 +196,14 @@ void ScrollBar::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 		if (subnode->Attribute("a") != nullptr && UString(subnode->Attribute("a")) != "")
 		{
 			GripperColour = Colour(
-			    Strings::ToU8(subnode->Attribute("r")), Strings::ToU8(subnode->Attribute("g")),
-			    Strings::ToU8(subnode->Attribute("b")), Strings::ToU8(subnode->Attribute("a")));
+			    Strings::toU8(subnode->Attribute("r")), Strings::toU8(subnode->Attribute("g")),
+			    Strings::toU8(subnode->Attribute("b")), Strings::toU8(subnode->Attribute("a")));
 		}
 		else
 		{
-			GripperColour = Colour(Strings::ToU8(subnode->Attribute("r")),
-			                       Strings::ToU8(subnode->Attribute("g")),
-			                       Strings::ToU8(subnode->Attribute("b")));
+			GripperColour = Colour(Strings::toU8(subnode->Attribute("r")),
+			                       Strings::toU8(subnode->Attribute("g")),
+			                       Strings::toU8(subnode->Attribute("b")));
 		}
 	}
 	subnode = Element->FirstChildElement("range");
@@ -211,11 +211,11 @@ void ScrollBar::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 	{
 		if (subnode->Attribute("min") != nullptr && UString(subnode->Attribute("min")) != "")
 		{
-			Minimum = Strings::ToInteger(subnode->Attribute("min"));
+			Minimum = Strings::toInteger(subnode->Attribute("min"));
 		}
 		if (subnode->Attribute("max") != nullptr && UString(subnode->Attribute("max")) != "")
 		{
-			Maximum = Strings::ToInteger(subnode->Attribute("max"));
+			Maximum = Strings::toInteger(subnode->Attribute("max"));
 		}
 	}
 }

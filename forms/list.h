@@ -15,11 +15,11 @@ class ListBox : public Control
 	bool scroller_is_internal;
 	sp<Control> hovered, selected;
 
-	void ConfigureInternalScrollBar();
+	void configureInternalScrollBar();
 
   protected:
-	void OnRender() override;
-	void PostRender() override;
+	void onRender() override;
+	void postRender() override;
 
   public:
 	sp<ScrollBar> scroller;
@@ -32,35 +32,35 @@ class ListBox : public Control
 	ListBox(sp<ScrollBar> ExternalScrollBar);
 	~ListBox() override;
 
-	void EventOccured(Event *e) override;
-	void Update() override;
-	void UnloadResources() override;
+	void eventOccured(Event *e) override;
+	void update() override;
+	void unloadResources() override;
 
 	void setSelected(sp<Control> c);
 
-	void Clear();
-	void AddItem(sp<Control> Item);
-	sp<Control> RemoveItem(sp<Control> Item);
-	sp<Control> RemoveItem(int Index);
+	void clear();
+	void addItem(sp<Control> Item);
+	sp<Control> removeItem(sp<Control> Item);
+	sp<Control> removeItem(int Index);
 	sp<Control> operator[](int Index);
 
-	sp<Control> CopyTo(sp<Control> CopyParent) override;
-	void ConfigureSelfFromXML(tinyxml2::XMLElement *Element) override;
+	sp<Control> copyTo(sp<Control> CopyParent) override;
+	void configureSelfFromXml(tinyxml2::XMLElement *Element) override;
 
-	template <typename T> sp<T> GetHoveredData() const
+	template <typename T> sp<T> getHoveredData() const
 	{
 		if (hovered != nullptr)
 		{
-			return hovered->GetData<T>();
+			return hovered->getData<T>();
 		}
 		return nullptr;
 	}
 
-	template <typename T> sp<T> GetSelectedData() const
+	template <typename T> sp<T> getSelectedData() const
 	{
 		if (selected != nullptr)
 		{
-			return selected->GetData<T>();
+			return selected->getData<T>();
 		}
 		return nullptr;
 	}

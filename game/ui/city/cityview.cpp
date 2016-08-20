@@ -78,19 +78,19 @@ static const std::vector<UString> CITY_ICON_VEHICLE_PASSENGER_COUNT_RESOURCES = 
 CityView::CityView(sp<GameState> state)
     : TileView(*state->current_city->map, Vec3<int>{CITY_TILE_X, CITY_TILE_Y, CITY_TILE_Z},
                Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Isometric),
-      baseForm(ui().GetForm("FORM_CITY_UI")), updateSpeed(UpdateSpeed::Speed1), state(state),
+      baseForm(ui().getForm("FORM_CITY_UI")), updateSpeed(UpdateSpeed::Speed1), state(state),
       followVehicle(false), selectionState(SelectionState::Normal),
-      day_palette(fw().data->load_palette("xcom3/ufodata/PAL_01.DAT")),
-      twilight_palette(fw().data->load_palette("xcom3/ufodata/PAL_02.DAT")),
-      night_palette(fw().data->load_palette("xcom3/ufodata/PAL_03.DAT"))
+      day_palette(fw().data->loadPalette("xcom3/ufodata/PAL_01.DAT")),
+      twilight_palette(fw().data->loadPalette("xcom3/ufodata/PAL_02.DAT")),
+      night_palette(fw().data->loadPalette("xcom3/ufodata/PAL_03.DAT"))
 {
-	baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED1")->SetChecked(true);
+	baseForm->findControlTyped<RadioButton>("BUTTON_SPEED1")->setChecked(true);
 	for (auto &formName : TAB_FORM_NAMES)
 	{
-		sp<Form> f(ui().GetForm(formName));
+		sp<Form> f(ui().getForm(formName));
 		if (!f)
 		{
-			LogError("Failed to load form \"%s\"", formName.c_str());
+			LogError("Failed to load form \"%s\"", formName.cStr());
 			return;
 		}
 		f->takesFocus = false;
@@ -99,7 +99,7 @@ CityView::CityView(sp<GameState> state)
 	this->activeTab = this->uiTabs[0];
 
 	// Refresh base views
-	Resume();
+	resume();
 
 	auto bld = state->current_base->building;
 	if (!bld)
@@ -115,21 +115,21 @@ CityView::CityView(sp<GameState> state)
 	{
 		auto &type = iconResource.first;
 		auto &path = iconResource.second;
-		auto image = fw().data->load_image(path);
+		auto image = fw().data->loadImage(path);
 		if (!image)
 		{
-			LogError("Failed to open city icon resource \"%s\"", path.c_str());
+			LogError("Failed to open city icon resource \"%s\"", path.cStr());
 		}
 		this->icons[type] = image;
 	}
 
 	for (auto &passengerResource : CITY_ICON_VEHICLE_PASSENGER_COUNT_RESOURCES)
 	{
-		auto image = fw().data->load_image(passengerResource);
+		auto image = fw().data->loadImage(passengerResource);
 		if (!image && passengerResource != "")
 		{
 			LogError("Failed to open city vehicle passenger icon resource \"%s\"",
-			         passengerResource.c_str());
+			         passengerResource.cStr());
 		}
 		this->vehiclePassengerCountIcons.push_back(image);
 	}
@@ -149,99 +149,99 @@ CityView::CityView(sp<GameState> state)
 	}
 	this->shieldImage = img;
 
-	this->baseForm->FindControl("BUTTON_TAB_1")
+	this->baseForm->findControl("BUTTON_TAB_1")
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *) { this->activeTab = this->uiTabs[0]; });
-	this->baseForm->FindControl("BUTTON_TAB_2")
+	this->baseForm->findControl("BUTTON_TAB_2")
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *) { this->activeTab = this->uiTabs[1]; });
-	this->baseForm->FindControl("BUTTON_TAB_3")
+	this->baseForm->findControl("BUTTON_TAB_3")
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *) { this->activeTab = this->uiTabs[2]; });
-	this->baseForm->FindControl("BUTTON_TAB_4")
+	this->baseForm->findControl("BUTTON_TAB_4")
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *) { this->activeTab = this->uiTabs[3]; });
-	this->baseForm->FindControl("BUTTON_TAB_5")
+	this->baseForm->findControl("BUTTON_TAB_5")
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *) { this->activeTab = this->uiTabs[4]; });
-	this->baseForm->FindControl("BUTTON_TAB_6")
+	this->baseForm->findControl("BUTTON_TAB_6")
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *) { this->activeTab = this->uiTabs[5]; });
-	this->baseForm->FindControl("BUTTON_TAB_7")
+	this->baseForm->findControl("BUTTON_TAB_7")
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *) { this->activeTab = this->uiTabs[6]; });
-	this->baseForm->FindControl("BUTTON_TAB_8")
+	this->baseForm->findControl("BUTTON_TAB_8")
 	    ->addCallback(FormEventType::ButtonClick,
 	                  [this](Event *) { this->activeTab = this->uiTabs[7]; });
-	this->baseForm->FindControl("BUTTON_FOLLOW_VEHICLE")
+	this->baseForm->findControl("BUTTON_FOLLOW_VEHICLE")
 	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) {
 		    this->followVehicle =
-		        std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy)->IsChecked();
+		        std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy)->isChecked();
 		});
-	this->baseForm->FindControl("BUTTON_TOGGLE_STRATMAP")
+	this->baseForm->findControl("BUTTON_TOGGLE_STRATMAP")
 	    ->addCallback(FormEventType::CheckBoxChange, [this](Event *e) {
-		    bool strategy = std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy)->IsChecked();
+		    bool strategy = std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy)->isChecked();
 		    this->setViewMode(strategy ? TileViewMode::Strategy : TileViewMode::Isometric);
 		});
-	this->baseForm->FindControl("BUTTON_SPEED0")
+	this->baseForm->findControl("BUTTON_SPEED0")
 	    ->addCallback(FormEventType::CheckBoxSelected,
 	                  [this](Event *) { this->updateSpeed = UpdateSpeed::Pause; });
-	this->baseForm->FindControl("BUTTON_SPEED1")
+	this->baseForm->findControl("BUTTON_SPEED1")
 	    ->addCallback(FormEventType::CheckBoxSelected,
 	                  [this](Event *) { this->updateSpeed = UpdateSpeed::Speed1; });
-	this->baseForm->FindControl("BUTTON_SPEED2")
+	this->baseForm->findControl("BUTTON_SPEED2")
 	    ->addCallback(FormEventType::CheckBoxSelected,
 	                  [this](Event *) { this->updateSpeed = UpdateSpeed::Speed2; });
-	this->baseForm->FindControl("BUTTON_SPEED3")
+	this->baseForm->findControl("BUTTON_SPEED3")
 	    ->addCallback(FormEventType::CheckBoxSelected,
 	                  [this](Event *) { this->updateSpeed = UpdateSpeed::Speed3; });
-	this->baseForm->FindControl("BUTTON_SPEED4")
+	this->baseForm->findControl("BUTTON_SPEED4")
 	    ->addCallback(FormEventType::CheckBoxSelected,
 	                  [this](Event *) { this->updateSpeed = UpdateSpeed::Speed4; });
-	this->baseForm->FindControl("BUTTON_SPEED5")
+	this->baseForm->findControl("BUTTON_SPEED5")
 	    ->addCallback(FormEventType::CheckBoxSelected,
 	                  [this](Event *) { this->updateSpeed = UpdateSpeed::Speed5; });
-	this->baseForm->FindControl("BUTTON_SHOW_ALIEN_INFILTRATION")
+	this->baseForm->findControl("BUTTON_SHOW_ALIEN_INFILTRATION")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    this->stageCmd.nextStage = mksp<InfiltrationScreen>(this->state);
 		});
-	this->baseForm->FindControl("BUTTON_SHOW_SCORE")
+	this->baseForm->findControl("BUTTON_SHOW_SCORE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    this->stageCmd.nextStage = mksp<ScoreScreen>(this->state);
 		});
-	this->baseForm->FindControl("BUTTON_SHOW_UFOPAEDIA")
+	this->baseForm->findControl("BUTTON_SHOW_UFOPAEDIA")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    this->stageCmd.nextStage = mksp<UfopaediaView>(this->state);
 		});
-	this->baseForm->FindControl("BUTTON_SHOW_OPTIONS")
+	this->baseForm->findControl("BUTTON_SHOW_OPTIONS")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    this->stageCmd.nextStage = mksp<InGameOptions>(this->state);
 		});
-	this->baseForm->FindControl("BUTTON_SHOW_LOG")
+	this->baseForm->findControl("BUTTON_SHOW_LOG")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    this->stageCmd.nextStage = mksp<MessageLogScreen>(this->state);
 		});
-	this->baseForm->FindControl("BUTTON_ZOOM_EVENT")
+	this->baseForm->findControl("BUTTON_ZOOM_EVENT")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { LogWarning("Zoom to event"); });
 
 	auto baseManagementForm = this->uiTabs[0];
-	baseManagementForm->FindControl("BUTTON_SHOW_BASE")
+	baseManagementForm->findControl("BUTTON_SHOW_BASE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    this->stageCmd.nextStage = mksp<BaseScreen>(this->state);
 		});
-	baseManagementForm->FindControl("BUTTON_BUILD_BASE")
+	baseManagementForm->findControl("BUTTON_BUILD_BASE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    this->stageCmd.nextStage = mksp<BaseSelectScreen>(this->state, this->centerPos);
 		});
 	auto vehicleForm = this->uiTabs[1];
-	vehicleForm->FindControl("BUTTON_EQUIP_VEHICLE")
+	vehicleForm->findControl("BUTTON_EQUIP_VEHICLE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    auto equipScreen = mksp<VEquipScreen>(this->state);
@@ -252,7 +252,7 @@ CityView::CityView(sp<GameState> state)
 		    }
 		    this->stageCmd.nextStage = equipScreen;
 		});
-	vehicleForm->FindControl("BUTTON_VEHICLE_BUILDING")
+	vehicleForm->findControl("BUTTON_VEHICLE_BUILDING")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
@@ -265,67 +265,66 @@ CityView::CityView(sp<GameState> state)
 			    }
 		    }
 		});
-	vehicleForm->FindControl("BUTTON_GOTO_BUILDING")
+	vehicleForm->findControl("BUTTON_GOTO_BUILDING")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
 		    {
-			    LogInfo("Select building for vehicle \"%s\"", v->name.c_str());
+			    LogInfo("Select building for vehicle \"%s\"", v->name.cStr());
 			    this->selectionState = SelectionState::VehicleGotoBuilding;
 		    }
 
 		});
-	vehicleForm->FindControl("BUTTON_GOTO_LOCATION")
+	vehicleForm->findControl("BUTTON_GOTO_LOCATION")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
 		    {
-			    LogInfo("Select building for vehicle \"%s\"", v->name.c_str());
+			    LogInfo("Select building for vehicle \"%s\"", v->name.cStr());
 			    this->selectionState = SelectionState::VehicleGotoLocation;
 		    }
 
 		});
-	vehicleForm->FindControl("BUTTON_GOTO_BASE")
+	vehicleForm->findControl("BUTTON_GOTO_BASE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
 		    {
-			    LogWarning("Goto base for vehicle \"%s\"", v->name.c_str());
+			    LogWarning("Goto base for vehicle \"%s\"", v->name.cStr());
 			    auto bld = v->homeBuilding;
 			    if (!bld)
 			    {
-				    LogError("Vehicle \"%s\" has no building", v->name.c_str());
+				    LogError("Vehicle \"%s\" has no building", v->name.cStr());
 			    }
-			    LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name.c_str(),
-			               bld->name.c_str());
+			    LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name.cStr(), bld->name.cStr());
 			    // FIXME: Don't clear missions if not replacing current mission
 			    v->missions.clear();
 			    v->missions.emplace_back(VehicleMission::gotoBuilding(*v, bld));
 			    v->missions.front()->start(*this->state, *v);
 		    }
 		});
-	vehicleForm->FindControl("BUTTON_VEHICLE_ATTACK")
+	vehicleForm->findControl("BUTTON_VEHICLE_ATTACK")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
 		    {
-			    LogInfo("Select target for vehicle \"%s\"", v->name.c_str());
+			    LogInfo("Select target for vehicle \"%s\"", v->name.cStr());
 			    this->selectionState = SelectionState::VehicleAttackVehicle;
 		    }
 
 		});
-	vehicleForm->FindControl("BUTTON_VEHICLE_ATTACK_BUILDING")
+	vehicleForm->findControl("BUTTON_VEHICLE_ATTACK_BUILDING")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
 		    {
-			    LogInfo("Select target building for vehicle \"%s\"", v->name.c_str());
+			    LogInfo("Select target building for vehicle \"%s\"", v->name.cStr());
 			    this->selectionState = SelectionState::VehicleGotoLocation;
 		    }
 
 		});
 
-	vehicleForm->FindControl("BUTTON_ATTACK_MODE_AGGRESSIVE")
+	vehicleForm->findControl("BUTTON_ATTACK_MODE_AGGRESSIVE")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
@@ -333,7 +332,7 @@ CityView::CityView(sp<GameState> state)
 			    v->attackMode = Vehicle::AttackMode::Aggressive;
 		    }
 		});
-	vehicleForm->FindControl("BUTTON_ATTACK_MODE_STANDARD")
+	vehicleForm->findControl("BUTTON_ATTACK_MODE_STANDARD")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
@@ -341,7 +340,7 @@ CityView::CityView(sp<GameState> state)
 			    v->attackMode = Vehicle::AttackMode::Standard;
 		    }
 		});
-	vehicleForm->FindControl("BUTTON_ATTACK_MODE_DEFENSIVE")
+	vehicleForm->findControl("BUTTON_ATTACK_MODE_DEFENSIVE")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
@@ -349,7 +348,7 @@ CityView::CityView(sp<GameState> state)
 			    v->attackMode = Vehicle::AttackMode::Defensive;
 		    }
 		});
-	vehicleForm->FindControl("BUTTON_ATTACK_MODE_EVASIVE")
+	vehicleForm->findControl("BUTTON_ATTACK_MODE_EVASIVE")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
@@ -357,7 +356,7 @@ CityView::CityView(sp<GameState> state)
 			    v->attackMode = Vehicle::AttackMode::Evasive;
 		    }
 		});
-	vehicleForm->FindControl("BUTTON_ALTITUDE_HIGHEST")
+	vehicleForm->findControl("BUTTON_ALTITUDE_HIGHEST")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
@@ -365,7 +364,7 @@ CityView::CityView(sp<GameState> state)
 			    v->altitude = Vehicle::Altitude::Highest;
 		    }
 		});
-	vehicleForm->FindControl("BUTTON_ALTITUDE_HIGH")
+	vehicleForm->findControl("BUTTON_ALTITUDE_HIGH")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
@@ -373,7 +372,7 @@ CityView::CityView(sp<GameState> state)
 			    v->altitude = Vehicle::Altitude::High;
 		    }
 		});
-	vehicleForm->FindControl("BUTTON_ALTITUDE_STANDARD")
+	vehicleForm->findControl("BUTTON_ALTITUDE_STANDARD")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
@@ -381,7 +380,7 @@ CityView::CityView(sp<GameState> state)
 			    v->altitude = Vehicle::Altitude::Standard;
 		    }
 		});
-	vehicleForm->FindControl("BUTTON_ALTITUDE_LOW")
+	vehicleForm->findControl("BUTTON_ALTITUDE_LOW")
 	    ->addCallback(FormEventType::CheckBoxSelected, [this](Event *) {
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
@@ -393,45 +392,45 @@ CityView::CityView(sp<GameState> state)
 
 CityView::~CityView() = default;
 
-void CityView::Begin()
+void CityView::begin()
 {
-	baseForm->FindControlTyped<Ticker>("NEWS_TICKER")
-	    ->AddMessage(tr("Welcome to X-COM Apocalypse"));
+	baseForm->findControlTyped<Ticker>("NEWS_TICKER")
+	    ->addMessage(tr("Welcome to X-COM Apocalypse"));
 }
 
-void CityView::Resume()
+void CityView::resume()
 {
-	this->uiTabs[0]->FindControlTyped<Label>("TEXT_BASE_NAME")->SetText(state->current_base->name);
+	this->uiTabs[0]->findControlTyped<Label>("TEXT_BASE_NAME")->setText(state->current_base->name);
 	miniViews.clear();
 	int b = 0;
 	for (auto &pair : state->player_bases)
 	{
 		auto &viewBase = pair.second;
 		auto viewName = UString::format("BUTTON_BASE_%d", ++b);
-		auto view = this->uiTabs[0]->FindControlTyped<GraphicButton>(viewName);
+		auto view = this->uiTabs[0]->findControlTyped<GraphicButton>(viewName);
 		if (!view)
 		{
-			LogError("Failed to find UI control matching \"%s\"", viewName.c_str());
+			LogError("Failed to find UI control matching \"%s\"", viewName.cStr());
 		}
-		view->SetData(viewBase);
+		view->setData(viewBase);
 		auto viewImage = BaseGraphics::drawMiniBase(viewBase);
-		view->SetImage(viewImage);
-		view->SetDepressedImage(viewImage);
+		view->setImage(viewImage);
+		view->setDepressedImage(viewImage);
 		view->addCallback(FormEventType::ButtonClick, [this](Event *e) {
-			this->state->current_base = {this->state.get(), e->Forms().RaisedBy->GetData<Base>()};
+			this->state->current_base = {this->state.get(), e->forms().RaisedBy->getData<Base>()};
 			this->uiTabs[0]
-			    ->FindControlTyped<Label>("TEXT_BASE_NAME")
-			    ->SetText(this->state->current_base->name);
+			    ->findControlTyped<Label>("TEXT_BASE_NAME")
+			    ->setText(this->state->current_base->name);
 		});
 		miniViews.push_back(view);
 	}
 }
 
-void CityView::Render()
+void CityView::render()
 {
 	TRACE_FN;
 
-	TileView::Render();
+	TileView::render();
 	if (state->showVehiclePath)
 	{
 		for (auto pair : state->vehicles)
@@ -455,14 +454,14 @@ void CityView::Render()
 			}
 		}
 	}
-	activeTab->Render();
-	baseForm->Render();
+	activeTab->render();
+	baseForm->render();
 	if (activeTab == uiTabs[0])
 	{
 		// Highlight selected base
 		for (auto &view : miniViews)
 		{
-			auto viewBase = view->GetData<Base>();
+			auto viewBase = view->getData<Base>();
 			if (state->current_base == viewBase)
 			{
 				Vec2<int> pos = uiTabs[0]->Location + view->Location - 1;
@@ -479,27 +478,27 @@ void CityView::setUpdateSpeed(UpdateSpeed updateSpeed)
 	switch (updateSpeed)
 	{
 		case UpdateSpeed::Pause:
-			baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED0")->SetChecked(true);
+			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED0")->setChecked(true);
 			break;
 		case UpdateSpeed::Speed1:
-			baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED1")->SetChecked(true);
+			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED1")->setChecked(true);
 			break;
 		case UpdateSpeed::Speed2:
-			baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED2")->SetChecked(true);
+			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED2")->setChecked(true);
 			break;
 		case UpdateSpeed::Speed3:
-			baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED3")->SetChecked(true);
+			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED3")->setChecked(true);
 			break;
 		case UpdateSpeed::Speed4:
-			baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED4")->SetChecked(true);
+			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED4")->setChecked(true);
 			break;
 		case UpdateSpeed::Speed5:
-			baseForm->FindControlTyped<RadioButton>("BUTTON_SPEED5")->SetChecked(true);
+			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED5")->setChecked(true);
 			break;
 	}
 }
 
-void CityView::Update(StageCmd *const cmd)
+void CityView::update(StageCmd *const cmd)
 {
 	unsigned int ticks = 0;
 	bool turbo = false;
@@ -537,7 +536,7 @@ void CityView::Update(StageCmd *const cmd)
 			}
 			break;
 	}
-	baseForm->FindControl("BUTTON_SPEED5")->Enabled = this->state->canTurbo();
+	baseForm->findControl("BUTTON_SPEED5")->Enabled = this->state->canTurbo();
 
 	if (turbo)
 	{
@@ -555,9 +554,9 @@ void CityView::Update(StageCmd *const cmd)
 			ticks--;
 		}
 	}
-	auto clockControl = baseForm->FindControlTyped<Label>("CLOCK");
+	auto clockControl = baseForm->findControlTyped<Label>("CLOCK");
 
-	clockControl->SetText(state->gameTime.getTimeString());
+	clockControl->setText(state->gameTime.getTimeString());
 
 	// The palette fades from pal_03 at 3am to pal_02 at 6am then pal_01 at 9am
 	// The reverse for 3pm, 6pm & 9pm
@@ -612,15 +611,15 @@ void CityView::Update(StageCmd *const cmd)
 		interpolated_palette = mksp<Palette>();
 		for (int i = 0; i < 256; i++)
 		{
-			auto &colour1 = palette1->GetColour(i);
-			auto &colour2 = palette2->GetColour(i);
+			auto &colour1 = palette1->getColour(i);
+			auto &colour2 = palette2->getColour(i);
 			Colour interpolated_colour;
 
 			interpolated_colour.r = (int)mix((float)colour1.r, (float)colour2.r, factor);
 			interpolated_colour.g = (int)mix((float)colour1.g, (float)colour2.g, factor);
 			interpolated_colour.b = (int)mix((float)colour1.b, (float)colour2.b, factor);
 			interpolated_colour.a = (int)mix((float)colour1.a, (float)colour2.a, factor);
-			interpolated_palette->SetColour(i, interpolated_colour);
+			interpolated_palette->setColour(i, interpolated_colour);
 		}
 	}
 
@@ -629,11 +628,11 @@ void CityView::Update(StageCmd *const cmd)
 	// FIXME: Possibly more efficient ways than re-generating all controls every frame?
 
 	// Setup owned vehicle list controls
-	auto ownedVehicleList = uiTabs[1]->FindControlTyped<ListBox>("OWNED_VEHICLE_LIST");
+	auto ownedVehicleList = uiTabs[1]->findControlTyped<ListBox>("OWNED_VEHICLE_LIST");
 	if (!ownedVehicleList)
 	{
 		LogError("Failed to find \"OWNED_VEHICLE_LIST\" control on city tab \"%s\"",
-		         TAB_FORM_NAMES[1].c_str());
+		         TAB_FORM_NAMES[1].cStr());
 	}
 
 	ownedVehicleList->ItemSpacing = 0;
@@ -641,7 +640,7 @@ void CityView::Update(StageCmd *const cmd)
 	auto selected = this->selectedVehicle.lock();
 	std::map<sp<Vehicle>, std::pair<VehicleTileInfo, sp<Control>>> newVehicleListControls;
 
-	ownedVehicleList->Clear();
+	ownedVehicleList->clear();
 
 	if (activeTab == uiTabs[1])
 	{
@@ -665,7 +664,7 @@ void CityView::Update(StageCmd *const cmd)
 				control = createVehicleInfoControl(info);
 			}
 			newVehicleListControls[vehicle] = std::make_pair(info, control);
-			ownedVehicleList->AddItem(control);
+			ownedVehicleList->addItem(control);
 
 			control->addCallback(FormEventType::MouseDown, [this, vehicle](Event *) {
 				this->selectedVehicle = vehicle;
@@ -674,40 +673,40 @@ void CityView::Update(StageCmd *const cmd)
 				switch (vehicle->altitude)
 				{
 					case Vehicle::Altitude::Highest:
-						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGHEST")
-						    ->SetChecked(true);
+						vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGHEST")
+						    ->setChecked(true);
 						break;
 					case Vehicle::Altitude::High:
-						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGH")
-						    ->SetChecked(true);
+						vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_HIGH")
+						    ->setChecked(true);
 						break;
 					case Vehicle::Altitude::Standard:
-						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ALTITUDE_STANDARD")
-						    ->SetChecked(true);
+						vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_STANDARD")
+						    ->setChecked(true);
 						break;
 					case Vehicle::Altitude::Low:
-						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ALTITUDE_LOW")
-						    ->SetChecked(true);
+						vehicleForm->findControlTyped<RadioButton>("BUTTON_ALTITUDE_LOW")
+						    ->setChecked(true);
 						break;
 				}
 
 				switch (vehicle->attackMode)
 				{
 					case Vehicle::AttackMode::Aggressive:
-						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ATTACK_MODE_AGGRESSIVE")
-						    ->SetChecked(true);
+						vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_AGGRESSIVE")
+						    ->setChecked(true);
 						break;
 					case Vehicle::AttackMode::Standard:
-						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ATTACK_MODE_STANDARD")
-						    ->SetChecked(true);
+						vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_STANDARD")
+						    ->setChecked(true);
 						break;
 					case Vehicle::AttackMode::Defensive:
-						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ATTACK_MODE_DEFENSIVE")
-						    ->SetChecked(true);
+						vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_DEFENSIVE")
+						    ->setChecked(true);
 						break;
 					case Vehicle::AttackMode::Evasive:
-						vehicleForm->FindControlTyped<RadioButton>("BUTTON_ATTACK_MODE_EVASIVE")
-						    ->SetChecked(true);
+						vehicleForm->findControlTyped<RadioButton>("BUTTON_ATTACK_MODE_EVASIVE")
+						    ->setChecked(true);
 						break;
 				}
 			});
@@ -718,8 +717,8 @@ void CityView::Update(StageCmd *const cmd)
 	this->vehicleListControls.clear();
 	this->vehicleListControls = std::move(newVehicleListControls);
 
-	activeTab->Update();
-	baseForm->Update();
+	activeTab->update();
+	baseForm->update();
 
 	// If we have 'follow vehicle' enabled we clobber any other movement that may have occurred in
 	// this frame
@@ -739,25 +738,25 @@ void CityView::Update(StageCmd *const cmd)
 	stageCmd = StageCmd();
 }
 
-void CityView::EventOccurred(Event *e)
+void CityView::eventOccurred(Event *e)
 {
-	activeTab->EventOccured(e);
-	baseForm->EventOccured(e);
+	activeTab->eventOccured(e);
+	baseForm->eventOccured(e);
 
 	if (activeTab->eventIsWithin(e) || baseForm->eventIsWithin(e))
 	{
 		return;
 	}
 
-	if (e->Type() == EVENT_KEY_DOWN && e->Keyboard().KeyCode == SDLK_ESCAPE)
+	if (e->type() == EVENT_KEY_DOWN && e->keyboard().KeyCode == SDLK_ESCAPE)
 	{
 		stageCmd.cmd = StageCmd::Command::PUSH;
 		stageCmd.nextStage = mksp<InGameOptions>(state);
 		return;
 	}
 	// FIXME: Check if scancode is better/worse
-	else if (e->Type() == EVENT_KEY_DOWN &&
-	         SDL_GetScancodeFromKey(e->Keyboard().KeyCode) == SDL_SCANCODE_R)
+	else if (e->type() == EVENT_KEY_DOWN &&
+	         SDL_GetScancodeFromKey(e->keyboard().KeyCode) == SDL_SCANCODE_R)
 	{
 		LogInfo("Repairing...");
 		std::set<sp<Scenery>> stuffToRepair;
@@ -777,25 +776,25 @@ void CityView::EventOccurred(Event *e)
 		}
 	}
 	// Exclude mouse down events that are over the form
-	else if (e->Type() == EVENT_MOUSE_DOWN)
+	else if (e->type() == EVENT_MOUSE_DOWN)
 	{
-		if (this->getViewMode() == TileViewMode::Strategy && e->Type() == EVENT_MOUSE_DOWN &&
-		    e->Mouse().Button == 2)
+		if (this->getViewMode() == TileViewMode::Strategy && e->type() == EVENT_MOUSE_DOWN &&
+		    e->mouse().Button == 2)
 		{
 			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
 			auto clickTile = this->screenToTileCoords(
-			    Vec2<float>{e->Mouse().X, e->Mouse().Y} - screenOffset, 0.0f);
+			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
 			this->setScreenCenterTile({clickTile.x, clickTile.y});
 		}
-		else if (e->Type() == EVENT_MOUSE_DOWN && e->Mouse().Button == 1)
+		else if (e->type() == EVENT_MOUSE_DOWN && e->mouse().Button == 1)
 		{
 			// If a click has not been handled by a form it's in the map. See if we intersect with
 			// anything
 			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
 			auto clickTop = this->screenToTileCoords(
-			    Vec2<float>{e->Mouse().X, e->Mouse().Y} - screenOffset, 9.99f);
+			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 9.99f);
 			auto clickBottom = this->screenToTileCoords(
-			    Vec2<float>{e->Mouse().X, e->Mouse().Y} - screenOffset, 0.0f);
+			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
 			auto collision = state->current_city->map->findCollision(clickTop, clickBottom);
 			if (collision)
 			{
@@ -825,20 +824,20 @@ void CityView::EventOccurred(Event *e)
 							v->missions.emplace_back(VehicleMission::gotoLocation(*v, targetPos));
 							v->missions.front()->start(*this->state, *v);
 							LogWarning("Vehicle \"%s\" going to location {%d,%d,%d}",
-							           v->name.c_str(), targetPos.x, targetPos.y, targetPos.z);
+							           v->name.cStr(), targetPos.x, targetPos.y, targetPos.z);
 						}
 						this->selectionState = SelectionState::Normal;
 					}
 					else if (building)
 					{
-						LogInfo("Scenery owned by building \"%s\"", building->name.c_str());
+						LogInfo("Scenery owned by building \"%s\"", building->name.cStr());
 						if (this->selectionState == SelectionState::VehicleGotoBuilding)
 						{
 							auto v = this->selectedVehicle.lock();
 							if (v && v->owner == state->getPlayer())
 							{
-								LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name.c_str(),
-								           building->name.c_str());
+								LogWarning("Vehicle \"%s\" goto building \"%s\"", v->name.cStr(),
+								           building->name.cStr());
 								// FIXME: Don't clear missions if not replacing current mission
 								v->missions.clear();
 								v->missions.emplace_back(
@@ -853,8 +852,8 @@ void CityView::EventOccurred(Event *e)
 							if (v)
 							{
 								// TODO: Attack building mission
-								LogWarning("Vehicle \"%s\" attack building \"%s\"", v->name.c_str(),
-								           building->name.c_str());
+								LogWarning("Vehicle \"%s\" attack building \"%s\"", v->name.cStr(),
+								           building->name.cStr());
 							}
 							this->selectionState = SelectionState::Normal;
 						}
@@ -871,7 +870,7 @@ void CityView::EventOccurred(Event *e)
 				{
 					auto vehicle =
 					    std::dynamic_pointer_cast<TileObjectVehicle>(collision.obj)->getVehicle();
-					LogWarning("Clicked on vehicle \"%s\"", vehicle->name.c_str());
+					LogWarning("Clicked on vehicle \"%s\"", vehicle->name.cStr());
 
 					if (this->selectionState == SelectionState::VehicleAttackVehicle)
 					{
@@ -891,7 +890,7 @@ void CityView::EventOccurred(Event *e)
 			}
 		}
 	}
-	else if (e->Type() == EVENT_GAME_STATE)
+	else if (e->type() == EVENT_GAME_STATE)
 	{
 		auto gameEvent = dynamic_cast<GameEvent *>(e);
 		if (!gameEvent)
@@ -948,7 +947,7 @@ void CityView::EventOccurred(Event *e)
 					if (!ufopaedia_category)
 					{
 						LogError("No UFOPaedia category found for entry %s",
-						         ufopaedia_entry->title.c_str());
+						         ufopaedia_entry->title.cStr());
 					}
 				}
 				auto message_box = mksp<MessageBox>(
@@ -959,14 +958,14 @@ void CityView::EventOccurred(Event *e)
 				    MessageBox::ButtonOptions::YesNo,
 				    // Yes callback
 				    [game_state, lab_facility, ufopaedia_category, ufopaedia_entry]() {
-					    fw().Stage_Push(mksp<ResearchScreen>(game_state, lab_facility));
+					    fw().stagePush(mksp<ResearchScreen>(game_state, lab_facility));
 					    if (ufopaedia_entry)
-						    fw().Stage_Push(mksp<UfopaediaCategoryView>(
+						    fw().stagePush(mksp<UfopaediaCategoryView>(
 						        game_state, ufopaedia_category, ufopaedia_entry));
 					},
 				    // No callback
 				    [game_state, lab_facility]() {
-					    fw().Stage_Push(mksp<ResearchScreen>(game_state, lab_facility));
+					    fw().stagePush(mksp<ResearchScreen>(game_state, lab_facility));
 					});
 				stageCmd.cmd = StageCmd::Command::PUSH;
 				stageCmd.nextStage = message_box;
@@ -1020,13 +1019,13 @@ void CityView::EventOccurred(Event *e)
 
 				auto message_box = mksp<MessageBox>(
 				    tr("MANUFACTURE COMPLETED"),
-				    UString::format("%s\n%s\n%s %d\n%d", lab_base->name, tr(item_name.c_str()),
+				    UString::format("%s\n%s\n%s %d\n%d", lab_base->name, tr(item_name.cStr()),
 				                    tr("Quantity:"), ev->goal,
 				                    tr("Do you wish to reasign the Workshop?")),
 				    MessageBox::ButtonOptions::YesNo,
 				    // Yes callback
 				    [game_state, lab_facility]() {
-					    fw().Stage_Push(mksp<ResearchScreen>(game_state, lab_facility));
+					    fw().stagePush(mksp<ResearchScreen>(game_state, lab_facility));
 					},
 				    // No callback
 				    []() {
@@ -1084,7 +1083,7 @@ void CityView::EventOccurred(Event *e)
 
 				auto message_box = mksp<MessageBox>(
 				    tr("MANUFACTURING HALTED"),
-				    UString::format("%s\n%s\n%s %d/%d\n%d", lab_base->name, tr(item_name.c_str()),
+				    UString::format("%s\n%s\n%s %d/%d\n%d", lab_base->name, tr(item_name.cStr()),
 				                    tr("Completion status:"), ev->done, ev->goal,
 				                    tr("Production costs exceed your available funds.")),
 				    MessageBox::ButtonOptions::Ok);
@@ -1112,7 +1111,7 @@ void CityView::EventOccurred(Event *e)
 	}
 	else
 	{
-		TileView::EventOccurred(e);
+		TileView::eventOccurred(e);
 	}
 }
 
@@ -1164,7 +1163,7 @@ VehicleTileInfo CityView::createVehicleInfo(sp<Vehicle> v)
 
 sp<Control> CityView::createVehicleInfoControl(const VehicleTileInfo &info)
 {
-	LogInfo("Creating city info control for vehicle \"%s\"", info.vehicle->name.c_str());
+	LogInfo("Creating city info control for vehicle \"%s\"", info.vehicle->name.cStr());
 
 	auto frame = info.selected ? this->icons[CityIcon::SelectedFrame]
 	                           : this->icons[CityIcon::UnselectedFrame];

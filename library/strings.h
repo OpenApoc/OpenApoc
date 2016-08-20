@@ -21,12 +21,12 @@ class UString
   private:
 	std::string u8Str;
 
-	static boost::format &_format(boost::format &f) { return f; }
+	static boost::format &format(boost::format &f) { return f; }
 
 	template <typename T, typename... Args>
-	static boost::format &_format(boost::format &f, T const &arg, Args &&... args)
+	static boost::format &format(boost::format &f, T const &arg, Args &&... args)
 	{
-		return _format(f % arg, std::forward<Args>(args)...);
+		return format(f % arg, std::forward<Args>(args)...);
 	}
 
   public:
@@ -52,13 +52,13 @@ class UString
 	template <typename... Args> static UString format(const UString &fmt, Args &&... args)
 	{
 		boost::format f(fmt.str());
-		return _format(f, std::forward<Args>(args)...).str();
+		return format(f, std::forward<Args>(args)...).str();
 	}
 
 	std::string str() const;
 	std::wstring wstr() const;
 
-	const char *c_str() const;
+	const char *cStr() const;
 
 	UString toUpper() const;
 	UString toLower() const;
@@ -110,13 +110,13 @@ class UString
 
 	static UniChar u8Char(char c);
 
-	//_lformat shouldn't be used directly, instead use OpenApoc::tr()
-	static boost::locale::format &_lformat(boost::locale::format &f) { return f; }
+	//_lFormat shouldn't be used directly, instead use OpenApoc::tr()
+	static boost::locale::format &lFormat(boost::locale::format &f) { return f; }
 
 	template <typename T, typename... Args>
-	static boost::locale::format &_lformat(boost::locale::format &f, T const &arg, Args &&... args)
+	static boost::locale::format &lFormat(boost::locale::format &f, T const &arg, Args &&... args)
 	{
-		return _lformat(f % arg, std::forward<Args>(args)...);
+		return lFormat(f % arg, std::forward<Args>(args)...);
 	}
 };
 
@@ -127,14 +127,14 @@ class Strings
 {
 
   public:
-	static bool IsFloat(const UString &s);
-	static bool IsInteger(const UString &s);
-	static int ToInteger(const UString &s);
-	static uint8_t ToU8(const UString &s);
-	static float ToFloat(const UString &s);
-	static UString FromInteger(int i);
-	static UString FromFloat(float f);
-	static bool IsWhiteSpace(UniChar c);
+	static bool isFloat(const UString &s);
+	static bool isInteger(const UString &s);
+	static int toInteger(const UString &s);
+	static uint8_t toU8(const UString &s);
+	static float toFloat(const UString &s);
+	static UString fromInteger(int i);
+	static UString fromFloat(float f);
+	static bool isWhiteSpace(UniChar c);
 };
 
 UString tr(const UString &str, const UString domain = "ufo_string");
@@ -142,14 +142,14 @@ UString tr(const UString &str, const UString domain = "ufo_string");
 template <typename... Args> static UString tr(const UString &fmt, Args &&... args)
 {
 	boost::locale::format f(boost::locale::translate(fmt.str()).str("ufo_string"));
-	return UString::_lformat(f, std::forward<Args>(args)...).str();
+	return UString::lFormat(f, std::forward<Args>(args)...).str();
 }
 
 template <typename... Args>
 static UString tr(const UString &fmt, const UString domain, Args &&... args)
 {
 	boost::locale::format f(boost::locale::translate(fmt.str()).str(domain.str()));
-	return UString::_lformat(f, std::forward<Args>(args)...).str();
+	return UString::lFormat(f, std::forward<Args>(args)...).str();
 }
 
 #ifdef DUMP_TRANSLATION_STRINGS

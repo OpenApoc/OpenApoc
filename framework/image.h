@@ -70,7 +70,7 @@ class PaletteImage : public Image
 	static void blit(sp<PaletteImage> src, sp<PaletteImage> dst,
 	                 Vec2<unsigned int> srcOffset = {0, 0}, Vec2<unsigned int> dstOffset = {0, 0});
 
-	void CalculateBounds();
+	void calculateBounds();
 };
 
 class PaletteImageLock

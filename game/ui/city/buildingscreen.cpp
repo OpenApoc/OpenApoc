@@ -9,40 +9,40 @@ namespace OpenApoc
 {
 
 BuildingScreen::BuildingScreen(sp<GameState> state, sp<Building> building)
-    : Stage(), menuform(ui().GetForm("FORM_BUILDING_SCREEN")), state(state), building(building)
+    : Stage(), menuform(ui().getForm("FORM_BUILDING_SCREEN")), state(state), building(building)
 {
-	menuform->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
-	menuform->FindControlTyped<Label>("TEXT_BUILDING_NAME")->SetText(tr(building->name));
-	menuform->FindControlTyped<Label>("TEXT_OWNER_NAME")->SetText(tr(building->owner->name));
-	menuform->FindControlTyped<Label>("TEXT_BUILDING_FUNCTION")->SetText(tr(building->function));
+	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
+	menuform->findControlTyped<Label>("TEXT_BUILDING_NAME")->setText(tr(building->name));
+	menuform->findControlTyped<Label>("TEXT_OWNER_NAME")->setText(tr(building->owner->name));
+	menuform->findControlTyped<Label>("TEXT_BUILDING_FUNCTION")->setText(tr(building->function));
 }
 
 BuildingScreen::~BuildingScreen() = default;
 
-void BuildingScreen::Begin() {}
+void BuildingScreen::begin() {}
 
-void BuildingScreen::Pause() {}
+void BuildingScreen::pause() {}
 
-void BuildingScreen::Resume() {}
+void BuildingScreen::resume() {}
 
-void BuildingScreen::Finish() {}
+void BuildingScreen::finish() {}
 
-void BuildingScreen::EventOccurred(Event *e)
+void BuildingScreen::eventOccurred(Event *e)
 {
-	menuform->EventOccured(e);
+	menuform->eventOccured(e);
 
-	if (e->Type() == EVENT_KEY_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::ButtonClick)
 	{
-		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
+		if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
@@ -50,21 +50,21 @@ void BuildingScreen::EventOccurred(Event *e)
 	}
 }
 
-void BuildingScreen::Update(StageCmd *const cmd)
+void BuildingScreen::update(StageCmd *const cmd)
 {
-	menuform->Update();
+	menuform->update();
 	*cmd = this->stageCmd;
 	// Reset the command to default
 	this->stageCmd = StageCmd();
 }
 
-void BuildingScreen::Render()
+void BuildingScreen::render()
 {
-	fw().Stage_GetPrevious(this->shared_from_this())->Render();
-	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
-	menuform->Render();
+	fw().stageGetPrevious(this->shared_from_this())->render();
+	fw().renderer->drawFilledRect({0, 0}, fw().displayGetSize(), Colour{0, 0, 0, 128});
+	menuform->render();
 }
 
-bool BuildingScreen::IsTransition() { return false; }
+bool BuildingScreen::isTransition() { return false; }
 
 }; // namespace OpenApoc

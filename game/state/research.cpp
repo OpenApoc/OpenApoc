@@ -102,7 +102,7 @@ sp<ResearchTopic> StateObject<ResearchTopic>::get(const GameState &state, const 
 	auto it = state.research.topics.find(id);
 	if (it == state.research.topics.end())
 	{
-		LogError("No research topic matching ID \"%s\"", id.c_str());
+		LogError("No research topic matching ID \"%s\"", id.cStr());
 		return nullptr;
 	}
 	return it->second;
@@ -144,7 +144,7 @@ template <> sp<Lab> StateObject<Lab>::get(const GameState &state, const UString 
 	auto it = state.research.labs.find(id);
 	if (it == state.research.labs.end())
 	{
-		LogError("No lab matching ID \"%s\"", id.c_str());
+		LogError("No lab matching ID \"%s\"", id.cStr());
 		return nullptr;
 	}
 	return it->second;
@@ -311,7 +311,7 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 				{
 					auto event = new GameResearchEvent(GameEventType::ResearchCompleted,
 					                                   lab->current_project, lab);
-					fw().PushEvent(event);
+					fw().pushEvent(event);
 					Lab::setResearch(lab, {state.get(), ""}, state);
 				}
 				break;
@@ -405,7 +405,7 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 						auto event = new GameManufactureEvent(
 						    GameEventType::ManufactureCompleted, lab->current_project,
 						    lab->manufacture_done, lab->manufacture_goal, lab);
-						fw().PushEvent(event);
+						fw().pushEvent(event);
 						Lab::setResearch(lab, {state.get(), ""}, state);
 					}
 					else
@@ -420,7 +420,7 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 							auto event = new GameManufactureEvent(
 							    GameEventType::ManufactureHalted, lab->current_project,
 							    lab->manufacture_done, lab->manufacture_goal, lab);
-							fw().PushEvent(event);
+							fw().pushEvent(event);
 							Lab::setResearch(lab, {state.get(), ""}, state);
 						}
 					}

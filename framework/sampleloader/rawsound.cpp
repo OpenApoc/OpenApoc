@@ -30,26 +30,26 @@ class RawSampleLoader : public SampleLoader
 		if (splitString.size() != 3)
 		{
 			LogInfo("String \"%s\" doesn't look like a rawsample - need 3 elements (got %zu)",
-			        path.c_str(), splitString.size());
+			        path.cStr(), splitString.size());
 			return nullptr;
 		}
 		if (splitString[0] != "RAWSOUND")
 		{
 			LogInfo("String \"%s\" doesn't look like a rawsample - no RAWSOUND prefix",
-			        path.c_str());
+			        path.cStr());
 			return nullptr;
 		}
-		int frequency = Strings::ToInteger(splitString[2]);
+		int frequency = Strings::toInteger(splitString[2]);
 		if (allowedSampleRates.find(frequency) == allowedSampleRates.end())
 		{
-			LogWarning("Rawsound \"%s\" has invalid sample rate of %d", path.c_str(), frequency);
+			LogWarning("Rawsound \"%s\" has invalid sample rate of %d", path.cStr(), frequency);
 			return nullptr;
 		}
 		auto file = data.fs.open(splitString[1]);
 		if (!file)
 		{
-			LogWarning("Rawsound \"%s\" failed to open file \"%s\"", path.c_str(),
-			           splitString[1].c_str());
+			LogWarning("Rawsound \"%s\" failed to open file \"%s\"", path.cStr(),
+			           splitString[1].cStr());
 			return nullptr;
 		}
 

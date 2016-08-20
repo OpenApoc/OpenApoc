@@ -15,9 +15,9 @@ Graphic::Graphic(sp<Image> Image)
 
 Graphic::~Graphic() = default;
 
-void Graphic::EventOccured(Event *e) { Control::EventOccured(e); }
+void Graphic::eventOccured(Event *e) { Control::eventOccured(e); }
 
-void Graphic::OnRender()
+void Graphic::onRender()
 {
 	if (!image)
 	{
@@ -86,9 +86,9 @@ void Graphic::OnRender()
 	}
 }
 
-void Graphic::Update()
+void Graphic::update()
 {
-	Control::Update();
+	Control::update();
 
 	if (image && AutoSize)
 	{
@@ -96,17 +96,17 @@ void Graphic::Update()
 	}
 }
 
-void Graphic::UnloadResources()
+void Graphic::unloadResources()
 {
 	image.reset();
-	Control::UnloadResources();
+	Control::unloadResources();
 }
 
-sp<Image> Graphic::GetImage() const { return image; }
+sp<Image> Graphic::getImage() const { return image; }
 
-void Graphic::SetImage(sp<Image> Image) { image = Image; }
+void Graphic::setImage(sp<Image> Image) { image = Image; }
 
-sp<Control> Graphic::CopyTo(sp<Control> CopyParent)
+sp<Control> Graphic::copyTo(sp<Control> CopyParent)
 {
 	sp<Graphic> copy;
 	if (CopyParent)
@@ -121,19 +121,19 @@ sp<Control> Graphic::CopyTo(sp<Control> CopyParent)
 	copy->ImageVAlign = this->ImageVAlign;
 	copy->ImagePosition = this->ImagePosition;
 	copy->AutoSize = this->AutoSize;
-	CopyControlData(copy);
+	copyControlData(copy);
 	return copy;
 }
 
-void Graphic::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
+void Graphic::configureSelfFromXml(tinyxml2::XMLElement *Element)
 {
-	Control::ConfigureSelfFromXML(Element);
+	Control::configureSelfFromXml(Element);
 	tinyxml2::XMLElement *subnode;
 	UString attribvalue;
 
 	if (Element->FirstChildElement("image") != nullptr)
 	{
-		image = fw().data->load_image(Element->FirstChildElement("image")->GetText());
+		image = fw().data->loadImage(Element->FirstChildElement("image")->GetText());
 	}
 	subnode = Element->FirstChildElement("alignment");
 	if (subnode != nullptr)

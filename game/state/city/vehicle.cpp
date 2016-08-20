@@ -80,12 +80,12 @@ class FlyingVehicleMover : public VehicleMover
 					while (vehicle.missions.front()->isFinished(state, this->vehicle))
 					{
 						LogInfo("Vehicle mission \"%s\" finished",
-						        vehicle.missions.front()->getName().c_str());
+						        vehicle.missions.front()->getName().cStr());
 						vehicle.missions.pop_front();
 						if (!vehicle.missions.empty())
 						{
 							LogInfo("Vehicle mission \"%s\" starting",
-							        vehicle.missions.front()->getName().c_str());
+							        vehicle.missions.front()->getName().cStr());
 							vehicle.missions.front()->start(state, this->vehicle);
 							continue;
 						}
@@ -154,7 +154,7 @@ const std::map<Vehicle::Altitude, UString> Vehicle::AltitudeMap = {
 
 void Vehicle::launch(TileMap &map, GameState &state, Vec3<float> initialPosition)
 {
-	LogInfo("Launching %s", this->name.c_str());
+	LogInfo("Launching %s", this->name.cStr());
 	if (this->tileObject)
 	{
 		LogError("Trying to launch already-launched vehicle");
@@ -212,11 +212,11 @@ void Vehicle::update(GameState &state, unsigned int ticks)
 		this->missions.front()->update(state, *this, ticks);
 	while (!this->missions.empty() && this->missions.front()->isFinished(state, *this))
 	{
-		LogInfo("Vehicle mission \"%s\" finished", this->missions.front()->getName().c_str());
+		LogInfo("Vehicle mission \"%s\" finished", this->missions.front()->getName().cStr());
 		this->missions.pop_front();
 		if (!this->missions.empty())
 		{
-			LogInfo("Vehicle mission \"%s\" starting", this->missions.front()->getName().c_str());
+			LogInfo("Vehicle mission \"%s\" starting", this->missions.front()->getName().cStr());
 			this->missions.front()->start(state, *this);
 			continue;
 		}
@@ -635,7 +635,7 @@ int Vehicle::getAcceleration() const
 	}
 	if (weight == 0)
 	{
-		LogError("Vehicle %s has zero weight", this->name.c_str());
+		LogError("Vehicle %s has zero weight", this->name.cStr());
 		return 0;
 	}
 	acceleration += std::max(1, power / weight);
@@ -748,7 +748,7 @@ bool Vehicle::canAddEquipment(Vec2<int> pos, StateRef<VEquipmentType> type) cons
 		if (otherBounds.intersects(bounds))
 		{
 			LogInfo("Equipping \"%s\" on \"%s\" at {%d,%d} failed: Intersects with other equipment",
-			        type->name.c_str(), this->name.c_str(), pos.x, pos.y);
+			        type->name.cStr(), this->name.cStr(), pos.x, pos.y);
 			return false;
 		}
 	}
@@ -772,7 +772,7 @@ bool Vehicle::canAddEquipment(Vec2<int> pos, StateRef<VEquipmentType> type) cons
 			if (!validSlot)
 			{
 				LogInfo("Equipping \"%s\" on \"%s\" at {%d,%d} failed: No valid slot",
-				        type->name.c_str(), this->name.c_str(), pos.x, pos.y);
+				        type->name.cStr(), this->name.cStr(), pos.x, pos.y);
 				return false;
 			}
 		}
@@ -786,8 +786,8 @@ void Vehicle::addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentT
 	// layouts
 	// if (!this->canAddEquipment(pos, type))
 	//{
-	//	LogError("Trying to add \"%s\" at {%d,%d} on vehicle \"%s\" failed", type.id.c_str(), pos.x,
-	//	         pos.y, this->name.c_str());
+	//	LogError("Trying to add \"%s\" at {%d,%d} on vehicle \"%s\" failed", type.id.cStr(), pos.x,
+	//	         pos.y, this->name.cStr());
 	//}
 	Vec2<int> slotOrigin;
 	bool slotFound = false;
@@ -804,8 +804,8 @@ void Vehicle::addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentT
 	// If this was not within a slow fail
 	if (!slotFound)
 	{
-		LogError("Equipping \"%s\" on \"%s\" at {%d,%d} failed: No valid slot", type->name.c_str(),
-		         this->name.c_str(), pos.x, pos.y);
+		LogError("Equipping \"%s\" on \"%s\" at {%d,%d} failed: No valid slot", type->name.cStr(),
+		         this->name.cStr(), pos.x, pos.y);
 		return;
 	}
 
@@ -817,7 +817,7 @@ void Vehicle::addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentT
 			engine->type = type;
 			this->equipment.emplace_back(engine);
 			engine->equippedPosition = slotOrigin;
-			LogInfo("Equipped \"%s\" with engine \"%s\"", this->name.c_str(), type->name.c_str());
+			LogInfo("Equipped \"%s\" with engine \"%s\"", this->name.cStr(), type->name.cStr());
 			break;
 		}
 		case VEquipmentType::Type::Weapon:
@@ -829,22 +829,22 @@ void Vehicle::addEquipment(GameState &state, Vec2<int> pos, StateRef<VEquipmentT
 			weapon->ammo = type->max_ammo;
 			this->equipment.emplace_back(weapon);
 			weapon->equippedPosition = slotOrigin;
-			LogInfo("Equipped \"%s\" with weapon \"%s\"", this->name.c_str(), type->name.c_str());
+			LogInfo("Equipped \"%s\" with weapon \"%s\"", this->name.cStr(), type->name.cStr());
 			break;
 		}
 		case VEquipmentType::Type::General:
 		{
 			auto equipment = mksp<VEquipment>();
 			equipment->type = type;
-			LogInfo("Equipped \"%s\" with general equipment \"%s\"", this->name.c_str(),
-			        type->name.c_str());
+			LogInfo("Equipped \"%s\" with general equipment \"%s\"", this->name.cStr(),
+			        type->name.cStr());
 			equipment->equippedPosition = slotOrigin;
 			this->equipment.emplace_back(equipment);
 			break;
 		}
 		default:
 			LogError("Equipment \"%s\" for \"%s\" at pos (%d,%d} has invalid type",
-			         type->name.c_str(), this->name.c_str(), pos.x, pos.y);
+			         type->name.cStr(), this->name.cStr(), pos.x, pos.y);
 	}
 }
 
@@ -861,7 +861,7 @@ void Vehicle::removeEquipment(sp<VEquipment> object)
 
 void Vehicle::equipDefaultEquipment(GameState &state)
 {
-	LogInfo("Equipping \"%s\" with default equipment", this->type->name.c_str());
+	LogInfo("Equipping \"%s\" with default equipment", this->type->name.cStr());
 	for (auto &pair : this->type->initial_equipment_list)
 	{
 		auto &pos = pair.first;
@@ -876,7 +876,7 @@ template <> sp<Vehicle> StateObject<Vehicle>::get(const GameState &state, const 
 	auto it = state.vehicles.find(id);
 	if (it == state.vehicles.end())
 	{
-		LogError("No vehicle matching ID \"%s\"", id.c_str());
+		LogError("No vehicle matching ID \"%s\"", id.cStr());
 		return nullptr;
 	}
 	return it->second;

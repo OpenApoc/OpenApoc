@@ -39,7 +39,7 @@ class ApocCursor
 	ApocCursor(sp<Palette> ColourPalette);
 	~ApocCursor();
 
-	void EventOccured(Event *e);
-	void Render();
+	void eventOccured(Event *e);
+	void render();
 };
 }; // namespace OpenApoc

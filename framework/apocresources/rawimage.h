@@ -15,7 +15,7 @@ class RawImage
 {
   public:
 	static sp<PaletteImage> load(Data &data, const UString &fileName, const Vec2<int> &size);
-	static sp<ImageSet> load_set(Data &data, const UString &fileName, const Vec2<int> &size);
+	static sp<ImageSet> loadSet(Data &data, const UString &fileName, const Vec2<int> &size);
 };
 
 }; // namespace OpenApoc

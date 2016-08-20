@@ -12,7 +12,7 @@ void InitialGameStateExtractor::extractOrganisations(GameState &state, Difficult
 
 	for (int i = 0; i < data.organisation_names->count(); i++)
 	{
-		UString id = data.get_org_id(i);
+		UString id = data.getOrgId(i);
 
 		auto name = data.organisation_names->get(i);
 		// FIXME: proper finances

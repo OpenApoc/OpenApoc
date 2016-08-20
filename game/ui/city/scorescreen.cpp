@@ -8,41 +8,41 @@ namespace OpenApoc
 {
 
 ScoreScreen::ScoreScreen(sp<GameState> state)
-    : Stage(), menuform(ui().GetForm("FORM_SCORE_SCREEN")), state(state)
+    : Stage(), menuform(ui().getForm("FORM_SCORE_SCREEN")), state(state)
 {
 }
 
 ScoreScreen::~ScoreScreen() = default;
 
-void ScoreScreen::Begin()
+void ScoreScreen::begin()
 {
-	menuform->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
-	menuform->FindControlTyped<Label>("TEXT_DATE")->SetText(state->gameTime.getDateString());
-	menuform->FindControlTyped<Label>("TEXT_WEEK")->SetText(state->gameTime.getWeekString());
+	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
+	menuform->findControlTyped<Label>("TEXT_DATE")->setText(state->gameTime.getDateString());
+	menuform->findControlTyped<Label>("TEXT_WEEK")->setText(state->gameTime.getWeekString());
 }
 
-void ScoreScreen::Pause() {}
+void ScoreScreen::pause() {}
 
-void ScoreScreen::Resume() {}
+void ScoreScreen::resume() {}
 
-void ScoreScreen::Finish() {}
+void ScoreScreen::finish() {}
 
-void ScoreScreen::EventOccurred(Event *e)
+void ScoreScreen::eventOccurred(Event *e)
 {
-	menuform->EventOccured(e);
+	menuform->eventOccured(e);
 
-	if (e->Type() == EVENT_KEY_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::ButtonClick)
 	{
-		if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
+		if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
@@ -50,21 +50,21 @@ void ScoreScreen::EventOccurred(Event *e)
 	}
 }
 
-void ScoreScreen::Update(StageCmd *const cmd)
+void ScoreScreen::update(StageCmd *const cmd)
 {
-	menuform->Update();
+	menuform->update();
 	*cmd = this->stageCmd;
 	// Reset the command to default
 	this->stageCmd = StageCmd();
 }
 
-void ScoreScreen::Render()
+void ScoreScreen::render()
 {
-	fw().Stage_GetPrevious(this->shared_from_this())->Render();
-	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
-	menuform->Render();
+	fw().stageGetPrevious(this->shared_from_this())->render();
+	fw().renderer->drawFilledRect({0, 0}, fw().displayGetSize(), Colour{0, 0, 0, 128});
+	menuform->render();
 }
 
-bool ScoreScreen::IsTransition() { return false; }
+bool ScoreScreen::isTransition() { return false; }
 
 }; // namespace OpenApoc

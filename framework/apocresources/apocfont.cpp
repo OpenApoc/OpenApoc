@@ -29,13 +29,13 @@ sp<BitmapFont> ApocalypseFont::loadFont(tinyxml2::XMLElement *fontElement)
 	auto err = fontElement->QueryIntAttribute("height", &height);
 	if (err != tinyxml2::XML_SUCCESS || height <= 0)
 	{
-		LogError("apocfont \"%s\" with invalid \"height\" attribute", fontName.c_str());
+		LogError("apocfont \"%s\" with invalid \"height\" attribute", fontName.cStr());
 		return nullptr;
 	}
 	err = fontElement->QueryIntAttribute("spacewidth", &spacewidth);
 	if (err != tinyxml2::XML_SUCCESS || spacewidth <= 0)
 	{
-		LogError("apocfont \"%s\" with invalid \"spacewidth\" attribute", fontName.c_str());
+		LogError("apocfont \"%s\" with invalid \"spacewidth\" attribute", fontName.cStr());
 		return nullptr;
 	}
 
@@ -45,22 +45,22 @@ sp<BitmapFont> ApocalypseFont::loadFont(tinyxml2::XMLElement *fontElement)
 		UString nodeName = glyphNode->Name();
 		if (nodeName != "glyph")
 		{
-			LogError("apocfont \"%s\" has unexpected child node \"%s\", skipping", fontName.c_str(),
-			         nodeName.c_str());
+			LogError("apocfont \"%s\" has unexpected child node \"%s\", skipping", fontName.cStr(),
+			         nodeName.cStr());
 			continue;
 		}
 		auto *glyphPath = glyphNode->Attribute("glyph");
 		if (!glyphPath)
 		{
 			LogError("Font \"%s\" has glyph with missing string attribute - skipping glyph",
-			         fontName.c_str());
+			         fontName.cStr());
 			continue;
 		}
 		auto *glyphString = glyphNode->Attribute("string");
 		if (!glyphString)
 		{
 			LogError("apocfont \"%s\" has glyph with missing string attribute - skipping glyph",
-			         fontName.c_str());
+			         fontName.cStr());
 			continue;
 		}
 
@@ -70,7 +70,7 @@ sp<BitmapFont> ApocalypseFont::loadFont(tinyxml2::XMLElement *fontElement)
 		{
 			LogError("apocfont \"%s\" glyph \"%s\" has %lu codepoints, expected one - skipping "
 			         "glyph",
-			         fontName.c_str(), glyphString, pointString.length());
+			         fontName.cStr(), glyphString, pointString.length());
 			continue;
 		}
 		UniChar c = pointString[0];
@@ -78,7 +78,7 @@ sp<BitmapFont> ApocalypseFont::loadFont(tinyxml2::XMLElement *fontElement)
 		if (charMap.find(c) != charMap.end())
 		{
 			LogError("Font \"%s\" has multiple glyphs for string \"%s\" - skipping glyph",
-			         fontName.c_str(), glyphString);
+			         fontName.cStr(), glyphString);
 			continue;
 		}
 
@@ -86,7 +86,7 @@ sp<BitmapFont> ApocalypseFont::loadFont(tinyxml2::XMLElement *fontElement)
 	}
 
 	auto font = BitmapFont::loadFont(charMap, spacewidth, height, fontName,
-	                                 fw().data->load_palette(fontElement->Attribute("palette")));
+	                                 fw().data->loadPalette(fontElement->Attribute("palette")));
 	return font;
 }
 }; // namespace OpenApoc

@@ -11,40 +11,40 @@ namespace OpenApoc
 GraphicButton::GraphicButton(sp<Image> image, sp<Image> imageDepressed, sp<Image> imageHover)
     : Control(), image(image), imagedepressed(imageDepressed), imagehover(imageHover),
       buttonclick(
-          fw().data->load_sample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050"))
+          fw().data->loadSample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050"))
 {
 }
 
 GraphicButton::~GraphicButton() = default;
 
-void GraphicButton::EventOccured(Event *e)
+void GraphicButton::eventOccured(Event *e)
 {
-	Control::EventOccured(e);
+	Control::eventOccured(e);
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
-	    e->Forms().EventFlag == FormEventType::MouseDown)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
+	    e->forms().EventFlag == FormEventType::MouseDown)
 	{
 		fw().soundBackend->playSample(buttonclick);
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().RaisedBy == shared_from_this() &&
-	    e->Forms().EventFlag == FormEventType::MouseClick)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().RaisedBy == shared_from_this() &&
+	    e->forms().EventFlag == FormEventType::MouseClick)
 	{
 		this->pushFormEvent(FormEventType::ButtonClick, e);
 
 		if (ScrollBarPrev != nullptr)
 		{
-			ScrollBarPrev->ScrollPrev();
+			ScrollBarPrev->scrollPrev();
 		}
 
 		if (ScrollBarNext != nullptr)
 		{
-			ScrollBarNext->ScrollNext();
+			ScrollBarNext->scrollNext();
 		}
 	}
 }
 
-void GraphicButton::OnRender()
+void GraphicButton::onRender()
 {
 	sp<Image> useimage;
 
@@ -84,29 +84,29 @@ void GraphicButton::OnRender()
 	}
 }
 
-void GraphicButton::Update() { Control::Update(); }
+void GraphicButton::update() { Control::update(); }
 
-void GraphicButton::UnloadResources()
+void GraphicButton::unloadResources()
 {
 	image.reset();
 	imagedepressed.reset();
 	imagehover.reset();
-	Control::UnloadResources();
+	Control::unloadResources();
 }
 
-sp<Image> GraphicButton::GetImage() const { return image; }
+sp<Image> GraphicButton::getImage() const { return image; }
 
-void GraphicButton::SetImage(sp<Image> Image) { image = Image; }
+void GraphicButton::setImage(sp<Image> Image) { image = Image; }
 
-sp<Image> GraphicButton::GetDepressedImage() const { return imagedepressed; }
+sp<Image> GraphicButton::getDepressedImage() const { return imagedepressed; }
 
-void GraphicButton::SetDepressedImage(sp<Image> Image) { imagedepressed = Image; }
+void GraphicButton::setDepressedImage(sp<Image> Image) { imagedepressed = Image; }
 
-sp<Image> GraphicButton::GetHoverImage() const { return imagehover; }
+sp<Image> GraphicButton::getHoverImage() const { return imagehover; }
 
-void GraphicButton::SetHoverImage(sp<Image> Image) { imagehover = Image; }
+void GraphicButton::setHoverImage(sp<Image> Image) { imagehover = Image; }
 
-sp<Control> GraphicButton::CopyTo(sp<Control> CopyParent)
+sp<Control> GraphicButton::copyTo(sp<Control> CopyParent)
 {
 	sp<GraphicButton> copy;
 	if (CopyParent)
@@ -128,25 +128,25 @@ sp<Control> GraphicButton::CopyTo(sp<Control> CopyParent)
 		copy->ScrollBarNext =
 		    std::dynamic_pointer_cast<ScrollBar>(ScrollBarNext->lastCopiedTo.lock());
 	}
-	CopyControlData(copy);
+	copyControlData(copy);
 	return copy;
 }
 
-void GraphicButton::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
+void GraphicButton::configureSelfFromXml(tinyxml2::XMLElement *Element)
 {
-	Control::ConfigureSelfFromXML(Element);
+	Control::configureSelfFromXml(Element);
 	if (Element->FirstChildElement("image") != nullptr)
 	{
-		image = fw().data->load_image(Element->FirstChildElement("image")->GetText());
+		image = fw().data->loadImage(Element->FirstChildElement("image")->GetText());
 	}
 	if (Element->FirstChildElement("imagedepressed") != nullptr)
 	{
 		imagedepressed =
-		    fw().data->load_image(Element->FirstChildElement("imagedepressed")->GetText());
+		    fw().data->loadImage(Element->FirstChildElement("imagedepressed")->GetText());
 	}
 	if (Element->FirstChildElement("imagehover") != nullptr)
 	{
-		imagehover = fw().data->load_image(Element->FirstChildElement("imagehover")->GetText());
+		imagehover = fw().data->loadImage(Element->FirstChildElement("imagehover")->GetText());
 	}
 }
 }; // namespace OpenApoc

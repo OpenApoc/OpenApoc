@@ -39,7 +39,7 @@ int BaseGraphics::getCorridorSprite(sp<Base> base, Vec2<int> pos)
 void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 {
 	// Draw grid
-	sp<Image> grid = fw().data->load_image(
+	sp<Image> grid = fw().data->loadImage(
 	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:xcom3/UFODATA/BASE.PCX");
 	Vec2<int> i;
 	for (i.x = 0; i.x < Base::SIZE; i.x++)
@@ -63,17 +63,17 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 				auto image = UString::format(
 				    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:%d:xcom3/UFODATA/BASE.PCX",
 				    sprite);
-				fw().renderer->draw(fw().data->load_image(image), pos);
+				fw().renderer->draw(fw().data->loadImage(image), pos);
 			}
 		}
 	}
 
 	// Draw facilities
-	sp<Image> circleS = fw().data->load_image(
+	sp<Image> circleS = fw().data->loadImage(
 	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:25:xcom3/UFODATA/BASE.PCX");
-	sp<Image> circleL = fw().data->load_image(
+	sp<Image> circleL = fw().data->loadImage(
 	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:26:xcom3/UFODATA/BASE.PCX");
-	auto font = ui().GetFont("SMALFONT");
+	auto font = ui().getFont("SMALFONT");
 	for (auto &facility : base->facilities)
 	{
 		sp<Image> sprite = facility->type->sprite;
@@ -96,7 +96,7 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 				fw().renderer->draw(circleL, pos);
 			}
 			// Draw time remaining
-			auto textImage = font->getString(Strings::FromInteger(facility->buildTime));
+			auto textImage = font->getString(Strings::fromInteger(facility->buildTime));
 			Vec2<int> textPos = {TILE_SIZE, TILE_SIZE};
 			textPos *= facility->type->size;
 			textPos -= textImage->size;
@@ -106,9 +106,9 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 	}
 
 	// Draw doors
-	sp<Image> doorLeft = fw().data->load_image(
+	sp<Image> doorLeft = fw().data->loadImage(
 	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:2:xcom3/UFODATA/BASE.PCX");
-	sp<Image> doorBottom = fw().data->load_image(
+	sp<Image> doorBottom = fw().data->loadImage(
 	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:3:xcom3/UFODATA/BASE.PCX");
 	for (auto &facility : base->facilities)
 	{
@@ -152,18 +152,18 @@ sp<RGBImage> BaseGraphics::drawMiniBase(sp<Base> base, FacilityHighlight highlig
 			Vec2<int> pos = i * MINI_SIZE;
 			auto image = UString::format(
 			    "RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:%d:xcom3/UFODATA/BASE.PCX", sprite);
-			RGBImage::blit(std::dynamic_pointer_cast<RGBImage>(fw().data->load_image(image)),
+			RGBImage::blit(std::dynamic_pointer_cast<RGBImage>(fw().data->loadImage(image)),
 			               minibase, {0, 0}, pos);
 		}
 	}
 
 	// Draw facilities
 	sp<Image> spriteNormal =
-	    fw().data->load_image("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:16:xcom3/UFODATA/BASE.PCX");
+	    fw().data->loadImage("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:16:xcom3/UFODATA/BASE.PCX");
 	sp<Image> spriteHighlighted =
-	    fw().data->load_image("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:17:xcom3/UFODATA/BASE.PCX");
+	    fw().data->loadImage("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:17:xcom3/UFODATA/BASE.PCX");
 	sp<Image> spriteSelected =
-	    fw().data->load_image("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:18:xcom3/UFODATA/BASE.PCX");
+	    fw().data->loadImage("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:18:xcom3/UFODATA/BASE.PCX");
 	for (auto &facility : base->facilities)
 	{
 		bool highlighted = false;

@@ -13,7 +13,7 @@ template <> sp<Building> StateObject<Building>::get(const GameState &state, cons
 			return it->second;
 	}
 
-	LogError("No building type matching ID \"%s\"", id.c_str());
+	LogError("No building type matching ID \"%s\"", id.cStr());
 	return nullptr;
 }
 

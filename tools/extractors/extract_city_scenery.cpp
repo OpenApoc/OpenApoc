@@ -67,11 +67,11 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
                                                    UString ovrFile, sp<City> city)
 {
 	auto &data = this->ufo2p;
-	auto minimap_palette = fw().data->load_palette(SCENERY_MINIMAP_PALETTE);
+	auto minimap_palette = fw().data->loadPalette(SCENERY_MINIMAP_PALETTE);
 	auto inFile = fw().data->fs.open("xcom3/ufodata/" + datFile + ".dat");
 	if (!inFile)
 	{
-		LogError("Failed to open \"%s.dat\"", datFile.c_str());
+		LogError("Failed to open \"%s.dat\"", datFile.cStr());
 	}
 
 	auto fileSize = inFile.size();
@@ -111,7 +111,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 				break;
 			default:
 				LogError("Unexpected scenery tile type %d for ID %s", (int)entry.tile_type,
-				         id.c_str());
+				         id.cStr());
 		}
 
 		switch (entry.road_type)
@@ -127,7 +127,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 				break;
 			default:
 				LogError("Unexpected scenery road type %d for ID %s", (int)entry.road_type,
-				         id.c_str());
+				         id.cStr());
 		}
 
 		switch (entry.walk_type)
@@ -143,7 +143,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 				break;
 			default:
 				LogError("Unexpected scenery walk type %d for ID %s", (int)entry.walk_type,
-				         id.c_str());
+				         id.cStr());
 		}
 
 		tile->constitution = entry.constitution;
@@ -169,7 +169,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		auto imageString = UString::format(
 		    "PCK:xcom3/UFODATA/" + spriteFile + ".PCK:xcom3/UFODATA/" + spriteFile + ".TAB:%u", i);
 
-		tile->sprite = fw().data->load_image(imageString);
+		tile->sprite = fw().data->loadImage(imageString);
 
 		tile->voxelMap = mksp<VoxelMap>(Vec3<int>{32, 32, 16});
 
@@ -178,7 +178,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 			auto lofString = UString::format("LOFTEMPS:xcom3/UFODATA/" + lofFile +
 			                                     ".DAT:xcom3/UFODATA/" + lofFile + ".TAB:%d",
 			                                 (int)entry.voxelIdx[z]);
-			tile->voxelMap->slices[z] = fw().data->load_voxel_slice(lofString);
+			tile->voxelMap->slices[z] = fw().data->loadVoxelSlice(lofString);
 		}
 
 		if (entry.stratmap_idx != 0)
@@ -187,7 +187,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 			    UString::format("PCKSTRAT:xcom3/UFODATA/" + stratmapFile + ".PCK:xcom3/UFODATA/" +
 			                        stratmapFile + ".TAB:%d",
 			                    (int)entry.stratmap_idx);
-			tile->strategySprite = fw().data->load_image(stratmapString);
+			tile->strategySprite = fw().data->loadImage(stratmapString);
 		}
 
 		if (entry.landing_pad == 1)
@@ -204,7 +204,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 			auto overlayString = UString::format("PCK:xcom3/UFODATA/" + ovrFile +
 			                                         ".PCK:xcom3/UFODATA/" + ovrFile + ".TAB:%d",
 			                                     (int)entry.overlaytile_idx);
-			tile->overlaySprite = fw().data->load_image(overlayString);
+			tile->overlaySprite = fw().data->loadImage(overlayString);
 		}
 
 		// FIXME: Only the 'human' city has a minimap visible from the base screen? So this doesn't
@@ -212,7 +212,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		if (datFile == "citymap")
 		{
 			uint8_t palette_index = data.scenery_minimap_colour->get(i).palette_index;
-			tile->minimap_colour = minimap_palette->GetColour(palette_index);
+			tile->minimap_colour = minimap_palette->getColour(palette_index);
 		}
 
 		// FIXME: I /think/ all scenery tiles have an offset of {32,32} to the center {0.5, 0.5, 0}

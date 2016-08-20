@@ -26,9 +26,9 @@ class RadioButton : public CheckBox
 	RadioButton(sp<RadioButtonGroup> radioButtonGroup = nullptr, sp<Image> ImageChecked = nullptr,
 	            sp<Image> ImageUnchecked = nullptr);
 	~RadioButton() override;
-	void SetChecked(bool checked) override;
+	void setChecked(bool checked) override;
 
-	sp<Control> CopyTo(sp<Control> CopyParent) override;
+	sp<Control> copyTo(sp<Control> CopyParent) override;
 };
 
 }; // namespace OpenApoc

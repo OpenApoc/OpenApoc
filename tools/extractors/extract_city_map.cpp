@@ -23,7 +23,7 @@ void InitialGameStateExtractor::extractCityMap(GameState &state, UString fileNam
 	auto inFile = fw().data->fs.open(map_prefix + fileName);
 	if (!inFile)
 	{
-		LogError("Failed to open \"%s\"", fileName.c_str());
+		LogError("Failed to open \"%s\"", fileName.cStr());
 	}
 	auto fileSize = inFile.size();
 

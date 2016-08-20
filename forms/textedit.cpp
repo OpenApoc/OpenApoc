@@ -21,61 +21,61 @@ TextEdit::TextEdit(const UString &Text, sp<BitmapFont> font)
 
 TextEdit::~TextEdit() = default;
 
-bool TextEdit::IsFocused() const { return editing; }
+bool TextEdit::isFocused() const { return editing; }
 
-void TextEdit::EventOccured(Event *e)
+void TextEdit::eventOccured(Event *e)
 {
 	UString keyname;
 
-	Control::EventOccured(e);
+	Control::eventOccured(e);
 
-	if (e->Type() == EVENT_FORM_INTERACTION)
+	if (e->type() == EVENT_FORM_INTERACTION)
 	{
-		if (e->Forms().RaisedBy == shared_from_this())
+		if (e->forms().RaisedBy == shared_from_this())
 		{
-			if (e->Forms().EventFlag == FormEventType::GotFocus ||
-			    e->Forms().EventFlag == FormEventType::MouseClick ||
-			    e->Forms().EventFlag == FormEventType::KeyDown)
+			if (e->forms().EventFlag == FormEventType::GotFocus ||
+			    e->forms().EventFlag == FormEventType::MouseClick ||
+			    e->forms().EventFlag == FormEventType::KeyDown)
 			{
 				editing = true;
 
-				fw().Text_StartInput();
+				fw().textStartInput();
 				// e->Handled = true;
 				// FIXME: Should we really fall through here?
 			}
 		}
 		if (editing)
 		{
-			if (e->Forms().RaisedBy == shared_from_this())
+			if (e->forms().RaisedBy == shared_from_this())
 			{
 
-				if (e->Forms().EventFlag == FormEventType::LostFocus)
+				if (e->forms().EventFlag == FormEventType::LostFocus)
 				{
 					editing = false;
-					fw().Text_StopInput();
-					RaiseEvent(FormEventType::TextEditFinish);
+					fw().textStopInput();
+					raiseEvent(FormEventType::TextEditFinish);
 					// e->Handled = true;
 				}
 			}
-			else if (e->Forms().EventFlag == FormEventType::MouseClick)
+			else if (e->forms().EventFlag == FormEventType::MouseClick)
 			{
 				// FIXME: Due to event duplication (?), this code won't work. Can only stop editing
 				// text by pressing enter.
 				// editting = false;
-				// fw().Text_StopInput();
-				// RaiseEvent(FormEventType::TextEditFinish);
+				// fw().textStopInput();
+				// raiseEvent(FormEventType::TextEditFinish);
 			}
-			if (e->Forms().EventFlag == FormEventType::KeyDown)
+			if (e->forms().EventFlag == FormEventType::KeyDown)
 			{
-				LogInfo("Key pressed: %d", e->Forms().KeyInfo.KeyCode);
-				switch (e->Forms().KeyInfo.KeyCode)
+				LogInfo("Key pressed: %d", e->forms().KeyInfo.KeyCode);
+				switch (e->forms().KeyInfo.KeyCode)
 				{
 					case SDLK_BACKSPACE:
 						if (SelectionStart > 0)
 						{
 							text.remove(SelectionStart - 1, 1);
 							SelectionStart--;
-							RaiseEvent(FormEventType::TextChanged);
+							raiseEvent(FormEventType::TextChanged);
 						}
 						e->Handled = true;
 						break;
@@ -83,7 +83,7 @@ void TextEdit::EventOccured(Event *e)
 						if (SelectionStart < text.length())
 						{
 							text.remove(SelectionStart, 1);
-							RaiseEvent(FormEventType::TextChanged);
+							raiseEvent(FormEventType::TextChanged);
 						}
 						e->Handled = true;
 						break;
@@ -111,13 +111,13 @@ void TextEdit::EventOccured(Event *e)
 						break;
 					case SDLK_RETURN:
 						editing = false;
-						fw().Text_StopInput();
-						RaiseEvent(FormEventType::TextEditFinish);
+						fw().textStopInput();
+						raiseEvent(FormEventType::TextEditFinish);
 						break;
 					case SDLK_v: // CTRL+V
-						if (e->Forms().KeyInfo.Modifiers & KMOD_CTRL)
+						if (e->forms().KeyInfo.Modifiers & KMOD_CTRL)
 						{
-							UString clipboard = fw().Text_GetClipboard();
+							UString clipboard = fw().textGetClipboard();
 
 							if (text.length() + clipboard.length() >= this->textMaxLength)
 							{
@@ -127,50 +127,50 @@ void TextEdit::EventOccured(Event *e)
 							{
 								text.insert(SelectionStart, clipboard);
 								SelectionStart += clipboard.length();
-								RaiseEvent(FormEventType::TextChanged);
+								raiseEvent(FormEventType::TextChanged);
 							}
 						}
 						break;
 				}
 			}
-			else if (e->Forms().EventFlag == FormEventType::TextInput)
+			else if (e->forms().EventFlag == FormEventType::TextInput)
 			{
 				if (text.length() >= this->textMaxLength)
 				{
 					return;
 				}
 
-				UString inputCharacter = e->Forms().Input.Input;
+				UString inputCharacter = e->forms().Input.Input;
 				if (allowedCharacters.empty() ||
 				    allowedCharacters.str().find(inputCharacter.str()) != std::string::npos)
 				{
 					text.insert(SelectionStart, inputCharacter);
 					SelectionStart += inputCharacter.length();
-					RaiseEvent(FormEventType::TextChanged);
+					raiseEvent(FormEventType::TextChanged);
 				}
 			}
 		}
 	}
 }
 
-void TextEdit::OnRender()
+void TextEdit::onRender()
 {
-	int xpos = Align(TextHAlign, Size.x, font->GetFontWidth(text));
-	int ypos = Align(TextVAlign, Size.y, font->GetFontHeight());
+	int xpos = align(TextHAlign, Size.x, font->getFontWidth(text));
+	int ypos = align(TextVAlign, Size.y, font->getFontHeight());
 
 	if (editing)
 	{
-		int cxpos = xpos + font->GetFontWidth(text.substr(0, SelectionStart)) + 1;
+		int cxpos = xpos + font->getFontWidth(text.substr(0, SelectionStart)) + 1;
 
 		if (cxpos < 0)
 		{
 			xpos += cxpos;
-			cxpos = xpos + font->GetFontWidth(text.substr(0, SelectionStart)) + 1;
+			cxpos = xpos + font->getFontWidth(text.substr(0, SelectionStart)) + 1;
 		}
 		if (cxpos > Size.x)
 		{
 			xpos -= cxpos - Size.x;
-			cxpos = xpos + font->GetFontWidth(text.substr(0, SelectionStart)) + 1;
+			cxpos = xpos + font->getFontWidth(text.substr(0, SelectionStart)) + 1;
 		}
 
 		if (caretDraw)
@@ -184,7 +184,7 @@ void TextEdit::OnRender()
 	fw().renderer->draw(textImage, Vec2<float>{xpos, ypos});
 }
 
-void TextEdit::Update()
+void TextEdit::update()
 {
 	if (editing)
 	{
@@ -196,38 +196,38 @@ void TextEdit::Update()
 	}
 }
 
-void TextEdit::UnloadResources() {}
+void TextEdit::unloadResources() {}
 
-UString TextEdit::GetText() const { return text; }
+UString TextEdit::getText() const { return text; }
 
-void TextEdit::SetText(const UString &Text)
+void TextEdit::setText(const UString &Text)
 {
 	text = Text;
 	SelectionStart = text.length();
-	RaiseEvent(FormEventType::TextChanged);
+	raiseEvent(FormEventType::TextChanged);
 }
 
-void TextEdit::SetCursor(const UString &cursor) { this->cursor = cursor; }
+void TextEdit::setCursor(const UString &cursor) { this->cursor = cursor; }
 
-void TextEdit::SetTextMaxSize(size_t length) { this->textMaxLength = length; }
+void TextEdit::setTextMaxSize(size_t length) { this->textMaxLength = length; }
 
-void TextEdit::SetAllowedCharacters(const UString &allowedCharacters)
+void TextEdit::setAllowedCharacters(const UString &allowedCharacters)
 {
 	this->allowedCharacters = allowedCharacters;
 }
 
-void TextEdit::RaiseEvent(FormEventType Type)
+void TextEdit::raiseEvent(FormEventType Type)
 {
 	//	std::ignore = Type;
 	pushFormEvent(Type, nullptr);
 	// this->pushFormEvent(FormEventType::TextChanged, nullptr);
 }
 
-sp<BitmapFont> TextEdit::GetFont() const { return font; }
+sp<BitmapFont> TextEdit::getFont() const { return font; }
 
-void TextEdit::SetFont(sp<BitmapFont> NewFont) { font = NewFont; }
+void TextEdit::setFont(sp<BitmapFont> NewFont) { font = NewFont; }
 
-sp<Control> TextEdit::CopyTo(sp<Control> CopyParent)
+sp<Control> TextEdit::copyTo(sp<Control> CopyParent)
 {
 	sp<TextEdit> copy;
 	if (CopyParent)
@@ -240,13 +240,13 @@ sp<Control> TextEdit::CopyTo(sp<Control> CopyParent)
 	}
 	copy->TextHAlign = this->TextHAlign;
 	copy->TextVAlign = this->TextVAlign;
-	CopyControlData(copy);
+	copyControlData(copy);
 	return copy;
 }
 
-void TextEdit::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
+void TextEdit::configureSelfFromXml(tinyxml2::XMLElement *Element)
 {
-	Control::ConfigureSelfFromXML(Element);
+	Control::configureSelfFromXml(Element);
 	tinyxml2::XMLElement *subnode;
 	UString attribvalue;
 
@@ -256,7 +256,7 @@ void TextEdit::ConfigureSelfFromXML(tinyxml2::XMLElement *Element)
 	}
 	if (Element->FirstChildElement("font") != nullptr)
 	{
-		font = ui().GetFont(Element->FirstChildElement("font")->GetText());
+		font = ui().getFont(Element->FirstChildElement("font")->GetText());
 	}
 	subnode = Element->FirstChildElement("alignment");
 	if (subnode != nullptr)

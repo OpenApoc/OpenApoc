@@ -11,7 +11,7 @@ void InitialGameStateExtractor::extractBaseLayouts(GameState &state, Difficulty)
 	auto &data = this->ufo2p;
 	for (unsigned i = 0; i < data.baselayouts->count(); i++)
 	{
-		UString id = UString::format("%s%d", BaseLayout::getPrefix().c_str(), i);
+		UString id = UString::format("%s%d", BaseLayout::getPrefix().cStr(), i);
 		auto layout = mksp<BaseLayout>();
 		auto b = data.baselayouts->get(i);
 		bool foundLift = false;
@@ -35,7 +35,7 @@ void InitialGameStateExtractor::extractBaseLayouts(GameState &state, Difficulty)
 						if (foundLift)
 						{
 							LogError("Unexpected repeated lift at position {%d,%d} in base %s", row,
-							         col, id.c_str());
+							         col, id.cStr());
 						}
 						foundLift = true;
 						layout->baseLift = {col, row};
@@ -47,13 +47,13 @@ void InitialGameStateExtractor::extractBaseLayouts(GameState &state, Difficulty)
 					}
 					default:
 						LogError("Unexpected module id %d at {%d,%d} in base %s",
-						         (int)b.module[row][col], col, row, id.c_str());
+						         (int)b.module[row][col], col, row, id.cStr());
 				}
 			}
 		}
 		if (!foundLift)
 		{
-			LogError("No lift found in base %s", id.c_str());
+			LogError("No lift found in base %s", id.cStr());
 		}
 		Rect<int>::compactRectSet(layout->baseCorridors);
 		state.base_layouts[id] = layout;

@@ -31,7 +31,7 @@ void InitialGameStateExtractor::extractResearch(GameState &state, Difficulty)
 				break;
 			default:
 				LogError("Unexpected researchGroup 0x%02x for research item %s",
-				         (unsigned)rdata.researchGroup, id.c_str());
+				         (unsigned)rdata.researchGroup, id.cStr());
 		}
 		switch (rdata.labSize)
 		{
@@ -43,7 +43,7 @@ void InitialGameStateExtractor::extractResearch(GameState &state, Difficulty)
 				break;
 			default:
 				LogError("Unexpected labSize 0x%02x for research item %s", (unsigned)rdata.labSize,
-				         id.c_str());
+				         id.cStr());
 		}
 		// FIXME: this assumed all listed techs are reqired, which is not true for some topics
 		// (It's possible that an unknown member in ResearchData marks this, or it's done
@@ -70,7 +70,7 @@ void InitialGameStateExtractor::extractResearch(GameState &state, Difficulty)
 
 		if (state.research.topics.find(id) != state.research.topics.end())
 		{
-			LogError("Multiple research topics with ID \"%s\"", id.c_str());
+			LogError("Multiple research topics with ID \"%s\"", id.cStr());
 		}
 		state.research.topics[id] = r;
 // FIXME: The ufopaedia entries here don't seem to directly map to the IDs we're currently using?
@@ -96,8 +96,8 @@ void InitialGameStateExtractor::extractResearch(GameState &state, Difficulty)
 		if (paediaEntry->required_research)
 		{
 			LogError("Multiple required research for UFOPaedia topic \"%s\" - \"%s\" and \"%s\"",
-			         ufopaediaEntryID.c_str(), r->name.c_str(),
-			         paediaEntry->required_research->name.c_str());
+			         ufopaediaEntryID.cStr(), r->name.cStr(),
+			         paediaEntry->required_research->name.cStr());
 		}
 		paediaEntry->required_research = {&state, id};
 #endif

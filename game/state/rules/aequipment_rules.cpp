@@ -23,7 +23,7 @@ sp<AEquipmentType> StateObject<AEquipmentType>::get(const GameState &state, cons
 	auto it = state.agent_equipment.find(id);
 	if (it == state.agent_equipment.end())
 	{
-		LogError("No aequipement type matching ID \"%s\"", id.c_str());
+		LogError("No aequipement type matching ID \"%s\"", id.cStr());
 		return nullptr;
 	}
 	return it->second;

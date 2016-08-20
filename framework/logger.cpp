@@ -160,8 +160,8 @@ static std::chrono::time_point<std::chrono::high_resolution_clock> timeInit =
 
 void _logAssert(bool show_dialog, UString prefix, UString string, int line, UString file)
 {
-	Log(show_dialog, LogLevel::Error, prefix, "Assertion \"%s\" failed at %s:%d", string.c_str(),
-	    file.c_str(), line);
+	Log(show_dialog, LogLevel::Error, prefix, "Assertion \"%s\" failed at %s:%d", string.cStr(),
+	    file.cStr(), line);
 	exit(EXIT_FAILURE);
 }
 
@@ -205,11 +205,11 @@ void Log(bool show_dialog, LogLevel level, UString prefix, const char *format, .
 	va_list arglist;
 	va_start(arglist, format);
 #ifdef ANDROID
-	LOGD("%s %llu %s: ", level_prefix, clockns, prefix.c_str());
+	LOGD("%s %llu %s: ", level_prefix, clockns, prefix.cStr());
 	LOGDV(format, arglist);
 	va_end(arglist);
 #else
-	fprintf(outFile, "%s %llu %s: ", level_prefix, clockns, prefix.c_str());
+	fprintf(outFile, "%s %llu %s: ", level_prefix, clockns, prefix.cStr());
 	vfprintf(outFile, format, arglist);
 
 	// On error print a backtrace to the log file
@@ -224,7 +224,7 @@ void Log(bool show_dialog, LogLevel level, UString prefix, const char *format, .
 	{
 		fflush(outFile);
 		va_start(arglist, format);
-		fprintf(stderr, "%s %llu %s: ", level_prefix, clockns, prefix.c_str());
+		fprintf(stderr, "%s %llu %s: ", level_prefix, clockns, prefix.cStr());
 		vfprintf(stderr, format, arglist);
 		fprintf(stderr, "\n");
 		va_end(arglist);
@@ -237,7 +237,7 @@ void Log(bool show_dialog, LogLevel level, UString prefix, const char *format, .
 		{
 			// No framework to have created a window, so don't try to show a dialog
 		}
-		else if (!fw().Display_HasWindow())
+		else if (!fw().displayHasWindow())
 		{
 			// Framework created but without window, so don't try to show a dialog
 		}

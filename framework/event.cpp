@@ -20,111 +20,111 @@ UserEvent::UserEvent(const UString &id, sp<void> data) : Event(EVENT_USER)
 	Data.data = data;
 }
 
-EventTypes Event::Type() const { return this->eventType; }
+EventTypes Event::type() const { return this->eventType; }
 
 // FIXME: Can do validation here that typeof(this) is expected?
-FrameworkDisplayEvent &Event::Display()
+FrameworkDisplayEvent &Event::display()
 {
 	auto *ev = static_cast<DisplayEvent *>(this);
 	return ev->Data;
 }
 
-FrameworkJoystickEvent &Event::Joystick()
+FrameworkJoystickEvent &Event::joystick()
 {
 	auto *ev = static_cast<JoystickEvent *>(this);
 	return ev->Data;
 }
 
-FrameworkKeyboardEvent &Event::Keyboard()
+FrameworkKeyboardEvent &Event::keyboard()
 {
 	auto *ev = static_cast<KeyboardEvent *>(this);
 	return ev->Data;
 }
 
-FrameworkMouseEvent &Event::Mouse()
+FrameworkMouseEvent &Event::mouse()
 {
 	auto *ev = static_cast<MouseEvent *>(this);
 	return ev->Data;
 }
 
-FrameworkFingerEvent &Event::Finger()
+FrameworkFingerEvent &Event::finger()
 {
 	auto *ev = static_cast<FingerEvent *>(this);
 	return ev->Data;
 }
 
-FrameworkTimerEvent &Event::Timer()
+FrameworkTimerEvent &Event::timer()
 {
 	auto *ev = static_cast<TimerEvent *>(this);
 	return ev->Data;
 }
 
-FrameworkFormsEvent &Event::Forms()
+FrameworkFormsEvent &Event::forms()
 {
 	auto *ev = static_cast<FormsEvent *>(this);
 	return ev->Data;
 }
 
-FrameworkTextEvent &Event::Text()
+FrameworkTextEvent &Event::text()
 {
 	auto *ev = static_cast<TextEvent *>(this);
 	return ev->Data;
 }
 
-FrameworkUserEvent &Event::User()
+FrameworkUserEvent &Event::user()
 {
 	auto *ev = static_cast<UserEvent *>(this);
 	return ev->Data;
 }
 
-const FrameworkDisplayEvent &Event::Display() const
+const FrameworkDisplayEvent &Event::display() const
 {
 	auto *ev = static_cast<const DisplayEvent *>(this);
 	return ev->Data;
 }
 
-const FrameworkJoystickEvent &Event::Joystick() const
+const FrameworkJoystickEvent &Event::joystick() const
 {
 	auto *ev = static_cast<const JoystickEvent *>(this);
 	return ev->Data;
 }
 
-const FrameworkKeyboardEvent &Event::Keyboard() const
+const FrameworkKeyboardEvent &Event::keyboard() const
 {
 	auto *ev = static_cast<const KeyboardEvent *>(this);
 	return ev->Data;
 }
 
-const FrameworkMouseEvent &Event::Mouse() const
+const FrameworkMouseEvent &Event::mouse() const
 {
 	auto *ev = static_cast<const MouseEvent *>(this);
 	return ev->Data;
 }
 
-const FrameworkFingerEvent &Event::Finger() const
+const FrameworkFingerEvent &Event::finger() const
 {
 	auto *ev = static_cast<const FingerEvent *>(this);
 	return ev->Data;
 }
 
-const FrameworkTimerEvent &Event::Timer() const
+const FrameworkTimerEvent &Event::timer() const
 {
 	auto *ev = static_cast<const TimerEvent *>(this);
 	return ev->Data;
 }
 
-const FrameworkFormsEvent &Event::Forms() const
+const FrameworkFormsEvent &Event::forms() const
 {
 	auto *ev = static_cast<const FormsEvent *>(this);
 	return ev->Data;
 }
 
-const FrameworkTextEvent &Event::Text() const
+const FrameworkTextEvent &Event::text() const
 {
 	auto *ev = static_cast<const TextEvent *>(this);
 	return ev->Data;
 }
-const FrameworkUserEvent &Event::User() const
+const FrameworkUserEvent &Event::user() const
 {
 	auto *ev = static_cast<const UserEvent *>(this);
 	return ev->Data;

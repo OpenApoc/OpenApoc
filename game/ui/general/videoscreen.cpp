@@ -17,22 +17,22 @@ VideoScreen::VideoScreen(const UString &videoPath, std::future<void> task,
 {
 	if (videoPath != "")
 	{
-		this->video = fw().data->load_video(videoPath);
+		this->video = fw().data->loadVideo(videoPath);
 		if (!this->video)
 		{
-			LogWarning("Failed to load video \"%s\"", videoPath.c_str());
+			LogWarning("Failed to load video \"%s\"", videoPath.cStr());
 		}
 		else
 		{
 			// Scale keeping aspect ratio to the max of the screen size
 			Vec2<float> unscaled_frame_size = this->video->getVideoSize();
-			Vec2<float> display_size = fw().Display_GetSize();
+			Vec2<float> display_size = fw().displayGetSize();
 			Vec2<float> scale_factors = display_size / unscaled_frame_size;
 			float scale = std::min(scale_factors.x, scale_factors.y);
 			this->frame_size = unscaled_frame_size * scale;
 			LogInfo("Scaling video from {%d,%d} to {%d,%d}", this->video->getVideoSize().x,
 			        this->video->getVideoSize().y, this->frame_size.x, this->frame_size.y);
-			this->frame_position = (fw().Display_GetSize() / 2) - (this->frame_size / 2);
+			this->frame_position = (fw().displayGetSize() / 2) - (this->frame_size / 2);
 		}
 	}
 	else
@@ -41,15 +41,15 @@ VideoScreen::VideoScreen(const UString &videoPath, std::future<void> task,
 	}
 }
 
-void VideoScreen::Begin()
+void VideoScreen::begin()
 {
 	// FIXME: This is now useless, as it doesn't actually load anything interesting here
-	loadingimage = fw().data->load_image("UI/LOADING.PNG");
+	loadingimage = fw().data->loadImage("UI/LOADING.PNG");
 	if (!backgroundimage)
 	{
-		backgroundimage = fw().data->load_image("UI/LOGO.PNG");
+		backgroundimage = fw().data->loadImage("UI/LOGO.PNG");
 	}
-	fw().Display_SetIcon();
+	fw().displaySetIcon();
 	loadingimageangle = 0;
 	last_frame_time = std::chrono::high_resolution_clock::now();
 	this->current_frame = this->video->popImage();
@@ -58,16 +58,16 @@ void VideoScreen::Begin()
 	fw().soundBackend->playMusic([](void *) {}, nullptr);
 }
 
-void VideoScreen::Pause() {}
+void VideoScreen::pause() {}
 
-void VideoScreen::Resume() {}
+void VideoScreen::resume() {}
 
-void VideoScreen::Finish() {}
+void VideoScreen::finish() {}
 
-void VideoScreen::EventOccurred(Event *e)
+void VideoScreen::eventOccurred(Event *e)
 {
-	if ((e->Type() == EVENT_KEY_DOWN && e->Keyboard().KeyCode == SDLK_ESCAPE) ||
-	    (e->Type() == EVENT_MOUSE_DOWN || e->Type() == EVENT_FINGER_DOWN))
+	if ((e->type() == EVENT_KEY_DOWN && e->keyboard().KeyCode == SDLK_ESCAPE) ||
+	    (e->type() == EVENT_MOUSE_DOWN || e->type() == EVENT_FINGER_DOWN))
 	{
 		// Magically skip the rest of the video
 		if (this->video)
@@ -79,7 +79,7 @@ void VideoScreen::EventOccurred(Event *e)
 	}
 }
 
-void VideoScreen::Update(StageCmd *const cmd)
+void VideoScreen::update(StageCmd *const cmd)
 {
 	if (!this->current_frame)
 	{
@@ -101,7 +101,7 @@ void VideoScreen::Update(StageCmd *const cmd)
 	}
 }
 
-void VideoScreen::Render()
+void VideoScreen::render()
 {
 	TRACE_FN;
 	if (this->video)
@@ -132,23 +132,23 @@ void VideoScreen::Render()
 	else
 	{
 
-		int logow = fw().Display_GetWidth() / 3;
+		int logow = fw().displayGetWidth() / 3;
 		float logosc = logow / static_cast<float>(backgroundimage->size.x);
 
 		Vec2<float> logoPosition{
-		    fw().Display_GetWidth() / 2 - (backgroundimage->size.x * logosc / 2),
-		    fw().Display_GetHeight() / 2 - (backgroundimage->size.y * logosc / 2)};
+		    fw().displayGetWidth() / 2 - (backgroundimage->size.x * logosc / 2),
+		    fw().displayGetHeight() / 2 - (backgroundimage->size.y * logosc / 2)};
 		Vec2<float> logoSize{backgroundimage->size.x * logosc, backgroundimage->size.y * logosc};
 
 		fw().renderer->drawScaled(backgroundimage, logoPosition, logoSize);
 
 		fw().renderer->drawRotated(
 		    loadingimage, Vec2<float>{24, 24},
-		    Vec2<float>{fw().Display_GetWidth() - 50, fw().Display_GetHeight() - 50},
+		    Vec2<float>{fw().displayGetWidth() - 50, fw().displayGetHeight() - 50},
 		    loadingimageangle);
 	}
 }
 
-bool VideoScreen::IsTransition() { return false; }
+bool VideoScreen::isTransition() { return false; }
 
 }; // namespace OpenApoc

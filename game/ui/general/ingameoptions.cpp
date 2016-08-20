@@ -10,24 +10,24 @@ namespace OpenApoc
 {
 
 InGameOptions::InGameOptions(sp<GameState> state)
-    : Stage(), menuform(ui().GetForm("FORM_INGAMEOPTIONS")), state(state)
+    : Stage(), menuform(ui().getForm("FORM_INGAMEOPTIONS")), state(state)
 {
 
 	/* Initialse all initial values */
 
-	menuform->FindControlTyped<ScrollBar>("GLOBAL_GAIN_SLIDER")
-	    ->SetValue(fw().Settings->getInt("Audio.GlobalGain"));
+	menuform->findControlTyped<ScrollBar>("GLOBAL_GAIN_SLIDER")
+	    ->setValue(fw().Settings->getInt("Audio.GlobalGain"));
 
-	menuform->FindControlTyped<ScrollBar>("MUSIC_GAIN_SLIDER")
-	    ->SetValue(fw().Settings->getInt("Audio.MusicGain"));
+	menuform->findControlTyped<ScrollBar>("MUSIC_GAIN_SLIDER")
+	    ->setValue(fw().Settings->getInt("Audio.MusicGain"));
 
-	menuform->FindControlTyped<ScrollBar>("SAMPLE_GAIN_SLIDER")
-	    ->SetValue(fw().Settings->getInt("Audio.SampleGain"));
+	menuform->findControlTyped<ScrollBar>("SAMPLE_GAIN_SLIDER")
+	    ->setValue(fw().Settings->getInt("Audio.SampleGain"));
 
-	menuform->FindControlTyped<CheckBox>("SHOW_VEHICLE_PATH")->SetChecked(state->showVehiclePath);
-	menuform->FindControlTyped<CheckBox>("SHOW_TILE_ORIGIN")->SetChecked(state->showTileOrigin);
-	menuform->FindControlTyped<CheckBox>("SHOW_SELECTABLE_BOUNDS")
-	    ->SetChecked(state->showSelectableBounds);
+	menuform->findControlTyped<CheckBox>("SHOW_VEHICLE_PATH")->setChecked(state->showVehiclePath);
+	menuform->findControlTyped<CheckBox>("SHOW_TILE_ORIGIN")->setChecked(state->showTileOrigin);
+	menuform->findControlTyped<CheckBox>("SHOW_SELECTABLE_BOUNDS")
+	    ->setChecked(state->showSelectableBounds);
 }
 
 InGameOptions::~InGameOptions()
@@ -35,171 +35,171 @@ InGameOptions::~InGameOptions()
 	/* Store persistent options */
 
 	fw().Settings->set("Audio.GlobalGain",
-	                   menuform->FindControlTyped<ScrollBar>("GLOBAL_GAIN_SLIDER")->GetValue());
+	                   menuform->findControlTyped<ScrollBar>("GLOBAL_GAIN_SLIDER")->getValue());
 	fw().Settings->set("Audio.MusicGain",
-	                   menuform->FindControlTyped<ScrollBar>("MUSIC_GAIN_SLIDER")->GetValue());
+	                   menuform->findControlTyped<ScrollBar>("MUSIC_GAIN_SLIDER")->getValue());
 	fw().Settings->set("Audio.SampleGain",
-	                   menuform->FindControlTyped<ScrollBar>("SAMPLE_GAIN_SLIDER")->GetValue());
+	                   menuform->findControlTyped<ScrollBar>("SAMPLE_GAIN_SLIDER")->getValue());
 }
 
-void InGameOptions::Begin()
+void InGameOptions::begin()
 {
-	menuform->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
+	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 }
 
-void InGameOptions::Pause() {}
+void InGameOptions::pause() {}
 
-void InGameOptions::Resume() {}
+void InGameOptions::resume() {}
 
-void InGameOptions::Finish() {}
+void InGameOptions::finish() {}
 
-void InGameOptions::EventOccurred(Event *e)
+void InGameOptions::eventOccurred(Event *e)
 {
-	menuform->EventOccured(e);
+	menuform->eventOccured(e);
 
-	if (e->Type() == EVENT_KEY_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION && e->Forms().EventFlag == FormEventType::ButtonClick)
+	if (e->type() == EVENT_FORM_INTERACTION && e->forms().EventFlag == FormEventType::ButtonClick)
 	{
-		if (e->Forms().RaisedBy->Name == "BUTTON_OK")
+		if (e->forms().RaisedBy->Name == "BUTTON_OK")
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
-		else if (e->Forms().RaisedBy->Name == "BUTTON_ABANDONGAME")
+		else if (e->forms().RaisedBy->Name == "BUTTON_ABANDONGAME")
 		{
 			stageCmd.cmd = StageCmd::Command::REPLACEALL;
 			stageCmd.nextStage = mksp<MainMenu>();
 			return;
 		}
-		else if (e->Forms().RaisedBy->Name == "BUTTON_QUIT")
+		else if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
 			stageCmd.cmd = StageCmd::Command::QUIT;
 			return;
 		}
-		else if (e->Forms().RaisedBy->Name == "BUTTON_SAVEGAME")
+		else if (e->forms().RaisedBy->Name == "BUTTON_SAVEGAME")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = mksp<SaveMenu>(SaveMenuAction::Save, state);
 			return;
 		}
-		else if (e->Forms().RaisedBy->Name == "BUTTON_DELETESAVEDGAME")
+		else if (e->forms().RaisedBy->Name == "BUTTON_DELETESAVEDGAME")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = mksp<SaveMenu>(SaveMenuAction::Delete, state);
 			return;
 		}
-		else if (e->Forms().RaisedBy->Name == "BUTTON_LOADGAME")
+		else if (e->forms().RaisedBy->Name == "BUTTON_LOADGAME")
 		{
 			stageCmd.cmd = StageCmd::Command::PUSH;
 			stageCmd.nextStage = mksp<SaveMenu>(SaveMenuAction::Load, state);
 			return;
 		}
-		else if (e->Forms().RaisedBy->Name == "BUTTON_GIVE_ALL_RESEARCH")
+		else if (e->forms().RaisedBy->Name == "BUTTON_GIVE_ALL_RESEARCH")
 		{
 			for (auto &r : this->state->research.topics)
 			{
-				LogWarning("Topic \"%s\"", r.first.c_str());
+				LogWarning("Topic \"%s\"", r.first.cStr());
 				auto &topic = r.second;
 				if (topic->isComplete())
 				{
-					LogWarning("Topic \"%s\" already complete", r.first.c_str());
+					LogWarning("Topic \"%s\" already complete", r.first.cStr());
 				}
 				else
 				{
 					topic->man_hours_progress = topic->man_hours;
-					LogWarning("Topic \"%s\" marked as complete", r.first.c_str());
+					LogWarning("Topic \"%s\" marked as complete", r.first.cStr());
 				}
 			}
 			return;
 		}
 	}
-	if (e->Type() == EVENT_FORM_INTERACTION &&
-	    e->Forms().EventFlag == FormEventType::ScrollBarChange)
+	if (e->type() == EVENT_FORM_INTERACTION &&
+	    e->forms().EventFlag == FormEventType::ScrollBarChange)
 	{
-		if (e->Forms().RaisedBy->Name == "GLOBAL_GAIN_SLIDER")
+		if (e->forms().RaisedBy->Name == "GLOBAL_GAIN_SLIDER")
 		{
-			auto slider = std::dynamic_pointer_cast<ScrollBar>(e->Forms().RaisedBy);
+			auto slider = std::dynamic_pointer_cast<ScrollBar>(e->forms().RaisedBy);
 			if (!slider)
 			{
 				LogError("Failed to cast \"GLOBAL_GAIN_SLIDER\" control to ScrollBar");
 				return;
 			}
 			float gain =
-			    static_cast<float>(slider->GetValue()) / static_cast<float>(slider->Maximum);
+			    static_cast<float>(slider->getValue()) / static_cast<float>(slider->Maximum);
 			fw().soundBackend->setGain(SoundBackend::Gain::Global, gain);
 		}
-		else if (e->Forms().RaisedBy->Name == "MUSIC_GAIN_SLIDER")
+		else if (e->forms().RaisedBy->Name == "MUSIC_GAIN_SLIDER")
 		{
-			auto slider = std::dynamic_pointer_cast<ScrollBar>(e->Forms().RaisedBy);
+			auto slider = std::dynamic_pointer_cast<ScrollBar>(e->forms().RaisedBy);
 			if (!slider)
 			{
 				LogError("Failed to cast \"MUSIC_GAIN_SLIDER\" control to ScrollBar");
 				return;
 			}
 			float gain =
-			    static_cast<float>(slider->GetValue()) / static_cast<float>(slider->Maximum);
+			    static_cast<float>(slider->getValue()) / static_cast<float>(slider->Maximum);
 			fw().soundBackend->setGain(SoundBackend::Gain::Music, gain);
 		}
-		else if (e->Forms().RaisedBy->Name == "SAMPLE_GAIN_SLIDER")
+		else if (e->forms().RaisedBy->Name == "SAMPLE_GAIN_SLIDER")
 		{
-			auto slider = std::dynamic_pointer_cast<ScrollBar>(e->Forms().RaisedBy);
+			auto slider = std::dynamic_pointer_cast<ScrollBar>(e->forms().RaisedBy);
 			if (!slider)
 			{
 				LogError("Failed to cast \"SAMPLE_GAIN_SLIDER\" control to ScrollBar");
 				return;
 			}
 			float gain =
-			    static_cast<float>(slider->GetValue()) / static_cast<float>(slider->Maximum);
+			    static_cast<float>(slider->getValue()) / static_cast<float>(slider->Maximum);
 			fw().soundBackend->setGain(SoundBackend::Gain::Sample, gain);
 		}
 	}
-	if (e->Type() == EVENT_FORM_INTERACTION &&
-	    e->Forms().EventFlag == FormEventType::CheckBoxChange)
+	if (e->type() == EVENT_FORM_INTERACTION &&
+	    e->forms().EventFlag == FormEventType::CheckBoxChange)
 	{
-		if (e->Forms().RaisedBy->Name == "SHOW_VEHICLE_PATH")
+		if (e->forms().RaisedBy->Name == "SHOW_VEHICLE_PATH")
 		{
-			auto box = std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy);
-			state->showVehiclePath = box->IsChecked();
-			LogWarning("Set SHOW_VEHICLE_PATH to %d", box->IsChecked());
+			auto box = std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy);
+			state->showVehiclePath = box->isChecked();
+			LogWarning("Set SHOW_VEHICLE_PATH to %d", box->isChecked());
 		}
-		if (e->Forms().RaisedBy->Name == "SHOW_TILE_ORIGIN")
+		if (e->forms().RaisedBy->Name == "SHOW_TILE_ORIGIN")
 		{
-			auto box = std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy);
-			state->showTileOrigin = box->IsChecked();
-			LogWarning("Set SHOW_TILE_ORIGIN to %d", box->IsChecked());
+			auto box = std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy);
+			state->showTileOrigin = box->isChecked();
+			LogWarning("Set SHOW_TILE_ORIGIN to %d", box->isChecked());
 		}
-		if (e->Forms().RaisedBy->Name == "SHOW_SELECTABLE_BOUNDS")
+		if (e->forms().RaisedBy->Name == "SHOW_SELECTABLE_BOUNDS")
 		{
-			auto box = std::dynamic_pointer_cast<CheckBox>(e->Forms().RaisedBy);
-			state->showSelectableBounds = box->IsChecked();
-			LogWarning("Set SHOW_SELECTABLE_BOUNDS to %d", box->IsChecked());
+			auto box = std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy);
+			state->showSelectableBounds = box->isChecked();
+			LogWarning("Set SHOW_SELECTABLE_BOUNDS to %d", box->isChecked());
 		}
 	}
 }
 
-void InGameOptions::Update(StageCmd *const cmd)
+void InGameOptions::update(StageCmd *const cmd)
 {
-	menuform->Update();
+	menuform->update();
 	*cmd = this->stageCmd;
 	// Reset the command to default
 	this->stageCmd = StageCmd();
 }
 
-void InGameOptions::Render()
+void InGameOptions::render()
 {
-	fw().Stage_GetPrevious(this->shared_from_this())->Render();
-	fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
-	menuform->Render();
+	fw().stageGetPrevious(this->shared_from_this())->render();
+	fw().renderer->drawFilledRect({0, 0}, fw().displayGetSize(), Colour{0, 0, 0, 128});
+	menuform->render();
 }
 
-bool InGameOptions::IsTransition() { return false; }
+bool InGameOptions::isTransition() { return false; }
 
 }; // namespace OpenApoc

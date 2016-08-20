@@ -31,8 +31,8 @@ int main(int, char **)
 	uint32_t s[2];
 	Xorshift128Plus<uint32_t> rng2{};
 
-	rng.get_state(s);
-	rng2.set_state(s);
+	rng.getState(s);
+	rng2.setState(s);
 
 	uint32_t r3 = rng2();
 	if (r3 != expected_r3)

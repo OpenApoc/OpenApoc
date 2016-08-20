@@ -17,14 +17,14 @@ int main(int argc, char *argv[])
 	}
 	Framework f(UString(argv[0]), {}, false);
 
-	auto img = f.data->load_image(argv[1]);
+	auto img = f.data->loadImage(argv[1]);
 	if (!img)
 	{
 		std::cerr << "Failed to load image \"" << argv[1] << "\"\n";
 		return EXIT_FAILURE;
 	}
 
-	if (!f.data->write_image(argv[2], img))
+	if (!f.data->writeImage(argv[2], img))
 	{
 		std::cerr << "Failed to write output file \"" << argv[2] << "\"\n";
 		return EXIT_FAILURE;

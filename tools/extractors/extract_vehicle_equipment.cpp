@@ -44,7 +44,7 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state, Diffic
 				e->users.insert(VEquipmentType::User::Ammo);
 				break;
 			default:
-				LogWarning("Unexpected 'usable_by' %d for ID %s", (int)edata.usable_by, id.c_str());
+				LogWarning("Unexpected 'usable_by' %d for ID %s", (int)edata.usable_by, id.cStr());
 				continue;
 		}
 		e->weight = edata.weight;
@@ -54,11 +54,11 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state, Diffic
 		e->ammo_type = UString::format("%d", (int)edata.ammo_type);
 		// Force all sprites into the correct palette by using A_RANDOM_VEHICLES_BACKGROUND pcx
 		//(I assume the parts of the palette used for this are the same on all?)
-		e->equipscreen_sprite = fw().data->load_image(UString::format(
+		e->equipscreen_sprite = fw().data->loadImage(UString::format(
 		    "PCK:xcom3/ufodata/vehequip.pck:xcom3/ufodata/vehequip.tab:%d:xcom3/ufodata/vhawk.pcx",
 		    (int)edata.sprite_idx));
 		e->equipscreen_size = {edata.size_x, edata.size_y};
-		e->manufacturer = {&state, data.get_org_id(edata.manufacturer)};
+		e->manufacturer = {&state, data.getOrgId(edata.manufacturer)};
 		e->store_space = edata.store_space;
 
 		switch (edata.type)
@@ -88,9 +88,9 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state, Diffic
 				e->firing_arc_2 = wData.firing_arc_2;
 				e->point_defence = wData.point_defence != 0 ? true : false;
 				e->fire_sfx =
-				    fw().data->load_sample(UString::format("RAWSOUND:%d", (int)wData.fire_sfx));
+				    fw().data->loadSample(UString::format("RAWSOUND:%d", (int)wData.fire_sfx));
 				e->explosion_graphic = wData.explosion_graphic;
-				e->icon = fw().data->load_image(UString::format(
+				e->icon = fw().data->loadImage(UString::format(
 				    "PCK:xcom3/ufodata/vs_obs.pck:xcom3/ufodata/vs_obs.tab:%d", weapon_count));
 
 				auto projectile_sprites = data.projectile_sprites->get(wData.projectile_image);
@@ -106,7 +106,7 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state, Diffic
 					{
 						sprite_path = ""; // a 'gap' in the projectile trail
 					}
-					e->projectile_sprites.push_back(fw().data->load_image(sprite_path));
+					e->projectile_sprites.push_back(fw().data->loadImage(sprite_path));
 				}
 				weapon_count++;
 				break;
@@ -127,7 +127,7 @@ void InitialGameStateExtractor::extractVehicleEquipment(GameState &state, Diffic
 				break;
 			}
 			default:
-				LogError("Unexpected vequipment type %d for ID %s", (int)e->type, id.c_str());
+				LogError("Unexpected vequipment type %d for ID %s", (int)e->type, id.cStr());
 		}
 
 		state.vehicle_equipment[id] = e;

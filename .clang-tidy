@@ -45,7 +45,7 @@ CheckOptions:
   - key:             readability-identifier-naming.ClassMemberSuffix
     value:           ''
   - key:             readability-identifier-naming.ClassMethodCase
-    value:           aNy_CasE
+    value:           camelBack
   - key:             readability-identifier-naming.ClassMethodPrefix
     value:           ''
   - key:             readability-identifier-naming.ClassMethodSuffix
@@ -79,7 +79,7 @@ CheckOptions:
   - key:             readability-identifier-naming.ConstexprFunctionSuffix
     value:           ''
   - key:             readability-identifier-naming.ConstexprMethodCase
-    value:           aNy_CasE
+    value:           cameBack
   - key:             readability-identifier-naming.ConstexprMethodPrefix
     value:           ''
   - key:             readability-identifier-naming.ConstexprMethodSuffix
@@ -153,7 +153,7 @@ CheckOptions:
   - key:             readability-identifier-naming.MemberSuffix
     value:           ''
   - key:             readability-identifier-naming.MethodCase
-    value:           aNy_CasE
+    value:           camelBack
   - key:             readability-identifier-naming.MethodPrefix
     value:           ''
   - key:             readability-identifier-naming.MethodSuffix
@@ -183,7 +183,7 @@ CheckOptions:
   - key:             readability-identifier-naming.PrivateMemberSuffix
     value:           ''
   - key:             readability-identifier-naming.PrivateMethodCase
-    value:           aNy_CasE
+    value:           camelBack
   - key:             readability-identifier-naming.PrivateMethodPrefix
     value:           ''
   - key:             readability-identifier-naming.PrivateMethodSuffix
@@ -195,7 +195,7 @@ CheckOptions:
   - key:             readability-identifier-naming.ProtectedMemberSuffix
     value:           ''
   - key:             readability-identifier-naming.ProtectedMethodCase
-    value:           aNy_CasE
+    value:           camelBack
   - key:             readability-identifier-naming.ProtectedMethodPrefix
     value:           ''
   - key:             readability-identifier-naming.ProtectedMethodSuffix
@@ -207,7 +207,7 @@ CheckOptions:
   - key:             readability-identifier-naming.PublicMemberSuffix
     value:           ''
   - key:             readability-identifier-naming.PublicMethodCase
-    value:           aNy_CasE
+    value:           camelBack
   - key:             readability-identifier-naming.PublicMethodPrefix
     value:           ''
   - key:             readability-identifier-naming.PublicMethodSuffix
@@ -273,7 +273,7 @@ CheckOptions:
   - key:             readability-identifier-naming.VariableSuffix
     value:           ''
   - key:             readability-identifier-naming.VirtualMethodCase
-    value:           aNy_CasE
+    value:           camelBack
   - key:             readability-identifier-naming.VirtualMethodPrefix
     value:           ''
   - key:             readability-identifier-naming.VirtualMethodSuffix

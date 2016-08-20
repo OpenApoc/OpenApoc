@@ -84,7 +84,7 @@ void City::initMap()
 				{
 					b.second->landingPadLocations.push_back(s->initialPosition);
 					LogInfo("Pad {%d,%d} is within building %s {%d,%d},{%d,%d}", pos.x, pos.y,
-					        b.first.c_str(), b.second->bounds.p0.x, b.second->bounds.p0.y,
+					        b.first.cStr(), b.second->bounds.p0.x, b.second->bounds.p0.y,
 					        b.second->bounds.p1.x, b.second->bounds.p1.y);
 				}
 			}
@@ -94,9 +94,9 @@ void City::initMap()
 	{
 		if (b.second->landingPadLocations.empty())
 		{
-			LogError("Building %s has no landing pads", b.first.c_str());
+			LogError("Building %s has no landing pads", b.first.cStr());
 		}
-		LogInfo("Building %s has %u landing pads:", b.first.c_str(),
+		LogInfo("Building %s has %u landing pads:", b.first.cStr(),
 		        (unsigned)b.second->landingPadLocations.size());
 
 		for (auto &loc : b.second->landingPadLocations)
@@ -120,7 +120,7 @@ void City::initMap()
 
 void City::update(GameState &state, unsigned int ticks)
 {
-	TRACE_FN_ARGS1("ticks", Strings::FromInteger(static_cast<int>(ticks)));
+	TRACE_FN_ARGS1("ticks", Strings::fromInteger(static_cast<int>(ticks)));
 	/* FIXME: Temporary 'get something working' HACK
 	 * Every now and then give a landed vehicle a new 'goto random building' mission, so there's
 	 * some activity in the city*/
@@ -287,7 +287,7 @@ template <> sp<City> StateObject<City>::get(const GameState &state, const UStrin
 	auto it = state.cities.find(id);
 	if (it == state.cities.end())
 	{
-		LogError("No citymap matching ID \"%s\"", id.c_str());
+		LogError("No citymap matching ID \"%s\"", id.cStr());
 		return nullptr;
 	}
 	return it->second;

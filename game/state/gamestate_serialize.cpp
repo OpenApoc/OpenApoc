@@ -129,14 +129,14 @@ void serializeIn<LazyImage>(const GameState *, sp<SerializationNode> node, sp<La
 {
 	if (!node)
 		return;
-	ptr = std::static_pointer_cast<LazyImage>(fw().data->load_image(node->getValue(), true));
+	ptr = std::static_pointer_cast<LazyImage>(fw().data->loadImage(node->getValue(), true));
 }
 
 template <> void serializeIn<Image>(const GameState *, sp<SerializationNode> node, sp<Image> &ptr)
 {
 	if (!node)
 		return;
-	ptr = fw().data->load_image(node->getValue());
+	ptr = fw().data->loadImage(node->getValue());
 }
 
 template <typename T>
@@ -305,14 +305,14 @@ void serializeIn<VoxelSlice>(const GameState *, sp<SerializationNode> node, sp<V
 {
 	if (!node)
 		return;
-	ptr = fw().data->load_voxel_slice(node->getValue());
+	ptr = fw().data->loadVoxelSlice(node->getValue());
 }
 
 template <> void serializeIn<Sample>(const GameState *, sp<SerializationNode> node, sp<Sample> &ptr)
 {
 	if (!node)
 		return;
-	ptr = fw().data->load_sample(node->getValue());
+	ptr = fw().data->loadSample(node->getValue());
 }
 
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, VoxelMap &map)
@@ -912,7 +912,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, Xorshift128
 	uint32_t s[2] = {0, 0};
 	serializeIn(state, node->getNode("s0"), s[0]);
 	serializeIn(state, node->getNode("s1"), s[1]);
-	t.set_state(s);
+	t.setState(s);
 }
 
 void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &s)
@@ -1617,7 +1617,7 @@ template <> void serializeOut(sp<SerializationNode> node, const Xorshift128Plus<
 		return;
 
 	uint32_t s[2] = {0, 0};
-	t.get_state(s);
+	t.getState(s);
 	serializeOut(node->addNode("s0"), s[0]);
 	serializeOut(node->addNode("s1"), s[1]);
 }
@@ -1672,7 +1672,7 @@ bool GameState::loadGame(const UString &path)
 	auto archive = SerializationArchive::readArchive(path);
 	if (!archive)
 	{
-		LogError("Failed to read \"%s\"", path.c_str());
+		LogError("Failed to read \"%s\"", path.cStr());
 		return false;
 	}
 
@@ -1687,7 +1687,7 @@ bool GameState::serialize(sp<SerializationArchive> archive) const
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().c_str());
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
 		return false;
 	}
 	return true;
@@ -1701,7 +1701,7 @@ bool GameState::deserialize(const sp<SerializationArchive> archive)
 	}
 	catch (SerializationException &e)
 	{
-		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().c_str());
+		LogError("Serialization failed: \"%s\" at %s", e.what(), e.node->getFullPath().cStr());
 		return false;
 	}
 	return true;

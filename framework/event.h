@@ -133,27 +133,27 @@ class Event
   public:
 	bool Handled;
 
-	EventTypes Type() const;
+	EventTypes type() const;
 
-	FrameworkDisplayEvent &Display();
-	FrameworkJoystickEvent &Joystick();
-	FrameworkKeyboardEvent &Keyboard();
-	FrameworkMouseEvent &Mouse();
-	FrameworkFingerEvent &Finger();
-	FrameworkTimerEvent &Timer();
-	FrameworkFormsEvent &Forms();
-	FrameworkTextEvent &Text();
-	FrameworkUserEvent &User();
+	FrameworkDisplayEvent &display();
+	FrameworkJoystickEvent &joystick();
+	FrameworkKeyboardEvent &keyboard();
+	FrameworkMouseEvent &mouse();
+	FrameworkFingerEvent &finger();
+	FrameworkTimerEvent &timer();
+	FrameworkFormsEvent &forms();
+	FrameworkTextEvent &text();
+	FrameworkUserEvent &user();
 
-	const FrameworkDisplayEvent &Display() const;
-	const FrameworkJoystickEvent &Joystick() const;
-	const FrameworkKeyboardEvent &Keyboard() const;
-	const FrameworkMouseEvent &Mouse() const;
-	const FrameworkFingerEvent &Finger() const;
-	const FrameworkTimerEvent &Timer() const;
-	const FrameworkFormsEvent &Forms() const;
-	const FrameworkTextEvent &Text() const;
-	const FrameworkUserEvent &User() const;
+	const FrameworkDisplayEvent &display() const;
+	const FrameworkJoystickEvent &joystick() const;
+	const FrameworkKeyboardEvent &keyboard() const;
+	const FrameworkMouseEvent &mouse() const;
+	const FrameworkFingerEvent &finger() const;
+	const FrameworkTimerEvent &timer() const;
+	const FrameworkFormsEvent &forms() const;
+	const FrameworkTextEvent &text() const;
+	const FrameworkUserEvent &user() const;
 
 	virtual ~Event() = default;
 };

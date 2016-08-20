@@ -14,7 +14,7 @@ RadioButton::RadioButton(sp<RadioButtonGroup> Group, sp<Image> ImageChecked,
 
 RadioButton::~RadioButton() = default;
 
-sp<Control> RadioButton::CopyTo(sp<Control> CopyParent)
+sp<Control> RadioButton::copyTo(sp<Control> CopyParent)
 {
 	sp<RadioButton> copy;
 	sp<RadioButtonGroup> newGroup;
@@ -35,7 +35,7 @@ sp<Control> RadioButton::CopyTo(sp<Control> CopyParent)
 	{
 		copy = mksp<RadioButton>(newGroup, imagechecked, imageunchecked);
 	}
-	CopyControlData(copy);
+	copyControlData(copy);
 	if (newGroup)
 	{
 		newGroup->radioButtons.push_back(copy);
@@ -43,7 +43,7 @@ sp<Control> RadioButton::CopyTo(sp<Control> CopyParent)
 	return copy;
 }
 
-void RadioButton::SetChecked(bool checked)
+void RadioButton::setChecked(bool checked)
 {
 	if (checked && !Checked)
 	{
@@ -58,7 +58,7 @@ void RadioButton::SetChecked(bool checked)
 				}
 			}
 		}
-		CheckBox::SetChecked(checked);
+		CheckBox::setChecked(checked);
 	}
 }
 

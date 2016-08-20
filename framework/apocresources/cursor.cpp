@@ -39,16 +39,16 @@ ApocCursor::ApocCursor(sp<Palette> pal) : cursorPos{0, 0}
 
 ApocCursor::~ApocCursor() = default;
 
-void ApocCursor::EventOccured(Event *e)
+void ApocCursor::eventOccured(Event *e)
 {
-	if (e->Type() == EVENT_MOUSE_MOVE)
+	if (e->type() == EVENT_MOUSE_MOVE)
 	{
-		cursorPos.x = e->Mouse().X;
-		cursorPos.y = e->Mouse().Y;
+		cursorPos.x = e->mouse().X;
+		cursorPos.y = e->mouse().Y;
 	}
 }
 
-void ApocCursor::Render()
+void ApocCursor::render()
 {
 	fw().renderer->draw(images.at(static_cast<int>(CurrentType)),
 	                    Vec2<float>{cursorPos.x, cursorPos.y});

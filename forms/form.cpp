@@ -8,7 +8,7 @@ Form::Form() : Control() {}
 
 Form::~Form() = default;
 
-void Form::ReadFormStyle(tinyxml2::XMLElement *FormConfiguration)
+void Form::readFormStyle(tinyxml2::XMLElement *FormConfiguration)
 {
 	if (FormConfiguration == nullptr)
 	{
@@ -35,28 +35,28 @@ void Form::ReadFormStyle(tinyxml2::XMLElement *FormConfiguration)
 
 	if (usenode != nullptr)
 	{
-		ConfigureFromXML(usenode);
-		ResolveLocation();
+		configureFromXml(usenode);
+		resolveLocation();
 	}
 }
 
-void Form::EventOccured(Event *e) { Control::EventOccured(e); }
+void Form::eventOccured(Event *e) { Control::eventOccured(e); }
 
-void Form::OnRender() {}
+void Form::onRender() {}
 
-void Form::Update()
+void Form::update()
 {
-	Control::Update();
-	ResolveLocation();
+	Control::update();
+	resolveLocation();
 }
 
-void Form::UnloadResources() { Control::UnloadResources(); }
+void Form::unloadResources() { Control::unloadResources(); }
 
-sp<Control> Form::CopyTo(sp<Control> CopyParent)
+sp<Control> Form::copyTo(sp<Control> CopyParent)
 {
 	std::ignore = CopyParent;
 	auto copy = mksp<Form>();
-	CopyControlData(copy);
+	copyControlData(copy);
 	return copy;
 }
 

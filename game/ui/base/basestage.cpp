@@ -13,7 +13,7 @@ BaseStage::BaseStage(sp<GameState> state)
 
 BaseStage::~BaseStage() = default;
 
-void BaseStage::ChangeBase(sp<Base> newBase)
+void BaseStage::changeBase(sp<Base> newBase)
 {
 	if (newBase != nullptr)
 	{
@@ -21,26 +21,26 @@ void BaseStage::ChangeBase(sp<Base> newBase)
 	}
 }
 
-void BaseStage::RefreshView()
+void BaseStage::refreshView()
 {
 	auto viewImage = drawMiniBase(state->current_base, viewHighlight, viewFacility);
-	currentView->SetImage(viewImage);
-	currentView->SetDepressedImage(viewImage);
+	currentView->setImage(viewImage);
+	currentView->setDepressedImage(viewImage);
 }
 
-void BaseStage::Begin()
+void BaseStage::begin()
 {
-	ChangeBase();
+	changeBase();
 
-	textFunds = form->FindControlTyped<Label>("TEXT_FUNDS");
-	textFunds->SetText(state->getPlayerBalance());
+	textFunds = form->findControlTyped<Label>("TEXT_FUNDS");
+	textFunds->setText(state->getPlayerBalance());
 
 	int b = 0;
 	for (auto &pair : state->player_bases)
 	{
 		auto &viewBase = pair.second;
 		auto viewName = UString::format("BUTTON_BASE_%d", ++b);
-		auto view = form->FindControlTyped<GraphicButton>(viewName);
+		auto view = form->findControlTyped<GraphicButton>(viewName);
 		if (!view)
 		{
 			// This screen doesn't have miniviews
@@ -50,36 +50,36 @@ void BaseStage::Begin()
 		{
 			currentView = view;
 		}
-		view->SetData(viewBase);
+		view->setData(viewBase);
 		auto viewImage = drawMiniBase(viewBase, viewHighlight, viewFacility);
-		view->SetImage(viewImage);
-		view->SetDepressedImage(viewImage);
+		view->setImage(viewImage);
+		view->setDepressedImage(viewImage);
 		wp<GraphicButton> weakView(view);
 		view->addCallback(FormEventType::ButtonClick, [this, weakView](Event *e) {
-			auto base = e->Forms().RaisedBy->GetData<Base>();
+			auto base = e->forms().RaisedBy->getData<Base>();
 			if (this->state->current_base != base)
 			{
-				this->ChangeBase(base);
+				this->changeBase(base);
 				this->currentView = weakView.lock();
 			}
 		});
 		view->addCallback(FormEventType::MouseEnter, [this](Event *e) {
-			auto base = e->Forms().RaisedBy->GetData<Base>();
-			this->textViewBase->SetText(base->name);
+			auto base = e->forms().RaisedBy->getData<Base>();
+			this->textViewBase->setText(base->name);
 		});
 		view->addCallback(FormEventType::MouseLeave,
-		                  [this](Event *) { this->textViewBase->SetText(""); });
+		                  [this](Event *) { this->textViewBase->setText(""); });
 		miniViews.push_back(view);
 	}
-	textViewBase = form->FindControlTyped<Label>("TEXT_BUTTON_BASE");
+	textViewBase = form->findControlTyped<Label>("TEXT_BUTTON_BASE");
 }
 
-void BaseStage::Render()
+void BaseStage::render()
 {
 	// Highlight selected base
 	if (currentView != nullptr)
 	{
-		auto viewBase = currentView->GetData<Base>();
+		auto viewBase = currentView->getData<Base>();
 		if (state->current_base == viewBase)
 		{
 			Vec2<int> pos = form->Location + currentView->Location - 2;

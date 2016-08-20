@@ -78,7 +78,7 @@ sp<Organisation> StateObject<Organisation>::get(const GameState &state, const US
 	auto it = state.organisations.find(id);
 	if (it == state.organisations.end())
 	{
-		LogError("No organisation matching ID \"%s\"", id.c_str());
+		LogError("No organisation matching ID \"%s\"", id.cStr());
 		return nullptr;
 	}
 	return it->second;

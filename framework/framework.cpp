@@ -106,9 +106,9 @@ class JukeBoxImpl : public JukeBox
 		this->mode = mode;
 		for (auto &track : tracks)
 		{
-			auto musicTrack = fw.data->load_music(track);
+			auto musicTrack = fw.data->loadMusic(track);
 			if (!musicTrack)
-				LogError("Failed to load music track \"%s\" - skipping", track.c_str());
+				LogError("Failed to load music track \"%s\" - skipping", track.cStr());
 			else
 				this->trackList.push_back(musicTrack);
 		}
@@ -129,7 +129,7 @@ class JukeBoxImpl : public JukeBox
 			return;
 		}
 		LogInfo("Playing track %u (%s)", jukebox->position,
-		        jukebox->trackList[jukebox->position]->getName().c_str());
+		        jukebox->trackList[jukebox->position]->getName().cStr());
 		jukebox->fw.soundBackend->setTrack(jukebox->trackList[jukebox->position]);
 
 		jukebox->position++;
@@ -183,7 +183,7 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 
 	this->instance = this;
 
-	if (PHYSFS_init(programName.c_str()) == 0)
+	if (PHYSFS_init(programName.cStr()) == 0)
 	{
 		PHYSFS_ErrorCode error = PHYSFS_getLastErrorCode();
 		LogError("Failed to init code %i PHYSFS: %s", (int)error, PHYSFS_getErrorByCode(error));
@@ -210,13 +210,13 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 		auto splitString = option.split('=');
 		if (splitString.size() != 2)
 		{
-			LogError("Failed to parse command line option \"%s\" - ignoring", option.c_str());
+			LogError("Failed to parse command line option \"%s\" - ignoring", option.cStr());
 			continue;
 		}
 		else
 		{
-			LogInfo("Setting option \"%s\" to \"%s\" from command line", splitString[0].c_str(),
-			        splitString[1].c_str());
+			LogInfo("Setting option \"%s\" to \"%s\" from command line", splitString[0].cStr(),
+			        splitString[1].cStr());
 			Settings->set(splitString[0], splitString[1]);
 		}
 	}
@@ -225,7 +225,7 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 	// langauge')
 	auto desiredLanguageName = Settings->getString("Language");
 
-	LogInfo("Setting up locale \"%s\"", desiredLanguageName.c_str());
+	LogInfo("Setting up locale \"%s\"", desiredLanguageName.cStr());
 
 	boost::locale::generator gen;
 
@@ -238,14 +238,14 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 	for (auto &path : resourcePaths)
 	{
 		auto langPath = path + "/languages";
-		LogInfo("Adding \"%s\" to language path", langPath.c_str());
+		LogInfo("Adding \"%s\" to language path", langPath.cStr());
 		gen.add_messages_path(langPath.str());
 	}
 
 	std::vector<UString> translationDomains = {"paedia_string", "ufo_string"};
 	for (auto &domain : translationDomains)
 	{
-		LogInfo("Adding \"%s\" to translation domains", domain.c_str());
+		LogInfo("Adding \"%s\" to translation domains", domain.cStr());
 		gen.add_messages_domain(domain.str());
 	}
 
@@ -305,8 +305,8 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 
 	if (createWindow)
 	{
-		Display_Initialise();
-		Audio_Initialise();
+		displayInitialise();
+		audioInitialise();
 	}
 }
 
@@ -314,15 +314,15 @@ Framework::~Framework()
 {
 	TRACE_FN;
 	LogInfo("Destroying framework");
-	p->ProgramStages.Clear();
+	p->ProgramStages.clear();
 	LogInfo("Saving config");
-	SaveSettings();
+	saveSettings();
 
 	LogInfo("Shutdown");
 	if (createWindow)
 	{
-		Display_Shutdown();
-		Audio_Shutdown();
+		displayShutdown();
+		audioShutdown();
 	}
 	LogInfo("SDL shutdown");
 	PHYSFS_deinit();
@@ -340,7 +340,7 @@ Framework &Framework::getInstance()
 }
 Framework *Framework::tryGetInstance() { return instance; }
 
-void Framework::Run(sp<Stage> initialStage, size_t frameCount)
+void Framework::run(sp<Stage> initialStage, size_t frameCount)
 {
 	if (!createWindow)
 	{
@@ -351,47 +351,47 @@ void Framework::Run(sp<Stage> initialStage, size_t frameCount)
 	TRACE_FN;
 	LogInfo("Program loop started");
 
-	p->ProgramStages.Push(initialStage);
+	p->ProgramStages.push(initialStage);
 
-	this->renderer->setPalette(this->data->load_palette("xcom3/ufodata/PAL_06.DAT"));
+	this->renderer->setPalette(this->data->loadPalette("xcom3/ufodata/PAL_06.DAT"));
 
 	while (!p->quitProgram)
 	{
 		frame++;
-		TraceObj obj{"Frame", {{"frame", Strings::FromInteger(frame)}}};
+		TraceObj obj{"Frame", {{"frame", Strings::fromInteger(frame)}}};
 
-		ProcessEvents();
+		processEvents();
 
 		StageCmd cmd;
-		if (p->ProgramStages.IsEmpty())
+		if (p->ProgramStages.isEmpty())
 		{
 			break;
 		}
 		{
 			TraceObj updateObj("Update");
-			p->ProgramStages.Current()->Update(&cmd);
+			p->ProgramStages.current()->update(&cmd);
 		}
 		switch (cmd.cmd)
 		{
 			case StageCmd::Command::CONTINUE:
 				break;
 			case StageCmd::Command::REPLACE:
-				p->ProgramStages.Pop();
-				p->ProgramStages.Push(cmd.nextStage);
+				p->ProgramStages.pop();
+				p->ProgramStages.push(cmd.nextStage);
 				break;
 			case StageCmd::Command::REPLACEALL:
-				p->ProgramStages.Clear();
-				p->ProgramStages.Push(cmd.nextStage);
+				p->ProgramStages.clear();
+				p->ProgramStages.push(cmd.nextStage);
 				break;
 			case StageCmd::Command::PUSH:
-				p->ProgramStages.Push(cmd.nextStage);
+				p->ProgramStages.push(cmd.nextStage);
 				break;
 			case StageCmd::Command::POP:
-				p->ProgramStages.Pop();
+				p->ProgramStages.pop();
 				break;
 			case StageCmd::Command::QUIT:
 				p->quitProgram = true;
-				p->ProgramStages.Clear();
+				p->ProgramStages.clear();
 				break;
 		}
 		auto surface = p->scaleSurface ? p->scaleSurface : p->defaultSurface;
@@ -400,11 +400,11 @@ void Framework::Run(sp<Stage> initialStage, size_t frameCount)
 			TraceObj objClear{"clear"};
 			this->renderer->clear();
 		}
-		if (!p->ProgramStages.IsEmpty())
+		if (!p->ProgramStages.isEmpty())
 		{
 			TraceObj updateObj("Render");
-			p->ProgramStages.Current()->Render();
-			this->cursor->Render();
+			p->ProgramStages.current()->render();
+			this->cursor->render();
 			if (p->scaleSurface)
 			{
 				RendererSurfaceBinding scaleBind(*this->renderer, p->defaultSurface);
@@ -434,19 +434,19 @@ void Framework::Run(sp<Stage> initialStage, size_t frameCount)
 	}
 }
 
-void Framework::ProcessEvents()
+void Framework::processEvents()
 {
 	TRACE_FN;
-	if (p->ProgramStages.IsEmpty())
+	if (p->ProgramStages.isEmpty())
 	{
 		p->quitProgram = true;
 		return;
 	}
 
 	// TODO: Consider threading the translation
-	TranslateSDLEvents();
+	translateSdlEvents();
 
-	while (p->eventQueue.size() > 0 && !p->ProgramStages.IsEmpty())
+	while (p->eventQueue.size() > 0 && !p->ProgramStages.isEmpty())
 	{
 		up<Event> e;
 		{
@@ -459,13 +459,13 @@ void Framework::ProcessEvents()
 			LogError("Invalid event on queue");
 			continue;
 		}
-		this->cursor->EventOccured(e.get());
-		if (e->Type() == EVENT_KEY_DOWN)
+		this->cursor->eventOccured(e.get());
+		if (e->type() == EVENT_KEY_DOWN)
 		{
-			if (e->Keyboard().KeyCode == SDLK_F5)
+			if (e->keyboard().KeyCode == SDLK_F5)
 			{
 				UString screenshotName = "screenshot.png";
-				LogWarning("Writing screenshot to \"%s\"", screenshotName.c_str());
+				LogWarning("Writing screenshot to \"%s\"", screenshotName.cStr());
 				if (!p->defaultSurface->rendererPrivateData)
 				{
 					LogWarning("No renderer data on surface - nothing drawn yet?");
@@ -479,26 +479,26 @@ void Framework::ProcessEvents()
 					}
 					else
 					{
-						auto ret = data->write_image(screenshotName, img);
+						auto ret = data->writeImage(screenshotName, img);
 						if (!ret)
 						{
 							LogWarning("Failed to write screenshot");
 						}
 						else
 						{
-							LogWarning("Wrote screenshot to \"%s\"", screenshotName.c_str());
+							LogWarning("Wrote screenshot to \"%s\"", screenshotName.cStr());
 						}
 					}
 				}
 			}
 		}
-		switch (e->Type())
+		switch (e->type())
 		{
 			case EVENT_WINDOW_CLOSED:
-				ShutdownFramework();
+				shutdownFramework();
 				return;
 			default:
-				p->ProgramStages.Current()->EventOccurred(e.get());
+				p->ProgramStages.current()->eventOccurred(e.get());
 				break;
 		}
 	}
@@ -510,15 +510,15 @@ void Framework::ProcessEvents()
 	}
 }
 
-void Framework::PushEvent(up<Event> e)
+void Framework::pushEvent(up<Event> e)
 {
 	std::lock_guard<std::mutex> l(p->eventQueueLock);
 	p->eventQueue.push_back(std::move(e));
 }
 
-void Framework::PushEvent(Event *e) { this->PushEvent(up<Event>(e)); }
+void Framework::pushEvent(Event *e) { this->pushEvent(up<Event>(e)); }
 
-void Framework::TranslateSDLEvents()
+void Framework::translateSdlEvents()
 {
 	SDL_Event e;
 	Event *fwE;
@@ -540,7 +540,7 @@ void Framework::TranslateSDLEvents()
 		{
 			case SDL_QUIT:
 				fwE = new DisplayEvent(EVENT_WINDOW_CLOSED);
-				PushEvent(up<Event>(fwE));
+				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_JOYDEVICEADDED:
 			case SDL_JOYDEVICEREMOVED:
@@ -548,36 +548,36 @@ void Framework::TranslateSDLEvents()
 				break;
 			case SDL_KEYDOWN:
 				fwE = new KeyboardEvent(EVENT_KEY_DOWN);
-				fwE->Keyboard().KeyCode = e.key.keysym.sym;
-				fwE->Keyboard().ScanCode = e.key.keysym.scancode;
-				fwE->Keyboard().Modifiers = e.key.keysym.mod;
-				PushEvent(up<Event>(fwE));
+				fwE->keyboard().KeyCode = e.key.keysym.sym;
+				fwE->keyboard().ScanCode = e.key.keysym.scancode;
+				fwE->keyboard().Modifiers = e.key.keysym.mod;
+				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_KEYUP:
 				fwE = new KeyboardEvent(EVENT_KEY_UP);
-				fwE->Keyboard().KeyCode = e.key.keysym.sym;
-				fwE->Keyboard().ScanCode = e.key.keysym.scancode;
-				fwE->Keyboard().Modifiers = e.key.keysym.mod;
-				PushEvent(up<Event>(fwE));
+				fwE->keyboard().KeyCode = e.key.keysym.sym;
+				fwE->keyboard().ScanCode = e.key.keysym.scancode;
+				fwE->keyboard().Modifiers = e.key.keysym.mod;
+				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_TEXTINPUT:
 				fwE = new TextEvent();
-				fwE->Text().Input = e.text.text;
-				PushEvent(up<Event>(fwE));
+				fwE->text().Input = e.text.text;
+				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_TEXTEDITING:
 				// FIXME: Do nothing?
 				break;
 			case SDL_MOUSEMOTION:
 				fwE = new MouseEvent(EVENT_MOUSE_MOVE);
-				fwE->Mouse().X = e.motion.x;
-				fwE->Mouse().Y = e.motion.y;
-				fwE->Mouse().DeltaX = e.motion.xrel;
-				fwE->Mouse().DeltaY = e.motion.yrel;
-				fwE->Mouse().WheelVertical = 0;   // These should be handled
-				fwE->Mouse().WheelHorizontal = 0; // in a separate event
-				fwE->Mouse().Button = e.motion.state;
-				PushEvent(up<Event>(fwE));
+				fwE->mouse().X = e.motion.x;
+				fwE->mouse().Y = e.motion.y;
+				fwE->mouse().DeltaX = e.motion.xrel;
+				fwE->mouse().DeltaY = e.motion.yrel;
+				fwE->mouse().WheelVertical = 0;   // These should be handled
+				fwE->mouse().WheelHorizontal = 0; // in a separate event
+				fwE->mouse().Button = e.motion.state;
+				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_MOUSEWHEEL:
 				// FIXME: Check these values for sanity
@@ -586,73 +586,73 @@ void Framework::TranslateSDLEvents()
 				// this code should be in its own small block.
 				{
 					int mx, my;
-					fwE->Mouse().Button = SDL_GetMouseState(&mx, &my);
-					fwE->Mouse().X = mx;
-					fwE->Mouse().Y = my;
-					fwE->Mouse().DeltaX = 0; // FIXME: This might cause problems?
-					fwE->Mouse().DeltaY = 0;
-					fwE->Mouse().WheelVertical = e.wheel.y;
-					fwE->Mouse().WheelHorizontal = e.wheel.x;
+					fwE->mouse().Button = SDL_GetMouseState(&mx, &my);
+					fwE->mouse().X = mx;
+					fwE->mouse().Y = my;
+					fwE->mouse().DeltaX = 0; // FIXME: This might cause problems?
+					fwE->mouse().DeltaY = 0;
+					fwE->mouse().WheelVertical = e.wheel.y;
+					fwE->mouse().WheelHorizontal = e.wheel.x;
 				}
-				PushEvent(up<Event>(fwE));
+				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_MOUSEBUTTONDOWN:
 				fwE = new MouseEvent(EVENT_MOUSE_DOWN);
-				fwE->Mouse().X = e.button.x;
-				fwE->Mouse().Y = e.button.y;
-				fwE->Mouse().DeltaX = 0; // FIXME: This might cause problems?
-				fwE->Mouse().DeltaY = 0;
-				fwE->Mouse().WheelVertical = 0;
-				fwE->Mouse().WheelHorizontal = 0;
-				fwE->Mouse().Button = SDL_BUTTON(e.button.button);
-				PushEvent(up<Event>(fwE));
+				fwE->mouse().X = e.button.x;
+				fwE->mouse().Y = e.button.y;
+				fwE->mouse().DeltaX = 0; // FIXME: This might cause problems?
+				fwE->mouse().DeltaY = 0;
+				fwE->mouse().WheelVertical = 0;
+				fwE->mouse().WheelHorizontal = 0;
+				fwE->mouse().Button = SDL_BUTTON(e.button.button);
+				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_MOUSEBUTTONUP:
 				fwE = new MouseEvent(EVENT_MOUSE_UP);
-				fwE->Mouse().X = e.button.x;
-				fwE->Mouse().Y = e.button.y;
-				fwE->Mouse().DeltaX = 0; // FIXME: This might cause problems?
-				fwE->Mouse().DeltaY = 0;
-				fwE->Mouse().WheelVertical = 0;
-				fwE->Mouse().WheelHorizontal = 0;
-				fwE->Mouse().Button = SDL_BUTTON(e.button.button);
-				PushEvent(up<Event>(fwE));
+				fwE->mouse().X = e.button.x;
+				fwE->mouse().Y = e.button.y;
+				fwE->mouse().DeltaX = 0; // FIXME: This might cause problems?
+				fwE->mouse().DeltaY = 0;
+				fwE->mouse().WheelVertical = 0;
+				fwE->mouse().WheelHorizontal = 0;
+				fwE->mouse().Button = SDL_BUTTON(e.button.button);
+				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_FINGERDOWN:
 				fwE = new FingerEvent(EVENT_FINGER_DOWN);
-				fwE->Finger().X = static_cast<int>(e.tfinger.x * Display_GetWidth());
-				fwE->Finger().Y = static_cast<int>(e.tfinger.y * Display_GetHeight());
-				fwE->Finger().DeltaX = static_cast<int>(e.tfinger.dx * Display_GetWidth());
-				fwE->Finger().DeltaY = static_cast<int>(e.tfinger.dy * Display_GetHeight());
-				fwE->Finger().Id = e.tfinger.fingerId;
-				fwE->Finger().IsPrimary =
+				fwE->finger().X = static_cast<int>(e.tfinger.x * displayGetWidth());
+				fwE->finger().Y = static_cast<int>(e.tfinger.y * displayGetHeight());
+				fwE->finger().DeltaX = static_cast<int>(e.tfinger.dx * displayGetWidth());
+				fwE->finger().DeltaY = static_cast<int>(e.tfinger.dy * displayGetHeight());
+				fwE->finger().Id = e.tfinger.fingerId;
+				fwE->finger().IsPrimary =
 				    e.tfinger.fingerId ==
 				    primaryFingerID; // FIXME: Try to remember the ID of the first touching finger!
-				PushEvent(up<Event>(fwE));
+				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_FINGERUP:
 				fwE = new FingerEvent(EVENT_FINGER_UP);
-				fwE->Finger().X = static_cast<int>(e.tfinger.x * Display_GetWidth());
-				fwE->Finger().Y = static_cast<int>(e.tfinger.y * Display_GetHeight());
-				fwE->Finger().DeltaX = static_cast<int>(e.tfinger.dx * Display_GetWidth());
-				fwE->Finger().DeltaY = static_cast<int>(e.tfinger.dy * Display_GetHeight());
-				fwE->Finger().Id = e.tfinger.fingerId;
-				fwE->Finger().IsPrimary =
+				fwE->finger().X = static_cast<int>(e.tfinger.x * displayGetWidth());
+				fwE->finger().Y = static_cast<int>(e.tfinger.y * displayGetHeight());
+				fwE->finger().DeltaX = static_cast<int>(e.tfinger.dx * displayGetWidth());
+				fwE->finger().DeltaY = static_cast<int>(e.tfinger.dy * displayGetHeight());
+				fwE->finger().Id = e.tfinger.fingerId;
+				fwE->finger().IsPrimary =
 				    e.tfinger.fingerId ==
 				    primaryFingerID; // FIXME: Try to remember the ID of the first touching finger!
-				PushEvent(up<Event>(fwE));
+				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_FINGERMOTION:
 				fwE = new FingerEvent(EVENT_FINGER_MOVE);
-				fwE->Finger().X = static_cast<int>(e.tfinger.x * Display_GetWidth());
-				fwE->Finger().Y = static_cast<int>(e.tfinger.y * Display_GetHeight());
-				fwE->Finger().DeltaX = static_cast<int>(e.tfinger.dx * Display_GetWidth());
-				fwE->Finger().DeltaY = static_cast<int>(e.tfinger.dy * Display_GetHeight());
-				fwE->Finger().Id = e.tfinger.fingerId;
-				fwE->Finger().IsPrimary =
+				fwE->finger().X = static_cast<int>(e.tfinger.x * displayGetWidth());
+				fwE->finger().Y = static_cast<int>(e.tfinger.y * displayGetHeight());
+				fwE->finger().DeltaX = static_cast<int>(e.tfinger.dx * displayGetWidth());
+				fwE->finger().DeltaY = static_cast<int>(e.tfinger.dy * displayGetHeight());
+				fwE->finger().Id = e.tfinger.fingerId;
+				fwE->finger().IsPrimary =
 				    e.tfinger.fingerId ==
 				    primaryFingerID; // FIXME: Try to remember the ID of the first touching finger!
-				PushEvent(up<Event>(fwE));
+				pushEvent(up<Event>(fwE));
 				break;
 			case SDL_WINDOWEVENT:
 				// Window events get special treatment
@@ -661,12 +661,12 @@ void Framework::TranslateSDLEvents()
 					case SDL_WINDOWEVENT_RESIZED:
 						// FIXME: Do we care about SDL_WINDOWEVENT_SIZE_CHANGED?
 						fwE = new DisplayEvent(EVENT_WINDOW_RESIZE);
-						fwE->Display().X = 0;
-						fwE->Display().Y = 0;
-						fwE->Display().Width = e.window.data1;
-						fwE->Display().Height = e.window.data2;
-						fwE->Display().Active = true;
-						PushEvent(up<Event>(fwE));
+						fwE->display().X = 0;
+						fwE->display().Y = 0;
+						fwE->display().Width = e.window.data1;
+						fwE->display().Height = e.window.data2;
+						fwE->display().Active = true;
+						pushEvent(up<Event>(fwE));
 						break;
 					case SDL_WINDOWEVENT_HIDDEN:
 					case SDL_WINDOWEVENT_MINIMIZED:
@@ -674,13 +674,13 @@ void Framework::TranslateSDLEvents()
 						// FIXME: Check if we should react this way for each of those events
 						// FIXME: Check if we're missing some of the events
 						fwE = new DisplayEvent(EVENT_WINDOW_DEACTIVATE);
-						fwE->Display().X = 0;
-						fwE->Display().Y = 0;
+						fwE->display().X = 0;
+						fwE->display().Y = 0;
 						// FIXME: Is this even necessary?
-						SDL_GetWindowSize(p->window, &(fwE->Display().Width),
-						                  &(fwE->Display().Height));
-						fwE->Display().Active = false;
-						PushEvent(up<Event>(fwE));
+						SDL_GetWindowSize(p->window, &(fwE->display().Width),
+						                  &(fwE->display().Height));
+						fwE->display().Active = false;
+						pushEvent(up<Event>(fwE));
 						break;
 					case SDL_WINDOWEVENT_SHOWN:
 					case SDL_WINDOWEVENT_EXPOSED:
@@ -688,13 +688,13 @@ void Framework::TranslateSDLEvents()
 					case SDL_WINDOWEVENT_ENTER:
 						// FIXME: Should we handle all these events as "aaand we're back" events?
 						fwE = new DisplayEvent(EVENT_WINDOW_ACTIVATE);
-						fwE->Display().X = 0;
-						fwE->Display().Y = 0;
+						fwE->display().X = 0;
+						fwE->display().Y = 0;
 						// FIXME: Is this even necessary?
-						SDL_GetWindowSize(p->window, &(fwE->Display().Width),
-						                  &(fwE->Display().Height));
-						fwE->Display().Active = false;
-						PushEvent(up<Event>(fwE));
+						SDL_GetWindowSize(p->window, &(fwE->display().Width),
+						                  &(fwE->display().Height));
+						fwE->display().Active = false;
+						pushEvent(up<Event>(fwE));
 						break;
 					case SDL_WINDOWEVENT_CLOSE:
 						// Closing a window will be a "quit" event.
@@ -709,14 +709,14 @@ void Framework::TranslateSDLEvents()
 	}
 }
 
-void Framework::ShutdownFramework()
+void Framework::shutdownFramework()
 {
 	LogInfo("Shutdown framework");
-	p->ProgramStages.Clear();
+	p->ProgramStages.clear();
 	p->quitProgram = true;
 }
 
-void Framework::SaveSettings()
+void Framework::saveSettings()
 {
 	// Just to keep the filename consistant
 	UString settingsPath(PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME));
@@ -724,7 +724,7 @@ void Framework::SaveSettings()
 	Settings->save(settingsPath);
 }
 
-void Framework::Display_Initialise()
+void Framework::displayInitialise()
 {
 	if (!this->createWindow)
 	{
@@ -799,7 +799,7 @@ void Framework::Display_Initialise()
 	LogInfo("Created OpenGL context, parameters:");
 	int value;
 	SDL_GL_GetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, &value);
-	std::string profileType;
+	UString profileType;
 	switch (value)
 	{
 		case SDL_GL_CONTEXT_PROFILE_ES:
@@ -814,7 +814,7 @@ void Framework::Display_Initialise()
 		default:
 			profileType = "Unknown";
 	}
-	LogInfo("  Context profile: %s", profileType.c_str());
+	LogInfo("  Context profile: %s", profileType.cStr());
 	int ctxMajor, ctxMinor;
 	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, &ctxMajor);
 	SDL_GL_GetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, &ctxMinor);
@@ -838,17 +838,17 @@ void Framework::Display_Initialise()
 		auto rendererFactory = p->registeredRenderers.find(rendererName);
 		if (rendererFactory == p->registeredRenderers.end())
 		{
-			LogInfo("Renderer \"%s\" not in supported list", rendererName.c_str());
+			LogInfo("Renderer \"%s\" not in supported list", rendererName.cStr());
 			continue;
 		}
 		Renderer *r = rendererFactory->second->create();
 		if (!r)
 		{
-			LogInfo("Renderer \"%s\" failed to init", rendererName.c_str());
+			LogInfo("Renderer \"%s\" failed to init", rendererName.cStr());
 			continue;
 		}
 		this->renderer.reset(r);
-		LogInfo("Using renderer: %s", this->renderer->getName().c_str());
+		LogInfo("Using renderer: %s", this->renderer->getName().cStr());
 		break;
 	}
 	if (!this->renderer)
@@ -888,10 +888,10 @@ void Framework::Display_Initialise()
 	{
 		p->displaySize = p->windowSize;
 	}
-	this->cursor.reset(new ApocCursor(this->data->load_palette("xcom3/tacdata/TACTICAL.PAL")));
+	this->cursor.reset(new ApocCursor(this->data->loadPalette("xcom3/tacdata/TACTICAL.PAL")));
 }
 
-void Framework::Display_Shutdown()
+void Framework::displayShutdown()
 {
 	this->cursor.reset();
 	if (!p->window)
@@ -907,13 +907,13 @@ void Framework::Display_Shutdown()
 	SDL_DestroyWindow(p->window);
 }
 
-int Framework::Display_GetWidth() { return p->displaySize.x; }
+int Framework::displayGetWidth() { return p->displaySize.x; }
 
-int Framework::Display_GetHeight() { return p->displaySize.y; }
+int Framework::displayGetHeight() { return p->displaySize.y; }
 
-Vec2<int> Framework::Display_GetSize() { return p->displaySize; }
+Vec2<int> Framework::displayGetSize() { return p->displaySize; }
 
-bool Framework::Display_HasWindow() const
+bool Framework::displayHasWindow() const
 {
 	if (createWindow == false)
 		return false;
@@ -922,15 +922,15 @@ bool Framework::Display_HasWindow() const
 	return true;
 }
 
-void Framework::Display_SetTitle(UString NewTitle)
+void Framework::displaySetTitle(UString NewTitle)
 {
 	if (p->window)
 	{
-		SDL_SetWindowTitle(p->window, NewTitle.c_str());
+		SDL_SetWindowTitle(p->window, NewTitle.cStr());
 	}
 }
 
-void Framework::Display_SetIcon()
+void Framework::displaySetIcon()
 {
 	if (!p->window)
 	{
@@ -951,7 +951,7 @@ void Framework::Display_SetIcon()
 #endif
 }
 
-void Framework::Audio_Initialise()
+void Framework::audioInitialise()
 {
 	TRACE_FN;
 	LogInfo("Initialise Audio");
@@ -964,17 +964,17 @@ void Framework::Audio_Initialise()
 		auto backendFactory = p->registeredSoundBackends.find(soundBackendName);
 		if (backendFactory == p->registeredSoundBackends.end())
 		{
-			LogInfo("Sound backend %s not in supported list", soundBackendName.c_str());
+			LogInfo("Sound backend %s not in supported list", soundBackendName.cStr());
 			continue;
 		}
 		SoundBackend *backend = backendFactory->second->create();
 		if (!backend)
 		{
-			LogInfo("Sound backend %s failed to init", soundBackendName.c_str());
+			LogInfo("Sound backend %s failed to init", soundBackendName.cStr());
 			continue;
 		}
 		this->soundBackend.reset(backend);
-		LogInfo("Using sound backend %s", soundBackendName.c_str());
+		LogInfo("Using sound backend %s", soundBackendName.cStr());
 		break;
 	}
 	if (!this->soundBackend)
@@ -995,7 +995,7 @@ void Framework::Audio_Initialise()
 	                                20.0f);
 }
 
-void Framework::Audio_Shutdown()
+void Framework::audioShutdown()
 {
 	TRACE_FN;
 	LogInfo("Shutdown Audio");
@@ -1003,23 +1003,23 @@ void Framework::Audio_Shutdown()
 	this->soundBackend.reset();
 }
 
-sp<Stage> Framework::Stage_GetPrevious() { return p->ProgramStages.Previous(); }
+sp<Stage> Framework::stageGetPrevious() { return p->ProgramStages.previous(); }
 
-sp<Stage> Framework::Stage_GetPrevious(sp<Stage> From) { return p->ProgramStages.Previous(From); }
+sp<Stage> Framework::stageGetPrevious(sp<Stage> From) { return p->ProgramStages.previous(From); }
 
-void Framework::Stage_Push(sp<Stage> stage)
+void Framework::stagePush(sp<Stage> stage)
 {
 	LogAssert(stage);
-	p->ProgramStages.Push(stage);
+	p->ProgramStages.push(stage);
 }
 
 Vec2<int> Framework::getCursorPosition() { return this->cursor->getPosition(); }
 
-void Framework::Text_StartInput() { SDL_StartTextInput(); }
+void Framework::textStartInput() { SDL_StartTextInput(); }
 
-void Framework::Text_StopInput() { SDL_StopTextInput(); }
+void Framework::textStopInput() { SDL_StopTextInput(); }
 
-UString Framework::Text_GetClipboard()
+UString Framework::textGetClipboard()
 {
 	UString str;
 	char *text = SDL_GetClipboardText();

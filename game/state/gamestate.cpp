@@ -58,7 +58,7 @@ GameState::~GameState()
 // Just a handy shortcut since it's shown on every single screen
 UString GameState::getPlayerBalance() const
 {
-	return Strings::FromInteger(this->getPlayer()->balance);
+	return Strings::fromInteger(this->getPlayer()->balance);
 }
 
 StateRef<Organisation> GameState::getOrganisation(const UString &orgID)
@@ -193,8 +193,8 @@ void GameState::startGame()
 
 	auto base = mksp<Base>(*this, StateRef<Building>{this, bld});
 	base->startingBase(*this);
-	base->name = "Base " + Strings::FromInteger(this->player_bases.size() + 1);
-	this->player_bases[Base::getPrefix() + Strings::FromInteger(this->player_bases.size() + 1)] =
+	base->name = "Base " + Strings::fromInteger(this->player_bases.size() + 1);
+	this->player_bases[Base::getPrefix() + Strings::fromInteger(this->player_bases.size() + 1)] =
 	    base;
 	bld->owner = this->getPlayer();
 	this->current_base = {this, base};
@@ -303,7 +303,7 @@ void GameState::updateEndOfDay()
 				f->buildTime--;
 				if (f->buildTime == 0)
 				{
-					fw().PushEvent(
+					fw().pushEvent(
 					    new GameFacilityEvent(GameEventType::FacilityCompleted, b.second, f));
 				}
 			}

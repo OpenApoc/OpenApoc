@@ -45,7 +45,7 @@ std::string ProviderWithChecksum::serializeManifest()
 	{
 		auto node = root.append_child();
 		node.set_name("checksum");
-		node.text().set(p.first.c_str());
+		node.text().set(p.first.cStr());
 		node.append_attribute("SHA1") = p.second.c_str();
 	}
 	std::stringstream ss;
@@ -77,14 +77,14 @@ bool ProviderWithChecksum::parseManifest(const std::string &manifestData)
 		auto shaAttribute = checksumNode.attribute("SHA1");
 		if (!shaAttribute)
 		{
-			LogWarning("checksum.xml checksum node \"%s\" has no SHA1 attribute", fileName.c_str());
+			LogWarning("checksum.xml checksum node \"%s\" has no SHA1 attribute", fileName.cStr());
 			contents[fileName] = "";
 		}
 		else
 		{
 			contents[fileName] = shaAttribute.value();
 		}
-		LogInfo("Manifest \"%s\" sha1=\"%s\"", fileName.c_str(), shaAttribute.value());
+		LogInfo("Manifest \"%s\" sha1=\"%s\"", fileName.cStr(), shaAttribute.value());
 		checksumNode = checksumNode.next_sibling("checksum");
 	}
 
@@ -101,7 +101,7 @@ bool ProviderWithChecksum::openArchive(const UString &path, bool write)
 	UString result;
 	if (!inner->readDocument("checksum.xml", result))
 	{
-		LogInfo("Missing manifest file in \"%s\"", path.c_str());
+		LogInfo("Missing manifest file in \"%s\"", path.cStr());
 		return true;
 	}
 	parseManifest(result.str());
@@ -118,12 +118,12 @@ bool ProviderWithChecksum::readDocument(const UString &path, UString &result)
 			if (sha1Sum != expectedSha1Sum)
 			{
 				LogWarning("File \"%s\" has incorrect checksum \"%s\", expected \"%s\"",
-				           path.c_str(), sha1Sum.c_str(), expectedSha1Sum.c_str());
+				           path.cStr(), sha1Sum.cStr(), expectedSha1Sum.c_str());
 			}
 		}
 		else
 		{
-			LogInfo("Skipping missing checksum for file \"%s\"", path.c_str());
+			LogInfo("Skipping missing checksum for file \"%s\"", path.cStr());
 		}
 		return true;
 	}

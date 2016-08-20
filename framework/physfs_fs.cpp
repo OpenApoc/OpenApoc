@@ -46,13 +46,13 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 	PhysfsIFileImpl(const UString &path, const UString &suppliedPath, size_t bufferSize = 512)
 	    : bufferSize(bufferSize), buffer(new char[bufferSize]), suppliedPath(suppliedPath)
 	{
-		file = PHYSFS_openRead(path.c_str());
+		file = PHYSFS_openRead(path.cStr());
 		if (!file)
 		{
-			LogError("Failed to open file \"%s\" : \"%s\"", path.c_str(), PHYSFS_getLastError());
+			LogError("Failed to open file \"%s\" : \"%s\"", path.cStr(), PHYSFS_getLastError());
 			return;
 		}
-		systemPath = PHYSFS_getRealDir(path.c_str());
+		systemPath = PHYSFS_getRealDir(path.cStr());
 		systemPath += "/" + path;
 	}
 	~PhysfsIFileImpl() override
@@ -102,7 +102,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 
 		if (mode & std::ios_base::out)
 		{
-			LogError("ios::out set on read-only IFile \"%s\"", this->suppliedPath.c_str());
+			LogError("ios::out set on read-only IFile \"%s\"", this->suppliedPath.cStr());
 			LogAssert(0);
 			setp(buffer.get(), buffer.get());
 		}
@@ -120,7 +120,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 
 		if (mode & std::ios_base::out)
 		{
-			LogError("ios::out set on read-only IFile \"%s\"", this->suppliedPath.c_str());
+			LogError("ios::out set on read-only IFile \"%s\"", this->suppliedPath.cStr());
 			LogAssert(0);
 			setp(buffer.get(), buffer.get());
 		}
@@ -130,7 +130,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 
 	int_type overflow(int_type c = traits_type::eof()) override
 	{
-		LogError("overflow called on read-only IFile \"%s\"", this->suppliedPath.c_str());
+		LogError("overflow called on read-only IFile \"%s\"", this->suppliedPath.cStr());
 		LogAssert(0);
 		std::ignore = c;
 		return 0;
@@ -225,21 +225,21 @@ FileSystem::FileSystem(std::vector<UString> paths)
 	// searched)
 	for (auto &p : paths)
 	{
-		if (!PHYSFS_mount(p.c_str(), "/", 0))
+		if (!PHYSFS_mount(p.cStr(), "/", 0))
 		{
-			LogInfo("Failed to add resource dir \"%s\", error: %s", p.c_str(),
+			LogInfo("Failed to add resource dir \"%s\", error: %s", p.cStr(),
 			        PHYSFS_getLastError());
 			continue;
 		}
 		else
-			LogInfo("Resource dir \"%s\" mounted to \"%s\"", p.c_str(),
-			        PHYSFS_getMountPoint(p.c_str()));
+			LogInfo("Resource dir \"%s\" mounted to \"%s\"", p.cStr(),
+			        PHYSFS_getMountPoint(p.cStr()));
 	}
 	this->writeDir = PHYSFS_getPrefDir(PROGRAM_ORGANISATION, PROGRAM_NAME);
-	LogInfo("Setting write directory to \"%s\"", this->writeDir.c_str());
-	PHYSFS_setWriteDir(this->writeDir.c_str());
+	LogInfo("Setting write directory to \"%s\"", this->writeDir.cStr());
+	PHYSFS_setWriteDir(this->writeDir.cStr());
 	// Finally, the write directory trumps all
-	PHYSFS_mount(this->writeDir.c_str(), "/", 0);
+	PHYSFS_mount(this->writeDir.cStr(), "/", 0);
 }
 
 FileSystem::~FileSystem() = default;
@@ -264,13 +264,13 @@ static UString FindFile(const UString &basePath, std::list<UString> pathElements
 
 	UString foundPath;
 
-	char **elements = PHYSFS_enumerateFiles(currentPath.c_str());
+	char **elements = PHYSFS_enumerateFiles(currentPath.cStr());
 
 	for (char **element = elements; *element != NULL; element++)
 	{
 		auto elementPath = currentPath + *element;
 		// Don't add directories to the expandedFiles map
-		if (PHYSFS_exists(elementPath.c_str()))
+		if (PHYSFS_exists(elementPath.cStr()))
 		{
 			expandedFiles[elementPath.toUpper()] = elementPath;
 		}
@@ -280,7 +280,7 @@ static UString FindFile(const UString &basePath, std::list<UString> pathElements
 			// check for overlapping entries
 			if (!foundPath.empty())
 			{
-				LogWarning("Multiple elements that match \"%s\"", currentPath.c_str());
+				LogWarning("Multiple elements that match \"%s\"", currentPath.cStr());
 			}
 			foundPath = currentPath + *element;
 		}
@@ -320,13 +320,13 @@ IFile FileSystem::open(const UString &path)
 	UString foundPath = this->getCorrectCaseFilename(path);
 	if (foundPath == "")
 	{
-		LogInfo("Failed to find \"%s\"", path.c_str());
+		LogInfo("Failed to find \"%s\"", path.cStr());
 		LogAssert(!f);
 		return f;
 	}
 	f.f.reset(new PhysfsIFileImpl(foundPath, path));
 	f.rdbuf(dynamic_cast<PhysfsIFileImpl *>(f.f.get()));
-	LogInfo("Loading \"%s\" from \"%s\"", path.c_str(), f.systemPath().c_str());
+	LogInfo("Loading \"%s\" from \"%s\"", path.cStr(), f.systemPath().cStr());
 	return f;
 }
 
@@ -338,7 +338,7 @@ std::list<UString> FileSystem::enumerateDirectory(const UString &basePath,
 	bool filterByExtension = !extension.empty();
 	UString uppercaseExtension = extension.toUpper();
 
-	char **elements = PHYSFS_enumerateFiles(basePath.c_str());
+	char **elements = PHYSFS_enumerateFiles(basePath.cStr());
 	for (char **element = elements; *element != NULL; element++)
 	{
 		if (!filterByExtension)

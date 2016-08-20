@@ -356,7 +356,7 @@ bool VehicleMission::takeOffCheck(GameState &state, Vehicle &v, UString mission)
 	{
 		if (v.currentlyLandedBuilding)
 		{
-			LogInfo("Mission %s: Taking off first", mission.c_str());
+			LogInfo("Mission %s: Taking off first", mission.cStr());
 			auto *takeoffMission = VehicleMission::takeOff(v);
 			v.missions.emplace_front(takeoffMission);
 			takeoffMission->start(state, v);
@@ -365,7 +365,7 @@ bool VehicleMission::takeOffCheck(GameState &state, Vehicle &v, UString mission)
 		else
 		{
 			LogError("Mission %s: Vehicle not in the city and shouldn't recieve orders",
-			         mission.c_str());
+			         mission.cStr());
 			return false;
 		}
 	}
@@ -489,7 +489,7 @@ bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float
 				auto name = this->getName();
 				LogError("Vehicle mission %s: getNextDestination() shouldn't be called unless "
 				         "you've reached the target?",
-				         name.c_str());
+				         name.cStr());
 			}
 			dest = {0, 0, 9};
 			return false;
@@ -529,15 +529,15 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks)
 			{
 				if (c.second->buildings.find(b.id) != c.second->buildings.end())
 				{
-					LogInfo("Taking off from building \"%s\" in city \"%s\"", b.id.c_str(),
-					        c.first.c_str());
+					LogInfo("Taking off from building \"%s\" in city \"%s\"", b.id.cStr(),
+					        c.first.cStr());
 					city = {&state, c.first};
 					break;
 				}
 			}
 			if (!city)
 			{
-				LogError("No city found containing building \"%s\"", b.id.c_str());
+				LogError("No city found containing building \"%s\"", b.id.cStr());
 				return;
 			}
 			auto &map = *city->map;
@@ -557,13 +557,13 @@ void VehicleMission::update(GameState &state, Vehicle &v, unsigned int ticks)
 				if (!tileHelper.canEnterTile(nullptr, padTile) ||
 				    !tileHelper.canEnterTile(padTile, tileAbovePad))
 					continue;
-				LogInfo("Launching vehicle from building \"%s\" at pad {%d,%d,%d}", b.id.c_str(),
+				LogInfo("Launching vehicle from building \"%s\" at pad {%d,%d,%d}", b.id.cStr(),
 				        padLocation.x, padLocation.y, padLocation.z);
 				this->currentPlannedPath = {padLocation, abovePadLocation};
 				v.launch(map, state, padLocation);
 				return;
 			}
-			LogInfo("No pad in building \"%s\" free - waiting", b.id.c_str());
+			LogInfo("No pad in building \"%s\" free - waiting", b.id.cStr());
 			return;
 		}
 		case MissionType::Patrol:
@@ -658,7 +658,7 @@ bool VehicleMission::isFinished(GameState &state, Vehicle &v)
 				/* FIXME: Overloading isFinished() to complete landing action
  * (Should add a ->end() call to mirror ->start()?*/
 				v.land(state, b);
-				LogInfo("Vehicle mission: Landed in %s", b.id.c_str());
+				LogInfo("Vehicle mission: Landed in %s", b.id.cStr());
 				return true;
 			}
 			return false;
@@ -764,7 +764,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			if (!padFound)
 			{
 				LogError("Vehicle at {%d,%d,%d} not directly above a landing pad for building %s",
-				         padPosition.x, padPosition.y, padPosition.z + 1, b.id.c_str());
+				         padPosition.x, padPosition.y, padPosition.z + 1, b.id.cStr());
 				return;
 			}
 			this->currentPlannedPath = {padPosition};
@@ -800,7 +800,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			{
 				// FIXME: Snooze for a while (?)
 				auto name = this->getName();
-				LogError("Vehicle mission %s failed to find a place to land", name.c_str());
+				LogError("Vehicle mission %s failed to find a place to land", name.cStr());
 				return;
 			}
 			this->targetLocation = tile;
@@ -816,7 +816,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 		case MissionType::AttackVehicle:
 		{
 			auto name = this->getName();
-			LogInfo("Vehicle mission %s checking state", name.c_str());
+			LogInfo("Vehicle mission %s checking state", name.cStr());
 			auto t = this->targetVehicle;
 			if (!t)
 			{
@@ -825,13 +825,13 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			if (v.shared_from_this() == t.getSp())
 			{
-				LogError("Vehicle mission %s: Targeting itself", name.c_str());
+				LogError("Vehicle mission %s: Targeting itself", name.cStr());
 				return;
 			}
 			auto targetTile = t->tileObject;
 			if (!targetTile)
 			{
-				LogInfo("Vehicle mission %s: Target not on the map", name.c_str());
+				LogInfo("Vehicle mission %s: Target not on the map", name.cStr());
 				return;
 			}
 			auto vehicleTile = v.tileObject;
@@ -846,7 +846,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 		case MissionType::GotoBuilding:
 		{
 			auto name = this->getName();
-			LogInfo("Vehicle mission %s checking state", name.c_str());
+			LogInfo("Vehicle mission %s checking state", name.cStr());
 			auto b = this->targetBuilding;
 			if (!b)
 			{
@@ -855,7 +855,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			if (b == v.currentlyLandedBuilding)
 			{
-				LogInfo("Vehicle mission %s: Already at building", name.c_str());
+				LogInfo("Vehicle mission %s: Already at building", name.cStr());
 				return;
 			}
 			auto vehicleTile = v.tileObject;
@@ -865,14 +865,14 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			/* Am I already above a landing pad? If so land */
 			auto position = vehicleTile->getOwningTile()->position;
-			LogInfo("Vehicle mission %s: at position {%d,%d,%d}", name.c_str(), position.x,
+			LogInfo("Vehicle mission %s: at position {%d,%d,%d}", name.cStr(), position.x,
 			        position.y, position.z);
 			for (auto padLocation : b->landingPadLocations)
 			{
 				padLocation.z += 1;
 				if (padLocation == position)
 				{
-					LogInfo("Mission %s: Landing on pad {%d,%d,%d}", name.c_str(), padLocation.x,
+					LogInfo("Mission %s: Landing on pad {%d,%d,%d}", name.cStr(), padLocation.x,
 					        padLocation.y, padLocation.z - 1);
 					auto *landMission = VehicleMission::land(v, b);
 					v.missions.emplace_front(landMission);
@@ -905,7 +905,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 					shortestPathPad = dest;
 			}
 
-			LogInfo("Vehicle mission %s: Pathing to pad at {%d,%d,%d}", name.c_str(),
+			LogInfo("Vehicle mission %s: Pathing to pad at {%d,%d,%d}", name.cStr(),
 			        shortestPathPad.x, shortestPathPad.y, shortestPathPad.z);
 			auto *gotoMission = VehicleMission::gotoLocation(v, shortestPathPad);
 			v.missions.emplace_front(gotoMission);
@@ -950,7 +950,7 @@ void VehicleMission::start(GameState &state, Vehicle &v)
 			}
 			else
 			{
-				LogError("Mission %s: Can't find a spot to land", name.c_str());
+				LogError("Mission %s: Can't find a spot to land", name.cStr());
 			}
 			return;
 		}
@@ -980,7 +980,7 @@ void VehicleMission::setPathTo(Vehicle &v, Vec3<int> target, int maxIterations)
 	}
 	else
 	{
-		LogError("Mission %s: Take off before pathfinding!", this->getName().c_str());
+		LogError("Mission %s: Take off before pathfinding!", this->getName().cStr());
 	}
 }
 

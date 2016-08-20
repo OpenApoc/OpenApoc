@@ -12,16 +12,16 @@ namespace OpenApoc
 ResearchScreen::ResearchScreen(sp<GameState> state, sp<Facility> selected_lab)
     : BaseStage(state), selected_lab(selected_lab)
 {
-	form = ui().GetForm("FORM_RESEARCHSCREEN");
+	form = ui().getForm("FORM_RESEARCHSCREEN");
 	viewHighlight = BaseGraphics::FacilityHighlight::Labs;
 	viewFacility = selected_lab;
 }
 
 ResearchScreen::~ResearchScreen() = default;
 
-void ResearchScreen::ChangeBase(sp<Base> newBase)
+void ResearchScreen::changeBase(sp<Base> newBase)
 {
-	BaseStage::ChangeBase(newBase);
+	BaseStage::changeBase(newBase);
 
 	// FIXME: Should only reset if selected_lab doesn't belong to current base
 	this->selected_lab = nullptr;
@@ -42,20 +42,20 @@ void ResearchScreen::ChangeBase(sp<Base> newBase)
 		}
 	}
 
-	auto labList = form->FindControlTyped<ListBox>("LIST_LABS");
-	labList->Clear();
+	auto labList = form->findControlTyped<ListBox>("LIST_LABS");
+	labList->clear();
 	for (auto &facility : this->labs)
 	{
 		auto graphic = mksp<Graphic>(facility->type->sprite);
 		graphic->AutoSize = true;
-		graphic->SetData(facility);
-		labList->AddItem(graphic);
+		graphic->setData(facility);
+		labList->addItem(graphic);
 	}
 
 	setCurrentLabInfo();
 }
 
-void ResearchScreen::Begin()
+void ResearchScreen::begin()
 {
 	auto img = mksp<RGBImage>(Vec2<int>{1, 2});
 	{
@@ -65,9 +65,9 @@ void ResearchScreen::Begin()
 	}
 	this->healthImage = img;
 
-	BaseStage::Begin();
+	BaseStage::begin();
 
-	auto unassignedAgentList = form->FindControlTyped<ListBox>("LIST_UNASSIGNED");
+	auto unassignedAgentList = form->findControlTyped<ListBox>("LIST_UNASSIGNED");
 	unassignedAgentList->addCallback(FormEventType::ListBoxChangeSelected, [this](Event *e) {
 		LogWarning("unassigned agent selected");
 		if (this->assigned_agent_count >= this->selected_lab->type->capacityAmount)
@@ -75,8 +75,8 @@ void ResearchScreen::Begin()
 			LogWarning("no free space in lab");
 			return;
 		}
-		auto list = std::static_pointer_cast<ListBox>(e->Forms().RaisedBy);
-		auto agent = list->GetSelectedData<Agent>();
+		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
+		auto agent = list->getSelectedData<Agent>();
 		if (!agent)
 		{
 			LogError("No agent in selected data");
@@ -84,7 +84,7 @@ void ResearchScreen::Begin()
 		}
 		if (agent->assigned_to_lab)
 		{
-			LogError("Agent \"%s\" already assigned to a lab?", agent->name.c_str());
+			LogError("Agent \"%s\" already assigned to a lab?", agent->name.cStr());
 			return;
 		}
 		agent->assigned_to_lab = true;
@@ -93,8 +93,8 @@ void ResearchScreen::Begin()
 	});
 	auto removeFn = [this](Event *e) {
 		LogWarning("assigned agent selected");
-		auto list = std::static_pointer_cast<ListBox>(e->Forms().RaisedBy);
-		auto agent = list->GetSelectedData<Agent>();
+		auto list = std::static_pointer_cast<ListBox>(e->forms().RaisedBy);
+		auto agent = list->getSelectedData<Agent>();
 		if (!agent)
 		{
 			LogError("No agent in selected data");
@@ -102,16 +102,16 @@ void ResearchScreen::Begin()
 		}
 		if (!agent->assigned_to_lab)
 		{
-			LogError("Agent \"%s\" not assigned to a lab?", agent->name.c_str());
+			LogError("Agent \"%s\" not assigned to a lab?", agent->name.cStr());
 			return;
 		}
 		agent->assigned_to_lab = false;
 		this->selected_lab->lab->assigned_agents.remove({state.get(), agent});
 		this->setCurrentLabInfo();
 	};
-	auto assignedAgentListCol1 = form->FindControlTyped<ListBox>("LIST_ASSIGNED_COL1");
+	auto assignedAgentListCol1 = form->findControlTyped<ListBox>("LIST_ASSIGNED_COL1");
 	assignedAgentListCol1->addCallback(FormEventType::ListBoxChangeSelected, removeFn);
-	auto assignedAgentListCol2 = form->FindControlTyped<ListBox>("LIST_ASSIGNED_COL2");
+	auto assignedAgentListCol2 = form->findControlTyped<ListBox>("LIST_ASSIGNED_COL2");
 	assignedAgentListCol2->addCallback(FormEventType::ListBoxChangeSelected, removeFn);
 
 	// Set the listboxes to always emit events, otherwise the first entry is considered 'selected'
@@ -121,38 +121,38 @@ void ResearchScreen::Begin()
 	unassignedAgentList->AlwaysEmitSelectionEvents = true;
 }
 
-void ResearchScreen::Pause() {}
+void ResearchScreen::pause() {}
 
-void ResearchScreen::Resume()
+void ResearchScreen::resume()
 {
-	form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
+	form->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 }
 
-void ResearchScreen::Finish() {}
+void ResearchScreen::finish() {}
 
-void ResearchScreen::EventOccurred(Event *e)
+void ResearchScreen::eventOccurred(Event *e)
 {
-	form->EventOccured(e);
+	form->eventOccured(e);
 
-	if (e->Type() == EVENT_KEY_DOWN)
+	if (e->type() == EVENT_KEY_DOWN)
 	{
-		if (e->Keyboard().KeyCode == SDLK_ESCAPE)
+		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
 	}
 
-	if (e->Type() == EVENT_FORM_INTERACTION)
+	if (e->type() == EVENT_FORM_INTERACTION)
 	{
-		if (e->Forms().EventFlag == FormEventType::ButtonClick)
+		if (e->forms().EventFlag == FormEventType::ButtonClick)
 		{
-			if (e->Forms().RaisedBy->Name == "BUTTON_OK")
+			if (e->forms().RaisedBy->Name == "BUTTON_OK")
 			{
 				stageCmd.cmd = StageCmd::Command::POP;
 				return;
 			}
-			else if (e->Forms().RaisedBy->Name == "BUTTON_RESEARCH_NEWPROJECT")
+			else if (e->forms().RaisedBy->Name == "BUTTON_RESEARCH_NEWPROJECT")
 			{
 				if (!this->selected_lab)
 				{
@@ -163,59 +163,59 @@ void ResearchScreen::EventOccurred(Event *e)
 				stageCmd.nextStage = mksp<ResearchSelect>(this->state, this->selected_lab->lab);
 				return;
 			}
-			else if (e->Forms().RaisedBy->Name == "BUTTON_RESEARCH_CANCELPROJECT")
+			else if (e->forms().RaisedBy->Name == "BUTTON_RESEARCH_CANCELPROJECT")
 			{
 				if (!this->selected_lab)
 				{
 					return;
 				}
 				Lab::setResearch(this->selected_lab->lab, {state.get(), ""}, state);
-				form->FindControlTyped<Label>("TEXT_FUNDS")->SetText(state->getPlayerBalance());
+				form->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 			}
 		}
 	}
 }
 
-void ResearchScreen::Update(StageCmd *const cmd)
+void ResearchScreen::update(StageCmd *const cmd)
 {
-	form->Update();
+	form->update();
 	*cmd = stageCmd;
 	stageCmd = StageCmd();
 }
 
-void ResearchScreen::Render()
+void ResearchScreen::render()
 {
-	auto labList = form->FindControlTyped<ListBox>("LIST_LABS");
-	if (this->selected_lab != labList->GetSelectedData<Facility>() ||
+	auto labList = form->findControlTyped<ListBox>("LIST_LABS");
+	if (this->selected_lab != labList->getSelectedData<Facility>() ||
 	    (this->selected_lab && this->selected_lab->lab->current_project != this->current_topic))
 	{
-		this->selected_lab = labList->GetSelectedData<Facility>();
+		this->selected_lab = labList->getSelectedData<Facility>();
 		this->viewFacility = this->selected_lab;
 		this->current_topic = this->selected_lab->lab->current_project;
 		this->setCurrentLabInfo();
-		this->RefreshView();
+		this->refreshView();
 	}
-	fw().Stage_GetPrevious(this->shared_from_this())->Render();
-	// fw().renderer->drawFilledRect({0, 0}, fw().Display_GetSize(), Colour{0, 0, 0, 128});
-	form->Render();
-	BaseStage::Render();
+	fw().stageGetPrevious(this->shared_from_this())->render();
+	// fw().renderer->drawFilledRect({0, 0}, fw().displayGetSize(), Colour{0, 0, 0, 128});
+	form->render();
+	BaseStage::render();
 }
 
-bool ResearchScreen::IsTransition() { return false; }
+bool ResearchScreen::isTransition() { return false; }
 
 void ResearchScreen::setCurrentLabInfo()
 {
 	if (!this->selected_lab)
 	{
-		auto unassignedAgentList = form->FindControlTyped<ListBox>("LIST_UNASSIGNED");
-		unassignedAgentList->Clear();
-		auto assignedAgentListCol1 = form->FindControlTyped<ListBox>("LIST_ASSIGNED_COL1");
-		assignedAgentListCol1->Clear();
-		auto assignedAgentListCol2 = form->FindControlTyped<ListBox>("LIST_ASSIGNED_COL2");
-		assignedAgentListCol2->Clear();
-		form->FindControlTyped<Label>("TEXT_LAB_TYPE")->SetText("");
-		auto totalSkillLabel = form->FindControlTyped<Label>("TEXT_TOTAL_SKILL");
-		totalSkillLabel->SetText(UString::format(tr("Total Skill: %d"), 0));
+		auto unassignedAgentList = form->findControlTyped<ListBox>("LIST_UNASSIGNED");
+		unassignedAgentList->clear();
+		auto assignedAgentListCol1 = form->findControlTyped<ListBox>("LIST_ASSIGNED_COL1");
+		assignedAgentListCol1->clear();
+		auto assignedAgentListCol2 = form->findControlTyped<ListBox>("LIST_ASSIGNED_COL2");
+		assignedAgentListCol2->clear();
+		form->findControlTyped<Label>("TEXT_LAB_TYPE")->setText("");
+		auto totalSkillLabel = form->findControlTyped<Label>("TEXT_TOTAL_SKILL");
+		totalSkillLabel->setText(UString::format(tr("Total Skill: %d"), 0));
 		return;
 	}
 	this->assigned_agent_count = 0;
@@ -243,17 +243,17 @@ void ResearchScreen::setCurrentLabInfo()
 		LogError("Unexpected CapacityType in lab");
 	}
 
-	form->FindControlTyped<Label>("TEXT_LAB_TYPE")->SetText(labTypeName);
+	form->findControlTyped<Label>("TEXT_LAB_TYPE")->setText(labTypeName);
 
-	auto font = ui().GetFont("SMALFONT");
-	auto agentEntryHeight = font->GetFontHeight() * 3;
+	auto font = ui().getFont("SMALFONT");
+	auto agentEntryHeight = font->getFontHeight() * 3;
 
-	auto unassignedAgentList = form->FindControlTyped<ListBox>("LIST_UNASSIGNED");
-	unassignedAgentList->Clear();
-	auto assignedAgentListCol1 = form->FindControlTyped<ListBox>("LIST_ASSIGNED_COL1");
-	assignedAgentListCol1->Clear();
-	auto assignedAgentListCol2 = form->FindControlTyped<ListBox>("LIST_ASSIGNED_COL2");
-	assignedAgentListCol2->Clear();
+	auto unassignedAgentList = form->findControlTyped<ListBox>("LIST_UNASSIGNED");
+	unassignedAgentList->clear();
+	auto assignedAgentListCol1 = form->findControlTyped<ListBox>("LIST_ASSIGNED_COL1");
+	assignedAgentListCol1->clear();
+	auto assignedAgentListCol2 = form->findControlTyped<ListBox>("LIST_ASSIGNED_COL2");
+	assignedAgentListCol2->clear();
 	for (auto &agent : state->agents)
 	{
 		bool assigned_to_current_lab = false;
@@ -291,27 +291,27 @@ void ResearchScreen::setCurrentLabInfo()
 			// FIXME: This should stop at 5 entries, but there's always a 'scrollbar' control, so
 			// stop at 6 instead
 			if (assignedAgentListCol1->Controls.size() < 6)
-				assignedAgentListCol1->AddItem(agentControl);
+				assignedAgentListCol1->addItem(agentControl);
 			else
-				assignedAgentListCol2->AddItem(agentControl);
+				assignedAgentListCol2->addItem(agentControl);
 		}
 		else
 		{
-			unassignedAgentList->AddItem(agentControl);
+			unassignedAgentList->addItem(agentControl);
 		}
 	}
 	assignedAgentListCol1->ItemSize = agentEntryHeight;
 	assignedAgentListCol2->ItemSize = agentEntryHeight;
 	unassignedAgentList->ItemSize = agentEntryHeight;
 
-	auto totalSkillLabel = form->FindControlTyped<Label>("TEXT_TOTAL_SKILL");
-	totalSkillLabel->SetText(
+	auto totalSkillLabel = form->findControlTyped<Label>("TEXT_TOTAL_SKILL");
+	totalSkillLabel->setText(
 	    UString::format(tr("Total Skill: %d"), this->selected_lab->lab->getTotalSkill()));
 
 	if (this->selected_lab->lab->current_project)
 	{
 		auto &topic = this->selected_lab->lab->current_project;
-		auto progressBar = form->FindControlTyped<Graphic>("GRAPHIC_PROGRESS_BAR");
+		auto progressBar = form->findControlTyped<Graphic>("GRAPHIC_PROGRESS_BAR");
 		auto progressImage = mksp<RGBImage>(progressBar->Size);
 		float projectProgress;
 		switch (this->selected_lab->lab->current_project->type)
@@ -346,21 +346,21 @@ void ResearchScreen::setCurrentLabInfo()
 				}
 			}
 		}
-		progressBar->SetImage(progressImage);
-		auto topicTitle = form->FindControlTyped<Label>("TEXT_CURRENT_PROJECT");
-		topicTitle->SetText(tr(topic->name));
-		auto completionPercent = form->FindControlTyped<Label>("TEXT_PROJECT_COMPLETION");
+		progressBar->setImage(progressImage);
+		auto topicTitle = form->findControlTyped<Label>("TEXT_CURRENT_PROJECT");
+		topicTitle->setText(tr(topic->name));
+		auto completionPercent = form->findControlTyped<Label>("TEXT_PROJECT_COMPLETION");
 		auto completionText = UString::format(tr("%d%%"), (int)(projectProgress * 100.0f));
-		completionPercent->SetText(completionText);
+		completionPercent->setText(completionText);
 	}
 	else
 	{
-		auto progressBar = form->FindControlTyped<Graphic>("GRAPHIC_PROGRESS_BAR");
-		progressBar->SetImage(nullptr);
-		auto topicTitle = form->FindControlTyped<Label>("TEXT_CURRENT_PROJECT");
-		topicTitle->SetText(tr("No Project"));
-		auto completionPercent = form->FindControlTyped<Label>("TEXT_PROJECT_COMPLETION");
-		completionPercent->SetText("");
+		auto progressBar = form->findControlTyped<Graphic>("GRAPHIC_PROGRESS_BAR");
+		progressBar->setImage(nullptr);
+		auto topicTitle = form->findControlTyped<Label>("TEXT_CURRENT_PROJECT");
+		topicTitle->setText(tr("No Project"));
+		auto completionPercent = form->findControlTyped<Label>("TEXT_PROJECT_COMPLETION");
+		completionPercent->setText("");
 	}
 }
 // FIXME: Put this in the rules somewhere?
@@ -371,11 +371,11 @@ static const UString agentFramePath =
 sp<Control> ResearchScreen::createAgentControl(Vec2<int> size, StateRef<Agent> agent)
 {
 	auto baseControl = mksp<Control>();
-	baseControl->SetData(agent.getSp());
+	baseControl->setData(agent.getSp());
 	baseControl->Name = "AGENT_PORTRAIT";
 	baseControl->Size = size;
 
-	auto frameGraphic = baseControl->createChild<Graphic>(fw().data->load_image(agentFramePath));
+	auto frameGraphic = baseControl->createChild<Graphic>(fw().data->loadImage(agentFramePath));
 	frameGraphic->AutoSize = true;
 	frameGraphic->Location = {5, 5};
 	auto photoGraphic = frameGraphic->createChild<Graphic>(agent->portrait.icon);
@@ -398,11 +398,11 @@ sp<Control> ResearchScreen::createAgentControl(Vec2<int> size, StateRef<Agent> a
 	healthGraphic->Size = healthBarSize;
 	healthGraphic->ImagePosition = FillMethod::Stretch;
 
-	auto font = ui().GetFont("SMALFONT");
+	auto font = ui().getFont("SMALFONT");
 
 	auto nameLabel = baseControl->createChild<Label>(agent->name, font);
 	nameLabel->Location = {40, 0};
-	nameLabel->Size = {100, font->GetFontHeight() * 2};
+	nameLabel->Size = {100, font->getFontHeight() * 2};
 
 	int skill = 0;
 	if (agent->type == Agent::Type::Physicist)
@@ -419,13 +419,12 @@ sp<Control> ResearchScreen::createAgentControl(Vec2<int> size, StateRef<Agent> a
 	}
 	else
 	{
-		LogError("Trying to show non-scientist agent %s (%s)", agent.id.c_str(),
-		         agent->name.c_str());
+		LogError("Trying to show non-scientist agent %s (%s)", agent.id.cStr(), agent->name.cStr());
 	}
 
 	auto skillLabel = baseControl->createChild<Label>(UString::format(tr("Skill %s"), skill), font);
-	skillLabel->Size = {100, font->GetFontHeight()};
-	skillLabel->Location = {40, font->GetFontHeight() * 2};
+	skillLabel->Size = {100, font->getFontHeight()};
+	skillLabel->Location = {40, font->getFontHeight() * 2};
 
 	return baseControl;
 }

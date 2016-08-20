@@ -476,7 +476,7 @@ class SpriteBuffer
 			LogWarning("Calling draw with no sprites stored?");
 			return;
 		}
-		TRACE_FN_ARGS1("buffer_contents", Strings::FromInteger(this->buffer_contents));
+		TRACE_FN_ARGS1("buffer_contents", Strings::fromInteger(this->buffer_contents));
 		gl->BindBuffer(GL::ARRAY_BUFFER, this->sprite_buffer_id);
 		gl->BufferSubData(GL::ARRAY_BUFFER, 0, this->buffer_contents * sizeof(SpriteDescription),
 		                  this->buffer.data());

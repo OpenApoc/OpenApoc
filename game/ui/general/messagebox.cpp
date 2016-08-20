@@ -17,22 +17,22 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 	const int MARGIN = 8;
 	const Vec2<int> BUTTON_SIZE = {100, 28};
 
-	auto lTitle = form->createChild<Label>(title.toUpper(), ui().GetFont("SMALFONT"));
+	auto lTitle = form->createChild<Label>(title.toUpper(), ui().getFont("SMALFONT"));
 	lTitle->Size.x = form->Size.x - MARGIN * 2;
-	lTitle->Size.y = ui().GetFont("SMALFONT")->GetFontHeight();
+	lTitle->Size.y = ui().getFont("SMALFONT")->getFontHeight();
 	lTitle->Location = {MARGIN, MARGIN};
 	lTitle->TextHAlign = HorizontalAlignment::Centre;
 
-	auto lText = form->createChild<Label>(text, ui().GetFont("SMALFONT"));
+	auto lText = form->createChild<Label>(text, ui().getFont("SMALFONT"));
 	lText->Size.x = form->Size.x - MARGIN * 2;
-	lText->Size.y = ui().GetFont("SMALFONT")->GetFontHeight(text, lText->Size.x);
+	lText->Size.y = ui().getFont("SMALFONT")->getFontHeight(text, lText->Size.x);
 	lText->Location = lTitle->Location;
 	lText->Location.y += lTitle->Size.y + MARGIN * 2;
 	lText->TextHAlign = HorizontalAlignment::Centre;
 
 	if (buttons == ButtonOptions::Ok)
 	{
-		auto bOk = form->createChild<TextButton>(tr("OK"), ui().GetFont("SMALLSET"));
+		auto bOk = form->createChild<TextButton>(tr("OK"), ui().getFont("SMALLSET"));
 		bOk->Name = "BUTTON_OK";
 		bOk->Size = BUTTON_SIZE;
 		bOk->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
@@ -43,14 +43,14 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 	}
 	else if (buttons == ButtonOptions::YesNo)
 	{
-		auto bYes = form->createChild<TextButton>(tr("Yes"), ui().GetFont("SMALLSET"));
+		auto bYes = form->createChild<TextButton>(tr("Yes"), ui().getFont("SMALLSET"));
 		bYes->Name = "BUTTON_YES";
 		bYes->Size = BUTTON_SIZE;
 		bYes->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
 		bYes->Location.x = MARGIN;
 		bYes->Location.y = lText->Location.y + lText->Size.y + MARGIN;
 
-		auto bNo = form->createChild<TextButton>(tr("No"), ui().GetFont("SMALLSET"));
+		auto bNo = form->createChild<TextButton>(tr("No"), ui().getFont("SMALLSET"));
 		bNo->Name = "BUTTON_NO";
 		bNo->Size = BUTTON_SIZE;
 		bNo->RenderStyle = TextButton::ButtonRenderStyle::Bevel;
@@ -60,37 +60,37 @@ MessageBox::MessageBox(const UString &title, const UString &text, ButtonOptions 
 		form->Size.y = bYes->Location.y + bYes->Size.y + MARGIN;
 	}
 
-	form->Align(HorizontalAlignment::Centre, VerticalAlignment::Centre);
+	form->align(HorizontalAlignment::Centre, VerticalAlignment::Centre);
 }
 
 MessageBox::~MessageBox() = default;
 
-void MessageBox::Begin() {}
+void MessageBox::begin() {}
 
-void MessageBox::Pause() {}
+void MessageBox::pause() {}
 
-void MessageBox::Resume() {}
+void MessageBox::resume() {}
 
-void MessageBox::Finish() {}
+void MessageBox::finish() {}
 
-void MessageBox::EventOccurred(Event *e)
+void MessageBox::eventOccurred(Event *e)
 {
-	form->EventOccured(e);
+	form->eventOccured(e);
 
-	if (e->Type() == EVENT_FORM_INTERACTION)
+	if (e->type() == EVENT_FORM_INTERACTION)
 	{
-		if (e->Forms().EventFlag == FormEventType::ButtonClick)
+		if (e->forms().EventFlag == FormEventType::ButtonClick)
 		{
-			if (e->Forms().RaisedBy->Name == "BUTTON_OK" ||
-			    e->Forms().RaisedBy->Name == "BUTTON_YES")
+			if (e->forms().RaisedBy->Name == "BUTTON_OK" ||
+			    e->forms().RaisedBy->Name == "BUTTON_YES")
 			{
 				stageCmd.cmd = StageCmd::Command::POP;
 				if (callbackYes)
 					callbackYes();
 				return;
 			}
-			else if (e->Forms().RaisedBy->Name == "BUTTON_CANCEL" ||
-			         e->Forms().RaisedBy->Name == "BUTTON_NO")
+			else if (e->forms().RaisedBy->Name == "BUTTON_CANCEL" ||
+			         e->forms().RaisedBy->Name == "BUTTON_NO")
 			{
 				stageCmd.cmd = StageCmd::Command::POP;
 				if (callbackNo)
@@ -101,22 +101,22 @@ void MessageBox::EventOccurred(Event *e)
 	}
 }
 
-void MessageBox::Update(StageCmd *const cmd)
+void MessageBox::update(StageCmd *const cmd)
 {
-	form->Update();
+	form->update();
 	*cmd = this->stageCmd;
 	this->stageCmd = StageCmd();
 }
 
-void MessageBox::Render()
+void MessageBox::render()
 {
-	fw().Stage_GetPrevious(this->shared_from_this())->Render();
-	form->Render();
+	fw().stageGetPrevious(this->shared_from_this())->render();
+	form->render();
 	fw().renderer->drawRect(form->Location, form->Size, Colour{48, 48, 52});
 	fw().renderer->drawRect(form->Location + 2, form->Size - 2, Colour{96, 100, 104});
 	fw().renderer->drawRect(form->Location + 1, form->Size - 2, Colour{236, 236, 236});
 }
 
-bool MessageBox::IsTransition() { return false; }
+bool MessageBox::isTransition() { return false; }
 
 }; // namespace OpenApoc

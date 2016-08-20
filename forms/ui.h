@@ -21,11 +21,11 @@ class UI
 	std::map<UString, UString> aliases;
 	UString resourceNodeNameFilter;
 
-	void ApplyAliases(tinyxml2::XMLElement *Source);
-	void ParseXMLDoc(UString XMLFilename);
-	void ParseGameXML(tinyxml2::XMLElement *Source);
-	void ParseStringXML(tinyxml2::XMLElement *Source);
-	void ParseFormXML(tinyxml2::XMLElement *Source);
+	void applyAliases(tinyxml2::XMLElement *Source);
+	void parseXmlDoc(UString XMLFilename);
+	void parseGameXml(tinyxml2::XMLElement *Source);
+	void parseStringXml(tinyxml2::XMLElement *Source);
+	void parseFormXml(tinyxml2::XMLElement *Source);
 
 	// void ParseAlienXML( tinyxml2::XMLElement* Source );
 	// void ParseInventoryXML( tinyxml2::XMLElement* Source );
@@ -33,16 +33,16 @@ class UI
 	// void ParseUFOXML( tinyxml2::XMLElement* Source );
 	// void ParseUFOpaediaXML( tinyxml2::XMLElement* Source );
 	// void ParseVehicleXML( tinyxml2::XMLElement* Source );
-	void Load(UString CoreXMLFilename);
+	void load(UString CoreXMLFilename);
 
   public:
 	UI();
 	~UI();
 
-	sp<Form> GetForm(UString ID);
-	sp<BitmapFont> GetFont(UString FontData);
+	sp<Form> getForm(UString ID);
+	sp<BitmapFont> getFont(UString FontData);
 
-	std::vector<UString> GetFormIDs();
+	std::vector<UString> getFormIDs();
 
 	static void unload();
 	static UI &getInstance();

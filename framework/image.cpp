@@ -42,7 +42,7 @@ sp<RGBImage> PaletteImage::toRGBImage(sp<Palette> p)
 		for (unsigned int x = 0; x < this->size.x; x++)
 		{
 			uint8_t idx = this->indices[y * this->size.x + x];
-			imgLock.set(Vec2<unsigned int>{x, y}, p->GetColour(idx));
+			imgLock.set(Vec2<unsigned int>{x, y}, p->getColour(idx));
 		}
 	}
 	return i;
@@ -115,10 +115,10 @@ void RGBImage::saveBitmap(const UString &filename)
 	{
 		workingdir += segs.at(pidx);
 
-		if (!PHYSFS_exists(workingdir.c_str()))
+		if (!PHYSFS_exists(workingdir.cStr()))
 		{
-			LogInfo("Building %s", workingdir.c_str());
-			PHYSFS_mkdir(workingdir.c_str());
+			LogInfo("Building %s", workingdir.cStr());
+			PHYSFS_mkdir(workingdir.cStr());
 		}
 		if (workingdir.substr(workingdir.length() - 1, 1) != "/")
 		{
@@ -147,7 +147,7 @@ void RGBImage::saveBitmap(const UString &filename)
 	}
 
 	SDL_UnlockSurface(bmp);
-	SDL_SaveBMP(bmp, filename.c_str());
+	SDL_SaveBMP(bmp, filename.cStr());
 	SDL_FreeSurface(bmp);
 }
 
@@ -173,7 +173,7 @@ PaletteImageLock::~PaletteImageLock() = default;
 
 void *PaletteImageLock::getData() { return this->img->indices.get(); }
 
-void PaletteImage::CalculateBounds()
+void PaletteImage::calculateBounds()
 {
 	unsigned int minX = this->size.x, minY = this->size.y, maxX = 0, maxY = 0;
 
@@ -204,7 +204,7 @@ sp<Image> &LazyImage::getRealImage()
 {
 	if (!this->realImage)
 	{
-		this->realImage = fw().data->load_image(this->path);
+		this->realImage = fw().data->loadImage(this->path);
 		this->size = this->realImage->size;
 	}
 	return this->realImage;
