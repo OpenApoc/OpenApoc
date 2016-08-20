@@ -54,12 +54,13 @@ void BaseStage::Begin()
 		auto viewImage = drawMiniBase(viewBase, viewHighlight, viewFacility);
 		view->SetImage(viewImage);
 		view->SetDepressedImage(viewImage);
-		view->addCallback(FormEventType::ButtonClick, [this, view](Event *e) {
+		wp<GraphicButton> weakView(view);
+		view->addCallback(FormEventType::ButtonClick, [this, weakView](Event *e) {
 			auto base = e->Forms().RaisedBy->GetData<Base>();
 			if (this->state->current_base != base)
 			{
 				this->ChangeBase(base);
-				this->currentView = view;
+				this->currentView = weakView.lock();
 			}
 		});
 		view->addCallback(FormEventType::MouseEnter, [this](Event *e) {
