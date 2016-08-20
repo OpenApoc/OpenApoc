@@ -41,11 +41,14 @@ void Ticker::OnRender()
 		auto outImage = font->getString(out);
 		fw().renderer->draw(outImage, Vec2<float>{xpos, ypos});
 
-		UString in = messages.front();
-		xpos = Align(TextHAlign, Size.x, font->GetFontWidth(in));
-		ypos = 15 - animTimer / 4;
-		auto inImage = font->getString(in);
-		fw().renderer->draw(inImage, Vec2<float>{xpos, ypos});
+		if (!messages.empty())
+		{
+			UString in = messages.front();
+			xpos = Align(TextHAlign, Size.x, font->GetFontWidth(in));
+			ypos = 15 - animTimer / 4;
+			auto inImage = font->getString(in);
+			fw().renderer->draw(inImage, Vec2<float>{xpos, ypos});
+		}
 	}
 }
 
