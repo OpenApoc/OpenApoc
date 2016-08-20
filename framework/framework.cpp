@@ -16,6 +16,10 @@
 #define WIN32_LEAN_AND_MEAN
 #define NOMINMAX
 #include <SDL_syswm.h>
+
+// Windows isn't the only thing that pollutes stuff with #defines - X gets in on it too with 'None'
+#undef None
+
 // Use physfs to get prefs dir
 #include <physfs.h>
 
