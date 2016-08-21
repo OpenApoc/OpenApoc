@@ -2,6 +2,7 @@
 #include "framework/image.h"
 #include "game/state/research.h"
 #include "game/state/stateobject.h"
+#include "game/state/ufopaedia.h"
 #include "library/strings.h"
 #include <map>
 
@@ -36,6 +37,7 @@ class FacilityType : public StateObject<FacilityType>
 	int size;
 	sp<Image> sprite;
 	ResearchDependency dependency;
+	StateRef<UfopaediaEntry> ufopaedia_entry;
 	bool isVisible() const;
 };
 };

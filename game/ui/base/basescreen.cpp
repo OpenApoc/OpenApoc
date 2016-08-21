@@ -9,6 +9,7 @@
 #include "game/ui/base/researchscreen.h"
 #include "game/ui/base/vequipscreen.h"
 #include "game/ui/general/messagebox.h"
+#include "game/ui/ufopaedia/ufopaediacategoryview.h"
 
 namespace OpenApoc
 {
@@ -163,11 +164,50 @@ void BaseScreen::eventOccurred(Event *e)
 
 		if (e->forms().EventFlag == FormEventType::MouseDown)
 		{
-			if (!drag && dragFacility)
+			if (e->forms().MouseInfo.Button == 1)
 			{
-				if (e->forms().RaisedBy->Name == "LISTBOX_FACILITIES")
+				if (!drag && dragFacility)
 				{
-					drag = true;
+					if (e->forms().RaisedBy->Name == "LISTBOX_FACILITIES")
+					{
+						drag = true;
+					}
+				}
+			}
+			if (e->forms().MouseInfo.Button == 4)
+			{
+				auto list = form->findControlTyped<ListBox>("LISTBOX_FACILITIES");
+				auto clickedFacilityName = list->getHoveredData<UString>();
+				StateRef<FacilityType> clickedFacility;
+				if (clickedFacilityName)
+					clickedFacility = StateRef<FacilityType>{state.get(), *clickedFacilityName};
+				if (!clickedFacility)
+					return;
+
+				auto ufopaedia_entry = clickedFacility->ufopaedia_entry;
+				sp<UfopaediaCategory> ufopaedia_category;
+				if (ufopaedia_entry)
+				{
+					for (auto &cat : this->state->ufopaedia)
+					{
+						for (auto &entry : cat.second->entries)
+						{
+							if (ufopaedia_entry == entry.second)
+							{
+								ufopaedia_category = cat.second;
+								break;
+							}
+						}
+						if (ufopaedia_category)
+							break;
+					}
+					if (!ufopaedia_category)
+					{
+						LogError("No UFOPaedia category found for entry %s",
+						         ufopaedia_entry->title.cStr());
+					}
+					fw().stagePush(
+					    mksp<UfopaediaCategoryView>(state, ufopaedia_category, ufopaedia_entry));
 				}
 			}
 		}

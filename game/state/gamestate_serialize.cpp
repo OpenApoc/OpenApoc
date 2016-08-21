@@ -434,6 +434,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("size"), f.size);
 	serializeIn(state, node->getNode("sprite"), f.sprite);
 	serializeIn(state, node->getNode("dependency"), f.dependency);
+	serializeIn(state, node->getNode("ufopaedia_entry"), f.ufopaedia_entry);
 }
 
 template <> void serializeIn(const GameState *state, sp<SerializationNode> node, DoodadFrame &f)
@@ -1201,6 +1202,7 @@ template <> void serializeOut(sp<SerializationNode> node, const FacilityType &f)
 	serializeOut(node->addNode("size"), f.size);
 	serializeOut(node->addNode("sprite"), f.sprite);
 	serializeOut(node->addNode("dependency"), f.dependency);
+	serializeOut(node->addNode("ufopaedia_entry"), f.ufopaedia_entry);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const DoodadFrame &f)
