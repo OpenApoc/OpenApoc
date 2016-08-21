@@ -144,35 +144,35 @@ void ResearchSelect::populateResearchList()
 	research_list->ItemSize = 20;
 	research_list->ItemSpacing = 1;
 
-	for (auto &r : state->research.topics)
+	for (auto &t : state->research.topic_list)
 	{
-		if (r.second->type != this->lab->type)
+		if (t->type != this->lab->type)
 		{
 			continue;
 		}
-		if (!r.second->dependencies.satisfied(state->current_base) && r.second->started == false)
+		if (!t->dependencies.satisfied(state->current_base) && t->started == false)
 		{
 			continue;
 		}
 		// FIXME: When we get font coloring, set light blue color for topics too large a size
-		bool too_large = (r.second->required_lab_size == ResearchTopic::LabSize::Large &&
+		bool too_large = (t->required_lab_size == ResearchTopic::LabSize::Large &&
 		                  this->lab->size == ResearchTopic::LabSize::Small);
 
 		auto control = mksp<Control>();
 		control->Size = {544, 20};
 
-		auto topic_name = control->createChild<Label>((r.second->name), ui().getFont("SMALFONT"));
+		auto topic_name = control->createChild<Label>((t->name), ui().getFont("SMALFONT"));
 		topic_name->Size = {200, 20};
 		topic_name->Location = {6, 0};
 
 		if (this->lab->type == ResearchTopic::Type::Engineering ||
 		    ((this->lab->type == ResearchTopic::Type::BioChem ||
 		      this->lab->type == ResearchTopic::Type::Physics) &&
-		     r.second->isComplete()))
+		     t->isComplete()))
 		{
 			UString progress_text;
 			if (this->lab->type == ResearchTopic::Type::Engineering)
-				progress_text = UString::format("$%d", r.second->cost);
+				progress_text = UString::format("$%d", t->cost);
 			else
 				progress_text = tr("Complete");
 			auto progress_label =
@@ -183,7 +183,7 @@ void ResearchSelect::populateResearchList()
 		else
 		{
 			float projectProgress =
-			    clamp((float)r.second->man_hours_progress / (float)r.second->man_hours, 0.0f, 1.0f);
+			    clamp((float)t->man_hours_progress / (float)t->man_hours, 0.0f, 1.0f);
 
 			auto progressBar = control->createChild<Graphic>();
 			progressBar->Size = {101, 6};
@@ -224,11 +224,11 @@ void ResearchSelect::populateResearchList()
 		{
 			case ResearchTopic::Type::BioChem:
 			case ResearchTopic::Type::Physics:
-				if (r.second->current_lab)
-					skill_total = r.second->current_lab->getTotalSkill();
+				if (t->current_lab)
+					skill_total = t->current_lab->getTotalSkill();
 				break;
 			case ResearchTopic::Type::Engineering:
-				skill_total = r.second->man_hours;
+				skill_total = t->man_hours;
 				break;
 			default:
 				break;
@@ -241,7 +241,7 @@ void ResearchSelect::populateResearchList()
 		skill_total_label->TextHAlign = HorizontalAlignment::Right;
 
 		UString labSize;
-		switch (r.second->required_lab_size)
+		switch (t->required_lab_size)
 		{
 			case ResearchTopic::LabSize::Small:
 				labSize = tr("Small");
@@ -258,10 +258,10 @@ void ResearchSelect::populateResearchList()
 		lab_size_label->Size = {100, 20};
 		lab_size_label->Location = {439, 0};
 
-		control->setData(r.second);
+		control->setData(t);
 
 		research_list->addItem(control);
-		control_map[r.second] = control;
+		control_map[t] = control;
 	}
 }
 

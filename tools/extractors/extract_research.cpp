@@ -102,6 +102,7 @@ void InitialGameStateExtractor::extractResearch(GameState &state, Difficulty)
 		paediaEntry->required_research = {&state, id};
 #endif
 	}
+	state.research.updateTopicList();
 }
 
 } // namespace OpenApoc

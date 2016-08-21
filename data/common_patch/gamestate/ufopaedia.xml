@@ -302,7 +302,7 @@
             <value>
               <sp>
                 <title>Overspawn Autopsy</title>
-                <description>This enormous creature is deposited by an Alien Mothership. Its primary objective appears to be destruction of the city and annihilation of X-COM bases. The terror and panic that it causes amongst the population indicates a change in Alien strategy. It is possible that they have abandoned their attempts at infiltration and are now only concerned with revenge and retribution against X-COM.</description>
+                <description>The Overspawn is a hybrid creature, derived from the Megaspawn genetic pool. It is difficult to kill, but will eventually succumb to bombardment by Disruptor Beams and other powerful weapons. Fortunately it has no ranged combat capability.</description>
                 <background>xcom3/UFOPAEDI/08AUTOPS.PCX</background>
                 <data_id/>
                 <dependency>
@@ -315,12 +315,12 @@
             </value>
           </entry>
           <entry>
-            <key>PAEDIAENTRY_OVERSPAWN_AUTOPSY_2</key>
+            <key>PAEDIAENTRY_OVERSPAWN_AUTOPSY_1</key>
             <value>
               <sp>
                 <title>Overspawn Autopsy</title>
-                <description>The Overspawn is a hybrid creature, derived from the Megaspawn genetic pool. It is difficult to kill, but will eventually succumb to bombardment by Disruptor Beams and other powerful weapons. Fortunately it has no ranged combat capability.</description>
-                <background>xcom3/UFOPAEDI/08AUTOPS.PCX</background>
+                <description>This enormous creature is deposited by an Alien Mothership. Its primary objective appears to be destruction of the city and annihilation of X-COM bases. The terror and panic that it causes amongst the population indicates a change in Alien strategy. It is possible that they have abandoned their attempts at infiltration and are now only concerned with revenge and retribution against X-COM.</description>
+                <background>xcom3/UFOPAEDI/08VRSPWN.PCX</background>
                 <data_id/>
                 <dependency>
                   <type>any</type>
@@ -331,7 +331,7 @@
               </sp>
             </value>
           </entry>
-          <entry>
+         <entry>
             <key>PAEDIAENTRY_POPPER</key>
             <value>
               <sp>

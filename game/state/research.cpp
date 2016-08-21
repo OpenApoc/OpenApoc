@@ -25,19 +25,19 @@ const std::map<ResearchTopic::ItemType, UString> ResearchTopic::ItemTypeMap = {
 };
 
 const std::map<ResearchDependency::Type, UString> ResearchDependency::TypeMap = {
-    {Type::Any, "any"}, {Type::All, "all"},
+    {Type::Any, "any"}, {Type::All, "all"}, {Type::Unused, "unused"},
 };
 
 ResearchTopic::ResearchTopic()
     : man_hours(0), man_hours_progress(0), type(Type::BioChem), required_lab_size(LabSize::Small),
-      item_type(ItemType::VehicleEquipment), score(0), started(false), cost(0)
+      item_type(ItemType::VehicleEquipment), score(0), started(false), cost(0), order(0)
 {
 }
 
 bool ResearchTopic::isComplete() const
 {
-	return this->type != ResearchTopic::Type::Engineering &&
-	       this->man_hours_progress >= this->man_hours;
+	return (this->type != ResearchTopic::Type::Engineering) &&
+	       (this->man_hours_progress >= this->man_hours);
 }
 
 ResearchDependency::ResearchDependency() : type(Type::Any){};
@@ -51,6 +51,8 @@ bool ResearchDependency::satisfied() const
 	}
 	switch (this->type)
 	{
+		case Type::Unused:
+			return false;
 		case Type::Any:
 		{
 			for (auto &r : this->topics)
@@ -175,6 +177,24 @@ template <> const UString &StateObject<Lab>::getId(const GameState &state, const
 
 ResearchState::ResearchState() : num_labs_created(0) {}
 
+void ResearchState::updateTopicList()
+{
+	topic_list.clear();
+	for (auto &t : topics)
+		topic_list.push_back(t.second);
+	resortTopicList();
+}
+
+void ResearchState::resortTopicList()
+{
+	topic_list.sort([](sp<ResearchTopic> a, sp<ResearchTopic> b) {
+		if (a->isComplete() != b->isComplete())
+			return b->isComplete();
+		else
+			return a->order < b->order;
+	});
+}
+
 void Lab::setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic, sp<GameState> state)
 {
 	if (topic)
@@ -227,14 +247,17 @@ void Lab::setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic, sp<GameS
 	}
 }
 
-void Lab::setGoal(StateRef<Lab> lab, unsigned goal)
+unsigned Lab::getQuantity() const { return manufacture_goal - manufacture_done; }
+
+void Lab::setQuantity(StateRef<Lab> lab, unsigned quantity)
 {
 	if (lab->type != ResearchTopic::Type::Engineering)
 		LogError("Cannot set goal for a research lab");
-	else if (lab->manufacture_goal <= goal)
-		LogError("Manufacturing goal must be at least 1 ahead of the amount already done");
 	else
-		lab->manufacture_goal = goal;
+	{
+		LogAssert(quantity >= 1 && quantity <= 50);
+		lab->manufacture_goal = lab->manufacture_done + quantity;
+	}
 }
 
 int Lab::getTotalSkill() const
@@ -290,8 +313,7 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 				break;
 			case ResearchTopic::Type::Engineering:
 				progress_hours = std::min(ticks_remaining_to_progress / ticks_per_progress_hour,
-				                          lab->current_project->man_hours *
-				                                  (lab->manufacture_goal - lab->manufacture_done) -
+				                          lab->current_project->man_hours * lab->getQuantity() -
 				                              lab->manufacture_man_hours_invested);
 				break;
 			default:

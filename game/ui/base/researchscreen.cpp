@@ -173,6 +173,24 @@ void ResearchScreen::eventOccurred(Event *e)
 				form->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
 			}
 		}
+		if (e->forms().EventFlag == FormEventType::ScrollBarChange)
+		{
+			if (e->forms().RaisedBy->Name == "MANUFACTURE_QUANTITY_SLIDER")
+			{
+				if (this->selected_lab &&
+				    this->selected_lab->lab->type == ResearchTopic::Type::Engineering &&
+				    this->selected_lab->lab->current_project)
+				{
+					auto manufacturing_scrollbar =
+					    form->findControlTyped<ScrollBar>("MANUFACTURE_QUANTITY_SLIDER");
+					auto manufacturing_quantity = form->findControlTyped<Label>("TEXT_QUANTITY");
+					auto quantity = manufacturing_scrollbar->getValue();
+
+					Lab::setQuantity(this->selected_lab->lab, quantity);
+					this->updateProgressInfo();
+				}
+			}
+		}
 	}
 }
 
@@ -308,6 +326,11 @@ void ResearchScreen::setCurrentLabInfo()
 	totalSkillLabel->setText(
 	    UString::format(tr("Total Skill: %d"), this->selected_lab->lab->getTotalSkill()));
 
+	updateProgressInfo();
+}
+
+void ResearchScreen::updateProgressInfo()
+{
 	if (this->selected_lab->lab->current_project)
 	{
 		auto &topic = this->selected_lab->lab->current_project;
@@ -322,11 +345,11 @@ void ResearchScreen::setCurrentLabInfo()
 				    clamp((float)topic->man_hours_progress / (float)topic->man_hours, 0.0f, 1.0f);
 				break;
 			case ResearchTopic::Type::Engineering:
-				projectProgress =
-				    clamp((float)(topic->man_hours * this->selected_lab->lab->manufacture_done +
-				                  this->selected_lab->lab->manufacture_man_hours_invested) /
-				              (float)(topic->man_hours * this->selected_lab->lab->manufacture_goal),
-				          0.0f, 1.0f);
+				projectProgress = clamp(
+				    (float)(this->selected_lab->lab->manufacture_man_hours_invested) /
+				        (float)(topic->man_hours * (this->selected_lab->lab->manufacture_goal -
+				                                    this->selected_lab->lab->manufacture_done)),
+				    0.0f, 1.0f);
 				break;
 			default:
 				LogError("Unknown lab type");
@@ -362,7 +385,35 @@ void ResearchScreen::setCurrentLabInfo()
 		auto completionPercent = form->findControlTyped<Label>("TEXT_PROJECT_COMPLETION");
 		completionPercent->setText("");
 	}
+	auto manufacturing_scrollbar = form->findControlTyped<ScrollBar>("MANUFACTURE_QUANTITY_SLIDER");
+	auto manufacturing_scroll_left =
+	    form->findControlTyped<GraphicButton>("MANUFACTURE_QUANTITY_DOWN");
+	auto manufacturing_scroll_right =
+	    form->findControlTyped<GraphicButton>("MANUFACTURE_QUANTITY_UP");
+	auto manufacturing_quantity = form->findControlTyped<Label>("TEXT_QUANTITY");
+	auto manufacturing_ntomake = form->findControlTyped<Label>("TEXT_NUMBER_TO_MAKE");
+	if (this->selected_lab->lab->current_project &&
+	    this->selected_lab->lab->current_project->type == ResearchTopic::Type::Engineering)
+	{
+		manufacturing_ntomake->Visible = true;
+		manufacturing_quantity->Visible = true;
+		manufacturing_scrollbar->Visible = true;
+		manufacturing_scroll_left->Visible = true;
+		manufacturing_scroll_right->Visible = true;
+		manufacturing_scrollbar->setValue(this->selected_lab->lab->getQuantity());
+		manufacturing_quantity->setText(
+		    UString::format(tr("%d"), this->selected_lab->lab->getQuantity()));
+	}
+	else
+	{
+		manufacturing_ntomake->Visible = false;
+		manufacturing_quantity->Visible = false;
+		manufacturing_scrollbar->Visible = false;
+		manufacturing_scroll_left->Visible = false;
+		manufacturing_scroll_right->Visible = false;
+	}
 }
+
 // FIXME: Put this in the rules somewhere?
 // FIXME: This could be shared with the citview ICON_RESOURCES?
 static const UString agentFramePath =

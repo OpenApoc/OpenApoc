@@ -520,6 +520,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("id"), e.id);
 	serializeIn(state, node->getNode("name"), e.name);
 	serializeIn(state, node->getNode("weight"), e.weight);
+	serializeIn(state, node->getNode("ammo_id"), e.ammo_id);
 	serializeIn(state, node->getNode("manufacturer"), e.manufacturer);
 	serializeIn(state, node->getNode("store_space"), e.store_space);
 }
@@ -788,6 +789,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 		return;
 	// Shared Research & Manufacture
 	serializeIn(state, node->getNode("name"), r.name);
+	serializeIn(state, node->getNode("order"), r.order);
 	serializeIn(state, node->getNode("description"), r.description);
 	serializeIn(state, node->getNode("man_hours"), r.man_hours);
 	serializeIn(state, node->getNode("type"), r.type);
@@ -889,6 +891,7 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	if (!node)
 		return;
 	serializeIn(state, node->getNode("topics"), r.topics);
+	r.updateTopicList();
 	serializeIn(state, node->getNode("labs"), r.labs);
 	serializeIn(state, node->getNode("num_labs_created"), r.num_labs_created);
 }
@@ -1277,6 +1280,7 @@ template <> void serializeOut(sp<SerializationNode> node, const VAmmoType &e)
 	serializeOut(node->addNode("id"), e.id);
 	serializeOut(node->addNode("name"), e.name);
 	serializeOut(node->addNode("weight"), e.weight);
+	serializeOut(node->addNode("ammo_id"), e.ammo_id);
 	serializeOut(node->addNode("manufacturer"), e.manufacturer);
 	serializeOut(node->addNode("store_space"), e.store_space);
 }
@@ -1511,6 +1515,7 @@ template <> void serializeOut(sp<SerializationNode> node, const ResearchTopic &r
 {
 	// Shared Research & Manufacture
 	serializeOut(node->addNode("name"), r.name);
+	serializeOut(node->addNode("order"), r.order);
 	serializeOut(node->addNode("description"), r.description);
 	serializeOut(node->addNode("man_hours"), r.man_hours);
 	serializeOut(node->addNode("type"), r.type);

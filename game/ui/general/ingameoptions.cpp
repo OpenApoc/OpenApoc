@@ -118,6 +118,7 @@ void InGameOptions::eventOccurred(Event *e)
 					LogWarning("Topic \"%s\" marked as complete", r.first.cStr());
 				}
 			}
+			this->state->research.resortTopicList();
 			return;
 		}
 	}

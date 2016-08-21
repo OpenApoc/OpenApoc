@@ -22,8 +22,7 @@ class VAmmoType : public StateObject<VAmmoType>
 	UString id;
 	UString name;
 
-	// FIXME: Vanilla has no sprites for vehicle ammunition, should we introduce it?
-	sp<Image> equipscreen_sprite;
+	unsigned ammo_id;
 
 	int weight;
 	int store_space;

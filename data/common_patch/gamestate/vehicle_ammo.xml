@@ -1,3 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <vehicle_ammo>
+  <entry>
+    <key>VEQUIPMENTAMMOTYPE_DISRUPTOR_BOMB</key>
+    <value>
+      <sp>
+        <id>VEQUIPMENTAMMOTYPE_DISRUPTOR_BOMB</id>
+        <name>Disruptor Bomb</name>
+        <ammo_id>8</ammo_id>
+        <manufacturer>ORG_X-COM</manufacturer>
+        <weight>0</weight>
+        <store_space>1</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>VEQUIPMENTAMMOTYPE_STASIS_BOMB</key>
+    <value>
+      <sp>
+        <id>VEQUIPMENTAMMOTYPE_STASIS_BOMB</id>
+        <name>Stasis Bomb</name>
+        <ammo_id>9</ammo_id>
+        <manufacturer>ORG_X-COM</manufacturer>
+        <weight>0</weight>
+        <store_space>1</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>VEQUIPMENTAMMOTYPE_DISRUPTOR_MULTI-BOMB</key>
+    <value>
+      <sp>
+        <id>VEQUIPMENTAMMOTYPE_DISRUPTOR_MULTI-BOMB</id>
+        <name>Disruptor Multi-Bomb</name>
+        <ammo_id>10</ammo_id>
+        <manufacturer>ORG_X-COM</manufacturer>
+        <weight>0</weight>
+        <store_space>1</store_space>
+      </sp>
+    </value>
+  </entry>
 </vehicle_ammo>
