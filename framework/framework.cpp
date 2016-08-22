@@ -30,12 +30,6 @@
 #include <boost/filesystem.hpp>
 #include <boost/locale.hpp>
 
-#ifdef OPENAPOC_GLES
-
-#include "framework/render/gles20/EGLContext.h"
-
-#endif /*OPENAPOC_GLES*/
-
 using namespace OpenApoc;
 
 namespace
@@ -415,15 +409,7 @@ void Framework::run(sp<Stage> initialStage, size_t frameCount)
 			{
 				TraceObj flipObj("Flip");
 				this->renderer->flush();
-#ifndef OPENAPOC_GLES
 				SDL_GL_SwapWindow(p->window);
-#else
-#ifdef _MSC_VER
-				GLContext::GetInstance()->Swap();
-#else
-				SDL_GL_SwapWindow(p->window);
-#endif
-#endif
 			}
 		}
 		if (frameCount && frame == frameCount)
