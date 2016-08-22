@@ -108,9 +108,6 @@
     <ClCompile Include="render\gl20\ogl_2_0_renderer.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="render\gl30\ogl_3_0_renderer.cpp">
-      <Filter>Render</Filter>
-    </ClCompile>
     <ClCompile Include="sound\null_backend.cpp">
       <Filter>Sound</Filter>
     </ClCompile>
@@ -236,9 +233,6 @@
     <ClInclude Include="render\gl20\gl_2_0.hpp">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="render\gl30\gl_3_0.hpp">
-      <Filter>Render</Filter>
-    </ClInclude>
     <ClInclude Include="..\dependencies\pugixml\src\pugiconfig.hpp">
       <Filter>pugixml</Filter>
     </ClInclude>
@@ -279,9 +273,6 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="render\gl20\gl_2_0.inl">
-      <Filter>Render</Filter>
-    </None>
-    <None Include="render\gl30\gl_3_0.inl">
       <Filter>Render</Filter>
     </None>
   </ItemGroup>
