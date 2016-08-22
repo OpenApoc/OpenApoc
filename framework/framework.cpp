@@ -51,7 +51,7 @@ namespace
 #else
 #warning RENDERERS not set - using default list
 #endif
-#define RENDERERS "GLES_3_0:GL_3_0:GL_2_0"
+#define RENDERERS "GLES_3_0:GL_2_0"
 #endif
 
 static std::map<UString, UString> defaultConfig = {
@@ -830,7 +830,6 @@ void Framework::displayInitialise()
 	SDL_ShowCursor(SDL_DISABLE);
 
 	p->registeredRenderers["GLES_3_0"].reset(getGLES30RendererFactory());
-	p->registeredRenderers["GL_3_0"].reset(getGL30RendererFactory());
 	p->registeredRenderers["GL_2_0"].reset(getGL20RendererFactory());
 
 	for (auto &rendererName : Settings->getString("Visual.Renderers").split(':'))
