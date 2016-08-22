@@ -17,6 +17,7 @@
           <type>any</type>
           <topics />
         </dependency>
+        <ufopaedia_entry>PAEDIAENTRY_ACCESS_LIFT</ufopaedia_entry>
       </sp>
     </value>
   </entry>
@@ -39,6 +40,7 @@
             <entry>RESEARCH_ADVANCED_ALIEN_CONTAINMENT</entry>
           </topics>
         </dependency>
+        <ufopaedia_entry>PAEDIAENTRY_ADVANCED_ALIEN_CONTAINMENT</ufopaedia_entry>
       </sp>
     </value>
   </entry>
@@ -61,6 +63,7 @@
             <entry>RESEARCH_ADVANCED_BIOCHEMISTRY_LAB</entry>
           </topics>
         </dependency>
+        <ufopaedia_entry>PAEDIAENTRY_ADVANCED_BIOCHEMISTRY_LAB</ufopaedia_entry>
       </sp>
     </value>
   </entry>
@@ -83,6 +86,7 @@
             <entry>RESEARCH_ADVANCED_QUANTUM_PHYSICS_LAB</entry>
           </topics>
         </dependency>
+        <ufopaedia_entry>PAEDIAENTRY_ADVANCED_QUANTUM_PHYSICS_LAB</ufopaedia_entry>
       </sp>
     </value>
   </entry>
@@ -105,6 +109,7 @@
             <entry>RESEARCH_ADVANCED_SECURITY_STATION</entry>
           </topics>
         </dependency>
+        <ufopaedia_entry>PAEDIAENTRY_ADVANCED_SECURITY_STATION</ufopaedia_entry>
       </sp>
     </value>
   </entry>
@@ -127,6 +132,7 @@
             <entry>RESEARCH_ADVANCED_WORKSHOP</entry>
           </topics>
         </dependency>
+        <ufopaedia_entry>PAEDIAENTRY_ADVANCED_WORKSHOP</ufopaedia_entry>
       </sp>
     </value>
   </entry>
@@ -147,6 +153,7 @@
           <type>any</type>
           <topics />
         </dependency>
+        <ufopaedia_entry>PAEDIAENTRY_ALIEN_CONTAINMENT</ufopaedia_entry>
       </sp>
     </value>
   </entry>
@@ -167,6 +174,7 @@
           <type>any</type>
           <topics />
         </dependency>
+        <ufopaedia_entry>PAEDIAENTRY_BIOCHEMISTRY_LAB</ufopaedia_entry>
       </sp>
     </value>
   </entry>
@@ -184,9 +192,10 @@
         <size>1</size>
         <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:30:xcom3/UFODATA/BASE.PCX</sprite>
         <dependency>
-          <type>any</type>
+          <type>unused</type>
           <topics />
         </dependency>
+        <ufopaedia_entry />
       </sp>
     </value>
   </entry>
@@ -207,6 +216,7 @@
           <type>any</type>
           <topics />
         </dependency>
+        <ufopaedia_entry>PAEDIAENTRY_LIVING_QUARTERS</ufopaedia_entry>
       </sp>
     </value>
   </entry>
@@ -227,6 +237,7 @@
           <type>any</type>
           <topics />
         </dependency>
+        <ufopaedia_entry>PAEDIAENTRY_MEDICAL_BAY</ufopaedia_entry>
       </sp>
     </value>
   </entry>
@@ -247,6 +258,7 @@
           <type>any</type>
           <topics />
         </dependency>
+        <ufopaedia_entry>PAEDIAENTRY_PSI-GYM</ufopaedia_entry>
       </sp>
     </value>
   </entry>
@@ -267,6 +279,7 @@
           <type>any</type>
           <topics />
         </dependency>
+        <ufopaedia_entry>PAEDIAENTRY_QUANTUM_PHYSICS_LAB</ufopaedia_entry>
       </sp>
     </value>
   </entry>
@@ -287,6 +300,7 @@
           <type>any</type>
           <topics />
         </dependency>
+        <ufopaedia_entry>PAEDIAENTRY_SECURITY_STATION</ufopaedia_entry>
       </sp>
     </value>
   </entry>
@@ -307,6 +321,7 @@
           <type>any</type>
           <topics />
         </dependency>
+        <ufopaedia_entry>PAEDIAENTRY_STORES</ufopaedia_entry>
       </sp>
     </value>
   </entry>
@@ -327,6 +342,7 @@
           <type>any</type>
           <topics />
         </dependency>
+        <ufopaedia_entry>PAEDIAENTRY_TRAINING_AREA</ufopaedia_entry>
       </sp>
     </value>
   </entry>
@@ -347,6 +363,7 @@
           <type>any</type>
           <topics />
         </dependency>
+        <ufopaedia_entry>PAEDIAENTRY_VEHICLE_REPAIR_BAY</ufopaedia_entry>
       </sp>
     </value>
   </entry>
@@ -367,6 +384,7 @@
           <type>any</type>
           <topics />
         </dependency>
+        <ufopaedia_entry>PAEDIAENTRY_WORKSHOP</ufopaedia_entry>
       </sp>
     </value>
   </entry>

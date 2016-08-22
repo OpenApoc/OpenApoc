@@ -56,12 +56,12 @@ class ResearchTopic : public StateObject<ResearchTopic>
 	Type type;
 	LabSize required_lab_size;
 	ProjectDependencies dependencies;
+	unsigned order;
 
 	// Research only
-	// FIXME: Some research topics enable multiple ufopaedia entries?
-	// FIXME: Is this deprecated?
-	StateRef<UfopaediaEntry> ufopaedia_entry;
 	unsigned man_hours_progress;
+	// This is the entry that gets shown when you press "Yes" when asked to view
+	StateRef<UfopaediaEntry> ufopaedia_entry;
 	StateRef<Lab> current_lab;
 	unsigned score;
 	bool started;
@@ -81,6 +81,7 @@ class ResearchDependency
 	{
 		Any,
 		All,
+		Unused
 	};
 	static const std::map<Type, UString> TypeMap;
 	Type type;
@@ -110,11 +111,12 @@ class Lab : public StateObject<Lab>
 	std::list<StateRef<Agent>> assigned_agents;
 
 	static void setResearch(StateRef<Lab> lab, StateRef<ResearchTopic> topic, sp<GameState> state);
-	static void setGoal(StateRef<Lab> lab, unsigned goal);
+	static void setQuantity(StateRef<Lab> lab, unsigned quantity);
 
 	static void update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state);
 
 	int getTotalSkill() const;
+	unsigned getQuantity() const;
 
 	// We keep a count of ticks since the last point of progress to accurately accumulate over
 	// periods of ticks smaller than what is required to progress a single 'progress' point.
@@ -141,6 +143,9 @@ class ResearchState
 	ResearchState();
 	unsigned int num_labs_created;
 	std::map<UString, sp<ResearchTopic>> topics;
+	std::list<sp<ResearchTopic>> topic_list;
+	void updateTopicList();
+	void resortTopicList();
 	std::map<UString, sp<Lab>> labs;
 };
 

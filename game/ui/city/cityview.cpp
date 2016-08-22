@@ -908,6 +908,7 @@ void CityView::eventOccurred(Event *e)
 				{
 					LogError("Invalid research event");
 				}
+				this->state->research.resortTopicList();
 				sp<Facility> lab_facility;
 				for (auto &base : state->player_bases)
 				{

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checksums>
   <checksum SHA1="f9d25caa95a6c4446fee077a5d5b643addf4e6b7">gamestate.xml</checksum>
-  <checksum SHA1="d06dd4564fd939ece93c5474f587b2cc93ccfbe2">gamestate/agent_equipment.xml</checksum>
+  <checksum SHA1="e35fd767881ba69057eac4881e69e211d278cbb1">gamestate/agent_equipment.xml</checksum>
   <checksum SHA1="b2db496939d0d36b94f9224721bc9c869672160e">gamestate/agent_generator.xml</checksum>
   <checksum SHA1="1dca603614f430b312839921dfaffaea1ba434b8">gamestate/agents.xml</checksum>
   <checksum SHA1="0b1fc22224d3d4d266780fe20b1db95ee052bba0">gamestate/base_layouts.xml</checksum>
@@ -23,14 +23,14 @@
   <checksum SHA1="a82a57e7e51ae6bdb07ce31bfc996432e7b93ab2">gamestate/cities/CITYMAP_HUMAN/scenery.xml</checksum>
   <checksum SHA1="660365805080e6df65b5eb419ec3bef49d49a71b">gamestate/cities/CITYMAP_HUMAN/tile_types.xml</checksum>
   <checksum SHA1="c632f9d07d997f7818ebb1bc3b6202c3d7d1940d">gamestate/doodad_types.xml</checksum>
-  <checksum SHA1="90255b57783da811170510c98da3fa2b93dbce19">gamestate/facility_types.xml</checksum>
+  <checksum SHA1="253cdcf3835b92a98fd6bfe53e3ca568983b5b5e">gamestate/facility_types.xml</checksum>
   <checksum SHA1="418982266672055365ccce0f3080db17c4473e9f">gamestate/organisations.xml</checksum>
   <checksum SHA1="a86ed75b4170a0cd3556a0e1eb8f8d4d39f0fd0b">gamestate/player_bases.xml</checksum>
-  <checksum SHA1="6b3cbd24086312ab72ef00d86f88a34ff89a38e4">gamestate/research.xml</checksum>
+  <checksum SHA1="ee3571a5b9498fbb2ac5541af3d76b61dbcd770f">gamestate/research.xml</checksum>
   <checksum SHA1="0ddc335dbf5d81989e5d94130e2a1a242194878c">gamestate/ufo_growth_lists.xml</checksum>
   <checksum SHA1="7f8986a4cd0163002b09ab2edaabefe86f4424b0">gamestate/ufo_incursions.xml</checksum>
-  <checksum SHA1="114f778214879709d10e2b9f085173c2aa2b7b01">gamestate/ufopaedia.xml</checksum>
-  <checksum SHA1="037bc999895bfb362b9d5eeccfd805b2f997f10f">gamestate/vehicle_ammo.xml</checksum>
+  <checksum SHA1="959bfc548b7af34b07503515ab4af26e948ef64c">gamestate/ufopaedia.xml</checksum>
+  <checksum SHA1="a0d7a54830685b0572941e46747d90533602548e">gamestate/vehicle_ammo.xml</checksum>
   <checksum SHA1="8a7755f371d041f0d85caf5d8b9936e380ca9c02">gamestate/vehicle_equipment.xml</checksum>
   <checksum SHA1="af910da2c9ac0cdeb1d9287eb408115ea9db24bb">gamestate/vehicle_types.xml</checksum>
   <checksum SHA1="d12ae543608589a131c3f3ff6aa85247688bde81">gamestate/vehicles.xml</checksum>

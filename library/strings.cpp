@@ -64,6 +64,7 @@ UString::UString(std::string str) : u8Str(str) {}
 UString::UString(char c) : u8Str(1, c) {}
 
 UString::UString(const char *cstr)
+
 {
 	// We have to handle this manually as some things thought UString(nullptr) was a good idea
 	if (cstr)
