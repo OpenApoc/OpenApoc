@@ -105,6 +105,19 @@
         <sp>
           <order>30110</order>
 		  <ufopaedia_entry>PAEDIAENTRY_ADVANCED_QUANTUM_PHYSICS_LAB</ufopaedia_entry>
+		  <dependencies>
+            <research>
+              <entry>
+                <type>any</type>
+                <topics>
+                  <entry>RESEARCH_ALIEN_CONTROL_SYSTEM</entry>
+                  <entry>RESEARCH_ALIEN_ENERGY_SOURCE</entry>
+                  <entry>RESEARCH_ALIEN_PROPULSION_SYSTEM</entry>
+                </topics>
+              </entry>
+            </research>
+            <items />
+          </dependencies>
         </sp>
       </value>
     </entry>

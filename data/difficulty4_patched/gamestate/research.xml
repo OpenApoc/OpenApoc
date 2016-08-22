@@ -1219,6 +1219,14 @@
                   <entry>RESEARCH_ALIEN_PROPULSION_SYSTEM</entry>
                 </topics>
               </entry>
+              <entry>
+                <type>any</type>
+                <topics>
+                  <entry>RESEARCH_ALIEN_CONTROL_SYSTEM</entry>
+                  <entry>RESEARCH_ALIEN_ENERGY_SOURCE</entry>
+                  <entry>RESEARCH_ALIEN_PROPULSION_SYSTEM</entry>
+                </topics>
+              </entry>
             </research>
             <items />
           </dependencies>
