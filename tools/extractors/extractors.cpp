@@ -34,6 +34,8 @@ void InitialGameStateExtractor::extract(GameState &state, Difficulty difficulty)
 	                         "cityovr", state.cities[humanMapId]);
 	this->extractCityScenery(state, "ALIENMAP_", "alienmap", "alien", "stratmap", "loftemps",
 	                         "cityovr", state.cities[humanMapId]);
+
+	//this->extractBattlescapeMap(state, "", "");
 }
 
 } // namespace OpenApoc

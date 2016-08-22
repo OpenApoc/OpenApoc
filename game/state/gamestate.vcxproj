@@ -22,6 +22,7 @@
     <ClCompile Include="agent.cpp" />
     <ClCompile Include="base\base.cpp" />
     <ClCompile Include="base\facility.cpp" />
+    <ClCompile Include="battle.cpp" />
     <ClCompile Include="city\baselayout.cpp" />
     <ClCompile Include="city\building.cpp" />
     <ClCompile Include="city\city.cpp" />
@@ -61,6 +62,7 @@
     <ClInclude Include="agent.h" />
     <ClInclude Include="base\base.h" />
     <ClInclude Include="base\facility.h" />
+    <ClInclude Include="battle.h" />
     <ClInclude Include="city\baselayout.h" />
     <ClInclude Include="city\building.h" />
     <ClInclude Include="city\city.h" />

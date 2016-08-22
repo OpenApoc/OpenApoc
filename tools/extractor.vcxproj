@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="extract_battlescape_map.cpp" />
     <ClCompile Include="extractors\common\strtab.cpp" />
     <ClCompile Include="extractors\common\ufo2p.cpp" />
     <ClCompile Include="extractors\extractors.cpp" />

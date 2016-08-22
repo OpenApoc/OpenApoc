@@ -17,6 +17,7 @@
 #include "game/state/rules/vequipment_type.h"
 #include "game/state/stateobject.h"
 #include "game/state/ufopaedia.h"
+#include "game/state/battle.h"
 #include "library/strings.h"
 #include "library/xorshift.h"
 #include <random>
@@ -50,6 +51,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	std::map<UString, sp<Vehicle>> vehicles;
 	std::map<UString, sp<UfopaediaCategory>> ufopaedia;
 	ResearchState research;
+	Battle battle;
 
 	mutable unsigned lastVehicle = 0;
 
