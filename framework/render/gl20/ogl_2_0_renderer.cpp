@@ -20,7 +20,7 @@ class Program
 {
   public:
 	GLuint prog;
-	static GLuint CreateShader(GLenum type, const UString source)
+	static GLuint createShader(GLenum type, const UString source)
 	{
 		GLuint shader = gl20::CreateShader(type);
 		auto sourceString = source.str();
@@ -46,13 +46,13 @@ class Program
 	}
 	Program(const UString vertexSource, const UString fragmentSource) : prog(0)
 	{
-		GLuint vShader = CreateShader(gl20::VERTEX_SHADER, vertexSource);
+		GLuint vShader = createShader(gl20::VERTEX_SHADER, vertexSource);
 		if (!vShader)
 		{
 			LogError("Failed to compile vertex shader");
 			return;
 		}
-		GLuint fShader = CreateShader(gl20::FRAGMENT_SHADER, fragmentSource);
+		GLuint fShader = createShader(gl20::FRAGMENT_SHADER, fragmentSource);
 		if (!fShader)
 		{
 			LogError("Failed to compile fragment shader");
@@ -87,21 +87,21 @@ class Program
 		return;
 	}
 
-	void Uniform(GLuint loc, Colour c)
+	void uniform(GLuint loc, Colour c)
 	{
 		gl20::Uniform4f(loc, c.r / 255.0f, c.g / 255.0f, c.b / 255.0f, c.a / 255.0f);
 	}
 
-	void Uniform(GLuint loc, Vec2<float> v) { gl20::Uniform2f(loc, v.x, v.y); }
-	void Uniform(GLuint loc, Vec2<int> v)
+	void uniform(GLuint loc, Vec2<float> v) { gl20::Uniform2f(loc, v.x, v.y); }
+	void uniform(GLuint loc, Vec2<int> v)
 	{
 		// FIXME: Float conversion
 		gl20::Uniform2f(loc, v.x, v.y);
 	}
-	void Uniform(GLuint loc, float v) { gl20::Uniform1f(loc, v); }
-	void Uniform(GLuint loc, int v) { gl20::Uniform1i(loc, v); }
+	void uniform(GLuint loc, float v) { gl20::Uniform1f(loc, v); }
+	void uniform(GLuint loc, int v) { gl20::Uniform1i(loc, v); }
 
-	void Uniform(GLuint loc, bool v) { gl20::Uniform1f(loc, (v ? 1.0f : 0.0f)); }
+	void uniform(GLuint loc, bool v) { gl20::Uniform1f(loc, (v ? 1.0f : 0.0f)); }
 
 	virtual ~Program()
 	{
@@ -179,17 +179,17 @@ class RGBProgram : public SpriteProgram
 		if (screenSize != currentScreenSize)
 		{
 			currentScreenSize = screenSize;
-			this->Uniform(this->screenSizeLoc, screenSize);
+			this->uniform(this->screenSizeLoc, screenSize);
 		}
 		if (texUnit != currentTexUnit)
 		{
 			currentTexUnit = texUnit;
-			this->Uniform(this->texLoc, texUnit);
+			this->uniform(this->texLoc, texUnit);
 		}
 		if (flipY != currentFlipY)
 		{
 			currentFlipY = flipY;
-			this->Uniform(this->flipYLoc, flipY);
+			this->uniform(this->flipYLoc, flipY);
 		}
 	}
 };
@@ -242,22 +242,22 @@ class PaletteProgram : public SpriteProgram
 		if (screenSize != currentScreenSize)
 		{
 			currentScreenSize = screenSize;
-			this->Uniform(this->screenSizeLoc, screenSize);
+			this->uniform(this->screenSizeLoc, screenSize);
 		}
 		if (texUnit != currentTexUnit)
 		{
 			currentTexUnit = texUnit;
-			this->Uniform(this->texLoc, texUnit);
+			this->uniform(this->texLoc, texUnit);
 		}
 		if (palUnit != currentPalUnit)
 		{
 			currentPalUnit = palUnit;
-			this->Uniform(this->palLoc, palUnit);
+			this->uniform(this->palLoc, palUnit);
 		}
 		if (currentFlipY != flipY)
 		{
 			currentFlipY = flipY;
-			this->Uniform(this->flipYLoc, flipY);
+			this->uniform(this->flipYLoc, flipY);
 		}
 	}
 };
@@ -305,17 +305,17 @@ class SolidColourProgram : public Program
 		if (currentScreenSize != screenSize)
 		{
 			currentScreenSize = screenSize;
-			this->Uniform(this->screenSizeLoc, screenSize);
+			this->uniform(this->screenSizeLoc, screenSize);
 		}
 		if (currentColour != colour)
 		{
 			currentColour = colour;
-			this->Uniform(this->colourLoc, colour);
+			this->uniform(this->colourLoc, colour);
 		}
 		if (currentFlipY != flipY)
 		{
 			currentFlipY = flipY;
-			this->Uniform(this->flipYLoc, flipY);
+			this->uniform(this->flipYLoc, flipY);
 		}
 	}
 };
@@ -713,7 +713,7 @@ class OGL20Renderer : public Renderer
 				img = new GLRGBImage(rgbImage);
 				image->rendererPrivateData.reset(img);
 			}
-			this->DrawRGB(*img, position, size, Scaler::Linear, center, angle);
+			this->drawRgb(*img, position, size, Scaler::Linear, center, angle);
 			return;
 		}
 
@@ -733,7 +733,7 @@ class OGL20Renderer : public Renderer
 				img = new GLRGBImage(rgbImage);
 				image->rendererPrivateData.reset(img);
 			}
-			this->DrawRGB(*img, position, size, scaler);
+			this->drawRgb(*img, position, size, scaler);
 			return;
 		}
 
@@ -753,7 +753,7 @@ class OGL20Renderer : public Renderer
 				// it to an RGB surface then scale that
 				LogError("Only nearest scaler is supported on paletted images");
 			}
-			this->DrawPalette(*img, position, size);
+			this->drawPalette(*img, position, size);
 			return;
 		}
 
@@ -766,7 +766,7 @@ class OGL20Renderer : public Renderer
 				fbo = new FBOData(image->size);
 				image->rendererPrivateData.reset(fbo);
 			}
-			this->DrawSurface(*fbo, position, size, scaler);
+			this->drawSurface(*fbo, position, size, scaler);
 			return;
 		}
 		LogError("Unsupported image type");
@@ -781,7 +781,14 @@ class OGL20Renderer : public Renderer
 	}
 	void drawFilledRect(Vec2<float> position, Vec2<float> size, Colour c) override
 	{
-		this->DrawRect(position, size, c);
+		bindProgram(colourProgram);
+		Rect<float> pos(position, position + size);
+		bool flipY = false;
+		if (currentBoundFBO == 0)
+			flipY = true;
+		colourProgram->setUniforms(this->currentSurface->size, flipY, c);
+		Quad q(pos, Rect<float>{{0, 0}, {1, 1}});
+		q.draw(colourProgram->posLoc);
 	}
 	void drawRect(Vec2<float> position, Vec2<float> size, Colour c, float thickness = 1.0) override
 	{
@@ -852,22 +859,18 @@ class OGL20Renderer : public Renderer
 		this->drawFilledRect(C, sizeC, c);
 		this->drawFilledRect(D, sizeD, c);
 	}
-	void drawLine(Vec2<float> p1, Vec2<float> p2, Colour c, float thickness = 1.0) override
-	{
-		this->DrawLine(p1, p2, c, thickness);
-	}
 	void flush() override { /* Nothing to flush */}
 	UString getName() override { return "OGL2.0 Renderer"; }
 	sp<Surface> getDefaultSurface() override { return this->defaultSurface; }
 
-	void BindProgram(sp<Program> p)
+	void bindProgram(sp<Program> p)
 	{
 		if (this->currentBoundProgram == p->prog)
 			return;
 		gl20::UseProgram(p->prog);
 		this->currentBoundProgram = p->prog;
 	}
-	void DrawRGB(GLRGBImage &img, Vec2<float> offset, Vec2<float> size, Scaler scaler,
+	void drawRgb(GLRGBImage &img, Vec2<float> offset, Vec2<float> size, Scaler scaler,
 	             Vec2<float> rotationCenter = {0, 0}, float rotationAngleRadians = 0)
 	{
 		GLenum filter;
@@ -885,7 +888,7 @@ class OGL20Renderer : public Renderer
 				filter = gl20::NEAREST;
 				break;
 		}
-		BindProgram(rgbProgram);
+		bindProgram(rgbProgram);
 		bool flipY = false;
 		if (currentBoundFBO == 0)
 			flipY = true;
@@ -896,9 +899,9 @@ class OGL20Renderer : public Renderer
 		Quad q(pos, Rect<float>{{0, 0}, {1, 1}}, rotationCenter, rotationAngleRadians);
 		q.draw(rgbProgram->posLoc, rgbProgram->texcoordLoc);
 	}
-	void DrawPalette(GLPaletteImage &img, Vec2<float> offset, Vec2<float> size)
+	void drawPalette(GLPaletteImage &img, Vec2<float> offset, Vec2<float> size)
 	{
-		BindProgram(paletteProgram);
+		bindProgram(paletteProgram);
 		Rect<float> pos(offset, offset + size);
 		bool flipY = false;
 		if (currentBoundFBO == 0)
@@ -912,7 +915,7 @@ class OGL20Renderer : public Renderer
 		q.draw(paletteProgram->posLoc, paletteProgram->texcoordLoc);
 	}
 
-	void DrawSurface(FBOData &fbo, Vec2<float> offset, Vec2<float> size, Scaler scaler)
+	void drawSurface(FBOData &fbo, Vec2<float> offset, Vec2<float> size, Scaler scaler)
 	{
 		GLenum filter;
 		Rect<float> pos(offset, offset + size);
@@ -929,7 +932,7 @@ class OGL20Renderer : public Renderer
 				filter = gl20::NEAREST;
 				break;
 		}
-		BindProgram(rgbProgram);
+		bindProgram(rgbProgram);
 		bool flipY = false;
 		if (currentBoundFBO == 0)
 			flipY = true;
@@ -941,21 +944,9 @@ class OGL20Renderer : public Renderer
 		q.draw(rgbProgram->posLoc, rgbProgram->texcoordLoc);
 	}
 
-	void DrawRect(Vec2<float> offset, Vec2<float> size, Colour c)
+	void drawLine(Vec2<float> p0, Vec2<float> p1, Colour c, float thickness) override
 	{
-		BindProgram(colourProgram);
-		Rect<float> pos(offset, offset + size);
-		bool flipY = false;
-		if (currentBoundFBO == 0)
-			flipY = true;
-		colourProgram->setUniforms(this->currentSurface->size, flipY, c);
-		Quad q(pos, Rect<float>{{0, 0}, {1, 1}});
-		q.draw(colourProgram->posLoc);
-	}
-
-	void DrawLine(Vec2<float> p0, Vec2<float> p1, Colour c, float thickness)
-	{
-		BindProgram(colourProgram);
+		bindProgram(colourProgram);
 		bool flipY = false;
 		if (currentBoundFBO == 0)
 			flipY = true;
