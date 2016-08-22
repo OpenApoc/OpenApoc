@@ -116,7 +116,7 @@ void ResearchSelect::begin()
 	});
 
 	auto ok_button = form->findControlTyped<GraphicButton>("BUTTON_OK");
-	ok_button->addCallback(FormEventType::ButtonClick, [this](Event *e) {
+	ok_button->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		LogInfo("Research selection OK pressed, applying selection");
 		Lab::setResearch({state.get(), this->lab}, {state.get(), current_topic}, state);
 	});
@@ -157,6 +157,7 @@ void ResearchSelect::populateResearchList()
 		// FIXME: When we get font coloring, set light blue color for topics too large a size
 		bool too_large = (t->required_lab_size == ResearchTopic::LabSize::Large &&
 		                  this->lab->size == ResearchTopic::LabSize::Small);
+		std::ignore = too_large;
 
 		auto control = mksp<Control>();
 		control->Size = {544, 20};

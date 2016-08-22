@@ -28,12 +28,6 @@ const std::map<ResearchDependency::Type, UString> ResearchDependency::TypeMap = 
     {Type::Any, "any"}, {Type::All, "all"}, {Type::Unused, "unused"},
 };
 
-ResearchTopic::ResearchTopic()
-    : man_hours(0), man_hours_progress(0), type(Type::BioChem), required_lab_size(LabSize::Small),
-      item_type(ItemType::VehicleEquipment), score(0), started(false), cost(0), order(0)
-{
-}
-
 bool ResearchTopic::isComplete() const
 {
 	return (this->type != ResearchTopic::Type::Engineering) &&
@@ -298,10 +292,10 @@ void Lab::update(unsigned int ticks, StateRef<Lab> lab, sp<GameState> state)
 		// working with sub-single progress 'unit' time units.
 		// This also leaves any remaining ticks in the lab's ticks_since_last_progress, so they will
 		// get added onto the next project that lab undertakes at the first update.
-		unsigned ticks_per_progress_hour = TICKS_PER_HOUR / lab->getTotalSkill();
+		unsigned ticks_per_progress_hour = TICKS_PER_HOUR / skill;
 		unsigned ticks_remaining_to_progress = ticks + lab->ticks_since_last_progress;
 
-		unsigned progress_hours;
+		unsigned progress_hours = 0;
 
 		switch (lab->current_project->type)
 		{
