@@ -12,6 +12,5 @@ class RendererFactory
 };
 
 RendererFactory *getGL20RendererFactory();
-RendererFactory *getGL30RendererFactory();
 RendererFactory *getGLES30RendererFactory();
 }; // namespace OpenApoc

@@ -336,7 +336,7 @@ void ResearchScreen::updateProgressInfo()
 		auto &topic = this->selected_lab->lab->current_project;
 		auto progressBar = form->findControlTyped<Graphic>("GRAPHIC_PROGRESS_BAR");
 		auto progressImage = mksp<RGBImage>(progressBar->Size);
-		float projectProgress;
+		float projectProgress = 0.0f;
 		switch (this->selected_lab->lab->current_project->type)
 		{
 			case ResearchTopic::Type::BioChem:

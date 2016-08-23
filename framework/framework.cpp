@@ -30,12 +30,6 @@
 #include <boost/filesystem.hpp>
 #include <boost/locale.hpp>
 
-#ifdef OPENAPOC_GLES
-
-#include "framework/render/gles20/EGLContext.h"
-
-#endif /*OPENAPOC_GLES*/
-
 using namespace OpenApoc;
 
 namespace
@@ -51,7 +45,7 @@ namespace
 #else
 #warning RENDERERS not set - using default list
 #endif
-#define RENDERERS "GLES_3_0:GL_3_0:GL_2_0"
+#define RENDERERS "GLES_3_0:GL_2_0"
 #endif
 
 static std::map<UString, UString> defaultConfig = {
@@ -415,15 +409,7 @@ void Framework::run(sp<Stage> initialStage, size_t frameCount)
 			{
 				TraceObj flipObj("Flip");
 				this->renderer->flush();
-#ifndef OPENAPOC_GLES
 				SDL_GL_SwapWindow(p->window);
-#else
-#ifdef _MSC_VER
-				GLContext::GetInstance()->Swap();
-#else
-				SDL_GL_SwapWindow(p->window);
-#endif
-#endif
 			}
 		}
 		if (frameCount && frame == frameCount)
@@ -830,7 +816,6 @@ void Framework::displayInitialise()
 	SDL_ShowCursor(SDL_DISABLE);
 
 	p->registeredRenderers["GLES_3_0"].reset(getGLES30RendererFactory());
-	p->registeredRenderers["GL_3_0"].reset(getGL30RendererFactory());
 	p->registeredRenderers["GL_2_0"].reset(getGL20RendererFactory());
 
 	for (auto &rendererName : Settings->getString("Visual.Renderers").split(':'))
