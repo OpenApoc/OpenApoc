@@ -79,7 +79,7 @@ CheckOptions:
   - key:             readability-identifier-naming.ConstexprFunctionSuffix
     value:           ''
   - key:             readability-identifier-naming.ConstexprMethodCase
-    value:           cameBack
+    value:           camelBack
   - key:             readability-identifier-naming.ConstexprMethodPrefix
     value:           ''
   - key:             readability-identifier-naming.ConstexprMethodSuffix
