@@ -26,7 +26,7 @@ class ProjectDependencies
 class ResearchTopic : public StateObject<ResearchTopic>
 {
   public:
-	ResearchTopic();
+	ResearchTopic() = default;
 	enum class Type
 	{
 		BioChem,
@@ -52,24 +52,24 @@ class ResearchTopic : public StateObject<ResearchTopic>
 	// Shared Research & Manufacture
 	UString name;
 	UString description;
-	unsigned man_hours;
-	Type type;
-	LabSize required_lab_size;
+	unsigned man_hours = 0;
+	Type type = Type::BioChem;
+	LabSize required_lab_size = LabSize::Small;
 	ProjectDependencies dependencies;
-	unsigned order;
+	unsigned order = 0;
 
 	// Research only
-	unsigned man_hours_progress;
+	unsigned man_hours_progress = 0;
 	// This is the entry that gets shown when you press "Yes" when asked to view
 	StateRef<UfopaediaEntry> ufopaedia_entry;
 	StateRef<Lab> current_lab;
-	unsigned score;
-	bool started;
+	unsigned score = 0;
+	bool started = false;
 	bool isComplete() const;
 
 	// Manufacture only
-	unsigned cost;
-	ItemType item_type;
+	int cost = 0;
+	ItemType item_type = ItemType::VehicleEquipment;
 	UString item_produced;
 };
 

@@ -41,7 +41,6 @@
     <ClCompile Include="physfs_fs.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="render\gl20\ogl_2_0_renderer.cpp" />
-    <ClCompile Include="render\gl30\ogl_3_0_renderer.cpp" />
     <ClCompile Include="render\gles30_v2\gleswrap_gles3.cpp" />
     <ClCompile Include="render\gles30_v2\ogles_3_0_renderer_v2.cpp" />
     <ClCompile Include="sampleloader\rawsound.cpp" />
@@ -82,7 +81,6 @@
     <ClInclude Include="renderer.h" />
     <ClInclude Include="renderer_interface.h" />
     <ClInclude Include="render\gl20\gl_2_0.hpp" />
-    <ClInclude Include="render\gl30\gl_3_0.hpp" />
     <ClInclude Include="render\gles30_v2\gleswrap.h" />
     <ClInclude Include="render\gles30_v2\gleswrap_gles3.h" />
     <ClInclude Include="render\gles30_v2\stb_rect_pack.h" />
@@ -123,7 +121,6 @@
   <ItemGroup>
     <None Include="packages.config" />
     <None Include="render\gl20\gl_2_0.inl" />
-    <None Include="render\gl30\gl_3_0.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A61CE9B3-B257-4978-9E8B-CABB592EC2CE}</ProjectGuid>
