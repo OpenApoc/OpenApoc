@@ -156,7 +156,6 @@
     <style minwidth="640" minheight="128">
       <position x="centre" y="bottom"/>
       <size width="640" height="128"/>
-      <backcolour r="128" g="96" b="80"/>
       <graphic>
         <size width="640" height="128"/>
         <image>RAW:xcom3/ufodata/isobord1.dat:640:128:xcom3/ufodata/pal_01.dat</image>
@@ -234,7 +233,6 @@
     <style minwidth="640" minheight="128">
       <position x="centre" y="bottom"/>
       <size width="640" height="128"/>
-      <backcolour r="128" g="96" b="80"/>
       <graphic>
         <size width="640" height="128"/>
         <image>RAW:xcom3/ufodata/isobord2.dat:640:128:xcom3/ufodata/pal_01.dat</image>
@@ -347,7 +345,6 @@
     <style minwidth="640" minheight="128">
       <position x="centre" y="bottom"/>
       <size width="640" height="128"/>
-      <backcolour r="128" g="96" b="80"/>
       <graphic>
         <size width="640" height="128"/>
         <image>RAW:xcom3/ufodata/isobord3.dat:640:128:xcom3/ufodata/pal_01.dat</image>
@@ -359,7 +356,6 @@
     <style minwidth="640" minheight="128">
       <position x="centre" y="bottom"/>
       <size width="640" height="128"/>
-      <backcolour r="128" g="96" b="80"/>
       <graphic>
         <size width="640" height="128"/>
         <image>RAW:xcom3/ufodata/isobord4.dat:640:128:xcom3/ufodata/pal_01.dat</image>
@@ -371,7 +367,6 @@
     <style minwidth="640" minheight="128">
       <position x="centre" y="bottom"/>
       <size width="640" height="128"/>
-      <backcolour r="128" g="96" b="80"/>
       <graphic>
         <size width="640" height="128"/>
         <image>RAW:xcom3/ufodata/isobord5.dat:640:128:xcom3/ufodata/pal_01.dat</image>
@@ -383,7 +378,6 @@
     <style minwidth="640" minheight="128">
       <position x="centre" y="bottom"/>
       <size width="640" height="128"/>
-      <backcolour r="128" g="96" b="80"/>
       <graphic>
         <size width="640" height="128"/>
         <image>RAW:xcom3/ufodata/isobord6.dat:640:128:xcom3/ufodata/pal_01.dat</image>
@@ -395,7 +389,6 @@
     <style minwidth="640" minheight="128">
       <position x="centre" y="bottom"/>
       <size width="640" height="128"/>
-      <backcolour r="128" g="96" b="80"/>
       <graphic>
         <size width="640" height="128"/>
         <image>RAW:xcom3/ufodata/isobord7.dat:640:128:xcom3/ufodata/pal_01.dat</image>
@@ -407,7 +400,6 @@
     <style minwidth="640" minheight="128">
       <position x="centre" y="bottom"/>
       <size width="640" height="128"/>
-      <backcolour r="128" g="96" b="80"/>
       <graphic>
         <size width="640" height="128"/>
         <image>RAW:xcom3/ufodata/isoborda.dat:640:128:xcom3/ufodata/pal_01.dat</image>

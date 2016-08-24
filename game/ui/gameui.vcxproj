@@ -36,6 +36,7 @@
     <ClCompile Include="debugtools\formpreview.cpp" />
     <ClCompile Include="debugtools\imagepreview.cpp" />
     <ClCompile Include="general\messagelogscreen.cpp" />
+    <ClCompile Include="general\notificationscreen.cpp" />
     <ClCompile Include="general\savemenu.cpp" />
     <ClCompile Include="general\difficultymenu.cpp" />
     <ClCompile Include="general\ingameoptions.cpp" />
@@ -66,6 +67,7 @@
     <ClInclude Include="debugtools\formpreview.h" />
     <ClInclude Include="debugtools\imagepreview.h" />
     <ClInclude Include="general\messagelogscreen.h" />
+    <ClInclude Include="general\notificationscreen.h" />
     <ClInclude Include="general\savemenu.h" />
     <ClInclude Include="general\difficultymenu.h" />
     <ClInclude Include="general\ingameoptions.h" />

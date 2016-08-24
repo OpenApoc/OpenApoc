@@ -73,8 +73,6 @@ class CityView : public TileView
 	std::vector<sp<GraphicButton>> miniViews;
 	UpdateSpeed updateSpeed;
 
-	void setUpdateSpeed(UpdateSpeed updateSpeed);
-
 	sp<GameState> state;
 	std::map<CityIcon, sp<Image>> icons;
 
@@ -107,6 +105,8 @@ class CityView : public TileView
 	void update(StageCmd *const cmd) override;
 	void render() override;
 	void eventOccurred(Event *e) override;
+
+	void setUpdateSpeed(UpdateSpeed updateSpeed);
 };
 
 }; // namespace OpenApoc

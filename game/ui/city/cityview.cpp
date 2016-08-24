@@ -24,6 +24,7 @@
 #include "game/ui/general/ingameoptions.h"
 #include "game/ui/general/messagebox.h"
 #include "game/ui/general/messagelogscreen.h"
+#include "game/ui/general/notificationscreen.h"
 #include "game/ui/ufopaedia/ufopaediacategoryview.h"
 #include "game/ui/ufopaedia/ufopaediaview.h"
 #include "library/sp.h"
@@ -896,6 +897,13 @@ void CityView::eventOccurred(Event *e)
 		if (!gameEvent)
 		{
 			LogError("Invalid game state event");
+		}
+		if (!gameEvent->message().empty())
+		{
+			baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
+			auto notification = mksp<NotificationScreen>(state, *this, gameEvent->message());
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = notification;
 		}
 		switch (gameEvent->type)
 		{
