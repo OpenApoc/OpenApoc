@@ -105,6 +105,9 @@
     <ClCompile Include="battletileview\battletileview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="general\notificationscreen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boot.h">
@@ -195,6 +198,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="battletileview\battletileview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="general\notificationscreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
