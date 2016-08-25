@@ -41,6 +41,6 @@ class InitialGameStateExtractor
 	                        UString ovrFile, sp<City> city);
 	
 	void extractBattlescapeMap(GameState &state, UString dirName, UString tilePrefix);
-	void extractBattlescapeScenery(GameState &state, UString dirName, UString tilePrefix)
+	void extractBattlescapeStuff(GameState &state, UString dirName, UString tilePrefix);
 };
 }

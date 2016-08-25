@@ -17,4 +17,15 @@ class Collision
 	explicit operator bool() const { return obj != nullptr; }
 };
 
+class BattleTileObject;
+
+class CollisionB
+{
+public:
+	sp<BattleTileObject> obj;
+	sp<Projectile> projectile;
+	Vec3<float> position;
+	explicit operator bool() const { return obj != nullptr; }
+};
+
 }; // namespace OpenApoc

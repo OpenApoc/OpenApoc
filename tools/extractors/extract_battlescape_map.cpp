@@ -10,7 +10,7 @@ namespace OpenApoc
 	void InitialGameStateExtractor::extractBattlescapeMap(GameState &state, UString dirName,
 		UString tilePrefix)
 	{
-		// FIXME: Right now we only know how to read 58UFO8
+		// FIXME: Right now we only read 58UFO8, in the future we will be reading every folder
 		dirName = UString("58UFO8");
 		tilePrefix = UString("58UFO8_");
 
@@ -76,6 +76,8 @@ namespace OpenApoc
 			chunksY = (unsigned)idx;
 			inFile.read((char *)&idx, sizeof(idx));
 			chunksZ = (unsigned)idx;
+
+			state.battle.size = Vec3<int>{ sizeX*chunksX, sizeY*chunksY, sizeZ*chunksZ };
 		}
 		
 		// Then we read 58SEC01.SMP itself for the map
@@ -95,15 +97,15 @@ namespace OpenApoc
 				LogError("Unexpected filesize %zu - expected %u", fileSize, expectedFileSize);
 			}
 
-			for (unsigned int cz = 1; cz <= chunksZ; cz++)
+			for (unsigned int cz = 0; cz < chunksZ; cz++)
 			{
-				for (unsigned int cy = 1; cy <= chunksY; cy++)
+				for (unsigned int z = 0; z < sizeZ; z++)
 				{
-					for (unsigned int cx = 1; cx <= chunksX; cx++)
+					for (unsigned int cy = 0; cy < chunksY; cy++)
 					{
-						for (unsigned int z = 0; z < sizeZ; z++)
+						for (unsigned int y = 0; y < sizeY; y++)
 						{
-							for (unsigned int y = 0; y < sizeY; y++)
+							for (unsigned int cx = 0; cx < chunksX; cx++)
 							{
 								for (unsigned int x = 0; x < sizeX; x++)
 								{
@@ -114,10 +116,10 @@ namespace OpenApoc
 
 										if (idx != 0)
 										{
-											auto tileName = UString::format("%s%s%u", BattleTileType::getPrefix(),
+											auto tileName = UString::format("%s%s%u", BattleGroundType::getPrefix(),
 												tilePrefix, (unsigned)idx);
 
-											state.battle.initial_tiles[Vec3<int>{x*cx, y*cy, z*cz}] = { &state, tileName };
+											state.battle.initial_grounds[Vec3<int>{x + sizeX * cx, y + sizeY * cy, z + sizeZ * cz}] = { &state, tileName };
 										}
 									}
 									// read left wall
@@ -130,7 +132,7 @@ namespace OpenApoc
 											auto tileName = UString::format("%s%s%u", BattleLeftWallType::getPrefix(),
 												tilePrefix, (unsigned)idx);
 
-											state.battle.initial_left_walls[Vec3<int>{x*cx, y*cy, z*cz}] = { &state, tileName };
+											state.battle.initial_left_walls[Vec3<int>{x + sizeX * cx, y + sizeY * cy, z + sizeZ * cz}] = { &state, tileName };
 										}
 									}
 									// read left wall
@@ -143,7 +145,7 @@ namespace OpenApoc
 											auto tileName = UString::format("%s%s%u", BattleRightWallType::getPrefix(),
 												tilePrefix, (unsigned)idx);
 
-											state.battle.initial_right_walls[Vec3<int>{x*cx, y*cy, z*cz}] = { &state, tileName };
+											state.battle.initial_right_walls[Vec3<int>{x + sizeX * cx, y + sizeY * cy, z + sizeZ * cz}] = { &state, tileName };
 										}
 									}
 									// read scenery
@@ -156,7 +158,7 @@ namespace OpenApoc
 											auto tileName = UString::format("%s%s%u", BattleSceneryType::getPrefix(),
 												tilePrefix, (unsigned)idx);
 
-											state.battle.initial_scenery[Vec3<int>{x*cx, y*cy, z*cz}] = { &state, tileName };
+											state.battle.initial_scenery[Vec3<int>{x + sizeX * cx, y + sizeY * cy, z + sizeZ * cz}] = { &state, tileName };
 										}
 									}
 								}

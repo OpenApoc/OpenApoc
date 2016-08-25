@@ -1,3 +1,4 @@
+#include "game/ui/battle/battleview.h"
 #include "game/ui/general/ingameoptions.h"
 #include "forms/ui.h"
 #include "framework/event.h"
@@ -119,6 +120,13 @@ void InGameOptions::eventOccurred(Event *e)
 				}
 			}
 			this->state->research.resortTopicList();
+			return;
+		}
+		else if (e->forms().RaisedBy->Name == "BUTTON_INTO_BATTLE")
+		{
+			state->battle.start();
+			stageCmd.cmd = StageCmd::Command::PUSH;
+			stageCmd.nextStage = mksp<BattleView>(state);
 			return;
 		}
 	}

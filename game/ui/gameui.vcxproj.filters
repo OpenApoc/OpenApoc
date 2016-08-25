@@ -99,6 +99,12 @@
     <ClCompile Include="debugtools\imagepreview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="battle\battleview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battletileview\battletileview.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="boot.h">
@@ -183,6 +189,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="debugtools\imagepreview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle\battleview.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battletileview\battletileview.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
