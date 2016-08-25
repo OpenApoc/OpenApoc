@@ -346,9 +346,8 @@ void ResearchScreen::updateProgressInfo()
 				break;
 			case ResearchTopic::Type::Engineering:
 				projectProgress = clamp(
-				    (float)(this->selected_lab->lab->manufacture_man_hours_invested) /
-				        (float)(topic->man_hours * (this->selected_lab->lab->manufacture_goal -
-				                                    this->selected_lab->lab->manufacture_done)),
+				    (float)(this->selected_lab->lab->manufacture_man_hours_invested + topic->man_hours * this->selected_lab->lab->manufacture_done) /
+				        (float)(topic->man_hours * this->selected_lab->lab->manufacture_goal),
 				    0.0f, 1.0f);
 				break;
 			default:
