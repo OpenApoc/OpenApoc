@@ -235,10 +235,10 @@ void BattleTileView::render()
 					for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 					{
 						auto &obj = tile->drawnObjects[layer][obj_id];
-						if (obj->getType() == BattleTileObject::Type::Ground && hideGround ||
-						    obj->getType() == BattleTileObject::Type::LeftWall && hideLeftWall ||
-						    obj->getType() == BattleTileObject::Type::RightWall && hideRightWall ||
-						    obj->getType() == BattleTileObject::Type::Scenery && hideScenery)
+						if (((obj->getType() == BattleTileObject::Type::Ground) && hideGround) ||
+						    ((obj->getType() == BattleTileObject::Type::LeftWall) && hideLeftWall) ||
+						    ((obj->getType() == BattleTileObject::Type::RightWall) && hideRightWall) ||
+						    ((obj->getType() == BattleTileObject::Type::Scenery) && hideScenery))
 							continue;
 						Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
 						obj->draw(r, *this, pos, this->viewMode);

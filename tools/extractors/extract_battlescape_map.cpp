@@ -7,12 +7,9 @@
 
 namespace OpenApoc
 {
-void InitialGameStateExtractor::extractBattlescapeMap(GameState &state, UString dirName,
-                                                      UString tilePrefix)
+void InitialGameStateExtractor::extractBattlescapeMap(GameState &state, UString dirName, UString secName)
 {
-	// FIXME: Right now we only read 58UFO8, in the future we will be reading every folder
-	dirName = UString("58UFO8");
-	tilePrefix = UString("58UFO8_");
+	UString tilePrefix = dirName + UString("_");
 
 	UString map_prefix = "xcom3/MAPS/";
 	unsigned int sizeX = 0;
@@ -52,7 +49,7 @@ void InitialGameStateExtractor::extractBattlescapeMap(GameState &state, UString 
 
 	// Then we read 58SEC01.SDT to see how many chunks
 	{
-		fileName = dirName + UString("/58SEC01.SDT");
+		fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("SEC") + secName + UString(".SDT");
 		expectedFileSize = 20;
 
 		auto inFile = fw().data->fs.open(map_prefix + fileName);
@@ -80,7 +77,7 @@ void InitialGameStateExtractor::extractBattlescapeMap(GameState &state, UString 
 
 	// Then we read 58SEC01.SMP itself for the map
 	{
-		fileName = dirName + UString("/58SEC01.SMP");
+		fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("SEC") + secName + UString(".SMP");
 		expectedFileSize = sizeX * sizeY * sizeZ * chunksX * chunksY * chunksZ * 4;
 
 		auto inFile = fw().data->fs.open(map_prefix + fileName);

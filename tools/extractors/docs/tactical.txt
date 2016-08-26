@@ -1,0 +1,41 @@
+Tactical data description:
+
+- XCOMA/MAPS/
+
+Each folder inside describes one tactical tileset (a map/ a building). Like, Slums, or UFO Type 8.
+
+- XCOMA/MAPS/XXNNNNNN (ex: 58UFO8)
+
+Folder name contains serial number and a title (hinting to what kind of a map it actually is, like 07CORPHQ - "Corporate Headquarters").
+Following is the folder's contents:
+
+-- BUILDING.DAT
+
+Length seems to be always 1966.
+00..11 - 12 bytes, contain x, y, z sizes of a chunk.
+12..1965 - 1954 unknown bytes. Contain a lot of FF's.
+
+-- XXSECYY.SDT, XXSECYY.SLS, XXSECYY.SMP, XXSECYY.SOB (ex: 37SEC12.SDT etc.)
+
+Groups of four files. ".SOB" file is not always present. They seem to represent a single block in a map. Map can then consist of some amount of those blocks. Like, Cult of Sirius temples have typical "building blocks" they're made from - twin altar room, twin lift room, chessboard room, dining room. 
+
+--- XXSECYY.SDT
+
+Length seems to be always 20.
+00..11 - 12 bytes, contain x, y, z number of chunks. 
+12..19 - 8 bytes, unknown.
+
+Number of chunks seems to be used for the case when some blocks are bigger than others. Like, again, Cult of Sirius temples can have square rooms (like the twin elevator room) and rectangular rooms (like the chessboard room). In this case, 2 chunks are used for bigger ones.
+
+--- XXSECYY.SLS
+
+Unknown. Line of sight probably? 
+
+jedpossum from forums says:
+"As for the SLS it seems to be fog of war maybe some other data as well. Seems to have a pattern of 272 bytes(0x110 in hex) for each part.
+Edit
+The fog is stored as just plain binary 0 not shown 1 a tile being shown in the memory. Of course, it follows the same way as the tile map start top going down right."
+
+I do not know what this means. Size seems inconsistent (usually smaller than .MAP file by a little).
+
+--- XXSECYY

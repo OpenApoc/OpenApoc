@@ -40,7 +40,7 @@ class InitialGameStateExtractor
 	                        UString spriteFile, UString stratmapFile, UString lofFile,
 	                        UString ovrFile, sp<City> city);
 
-	void extractBattlescapeMap(GameState &state, UString dirName, UString tilePrefix);
-	void extractBattlescapeStuff(GameState &state, UString dirName, UString tilePrefix);
+	void extractBattlescapeMap(GameState &state, UString dirName, UString secName);
+	void extractBattlescapeStuff(GameState &state, UString dirName);
 };
 }
