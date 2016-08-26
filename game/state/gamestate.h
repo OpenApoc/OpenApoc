@@ -5,6 +5,7 @@
 #include "game/state/base/base.h"
 #include "game/state/city/city.h"
 #include "game/state/gametime.h"
+#include "game/state/message.h"
 #include "game/state/organisation.h"
 #include "game/state/research.h"
 #include "game/state/rules/aequipment_type.h"
@@ -28,7 +29,9 @@ namespace OpenApoc
 class SerializationArchive;
 class City;
 class Base;
+class GameEvent;
 
+static const int MAX_MESSAGES = 50;
 static const unsigned ORIGINAL_TICKS = 36;
 class GameState : public std::enable_shared_from_this<GameState>
 {
@@ -52,6 +55,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 	std::map<UString, sp<UfopaediaCategory>> ufopaedia;
 	ResearchState research;
 	Battle battle;
+
+	std::list<EventMessage> messages;
 
 	mutable unsigned lastVehicle = 0;
 
@@ -120,6 +125,8 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	void updateEndOfDay();
 	void updateEndOfWeek();
+
+	void logEvent(GameEvent *ev);
 };
 
 }; // namespace OpenApoc

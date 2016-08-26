@@ -36,6 +36,7 @@
     <ClCompile Include="gamestate.cpp" />
     <ClCompile Include="gamestate_serialize.cpp" />
     <ClCompile Include="gametime.cpp" />
+    <ClCompile Include="message.cpp" />
     <ClCompile Include="organisation.cpp" />
     <ClCompile Include="research.cpp" />
     <ClCompile Include="rules\aequipment_rules.cpp" />
@@ -77,6 +78,7 @@
     <ClInclude Include="gamestate.h" />
     <ClInclude Include="gametime.h" />
     <ClInclude Include="gametime_facet.h" />
+    <ClInclude Include="message.h" />
     <ClInclude Include="organisation.h" />
     <ClInclude Include="research.h" />
     <ClInclude Include="rules\aequipment_type.h" />

@@ -107,6 +107,7 @@ class CityView : public TileView
 	void eventOccurred(Event *e) override;
 
 	void setUpdateSpeed(UpdateSpeed updateSpeed);
+	void zoomLastEvent();
 };
 
 }; // namespace OpenApoc
