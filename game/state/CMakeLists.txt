@@ -21,6 +21,7 @@ set (GAMESTATE_SOURCE_FILES
 	gamestate.cpp
 	gamestate_serialize.cpp
 	gametime.cpp
+	message.cpp
 	organisation.cpp
 	research.cpp
 	rules/aequipment_rules.cpp
@@ -61,6 +62,7 @@ set (GAMESTATE_HEADER_FILES
 	gamestate.h
 	gametime.h
 	gametime_facet.h
+	message.h
 	organisation.h
 	research.h
 	rules/aequipment_type.h

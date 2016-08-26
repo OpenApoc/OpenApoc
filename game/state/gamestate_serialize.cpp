@@ -919,6 +919,16 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, Xorshift128
 	t.setState(s);
 }
 
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, EventMessage &m)
+{
+	if (!node)
+		return;
+
+	serializeIn(state, node->getNode("time"), m.time);
+	serializeIn(state, node->getNode("text"), m.text);
+	serializeIn(state, node->getNode("location"), m.location);
+}
+
 void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &s)
 {
 	if (!node)
@@ -948,6 +958,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &
 	serializeIn(state, node->getNode("current_base"), s.current_base);
 	serializeIn(state, node->getNode("rng"), s.rng);
 	serializeIn(state, node->getNodeOpt("time"), s.gameTime);
+	serializeIn(state, node->getNodeOpt("messages"), s.messages);
 }
 
 void serializeOut(sp<SerializationNode> node, const UString &string) { node->setValue(string); }
@@ -1629,6 +1640,13 @@ template <> void serializeOut(sp<SerializationNode> node, const Xorshift128Plus<
 	serializeOut(node->addNode("s1"), s[1]);
 }
 
+void serializeOut(sp<SerializationNode> node, const EventMessage &m)
+{
+	serializeOut(node->addNode("time"), m.time);
+	serializeOut(node->addNode("text"), m.text);
+	serializeOut(node->addNode("location"), m.location);
+}
+
 void serializeOut(sp<SerializationNode> node, const GameState &state)
 {
 	serializeOut(node->addNode("lastVehicle"), state.lastVehicle);
@@ -1656,6 +1674,7 @@ void serializeOut(sp<SerializationNode> node, const GameState &state)
 	serializeOut(node->addNode("player"), state.player);
 	serializeOut(node->addNode("rng"), state.rng);
 	serializeOut(node->addNode("time"), state.gameTime);
+	serializeOut(node->addNode("messages"), state.messages);
 }
 
 } // anonymous namespace

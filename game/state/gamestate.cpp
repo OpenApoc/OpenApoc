@@ -10,6 +10,8 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/gameevent.h"
+#include "game/state/gameevent.h"
+#include "game/state/gametime.h"
 #include "game/state/organisation.h"
 #include "game/state/tileview/tileobject_vehicle.h"
 #include <random>
@@ -422,6 +424,21 @@ void GameState::updateTurbo()
 		ticksToUpdate -= align;
 	}
 	this->update(ticksToUpdate);
+}
+
+void GameState::logEvent(GameEvent *ev)
+{
+	if (messages.size() == MAX_MESSAGES)
+	{
+		messages.pop_front();
+	}
+	UString location;
+	if (GameVehicleEvent *gve = dynamic_cast<GameVehicleEvent *>(ev))
+	{
+		location = gve->vehicle.id;
+	}
+	// TODO: Other event types
+	messages.emplace_back(EventMessage{gameTime, ev->message(), location});
 }
 
 }; // namespace OpenApoc
