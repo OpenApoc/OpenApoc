@@ -6,7 +6,7 @@
       <sp>
         <fixed>true</fixed>
         <ufopaedia_entry>PAEDIAENTRY_ACCESS_LIFT</ufopaedia_entry>
-	  </sp>
+      </sp>
     </value>
   </entry>
   <entry>
@@ -21,7 +21,7 @@
           </topics>
         </dependency>
         <ufopaedia_entry>PAEDIAENTRY_ADVANCED_ALIEN_CONTAINMENT</ufopaedia_entry>
-	  </sp>
+      </sp>
     </value>
   </entry>
   <entry>
@@ -36,7 +36,7 @@
           </topics>
         </dependency>
         <ufopaedia_entry>PAEDIAENTRY_ADVANCED_BIOCHEMISTRY_LAB</ufopaedia_entry>
-	  </sp>
+      </sp>
     </value>
   </entry>
   <entry>
@@ -51,7 +51,7 @@
           </topics>
         </dependency>
         <ufopaedia_entry>PAEDIAENTRY_ADVANCED_QUANTUM_PHYSICS_LAB</ufopaedia_entry>
-	  </sp>
+      </sp>
     </value>
   </entry>
   <entry>
@@ -65,7 +65,7 @@
           </topics>
         </dependency>
         <ufopaedia_entry>PAEDIAENTRY_ADVANCED_SECURITY_STATION</ufopaedia_entry>
-	  </sp>
+      </sp>
     </value>
   </entry>
   <entry>
@@ -80,7 +80,7 @@
           </topics>
         </dependency>
         <ufopaedia_entry>PAEDIAENTRY_ADVANCED_WORKSHOP</ufopaedia_entry>
-	  </sp>
+      </sp>
     </value>
   </entry>
   <entry>
@@ -89,7 +89,7 @@
       <sp>
         <capacityType>aliens</capacityType>
         <ufopaedia_entry>PAEDIAENTRY_ALIEN_CONTAINMENT</ufopaedia_entry>
-	  </sp>
+      </sp>
     </value>
   </entry>
   <entry>
@@ -98,7 +98,7 @@
       <sp>
         <capacityType>chemistry</capacityType>
         <ufopaedia_entry>PAEDIAENTRY_BIOCHEMISTRY_LAB</ufopaedia_entry>
-	  </sp>
+      </sp>
     </value>
   </entry>
   <entry>
@@ -110,8 +110,8 @@
           <type>unused</type>
           <topics/>
         </dependency>
-		<ufopaedia_entry></ufopaedia_entry>
-	  </sp>
+        <ufopaedia_entry/>
+      </sp>
     </value>
   </entry>
   <entry>
@@ -120,7 +120,7 @@
       <sp>
         <capacityType>quarters</capacityType>
         <ufopaedia_entry>PAEDIAENTRY_LIVING_QUARTERS</ufopaedia_entry>
-	  </sp>
+      </sp>
     </value>
   </entry>
   <entry>
@@ -129,7 +129,7 @@
       <sp>
         <capacityType>medical</capacityType>
         <ufopaedia_entry>PAEDIAENTRY_MEDICAL_BAY</ufopaedia_entry>
-	  </sp>
+      </sp>
     </value>
   </entry>
   <entry>
@@ -138,7 +138,7 @@
       <sp>
         <capacityType>psi</capacityType>
         <ufopaedia_entry>PAEDIAENTRY_PSI-GYM</ufopaedia_entry>
-	  </sp>
+      </sp>
     </value>
   </entry>
   <entry>
@@ -147,7 +147,7 @@
       <sp>
         <capacityType>physics</capacityType>
         <ufopaedia_entry>PAEDIAENTRY_QUANTUM_PHYSICS_LAB</ufopaedia_entry>
-	  </sp>
+      </sp>
     </value>
   </entry>
   <entry>
@@ -155,7 +155,7 @@
     <value>
       <sp>
         <ufopaedia_entry>PAEDIAENTRY_SECURITY_STATION</ufopaedia_entry>
-	  </sp>
+      </sp>
     </value>
   </entry>
   <entry>
@@ -164,7 +164,7 @@
       <sp>
         <capacityType>stores</capacityType>
         <ufopaedia_entry>PAEDIAENTRY_STORES</ufopaedia_entry>
-	  </sp>
+      </sp>
     </value>
   </entry>
   <entry>
@@ -173,7 +173,7 @@
       <sp>
         <capacityType>training</capacityType>
         <ufopaedia_entry>PAEDIAENTRY_TRAINING_AREA</ufopaedia_entry>
-	  </sp>
+      </sp>
     </value>
   </entry>
   <entry>
@@ -183,7 +183,7 @@
         <capacityType>repair</capacityType>
         <capacityAmount>1</capacityAmount>
         <ufopaedia_entry>PAEDIAENTRY_VEHICLE_REPAIR_BAY</ufopaedia_entry>
-	  </sp>
+      </sp>
     </value>
   </entry>
   <entry>
@@ -192,7 +192,7 @@
       <sp>
         <capacityType>workshop</capacityType>
         <ufopaedia_entry>PAEDIAENTRY_WORKSHOP</ufopaedia_entry>
-	  </sp>
+      </sp>
     </value>
   </entry>
 </facility_types>

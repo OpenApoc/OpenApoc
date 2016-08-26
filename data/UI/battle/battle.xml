@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc>
-<!--
+  <!--
 TACBORD = Real-Time Main
 TACBORD2 = Real-Time Psi-attack
 TACBORD3 = Real-Time Grenade arm
@@ -22,66 +22,66 @@ ISOBORD = Unused
         <size width="23" height="19"/>
         <image/>
       </graphicbutton>
-	  <graphicbutton id="BUTTON_LAYER_DOWN">
+      <graphicbutton id="BUTTON_LAYER_DOWN">
         <position x="449" y="70"/>
         <size width="23" height="19"/>
         <image/>
       </graphicbutton>
-	  <radiobutton id="BUTTON_LAYER_1" groupid="LAYER">
+      <radiobutton id="BUTTON_LAYER_1" groupid="LAYER">
         <position x="314" y="113"/>
         <size width="12" height="8"/>
         <image/>
-        <imagechecked></imagechecked>
+        <imagechecked/>
       </radiobutton>
-	  <radiobutton id="BUTTON_LAYER_2" groupid="LAYER">
+      <radiobutton id="BUTTON_LAYER_2" groupid="LAYER">
         <position x="314" y="104"/>
         <size width="12" height="8"/>
         <image/>
-        <imagechecked></imagechecked>
+        <imagechecked/>
       </radiobutton>
-	  <radiobutton id="BUTTON_LAYER_3" groupid="LAYER">
+      <radiobutton id="BUTTON_LAYER_3" groupid="LAYER">
         <position x="314" y="95"/>
         <size width="12" height="8"/>
         <image/>
-        <imagechecked></imagechecked>
+        <imagechecked/>
       </radiobutton>
-	  <radiobutton id="BUTTON_LAYER_4" groupid="LAYER">
+      <radiobutton id="BUTTON_LAYER_4" groupid="LAYER">
         <position x="314" y="86"/>
         <size width="12" height="8"/>
         <image/>
-        <imagechecked></imagechecked>
+        <imagechecked/>
       </radiobutton>
-	  <radiobutton id="BUTTON_LAYER_5" groupid="LAYER">
+      <radiobutton id="BUTTON_LAYER_5" groupid="LAYER">
         <position x="314" y="77"/>
         <size width="12" height="8"/>
         <image/>
-        <imagechecked></imagechecked>
+        <imagechecked/>
       </radiobutton>
-	  <radiobutton id="BUTTON_LAYER_6" groupid="LAYER">
+      <radiobutton id="BUTTON_LAYER_6" groupid="LAYER">
         <position x="314" y="68"/>
         <size width="12" height="8"/>
         <image/>
-        <imagechecked></imagechecked>
+        <imagechecked/>
       </radiobutton>
-	  <radiobutton id="BUTTON_LAYER_7" groupid="LAYER">
+      <radiobutton id="BUTTON_LAYER_7" groupid="LAYER">
         <position x="314" y="59"/>
         <size width="12" height="8"/>
         <image/>
-        <imagechecked></imagechecked>
+        <imagechecked/>
       </radiobutton>
-	  <radiobutton id="BUTTON_LAYER_8" groupid="LAYER">
+      <radiobutton id="BUTTON_LAYER_8" groupid="LAYER">
         <position x="314" y="50"/>
         <size width="12" height="8"/>
         <image/>
-        <imagechecked></imagechecked>
+        <imagechecked/>
       </radiobutton>
-	  <radiobutton id="BUTTON_LAYER_9" groupid="LAYER">
+      <radiobutton id="BUTTON_LAYER_9" groupid="LAYER">
         <position x="314" y="41"/>
         <size width="12" height="8"/>
         <image/>
-        <imagechecked></imagechecked>
+        <imagechecked/>
       </radiobutton>
-	  <checkbox id="BUTTON_FOLLOW_AGENT">
+      <checkbox id="BUTTON_FOLLOW_AGENT">
         <position x="4" y="7"/>
         <size width="53" height="21"/>
         <image/>
@@ -141,13 +141,13 @@ ISOBORD = Unused
         <image/>
         <!--<imagechecked>PCK:xcom3/tacdata/icon_m.pck:xcom3/tacdata/icon_m.tab:33:xcom3/tacdata/tactical.pal</imagechecked>-->
       </radiobutton>
-	  <label id="CLOCK" text="TICK TOCK">
+      <label id="CLOCK" text="TICK TOCK">
         <position x="568" y="34"/>
         <size width="68" height="12"/>
         <alignment horizontal="centre" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-	  <ticker id="NEWS_TICKER">
+      <ticker id="NEWS_TICKER">
         <position x="94" y="5"/>
         <size width="452" height="17"/>
         <alignment horizontal="centre" vertical="centre"/>

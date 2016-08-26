@@ -21,13 +21,13 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-	  <label id="TEXT_DATE">
+      <label id="TEXT_DATE">
         <position x="77" y="90"/>
         <size width="300" height="15"/>
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-	  <label id="TEXT_WEEK">
+      <label id="TEXT_WEEK">
         <position x="421" y="90"/>
         <size width="90" height="15"/>
         <alignment horizontal="right" vertical="centre"/>

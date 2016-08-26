@@ -140,7 +140,7 @@
           <font>SMALLSET</font>
           <size width="200" height="32"/>
         </textbutton>
-		<textbutton text="Into battle!" id="BUTTON_INTO_BATTLE">
+        <textbutton text="Into battle!" id="BUTTON_INTO_BATTLE">
           <position x="310" y="172"/>
           <font>SMALLSET</font>
           <size width="200" height="32"/>

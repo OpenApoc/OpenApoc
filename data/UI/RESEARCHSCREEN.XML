@@ -98,7 +98,7 @@
         <size width="150" height="2"/>
         <image/>
       </graphic>
-	  <scroll id="MANUFACTURE_QUANTITY_SLIDER">
+      <scroll id="MANUFACTURE_QUANTITY_SLIDER">
         <position x="262" y="243"/>
         <size width="145" height="15"/>
         <range min="1" max="50"/>
@@ -115,13 +115,13 @@
         <image>BUTTON_SLIDER_RIGHT</image>
         <imagedepressed>BUTTON_SLIDER_RIGHT_DEPRESSED</imagedepressed>
       </graphicbutton>
-	  <label id="TEXT_QUANTITY" text="">
+      <label id="TEXT_QUANTITY" text="">
         <position x="438" y="243"/>
         <size width="28" height="14"/>
         <alignment horizontal="right" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-	  <label id="TEXT_NUMBER_TO_MAKE" text="Number to make">
+      <label id="TEXT_NUMBER_TO_MAKE" text="Number to make">
         <position x="474" y="243"/>
         <size width="110" height="14"/>
         <alignment horizontal="left" vertical="centre"/>

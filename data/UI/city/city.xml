@@ -143,7 +143,7 @@
         <alignment horizontal="centre" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-	  <ticker id="NEWS_TICKER">
+      <ticker id="NEWS_TICKER">
         <position x="115" y="6"/>
         <size width="410" height="17"/>
         <alignment horizontal="centre" vertical="centre"/>

@@ -16,13 +16,13 @@
     <include>UI/RESEARCHSCREEN.XML</include>
     <include>UI/RESEARCHSELECT.XML</include>
     <include>UI/MESSAGELOG.XML</include>
-	<include>UI/NOTIFICATION.XML</include>
+    <include>UI/NOTIFICATION.XML</include>
     <include>UI/CITY/city.xml</include>
     <include>UI/CITY/infiltration.xml</include>
     <include>UI/CITY/score.xml</include>
     <include>UI/CITY/building.xml</include>
     <include>UI/CITY/basebuy.xml</include>
     <include>UI/CITY/baseselect.xml</include>
-	<include>UI/BATTLE/battle.xml</include>
+    <include>UI/BATTLE/battle.xml</include>
   </game>
 </openapoc>

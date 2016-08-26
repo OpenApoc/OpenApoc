@@ -15,8 +15,8 @@ before_install:
   - if [ "$CXX" = "g++" ]; then sudo apt-get install g++-5 -y > /dev/null; fi
   - if [ "$CXX" = "g++" ]; then export CXX="g++-5" CC="gcc-5"; fi
   - if [ "$CXX" = "clang++" ]; then sudo apt-get install clang-3.8 --force-yes -y > /dev/null; fi
-  - if [ "$CXX" = "clang++" ]; then export TIDY="true" CXX="clang++-3.8" CC="clang-3.8"; fi
-  - if [ "${TIDY}" = "true" ]; then sudo apt-get install clang-tidy-3.8 clang-format-3.8 --force-yes -y > /dev/null; fi
+  - if [ "$CXX" = "clang++" ]; then export CXX="clang++-3.8" CC="clang-3.8"; fi
+  - if [ "${TIDY}" = "true" ]; then sudo apt-get install clang-tidy-3.8 clang-format-3.8 clang-3.8 --force-yes -y > /dev/null; fi
   - sudo apt-get install libunwind8-dev libsdl2-dev libboost-locale-dev libboost-filesystem-dev -y > /dev/null
   - ${CXX} --version
   - ${CC} --version
@@ -30,8 +30,16 @@ before_install:
   - echo "Resource.LocalDataDir=${PWD}/data/" >> ~/.local/share/OpenApoc/settings.cfg
 
 env:
-  - BUILD_TYPE="Release"
-  - BUILD_TYPE="Debug"
+  - BUILD_TYPE="RelWithDebInfo" TIDY="false" SANITIZE="false"
+  - BUILD_TYPE="RelWithDebInfo" TIDY="true" SANITIZE="false"
+  - BUILD_TYPE="RelWithDebInfo" TIDY="false" SANITIZE="true"
+
+matrix:
+  exclude:
+    - compiler: gcc
+      env: BUILD_TYPE="RelWithDebInfo" TIDY="true" SANITIZE="false"
+    - compiler: gcc
+      env: BUILD_TYPE="RelWithDebInfo" TIDY="false" SANITIZE="true"
 
 install:
   - pushd ./dependencies/tinyxml2 && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . > /dev/null && make -j2 > /dev/null && make install > /dev/null && popd;
@@ -40,6 +48,7 @@ install:
 
 before_script:
   - export CFLAGS="-Wall -Wextra" CXXFLAGS="-Wall -Wextra"
+  - if [ "$SANITIZE" = "true" ]; then export CFLAGS="$CFLAGS -fsanitize=address,undefined" CXXFLAGS="$CXXFLAGS -fsanitize=address,undefined"; fi
   - cmake . -DGLM_INCLUDE_DIR=~/dependency-prefix/include -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DCLANG_TIDY=clang-tidy-3.8 -DCLANG_FORMAT=clang-format-3.8 -DENABLE_TESTS=ON -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS}"
 # Do the format before the script so the output is cleaner - just showing the diff (if any) and the tidy results
   - if [ "${TIDY}" = "true" ]; then make format -j2 > /dev/null; fi
@@ -49,7 +58,8 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
 script:
-  - make -j2 && ctest -V && ./bin/OpenApoc_DataExtractor &&  if [ "${TIDY}" = "true" ]; then git --no-pager diff --ignore-submodules --stat && make tidy; fi
+  - if [ "${TIDY}" = "true" ]; then git --no-pager diff --ignore-submodules --stat && make tidy; fi
+  - if [ "${TIDY}" != "true" ]; then make -j2 && ctest -V && ./bin/OpenApoc_DataExtractor && git --no-pager diff --ignore-submodules --stat data/; fi
 
 os:
   - linux

@@ -4,10 +4,10 @@
     <style minwidth="640" minheight="480">
       <position x="centre" y="bottom"/>
       <size width="640" height="128"/>
-	  <graphic>
+      <graphic>
         <size width="640" height="128"/>
         <image>RAW:xcom3/ufodata/isobord8.dat:640:128:xcom3/ufodata/pal_01.dat</image>
-      </graphic>	  
+      </graphic>
       <label id="TEXT_NOTIFICATION">
         <position x="48" y="4"/>
         <size width="545" height="41"/>
@@ -26,13 +26,13 @@
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:54:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
-	  <graphicbutton id="BUTTON_PAUSE">
+      <graphicbutton id="BUTTON_PAUSE">
         <position x="605" y="13"/>
         <size width="24" height="25"/>
         <image/>
         <imagedepressed>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:53:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
-	  <checkbox id="CHECKBOX_ALWAYS_PAUSE">
+      <checkbox id="CHECKBOX_ALWAYS_PAUSE">
         <position x="60" y="80"/>
         <size width="54" height="25"/>
         <image>PCK:xcom3/ufodata/icon_m.pck:xcom3/ufodata/icon_m.tab:6:xcom3/ufodata/pal_01.dat</image>
