@@ -1721,7 +1721,7 @@ template <> void serializeOut(sp<SerializationNode> node, const Xorshift128Plus<
 	serializeOut(node->addNode("s1"), s[1]);
 }
 
-void serializeOut(sp<SerializationNode> node, const EventMessage &m)
+template <> void serializeOut(sp<SerializationNode> node, const EventMessage &m)
 {
 	serializeOut(node->addNode("time"), m.time);
 	serializeOut(node->addNode("text"), m.text);
