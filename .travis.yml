@@ -30,8 +30,7 @@ before_install:
   - echo "Resource.LocalDataDir=${PWD}/data/" >> ~/.local/share/OpenApoc/settings.cfg
 
 env:
-  - BUILD_TYPE="Release" TIDY="false" SANITIZE="false"
-  - BUILD_TYPE="Debug" TIDY="false" SANITIZE="false"
+  - BUILD_TYPE="RelWithDebInfo" TIDY="false" SANITIZE="false"
   - BUILD_TYPE="RelWithDebInfo" TIDY="true" SANITIZE="false"
   - BUILD_TYPE="RelWithDebInfo" TIDY="false" SANITIZE="true"
 
