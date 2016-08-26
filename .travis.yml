@@ -59,7 +59,7 @@ before_script:
 
 script:
   - if [ "${TIDY}" = "true" ]; then git --no-pager diff --ignore-submodules --stat && make tidy; fi
-  - if [ "${TIDY}" != "true" ]; then make -j2 && ctest -V && ./bin/OpenApoc_DataExtractor; fi
+  - if [ "${TIDY}" != "true" ]; then make -j2 && ctest -V && ./bin/OpenApoc_DataExtractor && git --no-pager diff --ignore-submodules --stat data/; fi
 
 os:
   - linux
