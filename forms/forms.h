@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include "tristatebox.h"
 #include "checkbox.h"
 #include "control.h"
 #include "form.h"

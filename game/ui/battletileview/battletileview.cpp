@@ -18,7 +18,8 @@ namespace OpenApoc
 		selectedTileImageBack(fw().data->loadImage("CITY/SELECTED-CITYTILE-BACK.PNG")),
 		selectedTileImageFront(fw().data->loadImage("CITY/SELECTED-CITYTILE-FRONT.PNG")),
 		pal(fw().data->loadPalette("xcom3/tacdata/tactical.pal")),
-		hideGround(false),hideLeftWall(false),hideRightWall(false),hideScenery(false), limitZ(false)
+		hideGround(false),hideLeftWall(false),hideRightWall(false),hideScenery(false),currentZLevel(1),
+		layerDrawingMode(BattleLayerDrawingMode::UpToCurrentLevel)
 	{
 		LogInfo("dpySize: {%d,%d}", dpySize.x, dpySize.y);
 	}
@@ -87,9 +88,6 @@ namespace OpenApoc
 				break;
 			case SDLK_4:
 				hideScenery = !hideScenery;
-				break;
-			case SDLK_5:
-				limitZ = !limitZ;
 				break;
 			case SDLK_F6:
 			{
@@ -205,7 +203,26 @@ namespace OpenApoc
 		int minY = std::max(0, topRight.y);
 		int maxY = std::min(map.size.y, bottomLeft.y);
 
-		for (int z = 0; z < (limitZ ? selectedTilePosition.z+1 : maxZDraw); z++)
+		int zFrom;
+		int zTo;
+		
+		switch (layerDrawingMode)
+		{
+			case BattleLayerDrawingMode::UpToCurrentLevel:
+				zFrom = 0;
+				zTo = currentZLevel;
+				break;
+			case BattleLayerDrawingMode::AllLevels:
+				zFrom = 0;
+				zTo = maxZDraw;
+				break;
+			case BattleLayerDrawingMode::OnlyCurrentLevel:
+				zFrom = currentZLevel - 1;
+				zTo = currentZLevel;
+				break;
+		}
+
+		for (int z = zFrom; z < zTo; z++)
 		{
 			for (int layer = 0; layer < map.getLayerCount(); layer++)
 			{
@@ -277,6 +294,21 @@ namespace OpenApoc
 			r.drawLine(bottomLeftRectPos, topLeftRectPos, this->strategyViewBoxColour,
 				this->strategyViewBoxThickness);
 		}
+	}
+
+	void BattleTileView::setZLevel(int zLevel)
+	{
+		currentZLevel = clamp(zLevel, 1, maxZDraw);
+	}
+
+	int BattleTileView::BattleTileView::getZLevel()
+	{
+		return currentZLevel;
+	}
+
+	void BattleTileView::setLayerDrawingMode(BattleLayerDrawingMode mode)
+	{
+		layerDrawingMode = mode;
 	}
 
 	bool BattleTileView::isTransition() { return false; }

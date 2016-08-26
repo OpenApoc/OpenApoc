@@ -9,6 +9,12 @@
 
 namespace OpenApoc
 {
+	enum class BattleLayerDrawingMode
+	{
+		UpToCurrentLevel,
+		AllLevels,
+		OnlyCurrentLevel
+	};
 
 	class BattleTileMap;
 	class Image;
@@ -36,9 +42,16 @@ namespace OpenApoc
 		bool hideLeftWall;
 		bool hideRightWall;
 		bool hideScenery;
-		bool limitZ;
+
+		int currentZLevel;
+		BattleLayerDrawingMode layerDrawingMode;
 
 	public:
+		void setZLevel(int zLevel);
+		int getZLevel();
+		
+		void setLayerDrawingMode(BattleLayerDrawingMode mode);
+
 		int maxZDraw;
 		Vec3<float> centerPos;
 		Vec2<float> isoScrollSpeed;

@@ -111,8 +111,8 @@ namespace OpenApoc
 	// Within the same layer these are ordered by a calculated z based on the 'center' position
 	static std::vector<std::set<BattleTileObject::Type>> layerMap = {
 		// Draw ground first, then put stuff on top of that
-		{ BattleTileObject::Type::Ground },
-		{ BattleTileObject::Type::LeftWall, BattleTileObject::Type::RightWall, BattleTileObject::Type::Scenery },
+		{ BattleTileObject::Type::Ground,BattleTileObject::Type::LeftWall, BattleTileObject::Type::RightWall, BattleTileObject::Type::Scenery },
+		{ },
 	};
 
 	Battle::~Battle()

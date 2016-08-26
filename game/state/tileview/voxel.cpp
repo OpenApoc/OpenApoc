@@ -54,8 +54,8 @@ CollisionB BattleTileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float
 {
 	CollisionB c;
 	c.obj = nullptr;
-	Vec3<int> tileSize = { 32, 32, 16 };
-	Vec3<float> tileSizef = { 32, 32, 16 };
+	Vec3<int> tileSize = { 48, 24, 40 };
+	Vec3<float> tileSizef = { 48, 24, 40 };
 	Vec3<int> lineSegmentStartVoxel = lineSegmentStart * tileSizef;
 	Vec3<int> lineSegmentEndVoxel = lineSegmentEnd * tileSizef;
 	LineSegment<int, true> line{ lineSegmentStartVoxel, lineSegmentEndVoxel };
@@ -84,8 +84,8 @@ CollisionB BattleTileMap::findCollision(Vec3<float> lineSegmentStart, Vec3<float
 				c.position = Vec3<float>{ point };
 				c.position /= tileSize;
 				return c;
-}
-}
+			}
+		}
 	}
 	return c;
 }

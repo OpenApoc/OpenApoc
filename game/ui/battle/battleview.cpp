@@ -75,6 +75,60 @@ namespace OpenApoc
 			bool strategy = std::dynamic_pointer_cast<CheckBox>(e->forms().RaisedBy)->isChecked();
 			this->setViewMode(strategy ? TileViewMode::Strategy : TileViewMode::Isometric);
 		});
+		this->baseForm->findControl("BUTTON_LAYERING")
+			->addCallback(FormEventType::TriStateBoxChange, [this](Event *e) {
+			int state = std::dynamic_pointer_cast<TriStateBox>(e->forms().RaisedBy)->getState();
+			switch (state)
+			{
+				case 1:
+					setLayerDrawingMode(BattleLayerDrawingMode::UpToCurrentLevel);
+					break;
+				case 2:
+					setLayerDrawingMode(BattleLayerDrawingMode::AllLevels);
+					break;
+				case 3:
+					setLayerDrawingMode(BattleLayerDrawingMode::OnlyCurrentLevel);
+					break;
+			}
+
+		});
+		this->baseForm->findControl("BUTTON_LAYER_UP")
+			->addCallback(FormEventType::ButtonClick, [this](Event *e) {
+			this->setZLevel(getZLevel() + 1);
+			updateLayerButtons();
+		});
+		this->baseForm->findControl("BUTTON_LAYER_DOWN")
+			->addCallback(FormEventType::ButtonClick, [this](Event *e) {
+			this->setZLevel(getZLevel() - 1);
+			updateLayerButtons();
+		});
+		this->baseForm->findControl("BUTTON_LAYER_1")
+			->addCallback(FormEventType::CheckBoxSelected,
+				[this](Event *) { this->setZLevel(1); });
+		this->baseForm->findControl("BUTTON_LAYER_2")
+			->addCallback(FormEventType::CheckBoxSelected,
+				[this](Event *) { this->setZLevel(2); });
+		this->baseForm->findControl("BUTTON_LAYER_3")
+			->addCallback(FormEventType::CheckBoxSelected,
+				[this](Event *) { this->setZLevel(3); });
+		this->baseForm->findControl("BUTTON_LAYER_4")
+			->addCallback(FormEventType::CheckBoxSelected,
+				[this](Event *) { this->setZLevel(4); });
+		this->baseForm->findControl("BUTTON_LAYER_5")
+			->addCallback(FormEventType::CheckBoxSelected,
+				[this](Event *) { this->setZLevel(5); });
+		this->baseForm->findControl("BUTTON_LAYER_6")
+			->addCallback(FormEventType::CheckBoxSelected,
+				[this](Event *) { this->setZLevel(6); });
+		this->baseForm->findControl("BUTTON_LAYER_7")
+			->addCallback(FormEventType::CheckBoxSelected,
+				[this](Event *) { this->setZLevel(7); });
+		this->baseForm->findControl("BUTTON_LAYER_8")
+			->addCallback(FormEventType::CheckBoxSelected,
+				[this](Event *) { this->setZLevel(8); });
+		this->baseForm->findControl("BUTTON_LAYER_9")
+			->addCallback(FormEventType::CheckBoxSelected,
+				[this](Event *) { this->setZLevel(9); });
 		this->baseForm->findControl("BUTTON_SPEED0")
 			->addCallback(FormEventType::CheckBoxSelected,
 				[this](Event *) { this->updateSpeed = BattleUpdateSpeed::Pause; });
@@ -106,6 +160,17 @@ namespace OpenApoc
 	void BattleView::begin()
 	{
 		//baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(tr("Welcome to X-COM Apocalypse"));
+		this->baseForm->findControl("BUTTON_LAYER_1")->Enabled = maxZDraw >= 1;
+		this->baseForm->findControl("BUTTON_LAYER_2")->Enabled = maxZDraw >= 2;
+		this->baseForm->findControl("BUTTON_LAYER_3")->Enabled = maxZDraw >= 3;
+		this->baseForm->findControl("BUTTON_LAYER_4")->Enabled = maxZDraw >= 4;
+		this->baseForm->findControl("BUTTON_LAYER_5")->Enabled = maxZDraw >= 5;
+		this->baseForm->findControl("BUTTON_LAYER_6")->Enabled = maxZDraw >= 6;
+		this->baseForm->findControl("BUTTON_LAYER_7")->Enabled = maxZDraw >= 7;
+		this->baseForm->findControl("BUTTON_LAYER_8")->Enabled = maxZDraw >= 8;
+		this->baseForm->findControl("BUTTON_LAYER_9")->Enabled = maxZDraw >= 9;
+		this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_1")->setChecked(true);
+		this->setZLevel(1);
 	}
 
 	void BattleView::resume()
@@ -267,4 +332,39 @@ namespace OpenApoc
 		}
 	}
 	
+	void BattleView::updateLayerButtons()
+	{
+		switch (this->getZLevel())
+		{
+			case 1:
+				this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_1")->setChecked(true);
+				break;
+			case 2:
+				this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_2")->setChecked(true);
+				break;
+			case 3:
+				this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_3")->setChecked(true);
+				break;
+			case 4:
+				this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_4")->setChecked(true);
+				break;
+			case 5:
+				this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_5")->setChecked(true);
+				break;
+			case 6:
+				this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_6")->setChecked(true);
+				break;
+			case 7:
+				this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_7")->setChecked(true);
+				break;
+			case 8:
+				this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_8")->setChecked(true);
+				break;
+			case 9:
+				this->baseForm->findControlTyped<RadioButton>("BUTTON_LAYER_9")->setChecked(true);
+				break;
+		}
+	}
+
+
 }; // namespace OpenApoc

@@ -10,7 +10,7 @@ namespace OpenApoc
 {
 	#define BATTLE_TILE_X (48)
 	#define BATTLE_TILE_Y (24)
-	#define BATTLE_TILE_Z (32)
+	#define BATTLE_TILE_Z (40)
 
 	#define BATTLE_STRAT_TILE_X 8
 	#define BATTLE_STRAT_TILE_Y 8

@@ -56,8 +56,15 @@ namespace OpenApoc
 				
 				auto object = mksp<BattleGroundType>();
 
-				// FIXME: In the future, here we will be reading tile information like health, voxelmap etc.
-				object->voxelMap = mksp<VoxelMap>(Vec3<int>{32, 32, 16});
+				// FIXME: In the future, here we will be reading tile information like health etc.
+
+				object->voxelMap = mksp<VoxelMap>(Vec3<int>{32, 32, 40});
+				for (unsigned z = 0; z < 40; z++)
+				{
+					auto lofString = UString::format("LOFTEMPS:xcom3/TACDATA/LOFTEMPS.DAT:xcom3/TACDATA/LOFTEMPS.TAB:%d",
+						(int)entry.loftemps[z]);
+					object->voxelMap->slices[z] = fw().data->loadVoxelSlice(lofString);
+				}
 
 				auto imageString = UString::format(
 					"PCK:" + map_prefix + dirName + mapunits_suffix + spriteFile + ".PCK:" + map_prefix + dirName + mapunits_suffix + spriteFile + ".TAB:%u", i);
@@ -97,8 +104,15 @@ namespace OpenApoc
 
 				auto object = mksp<BattleLeftWallType>();
 
-				// FIXME: In the future, here we will be reading tile information like health, voxelmap etc.
-				object->voxelMap = mksp<VoxelMap>(Vec3<int>{32, 32, 16});
+				// FIXME: In the future, here we will be reading tile information like health etc.
+
+				object->voxelMap = mksp<VoxelMap>(Vec3<int>{32, 32, 40});
+				for (unsigned z = 0; z < 40; z++)
+				{
+					auto lofString = UString::format("LOFTEMPS:xcom3/TACDATA/LOFTEMPS.DAT:xcom3/TACDATA/LOFTEMPS.TAB:%d",
+						(int)entry.loftemps[z]);
+					object->voxelMap->slices[z] = fw().data->loadVoxelSlice(lofString);
+				}
 
 				auto imageString = UString::format(
 					"PCK:" + map_prefix + dirName + mapunits_suffix + spriteFile + ".PCK:" + map_prefix + dirName + mapunits_suffix + spriteFile + ".TAB:%u", i);
@@ -139,8 +153,15 @@ namespace OpenApoc
 
 				auto object = mksp<BattleRightWallType>();
 
-				// FIXME: In the future, here we will be reading tile information like health, voxelmap etc.
-				object->voxelMap = mksp<VoxelMap>(Vec3<int>{32, 32, 16});
+				// FIXME: In the future, here we will be reading tile information like health etc.
+
+				object->voxelMap = mksp<VoxelMap>(Vec3<int>{32, 32, 40});
+				for (unsigned z = 0; z < 40; z++)
+				{
+					auto lofString = UString::format("LOFTEMPS:xcom3/TACDATA/LOFTEMPS.DAT:xcom3/TACDATA/LOFTEMPS.TAB:%d",
+						(int)entry.loftemps[z]);
+					object->voxelMap->slices[z] = fw().data->loadVoxelSlice(lofString);
+				}
 
 				auto imageString = UString::format(
 					"PCK:" + map_prefix + dirName + mapunits_suffix + spriteFile + ".PCK:" + map_prefix + dirName + mapunits_suffix + spriteFile + ".TAB:%u", i);
@@ -181,8 +202,15 @@ namespace OpenApoc
 
 				auto object = mksp<BattleSceneryType>();
 
-				// FIXME: In the future, here we will be reading tile information like health, voxelmap etc.
-				object->voxelMap = mksp<VoxelMap>(Vec3<int>{32, 32, 16});
+				// FIXME: In the future, here we will be reading tile information like health etc.
+
+				object->voxelMap = mksp<VoxelMap>(Vec3<int>{32, 32, 40});
+				for (unsigned z = 0; z < 40; z++)
+				{
+					auto lofString = UString::format("LOFTEMPS:xcom3/TACDATA/LOFTEMPS.DAT:xcom3/TACDATA/LOFTEMPS.TAB:%d",
+						(int)entry.loftemps[z]);
+					object->voxelMap->slices[z] = fw().data->loadVoxelSlice(lofString);
+				}
 
 				auto imageString = UString::format(
 					"PCK:" + map_prefix + dirName + mapunits_suffix + spriteFile + ".PCK:" + map_prefix + dirName + mapunits_suffix + spriteFile + ".TAB:%u", i);

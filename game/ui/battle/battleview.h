@@ -43,6 +43,8 @@ namespace OpenApoc
 
 		BattleSelectionState selectionState;
 
+		void updateLayerButtons();
+
 	public:
 		BattleView(sp<GameState> state);
 		~BattleView() override;
