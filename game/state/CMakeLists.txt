@@ -6,6 +6,12 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
 set (GAMESTATE_SOURCE_FILES
 	agent.cpp
+	battle.cpp
+	battlemappart.cpp
+	battlemappart_type.cpp
+	battletile.cpp
+	battletileobject.cpp
+	battletileobject_mappart.cpp
 	base/base.cpp
 	base/facility.cpp
 	city/baselayout.cpp
@@ -46,6 +52,12 @@ set (GAMESTATE_SOURCE_FILES
 source_group(gamestate\\sources FILES ${GAMESTATE_SOURCE_FILES})
 set (GAMESTATE_HEADER_FILES
 	agent.h
+	battle.h
+	battlemappart.h
+	battlemappart_type.h
+	battletile.h
+	battletileobject.h
+	battletileobject_mappart.h
 	base/base.h
 	base/facility.h
 	city/baselayout.h

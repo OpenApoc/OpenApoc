@@ -7,6 +7,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 set (DATAEXTRACTOR_SOURCE_FILES
 	common/strtab.cpp
 	common/ufo2p.cpp
+	extract_battlescape_map.cpp
+	extract_battlescape_stuff.cpp
 	extract_facilities.cpp
 	extract_organisations.cpp
 	extract_vehicle_equipment.cpp
