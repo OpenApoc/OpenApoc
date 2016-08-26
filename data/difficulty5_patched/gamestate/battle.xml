@@ -5,16 +5,10 @@
     <y>84</y>
     <z>7</z>
   </size>
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ground_types.xml" />
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="left_wall_types.xml" />
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="right_wall_types.xml" />
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="scenery_types.xml" />
+  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="map_part_types.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="initial_grounds.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="initial_left_walls.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="initial_right_walls.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="initial_scenery.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ground.xml" />
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="left_wall.xml" />
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="right_wall.xml" />
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="scenery.xml" />
 </battle>

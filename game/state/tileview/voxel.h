@@ -21,7 +21,7 @@ class BattleTileObject;
 
 class CollisionB
 {
-public:
+  public:
 	sp<BattleTileObject> obj;
 	sp<Projectile> projectile;
 	Vec3<float> position;

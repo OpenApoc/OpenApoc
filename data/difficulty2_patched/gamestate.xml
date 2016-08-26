@@ -89,4 +89,5 @@
     <ticks>0</ticks>
   </time>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="battle.xml" />
+  <messages />
 </gamestate>

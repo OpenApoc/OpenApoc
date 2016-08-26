@@ -1,9 +1,9 @@
-#include "game/ui/battle/battleview.h"
 #include "game/ui/general/ingameoptions.h"
 #include "forms/ui.h"
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "game/state/gamestate.h"
+#include "game/ui/battle/battleview.h"
 #include "game/ui/general/mainmenu.h"
 #include "game/ui/general/savemenu.h"
 

@@ -3,6 +3,7 @@
 
 #include "game/state/agent.h"
 #include "game/state/base/base.h"
+#include "game/state/battle.h"
 #include "game/state/city/city.h"
 #include "game/state/gametime.h"
 #include "game/state/message.h"
@@ -18,7 +19,6 @@
 #include "game/state/rules/vequipment_type.h"
 #include "game/state/stateobject.h"
 #include "game/state/ufopaedia.h"
-#include "game/state/battle.h"
 #include "library/strings.h"
 #include "library/xorshift.h"
 #include <random>
