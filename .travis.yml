@@ -38,6 +38,8 @@ matrix:
   exclude:
     - compiler: gcc
       env: BUILD_TYPE="RelWithDebInfo" TIDY="true" SANITIZE="false"
+    - compiler: gcc
+      env: BUILD_TYPE="RelWithDebInfo" TIDY="false" SANITIZE="true"
 
 install:
   - pushd ./dependencies/tinyxml2 && cmake -DCMAKE_INSTALL_PREFIX=~/dependency-prefix . > /dev/null && make -j2 > /dev/null && make install > /dev/null && popd;
