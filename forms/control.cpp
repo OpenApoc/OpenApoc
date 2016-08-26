@@ -361,6 +361,11 @@ void Control::configureChildrenFromXml(tinyxml2::XMLElement *Element)
 			auto cb = this->createChild<CheckBox>();
 			cb->configureFromXml(node);
 		}
+		else if (nodename == "tristatebox")
+		{
+			auto cb = this->createChild<TriStateBox>();
+			cb->configureFromXml(node);
+		}
 		else if (nodename == "radiobutton")
 		{
 			sp<RadioButtonGroup> group = nullptr;
@@ -888,6 +893,10 @@ void Control::pushFormEvent(FormEventType type, Event *parentEvent)
 		case FormEventType::TextChanged:
 		case FormEventType::CheckBoxSelected:
 		case FormEventType::CheckBoxDeSelected:
+		case FormEventType::TriStateBoxChange:
+		case FormEventType::TriStateBoxState1Selected:
+		case FormEventType::TriStateBoxState2Selected:
+		case FormEventType::TriStateBoxState3Selected:
 		case FormEventType::TextEditFinish:
 		{
 			event = new FormsEvent();

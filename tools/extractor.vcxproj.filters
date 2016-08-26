@@ -57,6 +57,12 @@
     <ClCompile Include="extractors\extract_bulletsprites.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="extractors\extract_battlescape_map.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="extractors\extract_battlescape_stuff.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="extractors\extractors.h">

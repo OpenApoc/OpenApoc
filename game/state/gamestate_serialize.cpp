@@ -4,6 +4,8 @@
 #include "framework/serialization/serialize.h"
 #include "framework/trace.h"
 #include "game/state/base/facility.h"
+#include "game/state/battlemappart.h"
+#include "game/state/battlemappart_type.h"
 #include "game/state/city/baselayout.h"
 #include "game/state/city/building.h"
 #include "game/state/city/city.h"
@@ -655,6 +657,49 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getSection("projectiles"), city.projectiles);
 }
 
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, BattleMapPart &s)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("type"), s.type);
+	serializeIn(state, node->getNode("initialPosition"), s.initialPosition);
+	serializeIn(state, node->getNode("currentPosition"), s.currentPosition);
+	serializeIn(state, node->getNode("damaged"), s.damaged);
+	serializeIn(state, node->getNode("falling"), s.falling);
+	serializeIn(state, node->getNode("destroyed"), s.destroyed);
+}
+
+template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Battle &battle)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("size"), battle.size);
+	serializeIn(state, node->getSection("map_part_types"), battle.map_part_types);
+	serializeIn(state, node->getSection("initial_grounds"), battle.initial_grounds);
+	serializeIn(state, node->getSection("initial_left_walls"), battle.initial_left_walls);
+	serializeIn(state, node->getSection("initial_right_walls"), battle.initial_right_walls);
+	serializeIn(state, node->getSection("initial_scenery"), battle.initial_scenery);
+	serializeIn(state, node->getSection("map_parts"), battle.map_parts);
+}
+
+template <>
+void serializeIn(const GameState *state, sp<SerializationNode> node, BattleMapPartType::Type &t)
+{
+	serializeIn(state, node, t, BattleMapPartType::TypeMap);
+}
+
+template <>
+void serializeIn(const GameState *state, sp<SerializationNode> node, BattleMapPartType &t)
+{
+	if (!node)
+		return;
+	serializeIn(state, node->getNode("type"), t.type);
+	serializeIn(state, node->getNode("sprite"), t.sprite);
+	serializeIn(state, node->getNode("strategySprite"), t.strategySprite);
+	serializeIn(state, node->getNode("voxelMap"), t.voxelMap);
+	serializeIn(state, node->getNode("imageOffset"), t.imageOffset);
+}
+
 template <>
 void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchTopic::Type &t)
 {
@@ -958,6 +1003,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &
 	serializeIn(state, node->getNode("current_base"), s.current_base);
 	serializeIn(state, node->getNode("rng"), s.rng);
 	serializeIn(state, node->getNodeOpt("time"), s.gameTime);
+	serializeIn(state, node->getSection("battle"), s.battle);
 	serializeIn(state, node->getNodeOpt("messages"), s.messages);
 }
 
@@ -1381,6 +1427,16 @@ template <> void serializeOut(sp<SerializationNode> node, const Doodad &doodad)
 	serializeOut(node->addNode("type"), doodad.type);
 }
 
+template <> void serializeOut(sp<SerializationNode> node, const BattleMapPart &s)
+{
+	serializeOut(node->addNode("type"), s.type);
+	serializeOut(node->addNode("initialPosition"), s.initialPosition);
+	serializeOut(node->addNode("currentPosition"), s.currentPosition);
+	serializeOut(node->addNode("damaged"), s.damaged);
+	serializeOut(node->addNode("falling"), s.falling);
+	serializeOut(node->addNode("destroyed"), s.destroyed);
+}
+
 template <> void serializeOut(sp<SerializationNode> node, const ResearchTopic::Type &t)
 {
 	serializeOut(node, t, ResearchTopic::TypeMap);
@@ -1452,6 +1508,31 @@ template <> void serializeOut(sp<SerializationNode> node, const City &city)
 	serializeOut(node->addSection("doodads"), city.doodads);
 	serializeOut(node->addSection("portals"), city.portals);
 	serializeOut(node->addSection("projectiles"), city.projectiles);
+}
+
+template <> void serializeOut(sp<SerializationNode> node, const Battle &battle)
+{
+	serializeOut(node->addNode("size"), battle.size);
+	serializeOut(node->addSection("map_part_types"), battle.map_part_types);
+	serializeOut(node->addSection("initial_grounds"), battle.initial_grounds);
+	serializeOut(node->addSection("initial_left_walls"), battle.initial_left_walls);
+	serializeOut(node->addSection("initial_right_walls"), battle.initial_right_walls);
+	serializeOut(node->addSection("initial_scenery"), battle.initial_scenery);
+	serializeOut(node->addSection("ground"), battle.map_parts);
+}
+
+template <> void serializeOut(sp<SerializationNode> node, const BattleMapPartType::Type &t)
+{
+	serializeOut(node, t, BattleMapPartType::TypeMap);
+}
+
+template <> void serializeOut(sp<SerializationNode> node, const BattleMapPartType &t)
+{
+	serializeOut(node->addNode("type"), t.type);
+	serializeOut(node->addNode("sprite"), t.sprite);
+	serializeOut(node->addNode("strategySprite"), t.strategySprite);
+	serializeOut(node->addNode("voxelMap"), t.voxelMap);
+	serializeOut(node->addNode("imageOffset"), t.imageOffset);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const VehicleMission &m)
@@ -1674,6 +1755,7 @@ void serializeOut(sp<SerializationNode> node, const GameState &state)
 	serializeOut(node->addNode("player"), state.player);
 	serializeOut(node->addNode("rng"), state.rng);
 	serializeOut(node->addNode("time"), state.gameTime);
+	serializeOut(node->addSection("battle"), state.battle);
 	serializeOut(node->addNode("messages"), state.messages);
 }
 

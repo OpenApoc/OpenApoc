@@ -3,6 +3,7 @@
 
 #include "game/state/agent.h"
 #include "game/state/base/base.h"
+#include "game/state/battle.h"
 #include "game/state/city/city.h"
 #include "game/state/gametime.h"
 #include "game/state/message.h"
@@ -53,6 +54,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 	std::map<UString, sp<Vehicle>> vehicles;
 	std::map<UString, sp<UfopaediaCategory>> ufopaedia;
 	ResearchState research;
+	Battle battle;
 
 	std::list<EventMessage> messages;
 

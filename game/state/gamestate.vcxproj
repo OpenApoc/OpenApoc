@@ -22,6 +22,12 @@
     <ClCompile Include="agent.cpp" />
     <ClCompile Include="base\base.cpp" />
     <ClCompile Include="base\facility.cpp" />
+    <ClCompile Include="battle.cpp" />
+    <ClCompile Include="battlemappart.cpp" />
+    <ClCompile Include="battlemappart_type.cpp" />
+    <ClCompile Include="battletile.cpp" />
+    <ClCompile Include="battletileobject.cpp" />
+    <ClCompile Include="battletileobject_mappart.cpp" />
     <ClCompile Include="city\baselayout.cpp" />
     <ClCompile Include="city\building.cpp" />
     <ClCompile Include="city\city.cpp" />
@@ -62,6 +68,12 @@
     <ClInclude Include="agent.h" />
     <ClInclude Include="base\base.h" />
     <ClInclude Include="base\facility.h" />
+    <ClInclude Include="battle.h" />
+    <ClInclude Include="battlemappart.h" />
+    <ClInclude Include="battletile.h" />
+    <ClInclude Include="battletileobject.h" />
+    <ClInclude Include="battlemappart_type.h" />
+    <ClInclude Include="battletileobject_mappart.h" />
     <ClInclude Include="city\baselayout.h" />
     <ClInclude Include="city\building.h" />
     <ClInclude Include="city\city.h" />

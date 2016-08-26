@@ -54,6 +54,9 @@
     <ClCompile Include="ticker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="tristatebox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="checkbox.h">
@@ -99,6 +102,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ticker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tristatebox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

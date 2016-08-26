@@ -14,3 +14,4 @@
 #include "textbutton.h"
 #include "textedit.h"
 #include "ticker.h"
+#include "tristatebox.h"

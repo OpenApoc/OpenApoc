@@ -126,7 +126,25 @@
     <ClCompile Include="rules\vammo_rules.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="battle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="message.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battlemappart_type.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battletileobject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battletile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battletileobject_mappart.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battlemappart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -251,7 +269,25 @@
     <ClInclude Include="rules\vammo_type.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="battle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="message.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battletileobject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battlemappart_type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battletile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battletileobject_mappart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battlemappart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

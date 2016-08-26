@@ -31,6 +31,7 @@
     <ClCompile Include="textbutton.cpp" />
     <ClCompile Include="textedit.cpp" />
     <ClCompile Include="ticker.cpp" />
+    <ClCompile Include="tristatebox.cpp" />
     <ClCompile Include="ui.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -48,6 +49,7 @@
     <ClInclude Include="textbutton.h" />
     <ClInclude Include="textedit.h" />
     <ClInclude Include="ticker.h" />
+    <ClInclude Include="tristatebox.h" />
     <ClInclude Include="ui.h" />
   </ItemGroup>
   <ItemGroup>
