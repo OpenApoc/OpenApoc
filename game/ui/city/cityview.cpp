@@ -228,7 +228,7 @@ CityView::CityView(sp<GameState> state)
 		    this->stageCmd.nextStage = mksp<MessageLogScreen>(this->state);
 		});
 	this->baseForm->findControl("BUTTON_ZOOM_EVENT")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { LogWarning("Zoom to event"); });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { this->zoomLastEvent(); });
 
 	auto baseManagementForm = this->uiTabs[0];
 	baseManagementForm->findControl("BUTTON_SHOW_BASE")
@@ -471,31 +471,6 @@ void CityView::render()
 				break;
 			}
 		}
-	}
-}
-
-void CityView::setUpdateSpeed(UpdateSpeed updateSpeed)
-{
-	switch (updateSpeed)
-	{
-		case UpdateSpeed::Pause:
-			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED0")->setChecked(true);
-			break;
-		case UpdateSpeed::Speed1:
-			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED1")->setChecked(true);
-			break;
-		case UpdateSpeed::Speed2:
-			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED2")->setChecked(true);
-			break;
-		case UpdateSpeed::Speed3:
-			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED3")->setChecked(true);
-			break;
-		case UpdateSpeed::Speed4:
-			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED4")->setChecked(true);
-			break;
-		case UpdateSpeed::Speed5:
-			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED5")->setChecked(true);
-			break;
 	}
 }
 
@@ -900,6 +875,7 @@ void CityView::eventOccurred(Event *e)
 		}
 		if (!gameEvent->message().empty())
 		{
+			state->logEvent(gameEvent);
 			baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
 			auto notification = mksp<NotificationScreen>(state, *this, gameEvent->message());
 			stageCmd.cmd = StageCmd::Command::PUSH;
@@ -1035,10 +1011,6 @@ void CityView::eventOccurred(Event *e)
 				    // Yes callback
 				    [game_state, lab_facility]() {
 					    fw().stagePush(mksp<ResearchScreen>(game_state, lab_facility));
-					},
-				    // No callback
-				    []() {
-
 					});
 				stageCmd.cmd = StageCmd::Command::PUSH;
 				stageCmd.nextStage = message_box;
@@ -1242,5 +1214,42 @@ bool VehicleTileInfo::operator==(const VehicleTileInfo &other) const
 	return (this->vehicle == other.vehicle && this->selected == other.selected &&
 	        this->healthProportion == other.healthProportion && this->shield == other.shield &&
 	        this->passengers == other.passengers && this->state == other.state);
+}
+
+void CityView::setUpdateSpeed(UpdateSpeed updateSpeed)
+{
+	switch (updateSpeed)
+	{
+		case UpdateSpeed::Pause:
+			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED0")->setChecked(true);
+			break;
+		case UpdateSpeed::Speed1:
+			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED1")->setChecked(true);
+			break;
+		case UpdateSpeed::Speed2:
+			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED2")->setChecked(true);
+			break;
+		case UpdateSpeed::Speed3:
+			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED3")->setChecked(true);
+			break;
+		case UpdateSpeed::Speed4:
+			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED4")->setChecked(true);
+			break;
+		case UpdateSpeed::Speed5:
+			baseForm->findControlTyped<RadioButton>("BUTTON_SPEED5")->setChecked(true);
+			break;
+	}
+}
+
+void CityView::zoomLastEvent()
+{
+	if (!state->messages.empty())
+	{
+		auto message = state->messages.back();
+		if (message.getMapLocation(*state) != EventMessage::NO_LOCATION)
+		{
+			setScreenCenterTile(message.getMapLocation(*state));
+		}
+	}
 }
 }; // namespace OpenApoc
