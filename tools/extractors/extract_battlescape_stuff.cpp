@@ -41,22 +41,24 @@ void InitialGameStateExtractor::extractBattlescapeStuff(GameState &state, UStrin
 		}
 		auto fileSize = inFile.size();
 		auto objectCount = fileSize / sizeof(struct battlemap_entry);
-		
-		auto strategyTabFile = fw().data->fs.open(map_prefix + dirName + mapunits_suffix + UString("S") + spriteFile + UString(".TAB"));
+
+		auto strategyTabFile = fw().data->fs.open(map_prefix + dirName + mapunits_suffix +
+		                                          UString("S") + spriteFile + UString(".TAB"));
 		unsigned strategySpritesCount = 0;
 		if (strategyTabFile)
 		{
 			strategySpritesCount = strategyTabFile.size() / 4;
 		}
 
-		LogInfo("Loading %zu ground entries, %zu strategy sprites", objectCount, strategySpritesCount);
+		LogInfo("Loading %zu ground entries, %zu strategy sprites", objectCount,
+		        strategySpritesCount);
 		for (unsigned i = 0; i < objectCount; i++)
 		{
 			struct battlemap_entry entry;
 			inFile.read((char *)&entry, sizeof(entry));
 
 			UString id =
-				UString::format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix, "GD_", i);
+			    UString::format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix, "GD_", i);
 
 			auto object = mksp<BattleMapPartType>();
 			object->type = BattleMapPartType::Type::Ground;
@@ -67,22 +69,22 @@ void InitialGameStateExtractor::extractBattlescapeStuff(GameState &state, UStrin
 			for (unsigned z = 0; z < 40; z++)
 			{
 				auto lofString = UString::format(
-					"LOFTEMPS:xcom3/TACDATA/LOFTEMPS.DAT:xcom3/TACDATA/LOFTEMPS.TAB:%d",
-					(int)entry.loftemps[z]);
+				    "LOFTEMPS:xcom3/TACDATA/LOFTEMPS.DAT:xcom3/TACDATA/LOFTEMPS.TAB:%d",
+				    (int)entry.loftemps[z]);
 				object->voxelMap->slices[z] = fw().data->loadVoxelSlice(lofString);
 			}
 
 			auto imageString = UString::format("PCK:" + map_prefix + dirName + mapunits_suffix +
-				spriteFile + ".PCK:" + map_prefix + dirName +
-				mapunits_suffix + spriteFile + ".TAB:%u",
-				i);
+			                                       spriteFile + ".PCK:" + map_prefix + dirName +
+			                                       mapunits_suffix + spriteFile + ".TAB:%u",
+			                                   i);
 			object->sprite = fw().data->loadImage(imageString);
 			if (i < strategySpritesCount)
 			{
-				imageString = UString::format("PCK:" + map_prefix + dirName + mapunits_suffix + "S" +
-					spriteFile + ".PCK:" + map_prefix + dirName +
-					mapunits_suffix + "S" + spriteFile + ".TAB:%u",
-					i);
+				imageString = UString::format(
+				    "PCK:" + map_prefix + dirName + mapunits_suffix + "S" + spriteFile + ".PCK:" +
+				        map_prefix + dirName + mapunits_suffix + "S" + spriteFile + ".TAB:%u",
+				    i);
 				object->strategySprite = fw().data->loadImage(imageString);
 			}
 
@@ -106,14 +108,16 @@ void InitialGameStateExtractor::extractBattlescapeStuff(GameState &state, UStrin
 		auto fileSize = inFile.size();
 		auto objectCount = fileSize / sizeof(struct battlemap_entry);
 
-		auto strategyTabFile = fw().data->fs.open(map_prefix + dirName + mapunits_suffix + UString("S") + spriteFile + UString(".TAB"));
+		auto strategyTabFile = fw().data->fs.open(map_prefix + dirName + mapunits_suffix +
+		                                          UString("S") + spriteFile + UString(".TAB"));
 		auto strategySpritesCount = 0;
 		if (strategyTabFile)
 		{
 			strategySpritesCount = strategyTabFile.size() / 4;
 		}
 
-		LogInfo("Loading %zu left wall entries, %zu strategy sprites", objectCount, strategySpritesCount);
+		LogInfo("Loading %zu left wall entries, %zu strategy sprites", objectCount,
+		        strategySpritesCount);
 		for (unsigned i = 0; i < objectCount; i++)
 		{
 			struct battlemap_entry entry;
@@ -143,10 +147,10 @@ void InitialGameStateExtractor::extractBattlescapeStuff(GameState &state, UStrin
 			object->sprite = fw().data->loadImage(imageString);
 			if (i < strategySpritesCount)
 			{
-				imageString = UString::format("PCK:" + map_prefix + dirName + mapunits_suffix + "S" +
-					spriteFile + ".PCK:" + map_prefix + dirName +
-					mapunits_suffix + "S" + spriteFile + ".TAB:%u",
-					i);
+				imageString = UString::format(
+				    "PCK:" + map_prefix + dirName + mapunits_suffix + "S" + spriteFile + ".PCK:" +
+				        map_prefix + dirName + mapunits_suffix + "S" + spriteFile + ".TAB:%u",
+				    i);
 				object->strategySprite = fw().data->loadImage(imageString);
 			}
 
@@ -171,14 +175,16 @@ void InitialGameStateExtractor::extractBattlescapeStuff(GameState &state, UStrin
 		auto fileSize = inFile.size();
 		auto objectCount = fileSize / sizeof(struct battlemap_entry);
 
-		auto strategyTabFile = fw().data->fs.open(map_prefix + dirName + mapunits_suffix + UString("S") + spriteFile + UString(".TAB"));
+		auto strategyTabFile = fw().data->fs.open(map_prefix + dirName + mapunits_suffix +
+		                                          UString("S") + spriteFile + UString(".TAB"));
 		auto strategySpritesCount = 0;
 		if (strategyTabFile)
 		{
 			strategySpritesCount = strategyTabFile.size() / 4;
 		}
 
-		LogInfo("Loading %zu right wall entries, %zu strategy sprites", objectCount, strategySpritesCount);
+		LogInfo("Loading %zu right wall entries, %zu strategy sprites", objectCount,
+		        strategySpritesCount);
 		for (unsigned i = 0; i < objectCount; i++)
 		{
 			struct battlemap_entry entry;
@@ -208,10 +214,10 @@ void InitialGameStateExtractor::extractBattlescapeStuff(GameState &state, UStrin
 			object->sprite = fw().data->loadImage(imageString);
 			if (i < strategySpritesCount)
 			{
-				imageString = UString::format("PCK:" + map_prefix + dirName + mapunits_suffix + "S" +
-					spriteFile + ".PCK:" + map_prefix + dirName +
-					mapunits_suffix + "S" + spriteFile + ".TAB:%u",
-					i);
+				imageString = UString::format(
+				    "PCK:" + map_prefix + dirName + mapunits_suffix + "S" + spriteFile + ".PCK:" +
+				        map_prefix + dirName + mapunits_suffix + "S" + spriteFile + ".TAB:%u",
+				    i);
 				object->strategySprite = fw().data->loadImage(imageString);
 			}
 
@@ -236,14 +242,16 @@ void InitialGameStateExtractor::extractBattlescapeStuff(GameState &state, UStrin
 		auto fileSize = inFile.size();
 		auto objectCount = fileSize / sizeof(struct battlemap_entry);
 
-		auto strategyTabFile = fw().data->fs.open(map_prefix + dirName + mapunits_suffix + UString("S") + spriteFile + UString(".TAB"));
+		auto strategyTabFile = fw().data->fs.open(map_prefix + dirName + mapunits_suffix +
+		                                          UString("S") + spriteFile + UString(".TAB"));
 		auto strategySpritesCount = 0;
 		if (strategyTabFile)
 		{
 			strategySpritesCount = strategyTabFile.size() / 4;
 		}
 
-		LogInfo("Loading %zu feature entries, %zu strategy sprites", objectCount, strategySpritesCount);
+		LogInfo("Loading %zu feature entries, %zu strategy sprites", objectCount,
+		        strategySpritesCount);
 		for (unsigned i = 0; i < objectCount; i++)
 		{
 			struct battlemap_entry entry;
@@ -273,10 +281,10 @@ void InitialGameStateExtractor::extractBattlescapeStuff(GameState &state, UStrin
 			object->sprite = fw().data->loadImage(imageString);
 			if (i < strategySpritesCount)
 			{
-				imageString = UString::format("PCK:" + map_prefix + dirName + mapunits_suffix + "S" +
-					spriteFile + ".PCK:" + map_prefix + dirName +
-					mapunits_suffix + "S" + spriteFile + ".TAB:%u",
-					i);
+				imageString = UString::format(
+				    "PCK:" + map_prefix + dirName + mapunits_suffix + "S" + spriteFile + ".PCK:" +
+				        map_prefix + dirName + mapunits_suffix + "S" + spriteFile + ".TAB:%u",
+				    i);
 				object->strategySprite = fw().data->loadImage(imageString);
 			}
 			object->imageOffset = {24, 48};

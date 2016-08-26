@@ -7,7 +7,8 @@
 
 namespace OpenApoc
 {
-void InitialGameStateExtractor::extractBattlescapeMap(GameState &state, UString dirName, UString secName)
+void InitialGameStateExtractor::extractBattlescapeMap(GameState &state, UString dirName,
+                                                      UString secName)
 {
 	UString tilePrefix = dirName + UString("_");
 
@@ -49,7 +50,8 @@ void InitialGameStateExtractor::extractBattlescapeMap(GameState &state, UString 
 
 	// Then we read 58SEC01.SDT to see how many chunks
 	{
-		fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("SEC") + secName + UString(".SDT");
+		fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("SEC") + secName +
+		           UString(".SDT");
 		expectedFileSize = 20;
 
 		auto inFile = fw().data->fs.open(map_prefix + fileName);
@@ -77,7 +79,8 @@ void InitialGameStateExtractor::extractBattlescapeMap(GameState &state, UString 
 
 	// Then we read 58SEC01.SMP itself for the map
 	{
-		fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("SEC") + secName + UString(".SMP");
+		fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("SEC") + secName +
+		           UString(".SMP");
 		expectedFileSize = sizeX * sizeY * sizeZ * chunksX * chunksY * chunksZ * 4;
 
 		auto inFile = fw().data->fs.open(map_prefix + fileName);

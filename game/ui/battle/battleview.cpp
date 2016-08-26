@@ -31,8 +31,8 @@ BattleView::BattleView(sp<GameState> state)
                      Vec2<int>{BATTLE_STRAT_TILE_X, BATTLE_STRAT_TILE_Y}, TileViewMode::Isometric),
       baseForm(ui().getForm("FORM_BATTLE_UI")), updateSpeed(BattleUpdateSpeed::Speed1),
       state(state), followAgent(false),
-      palette(fw().data->loadPalette("xcom3/tacdata/tactical.pal")), 
-	  selectionState(BattleSelectionState::Normal)
+      palette(fw().data->loadPalette("xcom3/tacdata/tactical.pal")),
+      selectionState(BattleSelectionState::Normal)
 {
 	baseForm->findControlTyped<RadioButton>("BUTTON_SPEED0")->setChecked(true);
 	for (auto &formName : TAB_FORM_NAMES)
@@ -317,11 +317,11 @@ void BattleView::eventOccurred(Event *e)
 		}
 		/*if (!gameEvent->message().empty())
 		{
-			state->logEvent(gameEvent);
-			baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
-			auto notification = mksp<NotificationScreen>(state, *this, gameEvent->message());
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = notification;
+		    state->logEvent(gameEvent);
+		    baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
+		    auto notification = mksp<NotificationScreen>(state, *this, gameEvent->message());
+		    stageCmd.cmd = StageCmd::Command::PUSH;
+		    stageCmd.nextStage = notification;
 		}*/
 		switch (gameEvent->type)
 		{
