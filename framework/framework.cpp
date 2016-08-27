@@ -409,6 +409,7 @@ void Framework::run(sp<Stage> initialStage, size_t frameCount)
 			{
 				TraceObj flipObj("Flip");
 				this->renderer->flush();
+				this->renderer->newFrame();
 				SDL_GL_SwapWindow(p->window);
 			}
 		}

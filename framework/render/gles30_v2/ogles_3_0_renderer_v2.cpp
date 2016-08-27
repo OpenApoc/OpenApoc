@@ -565,6 +565,7 @@ class SpriteDrawMachine
 	}
 
   public:
+	unsigned int used_buffers = 0;
 	SpriteDrawMachine(unsigned int bufferSize, unsigned int bufferCount,
 	                  Vec2<unsigned int> spritesheet_page_size)
 	    : current_buffer(0), palette_spritesheet(spritesheet_page_size, GL::R8UI),
@@ -620,6 +621,7 @@ class SpriteDrawMachine
 		this->buffers[this->current_buffer]->draw();
 		this->buffers[this->current_buffer]->reset();
 		this->current_buffer = (this->current_buffer + 1) % this->buffers.size();
+		this->used_buffers++;
 	}
 	void draw(sp<RGBImage> i, Vec2<float> screenPos, Vec2<float> screenSize,
 	          Vec2<unsigned int> viewport_size, bool flip_y)
@@ -864,6 +866,7 @@ class TexturedDrawMachine
 	};
 
   public:
+	unsigned int used_buffers = 0;
 	TexturedDrawMachine(unsigned int bufferCount, GL::GLuint position_attr = 0,
 	                    GL::GLuint texcoord_attr = 1, GL::GLuint tint_attr = 2)
 	    : current_buffer(0), tex_program_id(0)
@@ -973,6 +976,7 @@ class TexturedDrawMachine
 
 		auto &buf = this->buffers[this->current_buffer];
 		this->current_buffer = (this->current_buffer + 1) % this->buffers.size();
+		this->used_buffers++;
 
 		gl->BindBuffer(GL::ARRAY_BUFFER, buf.position_buffer);
 		gl->BufferSubData(GL::ARRAY_BUFFER, 0, sizeof(PositionVertices), &v);
@@ -1107,6 +1111,7 @@ class ColouredDrawMachine
 	GL::GLint viewport_size_location;
 
   public:
+	unsigned int used_buffers = 0;
 	ColouredDrawMachine(unsigned int bufferCount, GL::GLuint position_attr = 0,
 	                    GL::GLuint colour_attr = 1)
 	    : current_buffer(0), colour_program_id(0)
@@ -1174,6 +1179,7 @@ class ColouredDrawMachine
 		gl->DrawArrays(GL::TRIANGLE_STRIP, 0, 4);
 
 		this->current_buffer = (this->current_buffer + 1) % this->buffers.size();
+		this->used_buffers++;
 	}
 
 	void drawLine(Vec2<float> positions[2], Colour colours[2], Vec2<float> viewport_size,
@@ -1201,6 +1207,7 @@ class ColouredDrawMachine
 		gl->DrawArrays(GL::LINE_STRIP, 0, 2);
 
 		this->current_buffer = (this->current_buffer + 1) % this->buffers.size();
+		this->used_buffers++;
 	}
 
 	~ColouredDrawMachine()
@@ -1259,11 +1266,11 @@ class OGLES30Renderer final : public Renderer
 	Vec2<unsigned int> spritesheetPageSize = {4096, 4096};
 	Vec2<unsigned int> maxSpriteSizeToPack{256, 256};
 	unsigned int spriteBufferSize = 16384;
-	unsigned int spriteBufferCount = 2;
+	unsigned int spriteBufferCount = 40;
 
-	unsigned int texturedBufferCount = 1;
+	unsigned int texturedBufferCount = 100;
 
-	unsigned int quadBufferCount = 1;
+	unsigned int quadBufferCount = 100;
 
 	up<SpriteDrawMachine> spriteMachine;
 	up<TexturedDrawMachine> texturedMachine;
@@ -1283,8 +1290,38 @@ class OGLES30Renderer final : public Renderer
 
   public:
 	OGLES30Renderer();
-	~OGLES30Renderer() override = default;
-	;
+
+	unsigned int maxSpriteBuffers = 0;
+	unsigned int maxTexturedBuffers = 0;
+	unsigned int maxColouredBuffers = 0;
+	~OGLES30Renderer() override
+	{
+		LogInfo("Max %u sprite buffers %u textured buffers %u coloured buffers",
+		        this->maxSpriteBuffers, this->maxTexturedBuffers, this->maxColouredBuffers);
+	}
+
+	void newFrame() override
+	{
+		if (this->spriteMachine->used_buffers > this->maxSpriteBuffers)
+		{
+			LogInfo("New max sprite buffers: %u", this->spriteMachine->used_buffers);
+			this->maxSpriteBuffers = this->spriteMachine->used_buffers;
+		}
+		if (this->texturedMachine->used_buffers > this->maxTexturedBuffers)
+		{
+			LogInfo("New max textured buffers: %u", this->texturedMachine->used_buffers);
+			this->maxTexturedBuffers = this->texturedMachine->used_buffers;
+		}
+		if (this->colouredDrawMachine->used_buffers > this->maxColouredBuffers)
+		{
+			LogInfo("New max coloured buffers: %u", this->colouredDrawMachine->used_buffers);
+			this->maxColouredBuffers = this->colouredDrawMachine->used_buffers;
+		}
+		this->spriteMachine->used_buffers = 0;
+		this->texturedMachine->used_buffers = 0;
+		this->colouredDrawMachine->used_buffers = 0;
+	}
+
 	void clear(Colour c) override
 	{
 		TRACE_FN;
