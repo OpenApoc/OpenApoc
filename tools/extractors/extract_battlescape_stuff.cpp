@@ -18,6 +18,80 @@ struct battlemap_entry
 
 static_assert(sizeof(struct battlemap_entry) == 86, "Unexpected citymap_tile_entry size");
 
+static void readBattleMapParts(GameState &state, BattleMapPartType::Type type,
+                               const UString &idPrefix, const UString &dirName,
+                               const UString &datName, const UString &pckName,
+                               const UString &stratPckName)
+{
+	const UString loftempsFile = "xcom3/TACDATA/LOFTEMPS.DAT";
+	const UString loftempsTab = "xcom3/TACDATA/LOFTEMPS.TAB";
+	auto datFileName = dirName + "/" + datName + ".DAT";
+	auto inFile = fw().data->fs.open(datFileName);
+	if (!inFile)
+	{
+		LogError("Failed to open mapunits DAT file at \"%s\"", datFileName.cStr());
+		return;
+	}
+	auto fileSize = inFile.size();
+	auto objectCount = fileSize / sizeof(struct battlemap_entry);
+
+	auto strategySpriteTabFileName = dirName + "/" + stratPckName + ".tab";
+	auto strategySpriteTabFile = fw().data->fs.open(strategySpriteTabFileName);
+	if (!strategySpriteTabFile)
+	{
+		LogError("Failed to open strategy sprite TAB file \"%s\"",
+		         strategySpriteTabFileName.cStr());
+		return;
+	}
+
+	size_t strategySpriteCount = strategySpriteTabFile.size() / 4;
+
+	LogInfo("Loading %zu entries from \"%s\"", objectCount, datFileName.cStr());
+
+	for (size_t i = 0; i < objectCount; i++)
+	{
+
+		struct battlemap_entry entry;
+		inFile.read((char *)&entry, sizeof(entry));
+		if (!inFile)
+		{
+			LogError("Failed to read entry %zu in \"%s\"", i, datFileName.cStr());
+			return;
+		}
+
+		UString id = UString::format("%s%u", idPrefix, i);
+		auto object = mksp<BattleMapPartType>();
+		object->type = type;
+		object->voxelMap = mksp<VoxelMap>(Vec3<int>{32, 32, 40});
+		for (int slice = 0; slice < 40; slice++)
+		{
+			auto lofString =
+			    UString::format("LOFTEMPS:%s:%s:%u", loftempsFile.cStr(), loftempsTab.cStr(),
+			                    (unsigned int)entry.loftemps[slice]);
+			auto loftemp = fw().data->loadVoxelSlice(lofString);
+			if (!loftemp)
+			{
+				LogError("Failed to open voxel slice \"%s\"", lofString.cStr());
+				return;
+			}
+			object->voxelMap->slices[slice] = loftemp;
+		}
+		auto imageString = UString::format("PCK:%s%s.PCK:%s%s.TAB:%u", dirName.cStr(),
+		                                   pckName.cStr(), dirName.cStr(), pckName.cStr(), i);
+		object->sprite = fw().data->loadImage(imageString);
+		if (i < strategySpriteCount)
+		{
+			auto stratImageString =
+			    UString::format("PCK:%s%s.PCK:%s%s.TAB:%u", dirName.cStr(), stratPckName.cStr(),
+			                    dirName.cStr(), stratPckName.cStr(), i);
+			object->strategySprite = fw().data->loadImage(stratImageString);
+		}
+		object->imageOffset = {24, 48};
+
+		state.battle.map_part_types[id] = object;
+	}
+}
+
 void InitialGameStateExtractor::extractBattlescapeStuff(GameState &state, UString dirName)
 {
 	UString tilePrefix = dirName + UString("_");
@@ -30,267 +104,31 @@ void InitialGameStateExtractor::extractBattlescapeStuff(GameState &state, UStrin
 
 	// Read ground (tiles)
 	{
-		spriteFile = "GROUND";
-		datFile = "GROUNMAP";
-		fileName = dirName + mapunits_suffix + datFile + UString(".DAT");
-
-		auto inFile = fw().data->fs.open(map_prefix + fileName);
-		if (!inFile)
-		{
-			LogError("Failed to open \"%s\"", fileName.cStr());
-		}
-		auto fileSize = inFile.size();
-		auto objectCount = fileSize / sizeof(struct battlemap_entry);
-
-		auto strategyTabFile = fw().data->fs.open(map_prefix + dirName + mapunits_suffix +
-		                                          UString("S") + spriteFile + UString(".TAB"));
-		unsigned strategySpritesCount = 0;
-		if (strategyTabFile)
-		{
-			strategySpritesCount = strategyTabFile.size() / 4;
-		}
-
-		LogInfo("Loading %zu ground entries, %zu strategy sprites", objectCount,
-		        strategySpritesCount);
-		for (unsigned i = 0; i < objectCount; i++)
-		{
-			struct battlemap_entry entry;
-			inFile.read((char *)&entry, sizeof(entry));
-
-			UString id =
-			    UString::format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix, "GD_", i);
-
-			auto object = mksp<BattleMapPartType>();
-			object->type = BattleMapPartType::Type::Ground;
-
-			// FIXME: In the future, here we will be reading tile information like health etc.
-
-			object->voxelMap = mksp<VoxelMap>(Vec3<int>{32, 32, 40});
-			for (unsigned z = 0; z < 40; z++)
-			{
-				auto lofString = UString::format(
-				    "LOFTEMPS:xcom3/TACDATA/LOFTEMPS.DAT:xcom3/TACDATA/LOFTEMPS.TAB:%d",
-				    (int)entry.loftemps[z]);
-				object->voxelMap->slices[z] = fw().data->loadVoxelSlice(lofString);
-			}
-
-			auto imageString = UString::format("PCK:" + map_prefix + dirName + mapunits_suffix +
-			                                       spriteFile + ".PCK:" + map_prefix + dirName +
-			                                       mapunits_suffix + spriteFile + ".TAB:%u",
-			                                   i);
-			object->sprite = fw().data->loadImage(imageString);
-			if (i < strategySpritesCount)
-			{
-				imageString = UString::format(
-				    "PCK:" + map_prefix + dirName + mapunits_suffix + "S" + spriteFile + ".PCK:" +
-				        map_prefix + dirName + mapunits_suffix + "S" + spriteFile + ".TAB:%u",
-				    i);
-				object->strategySprite = fw().data->loadImage(imageString);
-			}
-
-			object->imageOffset = {24, 48};
-
-			state.battle.map_part_types[id] = object;
-		}
+		readBattleMapParts(state, BattleMapPartType::Type::Ground,
+		                   BattleMapPartType::getPrefix() + tilePrefix + "GD_",
+		                   map_prefix + dirName + mapunits_suffix, "GROUNMAP", "GROUND", "SGROUND");
 	}
 
 	// Read left walls
 	{
-		spriteFile = "LEFT";
-		datFile = "LEFTMAP";
-		fileName = dirName + mapunits_suffix + datFile + UString(".DAT");
-
-		auto inFile = fw().data->fs.open(map_prefix + fileName);
-		if (!inFile)
-		{
-			LogError("Failed to open \"%s\"", fileName.cStr());
-		}
-		auto fileSize = inFile.size();
-		auto objectCount = fileSize / sizeof(struct battlemap_entry);
-
-		auto strategyTabFile = fw().data->fs.open(map_prefix + dirName + mapunits_suffix +
-		                                          UString("S") + spriteFile + UString(".TAB"));
-		auto strategySpritesCount = 0;
-		if (strategyTabFile)
-		{
-			strategySpritesCount = strategyTabFile.size() / 4;
-		}
-
-		LogInfo("Loading %zu left wall entries, %zu strategy sprites", objectCount,
-		        strategySpritesCount);
-		for (unsigned i = 0; i < objectCount; i++)
-		{
-			struct battlemap_entry entry;
-			inFile.read((char *)&entry, sizeof(entry));
-
-			UString id =
-			    UString::format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix, "LW_", i);
-
-			auto object = mksp<BattleMapPartType>();
-			object->type = BattleMapPartType::Type::LeftWall;
-
-			// FIXME: In the future, here we will be reading tile information like health etc.
-
-			object->voxelMap = mksp<VoxelMap>(Vec3<int>{32, 32, 40});
-			for (unsigned z = 0; z < 40; z++)
-			{
-				auto lofString = UString::format(
-				    "LOFTEMPS:xcom3/TACDATA/LOFTEMPS.DAT:xcom3/TACDATA/LOFTEMPS.TAB:%d",
-				    (int)entry.loftemps[z]);
-				object->voxelMap->slices[z] = fw().data->loadVoxelSlice(lofString);
-			}
-
-			auto imageString = UString::format("PCK:" + map_prefix + dirName + mapunits_suffix +
-			                                       spriteFile + ".PCK:" + map_prefix + dirName +
-			                                       mapunits_suffix + spriteFile + ".TAB:%u",
-			                                   i);
-			object->sprite = fw().data->loadImage(imageString);
-			if (i < strategySpritesCount)
-			{
-				imageString = UString::format(
-				    "PCK:" + map_prefix + dirName + mapunits_suffix + "S" + spriteFile + ".PCK:" +
-				        map_prefix + dirName + mapunits_suffix + "S" + spriteFile + ".TAB:%u",
-				    i);
-				object->strategySprite = fw().data->loadImage(imageString);
-			}
-
-			object->imageOffset = {24, 48};
-
-			state.battle.map_part_types[id] = object;
-		}
+		readBattleMapParts(state, BattleMapPartType::Type::LeftWall,
+		                   BattleMapPartType::getPrefix() + tilePrefix + "LW_",
+		                   map_prefix + dirName + mapunits_suffix, "LEFTMAP", "LEFT", "SLEFT");
 	}
 
 	// Read right walls
 	{
-		spriteFile = "RIGHT";
-		datFile = "RIGHTMAP";
-
-		fileName = dirName + mapunits_suffix + datFile + UString(".DAT");
-
-		auto inFile = fw().data->fs.open(map_prefix + fileName);
-		if (!inFile)
-		{
-			LogError("Failed to open \"%s\"", fileName.cStr());
-		}
-		auto fileSize = inFile.size();
-		auto objectCount = fileSize / sizeof(struct battlemap_entry);
-
-		auto strategyTabFile = fw().data->fs.open(map_prefix + dirName + mapunits_suffix +
-		                                          UString("S") + spriteFile + UString(".TAB"));
-		auto strategySpritesCount = 0;
-		if (strategyTabFile)
-		{
-			strategySpritesCount = strategyTabFile.size() / 4;
-		}
-
-		LogInfo("Loading %zu right wall entries, %zu strategy sprites", objectCount,
-		        strategySpritesCount);
-		for (unsigned i = 0; i < objectCount; i++)
-		{
-			struct battlemap_entry entry;
-			inFile.read((char *)&entry, sizeof(entry));
-
-			UString id =
-			    UString::format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix, "RW_", i);
-
-			auto object = mksp<BattleMapPartType>();
-			object->type = BattleMapPartType::Type::RightWall;
-
-			// FIXME: In the future, here we will be reading tile information like health etc.
-
-			object->voxelMap = mksp<VoxelMap>(Vec3<int>{32, 32, 40});
-			for (unsigned z = 0; z < 40; z++)
-			{
-				auto lofString = UString::format(
-				    "LOFTEMPS:xcom3/TACDATA/LOFTEMPS.DAT:xcom3/TACDATA/LOFTEMPS.TAB:%d",
-				    (int)entry.loftemps[z]);
-				object->voxelMap->slices[z] = fw().data->loadVoxelSlice(lofString);
-			}
-
-			auto imageString = UString::format("PCK:" + map_prefix + dirName + mapunits_suffix +
-			                                       spriteFile + ".PCK:" + map_prefix + dirName +
-			                                       mapunits_suffix + spriteFile + ".TAB:%u",
-			                                   i);
-			object->sprite = fw().data->loadImage(imageString);
-			if (i < strategySpritesCount)
-			{
-				imageString = UString::format(
-				    "PCK:" + map_prefix + dirName + mapunits_suffix + "S" + spriteFile + ".PCK:" +
-				        map_prefix + dirName + mapunits_suffix + "S" + spriteFile + ".TAB:%u",
-				    i);
-				object->strategySprite = fw().data->loadImage(imageString);
-			}
-
-			object->imageOffset = {24, 48};
-
-			state.battle.map_part_types[id] = object;
-		}
+		readBattleMapParts(state, BattleMapPartType::Type::RightWall,
+		                   BattleMapPartType::getPrefix() + tilePrefix + "RW_",
+		                   map_prefix + dirName + mapunits_suffix, "RIGHTMAP", "RIGHT", "SRIGHT");
 	}
 
 	// Read scenery
 	{
-		spriteFile = "FEATURE";
-		datFile = "FEATMAP";
-
-		fileName = dirName + mapunits_suffix + datFile + UString(".DAT");
-
-		auto inFile = fw().data->fs.open(map_prefix + fileName);
-		if (!inFile)
-		{
-			LogError("Failed to open \"%s\"", fileName.cStr());
-		}
-		auto fileSize = inFile.size();
-		auto objectCount = fileSize / sizeof(struct battlemap_entry);
-
-		auto strategyTabFile = fw().data->fs.open(map_prefix + dirName + mapunits_suffix +
-		                                          UString("S") + spriteFile + UString(".TAB"));
-		auto strategySpritesCount = 0;
-		if (strategyTabFile)
-		{
-			strategySpritesCount = strategyTabFile.size() / 4;
-		}
-
-		LogInfo("Loading %zu feature entries, %zu strategy sprites", objectCount,
-		        strategySpritesCount);
-		for (unsigned i = 0; i < objectCount; i++)
-		{
-			struct battlemap_entry entry;
-			inFile.read((char *)&entry, sizeof(entry));
-
-			UString id =
-			    UString::format("%s%s%s%u", BattleMapPartType::getPrefix(), tilePrefix, "SC_", i);
-
-			auto object = mksp<BattleMapPartType>();
-			object->type = BattleMapPartType::Type::Scenery;
-
-			// FIXME: In the future, here we will be reading tile information like health etc.
-
-			object->voxelMap = mksp<VoxelMap>(Vec3<int>{32, 32, 40});
-			for (unsigned z = 0; z < 40; z++)
-			{
-				auto lofString = UString::format(
-				    "LOFTEMPS:xcom3/TACDATA/LOFTEMPS.DAT:xcom3/TACDATA/LOFTEMPS.TAB:%d",
-				    (int)entry.loftemps[z]);
-				object->voxelMap->slices[z] = fw().data->loadVoxelSlice(lofString);
-			}
-
-			auto imageString = UString::format("PCK:" + map_prefix + dirName + mapunits_suffix +
-			                                       spriteFile + ".PCK:" + map_prefix + dirName +
-			                                       mapunits_suffix + spriteFile + ".TAB:%u",
-			                                   i);
-			object->sprite = fw().data->loadImage(imageString);
-			if (i < strategySpritesCount)
-			{
-				imageString = UString::format(
-				    "PCK:" + map_prefix + dirName + mapunits_suffix + "S" + spriteFile + ".PCK:" +
-				        map_prefix + dirName + mapunits_suffix + "S" + spriteFile + ".TAB:%u",
-				    i);
-				object->strategySprite = fw().data->loadImage(imageString);
-			}
-			object->imageOffset = {24, 48};
-
-			state.battle.map_part_types[id] = object;
-		}
+		readBattleMapParts(state, BattleMapPartType::Type::Scenery,
+		                   BattleMapPartType::getPrefix() + tilePrefix + "SC_",
+		                   map_prefix + dirName + mapunits_suffix, "FEATMAP", "FEATURE",
+		                   "SFEATURE");
 	}
 }
 
