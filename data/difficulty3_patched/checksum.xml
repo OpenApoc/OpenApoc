@@ -11,7 +11,7 @@
   <checksum SHA1="ea3a7441cdc53ee8bf01b45af92cf7e6bd8af603">gamestate/battle/initial_left_walls.xml</checksum>
   <checksum SHA1="fd43764d5b6f53f06c6808354a37596a4e0f5df5">gamestate/battle/initial_right_walls.xml</checksum>
   <checksum SHA1="9ecd264c9e25ea312a81b5f1f65721348efe0852">gamestate/battle/initial_scenery.xml</checksum>
-  <checksum SHA1="034ddc6c8186934711c25737d20407399cd7b820">gamestate/battle/map_part_types.xml</checksum>
+  <checksum SHA1="31d2d2ad2e7df468cacf06643295d73cd952f472">gamestate/battle/map_part_types.xml</checksum>
   <checksum SHA1="9f859d3887a364db435ca7462c26d9522ffca803">gamestate/cities.xml</checksum>
   <checksum SHA1="cb08ea66d936fb8e5d61185fe6cc282d2834e781">gamestate/cities/CITYMAP_ALIEN.xml</checksum>
   <checksum SHA1="b91fe8ac8b375f72ad50660bfbb727e6e8a5b4ed">gamestate/cities/CITYMAP_ALIEN/buildings.xml</checksum>

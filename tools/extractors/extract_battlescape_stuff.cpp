@@ -82,8 +82,8 @@ static void readBattleMapParts(GameState &state, BattleMapPartType::Type type,
 		if (i < strategySpriteCount)
 		{
 			auto stratImageString =
-			    UString::format("PCK:%s%s.PCK:%s%s.TAB:%u", dirName.cStr(), stratPckName.cStr(),
-			                    dirName.cStr(), stratPckName.cStr(), i);
+			    UString::format("PCKSTRAT:%s%s.PCK:%s%s.TAB:%u", dirName.cStr(),
+			                    stratPckName.cStr(), dirName.cStr(), stratPckName.cStr(), i);
 			object->strategySprite = fw().data->loadImage(stratImageString);
 		}
 		object->imageOffset = {24, 48};
