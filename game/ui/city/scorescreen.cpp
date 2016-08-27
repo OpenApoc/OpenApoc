@@ -17,7 +17,7 @@ ScoreScreen::~ScoreScreen() = default;
 void ScoreScreen::begin()
 {
 	menuform->findControlTyped<Label>("TEXT_FUNDS")->setText(state->getPlayerBalance());
-	menuform->findControlTyped<Label>("TEXT_DATE")->setText(state->gameTime.getDateString());
+	menuform->findControlTyped<Label>("TEXT_DATE")->setText(state->gameTime.getLongDateString());
 	menuform->findControlTyped<Label>("TEXT_WEEK")->setText(state->gameTime.getWeekString());
 }
 

@@ -3,16 +3,62 @@
 #include "framework/event.h"
 #include "framework/framework.h"
 #include "game/state/gamestate.h"
+#include "game/ui/city/cityview.h"
 
 namespace OpenApoc
 {
 
-MessageLogScreen::MessageLogScreen(sp<GameState> state)
+MessageLogScreen::MessageLogScreen(sp<GameState> state, CityView &cityView)
     : Stage(), menuform(ui().getForm("FORM_MESSAGE_LOG_SCREEN")), state(state)
 {
+	auto listbox = menuform->findControlTyped<ListBox>("LISTBOX_MESSAGES");
+	for (EventMessage message : state->messages)
+	{
+		listbox->addItem(createMessageRow(message, state, cityView));
+	}
 }
 
 MessageLogScreen::~MessageLogScreen() = default;
+
+sp<Control> MessageLogScreen::createMessageRow(EventMessage message, sp<GameState> state,
+                                               CityView &cityView)
+{
+	auto control = mksp<Control>();
+
+	const int HEIGHT = 21;
+
+	auto date =
+	    control->createChild<Label>(message.time.getShortDateString(), ui().getFont("SMALFONT"));
+	date->Location = {0, 0};
+	date->Size = {100, HEIGHT};
+	date->TextVAlign = VerticalAlignment::Centre;
+
+	auto time = control->createChild<Label>(message.time.getTimeString(), ui().getFont("SMALFONT"));
+	time->Location = date->Location + Vec2<int>{date->Size.x, 0};
+	time->Size = {60, HEIGHT};
+	time->TextVAlign = VerticalAlignment::Centre;
+
+	auto text = control->createChild<Label>(message.text, ui().getFont("SMALFONT"));
+	text->Location = time->Location + Vec2<int>{time->Size.x, 0};
+	text->Size = {328, HEIGHT};
+	text->TextVAlign = VerticalAlignment::Centre;
+
+	if (message.getMapLocation(*state) != EventMessage::NO_LOCATION)
+	{
+		auto btnImage = fw().data->loadImage(
+		    "PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:57:UI/menuopt.pal");
+		auto btnLocation = control->createChild<GraphicButton>(btnImage, btnImage);
+		btnLocation->Location = text->Location + Vec2<int>{text->Size.x, 0};
+		btnLocation->Size = {22, HEIGHT};
+		btnLocation->addCallback(FormEventType::ButtonClick,
+		                         [this, message, state, &cityView](Event *) {
+			                         cityView.setScreenCenterTile(message.getMapLocation(*state));
+			                         this->stageCmd.cmd = StageCmd::Command::POP;
+			                     });
+	}
+
+	return control;
+}
 
 void MessageLogScreen::begin()
 {
