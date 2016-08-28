@@ -11,7 +11,8 @@ namespace OpenApoc
 
 const ptime GameTime::GAME_START = ptime(date(2084, Mar, 7), time_duration(0, 0, 0));
 std::locale *GameTime::TIME_FORMAT = nullptr;
-std::locale *GameTime::DATE_FORMAT = nullptr;
+std::locale *GameTime::DATE_LONG_FORMAT = nullptr;
+std::locale *GameTime::DATE_SHORT_FORMAT = nullptr;
 
 // FIXME: Refactor to always use ptime instead of ticks?
 time_duration GameTime::ticksToPosix(int64_t ticks)
@@ -40,13 +41,13 @@ UString GameTime::getTimeString() const
 	return ss.str();
 }
 
-UString GameTime::getDateString() const
+UString GameTime::getLongDateString() const
 {
 	std::stringstream ss;
-	if (DATE_FORMAT == nullptr)
+	if (DATE_LONG_FORMAT == nullptr)
 	{
 		apoc_date_facet *dateFacet = new apoc_date_facet("%A, %E %B, %Y");
-		DATE_FORMAT = new std::locale(std::locale::classic(), dateFacet);
+		DATE_LONG_FORMAT = new std::locale(std::locale::classic(), dateFacet);
 
 		std::vector<std::string> months = {
 		    tr("January").str(), tr("February").str(), tr("March").str(),
@@ -71,7 +72,38 @@ UString GameTime::getDateString() const
 		    tr("29th").str(), tr("30th").str(), tr("31st").str()};
 		dateFacet->longDayNames(days);
 	}
-	ss.imbue(*DATE_FORMAT);
+	ss.imbue(*DATE_LONG_FORMAT);
+	ss << datetime.date();
+	return ss.str();
+}
+
+UString GameTime::getShortDateString() const
+{
+	std::stringstream ss;
+	if (DATE_SHORT_FORMAT == nullptr)
+	{
+		apoc_date_facet *dateFacet = new apoc_date_facet("%E %B, %Y");
+		DATE_SHORT_FORMAT = new std::locale(std::locale::classic(), dateFacet);
+
+		std::vector<std::string> months = {
+		    tr("January").str(), tr("February").str(), tr("March").str(),
+		    tr("April").str(),   tr("May").str(),      tr("June").str(),
+		    tr("July").str(),    tr("August").str(),   tr("September").str(),
+		    tr("October").str(), tr("November").str(), tr("December").str()};
+		dateFacet->long_month_names(months);
+
+		std::vector<std::string> days = {
+		    tr("1st").str(),  tr("2nd").str(),  tr("3rd").str(),  tr("4th").str(),
+		    tr("5th").str(),  tr("6th").str(),  tr("7th").str(),  tr("8th").str(),
+		    tr("9th").str(),  tr("10th").str(), tr("11th").str(), tr("12th").str(),
+		    tr("13th").str(), tr("14th").str(), tr("15th").str(), tr("16th").str(),
+		    tr("17th").str(), tr("18th").str(), tr("19th").str(), tr("20th").str(),
+		    tr("21st").str(), tr("22nd").str(), tr("23rd").str(), tr("24th").str(),
+		    tr("25th").str(), tr("26th").str(), tr("27th").str(), tr("28th").str(),
+		    tr("29th").str(), tr("30th").str(), tr("31st").str()};
+		dateFacet->longDayNames(days);
+	}
+	ss.imbue(*DATE_SHORT_FORMAT);
 	ss << datetime.date();
 	return ss.str();
 }

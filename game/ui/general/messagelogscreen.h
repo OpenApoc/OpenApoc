@@ -6,8 +6,9 @@
 
 namespace OpenApoc
 {
-
 class GameState;
+class EventMessage;
+class CityView;
 
 class MessageLogScreen : public Stage
 {
@@ -17,8 +18,10 @@ class MessageLogScreen : public Stage
 
 	sp<GameState> state;
 
+	sp<Control> createMessageRow(EventMessage message, sp<GameState> state, CityView &cityView);
+
   public:
-	MessageLogScreen(sp<GameState> state);
+	MessageLogScreen(sp<GameState> state, CityView &cityView);
 	~MessageLogScreen() override;
 	// Stage control
 	void begin() override;

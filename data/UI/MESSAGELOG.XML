@@ -21,6 +21,27 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
+	  <scroll id="LISTBOX_SCROLL">
+        <position x="558" y="82"/>
+        <size width="15" height="356"/>
+      </scroll>
+	  <listbox id="LISTBOX_MESSAGES" scrollbarid="LISTBOX_SCROLL">
+        <position x="28" y="74"/>
+        <size width="510" height="375"/>
+        <item size="21" spacing="4"/>
+      </listbox>
+      <graphicbutton id="LISTBOX_SCROLL_UP" scrollprev="LISTBOX_SCROLL">
+        <position x="555" y="58"/>
+        <size width="22" height="21"/>
+        <image/>
+        <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>
+      </graphicbutton>
+      <graphicbutton id="LISTBOX_SCROLL_DOWN" scrollnext="LISTBOX_SCROLL">
+        <position x="555" y="441"/>
+        <size width="22" height="21"/>
+        <image/>
+        <imagedepressed>BUTTON_SCROLL_DOWN_DEPRESSED</imagedepressed>
+      </graphicbutton>
       <graphicbutton id="BUTTON_OK">
         <position x="602" y="443"/>
         <size width="40" height="40"/>

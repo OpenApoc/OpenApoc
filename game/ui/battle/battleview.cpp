@@ -11,8 +11,6 @@
 #include "game/ui/base/basescreen.h"
 #include "game/ui/battletileview/battletileview.h"
 #include "game/ui/general/ingameoptions.h"
-#include "game/ui/general/messagebox.h"
-#include "game/ui/general/messagelogscreen.h"
 #include "library/sp.h"
 
 namespace OpenApoc
@@ -124,10 +122,7 @@ BattleView::BattleView(sp<GameState> state)
 		    this->stageCmd.nextStage = mksp<InGameOptions>(this->state);
 		});
 	this->baseForm->findControl("BUTTON_SHOW_LOG")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<MessageLogScreen>(this->state);
-		});
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { LogWarning("Show log"); });
 	this->baseForm->findControl("BUTTON_ZOOM_EVENT")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { LogWarning("Zoom to event"); });
 }
@@ -136,8 +131,6 @@ BattleView::~BattleView() = default;
 
 void BattleView::begin()
 {
-	// baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(tr("Welcome to X-COM
-	// Apocalypse"));
 	this->baseForm->findControl("BUTTON_LAYER_1")->Enabled = maxZDraw >= 1;
 	this->baseForm->findControl("BUTTON_LAYER_2")->Enabled = maxZDraw >= 2;
 	this->baseForm->findControl("BUTTON_LAYER_3")->Enabled = maxZDraw >= 3;

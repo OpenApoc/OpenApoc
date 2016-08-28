@@ -225,10 +225,15 @@ CityView::CityView(sp<GameState> state)
 	this->baseForm->findControl("BUTTON_SHOW_LOG")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<MessageLogScreen>(this->state);
+		    this->stageCmd.nextStage = mksp<MessageLogScreen>(this->state, *this);
 		});
 	this->baseForm->findControl("BUTTON_ZOOM_EVENT")
-	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { this->zoomLastEvent(); });
+	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
+		    if (baseForm->findControlTyped<Ticker>("NEWS_TICKER")->hasMessages())
+		    {
+			    this->zoomLastEvent();
+		    }
+		});
 
 	auto baseManagementForm = this->uiTabs[0];
 	baseManagementForm->findControl("BUTTON_SHOW_BASE")

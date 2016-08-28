@@ -18,7 +18,7 @@ class GameTime
   private:
 	static const boost::posix_time::ptime GAME_START;
 	// needs some fancy initialization
-	static /*const*/ std::locale *TIME_FORMAT, *DATE_FORMAT;
+	static /*const*/ std::locale *TIME_FORMAT, *DATE_LONG_FORMAT, *DATE_SHORT_FORMAT;
 
 	uint64_t ticks;
 	boost::posix_time::ptime datetime;
@@ -50,7 +50,10 @@ class GameTime
 	UString getTimeString() const;
 
 	// returns formatted date in format a, d m, y
-	UString getDateString() const;
+	UString getLongDateString() const;
+
+	// returns formatted date in format d m, y
+	UString getShortDateString() const;
 
 	// set at midnight
 	bool dayPassed() const;
