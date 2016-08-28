@@ -62,6 +62,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>highexplosive</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -127,6 +133,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>80</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -192,6 +204,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>120</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -257,6 +275,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -322,6 +346,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -387,6 +417,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -452,6 +488,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -517,6 +559,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -582,6 +630,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -647,6 +701,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -712,6 +772,13 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>80</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
+</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -777,6 +844,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>80</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -842,6 +915,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>80</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -907,6 +986,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>120</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -972,6 +1057,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>80</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1037,6 +1128,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1102,6 +1199,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1167,6 +1270,13 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
+</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1232,6 +1342,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1297,6 +1413,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1362,6 +1484,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1427,6 +1555,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1492,6 +1626,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1557,6 +1697,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1622,6 +1768,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>120</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1687,6 +1839,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1752,6 +1910,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>120</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1817,6 +1981,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1882,6 +2052,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1947,6 +2123,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2012,6 +2194,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2077,6 +2265,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2142,6 +2336,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2207,6 +2407,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>80</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2272,6 +2478,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2337,6 +2549,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2402,6 +2620,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2467,6 +2691,13 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
+</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2532,6 +2763,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2597,6 +2834,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2662,6 +2905,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2727,6 +2976,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2792,6 +3047,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2857,6 +3118,13 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
+</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2922,6 +3190,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>80</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2987,6 +3261,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3052,6 +3332,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3117,6 +3403,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3182,6 +3474,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3247,6 +3545,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3312,6 +3616,13 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
+</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3377,6 +3688,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3442,6 +3759,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3507,6 +3830,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3572,6 +3901,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3637,6 +3972,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>80</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3702,6 +4043,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3767,6 +4114,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3832,6 +4185,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3897,6 +4256,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3962,6 +4327,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4027,6 +4398,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4092,6 +4469,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4157,6 +4540,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4222,6 +4611,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4287,6 +4682,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4352,6 +4753,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>120</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4417,6 +4824,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4482,6 +4895,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4547,6 +4966,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4612,6 +5037,13 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
+</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4677,6 +5109,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4742,6 +5180,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4807,6 +5251,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4872,6 +5322,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4937,6 +5393,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5002,6 +5464,13 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
+</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5067,6 +5536,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>120</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5132,6 +5607,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5197,6 +5678,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5262,6 +5749,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5327,6 +5820,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5392,6 +5891,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5457,6 +5962,13 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
+</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5522,6 +6034,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5587,6 +6105,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5652,6 +6176,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5717,6 +6247,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5782,6 +6318,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>120</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5847,6 +6389,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5912,6 +6460,13 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
+</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5977,6 +6532,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6042,6 +6603,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6107,6 +6674,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6172,6 +6745,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6237,6 +6816,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6302,6 +6887,13 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
+</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6367,6 +6959,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6432,6 +7030,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6497,6 +7101,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>120</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6562,6 +7172,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6627,6 +7243,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6692,6 +7314,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6757,6 +7385,13 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
+</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6822,6 +7457,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6887,6 +7528,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6952,6 +7599,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7017,6 +7670,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7082,6 +7741,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7147,6 +7812,13 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>90</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
+</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7212,6 +7884,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>120</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7277,6 +7955,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7342,6 +8026,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7407,6 +8097,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7472,6 +8168,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7537,6 +8239,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7602,6 +8310,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7667,6 +8381,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7732,6 +8452,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7797,6 +8523,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7862,6 +8594,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7927,6 +8665,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>highexplosive</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7992,6 +8736,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8057,6 +8807,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8122,6 +8878,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8187,6 +8949,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8252,6 +9020,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8317,6 +9091,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8382,6 +9162,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8447,6 +9233,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8512,6 +9304,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8577,6 +9375,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8642,6 +9446,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8707,6 +9517,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8772,6 +9588,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8837,6 +9659,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8902,6 +9730,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8967,6 +9801,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9032,6 +9872,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9097,6 +9943,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9162,6 +10014,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9227,6 +10085,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9292,6 +10156,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9357,6 +10227,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9422,6 +10298,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9487,6 +10369,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9552,6 +10440,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9617,6 +10511,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9682,6 +10582,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9747,6 +10653,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9812,6 +10724,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_LW_#</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9877,6 +10795,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9942,6 +10866,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10007,6 +10937,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10072,6 +11008,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10137,6 +11079,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10202,6 +11150,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10267,6 +11221,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10332,6 +11292,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10397,6 +11363,19 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:12</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:13</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:14</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:15</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:16</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:17</entry>
+        </animation_frames>
       </sp>
     </value>
   </entry>
@@ -10462,6 +11441,19 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:18</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:19</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:20</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:21</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:22</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:23</entry>
+        </animation_frames>
       </sp>
     </value>
   </entry>
@@ -10527,6 +11519,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10592,6 +11590,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10657,6 +11661,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10722,6 +11732,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10787,6 +11803,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10852,6 +11874,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10917,6 +11945,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>highexplosive</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10982,6 +12016,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11047,6 +12087,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11112,6 +12158,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11177,6 +12229,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11242,6 +12300,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11307,6 +12371,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11372,6 +12442,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11437,6 +12513,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11502,6 +12584,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11567,6 +12655,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11632,6 +12726,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11697,6 +12797,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11762,6 +12868,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11827,6 +12939,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11892,6 +13010,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11957,6 +13081,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12022,6 +13152,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12087,6 +13223,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12152,6 +13294,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12217,6 +13365,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12282,6 +13436,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12347,6 +13507,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12412,6 +13578,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12477,6 +13649,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12542,6 +13720,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12607,6 +13791,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_RW_ </damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12672,6 +13862,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12737,6 +13933,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12802,6 +14004,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12867,6 +14075,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12932,6 +14146,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12997,6 +14217,19 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:0</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:1</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:2</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:3</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:4</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:5</entry>
+        </animation_frames>
       </sp>
     </value>
   </entry>
@@ -13062,6 +14295,19 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:6</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:7</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:8</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:9</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:10</entry>
+          <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:11</entry>
+        </animation_frames>
       </sp>
     </value>
   </entry>
@@ -13127,6 +14373,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13192,6 +14444,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13257,6 +14515,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13322,6 +14586,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13387,6 +14657,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13452,6 +14728,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13517,6 +14799,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13582,6 +14870,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>100</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>highexplosive</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13647,6 +14941,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13712,6 +15012,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13777,6 +15083,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13842,6 +15154,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13907,6 +15225,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13972,6 +15296,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14037,6 +15367,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14102,6 +15438,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14167,6 +15509,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14232,6 +15580,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14297,6 +15651,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14362,6 +15722,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14427,6 +15793,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14492,6 +15864,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14557,6 +15935,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14622,6 +16006,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14687,6 +16077,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14752,6 +16148,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14817,6 +16219,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14882,6 +16290,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14947,6 +16361,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>100</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15012,6 +16432,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15077,6 +16503,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15142,6 +16574,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15207,6 +16645,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15272,6 +16716,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>100</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15337,6 +16787,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>100</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15402,6 +16858,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15467,6 +16929,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15532,6 +17000,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15597,6 +17071,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>100</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15662,6 +17142,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15727,6 +17213,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15792,6 +17284,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15857,6 +17355,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15922,6 +17426,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15987,6 +17497,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16052,6 +17568,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16117,6 +17639,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16182,6 +17710,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16247,6 +17781,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16312,6 +17852,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16377,6 +17923,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16442,6 +17994,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>10</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16507,6 +18065,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>10</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16572,6 +18136,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16637,6 +18207,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>10</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16702,6 +18278,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>10</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16767,6 +18349,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>150</explosion_power>
+        <explosion_radius_divizor>50</explosion_radius_divizor>
+        <explosion_type>highexplosive</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16832,6 +18420,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>35</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>10</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16897,6 +18491,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16962,6 +18562,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17027,6 +18633,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17092,6 +18704,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17157,6 +18775,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17222,6 +18846,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17287,6 +18917,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17352,6 +18988,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17417,6 +19059,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17482,6 +19130,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17547,6 +19201,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17612,6 +19272,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17677,6 +19343,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17742,6 +19414,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17807,6 +19485,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>150</explosion_power>
+        <explosion_radius_divizor>50</explosion_radius_divizor>
+        <explosion_type>highexplosive</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17872,6 +19556,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17937,6 +19627,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18002,6 +19698,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18067,6 +19769,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18132,6 +19840,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18197,6 +19911,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18262,6 +19982,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18327,6 +20053,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18392,6 +20124,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18457,6 +20195,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18522,6 +20266,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18587,6 +20337,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18652,6 +20408,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18717,6 +20479,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18782,6 +20550,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18847,6 +20621,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18912,6 +20692,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18977,6 +20763,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19042,6 +20834,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19107,6 +20905,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19172,6 +20976,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19237,6 +21047,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19302,6 +21118,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19367,6 +21189,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19432,6 +21260,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19497,6 +21331,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19562,6 +21402,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19627,6 +21473,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19692,6 +21544,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19757,6 +21615,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19822,6 +21686,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19887,6 +21757,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19952,6 +21828,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20017,6 +21899,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20082,6 +21970,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20147,6 +22041,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20212,6 +22112,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20277,6 +22183,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20342,6 +22254,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20407,6 +22325,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20472,6 +22396,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20537,6 +22467,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>150</explosion_power>
+        <explosion_radius_divizor>50</explosion_radius_divizor>
+        <explosion_type>highexplosive</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20602,6 +22538,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20667,6 +22609,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20732,6 +22680,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20797,6 +22751,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20862,6 +22822,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20927,6 +22893,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20992,6 +22964,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21057,6 +23035,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21122,6 +23106,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21187,6 +23177,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21252,6 +23248,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21317,6 +23319,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21382,6 +23390,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21447,6 +23461,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21512,6 +23532,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21577,6 +23603,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21642,6 +23674,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21707,6 +23745,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21772,6 +23816,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21837,6 +23887,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21902,6 +23958,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21967,6 +24029,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22032,6 +24100,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22097,6 +24171,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>45</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22162,6 +24242,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22227,6 +24313,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22292,6 +24384,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22357,6 +24455,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22422,6 +24526,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22487,6 +24597,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22552,6 +24668,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22617,6 +24739,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>1</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22682,6 +24810,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22747,6 +24881,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22812,6 +24952,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22877,6 +25023,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22942,6 +25094,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23007,6 +25165,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23072,6 +25236,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23137,6 +25307,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23202,6 +25378,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23267,6 +25449,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23332,6 +25520,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23397,6 +25591,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23462,6 +25662,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23527,6 +25733,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23592,6 +25804,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23657,6 +25875,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23722,6 +25946,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23787,6 +26017,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23852,6 +26088,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23917,6 +26159,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23982,6 +26230,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24047,6 +26301,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24112,6 +26372,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>255</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part>BATTLEMAPPART_57UFO7_SC_.</damaged_map_part>
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24177,6 +26443,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24242,6 +26514,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24307,6 +26585,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24372,6 +26656,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24437,6 +26727,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24502,6 +26798,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24567,6 +26869,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24632,6 +26940,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24697,6 +27011,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24762,6 +27082,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>1</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24827,6 +27153,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24892,6 +27224,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24957,6 +27295,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25022,6 +27366,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25087,6 +27437,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25152,6 +27508,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25217,6 +27579,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25282,6 +27650,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25347,6 +27721,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25412,6 +27792,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>75</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25477,6 +27863,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25542,6 +27934,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25607,6 +28005,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25672,6 +28076,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25737,6 +28147,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25802,6 +28218,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25867,6 +28289,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25932,6 +28360,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>65</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25997,6 +28431,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>100</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26062,6 +28502,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>100</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26127,6 +28573,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>100</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26192,6 +28644,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>100</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26257,6 +28715,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>100</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26322,6 +28786,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>100</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26387,6 +28857,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>100</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26452,6 +28928,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>100</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26517,6 +28999,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26582,6 +29070,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26647,6 +29141,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26712,6 +29212,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26777,6 +29283,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26842,6 +29354,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26907,6 +29425,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26972,6 +29496,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27037,6 +29567,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>100</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27102,6 +29638,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>100</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27167,6 +29709,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>15</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>100</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27232,6 +29780,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>150</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27297,6 +29851,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27362,6 +29922,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27427,6 +29993,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27492,6 +30064,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27557,6 +30135,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27622,6 +30206,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27687,6 +30277,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27752,6 +30348,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27817,6 +30419,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27882,6 +30490,12 @@
           <x>24</x>
           <y>48</y>
         </imageOffset>
+        <constitution>55</constitution>
+        <explosion_power>0</explosion_power>
+        <explosion_radius_divizor>1</explosion_radius_divizor>
+        <explosion_type>blank/smoke</explosion_type>
+        <damaged_map_part />
+        <animation_frames />
       </sp>
     </value>
   </entry>

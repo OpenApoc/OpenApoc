@@ -35,12 +35,21 @@ void InitialGameStateExtractor::extract(GameState &state, Difficulty difficulty)
 	this->extractCityScenery(state, "ALIENMAP_", "alienmap", "alien", "stratmap", "loftemps",
 	                         "cityovr", state.cities[humanMapId]);
 
+	/*UString map = "08PORT";
+	UString sec = "01";*/
+	/*UString map = "56UFO6";
+	UString sec = "01";*/
 	UString map = "57UFO7";
 	UString sec = "01";
-	// UString map = "58UFO8";
-	// UString sec = "01";
+	/*UString map = "58UFO8";
+	UString sec = "01";*/
+	/*UString map = "36CHURCH";
+	UString sec = "01";*/
 	this->extractBattlescapeMap(state, map, sec);
 	this->extractBattlescapeStuff(state, map);
+	// this->extractBattlescapeStuff(state, "15ACPOSH");
+	// "07CORPHQ", "15ACPOSH", "18HYDRO", "48GATE" and others - error when trying to load (usually)
+	// scenery (seems related to srat imgs)
 }
 
 } // namespace OpenApoc

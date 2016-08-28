@@ -1,4 +1,3 @@
-#pragma once
 #include "game/state/battlemappart_type.h"
 #include "framework/includes.h"
 #include "game/state/gamestate.h"
@@ -13,6 +12,12 @@ const std::map<BattleMapPartType::Type, UString> BattleMapPartType::TypeMap = {
     {Type::LeftWall, "leftwall"},
     {Type::RightWall, "rightwall"},
     {Type::Scenery, "scenery"},
+};
+
+const std::map<BattleMapPartType::ExplosionType, UString> BattleMapPartType::ExplosionTypeMap = {
+    {ExplosionType::BlankOrSmoke, "blank/smoke"},    {ExplosionType::AlienGas, "aliengas"},
+    {ExplosionType::Incendary, "incendary"},         {ExplosionType::StunGas, "stungas"},
+    {ExplosionType::HighExplosive, "highexplosive"},
 };
 
 template <>

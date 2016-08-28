@@ -1,17 +1,17 @@
 Tactical data description:
 
-- XCOMA/MAPS/
+- XCOM3/MAPS/
 
 Each folder inside describes one tactical tileset (a map/ a building). Like, Slums, or UFO Type 8.
 
-- XCOMA/MAPS/XXNNNNNN (ex: 58UFO8)
+- XCOM3/MAPS/XXNNNNNN (ex: 58UFO8)
 
 Folder name contains serial number and a title (hinting to what kind of a map it actually is, like 07CORPHQ - "Corporate Headquarters").
 Following is the folder's contents:
 
 -- BUILDING.DAT
 
-Length seems to be always 1966.
+Length: 1966
 00..11 - 12 bytes, contain x, y, z sizes of a chunk.
 12..1965 - 1954 unknown bytes. Contain a lot of FF's.
 
@@ -21,7 +21,7 @@ Groups of four files. ".SOB" file is not always present. They seem to represent 
 
 --- XXSECYY.SDT
 
-Length seems to be always 20.
+Length: 20.
 00..11 - 12 bytes, contain x, y, z number of chunks. 
 12..19 - 8 bytes, unknown.
 
@@ -29,7 +29,8 @@ Number of chunks seems to be used for the case when some blocks are bigger than 
 
 --- XXSECYY.SLS
 
-Unknown. Line of sight probably? 
+Length: Inconsistent.
+Content: unknown. Line of sight probably? 
 
 jedpossum from forums says:
 "As for the SLS it seems to be fog of war maybe some other data as well. Seems to have a pattern of 272 bytes(0x110 in hex) for each part.
@@ -38,4 +39,219 @@ The fog is stored as just plain binary 0 not shown 1 a tile being shown in the m
 
 I do not know what this means. Size seems inconsistent (usually smaller than .MAP file by a little).
 
---- XXSECYY
+--- XXSECYY.SMP
+
+Length: sizeX*Y*Z*chunksX*Y*Z*4
+Content: Stores tiles of the map block. 
+Each value contains four bytes: GD LW RW SC - Ground, Left Wall, Right Wall, Scenery.
+Stored in X then Y then Z order, as a whole (if there's more than one chunk, they are still stored in X then Y then Z order regardless).
+
+--- XXSECYY.SOB
+
+Length: 160 (if present)
+Content: Unknown.
+
+-- MAPUNITS
+
+Folder that contains all the information about map contents
+Following are the file formats contained in the folder, followed by file names.
+
+--- .PCK and .TAB
+
+File types .PCK and .TAB are typical picture containers.
+
+--- .DAT (four files for ground, scenery, left and right walls)
+
+Length: X*86
+Content: Contains information about map objects: walls, floor tiles etc. Each block contains 86 bytes. 
+
+00 - Health, it seems. FF means indestructible (like exit arrows or asphalt on 58UFO8)
+01 - ?? (always zero, maybe second byte for previous value)
+
+02-07 - Explosion data
+
+02 - Explosion Power. Seems to corellate with in-game weapon values. Typically 50, 100 or 150.
+03 - ?? (always zero, maybe second byte for previous value)
+
+04 - This value, combined with 02 (power), controls the radius of the explosion. Typically 25,50,70 or 100.
+05 - ?? (always zero, maybe second byte for previous value)
+
+06 - Explosion Type. 
+ 00 = Smoke
+ 01 = Alien Gas? (Pink)
+ 02 = Fire 
+ 03 = Stun Gas
+ 04 = High Explosive
+ 05 and higher = N/A
+07 - ?? (always zero, maybe second byte for previous value)
+
+Notes:
+
+02 and 04 determine the radius of the explosion. 
+
+The bigger 02 is and the smaller 04 is, the bigger the radius. Following are some values tested. They are presented in a format "3x3 | 2 | 1", showing size of the explosion, radius, and distance from center to edge.
+
+ 255,100 -> 3x3 | 2 | 1 (or bigger, not certain)
+ 255,050 -> 5x5 | 3 | 2
+
+ 200,050 -> 5x5 | 3 | 2
+
+ 150,150 -> 1x1 | 0
+ 150,100 -> 3x3 | 2 | 1
+ 150,050 -> 5x5 | 3 | 2
+ 150,025 -> 7x7 | 4 | 3
+ 150,010 -> huge explosion (9x9 or more)
+
+ 100,150 -> 1x1 | 0
+ 100,100 -> 1x1 | 0
+ 100,050 -> 3x3 | 2 | 1
+ 100,025 -> 7x7 | 4 | 3
+ 100,010 -> huge explosion (9x9 or more)
+ 100,005 -> huge explosion (9x9 or more)
+
+ 050,050 -> 1x1 | 0
+ 050,025 -> 3x3 | 2 | 1
+ 050,010 -> 3x3 | 2 | 1
+
+It seems that 04 acts as a kind of divisor to 02? Seems to be that radius of the explosion is quite similar to the value of 02 divided by 04. For huge explosions, the animation is often glitchy or simple 7x7, but that might be due to the engine failing to display it. Walls still get damaged pretty far away from the epicenter.
+
+Higher radius explosions seems to do more damage, but it might be related to the target considered being closer to the middle and thus being dealt more percent damage. However, because of this, it's hard to understand which value actually controls the power of the explosion.
+
+04 is almost always 1 for everything that does not explode. However, sometimes it isn't. Typically it's equal to 100 then. Maybe this is some kind of "blast resistance" parameter?
+
+08-09 :Uncertain
+
+Notes:
+
+For many objects it's 255.
+It's not 255 for scenery that's things like tubes, rubble and stuff.
+
+10: Uncertain
+
+Notes:
+
+Almost always 1. Seen 0 for:
+- 01SENATE: blank scenery and grey walls
+- 04SCHOOL: standing sticks and blank scenery, lift walls
+- 37CHURCH: some doors and lift walls
+
+11-13: Uncertain
+
+Notes: 
+
+11 is often 100. 
+12-13 is often 255.
+When 12-13 are not 255, then 11, 12 and 13 are always equal.
+
+14: Uncertain
+
+Notes:
+
+Almost always 0. Seen nonzero values only for:
+- 04SCHOOL: Grey walls (1)
+- 05RESCUE: Tiled blue walls (1)
+- 07CORPHQ: Grey walls (1)
+- 12SHOPS:  Grey walls (1)
+- 20WATER:  Blue walls (1)
+- 21APPL:   Tiled blue walls (1)
+- 22ARMS:   Tiled blue walls (1)
+- 23ROBOTS: Tiled blue walls (1)
+- ...
+- 37CHURCH: Curtains (1)
+- 39BASE - 48GATE: Many ground and scenery, some walls in alien buildings (10,15,35,45,55,79,100).
+- (nothing in UFO maps)
+
+I haven't been thorough but it seems only some very rare walls have values of only 1, and alien dimension has values all over the place.
+
+15..54: 40 bytes, voxel map (references to TACDATA\LOFTEMPS)
+
+Note: 
+
+I am yet to find a situation where first 20 bytes aren't exactly equal to the second 20 bytes. This is strange. And means we're probably wrong to read them sequentially. Because for example, typical floor has: 6,6, zeroes(18), 6,6, zeroes(18). Obviously, a floor should have voxels on the bottom and none in the middle and at the top.
+
+55..59: 5 bytes, Unknown
+
+60: Offset for the damaged thing. If this is 00, when damaged it will just disappear
+61: ?? (always zero, maybe second byte for previous value)
+
+62-65: Seem to define animation
+
+62: Offset for the first animated frame..
+63: ?? (always zero, maybe second byte for previous value)
+
+64: Number of animated frames. If this is 00, there is no animation.
+65: ?? (always zero, maybe second byte for previous value)
+
+Notes: 
+
+For borders of lifts in 37CHURCH, 62 = 00, 64 = 01. Even though animated frame 00 is for a door.
+For borders of lits in 58UFO8, 62 = 00, 64 = 00.
+
+63 and 65 are almost always 00. 65 is 01 for every 00 object but 00 seems to be unused.
+
+66..85: 20 bytes, Unknown
+
+Notes:
+
+66: Seems to always be 0. 
+
+Overall Notes:
+
+What information have we already uncovered:
+- Health data
+- Explosion data
+- Voxelmap data
+- Animation data
+- Damaged data
+
+What information supposedly should be there:
+- Explosion resitance maybe?
+- Supports/supported by
+- "Goal" flag (which scenery needs to be destroyed for alien buildings)
+- "Value", how much the faction values the object, how much relations are damaged when you destroy it
+- Mass?
+- What object is spawned when this falls and gets removed? Something should link to those piles of rubble, and it's not the "damaged" field
+
+Other tile information I discovered:
+- It seems that values of the fire (SC_25 for UFOs) has no effect. Replaced them with a generic ufo tile's values and nothing happened. It's still a fire, it burns, you can pass through it. It seems the game just manually replaces all these at start with fires. Fire is always 25 and smoke is 26 to 42. I guess it's just replaced at map start in the UFO map type code.
+
+--- .USE
+
+Length: 256
+Content: Unknown. Mostly it's either all ones or all zeroes?
+
+--- ANIMATE.PCK, ANIMATE.TAB, ANIMATE.USE
+
+Contain animated frames for objects on the map that are animated. 
+
+--- FEATURE.PCK, FEATURE.TAB, FEATURE.USE, FEATMAP.DAT
+--- GROUND.PCK, GROUND.TAB, GROUND.USE, GROUNMAP.DAT
+--- LEFT.PCK, LEFT.TAB, LEFT.USE, LEFTMAP.DAT
+--- RIGHT.PCK, RIGHT.TAB, RIGHT.USE, RIGHTMAP.DAT
+
+Contains sprites and object definition for the scenery, ground, left and right walls.
+
+--- FLOOR.PCK, FLOOR.TAB, FLOOT.USE, FLOORMAP.DAT
+
+Unused, supposedly it's been used for ground in the past but have been replaced and was not deleted
+
+--- RUBBLE.DAT
+
+Length: 15 bytes
+Content: Unknown. Sometimes all zero, sometimes lots of stuff.
+
+--- SFEATURE.PCK, SFEATURE.TAB
+--- SGROUND.PCK, SGROUND.TAB
+--- SLEFT.PCK, SLEFT.TAB
+--- SRIGHT.PCK, SRIGHT.TAB
+
+Contains strategy map images for the scenery, ground, left and right walls. Sometimes there's less entries here than there are actual objects, presumably that means objects at the end do not have a strategy map image.
+
+--- STRATMAP.PCK, STRATMAP.TAB
+
+Unknown. XED won't open it. Only present in several maps. Maybe unused, but forgot to delete.
+
+- XCOM3/SCENARIO
+
+Supposedly here the contents of the currently played tactical map are copied.
+

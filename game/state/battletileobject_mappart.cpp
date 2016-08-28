@@ -38,7 +38,7 @@ void BattleTileObjectMapPart::draw(Renderer &r, TileTransform &transform,
 		r.draw(sprite, transformedScreenPos);
 }
 
-const BattleTileObject::Type BattleTileObjectMapPart::convertType(BattleMapPartType::Type type)
+BattleTileObject::Type BattleTileObjectMapPart::convertType(BattleMapPartType::Type type)
 {
 	switch (type)
 	{

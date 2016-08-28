@@ -689,8 +689,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, BattleMapPa
 }
 
 template <>
-void serializeIn(const GameState *state, sp<SerializationNode> node,
-                 BattleMapPartType::ExplosionType &t)
+void serializeIn(const GameState *state, sp<SerializationNode> node, BattleMapPartType::ExplosionType &t)
 {
 	serializeIn(state, node, t, BattleMapPartType::ExplosionTypeMap);
 }
