@@ -13,6 +13,9 @@ INCLUDE(CheckCCompilerFlag)
 option(LTO "Build using link-time-optimisations" OFF)
 option(ENABLE_TESTS "Build some unit tests" ON)
 
+set(CMAKE_C_FLAGS_SANITIZE "-O1 -g -fsanitize=address,undefined")
+set(CMAKE_CXX_FLAGS_SANITIZE "-O1 -g -fsanitize=address,undefined")
+
 CHECK_CXX_COMPILER_FLAG("-flto"
 	COMPILER_SUPPORTS_LTO)
 CHECK_CXX_COMPILER_FLAG("-flto=4"
