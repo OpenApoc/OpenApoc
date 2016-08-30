@@ -32,6 +32,8 @@ class ResearchScreen : public BaseStage
 
 	int assigned_agent_count;
 
+	sp<Graphic> arrow;
+
 	void changeBase(sp<Base> newBase) override;
 
   public:
