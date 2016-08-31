@@ -29,6 +29,10 @@ before_install:
   - echo "Resource.LocalCDPath=${PWD}/data/cd.iso" > ~/.local/share/OpenApoc/settings.cfg
   - echo "Resource.LocalDataDir=${PWD}/data/" >> ~/.local/share/OpenApoc/settings.cfg
   - export LSAN_OPTIONS="exitcode=0"
+  - export NUM_CORES=$(grep '^processor' /proc/cpuinfo|wc -l)
+# Try to ignore hyperthreading
+  - export NUM_REAL_CORES=$(grep '^core id' /proc/cpuinfo|sort -u|wc -l)
+  - echo "Num cores ${NUM_CORES} Real cores ${NUM_REAL_CORES}"
 
 env:
   - BUILD_TYPE="RelWithDebInfo" TIDY="false"
@@ -59,7 +63,7 @@ before_script:
 
 script:
   - if [ "${TIDY}" = "true" ]; then git --no-pager diff --ignore-submodules --stat && make tidy; fi
-  - if [ "${TIDY}" != "true" ]; then make -j2 && ctest -V && ./bin/OpenApoc_DataExtractor && git --no-pager diff --ignore-submodules --stat data/; fi
+  - if [ "${TIDY}" != "true" ]; then make -j2 && ctest -V -j 2 && ./bin/OpenApoc_DataExtractor && git --no-pager diff --ignore-submodules --stat data/; fi
 
 os:
   - linux
