@@ -1,6 +1,7 @@
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "game/state/gamestate.h"
+#include <boost/filesystem.hpp>
 
 using namespace OpenApoc;
 
@@ -26,11 +27,17 @@ bool test_gamestate_serialization_roundtrip(sp<GameState> state, UString save_na
 
 bool test_gamestate_serialization(sp<GameState> state)
 {
-	if (!test_gamestate_serialization_roundtrip(state, "test_packed_state"))
+	auto tempPath = boost::filesystem::temp_directory_path() /
+	                boost::filesystem::unique_path("openapoc_test_serialize-%%%%%%%%");
+	UString pathString(tempPath.string());
+	LogInfo("Writing temp state to \"%s\"", pathString.cStr());
+	if (!test_gamestate_serialization_roundtrip(state, pathString))
 	{
 		LogError("Packed save test failed");
 		return false;
 	}
+
+	boost::filesystem::remove(tempPath);
 
 	return true;
 }
