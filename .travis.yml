@@ -17,7 +17,7 @@ before_install:
   - if [ "$CXX" = "clang++" ]; then sudo apt-get install clang-3.8 --force-yes -y > /dev/null; fi
   - if [ "$CXX" = "clang++" ]; then export CXX="clang++-3.8" CC="clang-3.8"; fi
   - if [ "${TIDY}" = "true" ]; then sudo apt-get install clang-tidy-3.8 clang-format-3.8 clang-3.8 --force-yes -y > /dev/null; fi
-  - sudo apt-get install libunwind8-dev libsdl2-dev libboost-locale-dev libboost-filesystem-dev -y > /dev/null
+  - sudo apt-get install libunwind8-dev libsdl2-dev libboost-locale-dev libboost-filesystem-dev libboost-program-options-dev -y > /dev/null
   - ${CXX} --version
   - ${CC} --version
   - mkdir ~/dependency-prefix

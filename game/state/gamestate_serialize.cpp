@@ -15,6 +15,7 @@
 #include "game/state/city/vehicle.h"
 #include "game/state/city/vehiclemission.h"
 #include "game/state/city/vequipment.h"
+#include "game/state/gamestate_serialize_generated.h"
 #include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/scenery_tile_type.h"
 #include "game/state/rules/vammo_type.h"
@@ -22,9 +23,6 @@
 #include "library/voxel.h"
 
 namespace OpenApoc
-{
-
-namespace
 {
 
 /* Avoid out-of-order declarations breaking */
@@ -126,15 +124,14 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, sp<T> &ptr)
 	}
 }
 
-template <>
-void serializeIn<LazyImage>(const GameState *, sp<SerializationNode> node, sp<LazyImage> &ptr)
+void serializeIn(const GameState *, sp<SerializationNode> node, sp<LazyImage> &ptr)
 {
 	if (!node)
 		return;
 	ptr = std::static_pointer_cast<LazyImage>(fw().data->loadImage(node->getValue(), true));
 }
 
-template <> void serializeIn<Image>(const GameState *, sp<SerializationNode> node, sp<Image> &ptr)
+void serializeIn(const GameState *, sp<SerializationNode> node, sp<Image> &ptr)
 {
 	if (!node)
 		return;
@@ -282,7 +279,6 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, std::vector
 	}
 }
 // std::vector<bool> is special
-template <>
 void serializeIn(const GameState *, sp<SerializationNode> node, std::vector<bool> &vector)
 {
 	if (!node)
@@ -290,34 +286,21 @@ void serializeIn(const GameState *, sp<SerializationNode> node, std::vector<bool
 	vector = node->getValueBoolVector();
 }
 
-template <>
-void serializeIn(const GameState *state, sp<SerializationNode> node,
-                 VehicleType::EquipmentLayoutSlot &slot)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("type"), slot.type, VEquipmentType::TypeMap);
-	serializeIn(state, node->getNode("align_x"), slot.align_x, VehicleType::AlignmentXMap);
-	serializeIn(state, node->getNode("align_y"), slot.align_y, VehicleType::AlignmentYMap);
-	serializeIn(state, node->getNode("bounds"), slot.bounds);
-}
-
-template <>
-void serializeIn<VoxelSlice>(const GameState *, sp<SerializationNode> node, sp<VoxelSlice> &ptr)
+void serializeIn(const GameState *, sp<SerializationNode> node, sp<VoxelSlice> &ptr)
 {
 	if (!node)
 		return;
 	ptr = fw().data->loadVoxelSlice(node->getValue());
 }
 
-template <> void serializeIn<Sample>(const GameState *, sp<SerializationNode> node, sp<Sample> &ptr)
+void serializeIn(const GameState *, sp<SerializationNode> node, sp<Sample> &ptr)
 {
 	if (!node)
 		return;
 	ptr = fw().data->loadSample(node->getValue());
 }
 
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, VoxelMap &map)
+void serializeIn(const GameState *state, sp<SerializationNode> node, VoxelMap &map)
 {
 	if (!node)
 		return;
@@ -325,7 +308,6 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("slices"), map.slices);
 }
 
-template <>
 void serializeIn(const GameState *state, sp<SerializationNode> node, VEquipmentType::User &user)
 {
 	if (!node)
@@ -348,187 +330,18 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, std::set<T>
 	}
 }
 
-template <>
+void serializeIn(const GameState *state, sp<SerializationNode> node,
+                 UFOIncursion::PrimaryMission &t)
+{
+	serializeIn(state, node, t, UFOIncursion::primaryMissionMap);
+}
+
 void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchDependency::Type &t)
 {
 	serializeIn(state, node, t, ResearchDependency::TypeMap);
 }
 
-template <>
-void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchDependency &d)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("type"), d.type);
-	serializeIn(state, node->getNode("topics"), d.topics);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, UfopaediaEntry &e)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("title"), e.title);
-	serializeIn(state, node->getNode("description"), e.description);
-	serializeIn(state, node->getNode("background"), e.background);
-	serializeIn(state, node->getNode("data_id"), e.data_id);
-	serializeIn(state, node->getNode("data_type"), e.data_type, UfopaediaEntry::DataMap);
-	serializeIn(state, node->getNode("dependency"), e.dependency);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, VehicleType &type)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("numCreated"), type.numCreated);
-	serializeIn(state, node->getNode("type"), type.type, type.TypeMap);
-	serializeIn(state, node->getNode("name"), type.name);
-	serializeIn(state, node->getNode("manufacturer"), type.manufacturer);
-	serializeIn(state, node->getNode("size"), type.size);
-	serializeIn(state, node->getNode("image_offset"), type.image_offset);
-	serializeIn(state, node->getNode("acceleration"), type.acceleration);
-	serializeIn(state, node->getNode("top_speed"), type.top_speed);
-	serializeIn(state, node->getNode("health"), type.health);
-	serializeIn(state, node->getNode("crash_health"), type.crash_health);
-	serializeIn(state, node->getNode("weight"), type.weight);
-	serializeIn(state, node->getNode("armour"), type.armour, type.ArmourDirectionMap);
-	serializeIn(state, node->getNode("passengers"), type.passengers);
-	serializeIn(state, node->getNode("aggressiveness"), type.aggressiveness);
-	serializeIn(state, node->getNode("score"), type.score);
-	serializeIn(state, node->getNode("icon"), type.icon);
-	serializeIn(state, node->getNode("equipment_screen"), type.equipment_screen);
-	serializeIn(state, node->getNode("equip_icon_big"), type.equip_icon_big);
-	serializeIn(state, node->getNode("equip_icon_small"), type.equip_icon_small);
-	serializeIn(state, node->getNode("directional_strategy_sprites"),
-	            type.directional_strategy_sprites);
-	serializeIn(state, node->getNode("directional_sprites"), type.directional_sprites,
-	            type.BankingMap);
-	serializeIn(state, node->getNode("shadow_offset"), type.shadow_offset);
-	serializeIn(state, node->getNode("directional_shadow_sprites"),
-	            type.directional_shadow_sprites);
-	serializeIn(state, node->getNode("animation_sprites"), type.animation_sprites);
-	serializeIn(state, node->getNode("crashed_sprite"), type.crashed_sprite);
-	serializeIn(state, node->getNode("voxelMap"), type.voxelMap);
-	serializeIn(state, node->getNode("equipment_layout_slots"), type.equipment_layout_slots);
-	serializeIn(state, node->getNode("initial_equipment_list"), type.initial_equipment_list);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Organisation &org)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("name"), org.name);
-	serializeIn(state, node->getNode("balance"), org.balance);
-	serializeIn(state, node->getNode("income"), org.income);
-	serializeIn(state, node->getNode("current_relations"), org.current_relations);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, FacilityType &f)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("name"), f.name);
-	serializeIn(state, node->getNode("fixed"), f.fixed);
-	serializeIn(state, node->getNode("buildCost"), f.buildCost);
-	serializeIn(state, node->getNode("buildTime"), f.buildTime);
-	serializeIn(state, node->getNode("weeklyCost"), f.weeklyCost);
-	serializeIn(state, node->getNode("capacityType"), f.capacityType, FacilityType::CapacityMap);
-	serializeIn(state, node->getNode("capacityAmount"), f.capacityAmount);
-	serializeIn(state, node->getNode("size"), f.size);
-	serializeIn(state, node->getNode("sprite"), f.sprite);
-	serializeIn(state, node->getNode("dependency"), f.dependency);
-	serializeIn(state, node->getNode("ufopaedia_entry"), f.ufopaedia_entry);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, DoodadFrame &f)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("image"), f.image);
-	serializeIn(state, node->getNode("time"), f.time);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, DoodadType &d)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("lifetime"), d.lifetime);
-	serializeIn(state, node->getNode("repeatable"), d.repeatable);
-	serializeIn(state, node->getNode("imageOffset"), d.imageOffset);
-	serializeIn(state, node->getNode("frames"), d.frames);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, VEquipmentType &e)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("type"), e.type, VEquipmentType::TypeMap);
-	serializeIn(state, node->getNode("id"), e.id);
-	serializeIn(state, node->getNode("name"), e.name);
-	serializeIn(state, node->getNode("weight"), e.weight);
-	serializeIn(state, node->getNode("max_ammo"), e.max_ammo);
-	serializeIn(state, node->getNode("ammo_type"), e.ammo_type);
-	serializeIn(state, node->getNode("equipscreen_sprite"), e.equipscreen_sprite);
-	serializeIn(state, node->getNode("equipscreen_size"), e.equipscreen_size);
-	serializeIn(state, node->getNode("manufacturer"), e.manufacturer);
-	serializeIn(state, node->getNode("store_space"), e.store_space);
-	serializeIn(state, node->getNode("users"), e.users);
-	// Weapons
-	serializeIn(state, node->getNode("speed"), e.speed);
-	serializeIn(state, node->getNode("projectile_sprites"), e.projectile_sprites);
-	serializeIn(state, node->getNode("damage"), e.damage);
-	serializeIn(state, node->getNode("accuracy"), e.accuracy);
-	serializeIn(state, node->getNode("fire_delay"), e.fire_delay);
-	serializeIn(state, node->getNode("tail_size"), e.tail_size);
-	serializeIn(state, node->getNode("guided"), e.guided);
-	serializeIn(state, node->getNode("turn_rate"), e.turn_rate);
-	serializeIn(state, node->getNode("range"), e.range);
-	serializeIn(state, node->getNode("firing_arc_1"), e.firing_arc_1);
-	serializeIn(state, node->getNode("firing_arc_2"), e.firing_arc_2);
-	serializeIn(state, node->getNode("point_defence"), e.point_defence);
-	serializeIn(state, node->getNode("fire_sfx"), e.fire_sfx);
-	serializeIn(state, node->getNode("explosion_graphic"), e.explosion_graphic);
-	serializeIn(state, node->getNode("icon"), e.icon);
-	// Engine
-	serializeIn(state, node->getNode("power"), e.power);
-	serializeIn(state, node->getNode("top_speed"), e.top_speed);
-	// General
-	serializeIn(state, node->getNode("accuracy_modifier"), e.accuracy_modifier);
-	serializeIn(state, node->getNode("cargo_space"), e.cargo_space);
-	serializeIn(state, node->getNode("passengers"), e.passengers);
-	serializeIn(state, node->getNode("alien_space"), e.alien_space);
-	serializeIn(state, node->getNode("missile_jamming"), e.missile_jamming);
-	serializeIn(state, node->getNode("shielding"), e.shielding);
-	serializeIn(state, node->getNode("cloaking"), e.cloaking);
-	serializeIn(state, node->getNode("teleporting"), e.teleporting);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, AEquipmentType &e)
-{
-	if (!node)
-		return;
-
-	serializeIn(state, node->getNode("id"), e.id);
-	serializeIn(state, node->getNode("name"), e.name);
-
-	serializeIn(state, node->getNode("equipscreen_sprite"), e.equipscreen_sprite);
-	serializeIn(state, node->getNode("equipscreen_size"), e.equipscreen_size);
-	serializeIn(state, node->getNode("manufacturer"), e.manufacturer);
-	serializeIn(state, node->getNode("store_space"), e.store_space);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, VAmmoType &e)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("id"), e.id);
-	serializeIn(state, node->getNode("name"), e.name);
-	serializeIn(state, node->getNode("weight"), e.weight);
-	serializeIn(state, node->getNode("ammo_id"), e.ammo_id);
-	serializeIn(state, node->getNode("manufacturer"), e.manufacturer);
-	serializeIn(state, node->getNode("store_space"), e.store_space);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Colour &c)
+void serializeIn(const GameState *state, sp<SerializationNode> node, Colour &c)
 {
 	if (!node)
 		return;
@@ -538,154 +351,54 @@ template <> void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node->getNode("a"), c.a);
 }
 
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, SceneryTileType &t)
+void serializeIn(const GameState *state, sp<SerializationNode> node, VehicleType::AlignmentX &t)
 {
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("tile_type"), t.tile_type, SceneryTileType::TileTypeMap);
-	serializeIn(state, node->getNode("road_type"), t.road_type, SceneryTileType::RoadTypeMap);
-	serializeIn(state, node->getNode("walk_mode"), t.walk_mode, SceneryTileType::WalkModeMap);
-	serializeIn(state, node->getNode("sprite"), t.sprite);
-	serializeIn(state, node->getNode("strategySprite"), t.strategySprite);
-	serializeIn(state, node->getNode("overlaySprite"), t.overlaySprite);
-	serializeIn(state, node->getNode("voxelMap"), t.voxelMap);
-	serializeIn(state, node->getNode("damagedTile"), t.damagedTile);
-	serializeIn(state, node->getNode("imageOffset"), t.imageOffset);
-	serializeIn(state, node->getNode("isLandingPad"), t.isLandingPad);
-	serializeIn(state, node->getNode("minimap_colour"), t.minimap_colour);
-	serializeIn(state, node->getNode("constitution"), t.constitution);
-	serializeIn(state, node->getNode("value"), t.value);
-	serializeIn(state, node->getNode("mass"), t.mass);
-	serializeIn(state, node->getNode("strength"), t.strength);
-	serializeIn(state, node->getNode("isHill"), t.isHill);
+	serializeIn(state, node, t, VehicleType::AlignmentXMap);
 }
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, BaseLayout &l)
+void serializeIn(const GameState *state, sp<SerializationNode> node, VehicleType::AlignmentY &t)
 {
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("baseCorridors"), l.baseCorridors);
-	serializeIn(state, node->getNode("baseLift"), l.baseLift);
+	serializeIn(state, node, t, VehicleType::AlignmentYMap);
 }
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, UFOGrowth &g)
+void serializeIn(const GameState *state, sp<SerializationNode> node, Projectile::Type &t)
 {
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("week"), g.week);
-	serializeIn(state, node->getNode("vehicleTypeList"), g.vehicleTypeList);
+	serializeIn(state, node, t, Projectile::TypeMap);
 }
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, UFOIncursion &i)
+void serializeIn(const GameState *state, sp<SerializationNode> node, SceneryTileType::TileType &t)
 {
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("primaryMission"), i.primaryMission,
-	            UFOIncursion::primaryMissionMap);
-	serializeIn(state, node->getNode("primaryList"), i.primaryList);
-	serializeIn(state, node->getNode("escortList"), i.escortList);
-	serializeIn(state, node->getNode("attackList"), i.attackList);
-	serializeIn(state, node->getNode("priority"), i.priority);
+	serializeIn(state, node, t, SceneryTileType::TileTypeMap);
 }
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Building &b)
+void serializeIn(const GameState *state, sp<SerializationNode> node, SceneryTileType::RoadType &t)
 {
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("name"), b.name);
-	serializeIn(state, node->getNode("function"), b.function);
-	serializeIn(state, node->getNode("owner"), b.owner);
-	serializeIn(state, node->getNode("bounds"), b.bounds);
-	serializeIn(state, node->getNode("base_layout"), b.base_layout);
-	// FIXME: Are landing pad locations useful to serialize?
-	serializeIn(state, node->getNode("landingPadLocations"), b.landingPadLocations);
-	serializeIn(state, node->getNode("landed_vehicles"), b.landed_vehicles);
+	serializeIn(state, node, t, SceneryTileType::RoadTypeMap);
 }
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Scenery &s)
+void serializeIn(const GameState *state, sp<SerializationNode> node, SceneryTileType::WalkMode &t)
 {
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("type"), s.type);
-	serializeIn(state, node->getNode("initialPosition"), s.initialPosition);
-	serializeIn(state, node->getNode("currentPosition"), s.currentPosition);
-	serializeIn(state, node->getNode("damaged"), s.damaged);
-	serializeIn(state, node->getNode("falling"), s.falling);
-	serializeIn(state, node->getNode("destroyed"), s.destroyed);
+	serializeIn(state, node, t, SceneryTileType::WalkModeMap);
 }
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Doodad &doodad)
+void serializeIn(const GameState *state, sp<SerializationNode> node, VEquipmentType::Type &t)
 {
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("position"), doodad.position);
-	serializeIn(state, node->getNode("imageOffset"), doodad.imageOffset);
-	serializeIn(state, node->getNode("temporary"), doodad.temporary);
-	serializeIn(state, node->getNode("age"), doodad.age);
-	serializeIn(state, node->getNode("lifetime"), doodad.lifetime);
-	serializeIn(state, node->getNode("sprite"), doodad.sprite);
-	serializeIn(state, node->getNode("type"), doodad.type);
+	serializeIn(state, node, t, VEquipmentType::TypeMap);
 }
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Projectile &p)
+void serializeIn(const GameState *state, sp<SerializationNode> node, FacilityType::Capacity &t)
 {
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("type"), p.type, Projectile::TypeMap);
-	serializeIn(state, node->getNode("position"), p.position);
-	serializeIn(state, node->getNode("velocity"), p.velocity);
-	serializeIn(state, node->getNode("age"), p.age);
-	serializeIn(state, node->getNode("damage"), p.damage);
-	serializeIn(state, node->getNode("lifetime"), p.lifetime);
-	serializeIn(state, node->getNode("firer"), p.firer);
-	serializeIn(state, node->getNode("previousPosition"), p.previousPosition);
-	serializeIn(state, node->getNode("tail_length"), p.tail_length);
-	serializeIn(state, node->getNode("projectile_sprites"), p.projectile_sprites);
+	serializeIn(state, node, t, FacilityType::CapacityMap);
 }
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, City &city)
+void serializeIn(const GameState *state, sp<SerializationNode> node, VehicleType::Type &t)
 {
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("size"), city.size);
-	serializeIn(state, node->getSection("tile_types"), city.tile_types);
-	serializeIn(state, node->getSection("initial_tiles"), city.initial_tiles);
-	serializeIn(state, node->getSection("buildings"), city.buildings);
-	serializeIn(state, node->getSection("scenery"), city.scenery);
-	serializeIn(state, node->getSection("doodads"), city.doodads);
-	serializeIn(state, node->getSection("portals"), city.portals);
-	serializeIn(state, node->getSection("projectiles"), city.projectiles);
+	serializeIn(state, node, t, VehicleType::TypeMap);
 }
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, BattleMapPart &s)
+void serializeIn(const GameState *state, sp<SerializationNode> node, UfopaediaEntry::Data &t)
 {
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("type"), s.type);
-	serializeIn(state, node->getNode("initialPosition"), s.initialPosition);
-	serializeIn(state, node->getNode("currentPosition"), s.currentPosition);
-	serializeIn(state, node->getNode("damaged"), s.damaged);
-	serializeIn(state, node->getNode("falling"), s.falling);
-	serializeIn(state, node->getNode("destroyed"), s.destroyed);
+	serializeIn(state, node, t, UfopaediaEntry::DataMap);
 }
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Battle &battle)
+void serializeIn(const GameState *state, sp<SerializationNode> node,
+                 VehicleType::ArmourDirection &t)
 {
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("size"), battle.size);
-	serializeIn(state, node->getSection("map_part_types"), battle.map_part_types);
-	serializeIn(state, node->getSection("initial_grounds"), battle.initial_grounds);
-	serializeIn(state, node->getSection("initial_left_walls"), battle.initial_left_walls);
-	serializeIn(state, node->getSection("initial_right_walls"), battle.initial_right_walls);
-	serializeIn(state, node->getSection("initial_scenery"), battle.initial_scenery);
-	serializeIn(state, node->getSection("map_parts"), battle.map_parts);
+	serializeIn(state, node, t, VehicleType::ArmourDirectionMap);
 }
-
-template <>
-void serializeIn(const GameState *state, sp<SerializationNode> node, BattleMapPartType::Type &t)
+void serializeIn(const GameState *state, sp<SerializationNode> node, VehicleType::Banking &t)
 {
-	serializeIn(state, node, t, BattleMapPartType::TypeMap);
+	serializeIn(state, node, t, VehicleType::BankingMap);
 }
 
 template <>
@@ -695,277 +408,55 @@ void serializeIn(const GameState *state, sp<SerializationNode> node,
 	serializeIn(state, node, t, BattleMapPartType::ExplosionTypeMap);
 }
 
-template <>
-void serializeIn(const GameState *state, sp<SerializationNode> node, BattleMapPartType &t)
+void serializeIn(const GameState *state, sp<SerializationNode> node, BattleMapPartType::Type &t)
 {
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("type"), t.type);
-	serializeIn(state, node->getNode("sprite"), t.sprite);
-	serializeIn(state, node->getNode("strategySprite"), t.strategySprite);
-	serializeIn(state, node->getNode("voxelMapLOF"), t.voxelMapLOF);
-	serializeIn(state, node->getNode("voxelMapLOS"), t.voxelMapLOS);
-	serializeIn(state, node->getNode("imageOffset"), t.imageOffset);
-	serializeIn(state, node->getNode("constitution"), t.constitution);
-	serializeIn(state, node->getNode("explosion_power"), t.explosion_power);
-	serializeIn(state, node->getNode("explosion_radius_divizor"), t.explosion_radius_divizor);
-	serializeIn(state, node->getNode("damaged_map_part"), t.damaged_map_part);
-	serializeIn(state, node->getNode("animation_frames"), t.animation_frames);
+	serializeIn(state, node, t, BattleMapPartType::TypeMap);
 }
 
-template <>
 void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchTopic::Type &t)
 {
 	serializeIn(state, node, t, ResearchTopic::TypeMap);
 }
 
-template <>
 void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchTopic::LabSize &s)
 {
 	serializeIn(state, node, s, ResearchTopic::LabSizeMap);
 }
 
-template <>
 void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchTopic::ItemType &s)
 {
 	serializeIn(state, node, s, ResearchTopic::ItemTypeMap);
 }
 
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Lab &lab)
+void serializeIn(const GameState *state, sp<SerializationNode> node, Vehicle::AttackMode &t)
 {
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("size"), lab.size);
-	serializeIn(state, node->getNode("type"), lab.type);
-	serializeIn(state, node->getNode("current_project"), lab.current_project);
-	serializeIn(state, node->getNode("assigned_agents"), lab.assigned_agents);
-	serializeIn(state, node->getNode("ticks_since_last_progress"), lab.ticks_since_last_progress);
-	serializeIn(state, node->getNode("manufacture_goal"), lab.manufacture_goal);
-	serializeIn(state, node->getNode("manufacture_done"), lab.manufacture_done);
-	serializeIn(state, node->getNode("manufacture_man_hours_invested"),
-	            lab.manufacture_man_hours_invested);
+	serializeIn(state, node, t, Vehicle::AttackModeMap);
 }
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Facility &facility)
+void serializeIn(const GameState *state, sp<SerializationNode> node, Vehicle::Altitude &t)
 {
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("type"), facility.type);
-	serializeIn(state, node->getNode("pos"), facility.pos);
-	serializeIn(state, node->getNode("buildTime"), facility.buildTime);
-	serializeIn(state, node->getNode("lab"), facility.lab);
+	serializeIn(state, node, t, Vehicle::AltitudeMap);
 }
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Base &base)
+void serializeIn(const GameState *state, sp<SerializationNode> node, VEquipment::WeaponState &t)
 {
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("corridors"), base.corridors);
-	serializeIn(state, node->getNode("facilities"), base.facilities);
-	serializeIn(state, node->getNode("inventoryAgentEquipment"), base.inventoryAgentEquipment);
-	serializeIn(state, node->getNode("inventoryVehicleEquipment"), base.inventoryVehicleEquipment);
-	serializeIn(state, node->getNode("inventoryVehicleAmmo"), base.inventoryVehicleAmmo);
-	serializeIn(state, node->getNode("name"), base.name);
-	serializeIn(state, node->getNode("building"), base.building);
+	serializeIn(state, node, t, VEquipment::WeaponStateMap);
 }
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, VehicleMission &m)
+void serializeIn(const GameState *state, sp<SerializationNode> node, VehicleMission::MissionType &t)
 {
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("type"), m.type, VehicleMission::TypeMap);
-	serializeIn(state, node->getNode("target_location"), m.targetLocation);
-	serializeIn(state, node->getNode("target_building"), m.targetBuilding);
-	serializeIn(state, node->getNode("target_vehicle"), m.targetVehicle);
-	serializeIn(state, node->getNode("time_to_snooze"), m.timeToSnooze);
-	serializeIn(state, node->getNode("mission_counter"), m.missionCounter);
-	serializeIn(state, node->getNode("current_planned_path"), m.currentPlannedPath);
+	serializeIn(state, node, t, VehicleMission::TypeMap);
 }
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, VEquipment &e)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("type"), e.type);
-	serializeIn(state, node->getNode("equipped_position"), e.equippedPosition);
-	serializeIn(state, node->getNode("weapon_state"), e.weaponState, VEquipment::WeaponStateMap);
-	serializeIn(state, node->getNode("owner"), e.owner);
-	serializeIn(state, node->getNode("ammo"), e.ammo);
-	serializeIn(state, node->getNode("reload_time"), e.reloadTime);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Vehicle &v)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("type"), v.type);
-	serializeIn(state, node->getNode("owner"), v.owner);
-	serializeIn(state, node->getNode("name"), v.name);
-	serializeIn(state, node->getNode("attackMode"), v.attackMode, Vehicle::AttackModeMap);
-	serializeIn(state, node->getNode("altitude"), v.altitude, Vehicle::AltitudeMap);
-	serializeIn(state, node->getNode("missions"), v.missions);
-	serializeIn(state, node->getNode("equipment"), v.equipment);
-	serializeIn(state, node->getNode("position"), v.position);
-	serializeIn(state, node->getNode("velocity"), v.velocity);
-	serializeIn(state, node->getNode("facing"), v.facing);
-	serializeIn(state, node->getNode("city"), v.city);
-	serializeIn(state, node->getNode("health"), v.health);
-	serializeIn(state, node->getNode("shield"), v.shield);
-	serializeIn(state, node->getNode("shieldRecharge"), v.shieldRecharge);
-	serializeIn(state, node->getNode("homeBuilding"), v.homeBuilding);
-	serializeIn(state, node->getNode("currentlyLandedBuilding"), v.currentlyLandedBuilding);
-}
-
-template <>
-void serializeIn(const GameState *state, sp<SerializationNode> node, UfopaediaCategory &c)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("title"), c.title);
-	serializeIn(state, node->getNode("description"), c.description);
-	serializeIn(state, node->getNode("background"), c.background);
-	serializeIn(state, node->getNode("entries"), c.entries);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, ItemDependency &d)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("items"), d.items);
-}
-
-template <>
-void serializeIn(const GameState *state, sp<SerializationNode> node, ProjectDependencies &d)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("research"), d.research);
-	serializeIn(state, node->getNode("items"), d.items);
-}
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchTopic &r)
-{
-	if (!node)
-		return;
-	// Shared Research & Manufacture
-	serializeIn(state, node->getNode("name"), r.name);
-	serializeIn(state, node->getNode("order"), r.order);
-	serializeIn(state, node->getNode("description"), r.description);
-	serializeIn(state, node->getNode("man_hours"), r.man_hours);
-	serializeIn(state, node->getNode("type"), r.type);
-	serializeIn(state, node->getNode("required_lab_size"), r.required_lab_size);
-	serializeIn(state, node->getNode("dependencies"), r.dependencies);
-	// Research only
-	if (r.type == ResearchTopic::Type::BioChem || r.type == ResearchTopic::Type::Physics)
-	{
-		serializeIn(state, node->getNode("ufopaedia_entry"), r.ufopaedia_entry);
-		serializeIn(state, node->getNode("man_hours_progress"), r.man_hours_progress);
-		serializeIn(state, node->getNode("current_lab"), r.current_lab);
-		serializeIn(state, node->getNode("score"), r.score);
-		serializeIn(state, node->getNode("started"), r.started);
-	}
-	// Manufacture Only
-	if (r.type == ResearchTopic::Type::Engineering)
-	{
-		serializeIn(state, node->getNode("cost"), r.cost);
-		serializeIn(state, node->getNode("item_type"), r.item_type);
-		serializeIn(state, node->getNode("item_produced"), r.item_produced);
-	}
-}
-
-// FIXME: These enums don't quite work the same way as the other map style - maybe a common way
-// could be used?
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Agent::Type &t)
+void serializeIn(const GameState *state, sp<SerializationNode> node, Agent::Type &t)
 {
 	serializeIn(state, node, t, Agent::TypeMap);
 }
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Agent::Gender &g)
+void serializeIn(const GameState *state, sp<SerializationNode> node, Agent::Gender &g)
 {
 	serializeIn(state, node, g, Agent::GenderMap);
 }
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Agent::Species &s)
+void serializeIn(const GameState *state, sp<SerializationNode> node, Agent::Species &s)
 {
 	serializeIn(state, node, s, Agent::SpeciesMap);
 }
 
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, AgentStats &s)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("health"), s.health);
-	serializeIn(state, node->getNode("accuracy"), s.accuracy);
-	serializeIn(state, node->getNode("reactions"), s.reactions);
-	serializeIn(state, node->getNode("speed"), s.speed);
-	serializeIn(state, node->getNode("stamina"), s.stamina);
-	serializeIn(state, node->getNode("bravery"), s.bravery);
-	serializeIn(state, node->getNode("strength"), s.strength);
-	serializeIn(state, node->getNode("psi_energy"), s.psi_energy);
-	serializeIn(state, node->getNode("psi_attack"), s.psi_attack);
-	serializeIn(state, node->getNode("psi_defence"), s.psi_defence);
-	serializeIn(state, node->getNode("physics_skill"), s.physics_skill);
-	serializeIn(state, node->getNode("biochem_skill"), s.biochem_skill);
-	serializeIn(state, node->getNode("engineering_skill"), s.engineering_skill);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, AgentPortrait &p)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("photo"), p.photo);
-	serializeIn(state, node->getNode("icon"), p.icon);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, Agent &a)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("name"), a.name);
-	serializeIn(state, node->getNode("portrait"), a.portrait);
-	serializeIn(state, node->getNode("type"), a.type, Agent::TypeMap);
-	serializeIn(state, node->getNode("species"), a.species, Agent::SpeciesMap);
-	serializeIn(state, node->getNode("gender"), a.gender, Agent::GenderMap);
-	serializeIn(state, node->getNode("initial_stats"), a.initial_stats);
-	serializeIn(state, node->getNode("current_stats"), a.current_stats);
-	serializeIn(state, node->getNode("home_base"), a.home_base);
-	serializeIn(state, node->getNode("owner"), a.owner);
-	serializeIn(state, node->getNode("assigned_to_lab"), a.assigned_to_lab);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, AgentGenerator &g)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("num_created"), g.num_created);
-	serializeIn(state, node->getNode("first_names"), g.first_names);
-	serializeIn(state, node->getNode("second_names"), g.second_names);
-	serializeIn(state, node->getNode("type_chance"), g.type_chance);
-	serializeIn(state, node->getNode("species_chance"), g.species_chance);
-	serializeIn(state, node->getNode("gender_chance"), g.gender_chance);
-	serializeIn(state, node->getNode("portraits"), g.portraits);
-	serializeIn(state, node->getNode("min_stats"), g.min_stats);
-	serializeIn(state, node->getNode("max_stats"), g.max_stats);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchState &r)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("topics"), r.topics);
-	r.updateTopicList();
-	serializeIn(state, node->getNode("labs"), r.labs);
-	serializeIn(state, node->getNode("num_labs_created"), r.num_labs_created);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, GameTime &t)
-{
-	if (!node)
-		return;
-
-	uint64_t ticks = 0;
-	serializeIn(state, node->getNode("ticks"), ticks);
-	t = GameTime(ticks);
-}
-
-template <>
 void serializeIn(const GameState *state, sp<SerializationNode> node, Xorshift128Plus<uint32_t> &t)
 {
 	if (!node)
@@ -975,49 +466,6 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, Xorshift128
 	serializeIn(state, node->getNode("s0"), s[0]);
 	serializeIn(state, node->getNode("s1"), s[1]);
 	t.setState(s);
-}
-
-template <> void serializeIn(const GameState *state, sp<SerializationNode> node, EventMessage &m)
-{
-	if (!node)
-		return;
-
-	serializeIn(state, node->getNode("time"), m.time);
-	serializeIn(state, node->getNode("text"), m.text);
-	serializeIn(state, node->getNode("location"), m.location);
-}
-
-void serializeIn(const GameState *state, sp<SerializationNode> node, GameState &s)
-{
-	if (!node)
-		return;
-	serializeIn(state, node->getNode("lastVehicle"), s.lastVehicle);
-	serializeIn(state, node->getSection("vehicle_types"), s.vehicle_types);
-	serializeIn(state, node->getSection("organisations"), s.organisations);
-	serializeIn(state, node->getSection("facility_types"), s.facility_types);
-	serializeIn(state, node->getSection("doodad_types"), s.doodad_types);
-	serializeIn(state, node->getSection("vehicle_equipment"), s.vehicle_equipment);
-	serializeIn(state, node->getSection("vehicle_ammo"), s.vehicle_ammo);
-	serializeIn(state, node->getSection("agent_equipment"), s.agent_equipment);
-	serializeInSectionMap(state, node->getSection("cities"), s.cities);
-	serializeIn(state, node->getSection("ufo_growth_lists"), s.ufo_growth_lists);
-	serializeIn(state, node->getSection("ufo_incursions"), s.ufo_incursions);
-	serializeIn(state, node->getSection("base_layouts"), s.base_layouts);
-	serializeIn(state, node->getSection("player_bases"), s.player_bases);
-	serializeIn(state, node->getSection("vehicles"), s.vehicles);
-	serializeIn(state, node->getSection("ufopaedia"), s.ufopaedia);
-	serializeIn(state, node->getSection("research"), s.research);
-	serializeIn(state, node->getSection("agents"), s.agents);
-	serializeIn(state, node->getSection("agent_generator"), s.agent_generator);
-	serializeIn(state, node->getNode("initial_agents"), s.initial_agents);
-	serializeIn(state, node->getNode("initial_facilities"), s.initial_facilities);
-	serializeIn(state, node->getNode("player"), s.player);
-	serializeIn(state, node->getNode("current_city"), s.current_city);
-	serializeIn(state, node->getNode("current_base"), s.current_base);
-	serializeIn(state, node->getNode("rng"), s.rng);
-	serializeIn(state, node->getNodeOpt("time"), s.gameTime);
-	serializeIn(state, node->getSection("battle"), s.battle);
-	serializeIn(state, node->getNodeOpt("messages"), s.messages);
 }
 
 void serializeOut(sp<SerializationNode> node, const UString &string) { node->setValue(string); }
@@ -1126,6 +574,16 @@ template <typename T> void serializeOut(sp<SerializationNode> node, const std::l
 
 template <typename Key, typename Value>
 void serializeOut(sp<SerializationNode> node, const std::map<Key, Value> &map)
+{
+	for (const auto &pair : map)
+	{
+		auto entry = node->addNode("entry");
+		serializeOut(entry->addNode("key"), pair.first);
+		serializeOut(entry->addNode("value"), pair.second);
+	}
+}
+
+template <typename T> void serializeOut(sp<SerializationNode> node, const StateRefMap<T> &map)
 {
 	for (const auto &pair : map)
 	{
@@ -1563,19 +1021,19 @@ template <> void serializeOut(sp<SerializationNode> node, const BattleMapPartTyp
 template <> void serializeOut(sp<SerializationNode> node, const VehicleMission &m)
 {
 	serializeOut(node->addNode("type"), m.type, VehicleMission::TypeMap);
-	serializeOut(node->addNode("target_location"), m.targetLocation);
-	serializeOut(node->addNode("target_building"), m.targetBuilding);
-	serializeOut(node->addNode("target_vehicle"), m.targetVehicle);
-	serializeOut(node->addNode("time_to_snooze"), m.timeToSnooze);
-	serializeOut(node->addNode("mission_counter"), m.missionCounter);
-	serializeOut(node->addNode("current_planned_path"), m.currentPlannedPath);
+	serializeOut(node->addNode("targetLocation"), m.targetLocation);
+	serializeOut(node->addNode("targetBuilding"), m.targetBuilding);
+	serializeOut(node->addNode("targetVehicle"), m.targetVehicle);
+	serializeOut(node->addNode("timeToSnooze"), m.timeToSnooze);
+	serializeOut(node->addNode("missionCounter"), m.missionCounter);
+	serializeOut(node->addNode("currentPlannedPath"), m.currentPlannedPath);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const VEquipment &e)
 {
 	serializeOut(node->addNode("type"), e.type);
-	serializeOut(node->addNode("equipped_position"), e.equippedPosition);
-	serializeOut(node->addNode("weapon_state"), e.weaponState, VEquipment::WeaponStateMap);
+	serializeOut(node->addNode("equippedPosition"), e.equippedPosition);
+	serializeOut(node->addNode("weaponState"), e.weaponState, VEquipment::WeaponStateMap);
 	serializeOut(node->addNode("owner"), e.owner);
 	serializeOut(node->addNode("ammo"), e.ammo);
 	serializeOut(node->addNode("reload_time"), e.reloadTime);
@@ -1779,12 +1237,10 @@ void serializeOut(sp<SerializationNode> node, const GameState &state)
 	serializeOut(node->addNode("current_base"), state.current_base);
 	serializeOut(node->addNode("player"), state.player);
 	serializeOut(node->addNode("rng"), state.rng);
-	serializeOut(node->addNode("time"), state.gameTime);
+	serializeOut(node->addNode("gameTime"), state.gameTime);
 	serializeOut(node->addSection("battle"), state.battle);
 	serializeOut(node->addNode("messages"), state.messages);
 }
-
-} // anonymous namespace
 
 bool GameState::saveGame(const UString &path, bool pack)
 {

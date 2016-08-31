@@ -36,9 +36,9 @@ class City : public StateObject<City>
 
 	Vec3<int> size;
 
-	std::map<UString, sp<SceneryTileType>> tile_types;
+	StateRefMap<SceneryTileType> tile_types;
 	std::map<Vec3<int>, StateRef<SceneryTileType>> initial_tiles;
-	std::map<UString, sp<Building>> buildings;
+	StateRefMap<Building> buildings;
 	std::set<sp<Scenery>> scenery;
 	std::set<sp<Doodad>> doodads;
 	std::set<sp<Doodad>> portals;

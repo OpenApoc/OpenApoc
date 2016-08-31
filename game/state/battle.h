@@ -30,7 +30,7 @@ class Battle
 	void initMap();
 
 	Vec3<int> size;
-	std::map<UString, sp<BattleMapPartType>> map_part_types;
+	StateRefMap<BattleMapPartType> map_part_types;
 
 	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_grounds;
 	std::map<Vec3<int>, StateRef<BattleMapPartType>> initial_left_walls;

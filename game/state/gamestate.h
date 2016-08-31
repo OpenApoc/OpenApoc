@@ -39,20 +39,20 @@ class GameState : public std::enable_shared_from_this<GameState>
 	void update(unsigned int ticks);
 
   public:
-	std::map<UString, sp<VehicleType>> vehicle_types;
-	std::map<UString, sp<Organisation>> organisations;
-	std::map<UString, sp<FacilityType>> facility_types;
-	std::map<UString, sp<DoodadType>> doodad_types;
-	std::map<UString, sp<VEquipmentType>> vehicle_equipment;
-	std::map<UString, sp<VAmmoType>> vehicle_ammo;
-	std::map<UString, sp<AEquipmentType>> agent_equipment;
-	std::map<UString, sp<BaseLayout>> base_layouts;
-	std::map<UString, sp<UFOGrowth>> ufo_growth_lists;
-	std::map<UString, sp<UFOIncursion>> ufo_incursions;
-	std::map<UString, sp<Base>> player_bases;
-	std::map<UString, sp<City>> cities;
-	std::map<UString, sp<Vehicle>> vehicles;
-	std::map<UString, sp<UfopaediaCategory>> ufopaedia;
+	StateRefMap<VehicleType> vehicle_types;
+	StateRefMap<Organisation> organisations;
+	StateRefMap<FacilityType> facility_types;
+	StateRefMap<DoodadType> doodad_types;
+	StateRefMap<VEquipmentType> vehicle_equipment;
+	StateRefMap<VAmmoType> vehicle_ammo;
+	StateRefMap<AEquipmentType> agent_equipment;
+	StateRefMap<BaseLayout> base_layouts;
+	StateRefMap<UFOGrowth> ufo_growth_lists;
+	StateRefMap<UFOIncursion> ufo_incursions;
+	StateRefMap<Base> player_bases;
+	StateRefMap<City> cities;
+	StateRefMap<Vehicle> vehicles;
+	StateRefMap<UfopaediaCategory> ufopaedia;
 	ResearchState research;
 	Battle battle;
 
@@ -60,7 +60,7 @@ class GameState : public std::enable_shared_from_this<GameState>
 
 	mutable unsigned lastVehicle = 0;
 
-	std::map<UString, sp<Agent>> agents;
+	StateRefMap<Agent> agents;
 	AgentGenerator agent_generator;
 
 	std::map<Agent::Type, unsigned> initial_agents;

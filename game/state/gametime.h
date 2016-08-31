@@ -20,7 +20,6 @@ class GameTime
 	// needs some fancy initialization
 	static /*const*/ std::locale *TIME_FORMAT, *DATE_LONG_FORMAT, *DATE_SHORT_FORMAT;
 
-	uint64_t ticks;
 	boost::posix_time::ptime datetime;
 
 	bool dayPassedFlag;
@@ -29,6 +28,7 @@ class GameTime
 	static boost::posix_time::time_duration ticksToPosix(int64_t ticks);
 
   public:
+	uint64_t ticks;
 	GameTime(uint64_t ticks = 0);
 
 	void addTicks(uint64_t ticks);

@@ -1,6 +1,7 @@
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "game/state/gamestate.h"
+#include "game/state/gamestate_serialize.h"
 #include <boost/filesystem.hpp>
 
 using namespace OpenApoc;
@@ -20,8 +21,11 @@ bool test_gamestate_serialization_roundtrip(sp<GameState> state, UString save_na
 		return false;
 	}
 
-	// FIXME: When GameState gets an operator==
-	// if (state != read_gamestate) FailTest();
+	if (*state != *read_gamestate)
+	{
+		// FIXME: Warning for now, at least comparison of sp<Type> is broken
+		LogWarning("Gamestate changed over serialization");
+	}
 	return true;
 }
 
@@ -57,6 +61,16 @@ int main(int argc, char **argv)
 	LogInfo("Loading \"%s\"", gamestate_name.cStr());
 
 	auto state = mksp<GameState>();
+
+	{
+		auto state2 = mksp<GameState>();
+		if (*state != *state2)
+		{
+			LogError("Empty gamestate failed comparison");
+			return EXIT_FAILURE;
+		}
+	}
+
 	if (!state->loadGame(gamestate_name))
 	{
 		LogError("Failed to load difficulty1_patched");

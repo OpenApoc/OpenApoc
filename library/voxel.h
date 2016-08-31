@@ -34,6 +34,9 @@ class VoxelMap
 
 	const Vec3<int> &getSize() const { return this->size; }
 
+	bool operator==(const VoxelMap &other) const;
+	bool operator!=(const VoxelMap &other) const;
+
 	VoxelMap(Vec3<int> size);
 	VoxelMap() = default;
 };

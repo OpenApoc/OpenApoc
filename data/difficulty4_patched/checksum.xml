@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checksums>
-  <checksum SHA1="fe792f885a9aa7fae8e3ab870bee067aaeb168ae">gamestate.xml</checksum>
+  <checksum SHA1="cf7b664cf6a911a5eba236b2f663bf66bfae743e">gamestate.xml</checksum>
   <checksum SHA1="e35fd767881ba69057eac4881e69e211d278cbb1">gamestate/agent_equipment.xml</checksum>
   <checksum SHA1="b2db496939d0d36b94f9224721bc9c869672160e">gamestate/agent_generator.xml</checksum>
   <checksum SHA1="1dca603614f430b312839921dfaffaea1ba434b8">gamestate/agents.xml</checksum>

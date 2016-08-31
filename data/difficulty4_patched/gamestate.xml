@@ -85,9 +85,9 @@
     <s0>2065550767</s0>
     <s1>1653378023</s1>
   </rng>
-  <time>
+  <gameTime>
     <ticks>0</ticks>
-  </time>
+  </gameTime>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="battle.xml" />
   <messages />
 </gamestate>

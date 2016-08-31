@@ -44,7 +44,7 @@ class UfopaediaCategory : public StateObject<UfopaediaCategory>
 	UString title;
 	UString description;
 	sp<LazyImage> background;
-	std::map<UString, sp<UfopaediaEntry>> entries;
+	StateRefMap<UfopaediaEntry> entries;
 };
 
 } // namespace OpenApoc

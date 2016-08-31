@@ -48,7 +48,8 @@ set (GAMESTATE_SOURCE_FILES
 	tileview/tileobject_shadow.cpp
 	tileview/tileobject_vehicle.cpp
 	tileview/voxel.cpp
-	ufopaedia.cpp)
+	ufopaedia.cpp
+	gamestate_serialize_generated.cpp)
 source_group(gamestate\\sources FILES ${GAMESTATE_SOURCE_FILES})
 set (GAMESTATE_HEADER_FILES
 	agent.h
@@ -97,7 +98,8 @@ set (GAMESTATE_HEADER_FILES
 	tileview/tileobject_shadow.h
 	tileview/tileobject_vehicle.h
 	tileview/voxel.h
-	ufopaedia.h)
+	ufopaedia.h
+	gamestate_serialize_generated.h)
 source_group(gamestate\\headers FILES ${GAMESTATE_HEADER_FILES})
 
 list(APPEND ALL_SOURCE_FILES ${GAMESTATE_SOURCE_FILES})
@@ -109,8 +111,21 @@ add_library(OpenApoc_GameState STATIC ${GAMESTATE_SOURCE_FILES}
 target_link_libraries(OpenApoc_GameState PUBLIC OpenApoc_Library)
 target_link_libraries(OpenApoc_GameState PUBLIC OpenApoc_Framework)
 
+target_include_directories(OpenApoc_GameState PRIVATE ${CMAKE_BINARY_DIR})
+
 set_property(TARGET OpenApoc_GameState PROPERTY CXX_STANDARD 11)
 set_property(TARGET OpenApoc_GameState PROPERTY CXX_STANDARD_REQUIRED ON)
 
 
+add_custom_command(OUTPUT
+		gamestate_serialize_generated.h
+		gamestate_serialize_generated.cpp
+		COMMAND
+		${CMAKE_BINARY_DIR}/bin/OpenApoc_GamestateSerializeGen
+		-x ${CMAKE_SOURCE_DIR}/game/state/gamestate_serialize.xml
+		-h gamestate_serialize_generated.h
+		-o gamestate_serialize_generated.cpp
+		DEPENDS
+		${CMAKE_BINARY_DIR}/bin/OpenApoc_GamestateSerializeGen
+		${CMAKE_SOURCE_DIR}/game/state/gamestate_serialize.xml)
 
