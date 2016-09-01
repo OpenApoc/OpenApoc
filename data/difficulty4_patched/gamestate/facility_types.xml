@@ -9,12 +9,12 @@
         <buildCost>5000</buildCost>
         <buildTime>0</buildTime>
         <weeklyCost>200</weeklyCost>
-        <capacityType>nothing</capacityType>
+        <capacityType>Nothing</capacityType>
         <capacityAmount>0</capacityAmount>
         <size>1</size>
         <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:27:xcom3/UFODATA/BASE.PCX</sprite>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics />
         </dependency>
         <ufopaedia_entry>PAEDIAENTRY_ACCESS_LIFT</ufopaedia_entry>
@@ -30,12 +30,12 @@
         <buildCost>14000</buildCost>
         <buildTime>7</buildTime>
         <weeklyCost>700</weeklyCost>
-        <capacityType>aliens</capacityType>
+        <capacityType>Aliens</capacityType>
         <capacityAmount>20</capacityAmount>
         <size>2</size>
         <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:42:xcom3/UFODATA/BASE.PCX</sprite>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics>
             <entry>RESEARCH_ADVANCED_ALIEN_CONTAINMENT</entry>
           </topics>
@@ -53,12 +53,12 @@
         <buildCost>20000</buildCost>
         <buildTime>8</buildTime>
         <weeklyCost>200</weeklyCost>
-        <capacityType>chemistry</capacityType>
+        <capacityType>Chemistry</capacityType>
         <capacityAmount>10</capacityAmount>
         <size>2</size>
         <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:38:xcom3/UFODATA/BASE.PCX</sprite>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics>
             <entry>RESEARCH_ADVANCED_BIOCHEMISTRY_LAB</entry>
           </topics>
@@ -76,12 +76,12 @@
         <buildCost>25000</buildCost>
         <buildTime>8</buildTime>
         <weeklyCost>200</weeklyCost>
-        <capacityType>physics</capacityType>
+        <capacityType>Physics</capacityType>
         <capacityAmount>10</capacityAmount>
         <size>2</size>
         <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:40:xcom3/UFODATA/BASE.PCX</sprite>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics>
             <entry>RESEARCH_ADVANCED_QUANTUM_PHYSICS_LAB</entry>
           </topics>
@@ -99,12 +99,12 @@
         <buildCost>8000</buildCost>
         <buildTime>4</buildTime>
         <weeklyCost>300</weeklyCost>
-        <capacityType>nothing</capacityType>
+        <capacityType>Nothing</capacityType>
         <capacityAmount>0</capacityAmount>
         <size>1</size>
         <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:35:xcom3/UFODATA/BASE.PCX</sprite>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics>
             <entry>RESEARCH_ADVANCED_SECURITY_STATION</entry>
           </topics>
@@ -122,12 +122,12 @@
         <buildCost>12000</buildCost>
         <buildTime>9</buildTime>
         <weeklyCost>200</weeklyCost>
-        <capacityType>workshop</capacityType>
+        <capacityType>Workshop</capacityType>
         <capacityAmount>10</capacityAmount>
         <size>2</size>
         <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:44:xcom3/UFODATA/BASE.PCX</sprite>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics>
             <entry>RESEARCH_ADVANCED_WORKSHOP</entry>
           </topics>
@@ -145,12 +145,12 @@
         <buildCost>7000</buildCost>
         <buildTime>4</buildTime>
         <weeklyCost>400</weeklyCost>
-        <capacityType>aliens</capacityType>
+        <capacityType>Aliens</capacityType>
         <capacityAmount>20</capacityAmount>
         <size>1</size>
         <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:41:xcom3/UFODATA/BASE.PCX</sprite>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics />
         </dependency>
         <ufopaedia_entry>PAEDIAENTRY_ALIEN_CONTAINMENT</ufopaedia_entry>
@@ -166,12 +166,12 @@
         <buildCost>10000</buildCost>
         <buildTime>5</buildTime>
         <weeklyCost>100</weeklyCost>
-        <capacityType>chemistry</capacityType>
+        <capacityType>Chemistry</capacityType>
         <capacityAmount>5</capacityAmount>
         <size>1</size>
         <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:37:xcom3/UFODATA/BASE.PCX</sprite>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics />
         </dependency>
         <ufopaedia_entry>PAEDIAENTRY_BIOCHEMISTRY_LAB</ufopaedia_entry>
@@ -187,12 +187,12 @@
         <buildCost>1200</buildCost>
         <buildTime>2</buildTime>
         <weeklyCost>100</weeklyCost>
-        <capacityType>aliens</capacityType>
+        <capacityType>Aliens</capacityType>
         <capacityAmount>10</capacityAmount>
         <size>1</size>
         <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:30:xcom3/UFODATA/BASE.PCX</sprite>
         <dependency>
-          <type>unused</type>
+          <type>Unused</type>
           <topics />
         </dependency>
         <ufopaedia_entry />
@@ -208,12 +208,12 @@
         <buildCost>5000</buildCost>
         <buildTime>3</buildTime>
         <weeklyCost>300</weeklyCost>
-        <capacityType>quarters</capacityType>
+        <capacityType>Quarters</capacityType>
         <capacityAmount>10</capacityAmount>
         <size>1</size>
         <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:28:xcom3/UFODATA/BASE.PCX</sprite>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics />
         </dependency>
         <ufopaedia_entry>PAEDIAENTRY_LIVING_QUARTERS</ufopaedia_entry>
@@ -229,12 +229,12 @@
         <buildCost>12000</buildCost>
         <buildTime>4</buildTime>
         <weeklyCost>800</weeklyCost>
-        <capacityType>medical</capacityType>
+        <capacityType>Medical</capacityType>
         <capacityAmount>10</capacityAmount>
         <size>1</size>
         <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:31:xcom3/UFODATA/BASE.PCX</sprite>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics />
         </dependency>
         <ufopaedia_entry>PAEDIAENTRY_MEDICAL_BAY</ufopaedia_entry>
@@ -250,12 +250,12 @@
         <buildCost>15000</buildCost>
         <buildTime>6</buildTime>
         <weeklyCost>900</weeklyCost>
-        <capacityType>psi</capacityType>
+        <capacityType>Psi</capacityType>
         <capacityAmount>10</capacityAmount>
         <size>1</size>
         <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:33:xcom3/UFODATA/BASE.PCX</sprite>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics />
         </dependency>
         <ufopaedia_entry>PAEDIAENTRY_PSI-GYM</ufopaedia_entry>
@@ -271,12 +271,12 @@
         <buildCost>10000</buildCost>
         <buildTime>5</buildTime>
         <weeklyCost>100</weeklyCost>
-        <capacityType>physics</capacityType>
+        <capacityType>Physics</capacityType>
         <capacityAmount>5</capacityAmount>
         <size>1</size>
         <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:39:xcom3/UFODATA/BASE.PCX</sprite>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics />
         </dependency>
         <ufopaedia_entry>PAEDIAENTRY_QUANTUM_PHYSICS_LAB</ufopaedia_entry>
@@ -292,12 +292,12 @@
         <buildCost>2000</buildCost>
         <buildTime>2</buildTime>
         <weeklyCost>200</weeklyCost>
-        <capacityType>nothing</capacityType>
+        <capacityType>Nothing</capacityType>
         <capacityAmount>0</capacityAmount>
         <size>1</size>
         <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:34:xcom3/UFODATA/BASE.PCX</sprite>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics />
         </dependency>
         <ufopaedia_entry>PAEDIAENTRY_SECURITY_STATION</ufopaedia_entry>
@@ -313,12 +313,12 @@
         <buildCost>1000</buildCost>
         <buildTime>2</buildTime>
         <weeklyCost>100</weeklyCost>
-        <capacityType>stores</capacityType>
+        <capacityType>Stores</capacityType>
         <capacityAmount>10000</capacityAmount>
         <size>1</size>
         <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:29:xcom3/UFODATA/BASE.PCX</sprite>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics />
         </dependency>
         <ufopaedia_entry>PAEDIAENTRY_STORES</ufopaedia_entry>
@@ -334,12 +334,12 @@
         <buildCost>8000</buildCost>
         <buildTime>5</buildTime>
         <weeklyCost>500</weeklyCost>
-        <capacityType>training</capacityType>
+        <capacityType>Training</capacityType>
         <capacityAmount>10</capacityAmount>
         <size>1</size>
         <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:32:xcom3/UFODATA/BASE.PCX</sprite>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics />
         </dependency>
         <ufopaedia_entry>PAEDIAENTRY_TRAINING_AREA</ufopaedia_entry>
@@ -355,12 +355,12 @@
         <buildCost>9000</buildCost>
         <buildTime>5</buildTime>
         <weeklyCost>500</weeklyCost>
-        <capacityType>repair</capacityType>
+        <capacityType>Repair</capacityType>
         <capacityAmount>1</capacityAmount>
         <size>2</size>
         <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:36:xcom3/UFODATA/BASE.PCX</sprite>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics />
         </dependency>
         <ufopaedia_entry>PAEDIAENTRY_VEHICLE_REPAIR_BAY</ufopaedia_entry>
@@ -376,12 +376,12 @@
         <buildCost>6000</buildCost>
         <buildTime>6</buildTime>
         <weeklyCost>100</weeklyCost>
-        <capacityType>workshop</capacityType>
+        <capacityType>Workshop</capacityType>
         <capacityAmount>5</capacityAmount>
         <size>1</size>
         <sprite>PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:43:xcom3/UFODATA/BASE.PCX</sprite>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics />
         </dependency>
         <ufopaedia_entry>PAEDIAENTRY_WORKSHOP</ufopaedia_entry>

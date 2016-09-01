@@ -138,8 +138,8 @@ void writeHeader(std::ofstream &out, const StateDefinition &state)
 	{
 		out << "void serializeIn(const GameState *, sp<SerializationNode> node, " << object.name
 		    << " &obj);\n";
-		out << "void serializeOut(sp<SerializationNode> node, " << object.name << " &obj, "
-		    << object.name << " &ref);\n";
+		out << "void serializeOut(sp<SerializationNode> node, const " << object.name
+		    << " &obj, const " << object.name << " &ref);\n";
 		out << "bool operator==(const " << object.name << " &a, const " << object.name << " &b);\n";
 		out << "bool operator!=(const " << object.name << " &a, const " << object.name
 		    << " &b);\n\n";
@@ -149,8 +149,8 @@ void writeHeader(std::ofstream &out, const StateDefinition &state)
 	{
 		out << "void serializeIn(const GameState *, sp<SerializationNode> node, " << e.name
 		    << " &val);\n";
-		out << "void serializeOut(sp<SerializationNode> node, " << e.name << " &val, " << e.name
-		    << " &ref);\n";
+		out << "void serializeOut(sp<SerializationNode> node, const " << e.name << " &val, const "
+		    << e.name << " &ref);\n";
 	}
 
 	out << "\n} // namespace OpenApoc\n";
@@ -196,12 +196,8 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 
 		out << "}\n";
 
-#if 0
-
-		out << "void serializeOut(sp<SerializationNode> node, " << object.name << " &obj, "
-		    << object.name << " &ref)\n{\n";
-
-		out << "\tif (obj == ref) return;\n";
+		out << "void serializeOut(sp<SerializationNode> node, const " << object.name
+		    << " &obj, const " << object.name << " &ref)\n{\n";
 
 		for (auto &member : object.members)
 		{
@@ -212,6 +208,7 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 				case NodeType::Normal:
 					serializeFn = "serializeOut";
 					newNodeFn = "addNode";
+					break;
 				case NodeType::Section:
 					serializeFn = "serializeOut";
 					newNodeFn = "addSection";
@@ -226,7 +223,6 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 		}
 
 		out << "}\n";
-#endif
 
 		out << "bool operator==(const " << object.name << " &a, const " << object.name
 		    << " &b)\n{\n";

@@ -43,6 +43,10 @@ template <typename T> bool operator==(const StateRefMap<T> &a, const StateRefMap
 		{
 			return false;
 		}
+		if (!itA->second || !itB->second)
+		{
+			return false;
+		}
 		if (*itA->second != *itB->second)
 		{
 			return false;
@@ -75,18 +79,20 @@ template <typename T> bool operator==(const sp<T> &a, const sp<T> &b)
 template <typename T> bool operator!=(const sp<T> &a, const sp<T> &b) { return !(a == b); }
 
 void serializeIn(const GameState *, sp<SerializationNode> node, UString &str);
-
 void serializeIn(const GameState *, sp<SerializationNode> node, unsigned int &val);
-
 void serializeIn(const GameState *, sp<SerializationNode> node, unsigned char &val);
-
 void serializeIn(const GameState *, sp<SerializationNode> node, float &val);
-
 void serializeIn(const GameState *, sp<SerializationNode> node, int &val);
-
 void serializeIn(const GameState *, sp<SerializationNode> node, uint64_t &val);
-
 void serializeIn(const GameState *, sp<SerializationNode> node, bool &val);
+void serializeIn(const GameState *, sp<SerializationNode> node, sp<LazyImage> &ptr);
+void serializeIn(const GameState *, sp<SerializationNode> node, sp<Image> &ptr);
+void serializeIn(const GameState *, sp<SerializationNode> node, std::vector<bool> &vector);
+void serializeIn(const GameState *, sp<SerializationNode> node, sp<VoxelSlice> &ptr);
+void serializeIn(const GameState *, sp<SerializationNode> node, sp<Sample> &ptr);
+void serializeIn(const GameState *state, sp<SerializationNode> node, VoxelMap &map);
+void serializeIn(const GameState *state, sp<SerializationNode> node, Colour &c);
+void serializeIn(const GameState *state, sp<SerializationNode> node, Xorshift128Plus<uint32_t> &t);
 
 template <typename T>
 void serializeIn(const GameState *state, sp<SerializationNode> node, StateRef<T> &ref)
@@ -127,10 +133,6 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, sp<T> &ptr)
 		serializeIn(state, spNode, *ptr);
 	}
 }
-
-void serializeIn(const GameState *, sp<SerializationNode> node, sp<LazyImage> &ptr);
-
-void serializeIn(const GameState *, sp<SerializationNode> node, sp<Image> &ptr);
 
 template <typename T>
 void serializeIn(const GameState *state, sp<SerializationNode> node, Vec3<T> &val)
@@ -178,9 +180,6 @@ void serializeIn(const GameState *, sp<SerializationNode> node, T &val,
 	throw SerializationException(
 	    UString::format("Invalid enum value for %s: \"%s\"", typeid(T).name(), str), node);
 }
-
-template <typename T>
-void serializeIn(const GameState *state, sp<SerializationNode> node, std::list<T> &list);
 
 template <typename Key, typename Value>
 void serializeIn(const GameState *state, sp<SerializationNode> node, std::map<Key, Value> &map)
@@ -273,13 +272,6 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, std::vector
 	}
 }
 // std::vector<bool> is special
-void serializeIn(const GameState *, sp<SerializationNode> node, std::vector<bool> &vector);
-
-void serializeIn(const GameState *, sp<SerializationNode> node, sp<VoxelSlice> &ptr);
-
-void serializeIn(const GameState *, sp<SerializationNode> node, sp<Sample> &ptr);
-
-void serializeIn(const GameState *state, sp<SerializationNode> node, VoxelMap &map);
 
 template <typename T>
 void serializeIn(const GameState *state, sp<SerializationNode> node, std::set<T> &set)
@@ -296,15 +288,10 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, std::set<T>
 	}
 }
 
-void serializeIn(const GameState *state, sp<SerializationNode> node, Colour &c);
-void serializeIn(const GameState *state, sp<SerializationNode> node, Xorshift128Plus<uint32_t> &t);
-
 template <typename T>
 void serializeOut(sp<SerializationNode> node, const T &val, const T &ref,
                   const std::map<T, UString> &valueMap)
 {
-	if (val == ref)
-		return;
 	auto it = valueMap.find(val);
 	if (it == valueMap.end())
 	{
@@ -312,4 +299,162 @@ void serializeOut(sp<SerializationNode> node, const T &val, const T &ref,
 	}
 	node->setValue(it->second);
 }
+
+void serializeOut(sp<SerializationNode> node, const UString &str, const UString &ref);
+void serializeOut(sp<SerializationNode> node, const unsigned int &val, const unsigned int &ref);
+void serializeOut(sp<SerializationNode> node, const unsigned char &val, const unsigned char &ref);
+void serializeOut(sp<SerializationNode> node, const float &val, const float &ref);
+void serializeOut(sp<SerializationNode> node, const int &val, const int &ref);
+void serializeOut(sp<SerializationNode> node, const uint64_t &val, const uint64_t &ref);
+void serializeOut(sp<SerializationNode> node, const bool &val, const bool &ref);
+void serializeOut(sp<SerializationNode> node, const sp<LazyImage> &ptr, const sp<LazyImage> &ref);
+void serializeOut(sp<SerializationNode> node, const sp<Image> &ptr, const sp<Image> &ref);
+void serializeOut(sp<SerializationNode> node, const std::vector<bool> &vector,
+                  const std::vector<bool> &ref);
+void serializeOut(sp<SerializationNode> node, const sp<VoxelSlice> &ptr, const sp<VoxelSlice> &ref);
+void serializeOut(sp<SerializationNode> node, const sp<Sample> &ptr, const sp<Sample> &ref);
+void serializeOut(sp<SerializationNode> node, const VoxelMap &map, const VoxelMap &ref);
+void serializeOut(sp<SerializationNode> node, const Colour &c, const Colour &ref);
+void serializeOut(sp<SerializationNode> node, const Xorshift128Plus<uint32_t> &t,
+                  const Xorshift128Plus<uint32_t> &ref);
+template <typename T>
+void serializeOut(sp<SerializationNode> node, const StateRef<T> &val, const StateRef<T> &ref)
+{
+	// node->setValue("") causes an extra unnecessary <tag></tag> instead of <tag />
+	if (val.id != "")
+		node->setValue(val.id);
+}
+
+template <typename T>
+void serializeOut(sp<SerializationNode> node, const Vec3<T> &val, const Vec3<T> &ref)
+{
+	serializeOut(node->addNode("x"), val.x, ref.x);
+	serializeOut(node->addNode("y"), val.y, ref.y);
+	serializeOut(node->addNode("z"), val.z, ref.z);
+}
+
+template <typename T>
+void serializeOut(sp<SerializationNode> node, const Vec2<T> &val, const Vec2<T> &ref)
+{
+	serializeOut(node->addNode("x"), val.x, ref.x);
+	serializeOut(node->addNode("y"), val.y, ref.y);
+}
+
+template <typename T>
+void serializeOut(sp<SerializationNode> node, const Rect<T> &val, const Rect<T> &ref)
+{
+	serializeOut(node->addNode("p0"), val.p0, ref.p0);
+	serializeOut(node->addNode("p1"), val.p1, ref.p1);
+}
+
+template <typename T>
+void serializeOut(sp<SerializationNode> node, const up<T> &ptr, const up<T> &ref)
+{
+	if (ptr)
+	{
+		if (ref)
+			serializeOut(node->addNode("up"), *ptr, *ref);
+		else
+		{
+			T defaultRef;
+			serializeOut(node->addNode("up"), *ptr, defaultRef);
+		}
+	}
+}
+
+template <typename T>
+void serializeOut(sp<SerializationNode> node, const sp<T> &ptr, const sp<T> &ref)
+{
+	if (ptr)
+	{
+		if (ref)
+			serializeOut(node->addNode("sp"), *ptr, *ref);
+		else
+		{
+			T defaultRef;
+			serializeOut(node->addNode("sp"), *ptr, defaultRef);
+		}
+	}
+}
+
+template <typename Key, typename Value>
+void serializeOut(sp<SerializationNode> node, const std::map<Key, Value> &map,
+                  const std::map<Key, Value> &ref)
+{
+	Key defaultKey;
+	Value defaultValue;
+	for (const auto &pair : map)
+	{
+		auto entry = node->addNode("entry");
+		serializeOut(entry->addNode("key"), pair.first, defaultKey);
+		serializeOut(entry->addNode("value"), pair.second, defaultValue);
+	}
+}
+
+template <typename T>
+void serializeOut(sp<SerializationNode> node, const StateRefMap<T> &map, const StateRefMap<T> &ref)
+{
+	UString defaultKey;
+	sp<T> defaultValue;
+	for (const auto &pair : map)
+	{
+		auto entry = node->addNode("entry");
+		serializeOut(entry->addNode("key"), pair.first, defaultKey);
+		serializeOut(entry->addNode("value"), pair.second, defaultValue);
+	}
+}
+
+template <typename Value>
+void serializeOutSectionMap(sp<SerializationNode> node, const std::map<UString, Value> &map,
+                            const std::map<UString, Value> &ref)
+{
+	UString defaultKey;
+	Value defaultValue;
+	for (const auto &pair : map)
+	{
+		auto entry = node->addNode("entry");
+		serializeOut(entry->addNode("key"), pair.first, defaultKey);
+		serializeOut(entry->addSection(pair.first), pair.second, defaultValue);
+	}
+}
+
+template <typename T>
+void serializeOut(sp<SerializationNode> node, const std::set<T> &set, const std::set<T> &ref)
+{
+	T defaultRef;
+	for (const auto &entry : set)
+	{
+		serializeOut(node->addNode("entry"), entry, defaultRef);
+	}
+}
+
+template <typename A, typename B>
+void serializeOut(sp<SerializationNode> node, const std::pair<A, B> &pair,
+                  const std::pair<A, B> &ref)
+{
+	serializeOut(node->addNode("first"), pair.first, ref.first);
+	serializeOut(node->addNode("second"), pair.second, ref.second);
+}
+
+template <typename T>
+void serializeOut(sp<SerializationNode> node, const std::list<T> &list, const std::list<T> &ref)
+{
+	T defaultRef;
+	for (auto &entry : list)
+	{
+		serializeOut(node->addNode("entry"), entry, defaultRef);
+	}
+}
+
+template <typename T>
+void serializeOut(sp<SerializationNode> node, const std::vector<T> &vector,
+                  const std::vector<T> &ref)
+{
+	T defaultRef;
+	for (auto &entry : vector)
+	{
+		serializeOut(node->addNode("entry"), entry, defaultRef);
+	}
+}
+
 } // namespace OpenApoc

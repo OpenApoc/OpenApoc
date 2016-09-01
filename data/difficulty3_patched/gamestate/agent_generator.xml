@@ -3,13 +3,13 @@
   <num_created>0</num_created>
   <first_names>
     <entry>
-      <key>male</key>
+      <key>Male</key>
       <value>
         <entry>Steve</entry>
       </value>
     </entry>
     <entry>
-      <key>female</key>
+      <key>Female</key>
       <value>
         <entry>Steph</entry>
       </value>
@@ -20,52 +20,52 @@
   </second_names>
   <type_chance>
     <entry>
-      <key>soldier</key>
+      <key>Soldier</key>
       <value>1</value>
     </entry>
     <entry>
-      <key>physicist</key>
+      <key>Physicist</key>
       <value>1</value>
     </entry>
     <entry>
-      <key>biochemist</key>
+      <key>BioChemist</key>
       <value>1</value>
     </entry>
     <entry>
-      <key>engineer</key>
+      <key>Engineer</key>
       <value>1</value>
     </entry>
   </type_chance>
   <species_chance>
     <entry>
-      <key>human</key>
+      <key>Human</key>
       <value>1</value>
     </entry>
     <entry>
-      <key>mutant</key>
+      <key>Mutant</key>
       <value>1</value>
     </entry>
     <entry>
-      <key>android</key>
+      <key>Android</key>
       <value>1</value>
     </entry>
   </species_chance>
   <gender_chance>
     <entry>
-      <key>male</key>
+      <key>Male</key>
       <value>1</value>
     </entry>
     <entry>
-      <key>female</key>
+      <key>Female</key>
       <value>1</value>
     </entry>
   </gender_chance>
   <portraits>
     <entry>
-      <key>human</key>
+      <key>Human</key>
       <value>
         <entry>
-          <key>male</key>
+          <key>Male</key>
           <value>
             <entry>
               <photo>PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:1:xcom3/ufodata/pal_01.dat</photo>
@@ -74,7 +74,7 @@
           </value>
         </entry>
         <entry>
-          <key>female</key>
+          <key>Female</key>
           <value>
             <entry>
               <photo>PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:1:xcom3/ufodata/pal_01.dat</photo>
@@ -85,10 +85,10 @@
       </value>
     </entry>
     <entry>
-      <key>mutant</key>
+      <key>Mutant</key>
       <value>
         <entry>
-          <key>male</key>
+          <key>Male</key>
           <value>
             <entry>
               <photo>PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:1:xcom3/ufodata/pal_01.dat</photo>
@@ -97,7 +97,7 @@
           </value>
         </entry>
         <entry>
-          <key>female</key>
+          <key>Female</key>
           <value>
             <entry>
               <photo>PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:1:xcom3/ufodata/pal_01.dat</photo>
@@ -108,10 +108,10 @@
       </value>
     </entry>
     <entry>
-      <key>android</key>
+      <key>Android</key>
       <value>
         <entry>
-          <key>male</key>
+          <key>Male</key>
           <value>
             <entry>
               <photo>PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:1:xcom3/ufodata/pal_01.dat</photo>
@@ -120,7 +120,7 @@
           </value>
         </entry>
         <entry>
-          <key>female</key>
+          <key>Female</key>
           <value>
             <entry>
               <photo>PCK:xcom3/ufodata/photo.pck:xcom3/ufodata/photo.tab:1:xcom3/ufodata/pal_01.dat</photo>
@@ -133,7 +133,7 @@
   </portraits>
   <min_stats>
     <entry>
-      <key>human</key>
+      <key>Human</key>
       <value>
         <health>40</health>
         <accuracy>35</accuracy>
@@ -151,7 +151,7 @@
       </value>
     </entry>
     <entry>
-      <key>mutant</key>
+      <key>Mutant</key>
       <value>
         <health>30</health>
         <accuracy>40</accuracy>
@@ -169,7 +169,7 @@
       </value>
     </entry>
     <entry>
-      <key>android</key>
+      <key>Android</key>
       <value>
         <health>70</health>
         <accuracy>50</accuracy>
@@ -189,7 +189,7 @@
   </min_stats>
   <max_stats>
     <entry>
-      <key>human</key>
+      <key>Human</key>
       <value>
         <health>50</health>
         <accuracy>55</accuracy>
@@ -207,7 +207,7 @@
       </value>
     </entry>
     <entry>
-      <key>mutant</key>
+      <key>Mutant</key>
       <value>
         <health>40</health>
         <accuracy>50</accuracy>
@@ -225,7 +225,7 @@
       </value>
     </entry>
     <entry>
-      <key>android</key>
+      <key>Android</key>
       <value>
         <health>90</health>
         <accuracy>60</accuracy>
