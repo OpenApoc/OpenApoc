@@ -39,9 +39,9 @@ class City : public StateObject<City>
 	StateRefMap<SceneryTileType> tile_types;
 	std::map<Vec3<int>, StateRef<SceneryTileType>> initial_tiles;
 	StateRefMap<Building> buildings;
-	std::set<sp<Scenery>> scenery;
-	std::set<sp<Doodad>> doodads;
-	std::set<sp<Doodad>> portals;
+	std::list<sp<Scenery>> scenery;
+	std::list<sp<Doodad>> doodads;
+	std::list<sp<Doodad>> portals;
 
 	std::set<sp<Projectile>> projectiles;
 

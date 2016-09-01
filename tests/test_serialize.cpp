@@ -23,8 +23,8 @@ bool test_gamestate_serialization_roundtrip(sp<GameState> state, UString save_na
 
 	if (*state != *read_gamestate)
 	{
-		// FIXME: Warning for now, at least comparison of sp<Type> is broken
-		LogWarning("Gamestate changed over serialization");
+		LogError("Gamestate changed over serialization");
+		return false;
 	}
 	return true;
 }

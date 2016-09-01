@@ -44,7 +44,7 @@ void Doodad::remove(GameState &state)
 	this->tileObject->removeFromMap();
 	this->tileObject = nullptr;
 	for (auto &city : state.cities)
-		city.second->doodads.erase(thisPtr);
+		city.second->doodads.remove(thisPtr);
 }
 
 void Doodad::setPosition(Vec3<float> position)

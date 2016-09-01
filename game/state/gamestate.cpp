@@ -132,7 +132,7 @@ void GameState::startGame()
 			s->initialPosition = tilePair.first;
 			s->currentPosition = s->initialPosition;
 
-			city->scenery.insert(s);
+			city->scenery.push_back(s);
 		}
 	}
 
