@@ -689,6 +689,13 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, BattleMapPa
 }
 
 template <>
+void serializeIn(const GameState *state, sp<SerializationNode> node,
+                 BattleMapPartType::ExplosionType &t)
+{
+	serializeIn(state, node, t, BattleMapPartType::ExplosionTypeMap);
+}
+
+template <>
 void serializeIn(const GameState *state, sp<SerializationNode> node, BattleMapPartType &t)
 {
 	if (!node)
@@ -696,8 +703,14 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, BattleMapPa
 	serializeIn(state, node->getNode("type"), t.type);
 	serializeIn(state, node->getNode("sprite"), t.sprite);
 	serializeIn(state, node->getNode("strategySprite"), t.strategySprite);
-	serializeIn(state, node->getNode("voxelMap"), t.voxelMap);
+	serializeIn(state, node->getNode("voxelMapLOF"), t.voxelMapLOF);
+	serializeIn(state, node->getNode("voxelMapLOS"), t.voxelMapLOS);
 	serializeIn(state, node->getNode("imageOffset"), t.imageOffset);
+	serializeIn(state, node->getNode("constitution"), t.constitution);
+	serializeIn(state, node->getNode("explosion_power"), t.explosion_power);
+	serializeIn(state, node->getNode("explosion_radius_divizor"), t.explosion_radius_divizor);
+	serializeIn(state, node->getNode("damaged_map_part"), t.damaged_map_part);
+	serializeIn(state, node->getNode("animation_frames"), t.animation_frames);
 }
 
 template <>
@@ -1518,7 +1531,7 @@ template <> void serializeOut(sp<SerializationNode> node, const Battle &battle)
 	serializeOut(node->addSection("initial_left_walls"), battle.initial_left_walls);
 	serializeOut(node->addSection("initial_right_walls"), battle.initial_right_walls);
 	serializeOut(node->addSection("initial_scenery"), battle.initial_scenery);
-	serializeOut(node->addSection("ground"), battle.map_parts);
+	serializeOut(node->addSection("map_parts"), battle.map_parts);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const BattleMapPartType::Type &t)
@@ -1526,13 +1539,25 @@ template <> void serializeOut(sp<SerializationNode> node, const BattleMapPartTyp
 	serializeOut(node, t, BattleMapPartType::TypeMap);
 }
 
+template <> void serializeOut(sp<SerializationNode> node, const BattleMapPartType::ExplosionType &t)
+{
+	serializeOut(node, t, BattleMapPartType::ExplosionTypeMap);
+}
+
 template <> void serializeOut(sp<SerializationNode> node, const BattleMapPartType &t)
 {
 	serializeOut(node->addNode("type"), t.type);
 	serializeOut(node->addNode("sprite"), t.sprite);
 	serializeOut(node->addNode("strategySprite"), t.strategySprite);
-	serializeOut(node->addNode("voxelMap"), t.voxelMap);
+	serializeOut(node->addNode("voxelMapLOF"), t.voxelMapLOF);
+	serializeOut(node->addNode("voxelMapLOS"), t.voxelMapLOS);
 	serializeOut(node->addNode("imageOffset"), t.imageOffset);
+	serializeOut(node->addNode("constitution"), t.constitution);
+	serializeOut(node->addNode("explosion_power"), t.explosion_power);
+	serializeOut(node->addNode("explosion_radius_divizor"), t.explosion_radius_divizor);
+	serializeOut(node->addNode("explosion_type"), t.explosion_type);
+	serializeOut(node->addNode("damaged_map_part"), t.damaged_map_part);
+	serializeOut(node->addNode("animation_frames"), t.animation_frames);
 }
 
 template <> void serializeOut(sp<SerializationNode> node, const VehicleMission &m)

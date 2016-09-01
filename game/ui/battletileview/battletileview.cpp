@@ -12,14 +12,14 @@ BattleTileView::BattleTileView(BattleTileMap &map, Vec3<int> isoTileSize, Vec2<i
     : Stage(), map(map), isoTileSize(isoTileSize), stratTileSize(stratTileSize),
       viewMode(initialMode), scrollUp(false), scrollDown(false), scrollLeft(false),
       scrollRight(false), dpySize(fw().displayGetWidth(), fw().displayGetHeight()),
-      strategyViewBoxColour(212, 176, 172, 255), strategyViewBoxThickness(2.0f),
-      maxZDraw(map.size.z), centerPos(0, 0, 0), isoScrollSpeed(0.5, 0.5),
-      stratScrollSpeed(2.0f, 2.0f), selectedTilePosition(0, 0, 0),
+      strategyViewBoxColour(212, 176, 172, 255), strategyViewBoxThickness(2.0f), hideGround(false),
+      hideLeftWall(false), hideRightWall(false), hideScenery(false), currentZLevel(1),
+      layerDrawingMode(BattleLayerDrawingMode::UpToCurrentLevel), maxZDraw(map.size.z),
+      centerPos(0, 0, 0), isoScrollSpeed(0.5, 0.5), stratScrollSpeed(2.0f, 2.0f),
+      selectedTilePosition(0, 0, 0),
       selectedTileImageBack(fw().data->loadImage("CITY/SELECTED-CITYTILE-BACK.PNG")),
       selectedTileImageFront(fw().data->loadImage("CITY/SELECTED-CITYTILE-FRONT.PNG")),
-      pal(fw().data->loadPalette("xcom3/tacdata/tactical.pal")), hideGround(false),
-      hideLeftWall(false), hideRightWall(false), hideScenery(false), currentZLevel(1),
-      layerDrawingMode(BattleLayerDrawingMode::UpToCurrentLevel)
+      pal(fw().data->loadPalette("xcom3/tacdata/tactical.pal"))
 {
 	LogInfo("dpySize: {%d,%d}", dpySize.x, dpySize.y);
 }

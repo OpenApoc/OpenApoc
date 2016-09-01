@@ -38,7 +38,7 @@ void BattleTileObjectMapPart::draw(Renderer &r, TileTransform &transform,
 		r.draw(sprite, transformedScreenPos);
 }
 
-const BattleTileObject::Type BattleTileObjectMapPart::convertType(BattleMapPartType::Type type)
+BattleTileObject::Type BattleTileObjectMapPart::convertType(BattleMapPartType::Type type)
 {
 	switch (type)
 	{
@@ -74,7 +74,7 @@ sp<BattleMapPart> BattleTileObjectMapPart::getOwner()
 	return s;
 }
 
-sp<VoxelMap> BattleTileObjectMapPart::getVoxelMap() { return this->getOwner()->type->voxelMap; }
+sp<VoxelMap> BattleTileObjectMapPart::getVoxelMap() { return this->getOwner()->type->voxelMapLOF; }
 
 Vec3<float> BattleTileObjectMapPart::getPosition() const
 {

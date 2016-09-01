@@ -19,7 +19,7 @@ class BattleTileObjectMapPart : public BattleTileObject
 	sp<VoxelMap> getVoxelMap() override;
 	Vec3<float> getPosition() const override;
 
-	static const BattleTileObject::Type convertType(BattleMapPartType::Type type);
+	static BattleTileObject::Type convertType(BattleMapPartType::Type type);
 
   private:
 	friend class BattleTileMap;

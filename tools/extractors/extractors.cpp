@@ -37,8 +37,6 @@ void InitialGameStateExtractor::extract(GameState &state, Difficulty difficulty)
 
 	UString map = "57UFO7";
 	UString sec = "01";
-	// UString map = "58UFO8";
-	// UString sec = "01";
 	this->extractBattlescapeMap(state, map, sec);
 	this->extractBattlescapeStuff(state, map);
 }
