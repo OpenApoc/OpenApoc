@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checksums>
   <checksum SHA1="fe792f885a9aa7fae8e3ab870bee067aaeb168ae">gamestate.xml</checksum>
-  <checksum SHA1="e35fd767881ba69057eac4881e69e211d278cbb1">gamestate/agent_equipment.xml</checksum>
+  <checksum SHA1="b47ad9c2cff9373f65214f5ee2e1aa18603b8874">gamestate/agent_equipment.xml</checksum>
   <checksum SHA1="b2db496939d0d36b94f9224721bc9c869672160e">gamestate/agent_generator.xml</checksum>
   <checksum SHA1="1dca603614f430b312839921dfaffaea1ba434b8">gamestate/agents.xml</checksum>
   <checksum SHA1="0b1fc22224d3d4d266780fe20b1db95ee052bba0">gamestate/base_layouts.xml</checksum>
@@ -11,7 +11,7 @@
   <checksum SHA1="ea3a7441cdc53ee8bf01b45af92cf7e6bd8af603">gamestate/battle/initial_left_walls.xml</checksum>
   <checksum SHA1="fd43764d5b6f53f06c6808354a37596a4e0f5df5">gamestate/battle/initial_right_walls.xml</checksum>
   <checksum SHA1="9ecd264c9e25ea312a81b5f1f65721348efe0852">gamestate/battle/initial_scenery.xml</checksum>
-  <checksum SHA1="fb53536a1f6d94f8fd2834f5fe0c236153618c4a">gamestate/battle/map_part_types.xml</checksum>
+  <checksum SHA1="c23f588f26c8627df303c27b1f2c8ea904dc7647">gamestate/battle/map_part_types.xml</checksum>
   <checksum SHA1="e1c069c2987b2452b3a2fba4a9883678533500cc">gamestate/battle/map_parts.xml</checksum>
   <checksum SHA1="9f859d3887a364db435ca7462c26d9522ffca803">gamestate/cities.xml</checksum>
   <checksum SHA1="cb08ea66d936fb8e5d61185fe6cc282d2834e781">gamestate/cities/CITYMAP_ALIEN.xml</checksum>
@@ -40,6 +40,6 @@
   <checksum SHA1="959bfc548b7af34b07503515ab4af26e948ef64c">gamestate/ufopaedia.xml</checksum>
   <checksum SHA1="a0d7a54830685b0572941e46747d90533602548e">gamestate/vehicle_ammo.xml</checksum>
   <checksum SHA1="8a7755f371d041f0d85caf5d8b9936e380ca9c02">gamestate/vehicle_equipment.xml</checksum>
-  <checksum SHA1="cac9a800a17738dd7a4c80390479d552bf0545bd">gamestate/vehicle_types.xml</checksum>
+  <checksum SHA1="af910da2c9ac0cdeb1d9287eb408115ea9db24bb">gamestate/vehicle_types.xml</checksum>
   <checksum SHA1="d12ae543608589a131c3f3ff6aa85247688bde81">gamestate/vehicles.xml</checksum>
 </checksums>

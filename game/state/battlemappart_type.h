@@ -33,7 +33,8 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 
 	sp<Image> sprite;
 	sp<Image> strategySprite;
-	sp<VoxelMap> voxelMap;
+	sp<VoxelMap> voxelMapLOF;
+	sp<VoxelMap> voxelMapLOS;
 	Vec2<float> imageOffset;
 
 	int constitution;

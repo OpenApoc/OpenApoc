@@ -74,7 +74,7 @@ sp<BattleMapPart> BattleTileObjectMapPart::getOwner()
 	return s;
 }
 
-sp<VoxelMap> BattleTileObjectMapPart::getVoxelMap() { return this->getOwner()->type->voxelMap; }
+sp<VoxelMap> BattleTileObjectMapPart::getVoxelMap() { return this->getOwner()->type->voxelMapLOF; }
 
 Vec3<float> BattleTileObjectMapPart::getPosition() const
 {

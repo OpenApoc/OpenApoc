@@ -19,7 +19,8 @@ struct battlemap_entry
 	uint8_t explosion_type;
 	uint8_t unknown10;
 	uint8_t unknown1[7];
-	uint8_t loftemps[40];
+	uint8_t loftemps_lof[20];
+	uint8_t loftemps_los[20];
 	uint8_t unknown2[5];
 	uint8_t damaged_idx;
 	uint8_t unknown6;
@@ -78,46 +79,63 @@ static void readBattleMapParts(GameState &state, BattleMapPartType::Type type,
 		auto object = mksp<BattleMapPartType>();
 		object->type = type;
 		object->constitution = entry.constitution;
-		object->explosion_power = entry.explosion_power;
-		object->explosion_radius_divizor = entry.explosion_radius_divizor;
-		switch (entry.explosion_type)
+		if (entry.explosion_type > 4)
 		{
-			case 0:
-				object->explosion_type = BattleMapPartType::ExplosionType::BlankOrSmoke;
-				break;
-			case 1:
-				object->explosion_type = BattleMapPartType::ExplosionType::AlienGas;
-				break;
-			case 2:
-				object->explosion_type = BattleMapPartType::ExplosionType::Incendary;
-				break;
-			case 3:
-				object->explosion_type = BattleMapPartType::ExplosionType::StunGas;
-				break;
-			case 4:
-				object->explosion_type = BattleMapPartType::ExplosionType::HighExplosive;
-				break;
-			default:
-				LogError("Unexpected explosion type %d for ID %s", (int)entry.explosion_type,
-				         id.cStr());
-				break;
+			LogWarning("Unexpected explosion type %d for ID %s", (int)entry.explosion_type,
+			           id.cStr());
+		}
+		else
+		{
+			object->explosion_power = entry.explosion_power;
+			object->explosion_radius_divizor = entry.explosion_radius_divizor;
+			switch (entry.explosion_type)
+			{
+				case 0:
+					object->explosion_type = BattleMapPartType::ExplosionType::BlankOrSmoke;
+					break;
+				case 1:
+					object->explosion_type = BattleMapPartType::ExplosionType::AlienGas;
+					break;
+				case 2:
+					object->explosion_type = BattleMapPartType::ExplosionType::Incendary;
+					break;
+				case 3:
+					object->explosion_type = BattleMapPartType::ExplosionType::StunGas;
+					break;
+				case 4:
+					object->explosion_type = BattleMapPartType::ExplosionType::HighExplosive;
+					break;
+			}
 		}
 
-		object->voxelMap = mksp<VoxelMap>(Vec3<int>{32, 32, 40});
-		for (int slice = 0; slice < 40; slice++)
+		object->voxelMapLOF = mksp<VoxelMap>(Vec3<int>{32, 32, 20});
+		for (int slice = 0; slice < 20; slice++)
 		{
 			auto lofString =
 			    UString::format("LOFTEMPS:%s:%s:%u", loftempsFile.cStr(), loftempsTab.cStr(),
-			                    (unsigned int)entry.loftemps[slice]);
+			                    (unsigned int)entry.loftemps_lof[slice]);
 			auto loftemp = fw().data->loadVoxelSlice(lofString);
 			if (!loftemp)
 			{
 				LogError("Failed to open voxel slice \"%s\"", lofString.cStr());
 				return;
 			}
-			object->voxelMap->slices[slice] = loftemp;
+			object->voxelMapLOF->slices[slice] = loftemp;
 		}
-
+		object->voxelMapLOS = mksp<VoxelMap>(Vec3<int>{32, 32, 20});
+		for (int slice = 0; slice < 20; slice++)
+		{
+			auto lofString =
+			    UString::format("LOFTEMPS:%s:%s:%u", loftempsFile.cStr(), loftempsTab.cStr(),
+			                    (unsigned int)entry.loftemps_los[slice]);
+			auto loftemp = fw().data->loadVoxelSlice(lofString);
+			if (!loftemp)
+			{
+				LogError("Failed to open voxel slice \"%s\"", lofString.cStr());
+				return;
+			}
+			object->voxelMapLOF->slices[slice] = loftemp;
+		}
 		if (entry.damaged_idx)
 		{
 			object->damaged_map_part = {&state,
@@ -128,12 +146,31 @@ static void readBattleMapParts(GameState &state, BattleMapPartType::Type type,
 		// field that are not actually animated via animated frames,
 		if (entry.animation_length > 1)
 		{
-			for (int j = 0; j < entry.animation_length; j++)
+			auto animateTabFileName = dirName + "/" + "ANIMATE.TAB";
+			auto animateTabFile = fw().data->fs.open(animateTabFileName);
+			if (!animateTabFile)
 			{
-				auto animateString =
-				    UString::format("PCK:%s%s.PCK:%s%s.TAB:%u", dirName.cStr(), "ANIMATE",
-				                    dirName.cStr(), "ANIMATE", entry.animation_idx + j);
-				object->animation_frames.push_back(fw().data->loadImage(animateString));
+				LogError("Failed to open animate sprite TAB file \"%s\"",
+				         animateTabFileName.cStr());
+				return;
+			}
+
+			size_t animateSpriteCount = animateTabFile.size() / 4;
+
+			if (animateSpriteCount < entry.animation_idx + entry.animation_length)
+			{
+				LogWarning("Bogus animation value, animation frames not present for ID %s",
+				           id.cStr());
+			}
+			else
+			{
+				for (int j = 0; j < entry.animation_length; j++)
+				{
+					auto animateString =
+					    UString::format("PCK:%s%s.PCK:%s%s.TAB:%u", dirName.cStr(), "ANIMATE",
+					                    dirName.cStr(), "ANIMATE", entry.animation_idx + j);
+					object->animation_frames.push_back(fw().data->loadImage(animateString));
+				}
 			}
 		}
 
@@ -150,13 +187,6 @@ static void readBattleMapParts(GameState &state, BattleMapPartType::Type type,
 		object->imageOffset = {24, 48};
 
 		state.battle.map_part_types[id] = object;
-
-		if (false) // debug output to get images into files
-		{
-			auto tmp = std::dynamic_pointer_cast<PaletteImage>(object->sprite)
-			               ->toRGBImage(fw().data->loadPalette("xcom3/tacdata/tactical.pal"));
-			tmp->saveBitmap("E:\\TEMP\\X\\" + id + ".bmp");
-		}
 	}
 }
 

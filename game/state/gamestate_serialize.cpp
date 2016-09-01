@@ -703,7 +703,8 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, BattleMapPa
 	serializeIn(state, node->getNode("type"), t.type);
 	serializeIn(state, node->getNode("sprite"), t.sprite);
 	serializeIn(state, node->getNode("strategySprite"), t.strategySprite);
-	serializeIn(state, node->getNode("voxelMap"), t.voxelMap);
+	serializeIn(state, node->getNode("voxelMapLOF"), t.voxelMapLOF);
+	serializeIn(state, node->getNode("voxelMapLOS"), t.voxelMapLOS);
 	serializeIn(state, node->getNode("imageOffset"), t.imageOffset);
 	serializeIn(state, node->getNode("constitution"), t.constitution);
 	serializeIn(state, node->getNode("explosion_power"), t.explosion_power);
@@ -1548,7 +1549,8 @@ template <> void serializeOut(sp<SerializationNode> node, const BattleMapPartTyp
 	serializeOut(node->addNode("type"), t.type);
 	serializeOut(node->addNode("sprite"), t.sprite);
 	serializeOut(node->addNode("strategySprite"), t.strategySprite);
-	serializeOut(node->addNode("voxelMap"), t.voxelMap);
+	serializeOut(node->addNode("voxelMapLOF"), t.voxelMapLOF);
+	serializeOut(node->addNode("voxelMapLOS"), t.voxelMapLOS);
 	serializeOut(node->addNode("imageOffset"), t.imageOffset);
 	serializeOut(node->addNode("constitution"), t.constitution);
 	serializeOut(node->addNode("explosion_power"), t.explosion_power);
