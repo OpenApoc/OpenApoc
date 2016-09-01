@@ -59,6 +59,21 @@ template <typename T> bool operator!=(const StateRefMap<T> &a, const StateRefMap
 	return !(a == b);
 }
 
+template <typename T> bool operator==(const sp<T> &a, const sp<T> &b)
+{
+	if (a.get() == b.get())
+	{
+		return true;
+	}
+	if (!a || !b)
+	{
+		return false;
+	}
+	return *a == *b;
+}
+
+template <typename T> bool operator!=(const sp<T> &a, const sp<T> &b) { return !(a == b); }
+
 void serializeIn(const GameState *, sp<SerializationNode> node, UString &str);
 
 void serializeIn(const GameState *, sp<SerializationNode> node, unsigned int &val);

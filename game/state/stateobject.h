@@ -121,8 +121,15 @@ template <typename T> class StateRef
 			resolve();
 		return !!obj;
 	}
-	bool operator==(const StateRef<T> &other) const { return (this->id == other.id); }
-	bool operator!=(const StateRef<T> &other) const { return (this->id != other.id); }
+	bool operator==(const StateRef<T> &other) const
+	{
+		if (this->id != other.id)
+		{
+			return false;
+		}
+		return true;
+	}
+	bool operator!=(const StateRef<T> &other) const { return !(*this == other); }
 	bool operator==(const sp<T> &other) const
 	{
 		if (!obj)

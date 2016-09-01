@@ -17,6 +17,9 @@ class VoxelSlice : public ResObject
 	void setBit(Vec2<int> pos, bool b);
 	const Vec2<int> &getSize() const { return this->size; }
 
+	bool operator==(const VoxelSlice &other) const;
+	bool operator!=(const VoxelSlice &other) const;
+
 	VoxelSlice(Vec2<int> size);
 	VoxelSlice() = default;
 };

@@ -89,4 +89,45 @@ void VoxelMap::calculateCentre()
 	}
 }
 
+bool VoxelMap::operator==(const VoxelMap &other) const
+{
+	if (this->size != other.size)
+	{
+		return false;
+	}
+	for (int i = 0; i < this->slices.size(); i++)
+	{
+		if (this->slices[i] == other.slices[i])
+		{
+			continue;
+		}
+		if (!this->slices[i] || !other.slices[i])
+		{
+			return false;
+		}
+		if (*this->slices[i] != *other.slices[i])
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+bool VoxelMap::operator!=(const VoxelMap &other) const { return !(*this == other); }
+
+bool VoxelSlice::operator==(const VoxelSlice &other) const
+{
+	if (this->size != other.size)
+	{
+		return false;
+	}
+	if (this->bits != other.bits)
+	{
+		return false;
+	}
+	return true;
+}
+
+bool VoxelSlice::operator!=(const VoxelSlice &other) const { return !(*this == other); }
+
 } // namesapce OpenApoc
