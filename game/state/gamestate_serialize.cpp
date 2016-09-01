@@ -308,13 +308,6 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, VoxelMap &m
 	serializeIn(state, node->getNode("slices"), map.slices);
 }
 
-void serializeIn(const GameState *state, sp<SerializationNode> node, VEquipmentType::User &user)
-{
-	if (!node)
-		return;
-	serializeIn(state, node, user, VEquipmentType::UserMap);
-}
-
 template <typename T>
 void serializeIn(const GameState *state, sp<SerializationNode> node, std::set<T> &set)
 {
@@ -330,17 +323,6 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, std::set<T>
 	}
 }
 
-void serializeIn(const GameState *state, sp<SerializationNode> node,
-                 UFOIncursion::PrimaryMission &t)
-{
-	serializeIn(state, node, t, UFOIncursion::primaryMissionMap);
-}
-
-void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchDependency::Type &t)
-{
-	serializeIn(state, node, t, ResearchDependency::TypeMap);
-}
-
 void serializeIn(const GameState *state, sp<SerializationNode> node, Colour &c)
 {
 	if (!node)
@@ -349,112 +331,6 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, Colour &c)
 	serializeIn(state, node->getNode("g"), c.g);
 	serializeIn(state, node->getNode("b"), c.b);
 	serializeIn(state, node->getNode("a"), c.a);
-}
-
-void serializeIn(const GameState *state, sp<SerializationNode> node, VehicleType::AlignmentX &t)
-{
-	serializeIn(state, node, t, VehicleType::AlignmentXMap);
-}
-void serializeIn(const GameState *state, sp<SerializationNode> node, VehicleType::AlignmentY &t)
-{
-	serializeIn(state, node, t, VehicleType::AlignmentYMap);
-}
-void serializeIn(const GameState *state, sp<SerializationNode> node, Projectile::Type &t)
-{
-	serializeIn(state, node, t, Projectile::TypeMap);
-}
-void serializeIn(const GameState *state, sp<SerializationNode> node, SceneryTileType::TileType &t)
-{
-	serializeIn(state, node, t, SceneryTileType::TileTypeMap);
-}
-void serializeIn(const GameState *state, sp<SerializationNode> node, SceneryTileType::RoadType &t)
-{
-	serializeIn(state, node, t, SceneryTileType::RoadTypeMap);
-}
-void serializeIn(const GameState *state, sp<SerializationNode> node, SceneryTileType::WalkMode &t)
-{
-	serializeIn(state, node, t, SceneryTileType::WalkModeMap);
-}
-void serializeIn(const GameState *state, sp<SerializationNode> node, VEquipmentType::Type &t)
-{
-	serializeIn(state, node, t, VEquipmentType::TypeMap);
-}
-void serializeIn(const GameState *state, sp<SerializationNode> node, FacilityType::Capacity &t)
-{
-	serializeIn(state, node, t, FacilityType::CapacityMap);
-}
-void serializeIn(const GameState *state, sp<SerializationNode> node, VehicleType::Type &t)
-{
-	serializeIn(state, node, t, VehicleType::TypeMap);
-}
-void serializeIn(const GameState *state, sp<SerializationNode> node, UfopaediaEntry::Data &t)
-{
-	serializeIn(state, node, t, UfopaediaEntry::DataMap);
-}
-void serializeIn(const GameState *state, sp<SerializationNode> node,
-                 VehicleType::ArmourDirection &t)
-{
-	serializeIn(state, node, t, VehicleType::ArmourDirectionMap);
-}
-void serializeIn(const GameState *state, sp<SerializationNode> node, VehicleType::Banking &t)
-{
-	serializeIn(state, node, t, VehicleType::BankingMap);
-}
-
-template <>
-void serializeIn(const GameState *state, sp<SerializationNode> node,
-                 BattleMapPartType::ExplosionType &t)
-{
-	serializeIn(state, node, t, BattleMapPartType::ExplosionTypeMap);
-}
-
-void serializeIn(const GameState *state, sp<SerializationNode> node, BattleMapPartType::Type &t)
-{
-	serializeIn(state, node, t, BattleMapPartType::TypeMap);
-}
-
-void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchTopic::Type &t)
-{
-	serializeIn(state, node, t, ResearchTopic::TypeMap);
-}
-
-void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchTopic::LabSize &s)
-{
-	serializeIn(state, node, s, ResearchTopic::LabSizeMap);
-}
-
-void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchTopic::ItemType &s)
-{
-	serializeIn(state, node, s, ResearchTopic::ItemTypeMap);
-}
-
-void serializeIn(const GameState *state, sp<SerializationNode> node, Vehicle::AttackMode &t)
-{
-	serializeIn(state, node, t, Vehicle::AttackModeMap);
-}
-void serializeIn(const GameState *state, sp<SerializationNode> node, Vehicle::Altitude &t)
-{
-	serializeIn(state, node, t, Vehicle::AltitudeMap);
-}
-void serializeIn(const GameState *state, sp<SerializationNode> node, VEquipment::WeaponState &t)
-{
-	serializeIn(state, node, t, VEquipment::WeaponStateMap);
-}
-void serializeIn(const GameState *state, sp<SerializationNode> node, VehicleMission::MissionType &t)
-{
-	serializeIn(state, node, t, VehicleMission::TypeMap);
-}
-void serializeIn(const GameState *state, sp<SerializationNode> node, Agent::Type &t)
-{
-	serializeIn(state, node, t, Agent::TypeMap);
-}
-void serializeIn(const GameState *state, sp<SerializationNode> node, Agent::Gender &g)
-{
-	serializeIn(state, node, g, Agent::GenderMap);
-}
-void serializeIn(const GameState *state, sp<SerializationNode> node, Agent::Species &s)
-{
-	serializeIn(state, node, s, Agent::SpeciesMap);
 }
 
 void serializeIn(const GameState *state, sp<SerializationNode> node, Xorshift128Plus<uint32_t> &t)

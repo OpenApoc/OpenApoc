@@ -275,16 +275,11 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, std::vector
 // std::vector<bool> is special
 void serializeIn(const GameState *, sp<SerializationNode> node, std::vector<bool> &vector);
 
-void serializeIn(const GameState *state, sp<SerializationNode> node,
-                 VehicleType::EquipmentLayoutSlot &slot);
-
 void serializeIn(const GameState *, sp<SerializationNode> node, sp<VoxelSlice> &ptr);
 
 void serializeIn(const GameState *, sp<SerializationNode> node, sp<Sample> &ptr);
 
 void serializeIn(const GameState *state, sp<SerializationNode> node, VoxelMap &map);
-
-void serializeIn(const GameState *state, sp<SerializationNode> node, VEquipmentType::User &user);
 
 template <typename T>
 void serializeIn(const GameState *state, sp<SerializationNode> node, std::set<T> &set)
@@ -301,44 +296,20 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, std::set<T>
 	}
 }
 
-void serializeIn(const GameState *state, sp<SerializationNode> node, VehicleType::AlignmentX &t);
-void serializeIn(const GameState *state, sp<SerializationNode> node, VehicleType::AlignmentY &t);
-void serializeIn(const GameState *state, sp<SerializationNode> node, Projectile::Type &t);
-void serializeIn(const GameState *state, sp<SerializationNode> node, SceneryTileType::TileType &t);
-void serializeIn(const GameState *state, sp<SerializationNode> node, SceneryTileType::RoadType &t);
-void serializeIn(const GameState *state, sp<SerializationNode> node, SceneryTileType::WalkMode &t);
-void serializeIn(const GameState *state, sp<SerializationNode> node, VEquipmentType::Type &t);
-void serializeIn(const GameState *state, sp<SerializationNode> node, FacilityType::Capacity &t);
-void serializeIn(const GameState *state, sp<SerializationNode> node, VehicleType::Type &t);
-void serializeIn(const GameState *state, sp<SerializationNode> node, UfopaediaEntry::Data &t);
-void serializeIn(const GameState *state, sp<SerializationNode> node,
-                 VehicleType::ArmourDirection &t);
-void serializeIn(const GameState *state, sp<SerializationNode> node, VehicleType::Banking &t);
-
-void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchDependency::Type &t);
-
-void serializeIn(const GameState *state, sp<SerializationNode> node, BattleMapPartType::Type &t);
-
-void serializeIn(const GameState *state, sp<SerializationNode> node, BattleMapPartType &t);
-
-void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchTopic::Type &t);
-
-void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchTopic::LabSize &s);
-
-void serializeIn(const GameState *state, sp<SerializationNode> node, ResearchTopic::ItemType &s);
-
-void serializeIn(const GameState *state, sp<SerializationNode> node, Vehicle::AttackMode &t);
-void serializeIn(const GameState *state, sp<SerializationNode> node, Vehicle::Altitude &t);
-void serializeIn(const GameState *state, sp<SerializationNode> node, VEquipment::WeaponState &t);
-void serializeIn(const GameState *state, sp<SerializationNode> node,
-                 VehicleMission::MissionType &t);
-void serializeIn(const GameState *state, sp<SerializationNode> node, Agent::Type &t);
-void serializeIn(const GameState *state, sp<SerializationNode> node, Agent::Gender &g);
-void serializeIn(const GameState *state, sp<SerializationNode> node, Agent::Species &s);
 void serializeIn(const GameState *state, sp<SerializationNode> node, Colour &c);
-void serializeIn(const GameState *state, sp<SerializationNode> node,
-                 UFOIncursion::PrimaryMission &t);
-
 void serializeIn(const GameState *state, sp<SerializationNode> node, Xorshift128Plus<uint32_t> &t);
 
+template <typename T>
+void serializeOut(sp<SerializationNode> node, const T &val, const T &ref,
+                  const std::map<T, UString> &valueMap)
+{
+	if (val == ref)
+		return;
+	auto it = valueMap.find(val);
+	if (it == valueMap.end())
+	{
+		LogError("Invalid enum value for %s: %d", typeid(T).name(), (int)val);
+	}
+	node->setValue(it->second);
+}
 } // namespace OpenApoc

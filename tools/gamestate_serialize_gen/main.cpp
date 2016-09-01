@@ -149,7 +149,7 @@ void writeHeader(std::ofstream &out, const StateDefinition &state)
 	{
 		out << "void serializeIn(const GameState *, sp<SerializationNode> node, " << e.name
 		    << " &val);\n";
-		out << "void serializeOut(sp<SerializationNode> node, " << e.name << " &obj, " << e.name
+		out << "void serializeOut(sp<SerializationNode> node, " << e.name << " &val, " << e.name
 		    << " &ref);\n";
 	}
 
@@ -195,7 +195,8 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 		}
 
 		out << "}\n";
-		/*
+
+#if 0
 
 		out << "void serializeOut(sp<SerializationNode> node, " << object.name << " &obj, "
 		    << object.name << " &ref)\n{\n";
@@ -204,28 +205,28 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 
 		for (auto &member : object.members)
 		{
-		    std::string serializeFn;
-		    std::string newNodeFn;
-		    switch (member.second.type)
-		    {
-		        case NodeType::Normal:
-		            serializeFn = "serializeOut";
-		            newNodeFn = "addNode";
-		        case NodeType::Section:
-		            serializeFn = "serializeOut";
-		            newNodeFn = "addSection";
-		            break;
-		        case NodeType::SectionMap:
-		            serializeFn = "serializeOutSectionMap";
-		            newNodeFn = "addSection";
-		            break;
-		    }
-		    out << "\t" << serializeFn << "(node->" << newNodeFn << "(\"" << member.first
-		        << "\"), obj." << member.first << ", ref." << member.first << ");\n";
+			std::string serializeFn;
+			std::string newNodeFn;
+			switch (member.second.type)
+			{
+				case NodeType::Normal:
+					serializeFn = "serializeOut";
+					newNodeFn = "addNode";
+				case NodeType::Section:
+					serializeFn = "serializeOut";
+					newNodeFn = "addSection";
+					break;
+				case NodeType::SectionMap:
+					serializeFn = "serializeOutSectionMap";
+					newNodeFn = "addSection";
+					break;
+			}
+			out << "\t" << serializeFn << "(node->" << newNodeFn << "(\"" << member.first
+			    << "\"), obj." << member.first << ", ref." << member.first << ");\n";
 		}
 
 		out << "}\n";
-		*/
+#endif
 
 		out << "bool operator==(const " << object.name << " &a, const " << object.name
 		    << " &b)\n{\n";
@@ -244,22 +245,27 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 	for (auto &e : state.enums)
 	{
 		out << "void serializeIn(const GameState *state, sp<SerializationNode> node, " << e.name
-		    << " &val)\n{\n";
-
-		out << "\tif (!node) return;\n"
-		    << "\tauto str = node->getValue();\n";
-
+		    << " &val)\n{\n"
+		    << "\tstatic const std::map<" << e.name << ", UString> valueMap = {\n";
 		for (auto &value : e.values)
 		{
-			out << "\tif (str == \"" << value << "\")\n\t{\n"
-			    << "\t\tval = " << e.name << "::" << value << ";\n"
-			    << "\t\treturn;\n"
-			    << "\t}\n";
+			out << "\t\t{" << e.name << "::" << value << ", \"" << value << "\"},\n";
 		}
+		out << "\t};\n";
 
-		out << "\tthrow SerializationException("
-		    << "UString::format(\"Invalid enum value for " << e.name
-		    << ": \\\"%s\\\"\", str), node);\n"
+		out << "\tserializeIn(state, node, val, valueMap);\n"
+		    << "}\n";
+
+		out << "void serializeOut(sp<SerializationNode> node, const " << e.name << " &val, const "
+		    << e.name << " &ref)\n{\n"
+		    << "\tstatic const std::map<" << e.name << ", UString> valueMap = {\n";
+		for (auto &value : e.values)
+		{
+			out << "\t\t{" << e.name << "::" << value << ", \"" << value << "\"},\n";
+		}
+		out << "\t};\n";
+
+		out << "\tserializeOut(node, val, ref, valueMap);\n"
 		    << "}\n";
 	}
 	out << "\n} // namespace OpenApoc\n";
