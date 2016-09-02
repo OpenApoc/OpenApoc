@@ -28,7 +28,7 @@
   <checksum SHA1="4d016461744ec8ec888f07069a7748443fadfae4">gamestate/cities/CITYMAP_HUMAN/portals.xml</checksum>
   <checksum SHA1="52fe14d9a8805ae6a71aac2cbc44de80a1e9d1da">gamestate/cities/CITYMAP_HUMAN/projectiles.xml</checksum>
   <checksum SHA1="a82a57e7e51ae6bdb07ce31bfc996432e7b93ab2">gamestate/cities/CITYMAP_HUMAN/scenery.xml</checksum>
-  <checksum SHA1="4c7cedf6036b08e701d6a67354f65d5b8958685f">gamestate/cities/CITYMAP_HUMAN/tile_types.xml</checksum>
+  <checksum SHA1="c6b3f4db6c0b2bb8cfddee8404478956f1f94d89">gamestate/cities/CITYMAP_HUMAN/tile_types.xml</checksum>
   <checksum SHA1="a680580b5d6f6fd01ba9f246e13234eb1a85cd78">gamestate/doodad_types.xml</checksum>
   <checksum SHA1="d3a18d4c3c29e84b0ff8822dfc633f178c7a27de">gamestate/facility_types.xml</checksum>
   <checksum SHA1="7eab4d2363210a2ccec85dafda7d205534ff63c0">gamestate/organisations.xml</checksum>
