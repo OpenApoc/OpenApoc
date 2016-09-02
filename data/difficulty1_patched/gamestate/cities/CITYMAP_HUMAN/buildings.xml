@@ -17,9 +17,6 @@
             <y>110</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -40,9 +37,6 @@
             <y>89</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -63,9 +57,6 @@
             <y>42</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -86,9 +77,6 @@
             <y>58</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -109,9 +97,6 @@
             <y>37</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -132,9 +117,6 @@
             <y>46</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -155,9 +137,6 @@
             <y>101</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -178,9 +157,6 @@
             <y>83</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -201,9 +177,6 @@
             <y>94</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -224,9 +197,6 @@
             <y>92</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -247,9 +217,6 @@
             <y>120</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -270,9 +237,6 @@
             <y>52</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -293,9 +257,6 @@
             <y>82</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -316,9 +277,6 @@
             <y>32</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -339,9 +297,6 @@
             <y>74</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -362,9 +317,6 @@
             <y>38</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -385,9 +337,6 @@
             <y>81</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -409,8 +358,6 @@
           </p1>
         </bounds>
         <base_layout>BASELAYOUT_5</base_layout>
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -431,9 +378,6 @@
             <y>104</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -454,9 +398,6 @@
             <y>98</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -477,9 +418,6 @@
             <y>40</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -500,9 +438,6 @@
             <y>92</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -523,9 +458,6 @@
             <y>42</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -546,9 +478,6 @@
             <y>38</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -569,9 +498,6 @@
             <y>109</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -592,9 +518,6 @@
             <y>81</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -615,9 +538,6 @@
             <y>28</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -638,9 +558,6 @@
             <y>91</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -661,9 +578,6 @@
             <y>61</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -685,8 +599,6 @@
           </p1>
         </bounds>
         <base_layout>BASELAYOUT_12</base_layout>
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -707,9 +619,6 @@
             <y>37</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -730,9 +639,6 @@
             <y>46</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -753,9 +659,6 @@
             <y>46</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -776,9 +679,6 @@
             <y>70</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -799,9 +699,6 @@
             <y>45</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -822,9 +719,6 @@
             <y>40</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -845,9 +739,6 @@
             <y>75</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -868,9 +759,6 @@
             <y>75</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -891,9 +779,6 @@
             <y>59</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -914,9 +799,6 @@
             <y>52</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -937,9 +819,6 @@
             <y>50</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -960,9 +839,6 @@
             <y>98</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -983,9 +859,6 @@
             <y>58</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1006,9 +879,6 @@
             <y>52</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1029,9 +899,6 @@
             <y>83</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1052,9 +919,6 @@
             <y>68</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1075,9 +939,6 @@
             <y>33</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1098,9 +959,6 @@
             <y>59</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1121,9 +979,6 @@
             <y>32</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1144,9 +999,6 @@
             <y>110</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1167,9 +1019,6 @@
             <y>91</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1190,9 +1039,6 @@
             <y>47</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1213,9 +1059,6 @@
             <y>45</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1236,9 +1079,6 @@
             <y>102</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1259,9 +1099,6 @@
             <y>40</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1282,9 +1119,6 @@
             <y>39</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1305,9 +1139,6 @@
             <y>76</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1328,9 +1159,6 @@
             <y>34</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1351,9 +1179,6 @@
             <y>110</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1374,9 +1199,6 @@
             <y>52</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1397,9 +1219,6 @@
             <y>45</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1421,8 +1240,6 @@
           </p1>
         </bounds>
         <base_layout>BASELAYOUT_3</base_layout>
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1444,8 +1261,6 @@
           </p1>
         </bounds>
         <base_layout>BASELAYOUT_0</base_layout>
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1466,9 +1281,6 @@
             <y>68</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1490,8 +1302,6 @@
           </p1>
         </bounds>
         <base_layout>BASELAYOUT_12</base_layout>
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1512,9 +1322,6 @@
             <y>45</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1536,8 +1343,6 @@
           </p1>
         </bounds>
         <base_layout>BASELAYOUT_2</base_layout>
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>
@@ -1558,9 +1363,6 @@
             <y>64</y>
           </p1>
         </bounds>
-        <base_layout />
-        <landingPadLocations />
-        <landed_vehicles />
       </sp>
     </value>
   </entry>

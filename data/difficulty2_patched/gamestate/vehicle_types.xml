@@ -4,8 +4,6 @@
     <key>VEHICLETYPE_AIRTAXI</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
-        <type>Flying</type>
         <name>Airtaxi</name>
         <manufacturer>ORG_TRANSTELLAR</manufacturer>
         <size>
@@ -17,10 +15,7 @@
           <x>32</x>
           <y>32</y>
         </image_offset>
-        <acceleration>0</acceleration>
-        <top_speed>0</top_speed>
         <health>25</health>
-        <crash_health>0</crash_health>
         <weight>600</weight>
         <armour>
           <entry>
@@ -49,12 +44,8 @@
           </entry>
         </armour>
         <passengers>4</passengers>
-        <aggressiveness>0</aggressiveness>
         <score>10</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:15:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -666,8 +657,6 @@
             <value>PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:50</value>
           </entry>
         </directional_shadow_sprites>
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -697,7 +686,6 @@
         </voxelMap>
         <equipment_layout_slots>
           <entry>
-            <type>Engine</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -728,8 +716,6 @@
     <key>VEHICLETYPE_AIRTRANS</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
-        <type>Flying</type>
         <name>Airtrans</name>
         <manufacturer>ORG_TRANSTELLAR</manufacturer>
         <size>
@@ -741,10 +727,7 @@
           <x>32</x>
           <y>32</y>
         </image_offset>
-        <acceleration>0</acceleration>
-        <top_speed>0</top_speed>
         <health>60</health>
-        <crash_health>0</crash_health>
         <weight>3000</weight>
         <armour>
           <entry>
@@ -773,12 +756,8 @@
           </entry>
         </armour>
         <passengers>8</passengers>
-        <aggressiveness>0</aggressiveness>
         <score>30</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:18:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -1390,8 +1369,6 @@
             <value>PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:50</value>
           </entry>
         </directional_shadow_sprites>
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -1421,7 +1398,6 @@
         </voxelMap>
         <equipment_layout_slots>
           <entry>
-            <type>Engine</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -1437,8 +1413,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -1452,8 +1426,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -1467,8 +1439,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -1482,8 +1452,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -1497,8 +1465,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -1512,8 +1478,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -1527,8 +1491,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -1542,8 +1504,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -1557,8 +1517,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -1572,8 +1530,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -1587,8 +1543,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -1602,8 +1556,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -1617,8 +1569,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -1632,8 +1582,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -1647,8 +1595,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -1662,8 +1608,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -1677,8 +1621,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -1692,8 +1634,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -1707,8 +1647,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -1722,8 +1660,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -1737,8 +1673,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -1752,8 +1686,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -1767,8 +1699,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -1782,8 +1712,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -1854,7 +1782,6 @@
     <key>VEHICLETYPE_ALIEN_ASSAULT_SHIP</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
         <type>UFO</type>
         <name>Alien Assault Ship</name>
         <manufacturer>ORG_ALIEN</manufacturer>
@@ -1902,9 +1829,6 @@
         <aggressiveness>550</aggressiveness>
         <score>300</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:9:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -1915,7 +1839,6 @@
             <value>PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:572</value>
           </entry>
         </directional_strategy_sprites>
-        <directional_sprites />
         <shadow_offset>
           <x>32</x>
           <y>0</y>
@@ -2020,8 +1943,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -2035,8 +1956,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -2050,8 +1969,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -2065,8 +1982,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -2080,8 +1995,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -2095,8 +2008,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -2110,8 +2021,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -2125,8 +2034,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -2140,8 +2047,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -2155,8 +2060,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -2170,8 +2073,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -2185,8 +2086,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -2200,8 +2099,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -2215,8 +2112,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -2230,8 +2125,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -2245,8 +2138,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -2260,8 +2151,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -2275,8 +2164,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -2290,8 +2177,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -2305,8 +2190,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -2320,8 +2203,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -2335,8 +2216,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -2350,8 +2229,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -2365,8 +2242,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -2416,7 +2291,6 @@
     <key>VEHICLETYPE_ALIEN_BATTLESHIP</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
         <type>UFO</type>
         <name>Alien Battleship</name>
         <manufacturer>ORG_ALIEN</manufacturer>
@@ -2464,9 +2338,6 @@
         <aggressiveness>800</aggressiveness>
         <score>500</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:12:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -2477,7 +2348,6 @@
             <value>PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:572</value>
           </entry>
         </directional_strategy_sprites>
-        <directional_sprites />
         <shadow_offset>
           <x>64</x>
           <y>0</y>
@@ -2589,8 +2459,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -2604,8 +2472,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -2619,8 +2485,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -2634,8 +2498,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -2649,8 +2511,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -2664,8 +2524,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -2679,8 +2537,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -2694,8 +2550,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -2709,8 +2563,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -2724,8 +2576,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -2739,8 +2589,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -2754,8 +2602,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -2769,8 +2615,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -2784,8 +2628,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -2799,8 +2641,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -2814,8 +2654,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -2829,8 +2667,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -2844,8 +2680,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -2859,8 +2693,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -2874,8 +2706,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -2889,8 +2719,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -2904,8 +2732,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -2919,8 +2745,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -2934,8 +2758,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -2985,7 +2807,6 @@
     <key>VEHICLETYPE_ALIEN_BOMBER</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
         <type>UFO</type>
         <name>Alien Bomber</name>
         <manufacturer>ORG_ALIEN</manufacturer>
@@ -3033,9 +2854,6 @@
         <aggressiveness>850</aggressiveness>
         <score>300</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:10:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -3046,7 +2864,6 @@
             <value>PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:572</value>
           </entry>
         </directional_strategy_sprites>
-        <directional_sprites />
         <shadow_offset>
           <x>32</x>
           <y>0</y>
@@ -3151,8 +2968,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -3166,8 +2981,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -3181,8 +2994,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -3196,8 +3007,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -3211,8 +3020,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -3226,8 +3033,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -3241,8 +3046,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -3256,8 +3059,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -3271,8 +3072,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -3286,8 +3085,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -3301,8 +3098,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -3316,8 +3111,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -3331,8 +3124,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -3346,8 +3137,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -3361,8 +3150,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -3376,8 +3163,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -3391,8 +3176,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -3406,8 +3189,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -3421,8 +3202,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -3436,8 +3215,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -3451,8 +3228,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -3466,8 +3241,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -3481,8 +3254,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -3496,8 +3267,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -3554,7 +3323,6 @@
     <key>VEHICLETYPE_ALIEN_DESTROYER</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
         <type>UFO</type>
         <name>Alien Destroyer</name>
         <manufacturer>ORG_ALIEN</manufacturer>
@@ -3602,9 +3370,6 @@
         <aggressiveness>750</aggressiveness>
         <score>250</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:8:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -3615,7 +3380,6 @@
             <value>PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:572</value>
           </entry>
         </directional_strategy_sprites>
-        <directional_sprites />
         <shadow_offset>
           <x>32</x>
           <y>0</y>
@@ -3720,8 +3484,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -3735,8 +3497,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -3750,8 +3510,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -3765,8 +3523,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -3780,8 +3536,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -3795,8 +3549,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -3810,8 +3562,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -3825,8 +3575,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -3840,8 +3588,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -3855,8 +3601,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -3870,8 +3614,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -3885,8 +3627,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -3900,8 +3640,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -3915,8 +3653,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -3930,8 +3666,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -3945,8 +3679,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -3960,8 +3692,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -3975,8 +3705,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -3990,8 +3718,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -4005,8 +3731,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -4020,8 +3744,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -4035,8 +3757,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -4050,8 +3770,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -4065,8 +3783,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -4109,7 +3825,6 @@
     <key>VEHICLETYPE_ALIEN_ESCORT</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
         <type>UFO</type>
         <name>Alien Escort</name>
         <manufacturer>ORG_ALIEN</manufacturer>
@@ -4157,9 +3872,6 @@
         <aggressiveness>900</aggressiveness>
         <score>250</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:11:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -4170,7 +3882,6 @@
             <value>PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:572</value>
           </entry>
         </directional_strategy_sprites>
-        <directional_sprites />
         <shadow_offset>
           <x>32</x>
           <y>0</y>
@@ -4275,8 +3986,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -4290,8 +3999,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -4305,8 +4012,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -4320,8 +4025,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -4335,8 +4038,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -4350,8 +4051,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -4365,8 +4064,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -4380,8 +4077,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -4395,8 +4090,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -4410,8 +4103,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -4425,8 +4116,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -4440,8 +4129,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -4455,8 +4142,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -4470,8 +4155,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -4485,8 +4168,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -4500,8 +4181,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -4515,8 +4194,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -4530,8 +4207,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -4545,8 +4220,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -4560,8 +4233,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -4575,8 +4246,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -4590,8 +4259,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -4605,8 +4272,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -4620,8 +4285,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -4671,7 +4334,6 @@
     <key>VEHICLETYPE_ALIEN_FAST_ATTACK_SHIP</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
         <type>UFO</type>
         <name>Alien Fast Attack Ship</name>
         <manufacturer>ORG_ALIEN</manufacturer>
@@ -4719,9 +4381,6 @@
         <aggressiveness>700</aggressiveness>
         <score>200</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:7:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -4732,7 +4391,6 @@
             <value>PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:572</value>
           </entry>
         </directional_strategy_sprites>
-        <directional_sprites />
         <shadow_offset>
           <x>32</x>
           <y>0</y>
@@ -4837,8 +4495,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -4852,8 +4508,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -4867,8 +4521,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -4882,8 +4534,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -4897,8 +4547,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -4912,8 +4560,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -4927,8 +4573,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -4942,8 +4586,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -4957,8 +4599,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -4972,8 +4612,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -4987,8 +4625,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -5002,8 +4638,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -5017,8 +4651,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -5032,8 +4664,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -5047,8 +4677,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -5062,8 +4690,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -5077,8 +4703,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -5092,8 +4716,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -5107,8 +4729,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -5122,8 +4742,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -5137,8 +4755,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -5152,8 +4768,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -5167,8 +4781,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -5182,8 +4794,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -5219,7 +4829,6 @@
     <key>VEHICLETYPE_ALIEN_MOTHERSHIP</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
         <type>UFO</type>
         <name>Alien Mothership</name>
         <manufacturer>ORG_ALIEN</manufacturer>
@@ -5267,9 +4876,6 @@
         <aggressiveness>1000</aggressiveness>
         <score>700</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:13:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -5280,7 +4886,6 @@
             <value>PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:572</value>
           </entry>
         </directional_strategy_sprites>
-        <directional_sprites />
         <shadow_offset>
           <x>64</x>
           <y>0</y>
@@ -5395,8 +5000,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -5410,8 +5013,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -5425,8 +5026,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -5440,8 +5039,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -5455,8 +5052,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -5470,8 +5065,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -5485,8 +5078,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -5500,8 +5091,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -5515,8 +5104,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -5530,8 +5117,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -5545,8 +5130,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -5560,8 +5143,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -5575,8 +5156,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -5590,8 +5169,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -5605,8 +5182,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -5620,8 +5195,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -5635,8 +5208,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -5650,8 +5221,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -5665,8 +5234,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -5680,8 +5247,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -5695,8 +5260,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -5710,8 +5273,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -5725,8 +5286,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -5740,8 +5299,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -5798,7 +5355,6 @@
     <key>VEHICLETYPE_ALIEN_PROBE</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
         <type>UFO</type>
         <name>Alien Probe</name>
         <manufacturer>ORG_ALIEN</manufacturer>
@@ -5846,9 +5402,6 @@
         <aggressiveness>500</aggressiveness>
         <score>50</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:4:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -5859,7 +5412,6 @@
             <value>PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:572</value>
           </entry>
         </directional_strategy_sprites>
-        <directional_sprites />
         <shadow_offset>
           <x>32</x>
           <y>0</y>
@@ -5958,8 +5510,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -5973,8 +5523,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -5988,8 +5536,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -6003,8 +5549,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -6018,8 +5562,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -6033,8 +5575,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -6048,8 +5588,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -6063,8 +5601,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -6078,8 +5614,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -6093,8 +5627,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -6108,8 +5640,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -6123,8 +5653,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -6138,8 +5666,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -6153,8 +5679,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -6168,8 +5692,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -6183,8 +5705,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -6198,8 +5718,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -6213,8 +5731,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -6228,8 +5744,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -6243,8 +5757,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -6258,8 +5770,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -6273,8 +5783,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -6288,8 +5796,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -6303,8 +5809,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -6333,7 +5837,6 @@
     <key>VEHICLETYPE_ALIEN_SCOUT</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
         <type>UFO</type>
         <name>Alien Scout</name>
         <manufacturer>ORG_ALIEN</manufacturer>
@@ -6381,9 +5884,6 @@
         <aggressiveness>550</aggressiveness>
         <score>100</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:5:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -6394,7 +5894,6 @@
             <value>PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:572</value>
           </entry>
         </directional_strategy_sprites>
-        <directional_sprites />
         <shadow_offset>
           <x>32</x>
           <y>0</y>
@@ -6493,8 +5992,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -6508,8 +6005,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -6523,8 +6018,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -6538,8 +6031,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -6553,8 +6044,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -6568,8 +6057,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -6583,8 +6070,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -6598,8 +6083,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -6613,8 +6096,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -6628,8 +6109,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -6643,8 +6122,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -6658,8 +6135,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -6673,8 +6148,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -6688,8 +6161,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -6703,8 +6174,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -6718,8 +6187,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -6733,8 +6200,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -6748,8 +6213,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -6763,8 +6226,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -6778,8 +6239,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -6793,8 +6252,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -6808,8 +6265,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -6823,8 +6278,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -6838,8 +6291,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -6875,7 +6326,6 @@
     <key>VEHICLETYPE_ALIEN_TRANSPORTER</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
         <type>UFO</type>
         <name>Alien Transporter</name>
         <manufacturer>ORG_ALIEN</manufacturer>
@@ -6923,9 +6373,6 @@
         <aggressiveness>600</aggressiveness>
         <score>150</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:6:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -6936,7 +6383,6 @@
             <value>PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:572</value>
           </entry>
         </directional_strategy_sprites>
-        <directional_sprites />
         <shadow_offset>
           <x>32</x>
           <y>0</y>
@@ -7041,8 +6487,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -7056,8 +6500,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -7071,8 +6513,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -7086,8 +6526,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -7101,8 +6539,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -7116,8 +6552,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -7131,8 +6565,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -7146,8 +6578,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -7161,8 +6591,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -7176,8 +6604,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -7191,8 +6617,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -7206,8 +6630,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -7221,8 +6643,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -7236,8 +6656,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -7251,8 +6669,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -7266,8 +6682,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -7281,8 +6695,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -7296,8 +6708,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -7311,8 +6721,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -7326,8 +6734,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -7341,8 +6747,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -7356,8 +6760,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -7371,8 +6773,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -7386,8 +6786,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -7423,8 +6821,6 @@
     <key>VEHICLETYPE_ANNIHILATOR</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
-        <type>Flying</type>
         <name>Annihilator</name>
         <manufacturer>ORG_X-COM</manufacturer>
         <size>
@@ -7439,7 +6835,6 @@
         <acceleration>7</acceleration>
         <top_speed>18</top_speed>
         <health>700</health>
-        <crash_health>0</crash_health>
         <weight>4000</weight>
         <armour>
           <entry>
@@ -7468,7 +6863,6 @@
           </entry>
         </armour>
         <passengers>8</passengers>
-        <aggressiveness>0</aggressiveness>
         <score>550</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:28:xcom3/ufodata/pal_01.dat</icon>
         <equipment_screen>xcom3/ufodata/VANNIHIL.pcx</equipment_screen>
@@ -8085,8 +7479,6 @@
             <value>PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:2</value>
           </entry>
         </directional_shadow_sprites>
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -8118,7 +7510,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -8133,7 +7524,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>1</x>
@@ -8148,7 +7538,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>12</x>
@@ -8162,8 +7551,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -8177,8 +7564,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -8192,8 +7577,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -8207,8 +7590,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -8222,8 +7603,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -8237,8 +7616,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -8252,8 +7629,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -8267,8 +7642,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -8282,8 +7655,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -8297,8 +7668,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -8312,8 +7681,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -8327,8 +7694,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -8342,8 +7707,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -8357,8 +7720,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -8372,8 +7733,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -8387,8 +7746,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -8402,8 +7759,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -8417,8 +7772,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -8432,8 +7785,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -8447,8 +7798,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -8462,8 +7811,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -8477,8 +7824,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -8492,8 +7837,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -8507,8 +7850,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -8522,8 +7863,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -8537,8 +7876,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -8552,8 +7889,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -8567,8 +7902,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -8582,8 +7915,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -8597,8 +7928,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -8611,7 +7940,6 @@
             </bounds>
           </entry>
         </equipment_layout_slots>
-        <initial_equipment_list />
       </sp>
     </value>
   </entry>
@@ -8619,7 +7947,6 @@
     <key>VEHICLETYPE_AUTOTAXI</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
         <type>Ground</type>
         <name>Autotaxi</name>
         <manufacturer>ORG_GENERAL_METRO</manufacturer>
@@ -8632,10 +7959,7 @@
           <x>16</x>
           <y>16</y>
         </image_offset>
-        <acceleration>0</acceleration>
-        <top_speed>0</top_speed>
         <health>15</health>
-        <crash_health>0</crash_health>
         <weight>400</weight>
         <armour>
           <entry>
@@ -8664,12 +7988,8 @@
           </entry>
         </armour>
         <passengers>4</passengers>
-        <aggressiveness>0</aggressiveness>
         <score>5</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:29:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -8825,13 +8145,6 @@
             </value>
           </entry>
         </directional_sprites>
-        <shadow_offset>
-          <x>0</x>
-          <y>0</y>
-        </shadow_offset>
-        <directional_shadow_sprites />
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -8861,7 +8174,6 @@
         </voxelMap>
         <equipment_layout_slots>
           <entry>
-            <type>Engine</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -8892,7 +8204,6 @@
     <key>VEHICLETYPE_AUTOTRANS</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
         <type>Ground</type>
         <name>Autotrans</name>
         <manufacturer>ORG_GENERAL_METRO</manufacturer>
@@ -8905,10 +8216,7 @@
           <x>16</x>
           <y>16</y>
         </image_offset>
-        <acceleration>0</acceleration>
-        <top_speed>0</top_speed>
         <health>20</health>
-        <crash_health>0</crash_health>
         <weight>800</weight>
         <armour>
           <entry>
@@ -8937,12 +8245,8 @@
           </entry>
         </armour>
         <passengers>4</passengers>
-        <aggressiveness>0</aggressiveness>
         <score>5</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:30:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -9098,13 +8402,6 @@
             </value>
           </entry>
         </directional_sprites>
-        <shadow_offset>
-          <x>0</x>
-          <y>0</y>
-        </shadow_offset>
-        <directional_shadow_sprites />
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -9134,7 +8431,6 @@
         </voxelMap>
         <equipment_layout_slots>
           <entry>
-            <type>Engine</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -9150,8 +8446,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -9165,8 +8459,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -9180,8 +8472,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -9195,8 +8485,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -9210,8 +8498,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -9225,8 +8511,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -9240,8 +8524,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -9255,8 +8537,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -9270,8 +8550,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -9285,8 +8563,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -9300,8 +8576,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -9315,8 +8589,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -9330,8 +8602,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -9345,8 +8615,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -9360,8 +8628,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -9375,8 +8641,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -9433,8 +8697,6 @@
     <key>VEHICLETYPE_BIOTRANS</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
-        <type>Flying</type>
         <name>Biotrans</name>
         <manufacturer>ORG_X-COM</manufacturer>
         <size>
@@ -9449,7 +8711,6 @@
         <acceleration>3</acceleration>
         <top_speed>15</top_speed>
         <health>600</health>
-        <crash_health>0</crash_health>
         <weight>2000</weight>
         <armour>
           <entry>
@@ -9478,7 +8739,6 @@
           </entry>
         </armour>
         <passengers>4</passengers>
-        <aggressiveness>0</aggressiveness>
         <score>250</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:25:xcom3/ufodata/pal_01.dat</icon>
         <equipment_screen>xcom3/ufodata/VBIOTRAN.pcx</equipment_screen>
@@ -10095,8 +9355,6 @@
             <value>PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:10</value>
           </entry>
         </directional_shadow_sprites>
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -10128,7 +9386,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -10142,8 +9399,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -10157,8 +9412,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -10172,8 +9425,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -10187,8 +9438,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -10202,8 +9451,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -10217,8 +9464,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -10232,8 +9477,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -10247,8 +9490,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -10262,8 +9503,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -10277,8 +9516,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -10292,8 +9529,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -10307,8 +9542,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -10322,8 +9555,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -10337,8 +9568,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -10352,8 +9581,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -10367,8 +9594,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -10382,8 +9607,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -10397,8 +9620,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -10412,8 +9633,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -10427,8 +9646,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -10442,8 +9659,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -10457,8 +9672,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -10472,8 +9685,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -10487,8 +9698,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -10502,8 +9711,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -10517,8 +9724,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -10532,8 +9737,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -10547,8 +9750,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -10562,8 +9763,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -10577,8 +9776,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -10592,8 +9789,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -10607,8 +9802,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -10686,7 +9879,6 @@
     <key>VEHICLETYPE_BLAZER_TURBO_BIKE</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
         <type>Ground</type>
         <name>Blazer Turbo Bike</name>
         <manufacturer>ORG_GENERAL_METRO</manufacturer>
@@ -10699,10 +9891,7 @@
           <x>16</x>
           <y>16</y>
         </image_offset>
-        <acceleration>0</acceleration>
-        <top_speed>0</top_speed>
         <health>20</health>
-        <crash_health>0</crash_health>
         <weight>80</weight>
         <armour>
           <entry>
@@ -10731,7 +9920,6 @@
           </entry>
         </armour>
         <passengers>1</passengers>
-        <aggressiveness>0</aggressiveness>
         <score>10</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:35:xcom3/ufodata/pal_01.dat</icon>
         <equipment_screen>xcom3/ufodata/VBIKGRND.pcx</equipment_screen>
@@ -10892,13 +10080,6 @@
             </value>
           </entry>
         </directional_sprites>
-        <shadow_offset>
-          <x>0</x>
-          <y>0</y>
-        </shadow_offset>
-        <directional_shadow_sprites />
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -10928,7 +10109,6 @@
         </voxelMap>
         <equipment_layout_slots>
           <entry>
-            <type>Engine</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -10959,7 +10139,6 @@
     <key>VEHICLETYPE_CIVILIAN_CAR</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
         <type>Ground</type>
         <name>Civilian Car</name>
         <manufacturer>ORG_GENERAL_METRO</manufacturer>
@@ -10972,10 +10151,7 @@
           <x>16</x>
           <y>16</y>
         </image_offset>
-        <acceleration>0</acceleration>
-        <top_speed>0</top_speed>
         <health>20</health>
-        <crash_health>0</crash_health>
         <weight>360</weight>
         <armour>
           <entry>
@@ -11004,12 +10180,8 @@
           </entry>
         </armour>
         <passengers>4</passengers>
-        <aggressiveness>0</aggressiveness>
         <score>5</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:32:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -11165,13 +10337,6 @@
             </value>
           </entry>
         </directional_sprites>
-        <shadow_offset>
-          <x>0</x>
-          <y>0</y>
-        </shadow_offset>
-        <directional_shadow_sprites />
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -11201,7 +10366,6 @@
         </voxelMap>
         <equipment_layout_slots>
           <entry>
-            <type>Engine</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -11232,8 +10396,6 @@
     <key>VEHICLETYPE_CONSTRUCTION_VEHICLE</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
-        <type>Flying</type>
         <name>Construction Vehicle</name>
         <manufacturer>ORG_GENERAL_METRO</manufacturer>
         <size>
@@ -11245,10 +10407,7 @@
           <x>32</x>
           <y>32</y>
         </image_offset>
-        <acceleration>0</acceleration>
-        <top_speed>0</top_speed>
         <health>60</health>
-        <crash_health>0</crash_health>
         <weight>4000</weight>
         <armour>
           <entry>
@@ -11277,12 +10436,8 @@
           </entry>
         </armour>
         <passengers>1</passengers>
-        <aggressiveness>0</aggressiveness>
         <score>30</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:17:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -11894,8 +11049,6 @@
             <value>PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:26</value>
           </entry>
         </directional_shadow_sprites>
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -11925,7 +11078,6 @@
         </voxelMap>
         <equipment_layout_slots>
           <entry>
-            <type>Engine</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -11941,8 +11093,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -11956,8 +11106,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -11971,8 +11119,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -11986,8 +11132,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -12001,8 +11145,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -12016,8 +11158,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -12031,8 +11171,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -12046,8 +11184,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -12061,8 +11197,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -12076,8 +11210,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -12091,8 +11223,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -12106,8 +11236,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -12121,8 +11249,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -12136,8 +11262,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -12151,8 +11275,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -12166,8 +11288,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -12181,8 +11301,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -12196,8 +11314,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -12211,8 +11327,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -12226,8 +11340,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -12241,8 +11353,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -12256,8 +11366,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -12271,8 +11379,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -12286,8 +11392,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -12358,8 +11462,6 @@
     <key>VEHICLETYPE_DIMENSION_PROBE</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
-        <type>Flying</type>
         <name>Dimension Probe</name>
         <manufacturer>ORG_MARSEC</manufacturer>
         <size>
@@ -12374,7 +11476,6 @@
         <acceleration>6</acceleration>
         <top_speed>19</top_speed>
         <health>80</health>
-        <crash_health>0</crash_health>
         <weight>800</weight>
         <armour>
           <entry>
@@ -12402,8 +11503,6 @@
             <value>8</value>
           </entry>
         </armour>
-        <passengers>0</passengers>
-        <aggressiveness>0</aggressiveness>
         <score>50</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:24:xcom3/ufodata/pal_01.dat</icon>
         <equipment_screen>xcom3/ufodata/VDIMprob.pcx</equipment_screen>
@@ -13020,8 +12119,6 @@
             <value>PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:66</value>
           </entry>
         </directional_shadow_sprites>
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -13066,7 +12163,6 @@
             </bounds>
           </entry>
         </equipment_layout_slots>
-        <initial_equipment_list />
       </sp>
     </value>
   </entry>
@@ -13074,8 +12170,6 @@
     <key>VEHICLETYPE_EXPLORER</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
-        <type>Flying</type>
         <name>Explorer</name>
         <manufacturer>ORG_X-COM</manufacturer>
         <size>
@@ -13090,7 +12184,6 @@
         <acceleration>4</acceleration>
         <top_speed>16</top_speed>
         <health>400</health>
-        <crash_health>0</crash_health>
         <weight>3000</weight>
         <armour>
           <entry>
@@ -13119,7 +12212,6 @@
           </entry>
         </armour>
         <passengers>8</passengers>
-        <aggressiveness>0</aggressiveness>
         <score>350</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:26:xcom3/ufodata/pal_01.dat</icon>
         <equipment_screen>xcom3/ufodata/VEXPLORE.pcx</equipment_screen>
@@ -13736,8 +12828,6 @@
             <value>PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:34</value>
           </entry>
         </directional_shadow_sprites>
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -13769,7 +12859,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -13784,7 +12873,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>3</x>
@@ -13799,7 +12887,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>12</x>
@@ -13813,8 +12900,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -13828,8 +12913,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -13843,8 +12926,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -13858,8 +12939,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -13873,8 +12952,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -13888,8 +12965,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -13903,8 +12978,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -13918,8 +12991,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -13933,8 +13004,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -13948,8 +13017,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -13963,8 +13030,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -13978,8 +13043,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -13992,7 +13055,6 @@
             </bounds>
           </entry>
         </equipment_layout_slots>
-        <initial_equipment_list />
       </sp>
     </value>
   </entry>
@@ -14000,7 +13062,6 @@
     <key>VEHICLETYPE_GRIFFON_AFV</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
         <type>Ground</type>
         <name>Griffon AFV</name>
         <manufacturer>ORG_MARSEC</manufacturer>
@@ -14013,10 +13074,7 @@
           <x>16</x>
           <y>16</y>
         </image_offset>
-        <acceleration>0</acceleration>
-        <top_speed>0</top_speed>
         <health>700</health>
-        <crash_health>0</crash_health>
         <weight>1800</weight>
         <armour>
           <entry>
@@ -14206,13 +13264,6 @@
             </value>
           </entry>
         </directional_sprites>
-        <shadow_offset>
-          <x>0</x>
-          <y>0</y>
-        </shadow_offset>
-        <directional_shadow_sprites />
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -14257,7 +13308,6 @@
             </bounds>
           </entry>
           <entry>
-            <type>Engine</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -14273,8 +13323,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -14288,8 +13336,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -14325,8 +13371,6 @@
     <key>VEHICLETYPE_HAWK_AIR_WARRIOR</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
-        <type>Flying</type>
         <name>Hawk Air Warrior</name>
         <manufacturer>ORG_MARSEC</manufacturer>
         <size>
@@ -14338,10 +13382,7 @@
           <x>32</x>
           <y>32</y>
         </image_offset>
-        <acceleration>0</acceleration>
-        <top_speed>0</top_speed>
         <health>460</health>
-        <crash_health>0</crash_health>
         <weight>5000</weight>
         <armour>
           <entry>
@@ -14987,8 +14028,6 @@
             <value>PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:18</value>
           </entry>
         </directional_shadow_sprites>
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -15020,7 +14059,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -15035,7 +14073,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -15050,7 +14087,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -15063,7 +14099,6 @@
             </bounds>
           </entry>
           <entry>
-            <type>Engine</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -15079,8 +14114,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -15094,8 +14127,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -15109,8 +14140,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -15124,8 +14153,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -15139,8 +14166,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -15154,8 +14179,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -15169,8 +14192,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -15184,8 +14205,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -15199,8 +14218,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -15214,8 +14231,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -15229,8 +14244,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -15244,8 +14257,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -15259,8 +14270,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -15274,8 +14283,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -15289,8 +14296,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -15304,8 +14309,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -15355,8 +14358,6 @@
     <key>VEHICLETYPE_HOVERBIKE</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
-        <type>Flying</type>
         <name>Hoverbike</name>
         <manufacturer>ORG_MARSEC</manufacturer>
         <size>
@@ -15368,10 +14369,7 @@
           <x>32</x>
           <y>32</y>
         </image_offset>
-        <acceleration>0</acceleration>
-        <top_speed>0</top_speed>
         <health>25</health>
-        <crash_health>0</crash_health>
         <weight>100</weight>
         <armour>
           <entry>
@@ -16017,8 +15015,6 @@
             <value>PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:42</value>
           </entry>
         </directional_shadow_sprites>
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -16050,7 +15046,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -16063,7 +15058,6 @@
             </bounds>
           </entry>
           <entry>
-            <type>Engine</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -16079,8 +15073,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -16116,8 +15108,6 @@
     <key>VEHICLETYPE_PHOENIX_HOVERCAR</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
-        <type>Flying</type>
         <name>Phoenix Hovercar</name>
         <manufacturer>ORG_MARSEC</manufacturer>
         <size>
@@ -16129,10 +15119,7 @@
           <x>32</x>
           <y>32</y>
         </image_offset>
-        <acceleration>0</acceleration>
-        <top_speed>0</top_speed>
         <health>70</health>
-        <crash_health>0</crash_health>
         <weight>700</weight>
         <armour>
           <entry>
@@ -16778,8 +15765,6 @@
             <value>PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:50</value>
           </entry>
         </directional_shadow_sprites>
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -16811,7 +15796,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -16826,7 +15810,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -16839,7 +15822,6 @@
             </bounds>
           </entry>
           <entry>
-            <type>Engine</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -16855,8 +15837,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -16870,8 +15850,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -16885,8 +15863,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -16900,8 +15876,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -16944,7 +15918,6 @@
     <key>VEHICLETYPE_POLICE_CAR</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
         <type>Ground</type>
         <name>Police Car</name>
         <manufacturer>ORG_MEGAPOL</manufacturer>
@@ -16957,10 +15930,7 @@
           <x>16</x>
           <y>16</y>
         </image_offset>
-        <acceleration>0</acceleration>
-        <top_speed>0</top_speed>
         <health>50</health>
-        <crash_health>0</crash_health>
         <weight>430</weight>
         <armour>
           <entry>
@@ -16989,12 +15959,8 @@
           </entry>
         </armour>
         <passengers>4</passengers>
-        <aggressiveness>0</aggressiveness>
         <score>10</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:31:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -17150,13 +16116,6 @@
             </value>
           </entry>
         </directional_sprites>
-        <shadow_offset>
-          <x>0</x>
-          <y>0</y>
-        </shadow_offset>
-        <directional_shadow_sprites />
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -17201,7 +16160,6 @@
             </bounds>
           </entry>
           <entry>
-            <type>Engine</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -17239,8 +16197,6 @@
     <key>VEHICLETYPE_POLICE_HOVERCAR</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
-        <type>Flying</type>
         <name>Police Hovercar</name>
         <manufacturer>ORG_MEGAPOL</manufacturer>
         <size>
@@ -17252,10 +16208,7 @@
           <x>32</x>
           <y>32</y>
         </image_offset>
-        <acceleration>0</acceleration>
-        <top_speed>0</top_speed>
         <health>40</health>
-        <crash_health>0</crash_health>
         <weight>700</weight>
         <armour>
           <entry>
@@ -17287,9 +16240,6 @@
         <aggressiveness>200</aggressiveness>
         <score>20</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:14:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -17901,8 +16851,6 @@
             <value>PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:50</value>
           </entry>
         </directional_shadow_sprites>
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -17934,7 +16882,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>5</x>
@@ -17949,7 +16896,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>10</x>
@@ -17962,7 +16908,6 @@
             </bounds>
           </entry>
           <entry>
-            <type>Engine</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -17978,8 +16923,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -17993,8 +16936,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -18008,8 +16949,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -18023,8 +16962,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -18038,8 +16975,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -18053,8 +16988,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -18097,8 +17030,6 @@
     <key>VEHICLETYPE_RESCUE_TRANSPORT</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
-        <type>Flying</type>
         <name>Rescue Transport</name>
         <manufacturer>ORG_GENERAL_METRO</manufacturer>
         <size>
@@ -18110,10 +17041,7 @@
           <x>32</x>
           <y>32</y>
         </image_offset>
-        <acceleration>0</acceleration>
-        <top_speed>0</top_speed>
         <health>35</health>
-        <crash_health>0</crash_health>
         <weight>1400</weight>
         <armour>
           <entry>
@@ -18142,12 +17070,8 @@
           </entry>
         </armour>
         <passengers>6</passengers>
-        <aggressiveness>0</aggressiveness>
         <score>30</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:16:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -18759,8 +17683,6 @@
             <value>PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:58</value>
           </entry>
         </directional_shadow_sprites>
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -18790,7 +17712,6 @@
         </voxelMap>
         <equipment_layout_slots>
           <entry>
-            <type>Engine</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -18806,8 +17727,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -18821,8 +17740,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -18836,8 +17753,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -18851,8 +17766,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -18866,8 +17779,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -18881,8 +17792,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -18896,8 +17805,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -18911,8 +17818,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -18926,8 +17831,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -18941,8 +17844,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -18956,8 +17857,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -18971,8 +17870,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -19015,8 +17912,6 @@
     <key>VEHICLETYPE_RETALIATOR</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
-        <type>Flying</type>
         <name>Retaliator</name>
         <manufacturer>ORG_X-COM</manufacturer>
         <size>
@@ -19031,7 +17926,6 @@
         <acceleration>5</acceleration>
         <top_speed>15</top_speed>
         <health>450</health>
-        <crash_health>0</crash_health>
         <weight>3400</weight>
         <armour>
           <entry>
@@ -19060,7 +17954,6 @@
           </entry>
         </armour>
         <passengers>4</passengers>
-        <aggressiveness>0</aggressiveness>
         <score>450</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:27:xcom3/ufodata/pal_01.dat</icon>
         <equipment_screen>xcom3/ufodata/VRTLIATR.pcx</equipment_screen>
@@ -19677,8 +18570,6 @@
             <value>PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:74</value>
           </entry>
         </directional_shadow_sprites>
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -19710,7 +18601,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -19725,7 +18615,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>3</x>
@@ -19740,7 +18629,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -19754,8 +18642,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -19769,8 +18655,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -19784,8 +18668,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -19799,8 +18681,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -19814,8 +18694,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -19829,8 +18707,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -19844,8 +18720,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -19859,8 +18733,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -19874,8 +18746,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -19889,8 +18759,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -19904,8 +18772,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -19919,8 +18785,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -19934,8 +18798,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -19949,8 +18811,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -19964,8 +18824,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -19979,8 +18837,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -19993,7 +18849,6 @@
             </bounds>
           </entry>
         </equipment_layout_slots>
-        <initial_equipment_list />
       </sp>
     </value>
   </entry>
@@ -20001,8 +18856,6 @@
     <key>VEHICLETYPE_SPACE_LINER</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
-        <type>Flying</type>
         <name>Space Liner</name>
         <manufacturer>ORG_GOVERNMENT</manufacturer>
         <size>
@@ -20014,10 +18867,7 @@
           <x>32</x>
           <y>32</y>
         </image_offset>
-        <acceleration>0</acceleration>
-        <top_speed>0</top_speed>
         <health>800</health>
-        <crash_health>0</crash_health>
         <weight>15000</weight>
         <armour>
           <entry>
@@ -20046,12 +18896,8 @@
           </entry>
         </armour>
         <passengers>20</passengers>
-        <aggressiveness>0</aggressiveness>
         <score>250</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:19:xcom3/ufodata/pal_01.dat</icon>
-        <equipment_screen />
-        <equip_icon_big />
-        <equip_icon_small />
         <directional_strategy_sprites>
           <entry>
             <key>
@@ -20259,8 +19105,6 @@
             <value>PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:100</value>
           </entry>
         </directional_shadow_sprites>
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -20290,7 +19134,6 @@
         </voxelMap>
         <equipment_layout_slots>
           <entry>
-            <type>Engine</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -20321,7 +19164,6 @@
     <key>VEHICLETYPE_STORMDOG</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
         <type>Ground</type>
         <name>Stormdog</name>
         <manufacturer>ORG_MARSEC</manufacturer>
@@ -20334,10 +19176,7 @@
           <x>16</x>
           <y>16</y>
         </image_offset>
-        <acceleration>0</acceleration>
-        <top_speed>0</top_speed>
         <health>45</health>
-        <crash_health>0</crash_health>
         <weight>450</weight>
         <armour>
           <entry>
@@ -20366,7 +19205,6 @@
           </entry>
         </armour>
         <passengers>4</passengers>
-        <aggressiveness>0</aggressiveness>
         <score>15</score>
         <icon>PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:33:xcom3/ufodata/pal_01.dat</icon>
         <equipment_screen>xcom3/ufodata/VROADWAR.pcx</equipment_screen>
@@ -20527,13 +19365,6 @@
             </value>
           </entry>
         </directional_sprites>
-        <shadow_offset>
-          <x>0</x>
-          <y>0</y>
-        </shadow_offset>
-        <directional_shadow_sprites />
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -20578,7 +19409,6 @@
             </bounds>
           </entry>
           <entry>
-            <type>Engine</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -20594,8 +19424,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -20609,8 +19437,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -20646,8 +19472,6 @@
     <key>VEHICLETYPE_VALKYRIE_INTERCEPTOR</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
-        <type>Flying</type>
         <name>Valkyrie Interceptor</name>
         <manufacturer>ORG_MARSEC</manufacturer>
         <size>
@@ -20659,10 +19483,7 @@
           <x>32</x>
           <y>32</y>
         </image_offset>
-        <acceleration>0</acceleration>
-        <top_speed>0</top_speed>
         <health>280</health>
-        <crash_health>0</crash_health>
         <weight>3000</weight>
         <armour>
           <entry>
@@ -21308,8 +20129,6 @@
             <value>PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:82</value>
           </entry>
         </directional_shadow_sprites>
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -21341,7 +20160,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>4</x>
@@ -21356,7 +20174,6 @@
           <entry>
             <type>Weapon</type>
             <align_x>Centre</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>11</x>
@@ -21369,7 +20186,6 @@
             </bounds>
           </entry>
           <entry>
-            <type>Engine</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -21385,8 +20201,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -21400,8 +20214,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -21415,8 +20227,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -21430,8 +20240,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -21445,8 +20253,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -21460,8 +20266,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -21475,8 +20279,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -21490,8 +20292,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -21505,8 +20305,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -21520,8 +20318,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -21535,8 +20331,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -21550,8 +20344,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -21594,7 +20386,6 @@
     <key>VEHICLETYPE_WOLFHOUND_APC</key>
     <value>
       <sp>
-        <numCreated>0</numCreated>
         <type>Ground</type>
         <name>Wolfhound APC</name>
         <manufacturer>ORG_MARSEC</manufacturer>
@@ -21607,10 +20398,7 @@
           <x>16</x>
           <y>16</y>
         </image_offset>
-        <acceleration>0</acceleration>
-        <top_speed>0</top_speed>
         <health>550</health>
-        <crash_health>0</crash_health>
         <weight>1000</weight>
         <armour>
           <entry>
@@ -21800,13 +20588,6 @@
             </value>
           </entry>
         </directional_sprites>
-        <shadow_offset>
-          <x>0</x>
-          <y>0</y>
-        </shadow_offset>
-        <directional_shadow_sprites />
-        <animation_sprites />
-        <crashed_sprite />
         <voxelMap>
           <sp>
             <size>
@@ -21851,7 +20632,6 @@
             </bounds>
           </entry>
           <entry>
-            <type>Engine</type>
             <align_x>Centre</align_x>
             <align_y>Centre</align_y>
             <bounds>
@@ -21867,8 +20647,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -21882,8 +20660,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -21897,8 +20673,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -21912,8 +20686,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>
@@ -21927,8 +20699,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>6</x>
@@ -21942,8 +20712,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>7</x>
@@ -21957,8 +20725,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>8</x>
@@ -21972,8 +20738,6 @@
           </entry>
           <entry>
             <type>General</type>
-            <align_x>Left</align_x>
-            <align_y>Top</align_y>
             <bounds>
               <p0>
                 <x>9</x>

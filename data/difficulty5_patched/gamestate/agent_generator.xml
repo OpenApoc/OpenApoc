@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <agent_generator>
-  <num_created>0</num_created>
   <first_names>
     <entry>
       <key>Male</key>
@@ -178,8 +177,6 @@
         <stamina>60</stamina>
         <bravery>60</bravery>
         <strength>55</strength>
-        <psi_energy>0</psi_energy>
-        <psi_attack>0</psi_attack>
         <psi_defence>100</psi_defence>
         <physics_skill>60</physics_skill>
         <biochem_skill>60</biochem_skill>
@@ -234,8 +231,6 @@
         <stamina>85</stamina>
         <bravery>100</bravery>
         <strength>85</strength>
-        <psi_energy>0</psi_energy>
-        <psi_attack>0</psi_attack>
         <psi_defence>100</psi_defence>
         <physics_skill>100</physics_skill>
         <biochem_skill>100</biochem_skill>

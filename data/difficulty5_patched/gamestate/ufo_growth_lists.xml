@@ -366,7 +366,6 @@
     <key>UFO_GROWTH_DEFAULT</key>
     <value>
       <sp>
-        <week>0</week>
         <vehicleTypeList>
           <entry>
             <first>VEHICLETYPE_ALIEN_BATTLESHIP</first>
@@ -392,7 +391,6 @@
     <key>UFO_GROWTH_LIMIT</key>
     <value>
       <sp>
-        <week>0</week>
         <vehicleTypeList>
           <entry>
             <first>VEHICLETYPE_ALIEN_ASSAULT_SHIP</first>

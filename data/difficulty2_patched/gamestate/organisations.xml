@@ -7,7 +7,6 @@
         <name>Alien</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -18,7 +17,6 @@
         <name>Civilian</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -29,7 +27,6 @@
         <name>Cult of Sirius</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -40,7 +37,6 @@
         <name>Cyberweb</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -51,7 +47,6 @@
         <name>Diablo</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -62,7 +57,6 @@
         <name>Energen</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -73,7 +67,6 @@
         <name>Evonet</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -84,7 +77,6 @@
         <name>Extropians</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -95,7 +87,6 @@
         <name>General Metro</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -106,7 +97,6 @@
         <name>Government</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -117,7 +107,6 @@
         <name>Gravball League</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -128,7 +117,6 @@
         <name>Lifetree</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -139,7 +127,6 @@
         <name>Marsec</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -150,7 +137,6 @@
         <name>Megapol</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -161,7 +147,6 @@
         <name>Mutant Alliance</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -172,7 +157,6 @@
         <name>Nanotech</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -183,7 +167,6 @@
         <name>Nutrivend</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -194,7 +177,6 @@
         <name>Osiron</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -205,7 +187,6 @@
         <name>Psyke</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -216,7 +197,6 @@
         <name>Sanctuary Clinic</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -227,7 +207,6 @@
         <name>Sensovision</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -238,7 +217,6 @@
         <name>Solmine</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -249,7 +227,6 @@
         <name>Superdynamics</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -260,7 +237,6 @@
         <name>Synthemesh</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -271,7 +247,6 @@
         <name>S.E.L.F.</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -282,7 +257,6 @@
         <name>Technocrats</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -293,7 +267,6 @@
         <name>Transtellar</name>
         <balance>5000</balance>
         <income>1000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>
@@ -304,7 +277,6 @@
         <name>X-COM</name>
         <balance>140000</balance>
         <income>92000</income>
-        <current_relations />
       </sp>
     </value>
   </entry>

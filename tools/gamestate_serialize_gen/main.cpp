@@ -218,8 +218,9 @@ void writeSource(std::ofstream &out, const StateDefinition &state)
 					newNodeFn = "addSection";
 					break;
 			}
-			out << "\t" << serializeFn << "(node->" << newNodeFn << "(\"" << member.first
-			    << "\"), obj." << member.first << ", ref." << member.first << ");\n";
+			out << "\tif (obj." << member.first << " != ref." << member.first << ")" << serializeFn
+			    << "(node->" << newNodeFn << "(\"" << member.first << "\"), obj." << member.first
+			    << ", ref." << member.first << ");\n";
 		}
 
 		out << "}\n";

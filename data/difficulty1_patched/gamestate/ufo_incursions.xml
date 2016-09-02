@@ -4,7 +4,6 @@
     <key>UFO_INCURSION_1</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_SCOUT</first>
@@ -17,7 +16,6 @@
             <second>1</second>
           </entry>
         </escortList>
-        <attackList />
         <priority>1</priority>
       </sp>
     </value>
@@ -26,7 +24,6 @@
     <key>UFO_INCURSION_10</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_ASSAULT_SHIP</first>
@@ -39,7 +36,6 @@
             <second>3</second>
           </entry>
         </escortList>
-        <attackList />
         <priority>10</priority>
       </sp>
     </value>
@@ -48,7 +44,6 @@
     <key>UFO_INCURSION_11</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_ASSAULT_SHIP</first>
@@ -59,8 +54,6 @@
             <second>2</second>
           </entry>
         </primaryList>
-        <escortList />
-        <attackList />
         <priority>11</priority>
       </sp>
     </value>
@@ -69,7 +62,6 @@
     <key>UFO_INCURSION_12</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_ASSAULT_SHIP</first>
@@ -86,7 +78,6 @@
             <second>3</second>
           </entry>
         </escortList>
-        <attackList />
         <priority>12</priority>
       </sp>
     </value>
@@ -95,7 +86,6 @@
     <key>UFO_INCURSION_13</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_ASSAULT_SHIP</first>
@@ -108,7 +98,6 @@
             <second>2</second>
           </entry>
         </escortList>
-        <attackList />
         <priority>13</priority>
       </sp>
     </value>
@@ -117,7 +106,6 @@
     <key>UFO_INCURSION_14</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_ASSAULT_SHIP</first>
@@ -130,7 +118,6 @@
             <second>3</second>
           </entry>
         </escortList>
-        <attackList />
         <priority>14</priority>
       </sp>
     </value>
@@ -139,7 +126,6 @@
     <key>UFO_INCURSION_15</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_ASSAULT_SHIP</first>
@@ -166,7 +152,6 @@
     <key>UFO_INCURSION_16</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_BATTLESHIP</first>
@@ -179,7 +164,6 @@
             <second>2</second>
           </entry>
         </escortList>
-        <attackList />
         <priority>16</priority>
       </sp>
     </value>
@@ -188,7 +172,6 @@
     <key>UFO_INCURSION_17</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_BATTLESHIP</first>
@@ -205,7 +188,6 @@
             <second>2</second>
           </entry>
         </escortList>
-        <attackList />
         <priority>17</priority>
       </sp>
     </value>
@@ -214,7 +196,6 @@
     <key>UFO_INCURSION_18</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_BATTLESHIP</first>
@@ -241,15 +222,12 @@
     <key>UFO_INCURSION_19</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_MOTHERSHIP</first>
             <second>1</second>
           </entry>
         </primaryList>
-        <escortList />
-        <attackList />
         <priority>19</priority>
       </sp>
     </value>
@@ -258,7 +236,6 @@
     <key>UFO_INCURSION_2</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_SCOUT</first>
@@ -271,7 +248,6 @@
             <second>2</second>
           </entry>
         </escortList>
-        <attackList />
         <priority>2</priority>
       </sp>
     </value>
@@ -280,7 +256,6 @@
     <key>UFO_INCURSION_20</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_MOTHERSHIP</first>
@@ -297,7 +272,6 @@
             <second>2</second>
           </entry>
         </escortList>
-        <attackList />
         <priority>20</priority>
       </sp>
     </value>
@@ -306,7 +280,6 @@
     <key>UFO_INCURSION_3</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_TRANSPORTER</first>
@@ -317,8 +290,6 @@
             <second>2</second>
           </entry>
         </primaryList>
-        <escortList />
-        <attackList />
         <priority>3</priority>
       </sp>
     </value>
@@ -327,7 +298,6 @@
     <key>UFO_INCURSION_4</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_TRANSPORTER</first>
@@ -340,7 +310,6 @@
             <second>2</second>
           </entry>
         </escortList>
-        <attackList />
         <priority>4</priority>
       </sp>
     </value>
@@ -349,7 +318,6 @@
     <key>UFO_INCURSION_5</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_TRANSPORTER</first>
@@ -362,7 +330,6 @@
             <second>2</second>
           </entry>
         </escortList>
-        <attackList />
         <priority>5</priority>
       </sp>
     </value>
@@ -371,7 +338,6 @@
     <key>UFO_INCURSION_6</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_TRANSPORTER</first>
@@ -388,7 +354,6 @@
             <second>2</second>
           </entry>
         </escortList>
-        <attackList />
         <priority>6</priority>
       </sp>
     </value>
@@ -397,7 +362,6 @@
     <key>UFO_INCURSION_7</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_ASSAULT_SHIP</first>
@@ -410,7 +374,6 @@
             <second>2</second>
           </entry>
         </escortList>
-        <attackList />
         <priority>7</priority>
       </sp>
     </value>
@@ -419,7 +382,6 @@
     <key>UFO_INCURSION_8</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_ASSAULT_SHIP</first>
@@ -430,8 +392,6 @@
             <second>2</second>
           </entry>
         </primaryList>
-        <escortList />
-        <attackList />
         <priority>8</priority>
       </sp>
     </value>
@@ -440,7 +400,6 @@
     <key>UFO_INCURSION_9</key>
     <value>
       <sp>
-        <primaryMission>Infiltration</primaryMission>
         <primaryList>
           <entry>
             <first>VEHICLETYPE_ALIEN_ASSAULT_SHIP</first>
@@ -457,7 +416,6 @@
             <second>3</second>
           </entry>
         </escortList>
-        <attackList />
         <priority>9</priority>
       </sp>
     </value>

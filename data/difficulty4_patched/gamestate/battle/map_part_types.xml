@@ -4,7 +4,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_0</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:0</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:0</strategySprite>
         <voxelMapLOF>
@@ -74,10 +73,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -85,7 +81,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_1</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:1</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:1</strategySprite>
         <voxelMapLOF>
@@ -155,10 +150,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>80</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -166,7 +159,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_10</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:10</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:10</strategySprite>
         <voxelMapLOF>
@@ -236,10 +228,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>120</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -247,7 +236,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_100</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:100</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:100</strategySprite>
         <voxelMapLOF>
@@ -317,10 +305,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -328,7 +313,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_101</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:101</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:101</strategySprite>
         <voxelMapLOF>
@@ -398,10 +382,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -409,7 +390,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_102</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:102</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:102</strategySprite>
         <voxelMapLOF>
@@ -479,10 +459,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -490,7 +467,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_103</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:103</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:103</strategySprite>
         <voxelMapLOF>
@@ -560,10 +536,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -571,7 +544,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_104</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:104</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:104</strategySprite>
         <voxelMapLOF>
@@ -641,10 +613,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -652,7 +621,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_105</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:105</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:105</strategySprite>
         <voxelMapLOF>
@@ -722,10 +690,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -733,7 +698,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_106</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:106</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:106</strategySprite>
         <voxelMapLOF>
@@ -803,10 +767,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -814,7 +775,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_107</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:107</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:107</strategySprite>
         <voxelMapLOF>
@@ -884,11 +844,9 @@
           <y>48</y>
         </imageOffset>
         <constitution>80</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
 </damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -896,7 +854,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_108</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:108</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:108</strategySprite>
         <voxelMapLOF>
@@ -966,10 +923,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>80</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -977,7 +932,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_109</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:109</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:109</strategySprite>
         <voxelMapLOF>
@@ -1047,10 +1001,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>80</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1058,7 +1010,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_11</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:11</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:11</strategySprite>
         <voxelMapLOF>
@@ -1128,10 +1079,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>120</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1139,7 +1087,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_110</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:110</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:110</strategySprite>
         <voxelMapLOF>
@@ -1209,10 +1156,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>80</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1220,7 +1165,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_111</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:111</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:111</strategySprite>
         <voxelMapLOF>
@@ -1290,10 +1234,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1301,7 +1243,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_112</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:112</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:112</strategySprite>
         <voxelMapLOF>
@@ -1371,10 +1312,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1382,7 +1321,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_113</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:113</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:113</strategySprite>
         <voxelMapLOF>
@@ -1452,11 +1390,9 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
 </damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1464,7 +1400,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_114</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:114</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:114</strategySprite>
         <voxelMapLOF>
@@ -1534,10 +1469,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1545,7 +1478,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_115</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:115</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:115</strategySprite>
         <voxelMapLOF>
@@ -1615,10 +1547,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1626,7 +1555,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_116</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:116</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:116</strategySprite>
         <voxelMapLOF>
@@ -1696,10 +1624,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1707,7 +1632,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_117</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:117</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:117</strategySprite>
         <voxelMapLOF>
@@ -1777,10 +1701,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1788,7 +1709,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_118</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:118</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:118</strategySprite>
         <voxelMapLOF>
@@ -1858,10 +1778,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1869,7 +1786,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_119</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:119</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:119</strategySprite>
         <voxelMapLOF>
@@ -1939,10 +1855,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -1950,7 +1863,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_12</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:12</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:12</strategySprite>
         <voxelMapLOF>
@@ -2020,10 +1932,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>120</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2031,7 +1940,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_120</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:120</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:120</strategySprite>
         <voxelMapLOF>
@@ -2101,10 +2009,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2112,7 +2017,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_13</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:13</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:13</strategySprite>
         <voxelMapLOF>
@@ -2182,10 +2086,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>120</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2193,7 +2094,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_14</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:14</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:14</strategySprite>
         <voxelMapLOF>
@@ -2263,10 +2163,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2274,7 +2171,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_15</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:15</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:15</strategySprite>
         <voxelMapLOF>
@@ -2344,10 +2240,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2355,7 +2248,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_16</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:16</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:16</strategySprite>
         <voxelMapLOF>
@@ -2425,10 +2317,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2436,7 +2325,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_17</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:17</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:17</strategySprite>
         <voxelMapLOF>
@@ -2506,10 +2394,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2517,7 +2402,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_18</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:18</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:18</strategySprite>
         <voxelMapLOF>
@@ -2587,10 +2471,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2598,7 +2480,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_19</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:19</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:19</strategySprite>
         <voxelMapLOF>
@@ -2668,10 +2549,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2679,7 +2558,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_2</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:2</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:2</strategySprite>
         <voxelMapLOF>
@@ -2749,10 +2627,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>80</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2760,7 +2636,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_20</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:20</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:20</strategySprite>
         <voxelMapLOF>
@@ -2830,10 +2705,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2841,7 +2714,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_21</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:21</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:21</strategySprite>
         <voxelMapLOF>
@@ -2911,10 +2783,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -2922,7 +2792,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_22</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:22</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:22</strategySprite>
         <voxelMapLOF>
@@ -2992,10 +2861,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3003,7 +2870,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_23</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:23</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:23</strategySprite>
         <voxelMapLOF>
@@ -3073,11 +2939,9 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
 </damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3085,7 +2949,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_24</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:24</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:24</strategySprite>
         <voxelMapLOF>
@@ -3155,10 +3018,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3166,7 +3027,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_25</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:25</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:25</strategySprite>
         <voxelMapLOF>
@@ -3236,10 +3096,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3247,7 +3105,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_26</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:26</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:26</strategySprite>
         <voxelMapLOF>
@@ -3317,10 +3174,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3328,7 +3183,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_27</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:27</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:27</strategySprite>
         <voxelMapLOF>
@@ -3398,10 +3252,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3409,7 +3261,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_28</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:28</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:28</strategySprite>
         <voxelMapLOF>
@@ -3479,10 +3330,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3490,7 +3339,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_29</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:29</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:29</strategySprite>
         <voxelMapLOF>
@@ -3560,11 +3408,9 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
 </damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3572,7 +3418,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_3</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:3</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:3</strategySprite>
         <voxelMapLOF>
@@ -3642,10 +3487,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>80</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3653,7 +3496,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_30</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:30</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:30</strategySprite>
         <voxelMapLOF>
@@ -3723,10 +3565,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3734,7 +3574,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_31</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:31</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:31</strategySprite>
         <voxelMapLOF>
@@ -3804,10 +3643,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3815,7 +3652,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_32</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:32</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:32</strategySprite>
         <voxelMapLOF>
@@ -3885,10 +3721,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3896,7 +3730,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_33</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:33</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:33</strategySprite>
         <voxelMapLOF>
@@ -3966,10 +3799,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -3977,7 +3808,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_34</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:34</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:34</strategySprite>
         <voxelMapLOF>
@@ -4047,10 +3877,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4058,7 +3886,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_35</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:35</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:35</strategySprite>
         <voxelMapLOF>
@@ -4128,11 +3955,9 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
 </damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4140,7 +3965,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_36</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:36</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:36</strategySprite>
         <voxelMapLOF>
@@ -4210,10 +4034,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4221,7 +4043,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_37</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:37</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:37</strategySprite>
         <voxelMapLOF>
@@ -4291,10 +4112,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4302,7 +4121,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_38</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:38</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:38</strategySprite>
         <voxelMapLOF>
@@ -4372,10 +4190,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4383,7 +4198,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_39</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:39</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:39</strategySprite>
         <voxelMapLOF>
@@ -4453,10 +4267,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4464,7 +4275,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_4</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:4</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:4</strategySprite>
         <voxelMapLOF>
@@ -4534,10 +4344,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>80</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4545,7 +4353,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_40</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:40</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:40</strategySprite>
         <voxelMapLOF>
@@ -4615,10 +4422,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4626,7 +4430,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_41</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:41</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:41</strategySprite>
         <voxelMapLOF>
@@ -4696,10 +4499,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4707,7 +4507,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_42</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:42</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:42</strategySprite>
         <voxelMapLOF>
@@ -4777,10 +4576,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4788,7 +4584,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_43</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:43</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:43</strategySprite>
         <voxelMapLOF>
@@ -4858,10 +4653,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4869,7 +4661,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_44</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:44</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:44</strategySprite>
         <voxelMapLOF>
@@ -4939,10 +4730,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -4950,7 +4738,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_45</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:45</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:45</strategySprite>
         <voxelMapLOF>
@@ -5020,10 +4807,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5031,7 +4815,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_46</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:46</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:46</strategySprite>
         <voxelMapLOF>
@@ -5101,10 +4884,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5112,7 +4892,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_47</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:47</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:47</strategySprite>
         <voxelMapLOF>
@@ -5182,10 +4961,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5193,7 +4969,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_48</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:48</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:48</strategySprite>
         <voxelMapLOF>
@@ -5263,10 +5038,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5274,7 +5046,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_49</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:49</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:49</strategySprite>
         <voxelMapLOF>
@@ -5344,10 +5115,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5355,7 +5123,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_5</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:5</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:5</strategySprite>
         <voxelMapLOF>
@@ -5425,10 +5192,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>120</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5436,7 +5200,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_50</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:50</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:50</strategySprite>
         <voxelMapLOF>
@@ -5506,10 +5269,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5517,7 +5277,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_51</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:51</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:51</strategySprite>
         <voxelMapLOF>
@@ -5587,10 +5346,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5598,7 +5355,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_52</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:52</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:52</strategySprite>
         <voxelMapLOF>
@@ -5668,10 +5424,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5679,7 +5433,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_53</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:53</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:53</strategySprite>
         <voxelMapLOF>
@@ -5749,11 +5502,9 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
 </damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5761,7 +5512,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_54</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:54</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:54</strategySprite>
         <voxelMapLOF>
@@ -5831,10 +5581,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5842,7 +5590,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_55</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:55</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:55</strategySprite>
         <voxelMapLOF>
@@ -5912,10 +5659,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -5923,7 +5668,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_56</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:56</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:56</strategySprite>
         <voxelMapLOF>
@@ -5993,10 +5737,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6004,7 +5746,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_57</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:57</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:57</strategySprite>
         <voxelMapLOF>
@@ -6074,10 +5815,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6085,7 +5824,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_58</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:58</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:58</strategySprite>
         <voxelMapLOF>
@@ -6155,10 +5893,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6166,7 +5902,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_59</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:59</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:59</strategySprite>
         <voxelMapLOF>
@@ -6236,11 +5971,9 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
 </damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6248,7 +5981,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_6</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:6</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:6</strategySprite>
         <voxelMapLOF>
@@ -6318,10 +6050,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>120</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6329,7 +6058,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_60</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:60</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:60</strategySprite>
         <voxelMapLOF>
@@ -6399,10 +6127,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6410,7 +6136,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_61</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:61</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:61</strategySprite>
         <voxelMapLOF>
@@ -6480,10 +6205,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6491,7 +6214,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_62</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:62</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:62</strategySprite>
         <voxelMapLOF>
@@ -6561,10 +6283,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6572,7 +6292,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_63</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:63</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:63</strategySprite>
         <voxelMapLOF>
@@ -6642,10 +6361,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6653,7 +6370,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_64</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:64</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:64</strategySprite>
         <voxelMapLOF>
@@ -6723,10 +6439,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6734,7 +6448,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_65</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:65</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:65</strategySprite>
         <voxelMapLOF>
@@ -6804,11 +6517,9 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
 </damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6816,7 +6527,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_66</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:66</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:66</strategySprite>
         <voxelMapLOF>
@@ -6886,10 +6596,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6897,7 +6605,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_67</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:67</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:67</strategySprite>
         <voxelMapLOF>
@@ -6967,10 +6674,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -6978,7 +6683,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_68</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:68</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:68</strategySprite>
         <voxelMapLOF>
@@ -7048,10 +6752,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7059,7 +6761,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_69</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:69</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:69</strategySprite>
         <voxelMapLOF>
@@ -7129,10 +6830,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7140,7 +6839,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_7</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:7</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:7</strategySprite>
         <voxelMapLOF>
@@ -7210,10 +6908,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>120</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7221,7 +6916,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_70</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:70</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:70</strategySprite>
         <voxelMapLOF>
@@ -7291,10 +6985,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7302,7 +6994,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_71</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:71</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:71</strategySprite>
         <voxelMapLOF>
@@ -7372,11 +7063,9 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
 </damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7384,7 +7073,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_72</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:72</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:72</strategySprite>
         <voxelMapLOF>
@@ -7454,10 +7142,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7465,7 +7151,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_73</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:73</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:73</strategySprite>
         <voxelMapLOF>
@@ -7535,10 +7220,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7546,7 +7229,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_74</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:74</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:74</strategySprite>
         <voxelMapLOF>
@@ -7616,10 +7298,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7627,7 +7307,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_75</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:75</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:75</strategySprite>
         <voxelMapLOF>
@@ -7697,10 +7376,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7708,7 +7385,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_76</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:76</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:76</strategySprite>
         <voxelMapLOF>
@@ -7778,10 +7454,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7789,7 +7463,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_77</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:77</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:77</strategySprite>
         <voxelMapLOF>
@@ -7859,11 +7532,9 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
 </damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7871,7 +7542,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_78</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:78</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:78</strategySprite>
         <voxelMapLOF>
@@ -7941,10 +7611,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -7952,7 +7620,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_79</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:79</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:79</strategySprite>
         <voxelMapLOF>
@@ -8022,10 +7689,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8033,7 +7698,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_8</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:8</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:8</strategySprite>
         <voxelMapLOF>
@@ -8103,10 +7767,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>120</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8114,7 +7775,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_80</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:80</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:80</strategySprite>
         <voxelMapLOF>
@@ -8184,10 +7844,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8195,7 +7853,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_81</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:81</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:81</strategySprite>
         <voxelMapLOF>
@@ -8265,10 +7922,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8276,7 +7931,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_82</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:82</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:82</strategySprite>
         <voxelMapLOF>
@@ -8346,10 +8000,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8357,7 +8009,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_83</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:83</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:83</strategySprite>
         <voxelMapLOF>
@@ -8427,11 +8078,9 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
 </damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8439,7 +8088,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_84</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:84</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:84</strategySprite>
         <voxelMapLOF>
@@ -8509,10 +8157,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#05;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8520,7 +8166,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_85</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:85</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:85</strategySprite>
         <voxelMapLOF>
@@ -8590,10 +8235,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#06;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8601,7 +8244,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_86</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:86</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:86</strategySprite>
         <voxelMapLOF>
@@ -8671,10 +8313,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#07;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8682,7 +8322,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_87</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:87</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:87</strategySprite>
         <voxelMapLOF>
@@ -8752,10 +8391,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_&#08;</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8763,7 +8400,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_88</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:88</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:88</strategySprite>
         <voxelMapLOF>
@@ -8833,10 +8469,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_	</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8844,7 +8478,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_89</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:89</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:89</strategySprite>
         <voxelMapLOF>
@@ -8914,11 +8547,9 @@
           <y>48</y>
         </imageOffset>
         <constitution>90</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_GD_
 </damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -8926,7 +8557,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_9</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:9</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:9</strategySprite>
         <voxelMapLOF>
@@ -8996,10 +8626,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>120</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9007,7 +8634,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_90</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:90</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:90</strategySprite>
         <voxelMapLOF>
@@ -9077,10 +8703,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9088,7 +8711,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_91</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:91</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:91</strategySprite>
         <voxelMapLOF>
@@ -9158,10 +8780,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9169,7 +8788,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_92</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:92</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:92</strategySprite>
         <voxelMapLOF>
@@ -9239,10 +8857,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9250,7 +8865,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_93</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:93</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:93</strategySprite>
         <voxelMapLOF>
@@ -9320,10 +8934,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9331,7 +8942,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_94</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:94</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:94</strategySprite>
         <voxelMapLOF>
@@ -9401,10 +9011,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9412,7 +9019,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_95</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:95</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:95</strategySprite>
         <voxelMapLOF>
@@ -9482,10 +9088,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9493,7 +9096,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_96</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:96</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:96</strategySprite>
         <voxelMapLOF>
@@ -9563,10 +9165,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9574,7 +9173,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_97</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:97</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:97</strategySprite>
         <voxelMapLOF>
@@ -9644,10 +9242,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9655,7 +9250,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_98</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:98</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:98</strategySprite>
         <voxelMapLOF>
@@ -9725,10 +9319,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9736,7 +9327,6 @@
     <key>BATTLEMAPPART_57UFO7_GD_99</key>
     <value>
       <sp>
-        <type>Ground</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/GROUND.TAB:99</sprite>
         <strategySprite>PCKSTRAT:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.PCK:xcom3/MAPS/57UFO7/MAPUNITS/SGROUND.TAB:99</strategySprite>
         <voxelMapLOF>
@@ -9806,10 +9396,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9887,10 +9474,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -9968,10 +9552,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10049,10 +9630,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10130,10 +9708,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10211,10 +9786,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10292,10 +9864,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10373,10 +9942,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10454,10 +10020,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10535,10 +10098,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10616,10 +10176,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10697,10 +10254,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10778,10 +10332,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10859,10 +10410,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -10940,10 +10488,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11021,10 +10566,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11102,10 +10644,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11183,10 +10722,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11264,10 +10800,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11345,10 +10878,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11426,10 +10956,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11507,10 +11034,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11588,10 +11112,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11669,10 +11190,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11750,10 +11268,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11831,10 +11346,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11912,10 +11424,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -11993,10 +11502,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12074,10 +11580,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12155,10 +11658,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12236,10 +11736,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_LW_#</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12317,10 +11815,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12398,10 +11893,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12479,10 +11971,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12560,10 +12049,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12641,10 +12127,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12722,10 +12205,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12803,10 +12283,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12884,10 +12361,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -12965,9 +12439,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
         <animation_frames>
           <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:12</entry>
           <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:13</entry>
@@ -13053,9 +12525,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
         <animation_frames>
           <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:18</entry>
           <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:19</entry>
@@ -13141,10 +12611,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13222,10 +12689,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13303,10 +12767,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13384,10 +12845,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13465,10 +12923,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13546,10 +13001,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13627,10 +13079,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13708,10 +13157,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13789,10 +13235,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13870,10 +13313,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -13951,10 +13391,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14032,10 +13469,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14113,10 +13547,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14194,10 +13625,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14275,10 +13703,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14356,10 +13781,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14437,10 +13859,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14518,10 +13937,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14599,10 +14015,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14680,10 +14093,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14761,10 +14171,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14842,10 +14249,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -14923,10 +14327,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15004,10 +14405,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15085,10 +14483,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15166,10 +14561,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15247,10 +14639,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15328,10 +14717,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15409,10 +14795,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15490,10 +14873,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15571,10 +14951,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15652,10 +15029,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15733,10 +15107,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_RW_ </damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15814,10 +15186,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15895,10 +15264,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -15976,10 +15342,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16057,10 +15420,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16138,10 +15498,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16151,7 +15508,6 @@
       <sp>
         <type>RightWall</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/RIGHT.PCK:xcom3/MAPS/57UFO7/MAPUNITS/RIGHT.TAB:38</sprite>
-        <strategySprite />
         <voxelMapLOF>
           <sp>
             <size>
@@ -16219,9 +15575,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
         <animation_frames>
           <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:0</entry>
           <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:1</entry>
@@ -16239,7 +15593,6 @@
       <sp>
         <type>RightWall</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/RIGHT.PCK:xcom3/MAPS/57UFO7/MAPUNITS/RIGHT.TAB:39</sprite>
-        <strategySprite />
         <voxelMapLOF>
           <sp>
             <size>
@@ -16307,9 +15660,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
         <animation_frames>
           <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:6</entry>
           <entry>PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.PCK:xcom3/MAPS/57UFO7/MAPUNITS/ANIMATE.TAB:7</entry>
@@ -16395,10 +15746,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16408,7 +15756,6 @@
       <sp>
         <type>RightWall</type>
         <sprite>PCK:xcom3/MAPS/57UFO7/MAPUNITS/RIGHT.PCK:xcom3/MAPS/57UFO7/MAPUNITS/RIGHT.TAB:40</sprite>
-        <strategySprite />
         <voxelMapLOF>
           <sp>
             <size>
@@ -16476,10 +15823,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16557,10 +15901,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16638,10 +15979,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16719,10 +16057,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16800,10 +16135,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16881,10 +16213,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -16962,10 +16291,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>100</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17043,10 +16369,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17124,10 +16447,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17205,10 +16525,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17286,10 +16603,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17367,10 +16681,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17448,10 +16759,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17529,10 +16837,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17610,10 +16915,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17691,10 +16993,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17772,10 +17071,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17853,10 +17149,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -17934,10 +17227,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18015,10 +17305,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18096,10 +17383,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18177,10 +17461,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18258,10 +17539,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18339,10 +17617,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18420,10 +17695,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18501,10 +17773,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18582,10 +17851,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18663,10 +17929,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>100</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18744,10 +18007,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18825,10 +18085,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18906,10 +18163,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -18987,10 +18241,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19068,10 +18319,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>100</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19149,10 +18397,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>100</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19230,10 +18475,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19311,10 +18553,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19392,10 +18631,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19473,10 +18709,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>100</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19554,10 +18787,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19635,10 +18865,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19716,10 +18943,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19797,10 +19021,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19878,10 +19099,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -19959,10 +19177,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20040,10 +19255,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20121,10 +19333,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20202,10 +19411,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20283,10 +19489,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20364,10 +19567,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20445,10 +19645,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20526,10 +19723,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>10</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20607,10 +19801,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>10</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20688,10 +19879,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20769,10 +19957,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>10</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20850,10 +20035,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>10</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -20933,8 +20115,6 @@
         <constitution>35</constitution>
         <explosion_power>150</explosion_power>
         <explosion_radius_divizor>50</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21012,10 +20192,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>35</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>10</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21093,10 +20270,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21174,10 +20348,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21255,10 +20426,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21336,10 +20504,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21417,10 +20582,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21498,10 +20660,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21579,10 +20738,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21660,10 +20816,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21741,10 +20894,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21822,10 +20972,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21903,10 +21050,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -21984,10 +21128,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22065,10 +21206,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22146,10 +21284,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22229,8 +21364,6 @@
         <constitution>15</constitution>
         <explosion_power>150</explosion_power>
         <explosion_radius_divizor>50</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22308,10 +21441,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22389,10 +21519,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22470,10 +21597,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22551,10 +21675,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22632,10 +21753,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22713,10 +21831,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22794,10 +21909,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22875,10 +21987,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -22956,10 +22065,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23037,10 +22143,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23118,10 +22221,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23199,10 +22299,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23280,10 +22377,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23361,10 +22455,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23442,10 +22533,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23523,10 +22611,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23604,10 +22689,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23685,10 +22767,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23766,10 +22845,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23847,10 +22923,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -23928,10 +23001,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24009,10 +23079,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24090,10 +23157,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24171,10 +23235,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24252,10 +23313,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24333,10 +23391,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24414,10 +23469,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24495,10 +23547,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24576,10 +23625,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24657,10 +23703,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24738,10 +23781,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24819,10 +23859,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24900,10 +23937,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -24981,10 +24015,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25062,10 +24093,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25143,10 +24171,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25224,10 +24249,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25305,10 +24327,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25386,10 +24405,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25467,10 +24483,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25548,10 +24561,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25631,8 +24641,6 @@
         <constitution>15</constitution>
         <explosion_power>150</explosion_power>
         <explosion_radius_divizor>50</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25710,10 +24718,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25791,10 +24796,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25872,10 +24874,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -25953,10 +24952,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26034,10 +25030,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26115,10 +25108,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26196,10 +25186,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26277,10 +25264,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26358,10 +25342,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26439,10 +25420,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26520,10 +25498,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26601,10 +25576,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26682,10 +25654,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26763,10 +25732,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26844,10 +25810,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -26925,10 +25888,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27006,10 +25966,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27087,10 +26044,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27168,10 +26122,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27249,10 +26200,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27330,10 +26278,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27411,10 +26356,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27492,10 +26434,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27573,10 +26512,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>45</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27654,10 +26590,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27735,10 +26668,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27816,10 +26746,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27897,10 +26824,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -27978,10 +26902,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -28059,10 +26980,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -28140,10 +27058,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -28221,10 +27136,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>1</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -28302,10 +27214,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -28383,10 +27292,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -28464,10 +27370,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -28545,10 +27448,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -28626,10 +27526,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -28707,10 +27604,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -28788,10 +27682,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -28869,10 +27760,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -28950,10 +27838,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -29031,10 +27916,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -29112,10 +27994,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -29193,10 +28072,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -29274,10 +28150,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -29355,10 +28228,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -29436,10 +28306,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -29517,10 +28384,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -29598,10 +28462,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -29679,10 +28540,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -29760,10 +28618,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -29841,10 +28696,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -29922,10 +28774,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -30003,10 +28852,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -30084,10 +28930,8 @@
           <y>48</y>
         </imageOffset>
         <constitution>255</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
         <damaged_map_part>BATTLEMAPPART_57UFO7_SC_.</damaged_map_part>
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -30165,10 +29009,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -30246,10 +29087,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -30327,10 +29165,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -30408,10 +29243,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -30489,10 +29321,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -30570,10 +29399,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -30651,10 +29477,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -30732,10 +29555,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -30813,10 +29633,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -30894,10 +29711,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>1</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -30975,10 +29789,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -31056,10 +29867,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -31137,10 +29945,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -31218,10 +30023,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -31299,10 +30101,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -31380,10 +30179,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -31461,10 +30257,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -31542,10 +30335,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -31623,10 +30413,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -31704,10 +30491,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>75</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -31785,10 +30569,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -31866,10 +30647,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -31947,10 +30725,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -32028,10 +30803,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -32109,10 +30881,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -32190,10 +30959,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -32271,10 +31037,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -32352,10 +31115,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>65</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -32433,10 +31193,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>100</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -32514,10 +31271,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>100</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -32595,10 +31349,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>100</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -32676,10 +31427,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>100</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -32757,10 +31505,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>100</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -32838,10 +31583,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>100</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -32919,10 +31661,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>100</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -33000,10 +31739,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>100</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -33081,10 +31817,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -33162,10 +31895,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -33243,10 +31973,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -33324,10 +32051,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -33405,10 +32129,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -33486,10 +32207,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -33567,10 +32285,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -33648,10 +32363,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -33729,10 +32441,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>100</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -33810,10 +32519,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>100</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -33891,10 +32597,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>15</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>100</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -33972,10 +32675,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>150</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -34053,10 +32753,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -34134,10 +32831,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -34215,10 +32909,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -34296,10 +32987,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -34377,10 +33065,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -34458,10 +33143,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -34539,10 +33221,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -34620,10 +33299,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -34701,10 +33377,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>
@@ -34782,10 +33455,7 @@
           <y>48</y>
         </imageOffset>
         <constitution>55</constitution>
-        <explosion_power>0</explosion_power>
         <explosion_radius_divizor>1</explosion_radius_divizor>
-        <damaged_map_part />
-        <animation_frames />
       </sp>
     </value>
   </entry>

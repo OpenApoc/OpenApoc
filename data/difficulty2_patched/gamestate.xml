@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gamestate>
-  <lastVehicle>0</lastVehicle>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vehicle_types.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="organisations.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="facility_types.xml" />
@@ -12,11 +11,8 @@
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ufo_growth_lists.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ufo_incursions.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="base_layouts.xml" />
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="player_bases.xml" />
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="vehicles.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="ufopaedia.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="research.xml" />
-  <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agents.xml" />
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_generator.xml" />
   <initial_agents>
     <entry>
@@ -78,16 +74,6 @@
       <value>1</value>
     </entry>
   </initial_facilities>
-  <current_city />
-  <current_base />
   <player>ORG_X-COM</player>
-  <rng>
-    <s0>2065550767</s0>
-    <s1>1653378023</s1>
-  </rng>
-  <gameTime>
-    <ticks>0</ticks>
-  </gameTime>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="battle.xml" />
-  <messages />
 </gamestate>
