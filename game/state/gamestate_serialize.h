@@ -385,9 +385,26 @@ void serializeOut(sp<SerializationNode> node, const std::map<Key, Value> &map,
 	Value defaultValue;
 	for (const auto &pair : map)
 	{
-		auto entry = node->addNode("entry");
-		serializeOut(entry->addNode("key"), pair.first, defaultKey);
-		serializeOut(entry->addNode("value"), pair.second, defaultValue);
+		auto refIt = ref.find(pair.first);
+		if (refIt != ref.end())
+		{
+			if (refIt->second != pair.second)
+			{
+				auto entry = node->addNode("entry");
+				serializeOut(entry->addNode("key"), pair.first, defaultKey);
+				serializeOut(entry->addNode("value"), pair.second, refIt->second);
+			}
+			else
+			{
+				// key and value unchanged, nothing serialized out
+			}
+		}
+		else
+		{
+			auto entry = node->addNode("entry");
+			serializeOut(entry->addNode("key"), pair.first, defaultKey);
+			serializeOut(entry->addNode("value"), pair.second, defaultValue);
+		}
 	}
 }
 
@@ -398,9 +415,26 @@ void serializeOut(sp<SerializationNode> node, const StateRefMap<T> &map, const S
 	sp<T> defaultValue;
 	for (const auto &pair : map)
 	{
-		auto entry = node->addNode("entry");
-		serializeOut(entry->addNode("key"), pair.first, defaultKey);
-		serializeOut(entry->addNode("value"), pair.second, defaultValue);
+		auto refIt = ref.find(pair.first);
+		if (refIt != ref.end())
+		{
+			if (refIt->second != pair.second)
+			{
+				auto entry = node->addNode("entry");
+				serializeOut(entry->addNode("key"), pair.first, defaultKey);
+				serializeOut(entry->addNode("value"), pair.second, refIt->second);
+			}
+			else
+			{
+				// key and value unchanged, nothing serialized out
+			}
+		}
+		else
+		{
+			auto entry = node->addNode("entry");
+			serializeOut(entry->addNode("key"), pair.first, defaultKey);
+			serializeOut(entry->addNode("value"), pair.second, defaultValue);
+		}
 	}
 }
 
@@ -412,9 +446,26 @@ void serializeOutSectionMap(sp<SerializationNode> node, const std::map<UString, 
 	Value defaultValue;
 	for (const auto &pair : map)
 	{
-		auto entry = node->addNode("entry");
-		serializeOut(entry->addNode("key"), pair.first, defaultKey);
-		serializeOut(entry->addSection(pair.first), pair.second, defaultValue);
+		auto refIt = ref.find(pair.first);
+		if (refIt != ref.end())
+		{
+			if (refIt->second != pair.second)
+			{
+				auto entry = node->addNode("entry");
+				serializeOut(entry->addNode("key"), pair.first, defaultKey);
+				serializeOut(entry->addSection(pair.first), pair.second, refIt->second);
+			}
+			else
+			{
+				// key and value unchanged, nothing serialized out
+			}
+		}
+		else
+		{
+			auto entry = node->addNode("entry");
+			serializeOut(entry->addNode("key"), pair.first, defaultKey);
+			serializeOut(entry->addSection(pair.first), pair.second, defaultValue);
+		}
 	}
 }
 
