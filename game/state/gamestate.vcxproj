@@ -216,7 +216,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <CustomBuildStep>
-      <Command>$(SolutionDir)bin\$(Platform)\$(Configuration)\gamestate_serialize_gen.exe -x $(SolutionDir)\game\state\gamestate_serialize.xml -h $(SolutionDir)\game\state\gamestate_serialize_generated.h -o $(SolutionDir)\game\state\gamestate_serialize_generated.cpp</Command>
+      <Command>"$(SolutionDir)bin\$(Platform)\$(Configuration)\gamestate_serialize_gen.exe" -x "$(SolutionDir)\game\state\gamestate_serialize.xml" -h "$(SolutionDir)\game\state\gamestate_serialize_generated.h" -o "$(SolutionDir)\game\state\gamestate_serialize_generated.cpp"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Inputs>$(SolutionDir)\game\state\gamestate_serialize.xml;%(Inputs)</Inputs>
@@ -240,7 +240,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <CustomBuildStep>
-      <Command>$(SolutionDir)bin\$(Platform)\$(Configuration)\gamestate_serialize_gen.exe -x $(SolutionDir)\game\state\gamestate_serialize.xml -h $(SolutionDir)\game\state\gamestate_serialize_generated.h -o $(SolutionDir)\game\state\gamestate_serialize_generated.cpp</Command>
+      <Command>"$(SolutionDir)bin\$(Platform)\$(Configuration)\gamestate_serialize_gen.exe" -x "$(SolutionDir)\game\state\gamestate_serialize.xml" -h "$(SolutionDir)\game\state\gamestate_serialize_generated.h" -o "$(SolutionDir)\game\state\gamestate_serialize_generated.cpp"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Inputs>$(SolutionDir)\game\state\gamestate_serialize.xml;%(Inputs)</Inputs>
@@ -268,7 +268,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <CustomBuildStep>
-      <Command>$(SolutionDir)bin\$(Platform)\$(Configuration)\gamestate_serialize_gen.exe -x $(SolutionDir)\game\state\gamestate_serialize.xml -h $(SolutionDir)\game\state\gamestate_serialize_generated.h -o $(SolutionDir)\game\state\gamestate_serialize_generated.cpp</Command>
+      <Command>"$(SolutionDir)bin\$(Platform)\$(Configuration)\gamestate_serialize_gen.exe" -x "$(SolutionDir)\game\state\gamestate_serialize.xml" -h "$(SolutionDir)\game\state\gamestate_serialize_generated.h" -o "$(SolutionDir)\game\state\gamestate_serialize_generated.cpp"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Inputs>$(SolutionDir)\game\state\gamestate_serialize.xml;%(Inputs)</Inputs>
@@ -296,7 +296,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <CustomBuildStep>
-      <Command>$(SolutionDir)bin\$(Platform)\$(Configuration)\gamestate_serialize_gen.exe -x $(SolutionDir)\game\state\gamestate_serialize.xml -h $(SolutionDir)\game\state\gamestate_serialize_generated.h -o $(SolutionDir)\game\state\gamestate_serialize_generated.cpp</Command>
+      <Command>"$(SolutionDir)bin\$(Platform)\$(Configuration)\gamestate_serialize_gen.exe" -x "$(SolutionDir)\game\state\gamestate_serialize.xml" -h "$(SolutionDir)\game\state\gamestate_serialize_generated.h" -o "$(SolutionDir)\game\state\gamestate_serialize_generated.cpp"</Command>
     </CustomBuildStep>
     <CustomBuildStep>
       <Inputs>$(SolutionDir)\game\state\gamestate_serialize.xml;%(Inputs)</Inputs>
