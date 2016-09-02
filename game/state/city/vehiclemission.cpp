@@ -372,8 +372,6 @@ bool VehicleMission::takeOffCheck(GameState &state, Vehicle &v, UString mission)
 	return false;
 }
 
-VehicleMission::VehicleMission() : targetLocation(0, 0, 0), timeToSnooze(0) {}
-
 bool VehicleMission::getNextDestination(GameState &state, Vehicle &v, Vec3<float> &dest)
 {
 	switch (this->type)

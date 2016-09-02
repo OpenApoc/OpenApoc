@@ -34,11 +34,11 @@ class Doodad : public std::enable_shared_from_this<Doodad>
 
 	sp<TileObjectDoodad> tileObject;
 
-	Vec3<float> position;
-	Vec2<int> imageOffset;
-	bool temporary;
-	int age;
-	int lifetime;
+	Vec3<float> position = {0, 0, 0};
+	Vec2<int> imageOffset = {0, 0};
+	bool temporary = false;
+	int age = 0;
+	int lifetime = 0;
 	// A doodad is either a single image sprite
 	sp<Image> sprite;
 	// Or a DoodadType containing an animation

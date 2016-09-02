@@ -81,13 +81,6 @@ static std::map<VehicleType::Banking, Vec3<float>> banking_vectors = {
     {VehicleType::Banking::Descending, Vec3<float>{0, 0, -1}},
 };
 
-VehicleType::VehicleType()
-    : numCreated(0), type(Type::Flying), size(0, 0, 0), image_offset(0, 0), acceleration(0),
-      top_speed(0), health(0), crash_health(0), weight(0), passengers(0), aggressiveness(0),
-      score(0), shadow_offset(0)
-{
-}
-
 template <> sp<VehicleType> StateObject<VehicleType>::get(const GameState &state, const UString &id)
 {
 	auto it = state.vehicle_types.find(id);

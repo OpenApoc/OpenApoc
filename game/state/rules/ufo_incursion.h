@@ -18,11 +18,11 @@ class UFOIncursion : public StateObject<UFOIncursion>
 	};
 	static const std::map<PrimaryMission, UString> primaryMissionMap;
 
-	PrimaryMission primaryMission;
+	PrimaryMission primaryMission = PrimaryMission::Infiltration;
 	std::vector<std::pair<UString, int>> primaryList;
 	std::vector<std::pair<UString, int>> escortList;
 	std::vector<std::pair<UString, int>> attackList;
-	int priority;
+	int priority = 0;
 };
 
 }; // namespace OpenApoc

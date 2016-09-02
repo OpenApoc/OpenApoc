@@ -3,7 +3,6 @@
 
 namespace OpenApoc
 {
-VAmmoType::VAmmoType() : weight(0), store_space(0){};
 
 template <> const UString &StateObject<VAmmoType>::getPrefix()
 {

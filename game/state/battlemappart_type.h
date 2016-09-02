@@ -19,7 +19,7 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 		Scenery
 	};
 	static const std::map<Type, UString> TypeMap;
-	Type type;
+	Type type = Type::Ground;
 
 	enum class ExplosionType
 	{
@@ -35,12 +35,12 @@ class BattleMapPartType : public StateObject<BattleMapPartType>
 	sp<Image> strategySprite;
 	sp<VoxelMap> voxelMapLOF;
 	sp<VoxelMap> voxelMapLOS;
-	Vec2<float> imageOffset;
+	Vec2<float> imageOffset = {0, 0};
 
-	int constitution;
-	int explosion_power;
-	int explosion_radius_divizor;
-	ExplosionType explosion_type;
+	int constitution = 0;
+	int explosion_power = 0;
+	int explosion_radius_divizor = 0;
+	ExplosionType explosion_type = ExplosionType::BlankOrSmoke;
 	StateRef<BattleMapPartType> damaged_map_part;
 	std::vector<sp<Image>> animation_frames;
 };

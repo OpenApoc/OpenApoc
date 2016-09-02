@@ -20,15 +20,6 @@ const std::map<Agent::Gender, UString> Agent::GenderMap = {
     {Gender::Male, "male"}, {Gender::Female, "female"},
 };
 
-Agent::Agent() : assigned_to_lab(false) {}
-
-AgentStats::AgentStats()
-    : health(0), accuracy(0), reactions(0), speed(0), stamina(0), bravery(0), strength(0),
-      psi_energy(0), psi_attack(0), psi_defence(0), physics_skill(0), biochem_skill(0),
-      engineering_skill(0)
-{
-}
-
 template <> sp<Agent> StateObject<Agent>::get(const GameState &state, const UString &id)
 {
 	auto it = state.agents.find(id);
@@ -61,8 +52,6 @@ template <> const UString &StateObject<Agent>::getId(const GameState &state, con
 	LogError("No agent matching pointer %p", ptr.get());
 	return emptyString;
 }
-
-AgentGenerator::AgentGenerator() : num_created(0) {}
 
 template <typename T, typename Generator>
 T probabilityMapRandomizer(Generator &g, const std::map<T, float> &probabilityMap)
