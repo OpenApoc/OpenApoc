@@ -20,7 +20,7 @@ class GameTime
 	// needs some fancy initialization
 	static /*const*/ std::locale *TIME_FORMAT, *DATE_LONG_FORMAT, *DATE_SHORT_FORMAT;
 
-	boost::posix_time::ptime datetime;
+	boost::posix_time::ptime getPtime() const;
 
 	bool dayPassedFlag;
 	bool weekPassedFlag;

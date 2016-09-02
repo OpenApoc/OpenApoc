@@ -22,10 +22,9 @@ time_duration GameTime::ticksToPosix(int64_t ticks)
 	return time_duration(0, 0, 0, tickTotal);
 }
 
-GameTime::GameTime(uint64_t ticks) : ticks(ticks), dayPassedFlag(false), weekPassedFlag(false)
-{
-	datetime = GAME_START + ticksToPosix(ticks);
-}
+GameTime::GameTime(uint64_t ticks) : ticks(ticks), dayPassedFlag(false), weekPassedFlag(false) {}
+
+boost::posix_time::ptime GameTime::getPtime() const { return GAME_START + ticksToPosix(ticks); }
 
 UString GameTime::getTimeString() const
 {
@@ -37,7 +36,7 @@ UString GameTime::getTimeString() const
 		TIME_FORMAT = new std::locale(std::locale::classic(), timeFacet);
 	}
 	ss.imbue(*TIME_FORMAT);
-	ss << datetime;
+	ss << this->getPtime();
 	return ss.str();
 }
 
@@ -73,7 +72,7 @@ UString GameTime::getLongDateString() const
 		dateFacet->longDayNames(days);
 	}
 	ss.imbue(*DATE_LONG_FORMAT);
-	ss << datetime.date();
+	ss << this->getPtime().date();
 	return ss.str();
 }
 
@@ -104,7 +103,7 @@ UString GameTime::getShortDateString() const
 		dateFacet->longDayNames(days);
 	}
 	ss.imbue(*DATE_SHORT_FORMAT);
-	ss << datetime.date();
+	ss << this->getPtime().date();
 	return ss.str();
 }
 
@@ -113,16 +112,16 @@ UString GameTime::getWeekString() const { return UString::format("%s %d", tr("We
 unsigned int GameTime::getWeek() const
 {
 	date firstMonday = previous_weekday(GAME_START.date(), greg_weekday(Monday));
-	date lastMonday = previous_weekday(datetime.date(), greg_weekday(Monday));
+	date lastMonday = previous_weekday(this->getPtime().date(), greg_weekday(Monday));
 	date_duration duration = lastMonday - firstMonday;
 	return duration.days() / 7 + 1;
 }
 
-unsigned int GameTime::getDay() const { return datetime.date().day(); }
+unsigned int GameTime::getDay() const { return this->getPtime().date().day(); }
 
-unsigned int GameTime::getHours() const { return datetime.time_of_day().hours(); }
+unsigned int GameTime::getHours() const { return this->getPtime().time_of_day().hours(); }
 
-unsigned int GameTime::getMinutes() const { return datetime.time_of_day().minutes(); }
+unsigned int GameTime::getMinutes() const { return this->getPtime().time_of_day().minutes(); }
 
 uint64_t GameTime::getTicks() const { return ticks; }
 
@@ -139,7 +138,6 @@ void GameTime::clearFlags()
 void GameTime::addTicks(uint64_t ticks)
 {
 	this->ticks += ticks;
-	this->datetime += ticksToPosix(ticks);
 	uint64_t dayTicks = this->ticks % TICKS_PER_DAY;
 	if (dayTicks < ticks)
 	{
