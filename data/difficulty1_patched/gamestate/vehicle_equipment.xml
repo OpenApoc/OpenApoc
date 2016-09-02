@@ -4,7 +4,7 @@
     <key>VEQUIPMENTTYPE_40MM_AUTO_CANNON</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_40MM_AUTO_CANNON</id>
         <name>40mm Auto Cannon</name>
         <weight>60</weight>
@@ -18,7 +18,7 @@
         <manufacturer>ORG_MEGAPOL</manufacturer>
         <store_space>30</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>20</speed>
         <projectile_sprites>
@@ -60,7 +60,7 @@
     <key>VEQUIPMENTTYPE_40MM_AUTO_CANNON_TURRET</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_40MM_AUTO_CANNON_TURRET</id>
         <name>40mm Auto Cannon Turret</name>
         <weight>20</weight>
@@ -74,7 +74,7 @@
         <manufacturer>ORG_MEGAPOL</manufacturer>
         <store_space>40</store_space>
         <users>
-          <entry>ground</entry>
+          <entry>Ground</entry>
         </users>
         <speed>20</speed>
         <projectile_sprites>
@@ -116,7 +116,7 @@
     <key>VEQUIPMENTTYPE_ADVANCED_CONTROL_SYSTEM</key>
     <value>
       <sp>
-        <type>general</type>
+        <type>General</type>
         <id>VEQUIPMENTTYPE_ADVANCED_CONTROL_SYSTEM</id>
         <name>Advanced Control System</name>
         <weight>16</weight>
@@ -130,8 +130,8 @@
         <manufacturer>ORG_X-COM</manufacturer>
         <store_space>40</store_space>
         <users>
-          <entry>ground</entry>
-          <entry>air</entry>
+          <entry>Ground</entry>
+          <entry>Air</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -165,7 +165,7 @@
     <key>VEQUIPMENTTYPE_AIRGUARD_ANTI-AIR_CANNON</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_AIRGUARD_ANTI-AIR_CANNON</id>
         <name>Airguard Anti-Air Cannon</name>
         <weight>25</weight>
@@ -179,7 +179,7 @@
         <manufacturer>ORG_MARSEC</manufacturer>
         <store_space>40</store_space>
         <users>
-          <entry>ground</entry>
+          <entry>Ground</entry>
         </users>
         <speed>15</speed>
         <projectile_sprites>
@@ -221,7 +221,7 @@
     <key>VEQUIPMENTTYPE_BIO-TRANSPORT_MODULE</key>
     <value>
       <sp>
-        <type>general</type>
+        <type>General</type>
         <id>VEQUIPMENTTYPE_BIO-TRANSPORT_MODULE</id>
         <name>Bio-Transport Module</name>
         <weight>65</weight>
@@ -235,8 +235,8 @@
         <manufacturer>ORG_X-COM</manufacturer>
         <store_space>40</store_space>
         <users>
-          <entry>ground</entry>
-          <entry>air</entry>
+          <entry>Ground</entry>
+          <entry>Air</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -270,7 +270,7 @@
     <key>VEQUIPMENTTYPE_BOLTER_4000_LASER_GUN</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_BOLTER_4000_LASER_GUN</id>
         <name>Bolter 4000 Laser Gun</name>
         <weight>50</weight>
@@ -284,7 +284,7 @@
         <manufacturer>ORG_MEGAPOL</manufacturer>
         <store_space>40</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>38</speed>
         <projectile_sprites>
@@ -341,7 +341,7 @@
     <key>VEQUIPMENTTYPE_CARGO_MODULE</key>
     <value>
       <sp>
-        <type>general</type>
+        <type>General</type>
         <id>VEQUIPMENTTYPE_CARGO_MODULE</id>
         <name>Cargo Module</name>
         <weight>55</weight>
@@ -355,8 +355,8 @@
         <manufacturer>ORG_SUPERDYNAMICS</manufacturer>
         <store_space>40</store_space>
         <users>
-          <entry>ground</entry>
-          <entry>air</entry>
+          <entry>Ground</entry>
+          <entry>Air</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -390,7 +390,7 @@
     <key>VEQUIPMENTTYPE_CLOAKING_FIELD</key>
     <value>
       <sp>
-        <type>general</type>
+        <type>General</type>
         <id>VEQUIPMENTTYPE_CLOAKING_FIELD</id>
         <name>Cloaking Field</name>
         <weight>80</weight>
@@ -404,8 +404,8 @@
         <manufacturer>ORG_X-COM</manufacturer>
         <store_space>90</store_space>
         <users>
-          <entry>ground</entry>
-          <entry>air</entry>
+          <entry>Ground</entry>
+          <entry>Air</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -439,7 +439,7 @@
     <key>VEQUIPMENTTYPE_DISRUPTOR_BOMB_LAUNCHER</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_DISRUPTOR_BOMB_LAUNCHER</id>
         <name>Disruptor Bomb Launcher</name>
         <weight>120</weight>
@@ -453,7 +453,7 @@
         <manufacturer>ORG_X-COM</manufacturer>
         <store_space>80</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>16</speed>
         <projectile_sprites>
@@ -508,7 +508,7 @@
     <key>VEQUIPMENTTYPE_DISRUPTOR_MULTI-BOMB_LAUNCHER</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_DISRUPTOR_MULTI-BOMB_LAUNCHER</id>
         <name>Disruptor Multi-Bomb Launcher</name>
         <weight>180</weight>
@@ -522,7 +522,7 @@
         <manufacturer>ORG_X-COM</manufacturer>
         <store_space>80</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>12</speed>
         <projectile_sprites>
@@ -592,7 +592,7 @@
     <key>VEQUIPMENTTYPE_GLM_AIR_DEFENSE</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_GLM_AIR_DEFENSE</id>
         <name>GLM Air defense</name>
         <weight>140</weight>
@@ -606,7 +606,7 @@
         <manufacturer>ORG_MARSEC</manufacturer>
         <store_space>160</store_space>
         <users>
-          <entry>ground</entry>
+          <entry>Ground</entry>
         </users>
         <speed>18</speed>
         <projectile_sprites>
@@ -676,7 +676,7 @@
     <key>VEQUIPMENTTYPE_GLM_ARRAY</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_GLM_ARRAY</id>
         <name>GLM Array</name>
         <weight>30</weight>
@@ -690,7 +690,7 @@
         <manufacturer>ORG_MARSEC</manufacturer>
         <store_space>40</store_space>
         <users>
-          <entry>ground</entry>
+          <entry>Ground</entry>
         </users>
         <speed>17</speed>
         <projectile_sprites>
@@ -744,7 +744,7 @@
     <key>VEQUIPMENTTYPE_HEAVY_DISRUPTOR_BEAM</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_HEAVY_DISRUPTOR_BEAM</id>
         <name>Heavy Disruptor Beam</name>
         <weight>130</weight>
@@ -758,7 +758,7 @@
         <manufacturer>ORG_X-COM</manufacturer>
         <store_space>160</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>32</speed>
         <projectile_sprites>
@@ -828,7 +828,7 @@
     <key>VEQUIPMENTTYPE_HEAVY_WEAPONS_CONTROL</key>
     <value>
       <sp>
-        <type>general</type>
+        <type>General</type>
         <id>VEQUIPMENTTYPE_HEAVY_WEAPONS_CONTROL</id>
         <name>Heavy Weapons Control</name>
         <weight>12</weight>
@@ -842,8 +842,8 @@
         <manufacturer>ORG_CYBERWEB</manufacturer>
         <store_space>40</store_space>
         <users>
-          <entry>ground</entry>
-          <entry>air</entry>
+          <entry>Ground</entry>
+          <entry>Air</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -877,7 +877,7 @@
     <key>VEQUIPMENTTYPE_JANITOR_MISSILE_ARRAY</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_JANITOR_MISSILE_ARRAY</id>
         <name>Janitor Missile Array</name>
         <weight>70</weight>
@@ -891,7 +891,7 @@
         <manufacturer>ORG_MEGAPOL</manufacturer>
         <store_space>50</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>16</speed>
         <projectile_sprites>
@@ -945,7 +945,7 @@
     <key>VEQUIPMENTTYPE_JUSTICE_MISSILE_LAUNCHER</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_JUSTICE_MISSILE_LAUNCHER</id>
         <name>Justice Missile Launcher</name>
         <weight>80</weight>
@@ -959,7 +959,7 @@
         <manufacturer>ORG_MEGAPOL</manufacturer>
         <store_space>80</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>10</speed>
         <projectile_sprites>
@@ -1029,7 +1029,7 @@
     <key>VEQUIPMENTTYPE_LANCER_7000_LASER_GUN</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_LANCER_7000_LASER_GUN</id>
         <name>Lancer 7000 Laser Gun</name>
         <weight>80</weight>
@@ -1043,7 +1043,7 @@
         <manufacturer>ORG_MEGAPOL</manufacturer>
         <store_space>60</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>38</speed>
         <projectile_sprites>
@@ -1103,7 +1103,7 @@
     <key>VEQUIPMENTTYPE_LARGE_DISRUPTION_SHIELD</key>
     <value>
       <sp>
-        <type>general</type>
+        <type>General</type>
         <id>VEQUIPMENTTYPE_LARGE_DISRUPTION_SHIELD</id>
         <name>Large Disruption Shield</name>
         <weight>120</weight>
@@ -1117,8 +1117,8 @@
         <manufacturer>ORG_X-COM</manufacturer>
         <store_space>90</store_space>
         <users>
-          <entry>ground</entry>
-          <entry>air</entry>
+          <entry>Ground</entry>
+          <entry>Air</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -1152,7 +1152,7 @@
     <key>VEQUIPMENTTYPE_LASER_DEFENSE_ARRAY</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_LASER_DEFENSE_ARRAY</id>
         <name>Laser Defense Array</name>
         <weight>50</weight>
@@ -1166,7 +1166,7 @@
         <manufacturer>ORG_MEGAPOL</manufacturer>
         <store_space>40</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>38</speed>
         <projectile_sprites>
@@ -1211,7 +1211,7 @@
     <key>VEQUIPMENTTYPE_LIGHT_DISRUPTOR_BEAM</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_LIGHT_DISRUPTOR_BEAM</id>
         <name>Light Disruptor Beam</name>
         <weight>50</weight>
@@ -1225,7 +1225,7 @@
         <manufacturer>ORG_X-COM</manufacturer>
         <store_space>60</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>28</speed>
         <projectile_sprites>
@@ -1275,7 +1275,7 @@
     <key>VEQUIPMENTTYPE_LIGHT_WEAPONS_CONTROL</key>
     <value>
       <sp>
-        <type>general</type>
+        <type>General</type>
         <id>VEQUIPMENTTYPE_LIGHT_WEAPONS_CONTROL</id>
         <name>Light Weapons Control</name>
         <weight>5</weight>
@@ -1289,8 +1289,8 @@
         <manufacturer>ORG_CYBERWEB</manufacturer>
         <store_space>10</store_space>
         <users>
-          <entry>ground</entry>
-          <entry>air</entry>
+          <entry>Ground</entry>
+          <entry>Air</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -1324,7 +1324,7 @@
     <key>VEQUIPMENTTYPE_LINEAGE_PLASMA_CANNON</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_LINEAGE_PLASMA_CANNON</id>
         <name>Lineage Plasma Cannon</name>
         <weight>95</weight>
@@ -1338,7 +1338,7 @@
         <manufacturer>ORG_MARSEC</manufacturer>
         <store_space>60</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>38</speed>
         <projectile_sprites>
@@ -1408,7 +1408,7 @@
     <key>VEQUIPMENTTYPE_MEDIUM_DISRUPTOR_BEAM</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_MEDIUM_DISRUPTOR_BEAM</id>
         <name>Medium Disruptor Beam</name>
         <weight>90</weight>
@@ -1422,7 +1422,7 @@
         <manufacturer>ORG_X-COM</manufacturer>
         <store_space>110</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>30</speed>
         <projectile_sprites>
@@ -1482,7 +1482,7 @@
     <key>VEQUIPMENTTYPE_MEDIUM_WEAPONS_CONTROL</key>
     <value>
       <sp>
-        <type>general</type>
+        <type>General</type>
         <id>VEQUIPMENTTYPE_MEDIUM_WEAPONS_CONTROL</id>
         <name>Medium Weapons Control</name>
         <weight>7</weight>
@@ -1496,8 +1496,8 @@
         <manufacturer>ORG_CYBERWEB</manufacturer>
         <store_space>20</store_space>
         <users>
-          <entry>ground</entry>
-          <entry>air</entry>
+          <entry>Ground</entry>
+          <entry>Air</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -1531,7 +1531,7 @@
     <key>VEQUIPMENTTYPE_METRO_MULTIPOWER_PLUS</key>
     <value>
       <sp>
-        <type>engine</type>
+        <type>Engine</type>
         <id>VEQUIPMENTTYPE_METRO_MULTIPOWER_PLUS</id>
         <name>Metro Multipower Plus</name>
         <weight>110</weight>
@@ -1545,7 +1545,7 @@
         <manufacturer>ORG_MARSEC</manufacturer>
         <store_space>120</store_space>
         <users>
-          <entry>ground</entry>
+          <entry>Ground</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -1579,7 +1579,7 @@
     <key>VEQUIPMENTTYPE_METRO_POWERGRAV</key>
     <value>
       <sp>
-        <type>engine</type>
+        <type>Engine</type>
         <id>VEQUIPMENTTYPE_METRO_POWERGRAV</id>
         <name>Metro Powergrav</name>
         <weight>80</weight>
@@ -1593,7 +1593,7 @@
         <manufacturer>ORG_GENERAL_METRO</manufacturer>
         <store_space>80</store_space>
         <users>
-          <entry>ground</entry>
+          <entry>Ground</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -1627,7 +1627,7 @@
     <key>VEQUIPMENTTYPE_METRO_ROADGRAV</key>
     <value>
       <sp>
-        <type>engine</type>
+        <type>Engine</type>
         <id>VEQUIPMENTTYPE_METRO_ROADGRAV</id>
         <name>Metro Roadgrav</name>
         <weight>50</weight>
@@ -1641,7 +1641,7 @@
         <manufacturer>ORG_GENERAL_METRO</manufacturer>
         <store_space>40</store_space>
         <users>
-          <entry>ground</entry>
+          <entry>Ground</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -1675,7 +1675,7 @@
     <key>VEQUIPMENTTYPE_METRO_ROADHOG</key>
     <value>
       <sp>
-        <type>engine</type>
+        <type>Engine</type>
         <id>VEQUIPMENTTYPE_METRO_ROADHOG</id>
         <name>Metro Roadhog</name>
         <weight>40</weight>
@@ -1689,7 +1689,7 @@
         <manufacturer>ORG_GENERAL_METRO</manufacturer>
         <store_space>20</store_space>
         <users>
-          <entry>ground</entry>
+          <entry>Ground</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -1723,7 +1723,7 @@
     <key>VEQUIPMENTTYPE_METRO_TURBOGRAV</key>
     <value>
       <sp>
-        <type>engine</type>
+        <type>Engine</type>
         <id>VEQUIPMENTTYPE_METRO_TURBOGRAV</id>
         <name>Metro Turbograv</name>
         <weight>65</weight>
@@ -1737,7 +1737,7 @@
         <manufacturer>ORG_GENERAL_METRO</manufacturer>
         <store_space>60</store_space>
         <users>
-          <entry>ground</entry>
+          <entry>Ground</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -1771,7 +1771,7 @@
     <key>VEQUIPMENTTYPE_MISSILE_EVASION_MATRIX</key>
     <value>
       <sp>
-        <type>general</type>
+        <type>General</type>
         <id>VEQUIPMENTTYPE_MISSILE_EVASION_MATRIX</id>
         <name>Missile Evasion Matrix</name>
         <weight>10</weight>
@@ -1785,8 +1785,8 @@
         <manufacturer>ORG_CYBERWEB</manufacturer>
         <store_space>40</store_space>
         <users>
-          <entry>ground</entry>
-          <entry>air</entry>
+          <entry>Ground</entry>
+          <entry>Air</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -1820,7 +1820,7 @@
     <key>VEQUIPMENTTYPE_PASSENGER_MODULE</key>
     <value>
       <sp>
-        <type>general</type>
+        <type>General</type>
         <id>VEQUIPMENTTYPE_PASSENGER_MODULE</id>
         <name>Passenger Module</name>
         <weight>55</weight>
@@ -1834,8 +1834,8 @@
         <manufacturer>ORG_GENERAL_METRO</manufacturer>
         <store_space>40</store_space>
         <users>
-          <entry>ground</entry>
-          <entry>air</entry>
+          <entry>Ground</entry>
+          <entry>Air</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -1869,7 +1869,7 @@
     <key>VEQUIPMENTTYPE_PLASMA_DEFENSE_ARRAY</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_PLASMA_DEFENSE_ARRAY</id>
         <name>Plasma Defense Array</name>
         <weight>45</weight>
@@ -1883,7 +1883,7 @@
         <manufacturer>ORG_MARSEC</manufacturer>
         <store_space>40</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>38</speed>
         <projectile_sprites>
@@ -1930,7 +1930,7 @@
     <key>VEQUIPMENTTYPE_PLASMA_MULTI-SYSTEM</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_PLASMA_MULTI-SYSTEM</id>
         <name>Plasma Multi-System</name>
         <weight>65</weight>
@@ -1944,7 +1944,7 @@
         <manufacturer>ORG_MARSEC</manufacturer>
         <store_space>40</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>38</speed>
         <projectile_sprites>
@@ -2001,7 +2001,7 @@
     <key>VEQUIPMENTTYPE_PLASMA_TURRET_CANNON</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_PLASMA_TURRET_CANNON</id>
         <name>Plasma Turret Cannon</name>
         <weight>140</weight>
@@ -2015,7 +2015,7 @@
         <manufacturer>ORG_MARSEC</manufacturer>
         <store_space>160</store_space>
         <users>
-          <entry>ground</entry>
+          <entry>Ground</entry>
         </users>
         <speed>38</speed>
         <projectile_sprites>
@@ -2085,7 +2085,7 @@
     <key>VEQUIPMENTTYPE_PROPHET_MISSILE_ARRAY</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_PROPHET_MISSILE_ARRAY</id>
         <name>Prophet Missile Array</name>
         <weight>70</weight>
@@ -2099,7 +2099,7 @@
         <manufacturer>ORG_MARSEC</manufacturer>
         <store_space>80</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>18</speed>
         <projectile_sprites>
@@ -2153,7 +2153,7 @@
     <key>VEQUIPMENTTYPE_RENDOR_PLASMA_GUN</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_RENDOR_PLASMA_GUN</id>
         <name>Rendor Plasma Gun</name>
         <weight>70</weight>
@@ -2167,7 +2167,7 @@
         <manufacturer>ORG_MARSEC</manufacturer>
         <store_space>30</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>38</speed>
         <projectile_sprites>
@@ -2224,7 +2224,7 @@
     <key>VEQUIPMENTTYPE_RETRIBUTION_MISSILE_LAUNCHER</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_RETRIBUTION_MISSILE_LAUNCHER</id>
         <name>Retribution Missile Launcher</name>
         <weight>55</weight>
@@ -2238,7 +2238,7 @@
         <manufacturer>ORG_MARSEC</manufacturer>
         <store_space>60</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>10</speed>
         <projectile_sprites>
@@ -2308,7 +2308,7 @@
     <key>VEQUIPMENTTYPE_RUMBLE_CANNON</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_RUMBLE_CANNON</id>
         <name>Rumble Cannon</name>
         <weight>140</weight>
@@ -2322,7 +2322,7 @@
         <manufacturer>ORG_MEGAPOL</manufacturer>
         <store_space>160</store_space>
         <users>
-          <entry>ground</entry>
+          <entry>Ground</entry>
         </users>
         <speed>20</speed>
         <projectile_sprites>
@@ -2364,7 +2364,7 @@
     <key>VEQUIPMENTTYPE_SD_DELUXE</key>
     <value>
       <sp>
-        <type>engine</type>
+        <type>Engine</type>
         <id>VEQUIPMENTTYPE_SD_DELUXE</id>
         <name>SD Deluxe</name>
         <weight>100</weight>
@@ -2378,7 +2378,7 @@
         <manufacturer>ORG_SUPERDYNAMICS</manufacturer>
         <store_space>20</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -2412,7 +2412,7 @@
     <key>VEQUIPMENTTYPE_SD_ELITE</key>
     <value>
       <sp>
-        <type>engine</type>
+        <type>Engine</type>
         <id>VEQUIPMENTTYPE_SD_ELITE</id>
         <name>SD Elite</name>
         <weight>240</weight>
@@ -2426,7 +2426,7 @@
         <manufacturer>ORG_SUPERDYNAMICS</manufacturer>
         <store_space>120</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -2460,7 +2460,7 @@
     <key>VEQUIPMENTTYPE_SD_SPECIAL</key>
     <value>
       <sp>
-        <type>engine</type>
+        <type>Engine</type>
         <id>VEQUIPMENTTYPE_SD_SPECIAL</id>
         <name>SD Special</name>
         <weight>180</weight>
@@ -2474,7 +2474,7 @@
         <manufacturer>ORG_SUPERDYNAMICS</manufacturer>
         <store_space>160</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -2508,7 +2508,7 @@
     <key>VEQUIPMENTTYPE_SD_SPORTS</key>
     <value>
       <sp>
-        <type>engine</type>
+        <type>Engine</type>
         <id>VEQUIPMENTTYPE_SD_SPORTS</id>
         <name>SD Sports</name>
         <weight>140</weight>
@@ -2522,7 +2522,7 @@
         <manufacturer>ORG_SUPERDYNAMICS</manufacturer>
         <store_space>40</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -2556,7 +2556,7 @@
     <key>VEQUIPMENTTYPE_SD_STANDARD</key>
     <value>
       <sp>
-        <type>engine</type>
+        <type>Engine</type>
         <id>VEQUIPMENTTYPE_SD_STANDARD</id>
         <name>SD Standard</name>
         <weight>75</weight>
@@ -2570,7 +2570,7 @@
         <manufacturer>ORG_SUPERDYNAMICS</manufacturer>
         <store_space>20</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -2604,7 +2604,7 @@
     <key>VEQUIPMENTTYPE_SD_TURBO</key>
     <value>
       <sp>
-        <type>engine</type>
+        <type>Engine</type>
         <id>VEQUIPMENTTYPE_SD_TURBO</id>
         <name>SD Turbo</name>
         <weight>190</weight>
@@ -2618,7 +2618,7 @@
         <manufacturer>ORG_SUPERDYNAMICS</manufacturer>
         <store_space>50</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -2652,7 +2652,7 @@
     <key>VEQUIPMENTTYPE_SMALL_DISRUPTION_SHIELD</key>
     <value>
       <sp>
-        <type>general</type>
+        <type>General</type>
         <id>VEQUIPMENTTYPE_SMALL_DISRUPTION_SHIELD</id>
         <name>Small Disruption Shield</name>
         <weight>80</weight>
@@ -2666,8 +2666,8 @@
         <manufacturer>ORG_X-COM</manufacturer>
         <store_space>40</store_space>
         <users>
-          <entry>ground</entry>
-          <entry>air</entry>
+          <entry>Ground</entry>
+          <entry>Air</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />
@@ -2701,7 +2701,7 @@
     <key>VEQUIPMENTTYPE_STASIS_BOMB_LAUNCHER</key>
     <value>
       <sp>
-        <type>weapon</type>
+        <type>Weapon</type>
         <id>VEQUIPMENTTYPE_STASIS_BOMB_LAUNCHER</id>
         <name>Stasis Bomb Launcher</name>
         <weight>130</weight>
@@ -2715,7 +2715,7 @@
         <manufacturer>ORG_X-COM</manufacturer>
         <store_space>80</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>24</speed>
         <projectile_sprites>
@@ -2774,7 +2774,7 @@
     <key>VEQUIPMENTTYPE_TELEPORTER</key>
     <value>
       <sp>
-        <type>general</type>
+        <type>General</type>
         <id>VEQUIPMENTTYPE_TELEPORTER</id>
         <name>Teleporter</name>
         <weight>90</weight>
@@ -2788,7 +2788,7 @@
         <manufacturer>ORG_X-COM</manufacturer>
         <store_space>60</store_space>
         <users>
-          <entry>air</entry>
+          <entry>Air</entry>
         </users>
         <speed>0</speed>
         <projectile_sprites />

@@ -20,19 +20,19 @@
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="agent_generator.xml" />
   <initial_agents>
     <entry>
-      <key>soldier</key>
+      <key>Soldier</key>
       <value>10</value>
     </entry>
     <entry>
-      <key>physicist</key>
+      <key>Physicist</key>
       <value>5</value>
     </entry>
     <entry>
-      <key>biochemist</key>
+      <key>BioChemist</key>
       <value>5</value>
     </entry>
     <entry>
-      <key>engineer</key>
+      <key>Engineer</key>
       <value>5</value>
     </entry>
   </initial_agents>
@@ -85,9 +85,9 @@
     <s0>2065550767</s0>
     <s1>1653378023</s1>
   </rng>
-  <time>
+  <gameTime>
     <ticks>0</ticks>
-  </time>
+  </gameTime>
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="battle.xml" />
   <messages />
 </gamestate>

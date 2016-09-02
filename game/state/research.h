@@ -142,11 +142,11 @@ class ResearchState
   public:
 	ResearchState();
 	unsigned int num_labs_created;
-	std::map<UString, sp<ResearchTopic>> topics;
+	StateRefMap<ResearchTopic> topics;
 	std::list<sp<ResearchTopic>> topic_list;
 	void updateTopicList();
 	void resortTopicList();
-	std::map<UString, sp<Lab>> labs;
+	StateRefMap<Lab> labs;
 };
 
 } // namespace OpenApoc

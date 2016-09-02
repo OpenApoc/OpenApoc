@@ -12,19 +12,19 @@
   <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="research.xml"/>
   <initial_agents>
     <entry>
-      <key>soldier</key>
+      <key>Soldier</key>
       <value>10</value>
     </entry>
     <entry>
-      <key>physicist</key>
+      <key>Physicist</key>
       <value>5</value>
     </entry>
     <entry>
-      <key>biochemist</key>
+      <key>BioChemist</key>
       <value>5</value>
     </entry>
     <entry>
-      <key>engineer</key>
+      <key>Engineer</key>
       <value>5</value>
     </entry>
   </initial_agents>

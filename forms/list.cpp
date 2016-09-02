@@ -11,8 +11,9 @@ ListBox::ListBox() : ListBox(nullptr) {}
 
 ListBox::ListBox(sp<ScrollBar> ExternalScrollBar)
     : Control(), scroller_is_internal(ExternalScrollBar == nullptr), scroller(ExternalScrollBar),
-      ItemSize(64), ItemSpacing(1), ListOrientation(Orientation::Vertical), HoverColour(0, 0, 0, 0),
-      SelectedColour(0, 0, 0, 0), AlwaysEmitSelectionEvents(false)
+      ItemSize(64), ItemSpacing(1), ListOrientation(Orientation::Vertical),
+      ScrollOrientation(ListOrientation), HoverColour(0, 0, 0, 0), SelectedColour(0, 0, 0, 0),
+      AlwaysEmitSelectionEvents(false)
 {
 }
 
@@ -23,7 +24,7 @@ void ListBox::configureInternalScrollBar()
 	scroller = this->createChild<ScrollBar>();
 	scroller->Size.x = 16;
 	scroller->Size.y = 16;
-	switch (ListOrientation)
+	switch (ScrollOrientation)
 	{
 		case Orientation::Vertical:
 			scroller->Location.x = this->Size.x - scroller->Size.x;
@@ -42,10 +43,20 @@ void ListBox::configureInternalScrollBar()
 
 void ListBox::onRender()
 {
-	int offset = 0;
+	Vec2<int> controlOffset, scrollOffset;
 	if (scroller == nullptr)
 	{
 		configureInternalScrollBar();
+	}
+
+	switch (ScrollOrientation)
+	{
+		case Orientation::Vertical:
+			scrollOffset.y = scroller->getValue();
+			break;
+		case Orientation::Horizontal:
+			scrollOffset.x = scroller->getValue();
+			break;
 	}
 
 	for (auto c = Controls.begin(); c != Controls.end(); c++)
@@ -53,39 +64,51 @@ void ListBox::onRender()
 		auto ctrl = *c;
 		if (ctrl != scroller && ctrl->Visible)
 		{
+			ctrl->Location = controlOffset - scrollOffset;
 			switch (ListOrientation)
 			{
 				case Orientation::Vertical:
-					ctrl->Location.x = 0;
-					ctrl->Location.y = offset - scroller->getValue();
-					if (ItemSize != 0)
+					controlOffset.y += ctrl->Size.y + ItemSpacing;
+					if (ListOrientation != ScrollOrientation && controlOffset.y >= Size.y)
 					{
-						ctrl->Size.x = (scroller_is_internal ? scroller->Location.x : this->Size.x);
-						ctrl->Size.y = ItemSize;
+						controlOffset.y = 0;
+						controlOffset.x += ctrl->Size.x + ItemSpacing;
 					}
-					offset += ctrl->Size.y + ItemSpacing;
 					break;
 				case Orientation::Horizontal:
-					ctrl->Location.x = offset - scroller->getValue();
-					ctrl->Location.y = 0;
-					if (ItemSize != 0)
+					controlOffset.x += ctrl->Size.x + ItemSpacing;
+					if (ListOrientation != ScrollOrientation && controlOffset.x >= Size.x)
 					{
+						controlOffset.x = 0;
+						controlOffset.y += ctrl->Size.y + ItemSpacing;
+					}
+					break;
+			}
+			if (ListOrientation == ScrollOrientation && ItemSize != 0)
+			{
+				switch (ScrollOrientation)
+				{
+					case Orientation::Vertical:
+						ctrl->Size.x = (scroller_is_internal ? scroller->Location.x : this->Size.x);
+						ctrl->Size.y = ItemSize;
+						break;
+					case Orientation::Horizontal:
 						ctrl->Size.x = ItemSize;
 						ctrl->Size.y = (scroller_is_internal ? scroller->Location.y : this->Size.y);
-					}
-					offset += ctrl->Size.x + ItemSpacing;
-					break;
+						break;
+				}
 			}
 		}
 	}
+
 	resolveLocation();
-	switch (ListOrientation)
+	switch (ScrollOrientation)
 	{
 		case Orientation::Vertical:
-			scroller->Maximum = std::max(offset - this->Size.y, scroller->Minimum);
+			scroller->Maximum = std::max(controlOffset.y - this->Size.y, scroller->Minimum);
 			break;
 		case Orientation::Horizontal:
-			scroller->Maximum = std::max(offset - this->Size.x, scroller->Minimum);
+			scroller->Maximum = std::max(controlOffset.x - this->Size.x, scroller->Minimum);
 			break;
 	}
 	scroller->LargeChange =
@@ -264,6 +287,7 @@ sp<Control> ListBox::copyTo(sp<Control> CopyParent)
 	copy->ItemSize = this->ItemSize;
 	copy->ItemSpacing = this->ItemSpacing;
 	copy->ListOrientation = this->ListOrientation;
+	copy->ScrollOrientation = this->ScrollOrientation;
 	copy->HoverColour = this->HoverColour;
 	copy->SelectedColour = this->SelectedColour;
 	copyControlData(copy);
@@ -290,16 +314,45 @@ void ListBox::configureSelfFromXml(tinyxml2::XMLElement *Element)
 		}
 	}
 	subnode = Element->FirstChildElement("orientation");
-	if (subnode != nullptr && UString(subnode->GetText()) != "")
+	if (subnode != nullptr)
 	{
-		UString value = subnode->GetText();
-		if (value == "horizontal")
+		if (UString(subnode->GetText()) != "")
 		{
-			ListOrientation = Orientation::Horizontal;
+			UString value = subnode->GetText();
+			if (value == "horizontal")
+			{
+				ListOrientation = Orientation::Horizontal;
+				ScrollOrientation = Orientation::Horizontal;
+			}
+			else if (value == "vertical")
+			{
+				ListOrientation = Orientation::Vertical;
+				ScrollOrientation = Orientation::Vertical;
+			}
 		}
-		else if (value == "vertical")
+		if (subnode->Attribute("list") != nullptr && UString(subnode->Attribute("list")) != "")
 		{
-			ListOrientation = Orientation::Vertical;
+			UString value = UString(subnode->Attribute("list"));
+			if (value == "horizontal")
+			{
+				ListOrientation = Orientation::Horizontal;
+			}
+			else if (value == "vertical")
+			{
+				ListOrientation = Orientation::Vertical;
+			}
+		}
+		if (subnode->Attribute("scroll") != nullptr && UString(subnode->Attribute("scroll")) != "")
+		{
+			UString value = UString(subnode->Attribute("scroll"));
+			if (value == "horizontal")
+			{
+				ScrollOrientation = Orientation::Horizontal;
+			}
+			else if (value == "vertical")
+			{
+				ScrollOrientation = Orientation::Vertical;
+			}
 		}
 	}
 	subnode = Element->FirstChildElement("hovercolour");

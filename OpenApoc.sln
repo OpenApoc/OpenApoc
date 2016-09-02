@@ -35,6 +35,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_rng", "tests\test_rng.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "miniz", "dependencies\miniz.vcxproj", "{44A12AC1-7E09-4AF7-BAC4-A264C2F814A7}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gamestate_serialize_gen", "tools\gamestate_serialize_gen\gamestate_serialize_gen.vcxproj", "{31FBCCBD-BFD2-45FC-B9DF-3375684A3157}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -163,6 +165,14 @@ Global
 		{44A12AC1-7E09-4AF7-BAC4-A264C2F814A7}.Release|Win32.Build.0 = Release|Win32
 		{44A12AC1-7E09-4AF7-BAC4-A264C2F814A7}.Release|x64.ActiveCfg = Release|x64
 		{44A12AC1-7E09-4AF7-BAC4-A264C2F814A7}.Release|x64.Build.0 = Release|x64
+		{31FBCCBD-BFD2-45FC-B9DF-3375684A3157}.Debug|Win32.ActiveCfg = Debug|Win32
+		{31FBCCBD-BFD2-45FC-B9DF-3375684A3157}.Debug|Win32.Build.0 = Debug|Win32
+		{31FBCCBD-BFD2-45FC-B9DF-3375684A3157}.Debug|x64.ActiveCfg = Debug|x64
+		{31FBCCBD-BFD2-45FC-B9DF-3375684A3157}.Debug|x64.Build.0 = Debug|x64
+		{31FBCCBD-BFD2-45FC-B9DF-3375684A3157}.Release|Win32.ActiveCfg = Release|Win32
+		{31FBCCBD-BFD2-45FC-B9DF-3375684A3157}.Release|Win32.Build.0 = Release|Win32
+		{31FBCCBD-BFD2-45FC-B9DF-3375684A3157}.Release|x64.ActiveCfg = Release|x64
+		{31FBCCBD-BFD2-45FC-B9DF-3375684A3157}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

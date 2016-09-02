@@ -48,6 +48,12 @@ template <class T, T A = 23, T B = 18, T C = 5> class Xorshift128Plus
 		return s[1] + s0;
 	}
 
+	bool operator==(const Xorshift128Plus<T, A, B, C> &other) const
+	{
+		return (this->s[0] == other.s[0] && this->s[1] == other.s[1]);
+	}
+	bool operator!=(const Xorshift128Plus<T, A, B, C> &other) const { return !(*this == other); }
+
 #if _MSC_VER && _MSC_VER <= 1800
 	static const result_type min() { return std::numeric_limits<result_type>::min(); }
 	static const result_type max() { return std::numeric_limits<result_type>::max(); }

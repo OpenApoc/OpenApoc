@@ -23,7 +23,7 @@ BattleTileView::BattleTileView(BattleTileMap &map, Vec3<int> isoTileSize, Vec2<i
           fw().data->loadImage("BATTLE/SELECTED-BATTLETILE-FILLED-BACK.PNG")),
       selectedTileFilledImageFront(
           fw().data->loadImage("BATTLE/SELECTED-BATTLETILE-FILLED-FRONT.PNG")),
-      selectedTileImageOffset(24, 42), centerPos(0, 0, 0), isoScrollSpeed(0.5, 0.5),
+      selectedTileImageOffset(23, 42), centerPos(0, 0, 0), isoScrollSpeed(0.5, 0.5),
       stratScrollSpeed(2.0f, 2.0f), pal(fw().data->loadPalette("xcom3/tacdata/tactical.pal"))
 {
 	LogInfo("dpySize: {%d,%d}", dpySize.x, dpySize.y);

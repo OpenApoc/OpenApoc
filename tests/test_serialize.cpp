@@ -1,6 +1,8 @@
 #include "framework/framework.h"
 #include "framework/logger.h"
 #include "game/state/gamestate.h"
+#include "game/state/gamestate_serialize.h"
+#include <boost/filesystem.hpp>
 
 using namespace OpenApoc;
 
@@ -19,18 +21,27 @@ bool test_gamestate_serialization_roundtrip(sp<GameState> state, UString save_na
 		return false;
 	}
 
-	// FIXME: When GameState gets an operator==
-	// if (state != read_gamestate) FailTest();
+	if (*state != *read_gamestate)
+	{
+		LogError("Gamestate changed over serialization");
+		return false;
+	}
 	return true;
 }
 
 bool test_gamestate_serialization(sp<GameState> state)
 {
-	if (!test_gamestate_serialization_roundtrip(state, "test_packed_state"))
+	auto tempPath = boost::filesystem::temp_directory_path() /
+	                boost::filesystem::unique_path("openapoc_test_serialize-%%%%%%%%");
+	UString pathString(tempPath.string());
+	LogInfo("Writing temp state to \"%s\"", pathString.cStr());
+	if (!test_gamestate_serialization_roundtrip(state, pathString))
 	{
 		LogError("Packed save test failed");
 		return false;
 	}
+
+	boost::filesystem::remove(tempPath);
 
 	return true;
 }
@@ -50,6 +61,16 @@ int main(int argc, char **argv)
 	LogInfo("Loading \"%s\"", gamestate_name.cStr());
 
 	auto state = mksp<GameState>();
+
+	{
+		auto state2 = mksp<GameState>();
+		if (*state != *state2)
+		{
+			LogError("Empty gamestate failed comparison");
+			return EXIT_FAILURE;
+		}
+	}
+
 	if (!state->loadGame(gamestate_name))
 	{
 		LogError("Failed to load difficulty1_patched");

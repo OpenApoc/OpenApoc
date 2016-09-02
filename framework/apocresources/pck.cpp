@@ -419,14 +419,16 @@ static sp<PaletteImage> loadStrategy(IFile &file)
 			unsigned int y = offset / STRIDE;
 #undef STRIDE
 
+			file.read(reinterpret_cast<char *>(&idx), 1);
+
 			if (x >= 8 || y >= 8)
 			{
-				LogError("Writing to {%d,%d} in 8x8 stratmap image", x, y);
-				return img;
+				LogWarning("Writing to {%d,%d} in 8x8 stratmap image", x, y);
 			}
-
-			file.read(reinterpret_cast<char *>(&idx), 1);
-			region.set(Vec2<int>{x, y}, idx);
+			else
+			{
+				region.set(Vec2<int>{x, y}, idx);
+			}
 
 			offset++;
 		}

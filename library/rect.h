@@ -38,6 +38,7 @@ template <typename T> class Rect
 	T getHeight() const { return (this->p1.y - this->p0.y); }
 
 	bool operator==(const Rect<T> &other) const { return p0 == other.p0 && p1 == other.p1; }
+	bool operator!=(const Rect<T> &other) const { return !(*this == other); }
 
 	Vec2<T> size() const { return Vec2<T>{p1.x - p0.x, p1.y - p0.y}; }
 

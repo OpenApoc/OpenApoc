@@ -9,12 +9,12 @@
           <order>40140</order>
           <description></description>
           <man_hours>1000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_ALIEN_GAS</entry>
                 </topics>
@@ -22,8 +22,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>250</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_ALIEN_GAS_GRENADE</item_produced>
         </sp>
       </value>
@@ -36,12 +41,12 @@
           <order>10140</order>
           <description></description>
           <man_hours>100000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_ANNIHILATOR</entry>
                 </topics>
@@ -49,8 +54,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>50000</cost>
-          <item_type>craft</item_type>
+          <item_type>Craft</item_type>
           <item_produced>VEHICLETYPE_ANNIHILATOR</item_produced>
         </sp>
       </value>
@@ -63,12 +73,12 @@
           <order>10110</order>
           <description></description>
           <man_hours>35000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_BIO-TRANSPORT</entry>
                 </topics>
@@ -76,8 +86,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>12000</cost>
-          <item_type>craft</item_type>
+          <item_type>Craft</item_type>
           <item_produced>VEHICLETYPE_BIO-TRANSPORT</item_produced>
         </sp>
       </value>
@@ -90,12 +105,12 @@
           <order>30110</order>
           <description>For transporting Alien life forms.</description>
           <man_hours>4000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_BIO-TRANSPORT_MODULE</entry>
                 </topics>
@@ -103,8 +118,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>700</cost>
-          <item_type>vehicleequipment</item_type>
+          <item_type>VehicleEquipment</item_type>
           <item_produced>VEQUIPMENTTYPE_BIO-TRANSPORT_MODULE</item_produced>
         </sp>
       </value>
@@ -117,12 +137,12 @@
           <order>40190</order>
           <description>An intelligent Alien proximity mine</description>
           <man_hours>3000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_BOOMEROID</entry>
                 </topics>
@@ -130,8 +150,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>230</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_BOOMEROID</item_produced>
         </sp>
       </value>
@@ -144,12 +169,12 @@
           <order>30140</order>
           <description>Reduced detection of vehicles.</description>
           <man_hours>35000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_CLOAKING_FIELD</entry>
                 </topics>
@@ -157,8 +182,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>6000</cost>
-          <item_type>vehicleequipment</item_type>
+          <item_type>VehicleEquipment</item_type>
           <item_produced>VEQUIPMENTTYPE_CLOAKING_FIELD</item_produced>
         </sp>
       </value>
@@ -171,12 +201,12 @@
           <order>40180</order>
           <description>An Alien beam weapon.</description>
           <man_hours>12000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_DEVASTATOR_CANNON</entry>
                 </topics>
@@ -184,8 +214,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>1200</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_DEVASTATOR_CANNON</item_produced>
         </sp>
       </value>
@@ -198,12 +233,12 @@
           <order>40210</order>
           <description>An Alien guided missile weapon.</description>
           <man_hours>4000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_DIMENSION_MISSILE_LAUNCHER</entry>
                 </topics>
@@ -211,8 +246,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>400</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_DIMENSION_MISSILE</item_produced>
         </sp>
       </value>
@@ -225,12 +265,12 @@
           <order>40200</order>
           <description>An Alien guided missile weapon.</description>
           <man_hours>5500</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_DIMENSION_MISSILE_LAUNCHER</entry>
                 </topics>
@@ -238,8 +278,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>1200</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_DIMENSION_MISSILE_LAUNCHER</item_produced>
         </sp>
       </value>
@@ -252,12 +297,12 @@
           <order>10100</order>
           <description></description>
           <man_hours>25000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_DIMENSION_PROBE</entry>
                 </topics>
@@ -265,8 +310,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>6000</cost>
-          <item_type>craft</item_type>
+          <item_type>Craft</item_type>
           <item_produced>VEHICLETYPE_DIMENSION_PROBE</item_produced>
         </sp>
       </value>
@@ -279,12 +329,12 @@
           <order>50140</order>
           <description></description>
           <man_hours>3800</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_DISRUPTOR_ARMOR</entry>
                 </topics>
@@ -292,8 +342,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>1500</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(HEAD)</item_produced>
         </sp>
       </value>
@@ -306,12 +361,12 @@
           <order>50130</order>
           <description></description>
           <man_hours>3400</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_DISRUPTOR_ARMOR</entry>
                 </topics>
@@ -319,8 +374,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>1200</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(LEFT_ARM)</item_produced>
         </sp>
       </value>
@@ -333,12 +393,12 @@
           <order>50100</order>
           <description></description>
           <man_hours>3400</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_DISRUPTOR_ARMOR</entry>
                 </topics>
@@ -346,8 +406,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>1200</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(LEGS)</item_produced>
         </sp>
       </value>
@@ -360,12 +425,12 @@
           <order>50120</order>
           <description></description>
           <man_hours>3400</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_DISRUPTOR_ARMOR</entry>
                 </topics>
@@ -373,8 +438,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>1200</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(RIGHT_ARM)</item_produced>
         </sp>
       </value>
@@ -387,12 +457,12 @@
           <order>50110</order>
           <description></description>
           <man_hours>3800</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_DISRUPTOR_ARMOR</entry>
                 </topics>
@@ -400,8 +470,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>1500</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(TORSO)</item_produced>
         </sp>
       </value>
@@ -414,12 +489,12 @@
           <order>40170</order>
           <description>An Alien beam weapon.</description>
           <man_hours>7000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_DISRUPTOR_GUN</entry>
                 </topics>
@@ -427,8 +502,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>600</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_DISRUPTOR_GUN</item_produced>
         </sp>
       </value>
@@ -441,12 +521,12 @@
           <order>20140</order>
           <description>An Alien guided missile launched from Alien craft.</description>
           <man_hours>4000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_DISRUPTOR_INVERSION_BOMB</entry>
                 </topics>
@@ -454,8 +534,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>1500</cost>
-          <item_type>vehicleequipmentammo</item_type>
+          <item_type>VehicleEquipmentAmmo</item_type>
           <item_produced>VEQUIPMENTAMMOTYPE_DISRUPTOR_BOMB</item_produced>
         </sp>
       </value>
@@ -468,12 +553,12 @@
           <order>20130</order>
           <description>An Alien guided missile launched from Alien craft.</description>
           <man_hours>8000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_DISRUPTOR_INVERSION_BOMB</entry>
                 </topics>
@@ -481,8 +566,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>3000</cost>
-          <item_type>vehicleequipment</item_type>
+          <item_type>VehicleEquipment</item_type>
           <item_produced>VEQUIPMENTTYPE_DISRUPTOR_BOMB_LAUNCHER</item_produced>
         </sp>
       </value>
@@ -495,12 +585,12 @@
           <order>20180</order>
           <description>A multiple warhead missile.</description>
           <man_hours>5000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_DISRUPTOR_MULTI-BOMB</entry>
                 </topics>
@@ -508,8 +598,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>1800</cost>
-          <item_type>vehicleequipmentammo</item_type>
+          <item_type>VehicleEquipmentAmmo</item_type>
           <item_produced>VEQUIPMENTAMMOTYPE_DISRUPTOR_MULTI-BOMB</item_produced>
         </sp>
       </value>
@@ -522,12 +617,12 @@
           <order>20170</order>
           <description>A multiple warhead missile.</description>
           <man_hours>10000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_DISRUPTOR_MULTI-BOMB</entry>
                 </topics>
@@ -535,8 +630,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>4000</cost>
-          <item_type>vehicleequipment</item_type>
+          <item_type>VehicleEquipment</item_type>
           <item_produced>VEQUIPMENTTYPE_DISRUPTOR_MULTI-BOMB_LAUNCHER</item_produced>
         </sp>
       </value>
@@ -549,12 +649,12 @@
           <order>10120</order>
           <description></description>
           <man_hours>55000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_EXPLORER</entry>
                 </topics>
@@ -562,8 +662,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>22000</cost>
-          <item_type>craft</item_type>
+          <item_type>Craft</item_type>
           <item_produced>VEHICLETYPE_EXPLORER</item_produced>
         </sp>
       </value>
@@ -576,12 +681,12 @@
           <order>20120</order>
           <description></description>
           <man_hours>35000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_HEAVY_DISRUPTOR_BEAM</entry>
                 </topics>
@@ -589,8 +694,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>8000</cost>
-          <item_type>vehicleequipment</item_type>
+          <item_type>VehicleEquipment</item_type>
           <item_produced>VEQUIPMENTTYPE_HEAVY_DISRUPTOR_BEAM</item_produced>
         </sp>
       </value>
@@ -603,12 +713,12 @@
           <order>40150</order>
           <description></description>
           <man_hours>1200</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_ALIEN_GAS</entry>
                 </topics>
@@ -616,8 +726,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>280</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_HEAVY_LAUNCHER_AG_MISSILE</item_produced>
         </sp>
       </value>
@@ -630,12 +745,12 @@
           <order>30130</order>
           <description>An Alien energy shield.</description>
           <man_hours>30000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_LARGE_DISRUPTION_SHIELD</entry>
                 </topics>
@@ -643,8 +758,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>8000</cost>
-          <item_type>vehicleequipment</item_type>
+          <item_type>VehicleEquipment</item_type>
           <item_produced>VEQUIPMENTTYPE_LARGE_DISRUPTION_SHIELD</item_produced>
         </sp>
       </value>
@@ -657,12 +777,12 @@
           <order>20100</order>
           <description>A beam weapon deployed on Alien craft.</description>
           <man_hours>12000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_LIGHT_DISRUPTOR_BEAM</entry>
                 </topics>
@@ -670,8 +790,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>2000</cost>
-          <item_type>vehicleequipment</item_type>
+          <item_type>VehicleEquipment</item_type>
           <item_produced>VEQUIPMENTTYPE_LIGHT_DISRUPTOR_BEAM</item_produced>
         </sp>
       </value>
@@ -684,12 +809,12 @@
           <order>20110</order>
           <description>A beam weapon deployed on Alien craft.</description>
           <man_hours>20000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_MEDIUM_DISRUPTOR_BEAM</entry>
                 </topics>
@@ -697,8 +822,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>4000</cost>
-          <item_type>vehicleequipment</item_type>
+          <item_type>VehicleEquipment</item_type>
           <item_produced>VEQUIPMENTTYPE_MEDIUM_DISRUPTOR_BEAM</item_produced>
         </sp>
       </value>
@@ -711,12 +841,12 @@
           <order>40160</order>
           <description></description>
           <man_hours>1600</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_ALIEN_GAS</entry>
                 </topics>
@@ -724,8 +854,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>360</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_MINILAUNCHER_AG_MISSILE</item_produced>
         </sp>
       </value>
@@ -738,12 +873,12 @@
           <order>40250</order>
           <description>An Alien device which limits detection.</description>
           <man_hours>18000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_PERSONAL_CLOAKING_FIELD</entry>
                 </topics>
@@ -751,8 +886,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>3000</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_PERSONAL_CLOAKING_FIELD</item_produced>
         </sp>
       </value>
@@ -765,12 +905,12 @@
           <order>40230</order>
           <description>An Alien energy shield.</description>
           <man_hours>14000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_PERSONAL_DISRUPTOR_SHIELD</entry>
                 </topics>
@@ -778,8 +918,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>2000</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_PERSONAL_DISRUPTOR_SHIELD</item_produced>
         </sp>
       </value>
@@ -792,12 +937,12 @@
           <order>40240</order>
           <description>An Alien teleportation device.</description>
           <man_hours>25000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_PERSONAL_TELEPORTER</entry>
                 </topics>
@@ -805,8 +950,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>6000</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_PERSONAL_TELEPORTER</item_produced>
         </sp>
       </value>
@@ -819,12 +969,12 @@
           <order>10130</order>
           <description></description>
           <man_hours>75000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_RETALIATOR</entry>
                 </topics>
@@ -832,8 +982,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>35000</cost>
-          <item_type>craft</item_type>
+          <item_type>Craft</item_type>
           <item_produced>VEHICLETYPE_RETALIATOR</item_produced>
         </sp>
       </value>
@@ -846,12 +1001,12 @@
           <order>30120</order>
           <description>An Alien energy shield.</description>
           <man_hours>20000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_SMALL_DISRUPTION_SHIELD</entry>
                 </topics>
@@ -859,8 +1014,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>5000</cost>
-          <item_type>vehicleequipment</item_type>
+          <item_type>VehicleEquipment</item_type>
           <item_produced>VEQUIPMENTTYPE_SMALL_DISRUPTION_SHIELD</item_produced>
         </sp>
       </value>
@@ -873,12 +1033,12 @@
           <order>20160</order>
           <description>An Alien missile with an immobilizing effect.</description>
           <man_hours>2000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_STASIS_FIELD_BOMB</entry>
                 </topics>
@@ -886,8 +1046,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>1200</cost>
-          <item_type>vehicleequipmentammo</item_type>
+          <item_type>VehicleEquipmentAmmo</item_type>
           <item_produced>VEQUIPMENTAMMOTYPE_STASIS_BOMB</item_produced>
         </sp>
       </value>
@@ -900,12 +1065,12 @@
           <order>20150</order>
           <description>An Alien missile with an immobilizing effect.</description>
           <man_hours>6000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_STASIS_FIELD_BOMB</entry>
                 </topics>
@@ -913,8 +1078,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>2000</cost>
-          <item_type>vehicleequipment</item_type>
+          <item_type>VehicleEquipment</item_type>
           <item_produced>VEQUIPMENTTYPE_STASIS_BOMB_LAUNCHER</item_produced>
         </sp>
       </value>
@@ -927,12 +1097,12 @@
           <order>30150</order>
           <description>Instantly transports a vehicle over short ranges.</description>
           <man_hours>45000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_TELEPORTER</entry>
                 </topics>
@@ -940,8 +1110,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>11000</cost>
-          <item_type>vehicleequipment</item_type>
+          <item_type>VehicleEquipment</item_type>
           <item_produced>VEQUIPMENTTYPE_TELEPORTER</item_produced>
         </sp>
       </value>
@@ -954,12 +1129,12 @@
           <order>40100</order>
           <description></description>
           <man_hours>3000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_BIOLOGICAL_WARFARE</entry>
                 </topics>
@@ -967,8 +1142,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>1200</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_TOXIGUN</item_produced>
         </sp>
       </value>
@@ -981,12 +1161,12 @@
           <order>40110</order>
           <description></description>
           <man_hours>800</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_BIOLOGICAL_WARFARE</entry>
                 </topics>
@@ -994,8 +1174,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>200</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_TOXIN_TYPE_A</item_produced>
         </sp>
       </value>
@@ -1008,12 +1193,12 @@
           <order>40120</order>
           <description></description>
           <man_hours>900</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_TOXIN_TYPE_B</entry>
                 </topics>
@@ -1021,8 +1206,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>300</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_TOXIN_TYPE_B</item_produced>
         </sp>
       </value>
@@ -1035,12 +1225,12 @@
           <order>40130</order>
           <description></description>
           <man_hours>1000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_TOXIN_TYPE_C</entry>
                 </topics>
@@ -1048,8 +1238,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>400</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_TOXIN_TYPE_C</item_produced>
         </sp>
       </value>
@@ -1062,12 +1257,12 @@
           <order>40220</order>
           <description>A powerful Alien grenade.</description>
           <man_hours>5000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_VORTEX_MINE</entry>
                 </topics>
@@ -1075,8 +1270,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>250</cost>
-          <item_type>agentequipment</item_type>
+          <item_type>AgentEquipment</item_type>
           <item_produced>AEQUIPMENTTYPE_VORTEX_MINE</item_produced>
         </sp>
       </value>
@@ -1089,12 +1289,12 @@
           <order>30100</order>
           <description>A superior weapons control system.</description>
           <man_hours>15000</man_hours>
-          <type>engineering</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Engineering</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_X-COM_ADVANCED_CONTROL_SYSTEM</entry>
                 </topics>
@@ -1102,8 +1302,13 @@
             </research>
             <items />
           </dependencies>
+          <ufopaedia_entry />
+          <man_hours_progress>0</man_hours_progress>
+          <current_lab />
+          <score>0</score>
+          <started>false</started>
           <cost>4000</cost>
-          <item_type>vehicleequipment</item_type>
+          <item_type>VehicleEquipment</item_type>
           <item_produced>VEQUIPMENTTYPE_ADVANCED_CONTROL_SYSTEM</item_produced>
         </sp>
       </value>
@@ -1116,18 +1321,18 @@
           <order>40110</order>
           <description>To secure and research large or dangerous Alien life forms.</description>
           <man_hours>22000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_ADVANCED_QUANTUM_PHYSICS_LAB</entry>
                 </topics>
               </entry>
               <entry>
-                <type>unused</type>
+                <type>Unused</type>
                 <topics />
               </entry>
             </research>
@@ -1138,6 +1343,9 @@
           <current_lab />
           <score>80</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1149,16 +1357,16 @@
           <order>40100</order>
           <description> For researching advanced Alien organic technology.</description>
           <man_hours>16000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
               <entry>
-                <type>any</type>
+                <type>Any</type>
                 <topics>
                   <entry>RESEARCH_ANTHROPOD</entry>
                   <entry>RESEARCH_ANTHROPOD_AUTOPSY</entry>
@@ -1196,6 +1404,9 @@
           <current_lab />
           <score>80</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1207,12 +1418,12 @@
           <order>30110</order>
           <description>For researching advanced Alien technology.</description>
           <man_hours>16000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_ALIEN_CONTROL_SYSTEM</entry>
                   <entry>RESEARCH_ALIEN_ENERGY_SOURCE</entry>
@@ -1220,7 +1431,7 @@
                 </topics>
               </entry>
               <entry>
-                <type>any</type>
+                <type>Any</type>
                 <topics>
                   <entry>RESEARCH_ALIEN_CONTROL_SYSTEM</entry>
                   <entry>RESEARCH_ALIEN_ENERGY_SOURCE</entry>
@@ -1235,6 +1446,9 @@
           <current_lab />
           <score>80</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1246,12 +1460,12 @@
           <order>30100</order>
           <description>A security station using Alien disrupter technology.</description>
           <man_hours>18000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_DISRUPTOR_INVERSION_BOMB</entry>
                   <entry>RESEARCH_LIGHT_DISRUPTOR_BEAM</entry>
@@ -1266,6 +1480,9 @@
           <current_lab />
           <score>80</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1277,12 +1494,12 @@
           <order>30120</order>
           <description>Needed for building new vehicle types.</description>
           <man_hours>24000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_DIMENSION_PROBE</entry>
                 </topics>
@@ -1295,6 +1512,9 @@
           <current_lab />
           <score>80</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1306,12 +1526,12 @@
           <order>70100</order>
           <description>This research could reveal a weakness in the Alien defenses.</description>
           <man_hours>38000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1322,6 +1542,9 @@
           <current_lab />
           <score>380</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1333,12 +1556,12 @@
           <order>70120</order>
           <description>This research could reveal a weakness in the Alien defenses.</description>
           <man_hours>42000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1349,6 +1572,9 @@
           <current_lab />
           <score>420</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1360,12 +1586,12 @@
           <order>70130</order>
           <description>This research could reveal a weakness in the Alien defenses.</description>
           <man_hours>32000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1376,6 +1602,9 @@
           <current_lab />
           <score>320</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1387,12 +1616,12 @@
           <order>70140</order>
           <description>This research could reveal a weakness in the Alien defenses.</description>
           <man_hours>46000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1403,6 +1632,9 @@
           <current_lab />
           <score>460</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1414,12 +1646,12 @@
           <order>70150</order>
           <description>This research could reveal a weakness in the Alien defenses.</description>
           <man_hours>30000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_THE_ALIEN_DIMENSION</entry>
                 </topics>
@@ -1432,6 +1664,9 @@
           <current_lab />
           <score>300</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1443,12 +1678,12 @@
           <order>70160</order>
           <description>This research could reveal a weakness in the Alien defenses.</description>
           <man_hours>44000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1459,6 +1694,9 @@
           <current_lab />
           <score>440</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1470,12 +1708,12 @@
           <order>70170</order>
           <description>This research could reveal a weakness in the Alien defenses.</description>
           <man_hours>34000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1486,6 +1724,9 @@
           <current_lab />
           <score>340</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1497,12 +1738,12 @@
           <order>70180</order>
           <description>This research could reveal a weakness in the Alien defenses.</description>
           <man_hours>40000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1513,6 +1754,9 @@
           <current_lab />
           <score>400</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1524,12 +1768,12 @@
           <order>70190</order>
           <description>This research could reveal a weakness in the Alien defenses.</description>
           <man_hours>36000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1540,6 +1784,9 @@
           <current_lab />
           <score>360</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1551,12 +1798,12 @@
           <order>70200</order>
           <description>This research could reveal a weakness in the Alien defenses.</description>
           <man_hours>48000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1567,6 +1814,9 @@
           <current_lab />
           <score>480</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1578,12 +1828,12 @@
           <order>80110</order>
           <description>Alien craft guidance System.</description>
           <man_hours>30000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1594,6 +1844,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1605,12 +1858,12 @@
           <order>80120</order>
           <description>Alien craft energy generator.</description>
           <man_hours>25000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1621,6 +1874,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1632,12 +1888,12 @@
           <order>30130</order>
           <description>There is a possibility that a multi-toxin can be suspended in gaseous form, which would increase the efficiency of our Biological weaponry.</description>
           <man_hours>28000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>large</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_QUEENSPAWN</entry>
                   <entry>RESEARCH_QUEENSPAWN_AUTOPSY</entry>
@@ -1652,6 +1908,9 @@
           <current_lab />
           <score>100</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1663,12 +1922,12 @@
           <order>80100</order>
           <description>Alien craft propulsion.</description>
           <man_hours>25000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1679,6 +1938,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1690,12 +1952,12 @@
           <order>20140</order>
           <description>The Alien threat can only be stopped by destroying their ability to create Dimension gates. A full assault on the Alien Dimensions requires a craft of immense power.</description>
           <man_hours>36000</man_hours>
-          <type>physics</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_RETALIATOR</entry>
                   <entry>RESEARCH_UFO_TYPE_9</entry>
@@ -1709,6 +1971,9 @@
           <current_lab />
           <score>300</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1720,12 +1985,12 @@
           <order>10220</order>
           <description>The Anthropod is a robust humanoid Alien soldier.</description>
           <man_hours>12000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1736,6 +2001,9 @@
           <current_lab />
           <score>200</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1747,12 +2015,12 @@
           <order>10210</order>
           <description>The Anthropod is the Alien creature that most resembles the human form.</description>
           <man_hours>8000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1763,6 +2031,9 @@
           <current_lab />
           <score>200</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1774,12 +2045,12 @@
           <order>20110</order>
           <description>The capture and study of live Alien specimens will help us understand the nature of the Alien threat. In order to do this we need an inter-dimensional transport vehicle that can contain and sustain Alien life forms.</description>
           <man_hours>18000</man_hours>
-          <type>physics</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_DIMENSION_PROBE</entry>
                   <entry>RESEARCH_UFO_TYPE_3</entry>
@@ -1793,6 +2064,9 @@
           <current_lab />
           <score>100</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1804,12 +2078,12 @@
           <order>60100</order>
           <description>For transporting Alien life forms.</description>
           <man_hours>9000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1820,6 +2094,9 @@
           <current_lab />
           <score>80</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1831,12 +2108,12 @@
           <order>30100</order>
           <description>The aim is to develop a toxin that specifically targets the early stages of the Alien life cycle.</description>
           <man_hours>26000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>large</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_THE_ALIEN_GENETIC_STRUCTURE</entry>
                 </topics>
@@ -1849,6 +2126,9 @@
           <current_lab />
           <score>200</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1860,12 +2140,12 @@
           <order>40120</order>
           <description>An intelligent Alien proximity mine</description>
           <man_hours>40000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1876,6 +2156,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1887,12 +2170,12 @@
           <order>10120</order>
           <description>A live Brainsucker is a valuable specimen - we must research it as soon as possible.</description>
           <man_hours>9000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1903,6 +2186,9 @@
           <current_lab />
           <score>120</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1914,12 +2200,12 @@
           <order>10110</order>
           <description>This small Alien creature has been seen to attack humans by jumping on the head and gripping with all its limbs.</description>
           <man_hours>7000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1930,6 +2216,9 @@
           <current_lab />
           <score>120</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1941,12 +2230,12 @@
           <order>50100</order>
           <description>Fires Brainsucker pods.</description>
           <man_hours>9000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1957,6 +2246,9 @@
           <current_lab />
           <score>100</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1968,12 +2260,12 @@
           <order>10100</order>
           <description>These pods contain a dormant Alien creature.</description>
           <man_hours>6000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -1984,6 +2276,9 @@
           <current_lab />
           <score>100</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -1995,12 +2290,12 @@
           <order>10200</order>
           <description>The study of a live Alien Chrysalis could represent a significant advance in our knowledge of the Alien life cycle.</description>
           <man_hours>12000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2011,6 +2306,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2022,12 +2320,12 @@
           <order>10190</order>
           <description>The remains of an Alien Chrysalis produces pungent fumes as it decays rapidly.</description>
           <man_hours>8000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2038,6 +2336,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2049,12 +2350,12 @@
           <order>70130</order>
           <description>Reduced detection of vehicles.</description>
           <man_hours>80000</man_hours>
-          <type>physics</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_LARGE_DISRUPTION_SHIELD</entry>
                 </topics>
@@ -2067,6 +2368,9 @@
           <current_lab />
           <score>200</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2078,12 +2382,12 @@
           <order>40110</order>
           <description>An Alien beam weapon.</description>
           <man_hours>38000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_DISRUPTOR_GUN</entry>
                 </topics>
@@ -2096,6 +2400,9 @@
           <current_lab />
           <score>200</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2107,16 +2414,16 @@
           <order>60160</order>
           <description>A device based on disruption field research which could be used to disable Alien disruption shields.</description>
           <man_hours>85000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
               <entry>
-                <type>unused</type>
+                <type>Unused</type>
                 <topics />
               </entry>
             </research>
@@ -2127,6 +2434,9 @@
           <current_lab />
           <score>100</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2138,12 +2448,12 @@
           <order>10100</order>
           <description>The mysterious atmospheric phenomenon from which the UFOs are emerging requires urgent attention. We must find out where the Alien craft are coming from.</description>
           <man_hours>5000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2154,6 +2464,9 @@
           <current_lab />
           <score>50</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2165,12 +2478,12 @@
           <order>40140</order>
           <description>An Alien guided missile.</description>
           <man_hours>12000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2181,6 +2494,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2192,12 +2508,12 @@
           <order>40130</order>
           <description>An Alien guided missile weapon.</description>
           <man_hours>42000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2208,6 +2524,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2219,12 +2538,12 @@
           <order>20100</order>
           <description>We need to build an automated device that can be sent through a Dimension gate. This will provide invaluable data which can prepare us for manned missions.</description>
           <man_hours>12000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_ALIEN_CONTROL_SYSTEM</entry>
                   <entry>RESEARCH_ALIEN_ENERGY_SOURCE</entry>
@@ -2239,6 +2558,9 @@
           <current_lab />
           <score>80</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2250,18 +2572,18 @@
           <order>70150</order>
           <description>Transports a vehicle between Dimensions.</description>
           <man_hours>190000</man_hours>
-          <type>physics</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_TELEPORTER</entry>
                 </topics>
               </entry>
               <entry>
-                <type>unused</type>
+                <type>Unused</type>
                 <topics />
               </entry>
             </research>
@@ -2272,6 +2594,9 @@
           <current_lab />
           <score>400</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2283,12 +2608,12 @@
           <order>50100</order>
           <description>Personal armor can be developed based on disrupter research</description>
           <man_hours>85000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_DISRUPTOR_GUN</entry>
                   <entry>RESEARCH_PERSONAL_DISRUPTOR_SHIELD</entry>
@@ -2303,6 +2628,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2314,12 +2642,12 @@
           <order>40100</order>
           <description>An Alien beam weapon.</description>
           <man_hours>40000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2330,6 +2658,9 @@
           <current_lab />
           <score>100</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2341,12 +2672,12 @@
           <order>60130</order>
           <description>An Alien guided missile launched from Alien craft.</description>
           <man_hours>60000</man_hours>
-          <type>physics</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_LIGHT_DISRUPTOR_BEAM</entry>
                 </topics>
@@ -2359,6 +2690,9 @@
           <current_lab />
           <score>300</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2370,12 +2704,12 @@
           <order>60150</order>
           <description>A multiple warhead missile.</description>
           <man_hours>80000</man_hours>
-          <type>physics</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_LIGHT_DISRUPTOR_BEAM</entry>
                 </topics>
@@ -2388,6 +2722,9 @@
           <current_lab />
           <score>400</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2399,12 +2736,12 @@
           <order>50110</order>
           <description>An Alien organic weapon.</description>
           <man_hours>9000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2415,6 +2752,9 @@
           <current_lab />
           <score>100</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2426,12 +2766,12 @@
           <order>50120</order>
           <description>Ammunition for an Alien weapon.</description>
           <man_hours>7000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2442,6 +2782,9 @@
           <current_lab />
           <score>100</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2453,12 +2796,12 @@
           <order>20120</order>
           <description>A craft capable of carrying our agents into the Alien Dimensions is required. The vast Alien structures must be explored and studied. This will help us understand their function and their weaknesses.</description>
           <man_hours>24000</man_hours>
-          <type>physics</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_BIO-TRANSPORT</entry>
                   <entry>RESEARCH_UFO_TYPE_5</entry>
@@ -2472,6 +2815,9 @@
           <current_lab />
           <score>120</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2483,12 +2829,12 @@
           <order>60120</order>
           <description>A beam weapon deployed on Alien craft.</description>
           <man_hours>70000</man_hours>
-          <type>physics</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_MEDIUM_DISRUPTOR_BEAM</entry>
                 </topics>
@@ -2501,6 +2847,9 @@
           <current_lab />
           <score>400</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2512,12 +2861,12 @@
           <order>10180</order>
           <description>The Hyperworm is a small, highly active carnivore.</description>
           <man_hours>9000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2528,6 +2877,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2539,12 +2891,12 @@
           <order>10170</order>
           <description>The Hyperworm corpse is extremely heavy for its size and appears to be a primitive creature.</description>
           <man_hours>6000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2555,6 +2907,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2566,12 +2921,12 @@
           <order>70120</order>
           <description>An Alien energy shield.</description>
           <man_hours>105000</man_hours>
-          <type>physics</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_HEAVY_DISRUPTOR_BEAM</entry>
                 </topics>
@@ -2584,6 +2939,9 @@
           <current_lab />
           <score>300</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2595,12 +2953,12 @@
           <order>60100</order>
           <description>A beam weapon deployed on Alien craft.</description>
           <man_hours>36000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2611,6 +2969,9 @@
           <current_lab />
           <score>200</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2622,12 +2983,12 @@
           <order>60110</order>
           <description>A beam weapon deployed on Alien craft.</description>
           <man_hours>46000</man_hours>
-          <type>physics</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_LIGHT_DISRUPTOR_BEAM</entry>
                 </topics>
@@ -2640,6 +3001,9 @@
           <current_lab />
           <score>300</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2651,12 +3015,12 @@
           <order>10280</order>
           <description>Due to the size of the Megaspawn we need a lot of free space in the Alien Containment facility to hold it and an advanced Bio-lab to study it.</description>
           <man_hours>20000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>large</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2667,6 +3031,9 @@
           <current_lab />
           <score>200</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2678,12 +3045,12 @@
           <order>10270</order>
           <description>An extremely large warrior creature.</description>
           <man_hours>12000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>large</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2694,6 +3061,9 @@
           <current_lab />
           <score>200</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2705,12 +3075,12 @@
           <order>10340</order>
           <description>A swarming amoebae-like Alien life form.</description>
           <man_hours>26000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2721,6 +3091,9 @@
           <current_lab />
           <score>300</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2732,12 +3105,12 @@
           <order>10330</order>
           <description>An unusual jelly like Alien life form.</description>
           <man_hours>20000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2748,6 +3121,9 @@
           <current_lab />
           <score>300</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2759,12 +3135,12 @@
           <order>10160</order>
           <description>A live Multiworm is a rare catch and must be studied immediately as it is a highly unstable life form.</description>
           <man_hours>15000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2775,6 +3151,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2786,12 +3165,12 @@
           <order>10150</order>
           <description>The Multiworm corpse decays rapidly, consumed by its own defense mechanisms. If research is not undertaken soon then we will not be able to preserve the remains.</description>
           <man_hours>9000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2802,6 +3181,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2813,12 +3195,12 @@
           <order>10140</order>
           <description>A live Multiworm egg gives us an excellent opportunity to observe the Alien life cycle in progress.</description>
           <man_hours>12000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2829,6 +3211,9 @@
           <current_lab />
           <score>120</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2840,12 +3225,12 @@
           <order>10130</order>
           <description>This stationary Alien life form appears to be some form of Alien egg.</description>
           <man_hours>8000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2856,6 +3241,9 @@
           <current_lab />
           <score>120</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2867,16 +3255,16 @@
           <order>10120</order>
           <description>We must discover a way to beat the Aliens once and for all</description>
           <man_hours>35000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
               <entry>
-                <type>unused</type>
+                <type>Unused</type>
                 <topics />
               </entry>
             </research>
@@ -2887,6 +3275,9 @@
           <current_lab />
           <score>500</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2898,12 +3289,12 @@
           <order>10370</order>
           <description>The Overspawn is an extremely dangerous Alien terror weapon.</description>
           <man_hours>20000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>large</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2914,6 +3305,9 @@
           <current_lab />
           <score>450</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2925,16 +3319,16 @@
           <order>10380</order>
           <description>A gigantic monster that has ravaged the city.</description>
           <man_hours>25000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>large</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
               <entry>
-                <type>unused</type>
+                <type>Unused</type>
                 <topics />
               </entry>
             </research>
@@ -2945,6 +3339,9 @@
           <current_lab />
           <score>450</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2956,12 +3353,12 @@
           <order>40180</order>
           <description>An Alien device which limits detection.</description>
           <man_hours>100000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2972,6 +3369,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -2983,12 +3383,12 @@
           <order>40160</order>
           <description>An Alien energy shield.</description>
           <man_hours>60000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -2999,6 +3399,9 @@
           <current_lab />
           <score>200</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3010,12 +3413,12 @@
           <order>40170</order>
           <description>An Alien teleportation device.</description>
           <man_hours>130000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3026,6 +3429,9 @@
           <current_lab />
           <score>200</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3037,12 +3443,12 @@
           <order>10300</order>
           <description>An extremely dangerous Alien that must be kept sedated.</description>
           <man_hours>9000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3053,6 +3459,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3064,12 +3473,12 @@
           <order>10290</order>
           <description>A small bipedal Alien creature.</description>
           <man_hours>6000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3080,6 +3489,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3091,12 +3503,12 @@
           <order>10240</order>
           <description>A living Psimorph is an extremely dangerous entity which must be kept unconscious, otherwise its Psionic ability would result in subversion of our personnel.</description>
           <man_hours>20000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>large</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3107,6 +3519,9 @@
           <current_lab />
           <score>250</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3118,12 +3533,12 @@
           <order>10230</order>
           <description>The Psimorph creature is a large mass of tentacles.</description>
           <man_hours>12000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>large</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3134,6 +3549,9 @@
           <current_lab />
           <score>250</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3145,12 +3563,12 @@
           <order>10360</order>
           <description>The enormous hulk of the Queenspawn requires great effort to transport and contain.</description>
           <man_hours>25000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>large</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3161,6 +3579,9 @@
           <current_lab />
           <score>450</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3172,12 +3593,12 @@
           <order>10350</order>
           <description>This is a huge egg laying Alien creature.</description>
           <man_hours>15000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>large</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3188,6 +3609,9 @@
           <current_lab />
           <score>450</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3199,12 +3623,12 @@
           <order>20130</order>
           <description>In order to combat the increasing aggression and power of Alien craft we must build an inter-dimensional weapons platform.</description>
           <man_hours>30000</man_hours>
-          <type>physics</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_EXPLORER</entry>
                   <entry>RESEARCH_UFO_TYPE_6</entry>
@@ -3218,6 +3642,9 @@
           <current_lab />
           <score>200</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3229,12 +3656,12 @@
           <order>10320</order>
           <description>An intelligent, airborne humanoid Alien warrior.</description>
           <man_hours>15000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3245,6 +3672,9 @@
           <current_lab />
           <score>200</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3256,12 +3686,12 @@
           <order>10310</order>
           <description>A humanoid Alien with an exo-skeleton structure.</description>
           <man_hours>10000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3272,6 +3702,9 @@
           <current_lab />
           <score>200</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3283,12 +3716,12 @@
           <order>70110</order>
           <description>An Alien energy shield.</description>
           <man_hours>60000</man_hours>
-          <type>physics</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_MEDIUM_DISRUPTOR_BEAM</entry>
                 </topics>
@@ -3301,6 +3734,9 @@
           <current_lab />
           <score>200</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3312,12 +3748,12 @@
           <order>10260</order>
           <description>The Spitter is humanoid in form but has a funnel shaped head.</description>
           <man_hours>9000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3328,6 +3764,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3339,12 +3778,12 @@
           <order>10250</order>
           <description>This ungainly creature has a huge funnel for propelling a deadly liquid.</description>
           <man_hours>6000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3355,6 +3794,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3366,12 +3808,12 @@
           <order>60140</order>
           <description>An Alien missile with an immobilizing effect.</description>
           <man_hours>50000</man_hours>
-          <type>physics</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_LIGHT_DISRUPTOR_BEAM</entry>
                 </topics>
@@ -3384,6 +3826,9 @@
           <current_lab />
           <score>300</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3395,12 +3840,12 @@
           <order>70140</order>
           <description>Instantly transports a vehicle over short ranges.</description>
           <man_hours>150000</man_hours>
-          <type>physics</type>
-          <required_lab_size>large</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_LIGHT_DISRUPTOR_BEAM</entry>
                 </topics>
@@ -3413,6 +3858,9 @@
           <current_lab />
           <score>400</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3424,12 +3872,12 @@
           <order>10110</order>
           <description>We must analyze the data from our Alien Dimension probe.</description>
           <man_hours>6000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3440,6 +3888,9 @@
           <current_lab />
           <score>50</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3451,12 +3902,12 @@
           <order>20100</order>
           <description>Investigate the genetic relationships between Alien life forms.</description>
           <man_hours>25000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_HYPERWORM_AUTOPSY</entry>
                   <entry>RESEARCH_MULTIWORM_AUTOPSY</entry>
@@ -3471,6 +3922,9 @@
           <current_lab />
           <score>300</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3482,16 +3936,16 @@
           <order>20110</order>
           <description>Research the primary stages of the Alien life cycle.</description>
           <man_hours>30000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_CHRYSALIS</entry>
                   <entry>RESEARCH_CHRYSALIS_AUTOPSY</entry>
@@ -3509,6 +3963,9 @@
           <current_lab />
           <score>400</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3520,16 +3977,16 @@
           <order>20120</order>
           <description>Investigate the source of the Alien intelligence and their secret purpose.</description>
           <man_hours>35000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>small</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_ANTHROPOD</entry>
                   <entry>RESEARCH_ANTHROPOD_AUTOPSY</entry>
@@ -3565,6 +4022,9 @@
           <current_lab />
           <score>500</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3576,12 +4036,12 @@
           <order>30110</order>
           <description>A toxin needs to be developed to combat the higher Alien life forms.</description>
           <man_hours>15000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>large</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_BIOLOGICAL_WARFARE</entry>
                   <entry>RESEARCH_THE_ALIEN_LIFE_CYCLE</entry>
@@ -3595,6 +4055,9 @@
           <current_lab />
           <score>100</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3606,12 +4069,12 @@
           <order>30120</order>
           <description>A powerful Biological warfare weapon designed to target the Micronoid parasites.</description>
           <man_hours>15000</man_hours>
-          <type>biochem</type>
-          <required_lab_size>large</required_lab_size>
+          <type>BioChem</type>
+          <required_lab_size>Large</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_THE_REAL_ALIEN_THREAT</entry>
                   <entry>RESEARCH_TOXIN_TYPE_B</entry>
@@ -3625,6 +4088,9 @@
           <current_lab />
           <score>100</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3636,12 +4102,12 @@
           <order>90100</order>
           <description>Alien inter-dimensional craft</description>
           <man_hours>8000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3652,6 +4118,9 @@
           <current_lab />
           <score>80</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3663,12 +4132,12 @@
           <order>90190</order>
           <description>Alien inter-dimensional craft</description>
           <man_hours>20000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3679,6 +4148,9 @@
           <current_lab />
           <score>200</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3690,12 +4162,12 @@
           <order>90110</order>
           <description>Alien inter-dimensional craft</description>
           <man_hours>10000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3706,6 +4178,9 @@
           <current_lab />
           <score>80</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3717,12 +4192,12 @@
           <order>90120</order>
           <description>Alien inter-dimensional craft</description>
           <man_hours>12000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3733,6 +4208,9 @@
           <current_lab />
           <score>100</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3744,12 +4222,12 @@
           <order>90130</order>
           <description>Alien inter-dimensional craft</description>
           <man_hours>12000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3760,6 +4238,9 @@
           <current_lab />
           <score>100</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3771,12 +4252,12 @@
           <order>90140</order>
           <description>Alien inter-dimensional craft</description>
           <man_hours>14000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3787,6 +4268,9 @@
           <current_lab />
           <score>120</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3798,12 +4282,12 @@
           <order>90150</order>
           <description>Alien inter-dimensional craft</description>
           <man_hours>14000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3814,6 +4298,9 @@
           <current_lab />
           <score>120</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3825,12 +4312,12 @@
           <order>90160</order>
           <description>Alien inter-dimensional craft</description>
           <man_hours>16000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3841,6 +4328,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3852,12 +4342,12 @@
           <order>90170</order>
           <description>Alien inter-dimensional craft</description>
           <man_hours>16000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3868,6 +4358,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3879,12 +4372,12 @@
           <order>90180</order>
           <description>Alien inter-dimensional craft</description>
           <man_hours>20000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3895,6 +4388,9 @@
           <current_lab />
           <score>200</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3906,12 +4402,12 @@
           <order>40150</order>
           <description>A powerful Alien grenade.</description>
           <man_hours>46000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics />
               </entry>
             </research>
@@ -3922,6 +4418,9 @@
           <current_lab />
           <score>150</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>
@@ -3933,12 +4432,12 @@
           <order>70100</order>
           <description>A superior weapons control system.</description>
           <man_hours>35000</man_hours>
-          <type>physics</type>
-          <required_lab_size>small</required_lab_size>
+          <type>Physics</type>
+          <required_lab_size>Small</required_lab_size>
           <dependencies>
             <research>
               <entry>
-                <type>all</type>
+                <type>All</type>
                 <topics>
                   <entry>RESEARCH_ALIEN_CONTROL_SYSTEM</entry>
                   <entry>RESEARCH_DISRUPTOR_INVERSION_BOMB</entry>
@@ -3953,6 +4452,9 @@
           <current_lab />
           <score>200</score>
           <started>false</started>
+          <cost>0</cost>
+          <item_type>VehicleEquipment</item_type>
+          <item_produced></item_produced>
         </sp>
       </value>
     </entry>

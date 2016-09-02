@@ -267,7 +267,7 @@ void City::generatePortals(GameState &state)
 				auto doodad =
 				    mksp<Doodad>(pos, StateRef<DoodadType>{&state, "DOODAD_DIMENSION_GATE"});
 				map->addObjectToMap(doodad);
-				this->portals.insert(doodad);
+				this->portals.push_back(doodad);
 				break;
 			}
 		}
@@ -278,7 +278,7 @@ sp<Doodad> City::placeDoodad(StateRef<DoodadType> type, Vec3<float> position)
 {
 	auto doodad = mksp<Doodad>(position, type);
 	map->addObjectToMap(doodad);
-	this->doodads.insert(doodad);
+	this->doodads.push_back(doodad);
 	return doodad;
 }
 

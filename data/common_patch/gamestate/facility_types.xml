@@ -13,9 +13,9 @@
     <key>FACILITYTYPE_ADVANCED_ALIEN_CONTAINMENT</key>
     <value>
       <sp>
-        <capacityType>aliens</capacityType>
+        <capacityType>Aliens</capacityType>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics>
             <entry>RESEARCH_ADVANCED_ALIEN_CONTAINMENT</entry>
           </topics>
@@ -28,9 +28,9 @@
     <key>FACILITYTYPE_ADVANCED_BIOCHEMISTRY_LAB</key>
     <value>
       <sp>
-        <capacityType>chemistry</capacityType>
+        <capacityType>Chemistry</capacityType>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics>
             <entry>RESEARCH_ADVANCED_BIOCHEMISTRY_LAB</entry>
           </topics>
@@ -43,9 +43,9 @@
     <key>FACILITYTYPE_ADVANCED_QUANTUM_PHYSICS_LAB</key>
     <value>
       <sp>
-        <capacityType>physics</capacityType>
+        <capacityType>Physics</capacityType>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics>
             <entry>RESEARCH_ADVANCED_QUANTUM_PHYSICS_LAB</entry>
           </topics>
@@ -59,7 +59,7 @@
     <value>
       <sp>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics>
             <entry>RESEARCH_ADVANCED_SECURITY_STATION</entry>
           </topics>
@@ -72,9 +72,9 @@
     <key>FACILITYTYPE_ADVANCED_WORKSHOP</key>
     <value>
       <sp>
-        <capacityType>workshop</capacityType>
+        <capacityType>Workshop</capacityType>
         <dependency>
-          <type>any</type>
+          <type>Any</type>
           <topics>
             <entry>RESEARCH_ADVANCED_WORKSHOP</entry>
           </topics>
@@ -87,7 +87,7 @@
     <key>FACILITYTYPE_ALIEN_CONTAINMENT</key>
     <value>
       <sp>
-        <capacityType>aliens</capacityType>
+        <capacityType>Aliens</capacityType>
         <ufopaedia_entry>PAEDIAENTRY_ALIEN_CONTAINMENT</ufopaedia_entry>
       </sp>
     </value>
@@ -96,7 +96,7 @@
     <key>FACILITYTYPE_BIOCHEMISTRY_LAB</key>
     <value>
       <sp>
-        <capacityType>chemistry</capacityType>
+        <capacityType>Chemistry</capacityType>
         <ufopaedia_entry>PAEDIAENTRY_BIOCHEMISTRY_LAB</ufopaedia_entry>
       </sp>
     </value>
@@ -105,9 +105,9 @@
     <key>FACILITYTYPE_CELLS</key>
     <value>
       <sp>
-        <capacityType>aliens</capacityType>
+        <capacityType>Aliens</capacityType>
         <dependency>
-          <type>unused</type>
+          <type>Unused</type>
           <topics/>
         </dependency>
         <ufopaedia_entry/>
@@ -118,7 +118,7 @@
     <key>FACILITYTYPE_LIVING_QUARTERS</key>
     <value>
       <sp>
-        <capacityType>quarters</capacityType>
+        <capacityType>Quarters</capacityType>
         <ufopaedia_entry>PAEDIAENTRY_LIVING_QUARTERS</ufopaedia_entry>
       </sp>
     </value>
@@ -127,7 +127,7 @@
     <key>FACILITYTYPE_MEDICAL_BAY</key>
     <value>
       <sp>
-        <capacityType>medical</capacityType>
+        <capacityType>Medical</capacityType>
         <ufopaedia_entry>PAEDIAENTRY_MEDICAL_BAY</ufopaedia_entry>
       </sp>
     </value>
@@ -136,7 +136,7 @@
     <key>FACILITYTYPE_PSI-GYM</key>
     <value>
       <sp>
-        <capacityType>psi</capacityType>
+        <capacityType>Psi</capacityType>
         <ufopaedia_entry>PAEDIAENTRY_PSI-GYM</ufopaedia_entry>
       </sp>
     </value>
@@ -145,7 +145,7 @@
     <key>FACILITYTYPE_QUANTUM_PHYSICS_LAB</key>
     <value>
       <sp>
-        <capacityType>physics</capacityType>
+        <capacityType>Physics</capacityType>
         <ufopaedia_entry>PAEDIAENTRY_QUANTUM_PHYSICS_LAB</ufopaedia_entry>
       </sp>
     </value>
@@ -162,7 +162,7 @@
     <key>FACILITYTYPE_STORES</key>
     <value>
       <sp>
-        <capacityType>stores</capacityType>
+        <capacityType>Stores</capacityType>
         <ufopaedia_entry>PAEDIAENTRY_STORES</ufopaedia_entry>
       </sp>
     </value>
@@ -171,7 +171,7 @@
     <key>FACILITYTYPE_TRAINING_AREA</key>
     <value>
       <sp>
-        <capacityType>training</capacityType>
+        <capacityType>Training</capacityType>
         <ufopaedia_entry>PAEDIAENTRY_TRAINING_AREA</ufopaedia_entry>
       </sp>
     </value>
@@ -180,7 +180,7 @@
     <key>FACILITYTYPE_VEHICLE_REPAIR_BAY</key>
     <value>
       <sp>
-        <capacityType>repair</capacityType>
+        <capacityType>Repair</capacityType>
         <capacityAmount>1</capacityAmount>
         <ufopaedia_entry>PAEDIAENTRY_VEHICLE_REPAIR_BAY</ufopaedia_entry>
       </sp>
@@ -190,7 +190,7 @@
     <key>FACILITYTYPE_WORKSHOP</key>
     <value>
       <sp>
-        <capacityType>workshop</capacityType>
+        <capacityType>Workshop</capacityType>
         <ufopaedia_entry>PAEDIAENTRY_WORKSHOP</ufopaedia_entry>
       </sp>
     </value>

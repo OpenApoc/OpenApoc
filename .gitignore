@@ -92,3 +92,9 @@ save.zip
 openapoc_log.txt
 version.h
 saves/
+
+
+# MSVC generated files end up in the source dir, we don't want to add them into git
+game/state/gamestate_serialize_generated.cpp
+game/state/gamestate_serialize_generated.h
+

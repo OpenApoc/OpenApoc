@@ -4,10 +4,15 @@
 #include "library/sp.h"
 #include "library/strings.h"
 #include <exception>
+#include <map>
 
 namespace OpenApoc
 {
 class GameState;
+
+template <typename T> class StateRefMap : public std::map<UString, sp<T>>
+{
+};
 
 template <typename T> class StateObject
 {
@@ -118,20 +123,13 @@ template <typename T> class StateRef
 	}
 	bool operator==(const StateRef<T> &other) const
 	{
-		if (!obj)
-			resolve();
-		if (!other.obj)
-			other.resolve();
-		return obj == other.obj;
+		if (this->id != other.id)
+		{
+			return false;
+		}
+		return true;
 	}
-	bool operator!=(const StateRef<T> &other) const
-	{
-		if (!obj)
-			resolve();
-		if (!other.obj)
-			other.resolve();
-		return obj != other.obj;
-	}
+	bool operator!=(const StateRef<T> &other) const { return !(*this == other); }
 	bool operator==(const sp<T> &other) const
 	{
 		if (!obj)

@@ -15,6 +15,7 @@ ResearchScreen::ResearchScreen(sp<GameState> state, sp<Facility> selected_lab)
 	form = ui().getForm("FORM_RESEARCHSCREEN");
 	viewHighlight = BaseGraphics::FacilityHighlight::Labs;
 	viewFacility = selected_lab;
+	arrow = form->findControlTyped<Graphic>("MAGIC_ARROW");
 }
 
 ResearchScreen::~ResearchScreen() = default;
@@ -109,15 +110,12 @@ void ResearchScreen::begin()
 		this->selected_lab->lab->assigned_agents.remove({state.get(), agent});
 		this->setCurrentLabInfo();
 	};
-	auto assignedAgentListCol1 = form->findControlTyped<ListBox>("LIST_ASSIGNED_COL1");
-	assignedAgentListCol1->addCallback(FormEventType::ListBoxChangeSelected, removeFn);
-	auto assignedAgentListCol2 = form->findControlTyped<ListBox>("LIST_ASSIGNED_COL2");
-	assignedAgentListCol2->addCallback(FormEventType::ListBoxChangeSelected, removeFn);
+	auto assignedAgentList = form->findControlTyped<ListBox>("LIST_ASSIGNED");
+	assignedAgentList->addCallback(FormEventType::ListBoxChangeSelected, removeFn);
 
 	// Set the listboxes to always emit events, otherwise the first entry is considered 'selected'
 	// to clicking on it won't get a callback
-	assignedAgentListCol1->AlwaysEmitSelectionEvents = true;
-	assignedAgentListCol2->AlwaysEmitSelectionEvents = true;
+	assignedAgentList->AlwaysEmitSelectionEvents = true;
 	unassignedAgentList->AlwaysEmitSelectionEvents = true;
 }
 
@@ -141,6 +139,11 @@ void ResearchScreen::eventOccurred(Event *e)
 			stageCmd.cmd = StageCmd::Command::POP;
 			return;
 		}
+	}
+
+	if (e->type() == EVENT_MOUSE_MOVE)
+	{
+		arrow->Visible = (e->mouse().X > form->Location.x + arrow->Location.x);
 	}
 
 	if (e->type() == EVENT_FORM_INTERACTION)
@@ -227,10 +230,8 @@ void ResearchScreen::setCurrentLabInfo()
 	{
 		auto unassignedAgentList = form->findControlTyped<ListBox>("LIST_UNASSIGNED");
 		unassignedAgentList->clear();
-		auto assignedAgentListCol1 = form->findControlTyped<ListBox>("LIST_ASSIGNED_COL1");
-		assignedAgentListCol1->clear();
-		auto assignedAgentListCol2 = form->findControlTyped<ListBox>("LIST_ASSIGNED_COL2");
-		assignedAgentListCol2->clear();
+		auto assignedAgentList = form->findControlTyped<ListBox>("LIST_ASSIGNED");
+		assignedAgentList->clear();
 		form->findControlTyped<Label>("TEXT_LAB_TYPE")->setText("");
 		auto totalSkillLabel = form->findControlTyped<Label>("TEXT_TOTAL_SKILL");
 		totalSkillLabel->setText(UString::format(tr("Total Skill: %d"), 0));
@@ -268,10 +269,8 @@ void ResearchScreen::setCurrentLabInfo()
 
 	auto unassignedAgentList = form->findControlTyped<ListBox>("LIST_UNASSIGNED");
 	unassignedAgentList->clear();
-	auto assignedAgentListCol1 = form->findControlTyped<ListBox>("LIST_ASSIGNED_COL1");
-	assignedAgentListCol1->clear();
-	auto assignedAgentListCol2 = form->findControlTyped<ListBox>("LIST_ASSIGNED_COL2");
-	assignedAgentListCol2->clear();
+	auto assignedAgentList = form->findControlTyped<ListBox>("LIST_ASSIGNED");
+	assignedAgentList->clear();
 	for (auto &agent : state->agents)
 	{
 		bool assigned_to_current_lab = false;
@@ -306,20 +305,14 @@ void ResearchScreen::setCurrentLabInfo()
 
 		if (assigned_to_current_lab)
 		{
-			// FIXME: This should stop at 5 entries, but there's always a 'scrollbar' control, so
-			// stop at 6 instead
-			if (assignedAgentListCol1->Controls.size() < 6)
-				assignedAgentListCol1->addItem(agentControl);
-			else
-				assignedAgentListCol2->addItem(agentControl);
+			assignedAgentList->addItem(agentControl);
 		}
 		else
 		{
 			unassignedAgentList->addItem(agentControl);
 		}
 	}
-	assignedAgentListCol1->ItemSize = agentEntryHeight;
-	assignedAgentListCol2->ItemSize = agentEntryHeight;
+	assignedAgentList->ItemSize = agentEntryHeight;
 	unassignedAgentList->ItemSize = agentEntryHeight;
 
 	auto totalSkillLabel = form->findControlTyped<Label>("TEXT_TOTAL_SKILL");
