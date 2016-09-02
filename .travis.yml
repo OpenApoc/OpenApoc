@@ -62,7 +62,8 @@ before_script:
   - sleep 3 # give xvfb some time to start
 
 script:
-  - if [ "${TIDY}" = "true" ]; then git --no-pager diff --ignore-submodules --stat && make tidy; fi
+# Create the GameState as that triggers the generated source commands
+  - if [ "${TIDY}" = "true" ]; then git --no-pager diff --ignore-submodules --stat && make OpenApoc_GameState -j2 && make tidy; fi
   - if [ "${TIDY}" != "true" ]; then make -j2 && ctest -V -j 2 && ./bin/OpenApoc_DataExtractor && git --no-pager diff --ignore-submodules --stat data/; fi
 
 os:
