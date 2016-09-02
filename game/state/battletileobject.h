@@ -18,10 +18,13 @@ class BattleTileObject : public std::enable_shared_from_this<BattleTileObject>
   public:
 	enum class Type
 	{
+		// Map parts (Ground, Walls, Scenery) must go first and in the order they are drawn
 		Ground,
 		LeftWall,
 		RightWall,
 		Scenery,
+		// Everything else goes below
+		Unit
 	};
 
 	/* 'screenPosition' is where the center of the object should be drawn */

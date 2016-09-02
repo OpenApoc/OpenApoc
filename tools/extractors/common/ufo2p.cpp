@@ -13,7 +13,7 @@ namespace OpenApoc
  * need to make sure the offsets are the same, then we can add them to an
  * 'allowed' list, or have a map of 'known' CRCs with offsets of the various
  * tables */
-uint32_t expected_crc32 = 0x1e7e11d6;
+uint32_t expected_ufo2p_crc32 = 0x1e7e11d6;
 
 UFO2P::UFO2P(std::string file_name)
 {
@@ -30,10 +30,10 @@ UFO2P::UFO2P(std::string file_name)
 
 	auto crc32 = crc(sof, eof);
 
-	if (crc32 != expected_crc32)
+	if (crc32 != expected_ufo2p_crc32)
 	{
 		LogError("File \"%s\"\" has an unknown crc32 value of 0x%08lx - expected 0x%08x",
-		         file_name.c_str(), crc32, expected_crc32);
+		         file_name.c_str(), crc32, expected_ufo2p_crc32);
 	}
 
 	file.seekg(0, std::ios::beg);
@@ -68,6 +68,9 @@ UFO2P::UFO2P(std::string file_name)
 	    new DataChunk<RawSoundData>(file, RAWSOUND_OFFSET_START, RAWSOUND_OFFSET_END));
 	this->baselayouts.reset(
 	    new DataChunk<BaseLayoutData>(file, BASELAYOUT_OFFSET_START, BASELAYOUT_OFFSET_END));
+
+	this->agent_equipment_names.reset(
+	    new StrTab(file, AGENT_EQUIPMENT_NAMES_OFFSET_START, AGENT_EQUIPMENT_NAMES_OFFSET_END));
 
 	this->vehicle_equipment_names.reset(
 	    new StrTab(file, VEHICLE_EQUIPMENT_NAMES_OFFSET_START, VEHICLE_EQUIPMENT_NAMES_OFFSET_END));

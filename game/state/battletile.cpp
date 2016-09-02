@@ -39,6 +39,14 @@ BattleTileMap::BattleTileMap(Vec3<int> size, std::vector<std::set<BattleTileObje
 			seenTypes.insert(type);
 		}
 	}
+	// In order for selectionBracket to be drawn properly, first layer must contain all mapparts's 
+	// and the unit's types
+	if (layerMap[0].find(BattleTileObject::Type::Ground) == layerMap[0].end() ||
+	    layerMap[0].find(BattleTileObject::Type::LeftWall) == layerMap[0].end() ||
+	    layerMap[0].find(BattleTileObject::Type::RightWall) == layerMap[0].end() ||
+	    layerMap[0].find(BattleTileObject::Type::Scenery) == layerMap[0].end() ||
+	    layerMap[0].find(BattleTileObject::Type::Unit) == layerMap[0].end())
+		LogError("Layer 0 for battlescape is not filled properly");
 }
 
 BattleTileMap::~BattleTileMap() = default;
@@ -47,7 +55,7 @@ void BattleTileMap::addObjectToMap(sp<BattleMapPart> map_part)
 {
 	if (map_part->tileObject)
 	{
-		LogError("Ground already has tile object");
+		LogError("Map part already has tile object");
 	}
 	// FIXME: mksp<> doesn't work for private (but accessible due to friend)
 	// constructors?

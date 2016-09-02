@@ -272,31 +272,19 @@ void BattleView::eventOccurred(Event *e)
 			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
 			this->setScreenCenterTile({clickTile.x, clickTile.y});
 		}
-		else if (e->type() == EVENT_MOUSE_DOWN && e->mouse().Button == 1)
+		else if (e->type() == EVENT_MOUSE_DOWN &&
+		         (e->mouse().Button == 1 || e->mouse().Button == 4))
 		{
-			// If a click has not been handled by a form it's in the map. See if we intersect with
-			// anything
-			Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
-			auto clickTop = this->screenToTileCoords(
-			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, (float)maxZDraw - 0.01f);
-			auto clickBottom = this->screenToTileCoords(
-			    Vec2<float>{e->mouse().X, e->mouse().Y} - screenOffset, 0.0f);
-			auto collision = state->battle.map->findCollision(clickTop, clickBottom);
-			if (collision)
+			// If a click has not been handled by a form it's in the map.
+			auto t = this->getSelectedTilePosition();
+			switch (e->mouse().Button)
 			{
-				if (collision.obj->getType() == BattleTileObject::Type::Ground ||
-				    collision.obj->getType() == BattleTileObject::Type::LeftWall ||
-				    collision.obj->getType() == BattleTileObject::Type::RightWall ||
-				    collision.obj->getType() == BattleTileObject::Type::Scenery)
-				{
-					auto map_part =
-					    std::dynamic_pointer_cast<BattleTileObjectMapPart>(collision.obj)
-					        ->getOwner();
-					LogInfo("Clicked on map part %s at {%f,%f,%f}",
-					        BattleMapPartType::TypeMap.at(map_part->type->type).cStr(),
-					        map_part->currentPosition.x, map_part->currentPosition.y,
-					        map_part->currentPosition.z);
-				}
+				case 1:
+					LogWarning("Left click at tile %d, %d, %d", t.x, t.y, t.z);
+					break;
+				case 4:
+					LogWarning("Right click at tile %d, %d, %d", t.x, t.y, t.z);
+					break;
 			}
 		}
 	}

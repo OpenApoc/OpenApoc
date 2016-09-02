@@ -46,6 +46,13 @@ class BattleTileView : public Stage, public TileTransform
 	int currentZLevel;
 	BattleLayerDrawingMode layerDrawingMode;
 
+	Vec3<int> selectedTilePosition;
+	sp<Image> selectedTileEmptyImageBack;
+	sp<Image> selectedTileEmptyImageFront;
+	sp<Image> selectedTileFilledImageBack;
+	sp<Image> selectedTileFilledImageFront;
+	Vec2<int> selectedTileImageOffset;
+
   public:
 	void setZLevel(int zLevel);
 	int getZLevel();
@@ -57,8 +64,6 @@ class BattleTileView : public Stage, public TileTransform
 	Vec2<float> isoScrollSpeed;
 	Vec2<float> stratScrollSpeed;
 
-	Vec3<int> selectedTilePosition;
-	sp<Image> selectedTileImageBack, selectedTileImageFront;
 	sp<Palette> pal;
 
 	BattleTileView(BattleTileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
@@ -68,6 +73,9 @@ class BattleTileView : public Stage, public TileTransform
 	Vec2<int> getScreenOffset() const;
 	void setScreenCenterTile(Vec2<float> center);
 	void setScreenCenterTile(Vec3<float> center);
+
+	Vec3<int> getSelectedTilePosition();
+	void setSelectedTilePosition(Vec3<int> newPosition);
 
 	template <typename T> Vec2<T> tileToScreenCoords(Vec3<T> c, TileViewMode v) const
 	{
