@@ -40,6 +40,7 @@
     <ClCompile Include="gameevent.cpp" />
     <ClCompile Include="gamestate.cpp" />
     <ClCompile Include="gamestate_serialize.cpp" />
+    <ClCompile Include="gamestate_serialize_generated.cpp" />
     <ClCompile Include="gametime.cpp" />
     <ClCompile Include="message.cpp" />
     <ClCompile Include="organisation.cpp" />
@@ -86,6 +87,7 @@
     <ClInclude Include="gameevent.h" />
     <ClInclude Include="gameevent_types.h" />
     <ClInclude Include="gamestate.h" />
+    <ClInclude Include="gamestate_serialize_generated.h" />
     <ClInclude Include="gametime.h" />
     <ClInclude Include="gametime_facet.h" />
     <ClInclude Include="message.h" />
@@ -117,9 +119,15 @@
     <ProjectReference Include="..\..\framework\framework.vcxproj">
       <Project>{a61ce9b3-b257-4978-9e8b-cabb592ec2ce}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\tools\gamestate_serialize_gen\gamestate_serialize_gen.vcxproj">
+      <Project>{31fbccbd-bfd2-45fc-b9df-3375684a3157}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="gamestate_serialize.xml" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{55DA5DD0-C503-426E-8322-E8E2D0E1A71B}</ProjectGuid>
@@ -172,21 +180,25 @@
     <IncludePath>$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <CustomBuildBeforeTargets>ClCompile</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <CustomBuildBeforeTargets>ClCompile</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <CustomBuildBeforeTargets>ClCompile</CustomBuildBeforeTargets>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>$(SolutionDir)\dependencies\glm;$(SolutionDir);$(IncludePath)</IncludePath>
     <OutDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin\intermediates\$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <CustomBuildBeforeTargets>ClCompile</CustomBuildBeforeTargets>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -202,6 +214,14 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <CustomBuildStep>
+      <Command>$(SolutionDir)bin\$(Platform)\$(Configuration)\gamestate_serialize_gen.exe -x $(SolutionDir)\game\state\gamestate_serialize.xml -h $(SolutionDir)\game\state\gamestate_serialize_generated.h -o $(SolutionDir)\game\state\gamestate_serialize_generated.cpp</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Inputs>$(SolutionDir)\game\state\gamestate_serialize.xml;%(Inputs)</Inputs>
+      <Message>Generating gamestate serialization code</Message>
+      <Outputs>$(SolutionDir)\game\state\gamestate_serialize_generated.cpp;$(SolutionDir)\game\state\gamestate_serialize_generated.h</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -217,6 +237,14 @@
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <CustomBuildStep>
+      <Command>$(SolutionDir)bin\$(Platform)\$(Configuration)\gamestate_serialize_gen.exe -x $(SolutionDir)\game\state\gamestate_serialize.xml -h $(SolutionDir)\game\state\gamestate_serialize_generated.h -o $(SolutionDir)\game\state\gamestate_serialize_generated.cpp</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Inputs>$(SolutionDir)\game\state\gamestate_serialize.xml;%(Inputs)</Inputs>
+      <Message>Generating gamestate serialization code</Message>
+      <Outputs>$(SolutionDir)\game\state\gamestate_serialize_generated.cpp;$(SolutionDir)\game\state\gamestate_serialize_generated.h</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -236,6 +264,14 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <CustomBuildStep>
+      <Command>$(SolutionDir)bin\$(Platform)\$(Configuration)\gamestate_serialize_gen.exe -x $(SolutionDir)\game\state\gamestate_serialize.xml -h $(SolutionDir)\game\state\gamestate_serialize_generated.h -o $(SolutionDir)\game\state\gamestate_serialize_generated.cpp</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Inputs>$(SolutionDir)\game\state\gamestate_serialize.xml;%(Inputs)</Inputs>
+      <Message>Generating gamestate serialization code</Message>
+      <Outputs>$(SolutionDir)\game\state\gamestate_serialize_generated.cpp;$(SolutionDir)\game\state\gamestate_serialize_generated.h</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -255,6 +291,14 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <CustomBuildStep>
+      <Command>$(SolutionDir)bin\$(Platform)\$(Configuration)\gamestate_serialize_gen.exe -x $(SolutionDir)\game\state\gamestate_serialize.xml -h $(SolutionDir)\game\state\gamestate_serialize_generated.h -o $(SolutionDir)\game\state\gamestate_serialize_generated.cpp</Command>
+    </CustomBuildStep>
+    <CustomBuildStep>
+      <Inputs>$(SolutionDir)\game\state\gamestate_serialize.xml;%(Inputs)</Inputs>
+      <Message>Generating gamestate serialization code</Message>
+      <Outputs>$(SolutionDir)\game\state\gamestate_serialize_generated.cpp;$(SolutionDir)\game\state\gamestate_serialize_generated.h</Outputs>
+    </CustomBuildStep>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

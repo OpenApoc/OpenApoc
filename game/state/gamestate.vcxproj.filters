@@ -147,6 +147,9 @@
     <ClCompile Include="battlemappart.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="gamestate_serialize_generated.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agent.h">
@@ -290,8 +293,16 @@
     <ClInclude Include="battlemappart.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="gamestate_serialize_generated.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="gamestate_serialize.xml">
+      <Filter>Resource Files</Filter>
+    </Xml>
   </ItemGroup>
 </Project>
