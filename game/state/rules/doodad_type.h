@@ -14,16 +14,16 @@ class DoodadFrame
 {
   public:
 	sp<Image> image;
-	int time;
+	int time = 0;
 };
 
 class DoodadType : public StateObject<DoodadType>
 {
   public:
 	DoodadType() = default;
-	int lifetime;
-	bool repeatable;
-	Vec2<int> imageOffset;
+	int lifetime = 0;
+	bool repeatable = false;
+	Vec2<int> imageOffset = {0, 0};
 	std::vector<DoodadFrame> frames;
 };
 

@@ -76,7 +76,7 @@ class ResearchTopic : public StateObject<ResearchTopic>
 class ResearchDependency
 {
   public:
-	ResearchDependency();
+	ResearchDependency() = default;
 	enum class Type
 	{
 		Any,
@@ -84,7 +84,7 @@ class ResearchDependency
 		Unused
 	};
 	static const std::map<Type, UString> TypeMap;
-	Type type;
+	Type type = Type::Any;
 
 	std::set<StateRef<ResearchTopic>> topics;
 
@@ -104,9 +104,9 @@ class ItemDependency
 class Lab : public StateObject<Lab>
 {
   public:
-	Lab();
-	ResearchTopic::LabSize size;
-	ResearchTopic::Type type;
+	Lab() = default;
+	ResearchTopic::LabSize size = ResearchTopic::LabSize::Small;
+	ResearchTopic::Type type = ResearchTopic::Type::BioChem;
 	StateRef<ResearchTopic> current_project;
 	std::list<StateRef<Agent>> assigned_agents;
 
@@ -122,11 +122,11 @@ class Lab : public StateObject<Lab>
 	// periods of ticks smaller than what is required to progress a single 'progress' point.
 	// This is also used to 'store' the remaining time if the update granularity is such that is
 	// overshoots a project's completion.
-	unsigned int ticks_since_last_progress;
+	unsigned int ticks_since_last_progress = 0;
 
-	unsigned manufacture_goal;
-	unsigned manufacture_done;
-	unsigned int manufacture_man_hours_invested;
+	unsigned manufacture_goal = 0;
+	unsigned manufacture_done = 0;
+	unsigned int manufacture_man_hours_invested = 0;
 };
 
 class ResearchCompleteData
@@ -140,8 +140,8 @@ class ResearchCompleteData
 class ResearchState
 {
   public:
-	ResearchState();
-	unsigned int num_labs_created;
+	ResearchState() = default;
+	unsigned int num_labs_created = 0;
 	StateRefMap<ResearchTopic> topics;
 	std::list<sp<ResearchTopic>> topic_list;
 	void updateTopicList();

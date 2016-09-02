@@ -34,8 +34,6 @@ bool ResearchTopic::isComplete() const
 	       (this->man_hours_progress >= this->man_hours);
 }
 
-ResearchDependency::ResearchDependency() : type(Type::Any){};
-
 bool ResearchDependency::satisfied() const
 {
 	if (this->topics.empty())
@@ -129,12 +127,6 @@ const UString &StateObject<ResearchTopic>::getId(const GameState &state,
 	return emptyString;
 }
 
-Lab::Lab()
-    : ticks_since_last_progress(0), manufacture_goal(0), manufacture_done(0),
-      manufacture_man_hours_invested(0)
-{
-}
-
 template <> sp<Lab> StateObject<Lab>::get(const GameState &state, const UString &id)
 {
 	auto it = state.research.labs.find(id);
@@ -168,8 +160,6 @@ template <> const UString &StateObject<Lab>::getId(const GameState &state, const
 	LogError("No lab matching pointer %p", ptr.get());
 	return emptyString;
 }
-
-ResearchState::ResearchState() : num_labs_created(0) {}
 
 void ResearchState::updateTopicList()
 {

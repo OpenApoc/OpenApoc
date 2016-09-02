@@ -12,7 +12,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -28,7 +27,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_ALIEN</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -44,7 +42,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -60,7 +57,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -76,7 +72,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -92,7 +87,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -108,7 +102,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -124,7 +117,6 @@
           <y>4</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -140,7 +132,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -156,7 +147,6 @@
           <y>4</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -172,7 +162,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -188,7 +177,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -204,7 +192,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -220,7 +207,6 @@
           <y>5</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -236,7 +222,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -252,7 +237,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_SOLMINE</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -263,12 +247,7 @@
         <id>AEQUIPMENTTYPE_EMPTY</id>
         <name>Empty</name>
         <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:0:xcom3/tacdata/tactical.pal</equipscreen_sprite>
-        <equipscreen_size>
-          <x>0</x>
-          <y>0</y>
-        </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -284,7 +263,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -300,7 +278,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -316,7 +293,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -332,7 +308,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -348,7 +323,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -364,7 +338,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -380,7 +353,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -396,7 +368,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_ALIEN</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -412,7 +383,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_DIABLO</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -428,7 +398,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -444,7 +413,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -460,7 +428,6 @@
           <y>5</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -476,7 +443,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -492,7 +458,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -508,7 +473,6 @@
           <y>4</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -524,7 +488,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -540,7 +503,6 @@
           <y>4</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -556,7 +518,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -572,7 +533,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -588,7 +548,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -604,7 +563,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_NANOTECH</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -620,7 +578,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -636,7 +593,6 @@
           <y>4</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -652,7 +608,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -668,7 +623,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -684,7 +638,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -700,7 +653,6 @@
           <y>5</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -716,7 +668,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -732,7 +683,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -748,7 +698,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -764,7 +713,6 @@
           <y>4</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -780,7 +728,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -796,7 +743,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -812,7 +758,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -828,7 +773,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -844,7 +788,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -860,7 +803,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -876,7 +818,6 @@
           <y>5</y>
         </equipscreen_size>
         <manufacturer>ORG_ALIEN</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -892,7 +833,6 @@
           <y>5</y>
         </equipscreen_size>
         <manufacturer>ORG_ALIEN</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -908,7 +848,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -924,7 +863,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -940,7 +878,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -956,7 +893,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -972,7 +908,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -988,7 +923,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1004,7 +938,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1020,7 +953,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_ALIEN</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1036,7 +968,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1052,7 +983,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1068,7 +998,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1084,7 +1013,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_ALIEN</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1100,7 +1028,6 @@
           <y>4</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1116,7 +1043,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_MARSEC</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1132,7 +1058,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_ALIEN</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1148,7 +1073,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_ALIEN</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1164,7 +1088,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_ALIEN</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1180,7 +1103,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_ALIEN</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1196,7 +1118,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1212,7 +1133,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1228,7 +1148,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1244,7 +1163,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1260,7 +1178,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1276,7 +1193,6 @@
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_MEGAPOL</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1292,7 +1208,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1308,7 +1223,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1324,7 +1238,6 @@
           <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1340,7 +1253,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1356,7 +1268,6 @@
           <y>4</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>
@@ -1372,7 +1283,6 @@
           <y>3</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>0</store_space>
       </sp>
     </value>
   </entry>

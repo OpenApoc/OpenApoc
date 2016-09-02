@@ -15,8 +15,8 @@ class Facility
 	Facility(StateRef<FacilityType> type);
 	Facility() = default;
 	StateRef<FacilityType> type;
-	Vec2<int> pos;
-	int buildTime;
+	Vec2<int> pos = {0, 0};
+	int buildTime = 0;
 
 	StateRef<Lab> lab;
 };

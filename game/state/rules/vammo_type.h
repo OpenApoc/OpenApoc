@@ -15,17 +15,17 @@ class Sample;
 class VAmmoType : public StateObject<VAmmoType>
 {
   public:
-	VAmmoType();
+	VAmmoType() = default;
 
 	~VAmmoType() override = default;
 
 	UString id;
 	UString name;
 
-	unsigned ammo_id;
+	unsigned ammo_id = 0;
 
-	int weight;
-	int store_space;
+	int weight = 0;
+	int store_space = 0;
 	StateRef<Organisation> manufacturer;
 };
 

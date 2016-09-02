@@ -9,9 +9,5 @@
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="tile_types.xml" />
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="initial_tiles.xml" />
     <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="buildings.xml" />
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="scenery.xml" />
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="doodads.xml" />
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="portals.xml" />
-    <xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="projectiles.xml" />
   </sp>
 </CITYMAP_HUMAN>

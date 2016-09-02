@@ -84,24 +84,24 @@ class VehicleType : public StateObject<VehicleType>
 	// This is explictly mutable it can be used through a const ref
 	// FIXME: Should this go somewhere else in the state? If the rules are meant to be immutable
 	// this may be lost after serialisation?
-	mutable unsigned numCreated;
+	mutable unsigned numCreated = 0;
 
-	Type type;
+	Type type = Type::Flying;
 
 	UString name;
 	StateRef<Organisation> manufacturer;
 
-	Vec3<float> size;
-	Vec2<float> image_offset;
-	float acceleration;
-	float top_speed;
-	float health;
-	float crash_health;
-	float weight;
+	Vec3<float> size = {0, 0, 0};
+	Vec2<float> image_offset = {0, 0};
+	float acceleration = 0;
+	float top_speed = 0;
+	float health = 0;
+	float crash_health = 0;
+	float weight = 0;
 	std::map<ArmourDirection, float> armour;
-	int passengers;
-	float aggressiveness;
-	int score;
+	int passengers = 0;
+	float aggressiveness = 0;
+	int score = 0;
 	sp<Image> icon;
 
 	// The following (equip screen, equip icon big and small) are only required
@@ -119,7 +119,7 @@ class VehicleType : public StateObject<VehicleType>
 	std::map<Banking, std::map<Vec3<float>, sp<Image>>> directional_sprites;
 
 	// Flying vehicles and UFOs have a shadow
-	Vec2<float> shadow_offset;
+	Vec2<float> shadow_offset = {0, 0};
 	std::map<Vec3<float>, sp<Image>> directional_shadow_sprites;
 
 	// UFOs have a non-directional animated sprite
@@ -132,9 +132,9 @@ class VehicleType : public StateObject<VehicleType>
 	class EquipmentLayoutSlot
 	{
 	  public:
-		VEquipmentType::Type type;
-		AlignmentX align_x;
-		AlignmentY align_y;
+		VEquipmentType::Type type = VEquipmentType::Type::Engine;
+		AlignmentX align_x = AlignmentX::Left;
+		AlignmentY align_y = AlignmentY::Top;
 		Rect<int> bounds;
 		EquipmentLayoutSlot() = default;
 		EquipmentLayoutSlot(VEquipmentType::Type type, AlignmentX align_x, AlignmentY align_y,
@@ -147,6 +147,6 @@ class VehicleType : public StateObject<VehicleType>
 	std::list<std::pair<Vec2<int>, StateRef<VEquipmentType>>> initial_equipment_list;
 
 	~VehicleType() override = default;
-	VehicleType();
+	VehicleType() = default;
 };
 }; // namespace OpenApoc

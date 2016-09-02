@@ -148,7 +148,6 @@
     <value>
       <sp>
         <lifetime>35</lifetime>
-        <repeatable>false</repeatable>
         <imageOffset>
           <x>31</x>
           <y>25</y>
@@ -191,7 +190,6 @@
     <value>
       <sp>
         <lifetime>95</lifetime>
-        <repeatable>false</repeatable>
         <imageOffset>
           <x>31</x>
           <y>25</y>
@@ -286,7 +284,6 @@
     <value>
       <sp>
         <lifetime>65</lifetime>
-        <repeatable>false</repeatable>
         <imageOffset>
           <x>31</x>
           <y>25</y>
@@ -353,7 +350,6 @@
     <value>
       <sp>
         <lifetime>85</lifetime>
-        <repeatable>false</repeatable>
         <imageOffset>
           <x>31</x>
           <y>25</y>
@@ -436,7 +432,6 @@
     <value>
       <sp>
         <lifetime>85</lifetime>
-        <repeatable>false</repeatable>
         <imageOffset>
           <x>31</x>
           <y>25</y>

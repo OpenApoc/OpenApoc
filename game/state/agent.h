@@ -14,21 +14,21 @@ class Organisation;
 class AgentStats
 {
   public:
-	AgentStats();
-	int health;
-	int accuracy;
-	int reactions;
-	int speed;
-	int stamina;
-	int bravery;
-	int strength;
-	int psi_energy;
-	int psi_attack;
-	int psi_defence;
+	AgentStats() = default;
+	int health = 0;
+	int accuracy = 0;
+	int reactions = 0;
+	int speed = 0;
+	int stamina = 0;
+	int bravery = 0;
+	int strength = 0;
+	int psi_energy = 0;
+	int psi_attack = 0;
+	int psi_defence = 0;
 
-	int physics_skill;
-	int biochem_skill;
-	int engineering_skill;
+	int physics_skill = 0;
+	int biochem_skill = 0;
+	int engineering_skill = 0;
 };
 
 class AgentPortrait
@@ -41,7 +41,7 @@ class AgentPortrait
 class Agent : public StateObject<Agent>
 {
   public:
-	Agent();
+	Agent() = default;
 
 	enum class Type
 	{
@@ -70,9 +70,9 @@ class Agent : public StateObject<Agent>
 	UString name;
 	AgentPortrait portrait;
 
-	Type type;
-	Species species;
-	Gender gender;
+	Type type = Type::Soldier;
+	Species species = Species::Human;
+	Gender gender = Gender::Male;
 
 	AgentStats initial_stats;
 	AgentStats current_stats;
@@ -80,15 +80,15 @@ class Agent : public StateObject<Agent>
 	StateRef<Base> home_base;
 	StateRef<Organisation> owner;
 
-	bool assigned_to_lab;
+	bool assigned_to_lab = false;
 };
 
 class AgentGenerator
 {
   public:
-	AgentGenerator();
+	AgentGenerator() = default;
 	// Magic number to make unique agent IDs
-	mutable unsigned int num_created;
+	mutable unsigned int num_created = 0;
 	// FIXME: I think there should be some kind of 'nationality' stuff going on here
 	std::map<Agent::Gender, std::list<UString>> first_names;
 	std::list<UString> second_names;

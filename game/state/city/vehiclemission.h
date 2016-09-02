@@ -26,7 +26,7 @@ class VehicleMission
 	bool takeOffCheck(GameState &state, Vehicle &v, UString mission);
 
   public:
-	VehicleMission();
+	VehicleMission() = default;
 
 	// Methods used in pathfinding etc.
 	bool getNextDestination(GameState &state, Vehicle &v, Vec3<float> &dest);
@@ -68,18 +68,18 @@ class VehicleMission
 	};
 	static const std::map<MissionType, UString> TypeMap;
 
-	MissionType type;
+	MissionType type = MissionType::GotoLocation;
 
 	// GotoLocation TakeOff GotoPortal Patrol
-	Vec3<int> targetLocation;
+	Vec3<int> targetLocation = {0, 0, 0};
 	// GotoBuilding AttackBuilding Land Infiltrate
 	StateRef<Building> targetBuilding;
 	// FollowVehicle AttackVehicle
 	StateRef<Vehicle> targetVehicle;
 	// Snooze
-	unsigned int timeToSnooze;
+	unsigned int timeToSnooze = 0;
 	// Patrol: waypoints
-	unsigned int missionCounter;
+	unsigned int missionCounter = 0;
 
 	std::list<Vec3<int>> currentPlannedPath;
 };

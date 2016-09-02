@@ -6,7 +6,6 @@
       <sp>
         <id>VEQUIPMENTAMMOTYPE_DISRUPTOR_BOMB</id>
         <name>Disruptor Bomb</name>
-        <weight>0</weight>
         <ammo_id>8</ammo_id>
         <manufacturer>ORG_X-COM</manufacturer>
         <store_space>1</store_space>
@@ -19,7 +18,6 @@
       <sp>
         <id>VEQUIPMENTAMMOTYPE_DISRUPTOR_MULTI-BOMB</id>
         <name>Disruptor Multi-Bomb</name>
-        <weight>0</weight>
         <ammo_id>10</ammo_id>
         <manufacturer>ORG_X-COM</manufacturer>
         <store_space>1</store_space>
@@ -32,7 +30,6 @@
       <sp>
         <id>VEQUIPMENTAMMOTYPE_STASIS_BOMB</id>
         <name>Stasis Bomb</name>
-        <weight>0</weight>
         <ammo_id>9</ammo_id>
         <manufacturer>ORG_X-COM</manufacturer>
         <store_space>1</store_space>
