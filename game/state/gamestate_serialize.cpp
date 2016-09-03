@@ -140,42 +140,42 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, Xorshift128
 	t.setState(s);
 }
 
-void serializeOut(sp<SerializationNode> node, const UString &string, const UString &ref)
+void serializeOut(sp<SerializationNode> node, const UString &string, const UString &)
 {
 	node->setValue(string);
 }
 
-void serializeOut(sp<SerializationNode> node, const unsigned int &val, const unsigned int &ref)
+void serializeOut(sp<SerializationNode> node, const unsigned int &val, const unsigned int &)
 {
 	node->setValueUInt(val);
 }
 
-void serializeOut(sp<SerializationNode> node, const unsigned char &val, const unsigned char &ref)
+void serializeOut(sp<SerializationNode> node, const unsigned char &val, const unsigned char &)
 {
 	node->setValueUChar(val);
 }
 
-void serializeOut(sp<SerializationNode> node, const float &val, const float &ref)
+void serializeOut(sp<SerializationNode> node, const float &val, const float &)
 {
 	node->setValueFloat(val);
 }
 
-void serializeOut(sp<SerializationNode> node, const int &val, const int &ref)
+void serializeOut(sp<SerializationNode> node, const int &val, const int &)
 {
 	node->setValueInt(val);
 }
 
-void serializeOut(sp<SerializationNode> node, const uint64_t &val, const uint64_t &ref)
+void serializeOut(sp<SerializationNode> node, const uint64_t &val, const uint64_t &)
 {
 	node->setValueUInt64(val);
 }
 
-void serializeOut(sp<SerializationNode> node, const bool &val, const bool &ref)
+void serializeOut(sp<SerializationNode> node, const bool &val, const bool &)
 {
 	node->setValueBool(val);
 }
 
-void serializeOut(sp<SerializationNode> node, const sp<LazyImage> &ptr, const sp<LazyImage> &ref)
+void serializeOut(sp<SerializationNode> node, const sp<LazyImage> &ptr, const sp<LazyImage> &)
 {
 	if (ptr != nullptr)
 	{
@@ -183,7 +183,7 @@ void serializeOut(sp<SerializationNode> node, const sp<LazyImage> &ptr, const sp
 	}
 }
 
-void serializeOut(sp<SerializationNode> node, const sp<Image> &ptr, const sp<Image> &ref)
+void serializeOut(sp<SerializationNode> node, const sp<Image> &ptr, const sp<Image> &)
 {
 	if (ptr != nullptr)
 	{
@@ -191,7 +191,7 @@ void serializeOut(sp<SerializationNode> node, const sp<Image> &ptr, const sp<Ima
 	}
 }
 
-void serializeOut(sp<SerializationNode> node, const sp<VoxelSlice> &ptr, const sp<VoxelSlice> &ref)
+void serializeOut(sp<SerializationNode> node, const sp<VoxelSlice> &ptr, const sp<VoxelSlice> &)
 {
 	if (ptr)
 	{
@@ -199,7 +199,7 @@ void serializeOut(sp<SerializationNode> node, const sp<VoxelSlice> &ptr, const s
 	}
 }
 
-void serializeOut(sp<SerializationNode> node, const sp<Sample> &ptr, const sp<Sample> &ref)
+void serializeOut(sp<SerializationNode> node, const sp<Sample> &ptr, const sp<Sample> &)
 {
 	if (ptr)
 	{
@@ -208,7 +208,7 @@ void serializeOut(sp<SerializationNode> node, const sp<Sample> &ptr, const sp<Sa
 }
 
 void serializeOut(sp<SerializationNode> node, const std::vector<bool> &vector,
-                  const std::vector<bool> &ref)
+                  const std::vector<bool> &)
 {
 	node->setValueBoolVector(vector);
 }

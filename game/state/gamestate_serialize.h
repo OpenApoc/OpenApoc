@@ -289,7 +289,7 @@ void serializeIn(const GameState *state, sp<SerializationNode> node, std::set<T>
 }
 
 template <typename T>
-void serializeOut(sp<SerializationNode> node, const T &val, const T &ref,
+void serializeOut(sp<SerializationNode> node, const T &val, const T &,
                   const std::map<T, UString> &valueMap)
 {
 	auto it = valueMap.find(val);
@@ -318,7 +318,7 @@ void serializeOut(sp<SerializationNode> node, const Colour &c, const Colour &ref
 void serializeOut(sp<SerializationNode> node, const Xorshift128Plus<uint32_t> &t,
                   const Xorshift128Plus<uint32_t> &ref);
 template <typename T>
-void serializeOut(sp<SerializationNode> node, const StateRef<T> &val, const StateRef<T> &ref)
+void serializeOut(sp<SerializationNode> node, const StateRef<T> &val, const StateRef<T> &)
 {
 	// node->setValue("") causes an extra unnecessary <tag></tag> instead of <tag />
 	if (val.id != "")
@@ -385,9 +385,26 @@ void serializeOut(sp<SerializationNode> node, const std::map<Key, Value> &map,
 	Value defaultValue;
 	for (const auto &pair : map)
 	{
-		auto entry = node->addNode("entry");
-		serializeOut(entry->addNode("key"), pair.first, defaultKey);
-		serializeOut(entry->addNode("value"), pair.second, defaultValue);
+		auto refIt = ref.find(pair.first);
+		if (refIt != ref.end())
+		{
+			if (refIt->second != pair.second)
+			{
+				auto entry = node->addNode("entry");
+				serializeOut(entry->addNode("key"), pair.first, defaultKey);
+				serializeOut(entry->addNode("value"), pair.second, refIt->second);
+			}
+			else
+			{
+				// key and value unchanged, nothing serialized out
+			}
+		}
+		else
+		{
+			auto entry = node->addNode("entry");
+			serializeOut(entry->addNode("key"), pair.first, defaultKey);
+			serializeOut(entry->addNode("value"), pair.second, defaultValue);
+		}
 	}
 }
 
@@ -398,9 +415,26 @@ void serializeOut(sp<SerializationNode> node, const StateRefMap<T> &map, const S
 	sp<T> defaultValue;
 	for (const auto &pair : map)
 	{
-		auto entry = node->addNode("entry");
-		serializeOut(entry->addNode("key"), pair.first, defaultKey);
-		serializeOut(entry->addNode("value"), pair.second, defaultValue);
+		auto refIt = ref.find(pair.first);
+		if (refIt != ref.end())
+		{
+			if (refIt->second != pair.second)
+			{
+				auto entry = node->addNode("entry");
+				serializeOut(entry->addNode("key"), pair.first, defaultKey);
+				serializeOut(entry->addNode("value"), pair.second, refIt->second);
+			}
+			else
+			{
+				// key and value unchanged, nothing serialized out
+			}
+		}
+		else
+		{
+			auto entry = node->addNode("entry");
+			serializeOut(entry->addNode("key"), pair.first, defaultKey);
+			serializeOut(entry->addNode("value"), pair.second, defaultValue);
+		}
 	}
 }
 
@@ -412,14 +446,31 @@ void serializeOutSectionMap(sp<SerializationNode> node, const std::map<UString, 
 	Value defaultValue;
 	for (const auto &pair : map)
 	{
-		auto entry = node->addNode("entry");
-		serializeOut(entry->addNode("key"), pair.first, defaultKey);
-		serializeOut(entry->addSection(pair.first), pair.second, defaultValue);
+		auto refIt = ref.find(pair.first);
+		if (refIt != ref.end())
+		{
+			if (refIt->second != pair.second)
+			{
+				auto entry = node->addNode("entry");
+				serializeOut(entry->addNode("key"), pair.first, defaultKey);
+				serializeOut(entry->addSection(pair.first), pair.second, refIt->second);
+			}
+			else
+			{
+				// key and value unchanged, nothing serialized out
+			}
+		}
+		else
+		{
+			auto entry = node->addNode("entry");
+			serializeOut(entry->addNode("key"), pair.first, defaultKey);
+			serializeOut(entry->addSection(pair.first), pair.second, defaultValue);
+		}
 	}
 }
 
 template <typename T>
-void serializeOut(sp<SerializationNode> node, const std::set<T> &set, const std::set<T> &ref)
+void serializeOut(sp<SerializationNode> node, const std::set<T> &set, const std::set<T> &)
 {
 	T defaultRef;
 	for (const auto &entry : set)
@@ -437,7 +488,7 @@ void serializeOut(sp<SerializationNode> node, const std::pair<A, B> &pair,
 }
 
 template <typename T>
-void serializeOut(sp<SerializationNode> node, const std::list<T> &list, const std::list<T> &ref)
+void serializeOut(sp<SerializationNode> node, const std::list<T> &list, const std::list<T> &)
 {
 	T defaultRef;
 	for (auto &entry : list)
@@ -447,8 +498,7 @@ void serializeOut(sp<SerializationNode> node, const std::list<T> &list, const st
 }
 
 template <typename T>
-void serializeOut(sp<SerializationNode> node, const std::vector<T> &vector,
-                  const std::vector<T> &ref)
+void serializeOut(sp<SerializationNode> node, const std::vector<T> &vector, const std::vector<T> &)
 {
 	T defaultRef;
 	for (auto &entry : vector)

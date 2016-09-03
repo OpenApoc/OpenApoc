@@ -175,6 +175,8 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 
 		for (unsigned z = 0; z < 16; z++)
 		{
+			if (entry.voxelIdx[z] == 0)
+				continue;
 			auto lofString = UString::format("LOFTEMPS:xcom3/UFODATA/" + lofFile +
 			                                     ".DAT:xcom3/UFODATA/" + lofFile + ".TAB:%d",
 			                                 (int)entry.voxelIdx[z]);
