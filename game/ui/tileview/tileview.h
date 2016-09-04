@@ -16,7 +16,6 @@ class Image;
 class TileView : public Stage, public TileTransform
 {
   protected:
-	StageCmd stageCmd;
 	TileMap &map;
 	Vec3<int> isoTileSize;
 	Vec2<int> stratTileSize;

@@ -79,7 +79,7 @@ void VideoScreen::eventOccurred(Event *e)
 	}
 }
 
-void VideoScreen::update(StageCmd *const cmd)
+void VideoScreen::update()
 {
 	if (!this->current_frame)
 	{
@@ -91,8 +91,7 @@ void VideoScreen::update(StageCmd *const cmd)
 		switch (status)
 		{
 			case std::future_status::ready:
-				cmd->cmd = StageCmd::Command::REPLACE;
-				cmd->nextStage = this->nextScreenFn();
+				fw().stageQueueCommand({StageCmd::Command::REPLACE, this->nextScreenFn()});
 				return;
 			default:
 				// Not yet finished

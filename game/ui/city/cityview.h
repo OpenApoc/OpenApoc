@@ -102,7 +102,7 @@ class CityView : public TileView
 	~CityView() override;
 	void begin() override;
 	void resume() override;
-	void update(StageCmd *const cmd) override;
+	void update() override;
 	void render() override;
 	void eventOccurred(Event *e) override;
 

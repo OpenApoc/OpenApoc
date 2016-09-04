@@ -50,11 +50,10 @@ sp<Control> MessageLogScreen::createMessageRow(EventMessage message, sp<GameStat
 		auto btnLocation = control->createChild<GraphicButton>(btnImage, btnImage);
 		btnLocation->Location = text->Location + Vec2<int>{text->Size.x, 0};
 		btnLocation->Size = {22, HEIGHT};
-		btnLocation->addCallback(FormEventType::ButtonClick,
-		                         [this, message, state, &cityView](Event *) {
-			                         cityView.setScreenCenterTile(message.getMapLocation(*state));
-			                         this->stageCmd.cmd = StageCmd::Command::POP;
-			                     });
+		btnLocation->addCallback(FormEventType::ButtonClick, [message, state, &cityView](Event *) {
+			cityView.setScreenCenterTile(message.getMapLocation(*state));
+			fw().stageQueueCommand({StageCmd::Command::POP});
+		});
 	}
 
 	return control;
@@ -79,7 +78,7 @@ void MessageLogScreen::eventOccurred(Event *e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
@@ -88,19 +87,13 @@ void MessageLogScreen::eventOccurred(Event *e)
 	{
 		if (e->forms().RaisedBy->Name == "BUTTON_OK")
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
 }
 
-void MessageLogScreen::update(StageCmd *const cmd)
-{
-	menuform->update();
-	*cmd = this->stageCmd;
-	// Reset the command to default
-	this->stageCmd = StageCmd();
-}
+void MessageLogScreen::update() { menuform->update(); }
 
 void MessageLogScreen::render()
 {

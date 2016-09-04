@@ -62,7 +62,7 @@ void InGameOptions::eventOccurred(Event *e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
@@ -71,36 +71,35 @@ void InGameOptions::eventOccurred(Event *e)
 	{
 		if (e->forms().RaisedBy->Name == "BUTTON_OK")
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 		else if (e->forms().RaisedBy->Name == "BUTTON_ABANDONGAME")
 		{
-			stageCmd.cmd = StageCmd::Command::REPLACEALL;
-			stageCmd.nextStage = mksp<MainMenu>();
+			fw().stageQueueCommand({StageCmd::Command::REPLACEALL, mksp<MainMenu>()});
 			return;
 		}
 		else if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
-			stageCmd.cmd = StageCmd::Command::QUIT;
+			fw().stageQueueCommand({StageCmd::Command::QUIT});
 			return;
 		}
 		else if (e->forms().RaisedBy->Name == "BUTTON_SAVEGAME")
 		{
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<SaveMenu>(SaveMenuAction::Save, state);
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::Save, state)});
 			return;
 		}
 		else if (e->forms().RaisedBy->Name == "BUTTON_DELETESAVEDGAME")
 		{
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<SaveMenu>(SaveMenuAction::Delete, state);
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::Delete, state)});
 			return;
 		}
 		else if (e->forms().RaisedBy->Name == "BUTTON_LOADGAME")
 		{
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<SaveMenu>(SaveMenuAction::Load, state);
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::Load, state)});
 			return;
 		}
 		else if (e->forms().RaisedBy->Name == "BUTTON_GIVE_ALL_RESEARCH")
@@ -125,8 +124,7 @@ void InGameOptions::eventOccurred(Event *e)
 		else if (e->forms().RaisedBy->Name == "BUTTON_INTO_BATTLE")
 		{
 			state->battle.start();
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<BattleView>(state);
+			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<BattleView>(state)});
 			return;
 		}
 	}
@@ -194,13 +192,7 @@ void InGameOptions::eventOccurred(Event *e)
 	}
 }
 
-void InGameOptions::update(StageCmd *const cmd)
-{
-	menuform->update();
-	*cmd = this->stageCmd;
-	// Reset the command to default
-	this->stageCmd = StageCmd();
-}
+void InGameOptions::update() { menuform->update(); }
 
 void InGameOptions::render()
 {

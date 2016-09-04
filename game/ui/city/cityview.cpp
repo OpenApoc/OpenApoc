@@ -204,28 +204,25 @@ CityView::CityView(sp<GameState> state)
 	                  [this](Event *) { this->updateSpeed = UpdateSpeed::Speed5; });
 	this->baseForm->findControl("BUTTON_SHOW_ALIEN_INFILTRATION")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<InfiltrationScreen>(this->state);
+		    fw().stageQueueCommand(
+		        {StageCmd::Command::PUSH, mksp<InfiltrationScreen>(this->state)});
 		});
 	this->baseForm->findControl("BUTTON_SHOW_SCORE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<ScoreScreen>(this->state);
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<ScoreScreen>(this->state)});
 		});
 	this->baseForm->findControl("BUTTON_SHOW_UFOPAEDIA")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<UfopaediaView>(this->state);
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<UfopaediaView>(this->state)});
 		});
 	this->baseForm->findControl("BUTTON_SHOW_OPTIONS")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<InGameOptions>(this->state);
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<InGameOptions>(this->state)});
 		});
 	this->baseForm->findControl("BUTTON_SHOW_LOG")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<MessageLogScreen>(this->state, *this);
+		    fw().stageQueueCommand(
+		        {StageCmd::Command::PUSH, mksp<MessageLogScreen>(this->state, *this)});
 		});
 	this->baseForm->findControl("BUTTON_ZOOM_EVENT")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
@@ -238,25 +235,23 @@ CityView::CityView(sp<GameState> state)
 	auto baseManagementForm = this->uiTabs[0];
 	baseManagementForm->findControl("BUTTON_SHOW_BASE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<BaseScreen>(this->state);
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<BaseScreen>(this->state)});
 		});
 	baseManagementForm->findControl("BUTTON_BUILD_BASE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<BaseSelectScreen>(this->state, this->centerPos);
+		    fw().stageQueueCommand(
+		        {StageCmd::Command::PUSH, mksp<BaseSelectScreen>(this->state, this->centerPos)});
 		});
 	auto vehicleForm = this->uiTabs[1];
 	vehicleForm->findControl("BUTTON_EQUIP_VEHICLE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->stageCmd.cmd = StageCmd::Command::PUSH;
 		    auto equipScreen = mksp<VEquipScreen>(this->state);
 		    auto v = this->selectedVehicle.lock();
 		    if (v && v->owner == this->state->getPlayer())
 		    {
 			    equipScreen->setSelectedVehicle(v);
 		    }
-		    this->stageCmd.nextStage = equipScreen;
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, equipScreen});
 		});
 	vehicleForm->findControl("BUTTON_VEHICLE_BUILDING")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
@@ -266,8 +261,8 @@ CityView::CityView(sp<GameState> state)
 			    auto b = v->currentlyLandedBuilding;
 			    if (b)
 			    {
-				    this->stageCmd.cmd = StageCmd::Command::PUSH;
-				    this->stageCmd.nextStage = mksp<BuildingScreen>(this->state, b);
+				    fw().stageQueueCommand(
+				        {StageCmd::Command::PUSH, mksp<BuildingScreen>(this->state, b)});
 			    }
 		    }
 		});
@@ -479,7 +474,7 @@ void CityView::render()
 	}
 }
 
-void CityView::update(StageCmd *const cmd)
+void CityView::update()
 {
 	unsigned int ticks = 0;
 	bool turbo = false;
@@ -715,8 +710,6 @@ void CityView::update(StageCmd *const cmd)
 			}
 		}
 	}
-	*cmd = stageCmd;
-	stageCmd = StageCmd();
 }
 
 void CityView::eventOccurred(Event *e)
@@ -731,8 +724,7 @@ void CityView::eventOccurred(Event *e)
 
 	if (e->type() == EVENT_KEY_DOWN && e->keyboard().KeyCode == SDLK_ESCAPE)
 	{
-		stageCmd.cmd = StageCmd::Command::PUSH;
-		stageCmd.nextStage = mksp<InGameOptions>(state);
+		fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<InGameOptions>(state)});
 		return;
 	}
 	// FIXME: Check if scancode is better/worse
@@ -840,8 +832,8 @@ void CityView::eventOccurred(Event *e)
 						}
 						else if (this->selectionState == SelectionState::Normal)
 						{
-							stageCmd.cmd = StageCmd::Command::PUSH;
-							stageCmd.nextStage = mksp<BuildingScreen>(this->state, building);
+							fw().stageQueueCommand({StageCmd::Command::PUSH,
+							                        mksp<BuildingScreen>(this->state, building)});
 						}
 
 						return;
@@ -882,9 +874,8 @@ void CityView::eventOccurred(Event *e)
 		{
 			state->logEvent(gameEvent);
 			baseForm->findControlTyped<Ticker>("NEWS_TICKER")->addMessage(gameEvent->message());
-			auto notification = mksp<NotificationScreen>(state, *this, gameEvent->message());
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = notification;
+			fw().stageQueueCommand({StageCmd::Command::PUSH,
+			                        mksp<NotificationScreen>(state, *this, gameEvent->message())});
 		}
 		switch (gameEvent->type)
 		{
@@ -948,17 +939,22 @@ void CityView::eventOccurred(Event *e)
 				    MessageBox::ButtonOptions::YesNo,
 				    // Yes callback
 				    [game_state, lab_facility, ufopaedia_category, ufopaedia_entry]() {
-					    fw().stagePush(mksp<ResearchScreen>(game_state, lab_facility));
+					    fw().stageQueueCommand({StageCmd::Command::PUSH,
+					                            mksp<ResearchScreen>(game_state, lab_facility)});
 					    if (ufopaedia_entry)
-						    fw().stagePush(mksp<UfopaediaCategoryView>(
-						        game_state, ufopaedia_category, ufopaedia_entry));
+					    {
+						    fw().stageQueueCommand(
+						        {StageCmd::Command::PUSH,
+						         mksp<UfopaediaCategoryView>(game_state, ufopaedia_category,
+						                                     ufopaedia_entry)});
+					    }
 					},
 				    // No callback
 				    [game_state, lab_facility]() {
-					    fw().stagePush(mksp<ResearchScreen>(game_state, lab_facility));
+					    fw().stageQueueCommand({StageCmd::Command::PUSH,
+					                            mksp<ResearchScreen>(game_state, lab_facility)});
 					});
-				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage = message_box;
+				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 			}
 			break;
 			case GameEventType::ManufactureCompleted:
@@ -1006,7 +1002,6 @@ void CityView::eventOccurred(Event *e)
 						item_name = game_state->vehicle_types[ev->topic->item_produced]->name;
 						break;
 				}
-
 				auto message_box = mksp<MessageBox>(
 				    tr("MANUFACTURE COMPLETED"),
 				    UString::format("%s\n%s\n%s %d\n%d", lab_base->name, tr(item_name.cStr()),
@@ -1015,10 +1010,10 @@ void CityView::eventOccurred(Event *e)
 				    MessageBox::ButtonOptions::YesNo,
 				    // Yes callback
 				    [game_state, lab_facility]() {
-					    fw().stagePush(mksp<ResearchScreen>(game_state, lab_facility));
+					    fw().stageQueueCommand({StageCmd::Command::PUSH,
+					                            mksp<ResearchScreen>(game_state, lab_facility)});
 					});
-				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage = message_box;
+				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 			}
 			break;
 			case GameEventType::ManufactureHalted:
@@ -1066,15 +1061,13 @@ void CityView::eventOccurred(Event *e)
 						item_name = game_state->vehicles[ev->topic->item_produced]->name;
 						break;
 				}
-
 				auto message_box = mksp<MessageBox>(
 				    tr("MANUFACTURING HALTED"),
 				    UString::format("%s\n%s\n%s %d/%d\n%d", lab_base->name, tr(item_name.cStr()),
 				                    tr("Completion status:"), ev->done, ev->goal,
 				                    tr("Production costs exceed your available funds.")),
 				    MessageBox::ButtonOptions::Ok);
-				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage = message_box;
+				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 			}
 			break;
 			case GameEventType::FacilityCompleted:
@@ -1089,8 +1082,7 @@ void CityView::eventOccurred(Event *e)
 				    tr("FACILITY COMPLETED"),
 				    UString::format("%s\n%s", ev->base->name, tr(ev->facility->type->name)),
 				    MessageBox::ButtonOptions::Ok);
-				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage = message_box;
+				fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 			}
 			break;
 		}

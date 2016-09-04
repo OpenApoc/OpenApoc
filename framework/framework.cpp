@@ -356,38 +356,47 @@ void Framework::run(sp<Stage> initialStage, size_t frameCount)
 
 		processEvents();
 
-		StageCmd cmd;
 		if (p->ProgramStages.isEmpty())
 		{
 			break;
 		}
 		{
 			TraceObj updateObj("Update");
-			p->ProgramStages.current()->update(&cmd);
+			p->ProgramStages.current()->update();
 		}
-		switch (cmd.cmd)
+
+		for (StageCmd cmd : stageCommands)
 		{
-			case StageCmd::Command::CONTINUE:
+			switch (cmd.cmd)
+			{
+				case StageCmd::Command::CONTINUE:
+					break;
+				case StageCmd::Command::REPLACE:
+					p->ProgramStages.pop();
+					p->ProgramStages.push(cmd.nextStage);
+					break;
+				case StageCmd::Command::REPLACEALL:
+					p->ProgramStages.clear();
+					p->ProgramStages.push(cmd.nextStage);
+					break;
+				case StageCmd::Command::PUSH:
+					p->ProgramStages.push(cmd.nextStage);
+					break;
+				case StageCmd::Command::POP:
+					p->ProgramStages.pop();
+					break;
+				case StageCmd::Command::QUIT:
+					p->quitProgram = true;
+					p->ProgramStages.clear();
+					break;
+			}
+			if (p->quitProgram)
+			{
 				break;
-			case StageCmd::Command::REPLACE:
-				p->ProgramStages.pop();
-				p->ProgramStages.push(cmd.nextStage);
-				break;
-			case StageCmd::Command::REPLACEALL:
-				p->ProgramStages.clear();
-				p->ProgramStages.push(cmd.nextStage);
-				break;
-			case StageCmd::Command::PUSH:
-				p->ProgramStages.push(cmd.nextStage);
-				break;
-			case StageCmd::Command::POP:
-				p->ProgramStages.pop();
-				break;
-			case StageCmd::Command::QUIT:
-				p->quitProgram = true;
-				p->ProgramStages.clear();
-				break;
+			}
 		}
+		stageCommands.clear();
+
 		auto surface = p->scaleSurface ? p->scaleSurface : p->defaultSurface;
 		RendererSurfaceBinding b(*this->renderer, surface);
 		{
@@ -993,11 +1002,7 @@ sp<Stage> Framework::stageGetPrevious() { return p->ProgramStages.previous(); }
 
 sp<Stage> Framework::stageGetPrevious(sp<Stage> From) { return p->ProgramStages.previous(From); }
 
-void Framework::stagePush(sp<Stage> stage)
-{
-	LogAssert(stage);
-	p->ProgramStages.push(stage);
-}
+void Framework::stageQueueCommand(const StageCmd &cmd) { stageCommands.emplace_back(cmd); }
 
 Vec2<int> Framework::getCursorPosition() { return this->cursor->getPosition(); }
 

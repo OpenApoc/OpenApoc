@@ -1,5 +1,6 @@
 
 #pragma once
+#include "framework/logger.h"
 #include "library/sp.h"
 
 namespace OpenApoc
@@ -27,6 +28,22 @@ class StageCmd
 	sp<Stage> nextStage;
 
 	StageCmd() : cmd(Command::CONTINUE) {}
+	StageCmd(Command cmd, sp<Stage> nextStage = nullptr) : cmd(cmd), nextStage(nextStage)
+	{
+		switch (cmd)
+		{
+			case Command::REPLACE:
+			case Command::REPLACEALL:
+			case Command::PUSH:
+				LogAssert(nextStage != nullptr);
+				break;
+			case Command::CONTINUE:
+			case Command::POP:
+			case Command::QUIT:
+				LogAssert(nextStage == nullptr);
+				break;
+		}
+	}
 };
 
 /*
@@ -79,9 +96,8 @@ class Stage : public std::enable_shared_from_this<Stage>
 	/*
 	    Function: Update
 	    Called for each game tick based upon the <FRAMES_PER_SECOND>.
-	    Optionally sets cmd to manage the stage stack
 	*/
-	virtual void update(StageCmd *const cmd) = 0;
+	virtual void update() = 0;
 
 	/*
 	    Function: Render

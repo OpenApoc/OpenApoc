@@ -38,7 +38,7 @@ sp<Stage> CreateUiForGame(sp<GameState> gameState)
 	return mksp<CityView>(gameState);
 }
 
-void LoadingScreen::update(StageCmd *const cmd)
+void LoadingScreen::update()
 {
 	loadingimageangle += (float)(M_PI + 0.05f);
 	if (loadingimageangle >= (float)(M_PI * 2.0f))
@@ -52,12 +52,11 @@ void LoadingScreen::update(StageCmd *const cmd)
 			auto gameState = loading_task.get();
 			if (gameState != nullptr)
 			{
-				cmd->cmd = StageCmd::Command::REPLACEALL;
-				cmd->nextStage = mksp<CityView>(gameState);
+				fw().stageQueueCommand({StageCmd::Command::REPLACEALL, mksp<CityView>(gameState)});
 			}
 			else
 			{
-				cmd->cmd = StageCmd::Command::POP;
+				fw().stageQueueCommand({StageCmd::Command::POP});
 			}
 		}
 			return;

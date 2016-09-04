@@ -19,7 +19,7 @@ void BootUp::finish() {}
 
 void BootUp::eventOccurred(Event *e) { std::ignore = e; }
 
-void BootUp::update(StageCmd *const cmd)
+void BootUp::update()
 {
 	// The first forms instance causes it to get loaded
 	auto loadTask = fw().threadPool->enqueue([]() {
@@ -27,11 +27,9 @@ void BootUp::update(StageCmd *const cmd)
 		std::ignore = ui_instance;
 	});
 
-	stageCmd.cmd = StageCmd::Command::REPLACE;
-	stageCmd.nextStage = mksp<VideoScreen>("SMK:xcom3/smk/intro1.smk", std::move(loadTask),
-	                                       []() -> sp<Stage> { return mksp<MainMenu>(); });
-	*cmd = stageCmd;
-	return;
+	fw().stageQueueCommand({StageCmd::Command::REPLACE,
+	                        mksp<VideoScreen>("SMK:xcom3/smk/intro1.smk", std::move(loadTask),
+	                                          []() -> sp<Stage> { return mksp<MainMenu>(); })});
 }
 
 void BootUp::render() {}

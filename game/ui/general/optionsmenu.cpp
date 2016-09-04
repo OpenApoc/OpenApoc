@@ -27,7 +27,7 @@ void OptionsMenu::eventOccurred(Event *e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
@@ -40,25 +40,18 @@ void OptionsMenu::eventOccurred(Event *e)
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_DEBUGGING")
 		{
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<DebugMenu>();
+			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<DebugMenu>()});
 			return;
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
 }
 
-void OptionsMenu::update(StageCmd *const cmd)
-{
-	menuform->update();
-	*cmd = this->stageCmd;
-	// Reset the command to default
-	this->stageCmd = StageCmd();
-}
+void OptionsMenu::update() { menuform->update(); }
 
 void OptionsMenu::render()
 {

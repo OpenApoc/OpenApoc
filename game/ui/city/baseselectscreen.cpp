@@ -18,9 +18,9 @@ BaseSelectScreen::BaseSelectScreen(sp<GameState> state, Vec3<float> centerPos)
       menuform(ui().getForm("FORM_SELECT_BASE_SCREEN")), state(state), counter(0)
 {
 	this->centerPos = centerPos;
-	this->menuform->findControl("BUTTON_OK")
-	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *) { this->stageCmd.cmd = StageCmd::Command::POP; });
+	this->menuform->findControl("BUTTON_OK")->addCallback(FormEventType::ButtonClick, [](Event *) {
+		fw().stageQueueCommand({StageCmd::Command::POP});
+	});
 }
 
 BaseSelectScreen::~BaseSelectScreen() = default;
@@ -47,7 +47,7 @@ void BaseSelectScreen::eventOccurred(Event *e)
 
 	if (e->type() == EVENT_KEY_DOWN && e->keyboard().KeyCode == SDLK_ESCAPE)
 	{
-		stageCmd.cmd = StageCmd::Command::POP;
+		fw().stageQueueCommand({StageCmd::Command::POP});
 	}
 	// Exclude mouse down events that are over the form
 	else if (e->type() == EVENT_MOUSE_DOWN)
@@ -80,8 +80,8 @@ void BaseSelectScreen::eventOccurred(Event *e)
 					{
 						if (building->base_layout && building->owner.id == "ORG_GOVERNMENT")
 						{
-							stageCmd.cmd = StageCmd::Command::PUSH;
-							stageCmd.nextStage = mksp<BaseBuyScreen>(state, building);
+							fw().stageQueueCommand(
+							    {StageCmd::Command::PUSH, mksp<BaseBuyScreen>(state, building)});
 						}
 					}
 				}
@@ -94,12 +94,9 @@ void BaseSelectScreen::eventOccurred(Event *e)
 	}
 }
 
-void BaseSelectScreen::update(StageCmd *const cmd)
+void BaseSelectScreen::update()
 {
 	menuform->update();
-	*cmd = this->stageCmd;
-	// Reset the command to default
-	this->stageCmd = StageCmd();
 	counter = (counter + 1) % COUNTER_MAX;
 }
 

@@ -39,7 +39,7 @@ void ImagePreview::eventOccurred(Event *e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
@@ -51,14 +51,7 @@ void ImagePreview::eventOccurred(Event *e)
 	}
 }
 
-void ImagePreview::update(StageCmd *const cmd)
-{
-	menuform->update();
-
-	*cmd = this->stageCmd;
-	// Reset the command to default
-	this->stageCmd = StageCmd();
-}
+void ImagePreview::update() { menuform->update(); }
 
 void ImagePreview::render() { menuform->render(); }
 

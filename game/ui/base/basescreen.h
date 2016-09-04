@@ -19,8 +19,6 @@ class BaseScreen : public BaseStage
   private:
 	static const Vec2<int> NO_SELECTION;
 
-	StageCmd stageCmd;
-
 	Vec2<int> selection, mousePos;
 	sp<Facility> selFacility;
 	StateRef<FacilityType> dragFacility;
@@ -43,7 +41,7 @@ class BaseScreen : public BaseStage
 	void resume() override;
 	void finish() override;
 	void eventOccurred(Event *e) override;
-	void update(StageCmd *const cmd) override;
+	void update() override;
 	void render() override;
 	bool isTransition() override;
 };

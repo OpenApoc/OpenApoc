@@ -21,7 +21,6 @@ class Control;
 class VEquipScreen : public Stage
 {
   private:
-	StageCmd stageCmd;
 	sp<Form> form;
 	sp<Vehicle> selected;
 	VEquipmentType::Type selectionType;
@@ -61,7 +60,7 @@ class VEquipScreen : public Stage
 	void resume() override;
 	void finish() override;
 	void eventOccurred(Event *e) override;
-	void update(StageCmd *const cmd) override;
+	void update() override;
 	void render() override;
 	bool isTransition() override;
 

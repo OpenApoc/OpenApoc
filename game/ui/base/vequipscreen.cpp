@@ -79,7 +79,7 @@ void VEquipScreen::eventOccurred(Event *e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
@@ -98,7 +98,7 @@ void VEquipScreen::eventOccurred(Event *e)
 
 		if (e->forms().RaisedBy->Name == "BUTTON_OK")
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
@@ -231,7 +231,7 @@ void VEquipScreen::eventOccurred(Event *e)
 	}
 }
 
-void VEquipScreen::update(StageCmd *const cmd)
+void VEquipScreen::update()
 {
 	this->glowCounter += GLOW_COUNTER_INCREMENT;
 	// Loop the increment over the period, otherwise we could start getting lower precision etc. if
@@ -241,8 +241,6 @@ void VEquipScreen::update(StageCmd *const cmd)
 		this->glowCounter -= 2.0f * M_PI;
 	}
 	form->update();
-	*cmd = stageCmd;
-	stageCmd = StageCmd();
 }
 
 void VEquipScreen::render()

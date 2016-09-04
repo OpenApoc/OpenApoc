@@ -219,15 +219,14 @@ void SaveMenu::loadWithWarning(sp<Control> parent)
 		if (slot != nullptr)
 		{
 			std::function<void()> onSuccess = std::function<void()>([this, slot] {
-				stageCmd.nextStage = mksp<LoadingScreen>(saveManager.loadGame(*slot));
-				stageCmd.cmd = StageCmd::Command::PUSH;
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH, mksp<LoadingScreen>(saveManager.loadGame(*slot))});
 			});
 			sp<MessageBox> messageBox = mksp<MessageBox>(
 			    MessageBox("Load game", "Unsaved progress will be lost. Continue?",
 			               MessageBox::ButtonOptions::YesNo, std::move(onSuccess), nullptr));
 
-			stageCmd.nextStage = messageBox;
-			stageCmd.cmd = StageCmd::Command::PUSH;
+			fw().stageQueueCommand({StageCmd::Command::PUSH, messageBox});
 		}
 	}
 }
@@ -239,8 +238,8 @@ void SaveMenu::tryToLoadGame(sp<Control> slotControl)
 		sp<SaveMetadata> slot = slotControl->getData<SaveMetadata>();
 		if (slot != nullptr)
 		{
-			stageCmd.nextStage = mksp<LoadingScreen>(saveManager.loadGame(*slot));
-			stageCmd.cmd = StageCmd::Command::PUSH;
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH, mksp<LoadingScreen>(saveManager.loadGame(*slot))});
 		}
 	}
 }
@@ -251,7 +250,7 @@ void SaveMenu::tryToSaveGame(const UString &saveName, sp<Control> parent)
 	{
 		if (saveManager.newSaveGame(saveName, currentState))
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 		}
 		else
 		{
@@ -264,7 +263,7 @@ void SaveMenu::tryToSaveGame(const UString &saveName, sp<Control> parent)
 		std::function<void()> onSuccess = std::function<void()>([this, slot, saveName] {
 			if (saveManager.overrideGame(*slot, saveName, currentState))
 			{
-				stageCmd.cmd = StageCmd::Command::POP;
+				fw().stageQueueCommand({StageCmd::Command::POP});
 			}
 			else
 			{
@@ -277,8 +276,7 @@ void SaveMenu::tryToSaveGame(const UString &saveName, sp<Control> parent)
 		    "Override saved game", "Do you really want to override " + slot->getName() + "?",
 		    MessageBox::ButtonOptions::YesNo, std::move(onSuccess), std::move(onCancel)));
 
-		stageCmd.nextStage = messageBox;
-		stageCmd.cmd = StageCmd::Command::PUSH;
+		fw().stageQueueCommand({StageCmd::Command::PUSH, messageBox});
 	}
 }
 
@@ -296,8 +294,7 @@ void SaveMenu::tryToDeleteSavedGame(sp<Control> &slotControl)
 	    MessageBox("Delete saved game", "Do you really want to delete " + slot->getName() + "?",
 	               MessageBox::ButtonOptions::YesNo, std::move(onSuccess), nullptr));
 
-	stageCmd.nextStage = messageBox;
-	stageCmd.cmd = StageCmd::Command::PUSH;
+	fw().stageQueueCommand({StageCmd::Command::PUSH, messageBox});
 }
 
 void SaveMenu::eventOccurred(Event *e)
@@ -308,7 +305,7 @@ void SaveMenu::eventOccurred(Event *e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
@@ -320,7 +317,7 @@ void SaveMenu::eventOccurred(Event *e)
 			case FormEventType::ButtonClick:
 				if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
 				{
-					stageCmd.cmd = StageCmd::Command::POP;
+					fw().stageQueueCommand({StageCmd::Command::POP});
 				}
 				else
 				{
@@ -382,13 +379,7 @@ void SaveMenu::eventOccurred(Event *e)
 	}
 }
 
-void SaveMenu::update(StageCmd *const cmd)
-{
-	menuform->update();
-	*cmd = this->stageCmd;
-	// Reset the command to default
-	this->stageCmd = StageCmd();
-}
+void SaveMenu::update() { menuform->update(); }
 
 void SaveMenu::render()
 {

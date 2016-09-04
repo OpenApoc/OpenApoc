@@ -118,8 +118,7 @@ BattleView::BattleView(sp<GameState> state)
 	                  [this](Event *) { this->updateSpeed = BattleUpdateSpeed::Speed3; });
 	this->baseForm->findControl("BUTTON_SHOW_OPTIONS")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
-		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<InGameOptions>(this->state);
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<InGameOptions>(this->state)});
 		});
 	this->baseForm->findControl("BUTTON_SHOW_LOG")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) { LogWarning("Show log"); });
@@ -174,7 +173,7 @@ void BattleView::setUpdateSpeed(BattleUpdateSpeed updateSpeed)
 	}
 }
 
-void BattleView::update(StageCmd *const cmd)
+void BattleView::update()
 {
 	unsigned int ticks = 0;
 	switch (this->updateSpeed)
@@ -219,8 +218,6 @@ void BattleView::update(StageCmd *const cmd)
 	{
 		// No agents yet!
 	}
-	*cmd = stageCmd;
-	stageCmd = StageCmd();
 }
 
 void BattleView::eventOccurred(Event *e)
@@ -242,8 +239,7 @@ void BattleView::eventOccurred(Event *e)
 		switch (e->keyboard().KeyCode)
 		{
 			case SDLK_ESCAPE:
-				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage = mksp<InGameOptions>(state);
+				fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<InGameOptions>(state)});
 				return;
 			case SDLK_PAGEUP:
 				this->setZLevel(getZLevel() + 1);

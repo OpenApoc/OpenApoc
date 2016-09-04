@@ -18,7 +18,6 @@ class ResearchSelect : public Stage
 {
   private:
 	sp<Form> form;
-	StageCmd stageCmd;
 	sp<Lab> lab;
 
 	sp<GameState> state;
@@ -38,7 +37,7 @@ class ResearchSelect : public Stage
 	void resume() override;
 	void finish() override;
 	void eventOccurred(Event *e) override;
-	void update(StageCmd *const cmd) override;
+	void update() override;
 	void render() override;
 	bool isTransition() override;
 };

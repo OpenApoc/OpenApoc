@@ -32,7 +32,7 @@
         <size width="15" height="259"/>
       </scroll>
       <graphicbutton id="LIST_SCROLL_UP" scrollprev="LIST_SCROLL">
-        <position x="569" y="46"/>
+        <position x="569" y="47"/>
         <size width="22" height="21"/>
         <image/>
         <imagedepressed>BUTTON_SCROLL_UP_DEPRESSED</imagedepressed>

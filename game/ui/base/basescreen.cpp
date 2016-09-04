@@ -74,18 +74,16 @@ void BaseScreen::begin()
 
 	form->findControlTyped<GraphicButton>("BUTTON_OK")
 	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *) { this->stageCmd.cmd = StageCmd::Command::POP; });
+	                  [](Event *) { fw().stageQueueCommand({StageCmd::Command::POP}); });
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_EQUIPVEHICLE")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    // FIXME: If you don't have any vehicles this button should do nothing
-		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<VEquipScreen>(state);
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<VEquipScreen>(state)});
 		});
 	form->findControlTyped<GraphicButton>("BUTTON_BASE_RES_AND_MANUF")
 	    ->addCallback(FormEventType::ButtonClick, [this](Event *) {
 		    // FIXME: If you don't have any facilities this button should do nothing
-		    this->stageCmd.cmd = StageCmd::Command::PUSH;
-		    this->stageCmd.nextStage = mksp<ResearchScreen>(state);
+		    fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<ResearchScreen>(state)});
 		});
 	form->findControlTyped<TextEdit>("TEXT_BASE_NAME")
 	    ->addCallback(FormEventType::TextEditFinish, [this](Event *e) {
@@ -108,7 +106,7 @@ void BaseScreen::eventOccurred(Event *e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
@@ -174,9 +172,10 @@ void BaseScreen::eventOccurred(Event *e)
 					}
 				}
 			}
-			if (e->forms().MouseInfo.Button == 4)
+			else if (e->forms().MouseInfo.Button == 4 &&
+			         e->forms().RaisedBy->Name == "LISTBOX_FACILITIES")
 			{
-				auto list = form->findControlTyped<ListBox>("LISTBOX_FACILITIES");
+				auto list = std::dynamic_pointer_cast<ListBox>(e->forms().RaisedBy);
 				auto clickedFacilityName = list->getHoveredData<UString>();
 				StateRef<FacilityType> clickedFacility;
 				if (clickedFacilityName)
@@ -206,8 +205,9 @@ void BaseScreen::eventOccurred(Event *e)
 						LogError("No UFOPaedia category found for entry %s",
 						         ufopaedia_entry->title.cStr());
 					}
-					fw().stagePush(
-					    mksp<UfopaediaCategoryView>(state, ufopaedia_category, ufopaedia_entry));
+					fw().stageQueueCommand(
+					    {StageCmd::Command::PUSH,
+					     mksp<UfopaediaCategoryView>(state, ufopaedia_category, ufopaedia_entry)});
 				}
 			}
 		}
@@ -229,29 +229,33 @@ void BaseScreen::eventOccurred(Event *e)
 							refreshView();
 							break;
 						case Base::BuildError::Occupied:
-							stageCmd.cmd = StageCmd::Command::PUSH;
-							stageCmd.nextStage = mksp<MessageBox>(
-							    tr("Area Occupied By Existing Facility"),
-							    tr("Existing facilities in this area of the base must be destroyed "
-							       "before construction work can begin."),
-							    MessageBox::ButtonOptions::Ok);
+							fw().stageQueueCommand(
+							    {StageCmd::Command::PUSH,
+							     mksp<MessageBox>(tr("Area Occupied By Existing Facility"),
+							                      tr("Existing facilities in this area of the base "
+							                         "must be destroyed "
+							                         "before construction work can begin."),
+							                      MessageBox::ButtonOptions::Ok)});
 							break;
 						case Base::BuildError::OutOfBounds:
-							stageCmd.cmd = StageCmd::Command::PUSH;
-							stageCmd.nextStage = mksp<MessageBox>(
-							    tr("Planning Permission Denied"),
-							    tr("Planning permission is denied for this proposed extension to "
-							       "the base, on the grounds that the additional excavations "
-							       "required would seriously weaken the foundations of the "
-							       "building."),
-							    MessageBox::ButtonOptions::Ok);
+							fw().stageQueueCommand(
+							    {StageCmd::Command::PUSH,
+							     mksp<MessageBox>(
+							         tr("Planning Permission Denied"),
+							         tr("Planning permission is denied for this proposed extension "
+							            "to "
+							            "the base, on the grounds that the additional excavations "
+							            "required would seriously weaken the foundations of the "
+							            "building."),
+							         MessageBox::ButtonOptions::Ok)});
 							break;
 						case Base::BuildError::NoMoney:
-							stageCmd.cmd = StageCmd::Command::PUSH;
-							stageCmd.nextStage = mksp<MessageBox>(
-							    tr("Funds exceeded"), tr("The proposed construction work is not "
-							                             "possible with your available funds."),
-							    MessageBox::ButtonOptions::Ok);
+							fw().stageQueueCommand(
+							    {StageCmd::Command::PUSH,
+							     mksp<MessageBox>(tr("Funds exceeded"),
+							                      tr("The proposed construction work is not "
+							                         "possible with your available funds."),
+							                      MessageBox::ButtonOptions::Ok)});
 							break;
 						case Base::BuildError::Indestructible:
 							// Indestrictible facilities (IE the access lift) are just silently
@@ -271,23 +275,24 @@ void BaseScreen::eventOccurred(Event *e)
 					switch (error)
 					{
 						case Base::BuildError::NoError:
-							stageCmd.cmd = StageCmd::Command::PUSH;
-							stageCmd.nextStage =
-							    mksp<MessageBox>(tr("Destroy facility"), tr("Are you sure?"),
-							                     MessageBox::ButtonOptions::YesNo, [this] {
-								                     this->state->current_base->destroyFacility(
-								                         *this->state, this->selection);
-								                     this->selFacility = nullptr;
-								                     this->refreshView();
-								                 });
+							fw().stageQueueCommand(
+							    {StageCmd::Command::PUSH,
+							     mksp<MessageBox>(tr("Destroy facility"), tr("Are you sure?"),
+							                      MessageBox::ButtonOptions::YesNo, [this] {
+								                      this->state->current_base->destroyFacility(
+								                          *this->state, this->selection);
+								                      this->refreshView();
+								                  })});
 							break;
 						case Base::BuildError::Occupied:
-							stageCmd.cmd = StageCmd::Command::PUSH;
-							stageCmd.nextStage = mksp<MessageBox>(tr("Facility in use"), tr(""),
-							                                      MessageBox::ButtonOptions::Ok);
+							fw().stageQueueCommand(
+							    {StageCmd::Command::PUSH,
+							     mksp<MessageBox>(tr("Facility in use"), tr(""),
+							                      MessageBox::ButtonOptions::Ok)});
 						default:
 							break;
 					}
+					selFacility = nullptr;
 				}
 			}
 		}
@@ -344,12 +349,7 @@ void BaseScreen::eventOccurred(Event *e)
 	}
 }
 
-void BaseScreen::update(StageCmd *const cmd)
-{
-	form->update();
-	*cmd = stageCmd;
-	stageCmd = StageCmd();
-}
+void BaseScreen::update() { form->update(); }
 
 void BaseScreen::render()
 {

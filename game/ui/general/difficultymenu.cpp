@@ -51,7 +51,7 @@ void DifficultyMenu::eventOccurred(Event *e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
@@ -85,18 +85,13 @@ void DifficultyMenu::eventOccurred(Event *e)
 			return;
 		}
 
-		stageCmd.cmd = StageCmd::Command::PUSH;
-		stageCmd.nextStage = mksp<LoadingScreen>(loadGame(initialStatePath));
+		fw().stageQueueCommand(
+		    {StageCmd::Command::PUSH, mksp<LoadingScreen>(loadGame(initialStatePath))});
 		return;
 	}
 }
 
-void DifficultyMenu::update(StageCmd *const cmd)
-{
-	difficultymenuform->update();
-	*cmd = stageCmd;
-	stageCmd = StageCmd();
-}
+void DifficultyMenu::update() { difficultymenuform->update(); }
 
 void DifficultyMenu::render() { difficultymenuform->render(); }
 

@@ -32,7 +32,7 @@ void UfopaediaView::eventOccurred(Event *e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
@@ -41,7 +41,7 @@ void UfopaediaView::eventOccurred(Event *e)
 	{
 		if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 
@@ -53,8 +53,8 @@ void UfopaediaView::eventOccurred(Event *e)
 				UString butName = "BUTTON_" + catName;
 				if (butName == e->forms().RaisedBy->Name)
 				{
-					stageCmd.cmd = StageCmd::Command::PUSH;
-					stageCmd.nextStage = mksp<UfopaediaCategoryView>(state, cat.second);
+					fw().stageQueueCommand(
+					    {StageCmd::Command::PUSH, mksp<UfopaediaCategoryView>(state, cat.second)});
 					LogInfo("Clicked category \"%s\"", catName.cStr());
 					return;
 				}
@@ -63,13 +63,7 @@ void UfopaediaView::eventOccurred(Event *e)
 	}
 }
 
-void UfopaediaView::update(StageCmd *const cmd)
-{
-	menuform->update();
-	*cmd = this->stageCmd;
-	// Reset the command to default
-	this->stageCmd = StageCmd();
-}
+void UfopaediaView::update() { menuform->update(); }
 
 void UfopaediaView::render()
 {

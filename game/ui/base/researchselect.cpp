@@ -67,8 +67,7 @@ void ResearchSelect::begin()
 			auto message_box =
 			    mksp<MessageBox>(tr("PROJECT COMPLETE"), tr("This project is already complete."),
 			                     MessageBox::ButtonOptions::Ok);
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = message_box;
+			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 			return;
 		}
 		if (topic->required_lab_size == ResearchTopic::LabSize::Large &&
@@ -78,8 +77,7 @@ void ResearchSelect::begin()
 			auto message_box = mksp<MessageBox>(
 			    tr("PROJECT TOO LARGE"), tr("This project requires an advanced lab or workshop."),
 			    MessageBox::ButtonOptions::Ok);
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = message_box;
+			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 			return;
 		}
 		if (this->lab->type == ResearchTopic::Type::Engineering &&
@@ -89,8 +87,7 @@ void ResearchSelect::begin()
 			auto message_box = mksp<MessageBox>(tr("FUNDS EXCEEDED"),
 			                                    tr("Production costs exceed your available funds."),
 			                                    MessageBox::ButtonOptions::Ok);
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = message_box;
+			fw().stageQueueCommand({StageCmd::Command::PUSH, message_box});
 			return;
 		}
 		current_topic = topic;
@@ -280,7 +277,7 @@ void ResearchSelect::eventOccurred(Event *e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
@@ -291,19 +288,14 @@ void ResearchSelect::eventOccurred(Event *e)
 		{
 			if (e->forms().RaisedBy->Name == "BUTTON_OK")
 			{
-				stageCmd.cmd = StageCmd::Command::POP;
+				fw().stageQueueCommand({StageCmd::Command::POP});
 				return;
 			}
 		}
 	}
 }
 
-void ResearchSelect::update(StageCmd *const cmd)
-{
-	form->update();
-	*cmd = stageCmd;
-	stageCmd = StageCmd();
-}
+void ResearchSelect::update() { form->update(); }
 
 void ResearchSelect::render()
 {

@@ -13,7 +13,6 @@ class FormPreview : public Stage
   private:
 	sp<CheckBox> interactWithDisplay;
 	sp<Label> currentSelected;
-	StageCmd stageCmd;
 	sp<Form> previewselector;
 	sp<Form> propertyeditor;
 	sp<Form> displayform;
@@ -34,7 +33,7 @@ class FormPreview : public Stage
 	void resume() override;
 	void finish() override;
 	void eventOccurred(Event *e) override;
-	void update(StageCmd *const cmd) override;
+	void update() override;
 	void render() override;
 	bool isTransition() override;
 };

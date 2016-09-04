@@ -19,7 +19,6 @@ class Agent;
 class ResearchScreen : public BaseStage
 {
   private:
-	StageCmd stageCmd;
 	sp<Facility> selected_lab;
 	StateRef<ResearchTopic> current_topic;
 	std::list<sp<Facility>> labs;
@@ -45,7 +44,7 @@ class ResearchScreen : public BaseStage
 	void resume() override;
 	void finish() override;
 	void eventOccurred(Event *e) override;
-	void update(StageCmd *const cmd) override;
+	void update() override;
 	void render() override;
 	bool isTransition() override;
 };

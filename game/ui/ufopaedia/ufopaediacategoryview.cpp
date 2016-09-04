@@ -118,7 +118,7 @@ void UfopaediaCategoryView::eventOccurred(Event *e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
@@ -127,7 +127,7 @@ void UfopaediaCategoryView::eventOccurred(Event *e)
 	{
 		if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_NEXT_TOPIC")
@@ -188,8 +188,8 @@ void UfopaediaCategoryView::eventOccurred(Event *e)
 			{
 				it = state->ufopaedia.begin();
 			}
-			stageCmd.cmd = StageCmd::Command::REPLACE;
-			stageCmd.nextStage = mksp<UfopaediaCategoryView>(state, it->second);
+			fw().stageQueueCommand(
+			    {StageCmd::Command::REPLACE, mksp<UfopaediaCategoryView>(state, it->second)});
 			return;
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_PREVIOUS_SECTION")
@@ -212,8 +212,8 @@ void UfopaediaCategoryView::eventOccurred(Event *e)
 			}
 			// Decrement it once to get the previous
 			it--;
-			stageCmd.cmd = StageCmd::Command::REPLACE;
-			stageCmd.nextStage = mksp<UfopaediaCategoryView>(state, it->second);
+			fw().stageQueueCommand(
+			    {StageCmd::Command::REPLACE, mksp<UfopaediaCategoryView>(state, it->second)});
 			return;
 		}
 		if (e->forms().RaisedBy->Name == "ENTRY_SHORTCUT")
@@ -246,13 +246,7 @@ void UfopaediaCategoryView::eventOccurred(Event *e)
 	}
 }
 
-void UfopaediaCategoryView::update(StageCmd *const cmd)
-{
-	menuform->update();
-	*cmd = this->stageCmd;
-	// Reset the command to default
-	this->stageCmd = StageCmd();
-}
+void UfopaediaCategoryView::update() { menuform->update(); }
 
 void UfopaediaCategoryView::render()
 {

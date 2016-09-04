@@ -109,7 +109,7 @@ void FormPreview::eventOccurred(Event *e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
@@ -155,7 +155,7 @@ void FormPreview::eventOccurred(Event *e)
 	}
 }
 
-void FormPreview::update(StageCmd *const cmd)
+void FormPreview::update()
 {
 	previewselector->update();
 	if (propertyeditor != nullptr)
@@ -166,9 +166,6 @@ void FormPreview::update(StageCmd *const cmd)
 	{
 		displayform->update();
 	}
-	*cmd = this->stageCmd;
-	// Reset the command to default
-	this->stageCmd = StageCmd();
 
 	glowindex = (glowindex + 4) % 511;
 }

@@ -13,7 +13,6 @@ class UfopaediaView : public Stage
 {
   private:
 	sp<Form> menuform;
-	StageCmd stageCmd;
 	sp<GameState> state;
 
   public:
@@ -25,7 +24,7 @@ class UfopaediaView : public Stage
 	void resume() override;
 	void finish() override;
 	void eventOccurred(Event *e) override;
-	void update(StageCmd *const cmd) override;
+	void update() override;
 	void render() override;
 	bool isTransition() override;
 };

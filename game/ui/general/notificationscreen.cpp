@@ -14,14 +14,14 @@ NotificationScreen::NotificationScreen(sp<GameState> state, CityView &cityView,
 {
 	menuform->findControlTyped<Label>("TEXT_NOTIFICATION")->setText(message);
 
-	menuform->findControl("BUTTON_RESUME")
-	    ->addCallback(FormEventType::ButtonClick,
-	                  [this](Event *) { this->stageCmd.cmd = StageCmd::Command::POP; });
+	menuform->findControl("BUTTON_RESUME")->addCallback(FormEventType::ButtonClick, [](Event *) {
+		fw().stageQueueCommand({StageCmd::Command::POP});
+	});
 	menuform->findControl("BUTTON_PAUSE")
-	    ->addCallback(FormEventType::ButtonClick, [this, &cityView](Event *) {
+	    ->addCallback(FormEventType::ButtonClick, [&cityView](Event *) {
 		    cityView.zoomLastEvent();
 		    cityView.setUpdateSpeed(UpdateSpeed::Pause);
-		    this->stageCmd.cmd = StageCmd::Command::POP;
+		    fw().stageQueueCommand({StageCmd::Command::POP});
 		});
 }
 
@@ -43,19 +43,13 @@ void NotificationScreen::eventOccurred(Event *e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
 }
 
-void NotificationScreen::update(StageCmd *const cmd)
-{
-	menuform->update();
-	*cmd = this->stageCmd;
-	// Reset the command to default
-	this->stageCmd = StageCmd();
-}
+void NotificationScreen::update() { menuform->update(); }
 
 void NotificationScreen::render()
 {

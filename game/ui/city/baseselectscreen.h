@@ -15,7 +15,6 @@ class BaseSelectScreen : public TileView
 	static const int COUNTER_MAX = 90;
 
 	sp<Form> menuform;
-	StageCmd stageCmd;
 
 	sp<GameState> state;
 	int counter;
@@ -29,7 +28,7 @@ class BaseSelectScreen : public TileView
 	void resume() override;
 	void finish() override;
 	void eventOccurred(Event *e) override;
-	void update(StageCmd *const cmd) override;
+	void update() override;
 	void render() override;
 	bool isTransition() override;
 };

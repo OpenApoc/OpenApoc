@@ -29,7 +29,7 @@ void DebugMenu::eventOccurred(Event *e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
@@ -38,7 +38,7 @@ void DebugMenu::eventOccurred(Event *e)
 	{
 		if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 		else if (e->forms().RaisedBy->Name == "BUTTON_DUMPPCK")
@@ -48,24 +48,16 @@ void DebugMenu::eventOccurred(Event *e)
 		}
 		else if (e->forms().RaisedBy->Name == "BUTTON_FORMPREVIEW")
 		{
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<FormPreview>();
+			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<FormPreview>()});
 		}
 		else if (e->forms().RaisedBy->Name == "BUTTON_IMAGEPREVIEW")
 		{
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<ImagePreview>();
+			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<ImagePreview>()});
 		}
 	}
 }
 
-void DebugMenu::update(StageCmd *const cmd)
-{
-	menuform->update();
-	*cmd = this->stageCmd;
-	// Reset the command to default
-	this->stageCmd = StageCmd();
-}
+void DebugMenu::update() { menuform->update(); }
 
 void DebugMenu::render()
 {

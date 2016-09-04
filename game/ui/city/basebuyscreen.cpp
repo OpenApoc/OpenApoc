@@ -48,7 +48,7 @@ void BaseBuyScreen::eventOccurred(Event *e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 		}
 	}
 
@@ -57,7 +57,7 @@ void BaseBuyScreen::eventOccurred(Event *e)
 	{
 		if (e->forms().RaisedBy->Name == "BUTTON_OK")
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 		}
 		else if (e->forms().RaisedBy->Name == "BUTTON_BUY_BASE")
 		{
@@ -69,27 +69,20 @@ void BaseBuyScreen::eventOccurred(Event *e)
 				state->player_bases[Base::getPrefix() +
 				                    Strings::fromInteger(state->player_bases.size() + 1)] = base;
 
-				stageCmd.cmd = StageCmd::Command::REPLACE;
-				stageCmd.nextStage = mksp<CityView>(state);
+				fw().stageQueueCommand({StageCmd::Command::REPLACE, mksp<CityView>(state)});
 			}
 			else
 			{
-				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage =
+				auto messagebox =
 				    mksp<MessageBox>(tr("No Sale"), tr("Not enough money to buy this building."),
 				                     MessageBox::ButtonOptions::Ok);
+				fw().stageQueueCommand({StageCmd::Command::PUSH, messagebox});
 			}
 		}
 	}
 }
 
-void BaseBuyScreen::update(StageCmd *const cmd)
-{
-	form->update();
-	*cmd = this->stageCmd;
-	// Reset the command to default
-	this->stageCmd = StageCmd();
-}
+void BaseBuyScreen::update() { form->update(); }
 
 void BaseBuyScreen::render()
 {

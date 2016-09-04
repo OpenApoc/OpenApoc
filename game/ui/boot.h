@@ -11,8 +11,6 @@ class Image;
 class BootUp : public Stage
 {
   private:
-	StageCmd stageCmd;
-
   public:
 	BootUp() : Stage() {}
 	// Stage control
@@ -21,7 +19,7 @@ class BootUp : public Stage
 	void resume() override;
 	void finish() override;
 	void eventOccurred(Event *e) override;
-	void update(StageCmd *const cmd) override;
+	void update() override;
 	void render() override;
 	bool isTransition() override;
 };

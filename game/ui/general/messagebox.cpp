@@ -84,7 +84,7 @@ void MessageBox::eventOccurred(Event *e)
 			if (e->forms().RaisedBy->Name == "BUTTON_OK" ||
 			    e->forms().RaisedBy->Name == "BUTTON_YES")
 			{
-				stageCmd.cmd = StageCmd::Command::POP;
+				fw().stageQueueCommand({StageCmd::Command::POP});
 				if (callbackYes)
 					callbackYes();
 				return;
@@ -92,7 +92,7 @@ void MessageBox::eventOccurred(Event *e)
 			else if (e->forms().RaisedBy->Name == "BUTTON_CANCEL" ||
 			         e->forms().RaisedBy->Name == "BUTTON_NO")
 			{
-				stageCmd.cmd = StageCmd::Command::POP;
+				fw().stageQueueCommand({StageCmd::Command::POP});
 				if (callbackNo)
 					callbackNo();
 				return;
@@ -101,12 +101,7 @@ void MessageBox::eventOccurred(Event *e)
 	}
 }
 
-void MessageBox::update(StageCmd *const cmd)
-{
-	form->update();
-	*cmd = this->stageCmd;
-	this->stageCmd = StageCmd();
-}
+void MessageBox::update() { form->update(); }
 
 void MessageBox::render()
 {

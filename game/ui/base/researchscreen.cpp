@@ -136,7 +136,7 @@ void ResearchScreen::eventOccurred(Event *e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::POP;
+			fw().stageQueueCommand({StageCmd::Command::POP});
 			return;
 		}
 	}
@@ -152,7 +152,7 @@ void ResearchScreen::eventOccurred(Event *e)
 		{
 			if (e->forms().RaisedBy->Name == "BUTTON_OK")
 			{
-				stageCmd.cmd = StageCmd::Command::POP;
+				fw().stageQueueCommand({StageCmd::Command::POP});
 				return;
 			}
 			else if (e->forms().RaisedBy->Name == "BUTTON_RESEARCH_NEWPROJECT")
@@ -162,8 +162,9 @@ void ResearchScreen::eventOccurred(Event *e)
 					// No lab selected, ignore this click
 					return;
 				}
-				stageCmd.cmd = StageCmd::Command::PUSH;
-				stageCmd.nextStage = mksp<ResearchSelect>(this->state, this->selected_lab->lab);
+				fw().stageQueueCommand(
+				    {StageCmd::Command::PUSH,
+				     mksp<ResearchSelect>(this->state, this->selected_lab->lab)});
 				return;
 			}
 			else if (e->forms().RaisedBy->Name == "BUTTON_RESEARCH_CANCELPROJECT")
@@ -197,12 +198,7 @@ void ResearchScreen::eventOccurred(Event *e)
 	}
 }
 
-void ResearchScreen::update(StageCmd *const cmd)
-{
-	form->update();
-	*cmd = stageCmd;
-	stageCmd = StageCmd();
-}
+void ResearchScreen::update() { form->update(); }
 
 void ResearchScreen::render()
 {

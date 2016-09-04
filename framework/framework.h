@@ -33,6 +33,8 @@ class Framework
 
 	up<ApocCursor> cursor;
 
+	std::list<StageCmd> stageCommands;
+
   public:
 	std::unique_ptr<Data> data;
 	std::unique_ptr<ConfigFile> Settings;
@@ -78,7 +80,7 @@ class Framework
 	sp<Stage> stageGetPrevious();
 	sp<Stage> stageGetPrevious(sp<Stage> From);
 
-	void stagePush(sp<Stage> stage);
+	void stageQueueCommand(const StageCmd &cmd);
 
 	Vec2<int> getCursorPosition();
 

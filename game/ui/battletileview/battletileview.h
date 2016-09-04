@@ -22,7 +22,6 @@ class Image;
 class BattleTileView : public Stage, public TileTransform
 {
   protected:
-	StageCmd stageCmd;
 	BattleTileMap &map;
 	Vec3<int> isoTileSize;
 	Vec2<int> stratTileSize;

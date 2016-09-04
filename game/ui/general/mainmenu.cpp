@@ -39,7 +39,7 @@ void MainMenu::eventOccurred(Event *e)
 	{
 		if (e->keyboard().KeyCode == SDLK_ESCAPE)
 		{
-			stageCmd.cmd = StageCmd::Command::QUIT;
+			fw().stageQueueCommand({StageCmd::Command::QUIT});
 			return;
 		}
 	}
@@ -48,42 +48,34 @@ void MainMenu::eventOccurred(Event *e)
 	{
 		if (e->forms().RaisedBy->Name == "BUTTON_OPTIONS")
 		{
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<OptionsMenu>();
+			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<OptionsMenu>()});
 			return;
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_QUIT")
 		{
-			stageCmd.cmd = StageCmd::Command::QUIT;
+			fw().stageQueueCommand({StageCmd::Command::QUIT});
 			return;
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_NEWGAME")
 		{
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<DifficultyMenu>();
+			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<DifficultyMenu>()});
 			return;
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_DEBUG")
 		{
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<DebugMenu>();
+			fw().stageQueueCommand({StageCmd::Command::PUSH, mksp<DebugMenu>()});
 			return;
 		}
 		if (e->forms().RaisedBy->Name == "BUTTON_LOADGAME")
 		{
-			stageCmd.cmd = StageCmd::Command::PUSH;
-			stageCmd.nextStage = mksp<SaveMenu>(SaveMenuAction::LoadNewGame, nullptr);
+			fw().stageQueueCommand(
+			    {StageCmd::Command::PUSH, mksp<SaveMenu>(SaveMenuAction::LoadNewGame, nullptr)});
 			return;
 		}
 	}
 }
 
-void MainMenu::update(StageCmd *const cmd)
-{
-	mainmenuform->update();
-	*cmd = stageCmd;
-	stageCmd = StageCmd();
-}
+void MainMenu::update() { mainmenuform->update(); }
 
 void MainMenu::render() { mainmenuform->render(); }
 
