@@ -65,26 +65,6 @@ File types .PCK and .TAB are typical picture containers.
 Length: X*86
 Content: Contains information about map objects: walls, floor tiles etc. Each block contains 86 bytes. 
 
-Remark:
-
-Everything below said about values ("always zero" etc.) applies to almost every map object in the game (23196 of them!) except several singled out ones that I consider to be errors in the data. 
-
-Here's a complete list:
--07CORPHQ, scenery #2
--27CONSTR scenery #150-151
--32POWER, scenery #171
--40SPAWN, left walls #13, #30-32
--40SPAWN, right walls #30-32
--44ORGAN, left wall #13
--46CONTRL, ground #135
--46CONTRL, ground #137
-
-They are the only one to have:
-- 02,03 containing insane explosion power (999)
-- 06 = 6 (psi blas, unused damage type)
-- 62 = 255 (animation frame index)
-- 68,69 = 1, marking it as a door while obviously not being a door
-
 Values below will be indexed in the following format: "HH/DD[L]:" where HH is hex notation, DD is decimal notation of the offset, and L is length (how many bytes are used). In case there's a group of values performing a similar function, (HH-HH/DD-DD): notation will be used.
 
 Now, a list of offsets and what they contain:
@@ -93,8 +73,8 @@ Now, a list of offsets and what they contain:
 --------
 Strength. Damage requied to destroy the object. FF means indestructible (like exit arrows or asphalt on 58UFO8)
 
-(02-07/02-07):
--------------
+(02-07/02-07)[6]:
+----------------
 Explosion data
 
 02/02[2]: 
@@ -144,15 +124,11 @@ The bigger 02 is and the smaller 04 is, the bigger the radius. Following are som
  050,025 -> 3x3 | 2 | 1
  050,010 -> 3x3 | 2 | 1
 
-It seems that 04 acts as a kind of divisor to 02? Seems to be that radius of the explosion is quite similar to the value of 02 divided by 04. For huge explosions, the animation is often glitchy or simple 7x7, but that might be due to the engine failing to display it. Walls still get damaged pretty far away from the epicenter.
+It seems that 04 is subtracted from 02 for every tile explosion passes? Seems to be that radius of the explosion is quite similar to the value of 02 divided by 04. For huge explosions, the animation is often glitchy or simple 7x7, but that might be due to the engine failing to display it. Walls still get damaged pretty far away from the epicenter.
 
-Higher radius explosions seems to do more damage, but it might be related to the target considered being closer to the middle and thus being dealt more percent damage. However, because of this, it's hard to understand which value actually controls the power of the explosion.
-
-04 is almost always 1 for everything that does not explode. However, sometimes it isn't. Typically it's equal to 100 then. Maybe this is some kind of "blast resistance" parameter?
-
-(08-0A/08-10):
--------------
-Related to burning. Mechanics are not yet clear.
+(08-0A/08-10)[3]:
+-------------------
+Related to objects catching fire and burning. 
 
 08/08[1]:
 ---------
@@ -174,8 +150,8 @@ Notes:
 
 This can be 1 or 0. Value 0 is encountered very rarely, only 2% of all objects have it, and only 0.5% of all objects have both it and a value other than 255 in 08 (fire-resistance). I assume this is unused.
 
-(0B-0E/11-14):
--------------
+(0B-0E/11-14)[4]:
+----------------
 Related to the tile blocking other effects. Mechanics are not yet clear.
 
 0B/11[1]: 
@@ -194,11 +170,21 @@ Fire blocking.
 --------
 Psionic blocking.
 
-(0F-36/15-54): 
--------------
+(0F-36/15-54)[40]: 
+-----------------
 40 bytes, voxel map (references to TACDATA\LOFTEMPS)
 
-First 20 bytes are for line-of-fire voxelmap, second 20 bytes are for line-of-sight voxelmap.
+0F/15[20]:
+---------
+Line-of-fire voxelmap offsets.
+
+23/35[20]:
+---------
+Line-of-sight voxelmap offsets.
+
+(37-3C/55-61)[7]:
+----------------
+Several misc. values.
 
 37/55[1]:
 --------
@@ -227,8 +213,8 @@ Most common value (3/4) is 0. Otherwise, almost every value is present. Seemst t
 -------- 
 Index of the damaged object. If this is 00, when damaged the object will just disappear
 
-(3E-41/62-65): 
--------------
+(3E-43/62-67)[6]: 
+----------------
 Define animation
 
 3E/62[2]: 
@@ -249,10 +235,10 @@ Auto-loop. This is never used on any proper object (excl. ones denoted at the be
 
 43/67[1]:
 --------
-Sound effect. Where to look for it is not yet determined. Possible values 0-8.
+Sound effect. What offset for RAWSOUN is not yet determined. Possible values 0-8.
 
-(44-45/68-69): 
--------------
+(44-45/68-69)[2]: 
+----------------
 Door parameters.
 
 44/68[1]:
@@ -269,17 +255,21 @@ Only tile with both values set to 1 will act as a door.
 
 There are "open door" tiles with 68=1 and 69=0. However, just about any tile can be an "open door" tile and as it does not require 68=1 to function properly, it seems.
 
+(46-49/70-73)[4]: 
+----------------
+Several miscellaneous parameters
+
 46/70[1]:
 --------
 "LOS Through Terrain?", as it's marked in TileEdit. However, it is always 0, except for 02POLICE scenery #92-93,106-109,212-217. Maybe it works? Maybe unused.
 
 47/71[1]:
 --------
-"Floor" marker. Exact way this is used is not yet known. 
+"Floor" marker. Does indeed mark hollow grounds with 0 and solids with 1. Exact way this is used is not yet known.
 
 48/72[1]:
 --------
-"Gravlift". 0 = no lift, 1 = lift. 
+"Gravlift". 0 = no lift, 1 = is a lift. 
 
 Notes:
 
@@ -289,18 +279,22 @@ Is not tied to animation. Game seems to animate pulsating green light on anythin
 
 49/73[1]:
 --------
-Uncertain.
+Unused in TacEdit. Uncertain as to what it means.
 
 Notes:
 Most common is 0, but almost all other values are present
 
+(4A-4E/74-78)[5]: 
+----------------
+Alternative object parameters. Only use for these is to identify an "open door" object.
+
 4A/74[2]:
 --------
-"Object required for alternative", as it's marked in TileEdit. However, it is always 0.
+"Object required for alternative", as it's marked in TileEdit. However, it is always 0 and thus I consider it unused.
 
 4C/76[2]: 
 --------
-Index of an open door object.
+"Alternative object". Index of an open door object.
 
 Notes:
 
@@ -327,6 +321,10 @@ However, does not seem to be used. Only several objects have this set, namely:
 - 46CONTRL ground #137
 
 In non-error tiles, it is set always to the same type (03 for scenery, 02 for right walls), except the ground in 46CONTRL, which has it set to 03, however, it also has FF in "alternative object" which does not exist for 46CONTRL, as it only has 208 sceneries defined. Therefore, I conclude it is not used.
+ 
+(4F-51/79-81)[3]: 
+----------------
+Movement-related parameters.
  
 4F/79[1]: 
 --------
@@ -390,6 +388,10 @@ However, to ascend a layer, it seems there must be no more than 16 a difference.
 
 Usually ingame this difference is 14, because stairs ingame have 2 sceneries, "low" and "high", first has a value of 14, second a value of 28, and then you go next level to a ground with a value of 3, meaning you ascend from 28 to 42, another 14. And usually the game doesn't have more than 2 flight of stairs in a row, it goes flat-raise-raise-flat. However, when there are longer stairs (for example, hills in battleshipmap) where it goes flat-raise-raise-raise-raise-flat, then when you go from "high" to a "low" stair scenery (from 28 to 14 on another layer) you can see how unevenly the agent ascends. Visually, the path is a linear ascension, but agent first goes up a litte bit (0 to 14), then again a little (14 to 28), and then a lot (28 to 53).
 
+(52-55/82-85)[4]: 
+----------------
+Gravity and structure parameters.
+
 52/82[1]:
 --------
 Floating object. Wether can hover when unsupported. 1 = can hover, 0 = normal object.
@@ -441,17 +443,14 @@ Possible values (as well as values encountered):
 
 Overall Notes:
 
-What information have we already uncovered:
+What we are still missing?
 - "Goal" flag (which scenery needs to be destroyed for alien buildings)?
 - "Value", how much the faction values the object, how much relations are damaged when you destroy it
-- Mass? For gravity?
-- What object is spawned when this falls and gets removed? Something should link to those piles of rubble, and it's not the "damaged" field.
-- Sound produced when walking on tile?
-- Latching values >4?
-- 
+- Latching values 7, 20, >=30?
+- How does the game know it has to spawn fire/smoke at specific sceneries?
 
 Other tile information I discovered:
-- It seems that values of the fire (SC_25 for UFOs) has no effect. Replaced them with a generic ufo tile's values and nothing happened. It's still a fire, it burns, you can pass through it. It seems the game just manually replaces all these at start with fires. Fire is always 25 and smoke is 26 to 42. I guess it's just replaced at map start in the UFO map type code.
+- It seems that values of the fire (SC_25 for UFOs) has no effect. Replaced them with a generic ufo tile's values and nothing happened. It's still a fire, it burns, you can pass through it. It seems the game just manually replaces all these at start with fires. Fire is always 25 and smoke is 26 to 42. I guess it's just replaced at map start in the UFO map type code?
 
 --- .USE
 
