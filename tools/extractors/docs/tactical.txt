@@ -12,8 +12,31 @@ Following is the folder's contents:
 -- BUILDING.DAT
 
 Length: 1966
-00..11 - 12 bytes, contain x, y, z sizes of a chunk.
-12..1965 - 1954 unknown bytes. Contain a lot of FF's.
+Content:
+
+00..11 		- 12 bytes, contain x, y, z sizes of a chunk.
+Editor allows this to go up to 20, however, ingame there is only space in the UI for up to 9 levels, and exit values are stored only for up to 15 levels.
+
+12..23 		- 12 bytes, contain x, y, z sizes of a battlefield. 
+This many chunks will be combined together to form a battlefield by a map generator. Current assumption is that generator takes into account min/max values defined in SDT files of SECs, and then just spawns SECs randomly to cover this amount of chunks.
+
+24     		- 1 byte, bitwise, allow entrance from NESW
+25 	   		- 1 byte, bitwise, allow exit from NESW
+This means that bit 0 stands for N, bit 1 for E etc. So, value of 15 (1111) would mean "any direction" and 12 (1100) would mean "south and west". North in the game is the top-right direction, east is bottom-right etc.
+
+26..33 		- 8 bytes, contain min and max values for entrance levels. 
+34..41  	- 8 bytes, contain min and max values for exit levels.
+These values limit at what levels you can spawn and leave - for example, you cannot spawn at level 1 in 36CHURCH (basement), even though you can exit there. 
+
+42..1961 	- Exit locations. 15 exits per side per level, 15 max levels. 4 bytes per value, and 16 values are stored, 16th is always 0xFFFFFFFF
+
+The game stores locations of exits here in exit serial number then level then side order. Side is stored in x then y order, so first right hand and then left hand exist. A single 4-byte value is stored which indicates the position of the exit (corresponding to the in-game coordinates on the axes). 16 values are stored in a bunch, 16th always being filled with 0xFFFFFFFF.
+
+So first it stores right-hand exit#1 for level 1, then right-hand exit #2 for level 1, up to exit #15, then right-hand exit$1 for level 2, etc up to level 15, then left-hand exit#1 for level 1 etc. 
+Or, in other words, if we describe a value as EX#01L02 where X is exit type (X for right wall, Y for left wall), #01 is serial number and L02 is level, then the game stores exits in the following order:
+EX#01L01, EX#02L01,...,EX#15L01,<0xFFFFFFFF>,EX#01L02,EX#02L02,.....,EX#15L15,<0xFFFFFFF>,EY#01L01,EY#02L01,.....EY#15L15,<0xFFFFFFFF>
+
+1962..1965 	- 4 bytes, contains index of a destroyed ground tile. I guess this is placed on level 1 if ground is destroyed, so that there's no "blanks" in the map.
 
 -- XXSECYY.SDT, XXSECYY.SLS, XXSECYY.SMP, XXSECYY.SOB (ex: 37SEC12.SDT etc.)
 
@@ -22,8 +45,10 @@ Groups of four files. ".SOB" file is not always present. They represent a single
 --- XXSECYY.SDT
 
 Length: 20.
+Content:
 00..11 - 12 bytes, contain x, y, z number of chunks. 
-12..19 - 8 bytes, unknown.
+12..15 - 4 bytes, min number of occurences
+16..19 - 4 bytes, max number of occurences
 
 Number of chunks seems to be used for the case when some blocks are bigger than others. Like, again, Cult of Sirius temples can have square rooms (like the twin elevator room) and rectangular rooms (like the chessboard room). In this case, 2 chunks are used for bigger ones.
 
