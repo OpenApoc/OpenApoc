@@ -5,8 +5,10 @@ PROJECT(OpenApoc_DataExtractor CXX C)
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
 set (DATAEXTRACTOR_SOURCE_FILES
+	common/tacp.cpp
 	common/strtab.cpp
 	common/ufo2p.cpp
+	extract_agent_equipment.cpp
 	extract_battlescape_map.cpp
 	extract_battlescape_stuff.cpp
 	extract_facilities.cpp
@@ -25,6 +27,7 @@ set (DATAEXTRACTOR_SOURCE_FILES
 source_group(dataextractor\\sources FILES ${DATAEXTRACTOR_SOURCE_FILES})
 
 set (DATAEXTRACTOR_HEADER_FILES
+	common/aequipment.h
 	common/audio.h
 	common/baselayout.h
 	common/facilities.h
@@ -41,6 +44,7 @@ set (DATAEXTRACTOR_HEADER_FILES
 	common/research.h
 	common/bulletsprite.h
 	common/building.h
+	common/tacp.h
 	extractors.h)
 
 source_group(dataextractor\\headers FILES ${DATAEXTRACTOR_HEADER_FILES})
