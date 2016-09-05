@@ -12,18 +12,43 @@ Following is the folder's contents:
 -- BUILDING.DAT
 
 Length: 1966
-00..11 - 12 bytes, contain x, y, z sizes of a chunk.
-12..1965 - 1954 unknown bytes. Contain a lot of FF's.
+Content:
+
+00..11 		- 12 bytes, contain x, y, z sizes of a chunk.
+Editor allows this to go up to 20, however, ingame there is only space in the UI for up to 9 levels, and exit values are stored only for up to 15 levels.
+
+12..23 		- 12 bytes, contain x, y, z sizes of a battlefield. 
+This many chunks will be combined together to form a battlefield by a map generator. Current assumption is that generator takes into account min/max values defined in SDT files of SECs, and then just spawns SECs randomly to cover this amount of chunks.
+
+24     		- 1 byte, bitwise, allow entrance from NESW
+25 	   		- 1 byte, bitwise, allow exit from NESW
+This means that bit 0 stands for N, bit 1 for E etc. So, value of 15 (1111) would mean "any direction" and 12 (1100) would mean "south and west". North in the game is the top-right direction, east is bottom-right etc.
+
+26..33 		- 8 bytes, contain min and max values for entrance levels. 
+34..41  	- 8 bytes, contain min and max values for exit levels.
+These values limit at what levels you can spawn and leave - for example, you cannot spawn at level 1 in 36CHURCH (basement), even though you can exit there. 
+
+42..1961 	- Exit locations. 15 exits per side per level, 15 max levels. 4 bytes per value, and 16 values are stored, 16th is always 0xFFFFFFFF
+
+The game stores locations of exits here in exit serial number then level then side order. Side is stored in x then y order, so first right hand and then left hand exist. A single 4-byte value is stored which indicates the position of the exit (corresponding to the in-game coordinates on the axes). 16 values are stored in a bunch, 16th always being filled with 0xFFFFFFFF.
+
+So first it stores right-hand exit#1 for level 1, then right-hand exit #2 for level 1, up to exit #15, then right-hand exit$1 for level 2, etc up to level 15, then left-hand exit#1 for level 1 etc. 
+Or, in other words, if we describe a value as EX#01L02 where X is exit type (X for right wall, Y for left wall), #01 is serial number and L02 is level, then the game stores exits in the following order:
+EX#01L01, EX#02L01,...,EX#15L01,<0xFFFFFFFF>,EX#01L02,EX#02L02,.....,EX#15L15,<0xFFFFFFF>,EY#01L01,EY#02L01,.....EY#15L15,<0xFFFFFFFF>
+
+1962..1965 	- 4 bytes, contains index of a destroyed ground tile. I guess this is placed on level 1 if ground is destroyed, so that there's no "blanks" in the map.
 
 -- XXSECYY.SDT, XXSECYY.SLS, XXSECYY.SMP, XXSECYY.SOB (ex: 37SEC12.SDT etc.)
 
-Groups of four files. ".SOB" file is not always present. They seem to represent a single block in a map. Map can then consist of some amount of those blocks. Like, Cult of Sirius temples have typical "building blocks" they're made from - twin altar room, twin lift room, chessboard room, dining room. 
+Groups of four files. ".SOB" file is not always present. They represent a single block in a map. Map can then consist of some amount of those blocks. Like, Cult of Sirius temples have typical "building blocks" they're made from - twin altar room, twin lift room, chessboard room, dining room. 
 
 --- XXSECYY.SDT
 
 Length: 20.
+Content:
 00..11 - 12 bytes, contain x, y, z number of chunks. 
-12..19 - 8 bytes, unknown.
+12..15 - 4 bytes, min number of occurences
+16..19 - 4 bytes, max number of occurences
 
 Number of chunks seems to be used for the case when some blocks are bigger than others. Like, again, Cult of Sirius temples can have square rooms (like the twin elevator room) and rectangular rooms (like the chessboard room). In this case, 2 chunks are used for bigger ones.
 
@@ -49,7 +74,7 @@ Stored in X then Y then Z order, as a whole (if there's more than one chunk, the
 --- XXSECYY.SOB
 
 Length: 160 (if present)
-Content: Unknown.
+Content: Loot information, what items to spawn where. Format not yet deciphered.
 
 -- MAPUNITS
 
@@ -65,71 +90,36 @@ File types .PCK and .TAB are typical picture containers.
 Length: X*86
 Content: Contains information about map objects: walls, floor tiles etc. Each block contains 86 bytes. 
 
-Remark:
-
-Everything below said about values ("always zero" etc.) applies to almost every map object in the game (23196 of them!) except several singled out ones that I consider to be errors in the data. 
-
-Here's a complete list:
--07CORPHQ, scenery #2
--27CONSTR scenery #150-151
--32POWER, scenery #171
--40SPAWN, left wall #13
--40SPAWN, left walls #30-32
--40SPAWN, right walls #30-32
--44ORGAN, left wall #13
--46CONTRL, ground #135
--46CONTRL, ground #137
-
-They are the only one to have:
-- 03 = nonzero (03 is presumably not used or second byte to 02)
-- 06 = 6 (incorrect explosion type)
-- 62 = 255 (animation frame index)
-- 65 = nonzero (65 is presumably not used or second byte to 64)
-- 68,69 = 1, marking it as a door while obviously not being a door
+Values below will be indexed in the following format: "HH/DD[L]:" where HH is hex notation, DD is decimal notation of the offset, and L is length (how many bytes are used). In case there's a group of values performing a similar function, (HH-HH/DD-DD): notation will be used.
 
 Now, a list of offsets and what they contain:
 
-00/00: 
-------
-Health, it seems. FF means indestructible (like exit arrows or asphalt on 58UFO8)
+00/00[2]: 
+--------
+Strength. Damage requied to destroy the object. FF means indestructible (like exit arrows or asphalt on 58UFO8)
 
-01/01: 
-------
-[always zero, maybe second byte for previous value]
-
-02-07/02-07:
-------------
+(02-07/02-07)[6]:
+----------------
 Explosion data
 
-02/02: 
-------
+02/02[2]: 
+--------
 Explosion Power. Seems to corellate with in-game weapon values. Typically 50, 100 or 150.
 
-03/03:
+04/04[2]:
 ------ 
-[always zero, maybe second byte for previous value]
+Explosion depletion rate. Controls the radius of the explosion. Typically 25, 50, 70 or 100.
 
-04/04:
------- 
-This value, combined with 02 (power), controls the radius of the explosion. Typically 25,50,70 or 100.
-
-05/05:
------- 
-[always zero, maybe second byte for previous value]
-
-06/06: 
-------
-Explosion Type. 
+06/06[2]: 
+--------
+Explosion Type. Index into Damage Type table. Typically usable values:
  00 = Smoke
- 01 = Alien Gas? (Pink)
+ 01 = Alien Gas
  02 = Fire 
  03 = Stun Gas
  04 = High Explosive
- 05 and higher = N/A
-
-07/07:
-------
-[always zero, maybe second byte for previous value]
+ 05 = Stun
+ 06 = Psionic Blast
 
 Notes:
 
@@ -159,349 +149,195 @@ The bigger 02 is and the smaller 04 is, the bigger the radius. Following are som
  050,025 -> 3x3 | 2 | 1
  050,010 -> 3x3 | 2 | 1
 
-It seems that 04 acts as a kind of divisor to 02? Seems to be that radius of the explosion is quite similar to the value of 02 divided by 04. For huge explosions, the animation is often glitchy or simple 7x7, but that might be due to the engine failing to display it. Walls still get damaged pretty far away from the epicenter.
+It seems that 04 is subtracted from 02 for every tile explosion passes? Seems to be that radius of the explosion is quite similar to the value of 02 divided by 04. For huge explosions, the animation is often glitchy or simple 7x7, but that might be due to the engine failing to display it. Walls still get damaged pretty far away from the epicenter.
 
-Higher radius explosions seems to do more damage, but it might be related to the target considered being closer to the middle and thus being dealt more percent damage. However, because of this, it's hard to understand which value actually controls the power of the explosion.
+(08-0A/08-10)[3]:
+-------------------
+Related to objects catching fire and burning. 
 
-04 is almost always 1 for everything that does not explode. However, sometimes it isn't. Typically it's equal to 100 then. Maybe this is some kind of "blast resistance" parameter?
-
-08-09/08-09:
------------
-Uncertain
-
-Notes:
-
-For many objects it's FFFF.
-It's not 255 for scenery that's things like tubes, rubble and stuff.
-
-0	83
-1	7
-5	319
-10	44
-15	117
-25	390
-30	49
-35	784
-36	11
-40	18
-45	2830
-50	157
-55	1175
-59	17
-60	330
-65	415
-67	11
-70	201
-75	417
-80	454
-83	17
-85	211
-90	459
-95	10
-98	11
-100	539
-107	17
-110	1
-120	260
-130	1416
-140	20
-145	1
-150	553
-160	308
-172	45
-180	235
-214	45
-255	11214
-
-0A/10:
-------
-Uncertain
+08/08[1]:
+---------
+Fire Resistance. 
 
 Notes: 
 
-Almost always 1. Seen 0 for:
--01SENATE left wall #36,37,39-49,55,86
--01SENATE right wall #35,39,55,56
--01SENATE scenery #98,99,101,104,126,180-182
--02POLICE ground #39
--02POLICE left wall #50-65,72-75,87,89,91,98-101
--02POLICE right wall #54-57,66-68,74,76,78,80
--02POLICE scenery #106-109,133,211,243,244
--04SCHOOL left wall #36,38-51,65,66,67
--04SCHOOL right wall #49-51,60,64
--04SCHOOL scenery #101-104,163,166,168,171,175,178
--07CORPHQ left wall #99-102
--07CORPHQ right wall #57-60,72-75,78
--07CORPHQ scenery #5
--08PORT left wall #93
--08PORT right wall #77
--10ASTRO left wall #71,78-81
--10ASTRO right wall #49-52,65,67
--10ASTRO scenery #97
--11PARK left wall #1-5,26,33-46
--11PARK right wall #1,22,30-32,35
--11PARK scenery #21,24-26,29
--12SHOPS right wall #73-75
--12SHOPS scenery #97,98,216-224
--14ACNORM left wall #34-57,68-71
--14ACNORM right wall #39-41
--15ACPOSH left wall #15-17,47-65
--15ACPOSH right wall #20-27
--15ACPOSH scenery #201,204
--18HYDRO left wall #19,28-34,37,39,47-49
--18HYDRO right wall #19,28,29,34,36,38,40-43
--18HYDRO scenery #60,133,134
--19SEWAGE scenery #5,6
--22ARMS left wall #31-33
--22ARMS scenery #130
--26LFLYER left wall #49
--28SLUMS scenery #88
--30WARE right wall #29,30,32
--32POWER scenery #171
--35TUBES left wall #22
--35TUBES right wall #39-48
--36CHURCH left wall #43,44,129-132
--37BASE ground #86
--40SPAWN left wall #13
--44ORGAN left wall #13
--46CONTRL ground #135,137
--46CONTRL left wall #13
+Unknown how does it work. Probably the same logic as for when explosive damage destroys objects. If force of incendary damage at object location is enough to overcome it's Fire Resistance, object is set on fire, otherwise, it is not.
 
-Do not see any connection. Perhaps this is unused?
+09/09[1]:
+---------
+Burn Time. Unknown what units is this in.
 
-0B-0D/11-13:
-------------
-Uncertain
-
-Notes: 
-
-11 is often 100. 
-12-13 is often 255.
-When 12-13 are not 255, then 11, 12 and 13 are always equal.
-
-0E/14: 
-------
-Uncertain
+0A/10[1]:
+---------
+Intensity/Time Table. Most likely unused.
 
 Notes:
 
-Almost always 0. Seen nonzero values for:
--04SCHOOL left wall #53
--04SCHOOL right wall #38,59
--05RESCUE left wall #28-29
--05RESCUE right wall #32-33
--07CORPHQ left wall #82-83
--07CORPHQ right wall #76-77
--12SHOPS left wall #56-57
--19SEWAGE left wall #30-31
--19SEWAGE right wall #30-31
--20WATER left wall #30-31
--20WATER right wall #30-31
--21APPL left wall #28-29
--21APPL right wall #28-29
--22ARMS left wall #23-24
--22ARMS right wall #24-25
--23ROBOTS left wall #28-29
--23ROBOTS right wall #28-29
--25FLYER left wall #21-22
--25FLYER right wall #22-23
--26LFLYER left wall #21,28
--26LFLYER right wall #23,30
--27CONSTR left wall #21-22
--27CONSTR right wall #22,25
--27CONSTR scenery #150-151,156-157
--30WARE left wall #17,28
--30WARE right wall #17,28
--32POWER scenery #171
--33RECYCL left wall #9-10
--33RECYCL right wall #8,10
--35TUBES left wall #18,21
--35TUBES right wall #17,21
--36CHURCH right wall #68-84
--39INCUB ground #1-14,23-25,30-45,50-57,60-100,105-195,200-215
--39INCUB left wall #13
--39INCUB right wall #13
--39INCUB scenery #1-28,31-40,43-44,57-58,76-81,86-92,97-118,192-193,196-199,202-203
--40SPAWN ground #1-8,10-12,23-25,30-45,50-57,60-100,105-144,158,160-195,200-224
--40SPAWN left wall #6,13,30-31
--40SPAWN right wall #6,13,30-31
--40SPAWN scenery #1-28,31-40,43-44,57-58,76-81,86-92,97-118,192-193,196-199,202-203
--41FOOD ground #1-12,23-25,30-45,50-57,60-100,105-195,200-215
--41FOOD left wall #13
--41FOOD right wall #13
--41FOOD scenery #1-28,31-40,43-44,57-58,76-81,86-92,97-118,192-193,196-199,202-203
--42MEGAPD ground #1-16,23-25,30-45,50-57,60-100,105-195,200-215
--42MEGAPD left wall #13
--42MEGAPD right wall #13
--42MEGAPD scenery #1-28,31-40,43-44,57-58,76-81,86-92,97-118,192-193,196-199,202-203
--43SLEEP ground #1-12,23-25,30-45,50-57,60-100,105-195,200-215
--43SLEEP left wall #13
--43SLEEP right wall #13
--43SLEEP scenery #1-28,31-40,43-44,57-58,76-81,86-92,97-118,192-193,196-199,202-203
--44ORGAN ground #1-8,10-12,23-25,30-45,50-57,60-100,105-195,200-231
--44ORGAN left wall #13
--44ORGAN right wall #13
--44ORGAN scenery #1-28,31-40,43-44,57-58,76-79,81,86-92,97-118,192-193,196-199,202-203
--45FARM ground #1-8,10-12,23-25,30-45,50-57,60-100,105-195,200-215
--45FARM left wall #13
--45FARM right wall #13
--45FARM scenery #1-28,31-40,43-44,57-58,76-81,86-92,97-118,192-193,196-199,202-203
--46CONTRL ground #1-8,10-12,23-25,30-45,50-57,60-100,105-134,138-195,200-215
--46CONTRL left wall #13
--46CONTRL right wall #13
--46CONTRL scenery #1-28,31-40,43-44,57-58,76-81,86-92,97-118,192-193,196-199,202
--47MAINT ground #1-25,30-45,50-100,105-195,208-229
--47MAINT left wall #13
--47MAINT right wall #13
--47MAINT scenery #1-28,31-40,43-44,57-58,76-81,86-92,97-118,141,192-193,196-199,202
+This can be 1 or 0. Value 0 is encountered very rarely, only 2% of all objects have it, and only 0.5% of all objects have both it and a value other than 255 in 08 (fire-resistance). I assume this is unused.
 
-Outside alien dimension, this rarely happens. In alien dimension, values are all over the place. Cannot figure out what this is.
+(0B-0E/11-14)[4]:
+----------------
+Related to the tile blocking other effects. Mechanics are not yet clear.
 
-0F-36/15-54: 
-------------
+0B/11[1]: 
+--------
+Physical blocking.
+
+0C/11[1]: 
+--------
+Gas blocking.
+
+0D/13[1]: 
+--------
+Fire blocking.
+
+0E/14[1]: 
+--------
+Psionic blocking.
+
+(0F-36/15-54)[40]: 
+-----------------
 40 bytes, voxel map (references to TACDATA\LOFTEMPS)
 
-First 20 bytes are for line-of-fire voxelmap, second 20 bytes are for line-of-sight voxelmap.
+0F/15[20]:
+---------
+Line-of-fire voxelmap offsets.
 
-37-3A/55..58:
-------------- 
-4 bytes, Unknown
+23/35[20]:
+---------
+Line-of-sight voxelmap offsets.
 
-3B/59:
-------
-Uncertain.
+(37-3C/55-61)[7]:
+----------------
+Several misc. values.
+
+37/55[1]:
+--------
+Unused in TacEdit, probably unused in the game as well.
+
+38/56[1]:
+--------
+Unused in TacEdit, probably unused in the game as well.
+
+39/57[1]:
+--------
+Unused in TacEdit, probably unused in the game as well.
+
+3A/58[1]:
+--------
+"Size", as defined in TacEdit. Allowed values are up to 10. Uncertain how it is used. Maybe when dealing damage to a unit?
+
+3B/59[1]:
+--------
+Unused in TacEdit, probably unused in the game as well.
 
 Notes:
 Most common value (3/4) is 0. Otherwise, almost every value is present. Seemst to be present much more frequently on the walls and scenery, a more rare on the ground.
 
-3C/60:
------- 
+3C/60[2]:
+-------- 
 Index of the damaged object. If this is 00, when damaged the object will just disappear
 
-3D/61: 
-------
-?? [always zero, maybe second byte for previous value]
+(3E-43/62-67)[6]: 
+----------------
+Define animation
 
-3E-41/62-65: 
-Seem to define animation
-
-3E/62: 
-------
+3E/62[2]: 
+--------
 Index of the first animated frame in the ANIMATE.PCK file
 
-3F/63: 
-------
-[always zero, maybe second byte for previous value]
-
-40/64: 
-------
+40/64[1]: 
+--------
 Number of animated frames. If this is 00, there is no animation.
 
-41/65:
-------
-[always zero, maybe second byte for previous value]
+41/65[1]: 
+--------
+Auto-loop. This is never used on any proper object (excl. ones denoted at the beginning)
+
+42/66[1]: 
+--------
+"Transparent", as it's marked in TileEdit. However, it is always 0. I assume it's unused.
+
+43/67[1]:
+--------
+Sound effect. What offset for RAWSOUN is not yet determined. Possible values 0-8.
+
+(44-45/68-69)[2]: 
+----------------
+Door parameters.
+
+44/68[1]:
+--------
+"Door". Wether or not this tile is a door.
+
+45/69[1]:
+--------
+"Closed door". Wether or not this tile is a closed door. 
 
 Notes: 
 
-For borders of lifts in 36CHURCH, 62 = 00, 64 = 01. Even though animated frame 00 is for a door.
-For borders of lits in 58UFO8, 62 = 00, 64 = 00.
-
-42/66: 
-------
-Always 0. 
-
-43/67:
-------
-Uncertain
-
-Note:
-Only values 0 to 8 are present. 1 and 4 seem to be the most common.
-
-Histogram (amount of values encountered):
-- 0:1976
-- 1:6364
-- 2:1224
-- 3:1834
-- 4:5109
-- 5:2538
-- 6:1024
-- 7:2954
-- 8:173
-
-
-44-45/68-69: 
-------------
-Seem to define doors.
-
-Notes:
-
-Must both be 1 for tile to be considered a door.
-
-For normal tiles, 68 and 69 are 0
-For a door, 68 and 69 are 1.
+Only tile with both values set to 1 will act as a door. 
 
 There are "open door" tiles with 68=1 and 69=0. However, just about any tile can be an "open door" tile and as it does not require 68=1 to function properly, it seems.
 
-46/70:
-------
-Always 0.
+(46-49/70-73)[4]: 
+----------------
+Several miscellaneous parameters
+
+46/70[1]:
+--------
+"LOS Through Terrain?", as it's marked in TileEdit. However, it is always 0, except for 02POLICE scenery #92-93,106-109,212-217. Maybe it works? Maybe unused.
+
+47/71[1]:
+--------
+"Floor" marker. Does indeed mark hollow grounds with 0 and solids with 1. Exact way this is used is not yet known.
+
+48/72[1]:
+--------
+"Gravlift". 0 = no lift, 1 = is a lift. 
 
 Notes:
-Only 02POLICE scenery #92-93,106-109,212-217 has 1 in this field. Therefore, I conclude it is unused.
-
-47/71:
-------
-Uncertain.
-
-Note: 
-Either 0 or 1. 1 is more common. 0 is still abundantly found.
-
-For ground, it seems to be 0 for hollow grounds and 1 for solid grounds.
-
-48/72:
-------
-Designates lifts. 0 = no lift, 1 = lift. 
-
-Note:
 
 Right walls, left walls, grounds and sceneries are all marked with this, but only scenery is required to actually lift. If there's no scenery marked with 1, a wall won't help. If there's a scenery, wall is not required. However, I was not able to confirm it with ground (wether ground is enough to be a lift or wether a scenery is required on top of it).
 
 Is not tied to animation. Game seems to animate pulsating green light on anything that is of a color pink (255,255,0), or there is some other value responsible for animation.
 
-49/73:
-------
-Uncertain.
+49/73[1]:
+--------
+Unused in TacEdit. Uncertain as to what it means.
 
-Note:
+Notes:
 Most common is 0, but almost all other values are present
 
-4A/74:
-------
-Always 0
+(4A-4E/74-78)[5]: 
+----------------
+Alternative object parameters. Only use for these is to identify an "open door" object.
 
-4B/75:
-------
-Always 0
+4A/74[2]:
+--------
+"Object required for alternative", as it's marked in TileEdit. However, it is always 0 and thus I consider it unused.
 
-4C/76: 
-------
-Index of an open door object
+4C/76[2]: 
+--------
+"Alternative object". Index of an open door object.
+
+Notes:
 
 This object is spawned at the moment the door starts animating to "open" and is despawned at the moment the doors finished animating to "closed". If it is impassable (never happens in vanilla), then unit will still pass through it right after animation is over (as I think the check to pass was already made when door was opening, as the door is considered passable) but after that it won't be able to get through until door closes fully.
 For alien ship doors, this links to 00, even though there exists an object next to the doors that seems to be an open door object - maybe since it's blank they didn't use it.
 
-4D/77: 
-------
-Always 0
+In TacEdit, described as "Alternative object" but does not seem to be used for anything other than doors.
 
-4E/78: 
-------
-Always 0
+4E/78[1]: 
+--------
+"Alternative Object Type", as it's marked in TileEdit. However, it is unused.
 
 Notes:
 
-Seen other values:
-- in some of the error tiles listed above
+00=GD, 01=LW, 02=RW, 03=SC. 
+
+However, does not seem to be used. Only several objects have this set, namely:
+- some of the error tiles listed above
 - 03HOSPIT scenery #131,132
 - 07CORPHQ scenery #5
 - 27CONSTR scenery #150,151
@@ -509,11 +345,18 @@ Seen other values:
 - 35TUBES right wall #43,45,46
 - 46CONTRL ground #137
 
-As it is used only in several maps, and only several tiles, I conclude this value is unused, probably was planned to mean something but since then was forgotten.
+In non-error tiles, it is set always to the same type (03 for scenery, 02 for right walls), except the ground in 46CONTRL, which has it set to 03, however, it also has FF in "alternative object" which does not exist for 46CONTRL, as it only has 208 sceneries defined. Therefore, I conclude it is not used.
  
-4F/79: 
-------
-Seems to control wether object is passable
+(4F-51/79-81)[3]: 
+----------------
+Movement-related parameters.
+ 
+4F/79[1]: 
+--------
+Movement cost through the tile. 
+
+Notes:
+Also seems to control passability.
  00 = only present on lift walls
  04 = passable
  06 = noticed on 36CHURCH, XXUFOY lift walls
@@ -521,14 +364,13 @@ Seems to control wether object is passable
  
 If set 255 for door, it will open, and let people through (unless 76 links to an unpassable object), but pathfinding won't plot through it (as it considers it to be unpassable).
 
-50/80:
-------
-For practical purposes, unused. 
-Most likely an unimplemented ability to jump/climb?
+50/80[1]:
+--------
+"Climbable". Appears to be unused.
 
 Notes:
 
-Almost always 0. Only 1 for 30 objects in the game (0.1%):
+Most likely an unimplemented ability to jump/climb. Almost always 0. Only set to 1 for 30 objects in the game (0.1% of them):
 -02POLICE scenery #68-69
 -03HOSPIT scenery #1-2,184-185
 -04SCHOOL scenery #40-41
@@ -548,8 +390,8 @@ Almost.
 
 I couldn't get an agent to climb a ladder, but after I destroyed a piece of scenery near the pommel horse, making a "step" of sorts, the agent agreed to get on the pommel horse, and did it VEEEEERY SLOOOOOWLY. I assume part of the old code?
 
-51/81:
-------
+51/81[1]:
+--------
 Object's height.
 
 Notes:
@@ -571,108 +413,74 @@ However, to ascend a layer, it seems there must be no more than 16 a difference.
 
 Usually ingame this difference is 14, because stairs ingame have 2 sceneries, "low" and "high", first has a value of 14, second a value of 28, and then you go next level to a ground with a value of 3, meaning you ascend from 28 to 42, another 14. And usually the game doesn't have more than 2 flight of stairs in a row, it goes flat-raise-raise-flat. However, when there are longer stairs (for example, hills in battleshipmap) where it goes flat-raise-raise-raise-raise-flat, then when you go from "high" to a "low" stair scenery (from 28 to 14 on another layer) you can see how unevenly the agent ascends. Visually, the path is a linear ascension, but agent first goes up a litte bit (0 to 14), then again a little (14 to 28), and then a lot (28 to 53).
 
-52/82:
-------
-Wether can hover when unsupported. 1 = can hover, 0 = normal object.
+(52-55/82-85)[4]: 
+----------------
+Gravity and structure parameters.
+
+52/82[1]:
+--------
+Floating object. Wether can hover when unsupported. 1 = can hover, 0 = normal object.
 
 Notes: 
 
 Only used for teleporters (ground/walls/scenery) and UFO (ground). This is what prevents UFO's higher layers from collapsing as they are not supported like normal buildings. Setting 0 for ufo ground tiles and destroying at least one object of ufo hull will cause hilarious chain reactions )))
 
-53/83:
-------
-Uncertain. Need more research.
-It's 1 for bigger objects and 0 for smaller objects.
+53/83[1]:
+--------
+Provides support. Wether or not other objects can rely on this to stay in place and not fall. 1 = provides support, 0 = does not.
 
-54/84:
-------
-Uncertain. Handles objects "latching" to neighbours and maybe other things.
+54/84[1]:
+--------
+Gets support from. Handles how objects stay in place or fall, as well as objects "latching" to neighbours.
 
-Notes:
-
-Handles objects that can "latch" to each other and stay in place regardless of having no support (like battleship's heavy beams). Uncertain what some values mean, though.
-
-Histogram:
--0:20098
--1:378
--2:233
--3:165
--4:432
--5:448
--7:4
--11:16
--12:14
--13:14
--14:16
--20:525
--21:10
--22:8
--23:10
--24:9
--30:1
--32:1
--36:582
--41:38
--42:38
--43:35
--44:40
--51:21
--52:21
--53:20
--54:19
-
-Known:
-
-0 means normal object. 
-1 means in can "latch" in a top-right direction. 
-2 means it can "latch" in a bottom-right direction. 
-3 means it can "latch" in a bottom-left direction. 
-4 means it can "latch" in a top-left direction. 
-
-These are straightforward. They're present on battleship's beams, on parts of alien dimension decor that should indeed hover and latch in the direction. 
-
-However, what do values over 4 do? They're very frequently encountered too!
-
-55/85: 
-------
-Uncertain. Need more research.
-Seems to be 1 for objects that are see-through? Must check.
-
-it's 1 for teleporter parts
-it's 1 for pieces of rubble
-it's 1 for small objects like trees, chairs, pcs.
+Possible values (as well as values encountered):
+ 0  = Down (object is supported by an object below).
+ 1  = Top-Right (can "latch" in a top-right direction to another object and stay) 
+ 2  = Bottom-Right
+ 3  = Bottom-Left
+ 4  = Top-Left
+ 5  = Up (object can be supported by an object above it)
+ 7  = unknown
+ 11 = Top-Right Below (can "latch" in a top-right direction to another object one layer below
+ 12 = Bottom-Right Below
+ 13 = Bottom-Left Below
+ 14 = Top-Left Below
+ 20 = unknown
+ 21 = Top-Right Above (can "latch" in a top-right direction to another object one layer below
+ 22 = Bottom-Right Above
+ 23 = Bottom-Left Above
+ 24 = Top-Left Above
+ 30 = unknown
+ 32 = unknown
+ 36 = unknown
+ 41 = unknown
+ 42 = unknown
+ 43 = unknown
+ 44 = unknown
+ 51 = unknown
+ 52 = unknown
+ 53 = unknown
+ 54 = unknown
  
+55/85[1]: 
+--------
+"Independent structure". Uncertain what this means.
+
 Overall Notes:
 
-What information have we already uncovered:
-- Health data
-- Explosion data
-- Voxelmap data
-- Animation data
-- Damaged object index
-- Lift data
-- Door data
-- Some of the "gravity" information
-- Wether tile can be passed through
-
-What information supposedly should be there:
-- Explosion resitance maybe?
-- Supports/supported by? Or is this not defined that way?
+What we are still missing?
 - "Goal" flag (which scenery needs to be destroyed for alien buildings)?
 - "Value", how much the faction values the object, how much relations are damaged when you destroy it
-- Mass? For gravity?
-- What object is spawned when this falls and gets removed? Something should link to those piles of rubble, and it's not the "damaged" field.
-- Sound produced when walking on tile?
-- Latching values >4?
-- 
+- Latching values 7, 20, >=30?
+- How does the game know it has to spawn fire/smoke at specific sceneries?
 
 Other tile information I discovered:
-- It seems that values of the fire (SC_25 for UFOs) has no effect. Replaced them with a generic ufo tile's values and nothing happened. It's still a fire, it burns, you can pass through it. It seems the game just manually replaces all these at start with fires. Fire is always 25 and smoke is 26 to 42. I guess it's just replaced at map start in the UFO map type code.
+- It seems that values of the fire (SC_25 for UFOs) has no effect. Replaced them with a generic ufo tile's values and nothing happened. It's still a fire, it burns, you can pass through it. It seems the game just manually replaces all these at start with fires. Fire is always 25 and smoke is 26 to 42. I guess it's just replaced at map start in the UFO map type code?
 
 --- .USE
 
 Length: 256
-Content: Unknown. Mostly it's either all ones or all zeroes?
+Content: Wether or not a particular object is used in the map. 01 = NOT used, 00 = used. 
 
 --- ANIMATE.PCK, ANIMATE.TAB, ANIMATE.USE
 
@@ -692,7 +500,9 @@ Unused, supposedly it's been used for ground in the past but have been replaced 
 --- RUBBLE.DAT
 
 Length: 15 bytes
-Content: Unknown. Sometimes all zero, sometimes lots of stuff.
+Content: Indexes of "rubble" objects. 
+
+It has 3 blocks of 5 values, first block is for left wall, second for right wall, third for scenery. Values are indexes into corresponding object lists. They link to 5 "stages" of rubble, from smallest to biggest size. So, if one right wall falls down, an right wall object with index 1 (6th values in the file) is spawned. If a second one falls down there, this object changes to the object with index 2 (7th value in the file) etc up to 5th index.
 
 --- SFEATURE.PCK, SFEATURE.TAB
 --- SGROUND.PCK, SGROUND.TAB

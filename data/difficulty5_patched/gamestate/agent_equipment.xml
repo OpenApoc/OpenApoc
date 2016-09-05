@@ -1,17 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <agent_equipment>
   <entry>
+    <key>AEQUIPMENTTYPE_ALIEN_DETECTOR</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_ALIEN_DETECTOR</id>
+        <name>Alien Detector</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_ALIEN_EGG_S_VOMIT_TUBE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_ALIEN_EGG_S_VOMIT_TUBE</id>
+        <name>Alien Egg's Vomit Tube</name>
+        <equipscreen_sprite>A´Â/</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
+        <store_space>-2147468998</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
     <key>AEQUIPMENTTYPE_ALIEN_GAS_GRENADE</key>
     <value>
       <sp>
         <id>AEQUIPMENTTYPE_ALIEN_GAS_GRENADE</id>
         <name>Alien Gas Grenade</name>
+        <equipscreen_sprite></equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+        <store_space>54795800</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_AUTO_CANNON_AP_CLIP</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_AUTO_CANNON_AP_CLIP</id>
+        <name>Auto Cannon AP Clip</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>1501744</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_AUTO_CANNON_HE_CLIP</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_AUTO_CANNON_HE_CLIP</id>
+        <name>Auto Cannon HE Clip</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>1438842880</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_AUTO_CANNON_IN_CLIP</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_AUTO_CANNON_IN_CLIP</id>
+        <name>Auto Cannon IN Clip</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>54794216</store_space>
       </sp>
     </value>
   </entry>
@@ -21,12 +101,44 @@
       <sp>
         <id>AEQUIPMENTTYPE_BOOMEROID</id>
         <name>Boomeroid</name>
+        <equipscreen_sprite></equipscreen_sprite>
         <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
+          <x>2</x>
+          <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER</id>
+        <name>Brainsucker Launcher</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>4</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+        <store_space>-2147483648</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_BRAINSUCKER_POD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_BRAINSUCKER_POD</id>
+        <name>Brainsucker Pod</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+        <store_space>-2147483648</store_space>
       </sp>
     </value>
   </entry>
@@ -36,12 +148,43 @@
       <sp>
         <id>AEQUIPMENTTYPE_DEVASTATOR_CANNON</id>
         <name>Devastator Cannon</name>
+        <equipscreen_sprite></equipscreen_sprite>
         <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
+          <x>2</x>
+          <y>4</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_DIMENSION_DESTABILISER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_DIMENSION_DESTABILISER</id>
+        <name>Dimension Destabiliser</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_DIMENSION_FORCE_FIELD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_DIMENSION_FORCE_FIELD</id>
+        <name>Dimension Force Field</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+        <store_space>52536060</store_space>
       </sp>
     </value>
   </entry>
@@ -51,12 +194,13 @@
       <sp>
         <id>AEQUIPMENTTYPE_DIMENSION_MISSILE</id>
         <name>Dimension Missile</name>
+        <equipscreen_sprite></equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
-          <y>1</y>
+          <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+        <store_space>7</store_space>
       </sp>
     </value>
   </entry>
@@ -66,87 +210,13 @@
       <sp>
         <id>AEQUIPMENTTYPE_DIMENSION_MISSILE_LAUNCHER</id>
         <name>Dimension Missile Launcher</name>
+        <equipscreen_sprite></equipscreen_sprite>
         <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
+          <x>3</x>
+          <y>5</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(HEAD)</key>
-    <value>
-      <sp>
-        <id>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(HEAD)</id>
-        <name>Personal Disruptor Armor (head)</name>
-        <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
-        </equipscreen_size>
-        <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(LEFT_ARM)</key>
-    <value>
-      <sp>
-        <id>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(LEFT_ARM)</id>
-        <name>Personal Disruptor Armor (left arm)</name>
-        <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
-        </equipscreen_size>
-        <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(LEGS)</key>
-    <value>
-      <sp>
-        <id>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(LEGS)</id>
-        <name>Personal Disruptor Armor (legs)</name>
-        <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
-        </equipscreen_size>
-        <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(RIGHT_ARM)</key>
-    <value>
-      <sp>
-        <id>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(RIGHT_ARM)</id>
-        <name>Personal Disruptor Armor (right arm)</name>
-        <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
-        </equipscreen_size>
-        <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(TORSO)</key>
-    <value>
-      <sp>
-        <id>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(TORSO)</id>
-        <name>Personal Disruptor Armor (torso)</name>
-        <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
-        </equipscreen_size>
-        <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+        <store_space>9</store_space>
       </sp>
     </value>
   </entry>
@@ -156,12 +226,104 @@
       <sp>
         <id>AEQUIPMENTTYPE_DISRUPTOR_GUN</id>
         <name>Disruptor Gun</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+        <store_space>52535332</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_ELERIUM</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_ELERIUM</id>
+        <name>Elerium</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_SOLMINE</manufacturer>
+        <store_space>54708760</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_EMPTY</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_EMPTY</id>
+        <name>Empty</name>
+        <equipscreen_sprite>˛F,</equipscreen_sprite>
+        <manufacturer>ORG_X-COM</manufacturer>
+        <store_space>7274595</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_ENERGY_POD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_ENERGY_POD</id>
+        <name>Energy Pod</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+        <store_space>1060439283</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_ENTROPY_LAUNCHER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_ENTROPY_LAUNCHER</id>
+        <name>Entropy Launcher</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_ENTROPY_POD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_ENTROPY_POD</id>
+        <name>Entropy Pod</name>
+        <equipscreen_sprite></equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+        <store_space>52537620</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_FORCEWEB</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_FORCEWEB</id>
+        <name>ForceWeb</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+        <store_space>54602608</store_space>
       </sp>
     </value>
   </entry>
@@ -171,12 +333,588 @@
       <sp>
         <id>AEQUIPMENTTYPE_HEAVY_LAUNCHER_AG_MISSILE</id>
         <name>Heavy Launcher AG Missile</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>1060439283</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_HEAVY_LAUNCHER_HE_MISSILE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_HEAVY_LAUNCHER_HE_MISSILE</id>
+        <name>Heavy Launcher HE Missile</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>-346881791</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_HEAVY_LAUNCHER_IN_MISSILE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_HEAVY_LAUNCHER_IN_MISSILE</id>
+        <name>Heavy Launcher IN Missile</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>54795032</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_HYPERWORM_S_BITE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_HYPERWORM_S_BITE</id>
+        <name>Hyperworm's Bite</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
+        <store_space>1431524805</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_INCENDIARY_GRENADE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_INCENDIARY_GRENADE</id>
+        <name>Incendiary Grenade</name>
+        <equipscreen_sprite></equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
           <y>1</y>
         </equipscreen_size>
-        <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+        <manufacturer>ORG_DIABLO</manufacturer>
+        <store_space>-1087044365</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_BODY_UNIT</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_BODY_UNIT</id>
+        <name>Marsec Body Unit</name>
+        <equipscreen_sprite>XÃ</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>1438842881</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_HEAD_UNIT</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_HEAD_UNIT</id>
+        <name>Marsec Head Unit</name>
+        <equipscreen_sprite>8ﬁ</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>1422021972</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_HEAVY_LAUNCHER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_HEAVY_LAUNCHER</id>
+        <name>Marsec Heavy Launcher</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>5</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>-2147451452</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_HIGH_EXPLOSIVE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_HIGH_EXPLOSIVE</id>
+        <name>Marsec High Explosive</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>703316265</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_LEFT_ARM_UNIT</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_LEFT_ARM_UNIT</id>
+        <name>Marsec Left Arm Unit</name>
+        <equipscreen_sprite>XŸ</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>-2147468486</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_LEG_UNITS</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_LEG_UNITS</id>
+        <name>Marsec Leg Units</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>4</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>1063581998</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_M4000_GUN_CLIP</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_M4000_GUN_CLIP</id>
+        <name>Marsec M4000 Gun Clip</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>54793304</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_M4000_MACHINE_GUN</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_M4000_MACHINE_GUN</id>
+        <name>Marsec M4000 Machine Gun</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>4</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>-356450303</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_MINILAUNCHER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_MINILAUNCHER</id>
+        <name>Marsec MiniLauncher</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>-2147462059</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_PROXIMITY_MINE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_PROXIMITY_MINE</id>
+        <name>Marsec Proximity Mine</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>-2147422015</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_RIGHT_ARM_UNIT</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_RIGHT_ARM_UNIT</id>
+        <name>Marsec Right Arm Unit</name>
+        <equipscreen_sprite>x‘</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>54706120</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEDI-KIT</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEDI-KIT</id>
+        <name>Medi-kit</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_NANOTECH</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</id>
+        <name>Megapol AP Grenade</name>
+        <equipscreen_sprite>˛F,</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>5177414</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_AUTO_CANNON</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_AUTO_CANNON</id>
+        <name>Megapol Auto Cannon</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>4</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>53557276</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_BODY_ARMOR</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_BODY_ARMOR</id>
+        <name>Megapol Body Armor</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>54705256</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_HELMET</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_HELMET</id>
+        <name>Megapol Helmet</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>52539180</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_LASER_POD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_LASER_POD</id>
+        <name>Megapol Laser Pod</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>-1024343761</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_LASER_SNIPER_GUN</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_LASER_SNIPER_GUN</id>
+        <name>Megapol Laser Sniper Gun</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>5</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>-2147472446</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_LAWPISTOL</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_LAWPISTOL</id>
+        <name>Megapol Lawpistol</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>52852860</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_LAWPISTOL_CLIP</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_LAWPISTOL_CLIP</id>
+        <name>Megapol Lawpistol Clip</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>1065353216</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_LEFT_ARM_ARMOR</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_LEFT_ARM_ARMOR</id>
+        <name>Megapol Left Arm Armor</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>1785550186</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_LEG_ARMOR</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_LEG_ARMOR</id>
+        <name>Megapol Leg Armor</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>4</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>1785659393</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_PLASMA_GUN</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_PLASMA_GUN</id>
+        <name>Megapol Plasma Gun</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>-2147425706</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_PLASMA_POD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_PLASMA_POD</id>
+        <name>Megapol Plasma Pod</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>1422021972</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_RIGHT_ARM_ARMOR</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_RIGHT_ARM_ARMOR</id>
+        <name>Megapol Right Arm Armor</name>
+        <equipscreen_sprite>ê</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>-2147433925</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_SMOKE_GRENADE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_SMOKE_GRENADE</id>
+        <name>Megapol Smoke Grenade</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>5767235</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_STUN_GRAPPLE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_STUN_GRAPPLE</id>
+        <name>Megapol Stun Grapple</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>1398079489</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_STUN_GRENADE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_STUN_GRENADE</id>
+        <name>Megapol Stun Grenade</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>5505089</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGASPAWN_S_DISRUPTOR</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGASPAWN_S_DISRUPTOR</id>
+        <name>Megaspawn's Disruptor</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>5</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
+        <store_space>53554884</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGASPAWN_S_LAUNCHER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGASPAWN_S_LAUNCHER</id>
+        <name>Megaspawn's Launcher</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>5</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
+        <store_space>7</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MIND_BENDER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MIND_BENDER</id>
+        <name>Mind Bender</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>-2147483648</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MIND_SHIELD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MIND_SHIELD</id>
+        <name>Mind Shield</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>54603424</store_space>
       </sp>
     </value>
   </entry>
@@ -186,12 +924,93 @@
       <sp>
         <id>AEQUIPMENTTYPE_MINILAUNCHER_AG_MISSILE</id>
         <name>MiniLauncher AG Missile</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>-1001171511</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MINILAUNCHER_HE_MISSILE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MINILAUNCHER_HE_MISSILE</id>
+        <name>MiniLauncher HE Missile</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>52855772</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MINILAUNCHER_IN_MISSILE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MINILAUNCHER_IN_MISSILE</id>
+        <name>MiniLauncher IN Missile</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>1065353216</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MOTION_SCANNER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MOTION_SCANNER</id>
+        <name>Motion Scanner</name>
+        <equipscreen_sprite></equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
           <y>1</y>
         </equipscreen_size>
-        <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>54606016</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MULTI-TRACKER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MULTI-TRACKER</id>
+        <name>Multi-Tracker</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>1065353216</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MULTIWORM_S_SPIT</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MULTIWORM_S_SPIT</id>
+        <name>Multiworm's Spit</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
+        <store_space>54707992</store_space>
       </sp>
     </value>
   </entry>
@@ -201,12 +1020,12 @@
       <sp>
         <id>AEQUIPMENTTYPE_PERSONAL_CLOAKING_FIELD</id>
         <name>Personal Cloaking Field</name>
+        <equipscreen_sprite></equipscreen_sprite>
         <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
+          <x>2</x>
+          <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
       </sp>
     </value>
   </entry>
@@ -216,12 +1035,141 @@
       <sp>
         <id>AEQUIPMENTTYPE_PERSONAL_DISRUPTOR_SHIELD</id>
         <name>Personal Disruptor Shield</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+        <store_space>54604960</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_PERSONAL_TELEPORTER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_PERSONAL_TELEPORTER</id>
+        <name>Personal Teleporter</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+        <store_space>-2147483648</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_POPPER_S_BOMB</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_POPPER_S_BOMB</id>
+        <name>Popper's Bomb</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
+        <store_space>1065353216</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_POWER_SWORD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_POWER_SWORD</id>
+        <name>Power Sword</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>4</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+        <store_space>54604288</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_PSI-GRENADE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_PSI-GRENADE</id>
+        <name>PSI-Grenade</name>
+        <equipscreen_sprite></equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
           <y>1</y>
         </equipscreen_size>
-        <manufacturer>ORG_X-COM</manufacturer>
+        <manufacturer>ORG_MARSEC</manufacturer>
         <store_space>1</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_PSICLONE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_PSICLONE</id>
+        <name>Psiclone</name>
+        <equipscreen_sprite>A´Â/</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
+        <store_space>-2147468859</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_PSIMORPH_S_MINDBENDER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_PSIMORPH_S_MINDBENDER</id>
+        <name>Psimorph's Mindbender</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
+        <store_space>1433059925</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_QUEENSPAWN_S_TENTACLES</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_QUEENSPAWN_S_TENTACLES</id>
+        <name>Queenspawn's Tentacles</name>
+        <equipscreen_sprite>]÷‰/</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
+        <store_space>52541988</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_SPITTER_S_VOMIT_FUNNEL</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_SPITTER_S_VOMIT_FUNNEL</id>
+        <name>Spitter's Vomit Funnel</name>
+        <equipscreen_sprite>]÷‰/</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
+        <store_space>1834314347</store_space>
       </sp>
     </value>
   </entry>
@@ -231,57 +1179,91 @@
       <sp>
         <id>AEQUIPMENTTYPE_TOXIGUN</id>
         <name>Toxigun</name>
+        <equipscreen_sprite></equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
-          <y>1</y>
+          <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+        <store_space>-2147483648</store_space>
       </sp>
     </value>
   </entry>
   <entry>
-    <key>AEQUIPMENTTYPE_TOXIN_TYPE_A</key>
+    <key>AEQUIPMENTTYPE_TOXIGUN_A-CLIP</key>
     <value>
       <sp>
-        <id>AEQUIPMENTTYPE_TOXIN_TYPE_A</id>
-        <name>Toxin Type A</name>
+        <id>AEQUIPMENTTYPE_TOXIGUN_A-CLIP</id>
+        <name>Toxigun A-Clip</name>
+        <equipscreen_sprite></equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
       </sp>
     </value>
   </entry>
   <entry>
-    <key>AEQUIPMENTTYPE_TOXIN_TYPE_B</key>
+    <key>AEQUIPMENTTYPE_TOXIGUN_B-CLIP</key>
     <value>
       <sp>
-        <id>AEQUIPMENTTYPE_TOXIN_TYPE_B</id>
-        <name>Toxin Type B</name>
+        <id>AEQUIPMENTTYPE_TOXIGUN_B-CLIP</id>
+        <name>Toxigun B-Clip</name>
+        <equipscreen_sprite></equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+        <store_space>52533668</store_space>
       </sp>
     </value>
   </entry>
   <entry>
-    <key>AEQUIPMENTTYPE_TOXIN_TYPE_C</key>
+    <key>AEQUIPMENTTYPE_TOXIGUN_C-CLIP</key>
     <value>
       <sp>
-        <id>AEQUIPMENTTYPE_TOXIN_TYPE_C</id>
-        <name>Toxin Type C</name>
+        <id>AEQUIPMENTTYPE_TOXIGUN_C-CLIP</id>
+        <name>Toxigun C-Clip</name>
+        <equipscreen_sprite></equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_TRACKER_GUN</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_TRACKER_GUN</id>
+        <name>Tracker Gun</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>52215460</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_TRACKER_GUN_CLIP</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_TRACKER_GUN_CLIP</id>
+        <name>Tracker Gun Clip</name>
+        <equipscreen_sprite></equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+        <store_space>-2147473110</store_space>
       </sp>
     </value>
   </entry>
@@ -291,12 +1273,93 @@
       <sp>
         <id>AEQUIPMENTTYPE_VORTEX_MINE</id>
         <name>Vortex Mine</name>
+        <equipscreen_sprite></equipscreen_sprite>
         <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
+          <x>2</x>
+          <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+        <store_space>257</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_X-COM_BODY_SHIELD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_X-COM_BODY_SHIELD</id>
+        <name>X-COM Body Shield</name>
+        <equipscreen_sprite>¯Á</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+        <store_space>1063581998</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_X-COM_HEAD_SHIELD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_X-COM_HEAD_SHIELD</id>
+        <name>X-COM Head Shield</name>
+        <equipscreen_sprite>xÊ</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+        <store_space>-2147468998</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_X-COM_LEFT_ARM_SHIELD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_X-COM_LEFT_ARM_SHIELD</id>
+        <name>X-COM Left Arm Shield</name>
+        <equipscreen_sprite>ò·</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+        <store_space>54706936</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_X-COM_LEG_SHIELDS</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_X-COM_LEG_SHIELDS</id>
+        <name>X-COM Leg Shields</name>
+        <equipscreen_sprite>&#24;„</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>4</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+        <store_space>52540844</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_X-COM_RIGHT_ARM_SHIELD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_X-COM_RIGHT_ARM_SHIELD</id>
+        <name>X-COM Right Arm Shield</name>
+        <equipscreen_sprite>∏‹</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+        <store_space>-984350719</store_space>
       </sp>
     </value>
   </entry>

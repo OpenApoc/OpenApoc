@@ -15,11 +15,16 @@ BattleTileView::BattleTileView(BattleTileMap &map, Vec3<int> isoTileSize, Vec2<i
       strategyViewBoxColour(212, 176, 172, 255), strategyViewBoxThickness(2.0f), hideGround(false),
       hideLeftWall(false), hideRightWall(false), hideScenery(false), currentZLevel(1),
       layerDrawingMode(BattleLayerDrawingMode::UpToCurrentLevel), maxZDraw(map.size.z),
-      centerPos(0, 0, 0), isoScrollSpeed(0.5, 0.5), stratScrollSpeed(2.0f, 2.0f),
       selectedTilePosition(0, 0, 0),
-      selectedTileImageBack(fw().data->loadImage("CITY/SELECTED-CITYTILE-BACK.PNG")),
-      selectedTileImageFront(fw().data->loadImage("CITY/SELECTED-CITYTILE-FRONT.PNG")),
-      pal(fw().data->loadPalette("xcom3/tacdata/tactical.pal"))
+      selectedTileEmptyImageBack(fw().data->loadImage("BATTLE/SELECTED-BATTLETILE-EMPTY-BACK.PNG")),
+      selectedTileEmptyImageFront(
+          fw().data->loadImage("BATTLE/SELECTED-BATTLETILE-EMPTY-FRONT.PNG")),
+      selectedTileFilledImageBack(
+          fw().data->loadImage("BATTLE/SELECTED-BATTLETILE-FILLED-BACK.PNG")),
+      selectedTileFilledImageFront(
+          fw().data->loadImage("BATTLE/SELECTED-BATTLETILE-FILLED-FRONT.PNG")),
+      selectedTileImageOffset(23, 42), centerPos(0, 0, 0), isoScrollSpeed(0.5, 0.5),
+      stratScrollSpeed(2.0f, 2.0f), pal(fw().data->loadPalette("xcom3/tacdata/tactical.pal"))
 {
 	LogInfo("dpySize: {%d,%d}", dpySize.x, dpySize.y);
 }
@@ -116,6 +121,14 @@ void BattleTileView::eventOccurred(Event *e)
 				scrollRight = false;
 				break;
 		}
+	}
+	else if (e->type() == EVENT_MOUSE_MOVE)
+	{
+		Vec2<float> screenOffset = {this->getScreenOffset().x, this->getScreenOffset().y};
+		// Offset by 4 since ingame 4 is the typical height of the ground, and game displays cursor
+		// on top of the ground
+		setSelectedTilePosition(this->screenToTileCoords(
+		    Vec2<float>(e->mouse().X, e->mouse().Y + 4) - screenOffset, currentZLevel - 1));
 	}
 	else if (e->type() == EVENT_FINGER_MOVE)
 	{
@@ -222,36 +235,129 @@ void BattleTileView::render()
 			break;
 	}
 
-	for (int z = zFrom; z < zTo; z++)
+	if (this->viewMode == TileViewMode::Isometric)
 	{
-		for (int layer = 0; layer < map.getLayerCount(); layer++)
+		// Find out when to draw selection bracket parts (if ever)
+		BattleTile *selectedTile = nullptr;
+		sp<BattleTileObject> drawBackBeforeThis;
+		sp<Image> selectionImageBack;
+		sp<Image> selectionImageFront;
+		if (selectedTilePosition.x >= minX && selectedTilePosition.x < maxX &&
+		    selectedTilePosition.y >= minY && selectedTilePosition.y < maxY &&
+		    selectedTilePosition.z >= zFrom && selectedTilePosition.z < zTo)
 		{
-			for (int y = minY; y < maxY; y++)
+			selectedTile =
+			    map.getTile(selectedTilePosition.x, selectedTilePosition.y, selectedTilePosition.z);
+
+			auto object_count = selectedTile->drawnObjects[0].size();
+			bool foundUnit = false;
+			for (size_t obj_id = 0; obj_id < object_count; obj_id++)
 			{
-				for (int x = minX; x < maxX; x++)
+				auto &obj = selectedTile->drawnObjects[0][obj_id];
+				if (!drawBackBeforeThis && (int)obj->getType() > 0)
+					drawBackBeforeThis = obj;
+				if (obj->getType() == BattleTileObject::Type::Unit)
+					foundUnit = true;
+			}
+			if (foundUnit)
+			{
+				selectionImageBack = selectedTileFilledImageBack;
+				selectionImageFront = selectedTileFilledImageFront;
+			}
+			else
+			{
+				selectionImageBack = selectedTileEmptyImageBack;
+				selectionImageFront = selectedTileEmptyImageFront;
+			}
+		}
+
+		for (int z = zFrom; z < zTo; z++)
+		{
+			for (int layer = 0; layer < map.getLayerCount(); layer++)
+			{
+				for (int y = minY; y < maxY; y++)
 				{
-					auto tile = map.getTile(x, y, z);
-					auto object_count = tile->drawnObjects[layer].size();
-					for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+					for (int x = minX; x < maxX; x++)
 					{
-						auto &obj = tile->drawnObjects[layer][obj_id];
-						if (((obj->getType() == BattleTileObject::Type::Ground) && hideGround) ||
-						    ((obj->getType() == BattleTileObject::Type::LeftWall) &&
-						     hideLeftWall) ||
-						    ((obj->getType() == BattleTileObject::Type::RightWall) &&
-						     hideRightWall) ||
-						    ((obj->getType() == BattleTileObject::Type::Scenery) && hideScenery))
-							continue;
-						Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
-						obj->draw(r, *this, pos, this->viewMode);
+						auto tile = map.getTile(x, y, z);
+						auto object_count = tile->drawnObjects[layer].size();
+						for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+						{
+							auto &obj = tile->drawnObjects[layer][obj_id];
+							// Back selection image is drawn between ground image and everything
+							// else
+							if (layer == 0 && tile == selectedTile && obj == drawBackBeforeThis)
+								r.draw(selectedTileEmptyImageBack,
+								       tileToOffsetScreenCoords(selectedTilePosition) -
+								           selectedTileImageOffset);
+							// FIXME: Remove this when renderer is working 100% properly to make
+							// rendering faster
+							if (((obj->getType() == BattleTileObject::Type::Ground) &&
+							     hideGround) ||
+							    ((obj->getType() == BattleTileObject::Type::LeftWall) &&
+							     hideLeftWall) ||
+							    ((obj->getType() == BattleTileObject::Type::RightWall) &&
+							     hideRightWall) ||
+							    ((obj->getType() == BattleTileObject::Type::Scenery) &&
+							     hideScenery))
+								continue;
+							Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
+							obj->draw(r, *this, pos, this->viewMode);
+						}
+						// When on the last layer, draw the front selection image (and back
+						// selection image if we haven't yet)
+						if (layer == 0 && tile == selectedTile)
+						{
+							// Back selection image is drawn here if it hasn't been drawn yet
+							if (!drawBackBeforeThis)
+								r.draw(selectedTileEmptyImageBack,
+								       tileToOffsetScreenCoords(selectedTilePosition) -
+								           selectedTileImageOffset);
+							r.draw(selectedTileEmptyImageFront,
+							       tileToOffsetScreenCoords(selectedTilePosition) -
+							           selectedTileImageOffset);
+						}
 					}
 				}
 			}
 		}
 	}
-
 	if (this->viewMode == TileViewMode::Strategy)
 	{
+		for (int z = zFrom; z < zTo; z++)
+		{
+			for (int layer = 0; layer < map.getLayerCount(); layer++)
+			{
+				for (int y = minY; y < maxY; y++)
+				{
+					for (int x = minX; x < maxX; x++)
+					{
+						bool selected = selectedTilePosition.x == x &&
+						                selectedTilePosition.y == y && selectedTilePosition.z == z;
+						auto tile = map.getTile(x, y, z);
+						auto object_count = tile->drawnObjects[layer].size();
+						for (size_t obj_id = 0; obj_id < object_count; obj_id++)
+						{
+							auto &obj = tile->drawnObjects[layer][obj_id];
+							// FIXME: Remove this when renderer is working 100% properly to make
+							// rendering faster
+							if (((obj->getType() == BattleTileObject::Type::Ground) &&
+							     hideGround) ||
+							    ((obj->getType() == BattleTileObject::Type::LeftWall) &&
+							     hideLeftWall) ||
+							    ((obj->getType() == BattleTileObject::Type::RightWall) &&
+							     hideRightWall) ||
+							    ((obj->getType() == BattleTileObject::Type::Scenery) &&
+							     hideScenery))
+								continue;
+							Vec2<float> pos = tileToOffsetScreenCoords(obj->getPosition());
+							obj->draw(r, *this, pos, this->viewMode);
+						}
+					}
+				}
+			}
+		}
+
 		Vec2<float> centerIsoScreenPos = this->tileToScreenCoords(
 		    Vec3<float>{this->centerPos.x, this->centerPos.y, 0}, TileViewMode::Isometric);
 
@@ -350,6 +456,25 @@ void BattleTileView::setScreenCenterTile(Vec3<float> center)
 void BattleTileView::setScreenCenterTile(Vec2<float> center)
 {
 	this->setScreenCenterTile(Vec3<float>{center.x, center.y, currentZLevel});
+}
+
+Vec3<int> BattleTileView::getSelectedTilePosition() { return selectedTilePosition; }
+
+void BattleTileView::setSelectedTilePosition(Vec3<int> newPosition)
+{
+	selectedTilePosition = newPosition;
+	if (selectedTilePosition.x < 0)
+		selectedTilePosition.x = 0;
+	if (selectedTilePosition.y < 0)
+		selectedTilePosition.y = 0;
+	if (selectedTilePosition.z < 0)
+		selectedTilePosition.z = 0;
+	if (selectedTilePosition.x >= map.size.x)
+		selectedTilePosition.x = map.size.x - 1;
+	if (selectedTilePosition.y >= map.size.y)
+		selectedTilePosition.y = map.size.y - 1;
+	if (selectedTilePosition.z >= map.size.z)
+		selectedTilePosition.z = map.size.z - 1;
 }
 
 }; // namespace OpenApoc

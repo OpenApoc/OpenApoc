@@ -20,8 +20,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="extractors\common\strtab.cpp" />
+    <ClCompile Include="extractors\common\tacp.cpp" />
     <ClCompile Include="extractors\common\ufo2p.cpp" />
     <ClCompile Include="extractors\extractors.cpp" />
+    <ClCompile Include="extractors\extract_agent_equipment.cpp" />
     <ClCompile Include="extractors\extract_base_layouts.cpp" />
     <ClCompile Include="extractors\extract_battlescape_map.cpp" />
     <ClCompile Include="extractors\extract_battlescape_stuff.cpp" />
@@ -37,6 +39,7 @@
     <ClCompile Include="extractors\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="extractors\common\aequipment.h" />
     <ClInclude Include="extractors\common\audio.h" />
     <ClInclude Include="extractors\common\baselayout.h" />
     <ClInclude Include="extractors\common\building.h" />
@@ -49,6 +52,7 @@
     <ClInclude Include="extractors\common\research.h" />
     <ClInclude Include="extractors\common\scenerytile.h" />
     <ClInclude Include="extractors\common\strtab.h" />
+    <ClInclude Include="extractors\common\tacp.h" />
     <ClInclude Include="extractors\common\ufo2p.h" />
     <ClInclude Include="extractors\common\ufopaedia.h" />
     <ClInclude Include="extractors\common\vehicle.h" />

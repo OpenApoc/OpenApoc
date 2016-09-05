@@ -1,11 +1,11 @@
 #pragma once
 
 #include "game/state/organisation.h"
-#include "game/state/rules/aequipment_type.h"
 #include "game/state/rules/facility_type.h"
 #include "game/state/rules/vammo_type.h"
 #include "game/state/rules/vehicle_type.h"
 #include "game/state/rules/vequipment_type.h"
+#include "tools/extractors/common/aequipment.h"
 #include "tools/extractors/common/audio.h"
 #include "tools/extractors/common/baselayout.h"
 #include "tools/extractors/common/building.h"
@@ -47,6 +47,8 @@ class UFO2P
 
 	std::unique_ptr<DataChunk<RawSoundData>> rawsound;
 	std::unique_ptr<DataChunk<BaseLayoutData>> baselayouts;
+
+	std::unique_ptr<StrTab> agent_equipment_names;
 
 	std::unique_ptr<StrTab> vehicle_equipment_names;
 

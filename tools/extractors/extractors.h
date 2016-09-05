@@ -1,6 +1,7 @@
 #pragma once
 #include "game/state/gamestate.h"
 #include "library/strings.h"
+#include "tools/extractors/common/tacp.h"
 #include "tools/extractors/common/ufo2p.h"
 
 namespace OpenApoc
@@ -10,6 +11,7 @@ class InitialGameStateExtractor
 {
   private:
 	UFO2P ufo2p;
+	TACP tacp;
 
   public:
 	enum class Difficulty
@@ -31,6 +33,7 @@ class InitialGameStateExtractor
 	void extractFacilities(GameState &state, Difficulty difficulty);
 	void extractBaseLayouts(GameState &state, Difficulty difficulty);
 	void extractVehicleEquipment(GameState &state, Difficulty difficulty);
+	void extractAgentEquipment(GameState &state, Difficulty difficulty);
 	void extractResearch(GameState &state, Difficulty difficulty);
 
 	void extractBuildings(GameState &state, UString bldFileName, sp<City> city,

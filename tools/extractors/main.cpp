@@ -60,9 +60,9 @@ int main(int argc, char *argv[])
 
 		std::list<std::future<void>> tasks;
 
-		// auto dpair = std::pair<UString,
-		// InitialGameStateExtractor::Difficulty>("data/difficulty5",
-		// InitialGameStateExtractor::Difficulty::DIFFICULTY_5);
+		/*auto dpair = std::pair<UString,
+		InitialGameStateExtractor::Difficulty>("data/difficulty5",
+		InitialGameStateExtractor::Difficulty::DIFFICULTY_5);*/
 		for (auto &dpair : difficultyOutputFiles)
 		{
 			auto future = fw->threadPool->enqueue([dpair, &e]() {
