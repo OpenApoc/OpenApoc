@@ -7,6 +7,8 @@
 namespace OpenApoc
 {
 
+StrTab::StrTab(std::vector<std::string> strings) : readStrings(strings) {}
+
 StrTab::StrTab(std::istream &file, off_t start_offset, off_t end_offset, bool makeUnique)
 {
 	LogAssert(end_offset > start_offset);

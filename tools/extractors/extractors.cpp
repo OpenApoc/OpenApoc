@@ -7,6 +7,7 @@ void InitialGameStateExtractor::extract(GameState &state, Difficulty difficulty)
 {
 	this->extractOrganisations(state, difficulty);
 	this->extractVehicleEquipment(state, difficulty);
+	this->extractAgentEquipment(state, difficulty);
 	this->extractVehicles(state, difficulty);
 	this->extractFacilities(state, difficulty);
 	this->extractBaseLayouts(state, difficulty);

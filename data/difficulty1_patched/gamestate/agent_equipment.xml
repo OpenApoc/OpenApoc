@@ -1,17 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <agent_equipment>
   <entry>
+    <key>AEQUIPMENTTYPE_ALIEN_DETECTOR</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_ALIEN_DETECTOR</id>
+        <name>Alien Detector</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:39:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_ALIEN_EGG_S_VOMIT_TUBE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_ALIEN_EGG_S_VOMIT_TUBE</id>
+        <name>Alien Egg's Vomit Tube</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:78:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
     <key>AEQUIPMENTTYPE_ALIEN_GAS_GRENADE</key>
     <value>
       <sp>
         <id>AEQUIPMENTTYPE_ALIEN_GAS_GRENADE</id>
         <name>Alien Gas Grenade</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:26:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_AUTO_CANNON_AP_CLIP</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_AUTO_CANNON_AP_CLIP</id>
+        <name>Auto Cannon AP Clip</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:12:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_AUTO_CANNON_HE_CLIP</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_AUTO_CANNON_HE_CLIP</id>
+        <name>Auto Cannon HE Clip</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:13:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_AUTO_CANNON_IN_CLIP</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_AUTO_CANNON_IN_CLIP</id>
+        <name>Auto Cannon IN Clip</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:14:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
       </sp>
     </value>
   </entry>
@@ -21,12 +96,42 @@
       <sp>
         <id>AEQUIPMENTTYPE_BOOMEROID</id>
         <name>Boomeroid</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:42:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
+          <x>2</x>
+          <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_BRAINSUCKER_LAUNCHER</id>
+        <name>Brainsucker Launcher</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:44:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>4</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_BRAINSUCKER_POD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_BRAINSUCKER_POD</id>
+        <name>Brainsucker Pod</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:56:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
       </sp>
     </value>
   </entry>
@@ -36,12 +141,42 @@
       <sp>
         <id>AEQUIPMENTTYPE_DEVASTATOR_CANNON</id>
         <name>Devastator Cannon</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:41:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
+          <x>2</x>
+          <y>4</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_DIMENSION_DESTABILISER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_DIMENSION_DESTABILISER</id>
+        <name>Dimension Destabiliser</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:36:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_DIMENSION_FORCE_FIELD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_DIMENSION_FORCE_FIELD</id>
+        <name>Dimension Force Field</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:52:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
       </sp>
     </value>
   </entry>
@@ -51,12 +186,12 @@
       <sp>
         <id>AEQUIPMENTTYPE_DIMENSION_MISSILE</id>
         <name>Dimension Missile</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:47:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
-          <y>1</y>
+          <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
       </sp>
     </value>
   </entry>
@@ -66,87 +201,12 @@
       <sp>
         <id>AEQUIPMENTTYPE_DIMENSION_MISSILE_LAUNCHER</id>
         <name>Dimension Missile Launcher</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:46:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
+          <x>3</x>
+          <y>5</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(HEAD)</key>
-    <value>
-      <sp>
-        <id>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(HEAD)</id>
-        <name>Personal Disruptor Armor (head)</name>
-        <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
-        </equipscreen_size>
-        <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(LEFT_ARM)</key>
-    <value>
-      <sp>
-        <id>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(LEFT_ARM)</id>
-        <name>Personal Disruptor Armor (left arm)</name>
-        <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
-        </equipscreen_size>
-        <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(LEGS)</key>
-    <value>
-      <sp>
-        <id>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(LEGS)</id>
-        <name>Personal Disruptor Armor (legs)</name>
-        <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
-        </equipscreen_size>
-        <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(RIGHT_ARM)</key>
-    <value>
-      <sp>
-        <id>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(RIGHT_ARM)</id>
-        <name>Personal Disruptor Armor (right arm)</name>
-        <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
-        </equipscreen_size>
-        <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
-      </sp>
-    </value>
-  </entry>
-  <entry>
-    <key>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(TORSO)</key>
-    <value>
-      <sp>
-        <id>AEQUIPMENTTYPE_DISRUPTOR_ARMOR_(TORSO)</id>
-        <name>Personal Disruptor Armor (torso)</name>
-        <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
-        </equipscreen_size>
-        <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
       </sp>
     </value>
   </entry>
@@ -156,12 +216,98 @@
       <sp>
         <id>AEQUIPMENTTYPE_DISRUPTOR_GUN</id>
         <name>Disruptor Gun</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:40:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_ELERIUM</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_ELERIUM</id>
+        <name>Elerium</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:75:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_SOLMINE</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_EMPTY</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_EMPTY</id>
+        <name>Empty</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:0:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <manufacturer>ORG_X-COM</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_ENERGY_POD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_ENERGY_POD</id>
+        <name>Energy Pod</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:53:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_ENTROPY_LAUNCHER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_ENTROPY_LAUNCHER</id>
+        <name>Entropy Launcher</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:45:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_ENTROPY_POD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_ENTROPY_POD</id>
+        <name>Entropy Pod</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:57:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_FORCEWEB</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_FORCEWEB</id>
+        <name>ForceWeb</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:31:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
       </sp>
     </value>
   </entry>
@@ -171,12 +317,552 @@
       <sp>
         <id>AEQUIPMENTTYPE_HEAVY_LAUNCHER_AG_MISSILE</id>
         <name>Heavy Launcher AG Missile</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:18:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_HEAVY_LAUNCHER_HE_MISSILE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_HEAVY_LAUNCHER_HE_MISSILE</id>
+        <name>Heavy Launcher HE Missile</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:19:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_HEAVY_LAUNCHER_IN_MISSILE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_HEAVY_LAUNCHER_IN_MISSILE</id>
+        <name>Heavy Launcher IN Missile</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:20:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_HYPERWORM_S_BITE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_HYPERWORM_S_BITE</id>
+        <name>Hyperworm's Bite</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:80:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_INCENDIARY_GRENADE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_INCENDIARY_GRENADE</id>
+        <name>Incendiary Grenade</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:58:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
           <y>1</y>
         </equipscreen_size>
-        <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+        <manufacturer>ORG_DIABLO</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_BODY_UNIT</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_BODY_UNIT</id>
+        <name>Marsec Body Unit</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:65:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_HEAD_UNIT</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_HEAD_UNIT</id>
+        <name>Marsec Head Unit</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:68:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_HEAVY_LAUNCHER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_HEAVY_LAUNCHER</id>
+        <name>Marsec Heavy Launcher</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:17:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>5</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_HIGH_EXPLOSIVE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_HIGH_EXPLOSIVE</id>
+        <name>Marsec High Explosive</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:4:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_LEFT_ARM_UNIT</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_LEFT_ARM_UNIT</id>
+        <name>Marsec Left Arm Unit</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:66:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_LEG_UNITS</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_LEG_UNITS</id>
+        <name>Marsec Leg Units</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:64:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>4</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_M4000_GUN_CLIP</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_M4000_GUN_CLIP</id>
+        <name>Marsec M4000 Gun Clip</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:8:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_M4000_MACHINE_GUN</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_M4000_MACHINE_GUN</id>
+        <name>Marsec M4000 Machine Gun</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:7:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>4</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_MINILAUNCHER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_MINILAUNCHER</id>
+        <name>Marsec MiniLauncher</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:21:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_PROXIMITY_MINE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_PROXIMITY_MINE</id>
+        <name>Marsec Proximity Mine</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:3:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MARSEC_RIGHT_ARM_UNIT</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MARSEC_RIGHT_ARM_UNIT</id>
+        <name>Marsec Right Arm Unit</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:67:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEDI-KIT</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEDI-KIT</id>
+        <name>Medi-kit</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:54:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_NANOTECH</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_AP_GRENADE</id>
+        <name>Megapol AP Grenade</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:0:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_AUTO_CANNON</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_AUTO_CANNON</id>
+        <name>Megapol Auto Cannon</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:11:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>4</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_BODY_ARMOR</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_BODY_ARMOR</id>
+        <name>Megapol Body Armor</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:60:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_HELMET</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_HELMET</id>
+        <name>Megapol Helmet</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:63:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_LASER_POD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_LASER_POD</id>
+        <name>Megapol Laser Pod</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:10:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_LASER_SNIPER_GUN</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_LASER_SNIPER_GUN</id>
+        <name>Megapol Laser Sniper Gun</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:9:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>5</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_LAWPISTOL</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_LAWPISTOL</id>
+        <name>Megapol Lawpistol</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:5:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_LAWPISTOL_CLIP</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_LAWPISTOL_CLIP</id>
+        <name>Megapol Lawpistol Clip</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:6:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_LEFT_ARM_ARMOR</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_LEFT_ARM_ARMOR</id>
+        <name>Megapol Left Arm Armor</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:61:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_LEG_ARMOR</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_LEG_ARMOR</id>
+        <name>Megapol Leg Armor</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:59:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>4</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_PLASMA_GUN</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_PLASMA_GUN</id>
+        <name>Megapol Plasma Gun</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:15:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_PLASMA_POD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_PLASMA_POD</id>
+        <name>Megapol Plasma Pod</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:16:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_RIGHT_ARM_ARMOR</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_RIGHT_ARM_ARMOR</id>
+        <name>Megapol Right Arm Armor</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:62:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_SMOKE_GRENADE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_SMOKE_GRENADE</id>
+        <name>Megapol Smoke Grenade</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:2:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_STUN_GRAPPLE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_STUN_GRAPPLE</id>
+        <name>Megapol Stun Grapple</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:25:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGAPOL_STUN_GRENADE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGAPOL_STUN_GRENADE</id>
+        <name>Megapol Stun Grenade</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:1:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGASPAWN_S_DISRUPTOR</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGASPAWN_S_DISRUPTOR</id>
+        <name>Megaspawn's Disruptor</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:82:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>5</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MEGASPAWN_S_LAUNCHER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MEGASPAWN_S_LAUNCHER</id>
+        <name>Megaspawn's Launcher</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:83:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>5</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MIND_BENDER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MIND_BENDER</id>
+        <name>Mind Bender</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:38:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MIND_SHIELD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MIND_SHIELD</id>
+        <name>Mind Shield</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:37:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
       </sp>
     </value>
   </entry>
@@ -186,12 +872,87 @@
       <sp>
         <id>AEQUIPMENTTYPE_MINILAUNCHER_AG_MISSILE</id>
         <name>MiniLauncher AG Missile</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:22:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MINILAUNCHER_HE_MISSILE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MINILAUNCHER_HE_MISSILE</id>
+        <name>MiniLauncher HE Missile</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:23:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MINILAUNCHER_IN_MISSILE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MINILAUNCHER_IN_MISSILE</id>
+        <name>MiniLauncher IN Missile</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:24:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MOTION_SCANNER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MOTION_SCANNER</id>
+        <name>Motion Scanner</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:55:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
           <y>1</y>
         </equipscreen_size>
-        <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MULTI-TRACKER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MULTI-TRACKER</id>
+        <name>Multi-Tracker</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:29:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_MULTIWORM_S_SPIT</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_MULTIWORM_S_SPIT</id>
+        <name>Multiworm's Spit</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:76:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
       </sp>
     </value>
   </entry>
@@ -201,12 +962,12 @@
       <sp>
         <id>AEQUIPMENTTYPE_PERSONAL_CLOAKING_FIELD</id>
         <name>Personal Cloaking Field</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:51:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
+          <x>2</x>
+          <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
       </sp>
     </value>
   </entry>
@@ -216,12 +977,132 @@
       <sp>
         <id>AEQUIPMENTTYPE_PERSONAL_DISRUPTOR_SHIELD</id>
         <name>Personal Disruptor Shield</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:49:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_PERSONAL_TELEPORTER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_PERSONAL_TELEPORTER</id>
+        <name>Personal Teleporter</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:50:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_POPPER_S_BOMB</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_POPPER_S_BOMB</id>
+        <name>Popper's Bomb</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:81:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_POWER_SWORD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_POWER_SWORD</id>
+        <name>Power Sword</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:43:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>4</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_PSI-GRENADE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_PSI-GRENADE</id>
+        <name>PSI-Grenade</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:30:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
           <y>1</y>
         </equipscreen_size>
-        <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+        <manufacturer>ORG_MARSEC</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_PSICLONE</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_PSICLONE</id>
+        <name>Psiclone</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:78:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_PSIMORPH_S_MINDBENDER</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_PSIMORPH_S_MINDBENDER</id>
+        <name>Psimorph's Mindbender</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:79:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_QUEENSPAWN_S_TENTACLES</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_QUEENSPAWN_S_TENTACLES</id>
+        <name>Queenspawn's Tentacles</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:77:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_SPITTER_S_VOMIT_FUNNEL</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_SPITTER_S_VOMIT_FUNNEL</id>
+        <name>Spitter's Vomit Funnel</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:77:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_ALIEN</manufacturer>
       </sp>
     </value>
   </entry>
@@ -231,57 +1112,87 @@
       <sp>
         <id>AEQUIPMENTTYPE_TOXIGUN</id>
         <name>Toxigun</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:32:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
-          <y>1</y>
+          <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
       </sp>
     </value>
   </entry>
   <entry>
-    <key>AEQUIPMENTTYPE_TOXIN_TYPE_A</key>
+    <key>AEQUIPMENTTYPE_TOXIGUN_A-CLIP</key>
     <value>
       <sp>
-        <id>AEQUIPMENTTYPE_TOXIN_TYPE_A</id>
-        <name>Toxin Type A</name>
+        <id>AEQUIPMENTTYPE_TOXIGUN_A-CLIP</id>
+        <name>Toxigun A-Clip</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:33:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
       </sp>
     </value>
   </entry>
   <entry>
-    <key>AEQUIPMENTTYPE_TOXIN_TYPE_B</key>
+    <key>AEQUIPMENTTYPE_TOXIGUN_B-CLIP</key>
     <value>
       <sp>
-        <id>AEQUIPMENTTYPE_TOXIN_TYPE_B</id>
-        <name>Toxin Type B</name>
+        <id>AEQUIPMENTTYPE_TOXIGUN_B-CLIP</id>
+        <name>Toxigun B-Clip</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:34:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
       </sp>
     </value>
   </entry>
   <entry>
-    <key>AEQUIPMENTTYPE_TOXIN_TYPE_C</key>
+    <key>AEQUIPMENTTYPE_TOXIGUN_C-CLIP</key>
     <value>
       <sp>
-        <id>AEQUIPMENTTYPE_TOXIN_TYPE_C</id>
-        <name>Toxin Type C</name>
+        <id>AEQUIPMENTTYPE_TOXIGUN_C-CLIP</id>
+        <name>Toxigun C-Clip</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:35:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
           <x>1</x>
           <y>1</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_TRACKER_GUN</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_TRACKER_GUN</id>
+        <name>Tracker Gun</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:28:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_TRACKER_GUN_CLIP</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_TRACKER_GUN_CLIP</id>
+        <name>Tracker Gun Clip</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:27:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>1</x>
+          <y>1</y>
+        </equipscreen_size>
+        <manufacturer>ORG_MEGAPOL</manufacturer>
       </sp>
     </value>
   </entry>
@@ -291,12 +1202,87 @@
       <sp>
         <id>AEQUIPMENTTYPE_VORTEX_MINE</id>
         <name>Vortex Mine</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:48:xcom3/tacdata/tactical.pal</equipscreen_sprite>
         <equipscreen_size>
-          <x>1</x>
-          <y>1</y>
+          <x>2</x>
+          <y>2</y>
         </equipscreen_size>
         <manufacturer>ORG_X-COM</manufacturer>
-        <store_space>1</store_space>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_X-COM_BODY_SHIELD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_X-COM_BODY_SHIELD</id>
+        <name>X-COM Body Shield</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:70:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_X-COM_HEAD_SHIELD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_X-COM_HEAD_SHIELD</id>
+        <name>X-COM Head Shield</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:73:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>2</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_X-COM_LEFT_ARM_SHIELD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_X-COM_LEFT_ARM_SHIELD</id>
+        <name>X-COM Left Arm Shield</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:71:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_X-COM_LEG_SHIELDS</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_X-COM_LEG_SHIELDS</id>
+        <name>X-COM Leg Shields</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:69:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>3</x>
+          <y>4</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
+      </sp>
+    </value>
+  </entry>
+  <entry>
+    <key>AEQUIPMENTTYPE_X-COM_RIGHT_ARM_SHIELD</key>
+    <value>
+      <sp>
+        <id>AEQUIPMENTTYPE_X-COM_RIGHT_ARM_SHIELD</id>
+        <name>X-COM Right Arm Shield</name>
+        <equipscreen_sprite>PCK:xcom3/ufodata/pequip.pck:xcom3/ufodata/pequip.tab:72:xcom3/tacdata/tactical.pal</equipscreen_sprite>
+        <equipscreen_size>
+          <x>2</x>
+          <y>3</y>
+        </equipscreen_size>
+        <manufacturer>ORG_X-COM</manufacturer>
       </sp>
     </value>
   </entry>

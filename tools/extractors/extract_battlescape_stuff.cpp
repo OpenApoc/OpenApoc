@@ -108,33 +108,25 @@ static void readBattleMapParts(GameState &state, BattleMapPartType::Type type,
 			}
 		}
 
-		object->voxelMapLOF = mksp<VoxelMap>(Vec3<int>{32, 32, 20});
+		object->voxelMapLOF = mksp<VoxelMap>(Vec3<int>{24, 24, 20});
 		for (int slice = 0; slice < 20; slice++)
 		{
+			if ((unsigned int)entry.loftemps_lof[slice] == 0)
+				continue;
 			auto lofString =
 			    UString::format("LOFTEMPS:%s:%s:%u", loftempsFile.cStr(), loftempsTab.cStr(),
 			                    (unsigned int)entry.loftemps_lof[slice]);
-			auto loftemp = fw().data->loadVoxelSlice(lofString);
-			if (!loftemp)
-			{
-				LogError("Failed to open voxel slice \"%s\"", lofString.cStr());
-				return;
-			}
-			object->voxelMapLOF->slices[slice] = loftemp;
+			object->voxelMapLOF->slices[slice] = fw().data->loadVoxelSlice(lofString);
 		}
-		object->voxelMapLOS = mksp<VoxelMap>(Vec3<int>{32, 32, 20});
+		object->voxelMapLOS = mksp<VoxelMap>(Vec3<int>{24, 24, 20});
 		for (int slice = 0; slice < 20; slice++)
 		{
+			if ((unsigned int)entry.loftemps_los[slice] == 0)
+				continue;
 			auto lofString =
 			    UString::format("LOFTEMPS:%s:%s:%u", loftempsFile.cStr(), loftempsTab.cStr(),
 			                    (unsigned int)entry.loftemps_los[slice]);
-			auto loftemp = fw().data->loadVoxelSlice(lofString);
-			if (!loftemp)
-			{
-				LogError("Failed to open voxel slice \"%s\"", lofString.cStr());
-				return;
-			}
-			object->voxelMapLOF->slices[slice] = loftemp;
+			object->voxelMapLOS->slices[slice] = fw().data->loadVoxelSlice(lofString);
 		}
 		if (entry.damaged_idx)
 		{
@@ -184,7 +176,9 @@ static void readBattleMapParts(GameState &state, BattleMapPartType::Type type,
 			                    stratPckName.cStr(), dirName.cStr(), stratPckName.cStr(), i);
 			object->strategySprite = fw().data->loadImage(stratImageString);
 		}
-		object->imageOffset = {24, 48};
+		// It should be {24,34} I guess, since 48/2=24, but 23 gives a little better visual
+		// corellation with the sprites
+		object->imageOffset = {23, 34};
 
 		state.battle.map_part_types[id] = object;
 	}
