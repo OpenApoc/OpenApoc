@@ -1,7 +1,7 @@
 PROJECT (OpenApoc_Tests CXX C)
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1)
 
-set (TEST_LIST test_rect test_voxel test_tilemap test_rng)
+set (TEST_LIST test_rect test_voxel test_tilemap test_rng test_images)
 
 foreach(TEST ${TEST_LIST})
 		add_executable(${TEST} ${TEST}.cpp)
