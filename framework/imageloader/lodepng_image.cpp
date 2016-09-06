@@ -34,65 +34,34 @@ sp<Palette> OpenApoc::loadPNGPalette(Data &d, const UString fileName)
 		        f.systemPath().cStr(), err, lodepng_error_text(err));
 		return nullptr;
 	}
-	// 2 possible types of PNG palette - either a PALETTE section, or a 256-pixel long image
-	if (png_state.info_png.color.colortype == LCT_PALETTE)
+	if (width * height != 256)
 	{
-		if (png_state.info_png.color.bitdepth != 8)
-		{
-			LogWarning("PNG \"%s\" has unsupported palette bit depth %u (expected '8')",
-			           f.systemPath().cStr(), png_state.info_png.color.bitdepth);
-			return nullptr;
-		}
-		if (png_state.info_png.color.palettesize != 256)
-		{
-			LogWarning("PNG \"%s\" has unsupported palette size %zu (expected '256')",
-			           f.systemPath().cStr(), png_state.info_png.color.palettesize);
-			return nullptr;
-		}
-		auto pal = mksp<Palette>();
-		// The lodepng palette is already in R G B A byte order and is u8
-		uint8_t *palPos = png_state.info_png.color.palette;
-		for (unsigned int i = 0; i < 256; i++)
-		{
-			auto r = *palPos++;
-			auto g = *palPos++;
-			auto b = *palPos++;
-			auto a = *palPos++;
-			pal->setColour(i, Colour{r, g, b, a});
-		}
-		return pal;
-	}
-	else
-	{
-		if (width * height != 256)
-		{
 
-			LogWarning("PNG \"%s\" size {%u,%u} too large for palette (must be 256 pixels total)",
-			           f.systemPath().cStr(), width, height);
-			return nullptr;
-		}
-		std::vector<unsigned char> pixels;
-		auto error = lodepng::decode(pixels, width, height,
-		                             reinterpret_cast<unsigned char *>(data.get()), dataSize);
-		if (error)
-		{
-			LogInfo("Failed to read PNG \"%s\" (%u) : %s", f.systemPath().cStr(), err,
-			        lodepng_error_text(err));
-			return nullptr;
-		}
-		auto pal = mksp<Palette>();
-		// The lodepng default data output is already in R G B A byte order and is u8
-		uint8_t *palPos = pixels.data();
-		for (unsigned int i = 0; i < 256; i++)
-		{
-			uint8_t r = *palPos++;
-			uint8_t g = *palPos++;
-			uint8_t b = *palPos++;
-			uint8_t a = *palPos++;
-			pal->setColour(i, Colour{r, g, b, a});
-		}
-		return pal;
+		LogWarning("PNG \"%s\" size {%u,%u} too large for palette (must be 256 pixels total)",
+		           f.systemPath().cStr(), width, height);
+		return nullptr;
 	}
+	std::vector<unsigned char> pixels;
+	auto error = lodepng::decode(pixels, width, height,
+	                             reinterpret_cast<unsigned char *>(data.get()), dataSize);
+	if (error)
+	{
+		LogInfo("Failed to read PNG \"%s\" (%u) : %s", f.systemPath().cStr(), err,
+		        lodepng_error_text(err));
+		return nullptr;
+	}
+	auto pal = mksp<Palette>();
+	// The lodepng default data output is already in R G B A byte order and is u8
+	uint8_t *palPos = pixels.data();
+	for (unsigned int i = 0; i < 256; i++)
+	{
+		uint8_t r = *palPos++;
+		uint8_t g = *palPos++;
+		uint8_t b = *palPos++;
+		uint8_t a = *palPos++;
+		pal->setColour(i, Colour{r, g, b, a});
+	}
+	return pal;
 }
 
 namespace
@@ -126,47 +95,8 @@ class LodepngImageLoader : public OpenApoc::ImageLoader
 		        file.systemPath().cStr(), width, height, png_state.info_png.color.colortype,
 		        png_state.info_png.color.bitdepth);
 
-		if (png_state.info_png.color.colortype == LCT_PALETTE)
-		{
-			if (png_state.info_png.color.bitdepth != 8)
-			{
-				LogWarning("PNG \"%s\" has unsupported palette bit depth %u (expected '8')",
-				           file.systemPath().cStr(), png_state.info_png.color.bitdepth);
-				return nullptr;
-			}
-			std::vector<unsigned char> pixels;
-			err = lodepng::decode(pixels, width, height,
-			                      reinterpret_cast<unsigned char *>(data.get()), dataSize,
-			                      LCT_PALETTE, 8);
-			if (err)
-			{
-				LogInfo("Failed to read PNG \"%s\" (%u) : %s", file.systemPath().cStr(), err,
-				        lodepng_error_text(err));
-				return nullptr;
-			}
-			if (pixels.size() < width * height)
-			{
-				LogWarning("PNG \"%s\" has insufficient size %zu for {%u,%u} image",
-				           file.systemPath().cStr(), pixels.size(), width, height);
-				return nullptr;
-			}
-			auto img = mksp<PaletteImage>(Vec2<unsigned int>{width, height});
-			PaletteImageLock dst(img, ImageLockUse::Write);
-			uint8_t *readPos = pixels.data();
-
-			for (unsigned y = 0; y < height; y++)
-			{
-				for (unsigned x = 0; x < width; x++)
-				{
-					dst.set({x, y}, *readPos);
-					readPos++;
-				}
-			}
-
-			return img;
-		}
-
-		// Otherwise just convert to RGBA
+		// Just convert to RGBA, as PNG palettes are often reordered/trimmed at every turn by any
+		// app modifying them
 
 		std::vector<unsigned char> image;
 		unsigned int error = lodepng::decode(
