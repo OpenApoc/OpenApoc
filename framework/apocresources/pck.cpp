@@ -254,7 +254,7 @@ sp<ImageSet> PCKLoader::load(Data &d, UString PckFilename, UString TabFilename)
 		{
 			case 0:
 				// 0 appears to mean a missing image?
-				img = nullptr;
+				img = mksp<PaletteImage>(Vec2<unsigned>{1, 1});
 				break;
 			case 1:
 				img = readPckCompression1(pck, {header.rightClip, header.bottomClip});
