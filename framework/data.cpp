@@ -459,6 +459,30 @@ sp<Image> Data::loadImage(const UString &path, bool lazy)
 				return nullptr;
 		}
 	}
+	else if (path.substr(0, 9) == "LOFTEMPS:")
+	{
+		LogInfo("Loading LOFTEMPS \"%s\" as image", path.cStr());
+		auto voxelSlice = this->loadVoxelSlice(path);
+		if (!voxelSlice)
+		{
+			return nullptr;
+		}
+		Colour emptyColour{0, 0, 0, 0};
+		Colour filledColour{255, 255, 255, 255};
+		auto rgbImg = mksp<RGBImage>(voxelSlice->size);
+		RGBImageLock l(rgbImg, ImageLockUse::Write);
+		for (int y = 0; y < voxelSlice->size.y; y++)
+		{
+			for (int x = 0; x < voxelSlice->size.x; x++)
+			{
+				if (voxelSlice->getBit({x, y}))
+					l.set({x, y}, filledColour);
+				else
+					l.set({x, y}, emptyColour);
+			}
+		}
+		img = rgbImg;
+	}
 	else
 	{
 		for (auto &loader : imageLoaders)

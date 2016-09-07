@@ -91,6 +91,13 @@ int main(int, char **)
 	    // SHADOW files:
 	    {"PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:5:xcom3/UFODATA/pal_01.dat",
 	     "test_images/ufodata_shadow_5.png"},
+	    // LOFTEMPS files:
+	    {"LOFTEMPS:xcom3/UFODATA/loftemps.DAT:xcom3/UFODATA/loftemps.TAB:113",
+	     "test_images/ufodata_loftemps_113.png"},
+	    {"LOFTEMPS:xcom3/UFODATA/loftemps.DAT:xcom3/UFODATA/loftemps.TAB:150",
+	     "test_images/ufodata_loftemps_150.png"},
+	    {"LOFTEMPS:xcom3/UFODATA/loftemps.DAT:xcom3/UFODATA/loftemps.TAB:151",
+	     "test_images/ufodata_loftemps_151.png"},
 	};
 	Framework fw("OpenApoc", {}, false);
 
