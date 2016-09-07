@@ -75,6 +75,15 @@ int main(int, char **)
 	     "test_images/ufodata_newbut_3_base_pcx.png"},
 	    {"PCK:xcom3/UFODATA/city.PCK:xcom3/UFODATA/city.TAB:956:xcom3/UFODATA/pal_01.dat",
 	     "test_images/ufodata_city_956_pal01.png"},
+	    {"PCK:xcom3/tacdata/unit/xcom1a.pck:xcom3/tacdata/unit/xcom1a.tab:30:xcom3/tacdata/"
+	     "tactical.pal",
+	     "test_images/tacdata_unit_xcom1a_30_tactical.png"},
+	    {"PCK:xcom3/tacdata/unit/xcom1a.pck:xcom3/tacdata/unit/xcom1a.tab:240:xcom3/tacdata/"
+	     "tactical.pal",
+	     "test_images/tacdata_unit_xcom1a_240_tactical.png"},
+	    {"PCK:xcom3/tacdata/unit/xcom1a.pck:xcom3/tacdata/unit/xcom1a.tab:134:xcom3/tacdata/"
+	     "tactical.pal",
+	     "test_images/tacdata_unit_xcom1a_134_tactical.png"},
 	    // PCKSTRAT files:
 	    {"PCKSTRAT:xcom3/UFODATA/stratmap.PCK:xcom3/UFODATA/stratmap.TAB:32:xcom3/UFODATA/"
 	     "pal_01.dat",
