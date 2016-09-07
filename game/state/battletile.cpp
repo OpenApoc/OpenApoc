@@ -39,7 +39,7 @@ BattleTileMap::BattleTileMap(Vec3<int> size, std::vector<std::set<BattleTileObje
 			seenTypes.insert(type);
 		}
 	}
-	// In order for selectionBracket to be drawn properly, first layer must contain all mapparts's 
+	// In order for selectionBracket to be drawn properly, first layer must contain all mapparts's
 	// and the unit's types
 	if (layerMap[0].find(BattleTileObject::Type::Ground) == layerMap[0].end() ||
 	    layerMap[0].find(BattleTileObject::Type::LeftWall) == layerMap[0].end() ||
