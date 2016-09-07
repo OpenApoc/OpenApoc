@@ -90,7 +90,8 @@ struct PckBlkSubHeader
 {
 	uint8_t pixelSkip;
 	uint8_t pixelCount;
-	uint32_t blkOffset : 24;
+	// MSVC doesn't like aligning bit fields, this is really a 24bit 'little endian' offset
+	uint8_t blkOffset[3];
 };
 #pragma pack(pop)
 static_assert(sizeof(struct PckBlkSubHeader) == 5, "BlkSubHeader not 5 bytes");
@@ -134,10 +135,12 @@ static sp<PaletteImage> readPckCompression3(std::istream &input, Vec2<unsigned> 
 				LogWarning("Unexpected EOF reading row header");
 				return nullptr;
 			}
+			unsigned blkOffset = 0;
+			blkOffset =
+			    subHeader.blkOffset[0] | subHeader.blkOffset[1] << 8 | subHeader.blkOffset[2] << 16;
 			col += subHeader.pixelSkip;
 			for (unsigned i = 0; i < subHeader.pixelCount; i++)
 			{
-				unsigned blkOffset = i + subHeader.blkOffset;
 				if (blkOffset >= blkSize)
 				{
 					LogWarning("BLKOffset %u too large for xcom.blk size", blkOffset);
@@ -153,6 +156,7 @@ static sp<PaletteImage> readPckCompression3(std::istream &input, Vec2<unsigned> 
 						LogWarning("{%d,%d} out of bounds", col, row);
 					}
 				}
+				blkOffset++;
 				col++;
 			}
 		}
