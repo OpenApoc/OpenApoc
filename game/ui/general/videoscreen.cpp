@@ -44,10 +44,10 @@ VideoScreen::VideoScreen(const UString &videoPath, std::future<void> task,
 void VideoScreen::begin()
 {
 	// FIXME: This is now useless, as it doesn't actually load anything interesting here
-	loadingimage = fw().data->loadImage("UI/LOADING.PNG");
+	loadingimage = fw().data->loadImage("ui/loading.png");
 	if (!backgroundimage)
 	{
-		backgroundimage = fw().data->loadImage("UI/LOGO.PNG");
+		backgroundimage = fw().data->loadImage("ui/logo.png");
 	}
 	fw().displaySetIcon();
 	loadingimageangle = 0;

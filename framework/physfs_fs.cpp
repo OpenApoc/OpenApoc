@@ -38,13 +38,12 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 	size_t bufferSize;
 	std::unique_ptr<char[]> buffer;
 	UString systemPath;
-	UString caseCorrectedPath;
 	UString suppliedPath;
 
 	PHYSFS_File *file;
 
-	PhysfsIFileImpl(const UString &path, const UString &suppliedPath, size_t bufferSize = 512)
-	    : bufferSize(bufferSize), buffer(new char[bufferSize]), suppliedPath(suppliedPath)
+	PhysfsIFileImpl(const UString &path, size_t bufferSize = 512)
+	    : bufferSize(bufferSize), buffer(new char[bufferSize]), suppliedPath(path)
 	{
 		file = PHYSFS_openRead(path.cStr());
 		if (!file)
@@ -102,7 +101,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 
 		if (mode & std::ios_base::out)
 		{
-			LogError("ios::out set on read-only IFile \"%s\"", this->suppliedPath.cStr());
+			LogError("ios::out set on read-only IFile \"%s\"", this->systemPath.cStr());
 			LogAssert(0);
 			setp(buffer.get(), buffer.get());
 		}
@@ -120,7 +119,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 
 		if (mode & std::ios_base::out)
 		{
-			LogError("ios::out set on read-only IFile \"%s\"", this->suppliedPath.cStr());
+			LogError("ios::out set on read-only IFile \"%s\"", this->systemPath.cStr());
 			LogAssert(0);
 			setp(buffer.get(), buffer.get());
 		}
@@ -130,7 +129,7 @@ class PhysfsIFileImpl : public std::streambuf, public IFileImpl
 
 	int_type overflow(int_type c = traits_type::eof()) override
 	{
-		LogError("overflow called on read-only IFile \"%s\"", this->suppliedPath.cStr());
+		LogError("overflow called on read-only IFile \"%s\"", this->systemPath.cStr());
 		LogAssert(0);
 		std::ignore = c;
 		return 0;
@@ -244,87 +243,24 @@ FileSystem::FileSystem(std::vector<UString> paths)
 
 FileSystem::~FileSystem() = default;
 
-static bool CaseInsensitiveCompare(const UString &a, const UString &b)
-{
-	return a.toUpper() == b.toUpper();
-}
-
-static UString FindFile(const UString &basePath, std::list<UString> pathElements,
-                        std::map<UString, UString> &expandedFiles)
-{
-	if (pathElements.empty())
-	{
-		return basePath;
-	}
-	UString currentPath = basePath;
-	if (!currentPath.empty())
-		currentPath += "/";
-	UString currentElement = pathElements.front();
-	pathElements.pop_front();
-
-	UString foundPath;
-
-	char **elements = PHYSFS_enumerateFiles(currentPath.cStr());
-
-	for (char **element = elements; *element != NULL; element++)
-	{
-		auto elementPath = currentPath + *element;
-		// Don't add directories to the expandedFiles map
-		if (PHYSFS_exists(elementPath.cStr()))
-		{
-			expandedFiles[elementPath.toUpper()] = elementPath;
-		}
-		if (CaseInsensitiveCompare(currentElement, *element))
-		{
-			// We don't directly return here as we want to add the rest of the dir to cache, and
-			// check for overlapping entries
-			if (!foundPath.empty())
-			{
-				LogWarning("Multiple elements that match \"%s\"", currentPath.cStr());
-			}
-			foundPath = currentPath + *element;
-		}
-	}
-	PHYSFS_freeList(elements);
-	if (!foundPath.empty())
-	{
-		return FindFile(foundPath, pathElements, expandedFiles);
-	}
-	else
-	{
-		// Not found
-		return "";
-	}
-}
-
-UString FileSystem::getCorrectCaseFilename(const UString &path)
-{
-	TRACE_FN;
-	std::lock_guard<std::recursive_mutex> l(this->pathCacheLock);
-
-	UString cacheKey = path.toUpper();
-
-	auto it = this->pathCache.find(cacheKey);
-	if (it != this->pathCache.end())
-	{
-		return it->second;
-	}
-
-	return FindFile("", path.splitlist('/'), this->pathCache);
-}
-
 IFile FileSystem::open(const UString &path)
 {
 	TRACE_FN_ARGS1("PATH", path);
 	IFile f;
-	UString foundPath = this->getCorrectCaseFilename(path);
-	if (foundPath == "")
+
+	auto lowerPath = path.toLower();
+	if (path != lowerPath)
+	{
+		LogError("Path \"%s\" contains CAPITAL - cut it out!", path.cStr());
+	}
+
+	if (!PHYSFS_exists(path.cStr()))
 	{
 		LogInfo("Failed to find \"%s\"", path.cStr());
 		LogAssert(!f);
 		return f;
 	}
-	f.f.reset(new PhysfsIFileImpl(foundPath, path));
+	f.f.reset(new PhysfsIFileImpl(path));
 	f.rdbuf(dynamic_cast<PhysfsIFileImpl *>(f.f.get()));
 	LogInfo("Loading \"%s\" from \"%s\"", path.cStr(), f.systemPath().cStr());
 	return f;
@@ -336,7 +272,6 @@ std::list<UString> FileSystem::enumerateDirectory(const UString &basePath,
 
 	std::list<UString> result;
 	bool filterByExtension = !extension.empty();
-	UString uppercaseExtension = extension.toUpper();
 
 	char **elements = PHYSFS_enumerateFiles(basePath.cStr());
 	for (char **element = elements; *element != NULL; element++)
@@ -348,7 +283,7 @@ std::list<UString> FileSystem::enumerateDirectory(const UString &basePath,
 		else
 		{
 			const UString elementString = (*element);
-			if (elementString.toUpper().endsWith(uppercaseExtension))
+			if (elementString.endsWith(extension))
 			{
 				result.push_back(elementString);
 			}

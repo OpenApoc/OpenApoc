@@ -11,8 +11,8 @@ namespace OpenApoc
 
 TextButton::TextButton(const UString &Text, sp<BitmapFont> font)
     : Control(), buttonclick(fw().data->loadSample(
-                     "RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
-      buttonbackground(fw().data->loadImage("UI/TEXTBUTTONBACK.PNG")),
+                     "RAWSOUND:xcom3/rawsound/strategc/intrface/button1.raw:22050")),
+      buttonbackground(fw().data->loadImage("ui/textbuttonback.png")),
       TextHAlign(HorizontalAlignment::Centre), TextVAlign(VerticalAlignment::Centre),
       RenderStyle(ButtonRenderStyle::Menu)
 {

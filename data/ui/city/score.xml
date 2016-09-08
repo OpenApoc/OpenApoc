@@ -5,7 +5,7 @@
       <position x="centre" y="centre"/>
       <size width="640" height="480"/>
       <graphic>
-        <image>XCOM3/UFODATA/PLAINBAK.PCX</image>
+        <image>xcom3/ufodata/plainbak.pcx</image>
         <position x="0" y="0"/>
         <size width="640" height="480"/>
       </graphic>

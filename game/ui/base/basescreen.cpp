@@ -336,7 +336,7 @@ void BaseScreen::eventOccurred(Event *e)
 	{
 		int sprite = BaseGraphics::getCorridorSprite(state->current_base, selection);
 		auto image = UString::format(
-		    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:%d:xcom3/UFODATA/BASE.PCX", sprite);
+		    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:%d:xcom3/ufodata/base.pcx", sprite);
 		if (sprite != 0)
 		{
 			selText->setText(tr("Corridor"));

@@ -40,7 +40,7 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 {
 	// Draw grid
 	sp<Image> grid = fw().data->loadImage(
-	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:0:xcom3/UFODATA/BASE.PCX");
+	    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:0:xcom3/ufodata/base.pcx");
 	Vec2<int> i;
 	for (i.x = 0; i.x < Base::SIZE; i.x++)
 	{
@@ -61,7 +61,7 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 			{
 				Vec2<int> pos = renderPos + i * TILE_SIZE;
 				auto image = UString::format(
-				    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:%d:xcom3/UFODATA/BASE.PCX",
+				    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:%d:xcom3/ufodata/base.pcx",
 				    sprite);
 				fw().renderer->draw(fw().data->loadImage(image), pos);
 			}
@@ -70,9 +70,9 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 
 	// Draw facilities
 	sp<Image> circleS = fw().data->loadImage(
-	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:25:xcom3/UFODATA/BASE.PCX");
+	    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:25:xcom3/ufodata/base.pcx");
 	sp<Image> circleL = fw().data->loadImage(
-	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:26:xcom3/UFODATA/BASE.PCX");
+	    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:26:xcom3/ufodata/base.pcx");
 	auto font = ui().getFont("SMALFONT");
 	for (auto &facility : base->facilities)
 	{
@@ -107,9 +107,9 @@ void BaseGraphics::renderBase(Vec2<int> renderPos, sp<Base> base)
 
 	// Draw doors
 	sp<Image> doorLeft = fw().data->loadImage(
-	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:2:xcom3/UFODATA/BASE.PCX");
+	    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:2:xcom3/ufodata/base.pcx");
 	sp<Image> doorBottom = fw().data->loadImage(
-	    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:3:xcom3/UFODATA/BASE.PCX");
+	    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:3:xcom3/ufodata/base.pcx");
 	for (auto &facility : base->facilities)
 	{
 		for (int y = 0; y < facility->type->size; y++)
@@ -151,7 +151,7 @@ sp<RGBImage> BaseGraphics::drawMiniBase(sp<Base> base, FacilityHighlight highlig
 			}
 			Vec2<int> pos = i * MINI_SIZE;
 			auto image = UString::format(
-			    "RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:%d:xcom3/UFODATA/BASE.PCX", sprite);
+			    "RAW:xcom3/ufodata/minibase.dat:4:4:%d:xcom3/ufodata/base.pcx", sprite);
 			RGBImage::blit(std::dynamic_pointer_cast<RGBImage>(fw().data->loadImage(image)),
 			               minibase, {0, 0}, pos);
 		}
@@ -159,11 +159,11 @@ sp<RGBImage> BaseGraphics::drawMiniBase(sp<Base> base, FacilityHighlight highlig
 
 	// Draw facilities
 	sp<Image> spriteNormal =
-	    fw().data->loadImage("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:16:xcom3/UFODATA/BASE.PCX");
+	    fw().data->loadImage("RAW:xcom3/ufodata/minibase.dat:4:4:16:xcom3/ufodata/base.pcx");
 	sp<Image> spriteHighlighted =
-	    fw().data->loadImage("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:17:xcom3/UFODATA/BASE.PCX");
+	    fw().data->loadImage("RAW:xcom3/ufodata/minibase.dat:4:4:17:xcom3/ufodata/base.pcx");
 	sp<Image> spriteSelected =
-	    fw().data->loadImage("RAW:xcom3/UFODATA/MINIBASE.DAT:4:4:18:xcom3/UFODATA/BASE.PCX");
+	    fw().data->loadImage("RAW:xcom3/ufodata/minibase.dat:4:4:18:xcom3/ufodata/base.pcx");
 	for (auto &facility : base->facilities)
 	{
 		bool highlighted = false;

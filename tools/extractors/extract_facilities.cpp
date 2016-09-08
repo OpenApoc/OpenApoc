@@ -32,7 +32,7 @@ void InitialGameStateExtractor::extractFacilities(GameState &state, Difficulty)
 		facilityType->capacityAmount = f.capacity;
 		facilityType->size = f.size;
 		facilityType->sprite = fw().data->loadImage(UString::format(
-		    "PCK:xcom3/UFODATA/BASE.PCK:xcom3/UFODATA/BASE.TAB:%d:xcom3/UFODATA/BASE.PCX",
+		    "PCK:xcom3/ufodata/base.pck:xcom3/ufodata/base.tab:%d:xcom3/ufodata/base.pcx",
 		    (int)f.image_offset));
 
 		state.facility_types[id] = facilityType;

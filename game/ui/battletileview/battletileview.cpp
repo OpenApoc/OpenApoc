@@ -16,13 +16,13 @@ BattleTileView::BattleTileView(BattleTileMap &map, Vec3<int> isoTileSize, Vec2<i
       hideLeftWall(false), hideRightWall(false), hideScenery(false), currentZLevel(1),
       layerDrawingMode(BattleLayerDrawingMode::UpToCurrentLevel), maxZDraw(map.size.z),
       selectedTilePosition(0, 0, 0),
-      selectedTileEmptyImageBack(fw().data->loadImage("BATTLE/SELECTED-BATTLETILE-EMPTY-BACK.PNG")),
+      selectedTileEmptyImageBack(fw().data->loadImage("battle/selected-battletile-empty-back.png")),
       selectedTileEmptyImageFront(
-          fw().data->loadImage("BATTLE/SELECTED-BATTLETILE-EMPTY-FRONT.PNG")),
+          fw().data->loadImage("battle/selected-battletile-empty-front.png")),
       selectedTileFilledImageBack(
-          fw().data->loadImage("BATTLE/SELECTED-BATTLETILE-FILLED-BACK.PNG")),
+          fw().data->loadImage("battle/selected-battletile-filled-back.png")),
       selectedTileFilledImageFront(
-          fw().data->loadImage("BATTLE/SELECTED-BATTLETILE-FILLED-FRONT.PNG")),
+          fw().data->loadImage("battle/selected-battletile-filled-front.png")),
       selectedTileImageOffset(23, 42), centerPos(0, 0, 0), isoScrollSpeed(0.5, 0.5),
       stratScrollSpeed(2.0f, 2.0f), pal(fw().data->loadPalette("xcom3/tacdata/tactical.pal"))
 {

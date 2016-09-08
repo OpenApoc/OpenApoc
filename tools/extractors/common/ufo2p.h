@@ -31,7 +31,7 @@ namespace OpenApoc
 class UFO2P
 {
   public:
-	UFO2P(std::string fileName = "XCOM3/UFOEXE/UFO2P.EXE");
+	UFO2P(std::string fileName = "xcom3/ufoexe/ufo2p.exe");
 	std::unique_ptr<StrTab> research_names;
 	std::unique_ptr<StrTab> research_descriptions;
 	std::unique_ptr<DataChunk<ResearchData>> research_data;

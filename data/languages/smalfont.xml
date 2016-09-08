@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc>
-  <apocfont name="SMALFONT" path="xcom3/ufodata/smalfont.dat" height="15" width="14" spacewidth="3" palette="UI/UI_PALETTE.PNG">
+  <apocfont name="SMALFONT" path="xcom3/ufodata/smalfont.dat" height="15" width="14" spacewidth="3" palette="ui/ui_palette.png">
     <glyph string="!" glyph="RAW:xcom3/ufodata/smalfont.dat:14:15:0"/>
     <glyph string="&quot;" glyph="RAW:xcom3/ufodata/smalfont.dat:14:15:1"/>
     <glyph string="#" glyph="RAW:xcom3/ufodata/smalfont.dat:14:15:2"/>

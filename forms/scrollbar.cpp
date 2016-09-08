@@ -10,8 +10,8 @@ namespace OpenApoc
 ScrollBar::ScrollBar()
     : Control(), capture(false), grippersize(1), segmentsize(1),
       gripperbutton(fw().data->loadImage(
-          "PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:4:UI/menuopt.pal")),
-      buttonerror(fw().data->loadSample("RAWSOUND:xcom3/RAWSOUND/EXTRA/TEXTBEEP.RAW:22050")),
+          "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:4:ui/menuopt.pal")),
+      buttonerror(fw().data->loadSample("RAWSOUND:xcom3/rawsound/extra/textbeep.raw:22050")),
       Value(0), BarOrientation(Orientation::Vertical), RenderStyle(ScrollBarRenderStyle::Menu),
       GripperColour(220, 192, 192), Minimum(0), Maximum(10), LargeChange(2)
 {

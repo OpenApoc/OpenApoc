@@ -9,10 +9,10 @@ namespace OpenApoc
 
 ApocCursor::ApocCursor(sp<Palette> pal) : cursorPos{0, 0}
 {
-	auto f = fw().data->fs.open("xcom3/TACDATA/MOUSE.DAT");
+	auto f = fw().data->fs.open("xcom3/tacdata/mouse.dat");
 	if (!f)
 	{
-		LogError("Failed to open xcom3/TACDATA/MOUSE.DAT");
+		LogError("Failed to open xcom3/tacdata/mouse.dat");
 		return;
 	}
 

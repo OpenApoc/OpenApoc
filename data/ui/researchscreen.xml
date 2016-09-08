@@ -5,7 +5,7 @@
       <position x="centre" y="centre"/>
       <size width="640" height="480"/>
       <graphic>
-        <image>xcom3/UFODATA/RESEARCH.PCX</image>
+        <image>xcom3/ufodata/research.pcx</image>
         <position x="0" y="0"/>
         <size width="640" height="480"/>
       </graphic>
@@ -169,8 +169,8 @@
         <orientation>vertical</orientation>
         <hovercolour r="255" g="255" b="255" a="255"/>
       </listbox>
-	  <graphic id="MAGIC_ARROW">
-        <image>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:60:xcom3/UFODATA/RESEARCH.PCX</image>
+      <graphic id="MAGIC_ARROW">
+        <image>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:60:xcom3/ufodata/research.pcx</image>
         <position x="184" y="360"/>
         <size width="43" height="31"/>
       </graphic>
@@ -178,13 +178,13 @@
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <image/>
-        <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:58:xcom3/UFODATA/RESEARCH.PCX</imagedepressed>
+        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:58:xcom3/ufodata/research.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_RESEARCH_CANCELPROJECT">
         <position x="602" y="80"/>
         <size width="35" height="34"/>
         <image/>
-        <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:59:xcom3/UFODATA/RESEARCH.PCX</imagedepressed>
+        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:59:xcom3/ufodata/research.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_OK">
         <position x="602" y="443"/>

@@ -7,7 +7,7 @@
       <backcolour r="80" g="80" b="80"/>
       <graphic>
         <imagex>TESTBACKGROUND</imagex>
-        <image>xcom3/UFODATA/SAVEGAME.PCX</image>
+        <image>xcom3/ufodata/savegame.pcx</image>
         <position x="2" y="2"/>
         <size width="640" height="480"/>
         <label id="TEXT_FUNDS">

@@ -77,16 +77,16 @@ void DebugMenu::bulkExportPcks()
 	std::vector<UString> PckNames;
 
 	// All the palettes
-	PaletteNames.push_back("XCOM3/UFODATA/PAL_01.DAT");
-	PaletteNames.push_back("XCOM3/UFODATA/PAL_02.DAT");
-	PaletteNames.push_back("XCOM3/UFODATA/PAL_03.DAT");
-	PaletteNames.push_back("XCOM3/UFODATA/PAL_04.DAT");
-	PaletteNames.push_back("XCOM3/UFODATA/PAL_05.DAT");
-	PaletteNames.push_back("XCOM3/UFODATA/PAL_06.DAT");
-	PaletteNames.push_back("XCOM3/UFODATA/PAL_99.DAT");
-	// PaletteNames.push_back("XCOM3/TACDATA/DEFAULT.PAL");
-	// PaletteNames.push_back("XCOM3/TACDATA/EQUIP.PAL");
-	// PaletteNames.push_back("XCOM3/TACDATA/TACTICAL.PAL");
+	PaletteNames.push_back("xcom3/ufodata/pal_01.dat");
+	PaletteNames.push_back("xcom3/ufodata/pal_02.dat");
+	PaletteNames.push_back("xcom3/ufodata/pal_03.dat");
+	PaletteNames.push_back("xcom3/ufodata/pal_04.dat");
+	PaletteNames.push_back("xcom3/ufodata/pal_05.dat");
+	PaletteNames.push_back("xcom3/ufodata/pal_06.dat");
+	PaletteNames.push_back("xcom3/ufodata/pal_99.dat");
+	// PaletteNames.push_back("xcom3/tacdata/default.pal");
+	// PaletteNames.push_back("xcom3/tacdata/equip.pal");
+	// PaletteNames.push_back("xcom3/tacdata/tactical.pal");
 
 	// Load them up
 	for (auto i = PaletteNames.begin(); i != PaletteNames.end(); i++)
@@ -96,42 +96,42 @@ void DebugMenu::bulkExportPcks()
 	}
 
 	// All the PCKs
-	PckNames.push_back("XCOM3/UFODATA/AGNTICO.PCK");
-	PckNames.push_back("XCOM3/UFODATA/ALIEN.PCK");
-	PckNames.push_back("XCOM3/UFODATA/ALIEN_S.PCK");
-	PckNames.push_back("XCOM3/UFODATA/ARMOUR.PCK");
-	PckNames.push_back("XCOM3/UFODATA/BASE.PCK");
-	PckNames.push_back("XCOM3/UFODATA/BIGVEH.PCK");
-	PckNames.push_back("XCOM3/UFODATA/CITY.PCK");
-	PckNames.push_back("XCOM3/UFODATA/CITYOVR.PCK");
-	PckNames.push_back("XCOM3/UFODATA/CONTICO.PCK");
-	PckNames.push_back("XCOM3/UFODATA/DESCURS.PCK");
-	PckNames.push_back("XCOM3/UFODATA/ICONS.PCK");
-	PckNames.push_back("XCOM3/UFODATA/ICON_M.PCK");
-	PckNames.push_back("XCOM3/UFODATA/ICON_S.PCK");
-	PckNames.push_back("XCOM3/UFODATA/NEWBUT.PCK");
-	// PckNames.push_back("XCOM3/UFODATA/OVER-A.PCK");
-	// PckNames.push_back("XCOM3/UFODATA/OVER-B.PCK");
-	// PckNames.push_back("XCOM3/UFODATA/OVER-S.PCK");
-	PckNames.push_back("XCOM3/UFODATA/PED-BUT.PCK");
-	PckNames.push_back("XCOM3/UFODATA/PEQUIP.PCK");
-	PckNames.push_back("XCOM3/UFODATA/PHOTO.PCK");
-	PckNames.push_back("XCOM3/UFODATA/PTANG.PCK");
-	PckNames.push_back("XCOM3/UFODATA/SAUCER.PCK");
-	// PckNames.push_back("XCOM3/UFODATA/SHADOW.PCK");
-	PckNames.push_back("XCOM3/UFODATA/SMALVEH.PCK");
-	// PckNames.push_back("XCOM3/UFODATA/STRATMAP.PCK");
-	PckNames.push_back("XCOM3/UFODATA/VEHEQUIP.PCK");
-	PckNames.push_back("XCOM3/UFODATA/VEHICLE.PCK");
-	PckNames.push_back("XCOM3/UFODATA/VS_ICON.PCK");
-	PckNames.push_back("XCOM3/UFODATA/VS_OBS.PCK");
+	PckNames.push_back("xcom3/ufodata/agntico.pck");
+	PckNames.push_back("xcom3/ufodata/alien.pck");
+	PckNames.push_back("xcom3/ufodata/alien_s.pck");
+	PckNames.push_back("xcom3/ufodata/armour.pck");
+	PckNames.push_back("xcom3/ufodata/base.pck");
+	PckNames.push_back("xcom3/ufodata/bigveh.pck");
+	PckNames.push_back("xcom3/ufodata/city.pck");
+	PckNames.push_back("xcom3/ufodata/cityovr.pck");
+	PckNames.push_back("xcom3/ufodata/contico.pck");
+	PckNames.push_back("xcom3/ufodata/descurs.pck");
+	PckNames.push_back("xcom3/ufodata/icons.pck");
+	PckNames.push_back("xcom3/ufodata/icon_m.pck");
+	PckNames.push_back("xcom3/ufodata/icon_s.pck");
+	PckNames.push_back("xcom3/ufodata/newbut.pck");
+	// PckNames.push_back("xcom3/ufodata/over-a.pck");
+	// PckNames.push_back("xcom3/ufodata/over-b.pck");
+	// PckNames.push_back("xcom3/ufodata/over-s.pck");
+	PckNames.push_back("xcom3/ufodata/ped-but.pck");
+	PckNames.push_back("xcom3/ufodata/pequip.pck");
+	PckNames.push_back("xcom3/ufodata/photo.pck");
+	PckNames.push_back("xcom3/ufodata/ptang.pck");
+	PckNames.push_back("xcom3/ufodata/saucer.pck");
+	// PckNames.push_back("xcom3/ufodata/shadow.pck");
+	PckNames.push_back("xcom3/ufodata/smalveh.pck");
+	// PckNames.push_back("xcom3/ufodata/stratmap.pck");
+	PckNames.push_back("xcom3/ufodata/vehequip.pck");
+	PckNames.push_back("xcom3/ufodata/vehicle.pck");
+	PckNames.push_back("xcom3/ufodata/vs_icon.pck");
+	PckNames.push_back("xcom3/ufodata/vs_obs.pck");
 
 	// Load them up
 	for (auto i = PckNames.begin(); i != PckNames.end(); i++)
 	{
 		UString pckname = (*i);
 		UString pckloadstr = UString("PCK:") + pckname + UString(":") +
-		                     pckname.substr(0, pckname.length() - 3) + UString("TAB");
+		                     pckname.substr(0, pckname.length() - 3) + UString("tab");
 
 		LogInfo("Processing %s", pckloadstr.cStr());
 
@@ -144,7 +144,7 @@ void DebugMenu::bulkExportPcks()
 			for (unsigned int idx = 0; idx < pckset->images.size(); idx++)
 			{
 				UString outputname = UString("Extracted/") + pckname + UString("/") +
-				                     Strings::fromInteger(idx) + UString(".PNG");
+				                     Strings::fromInteger(idx) + UString(".png");
 				sp<Image> curimg = pckset->images.at(idx);
 
 				if (RGBImage *bi = dynamic_cast<RGBImage *>(curimg.get()))
@@ -158,9 +158,9 @@ void DebugMenu::bulkExportPcks()
 
 					for (unsigned int palidx = 0; palidx < PaletteList.size(); palidx++)
 					{
-						outputname = UString("Extracted/") + pckname + UString("/") +
+						outputname = UString("extracted/") + pckname + UString("/") +
 						             Strings::fromInteger(idx) + UString(".#") +
-						             Strings::fromInteger(palidx) + UString(".PNG");
+						             Strings::fromInteger(palidx) + UString(".png");
 						LogInfo("Saving %s", outputname.cStr());
 						pi->toRGBImage(PaletteList.at(palidx))->saveBitmap(outputname);
 					}

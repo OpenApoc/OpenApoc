@@ -5,7 +5,7 @@
       <position x="centre" y="centre"/>
       <size width="640" height="480"/>
       <graphic>
-        <image>xcom3/UFODATA/MENUOPT.PCX</image>
+        <image>xcom3/ufodata/menuopt.pcx</image>
         <position x="0" y="0"/>
         <size width="640" height="480"/>
         <label text="OPTIONS">

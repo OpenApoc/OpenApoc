@@ -6,7 +6,7 @@
       <size width="644" height="484"/>
       <backcolour r="80" g="80" b="80"/>
       <graphic>
-        <image>xcom3/UFOPAEDI/TITLE.PCX</image>
+        <image>xcom3/ufopaedi/title.pcx</image>
         <position x="2" y="2"/>
         <size width="640" height="480"/>
       </graphic>
@@ -138,7 +138,7 @@
       <size width="644" height="484"/>
       <backcolour r="80" g="80" b="80"/>
       <graphic id="BACKGROUND_PICTURE">
-        <image>xcom3/UFOPAEDI/B-TITLE.PCX</image>
+        <image>xcom3/ufopaedi/b-title.pcx</image>
         <position x="2" y="2"/>
         <size width="640" height="480"/>
         <label id="TEXT_TITLE_DATA" text="">
@@ -366,14 +366,14 @@
           <graphicbutton id="LISTBOX_SHORTCUTS_UP" scrollprev="SCROLL_LISTPOSITION">
             <position x="266" y="4"/>
             <size width="17" height="16"/>
-            <image>PCK:xcom3/UFODATA/ICONS.PCK:xcom3/UFODATA/ICONS.TAB:13:UI/menuopt.pal</image>
-            <imagedepressed>PCK:xcom3/UFODATA/ICONS.PCK:xcom3/UFODATA/ICONS.TAB:14:UI/menuopt.pal</imagedepressed>
+            <image>PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:13:ui/menuopt.pal</image>
+            <imagedepressed>PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:14:ui/menuopt.pal</imagedepressed>
           </graphicbutton>
           <graphicbutton id="LISTBOX_SHORTCUTS_DOWN" scrollnext="SCROLL_LISTPOSITION">
             <position x="266" y="342"/>
             <size width="17" height="16"/>
-            <image>PCK:xcom3/UFODATA/ICONS.PCK:xcom3/UFODATA/ICONS.TAB:15:UI/menuopt.pal</image>
-            <imagedepressed>PCK:xcom3/UFODATA/ICONS.PCK:xcom3/UFODATA/ICONS.TAB:16:UI/menuopt.pal</imagedepressed>
+            <image>PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:15:ui/menuopt.pal</image>
+            <imagedepressed>PCK:xcom3/ufodata/icons.pck:xcom3/ufodata/icons.tab:16:ui/menuopt.pal</imagedepressed>
           </graphicbutton>
         </control>
       </graphic>

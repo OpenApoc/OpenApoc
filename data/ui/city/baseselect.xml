@@ -9,7 +9,7 @@
         <!--<size width="640" height="128"/>-->
         <size width="640" height="480"/>
         <position x="centre" y="bottom"/>
-        <image>xcom3/UFODATA/BUYBASE2.PCX</image>
+        <image>xcom3/ufodata/buybase2.pcx</image>
       </graphic>
       <label text="BUY NEW BASE">
         <position x="20" y="2"/>

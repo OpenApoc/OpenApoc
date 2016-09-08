@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openapoc>
   <alias id="TESTALIAS">Testing Alias Text</alias>
-  <alias id="TESTBACKGROUND">xcom3/UFODATA/AGENTEQP.PCX</alias>
+  <alias id="TESTBACKGROUND">xcom3/ufodata/agenteqp.pcx</alias>
   <form id="FORM_OPTIONSMENU">
     <style minwidth="640" minheight="480">
       <position x="centre" y="centre"/>
@@ -9,7 +9,7 @@
       <backcolour r="80" g="80" b="80"/>
       <graphic>
         <imagex>TESTBACKGROUND</imagex>
-        <image>xcom3/UFODATA/MESSAGE.PCX</image>
+        <image>xcom3/ufodata/message.pcx</image>
         <position x="2" y="2"/>
         <size width="640" height="480"/>
         <scroll id="SCROLL_LISTPOSITION">
@@ -86,7 +86,7 @@
         <size width="35" height="34"/>
         <image/>
         <!-- FIXME: PAL_01 doesn't seem correct for all newbut.tab images? -->
-        <imagedepressed>PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:5:XCOM3/UFODATA/PAL_01.DAT</imagedepressed>
+        <imagedepressed>pck:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:5:xcom3/ufodata/pal_01.dat</imagedepressed>
       </graphicbutton>
       <textedit id="TEXTEDIT_A">
         <backcolour r="80" g="80" b="80" a="255"/>

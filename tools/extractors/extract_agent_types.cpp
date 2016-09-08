@@ -37,8 +37,8 @@ void InitialGameStateExtractor::extractAgentTypes(GameState &state, Difficulty d
 
 	const int UNIT_TYPE_FIRST_ALIEN_ENTRY = 34;
 
-	const UString loftempsFile = "xcom3/TACDATA/LOFTEMPS.DAT";
-	const UString loftempsTab = "xcom3/TACDATA/LOFTEMPS.TAB";
+	const UString loftempsFile = "xcom3/tacdata/loftemps.dat";
+	const UString loftempsTab = "xcom3/tacdata/loftemps.tab";
 
 	auto &data_t = this->tacp;
 	auto &data_u = this->ufo2p;

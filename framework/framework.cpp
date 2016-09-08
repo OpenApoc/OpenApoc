@@ -59,7 +59,7 @@ static std::map<UString, UString> defaultConfig = {
     {"Visual.FullScreen", "false"},
 #endif
     {"Language", ""},
-    {"GameRules", "XCOMAPOC.XML"},
+    {"GameRules", "xcomapoc.xml"},
     {"Resource.LocalDataDir", "./data"},
     {"Resource.SystemDataDir", DATA_DIRECTORY},
     {"Resource.LocalCDPath", "./data/cd.iso"},
@@ -282,14 +282,14 @@ Framework::Framework(const UString programName, const std::vector<UString> cmdli
 	LogInfo("Current working directory: \"%s\"", boost::filesystem::current_path().c_str());
 	this->data.reset(new Data(resourcePaths));
 
-	auto testFile = this->data->fs.open("MUSIC");
+	auto testFile = this->data->fs.open("music");
 	if (!testFile)
 	{
 		LogError("Failed to open \"music\" from the CD - likely the cd couldn't be loaded or paths "
 		         "are incorrect if using an extracted CD image");
 	}
 
-	auto testFile2 = this->data->fs.open("FileDoesntExist");
+	auto testFile2 = this->data->fs.open("filedoesntexist");
 	if (testFile2)
 	{
 		LogError("Succeded in opening \"FileDoesntExist\" - either you have the weirdest filename "
@@ -347,7 +347,7 @@ void Framework::run(sp<Stage> initialStage, size_t frameCount)
 
 	p->ProgramStages.push(initialStage);
 
-	this->renderer->setPalette(this->data->loadPalette("xcom3/ufodata/PAL_06.DAT"));
+	this->renderer->setPalette(this->data->loadPalette("xcom3/ufodata/pal_06.dat"));
 
 	while (!p->quitProgram)
 	{
@@ -883,7 +883,7 @@ void Framework::displayInitialise()
 	{
 		p->displaySize = p->windowSize;
 	}
-	this->cursor.reset(new ApocCursor(this->data->loadPalette("xcom3/tacdata/TACTICAL.PAL")));
+	this->cursor.reset(new ApocCursor(this->data->loadPalette("xcom3/tacdata/tactical.pal")));
 }
 
 void Framework::displayShutdown()

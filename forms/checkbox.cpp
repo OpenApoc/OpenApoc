@@ -10,7 +10,7 @@ namespace OpenApoc
 CheckBox::CheckBox(sp<Image> ImageChecked, sp<Image> ImageUnchecked)
     : Control(), imagechecked(ImageChecked), imageunchecked(ImageUnchecked),
       buttonclick(
-          fw().data->loadSample("RAWSOUND:xcom3/RAWSOUND/STRATEGC/INTRFACE/BUTTON1.RAW:22050")),
+          fw().data->loadSample("RAWSOUND:xcom3/rawsound/strategc/intrface/button1.raw:22050")),
       Checked(false)
 {
 }

@@ -36,9 +36,9 @@ FormPreview::FormPreview() : Stage()
 
 	interactWithDisplay = c->createChild<CheckBox>(
 	    fw().data->loadImage(
-	        "PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:65:UI/menuopt.pal"),
+	        "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:65:ui/menuopt.pal"),
 	    fw().data->loadImage(
-	        "PCK:XCOM3/UFODATA/NEWBUT.PCK:XCOM3/UFODATA/NEWBUT.TAB:64:UI/menuopt.pal"));
+	        "PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:64:ui/menuopt.pal"));
 	interactWithDisplay->Size = {19, 16};
 	interactWithDisplay->Location.x = 0;
 	interactWithDisplay->Location.y = c->Size.y - interactWithDisplay->Size.y * 2;

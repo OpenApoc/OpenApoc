@@ -16,7 +16,7 @@ namespace OpenApoc
 class TACP
 {
   public:
-	TACP(std::string fileName = "XCOM3/TACEXE/TACP.EXE");
+	TACP(std::string fileName = "xcom3/tacexe/tacp.exe");
 
 	std::unique_ptr<StrTab> damage_modifier_names;
 	std::unique_ptr<StrTab> damage_type_names;

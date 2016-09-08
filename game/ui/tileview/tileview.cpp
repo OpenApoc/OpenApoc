@@ -16,9 +16,9 @@ TileView::TileView(TileMap &map, Vec3<int> isoTileSize, Vec2<int> stratTileSize,
       strategyViewBoxColour(212, 176, 172, 255), strategyViewBoxThickness(2.0f),
       maxZDraw(map.size.z), centerPos(0, 0, 0), isoScrollSpeed(0.5, 0.5),
       stratScrollSpeed(2.0f, 2.0f), selectedTilePosition(0, 0, 0),
-      selectedTileImageBack(fw().data->loadImage("CITY/SELECTED-CITYTILE-BACK.PNG")),
-      selectedTileImageFront(fw().data->loadImage("CITY/SELECTED-CITYTILE-FRONT.PNG")),
-      pal(fw().data->loadPalette("xcom3/ufodata/PAL_01.DAT"))
+      selectedTileImageBack(fw().data->loadImage("city/selected-citytile-back.png")),
+      selectedTileImageFront(fw().data->loadImage("city/selected-citytile-front.png")),
+      pal(fw().data->loadPalette("xcom3/ufodata/pal_01.dat"))
 {
 	LogInfo("dpySize: {%d,%d}", dpySize.x, dpySize.y);
 }
@@ -77,13 +77,13 @@ void TileView::eventOccurred(Event *e)
 					selectedTilePosition.z--;
 				break;
 			case SDLK_1:
-				pal = fw().data->loadPalette("xcom3/ufodata/PAL_01.DAT");
+				pal = fw().data->loadPalette("xcom3/ufodata/pal_01.dat");
 				break;
 			case SDLK_2:
-				pal = fw().data->loadPalette("xcom3/ufodata/PAL_02.DAT");
+				pal = fw().data->loadPalette("xcom3/ufodata/pal_02.dat");
 				break;
 			case SDLK_3:
-				pal = fw().data->loadPalette("xcom3/ufodata/PAL_03.DAT");
+				pal = fw().data->loadPalette("xcom3/ufodata/pal_03.dat");
 				break;
 			case SDLK_F6:
 			{

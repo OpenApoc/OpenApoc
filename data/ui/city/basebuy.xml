@@ -5,7 +5,7 @@
       <position x="centre" y="centre"/>
       <size width="640" height="480"/>
       <graphic>
-        <image>xcom3/UFODATA/BUYBASE1.PCX</image>
+        <image>xcom3/ufodata/buybase1.pcx</image>
         <position x="0" y="0"/>
         <size width="640" height="480"/>
       </graphic>
@@ -42,7 +42,7 @@
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <image/>
-        <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:77:xcom3/UFODATA/BUYBASE1.PCX</imagedepressed>
+        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:77:xcom3/ufodata/buybase1.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_OK">
         <position x="602" y="443"/>

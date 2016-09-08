@@ -21,7 +21,7 @@ static const float GLOW_COUNTER_INCREMENT = M_PI / 15.0f;
 
 VEquipScreen::VEquipScreen(sp<GameState> state)
     : Stage(), form(ui().getForm("FORM_VEQUIPSCREEN")), selectionType(VEquipmentType::Type::Weapon),
-      pal(fw().data->loadPalette("xcom3/UFODATA/VROADWAR.PCX")),
+      pal(fw().data->loadPalette("xcom3/ufodata/vroadwar.pcx")),
       labelFont(ui().getFont("SMALFONT")), drawHighlightBox(false), state(state), glowCounter(0)
 
 {

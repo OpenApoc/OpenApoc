@@ -37,20 +37,20 @@ namespace
 static const std::map<CityIcon, UString> CITY_ICON_RESOURCES = {
     // FIXME: Put this in the rules somewhere?
     {CityIcon::UnselectedFrame,
-     "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:37:xcom3/UFODATA/PAL_01.DAT"},
+     "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:37:xcom3/ufodata/pal_01.dat"},
     {CityIcon::SelectedFrame,
-     "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:39:xcom3/UFODATA/PAL_01.DAT"},
+     "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:39:xcom3/ufodata/pal_01.dat"},
     {CityIcon::SelectedSecondaryFrame,
-     "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:38:xcom3/UFODATA/PAL_01.DAT"},
+     "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:38:xcom3/ufodata/pal_01.dat"},
 
     {CityIcon::InBase,
-     "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:47:xcom3/UFODATA/PAL_01.DAT"},
+     "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:47:xcom3/ufodata/pal_01.dat"},
     {CityIcon::InVehicle,
-     "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:48:xcom3/UFODATA/PAL_01.DAT"},
+     "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:48:xcom3/ufodata/pal_01.dat"},
     {CityIcon::InBuilding,
-     "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:49:xcom3/UFODATA/PAL_01.DAT"},
+     "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:49:xcom3/ufodata/pal_01.dat"},
     {CityIcon::InMotion,
-     "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:50:xcom3/UFODATA/PAL_01.DAT"},
+     "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:50:xcom3/ufodata/pal_01.dat"},
 };
 static const std::vector<UString> TAB_FORM_NAMES = {
     "FORM_CITY_UI_1", "FORM_CITY_UI_2", "FORM_CITY_UI_3", "FORM_CITY_UI_4",
@@ -59,19 +59,19 @@ static const std::vector<UString> TAB_FORM_NAMES = {
 
 static const std::vector<UString> CITY_ICON_VEHICLE_PASSENGER_COUNT_RESOURCES = {
     {""}, // 0 has no image
-    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:51:xcom3/UFODATA/PAL_01.DAT"}, // 1
-    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:52:xcom3/UFODATA/PAL_01.DAT"}, // 2
-    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:53:xcom3/UFODATA/PAL_01.DAT"}, // 3
-    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:54:xcom3/UFODATA/PAL_01.DAT"}, // 4
-    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:55:xcom3/UFODATA/PAL_01.DAT"}, // 5
-    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:56:xcom3/UFODATA/PAL_01.DAT"}, // 6
-    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:57:xcom3/UFODATA/PAL_01.DAT"}, // 7
-    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:58:xcom3/UFODATA/PAL_01.DAT"}, // 8
-    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:59:xcom3/UFODATA/PAL_01.DAT"}, // 9
-    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:60:xcom3/UFODATA/PAL_01.DAT"}, // 10
-    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:61:xcom3/UFODATA/PAL_01.DAT"}, // 11
-    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:62:xcom3/UFODATA/PAL_01.DAT"}, // 12
-    {"PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:63:xcom3/UFODATA/PAL_01.DAT"}, // 13+
+    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:51:xcom3/ufodata/pal_01.dat"}, // 1
+    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:52:xcom3/ufodata/pal_01.dat"}, // 2
+    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:53:xcom3/ufodata/pal_01.dat"}, // 3
+    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:54:xcom3/ufodata/pal_01.dat"}, // 4
+    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:55:xcom3/ufodata/pal_01.dat"}, // 5
+    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:56:xcom3/ufodata/pal_01.dat"}, // 6
+    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:57:xcom3/ufodata/pal_01.dat"}, // 7
+    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:58:xcom3/ufodata/pal_01.dat"}, // 8
+    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:59:xcom3/ufodata/pal_01.dat"}, // 9
+    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:60:xcom3/ufodata/pal_01.dat"}, // 10
+    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:61:xcom3/ufodata/pal_01.dat"}, // 11
+    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:62:xcom3/ufodata/pal_01.dat"}, // 12
+    {"PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:63:xcom3/ufodata/pal_01.dat"}, // 13+
 };
 
 } // anonymous namespace
@@ -81,9 +81,9 @@ CityView::CityView(sp<GameState> state)
                Vec2<int>{CITY_STRAT_TILE_X, CITY_STRAT_TILE_Y}, TileViewMode::Isometric),
       baseForm(ui().getForm("FORM_CITY_UI")), updateSpeed(UpdateSpeed::Speed1), state(state),
       followVehicle(false), selectionState(SelectionState::Normal),
-      day_palette(fw().data->loadPalette("xcom3/ufodata/PAL_01.DAT")),
-      twilight_palette(fw().data->loadPalette("xcom3/ufodata/PAL_02.DAT")),
-      night_palette(fw().data->loadPalette("xcom3/ufodata/PAL_03.DAT"))
+      day_palette(fw().data->loadPalette("xcom3/ufodata/pal_01.dat")),
+      twilight_palette(fw().data->loadPalette("xcom3/ufodata/pal_02.dat")),
+      night_palette(fw().data->loadPalette("xcom3/ufodata/pal_03.dat"))
 {
 	baseForm->findControlTyped<RadioButton>("BUTTON_SPEED1")->setChecked(true);
 	for (auto &formName : TAB_FORM_NAMES)

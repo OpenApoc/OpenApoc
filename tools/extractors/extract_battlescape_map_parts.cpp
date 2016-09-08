@@ -19,10 +19,10 @@ void InitialGameStateExtractor::readBattleMapParts(GameState &state, sp<BattleMa
 	auto &data_t = this->tacp;
 	auto &data_u = this->ufo2p;
 
-	const UString loftempsFile = "xcom3/TACDATA/LOFTEMPS.DAT";
-	const UString loftempsTab = "xcom3/TACDATA/LOFTEMPS.TAB";
+	const UString loftempsFile = "xcom3/tacdata/loftemps.dat";
+	const UString loftempsTab = "xcom3/tacdata/loftemps.tab";
 
-	auto datFileName = dirName + "/" + datName + ".DAT";
+	auto datFileName = dirName + "/" + datName + ".dat";
 	auto inFile = fw().data->fs.open(datFileName);
 	if (!inFile)
 	{
@@ -101,7 +101,7 @@ void InitialGameStateExtractor::readBattleMapParts(GameState &state, sp<BattleMa
 		// field that are not actually animated via animated frames, therefore, ignore them
 		if (entry.animation_length > 1)
 		{
-			auto animateTabFileName = dirName + "/" + "ANIMATE.TAB";
+			auto animateTabFileName = dirName + "/" + "animate.tab";
 			auto animateTabFile = fw().data->fs.open(animateTabFileName);
 			if (!animateTabFile)
 			{
@@ -121,20 +121,20 @@ void InitialGameStateExtractor::readBattleMapParts(GameState &state, sp<BattleMa
 				for (int j = 0; j < entry.animation_length; j++)
 				{
 					auto animateString =
-					    UString::format("PCK:%s%s.PCK:%s%s.TAB:%u", dirName.cStr(), "ANIMATE",
-					                    dirName.cStr(), "ANIMATE", entry.animation_idx + j);
+					    UString::format("PCK:%s%s.pck:%s%s.tab:%u", dirName.cStr(), "animate",
+					                    dirName.cStr(), "animate", entry.animation_idx + j);
 					object->animation_frames.push_back(fw().data->loadImage(animateString));
 				}
 			}
 		}
 
-		auto imageString = UString::format("PCK:%s%s.PCK:%s%s.TAB:%u", dirName.cStr(),
+		auto imageString = UString::format("PCK:%s%s.pck:%s%s.tab:%u", dirName.cStr(),
 		                                   pckName.cStr(), dirName.cStr(), pckName.cStr(), i);
 		object->sprite = fw().data->loadImage(imageString);
 		if (i < strategySpriteCount)
 		{
 			auto stratImageString =
-			    UString::format("PCKSTRAT:%s%s.PCK:%s%s.TAB:%u", dirName.cStr(),
+			    UString::format("PCKSTRAT:%s%s.pck:%s%s.tab:%u", dirName.cStr(),
 			                    stratPckName.cStr(), dirName.cStr(), stratPckName.cStr(), i);
 			object->strategySprite = fw().data->loadImage(stratImageString);
 		}
@@ -253,8 +253,8 @@ void InitialGameStateExtractor::extractBattlescapeMapPartsFromMap(GameState &sta
                                                                   const int index)
 {
 	UString tilePrefix = UString::format("%d_", index);
-	UString map_prefix = "xcom3/MAPS/";
-	UString mapunits_suffix = "/MAPUNITS/";
+	UString map_prefix = "xcom3/maps/";
+	UString mapunits_suffix = "/mapunits/";
 	UString spriteFile;
 	UString datFile;
 	UString fileName;
@@ -265,29 +265,29 @@ void InitialGameStateExtractor::extractBattlescapeMapPartsFromMap(GameState &sta
 	{
 		readBattleMapParts(state, t, BattleMapPartType::Type::Ground,
 		                   BattleMapPartType::getPrefix() + tilePrefix + "GD_",
-		                   map_prefix + dirName + mapunits_suffix, "GROUNMAP", "GROUND", "SGROUND");
+		                   map_prefix + dirName + mapunits_suffix, "grounmap", "ground", "sground");
 	}
 
 	// Read left walls
 	{
 		readBattleMapParts(state, t, BattleMapPartType::Type::LeftWall,
 		                   BattleMapPartType::getPrefix() + tilePrefix + "LW_",
-		                   map_prefix + dirName + mapunits_suffix, "LEFTMAP", "LEFT", "SLEFT");
+		                   map_prefix + dirName + mapunits_suffix, "leftmap", "left", "sleft");
 	}
 
 	// Read right walls
 	{
 		readBattleMapParts(state, t, BattleMapPartType::Type::RightWall,
 		                   BattleMapPartType::getPrefix() + tilePrefix + "RW_",
-		                   map_prefix + dirName + mapunits_suffix, "RIGHTMAP", "RIGHT", "SRIGHT");
+		                   map_prefix + dirName + mapunits_suffix, "rightmap", "right", "sright");
 	}
 
 	// Read scenery
 	{
 		readBattleMapParts(state, t, BattleMapPartType::Type::Scenery,
 		                   BattleMapPartType::getPrefix() + tilePrefix + "SC_",
-		                   map_prefix + dirName + mapunits_suffix, "FEATMAP", "FEATURE",
-		                   "SFEATURE");
+		                   map_prefix + dirName + mapunits_suffix, "featmap", "feature",
+		                   "sfeature");
 	}
 
 	UString id = BattleMapPartType::getPrefix() + tilePrefix.substr(0, tilePrefix.length() - 1);

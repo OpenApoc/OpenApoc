@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openapoc>
+  <game>
+    <title>Open Apocalypse</title>
+    <include>languages/fonts.xml</include>
+    <include>ui/graphicalias.xml</include>
+    <include>ui/mainmenu.xml</include>
+    <include>ui/options.xml</include>
+    <include>ui/basescreen.xml</include>
+    <include>ui/vequipscreen.xml</include>
+    <include>ui/ufopaedia.xml</include>
+    <include>ui/difficultymenu.xml</include>
+    <include>ui/savemenu.xml</include>
+    <include>ui/debugmenu.xml</include>
+    <include>ui/ingameoptions.xml</include>
+    <include>ui/researchscreen.xml</include>
+    <include>ui/researchselect.xml</include>
+    <include>ui/messagelog.xml</include>
+    <include>ui/notification.xml</include>
+    <include>ui/city/city.xml</include>
+    <include>ui/city/infiltration.xml</include>
+    <include>ui/city/score.xml</include>
+    <include>ui/city/building.xml</include>
+    <include>ui/city/basebuy.xml</include>
+    <include>ui/city/baseselect.xml</include>
+    <include>ui/battle/battle.xml</include>
+	<include>ui/mapselector.xml</include>
+  </game>
+</openapoc>

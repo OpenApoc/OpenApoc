@@ -6,7 +6,7 @@
       <size width="644" height="484"/>
       <backcolour r="128" g="80" b="80"/>
       <graphic>
-        <image>xcom3/UFODATA/TITLES.PCX</image>
+        <image>xcom3/ufodata/titles.pcx</image>
         <position x="2" y="2"/>
         <size width="640" height="480"/>
         <label text="OpenApocalypse">

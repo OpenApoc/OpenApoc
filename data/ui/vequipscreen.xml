@@ -5,7 +5,7 @@
       <position x="centre" y="centre"/>
       <size width="640" height="480"/>
       <graphic id="BACKGROUND">
-        <image>PLACEHOLDER.PNG</image>
+        <image>placeholder.png</image>
         <position x="0" y="0"/>
         <size width="640" height="480"/>
       </graphic>
@@ -150,7 +150,7 @@
       <graphic id="SELECTED_ICON">
         <position x="20" y="70"/>
         <size width="64" height="64"/>
-        <image>PLACEHOLDER.PNG</image>
+        <image>placeholder.png</image>
         <imageposition>fit</imageposition>
       </graphic>
       <graphic id="INVENTORY">
@@ -163,19 +163,19 @@
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <image/>
-        <imagechecked>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:8:xcom3/UFODATA/BASE.PCX</imagechecked>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:8:xcom3/ufodata/base.pcx</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_SHOW_ENGINES" groupid="TYPE">
         <position x="602" y="80"/>
         <size width="35" height="34"/>
         <image/>
-        <imagechecked>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:9:xcom3/UFODATA/BASE.PCX</imagechecked>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:9:xcom3/ufodata/base.pcx</imagechecked>
       </radiobutton>
       <radiobutton id="BUTTON_SHOW_GENERAL" groupid="TYPE">
         <position x="602" y="120"/>
         <size width="35" height="34"/>
         <image/>
-        <imagechecked>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:10:xcom3/UFODATA/BASE.PCX</imagechecked>
+        <imagechecked>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:10:xcom3/ufodata/base.pcx</imagechecked>
       </radiobutton>
       <scroll id="VEHICLE_SELECT_SCROLL">
         <position x="571" y="81"/>

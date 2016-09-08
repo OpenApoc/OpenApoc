@@ -15,12 +15,12 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
                                                               const int index)
 {
 	UString tilePrefix = UString::format("%d_", index);
-	UString map_prefix = "xcom3/MAPS/";
-	UString mapunits_suffix = "/MAPUNITS/";
+	UString map_prefix = "xcom3/maps/";
+	UString mapunits_suffix = "/mapunits/";
 
 	BuildingDatStructure bdata;
 	{
-		auto fileName = dirName + UString("/BUILDING.DAT");
+		auto fileName = dirName + UString("/building.dat");
 
 		auto datFileName = map_prefix + fileName;
 		auto inFile = fw().data->fs.open(datFileName);
@@ -40,8 +40,7 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 
 	RubbleDatStructure rdata;
 	{
-		auto fileName = dirName + mapunits_suffix + UString("RUBBLE.DAT");
-
+		auto fileName = dirName + mapunits_suffix + UString("rubble.dat");
 		auto fullPath = map_prefix + fileName;
 		auto inFile = fw().data->fs.open(fullPath);
 		if (!inFile)
@@ -137,8 +136,8 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 
 		SecSdtStructure sdata;
 		{
-			auto fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("SEC") +
-			                secName + UString(".SDT");
+			auto fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("sec") +
+			                secName + UString(".sdt");
 
 			auto fullPath = map_prefix + fileName;
 			auto inFile = fw().data->fs.open(fullPath);
@@ -164,8 +163,8 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 
 		// Read LOS blocks
 		{
-			auto fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("SEC") +
-			                secName + UString(".SLS");
+			auto fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("sec") +
+			                secName + UString(".sls");
 
 			auto fullPath = map_prefix + fileName;
 			auto inFile = fw().data->fs.open(fullPath);
@@ -233,8 +232,8 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 
 		// Read Loot locations
 		{
-			auto fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("SEC") +
-			                secName + UString(".SOB");
+			auto fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("sec") +
+			                secName + UString(".sob");
 
 			auto fullPath = map_prefix + fileName;
 			auto inFile = fw().data->fs.open(fullPath);
@@ -281,8 +280,8 @@ void InitialGameStateExtractor::extractBattlescapeMapFromPath(GameState &state,
 
 		// Read sector map
 		{
-			auto fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("SEC") +
-			                secName + UString(".SMP");
+			auto fileName = dirName + UString("/") + dirName.substr(0, 2) + UString("sec") +
+			                secName + UString(".smp");
 
 			auto expectedFileSize = bdata.chunk_x * bdata.chunk_y * bdata.chunk_z * sdata.chunks_x *
 			                        sdata.chunks_y * sdata.chunks_z * 4;

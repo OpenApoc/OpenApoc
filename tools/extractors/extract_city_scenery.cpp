@@ -167,7 +167,7 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		}
 
 		auto imageString = UString::format(
-		    "PCK:xcom3/UFODATA/" + spriteFile + ".PCK:xcom3/UFODATA/" + spriteFile + ".TAB:%u", i);
+		    "PCK:xcom3/ufodata/" + spriteFile + ".pck:xcom3/ufodata/" + spriteFile + ".tab:%u", i);
 
 		tile->sprite = fw().data->loadImage(imageString);
 
@@ -177,8 +177,8 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		{
 			if (entry.voxelIdx[z] == 0)
 				continue;
-			auto lofString = UString::format("LOFTEMPS:xcom3/UFODATA/" + lofFile +
-			                                     ".DAT:xcom3/UFODATA/" + lofFile + ".TAB:%d",
+			auto lofString = UString::format("LOFTEMPS:xcom3/ufodata/" + lofFile +
+			                                     ".dat:xcom3/ufodata/" + lofFile + ".tab:%d",
 			                                 (int)entry.voxelIdx[z]);
 			tile->voxelMap->slices[z] = fw().data->loadVoxelSlice(lofString);
 		}
@@ -186,8 +186,8 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 		if (entry.stratmap_idx != 0)
 		{
 			auto stratmapString =
-			    UString::format("PCKSTRAT:xcom3/UFODATA/" + stratmapFile + ".PCK:xcom3/UFODATA/" +
-			                        stratmapFile + ".TAB:%d",
+			    UString::format("PCKSTRAT:xcom3/ufodata/" + stratmapFile + ".pck:xcom3/ufodata/" +
+			                        stratmapFile + ".tab:%d",
 			                    (int)entry.stratmap_idx);
 			tile->strategySprite = fw().data->loadImage(stratmapString);
 		}
@@ -203,8 +203,8 @@ void InitialGameStateExtractor::extractCityScenery(GameState &state, UString til
 
 		if (entry.overlaytile_idx != 0xff)
 		{
-			auto overlayString = UString::format("PCK:xcom3/UFODATA/" + ovrFile +
-			                                         ".PCK:xcom3/UFODATA/" + ovrFile + ".TAB:%d",
+			auto overlayString = UString::format("PCK:xcom3/ufodata/" + ovrFile +
+			                                         ".pck:xcom3/ufodata/" + ovrFile + ".tab:%d",
 			                                     (int)entry.overlaytile_idx);
 			tile->overlaySprite = fw().data->loadImage(overlayString);
 		}

@@ -5,7 +5,7 @@
       <position x="centre" y="centre"/>
       <size width="640" height="480"/>
       <graphic>
-        <image>xcom3/UFODATA/BASE.PCX</image>
+        <image>xcom3/ufodata/base.pcx</image>
         <position x="0" y="0"/>
         <size width="640" height="480"/>
       </graphic>
@@ -167,43 +167,43 @@
         <position x="602" y="40"/>
         <size width="35" height="34"/>
         <image/>
-        <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:26:xcom3/UFODATA/BASE.PCX</imagedepressed>
+        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:26:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_BUYSELL">
         <position x="602" y="80"/>
         <size width="35" height="34"/>
         <image/>
-        <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:27:xcom3/UFODATA/BASE.PCX</imagedepressed>
+        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:27:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_TRANSFER">
         <position x="602" y="120"/>
         <size width="35" height="34"/>
         <image/>
-        <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:28:xcom3/UFODATA/BASE.PCX</imagedepressed>
+        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:28:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_EQUIPAGENT">
         <position x="602" y="160"/>
         <size width="35" height="34"/>
         <image/>
-        <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:29:xcom3/UFODATA/BASE.PCX</imagedepressed>
+        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:29:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_EQUIPVEHICLE">
         <position x="602" y="200"/>
         <size width="35" height="34"/>
         <image/>
-        <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:30:xcom3/UFODATA/BASE.PCX</imagedepressed>
+        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:30:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_RES_AND_MANUF">
         <position x="602" y="240"/>
         <size width="35" height="34"/>
         <image/>
-        <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:31:xcom3/UFODATA/BASE.PCX</imagedepressed>
+        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:31:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_BASE_ALIEN_CONTAINMENT">
         <position x="602" y="280"/>
         <size width="35" height="34"/>
         <image/>
-        <imagedepressed>PCK:xcom3/UFODATA/NEWBUT.PCK:xcom3/UFODATA/NEWBUT.TAB:32:xcom3/UFODATA/BASE.PCX</imagedepressed>
+        <imagedepressed>PCK:xcom3/ufodata/newbut.pck:xcom3/ufodata/newbut.tab:32:xcom3/ufodata/base.pcx</imagedepressed>
       </graphicbutton>
       <graphicbutton id="BUTTON_OK">
         <position x="602" y="443"/>

@@ -1063,6 +1063,7 @@ class CueArchiver
   public:
 	static void *cueOpenArchive(PHYSFS_Io *, const char *filename, int forWriting)
 	{
+		LogWarning("Opening \"%s\"", filename);
 		// FIXME: Here we assume the filename actually points to the actual .cue file,
 		// ignoring the PHYSFS_Io (though how would we even read the accompanying file?)
 		// TODO: Actually read from PHYSFS_Io to allow mounting non-CUE images?

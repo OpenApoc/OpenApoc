@@ -406,7 +406,7 @@ void ResearchScreen::updateProgressInfo()
 // FIXME: Put this in the rules somewhere?
 // FIXME: This could be shared with the citview ICON_RESOURCES?
 static const UString agentFramePath =
-    "PCK:xcom3/UFODATA/VS_ICON.PCK:xcom3/UFODATA/VS_ICON.TAB:37:xcom3/UFODATA/PAL_01.DAT";
+    "PCK:xcom3/ufodata/vs_icon.pck:xcom3/ufodata/vs_icon.tab:37:xcom3/ufodata/pal_01.dat";
 
 sp<Control> ResearchScreen::createAgentControl(Vec2<int> size, StateRef<Agent> agent)
 {

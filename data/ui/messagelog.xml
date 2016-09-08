@@ -5,7 +5,7 @@
       <position x="centre" y="centre"/>
       <size width="640" height="480"/>
       <graphic>
-        <image>XCOM3/UFODATA/MESSAGE.PCX</image>
+        <image>xcom3/ufodata/message.pcx</image>
         <position x="0" y="0"/>
         <size width="640" height="480"/>
       </graphic>
@@ -21,11 +21,11 @@
         <alignment horizontal="left" vertical="centre"/>
         <font>SMALFONT</font>
       </label>
-	  <scroll id="LISTBOX_SCROLL">
+      <scroll id="LISTBOX_SCROLL">
         <position x="558" y="82"/>
         <size width="15" height="356"/>
       </scroll>
-	  <listbox id="LISTBOX_MESSAGES" scrollbarid="LISTBOX_SCROLL">
+      <listbox id="LISTBOX_MESSAGES" scrollbarid="LISTBOX_SCROLL">
         <position x="28" y="74"/>
         <size width="510" height="375"/>
         <item size="21" spacing="4"/>

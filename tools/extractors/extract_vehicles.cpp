@@ -135,7 +135,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 			for (auto &dir : directions)
 			{
 				auto str =
-				    UString::format("PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:%d",
+				    UString::format("PCK:xcom3/ufodata/vehicle.pck:xcom3/ufodata/vehicle.tab:%d",
 				                    (int)(v.graphic_frame + image_offset++));
 				;
 				vehicle->directional_sprites[bank][VehicleType::directionToVector(dir)] =
@@ -152,7 +152,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 				for (auto &dir : directions)
 				{
 					auto str = UString::format(
-					    "PCK:xcom3/UFODATA/VEHICLE.PCK:xcom3/UFODATA/VEHICLE.TAB:%d",
+					    "PCK:xcom3/ufodata/vehicle.pck:xcom3/ufodata/vehicle.tab:%d",
 					    (int)(v.graphic_frame + image_offset++));
 					vehicle->directional_sprites[bank][VehicleType::directionToVector(dir)] =
 					    fw().data->loadImage(str);
@@ -161,7 +161,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 			// Give ground vehicles non-directional stratmap stuff for now
 			// FIXME: How to select hostile/friendly/neutral stratmap sprites?
 			auto str = UString::format(
-			    "PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:%d", 572);
+			    "PCKSTRAT:xcom3/ufodata/stratmaP.pck:xcom3/ufodata/stratmaP.tab:%d", 572);
 			vehicle->directional_strategy_sprites[Vec3<float>{1, 0, 0}] = fw().data->loadImage(str);
 		}
 		else if (v.movement_type == 1)
@@ -178,7 +178,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 				if (v.size_x == 1 && v.size_y == 1)
 				{
 					auto str = UString::format(
-					    "PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:%d", 572);
+					    "PCKSTRAT:xcom3/ufodata/stratmap.pck:xcom3/ufodata/stratmap.tab:%d", 572);
 					vehicle->directional_strategy_sprites[Vec3<float>{1, 0, 0}] =
 					    fw().data->loadImage(str);
 				}
@@ -186,7 +186,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 				{
 					// FIXME: Support 'large' strategy sprites?
 					auto str = UString::format(
-					    "PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:%d", 572);
+					    "PCKSTRAT:xcom3/ufodata/stratmap.pck:xcom3/ufodata/stratmap.tab:%d", 572);
 					vehicle->directional_strategy_sprites[Vec3<float>{1, 0, 0}] =
 					    fw().data->loadImage(str);
 #if 0
@@ -195,7 +195,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 						for (int y = 0; y <= 1; y++)
 						{
 							std::stringstream ss;
-							ss << "PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:"
+							ss << "PCKSTRAT:xcom3/ufodata/stratmap.pck:xcom3/ufodata/stratmap.tab:"
 							   << 573 + x + (2 * y);
 							auto sprite = fw().data->loadImage(ss.str());
 							vehicle->directional_stratecy_sprites[Vec3<float>{1,0,0}][x][y] = sprite;
@@ -212,19 +212,19 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 				for (int i = 0; i < animFrames; i++)
 				{
 					auto str =
-					    UString::format("PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:%d",
+					    UString::format("PCK:xcom3/ufodata/saucer.pck:xcom3/ufodata/saucer.tab:%d",
 					                    (int)(v.graphic_frame + i));
 					vehicle->animation_sprites.push_back(fw().data->loadImage(str));
 				}
 
 				auto str =
-				    UString::format("PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:%d",
+				    UString::format("PCK:xcom3/ufodata/saucer.pck:xcom3/ufodata/saucer.tab:%d",
 				                    (int)(v.graphic_frame + animFrames));
 
 				vehicle->crashed_sprite = fw().data->loadImage(str);
 
 				str = UString::format(
-				    "PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:%d",
+				    "PCKSHADOW:xcom3/ufodata/shadow.pck:xcom3/ufodata/shadow.tab:%d",
 				    (int)(v.shadow_graphic));
 				vehicle->directional_shadow_sprites[{1, 0, 0}] = fw().data->loadImage(str);
 
@@ -262,7 +262,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 				for (auto &dir : directions)
 				{
 					auto str = UString::format(
-					    "PCKSTRAT:xcom3/UFODATA/STRATMAP.PCK:xcom3/UFODATA/STRATMAP.TAB:%d",
+					    "PCKSTRAT:xcom3/ufodata/stratmap.pck:xcom3/ufodata/stratmap.tab:%d",
 					    image_offset++);
 					vehicle->directional_strategy_sprites[VehicleType::directionToVector(dir)] =
 					    fw().data->loadImage(str);
@@ -277,7 +277,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 					for (auto &dir : directionsForThisBanking)
 					{
 						auto str = UString::format(
-						    "PCK:xcom3/UFODATA/SAUCER.PCK:xcom3/UFODATA/SAUCER.TAB:%d",
+						    "PCK:xcom3/ufodata/saucer.pck:xcom3/ufodata/saucer.tab:%d",
 						    (int)(v.graphic_frame + image_offset++));
 						vehicle->directional_sprites[bank][VehicleType::directionToVector(dir)] =
 						    fw().data->loadImage(str);
@@ -292,7 +292,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 				for (auto &dir : directions)
 				{
 					auto str = UString::format(
-					    "PCKSHADOW:xcom3/UFODATA/SHADOW.PCK:xcom3/UFODATA/SHADOW.TAB:%d",
+					    "PCKSHADOW:xcom3/ufodata/shadow.pck:xcom3/ufodata/shadow.tab:%d",
 					    (int)(v.shadow_graphic + image_offset++));
 					vehicle->directional_shadow_sprites[VehicleType::directionToVector(dir)] =
 					    fw().data->loadImage(str);
@@ -329,7 +329,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 		memcpy((void *)&equipment_screen_filename[0], (void *)&v.equipment_screen_name[0], 8);
 		equipment_screen_filename[8] = '\0';
 		std::string equipment_screen_image =
-		    "xcom3/ufodata/" + std::string(equipment_screen_filename) + ".pcx";
+		    "xcom3/ufodata/" + UString(equipment_screen_filename).toLower().str() + ".pcx";
 		// If it's all NULLs skip (as it might be an alien ship or something and therefore no
 		// equipment screen)
 		if (equipment_screen_filename[0] != '\0')
@@ -377,7 +377,7 @@ void InitialGameStateExtractor::extractVehicles(GameState &state, Difficulty)
 		for (int i = 0; i < v.loftemps_height; i++)
 		{
 			auto str =
-			    UString::format("LOFTEMPS:xcom3/UFODATA/LOFTEMPS.DAT:xcom3/UFODATA/LOFTEMPS.TAB:%d",
+			    UString::format("LOFTEMPS:xcom3/ufodata/loftemps.dat:xcom3/ufodata/loftemps.tab:%d",
 			                    (int)v.loftemps_index);
 			vehicle->voxelMap->setSlice(i, fw().data->loadVoxelSlice(str));
 		}
